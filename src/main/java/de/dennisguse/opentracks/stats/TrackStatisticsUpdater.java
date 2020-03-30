@@ -112,7 +112,7 @@ public class TrackStatisticsUpdater {
      * Adds a trackPoint.
      * TODO: This assume trackPoint has a valid time.
      *
-     * @param trackPoint             the trackPoint
+     * @param trackPoint           the trackPoint
      * @param minRecordingDistance the min recording distance
      */
     public void addTrackPoint(TrackPoint trackPoint, int minRecordingDistance) {
@@ -134,8 +134,16 @@ public class TrackStatisticsUpdater {
             return;
         }
 
-        //TODO Use Barometer to compute elevation gain.
-        double elevationDifference = trackPoint.hasAltitude() ? updateElevation(trackPoint.getAltitude()) : 0.0;
+        //Update absolute (GPS-based) elevation
+        if (trackPoint.hasAltitude()) {
+            updateAbsoluteElevation(trackPoint.getAltitude());
+        }
+
+        //Get elevation gain
+        if (trackPoint.hasElevationGain()) {
+            currentSegment.addTotalElevationGain(trackPoint.getElevationGain());
+            Log.d(TAG, "elevation gain: " + trackPoint.getElevationGain());
+        }
 
         if (lastTrackPoint == null || lastMovingTrackPoint == null) {
             lastTrackPoint = trackPoint;
@@ -207,23 +215,21 @@ public class TrackStatisticsUpdater {
     }
 
     /**
-     * Updates an elevation reading. Returns the difference.
+     * Updates an elevation reading.
      *
      * @param elevation the elevation
+     * @return the difference
      */
     @VisibleForTesting
-    private double updateElevation(double elevation) {
+    private double updateAbsoluteElevation(double elevation) {
         // Update elevation using the smoothed average
         double oldAverage = elevationBuffer_m.getAverage();
         elevationBuffer_m.setNext(elevation);
         double newAverage = elevationBuffer_m.getAverage();
 
         currentSegment.updateElevationExtremities(newAverage);
-        double difference = newAverage - oldAverage;
-        if (difference > 0) {
-            currentSegment.addTotalElevationGain(difference);
-        }
-        return difference;
+
+        return newAverage - oldAverage;
     }
 
     private TrackStatistics init(long time) {

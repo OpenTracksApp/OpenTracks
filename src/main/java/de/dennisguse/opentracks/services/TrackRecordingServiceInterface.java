@@ -65,11 +65,18 @@ public interface TrackRecordingServiceInterface {
     Marker.Id insertMarker(String name, String category, String description, String photoUrl);
 
     /**
-     * Gets the current sensor data. Returns null if there is no data.
+     * Gets the current sensor data.
      *
-     * @return SensorDataSet object.
+     * @return SensorDataSet object or null.
      */
     SensorDataSet getSensorData();
+
+    /**
+     * Gets the current elevation gain.
+     *
+     * @return elevation gain in m or null.
+     */
+    Float getElevationGain_m();
 
     @VisibleForTesting
     void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager);

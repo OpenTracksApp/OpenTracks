@@ -49,6 +49,7 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.HandlerServer;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
+import de.dennisguse.opentracks.services.sensors.ElevationSumManager;
 import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTaskFactory;
 import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -115,6 +116,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     // The following variables are set when recording:
     private WakeLock wakeLock;
     private BluetoothRemoteSensorManager remoteSensorManager;
+    private ElevationSumManager elevationSumManager;
 
     private TrackStatisticsUpdater trackStatisticsUpdater;
     private TrackPoint lastTrackPoint;
@@ -172,6 +174,11 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         if (remoteSensorManager != null) {
             remoteSensorManager.stop();
             remoteSensorManager = null;
+        }
+
+        if (elevationSumManager != null) {
+            elevationSumManager.stop(this);
+            elevationSumManager = null;
         }
 
         // Reverse order from onCreate
@@ -371,6 +378,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         // Update instance variables
         remoteSensorManager = new BluetoothRemoteSensorManager(this);
         remoteSensorManager.start();
+
+        elevationSumManager = new ElevationSumManager();
+        elevationSumManager.start(this);
+
         lastTrackPoint = null;
         isIdle = false;
 
@@ -456,6 +467,11 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             remoteSensorManager.stop();
             remoteSensorManager = null;
         }
+        if (elevationSumManager != null) {
+            elevationSumManager.stop(this);
+            elevationSumManager = null;
+        }
+
         lastTrackPoint = null;
 
         handlerServer.stop(this);
@@ -533,6 +549,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         //TODO Figure out how to avoid loading the lastValidTrackPoint from the database
         TrackPoint lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(track.getId());
 
+        if (elevationSumManager != null) {
+            trackPoint.setElevationGain(elevationSumManager.getElevationGain_m());
+        }
+
         //Storing trackPoint
 
         // Always insert the first segment location
@@ -556,15 +576,19 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             insertTrackPoint(track, TrackPoint.createPause());
 
             insertTrackPoint(track, trackPoint);
-            isIdle = false;
+            elevationSumManager.reset();
 
+            isIdle = false;
             lastTrackPoint = trackPoint;
             return;
         }
 
         if (trackPoint.hasSensorData() || distanceToLastTrackLocation >= recordingDistanceInterval) {
             insertTrackPointIfNewer(track, lastTrackPoint);
+
             insertTrackPoint(track, trackPoint);
+            elevationSumManager.reset();
+
             isIdle = false;
 
             lastTrackPoint = trackPoint;
@@ -573,7 +597,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         if (!isIdle && !TrackPointUtils.isMoving(trackPoint)) {
             insertTrackPointIfNewer(track, lastTrackPoint);
+
             insertTrackPoint(track, trackPoint);
+            elevationSumManager.reset();
+
             isIdle = true;
 
             lastTrackPoint = trackPoint;
@@ -582,7 +609,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         if (isIdle && TrackPointUtils.isMoving(trackPoint)) {
             insertTrackPointIfNewer(track, lastTrackPoint);
+
             insertTrackPoint(track, trackPoint);
+            elevationSumManager.reset();
+
             isIdle = false;
 
             lastTrackPoint = trackPoint;
@@ -670,6 +700,17 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         if (sensorData != null) {
             sensorData.fillTrackPoint(trackPoint);
         }
+    }
+
+    /**
+     * Returns the relative elevation gain (since last trackpoint).
+     */
+    Float getElevationGain_m() {
+        if (elevationSumManager == null || !elevationSumManager.isConnected()) {
+            return null;
+        }
+
+        return elevationSumManager.getElevationGain_m();
     }
 
     private void showNotification(boolean isGpsStarted) {

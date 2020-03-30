@@ -258,8 +258,8 @@
             style="@style/StatsSmallLabel"
             android:text="@string/stats_elevation"
             app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toRightOf="@+id/guideline2"
-            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintLeft_toRightOf="@+id/guideline"
+            app:layout_constraintRight_toLeftOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@id/stats_elevation_horizontal_line" />
 
         <TextView
@@ -267,7 +267,7 @@
             style="@style/StatsSmallValue"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintLeft_toRightOf="@+id/guideline"
             app:layout_constraintRight_toLeftOf="@+id/stats_elevation_current_unit"
             app:layout_constraintTop_toBottomOf="@+id/stats_elevation_current_label"
             tools:text="100" />
@@ -277,6 +277,40 @@
             style="@style/StatsUnit"
             app:layout_constraintBottom_toBottomOf="@+id/stats_elevation_current_value"
             app:layout_constraintLeft_toRightOf="@+id/stats_elevation_current_value"
+            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            tools:text="m" />
+
+        <!-- Current elevation -->
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/stats_elevation_gain_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="stats_elevation_current_label,stats_elevation_current_value,stats_elevation_current_unit,stats_elevation_horizontal_line" />
+
+        <TextView
+            android:id="@+id/stats_elevation_gain_label"
+            style="@style/StatsSmallLabel"
+            android:text="@string/stats_gain"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_elevation_horizontal_line" />
+
+        <TextView
+            android:id="@+id/stats_elevation_gain_value"
+            style="@style/StatsSmallValue"
+            android:value="@string/value_unknown"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/stats_elevation_gain_unit"
+            app:layout_constraintTop_toBottomOf="@+id/stats_elevation_gain_label"
+            tools:text="100" />
+
+        <TextView
+            android:id="@+id/stats_elevation_gain_unit"
+            style="@style/StatsUnit"
+            app:layout_constraintBottom_toBottomOf="@+id/stats_elevation_gain_value"
+            app:layout_constraintLeft_toRightOf="@+id/stats_elevation_gain_value"
             app:layout_constraintRight_toLeftOf="@+id/guideline3"
             tools:text="m" />
 
