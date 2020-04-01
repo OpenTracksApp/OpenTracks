@@ -39,11 +39,11 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
- * Track data hub. Receives data from {@link DataSource} and distributes it to {@link TrackDataListener} after some processing.
+ * Track data hub. Receives data from {@link de.dennisguse.opentracks.content.DataSourceManager.DataSource} and distributes it to {@link TrackDataListener} after some processing.
  *
  * @author Rodrigo Damazio
  */
-public class TrackDataHub implements DataSourceListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class TrackDataHub implements DataSourceManager.DataSourceListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**
      * Target number of track points displayed by the map overlay.
@@ -69,7 +69,6 @@ public class TrackDataHub implements DataSourceListener, SharedPreferences.OnSha
     private boolean started;
     private HandlerThread handlerThread;
     private Handler handler;
-    private DataSource dataSource;
     private DataSourceManager dataSourceManager;
 
     // Preference values
@@ -104,8 +103,7 @@ public class TrackDataHub implements DataSourceListener, SharedPreferences.OnSha
         handlerThread = new HandlerThread("TrackDataHubHandlerThread");
         handlerThread.start();
         handler = new Handler(handlerThread.getLooper());
-        dataSource = newDataSource();
-        dataSourceManager = new DataSourceManager(dataSource, this);
+        dataSourceManager = new DataSourceManager(context, this);
 
         PreferencesUtils.register(context, this);
         onSharedPreferenceChanged(null, null);
@@ -136,7 +134,6 @@ public class TrackDataHub implements DataSourceListener, SharedPreferences.OnSha
             handlerThread = null;
         }
         handler = null;
-        dataSource = null;
         dataSourceManager = null;
     }
 
@@ -450,14 +447,6 @@ public class TrackDataHub implements DataSourceListener, SharedPreferences.OnSha
         numLoadedPoints = 0;
         firstSeenLocationId = -1L;
         lastSeenLocationId = -1L;
-    }
-
-    /**
-     * Creates a {@link DataSource}.
-     */
-    @VisibleForTesting
-    private DataSource newDataSource() {
-        return new DataSource(context);
     }
 
     /**
