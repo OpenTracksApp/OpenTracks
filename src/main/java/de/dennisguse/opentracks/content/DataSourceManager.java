@@ -16,6 +16,8 @@
 
 package de.dennisguse.opentracks.content;
 
+import android.content.ContentResolver;
+import android.content.Context;
 import android.database.ContentObserver;
 import android.os.Handler;
 import android.util.Log;
@@ -28,7 +30,7 @@ import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
 
 /**
- * Creates observers/listeners and manages their registration with {@link DataSource}.
+ * Creates observers/listeners and manages their registration.
  * The observers/listeners calls {@link DataSourceListener} when data changes.
  *
  * @author Rodrigo Damazio
@@ -37,25 +39,36 @@ class DataSourceManager {
 
     private static final String TAG = DataSourceManager.class.getSimpleName();
 
-    private final DataSource dataSource;
-
-    private final DataSourceListener dataSourceListener;
+    private final ContentResolver contentResolver;
 
     // Registered listeners
     private final Set<TrackDataType> registeredListeners = EnumSet.noneOf(TrackDataType.class);
-    private final Handler handler;
-    private final TracksTableObserver tracksTableObserver;
-    private final WaypointsTableObserver waypointsTableObserver;
-    private final TrackPointsTableObserver trackPointsTableObserver;
+    private final ContentObserver tracksTableObserver;
+    private final ContentObserver waypointsTableObserver;
+    private final ContentObserver trackPointsTableObserver;
 
-    DataSourceManager(DataSource dataSource, DataSourceListener dataSourceListener) {
-        this.dataSource = dataSource;
-        this.dataSourceListener = dataSourceListener;
+    DataSourceManager(Context context, final DataSourceListener dataSourceListener) {
+        contentResolver = context.getContentResolver();
 
-        handler = new Handler();
-        tracksTableObserver = new TracksTableObserver();
-        waypointsTableObserver = new WaypointsTableObserver();
-        trackPointsTableObserver = new TrackPointsTableObserver();
+        Handler handler = new Handler();
+        tracksTableObserver = new ContentObserver(handler) {
+            @Override
+            public void onChange(boolean selfChange) {
+                dataSourceListener.notifyTracksTableUpdated();
+            }
+        };
+        waypointsTableObserver = new ContentObserver(handler) {
+            @Override
+            public void onChange(boolean selfChange) {
+                dataSourceListener.notifyWaypointsTableUpdated();
+            }
+        };
+        trackPointsTableObserver = new ContentObserver(handler) {
+            @Override
+            public void onChange(boolean selfChange) {
+                dataSourceListener.notifyTrackPointsTableUpdated();
+            }
+        };
     }
 
     /**
@@ -105,13 +118,13 @@ class DataSourceManager {
     private void registerListener(TrackDataType trackDataType) {
         switch (trackDataType) {
             case TRACKS_TABLE:
-                dataSource.registerContentObserver(TracksColumns.CONTENT_URI, tracksTableObserver);
+                contentResolver.registerContentObserver(TracksColumns.CONTENT_URI, false, tracksTableObserver);
                 break;
             case WAYPOINTS_TABLE:
-                dataSource.registerContentObserver(WaypointsColumns.CONTENT_URI, waypointsTableObserver);
+                contentResolver.registerContentObserver(WaypointsColumns.CONTENT_URI, false, waypointsTableObserver);
                 break;
             case SAMPLED_IN_TRACK_POINTS_TABLE:
-                dataSource.registerContentObserver(TrackPointsColumns.CONTENT_URI_BY_ID, trackPointsTableObserver);
+                contentResolver.registerContentObserver(TrackPointsColumns.CONTENT_URI_BY_ID, false, trackPointsTableObserver);
                 break;
             case SAMPLED_OUT_TRACK_POINTS_TABLE:
                 // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.
@@ -129,13 +142,13 @@ class DataSourceManager {
     private void unregisterListener(TrackDataType trackDataType) {
         switch (trackDataType) {
             case TRACKS_TABLE:
-                dataSource.unregisterContentObserver(tracksTableObserver);
+                contentResolver.unregisterContentObserver(tracksTableObserver);
                 break;
             case WAYPOINTS_TABLE:
-                dataSource.unregisterContentObserver(waypointsTableObserver);
+                contentResolver.unregisterContentObserver(waypointsTableObserver);
                 break;
             case SAMPLED_IN_TRACK_POINTS_TABLE:
-                dataSource.unregisterContentObserver(trackPointsTableObserver);
+                contentResolver.unregisterContentObserver(trackPointsTableObserver);
                 break;
             case SAMPLED_OUT_TRACK_POINTS_TABLE:
                 // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.
@@ -155,53 +168,25 @@ class DataSourceManager {
     }
 
     /**
-     * Observer when the tracks table is updated.
+     * Listener to be invoked when observed data changes changes.
      *
      * @author Jimmy Shih
      */
-    private class TracksTableObserver extends ContentObserver {
+    public interface DataSourceListener {
 
-        TracksTableObserver() {
-            super(handler);
-        }
+        /**
+         * Notifies when the tracks table is updated.
+         */
+        void notifyTracksTableUpdated();
 
-        @Override
-        public void onChange(boolean selfChange) {
-            dataSourceListener.notifyTracksTableUpdated();
-        }
-    }
+        /**
+         * Notifies when the waypoints table is updated.
+         */
+        void notifyWaypointsTableUpdated();
 
-    /**
-     * Observer when the waypoints table is updated.
-     *
-     * @author Jimmy Shih
-     */
-    private class WaypointsTableObserver extends ContentObserver {
-
-        WaypointsTableObserver() {
-            super(handler);
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            dataSourceListener.notifyWaypointsTableUpdated();
-        }
-    }
-
-    /**
-     * Observer when the track points table is updated.
-     *
-     * @author Jimmy Shih
-     */
-    private class TrackPointsTableObserver extends ContentObserver {
-
-        TrackPointsTableObserver() {
-            super(handler);
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            dataSourceListener.notifyTrackPointsTableUpdated();
-        }
+        /**
+         * Notifies when the track points table is updated.
+         */
+        void notifyTrackPointsTableUpdated();
     }
 }
