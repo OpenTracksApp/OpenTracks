@@ -134,12 +134,6 @@ public class DescriptionGenerator {
         // Elevation gain
         writeElevation(stats.getTotalElevationGain(), builder, R.string.description_elevation_gain, lineBreak);
 
-        // Max grade
-        writeGrade(stats.getMaxGrade(), builder, R.string.description_max_grade, lineBreak);
-
-        // Min grade
-        writeGrade(stats.getMinGrade(), builder, R.string.description_min_grade, lineBreak);
-
         // Recorded time
         builder.append(context.getString(R.string.description_recorded_time, StringUtils.formatDateTime(context, stats.getStartTime())));
         builder.append(lineBreak);
@@ -226,21 +220,6 @@ public class DescriptionGenerator {
         long elevationInM = Math.round(elevation);
         long elevationInFt = Math.round(elevation * UnitConversions.M_TO_FT);
         builder.append(context.getString(resId, elevationInM, elevationInFt));
-        builder.append(lineBreak);
-    }
-
-    /**
-     * Writes grade.
-     *
-     * @param grade     grade in fraction
-     * @param builder   StringBuilder to append grade
-     * @param resId     resource id grade string
-     * @param lineBreak line break string
-     */
-    @VisibleForTesting
-    void writeGrade(double grade, StringBuilder builder, int resId, String lineBreak) {
-        long gradeInPercent = Double.isNaN(grade) || Double.isInfinite(grade) ? 0L : Math.round(grade * 100);
-        builder.append(context.getString(resId, gradeInPercent));
         builder.append(lineBreak);
     }
 }

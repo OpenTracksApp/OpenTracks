@@ -241,9 +241,9 @@ public class PreferencesUtils {
         return getBoolean(context, R.string.stats_keep_screen_on_while_recording_key, DEFAULT);
     }
 
-    public static boolean isShowStatsGradeElevation(Context context) {
-        final boolean STATS_SHOW_GRADE_ELEVATION = context.getResources().getBoolean(R.bool.stats_show_grade_elevation_default);
-        return getBoolean(context, R.string.stats_show_grade_elevation_key, STATS_SHOW_GRADE_ELEVATION);
+    public static boolean isShowStatsElevation(Context context) {
+        final boolean STATS_SHOW_ELEVATION = context.getResources().getBoolean(R.bool.stats_show_elevation_default);
+        return getBoolean(context, R.string.stats_show_grade_elevation_key, STATS_SHOW_ELEVATION);
     }
 
     public static boolean isStatsShowCoordinate(Context context) {

@@ -147,8 +147,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     private TextView speedMovingLabel;
     private TextView speedMovingValue;
     private TextView speedMovingUnit;
-    private View gradeElevationSeparator;
-    private View gradeElevationContainer;
+    private View elevationSeparator;
+    private View elevationContainer;
     private View speedContainer;
     private TextView speedLabel;
     private TextView speedValue;
@@ -190,8 +190,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         speedMovingValue = view.findViewById(R.id.stats_moving_speed_value);
         speedMovingUnit = view.findViewById(R.id.stats_moving_speed_unit);
 
-        gradeElevationSeparator = view.findViewById(R.id.stats_elevation_separator);
-        gradeElevationContainer = view.findViewById(R.id.stats_elevation_container);
+        elevationSeparator = view.findViewById(R.id.stats_elevation_separator);
+        elevationContainer = view.findViewById(R.id.stats_elevation_container);
 
         speedContainer = view.findViewById(R.id.stats_speed);
         speedLabel = view.findViewById(R.id.stats_speed_label);
@@ -297,8 +297,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         speedMovingValue = null;
         speedMovingUnit = null;
 
-        gradeElevationSeparator = null;
-        gradeElevationContainer = null;
+        elevationSeparator = null;
+        elevationContainer = null;
 
         speedContainer = null;
         speedLabel = null;
@@ -535,8 +535,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
         // Make elevation visible?
         {
-            boolean showElevation = PreferencesUtils.isShowStatsGradeElevation(getContext());
-            gradeElevationSeparator.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+            boolean showElevation = PreferencesUtils.isShowStatsElevation(getContext());
+            elevationSeparator.setVisibility(showElevation ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -580,10 +580,10 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         }
 
         // Set elevation
-        boolean showGradeElevation = isRecording && PreferencesUtils.isShowStatsGradeElevation(getContext());
-        gradeElevationContainer.setVisibility(showGradeElevation ? View.VISIBLE : View.GONE);
+        boolean showElevation = isRecording && PreferencesUtils.isShowStatsElevation(getContext());
+        elevationContainer.setVisibility(showElevation ? View.VISIBLE : View.GONE);
 
-        if (showGradeElevation) {
+        if (showElevation) {
             double altitude = lastTrackPoint != null && lastTrackPoint.hasAltitude() ? lastTrackPoint.getAltitude() : Double.NaN;
             Pair<String, String> parts = StringUtils.formatElevation(getContext(), altitude, metricUnits);
 

@@ -63,8 +63,6 @@ public class DescriptionGeneratorTest {
         stats.setMaxElevation(550);
         stats.setMinElevation(-500);
         stats.setTotalElevationGain(6000);
-        stats.setMaxGrade(0.42);
-        stats.setMinGrade(0.11);
         stats.setStartTime(START_TIME);
         track.setTripStatistics(stats);
         track.setCategory("hiking");
@@ -85,8 +83,6 @@ public class DescriptionGeneratorTest {
                 + "Max elevation: 550 m (1804 ft)<br>"
                 + "Min elevation: -500 m (-1640 ft)<br>"
                 + "Elevation gain: 6000 m (19685 ft)<br>"
-                + "Max grade: 42 %<br>"
-                + "Min grade: 11 %<br>"
                 + "Recorded: " + StringUtils.formatDateTime(context, START_TIME) + "<br>";
 
         Assert.assertEquals(expected, descriptionGenerator.generateTrackDescription(track, true));
@@ -141,35 +137,5 @@ public class DescriptionGeneratorTest {
         StringBuilder builder = new StringBuilder();
         descriptionGenerator.writePace(1.1, builder, R.string.description_average_pace_in_minute, "\n");
         Assert.assertEquals("Average pace: 15:09 min/km (24:23 min/mi)\n", builder.toString());
-    }
-
-    /**
-     * Tests {@link DescriptionGenerator#writeGrade(double, StringBuilder, int, String)}.
-     */
-    @Test
-    public void testWriteGrade() {
-        StringBuilder builder = new StringBuilder();
-        descriptionGenerator.writeGrade(.042, builder, R.string.description_max_grade, "<br>");
-        Assert.assertEquals("Max grade: 4 %<br>", builder.toString());
-    }
-
-    /**
-     * Tests {@link DescriptionGenerator#writeGrade(double, StringBuilder, int, String)} with a NaN.
-     */
-    @Test
-    public void testWriteGrade_nan() {
-        StringBuilder builder = new StringBuilder();
-        descriptionGenerator.writeGrade(Double.NaN, builder, R.string.description_max_grade, "<br>");
-        Assert.assertEquals("Max grade: 0 %<br>", builder.toString());
-    }
-
-    /**
-     * Tests {@link DescriptionGenerator#writeGrade(double, StringBuilder, int, String)} with an infinite number.
-     */
-    @Test
-    public void testWriteGrade_infinite() {
-        StringBuilder builder = new StringBuilder();
-        descriptionGenerator.writeGrade(Double.POSITIVE_INFINITY, builder, R.string.description_max_grade, "<br>");
-        Assert.assertEquals("Max grade: 0 %<br>", builder.toString());
     }
 }

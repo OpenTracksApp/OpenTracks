@@ -38,21 +38,11 @@ import static de.dennisguse.opentracks.services.TrackRecordingService.MAX_NO_MOV
 public class TripStatisticsUpdater {
 
     /**
-     * The number of grade readings to smooth to get a somewhat accurate signal.
-     */
-    public static final int GRADE_SMOOTHING_FACTOR = 5;
-    /**
-     * The number of elevation readings to smooth to get a somewhat accurate
-     * signal.
+     * The number of elevation readings to smooth to get a somewhat accurate signal.
      */
     @VisibleForTesting
     private static final int ELEVATION_SMOOTHING_FACTOR = 25;
 
-    /**
-     * The number of run readings to smooth for calculating grade.
-     */
-    @VisibleForTesting
-    private static final int RUN_SMOOTHING_FACTOR = 25;
     /**
      * The number of speed reading to smooth to get a somewhat accurate signal.
      */
@@ -72,10 +62,6 @@ public class TripStatisticsUpdater {
 
     // A buffer of the recent elevation readings (m)
     private final DoubleBuffer elevationBuffer = new DoubleBuffer(ELEVATION_SMOOTHING_FACTOR);
-    // A buffer of the recent run readings (m) for calculating grade
-    private final DoubleBuffer runBuffer = new DoubleBuffer(RUN_SMOOTHING_FACTOR);
-    // A buffer of the recent grade calculations (%)
-    private final DoubleBuffer gradeBuffer = new DoubleBuffer(GRADE_SMOOTHING_FACTOR);
     // A buffer of the recent speed readings (m/s) for calculating max speed
     private final DoubleBuffer speedBuffer = new DoubleBuffer(SPEED_SMOOTHING_FACTOR);
 
@@ -143,8 +129,6 @@ public class TripStatisticsUpdater {
             lastTrackPoint = null;
             lastMovingTrackPoint = null;
             elevationBuffer.reset();
-            runBuffer.reset();
-            gradeBuffer.reset();
             speedBuffer.reset();
             return;
         }
@@ -175,10 +159,6 @@ public class TripStatisticsUpdater {
 
         // Update moving time
         currentSegment.addMovingTime(movingTime);
-
-        // Update grade
-        double run = lastTrackPoint.distanceTo(trackPoint);
-        updateGrade(run, elevationDifference);
 
         // Update max speed
         if (trackPoint.hasSpeed() && lastTrackPoint.hasSpeed()) {
@@ -248,26 +228,6 @@ public class TripStatisticsUpdater {
             currentSegment.addTotalElevationGain(difference);
         }
         return difference;
-    }
-
-    /**
-     * Updates a grade reading.
-     *
-     * @param run  the run
-     * @param rise the rise
-     */
-    @VisibleForTesting
-    private void updateGrade(double run, double rise) {
-        runBuffer.setNext(run);
-
-        double smoothedRun = runBuffer.getAverage();
-
-        // With the error in the altitude measurement, it is dangerous to divide by * anything less than 5.
-        if (smoothedRun < 5.0) {
-            return;
-        }
-        gradeBuffer.setNext(rise / smoothedRun);
-        currentSegment.updateGradeExtremities(gradeBuffer.getAverage());
     }
 
     private TripStatistics init(long time) {
