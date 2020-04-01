@@ -28,9 +28,6 @@ public class TripStatistics {
 
     // The min and max elevation (meters) seen on this trip.
     private final ExtremityMonitor elevationExtremities = new ExtremityMonitor();
-    // The min and max grade seen on this trip.
-    @Deprecated //Remove grade min/max completely
-    private final ExtremityMonitor gradeExtremities = new ExtremityMonitor();
 
     // The trip start time. This is the system time, might not match the GPs time.
     private long startTime = -1L;
@@ -64,7 +61,6 @@ public class TripStatistics {
         maxSpeed_mps = other.maxSpeed_mps;
         elevationExtremities.set(other.elevationExtremities.getMin(), other.elevationExtremities.getMax());
         totalElevationGain_m = other.totalElevationGain_m;
-        gradeExtremities.set(other.gradeExtremities.getMin(), other.gradeExtremities.getMax());
     }
 
     /**
@@ -85,10 +81,6 @@ public class TripStatistics {
             elevationExtremities.update(other.elevationExtremities.getMax());
         }
         totalElevationGain_m += other.totalElevationGain_m;
-        if (other.gradeExtremities.hasData()) {
-            gradeExtremities.update(other.gradeExtremities.getMin());
-            gradeExtremities.update(other.gradeExtremities.getMax());
-        }
     }
 
     /**
@@ -242,31 +234,6 @@ public class TripStatistics {
         totalElevationGain_m += gain_m;
     }
 
-    public double getMinGrade() {
-        return gradeExtremities.getMin();
-    }
-
-    public void setMinGrade(double grade) {
-        gradeExtremities.setMin(grade);
-    }
-
-    public double getMaxGrade() {
-        return gradeExtremities.getMax();
-    }
-
-    /**
-     * Sets the maximum grade.
-     *
-     * @param grade the grade as a fraction (1.0 would mean vertical upwards)
-     */
-    public void setMaxGrade(double grade) {
-        gradeExtremities.setMax(grade);
-    }
-
-    public void updateGradeExtremities(double grade) {
-        gradeExtremities.update(grade);
-    }
-
     @NonNull
     @Override
     public String toString() {
@@ -274,7 +241,6 @@ public class TripStatistics {
                 + "; Total Distance: " + getTotalDistance() + "; Total Time: " + getTotalTime()
                 + "; Moving Time: " + getMovingTime() + "; Max Speed: " + getMaxSpeed()
                 + "; Min Elevation: " + getMinElevation() + "; Max Elevation: " + getMaxElevation()
-                + "; Elevation Gain: " + getTotalElevationGain() + "; Min Grade: " + getMinGrade()
-                + "; Max Grade: " + getMaxGrade() + "}";
+                + "; Elevation Gain: " + getTotalElevationGain() + "}";
     }
 }

@@ -58,10 +58,6 @@ public class TripStatisticsTest {
         statistics.setMinElevation(1200.0);  // Resulting min elevation
         statistics2.setMaxElevation(3575.0);  // Resulting max elevation
         statistics2.setMinElevation(2800.0);
-        statistics.setMaxGrade(15.0);
-        statistics.setMinGrade(-25.0);  // Resulting min grade
-        statistics2.setMaxGrade(35.0);  // Resulting max grade
-        statistics2.setMinGrade(0.0);
 
         statistics.merge(statistics2);
 
@@ -74,8 +70,6 @@ public class TripStatisticsTest {
         Assert.assertEquals(statistics.getTotalDistance() / (statistics.getMovingTime() / 1000.0), statistics.getMaxSpeed(), 0.001);
         Assert.assertEquals(1200.0, statistics.getMinElevation(), 0.001);
         Assert.assertEquals(3575.0, statistics.getMaxElevation(), 0.001);
-        Assert.assertEquals(-25.0, statistics.getMinGrade(), 0.001);
-        Assert.assertEquals(35.0, statistics.getMaxGrade(), 0.001);
     }
 
     @Test

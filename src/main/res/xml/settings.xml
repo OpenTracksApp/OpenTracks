@@ -44,7 +44,7 @@ limitations under the License.
 
     <PreferenceCategory android:title="@string/settings_show">
         <SwitchPreferenceCompat
-            android:defaultValue="@bool/stats_show_grade_elevation_default"
+            android:defaultValue="@bool/stats_show_elevation_default"
             android:key="@string/stats_show_grade_elevation_key"
             android:title="@string/stats_elevation" />
         <SwitchPreferenceCompat
