@@ -16,13 +16,7 @@
 
 package de.dennisguse.opentracks.content;
 
-import android.util.Log;
-
-import java.util.EnumMap;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.Map;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -34,84 +28,68 @@ class TrackDataManager {
 
     private static final String TAG = TrackDataManager.class.getSimpleName();
 
-    private final Map<TrackDataListener, EnumSet<TrackDataType>> listenerToTypesMap = new HashMap<>();
+    private final Set<TrackDataListener> dataListenerTracks = new HashSet<>();
+    private final Set<TrackDataListener> dataListenerWaypoints = new HashSet<>();
+    private final Set<TrackDataListener> dataListenerTrackPoints_SampledIn = new HashSet<>();
+    private final Set<TrackDataListener> dataListenerTrackPoints_SampledOut = new HashSet<>();
 
-    private final Map<TrackDataType, Set<TrackDataListener>> typeToListenersMap = new EnumMap<>(TrackDataType.class);
-
-    TrackDataManager() {
-        for (TrackDataType trackDataType : TrackDataType.values()) {
-            typeToListenersMap.put(trackDataType, new LinkedHashSet<TrackDataListener>());
-        }
+    void registerTrackDataListener(final TrackDataListener trackDataListener, boolean tracksTable, boolean waypointsTable, boolean trackPointsTable_SampleIn, boolean trackPointsTable_SampleOut) {
+        if (tracksTable) dataListenerTracks.add(trackDataListener);
+        if (waypointsTable) dataListenerWaypoints.add(trackDataListener);
+        if (trackPointsTable_SampleIn) dataListenerTrackPoints_SampledIn.add(trackDataListener);
+        if (trackPointsTable_SampleOut) dataListenerTrackPoints_SampledOut.add(trackDataListener);
     }
 
-    /**
-     * Registers a listener.
-     *
-     * @param listener       the listener
-     * @param trackDataTypes the track data types the listener is interested
-     */
-    void registerListener(TrackDataListener listener, EnumSet<TrackDataType> trackDataTypes) {
-        if (listenerToTypesMap.containsKey(listener)) {
-            Log.w(TAG, "Tried to register a listener that is already registered. Ignore.");
-            return;
-        }
-        listenerToTypesMap.put(listener, trackDataTypes);
-        for (TrackDataType trackDataType : trackDataTypes) {
-            typeToListenersMap.get(trackDataType).add(listener);
-        }
+    void unregisterTrackDataListener(TrackDataListener trackDataListener) {
+        dataListenerTracks.add(trackDataListener);
+        dataListenerWaypoints.add(trackDataListener);
+        dataListenerTrackPoints_SampledIn.add(trackDataListener);
+        dataListenerTrackPoints_SampledOut.add(trackDataListener);
     }
 
-    /**
-     * Unregisters a listener.
-     *
-     * @param listener the listener
-     */
-    void unregisterListener(TrackDataListener listener) {
-        EnumSet<TrackDataType> removedTypes = listenerToTypesMap.remove(listener);
-        if (removedTypes == null) {
-            Log.w(TAG, "Tried to unregister a listener that is not registered. Ignore.");
-            return;
-        }
-
-        // Remove the listener from the typeToListenersMap
-        for (TrackDataType trackDataType : removedTypes) {
-            typeToListenersMap.get(trackDataType).remove(listener);
-        }
+    boolean hasListeners() {
+        return dataListenerTracks.size() + dataListenerWaypoints.size() + dataListenerTrackPoints_SampledIn.size() + dataListenerTrackPoints_SampledOut.size() > 0;
     }
 
-    /**
-     * Gets the number of {@link TrackDataListener}.
-     */
     int getNumberOfListeners() {
-        return listenerToTypesMap.size();
+        Set<TrackDataListener> listener = new HashSet<>();
+        listener.addAll(dataListenerTracks);
+        listener.addAll(dataListenerWaypoints);
+        listener.addAll(dataListenerTrackPoints_SampledIn);
+        listener.addAll(dataListenerTrackPoints_SampledOut);
+
+        return listener.size();
     }
 
-    /**
-     * Gets the track data types for a listener.
-     *
-     * @param listener the listener
-     */
-    EnumSet<TrackDataType> getTrackDataTypes(TrackDataListener listener) {
-        return listenerToTypesMap.get(listener);
+    boolean listensForTracks(TrackDataListener listener) {
+        return dataListenerTracks.contains(listener);
     }
 
-    /**
-     * Gets the listeners for a {@link TrackDataType}.
-     *
-     * @param type the type
-     */
-    Set<TrackDataListener> getListeners(TrackDataType type) {
-        return typeToListenersMap.get(type);
+    boolean listensForWaypoints(TrackDataListener listener) {
+        return dataListenerWaypoints.contains(listener);
     }
 
-    /**
-     * Gets all the registered {@link TrackDataType}.
-     */
-    EnumSet<TrackDataType> getRegisteredTrackDataTypes() {
-        EnumSet<TrackDataType> types = EnumSet.noneOf(TrackDataType.class);
-        for (EnumSet<TrackDataType> value : listenerToTypesMap.values()) {
-            types.addAll(value);
-        }
-        return types;
+    boolean listensForTrackPoints_SampledIn(TrackDataListener listener) {
+        return dataListenerTrackPoints_SampledIn.contains(listener);
+    }
+
+    boolean listensForTrackPoints_SampledOut(TrackDataListener listener) {
+        return dataListenerTrackPoints_SampledOut.contains(listener);
+    }
+
+    Set<TrackDataListener> getListenerTracks() {
+        return dataListenerTracks;
+    }
+
+    Set<TrackDataListener> getListenerWaypoints() {
+        return dataListenerWaypoints;
+    }
+
+    Set<TrackDataListener> getListenerTrackPoints_SampledIn() {
+        return dataListenerTrackPoints_SampledIn;
+    }
+
+    Set<TrackDataListener> getListenerTrackPoints_SampledOut() {
+        return dataListenerTrackPoints_SampledOut;
     }
 }
