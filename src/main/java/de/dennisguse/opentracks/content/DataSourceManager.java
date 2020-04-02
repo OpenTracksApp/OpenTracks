@@ -20,10 +20,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.os.Handler;
-import android.util.Log;
-
-import java.util.EnumSet;
-import java.util.Set;
 
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
@@ -42,7 +38,6 @@ class DataSourceManager {
     private final ContentResolver contentResolver;
 
     // Registered listeners
-    private final Set<TrackDataType> registeredListeners = EnumSet.noneOf(TrackDataType.class);
     private final ContentObserver tracksTableObserver;
     private final ContentObserver waypointsTableObserver;
     private final ContentObserver trackPointsTableObserver;
@@ -72,99 +67,21 @@ class DataSourceManager {
     }
 
     /**
-     * Updates listeners with data source.
-     *
-     * @param listeners the listeners
+     * Registers for content changes.
      */
-    void updateListeners(EnumSet<TrackDataType> listeners) {
-        EnumSet<TrackDataType> neededListeners = EnumSet.copyOf(listeners);
-
-        // Map SAMPLED_OUT_POINT_UPDATES to POINT_UPDATES since they correspond to the same internal listener
-        if (neededListeners.contains(TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE)) {
-            neededListeners.remove(TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE);
-            neededListeners.add(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE);
-        }
-
-        Log.d(TAG, "Updating listeners " + neededListeners);
-
-        // Unnecessary = registered - needed
-        Set<TrackDataType> unnecessaryListeners = EnumSet.copyOf(registeredListeners);
-        unnecessaryListeners.removeAll(neededListeners);
-
-        // Missing = needed - registered
-        Set<TrackDataType> missingListeners = EnumSet.copyOf(neededListeners);
-        missingListeners.removeAll(registeredListeners);
-
-        // Remove unnecessary listeners
-        for (TrackDataType trackDataType : unnecessaryListeners) {
-            unregisterListener(trackDataType);
-        }
-
-        // Add missing listeners
-        for (TrackDataType trackDataType : missingListeners) {
-            registerListener(trackDataType);
-        }
-
-        // Update registered listeners
-        registeredListeners.clear();
-        registeredListeners.addAll(neededListeners);
+    public void start() {
+        contentResolver.registerContentObserver(TracksColumns.CONTENT_URI, false, tracksTableObserver);
+        contentResolver.registerContentObserver(WaypointsColumns.CONTENT_URI, false, waypointsTableObserver);
+        contentResolver.registerContentObserver(TrackPointsColumns.CONTENT_URI_BY_ID, false, trackPointsTableObserver);
     }
 
     /**
-     * Registers a listener with data source.
-     *
-     * @param trackDataType the listener data type
+     * Unregisters from content changes.
      */
-    private void registerListener(TrackDataType trackDataType) {
-        switch (trackDataType) {
-            case TRACKS_TABLE:
-                contentResolver.registerContentObserver(TracksColumns.CONTENT_URI, false, tracksTableObserver);
-                break;
-            case WAYPOINTS_TABLE:
-                contentResolver.registerContentObserver(WaypointsColumns.CONTENT_URI, false, waypointsTableObserver);
-                break;
-            case SAMPLED_IN_TRACK_POINTS_TABLE:
-                contentResolver.registerContentObserver(TrackPointsColumns.CONTENT_URI_BY_ID, false, trackPointsTableObserver);
-                break;
-            case SAMPLED_OUT_TRACK_POINTS_TABLE:
-                // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * Unregisters a listener with data source.
-     *
-     * @param trackDataType listener data type
-     */
-    private void unregisterListener(TrackDataType trackDataType) {
-        switch (trackDataType) {
-            case TRACKS_TABLE:
-                contentResolver.unregisterContentObserver(tracksTableObserver);
-                break;
-            case WAYPOINTS_TABLE:
-                contentResolver.unregisterContentObserver(waypointsTableObserver);
-                break;
-            case SAMPLED_IN_TRACK_POINTS_TABLE:
-                contentResolver.unregisterContentObserver(trackPointsTableObserver);
-                break;
-            case SAMPLED_OUT_TRACK_POINTS_TABLE:
-                // Do nothing. SAMPLED_OUT_POINT_UPDATES is mapped to POINT_UPDATES.
-                break;
-            default:
-                break;
-        }
-    }
-
-    /**
-     * Unregisters all listeners with data source.
-     */
-    void unregisterAllListeners() {
-        for (TrackDataType trackDataType : TrackDataType.values()) {
-            unregisterListener(trackDataType);
-        }
+    public void stop() {
+        contentResolver.unregisterContentObserver(tracksTableObserver);
+        contentResolver.unregisterContentObserver(waypointsTableObserver);
+        contentResolver.unregisterContentObserver(trackPointsTableObserver);
     }
 
     /**
@@ -172,7 +89,7 @@ class DataSourceManager {
      *
      * @author Jimmy Shih
      */
-    public interface DataSourceListener {
+    interface DataSourceListener {
 
         /**
          * Notifies when the tracks table is updated.
