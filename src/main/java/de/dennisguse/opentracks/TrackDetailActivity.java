@@ -199,7 +199,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
 
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, bindChangedCallback);
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
         trackDataHub = new TrackDataHub(this);
 
         FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager(), 1) {

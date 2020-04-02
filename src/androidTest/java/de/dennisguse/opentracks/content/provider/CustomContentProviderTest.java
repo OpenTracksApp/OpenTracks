@@ -38,7 +38,7 @@ import de.dennisguse.opentracks.content.data.WaypointsColumns;
 public class CustomContentProviderTest {
 
     private CustomContentProvider customContentProvider;
-    private Context context = ApplicationProvider.getApplicationContext();
+    private final Context context = ApplicationProvider.getApplicationContext();
 
     @Before
     public void setUp() {

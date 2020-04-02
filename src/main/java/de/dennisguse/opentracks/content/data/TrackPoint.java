@@ -29,7 +29,7 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
  */
 public class TrackPoint {
 
-    private Location location;
+    private final Location location;
 
     public TrackPoint() {
         this.location = new Location("");

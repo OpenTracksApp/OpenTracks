@@ -40,16 +40,16 @@ public class ExportImportTest {
 
     private static final String TAG = ExportImportTest.class.getSimpleName();
 
-    private Context context = ApplicationProvider.getApplicationContext();
+    private final Context context = ApplicationProvider.getApplicationContext();
 
-    private ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
+    private final ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
 
     private static final String TRACK_ICON = "the track icon";
     private static final String TRACK_CATEGORY = "the category";
     private static final String TRACK_DESCRIPTION = "the description";
     private final List<Waypoint> waypoints = new ArrayList<>();
     private long importTrackId;
-    private long trackId = System.currentTimeMillis();
+    private final long trackId = System.currentTimeMillis();
 
     @Before
     public void setUp() {

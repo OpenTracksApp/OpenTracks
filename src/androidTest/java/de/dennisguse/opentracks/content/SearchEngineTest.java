@@ -56,7 +56,7 @@ public class SearchEngineTest {
     private ContentProviderUtils providerUtils;
     private SearchEngine engine;
 
-    private Context context = ApplicationProvider.getApplicationContext();
+    private final Context context = ApplicationProvider.getApplicationContext();
 
 
     @Before
@@ -66,7 +66,7 @@ public class SearchEngineTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         providerUtils.deleteAllTracks(context);
     }
 

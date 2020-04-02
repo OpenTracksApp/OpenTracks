@@ -42,7 +42,7 @@ public class DescriptionGeneratorTest {
     private static final long START_TIME = 1288721514000L;
     private DescriptionGenerator descriptionGenerator;
 
-    private Context context = ApplicationProvider.getApplicationContext();
+    private final Context context = ApplicationProvider.getApplicationContext();
 
     @Before
     public void setUp() {

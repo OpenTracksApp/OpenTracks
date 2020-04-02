@@ -36,7 +36,7 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class AnnouncementPeriodicTaskFactoryTest {
 
-    private Context context = ApplicationProvider.getApplicationContext();
+    private final Context context = ApplicationProvider.getApplicationContext();
 
     @BeforeClass
     public static void preSetUp() {

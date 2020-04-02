@@ -231,7 +231,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         contentProviderUtils = new ContentProviderUtils(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, bindChangedCallback);
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
         trackController = new TrackController(this, trackRecordingServiceConnection, true, recordListener, stopListener);
 
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);

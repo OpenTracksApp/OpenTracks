@@ -36,7 +36,7 @@ import java.util.TimeZone;
 @RunWith(AndroidJUnit4.class)
 public class StringUtilsTest {
 
-    private Context context = ApplicationProvider.getApplicationContext();
+    private final Context context = ApplicationProvider.getApplicationContext();
 
 
     /**

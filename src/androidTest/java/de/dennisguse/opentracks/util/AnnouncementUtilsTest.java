@@ -14,7 +14,7 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 @RunWith(AndroidJUnit4.class)
 public class AnnouncementUtilsTest {
 
-    private Context context = ApplicationProvider.getApplicationContext();
+    private final Context context = ApplicationProvider.getApplicationContext();
 
     @Test
     public void getAnnouncement() {

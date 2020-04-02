@@ -100,7 +100,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                     // A recording track id has been set -> Resumes track and starts timer.
                     resumeTrackDataHub();
                     if (trackRecordingServiceConnection == null) {
-                        trackRecordingServiceConnection = new TrackRecordingServiceConnection(getContext(), null);
+                        trackRecordingServiceConnection = new TrackRecordingServiceConnection(null);
                     }
                     trackRecordingServiceConnection.startConnection(getContext());
 
@@ -244,7 +244,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         resumeTrackDataHub();
         PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
 
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(getContext(), null);
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(null);
         trackRecordingServiceConnection.startConnection(getContext());
 
         handlerUpdateUI.post(updateUIeachSecond);

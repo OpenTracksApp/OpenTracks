@@ -73,9 +73,9 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         String longitude = Double.toString(TRACK_LONGITUDE + index);
         String elevation = Double.toString(TRACK_ELEVATION + index);
         StringBuilder buffer = new StringBuilder();
-        buffer.append("<trkpt lat=\"" + latitude + "\" lon=\"" + longitude + "\"><ele>" + elevation + "</ele>");
+        buffer.append("<trkpt lat=\"").append(latitude).append("\" lon=\"").append(longitude).append("\"><ele>").append(elevation).append("</ele>");
         if (time != null) {
-            buffer.append("<time>" + time + "</time>");
+            buffer.append("<time>").append(time).append("</time>");
         }
         buffer.append("</trkpt>");
         return buffer.toString();

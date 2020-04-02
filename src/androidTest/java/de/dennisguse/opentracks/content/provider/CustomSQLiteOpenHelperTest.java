@@ -29,7 +29,7 @@ public class CustomSQLiteOpenHelperTest {
 
     private static final String DATABASE_NAME = "test.db";
 
-    private Context context = ApplicationProvider.getApplicationContext();
+    private final Context context = ApplicationProvider.getApplicationContext();
 
     /**
      * Get the SQL create statements for all tables (ordered by name).
