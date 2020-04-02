@@ -39,7 +39,7 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
- * Track data hub. Receives data from {@link de.dennisguse.opentracks.content.DataSourceManager.DataSource} and distributes it to {@link TrackDataListener} after some processing.
+ * Track data hub. Receives data from {@link de.dennisguse.opentracks.content.DataSourceManager} and distributes it to {@link TrackDataListener} after some processing.
  *
  * @author Rodrigo Damazio
  */
@@ -100,7 +100,7 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
             return;
         }
         started = true;
-        handlerThread = new HandlerThread("TrackDataHubHandlerThread");
+        handlerThread = new HandlerThread(TAG);
         handlerThread.start();
         handler = new Handler(handlerThread.getLooper());
         dataSourceManager = new DataSourceManager(context, this);
@@ -111,7 +111,7 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
             @Override
             public void run() {
                 if (dataSourceManager != null) {
-                    dataSourceManager.updateListeners(trackDataManager.getRegisteredTrackDataTypes());
+                    dataSourceManager.start();
                     loadDataForAll();
                 }
             }
@@ -128,7 +128,7 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
 
         started = false;
 
-        dataSourceManager.unregisterAllListeners();
+        dataSourceManager.stop();
         if (handlerThread != null) {
             handlerThread.getLooper().quit();
             handlerThread = null;
@@ -163,7 +163,6 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
             public void run() {
                 trackDataManager.registerListener(trackDataListener, trackDataTypes);
                 if (dataSourceManager != null) {
-                    dataSourceManager.updateListeners(trackDataManager.getRegisteredTrackDataTypes());
                     loadDataForListener(trackDataListener);
                 }
             }
@@ -180,9 +179,6 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
             @Override
             public void run() {
                 trackDataManager.unregisterListener(trackDataListener);
-                if (dataSourceManager != null) {
-                    dataSourceManager.updateListeners(trackDataManager.getRegisteredTrackDataTypes());
-                }
             }
         });
     }
@@ -454,6 +450,7 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
      *
      * @param runnable the runnable
      */
+    @Deprecated //TODO: Why actually catch this problem: I guess it would be better to fail hard.
     @VisibleForTesting
     private void runInHandlerThread(Runnable runnable) {
         if (handler == null) {
