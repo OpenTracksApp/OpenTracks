@@ -28,7 +28,6 @@ import android.util.Log;
 import androidx.annotation.VisibleForTesting;
 
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.Set;
 
 import de.dennisguse.opentracks.R;
@@ -118,7 +117,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         tracksTableObserver = new ContentObserver(handler) {
             @Override
             public void onChange(boolean selfChange) {
-                notifyTracksTableUpdate(trackDataManager.getListeners(TrackDataType.TRACKS_TABLE));
+                notifyTracksTableUpdate(trackDataManager.getListenerTracks());
             }
         };
         contentResolver.registerContentObserver(TracksColumns.CONTENT_URI, false, tracksTableObserver);
@@ -126,7 +125,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         waypointsTableObserver = new ContentObserver(handler) {
             @Override
             public void onChange(boolean selfChange) {
-                notifyWaypointsTableUpdate(trackDataManager.getListeners(TrackDataType.WAYPOINTS_TABLE));
+                notifyWaypointsTableUpdate(trackDataManager.getListenerWaypoints());
             }
         };
         contentResolver.registerContentObserver(WaypointsColumns.CONTENT_URI, false, waypointsTableObserver);
@@ -134,7 +133,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         trackPointsTableObserver = new ContentObserver(handler) {
             @Override
             public void onChange(boolean selfChange) {
-                notifyTrackPointsTableUpdate(true, trackDataManager.getListeners(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE), trackDataManager.getListeners(TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE));
+                notifyTrackPointsTableUpdate(true, trackDataManager.getListenerTrackPoints_SampledIn(), trackDataManager.getListenerTrackPoints_SampledOut());
             }
         };
         contentResolver.registerContentObserver(TrackPointsColumns.CONTENT_URI_BY_ID, false, trackPointsTableObserver);
@@ -194,17 +193,11 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
      *
      * @param trackDataListener the track data listener
      */
-    public void registerTrackDataListener(final TrackDataListener trackDataListener, boolean tracksTable, boolean waypointTable, boolean trackPointsTable_SampleIn, boolean trackPointsTable_SampleOut) {
-        final EnumSet<TrackDataType> types = EnumSet.noneOf(TrackDataType.class);
-        if (tracksTable) types.add(TrackDataType.TRACKS_TABLE);
-        if (waypointTable) types.add(TrackDataType.WAYPOINTS_TABLE);
-        if (trackPointsTable_SampleIn) types.add(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE);
-        if (trackPointsTable_SampleOut) types.add(TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE);
-
+    public void registerTrackDataListener(final TrackDataListener trackDataListener, final boolean tracksTable, final boolean waypointsTable, final boolean trackPointsTable_SampleIn, final boolean trackPointsTable_SampleOut) {
         runInHandlerThread(new Runnable() {
             @Override
             public void run() {
-                trackDataManager.registerListener(trackDataListener, types);
+                trackDataManager.registerTrackDataListener(trackDataListener, tracksTable, waypointsTable, trackPointsTable_SampleIn, trackPointsTable_SampleOut);
                 if (started) {
                     loadDataForListener(trackDataListener);
                 }
@@ -221,7 +214,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         runInHandlerThread(new Runnable() {
             @Override
             public void run() {
-                trackDataManager.unregisterListener(trackDataListener);
+                trackDataManager.unregisterTrackDataListener(trackDataListener);
             }
         });
     }
@@ -272,19 +265,17 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
      */
     private void loadDataForAll() {
         resetSamplingState();
-        if (trackDataManager.getNumberOfListeners() == 0) {
+        if (!trackDataManager.hasListeners()) {
             return;
         }
 
-        notifyTracksTableUpdate(trackDataManager.getListeners(TrackDataType.TRACKS_TABLE));
+        notifyTracksTableUpdate(trackDataManager.getListenerTracks());
 
-        for (TrackDataListener listener : trackDataManager.getListeners(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE)) {
+        for (TrackDataListener listener : trackDataManager.getListenerTrackPoints_SampledIn()) {
             listener.clearTrackPoints();
         }
-        notifyTrackPointsTableUpdate(true,
-                trackDataManager.getListeners(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE),
-                trackDataManager.getListeners(TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE));
-        notifyWaypointsTableUpdate(trackDataManager.getListeners(TrackDataType.WAYPOINTS_TABLE));
+        notifyTrackPointsTableUpdate(true, trackDataManager.getListenerTrackPoints_SampledIn(), trackDataManager.getListenerTrackPoints_SampledOut());
+        notifyWaypointsTableUpdate(trackDataManager.getListenerWaypoints());
     }
 
     /**
@@ -294,14 +285,13 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
      */
     private void loadDataForListener(TrackDataListener trackDataListener) {
         Set<TrackDataListener> trackDataListeners = Collections.singleton(trackDataListener);
-        EnumSet<TrackDataType> trackDataTypes = trackDataManager.getTrackDataTypes(trackDataListener);
 
-        if (trackDataTypes.contains(TrackDataType.TRACKS_TABLE)) {
+        if (trackDataManager.listensForTracks(trackDataListener)) {
             notifyTracksTableUpdate(trackDataListeners);
         }
 
-        boolean hasSampledIn = trackDataTypes.contains(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE);
-        boolean hasSampledOut = trackDataTypes.contains(TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE);
+        boolean hasSampledIn = trackDataManager.listensForTrackPoints_SampledIn(trackDataListener);
+        boolean hasSampledOut = trackDataManager.listensForTrackPoints_SampledOut(trackDataListener);
         if (hasSampledIn || hasSampledOut) {
             trackDataListener.clearTrackPoints();
             boolean isOnlyListener = trackDataManager.getNumberOfListeners() == 1;
@@ -312,7 +302,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
             notifyTrackPointsTableUpdate(isOnlyListener, trackDataListeners, sampledOutListeners);
         }
 
-        if (trackDataTypes.contains(TrackDataType.WAYPOINTS_TABLE)) {
+        if (trackDataManager.listensForWaypoints(trackDataListener)) {
             notifyWaypointsTableUpdate(trackDataListeners);
         }
     }
