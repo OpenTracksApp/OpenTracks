@@ -58,7 +58,7 @@ public class CustomContentProviderUtilsTest {
     private static final String TEST_DESC = "Test Desc!";
     private static final String TEST_DESC_NEW = "Test Desc new!";
 
-    private Context context = ApplicationProvider.getApplicationContext();
+    private final Context context = ApplicationProvider.getApplicationContext();
     private ContentProviderUtils contentProviderUtils;
 
     @Mock
@@ -107,7 +107,7 @@ public class CustomContentProviderUtilsTest {
         testIterator(1, 20000, 2000, false);
     }
 
-    private List<TrackPoint> testIterator(long trackId, int numPoints, int batchSize, boolean descending) {
+    private void testIterator(long trackId, int numPoints, int batchSize, boolean descending) {
         long lastPointId = initializeTrack(trackId, numPoints);
         contentProviderUtils.setDefaultCursorBatchSize(batchSize);
         List<TrackPoint> locations = new ArrayList<>(numPoints);
@@ -122,7 +122,6 @@ public class CustomContentProviderUtilsTest {
             }
             Assert.assertEquals(numPoints, locations.size());
         }
-        return locations;
     }
 
     private long initializeTrack(long id, int numPoints) {

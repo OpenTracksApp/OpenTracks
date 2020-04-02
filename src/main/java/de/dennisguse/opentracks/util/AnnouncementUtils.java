@@ -81,7 +81,7 @@ public class AnnouncementUtils {
         } else {
             //TODO This seems weird; why not use Math.round(d) or Math.ceil()?
             int count = (int) d;
-            return count < 3 ? 3 : count;
+            return Math.max(count, 3);
         }
     }
 }

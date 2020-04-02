@@ -88,7 +88,7 @@ public class MarkerEditActivity extends AbstractActivity {
 
         trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
         markerId = getIntent().getLongExtra(EXTRA_MARKER_ID, -1L);
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(this, null);
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(null);
 
         hasCamera = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
 
@@ -254,8 +254,8 @@ public class MarkerEditActivity extends AbstractActivity {
     private void hideAndShowOptions() {
         boolean isPhotoSet = (waypoint != null && waypoint.hasPhoto()) || photoUri != null;
         if (insertPhotoMenuItem != null && insertGalleryImgMenuItem != null) {
-            insertPhotoMenuItem.setVisible(isPhotoSet ? false : true);
-            insertGalleryImgMenuItem.setVisible(isPhotoSet ? false : true);
+            insertPhotoMenuItem.setVisible(!isPhotoSet);
+            insertGalleryImgMenuItem.setVisible(!isPhotoSet);
         }
         waypointDeletePhotoBtn.setVisibility(isPhotoSet ? View.VISIBLE : View.GONE);
     }

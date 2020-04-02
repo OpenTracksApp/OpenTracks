@@ -21,6 +21,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * Tests for {@link FileUtils}.
@@ -108,9 +109,7 @@ public class FileUtilsTest {
         File directory = new File("/dir1/dir2/");
         String suffix = ".gpx";
         char[] name = new char[FileUtils.MAX_FAT32_PATH_LENGTH];
-        for (int i = 0; i < name.length; i++) {
-            name[i] = 'a';
-        }
+        Arrays.fill(name, 'a');
         String nameString = new String(name);
         String truncated = FileUtils.truncateFileName(directory, nameString, suffix);
 

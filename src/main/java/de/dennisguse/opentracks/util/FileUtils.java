@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -231,9 +230,8 @@ public class FileUtils {
      *
      * @param src source file.
      * @param dst destination file.
-     * @throws IOException
-     */
-    public static void copy(FileDescriptor src, File dst) throws IOException {
+         */
+        public static void copy(FileDescriptor src, File dst) {
         try (FileChannel in = new FileInputStream(src).getChannel();
              FileChannel out = new FileOutputStream(dst).getChannel()) {
             in.transferTo(0, in.size(), out);

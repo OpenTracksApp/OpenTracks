@@ -78,8 +78,8 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
 
     // Track points sampling state
     private int numLoadedPoints;
-    private long firstSeenLocationId;
-    private long lastSeenLocationId;
+    private long firstSeenTrackPointId;
+    private long lastSeenTrackPointId;
 
     public TrackDataHub(Context context) {
         this(context, new TrackDataManager(), new ContentProviderUtils(context), TARGET_DISPLAYED_TRACK_POINTS);
@@ -380,9 +380,9 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
         }
 
         int localNumLoadedPoints = updateSamplingState ? numLoadedPoints : 0;
-        long localFirstSeenLocationId = updateSamplingState ? firstSeenLocationId : -1L;
-        long localLastSeenLocationId = updateSamplingState ? lastSeenLocationId : -1L;
-        long maxPointId = updateSamplingState ? -1L : lastSeenLocationId;
+        long localFirstSeenLocationId = updateSamplingState ? firstSeenTrackPointId : -1L;
+        long localLastSeenLocationId = updateSamplingState ? lastSeenTrackPointId : -1L;
+        long maxPointId = updateSamplingState ? -1L : lastSeenTrackPointId;
 
         long lastTrackPointId = contentProviderUtils.getLastTrackPointId(selectedTrackId);
         int samplingFrequency = -1;
@@ -431,8 +431,8 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
 
         if (updateSamplingState) {
             numLoadedPoints = localNumLoadedPoints;
-            firstSeenLocationId = localFirstSeenLocationId;
-            lastSeenLocationId = localLastSeenLocationId;
+            firstSeenTrackPointId = localFirstSeenLocationId;
+            lastSeenTrackPointId = localLastSeenLocationId;
         }
 
         for (TrackDataListener listener : sampledInListeners) {
@@ -445,8 +445,8 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
      */
     private void resetSamplingState() {
         numLoadedPoints = 0;
-        firstSeenLocationId = -1L;
-        lastSeenLocationId = -1L;
+        firstSeenTrackPointId = -1L;
+        lastSeenTrackPointId = -1L;
     }
 
     /**
@@ -462,14 +462,5 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
             return;
         }
         handler.post(runnable);
-    }
-
-    /**
-     * Gets the value selectedTrackId.
-     *
-     * @return the selectedTrackId
-     */
-    public long getSelectedTrackId() {
-        return selectedTrackId;
     }
 }

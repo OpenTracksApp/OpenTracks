@@ -45,7 +45,7 @@ public class TrackRecordingServiceTestLooper {
     @Rule
     public final ServiceTestRule mServiceRule = ServiceTestRule.withTimeout(5, TimeUnit.SECONDS);
 
-    private Context context = ApplicationProvider.getApplicationContext();
+    private final Context context = ApplicationProvider.getApplicationContext();
 
     private ContentProviderUtils contentProviderUtils;
 
