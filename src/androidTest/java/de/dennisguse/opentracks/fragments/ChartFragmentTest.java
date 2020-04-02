@@ -63,7 +63,7 @@ public class ChartFragmentTest {
         boolean chartByDistance = false;
         chartFragment = (ChartFragment) ChartFragment.newInstance(chartByDistance);
         chartFragment.setChartView(new ChartView(ApplicationProvider.getApplicationContext(), chartByDistance));
-        chartFragment.setTripStatisticsUpdater(TrackStubUtils.INITIAL_TIME);
+        chartFragment.setTrackStatisticsUpdater(TrackStubUtils.INITIAL_TIME);
     }
 
     /**

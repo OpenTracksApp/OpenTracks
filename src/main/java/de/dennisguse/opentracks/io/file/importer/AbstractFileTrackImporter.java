@@ -41,7 +41,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
-import de.dennisguse.opentracks.stats.TripStatisticsUpdater;
+import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -156,9 +156,9 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         int waypointPosition = -1;
         Waypoint waypoint = null;
         TrackPoint trackPoint = null;
-        TripStatisticsUpdater trackTripStatisticstrackUpdater = new TripStatisticsUpdater(track.getTripStatistics().getStartTime());
-        @Deprecated // TODO Should not be necessary anymore?
-                TripStatisticsUpdater markerTripStatisticsUpdater = new TripStatisticsUpdater(track.getTripStatistics().getStartTime());
+        TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics().getStartTime_ms());
+        // TODO Should not be necessary anymore?
+        TrackStatisticsUpdater markerTrackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics().getStartTime_ms());
 
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false)) {
 
@@ -178,8 +178,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                         return;
                     }
                     trackPoint = trackPointIterator.next();
-                    trackTripStatisticstrackUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
-                    markerTripStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
+                    trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
+                    markerTrackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
                 }
 
                 if (waypoint.getLocation().getTime() > trackPoint.getTime()) {
@@ -199,8 +199,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                     if (trackPoint.getLatitude() == waypoint.getLocation().getLatitude() && trackPoint.getLongitude() == waypoint.getLocation().getLongitude()) {
                         String waypointDescription = waypoint.getDescription();
                         String icon = context.getString(R.string.marker_waypoint_icon_url);
-                        double length = trackTripStatisticstrackUpdater.getTripStatistics().getTotalDistance();
-                        long duration = trackTripStatisticstrackUpdater.getTripStatistics().getTotalTime();
+                        double length = trackStatisticsUpdater.getTrackStatistics().getTotalDistance();
+                        long duration = trackStatisticsUpdater.getTrackStatistics().getTotalTime();
 
                         // Insert waypoint
                         Waypoint newWaypoint = new Waypoint(waypoint.getName(), waypointDescription, waypoint.getCategory(), icon, track.getId(), length, duration, trackPoint.getLocation(), waypoint.getPhotoUrl());
@@ -254,11 +254,11 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         if (icon != null) {
             trackData.track.setIcon(icon);
         }
-        if (trackData.tripStatisticsUpdater == null) {
-            trackData.tripStatisticsUpdater = new TripStatisticsUpdater(trackData.importTime);
-            trackData.tripStatisticsUpdater.updateTime(trackData.importTime);
+        if (trackData.trackStatisticsUpdater == null) {
+            trackData.trackStatisticsUpdater = new TrackStatisticsUpdater(trackData.importTime);
+            trackData.trackStatisticsUpdater.updateTime(trackData.importTime);
         }
-        trackData.track.setTripStatistics(trackData.tripStatisticsUpdater.getTripStatistics());
+        trackData.track.setTrackStatistics(trackData.trackStatisticsUpdater.getTrackStatistics());
         contentProviderUtils.updateTrack(trackData.track);
     }
 
@@ -420,10 +420,10 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      * @param trackPoint the trackPoint
      */
     private void insertLocation(TrackPoint trackPoint) {
-        if (trackData.tripStatisticsUpdater == null) {
-            trackData.tripStatisticsUpdater = new TripStatisticsUpdater(trackPoint.getTime() != -1L ? trackPoint.getTime() : trackData.importTime);
+        if (trackData.trackStatisticsUpdater == null) {
+            trackData.trackStatisticsUpdater = new TrackStatisticsUpdater(trackPoint.getTime() != -1L ? trackPoint.getTime() : trackData.importTime);
         }
-        trackData.tripStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
+        trackData.trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
 
         trackData.bufferedTrackPoints[trackData.numBufferedLocations] = trackPoint;
         trackData.numBufferedLocations++;
@@ -475,8 +475,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         // The number of locations processed for the current track
         int numberOfLocations = 0;
 
-        // The trip statistics updater for the current track
-        TripStatisticsUpdater tripStatisticsUpdater;
+        // The TrackStatisticsUpdater for the current track
+        TrackStatisticsUpdater trackStatisticsUpdater;
 
         // The import time of the track.
         final long importTime = System.currentTimeMillis();

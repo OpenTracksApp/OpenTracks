@@ -23,7 +23,7 @@ import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
@@ -67,7 +67,7 @@ public class DescriptionGenerator {
         writeString(track.getName(), builder, R.string.generic_name_line, lineBreak);
         writeString(track.getCategory(), builder, R.string.description_activity_type, lineBreak);
         writeString(track.getDescription(), builder, R.string.generic_description_line, lineBreak);
-        builder.append(generateTripStatisticsDescription(track.getTripStatistics(), html));
+        builder.append(generateTrackStatisticsDescription(track.getTrackStatistics(), html));
 
         return builder.toString();
     }
@@ -89,12 +89,12 @@ public class DescriptionGenerator {
     }
 
     /**
-     * Generates a description for a {@link TripStatistics}.
+     * Generates a description for a {@link TrackStatistics}.
      *
-     * @param stats the trip statistics
+     * @param stats the track statistics
      * @param html  true to use "<br>" for line break instead of "\n"
      */
-    private String generateTripStatisticsDescription(TripStatistics stats, boolean html) {
+    private String generateTrackStatisticsDescription(TrackStatistics stats, boolean html) {
         String lineBreak = html ? HTML_LINE_BREAK : TEXT_LINE_BREAK;
         StringBuilder builder = new StringBuilder();
 
@@ -135,7 +135,7 @@ public class DescriptionGenerator {
         writeElevation(stats.getTotalElevationGain(), builder, R.string.description_elevation_gain, lineBreak);
 
         // Recorded time
-        builder.append(context.getString(R.string.description_recorded_time, StringUtils.formatDateTime(context, stats.getStartTime())));
+        builder.append(context.getString(R.string.description_recorded_time, StringUtils.formatDateTime(context, stats.getStartTime_ms())));
         builder.append(lineBreak);
 
         return builder.toString();

@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 
 @RunWith(AndroidJUnit4.class)
 public class AnnouncementUtilsTest {
@@ -18,7 +18,7 @@ public class AnnouncementUtilsTest {
 
     @Test
     public void getAnnouncement() {
-        TripStatistics stats = new TripStatistics();
+        TrackStatistics stats = new TrackStatistics();
         stats.setTotalDistance(20000);
         stats.setTotalTime(600000);
         stats.setMovingTime(300000);

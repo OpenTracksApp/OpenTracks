@@ -70,9 +70,9 @@ public class FileTrackExporter implements TrackExporter {
                 writeWaypoints(track1);
             }
             trackWriter.writeBeginTracks();
-            long startTime = tracks[0].getTripStatistics().getStartTime();
+            long startTime = tracks[0].getTrackStatistics().getStartTime_ms();
             for (Track track : tracks) {
-                long offset = track.getTripStatistics().getStartTime() - startTime;
+                long offset = track.getTrackStatistics().getStartTime_ms() - startTime;
                 writeLocations(track, offset);
             }
             trackWriter.writeEndTracks();

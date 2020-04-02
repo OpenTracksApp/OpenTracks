@@ -41,7 +41,7 @@ import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
-import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 
 import static org.mockito.Mockito.when;
 
@@ -313,9 +313,9 @@ public class CustomContentProviderUtilsTest {
         long startTime = 1000L;
         // AverageSpeed
         double minGrade = -20.11;
-        TripStatistics statistics = new TripStatistics();
-        statistics.setStartTime(startTime);
-        statistics.setStopTime(2500L);
+        TrackStatistics statistics = new TrackStatistics();
+        statistics.setStartTime_ms(startTime);
+        statistics.setStopTime_ms(2500L);
         statistics.setTotalTime(1500L);
         statistics.setMovingTime(700L);
         statistics.setTotalDistance(750.0);
@@ -324,7 +324,7 @@ public class CustomContentProviderUtilsTest {
         statistics.setMaxElevation(1250.0);
         statistics.setMinElevation(1200.0);
 
-        track.setTripStatistics(statistics);
+        track.setTrackStatistics(statistics);
         contentProviderUtils.insertTrack(track);
 
         // Insert at first.
@@ -415,9 +415,9 @@ public class CustomContentProviderUtilsTest {
         long trackId = System.currentTimeMillis();
         Track track = TestDataUtil.getTrack(trackId, 10);
 
-        TripStatistics statistics = new TripStatistics();
-        statistics.setStartTime(1000L);
-        statistics.setStopTime(2500L);
+        TrackStatistics statistics = new TrackStatistics();
+        statistics.setStartTime_ms(1000L);
+        statistics.setStopTime_ms(2500L);
         statistics.setTotalTime(1500L);
         statistics.setMovingTime(700L);
         statistics.setTotalDistance(750.0);
@@ -426,7 +426,7 @@ public class CustomContentProviderUtilsTest {
         statistics.setMaxElevation(1250.0);
         statistics.setMinElevation(1200.0);
 
-        track.setTripStatistics(statistics);
+        track.setTrackStatistics(statistics);
         contentProviderUtils.insertTrack(track);
 
 

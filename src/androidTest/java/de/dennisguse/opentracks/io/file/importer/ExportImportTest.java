@@ -25,6 +25,7 @@ import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -32,7 +33,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Export a track to {@link TrackFileFormat} and verify that the import is identical.
  * <p>
- * TODO: test ignores {@link de.dennisguse.opentracks.stats.TripStatistics} for now.
+ * TODO: test ignores {@link TrackStatistics} for now.
  */
 @RunWith(JUnit4.class)
 public class ExportImportTest {

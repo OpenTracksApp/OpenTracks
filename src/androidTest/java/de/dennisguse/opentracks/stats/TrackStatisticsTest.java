@@ -22,28 +22,28 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 /**
- * Tests for {@link TripStatistics}.
+ * Tests for {@link TrackStatistics}.
  * This only tests non-trivial pieces of that class.
  *
  * @author Rodrigo Damazio
  */
 @RunWith(JUnit4.class)
-public class TripStatisticsTest {
+public class TrackStatisticsTest {
 
-    private TripStatistics statistics;
+    private TrackStatistics statistics;
 
     @Before
     public void setUp() {
-        statistics = new TripStatistics();
+        statistics = new TrackStatistics();
     }
 
     @Test
     public void testMerge() {
-        TripStatistics statistics2 = new TripStatistics();
-        statistics.setStartTime(1000L);  // Resulting start time
-        statistics.setStopTime(2500L);
-        statistics2.setStartTime(3000L);
-        statistics2.setStopTime(4000L);  // Resulting stop time
+        TrackStatistics statistics2 = new TrackStatistics();
+        statistics.setStartTime_ms(1000L);  // Resulting start time
+        statistics.setStopTime_ms(2500L);
+        statistics2.setStartTime_ms(3000L);
+        statistics2.setStopTime_ms(4000L);  // Resulting stop time
         statistics.setTotalTime(1500L);
         statistics2.setTotalTime(1000L);  // Result: 1500+1000
         statistics.setMovingTime(700L);
@@ -61,8 +61,8 @@ public class TripStatisticsTest {
 
         statistics.merge(statistics2);
 
-        Assert.assertEquals(1000L, statistics.getStartTime());
-        Assert.assertEquals(4000L, statistics.getStopTime());
+        Assert.assertEquals(1000L, statistics.getStartTime_ms());
+        Assert.assertEquals(4000L, statistics.getStopTime_ms());
         Assert.assertEquals(2500L, statistics.getTotalTime());
         Assert.assertEquals(1300L, statistics.getMovingTime());
         Assert.assertEquals(1100.0, statistics.getTotalDistance(), 0.001);

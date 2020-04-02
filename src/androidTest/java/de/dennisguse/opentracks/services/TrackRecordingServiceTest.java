@@ -46,7 +46,7 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
-import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
@@ -193,9 +193,9 @@ public class TrackRecordingServiceTest {
         Track dummyTrack = new Track();
         dummyTrack.setId(id);
         dummyTrack.setName("Dummy Track");
-        TripStatistics tripStatistics = new TripStatistics();
-        tripStatistics.setStopTime(stopTime);
-        dummyTrack.setTripStatistics(tripStatistics);
+        TrackStatistics trackStatistics = new TrackStatistics();
+        trackStatistics.setStopTime_ms(stopTime);
+        dummyTrack.setTrackStatistics(trackStatistics);
         addTrack(dummyTrack, isRecording);
     }
 

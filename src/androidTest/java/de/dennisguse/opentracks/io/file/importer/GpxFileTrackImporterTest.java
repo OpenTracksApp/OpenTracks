@@ -108,7 +108,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         verify(contentProviderUtils, atLeastOnce()).updateTrack(trackCaptor.capture());
         long time0 = DATE_FORMAT_0.parse(TRACK_TIME_0).getTime();
         long time1 = DATE_FORMAT_1.parse(TRACK_TIME_1).getTime();
-        Assert.assertEquals(time1 - time0, trackCaptor.getValue().getTripStatistics().getTotalTime());
+        Assert.assertEquals(time1 - time0, trackCaptor.getValue().getTrackStatistics().getTotalTime());
         verifyTrack(trackCaptor.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0, time0);
     }
 
@@ -140,7 +140,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         long time1 = DATE_FORMAT_1.parse(TRACK_TIME_1).getTime();
         long time2 = DATE_FORMAT_1.parse(TRACK_TIME_2).getTime();
         long time3 = DATE_FORMAT_1.parse(TRACK_TIME_3).getTime();
-        Assert.assertEquals(time1 - time0 + time3 - time2, trackCaptor.getValue().getTripStatistics().getTotalTime());
+        Assert.assertEquals(time1 - time0 + time3 - time2, trackCaptor.getValue().getTrackStatistics().getTotalTime());
 
         verifyTrack(trackCaptor.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0, DATE_FORMAT_0.parse(TRACK_TIME_0).getTime());
     }
@@ -168,7 +168,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         verify(contentProviderUtils, atLeastOnce()).updateTrack(trackCaptor.capture());
         Assert.assertEquals(TRACK_ID_0, trackId);
 
-        Assert.assertEquals(0, trackCaptor.getValue().getTripStatistics().getTotalTime());
+        Assert.assertEquals(0, trackCaptor.getValue().getTrackStatistics().getTotalTime());
         verifyTrack(trackCaptor.getValue(), TRACK_NAME_0, TRACK_DESCRIPTION_0, -1L);
     }
 
