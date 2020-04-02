@@ -42,8 +42,8 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.stats.TripStatistics;
-import de.dennisguse.opentracks.stats.TripStatisticsUpdater;
+import de.dennisguse.opentracks.stats.TrackStatistics;
+import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
@@ -72,7 +72,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     private TrackDataHub trackDataHub;
 
     // Stats gathered from the received data
-    private TripStatisticsUpdater tripStatisticsUpdater;
+    private TrackStatisticsUpdater trackStatisticsUpdater;
     private long startTime;
 
     private int recordingDistanceInterval;
@@ -193,18 +193,18 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     @Override
     public void onTrackUpdated(Track track) {
         if (isResumed()) {
-            if (track == null || track.getTripStatistics() == null) {
+            if (track == null || track.getTrackStatistics() == null) {
                 startTime = -1L;
                 return;
             }
-            startTime = track.getTripStatistics().getStartTime();
+            startTime = track.getTrackStatistics().getStartTime_ms();
         }
     }
 
     @Override
     public void clearTrackPoints() {
         if (isResumed()) {
-            tripStatisticsUpdater = startTime != -1L ? new TripStatisticsUpdater(startTime) : null;
+            trackStatisticsUpdater = startTime != -1L ? new TrackStatisticsUpdater(startTime) : null;
             pendingPoints.clear();
             chartView.reset();
             runOnUiThread(new Runnable() {
@@ -369,25 +369,25 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         double speed = Double.NaN;
         double pace = Double.NaN;
 
-        if (tripStatisticsUpdater != null) {
-            tripStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
-            TripStatistics tripStatistics = tripStatisticsUpdater.getTripStatistics();
+        if (trackStatisticsUpdater != null) {
+            trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
+            TrackStatistics trackStatistics = trackStatisticsUpdater.getTrackStatistics();
             if (chartByDistance) {
-                double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
+                double distance = trackStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
                 if (!chartView.getMetricUnits()) {
                     distance *= UnitConversions.KM_TO_MI;
                 }
                 timeOrDistance = distance;
             } else {
-                timeOrDistance = tripStatistics.getTotalTime();
+                timeOrDistance = trackStatistics.getTotalTime();
             }
 
-            elevation = tripStatisticsUpdater.getSmoothedElevation();
+            elevation = trackStatisticsUpdater.getSmoothedElevation();
             if (!chartView.getMetricUnits()) {
                 elevation *= UnitConversions.M_TO_FT;
             }
 
-            speed = tripStatisticsUpdater.getSmoothedSpeed() * UnitConversions.MS_TO_KMH;
+            speed = trackStatisticsUpdater.getSmoothedSpeed() * UnitConversions.MS_TO_KMH;
             if (!chartView.getMetricUnits()) {
                 speed *= UnitConversions.KM_TO_MI;
             }
@@ -423,8 +423,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     @VisibleForTesting
-    void setTripStatisticsUpdater(long time) {
-        tripStatisticsUpdater = new TripStatisticsUpdater(time);
+    void setTrackStatisticsUpdater(long time) {
+        trackStatisticsUpdater = new TrackStatisticsUpdater(time);
     }
 
     @VisibleForTesting

@@ -28,14 +28,14 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import static de.dennisguse.opentracks.services.TrackRecordingService.MAX_NO_MOVEMENT_SPEED;
 
 /**
- * Updater for {@link TripStatistics}.
- * For updating track trip statistics as new locations are added.
- * NOTE:Some of the locations represent pause/resume separator.
+ * Updater for {@link TrackStatistics}.
+ * For updating track {@link TrackStatistics} as new {@link TrackPoint}s are added.
+ * NOTE: Some of the locations represent pause/resume separator.
  *
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
-public class TripStatisticsUpdater {
+public class TrackStatisticsUpdater {
 
     /**
      * The number of elevation readings to smooth to get a somewhat accurate signal.
@@ -49,7 +49,7 @@ public class TripStatisticsUpdater {
     @VisibleForTesting
     private static final int SPEED_SMOOTHING_FACTOR = 25;
 
-    private static final String TAG = TripStatisticsUpdater.class.getSimpleName();
+    private static final String TAG = TrackStatisticsUpdater.class.getSimpleName();
     /**
      * Ignore any acceleration faster than this.
      * Will ignore any speeds that imply acceleration greater than 2g's
@@ -57,52 +57,52 @@ public class TripStatisticsUpdater {
      */
     private static final double MAX_ACCELERATION = 0.02;
 
-    // The track's trip statistics
-    private final TripStatistics tripStatistics;
+    // The track's statistics
+    private final TrackStatistics trackStatistics;
 
     // A buffer of the recent elevation readings (m)
     private final DoubleBuffer elevationBuffer = new DoubleBuffer(ELEVATION_SMOOTHING_FACTOR);
     // A buffer of the recent speed readings (m/s) for calculating max speed
     private final DoubleBuffer speedBuffer = new DoubleBuffer(SPEED_SMOOTHING_FACTOR);
 
-    // The current segment's trip statistics
-    private TripStatistics currentSegment;
+    // The current segment's statistics
+    private TrackStatistics currentSegment;
     // Current segment's last trackPoint
     private TrackPoint lastTrackPoint;
     // Current segment's last moving trackPoint
     private TrackPoint lastMovingTrackPoint;
 
     /**
-     * Creates a new trip statistics updater.
+     * Creates a new {@link TrackStatisticsUpdater}.
      *
-     * @param startTime the start time
+     * @param startTime_ms the start time in milliseconds
      */
-    public TripStatisticsUpdater(long startTime) {
-        tripStatistics = init(startTime);
-        currentSegment = init(startTime);
+    public TrackStatisticsUpdater(long startTime_ms) {
+        trackStatistics = init(startTime_ms);
+        currentSegment = init(startTime_ms);
     }
 
     /**
-     * Creates a new trip statistics updater with a trip statistics already existed.
+     * Creates a new{@link TrackStatisticsUpdater} with a {@link TrackStatisticsUpdater} already existed.
      *
-     * @param tripStatistics a trip statistics.
+     * @param trackStatistics a {@link TrackStatisticsUpdater}
      */
-    public TripStatisticsUpdater(TripStatistics tripStatistics) {
-        this.tripStatistics = tripStatistics;
+    public TrackStatisticsUpdater(TrackStatistics trackStatistics) {
+        this.trackStatistics = trackStatistics;
         currentSegment = init(System.currentTimeMillis());
     }
 
     public void updateTime(long time) {
-        currentSegment.setStopTime(time);
-        currentSegment.setTotalTime(time - currentSegment.getStartTime());
+        currentSegment.setStopTime_ms(time);
+        currentSegment.setTotalTime(time - currentSegment.getStartTime_ms());
     }
 
     /**
-     * Gets the track's trip statistics.
+     * Gets the track's statistics.
      */
-    public TripStatistics getTripStatistics() {
-        // Take a snapshot - we don't want anyone messing with our tripStatistics
-        TripStatistics stats = new TripStatistics(tripStatistics);
+    public TrackStatistics getTrackStatistics() {
+        // Take a snapshot - we don't want anyone messing with our trackStatistics
+        TrackStatistics stats = new TrackStatistics(trackStatistics);
         stats.merge(currentSegment);
         return stats;
     }
@@ -123,7 +123,7 @@ public class TripStatisticsUpdater {
                 if (lastTrackPoint != null && lastMovingTrackPoint != null && lastTrackPoint != lastMovingTrackPoint) {
                     currentSegment.addTotalDistance(lastMovingTrackPoint.distanceTo(lastTrackPoint));
                 }
-                tripStatistics.merge(currentSegment);
+                trackStatistics.merge(currentSegment);
             }
             currentSegment = init(trackPoint.getLocation().getTime());
             lastTrackPoint = null;
@@ -230,10 +230,10 @@ public class TripStatisticsUpdater {
         return difference;
     }
 
-    private TripStatistics init(long time) {
-        TripStatistics stats = new TripStatistics();
-        stats.setStartTime(time);
-        stats.setStopTime(time);
+    private TrackStatistics init(long time) {
+        TrackStatistics stats = new TrackStatistics();
+        stats.setStartTime_ms(time);
+        stats.setStopTime_ms(time);
         return stats;
     }
 

@@ -47,7 +47,7 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
-import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -73,7 +73,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
 
     private TrackPoint lastTrackPoint = null;
-    private TripStatistics lastTripStatistics = null;
+    private TrackStatistics lastTrackStatistics = null;
 
     private String category = "";
     @Deprecated //TODO This should be handled somewhere else; not in the UI.
@@ -124,7 +124,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     private final Runnable updateUIeachSecond = new Runnable() {
         public void run() {
             if (isResumed() && isSelectedTrackRecording()) {
-                if (!isSelectedTrackPaused() && lastTripStatistics != null) {
+                if (!isSelectedTrackPaused() && lastTrackStatistics != null) {
                     updateTotalTime();
                     updateSensorDataUI();
                 }
@@ -322,7 +322,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                 @Override
                 public void run() {
                     if (isResumed()) {
-                        lastTripStatistics = track != null ? track.getTripStatistics() : null;
+                        lastTrackStatistics = track != null ? track.getTrackStatistics() : null;
                         category = track != null ? track.getCategory() : "";
                         updateUI();
                     }
@@ -477,7 +477,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
         // Set total distance
         {
-            double totalDistance = lastTripStatistics == null ? Double.NaN : lastTripStatistics.getTotalDistance();
+            double totalDistance = lastTrackStatistics == null ? Double.NaN : lastTrackStatistics.getTotalDistance();
             Pair<String, String> parts = StringUtils.getDistanceParts(getContext(), totalDistance, metricUnits);
 
             distanceValue.setText(parts.first);
@@ -496,14 +496,14 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         }
 
         // Set time
-        if (lastTripStatistics != null) {
-            movingTimeValue.setText(StringUtils.formatElapsedTime(lastTripStatistics.getMovingTime()));
+        if (lastTrackStatistics != null) {
+            movingTimeValue.setText(StringUtils.formatElapsedTime(lastTrackStatistics.getMovingTime()));
             updateTotalTime();
         }
 
         // Set average speed/pace
         {
-            double speed = lastTripStatistics != null ? lastTripStatistics.getAverageSpeed() : Double.NaN;
+            double speed = lastTrackStatistics != null ? lastTrackStatistics.getAverageSpeed() : Double.NaN;
             speedAvgLabel.setText(reportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
 
             Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
@@ -513,7 +513,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
         // Set max speed/pace
         {
-            double speed = lastTripStatistics == null ? Double.NaN : lastTripStatistics.getMaxSpeed();
+            double speed = lastTrackStatistics == null ? Double.NaN : lastTrackStatistics.getMaxSpeed();
 
             speedMaxLabel.setText(reportSpeed ? R.string.stats_max_speed : R.string.stats_fastest_pace);
 
@@ -524,7 +524,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
         // Set moving speed/pace
         {
-            double speed = lastTripStatistics != null ? lastTripStatistics.getAverageMovingSpeed() : Double.NaN;
+            double speed = lastTrackStatistics != null ? lastTrackStatistics.getAverageMovingSpeed() : Double.NaN;
 
             speedMovingLabel.setText(reportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
 
@@ -545,21 +545,21 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         if (isSelectedTrackRecording()) {
             totalTime = calculateTotalTime();
         } else {
-            totalTime = lastTripStatistics.getTotalTime();
+            totalTime = lastTrackStatistics.getTotalTime();
         }
         totalTimeValueView.setText(StringUtils.formatElapsedTime(totalTime));
     }
 
     /**
      * Return time from service.
-     * If service isn't bound then use lastTripStatistics for calculate it.
+     * If service isn't bound then use lastTrackStatistics for calculate it.
      */
     private long calculateTotalTime() {
         TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
         if (trackRecordingService != null) {
             return trackRecordingService.getTotalTime();
         } else {
-            return System.currentTimeMillis() - lastTripStatistics.getStopTime() + lastTripStatistics.getTotalTime();
+            return System.currentTimeMillis() - lastTrackStatistics.getStopTime_ms() + lastTrackStatistics.getTotalTime();
         }
     }
 

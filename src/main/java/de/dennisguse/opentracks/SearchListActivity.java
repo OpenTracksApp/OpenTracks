@@ -50,7 +50,7 @@ import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
@@ -424,7 +424,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
     private Map<String, Object> prepareTrackForDisplay(Track track) {
         Map<String, Object> resultMap = new HashMap<>();
 
-        TripStatistics tripStatistics = track.getTripStatistics();
+        TrackStatistics trackStatistics = track.getTrackStatistics();
         String icon = track.getIcon();
         String category = icon != null && !icon.equals("") ? null : track.getCategory();
 
@@ -433,10 +433,10 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         resultMap.put(ICON_ID_FIELD, TrackIconUtils.getIconDrawable(icon));
         resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.image_track);
         resultMap.put(NAME_FIELD, track.getName());
-        resultMap.put(TOTAL_TIME_FIELD, StringUtils.formatElapsedTime(tripStatistics.getTotalTime()));
-        resultMap.put(TOTAL_DISTANCE_FIELD, StringUtils.formatDistance(this, tripStatistics.getTotalDistance(), metricUnits));
+        resultMap.put(TOTAL_TIME_FIELD, StringUtils.formatElapsedTime(trackStatistics.getTotalTime()));
+        resultMap.put(TOTAL_DISTANCE_FIELD, StringUtils.formatDistance(this, trackStatistics.getTotalDistance(), metricUnits));
         resultMap.put(MARKER_COUNT_FIELD, contentProviderUtils.getWaypointCount(track.getId()));
-        resultMap.put(START_TIME_FIELD, tripStatistics.getStartTime());
+        resultMap.put(START_TIME_FIELD, trackStatistics.getStartTime_ms());
         resultMap.put(CATEGORY_FIELD, category);
         resultMap.put(DESCRIPTION_FIELD, track.getDescription());
         resultMap.put(PHOTO_URL_FIELD, null);

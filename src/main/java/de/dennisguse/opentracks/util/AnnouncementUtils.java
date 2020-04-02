@@ -3,17 +3,17 @@ package de.dennisguse.opentracks.util;
 import android.content.Context;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 
 public class AnnouncementUtils {
 
     private AnnouncementUtils() {}
 
-    public static String getAnnouncement(Context context, TripStatistics tripStatistics) {
+    public static String getAnnouncement(Context context, TrackStatistics trackStatistics) {
         boolean metricUnits = PreferencesUtils.isMetricUnits(context);
         boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
-        double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
-        double distancePerTime = tripStatistics.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
+        double distance = trackStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
+        double distancePerTime = trackStatistics.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
 
         if (distance == 0) {
             return context.getString(R.string.voice_total_distance_zero);
@@ -38,7 +38,7 @@ public class AnnouncementUtils {
         int totalDistanceId = metricUnits ? R.plurals.voiceTotalDistanceKilometers : R.plurals.voiceTotalDistanceMiles;
         String totalDistance = context.getResources().getQuantityString(totalDistanceId, getQuantityCount(distance), distance);
 
-        return context.getString(R.string.voice_template, totalDistance, getAnnounceTime(context, tripStatistics.getMovingTime()), rate);
+        return context.getString(R.string.voice_template, totalDistance, getAnnounceTime(context, trackStatistics.getMovingTime()), rate);
     }
 
     public static String getAnnounceTime(Context context, long time) {

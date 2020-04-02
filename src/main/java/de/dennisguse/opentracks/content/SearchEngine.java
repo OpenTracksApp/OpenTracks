@@ -33,7 +33,7 @@ import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
@@ -247,9 +247,9 @@ public class SearchEngine {
 
         score *= getTitleBoost(query, track.getName(), track.getDescription(), track.getCategory());
 
-        TripStatistics statistics = track.getTripStatistics();
+        TrackStatistics statistics = track.getTrackStatistics();
 
-        long meanTimestamp = (statistics.getStartTime() + statistics.getStopTime()) / 2L;
+        long meanTimestamp = (statistics.getStartTime_ms() + statistics.getStopTime_ms()) / 2L;
         score *= getTimeBoost(query, meanTimestamp);
 
         // Score the currently-selected track lower (user is already there, wouldn't be searching for it).

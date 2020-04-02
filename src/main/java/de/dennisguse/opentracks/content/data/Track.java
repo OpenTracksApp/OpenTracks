@@ -21,7 +21,7 @@ import androidx.annotation.VisibleForTesting;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
  * A track.
@@ -38,7 +38,7 @@ public class Track {
 
     private String icon = "";
 
-    private TripStatistics tripStatistics = new TripStatistics();
+    private TrackStatistics trackStatistics = new TrackStatistics();
 
     // Location points (which may not have been loaded)
     private List<TrackPoint> trackPoints = new ArrayList<>();
@@ -86,12 +86,12 @@ public class Track {
         this.icon = icon;
     }
 
-    public TripStatistics getTripStatistics() {
-        return tripStatistics;
+    public TrackStatistics getTrackStatistics() {
+        return trackStatistics;
     }
 
-    public void setTripStatistics(TripStatistics tripStatistics) {
-        this.tripStatistics = tripStatistics;
+    public void setTrackStatistics(TrackStatistics trackStatistics) {
+        this.trackStatistics = trackStatistics;
     }
 
     @VisibleForTesting

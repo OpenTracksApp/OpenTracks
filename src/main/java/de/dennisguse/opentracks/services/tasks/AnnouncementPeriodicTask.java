@@ -26,11 +26,11 @@ import android.util.Log;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.services.TrackRecordingService;
-import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.AnnouncementUtils;
 
 /**
- * This class will periodically announce the user's trip statistics.
+ * This class will periodically announce the user's {@link TrackStatistics}.
  *
  * @author Sandor Dornbush
  */
@@ -126,17 +126,17 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
             Log.e(TAG, "TrackRecordingService is null.");
             return;
         }
-        announce(trackRecordingService.getTripStatistics());
+        announce(trackRecordingService.getTrackStatistics());
     }
 
     /**
      * Runs this task.
      *
-     * @param tripStatistics the trip statistics
+     * @param trackStatistics the track statistics
      */
-    private void announce(TripStatistics tripStatistics) {
-        if (tripStatistics == null) {
-            Log.e(TAG, "TripStatistics is null.");
+    private void announce(TrackStatistics trackStatistics) {
+        if (trackStatistics == null) {
+            Log.e(TAG, "TrackStatistics is null.");
             return;
         }
 
@@ -157,7 +157,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
             Log.i(TAG, "Speech is not allowed at this time.");
             return;
         }
-        String announcement = AnnouncementUtils.getAnnouncement(context, tripStatistics);
+        String announcement = AnnouncementUtils.getAnnouncement(context, trackStatistics);
         speakAnnouncement(announcement);
     }
 

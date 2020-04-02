@@ -39,7 +39,7 @@ import de.dennisguse.opentracks.content.SearchEngine.SearchQuery;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
  * Tests for {@link SearchEngine}.
@@ -76,11 +76,11 @@ public class SearchEngineTest {
         track.setDescription(description);
         track.setCategory(category);
 
-        TripStatistics stats = track.getTripStatistics();
+        TrackStatistics stats = track.getTrackStatistics();
         if (hoursAgo > 0) {
             // Started twice hoursAgo, so the average time is hoursAgo.
-            stats.setStartTime(NOW - hoursAgo * 1000L * 60L * 60L * 2);
-            stats.setStopTime(NOW);
+            stats.setStartTime_ms(NOW - hoursAgo * 1000L * 60L * 60L * 2);
+            stats.setStopTime_ms(NOW);
         }
 
         Uri uri = providerUtils.insertTrack(track);

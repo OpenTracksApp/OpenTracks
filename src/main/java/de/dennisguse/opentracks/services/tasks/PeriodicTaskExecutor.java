@@ -19,7 +19,7 @@ import android.util.Log;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.services.TrackRecordingService;
-import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
@@ -122,12 +122,12 @@ public class PeriodicTaskExecutor {
             return;
         }
 
-        TripStatistics tripStatistics = trackRecordingService.getTripStatistics();
-        if (tripStatistics == null) {
+        TrackStatistics trackStatistics = trackRecordingService.getTrackStatistics();
+        if (trackStatistics == null) {
             return;
         }
 
-        double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
+        double distance = trackStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
         if (!metricUnits) {
             distance *= UnitConversions.KM_TO_MI;
         }
@@ -166,8 +166,8 @@ public class PeriodicTaskExecutor {
             return;
         }
 
-        TripStatistics tripStatistics = trackRecordingService.getTripStatistics();
-        if (tripStatistics == null) {
+        TrackStatistics trackStatistics = trackRecordingService.getTrackStatistics();
+        if (trackStatistics == null) {
             return;
         }
 
@@ -177,7 +177,7 @@ public class PeriodicTaskExecutor {
             return;
         }
 
-        double distance = tripStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
+        double distance = trackStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
         if (!metricUnits) {
             distance *= UnitConversions.KM_TO_MI;
         }

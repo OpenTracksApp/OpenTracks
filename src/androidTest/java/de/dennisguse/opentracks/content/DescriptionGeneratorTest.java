@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
@@ -55,7 +55,7 @@ public class DescriptionGeneratorTest {
     @Test
     public void testGenerateTrackDescription() {
         Track track = new Track();
-        TripStatistics stats = new TripStatistics();
+        TrackStatistics stats = new TrackStatistics();
         stats.setTotalDistance(20000);
         stats.setTotalTime(600000);
         stats.setMovingTime(300000);
@@ -63,8 +63,8 @@ public class DescriptionGeneratorTest {
         stats.setMaxElevation(550);
         stats.setMinElevation(-500);
         stats.setTotalElevationGain(6000);
-        stats.setStartTime(START_TIME);
-        track.setTripStatistics(stats);
+        stats.setStartTime_ms(START_TIME);
+        track.setTrackStatistics(stats);
         track.setCategory("hiking");
         String expected = //"Created by"
                 "<a href='https://github.com/OpenTracksApp/OpenTracks'>OpenTracks</a><p>"

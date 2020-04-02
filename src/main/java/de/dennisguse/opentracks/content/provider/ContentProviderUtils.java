@@ -41,7 +41,7 @@ import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
 
 /**
@@ -121,7 +121,7 @@ public class ContentProviderUtils {
         int iconIndex = cursor.getColumnIndexOrThrow(TracksColumns.ICON);
 
         Track track = new Track();
-        TripStatistics tripStatistics = track.getTripStatistics();
+        TrackStatistics trackStatistics = track.getTrackStatistics();
         if (!cursor.isNull(idIndex)) {
             track.setId(cursor.getLong(idIndex));
         }
@@ -135,31 +135,31 @@ public class ContentProviderUtils {
             track.setCategory(cursor.getString(categoryIndex));
         }
         if (!cursor.isNull(startTimeIndex)) {
-            tripStatistics.setStartTime(cursor.getLong(startTimeIndex));
+            trackStatistics.setStartTime_ms(cursor.getLong(startTimeIndex));
         }
         if (!cursor.isNull(stopTimeIndex)) {
-            tripStatistics.setStopTime(cursor.getLong(stopTimeIndex));
+            trackStatistics.setStopTime_ms(cursor.getLong(stopTimeIndex));
         }
         if (!cursor.isNull(totalDistanceIndex)) {
-            tripStatistics.setTotalDistance(cursor.getFloat(totalDistanceIndex));
+            trackStatistics.setTotalDistance(cursor.getFloat(totalDistanceIndex));
         }
         if (!cursor.isNull(totalTimeIndex)) {
-            tripStatistics.setTotalTime(cursor.getLong(totalTimeIndex));
+            trackStatistics.setTotalTime(cursor.getLong(totalTimeIndex));
         }
         if (!cursor.isNull(movingTimeIndex)) {
-            tripStatistics.setMovingTime(cursor.getLong(movingTimeIndex));
+            trackStatistics.setMovingTime(cursor.getLong(movingTimeIndex));
         }
         if (!cursor.isNull(maxSpeedIndex)) {
-            tripStatistics.setMaxSpeed(cursor.getFloat(maxSpeedIndex));
+            trackStatistics.setMaxSpeed(cursor.getFloat(maxSpeedIndex));
         }
         if (!cursor.isNull(minElevationIndex)) {
-            tripStatistics.setMinElevation(cursor.getFloat(minElevationIndex));
+            trackStatistics.setMinElevation(cursor.getFloat(minElevationIndex));
         }
         if (!cursor.isNull(maxElevationIndex)) {
-            tripStatistics.setMaxElevation(cursor.getFloat(maxElevationIndex));
+            trackStatistics.setMaxElevation(cursor.getFloat(maxElevationIndex));
         }
         if (!cursor.isNull(elevationGainIndex)) {
-            tripStatistics.setTotalElevationGain(cursor.getFloat(elevationGainIndex));
+            trackStatistics.setTotalElevationGain(cursor.getFloat(elevationGainIndex));
         }
         if (!cursor.isNull(iconIndex)) {
             track.setIcon(cursor.getString(iconIndex));
@@ -308,7 +308,7 @@ public class ContentProviderUtils {
 
     private ContentValues createContentValues(Track track) {
         ContentValues values = new ContentValues();
-        TripStatistics tripStatistics = track.getTripStatistics();
+        TrackStatistics trackStatistics = track.getTrackStatistics();
 
         // Value < 0 indicates no id is available
         if (track.getId() >= 0) {
@@ -317,17 +317,17 @@ public class ContentProviderUtils {
         values.put(TracksColumns.NAME, track.getName());
         values.put(TracksColumns.DESCRIPTION, track.getDescription());
         values.put(TracksColumns.CATEGORY, track.getCategory());
-        values.put(TracksColumns.STARTTIME, tripStatistics.getStartTime());
-        values.put(TracksColumns.STOPTIME, tripStatistics.getStopTime());
-        values.put(TracksColumns.TOTALDISTANCE, tripStatistics.getTotalDistance());
-        values.put(TracksColumns.TOTALTIME, tripStatistics.getTotalTime());
-        values.put(TracksColumns.MOVINGTIME, tripStatistics.getMovingTime());
-        values.put(TracksColumns.AVGSPEED, tripStatistics.getAverageSpeed());
-        values.put(TracksColumns.AVGMOVINGSPEED, tripStatistics.getAverageMovingSpeed());
-        values.put(TracksColumns.MAXSPEED, tripStatistics.getMaxSpeed());
-        values.put(TracksColumns.MINELEVATION, tripStatistics.getMinElevation());
-        values.put(TracksColumns.MAXELEVATION, tripStatistics.getMaxElevation());
-        values.put(TracksColumns.ELEVATIONGAIN, tripStatistics.getTotalElevationGain());
+        values.put(TracksColumns.STARTTIME, trackStatistics.getStartTime_ms());
+        values.put(TracksColumns.STOPTIME, trackStatistics.getStopTime_ms());
+        values.put(TracksColumns.TOTALDISTANCE, trackStatistics.getTotalDistance());
+        values.put(TracksColumns.TOTALTIME, trackStatistics.getTotalTime());
+        values.put(TracksColumns.MOVINGTIME, trackStatistics.getMovingTime());
+        values.put(TracksColumns.AVGSPEED, trackStatistics.getAverageSpeed());
+        values.put(TracksColumns.AVGMOVINGSPEED, trackStatistics.getAverageMovingSpeed());
+        values.put(TracksColumns.MAXSPEED, trackStatistics.getMaxSpeed());
+        values.put(TracksColumns.MINELEVATION, trackStatistics.getMinElevation());
+        values.put(TracksColumns.MAXELEVATION, trackStatistics.getMaxElevation());
+        values.put(TracksColumns.ELEVATIONGAIN, trackStatistics.getTotalElevationGain());
         values.put(TracksColumns.ICON, track.getIcon());
 
         return values;

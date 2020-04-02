@@ -51,8 +51,8 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTaskFactory;
 import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
-import de.dennisguse.opentracks.stats.TripStatistics;
-import de.dennisguse.opentracks.stats.TripStatisticsUpdater;
+import de.dennisguse.opentracks.stats.TrackStatistics;
+import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -137,7 +137,7 @@ public class TrackRecordingService extends Service {
     private WakeLock wakeLock;
     private BluetoothRemoteSensorManager remoteSensorManager;
 
-    private TripStatisticsUpdater trackTripStatisticsUpdater;
+    private TrackStatisticsUpdater trackStatisticsUpdater;
     private TrackPoint lastTrackPoint;
     private boolean currentSegmentHasLocation;
     private boolean isIdle;
@@ -259,21 +259,21 @@ public class TrackRecordingService extends Service {
         return recordingTrackId;
     }
 
-    public TripStatistics getTripStatistics() {
-        if (trackTripStatisticsUpdater == null) {
+    public TrackStatistics getTrackStatistics() {
+        if (trackStatisticsUpdater == null) {
             return null;
         }
-        return trackTripStatisticsUpdater.getTripStatistics();
+        return trackStatisticsUpdater.getTrackStatistics();
     }
 
     public long getTotalTime() {
-        if (trackTripStatisticsUpdater == null) {
+        if (trackStatisticsUpdater == null) {
             return 0;
         }
         if (!isPaused()) {
-            trackTripStatisticsUpdater.updateTime(System.currentTimeMillis());
+            trackStatisticsUpdater.updateTime(System.currentTimeMillis());
         }
-        return trackTripStatisticsUpdater.getTripStatistics().getTotalTime();
+        return trackStatisticsUpdater.getTrackStatistics().getTotalTime();
     }
 
     /**
@@ -305,7 +305,7 @@ public class TrackRecordingService extends Service {
         String icon = getString(R.string.marker_waypoint_icon_url);
         photoUrl = photoUrl != null ? photoUrl : "";
 
-        TripStatistics stats = trackTripStatisticsUpdater.getTripStatistics();
+        TrackStatistics stats = trackStatisticsUpdater.getTrackStatistics();
         double length = stats.getTotalDistance();
         long duration = stats.getTotalTime();
 
@@ -326,7 +326,7 @@ public class TrackRecordingService extends Service {
             return -1L;
         }
         long now = System.currentTimeMillis();
-        trackTripStatisticsUpdater = new TripStatisticsUpdater(now);
+        trackStatisticsUpdater = new TrackStatisticsUpdater(now);
 
         // Insert a track
         Track track = new Track();
@@ -343,7 +343,7 @@ public class TrackRecordingService extends Service {
         String category = PreferencesUtils.getDefaultActivity(this);
         track.setCategory(category);
         track.setIcon(TrackIconUtils.getIconValue(this, category));
-        track.setTripStatistics(trackTripStatisticsUpdater.getTripStatistics());
+        track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
         contentProviderUtils.updateTrack(track);
 
         startRecording();
@@ -364,8 +364,8 @@ public class TrackRecordingService extends Service {
         }
 
         // Sync the real time setting the stop time with current time.
-        track.getTripStatistics().setStopTime(System.currentTimeMillis());
-        trackTripStatisticsUpdater = new TripStatisticsUpdater(track.getTripStatistics());
+        track.getTrackStatistics().setStopTime_ms(System.currentTimeMillis());
+        trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics());
 
         insertTrackPoint(track, TrackPoint.createPause(), null);
         insertTrackPoint(track, TrackPoint.createResume(), null);
@@ -379,11 +379,10 @@ public class TrackRecordingService extends Service {
     private void restartTrack(Track track) {
         Log.d(TAG, "Restarting track: " + track.getId());
 
-        TripStatistics tripStatistics = track.getTripStatistics();
-        trackTripStatisticsUpdater = new TripStatisticsUpdater(tripStatistics.getStartTime());
+        trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics().getStartTime_ms());
 
         try (TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false)) {
-            trackTripStatisticsUpdater.addTrackPoint(locationIterator, recordingDistanceInterval);
+            trackStatisticsUpdater.addTrackPoint(locationIterator, recordingDistanceInterval);
         } catch (RuntimeException e) {
             Log.e(TAG, "RuntimeException", e);
         }
@@ -462,7 +461,7 @@ public class TrackRecordingService extends Service {
                 updateRecordingTrack(track);
             }
 
-            String trackName = TrackNameUtils.getTrackName(this, trackId, track.getTripStatistics().getStartTime());
+            String trackName = TrackNameUtils.getTrackName(this, trackId, track.getTrackStatistics().getStartTime_ms());
             if (trackName != null && !trackName.equals(track.getName())) {
                 track.setName(trackName);
                 contentProviderUtils.updateTrack(track);
@@ -657,7 +656,7 @@ public class TrackRecordingService extends Service {
 
         try {
             contentProviderUtils.insertTrackPoint(trackPoint, track.getId());
-            trackTripStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
+            trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
             updateRecordingTrack(track);
         } catch (SQLiteException e) {
             /*
@@ -675,8 +674,8 @@ public class TrackRecordingService extends Service {
      * @param track the track
      */
     private void updateRecordingTrack(Track track) {
-        trackTripStatisticsUpdater.updateTime(System.currentTimeMillis());
-        track.setTripStatistics(trackTripStatisticsUpdater.getTripStatistics());
+        trackStatisticsUpdater.updateTime(System.currentTimeMillis());
+        track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
         contentProviderUtils.updateTrack(track);
     }
 

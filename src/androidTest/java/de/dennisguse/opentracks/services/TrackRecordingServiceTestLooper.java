@@ -28,7 +28,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
-import de.dennisguse.opentracks.stats.TripStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
@@ -229,9 +229,9 @@ public class TrackRecordingServiceTestLooper {
         track = contentProviderUtils.getTrack(id);
         Assert.assertNotNull(track);
         Assert.assertEquals(id, track.getId());
-        TripStatistics tripStatistics = track.getTripStatistics();
-        Assert.assertNotNull(tripStatistics);
-        Assert.assertTrue(tripStatistics.getStartTime() > 0);
-        Assert.assertTrue(tripStatistics.getStopTime() >= tripStatistics.getStartTime());
+        TrackStatistics trackStatistics = track.getTrackStatistics();
+        Assert.assertNotNull(trackStatistics);
+        Assert.assertTrue(trackStatistics.getStartTime_ms() > 0);
+        Assert.assertTrue(trackStatistics.getStopTime_ms() >= trackStatistics.getStartTime_ms());
     }
 }
