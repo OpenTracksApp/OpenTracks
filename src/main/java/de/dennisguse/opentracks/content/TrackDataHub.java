@@ -16,8 +16,10 @@
 
 package de.dennisguse.opentracks.content;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -32,18 +34,21 @@ import java.util.Set;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.content.data.TrackPointsColumns;
+import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
- * Track data hub. Receives data from {@link de.dennisguse.opentracks.content.DataSourceManager} and distributes it to {@link TrackDataListener} after some processing.
+ * Track data hub. Receives data from {@link de.dennisguse.opentracks.content.provider.CustomContentProvider} and distributes it to {@link TrackDataListener} after some processing.
  *
  * @author Rodrigo Damazio
  */
-public class TrackDataHub implements DataSourceManager.DataSourceListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**
      * Target number of track points displayed by the map overlay.
@@ -69,7 +74,6 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
     private boolean started;
     private HandlerThread handlerThread;
     private Handler handler;
-    private DataSourceManager dataSourceManager;
 
     // Preference values
     private long selectedTrackId;
@@ -80,6 +84,11 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
     private int numLoadedPoints;
     private long firstSeenTrackPointId;
     private long lastSeenTrackPointId;
+
+    // Registered listeners
+    private ContentObserver tracksTableObserver;
+    private ContentObserver waypointsTableObserver;
+    private ContentObserver trackPointsTableObserver;
 
     public TrackDataHub(Context context) {
         this(context, new TrackDataManager(), new ContentProviderUtils(context), TARGET_DISPLAYED_TRACK_POINTS);
@@ -103,15 +112,40 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
         handlerThread = new HandlerThread(TAG);
         handlerThread.start();
         handler = new Handler(handlerThread.getLooper());
-        dataSourceManager = new DataSourceManager(context, this);
+
+        //register listeners
+        ContentResolver contentResolver = context.getContentResolver();
+        tracksTableObserver = new ContentObserver(handler) {
+            @Override
+            public void onChange(boolean selfChange) {
+                notifyTracksTableUpdate(trackDataManager.getListeners(TrackDataType.TRACKS_TABLE));
+            }
+        };
+        contentResolver.registerContentObserver(TracksColumns.CONTENT_URI, false, tracksTableObserver);
+
+        waypointsTableObserver = new ContentObserver(handler) {
+            @Override
+            public void onChange(boolean selfChange) {
+                notifyWaypointsTableUpdate(trackDataManager.getListeners(TrackDataType.WAYPOINTS_TABLE));
+            }
+        };
+        contentResolver.registerContentObserver(WaypointsColumns.CONTENT_URI, false, waypointsTableObserver);
+
+        trackPointsTableObserver = new ContentObserver(handler) {
+            @Override
+            public void onChange(boolean selfChange) {
+                notifyTrackPointsTableUpdate(true, trackDataManager.getListeners(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE), trackDataManager.getListeners(TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE));
+            }
+        };
+        contentResolver.registerContentObserver(TrackPointsColumns.CONTENT_URI_BY_ID, false, trackPointsTableObserver);
+
 
         PreferencesUtils.register(context, this);
         onSharedPreferenceChanged(null, null);
         runInHandlerThread(new Runnable() {
             @Override
             public void run() {
-                if (dataSourceManager != null) {
-                    dataSourceManager.start();
+                if (started) {
                     loadDataForAll();
                 }
             }
@@ -128,13 +162,17 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
 
         started = false;
 
-        dataSourceManager.stop();
+        //Unregister listeners
+        ContentResolver contentResolver = context.getContentResolver();
+        contentResolver.unregisterContentObserver(tracksTableObserver);
+        contentResolver.unregisterContentObserver(waypointsTableObserver);
+        contentResolver.unregisterContentObserver(trackPointsTableObserver);
+
         if (handlerThread != null) {
             handlerThread.getLooper().quit();
             handlerThread = null;
         }
         handler = null;
-        dataSourceManager = null;
     }
 
     public void loadTrack(final long trackId) {
@@ -162,7 +200,7 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
             @Override
             public void run() {
                 trackDataManager.registerListener(trackDataListener, trackDataTypes);
-                if (dataSourceManager != null) {
+                if (started) {
                     loadDataForListener(trackDataListener);
                 }
             }
@@ -207,37 +245,6 @@ public class TrackDataHub implements DataSourceManager.DataSourceListener, Share
      */
     public boolean isSelectedTrackPaused() {
         return selectedTrackId == recordingTrackId && recordingTrackPaused;
-    }
-
-    @Override
-    public void notifyTracksTableUpdated() {
-        runInHandlerThread(new Runnable() {
-            @Override
-            public void run() {
-                notifyTracksTableUpdate(trackDataManager.getListeners(TrackDataType.TRACKS_TABLE));
-            }
-        });
-    }
-
-    @Override
-    public void notifyWaypointsTableUpdated() {
-        runInHandlerThread(new Runnable() {
-            @Override
-            public void run() {
-                notifyWaypointsTableUpdate(trackDataManager.getListeners(TrackDataType.WAYPOINTS_TABLE));
-            }
-        });
-    }
-
-    @Override
-    public void notifyTrackPointsTableUpdated() {
-        runInHandlerThread(new Runnable() {
-            @Override
-            public void run() {
-                notifyTrackPointsTableUpdate(true, trackDataManager.getListeners(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE),
-                        trackDataManager.getListeners(TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE));
-            }
-        });
     }
 
     @Override
