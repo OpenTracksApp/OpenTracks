@@ -193,13 +193,18 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
      * Registers a {@link TrackDataListener}.
      *
      * @param trackDataListener the track data listener
-     * @param trackDataTypes    the track data types
      */
-    public void registerTrackDataListener(final TrackDataListener trackDataListener, final EnumSet<TrackDataType> trackDataTypes) {
+    public void registerTrackDataListener(final TrackDataListener trackDataListener, boolean tracksTable, boolean waypointTable, boolean trackPointsTable_SampleIn, boolean trackPointsTable_SampleOut) {
+        final EnumSet<TrackDataType> types = EnumSet.noneOf(TrackDataType.class);
+        if (tracksTable) types.add(TrackDataType.TRACKS_TABLE);
+        if (waypointTable) types.add(TrackDataType.WAYPOINTS_TABLE);
+        if (trackPointsTable_SampleIn) types.add(TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE);
+        if (trackPointsTable_SampleOut) types.add(TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE);
+
         runInHandlerThread(new Runnable() {
             @Override
             public void run() {
-                trackDataManager.registerListener(trackDataListener, trackDataTypes);
+                trackDataManager.registerListener(trackDataListener, types);
                 if (started) {
                     loadDataForListener(trackDataListener);
                 }

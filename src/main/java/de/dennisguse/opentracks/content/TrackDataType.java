@@ -21,7 +21,7 @@ package de.dennisguse.opentracks.content;
  *
  * @author Jimmy Shih
  */
-public enum TrackDataType {
+enum TrackDataType {
     TRACKS_TABLE, // tracks table changes
     WAYPOINTS_TABLE, // waypoints table changes
     SAMPLED_IN_TRACK_POINTS_TABLE, // sampled-in track points table changes

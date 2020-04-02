@@ -33,13 +33,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.util.EnumSet;
-
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackDetailActivity;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
-import de.dennisguse.opentracks.content.TrackDataType;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
@@ -393,8 +390,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
      */
     private synchronized void resumeTrackDataHub() {
         trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
-        trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.TRACKS_TABLE,
-                TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE, TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE));
+        trackDataHub.registerTrackDataListener(this, true, false, true, true);
     }
 
     /**
