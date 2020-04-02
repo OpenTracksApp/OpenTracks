@@ -29,7 +29,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
@@ -37,7 +36,6 @@ import de.dennisguse.opentracks.TrackDetailActivity;
 import de.dennisguse.opentracks.chart.ChartView;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
-import de.dennisguse.opentracks.content.TrackDataType;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
@@ -305,9 +303,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
      */
     private synchronized void resumeTrackDataHub() {
         trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
-        trackDataHub.registerTrackDataListener(this, EnumSet.of(TrackDataType.TRACKS_TABLE,
-                TrackDataType.WAYPOINTS_TABLE, TrackDataType.SAMPLED_IN_TRACK_POINTS_TABLE,
-                TrackDataType.SAMPLED_OUT_TRACK_POINTS_TABLE));
+        trackDataHub.registerTrackDataListener(this, true, true, true, true);
     }
 
     /**
@@ -360,7 +356,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
      * data[6] = power <br>
      *
      * @param trackPoint the trackPoint
-     * @param data     the data point to fill in, can be null
+     * @param data       the data point to fill in, can be null
      */
     @VisibleForTesting
     void fillDataPoint(@NonNull TrackPoint trackPoint, double[] data) {
