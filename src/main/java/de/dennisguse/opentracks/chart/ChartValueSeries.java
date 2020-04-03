@@ -23,6 +23,8 @@ import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 
+import androidx.annotation.NonNull;
+
 import java.text.NumberFormat;
 
 import de.dennisguse.opentracks.stats.ExtremityMonitor;
@@ -32,7 +34,7 @@ import de.dennisguse.opentracks.stats.ExtremityMonitor;
  *
  * @author Sandor Dornbush
  */
-class ChartValueSeries {
+abstract class ChartValueSeries {
 
     private static final float STROKE_WIDTH = 2f;
 
@@ -126,26 +128,26 @@ class ChartValueSeries {
     }
 
     /**
-     * Updates the series with a new value.
-     *
-     * @param value the new value
+     * Updates the series with a new {@link ChartPoint}.
      */
-    void update(double value) {
-        extremityMonitor.update(value);
+    void update(ChartPoint chartPoint) {
+        if (isChartPointValid(chartPoint)) {
+            extremityMonitor.update(extractDataFromChartPoint(chartPoint));
+        }
     }
 
-    /**
-     * Gets the path.
-     */
+    abstract double extractDataFromChartPoint(@NonNull ChartPoint chartPoint);
+
+    boolean isChartPointValid(@NonNull ChartPoint chartPoint) {
+        return !Double.isNaN(extractDataFromChartPoint(chartPoint));
+    }
+
+    protected abstract boolean drawIfChartPointHasNoData();
+
     Path getPath() {
         return path;
     }
 
-    /**
-     * Draws the path on canvas.
-     *
-     * @param canvas the canvas
-     */
     void drawPath(Canvas canvas) {
         canvas.drawPath(path, fillPaint);
         canvas.drawPath(path, strokePaint);

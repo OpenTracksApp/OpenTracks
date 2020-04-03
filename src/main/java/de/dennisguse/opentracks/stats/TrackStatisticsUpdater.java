@@ -61,9 +61,9 @@ public class TrackStatisticsUpdater {
     private final TrackStatistics trackStatistics;
 
     // A buffer of the recent elevation readings (m)
-    private final DoubleBuffer elevationBuffer = new DoubleBuffer(ELEVATION_SMOOTHING_FACTOR);
+    private final DoubleBuffer elevationBuffer_m = new DoubleBuffer(ELEVATION_SMOOTHING_FACTOR);
     // A buffer of the recent speed readings (m/s) for calculating max speed
-    private final DoubleBuffer speedBuffer = new DoubleBuffer(SPEED_SMOOTHING_FACTOR);
+    private final DoubleBuffer speedBuffer_ms = new DoubleBuffer(SPEED_SMOOTHING_FACTOR);
 
     // The current segment's statistics
     private TrackStatistics currentSegment;
@@ -128,8 +128,8 @@ public class TrackStatisticsUpdater {
             currentSegment = init(trackPoint.getLocation().getTime());
             lastTrackPoint = null;
             lastMovingTrackPoint = null;
-            elevationBuffer.reset();
-            speedBuffer.reset();
+            elevationBuffer_m.reset();
+            speedBuffer_ms.reset();
             return;
         }
 
@@ -144,7 +144,7 @@ public class TrackStatisticsUpdater {
 
         double movingDistance = lastMovingTrackPoint.distanceTo(trackPoint);
         if (movingDistance < minRecordingDistance && (!trackPoint.hasSpeed() || trackPoint.getSpeed() < MAX_NO_MOVEMENT_SPEED)) {
-            speedBuffer.reset();
+            speedBuffer_ms.reset();
             lastTrackPoint = trackPoint;
             return;
         }
@@ -181,11 +181,11 @@ public class TrackStatisticsUpdater {
      * The elevation readings is noisy so the smoothed elevation is better than the raw elevation for many tasks.
      */
     public double getSmoothedElevation() {
-        return elevationBuffer.getAverage();
+        return elevationBuffer_m.getAverage();
     }
 
     public double getSmoothedSpeed() {
-        return speedBuffer.getAverage();
+        return speedBuffer_ms.getAverage();
     }
 
     /**
@@ -199,11 +199,11 @@ public class TrackStatisticsUpdater {
     @VisibleForTesting
     private void updateSpeed(long time, double speed, long lastLocationTime, double lastLocationSpeed) {
         if (speed < MAX_NO_MOVEMENT_SPEED) {
-            speedBuffer.reset();
+            speedBuffer_ms.reset();
         } else if (isValidSpeed(time, speed, lastLocationTime, lastLocationSpeed)) {
-            speedBuffer.setNext(speed);
-            if (speedBuffer.getAverage() > currentSegment.getMaxSpeed()) {
-                currentSegment.setMaxSpeed(speedBuffer.getAverage());
+            speedBuffer_ms.setNext(speed);
+            if (speedBuffer_ms.getAverage() > currentSegment.getMaxSpeed()) {
+                currentSegment.setMaxSpeed(speedBuffer_ms.getAverage());
             }
         } else {
             Log.d(TAG, "Invalid speed. speed: " + speed + " lastLocationSpeed: " + lastLocationSpeed);
@@ -218,9 +218,9 @@ public class TrackStatisticsUpdater {
     @VisibleForTesting
     private double updateElevation(double elevation) {
         // Update elevation using the smoothed average
-        double oldAverage = elevationBuffer.getAverage();
-        elevationBuffer.setNext(elevation);
-        double newAverage = elevationBuffer.getAverage();
+        double oldAverage = elevationBuffer_m.getAverage();
+        elevationBuffer_m.setNext(elevation);
+        double newAverage = elevationBuffer_m.getAverage();
 
         currentSegment.updateElevationExtremities(newAverage);
         double difference = newAverage - oldAverage;
@@ -264,8 +264,8 @@ public class TrackStatisticsUpdater {
         }
 
         // Only check if the speed buffer is full. Check that the speed is less than 10X the smoothed average and the speed difference doesn't imply 2g acceleration.
-        if (speedBuffer.isFull()) {
-            double average = speedBuffer.getAverage();
+        if (speedBuffer_ms.isFull()) {
+            double average = speedBuffer_ms.getAverage();
             double diff = Math.abs(average - speed);
             return (speed < average * 10) && (diff < MAX_ACCELERATION * timeDifference);
         }

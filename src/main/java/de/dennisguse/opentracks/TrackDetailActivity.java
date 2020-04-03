@@ -96,7 +96,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             if (recordingTrackId == -1L) {
                 TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
                 if (service == null) {
-                    Log.d(TAG, "it could not get service");
+                    Log.d(TAG, "could not get TrackRecordingService");
                     return;
                 }
 

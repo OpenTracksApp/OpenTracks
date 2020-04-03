@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.dennisguse.opentracks.TrackStubUtils;
+import de.dennisguse.opentracks.chart.ChartPoint;
 import de.dennisguse.opentracks.chart.ChartView;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
@@ -74,10 +75,10 @@ public class ChartFragmentTest {
         TrackPoint trackPoint = TrackStubUtils.createDefaultTrackPoint();
 
         // No input.
-        double[] point = chartFragment.createPendingPoint(trackPoint);
-        Assert.assertEquals(Float.NaN, point[ChartView.HEART_RATE_SERIES + 1], 0.01);
-        Assert.assertEquals(Float.NaN, point[ChartView.CADENCE_SERIES + 1], 0.01);
-        Assert.assertEquals(Float.NaN, point[ChartView.POWER_SERIES + 1], 0.01);
+        ChartPoint point = chartFragment.createPendingPoint(trackPoint);
+        Assert.assertEquals(Float.NaN, point.getHeartRate(), 0.01);
+        Assert.assertEquals(Float.NaN, point.getCadence(), 0.01);
+        Assert.assertEquals(Float.NaN, point.getPower(), 0.01);
 
         // Input incorrect state.
         // Creates SensorData.
@@ -85,9 +86,9 @@ public class ChartFragmentTest {
         trackPoint.setSensorDataSet(sensorDataSet);
         // Test.
         point = chartFragment.createPendingPoint(trackPoint);
-        Assert.assertEquals(Float.NaN, point[ChartView.HEART_RATE_SERIES + 1], 0.01);
-        Assert.assertEquals(Float.NaN, point[ChartView.CADENCE_SERIES + 1], 0.01);
-        Assert.assertEquals(Float.NaN, point[ChartView.POWER_SERIES + 1], 0.01);
+        Assert.assertEquals(Float.NaN, point.getHeartRate(), 0.01);
+        Assert.assertEquals(Float.NaN, point.getCadence(), 0.01);
+        Assert.assertEquals(Float.NaN, point.getPower(), 0.01);
     }
 
     /**
@@ -97,10 +98,10 @@ public class ChartFragmentTest {
     public void testCreatePendingPoint_sensorCorrect() {
         TrackPoint trackPoint = TrackStubUtils.createDefaultTrackPoint();
         // No input.
-        double[] point = chartFragment.createPendingPoint(trackPoint);
-        Assert.assertEquals(Float.NaN, point[ChartView.HEART_RATE_SERIES + 1], 0.01);
-        Assert.assertEquals(Float.NaN, point[ChartView.CADENCE_SERIES + 1], 0.01);
-        Assert.assertEquals(Float.NaN, point[ChartView.POWER_SERIES + 1], 0.01);
+        ChartPoint point = chartFragment.createPendingPoint(trackPoint);
+        Assert.assertEquals(Float.NaN, point.getHeartRate(), 0.01);
+        Assert.assertEquals(Float.NaN, point.getCadence(), 0.01);
+        Assert.assertEquals(Float.NaN, point.getPower(), 0.01);
 
         // Creates SensorData.
         SensorDataSet sensorDataSet = new SensorDataSet(100, 101, 102);
@@ -109,9 +110,9 @@ public class ChartFragmentTest {
         trackPoint.setSensorDataSet(sensorDataSet);
         // Test.
         point = chartFragment.createPendingPoint(trackPoint);
-        Assert.assertEquals(100.0, point[ChartView.HEART_RATE_SERIES + 1], 0.01);
-        Assert.assertEquals(101.0, point[ChartView.CADENCE_SERIES + 1], 0.01);
-        Assert.assertEquals(102.0, point[ChartView.POWER_SERIES + 1], 0.01);
+        Assert.assertEquals(100.0, point.getHeartRate(), 0.01);
+        Assert.assertEquals(101.0, point.getCadence(), 0.01);
+        Assert.assertEquals(102.0, point.getPower(), 0.01);
     }
 
     /**
@@ -122,13 +123,13 @@ public class ChartFragmentTest {
         chartFragment.setChartByDistance(true);
         // Resets last location and writes first location.
         TrackPoint trackPoint1 = TrackStubUtils.createDefaultTrackPoint();
-        double[] point = chartFragment.createPendingPoint(trackPoint1);
-        Assert.assertEquals(0.0, point[0], 0.01);
+        ChartPoint point = chartFragment.createPendingPoint(trackPoint1);
+        Assert.assertEquals(0.0, point.getTimeOrDistance(), 0.01);
 
         // The second is a same location, just different time.
         TrackPoint trackPoint2 = TrackStubUtils.createDefaultTrackPoint();
         point = chartFragment.createPendingPoint(trackPoint2);
-        Assert.assertEquals(0.0, point[0], 0.01);
+        Assert.assertEquals(0.0, point.getTimeOrDistance(), 0.01);
 
         // The third location is a new location, and use metric.
         TrackPoint trackPoint3 = TrackStubUtils.createDefaultTrackPoint();
@@ -140,7 +141,7 @@ public class ChartFragmentTest {
         Location.distanceBetween(trackPoint2.getLatitude(), trackPoint2.getLongitude(),
                 trackPoint3.getLatitude(), trackPoint3.getLongitude(), results);
         double distance1 = results[0] * UnitConversions.M_TO_KM;
-        Assert.assertEquals(distance1, point[0], 0.01);
+        Assert.assertEquals(distance1, point.getTimeOrDistance(), 0.01);
 
         // The fourth location is a new location, and use metric.
         TrackPoint trackPoint4 = TrackStubUtils.createDefaultTrackPoint();
@@ -151,7 +152,7 @@ public class ChartFragmentTest {
         Location.distanceBetween(trackPoint3.getLatitude(), trackPoint3.getLongitude(),
                 trackPoint4.getLatitude(), trackPoint4.getLongitude(), results);
         double distance2 = results[0] * UnitConversions.M_TO_KM;
-        Assert.assertEquals((distance1 + distance2), point[0], 0.01);
+        Assert.assertEquals((distance1 + distance2), point.getTimeOrDistance(), 0.01);
     }
 
     /**
@@ -166,8 +167,8 @@ public class ChartFragmentTest {
 
         // The first is a same location, just different time.
         TrackPoint trackPoint1 = TrackStubUtils.createDefaultTrackPoint();
-        double[] point = chartFragment.createPendingPoint(trackPoint1);
-        Assert.assertEquals(0.0, point[0], 0.01);
+        ChartPoint point = chartFragment.createPendingPoint(trackPoint1);
+        Assert.assertEquals(0.0, point.getTimeOrDistance(), 0.01);
 
         // The second location is a new location, and use imperial.
         TrackPoint trackPoint2 = TrackStubUtils.createDefaultTrackPoint();
@@ -181,7 +182,7 @@ public class ChartFragmentTest {
         float[] results = new float[4];
         Location.distanceBetween(trackPoint1.getLatitude(), trackPoint1.getLongitude(), trackPoint2.getLatitude(), trackPoint2.getLongitude(), results);
         double distance1 = results[0] * UnitConversions.M_TO_KM * UnitConversions.KM_TO_MI;
-        Assert.assertEquals(distance1, point[0], 0.01);
+        Assert.assertEquals(distance1, point.getTimeOrDistance(), 0.01);
 
         // The third location is a new location, and use imperial.
         TrackPoint trackPoint3 = TrackStubUtils.createDefaultTrackPoint();
@@ -194,7 +195,7 @@ public class ChartFragmentTest {
          */
         Location.distanceBetween(trackPoint2.getLatitude(), trackPoint2.getLongitude(), trackPoint3.getLatitude(), trackPoint3.getLongitude(), results);
         double distance2 = results[0] * UnitConversions.M_TO_KM * UnitConversions.KM_TO_MI;
-        Assert.assertEquals(distance1 + distance2, point[0], 0.01);
+        Assert.assertEquals(distance1 + distance2, point.getTimeOrDistance(), 0.01);
     }
 
     /**
@@ -204,13 +205,13 @@ public class ChartFragmentTest {
     public void testCreatePendingPoint_time() {
         chartFragment.setChartByDistance(false);
         TrackPoint trackPoint1 = TrackStubUtils.createDefaultTrackPoint();
-        double[] point = chartFragment.createPendingPoint(trackPoint1);
-        Assert.assertEquals(0.0, point[0], 0.01);
+        ChartPoint point = chartFragment.createPendingPoint(trackPoint1);
+        Assert.assertEquals(0.0, point.getTimeOrDistance(), 0.01);
         long timeSpan = 222;
         TrackPoint trackPoint2 = TrackStubUtils.createDefaultTrackPoint();
         trackPoint2.setTime(trackPoint1.getTime() + timeSpan);
         point = chartFragment.createPendingPoint(trackPoint2);
-        Assert.assertEquals((double) timeSpan, point[0], 0.01);
+        Assert.assertEquals((double) timeSpan, point.getTimeOrDistance(), 0.01);
     }
 
     /**
@@ -224,8 +225,8 @@ public class ChartFragmentTest {
          * At first, clear old points of elevation, so give true to the second parameter.
          * Then only one value INITIAL_ALTITUDE in buffer.
          */
-        double[] point = chartFragment.createPendingPoint(trackPoint1);
-        Assert.assertEquals(TrackStubUtils.INITIAL_ALTITUDE, point[ChartView.ELEVATION_SERIES + 1], 0.01);
+        ChartPoint point = chartFragment.createPendingPoint(trackPoint1);
+        Assert.assertEquals(TrackStubUtils.INITIAL_ALTITUDE, point.getElevation(), 0.01);
 
         /*
          * Send another value to buffer, now there are two values, INITIAL_ALTITUDE and INITIAL_ALTITUDE * 2.
@@ -233,7 +234,7 @@ public class ChartFragmentTest {
         TrackPoint trackPoint2 = TrackStubUtils.createDefaultTrackPoint();
         trackPoint2.setAltitude(TrackStubUtils.INITIAL_ALTITUDE * 2);
         point = chartFragment.createPendingPoint(trackPoint2);
-        Assert.assertEquals((TrackStubUtils.INITIAL_ALTITUDE + TrackStubUtils.INITIAL_ALTITUDE * 2) / 2.0, point[ChartView.ELEVATION_SERIES + 1], 0.01);
+        Assert.assertEquals((TrackStubUtils.INITIAL_ALTITUDE + TrackStubUtils.INITIAL_ALTITUDE * 2) / 2.0, point.getElevation(), 0.01);
     }
 
     /**
@@ -249,8 +250,8 @@ public class ChartFragmentTest {
          */
         TrackPoint trackPoint1 = TrackStubUtils.createDefaultTrackPoint();
         trackPoint1.setSpeed(128.5f);
-        double[] point = chartFragment.createPendingPoint(trackPoint1);
-        Assert.assertEquals(0.0, point[ChartView.SPEED_SERIES + 1], 0.01);
+        ChartPoint point = chartFragment.createPendingPoint(trackPoint1);
+        Assert.assertEquals(0.0, point.getSpeed(), 0.01);
 
         /*
          * Tests the logic when both metricUnits and reportSpeed are true.
@@ -264,7 +265,7 @@ public class ChartFragmentTest {
         trackPoint2.setTime(trackPoint1.getTime() + 222);
         trackPoint2.setSpeed(130);
         point = chartFragment.createPendingPoint(trackPoint2);
-        Assert.assertEquals(130.0 * UnitConversions.MS_TO_KMH, point[ChartView.SPEED_SERIES + 1], 0.01);
+        Assert.assertEquals(130.0 * UnitConversions.MS_TO_KMH, point.getSpeed(), 0.01);
     }
 
     /**
@@ -277,8 +278,8 @@ public class ChartFragmentTest {
         // First data point is not added to the speed buffer
         TrackPoint trackPoint1 = TrackStubUtils.createDefaultTrackPoint();
         trackPoint1.setSpeed(100.0f);
-        double[] point = chartFragment.createPendingPoint(trackPoint1);
-        Assert.assertEquals(0.0, point[ChartView.SPEED_SERIES + 1], 0.01);
+        ChartPoint point = chartFragment.createPendingPoint(trackPoint1);
+        Assert.assertEquals(0.0, point.getSpeed(), 0.01);
 
         TrackPoint trackPoint2 = TrackStubUtils.createDefaultTrackPoint();
 
@@ -289,7 +290,7 @@ public class ChartFragmentTest {
         trackPoint2.setTime(trackPoint2.getTime() + 222);
         trackPoint2.setSpeed(102);
         point = chartFragment.createPendingPoint(trackPoint2);
-        Assert.assertEquals(102.0 * UnitConversions.MS_TO_KMH * UnitConversions.KM_TO_MI, point[ChartView.SPEED_SERIES + 1], 0.01);
+        Assert.assertEquals(102.0 * UnitConversions.MS_TO_KMH * UnitConversions.KM_TO_MI, point.getSpeed(), 0.01);
     }
 
     /**
@@ -302,8 +303,8 @@ public class ChartFragmentTest {
         // First data point is not added to the speed buffer
         TrackPoint trackPoint1 = TrackStubUtils.createDefaultTrackPoint();
         trackPoint1.setSpeed(100.0f);
-        double[] point = chartFragment.createPendingPoint(trackPoint1);
-        Assert.assertEquals(0.0, point[ChartView.SPEED_SERIES + 1], 0.01);
+        ChartPoint point = chartFragment.createPendingPoint(trackPoint1);
+        Assert.assertEquals(0.0, point.getSpeed(), 0.01);
 
         TrackPoint trackPoint2 = TrackStubUtils.createDefaultTrackPoint();
 
@@ -314,7 +315,7 @@ public class ChartFragmentTest {
         trackPoint2.setTime(trackPoint2.getTime() + 222);
         trackPoint2.setSpeed(102);
         point = chartFragment.createPendingPoint(trackPoint2);
-        Assert.assertEquals(HOURS_PER_UNIT / (102.0 * UnitConversions.MS_TO_KMH), point[ChartView.PACE_SERIES + 1], 0.01);
+        Assert.assertEquals(HOURS_PER_UNIT / (102.0 * UnitConversions.MS_TO_KMH), point.getPace(), 0.01);
     }
 
     /**
@@ -325,7 +326,7 @@ public class ChartFragmentTest {
         chartFragment.setReportSpeed(false);
         TrackPoint trackPoint = TrackStubUtils.createDefaultTrackPoint();
         trackPoint.setSpeed(0);
-        double[] point = chartFragment.createPendingPoint(trackPoint);
-        Assert.assertEquals(0.0, point[ChartView.PACE_SERIES + 1], 0.01);
+        ChartPoint point = chartFragment.createPendingPoint(trackPoint);
+        Assert.assertEquals(0.0, point.getPace(), 0.01);
     }
 }

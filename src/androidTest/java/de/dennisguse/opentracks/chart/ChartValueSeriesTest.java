@@ -15,6 +15,7 @@
  */
 package de.dennisguse.opentracks.chart;
 
+import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -44,7 +45,17 @@ public class ChartValueSeriesTest {
                 R.string.description_elevation_metric,
                 R.string.description_elevation_imperial,
                 R.color.chart_elevation_fill,
-                R.color.chart_elevation_border);
+                R.color.chart_elevation_border) {
+            @Override
+            double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
+                return chartPoint.getElevation();
+            }
+
+            @Override
+            protected boolean drawIfChartPointHasNoData() {
+                return false;
+            }
+        };
     }
 
     @Test
@@ -63,8 +74,8 @@ public class ChartValueSeriesTest {
 
     @Test
     public void testSmallUpdates() {
-        series.update(0);
-        series.update(10);
+        series.update(new ChartPoint(0));
+        series.update(new ChartPoint(10));
         series.updateDimension();
         Assert.assertEquals(100, series.getInterval());
         Assert.assertEquals(0, series.getMinMarkerValue());
@@ -73,8 +84,8 @@ public class ChartValueSeriesTest {
 
     @Test
     public void testBigUpdates() {
-        series.update(0);
-        series.update(901);
+        series.update(new ChartPoint(0));
+        series.update(new ChartPoint(901));
         series.updateDimension();
         Assert.assertEquals(1000, series.getInterval());
         Assert.assertEquals(0, series.getMinMarkerValue());
@@ -83,8 +94,8 @@ public class ChartValueSeriesTest {
 
     @Test
     public void testNotZeroBasedUpdates() {
-        series.update(220);
-        series.update(250);
+        series.update(new ChartPoint(220));
+        series.update(new ChartPoint(250));
         series.updateDimension();
         Assert.assertEquals(100, series.getInterval());
         Assert.assertEquals(200, series.getMinMarkerValue());

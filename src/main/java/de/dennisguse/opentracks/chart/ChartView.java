@@ -33,6 +33,7 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.Scroller;
 
+import androidx.annotation.NonNull;
 import androidx.core.view.GestureDetectorCompat;
 
 import java.text.NumberFormat;
@@ -62,14 +63,6 @@ public class ChartView extends View {
 
     static final int Y_AXIS_INTERVALS = 5;
 
-    public static final int NUM_SERIES = 6;
-    public static final int ELEVATION_SERIES = 0;
-    public static final int SPEED_SERIES = 1;
-    public static final int PACE_SERIES = 2;
-    public static final int HEART_RATE_SERIES = 3;
-    public static final int CADENCE_SERIES = 4;
-    public static final int POWER_SERIES = 5;
-
     private static final int TARGET_X_AXIS_INTERVALS = 4;
 
     private static final int MIN_ZOOM_LEVEL = 1;
@@ -89,8 +82,11 @@ public class ChartView extends View {
         X_FRACTION_FORMAT.setMinimumFractionDigits(1);
     }
 
-    private final ChartValueSeries[] series = new ChartValueSeries[NUM_SERIES];
-    private final List<double[]> chartData = new ArrayList<>();
+    private final List<ChartValueSeries> seriesList = new ArrayList<>();
+    private final ChartValueSeries speedSeries;
+    private final ChartValueSeries paceSeries;
+
+    private final List<ChartPoint> chartData = new ArrayList<>();
     private final List<Waypoint> waypoints = new ArrayList<>();
     private final ExtremityMonitor xExtremityMonitor = new ExtremityMonitor();
     private final Paint axisPaint;
@@ -192,58 +188,124 @@ public class ChartView extends View {
         }
     });
 
-    public ChartView(Context context, boolean chartByDistance) {
+    public ChartView(Context context, final boolean chartByDistance) {
         super(context);
         this.chartByDistance = chartByDistance;
 
-        series[ELEVATION_SERIES] = new ChartValueSeries(context,
+        seriesList.add(new ChartValueSeries(context,
                 Integer.MIN_VALUE,
                 Integer.MAX_VALUE,
                 new int[]{5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000},
                 R.string.description_elevation_metric,
                 R.string.description_elevation_imperial,
                 R.color.chart_elevation_fill,
-                R.color.chart_elevation_border);
-        series[SPEED_SERIES] = new ChartValueSeries(context,
+                R.color.chart_elevation_border) {
+            @Override
+            protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
+                return chartPoint.getElevation();
+            }
+
+            @Override
+            protected boolean drawIfChartPointHasNoData() {
+                return true;
+            }
+        });
+
+        speedSeries = new ChartValueSeries(context,
                 0,
                 Integer.MAX_VALUE,
                 new int[]{1, 5, 10, 20, 50, 100},
                 R.string.description_speed_metric,
                 R.string.description_speed_imperial,
                 R.color.chart_speed_fill,
-                R.color.chart_speed_border);
-        series[PACE_SERIES] = new ChartValueSeries(context,
+                R.color.chart_speed_border) {
+            @Override
+            protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
+                return chartPoint.getSpeed();
+            }
+
+            @Override
+            protected boolean drawIfChartPointHasNoData() {
+                return reportSpeed;
+            }
+        };
+        seriesList.add(speedSeries);
+
+        paceSeries = new ChartValueSeries(context,
                 0,
                 Integer.MAX_VALUE,
                 new int[]{1, 2, 5, 10, 15, 20, 30, 60, 120},
                 R.string.description_pace_metric,
                 R.string.description_pace_imperial,
                 R.color.chart_pace_fill,
-                R.color.chart_pace_border);
-        series[HEART_RATE_SERIES] = new ChartValueSeries(context,
+                R.color.chart_pace_border) {
+            @Override
+            protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
+                return chartPoint.getPace();
+            }
+
+            @Override
+            protected boolean drawIfChartPointHasNoData() {
+                return !reportSpeed;
+            }
+        };
+        seriesList.add(paceSeries);
+
+        seriesList.add(new ChartValueSeries(context,
                 0,
                 Integer.MAX_VALUE,
                 new int[]{25, 50},
                 R.string.description_sensor_heart_rate,
                 R.string.description_sensor_heart_rate,
                 R.color.chart_heart_rate_fill,
-                R.color.chart_heart_rate_border);
-        series[CADENCE_SERIES] = new ChartValueSeries(context,
+                R.color.chart_heart_rate_border) {
+            @Override
+            protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
+                return chartPoint.getHeartRate();
+            }
+
+            @Override
+            protected boolean drawIfChartPointHasNoData() {
+                return false;
+            }
+        });
+
+        seriesList.add(new ChartValueSeries(context,
                 0,
                 Integer.MAX_VALUE,
                 new int[]{5, 10, 25, 50},
                 R.string.description_sensor_cadence,
                 R.string.description_sensor_cadence,
                 R.color.chart_cadence_fill,
-                R.color.chart_cadence_border);
-        series[POWER_SERIES] = new ChartValueSeries(context,
+                R.color.chart_cadence_border) {
+            @Override
+            protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
+                return chartPoint.getCadence();
+            }
+
+            @Override
+            protected boolean drawIfChartPointHasNoData() {
+                return false;
+            }
+        });
+        seriesList.add(new ChartValueSeries(context,
                 0,
                 1000,
                 new int[]{5, 50, 100, 200},
                 R.string.description_sensor_power,
                 R.string.description_sensor_power,
                 R.color.chart_power_fill,
-                R.color.chart_power_border);
+                R.color.chart_power_border) {
+            @Override
+            protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
+                return chartPoint.getPower();
+            }
+
+            @Override
+            protected boolean drawIfChartPointHasNoData() {
+                return false;
+            }
+        });
 
         float scale = context.getResources().getDisplayMetrics().density;
 
@@ -279,20 +341,15 @@ public class ChartView extends View {
         setFocusable(true);
         setClickable(true);
         updateDimensions();
+
+        // either speedSeries or paceSeries should be enabled.
+        speedSeries.setEnabled(reportSpeed);
+        paceSeries.setEnabled(!reportSpeed);
     }
 
     @Override
     public boolean canScrollHorizontally(int direction) {
         return true;
-    }
-
-    /**
-     * Sets the enabled value for a chart value series.
-     *
-     * @param index the chart value series index
-     */
-    public void setChartValueSeriesEnabled(int index, boolean enabled) {
-        series[index].setEnabled(enabled);
     }
 
     public boolean getMetricUnits() {
@@ -315,10 +372,28 @@ public class ChartView extends View {
     /**
      * Sets report speed.
      *
-     * @param value true to report speed
+     * @param value report speed (true) or pace (false)
      */
     public void setReportSpeed(boolean value) {
         reportSpeed = value;
+    }
+
+    public boolean applyReportSpeed() {
+        if (reportSpeed) {
+            if (!speedSeries.isEnabled()) {
+                speedSeries.setEnabled(true);
+                paceSeries.setEnabled(false);
+                return true;
+            }
+        } else {
+            if (!paceSeries.isEnabled()) {
+                speedSeries.setEnabled(false);
+                paceSeries.setEnabled(true);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -335,15 +410,13 @@ public class ChartView extends View {
      *
      * @param dataPoints an array of data points to be added
      */
-    public void addPendingPoints(List<double[]> dataPoints) {
+    public void addChartPoints(List<ChartPoint> dataPoints) {
         synchronized (chartData) {
             chartData.addAll(dataPoints);
-            for (double[] dataPoint : dataPoints) {
-                xExtremityMonitor.update(dataPoint[0]);
-                for (int j = 0; j < series.length; j++) {
-                    if (!Double.isNaN(dataPoint[j + 1])) {
-                        series[j].update(dataPoint[j + 1]);
-                    }
+            for (ChartPoint dataPoint : dataPoints) {
+                xExtremityMonitor.update(dataPoint.getTimeOrDistance());
+                for (ChartValueSeries i : seriesList) {
+                    i.update(dataPoint);
                 }
             }
             updateDimensions();
@@ -536,7 +609,7 @@ public class ChartView extends View {
      * @param canvas the canvas
      */
     private void drawDataSeries(Canvas canvas) {
-        for (ChartValueSeries chartValueSeries : series) {
+        for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
                 chartValueSeries.drawPath(canvas);
             }
@@ -602,9 +675,8 @@ public class ChartView extends View {
         int lines = titleDimensions[0];
         int lineHeight = titleDimensions[1];
         int count = 0;
-        for (int i = 0; i < series.length; i++) {
-            ChartValueSeries chartValueSeries = series[i];
-            if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(i)) {
+        for (ChartValueSeries chartValueSeries : seriesList) {
+            if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
                 count++;
                 String title = getContext().getString(chartValueSeries.getTitleId(metricUnits));
                 Paint paint = chartValueSeries.getTitlePaint();
@@ -622,9 +694,8 @@ public class ChartView extends View {
     private int[] getTitleDimensions() {
         int lines = 0;
         int lineHeight = 0;
-        for (int i = 0; i < series.length; i++) {
-            ChartValueSeries chartValueSeries = series[i];
-            if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(i)) {
+        for (ChartValueSeries chartValueSeries : seriesList) {
+            if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
                 lines++;
                 String title = getContext().getString(chartValueSeries.getTitleId(metricUnits));
                 Rect rect = getRect(chartValueSeries.getTitlePaint(), title);
@@ -728,10 +799,10 @@ public class ChartView extends View {
         canvas.drawLine(x, y, x, y + effectiveHeight, axisPaint);
 
         int markerXPosition = x - spacer;
-        for (int i = 0; i < series.length; i++) {
-            int index = series.length - 1 - i;
-            ChartValueSeries chartValueSeries = series[index];
-            if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(index)) {
+        for (int i = 0; i < seriesList.size(); i++) {
+            int index = seriesList.size() - 1 - i;
+            ChartValueSeries chartValueSeries = seriesList.get(index);
+            if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
                 markerXPosition -= drawYAxisMarkers(chartValueSeries, canvas, markerXPosition) + spacer;
             }
         }
@@ -779,18 +850,34 @@ public class ChartView extends View {
      * @param canvas the canvas
      */
     private void drawPointer(Canvas canvas) {
-        int index = -1;
-        for (int i = 0; i < series.length; i++) {
-            ChartValueSeries chartValueSeries = series[i];
+        //TODO pass chartValueSeries to 2nd if
+//        int index = -1;
+//        for (int i = 0; i < seriesList.size(); i++) {
+//            ChartValueSeries chartValueSeries = seriesList.get(i);
+//            if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
+//                index = i;
+//                break;
+//            }
+//        }
+//        if (index != -1 && chartData.size() > 0) {
+//            int dx = getX(maxX) - pointer.getIntrinsicWidth() / 2;
+//            int dy = getY(seriesList.get(index), chartData.get(chartData.size() - 1)[index + 1])
+//                    - pointer.getIntrinsicHeight();
+//            canvas.translate(dx, dy);
+//            pointer.draw(canvas);
+//        }
+
+        ChartValueSeries firstChartValueSeries = null;
+        for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
-                index = i;
+                firstChartValueSeries = chartValueSeries;
                 break;
             }
         }
-        if (index != -1 && chartData.size() > 0) {
+        if (firstChartValueSeries != null && chartData.size() > 0) {
             int dx = getX(maxX) - pointer.getIntrinsicWidth() / 2;
-            int dy = getY(series[index], chartData.get(chartData.size() - 1)[index + 1])
-                    - pointer.getIntrinsicHeight();
+            double value = firstChartValueSeries.extractDataFromChartPoint(chartData.get(chartData.size() - 1));
+            int dy = getY(firstChartValueSeries, value) - pointer.getIntrinsicHeight();
             canvas.translate(dx, dy);
             pointer.draw(canvas);
         }
@@ -801,7 +888,7 @@ public class ChartView extends View {
      */
     private void updatePaths() {
         synchronized (chartData) {
-            for (ChartValueSeries chartValueSeries : series) {
+            for (ChartValueSeries chartValueSeries : seriesList) {
                 chartValueSeries.getPath().reset();
             }
             drawPaths();
@@ -813,17 +900,19 @@ public class ChartView extends View {
      * Draws all paths.
      */
     private void drawPaths() {
-        boolean[] hasMoved = new boolean[series.length];
+        boolean[] hasMoved = new boolean[seriesList.size()];
 
-        for (double[] dataPoint : chartData) {
-            for (int j = 0; j < series.length; j++) {
-                double value = dataPoint[j + 1];
+        for (ChartPoint dataPoint : chartData) {
+            for (int j = 0; j < seriesList.size(); j++) {
+                ChartValueSeries chartValueSeries = seriesList.get(j);
+
+
+                double value = chartValueSeries.extractDataFromChartPoint(dataPoint);
                 if (Double.isNaN(value)) {
                     continue;
                 }
-                ChartValueSeries chartValueSeries = series[j];
                 Path path = chartValueSeries.getPath();
-                int x = getX(dataPoint[0]);
+                int x = getX(dataPoint.getTimeOrDistance());
                 int y = getY(chartValueSeries, value);
                 if (!hasMoved[j]) {
                     hasMoved[j] = true;
@@ -839,20 +928,21 @@ public class ChartView extends View {
      * Closes all paths.
      */
     private void closePaths() {
-        for (int i = 0; i < series.length; i++) {
-            int first = getFirstPopulatedChartDataIndex(i);
+        for (int i = 0; i < seriesList.size(); i++) {
+            ChartValueSeries chartValueSeries = seriesList.get(i);
+            int first = getFirstPopulatedChartDataIndex(chartValueSeries);
 
             if (first != -1) {
-                int xCorner = getX(chartData.get(first)[0]);
+                int xCorner = getX(chartData.get(first).getTimeOrDistance());
                 int yCorner = topBorder + effectiveHeight;
-                ChartValueSeries chartValueSeries = series[i];
                 Path path = chartValueSeries.getPath();
                 // Bottom right corner
-                path.lineTo(getX(chartData.get(chartData.size() - 1)[0]), yCorner);
+                path.lineTo(getX(chartData.get(chartData.size() - 1).getTimeOrDistance()), yCorner);
                 // Bottom left corner
                 path.lineTo(xCorner, yCorner);
                 // Top right corner
-                path.lineTo(xCorner, getY(chartValueSeries, chartData.get(first)[i + 1]));
+                double value = chartValueSeries.extractDataFromChartPoint(chartData.get(first));
+                path.lineTo(xCorner, getY(chartValueSeries, value));
             }
         }
     }
@@ -860,12 +950,10 @@ public class ChartView extends View {
     /**
      * Finds the index of the first data point containing data for a series.
      * Returns -1 if no data point contains data for the series.
-     *
-     * @param seriesIndex the series's index
      */
-    private int getFirstPopulatedChartDataIndex(int seriesIndex) {
+    private int getFirstPopulatedChartDataIndex(ChartValueSeries chartValueSeries) {
         for (int i = 0; i < chartData.size(); i++) {
-            if (!Double.isNaN(chartData.get(i)[seriesIndex + 1])) {
+            if (chartValueSeries.isChartPointValid(chartData.get(i))) {
                 return i;
             }
         }
@@ -877,7 +965,7 @@ public class ChartView extends View {
      */
     private void updateDimensions() {
         maxX = xExtremityMonitor.hasData() ? xExtremityMonitor.getMax() : 1.0;
-        for (ChartValueSeries chartValueSeries : series) {
+        for (ChartValueSeries chartValueSeries : seriesList) {
             chartValueSeries.updateDimension();
         }
         float density = getContext().getResources().getDisplayMetrics().density;
@@ -885,9 +973,9 @@ public class ChartView extends View {
         yAxisOffset = (int) (density * Y_AXIS_OFFSET);
 
         int markerLength = 0;
-        for (int i = 0; i < series.length; i++) {
-            ChartValueSeries chartValueSeries = series[i];
-            if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(i)) {
+        for (int i = 0; i < seriesList.size(); i++) {
+            ChartValueSeries chartValueSeries = seriesList.get(i);
+            if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
                 Rect rect = getRect(chartValueSeries.getMarkerPaint(), chartValueSeries.getLargestMarker());
                 markerLength += rect.width() + spacer;
             }
@@ -980,22 +1068,12 @@ public class ChartView extends View {
 
     /**
      * Returns true if the index is allowed when the chartData is empty.
-     *
-     * @param index the index
      */
-    private boolean allowIfEmpty(int index) {
+    private boolean allowIfEmpty(ChartValueSeries chartValueSeries) {
         if (!chartData.isEmpty()) {
             return false;
         }
-        switch (index) {
-            case ELEVATION_SERIES:
-                return true;
-            case SPEED_SERIES:
-                return reportSpeed;
-            case PACE_SERIES:
-                return !reportSpeed;
-            default:
-                return false;
-        }
+
+        return chartValueSeries.drawIfChartPointHasNoData();
     }
 }
