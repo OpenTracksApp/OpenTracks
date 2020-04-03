@@ -49,7 +49,7 @@ public class TrackStubUtils {
     public static Track createTrack(int numberOfLocations) {
         Track track = new Track();
         for (int i = 0; i < numberOfLocations; i++) {
-            track.addTrackPoint(createSensorDataSetLocation(INITIAL_LATITUDE + i * DIFFERENCE, INITIAL_LONGITUDE + i * DIFFERENCE, INITIAL_ALTITUDE + i * DIFFERENCE));
+            track.addTrackPoint(createDefaultTrackPoint(INITIAL_LATITUDE + i * DIFFERENCE, INITIAL_LONGITUDE + i * DIFFERENCE, INITIAL_ALTITUDE + i * DIFFERENCE));
         }
 
         return track;
@@ -60,8 +60,8 @@ public class TrackStubUtils {
      *
      * @return a track stub.
      */
-    public static TrackPoint createSensorDataSetLocation() {
-        return createSensorDataSetLocation(INITIAL_LATITUDE, INITIAL_LONGITUDE, INITIAL_ALTITUDE);
+    public static TrackPoint createDefaultTrackPoint() {
+        return createDefaultTrackPoint(INITIAL_LATITUDE, INITIAL_LONGITUDE, INITIAL_ALTITUDE);
     }
 
     /**
@@ -69,7 +69,7 @@ public class TrackStubUtils {
      *
      * @return a SensorDataSetLocation stub.
      */
-    private static TrackPoint createSensorDataSetLocation(double latitude, double longitude, double altitude) {
+    private static TrackPoint createDefaultTrackPoint(double latitude, double longitude, double altitude) {
         Location location = new Location(LOCATION_PROVIDER);
         location.setLatitude(latitude);
         location.setLongitude(longitude);
