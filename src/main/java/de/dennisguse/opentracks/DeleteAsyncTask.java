@@ -26,7 +26,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
  *
  * @author Jimmy Shih
  */
-public class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
+class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     private final long[] trackIds;
     private final Context context;

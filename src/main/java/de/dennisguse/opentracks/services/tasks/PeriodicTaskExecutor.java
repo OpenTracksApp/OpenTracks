@@ -30,7 +30,6 @@ import de.dennisguse.opentracks.util.UnitConversions;
 public class PeriodicTaskExecutor {
 
     private static final String TAG = PeriodicTaskExecutor.class.getSimpleName();
-    private static final long MINUTE_TO_MILLISECONDS = 60000L;
 
     private final TrackRecordingService trackRecordingService;
     private final PeriodicTaskFactory periodicTaskFactory;
@@ -93,7 +92,7 @@ public class PeriodicTaskExecutor {
             if (timerTaskExecutor == null) {
                 timerTaskExecutor = new TimerTaskExecutor(periodicTask, trackRecordingService);
             }
-            timerTaskExecutor.scheduleTask(taskFrequency * MINUTE_TO_MILLISECONDS);
+            timerTaskExecutor.scheduleTask(taskFrequency * UnitConversions.ONE_MINUTE_MS);
         } else {
             // For distance periodic task
             calculateNextTaskDistance();

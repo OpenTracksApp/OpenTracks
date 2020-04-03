@@ -311,7 +311,6 @@ public class CustomContentProviderUtilsTest {
         // Bottom
         long startTime = 1000L;
         // AverageSpeed
-        double minGrade = -20.11;
         TrackStatistics statistics = new TrackStatistics();
         statistics.setStartTime_ms(startTime);
         statistics.setStopTime_ms(2500L);

@@ -21,7 +21,7 @@ package de.dennisguse.opentracks.services;
  *
  * @author Sandor Dornbush
  */
-public interface LocationListenerPolicy {
+interface LocationListenerPolicy {
 
     /**
      * Returns the polling interval this policy would like at this moment.

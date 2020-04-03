@@ -69,7 +69,7 @@ public class ContentProviderUtils {
      * Maximum number of waypoints that will be loaded at one time.
      */
     public static final int MAX_LOADED_WAYPOINTS_POINTS = 10000;
-    public static final String ID_SEPARATOR = ",";
+    private static final String ID_SEPARATOR = ",";
 
     private final IContentResolver contentResolver;
     private int defaultCursorBatchSize = 2000;

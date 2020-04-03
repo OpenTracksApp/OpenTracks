@@ -23,7 +23,7 @@ import android.content.Context;
  *
  * @author Sandor Dornbush
  */
-public interface PeriodicTaskFactory {
+interface PeriodicTaskFactory {
 
     /**
      * Creates a {@link PeriodicTask}.

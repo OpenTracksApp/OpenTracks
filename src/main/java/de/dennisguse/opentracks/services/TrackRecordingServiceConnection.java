@@ -70,7 +70,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     /**
      * Binds the service if it is started.
      */
-    public void bindIfStarted(Context context) {
+    private void bindIfStarted(Context context) {
         bindService(context, false);
     }
 

@@ -443,7 +443,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     /**
      * Shows start up dialogs.
      */
-    public void showStartupDialogs() {
+    private void showStartupDialogs() {
         // If stats_units_key is undefined, set it
         if (PreferencesUtils.getString(this, R.string.stats_units_key, "").equals("")) {
             String statsUnits = getString(Locale.US.equals(Locale.getDefault()) ? R.string.stats_units_imperial : R.string.stats_units_metric);
@@ -466,7 +466,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
      * @param isRecording  true if recording
      */
     private void updateMenuItems(boolean isGpsStarted, boolean isRecording) {
-        boolean hasTrack = listView != null && listView.getCount() != 0;
         if (startGpsMenuItem != null) {
             startGpsMenuItem.setVisible(!isRecording);
             if (!isRecording) {
