@@ -33,18 +33,17 @@ import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackDetailActivity;
+import de.dennisguse.opentracks.chart.ChartPoint;
 import de.dennisguse.opentracks.chart.ChartView;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * A fragment to display track chart to the user.
@@ -66,7 +65,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         return chartFragment;
     }
 
-    private final List<double[]> pendingPoints = new ArrayList<>();
+    private final List<ChartPoint> pendingPoints = new ArrayList<>();
 
     private TrackDataHub trackDataHub;
 
@@ -74,11 +73,11 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     private TrackStatisticsUpdater trackStatisticsUpdater;
     private long startTime;
 
+    //TODO Why is this needed?
     private int recordingDistanceInterval;
 
     // Modes of operation
     private boolean chartByDistance;
-    private final boolean[] chartShow = new boolean[]{true, true, true, true, true, true};
 
     // UI elements
     private ChartView chartView;
@@ -104,8 +103,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
                 boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext());
                 if (reportSpeed != chartView.getReportSpeed()) {
                     chartView.setReportSpeed(reportSpeed);
-                    setSeriesEnabled(ChartView.SPEED_SERIES, reportSpeed);
-                    setSeriesEnabled(ChartView.PACE_SERIES, !reportSpeed);
+                    chartView.applyReportSpeed();
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -236,7 +235,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     @Override
     public void onNewTrackPointsDone() {
         if (isResumed()) {
-            chartView.addPendingPoints(pendingPoints);
+            chartView.addChartPoints(pendingPoints);
             pendingPoints.clear();
             runOnUiThread(updateChart);
         }
@@ -267,35 +266,10 @@ public class ChartFragment extends Fragment implements TrackDataListener {
      * Checks the chart settings.
      */
     private void checkChartSettings() {
-        boolean needUpdate = false;
-
-        if (setSeriesEnabled(ChartView.SPEED_SERIES, chartView.getReportSpeed())) {
-            needUpdate = true;
-        }
-        if (setSeriesEnabled(ChartView.PACE_SERIES, !chartView.getReportSpeed())) {
-            needUpdate = true;
-        }
-
+        boolean needUpdate = chartView.applyReportSpeed();
         if (needUpdate) {
             chartView.postInvalidate();
         }
-    }
-
-    /**
-     * Sets the series enabled value.
-     *
-     * @param index the series index
-     * @param value the value
-     * @return true if changed
-     */
-    private boolean setSeriesEnabled(int index, boolean value) {
-        if (chartShow[index] != value) {
-            chartShow[index] = value;
-            chartView.setChartValueSeriesEnabled(index, value);
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -346,68 +320,10 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         }
     }
 
-    /**
-     * Given a {@link TrackPoint}, fill in a data point. <br>
-     * data[0] = time/distance <br>
-     * data[1] = elevation <br>
-     * data[2] = speed <br>
-     * data[3] = pace <br>
-     * data[4] = heart rate <br>
-     * data[5] = cadence <br>
-     * data[6] = power <br>
-     *
-     * @param trackPoint the trackPoint
-     */
     @VisibleForTesting
-    double[] createPendingPoint(@NonNull TrackPoint trackPoint) {
-        double timeOrDistance = Double.NaN;
-        double elevation = Double.NaN;
-        double speed = Double.NaN;
-        double pace = Double.NaN;
-
-        if (trackStatisticsUpdater != null) {
-            trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
-            TrackStatistics trackStatistics = trackStatisticsUpdater.getTrackStatistics();
-            if (chartByDistance) {
-                double distance = trackStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
-                if (!chartView.getMetricUnits()) {
-                    distance *= UnitConversions.KM_TO_MI;
-                }
-                timeOrDistance = distance;
-            } else {
-                timeOrDistance = trackStatistics.getTotalTime();
-            }
-
-            elevation = trackStatisticsUpdater.getSmoothedElevation();
-            if (!chartView.getMetricUnits()) {
-                elevation *= UnitConversions.M_TO_FT;
-            }
-
-            speed = trackStatisticsUpdater.getSmoothedSpeed() * UnitConversions.MS_TO_KMH;
-            if (!chartView.getMetricUnits()) {
-                speed *= UnitConversions.KM_TO_MI;
-            }
-            pace = speed == 0 ? 0.0 : 60.0 / speed;
-        }
-
-        double heartRate = Double.NaN;
-        double cadence = Double.NaN;
-        double power = Double.NaN;
-        if (trackPoint.getSensorDataSet() != null) {
-            SensorDataSet sensorDataSet = trackPoint.getSensorDataSet();
-            if (sensorDataSet.hasHeartRate()) {
-                heartRate = sensorDataSet.getHeartRate();
-            }
-            if (sensorDataSet.hasCadence()) {
-                cadence = sensorDataSet.getCadence();
-            }
-            if (sensorDataSet.hasPower()) {
-                power = sensorDataSet.getPower();
-            }
-        }
-
-        //TODO: Is related to ChartView.ELEVATION_SERIES etc.
-        return new double[]{timeOrDistance, elevation, speed, pace, heartRate, cadence, power};
+    ChartPoint createPendingPoint(@NonNull TrackPoint trackPoint) {
+        trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
+        return new ChartPoint(trackStatisticsUpdater, trackPoint.getSensorDataSet(), chartByDistance, chartView.getMetricUnits());
     }
 
     @VisibleForTesting
