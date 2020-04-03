@@ -43,7 +43,10 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
- * Track data hub. Receives data from {@link de.dennisguse.opentracks.content.provider.CustomContentProvider} and distributes it to {@link TrackDataListener} after some processing.
+ * Track data hub.
+ * Receives data from {@link de.dennisguse.opentracks.content.provider.CustomContentProvider} and distributes it to {@link TrackDataListener} after some processing.
+ *
+ * {@link TrackPoint}s are filtered/downsampled with a dynamic sampling frequency.
  *
  * @author Rodrigo Damazio
  */
@@ -377,32 +380,32 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
             }
         }
 
-        int localNumLoadedPoints = updateSamplingState ? numLoadedPoints : 0;
-        long localFirstSeenLocationId = updateSamplingState ? firstSeenTrackPointId : -1L;
-        long localLastSeenLocationId = updateSamplingState ? lastSeenTrackPointId : -1L;
+        int localNumLoadedTrackPoints = updateSamplingState ? numLoadedPoints : 0;
+        long localFirstSeenTrackPointId = updateSamplingState ? firstSeenTrackPointId : -1L;
+        long localLastSeenTrackPointIdId = updateSamplingState ? lastSeenTrackPointId : -1L;
         long maxPointId = updateSamplingState ? -1L : lastSeenTrackPointId;
 
         long lastTrackPointId = contentProviderUtils.getLastTrackPointId(selectedTrackId);
         int samplingFrequency = -1;
         boolean includeNextPoint = false;
 
-        try (TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, localLastSeenLocationId + 1, false)) {
+        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, localLastSeenTrackPointIdId + 1, false)) {
 
-            while (locationIterator.hasNext()) {
-                TrackPoint trackPoint = locationIterator.next();
-                long locationId = locationIterator.getTrackPointId();
+            while (trackPointIterator.hasNext()) {
+                TrackPoint trackPoint = trackPointIterator.next();
+                long trackPointId = trackPointIterator.getTrackPointId();
 
                 // Stop if past the last wanted point
-                if (maxPointId != -1L && locationId > maxPointId) {
+                if (maxPointId != -1L && trackPointId > maxPointId) {
                     break;
                 }
 
-                if (localFirstSeenLocationId == -1) {
-                    localFirstSeenLocationId = locationId;
+                if (localFirstSeenTrackPointId == -1) {
+                    localFirstSeenTrackPointId = trackPointId;
                 }
 
                 if (samplingFrequency == -1) {
-                    long numTotalPoints = Math.max(0L, lastTrackPointId - localFirstSeenLocationId);
+                    long numTotalPoints = Math.max(0L, lastTrackPointId - localFirstSeenTrackPointId);
                     samplingFrequency = 1 + (int) (numTotalPoints / targetNumPoints);
                 }
 
@@ -410,7 +413,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
                     includeNextPoint = true;
                 } else {
                     // Also include the last point if the selected track is not recording.
-                    if (includeNextPoint || (localNumLoadedPoints % samplingFrequency == 0) || (locationId == lastTrackPointId && !isSelectedTrackRecording())) {
+                    if (includeNextPoint || (localNumLoadedTrackPoints % samplingFrequency == 0) || (trackPointId == lastTrackPointId && !isSelectedTrackRecording())) {
                         includeNextPoint = false;
                         for (TrackDataListener trackDataListener : sampledInListeners) {
                             trackDataListener.onSampledInTrackPoint(trackPoint);
@@ -422,15 +425,15 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
                     }
                 }
 
-                localNumLoadedPoints++;
-                localLastSeenLocationId = locationId;
+                localNumLoadedTrackPoints++;
+                localLastSeenTrackPointIdId = trackPointId;
             }
         }
 
         if (updateSamplingState) {
-            numLoadedPoints = localNumLoadedPoints;
-            firstSeenTrackPointId = localFirstSeenLocationId;
-            lastSeenTrackPointId = localLastSeenLocationId;
+            numLoadedPoints = localNumLoadedTrackPoints;
+            firstSeenTrackPointId = localFirstSeenTrackPointId;
+            lastSeenTrackPointId = localLastSeenTrackPointIdId;
         }
 
         for (TrackDataListener listener : sampledInListeners) {

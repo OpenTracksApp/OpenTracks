@@ -48,6 +48,7 @@ import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * A fragment to display track chart to the user.
+ * ChartFragment uses a {@link TrackStatisticsUpdater} internally and recomputes the {@link TrackStatistics} from the beginning.
  *
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
@@ -219,23 +220,23 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     @Override
     public void onSampledInTrackPoint(TrackPoint trackPoint) {
         if (isResumed()) {
-            double[] data = new double[ChartView.NUM_SERIES + 1];
-            fillDataPoint(trackPoint, data);
-            pendingPoints.add(data);
+            pendingPoints.add(createPendingPoint(trackPoint));
         }
     }
 
     @Override
     public void onSampledOutTrackPoint(TrackPoint trackPoint) {
         if (isResumed()) {
-            fillDataPoint(trackPoint, null);
+            if (trackStatisticsUpdater != null) {
+                trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
+            }
         }
     }
 
     @Override
     public void onNewTrackPointsDone() {
         if (isResumed()) {
-            chartView.addDataPoints(pendingPoints);
+            chartView.addPendingPoints(pendingPoints);
             pendingPoints.clear();
             runOnUiThread(updateChart);
         }
@@ -346,7 +347,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     /**
-     * Given a trackPoint, fill in a data point, an array of double[]. <br>
+     * Given a {@link TrackPoint}, fill in a data point. <br>
      * data[0] = time/distance <br>
      * data[1] = elevation <br>
      * data[2] = speed <br>
@@ -356,10 +357,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
      * data[6] = power <br>
      *
      * @param trackPoint the trackPoint
-     * @param data       the data point to fill in, can be null
      */
     @VisibleForTesting
-    void fillDataPoint(@NonNull TrackPoint trackPoint, double[] data) {
+    double[] createPendingPoint(@NonNull TrackPoint trackPoint) {
         double timeOrDistance = Double.NaN;
         double elevation = Double.NaN;
         double speed = Double.NaN;
@@ -407,15 +407,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         }
 
         //TODO: Is related to ChartView.ELEVATION_SERIES etc.
-        if (data != null) {
-            data[0] = timeOrDistance;
-            data[1] = elevation;
-            data[2] = speed;
-            data[3] = pace;
-            data[4] = heartRate;
-            data[5] = cadence;
-            data[6] = power;
-        }
+        return new double[]{timeOrDistance, elevation, speed, pace, heartRate, cadence, power};
     }
 
     @VisibleForTesting
