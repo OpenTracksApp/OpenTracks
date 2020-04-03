@@ -223,18 +223,6 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
     }
 
     /**
-     * Reloads data for a {@link TrackDataListener}.
-     */
-    public void reloadDataForListener(final TrackDataListener trackDataListener) {
-        runInHandlerThread(new Runnable() {
-            @Override
-            public void run() {
-                loadDataForListener(trackDataListener);
-            }
-        });
-    }
-
-    /**
      * Returns true if the selected track is recording.
      */
     public boolean isSelectedTrackRecording() {

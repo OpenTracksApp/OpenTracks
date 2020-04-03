@@ -15,14 +15,14 @@ import de.dennisguse.opentracks.content.data.WaypointsColumns;
  * Database helper for creating and upgrading the database.
  */
 @VisibleForTesting
-public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
+class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
     @VisibleForTesting
-    static final int DATABASE_VERSION = 25;
+    private static final int DATABASE_VERSION = 25;
     private static final String TAG = CustomSQLiteOpenHelper.class.getSimpleName();
 
     @VisibleForTesting
-    static final String DATABASE_NAME = "database.db";
+    private static final String DATABASE_NAME = "database.db";
 
 
     public CustomSQLiteOpenHelper(Context context) {

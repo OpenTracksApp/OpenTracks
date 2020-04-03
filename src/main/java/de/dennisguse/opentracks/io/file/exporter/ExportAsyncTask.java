@@ -40,7 +40,7 @@ import de.dennisguse.opentracks.util.SystemUtils;
  * @author Jimmy Shih
  */
 //TODO Make independent from ExportActivity?
-public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
+class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     private static final String TAG = ExportAsyncTask.class.getSimpleName();
     private final TrackFileFormat trackFileFormat;
@@ -68,18 +68,6 @@ public class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         this.directory = directory;
         context = exportActivity.getApplicationContext();
         contentProviderUtils = new ContentProviderUtils(context);
-    }
-
-    /**
-     * Sets the current activity associated with this AsyncTask.
-     *
-     * @param exportActivity the current activity, can be null
-     */
-    public void setActivity(ExportActivity exportActivity) {
-        this.exportActivity = exportActivity;
-        if (completed && exportActivity != null) {
-            exportActivity.onAsyncTaskCompleted(processedTrackCount, totalTrackCount);
-        }
     }
 
     @Override

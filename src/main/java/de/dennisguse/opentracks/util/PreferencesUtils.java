@@ -93,7 +93,7 @@ public class PreferencesUtils {
      * @param keyId        the key id
      * @param defaultValue the default value
      */
-    public static boolean getBoolean(Context context, int keyId, boolean defaultValue) {
+    private static boolean getBoolean(Context context, int keyId, boolean defaultValue) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         return sharedPreferences.getBoolean(getKey(context, keyId), defaultValue);
     }
@@ -119,7 +119,7 @@ public class PreferencesUtils {
      * @param keyId        the key id
      * @param defaultValue the default value
      */
-    public static int getInt(Context context, int keyId, int defaultValue) {
+    private static int getInt(Context context, int keyId, int defaultValue) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
 
         try {
@@ -215,7 +215,7 @@ public class PreferencesUtils {
         setBoolean(context, R.string.recording_track_paused_key, RECORDING_TRACK_PAUSED);
     }
 
-    public static String getBluetoothHeartRateSensorAddressNone(Context context) {
+    private static String getBluetoothHeartRateSensorAddressNone(Context context) {
         return context.getString(R.string.sensor_type_value_none);
     }
 

@@ -32,7 +32,7 @@ import de.dennisguse.opentracks.util.ResourceUtils;
  *
  * @author apoorvn
  */
-public class ChooseActivityTypeImageAdapter extends BaseAdapter {
+class ChooseActivityTypeImageAdapter extends BaseAdapter {
 
     private final List<Integer> imageIds;
     private int selected = -1;

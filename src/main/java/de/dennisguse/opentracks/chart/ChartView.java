@@ -86,7 +86,7 @@ public class ChartView extends View {
     private final ChartValueSeries speedSeries;
     private final ChartValueSeries paceSeries;
 
-    private final List<ChartPoint> chartData = new ArrayList<>();
+    private final List<ChartPoint> chartPoints = new ArrayList<>();
     private final List<Waypoint> waypoints = new ArrayList<>();
     private final ExtremityMonitor xExtremityMonitor = new ExtremityMonitor();
     private final Paint axisPaint;
@@ -396,23 +396,13 @@ public class ChartView extends View {
         return false;
     }
 
-    /**
-     * Sets show pointer.
-     *
-     * @param value true to show pointer
-     */
     public void setShowPointer(boolean value) {
         showPointer = value;
     }
 
-    /**
-     * Adds data points.
-     *
-     * @param dataPoints an array of data points to be added
-     */
     public void addChartPoints(List<ChartPoint> dataPoints) {
-        synchronized (chartData) {
-            chartData.addAll(dataPoints);
+        synchronized (chartPoints) {
+            chartPoints.addAll(dataPoints);
             for (ChartPoint dataPoint : dataPoints) {
                 xExtremityMonitor.update(dataPoint.getTimeOrDistance());
                 for (ChartValueSeries i : seriesList) {
@@ -428,8 +418,8 @@ public class ChartView extends View {
      * Clears all data.
      */
     public void reset() {
-        synchronized (chartData) {
-            chartData.clear();
+        synchronized (chartPoints) {
+            chartPoints.clear();
             xExtremityMonitor.reset();
             zoomLevel = 1;
             updateDimensions();
@@ -437,50 +427,34 @@ public class ChartView extends View {
     }
 
     /**
-     * Resets scroll. To be called on the UI thread.
+     * Resets scroll.
+     * To be called on the UI thread.
      */
     public void resetScroll() {
         scrollTo(0, 0);
     }
 
-    /**
-     * Adds a waypoint.
-     *
-     * @param waypoint the waypoint
-     */
     public void addWaypoint(Waypoint waypoint) {
         synchronized (waypoints) {
             waypoints.add(waypoint);
         }
     }
 
-    /**
-     * Clears the waypoints.
-     */
     public void clearWaypoints() {
         synchronized (waypoints) {
             waypoints.clear();
         }
     }
 
-    /**
-     * Returns true if can zoom in.
-     */
-    public boolean canZoomIn() {
+    private boolean canZoomIn() {
         return zoomLevel < MAX_ZOOM_LEVEL;
     }
 
-    /**
-     * Returns true if can zoom out.
-     */
-    public boolean canZoomOut() {
+    private boolean canZoomOut() {
         return zoomLevel > MIN_ZOOM_LEVEL;
     }
 
-    /**
-     * Zooms in one level.
-     */
-    public void zoomIn() {
+    private void zoomIn() {
         if (canZoomIn()) {
             zoomLevel++;
             updatePaths();
@@ -488,10 +462,7 @@ public class ChartView extends View {
         }
     }
 
-    /**
-     * Zooms out one level.
-     */
-    public void zoomOut() {
+    private void zoomOut() {
         if (canZoomOut()) {
             zoomLevel--;
             scroller.abortAnimation();
@@ -511,7 +482,7 @@ public class ChartView extends View {
      *
      * @param velocityX velocity of fling in pixels per second
      */
-    public void fling(int velocityX) {
+    private void fling(int velocityX) {
         int maxWidth = effectiveWidth * (zoomLevel - 1);
         scroller.fling(getScrollX(), 0, velocityX, 0, 0, maxWidth, 0, 0);
         invalidate();
@@ -522,7 +493,7 @@ public class ChartView extends View {
      *
      * @param deltaX the number of pixels to scroll
      */
-    public void scrollBy(int deltaX) {
+    private void scrollBy(int deltaX) {
         int scrollX = getScrollX() + deltaX;
         if (scrollX < 0) {
             scrollX = 0;
@@ -566,7 +537,7 @@ public class ChartView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        synchronized (chartData) {
+        synchronized (chartPoints) {
             canvas.save();
 
             canvas.drawColor(Color.WHITE);
@@ -623,11 +594,7 @@ public class ChartView extends View {
      */
     private void drawWaypoints(Canvas canvas) {
         synchronized (waypoints) {
-            for (int i = 0; i < waypoints.size(); i++) {
-                final Waypoint waypoint = waypoints.get(i);
-                if (waypoint.getLocation() == null) {
-                    continue;
-                }
+            for (Waypoint waypoint : waypoints) {
                 double xValue = getWaypointXValue(waypoint);
                 if (xValue > maxX) {
                     continue;
@@ -729,9 +696,6 @@ public class ChartView extends View {
         }
     }
 
-    /**
-     * Gets the x axis label.
-     */
     private String getXAxisLabel() {
         Context context = getContext();
         if (chartByDistance) {
@@ -755,9 +719,6 @@ public class ChartView extends View {
         canvas.drawText(marker, getX(value), topBorder + effectiveHeight + spacing + rect.height(), xAxisMarkerPaint);
     }
 
-    /**
-     * Gets the x axis interval.
-     */
     private double getXAxisInterval() {
         double interval = maxX / zoomLevel / TARGET_X_AXIS_INTERVALS;
         if (interval < 1) {
@@ -772,16 +733,13 @@ public class ChartView extends View {
         return interval;
     }
 
-    /**
-     * Gets the x axis marker positions.
-     */
     private List<Double> getXAxisMarkerPositions(double interval) {
         List<Double> markers = new ArrayList<>();
         markers.add(0d);
         for (int i = 1; i * interval < maxX; i++) {
             markers.add(i * interval);
         }
-        // At least 2 markers
+
         if (markers.size() < 2) {
             markers.add(maxX);
         }
@@ -798,6 +756,7 @@ public class ChartView extends View {
         int y = topBorder;
         canvas.drawLine(x, y, x, y + effectiveHeight, axisPaint);
 
+        //TODO
         int markerXPosition = x - spacer;
         for (int i = 0; i < seriesList.size(); i++) {
             int index = seriesList.size() - 1 - i;
@@ -850,23 +809,6 @@ public class ChartView extends View {
      * @param canvas the canvas
      */
     private void drawPointer(Canvas canvas) {
-        //TODO pass chartValueSeries to 2nd if
-//        int index = -1;
-//        for (int i = 0; i < seriesList.size(); i++) {
-//            ChartValueSeries chartValueSeries = seriesList.get(i);
-//            if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
-//                index = i;
-//                break;
-//            }
-//        }
-//        if (index != -1 && chartData.size() > 0) {
-//            int dx = getX(maxX) - pointer.getIntrinsicWidth() / 2;
-//            int dy = getY(seriesList.get(index), chartData.get(chartData.size() - 1)[index + 1])
-//                    - pointer.getIntrinsicHeight();
-//            canvas.translate(dx, dy);
-//            pointer.draw(canvas);
-//        }
-
         ChartValueSeries firstChartValueSeries = null;
         for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
@@ -874,9 +816,9 @@ public class ChartView extends View {
                 break;
             }
         }
-        if (firstChartValueSeries != null && chartData.size() > 0) {
+        if (firstChartValueSeries != null && chartPoints.size() > 0) {
             int dx = getX(maxX) - pointer.getIntrinsicWidth() / 2;
-            double value = firstChartValueSeries.extractDataFromChartPoint(chartData.get(chartData.size() - 1));
+            double value = firstChartValueSeries.extractDataFromChartPoint(chartPoints.get(chartPoints.size() - 1));
             int dy = getY(firstChartValueSeries, value) - pointer.getIntrinsicHeight();
             canvas.translate(dx, dy);
             pointer.draw(canvas);
@@ -884,10 +826,11 @@ public class ChartView extends View {
     }
 
     /**
-     * Updates paths. The path needs to be updated any time after the data or the dimensions change.
+     * Updates paths.
+     * The path needs to be updated any time after the data or the dimensions change.
      */
     private void updatePaths() {
-        synchronized (chartData) {
+        synchronized (chartPoints) {
             for (ChartValueSeries chartValueSeries : seriesList) {
                 chartValueSeries.getPath().reset();
             }
@@ -896,26 +839,23 @@ public class ChartView extends View {
         }
     }
 
-    /**
-     * Draws all paths.
-     */
     private void drawPaths() {
         boolean[] hasMoved = new boolean[seriesList.size()];
 
-        for (ChartPoint dataPoint : chartData) {
-            for (int j = 0; j < seriesList.size(); j++) {
-                ChartValueSeries chartValueSeries = seriesList.get(j);
+        for (ChartPoint dataPoint : chartPoints) {
+            for (int i = 0; i < seriesList.size(); i++) {
+                ChartValueSeries chartValueSeries = seriesList.get(i);
 
-
-                double value = chartValueSeries.extractDataFromChartPoint(dataPoint);
-                if (Double.isNaN(value)) {
+                if (chartValueSeries.isChartPointValid(dataPoint)) {
                     continue;
                 }
+
+                double value = chartValueSeries.extractDataFromChartPoint(dataPoint);
                 Path path = chartValueSeries.getPath();
                 int x = getX(dataPoint.getTimeOrDistance());
                 int y = getY(chartValueSeries, value);
-                if (!hasMoved[j]) {
-                    hasMoved[j] = true;
+                if (!hasMoved[i]) {
+                    hasMoved[i] = true;
                     path.moveTo(x, y);
                 } else {
                     path.lineTo(x, y);
@@ -924,24 +864,20 @@ public class ChartView extends View {
         }
     }
 
-    /**
-     * Closes all paths.
-     */
     private void closePaths() {
-        for (int i = 0; i < seriesList.size(); i++) {
-            ChartValueSeries chartValueSeries = seriesList.get(i);
+        for (ChartValueSeries chartValueSeries : seriesList) {
             int first = getFirstPopulatedChartDataIndex(chartValueSeries);
 
             if (first != -1) {
-                int xCorner = getX(chartData.get(first).getTimeOrDistance());
+                int xCorner = getX(chartPoints.get(first).getTimeOrDistance());
                 int yCorner = topBorder + effectiveHeight;
                 Path path = chartValueSeries.getPath();
                 // Bottom right corner
-                path.lineTo(getX(chartData.get(chartData.size() - 1).getTimeOrDistance()), yCorner);
+                path.lineTo(getX(chartPoints.get(chartPoints.size() - 1).getTimeOrDistance()), yCorner);
                 // Bottom left corner
                 path.lineTo(xCorner, yCorner);
                 // Top right corner
-                double value = chartValueSeries.extractDataFromChartPoint(chartData.get(first));
+                double value = chartValueSeries.extractDataFromChartPoint(chartPoints.get(first));
                 path.lineTo(xCorner, getY(chartValueSeries, value));
             }
         }
@@ -949,11 +885,11 @@ public class ChartView extends View {
 
     /**
      * Finds the index of the first data point containing data for a series.
-     * Returns -1 if no data point contains data for the series.
+     * @return -1 if no data point contains data for the series.
      */
     private int getFirstPopulatedChartDataIndex(ChartValueSeries chartValueSeries) {
-        for (int i = 0; i < chartData.size(); i++) {
-            if (chartValueSeries.isChartPointValid(chartData.get(i))) {
+        for (int i = 0; i < chartPoints.size(); i++) {
+            if (chartValueSeries.isChartPointValid(chartPoints.get(i))) {
                 return i;
             }
         }
@@ -973,8 +909,7 @@ public class ChartView extends View {
         yAxisOffset = (int) (density * Y_AXIS_OFFSET);
 
         int markerLength = 0;
-        for (int i = 0; i < seriesList.size(); i++) {
-            ChartValueSeries chartValueSeries = seriesList.get(i);
+        for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
                 Rect rect = getRect(chartValueSeries.getMarkerPaint(), chartValueSeries.getLargestMarker());
                 markerLength += rect.width() + spacer;
@@ -1070,7 +1005,7 @@ public class ChartView extends View {
      * Returns true if the index is allowed when the chartData is empty.
      */
     private boolean allowIfEmpty(ChartValueSeries chartValueSeries) {
-        if (!chartData.isEmpty()) {
+        if (!chartPoints.isEmpty()) {
             return false;
         }
 

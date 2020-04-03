@@ -25,7 +25,7 @@ import androidx.annotation.NonNull;
  *
  * @author Sandor Dornbush
  */
-public class DoubleBuffer {
+class DoubleBuffer {
 
     // The sliding buffer of doubles.
     private final double[] buffer;

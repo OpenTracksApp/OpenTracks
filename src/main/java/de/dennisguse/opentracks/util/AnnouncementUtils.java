@@ -41,7 +41,7 @@ public class AnnouncementUtils {
         return context.getString(R.string.voice_template, totalDistance, getAnnounceTime(context, trackStatistics.getMovingTime()), rate);
     }
 
-    public static String getAnnounceTime(Context context, long time) {
+    private static String getAnnounceTime(Context context, long time) {
         int[] parts = StringUtils.getTimeParts(time);
         String seconds = context.getResources()
                 .getQuantityString(R.plurals.voiceSeconds, parts[0], parts[0]);
@@ -71,7 +71,7 @@ public class AnnouncementUtils {
      *
      * @param d the double value
      */
-    public static int getQuantityCount(double d) {
+    private static int getQuantityCount(double d) {
         if (d == 0) {
             return 0;
         } else if (d == 1) {

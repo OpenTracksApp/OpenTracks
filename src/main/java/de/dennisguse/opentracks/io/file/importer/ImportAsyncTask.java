@@ -41,7 +41,7 @@ import de.dennisguse.opentracks.util.SystemUtils;
  *
  * @author Jimmy Shih
  */
-public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
+class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     private static final String TAG = ImportAsyncTask.class.getSimpleName();
     private final TrackFileFormat trackFileFormat;
@@ -79,18 +79,6 @@ public class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         importTrackCount = 0;
         totalTrackCount = 0;
         trackId = -1L;
-    }
-
-    /**
-     * Sets the current {@link ImportActivity} associated with this AyncTask.
-     *
-     * @param importActivity the current {@link ImportActivity}, can be null
-     */
-    public void setActivity(ImportActivity importActivity) {
-        this.importActivity = importActivity;
-        if (completed && importActivity != null) {
-            importActivity.onAsyncTaskCompleted(importTrackCount, totalTrackCount);
-        }
     }
 
     @Override

@@ -43,7 +43,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
 
     private static final String[] COLUMNS = {OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE};
 
-    public static final String TAG = ShareContentProvider.class.getSimpleName();
+    private static final String TAG = ShareContentProvider.class.getSimpleName();
 
     private static final int URI_GPX = 0;
     private static final int URI_KML_ONLY = 1;
@@ -90,7 +90,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
         return new Pair<>(uri, mime);
     }
 
-    protected static long[] parseURI(Uri uri) {
+    static long[] parseURI(Uri uri) {
         List<String> uriPaths = uri.getPathSegments();
         if (uriPaths == null || uriPaths.size() < 2) {
             Log.d(TAG, "URI does not contain any trackIds.");
@@ -151,7 +151,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
     }
 
     @Nullable
-    public static String getTypeMime(@NonNull Uri uri) {
+    private static String getTypeMime(@NonNull Uri uri) {
         return getTrackFileFormat(uri).getMimeType();
     }
 

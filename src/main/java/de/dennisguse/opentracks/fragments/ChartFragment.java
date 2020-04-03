@@ -299,16 +299,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     /**
-     * Reloads the trackDataHub.
-     * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
-     */
-    private synchronized void reloadTrackDataHub() {
-        if (trackDataHub != null) {
-            trackDataHub.reloadDataForListener(this);
-        }
-    }
-
-    /**
      * Runs a runnable on the UI thread if possible.
      *
      * @param runnable the runnable
