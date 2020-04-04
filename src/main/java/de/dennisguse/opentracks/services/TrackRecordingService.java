@@ -352,8 +352,9 @@ public class TrackRecordingService extends Service {
 
     /**
      * Resumes the track identified by trackId.
+     * It results in a pause/continue.
      *
-     * @param trackId
+     * @param trackId the id of the track to be resumed.
      */
     void resumeTrack(long trackId) {
         Track track = contentProviderUtils.getTrack(trackId);
@@ -362,10 +363,14 @@ public class TrackRecordingService extends Service {
             return;
         }
 
+        // Sync the real time setting the stop time with current time.
         track.getTripStatistics().setStopTime(System.currentTimeMillis());
         trackTripStatisticsUpdater = new TripStatisticsUpdater(track.getTripStatistics());
 
-        // Update shared preferences
+        insertTrackPoint(track, TrackPoint.createPause(), null);
+        insertTrackPoint(track, TrackPoint.createResume(), null);
+
+        // Update shared preferences.
         updateRecordingState(trackId, false);
 
         startRecording();
