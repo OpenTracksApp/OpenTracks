@@ -18,7 +18,6 @@ package de.dennisguse.opentracks.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
@@ -49,7 +48,6 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * A fragment to display track statistics to the user.
@@ -59,12 +57,9 @@ import de.dennisguse.opentracks.util.UnitConversions;
  */
 public class StatsFragment extends Fragment implements TrackDataListener {
 
-    private static final String STATS_FRAGMENT_TAG = StatsFragment.class.getSimpleName();
-
-    private static final long UI_UPDATE_INTERVAL = UnitConversions.ONE_SECOND_MS;
+    private static final String TAG = StatsFragment.class.getSimpleName();
 
     private TrackDataHub trackDataHub;
-    private Handler handlerUpdateUI;
 
     //TODO Initialize immediately and remove in onDestroy()
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
@@ -100,8 +95,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                         trackRecordingServiceConnection = new TrackRecordingServiceConnection(null);
                     }
                     trackRecordingServiceConnection.startConnection(getContext());
-
-                    handlerUpdateUI.post(updateUIeachSecond);
                 }
             }
         }
@@ -118,18 +111,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     private TextView heartRateSensorView;
 
     private TextView totalTimeValueView;
-    private final Runnable updateUIeachSecond = new Runnable() {
-        public void run() {
-            if (isResumed() && isSelectedTrackRecording()) {
-                if (!isSelectedTrackPaused() && lastTrackStatistics != null) {
-                    updateTotalTime();
-                    updateSensorDataUI();
-                }
 
-                handlerUpdateUI.postDelayed(this, UI_UPDATE_INTERVAL);
-            }
-        }
-    };
     private TextView distanceValue;
     private TextView distanceUnit;
     private View activityLabel;
@@ -211,8 +193,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
         recordingGpsAccuracy = Integer.parseInt(getContext().getResources().getString(R.string.recording_gps_accuracy_default));
 
-        handlerUpdateUI = new Handler();
-
         Spinner activityTypeIcon = getView().findViewById(R.id.stats_activity_type_icon);
         activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(getActivity(), ""));
         activityTypeIcon.setOnTouchListener(new View.OnTouchListener() {
@@ -243,8 +223,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(null);
         trackRecordingServiceConnection.startConnection(getContext());
-
-        handlerUpdateUI.post(updateUIeachSecond);
     }
 
     @Override
@@ -252,8 +230,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         super.onPause();
         pauseTrackDataHub();
         PreferencesUtils.unregister(getContext(), sharedPreferenceChangeListener);
-
-        handlerUpdateUI.removeCallbacks(updateUIeachSecond);
     }
 
     @Override
@@ -432,7 +408,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
         SensorDataSet sensorDataSet = null;
         if (trackRecordingService == null) {
-            Log.d(STATS_FRAGMENT_TAG, "Cannot get the track recording service.");
+            Log.d(TAG, "Cannot get the track recording service.");
         } else {
             //TODO sensorState = trackRecordingService.getSensorState();
             sensorDataSet = trackRecordingService.getSensorData();

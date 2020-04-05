@@ -29,6 +29,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
@@ -81,6 +82,17 @@ public class TrackRecordingService extends Service {
     private PeriodicTaskExecutor voiceExecutor;
     private TrackRecordingServiceNotificationManager notificationManager;
     private LocationListenerPolicy locationListenerPolicy;
+
+    private Handler handlerTotalTimeUpdater = new Handler();
+    private final Runnable updateTotalTimeEachSecond = new Runnable() {
+        public void run() {
+            if (isRecording() && !isPaused()) {
+
+                long nextExecution = updateTotalTime();
+                handlerTotalTimeUpdater.postDelayed(this, nextExecution);
+            }
+        }
+    };
 
     private long recordingTrackId;
     private boolean recordingTrackPaused;
@@ -266,6 +278,7 @@ public class TrackRecordingService extends Service {
         return trackStatisticsUpdater.getTrackStatistics();
     }
 
+    @Deprecated //Total time is exposed via TrackDataHub.
     public long getTotalTime() {
         if (trackStatisticsUpdater == null) {
             return 0;
@@ -421,6 +434,8 @@ public class TrackRecordingService extends Service {
 
         startGps();
 
+        handlerTotalTimeUpdater.post(updateTotalTimeEachSecond);
+
         // Restore periodic tasks
         voiceExecutor.restore();
     }
@@ -508,6 +523,8 @@ public class TrackRecordingService extends Service {
             remoteSensorManager = null;
         }
         lastTrackPoint = null;
+
+        handlerTotalTimeUpdater.removeCallbacks(updateTotalTimeEachSecond);
 
         stopGps(trackStopped);
     }
@@ -669,11 +686,23 @@ public class TrackRecordingService extends Service {
     }
 
     /**
+     * Updates the total time and computes the time until the next full second.
+     *
+     * @return milliseconds until next full second for the track's total time.
+     */
+    private synchronized long updateTotalTime() {
+        Track track = contentProviderUtils.getTrack(recordingTrackId);
+        updateRecordingTrack(track);
+        return UnitConversions.ONE_SECOND_MS - track.getTrackStatistics().getTotalTime() % UnitConversions.ONE_SECOND_MS;
+    }
+
+    /**
      * Updates the recording track time.
+     * Needs to be synchronized as it might be called by insertTrackPoint() and updateTotalTime().
      *
      * @param track the track
      */
-    private void updateRecordingTrack(Track track) {
+    private synchronized void updateRecordingTrack(Track track) {
         trackStatisticsUpdater.updateTime(System.currentTimeMillis());
         track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
         contentProviderUtils.updateTrack(track);
