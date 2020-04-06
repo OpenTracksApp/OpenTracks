@@ -74,7 +74,7 @@ public class KmlTrackWriter implements TrackWriter {
     /**
      * @param context            the context
      * @param hasMultipleTracks  should encode multiple tracks into one file?
-     * @param exportTrackDetail should detailed information about the track be exported (e.g., title, description, waypoints, timing)?
+     * @param exportTrackDetail  should detailed information about the track be exported (e.g., title, description, waypoints, timing)?
      * @param exportSensorData   should {@link SensorDataSet} be exported?
      * @param exportPhotos       should pictures be exported (if true: exports to KMZ)?
      */
@@ -192,7 +192,8 @@ public class KmlTrackWriter implements TrackWriter {
         this.startTrackPoint = startTrackPoint;
         if (printWriter != null) {
             String name = context.getString(R.string.marker_label_start, track.getName());
-            writePlacemark(name, "", "", START_STYLE, startTrackPoint.getLocation());
+            Location location = startTrackPoint != null ? startTrackPoint.getLocation() : null;
+            writePlacemark(name, "", "", START_STYLE, location);
             printWriter.println("<Placemark>");
 
             if (exportTrackDetail) {
@@ -218,7 +219,8 @@ public class KmlTrackWriter implements TrackWriter {
             if (exportTrackDetail) {
                 String name = context.getString(R.string.marker_label_end, track.getName());
                 String description = descriptionGenerator.generateTrackDescription(track, false);
-                writePlacemark(name, "", description, END_STYLE, endTrackPoint.getLocation());
+                Location location = endTrackPoint != null ? endTrackPoint.getLocation() : null;
+                writePlacemark(name, "", description, END_STYLE, location);
             }
         }
     }
@@ -345,7 +347,7 @@ public class KmlTrackWriter implements TrackWriter {
             writeCategory(category);
 
             if (exportPhotos) {
-                printWriter.println("<Icon><href>" + Uri.decode(photoUrl) + "</href></Icon>");
+                printWriter.println("<Icon><href>" + KmzTrackExporter.buildKmzImageFilePath(Uri.parse(photoUrl)) + "</href></Icon>");
             }
 
             printWriter.print("<ViewVolume>");
