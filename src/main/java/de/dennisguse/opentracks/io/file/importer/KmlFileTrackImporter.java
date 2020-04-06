@@ -186,9 +186,9 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
             return;
         }
 
+        // If there is photoUrl it has to be changed because that url in kml file isn't a valid content:// to the imported one.
         if (photoUrl != null) {
-            Uri uri = Uri.parse(photoUrl);
-            photoUrl = getPhotoUrl(uri.getLastPathSegment());
+            photoUrl = getPhotoUrl(Uri.parse(photoUrl).getLastPathSegment());
         }
 
         addWaypoint();

@@ -126,7 +126,7 @@ public class KmzTrackExporter implements TrackExporter {
         Uri uri = Uri.parse(photoUrl);
 
         try (InputStream inputStream = context.getContentResolver().openInputStream(uri)) {
-            ZipEntry zipEntry = new ZipEntry(KMZ_IMAGES_DIR + File.separatorChar + FileUtils.sanitizeFileName(uri.getLastPathSegment()));
+            ZipEntry zipEntry = new ZipEntry(buildKmzImageFilePath(uri));
             zipOutputStream.putNextEntry(zipEntry);
 
             if (inputStream == null) throw new FileNotFoundException();
@@ -146,5 +146,14 @@ public class KmzTrackExporter implements TrackExporter {
         while ((byteCount = inputStream.read(buffer)) != -1) {
             outputStream.write(buffer, 0, byteCount);
         }
+    }
+
+    /**
+     * Builds and returns the path for the file that will be saved inside KMZ_IMAGES_DIR.
+     *
+     * @param uri URI object.
+     */
+    public static String buildKmzImageFilePath(Uri uri) {
+        return KMZ_IMAGES_DIR + File.separatorChar + FileUtils.sanitizeFileName(uri.getLastPathSegment());
     }
 }
