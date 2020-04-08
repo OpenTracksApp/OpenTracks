@@ -48,7 +48,7 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
         getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, prefsFragment).commit();
     }
 
-    private static class PrefsFragment extends PreferenceFragmentCompat {
+    public static class PrefsFragment extends PreferenceFragmentCompat {
 
         private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
