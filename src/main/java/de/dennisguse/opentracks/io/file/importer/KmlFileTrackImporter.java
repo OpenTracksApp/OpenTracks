@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
-import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
@@ -187,9 +186,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         }
 
         // If there is photoUrl it has to be changed because that url in kml file is a relative path to the internal kmz file.
-        if (photoUrl != null) {
-            photoUrl = getPhotoUrl(Uri.parse(photoUrl).getLastPathSegment());
-        }
+        photoUrl = getInternalPhotoUrl(photoUrl);
 
         addWaypoint();
     }
