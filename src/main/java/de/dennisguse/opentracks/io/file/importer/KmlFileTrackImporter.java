@@ -186,7 +186,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
             return;
         }
 
-        // If there is photoUrl it has to be changed because that url in kml file isn't a valid content:// to the imported one.
+        // If there is photoUrl it has to be changed because that url in kml file is a relative path to the internal kmz file.
         if (photoUrl != null) {
             photoUrl = getPhotoUrl(Uri.parse(photoUrl).getLastPathSegment());
         }
