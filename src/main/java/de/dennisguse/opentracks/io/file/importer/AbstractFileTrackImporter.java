@@ -378,7 +378,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
         Uri photoUri = FileUtils.getUriForFile(context, file);
 
-        return photoUri.toString();
+        return "" + photoUri;
     }
 
     /**
