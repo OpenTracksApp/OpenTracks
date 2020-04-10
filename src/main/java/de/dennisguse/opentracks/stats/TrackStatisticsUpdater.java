@@ -62,9 +62,9 @@ public class TrackStatisticsUpdater {
     private final TrackStatistics trackStatistics;
 
     // A buffer of the recent elevation readings (m)
-    private final DoubleBuffer elevationBuffer_m = new DoubleBuffer(ELEVATION_SMOOTHING_FACTOR);
+    private final DoubleRingBuffer elevationBuffer_m = new DoubleRingBuffer(ELEVATION_SMOOTHING_FACTOR);
     // A buffer of the recent speed readings (m/s) for calculating max speed
-    private final DoubleBuffer speedBuffer_ms = new DoubleBuffer(SPEED_SMOOTHING_FACTOR);
+    private final DoubleRingBuffer speedBuffer_ms = new DoubleRingBuffer(SPEED_SMOOTHING_FACTOR);
 
     // The current segment's statistics
     private TrackStatistics currentSegment;

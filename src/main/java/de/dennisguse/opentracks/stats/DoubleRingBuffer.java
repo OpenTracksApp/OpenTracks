@@ -19,13 +19,13 @@ package de.dennisguse.opentracks.stats;
 import androidx.annotation.NonNull;
 
 /**
- * This class maintains a buffer of doubles.
+ * This class maintains a ring buffer of doubles.
  * This buffer is a convenient class for storing a series of doubles and calculating information about them.
  * This is a FIFO buffer.
  *
  * @author Sandor Dornbush
  */
-class DoubleBuffer {
+class DoubleRingBuffer {
 
     // The sliding buffer of doubles.
     private final double[] buffer;
@@ -41,7 +41,7 @@ class DoubleBuffer {
      *
      * @param size the size
      */
-    DoubleBuffer(int size) {
+    DoubleRingBuffer(int size) {
         if (size < 1) {
             throw new IllegalArgumentException("The buffer size must be greater than 1.");
         }
