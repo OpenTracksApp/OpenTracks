@@ -33,6 +33,7 @@ import android.os.IBinder;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.TaskStackBuilder;
 
 import java.util.concurrent.ExecutorService;
@@ -59,6 +60,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackNameUtils;
+import de.dennisguse.opentracks.util.TrackPointUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
@@ -69,10 +71,7 @@ import de.dennisguse.opentracks.util.UnitConversions;
  */
 public class TrackRecordingService extends Service {
 
-    // Anything faster than that (in meters per second) will be considered moving.
     private static final String TAG = TrackRecordingService.class.getSimpleName();
-
-    public static final double MAX_NO_MOVEMENT_SPEED = 0.224;
 
     // The following variables are set in onCreate:
     private ExecutorService executorService;
@@ -455,7 +454,9 @@ public class TrackRecordingService extends Service {
         if (track != null) {
             // If not paused, add the last location
             if (!paused) {
-                insertTrackPoint(track, lastTrackPoint, getLastValidTrackPointInCurrentSegment(trackId));
+                if (lastTrackPoint != null) {
+                    insertTrackPoint(track, lastTrackPoint, getLastValidTrackPointInCurrentSegment(trackId));
+                }
 
                 // Update the recording track time
                 updateRecordingTrack(track);
@@ -574,27 +575,23 @@ public class TrackRecordingService extends Service {
         TrackPoint trackPoint = new TrackPoint(location, getSensorDataSet());
         notificationManager.updateTrackPoint(this, trackPoint, recordingGpsAccuracy);
 
-        if (!location.hasAccuracy() || location.getAccuracy() >= recordingGpsAccuracy) {
+        if (!TrackPointUtils.fulfillsAccuracy(trackPoint, recordingGpsAccuracy)) {
             Log.d(TAG, "Ignore onLocationChangedAsync. Poor accuracy.");
             return;
         }
 
-        //TODO Necessary?
-        // Fix for phones that do not set the time field
-        if (location.getTime() == 0L) {
-            location.setTime(System.currentTimeMillis());
-        }
+        TrackPointUtils.fixTime(trackPoint);
 
+        //TODO Figure out how to avoid loading the lastValidTrackPoint from the database
         TrackPoint lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(track.getId());
         long idleTime = 0L;
-        if (lastValidTrackPoint != null && location.getTime() > lastValidTrackPoint.getLocation().getTime()) {
-            idleTime = location.getTime() - lastValidTrackPoint.getLocation().getTime();
+        if (TrackPointUtils.after(trackPoint, lastValidTrackPoint)) {
+            idleTime = trackPoint.getTime() - lastValidTrackPoint.getLocation().getTime();
         }
         locationListenerPolicy.updateIdleTime(idleTime);
         if (currentRecordingInterval != locationListenerPolicy.getDesiredPollingInterval()) {
             registerLocationListener();
         }
-
 
         // Always insert the first segment location
         if (!currentSegmentHasLocation) {
@@ -611,7 +608,7 @@ public class TrackRecordingService extends Service {
             return;
         }
 
-        double distanceToLastTrackLocation = location.distanceTo(lastValidTrackPoint.getLocation());
+        double distanceToLastTrackLocation = trackPoint.distanceTo(lastValidTrackPoint);
         if (distanceToLastTrackLocation > maxRecordingDistance) {
             insertTrackPoint(track, lastTrackPoint, lastValidTrackPoint);
             insertTrackPoint(track, TrackPoint.createPause(), null);
@@ -622,16 +619,16 @@ public class TrackRecordingService extends Service {
             insertTrackPoint(track, lastTrackPoint, lastValidTrackPoint);
             insertTrackPoint(track, trackPoint, null);
             isIdle = false;
-        } else if (!isIdle && location.hasSpeed() && location.getSpeed() < MAX_NO_MOVEMENT_SPEED) {
+        } else if (!isIdle && !TrackPointUtils.isMoving(trackPoint)) {
             insertTrackPoint(track, lastTrackPoint, lastValidTrackPoint);
             insertTrackPoint(track, trackPoint, null);
             isIdle = true;
-        } else if (isIdle && location.hasSpeed() && location.getSpeed() >= MAX_NO_MOVEMENT_SPEED) {
+        } else if (isIdle && TrackPointUtils.isMoving(trackPoint)) {
             insertTrackPoint(track, lastTrackPoint, lastValidTrackPoint);
             insertTrackPoint(track, trackPoint, null);
             isIdle = false;
         } else {
-            Log.d(TAG, "Not recording location, idle");
+            Log.d(TAG, "Not recording TrackPoint, idle");
         }
         lastTrackPoint = trackPoint;
     }
@@ -643,14 +640,10 @@ public class TrackRecordingService extends Service {
      * @param trackPoint          the trackPoint
      * @param lastValidTrackPoint the last valid track point, can be null
      */
-    private void insertTrackPoint(Track track, TrackPoint trackPoint, TrackPoint lastValidTrackPoint) {
-        if (trackPoint == null) {
-            Log.w(TAG, "Ignore insertLocation. trackPoint is null.");
-            return;
-        }
-        // Do not insert if inserted already
-        if (lastValidTrackPoint != null && lastValidTrackPoint.getTime() == trackPoint.getTime()) {
-            Log.w(TAG, "Ignore insertLocation. trackPoint time same as last valid track point time.");
+    private void insertTrackPoint(@NonNull Track track, @NonNull TrackPoint trackPoint, TrackPoint lastValidTrackPoint) {
+        if (TrackPointUtils.equalTime(trackPoint, lastValidTrackPoint)) {
+            // Do not insert if inserted already
+            Log.w(TAG, "Ignore insertTrackPoint. trackPoint time same as last valid track point time.");
             return;
         }
 

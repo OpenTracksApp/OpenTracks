@@ -49,6 +49,7 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
+import de.dennisguse.opentracks.util.TrackPointUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
@@ -356,7 +357,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
                         if (lastTrackPoint != null) {
                             boolean hasFix = !LocationUtils.isLocationOld(lastTrackPoint.getLocation());
-                            boolean hasGoodFix = lastTrackPoint.hasAccuracy() && lastTrackPoint.getAccuracy() < recordingGpsAccuracy;
+                            boolean hasGoodFix = TrackPointUtils.fulfillsAccuracy(lastTrackPoint, recordingGpsAccuracy);
 
                             if (!hasFix || !hasGoodFix) {
                                 lastTrackPoint = null;
