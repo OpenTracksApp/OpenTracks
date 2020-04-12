@@ -1,0 +1,4 @@
+v3.6.1: OpenTracks
+
+Bugfix:
+- KMZ import: store correct picture path

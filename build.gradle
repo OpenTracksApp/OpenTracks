@@ -59,10 +59,13 @@ android {
                 applicationName: "@string/app_name"
         ]
 
-        //Useful for debugging.
-        //versionCode getVersionCode()
+        versionCode 3333
+        //versionCode getVersionCode() //Useful for debugging.
+        versionName "v3.6.1"
 
         buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
+
+
 
         minSdkVersion 21
         targetSdkVersion 29
