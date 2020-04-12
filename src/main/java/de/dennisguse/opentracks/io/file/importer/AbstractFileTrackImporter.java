@@ -391,7 +391,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         }
 
         File dir = FileUtils.getPhotoDir(context, importTrackId);
-        File file = new File(dir, externalPhotoUrl);
+        File file = new File(dir, filename);
 
         Uri photoUri = FileUtils.getUriForFile(context, file);
 
