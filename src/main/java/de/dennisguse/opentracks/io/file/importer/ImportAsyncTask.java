@@ -186,7 +186,7 @@ class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
                 Uri uri = contentProviderUtils.insertTrack(new Track());
                 long newId = Long.parseLong(uri.getLastPathSegment());
 
-                trackImporter = new KmzTrackImporter(importActivity, newId);
+                trackImporter = new KmzTrackImporter(importActivity, newId, file.getUri());
             }
         }
 

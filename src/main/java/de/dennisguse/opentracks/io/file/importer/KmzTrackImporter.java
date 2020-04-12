@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import java.io.ByteArrayInputStream;
@@ -46,50 +47,103 @@ public class KmzTrackImporter implements TrackImporter {
 
     private final Context context;
     private final long importTrackId;
+    private Uri uriKmzFile;
 
     /**
      * Constructor.
      *
      * @param context       the context
      * @param importTrackId track id to import to. This should not be -1L so that images in the kmz file can be imported.
+     * @param uriFile       URI of the kmz file.
      */
-    KmzTrackImporter(Context context, long importTrackId) {
+    KmzTrackImporter(Context context, long importTrackId, Uri uriFile) {
         this.context = context;
         this.importTrackId = importTrackId;
+        this.uriKmzFile = uriFile;
     }
 
     @Override
     public long importFile(InputStream inputStream) {
-        long trackId = importTrackId;
-        try (ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
+        long trackId;
+
+        if (!copyKmzImages()) {
+            cleanImport(context, importTrackId);
+            return -1L;
+        }
+
+        trackId = findAndParseKmlFile(inputStream);
+        if (trackId == -1L) {
+            cleanImport(context, importTrackId);
+            return -1L;
+        }
+
+        return trackId;
+    }
+
+    /**
+     * Copies KMZ images that are inside KmzTrackExporter.KMZ_IMAGES_DIR to OpenTracks external storage.
+     *
+     * @return false if there are errors or true otherwise.
+     */
+    private boolean copyKmzImages() {
+        try (InputStream inputStream = context.getContentResolver().openInputStream(uriKmzFile);
+             ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
             ZipEntry zipEntry;
 
             while ((zipEntry = zipInputStream.getNextEntry()) != null) {
                 if (Thread.interrupted()) {
                     Log.d(TAG, "Thread interrupted");
-                    cleanImport(context, trackId);
+                    return false;
+                }
+
+                String fileName = zipEntry.getName();
+                String prefix = KmzTrackExporter.KMZ_IMAGES_DIR + File.separatorChar;
+                if (fileName.startsWith(prefix)) {
+                    readImageFile(zipInputStream, fileName.substring(prefix.length()));
+                }
+
+                zipInputStream.closeEntry();
+            }
+
+            return true;
+        } catch (IOException e) {
+            Log.e(TAG, "Unable to import file", e);
+            return false;
+        }
+    }
+
+    /**
+     * Finds KmzTrackExporter.KMZ_KML_FILE file inside kmz file (inputStream) and it parses it.
+     *
+     * @param inputStream kmz input stream.
+     * @return            -1 if error or the id of the track otherwise.
+     */
+    private long findAndParseKmlFile(InputStream inputStream) {
+        try (ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
+            ZipEntry zipEntry;
+            long trackId = -1L;
+
+            while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+                if (Thread.interrupted()) {
+                    Log.d(TAG, "Thread interrupted");
                     return -1L;
                 }
+
                 String fileName = zipEntry.getName();
                 if (KmzTrackExporter.KMZ_KML_FILE.equals(fileName)) {
                     trackId = parseKml(zipInputStream);
                     if (trackId == -1L) {
                         Log.d(TAG, "Unable to parse kml in kmz");
-                        cleanImport(context, trackId);
                         return -1L;
                     }
-                } else {
-                    String prefix = KmzTrackExporter.KMZ_IMAGES_DIR + File.separatorChar;
-                    if (fileName.startsWith(prefix)) {
-                        readImageFile(zipInputStream, fileName.substring(prefix.length()));
-                    }
                 }
+
                 zipInputStream.closeEntry();
             }
+
             return trackId;
         } catch (IOException e) {
             Log.e(TAG, "Unable to import file", e);
-            cleanImport(context, trackId);
             return -1L;
         }
     }
