@@ -588,6 +588,7 @@ public class TrackRecordingService extends Service {
         if (TrackPointUtils.after(trackPoint, lastValidTrackPoint)) {
             idleTime = trackPoint.getTime() - lastValidTrackPoint.getLocation().getTime();
         }
+
         locationListenerPolicy.updateIdleTime(idleTime);
         if (currentRecordingInterval != locationListenerPolicy.getDesiredPollingInterval()) {
             registerLocationListener();
@@ -615,21 +616,39 @@ public class TrackRecordingService extends Service {
 
             insertTrackPoint(track, trackPoint, null);
             isIdle = false;
-        } else if (trackPoint.getSensorDataSet() != null || distanceToLastTrackLocation >= recordingDistanceInterval) {
+
+            lastTrackPoint = trackPoint;
+            return;
+        }
+
+        if (trackPoint.getSensorDataSet() != null || distanceToLastTrackLocation >= recordingDistanceInterval) {
             insertTrackPoint(track, lastTrackPoint, lastValidTrackPoint);
             insertTrackPoint(track, trackPoint, null);
             isIdle = false;
-        } else if (!isIdle && !TrackPointUtils.isMoving(trackPoint)) {
+
+            lastTrackPoint = trackPoint;
+            return;
+        }
+
+        if (!isIdle && !TrackPointUtils.isMoving(trackPoint)) {
             insertTrackPoint(track, lastTrackPoint, lastValidTrackPoint);
             insertTrackPoint(track, trackPoint, null);
             isIdle = true;
-        } else if (isIdle && TrackPointUtils.isMoving(trackPoint)) {
+
+            lastTrackPoint = trackPoint;
+            return;
+        }
+
+        if (isIdle && TrackPointUtils.isMoving(trackPoint)) {
             insertTrackPoint(track, lastTrackPoint, lastValidTrackPoint);
             insertTrackPoint(track, trackPoint, null);
             isIdle = false;
-        } else {
-            Log.d(TAG, "Not recording TrackPoint, idle");
+
+            lastTrackPoint = trackPoint;
+            return;
         }
+
+        Log.d(TAG, "Not recording TrackPoint, idle");
         lastTrackPoint = trackPoint;
     }
 
