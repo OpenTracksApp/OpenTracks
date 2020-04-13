@@ -18,7 +18,6 @@ package de.dennisguse.opentracks;
 
 import android.location.Location;
 
-import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 
@@ -39,21 +38,6 @@ public class TrackStubUtils {
     private static final float INITIAL_BEARING = 3.0f;
     // Used to change the value of latitude, longitude, and altitude.
     private static final double DIFFERENCE = 0.01;
-
-    /**
-     * Gets a a {@link Track} stub with specified number of locations.
-     *
-     * @param numberOfLocations the number of locations for the track
-     * @return a track stub.
-     */
-    public static Track createTrack(int numberOfLocations) {
-        Track track = new Track();
-        for (int i = 0; i < numberOfLocations; i++) {
-            track.addTrackPoint(createDefaultTrackPoint(INITIAL_LATITUDE + i * DIFFERENCE, INITIAL_LONGITUDE + i * DIFFERENCE, INITIAL_ALTITUDE + i * DIFFERENCE));
-        }
-
-        return track;
-    }
 
     /**
      * Create a MyTracks location with default values.

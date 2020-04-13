@@ -15,6 +15,7 @@ public class TestDataUtil {
      * @param numPoints the location number in the track
      * @return the simulated track
      */
+    @Deprecated //TODO Does not store the data in the db.
     public static Track getTrack(long id, int numPoints) {
         Track track = new Track();
         track.setId(id);

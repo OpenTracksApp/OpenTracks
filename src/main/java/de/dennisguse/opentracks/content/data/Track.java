@@ -41,6 +41,7 @@ public class Track {
     private TrackStatistics trackStatistics = new TrackStatistics();
 
     // Location points (which may not have been loaded)
+    @Deprecated //TODO Is only used by tests
     private List<TrackPoint> trackPoints = new ArrayList<>();
 
     public Track() {
@@ -94,15 +95,19 @@ public class Track {
         this.trackStatistics = trackStatistics;
     }
 
+    @Deprecated
     @VisibleForTesting
     public void addTrackPoint(TrackPoint location) {
         trackPoints.add(location);
     }
 
+    @VisibleForTesting
+    @Deprecated //TODO Only used for testing; can be removed?
     public List<TrackPoint> getTrackPoints() {
         return trackPoints;
     }
 
+    @Deprecated //TODO Remove
     public void setTrackPoints(ArrayList<TrackPoint> trackPoints) {
         this.trackPoints = trackPoints;
     }

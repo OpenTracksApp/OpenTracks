@@ -196,8 +196,9 @@ public class CustomContentProviderUtilsTest {
         long trackId = System.currentTimeMillis();
         Track track = TestDataUtil.getTrack(trackId, 10);
         insertTrackWithLocations(track);
-        Waypoint waypoint = new Waypoint();
+        Waypoint waypoint = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
         contentProviderUtils.insertWaypoint(waypoint);
+
         ContentResolver contentResolver = context.getContentResolver();
         Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         Assert.assertEquals(1, tracksCursor.getCount());
@@ -224,12 +225,12 @@ public class CustomContentProviderUtilsTest {
         // Insert three tracks, points of two tracks and way point of one track.
         long trackId = System.currentTimeMillis();
         Track track = TestDataUtil.getTrack(trackId, 10);
-
         contentProviderUtils.insertTrack(track);
+
         insertTrackWithLocations(TestDataUtil.getTrack(trackId + 1, 10));
         insertTrackWithLocations(TestDataUtil.getTrack(trackId + 2, 10));
 
-        Waypoint waypoint = new Waypoint();
+        Waypoint waypoint = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId + 1));
         waypoint.setTrackId(trackId);
         contentProviderUtils.insertWaypoint(waypoint);
 
@@ -389,10 +390,10 @@ public class CustomContentProviderUtilsTest {
     public void testDeleteWaypoint_onlyOneWayPoint() {
         long trackId = System.currentTimeMillis();
         Track track = TestDataUtil.getTrack(trackId, 10);
-        contentProviderUtils.insertTrack(track);
+        insertTrackWithLocations(track);
 
         // Insert at first.
-        Waypoint waypoint1 = new Waypoint();
+        Waypoint waypoint1 = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint1.setDescription(TEST_DESC);
         waypoint1.setTrackId(trackId);
         contentProviderUtils.insertWaypoint(waypoint1);
@@ -425,16 +426,15 @@ public class CustomContentProviderUtilsTest {
         statistics.setMinElevation(1200.0);
 
         track.setTrackStatistics(statistics);
-        contentProviderUtils.insertTrack(track);
-
+        insertTrackWithLocations(track);
 
         // Insert at first.
-        Waypoint waypoint1 = new Waypoint();
+        Waypoint waypoint1 = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint1.setDescription(MOCK_DESC);
         waypoint1.setTrackId(trackId);
         long waypoint1Id = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint1));
 
-        Waypoint waypoint2 = new Waypoint();
+        Waypoint waypoint2 = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint2.setDescription(MOCK_DESC);
         waypoint2.setTrackId(trackId);
         long waypoint2Id = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint2));
@@ -454,15 +454,15 @@ public class CustomContentProviderUtilsTest {
     public void testGetNextWaypointNumber() {
         long trackId = System.currentTimeMillis();
         Track track = TestDataUtil.getTrack(trackId, 10);
-        contentProviderUtils.insertTrack(track);
+        insertTrackWithLocations(track);
 
-        Waypoint waypoint1 = new Waypoint();
+        Waypoint waypoint1 = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint1.setTrackId(trackId);
-        Waypoint waypoint2 = new Waypoint();
+        Waypoint waypoint2 = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint2.setTrackId(trackId);
-        Waypoint waypoint3 = new Waypoint();
+        Waypoint waypoint3 = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint3.setTrackId(trackId);
-        Waypoint waypoint4 = new Waypoint();
+        Waypoint waypoint4 = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint4.setTrackId(trackId);
         contentProviderUtils.insertWaypoint(waypoint1);
         contentProviderUtils.insertWaypoint(waypoint2);
@@ -480,9 +480,9 @@ public class CustomContentProviderUtilsTest {
     public void testInsertAndGetWaypoint() {
         long trackId = System.currentTimeMillis();
         Track track = TestDataUtil.getTrack(trackId, 10);
-        contentProviderUtils.insertTrack(track);
+        insertTrackWithLocations(track);
 
-        Waypoint waypoint = new Waypoint();
+        Waypoint waypoint = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint.setDescription(TEST_DESC);
         waypoint.setTrackId(trackId);
         long waypointId = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint));
@@ -497,9 +497,10 @@ public class CustomContentProviderUtilsTest {
     public void testUpdateWaypoint() {
         long trackId = System.currentTimeMillis();
         Track track = TestDataUtil.getTrack(trackId, 10);
-        contentProviderUtils.insertTrack(track);
+        insertTrackWithLocations(track);
+
         // Insert at first.
-        Waypoint waypoint = new Waypoint();
+        Waypoint waypoint = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint.setDescription(TEST_DESC);
         waypoint.setTrackId(trackId);
         long waypointId = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint));
