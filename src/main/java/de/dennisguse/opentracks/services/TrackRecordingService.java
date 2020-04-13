@@ -189,17 +189,7 @@ public class TrackRecordingService extends Service {
         PreferencesUtils.register(this, sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
 
-        // Try to restart the previous recording track in case the service has been restarted by the system, which can sometimes happen.
-        Track track = contentProviderUtils.getTrack(recordingTrackId);
-        if (track != null) {
-            restartTrack(track);
-        } else {
-            if (isRecording()) {
-                Log.w(TAG, "track is null, but recordingTrackId not -1L. " + recordingTrackId);
-                updateRecordingState(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, true);
-            }
-            showNotification(false);
-        }
+        restartTrackAfterServiceRestart();
     }
 
     @Override
@@ -375,7 +365,20 @@ public class TrackRecordingService extends Service {
         startRecording();
     }
 
-    private void restartTrack(Track track) {
+    /**
+     * Try to restart the previous recording track in case the service has been restarted by the system, which can sometimes happen.
+     */
+    private void restartTrackAfterServiceRestart() {
+        Track track = contentProviderUtils.getTrack(recordingTrackId);
+        if (track == null) {
+            if (isRecording()) {
+                Log.w(TAG, "track is null, but recordingTrackId not -1L. " + recordingTrackId);
+                updateRecordingState(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, true);
+            }
+            showNotification(false);
+            return;
+        }
+
         Log.d(TAG, "Restarting track: " + track.getId());
 
         trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics().getStartTime_ms());
