@@ -846,7 +846,7 @@ public class ChartView extends View {
             for (int i = 0; i < seriesList.size(); i++) {
                 ChartValueSeries chartValueSeries = seriesList.get(i);
 
-                if (chartValueSeries.isChartPointValid(dataPoint)) {
+                if (!chartValueSeries.isChartPointValid(dataPoint)) {
                     continue;
                 }
 
