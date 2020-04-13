@@ -31,6 +31,7 @@ import de.dennisguse.opentracks.util.TrackPointUtils;
  * Updater for {@link TrackStatistics}.
  * For updating track {@link TrackStatistics} as new {@link TrackPoint}s are added.
  * NOTE: Some of the locations represent pause/resume separator.
+ * NOTE: Has still support for segments (at the moment unused).
  *
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
@@ -116,16 +117,16 @@ public class TrackStatisticsUpdater {
      */
     public void addTrackPoint(TrackPoint trackPoint, int minRecordingDistance) {
         // Always update time
-        updateTime(trackPoint.getLocation().getTime());
+        updateTime(trackPoint.getTime());
         if (!LocationUtils.isValidLocation(trackPoint.getLocation())) {
             // Either pause or resume marker
-            if (trackPoint.getLocation().getLatitude() == TrackPointsColumns.PAUSE_LATITUDE) {
+            if (trackPoint.getLatitude() == TrackPointsColumns.PAUSE_LATITUDE) {
                 if (lastTrackPoint != null && lastMovingTrackPoint != null && lastTrackPoint != lastMovingTrackPoint) {
                     currentSegment.addTotalDistance(lastMovingTrackPoint.distanceTo(lastTrackPoint));
                 }
                 trackStatistics.merge(currentSegment);
             }
-            currentSegment = init(trackPoint.getLocation().getTime());
+            currentSegment = init(trackPoint.getTime());
             lastTrackPoint = null;
             lastMovingTrackPoint = null;
             elevationBuffer_m.reset();
