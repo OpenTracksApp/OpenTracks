@@ -30,7 +30,6 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.eq;
@@ -91,7 +90,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         expectFirstTrackPoint(trackPoint0, TRACK_ID_0, TRACK_POINT_ID_0);
 
         // A flush happens at the end
-        when(contentProviderUtils.bulkInsertTrackPoint((TrackPoint[]) any(), eq(1), eq(TRACK_ID_0))).thenReturn(1);
+        when(contentProviderUtils.bulkInsertTrackPoint((TrackPoint[]) any(), eq(TRACK_ID_0))).thenReturn(1);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_1);
         when(contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context))).thenReturn(null);
         ArgumentCaptor<Track> trackCaptor = ArgumentCaptor.forClass(Track.class);
@@ -120,7 +119,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         when(contentProviderUtils.insertTrack((Track) any())).thenReturn(TRACK_ID_0_URI);
         expectFirstTrackPoint(trackPoint0, TRACK_ID_0, TRACK_POINT_ID_0);
         // A flush happens at the end
-        when(contentProviderUtils.bulkInsertTrackPoint((TrackPoint[]) any(), eq(5), eq(TRACK_ID_0))).thenReturn(5);
+        when(contentProviderUtils.bulkInsertTrackPoint((TrackPoint[]) any(), eq(TRACK_ID_0))).thenReturn(5);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_3);
         when(contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context))).thenReturn(null);
 
@@ -152,7 +151,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         expectFirstTrackPoint(null, TRACK_ID_0, TRACK_POINT_ID_0);
 
         // A flush happens at the end
-        when(contentProviderUtils.bulkInsertTrackPoint((TrackPoint[]) any(), eq(5), eq(TRACK_ID_0))).thenReturn(5);
+        when(contentProviderUtils.bulkInsertTrackPoint((TrackPoint[]) any(), eq(TRACK_ID_0))).thenReturn(5);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_3);
         when(contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context))).thenReturn(null);
 
@@ -206,7 +205,7 @@ public class GpxFileTrackImporterTest extends AbstractTestFileTrackImporter {
         when(contentProviderUtils.insertTrack((Track) any())).thenReturn(TRACK_ID_0_URI);
 
         // For the following, use StubReturn since we don't care whether they are invoked or not.
-        when(contentProviderUtils.bulkInsertTrackPoint((TrackPoint[]) any(), anyInt(), anyLong())).thenReturn(1);
+        when(contentProviderUtils.bulkInsertTrackPoint((TrackPoint[]) any(), anyLong())).thenReturn(1);
         when(contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context))).thenReturn(null);
         contentProviderUtils.deleteTrack(context, TRACK_ID_0);
 

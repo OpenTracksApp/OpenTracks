@@ -59,7 +59,7 @@ public class ExportImportTest {
         track.first.setCategory(TRACK_CATEGORY);
         track.first.setDescription(TRACK_DESCRIPTION);
         contentProviderUtils.insertTrack(track.first);
-        contentProviderUtils.bulkInsertTrackPoint(track.second, track.second.length, track.first.getId());
+        contentProviderUtils.bulkInsertTrackPoint(track.second, track.first.getId());
 
         for (int i = 0; i < 3; i++) {
             Waypoint waypoint = new Waypoint(track.second[i].getLocation());

@@ -71,6 +71,6 @@ public class TestDataUtil {
      */
     public static void insertTrackWithLocations(ContentProviderUtils contentProviderUtils, Track track, TrackPoint[] trackPoints) {
         contentProviderUtils.insertTrack(track);
-        contentProviderUtils.bulkInsertTrackPoint(trackPoints, trackPoints.length, track.getId());
+        contentProviderUtils.bulkInsertTrackPoint(trackPoints, track.getId());
     }
 }

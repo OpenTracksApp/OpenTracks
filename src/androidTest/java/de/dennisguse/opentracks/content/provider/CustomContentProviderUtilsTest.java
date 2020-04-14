@@ -33,6 +33,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.dennisguse.opentracks.content.data.TestDataUtil;
@@ -142,7 +143,7 @@ public class CustomContentProviderUtilsTest {
             loc.setAltitude(i * 2.5);
             trackPoints[i] = new TrackPoint(loc);
         }
-        contentProviderUtils.bulkInsertTrackPoint(trackPoints, numPoints, id);
+        contentProviderUtils.bulkInsertTrackPoint(trackPoints, id);
 
         // Load all inserted trackPoints.
         long lastPointId = -1;
@@ -523,9 +524,9 @@ public class CustomContentProviderUtilsTest {
         TestDataUtil.insertTrackWithLocations(contentProviderUtils, track.first, track.second);
 
         // when / then
-        contentProviderUtils.bulkInsertTrackPoint(track.second, -1, trackId);
+        contentProviderUtils.bulkInsertTrackPoint(track.second, trackId);
         Assert.assertEquals(20, contentProviderUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
-        contentProviderUtils.bulkInsertTrackPoint(track.second, 8, trackId);
+        contentProviderUtils.bulkInsertTrackPoint(Arrays.copyOfRange(track.second, 0, 8), trackId);
         Assert.assertEquals(28, contentProviderUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
     }
 

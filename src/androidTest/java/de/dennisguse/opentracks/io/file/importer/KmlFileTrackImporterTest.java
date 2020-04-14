@@ -75,7 +75,7 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
         expectFirstTrackPoint(trackPoint0, TRACK_ID_0, TRACK_POINT_ID_0);
 
         // A flush happens at the end
-        when(contentProviderUtils.bulkInsertTrackPoint((TrackPoint[]) any(), eq(1), eq(TRACK_ID_0))).thenReturn(1);
+        when(contentProviderUtils.bulkInsertTrackPoint((TrackPoint[]) any(), eq(TRACK_ID_0))).thenReturn(1);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_1);
         when(contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context))).thenReturn(null);
 
@@ -106,7 +106,7 @@ public class KmlFileTrackImporterTest extends AbstractTestFileTrackImporter {
         expectFirstTrackPoint(trackPoint0, TRACK_ID_0, TRACK_POINT_ID_0);
 
         // A flush happens at the end
-        when(contentProviderUtils.bulkInsertTrackPoint((TrackPoint[]) any(), eq(5), eq(TRACK_ID_0))).thenReturn(5);
+        when(contentProviderUtils.bulkInsertTrackPoint((TrackPoint[]) any(), eq(TRACK_ID_0))).thenReturn(5);
         when(contentProviderUtils.getLastTrackPointId(TRACK_ID_0)).thenReturn(TRACK_POINT_ID_3);
         when(contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context))).thenReturn(null);
 

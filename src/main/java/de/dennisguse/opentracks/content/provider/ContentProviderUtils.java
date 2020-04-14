@@ -634,17 +634,13 @@ public class ContentProviderUtils {
      * Inserts multiple trackPoints.
      *
      * @param trackPoints an array of trackPoints
-     * @param length      the number of trackPoints (from the beginning of the array) to insert, or -1 for all of them
      * @param trackId     the trackPoints id
      * @return the number of trackPoints inserted
      */
-    //TODO Only used for testing and file import; might be better to replace it; in any case remove length.
-    public int bulkInsertTrackPoint(TrackPoint[] trackPoints, int length, long trackId) {
-        if (length == -1) {
-            length = trackPoints.length;
-        }
-        ContentValues[] values = new ContentValues[length];
-        for (int i = 0; i < length; i++) {
+    //TODO Only used for testing and file import; might be better to replace it.
+    public int bulkInsertTrackPoint(TrackPoint[] trackPoints, long trackId) {
+        ContentValues[] values = new ContentValues[trackPoints.length];
+        for (int i = 0; i < values.length; i++) {
             values[i] = createContentValues(trackPoints[i], trackId);
         }
         return contentResolver.bulkInsert(TrackPointsColumns.CONTENT_URI_BY_ID, values);
