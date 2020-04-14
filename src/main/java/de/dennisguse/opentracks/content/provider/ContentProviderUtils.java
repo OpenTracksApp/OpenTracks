@@ -855,6 +855,24 @@ public class ContentProviderUtils {
         return contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, projection, selection, selectionArgs, sortOrder);
     }
 
+    @VisibleForTesting
+    public List<TrackPoint> getTrackPoints(long trackId) {
+        List<TrackPoint> trackPoints = null;
+
+        try (Cursor trackPointCursor = getTrackPointCursor(trackId, -1L, -1, false)) {
+            if (trackPointCursor != null) {
+                trackPointCursor.moveToFirst();
+                trackPoints = new ArrayList<>(trackPointCursor.getCount());
+                for (int i = 0; i < trackPointCursor.getCount(); i++) {
+                    trackPoints.add(createTrackPoint(trackPointCursor));
+                    trackPointCursor.moveToNext();
+                }
+            }
+        }
+
+        return trackPoints;
+    }
+
     int getDefaultCursorBatchSize() {
         return defaultCursorBatchSize;
     }
