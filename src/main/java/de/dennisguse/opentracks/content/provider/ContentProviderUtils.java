@@ -638,6 +638,7 @@ public class ContentProviderUtils {
      * @param trackId     the trackPoints id
      * @return the number of trackPoints inserted
      */
+    //TODO Only used for testing and file import; might be better to replace it; in any case remove length.
     public int bulkInsertTrackPoint(TrackPoint[] trackPoints, int length, long trackId) {
         if (length == -1) {
             length = trackPoints.length;

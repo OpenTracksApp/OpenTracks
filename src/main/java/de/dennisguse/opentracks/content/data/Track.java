@@ -16,11 +16,6 @@
 
 package de.dennisguse.opentracks.content.data;
 
-import androidx.annotation.VisibleForTesting;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
@@ -39,10 +34,6 @@ public class Track {
     private String icon = "";
 
     private TrackStatistics trackStatistics = new TrackStatistics();
-
-    // Location points (which may not have been loaded)
-    @Deprecated //TODO Is only used by tests
-    private List<TrackPoint> trackPoints = new ArrayList<>();
 
     public Track() {
     }
@@ -93,22 +84,5 @@ public class Track {
 
     public void setTrackStatistics(TrackStatistics trackStatistics) {
         this.trackStatistics = trackStatistics;
-    }
-
-    @Deprecated
-    @VisibleForTesting
-    public void addTrackPoint(TrackPoint location) {
-        trackPoints.add(location);
-    }
-
-    @VisibleForTesting
-    @Deprecated //TODO Only used for testing; can be removed?
-    public List<TrackPoint> getTrackPoints() {
-        return trackPoints;
-    }
-
-    @Deprecated //TODO Remove
-    public void setTrackPoints(ArrayList<TrackPoint> trackPoints) {
-        this.trackPoints = trackPoints;
     }
 }

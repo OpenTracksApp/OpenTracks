@@ -24,6 +24,7 @@ import android.os.IBinder;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.FlakyTest;
 import androidx.test.filters.MediumTest;
 import androidx.test.filters.SmallTest;
 import androidx.test.rule.GrantPermissionRule;
@@ -143,6 +144,7 @@ public class TrackRecordingServiceTest {
         Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
     }
 
+    @FlakyTest(detail = "Sometimes fails on CI.")
     @MediumTest
     @Test
     public void testRecording_orphanedRecordingTrack() throws Exception {

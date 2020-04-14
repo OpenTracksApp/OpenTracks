@@ -383,8 +383,8 @@ public class TrackRecordingService extends Service {
 
         trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics().getStartTime_ms());
 
-        try (TrackPointIterator locationIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false)) {
-            trackStatisticsUpdater.addTrackPoint(locationIterator, recordingDistanceInterval);
+        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false)) {
+            trackStatisticsUpdater.addTrackPoint(trackPointIterator, recordingDistanceInterval);
         } catch (RuntimeException e) {
             Log.e(TAG, "RuntimeException", e);
         }

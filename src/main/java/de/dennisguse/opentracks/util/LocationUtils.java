@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 
 /**
@@ -90,13 +89,13 @@ public class LocationUtils {
      *
      * @param tolerance in meters
      * @param trackPoints input
-     * @param decimated output
      */
     //TODO What was it used for? Sharing data with other apps?
-    private static void decimate(double tolerance, List<TrackPoint> trackPoints, List<TrackPoint> decimated) {
+    private static List<TrackPoint> decimate(double tolerance, List<TrackPoint> trackPoints) {
+        List<TrackPoint> decimated = new ArrayList<>();
         final int n = trackPoints.size();
         if (n < 1) {
-            return;
+            return null;
         }
         int idx;
         int maxIdx = 0;
@@ -142,18 +141,8 @@ public class LocationUtils {
             idx++;
         }
         Log.d(TAG, "Decimating " + n + " points to " + i + " w/ tolerance = " + tolerance);
-    }
 
-    /**
-     * Decimates the given track for the given precision.
-     *
-     * @param track     a track
-     * @param precision desired precision in meters
-     */
-    public static void decimate(Track track, double precision) {
-        ArrayList<TrackPoint> decimated = new ArrayList<>();
-        decimate(precision, track.getTrackPoints(), decimated);
-        track.setTrackPoints(decimated);
+        return decimated;
     }
 
     /**
