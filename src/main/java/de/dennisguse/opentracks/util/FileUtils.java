@@ -250,4 +250,34 @@ public class FileUtils {
     public static Uri getUriForFile(Context context, File file) {
         return FileProvider.getUriForFile(context, FileUtils.FILEPROVIDER, file);
     }
+
+    /**
+     * Checks that there is a file inside track photo directory whose name is the same that uri file.
+     * If there is a file inside photo directory whose name is the same that uri then returns File. Otherwise returns null.
+     *
+     * @param context the Context.
+     * @param trackId the id of the Track.
+     * @param uri     the uri to check.
+     * @return        File object or null.
+     */
+    public static File getPhotoFileIfExists(Context context, long trackId, Uri uri) {
+        if (uri == null) {
+            Log.w(TAG, "URI object is null.");
+            return null;
+        }
+
+        String filename = uri.getLastPathSegment();
+        if (filename == null) {
+            Log.w(TAG, "External photo contains no filename.");
+            return null;
+        }
+
+        File dir = FileUtils.getPhotoDir(context, trackId);
+        File file = new File(dir, filename);
+        if (!file.exists()) {
+            return null;
+        }
+
+        return file;
+    }
 }

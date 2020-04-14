@@ -380,20 +380,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             return null;
         }
 
-        Uri externalPhotoUri = Uri.parse(externalPhotoUrl);
-        if (externalPhotoUri == null) {
-            Log.w(TAG, "Could not parse external photo url.");
-            return null;
-        }
-        String filename = externalPhotoUri.getLastPathSegment();
-        if (filename == null) {
-            Log.w(TAG, "External photo contains no filename.");
-            return null;
-        }
-
-        File dir = FileUtils.getPhotoDir(context, importTrackId);
-        File file = new File(dir, filename);
-        if (file.exists()) {
+        File file = FileUtils.getPhotoFileIfExists(context, importTrackId, Uri.parse(externalPhotoUrl));
+        if (file != null) {
             Uri photoUri = FileUtils.getUriForFile(context, file);
             return "" + photoUri;
         }

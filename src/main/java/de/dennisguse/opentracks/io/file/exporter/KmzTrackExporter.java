@@ -112,7 +112,11 @@ public class KmzTrackExporter implements TrackExporter {
                         }
                         Waypoint waypoint = contentProviderUtils.createWaypoint(cursor);
                         if (waypoint.hasPhoto()) {
-                            addImage(context, zipOutputStream, waypoint.getPhotoUrl());
+                            Uri uriPhoto = waypoint.getPhotoURI();
+                            boolean existsPhoto = FileUtils.getPhotoFileIfExists(context, track.getId(), uriPhoto) != null;
+                            if (existsPhoto) {
+                                addImage(context, zipOutputStream, uriPhoto);
+                            }
                         }
 
                         cursor.moveToNext();
@@ -122,9 +126,7 @@ public class KmzTrackExporter implements TrackExporter {
         }
     }
 
-    private void addImage(Context context, ZipOutputStream zipOutputStream, String photoUrl) throws IOException {
-        Uri uri = Uri.parse(photoUrl);
-
+    private void addImage(Context context, ZipOutputStream zipOutputStream, Uri uri) throws IOException {
         try (InputStream inputStream = context.getContentResolver().openInputStream(uri)) {
             ZipEntry zipEntry = new ZipEntry(buildKmzImageFilePath(uri));
             zipOutputStream.putNextEntry(zipEntry);
