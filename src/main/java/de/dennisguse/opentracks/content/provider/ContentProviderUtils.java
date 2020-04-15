@@ -55,19 +55,13 @@ public class ContentProviderUtils {
     private static final String TAG = ContentProviderUtils.class.getSimpleName();
     private static final int MAX_LATITUDE = 90000000;
 
-    /**
-     * The authority (the first part of the URI) for the app's content provider.
-     */
+    // The authority (the first part of the URI) for the app's content provider.
     static final String AUTHORITY_PACKAGE = BuildConfig.APPLICATION_ID + ".content";
 
-    /**
-     * The base URI for the app's content provider.
-     */
+    // The base URI for the app's content provider.
     public static final String CONTENT_BASE_URI = "content://" + AUTHORITY_PACKAGE;
 
-    /**
-     * Maximum number of waypoints that will be loaded at one time.
-     */
+    // Maximum number of waypoints that will be loaded at one time.
     public static final int MAX_LOADED_WAYPOINTS_POINTS = 10000;
     private static final String ID_SEPARATOR = ",";
 
@@ -87,7 +81,7 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Clears a track: removes waypoints and trackpoints.
+     * Clears a track: removes waypoints and trackPoints.
      * Only keeps the track id.
      *
      * @param trackId the track id
@@ -168,7 +162,7 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Deletes all tracks (including waypoints and track points).
+     * Deletes all tracks (including waypoints and trackPoints).
      */
     public void deleteAllTracks(Context context) {
         contentResolver.delete(TrackPointsColumns.CONTENT_URI_BY_ID, null, null);
@@ -188,13 +182,12 @@ public class ContentProviderUtils {
     public void deleteTrack(Context context, long trackId) {
         deleteTrackPointsAndWaypoints(context, trackId);
 
-        // Delete track last since it triggers a database vaccum call
-        contentResolver.delete(TracksColumns.CONTENT_URI, TracksColumns._ID + "=?",
-                new String[]{Long.toString(trackId)});
+        // Delete track last since it triggers a database vacuum call
+        contentResolver.delete(TracksColumns.CONTENT_URI, TracksColumns._ID + "=?", new String[]{Long.toString(trackId)});
     }
 
     /**
-     * Deletes track points and waypoints of a track.
+     * Deletes trackPoints and waypoints of a track.
      *
      * @param trackId the track id
      */
@@ -203,8 +196,7 @@ public class ContentProviderUtils {
         String[] selectionArgs = new String[]{Long.toString(trackId)};
         contentResolver.delete(TrackPointsColumns.CONTENT_URI_BY_ID, where, selectionArgs);
 
-        contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?",
-                new String[]{Long.toString(trackId)});
+        contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?", new String[]{Long.toString(trackId)});
         deleteDirectoryRecurse(FileUtils.getPhotoDir(context, trackId));
     }
 
@@ -224,8 +216,8 @@ public class ContentProviderUtils {
 
     /**
      * Gets all the tracks.
-     * If no track exists, an empty list is returned.
-     * NOTE: the returned tracks do not have any track points attached.
+     *
+     * @return the tracks do not have any trackPoints attached.
      */
     @VisibleForTesting
     public List<Track> getAllTracks() {
@@ -241,9 +233,6 @@ public class ContentProviderUtils {
         return tracks;
     }
 
-    /**
-     * Gets the last track or null.
-     */
     public Track getLastTrack() {
         try (Cursor cursor = getTrackCursor(null, null, TracksColumns.STARTTIME + " DESC")) {
             // Using the same order as shown in the track list
@@ -255,10 +244,8 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Gets a track by a track id or null
-     * Note that the returned track doesn't have any track points attached.
-     *
      * @param trackId the track id.
+     * @return the track doesn't have any trackPoints attached
      */
     public Track getTrack(long trackId) {
         if (trackId < 0) {
@@ -286,7 +273,7 @@ public class ContentProviderUtils {
 
     /**
      * Inserts a track.
-     * NOTE: This doesn't insert any track points.
+     * NOTE: This doesn't insert any trackPoints.
      *
      * @param track the track
      * @return the content provider URI of the inserted track.
@@ -297,13 +284,12 @@ public class ContentProviderUtils {
 
     /**
      * Updates a track.
-     * NOTE: This doesn't update any track points.
+     * NOTE: This doesn't update any trackPoints.
      *
      * @param track the track
      */
     public void updateTrack(Track track) {
-        contentResolver.update(TracksColumns.CONTENT_URI, createContentValues(track),
-                TracksColumns._ID + "=?", new String[]{Long.toString(track.getId())});
+        contentResolver.update(TracksColumns.CONTENT_URI, createContentValues(track), TracksColumns._ID + "=?", new String[]{Long.toString(track.getId())});
     }
 
     private ContentValues createContentValues(Track track) {
@@ -407,14 +393,6 @@ public class ContentProviderUtils {
         return waypoint;
     }
 
-    /**
-     * Deletes a waypoint.
-     * If deleting a statistics waypoint, this will also correct the next statistics waypoint after the deleted one to reflect the  deletion.
-     * The generator is used to update the next statistics waypoint.
-     *
-     * @param waypointId the waypoint id
-     */
-
     public void deleteWaypoint(long waypointId) {
         final Waypoint waypoint = getWaypoint(waypointId);
         if (waypoint != null && waypoint.hasPhoto()) {
@@ -432,10 +410,10 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Gets the next waypoint number for a type.
-     * Returns -1 if not able to get the next waypoint number.
+     * Gets the next waypoint number.
      *
      * @param trackId the track id
+     * @return -1 if not able to get the next waypoint number.
      */
     public int getNextWaypointNumber(long trackId) {
         if (trackId < 0) {
@@ -452,12 +430,6 @@ public class ContentProviderUtils {
         return -1;
     }
 
-    /**
-     * Gets a waypoint from a waypoint id.
-     * Returns null if not found.
-     *
-     * @param waypointId the waypoint id
-     */
     public Waypoint getWaypoint(long waypointId) {
         if (waypointId < 0) {
             return null;
@@ -478,8 +450,7 @@ public class ContentProviderUtils {
      * @param selection     the selection. Can be null
      * @param selectionArgs the selection arguments. Can be null
      * @param sortOrder     the sort order. Can be null
-     * @param maxWaypoints  the maximum number of waypoints to return. -1 for no
-     *                      limit
+     * @param maxWaypoints  the maximum number of waypoints to return. -1 for no limit
      */
     public Cursor getWaypointCursor(String selection, String[] selectionArgs, String sortOrder, int maxWaypoints) {
         return getWaypointCursor(null, selection, selectionArgs, sortOrder, maxWaypoints);
@@ -536,12 +507,13 @@ public class ContentProviderUtils {
         String[] projection = new String[]{"count(*) AS count"};
         String selection = WaypointsColumns.TRACKID + "=?";
         String[] selectionArgs = new String[]{Long.toString(trackId)};
-        Cursor cursor = contentResolver.query(WaypointsColumns.CONTENT_URI, projection, selection, selectionArgs, WaypointsColumns._ID);
-
-        cursor.moveToFirst();
-        int count = cursor.getInt(0);
-        cursor.close();
-        return count;
+        try (Cursor cursor = contentResolver.query(WaypointsColumns.CONTENT_URI, projection, selection, selectionArgs, WaypointsColumns._ID)) {
+            if (cursor == null) {
+                return 0;
+            }
+            cursor.moveToFirst();
+            return cursor.getInt(0);
+        }
     }
 
     /**
@@ -582,19 +554,17 @@ public class ContentProviderUtils {
         values.put(WaypointsColumns.DURATION, waypoint.getDuration());
 
         Location location = waypoint.getLocation();
-        if (location != null) {
-            values.put(WaypointsColumns.LONGITUDE, (int) (location.getLongitude() * 1E6));
-            values.put(WaypointsColumns.LATITUDE, (int) (location.getLatitude() * 1E6));
-            values.put(WaypointsColumns.TIME, location.getTime());
-            if (location.hasAltitude()) {
-                values.put(WaypointsColumns.ALTITUDE, location.getAltitude());
-            }
-            if (location.hasAccuracy()) {
-                values.put(WaypointsColumns.ACCURACY, location.getAccuracy());
-            }
-            if (location.hasBearing()) {
-                values.put(WaypointsColumns.BEARING, location.getBearing());
-            }
+        values.put(WaypointsColumns.LONGITUDE, (int) (location.getLongitude() * 1E6));
+        values.put(WaypointsColumns.LATITUDE, (int) (location.getLatitude() * 1E6));
+        values.put(WaypointsColumns.TIME, location.getTime());
+        if (location.hasAltitude()) {
+            values.put(WaypointsColumns.ALTITUDE, location.getAltitude());
+        }
+        if (location.hasAccuracy()) {
+            values.put(WaypointsColumns.ACCURACY, location.getAccuracy());
+        }
+        if (location.hasBearing()) {
+            values.put(WaypointsColumns.BEARING, location.getBearing());
         }
 
         values.put(WaypointsColumns.PHOTOURL, waypoint.getPhotoUrl());
@@ -623,8 +593,8 @@ public class ContentProviderUtils {
     /**
      * Fills a {@link TrackPoint} from a cursor.
      *
-     * @param cursor   the cursor pointing to a trackPoint.
-     * @param indexes  the cached track points indexes
+     * @param cursor  the cursor pointing to a trackPoint.
+     * @param indexes the cached trackPoints indexes
      */
     static TrackPoint fillTrackPoint(Cursor cursor, CachedTrackPointsIndexes indexes) {
         TrackPoint trackPoint = new TrackPoint();
@@ -661,20 +631,16 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Inserts multiple trackPoints points.
+     * Inserts multiple trackPoints.
      *
      * @param trackPoints an array of trackPoints
-     * @param length    the number of trackPoints (from the beginning of the array) to
-     *                  insert, or -1 for all of them
-     * @param trackId   the trackPoints id
-     * @return the number of points inserted
+     * @param trackId     the trackPoints id
+     * @return the number of trackPoints inserted
      */
-    public int bulkInsertTrackPoint(TrackPoint[] trackPoints, int length, long trackId) {
-        if (length == -1) {
-            length = trackPoints.length;
-        }
-        ContentValues[] values = new ContentValues[length];
-        for (int i = 0; i < length; i++) {
+    //TODO Only used for testing and file import; might be better to replace it.
+    public int bulkInsertTrackPoint(TrackPoint[] trackPoints, long trackId) {
+        ContentValues[] values = new ContentValues[trackPoints.length];
+        for (int i = 0; i < values.length; i++) {
             values[i] = createContentValues(trackPoints[i], trackId);
         }
         return contentResolver.bulkInsert(TrackPointsColumns.CONTENT_URI_BY_ID, values);
@@ -691,9 +657,7 @@ public class ContentProviderUtils {
         if (trackId < 0) {
             return -1L;
         }
-        String selection = TrackPointsColumns._ID + "=(select min(" + TrackPointsColumns._ID
-                + ") from " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID
-                + "=?)";
+        String selection = TrackPointsColumns._ID + "=(SELECT MIN(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=?)";
         String[] selectionArgs = new String[]{Long.toString(trackId)};
         try (Cursor cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection, selectionArgs, TrackPointsColumns._ID)) {
             if (cursor != null && cursor.moveToFirst()) {
@@ -714,9 +678,7 @@ public class ContentProviderUtils {
         if (trackId < 0) {
             return -1L;
         }
-        String selection = TrackPointsColumns._ID + "=(select max(" + TrackPointsColumns._ID
-                + ") from " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID
-                + "=?)";
+        String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") from " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=?)";
         String[] selectionArgs = new String[]{Long.toString(trackId)};
         try (Cursor cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection, selectionArgs, TrackPointsColumns._ID)) {
             if (cursor != null && cursor.moveToFirst()) {
@@ -727,19 +689,17 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Gets the track point id of a location.
+     * Gets the trackPoint id for a location.
      *
      * @param trackId  the track id
      * @param location the location
-     * @return track point id if the location is in the track. -1L otherwise.
+     * @return trackPoint id if the location is in the track. -1L otherwise.
      */
     public long getTrackPointId(long trackId, Location location) {
         if (trackId < 0) {
             return -1L;
         }
-        String selection = TrackPointsColumns._ID + "=(select max(" + TrackPointsColumns._ID
-                + ") from " + TrackPointsColumns.TABLE_NAME
-                + " WHERE " + TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns.TIME + "=?)";
+        String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns.TIME + "=?)";
         String[] selectionArgs = new String[]{Long.toString(trackId), Long.toString(location.getTime())};
         try (Cursor cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection, selectionArgs, TrackPointsColumns._ID)) {
             if (cursor != null && cursor.moveToFirst()) {
@@ -762,7 +722,7 @@ public class ContentProviderUtils {
      * Creates a location cursor. The caller owns the returned cursor and is responsible for closing it.
      *
      * @param trackId           the track id
-     * @param startTrackPointId the starting track point id. -1L to ignore
+     * @param startTrackPointId the starting trackPoint id. -1L to ignore
      * @param maxLocations      maximum number of locations to return. -1 for no limit
      * @param descending        true to sort the result in descending order (latest location first)
      */
@@ -775,8 +735,7 @@ public class ContentProviderUtils {
         String[] selectionArgs;
         if (startTrackPointId >= 0) {
             String comparison = descending ? "<=" : ">=";
-            selection = TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns._ID + comparison
-                    + "?";
+            selection = TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns._ID + comparison + "?";
             selectionArgs = new String[]{Long.toString(trackId), Long.toString(startTrackPointId)};
         } else {
             selection = TrackPointsColumns.TRACKID + "=?";
@@ -804,19 +763,17 @@ public class ContentProviderUtils {
         if (trackId < 0) {
             return null;
         }
-        String selection = TrackPointsColumns._ID + "=(select max(" + TrackPointsColumns._ID + ") from "
-                + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND "
-                + TrackPointsColumns.LATITUDE + "<=" + MAX_LATITUDE + ")";
+        String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns.LATITUDE + "<=" + MAX_LATITUDE + ")";
         String[] selectionArgs = new String[]{Long.toString(trackId)};
         return findTrackPointBy(selection, selectionArgs);
     }
 
     /**
-     * Inserts a track point.
+     * Inserts a trackPoint.
      *
      * @param trackPoint the trackPoint
-     * @param trackId  the track id
-     * @return the content provider URI of the inserted track point
+     * @param trackId    the track id
+     * @return the content provider URI of the inserted trackPoint
      */
     public Uri insertTrackPoint(TrackPoint trackPoint, long trackId) {
         return contentResolver.insert(TrackPointsColumns.CONTENT_URI_BY_ID, createContentValues(trackPoint, trackId));
@@ -826,7 +783,7 @@ public class ContentProviderUtils {
      * Creates the {@link ContentValues} for a {@link TrackPoint}.
      *
      * @param trackPoint the trackPoint
-     * @param trackId  the track id
+     * @param trackId    the track id
      */
     private ContentValues createContentValues(TrackPoint trackPoint, long trackId) {
         ContentValues values = new ContentValues();
@@ -870,7 +827,7 @@ public class ContentProviderUtils {
      * When done with iteration, {@link TrackPointIterator#close()} must be called.
      *
      * @param trackId           the track id
-     * @param startTrackPointId the starting track point id. -1L to ignore
+     * @param startTrackPointId the starting trackPoint id. -1L to ignore
      * @param descending        true to sort the result in descending order (latest location first)
      */
     public TrackPointIterator getTrackPointLocationIterator(final long trackId, final long startTrackPointId, final boolean descending) {
@@ -887,7 +844,7 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Gets a track point cursor.
+     * Gets a trackPoint cursor.
      *
      * @param projection    the projection
      * @param selection     the selection
@@ -896,6 +853,24 @@ public class ContentProviderUtils {
      */
     private Cursor getTrackPointCursor(String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         return contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, projection, selection, selectionArgs, sortOrder);
+    }
+
+    @VisibleForTesting
+    public List<TrackPoint> getTrackPoints(long trackId) {
+        List<TrackPoint> trackPoints = null;
+
+        try (Cursor trackPointCursor = getTrackPointCursor(trackId, -1L, -1, false)) {
+            if (trackPointCursor != null) {
+                trackPointCursor.moveToFirst();
+                trackPoints = new ArrayList<>(trackPointCursor.getCount());
+                for (int i = 0; i < trackPointCursor.getCount(); i++) {
+                    trackPoints.add(createTrackPoint(trackPointCursor));
+                    trackPointCursor.moveToNext();
+                }
+            }
+        }
+
+        return trackPoints;
     }
 
     int getDefaultCursorBatchSize() {
@@ -915,7 +890,7 @@ public class ContentProviderUtils {
     /**
      * Formats an array of IDs as comma separated string value
      *
-     * @param ids   array with IDs
+     * @param ids array with IDs
      * @return comma separated list of ids
      */
     public static String formatIdListForUri(long[] ids) {

@@ -18,19 +18,20 @@ package de.dennisguse.opentracks.stats;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.util.LocationUtils;
-
-import static de.dennisguse.opentracks.services.TrackRecordingService.MAX_NO_MOVEMENT_SPEED;
+import de.dennisguse.opentracks.util.TrackPointUtils;
 
 /**
  * Updater for {@link TrackStatistics}.
  * For updating track {@link TrackStatistics} as new {@link TrackPoint}s are added.
  * NOTE: Some of the locations represent pause/resume separator.
+ * NOTE: Has still support for segments (at the moment unused).
  *
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
@@ -116,16 +117,16 @@ public class TrackStatisticsUpdater {
      */
     public void addTrackPoint(TrackPoint trackPoint, int minRecordingDistance) {
         // Always update time
-        updateTime(trackPoint.getLocation().getTime());
+        updateTime(trackPoint.getTime());
         if (!LocationUtils.isValidLocation(trackPoint.getLocation())) {
             // Either pause or resume marker
-            if (trackPoint.getLocation().getLatitude() == TrackPointsColumns.PAUSE_LATITUDE) {
+            if (trackPoint.getLatitude() == TrackPointsColumns.PAUSE_LATITUDE) {
                 if (lastTrackPoint != null && lastMovingTrackPoint != null && lastTrackPoint != lastMovingTrackPoint) {
                     currentSegment.addTotalDistance(lastMovingTrackPoint.distanceTo(lastTrackPoint));
                 }
                 trackStatistics.merge(currentSegment);
             }
-            currentSegment = init(trackPoint.getLocation().getTime());
+            currentSegment = init(trackPoint.getTime());
             lastTrackPoint = null;
             lastMovingTrackPoint = null;
             elevationBuffer_m.reset();
@@ -143,7 +144,7 @@ public class TrackStatisticsUpdater {
         }
 
         double movingDistance = lastMovingTrackPoint.distanceTo(trackPoint);
-        if (movingDistance < minRecordingDistance && (!trackPoint.hasSpeed() || trackPoint.getSpeed() < MAX_NO_MOVEMENT_SPEED)) {
+        if (movingDistance < minRecordingDistance && !TrackPointUtils.isMoving(trackPoint)) {
             speedBuffer_ms.reset();
             lastTrackPoint = trackPoint;
             return;
@@ -162,7 +163,7 @@ public class TrackStatisticsUpdater {
 
         // Update max speed
         if (trackPoint.hasSpeed() && lastTrackPoint.hasSpeed()) {
-            updateSpeed(trackPoint.getTime(), trackPoint.getSpeed(), lastTrackPoint.getTime(), lastTrackPoint.getSpeed());
+            updateSpeed(trackPoint, lastTrackPoint);
         }
 
         lastTrackPoint = trackPoint;
@@ -190,23 +191,18 @@ public class TrackStatisticsUpdater {
 
     /**
      * Updates a speed reading while assuming the user is moving.
-     *
-     * @param time              the time
-     * @param speed             the speed
-     * @param lastLocationTime  the last location time
-     * @param lastLocationSpeed the last location speed
      */
     @VisibleForTesting
-    private void updateSpeed(long time, double speed, long lastLocationTime, double lastLocationSpeed) {
-        if (speed < MAX_NO_MOVEMENT_SPEED) {
+    private void updateSpeed(@NonNull TrackPoint trackPoint, @NonNull TrackPoint lastTrackPoint) {
+        if (!TrackPointUtils.isMoving(trackPoint)) {
             speedBuffer_ms.reset();
-        } else if (isValidSpeed(time, speed, lastLocationTime, lastLocationSpeed)) {
-            speedBuffer_ms.setNext(speed);
+        } else if (isValidSpeed(trackPoint, lastTrackPoint)) {
+            speedBuffer_ms.setNext(trackPoint.getSpeed());
             if (speedBuffer_ms.getAverage() > currentSegment.getMaxSpeed()) {
                 currentSegment.setMaxSpeed(speedBuffer_ms.getAverage());
             }
         } else {
-            Log.d(TAG, "Invalid speed. speed: " + speed + " lastLocationSpeed: " + lastLocationSpeed);
+            Log.d(TAG, "Invalid speed. speed: " + trackPoint.getSpeed() + " lastLocationSpeed: " + lastTrackPoint.getSpeed());
         }
     }
 
@@ -239,26 +235,21 @@ public class TrackStatisticsUpdater {
 
     /**
      * Returns true if the speed is valid.
-     *
-     * @param time              the time
-     * @param speed             the speed
-     * @param lastLocationTime  the last location time
-     * @param lastLocationSpeed the last location speed
      */
-    private boolean isValidSpeed(long time, double speed, long lastLocationTime, double lastLocationSpeed) {
+    private boolean isValidSpeed(@NonNull TrackPoint trackPoint, @NonNull TrackPoint lastTrackPoint) {
         // There are a lot of noisy speed readings. Do the cheapest checks first, most expensive last.
-        if (speed == 0) {
+        if (trackPoint.getSpeed() == 0) {
             return false;
         }
 
         // The following code will ignore unlikely readings. 128 m/s seems to be an internal android error code.
-        if (Math.abs(speed - 128) < 1) {
+        if (Math.abs(trackPoint.getSpeed() - 128) < 1) {
             return false;
         }
 
         // See if the speed seems physically likely. Ignore any speeds that imply acceleration greater than 2g.
-        long timeDifference = time - lastLocationTime;
-        double speedDifference = Math.abs(lastLocationSpeed - speed);
+        long timeDifference = trackPoint.getTime() - lastTrackPoint.getTime();
+        double speedDifference = Math.abs(lastTrackPoint.getSpeed() - trackPoint.getSpeed());
         if (speedDifference > MAX_ACCELERATION * timeDifference) {
             return false;
         }
@@ -266,8 +257,8 @@ public class TrackStatisticsUpdater {
         // Only check if the speed buffer is full. Check that the speed is less than 10X the smoothed average and the speed difference doesn't imply 2g acceleration.
         if (speedBuffer_ms.isFull()) {
             double average = speedBuffer_ms.getAverage();
-            double diff = Math.abs(average - speed);
-            return (speed < average * 10) && (diff < MAX_ACCELERATION * timeDifference);
+            double diff = Math.abs(average - trackPoint.getSpeed());
+            return (trackPoint.getSpeed() < average * 10) && (diff < MAX_ACCELERATION * timeDifference);
         }
 
         return true;

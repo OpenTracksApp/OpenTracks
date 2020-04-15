@@ -28,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -446,11 +447,11 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         }
         trackData.trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
 
-        trackData.bufferedTrackPoints[trackData.numBufferedLocations] = trackPoint;
-        trackData.numBufferedLocations++;
+        trackData.bufferedTrackPoints[trackData.numBufferedTrackPoints] = trackPoint;
+        trackData.numBufferedTrackPoints++;
         trackData.numberOfLocations++;
 
-        if (trackData.numBufferedLocations >= MAX_BUFFERED_LOCATIONS) {
+        if (trackData.numBufferedTrackPoints >= MAX_BUFFERED_LOCATIONS) {
             flushLocations(trackData);
         }
     }
@@ -461,11 +462,11 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      * @param data the track data
      */
     private void flushLocations(TrackData data) {
-        if (data.numBufferedLocations <= 0) {
+        if (data.numBufferedTrackPoints <= 0) {
             return;
         }
-        contentProviderUtils.bulkInsertTrackPoint(data.bufferedTrackPoints, data.numBufferedLocations, data.track.getId());
-        data.numBufferedLocations = 0;
+        contentProviderUtils.bulkInsertTrackPoint(Arrays.copyOfRange(data.bufferedTrackPoints, 0, data.numBufferedTrackPoints), data.track.getId());
+        data.numBufferedTrackPoints = 0;
     }
 
     /**
@@ -506,6 +507,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         final TrackPoint[] bufferedTrackPoints = new TrackPoint[MAX_BUFFERED_LOCATIONS];
 
         // The number of buffered locations
-        int numBufferedLocations = 0;
+        int numBufferedTrackPoints = 0;
     }
 }

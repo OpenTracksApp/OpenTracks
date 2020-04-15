@@ -24,6 +24,7 @@ import android.os.IBinder;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.FlakyTest;
 import androidx.test.filters.MediumTest;
 import androidx.test.filters.SmallTest;
 import androidx.test.rule.GrantPermissionRule;
@@ -43,6 +44,8 @@ import java.util.concurrent.TimeoutException;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
@@ -86,7 +89,7 @@ public class TrackRecordingServiceTest {
 
         // Let's use default values.
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
-        sharedPreferences.edit().clear().apply();
+        sharedPreferences.edit().clear().commit();
 
         // Ensure that the database is empty before every test
         contentProviderUtils.deleteAllTracks(context);
@@ -121,13 +124,16 @@ public class TrackRecordingServiceTest {
     @MediumTest
     @Test
     public void testRecording_noTracks() throws Exception {
+        // given
         List<Track> tracks = contentProviderUtils.getAllTracks();
         Assert.assertTrue(tracks.isEmpty());
 
+        // when
         Intent startIntent = createStartIntent(context);
         mServiceRule.startService(startIntent);
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(startIntent));
 
+        // then
         // Test if we start in no-recording mode by default.
         Assert.assertFalse(service.isRecording());
         Assert.assertEquals(-1L, service.getRecordingTrackId());
@@ -136,19 +142,92 @@ public class TrackRecordingServiceTest {
     @MediumTest
     @Test
     public void testRecording_oldTracks() throws Exception {
+        // given
         createDummyTrack(trackId, -1L, false);
 
+        // when
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+
+        // then
         Assert.assertFalse(service.isRecording());
         Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
     }
 
     @MediumTest
     @Test
-    public void testRecording_orphanedRecordingTrack() throws Exception {
-        Intent startIntent = createStartIntent(context);
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(startIntent));
+    public void testRecording_serviceRestart_whileRecording() throws Exception {
+        // given
+        createDummyTrack(trackId, -1L, true);
 
+        //when
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+
+        // then
+        Assert.assertTrue(service.isRecording());
+    }
+
+    @MediumTest
+    @Test
+    public void testRecording_pauseAndResume() throws Exception {
+        // given
+        createDummyTrack(trackId, -1L, true);
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        insertLocation(service);
+
+        // when
+        service.pauseCurrentTrack();
+
+        // then
+        Assert.assertEquals(2, contentProviderUtils.getTrackPoints(trackId).size());
+
+        //when
+        service.resumeTrack(trackId);
+        insertLocation(service);
+
+        // then
+        Assert.assertTrue(service.isRecording());
+        Assert.assertEquals(trackId, service.getRecordingTrackId());
+
+        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        Assert.assertEquals(5, trackPoints.size());
+        Assert.assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(1).getLatitude(), 0.01);
+        Assert.assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(2).getLatitude(), 0.01);
+        Assert.assertEquals(TrackPointsColumns.RESUME_LATITUDE, trackPoints.get(3).getLatitude(), 0.01);
+    }
+
+    @MediumTest
+    @Test
+    public void testRecording_resumeStoppedTrack() throws Exception {
+        // given
+        createDummyTrack(trackId, -1L, true);
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        insertLocation(service);
+        service.endCurrentTrack();
+
+        Assert.assertEquals(1, contentProviderUtils.getTrackPoints(trackId).size());
+
+        // when
+        service.resumeTrack(trackId);
+        insertLocation(service);
+
+        // then
+        Assert.assertTrue(service.isRecording());
+        Assert.assertEquals(trackId, service.getRecordingTrackId());
+
+        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        Assert.assertEquals(4, trackPoints.size());
+        Assert.assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(1).getLatitude(), 0.01);
+        Assert.assertEquals(TrackPointsColumns.RESUME_LATITUDE, trackPoints.get(2).getLatitude(), 0.01);
+    }
+
+    @FlakyTest(detail = "Sometimes fails on CI.")
+    @MediumTest
+    @Test
+    public void testRecording_orphanedRecordingTrack() throws Exception {
+        // given
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+
+        // when
         // Just set recording track to a bogus value.
         // Make sure that the service will not start recording and will clear the bogus track.
         PreferencesUtils.setLong(context, R.string.recording_track_id_key, 123L);
@@ -161,31 +240,84 @@ public class TrackRecordingServiceTest {
     @MediumTest
     @Test
     public void testStartNewTrack_alreadyRecording() throws Exception {
+        // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         service.startNewTrack();
         Assert.assertTrue(service.isRecording());
+
         long trackId = service.getRecordingTrackId();
 
+        // when
         long newTrackId = service.startNewTrack();
+
+        // then
         Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, newTrackId);
 
         Assert.assertEquals(trackId, PreferencesUtils.getRecordingTrackId(context));
         Assert.assertEquals(trackId, service.getRecordingTrackId());
-
-        service.endCurrentTrack();
     }
 
     @MediumTest
     @Test
     public void testEndCurrentTrack_noRecording() throws Exception {
+        // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         Assert.assertFalse(service.isRecording());
 
+        // when
         // Ending the current track when there is no recording should not result in any error.
         service.endCurrentTrack();
 
+        // then
         Assert.assertFalse(PreferencesUtils.isRecording(context));
         Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
+    }
+
+    @MediumTest
+    @Test
+    public void testInsertWaypointMarker_noRecordingTrack() throws Exception {
+        // given
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        Assert.assertFalse(service.isRecording());
+
+        // when
+        long waypointId = service.insertWaypoint(null, null, null, null);
+
+        // then
+        Assert.assertEquals(-1L, waypointId);
+    }
+
+    @MediumTest
+    @Test
+    public void testInsertWaypointMarker_validWaypoint() throws Exception {
+        // given
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        service.startNewTrack();
+        Assert.assertTrue(service.isRecording());
+        insertLocation(service);
+        long trackId = service.getRecordingTrackId();
+
+        // when
+        long waypointId = service.insertWaypoint(null, null, null, null);
+
+        // then
+        Assert.assertNotEquals(-1L, waypointId);
+        Waypoint wpt = contentProviderUtils.getWaypoint(waypointId);
+        Assert.assertEquals(context.getString(R.string.marker_waypoint_icon_url), wpt.getIcon());
+        Assert.assertEquals(context.getString(R.string.marker_name_format, 1), wpt.getName());
+        Assert.assertEquals(trackId, wpt.getTrackId());
+        Assert.assertEquals(0.0, wpt.getLength(), 0.01);
+        Assert.assertNotNull(wpt.getLocation());
+
+        service.endCurrentTrack();
+    }
+
+    private void addTrack(Track track, boolean isRecording) {
+        Assert.assertTrue(track.getId() >= 0);
+        contentProviderUtils.insertTrack(track);
+        Assert.assertEquals(track.getId(), contentProviderUtils.getTrack(track.getId()).getId());
+        PreferencesUtils.setLong(context, R.string.recording_track_id_key, isRecording ? track.getId() : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+        PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, !isRecording);
     }
 
     // NOTE: Do not use to create a track that is currently recording.
@@ -199,58 +331,28 @@ public class TrackRecordingServiceTest {
         addTrack(dummyTrack, isRecording);
     }
 
-    private void addTrack(Track track, boolean isRecording) {
-        Assert.assertTrue(track.getId() >= 0);
-        contentProviderUtils.insertTrack(track);
-        Assert.assertEquals(track.getId(), contentProviderUtils.getTrack(track.getId()).getId());
-        PreferencesUtils.setLong(context, R.string.recording_track_id_key, isRecording ? track.getId() : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
-        PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, !isRecording);
+    static void insertLocation(TrackRecordingServiceInterface trackRecordingService) throws InterruptedException {
+        insertLocation(trackRecordingService, 45.0f, 35f, 5, 10, System.currentTimeMillis());
+    }
+
+    static void insertLocation(TrackRecordingServiceInterface trackRecordingService, double latitude, double longitude, float accuracy, long speed) throws InterruptedException {
+        insertLocation(trackRecordingService, latitude, longitude, accuracy, speed, System.currentTimeMillis());
     }
 
     /**
      * Inserts a location and waits for 200ms.
      */
-    private void insertLocation(TrackRecordingServiceInterface trackRecordingService) throws InterruptedException {
+    static void insertLocation(TrackRecordingServiceInterface trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) throws InterruptedException {
         Location location = new Location("gps");
-        location.setLongitude(35.0f);
-        location.setLatitude(45.0f);
-        location.setAccuracy(5);
-        location.setSpeed(10);
-        location.setTime(System.currentTimeMillis());
+        location.setLongitude(longitude);
+        location.setLatitude(latitude);
+        location.setAccuracy(accuracy);
+        location.setSpeed(speed);
+        location.setTime(time);
         location.setBearing(3.0f);
         trackRecordingService.insertLocation(location);
 
+        //TODO Needed?
         Thread.sleep(200);
-    }
-
-    @MediumTest
-    @Test
-    public void testInsertWaypointMarker_noRecordingTrack() throws Exception {
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
-        Assert.assertFalse(service.isRecording());
-
-        long waypointId = service.insertWaypoint(null, null, null, null);
-        Assert.assertEquals(-1L, waypointId);
-    }
-
-    @MediumTest
-    @Test
-    public void testInsertWaypointMarker_validWaypoint() throws Exception {
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
-        service.startNewTrack();
-        Assert.assertTrue(service.isRecording());
-        insertLocation(service);
-
-        long trackId = service.getRecordingTrackId();
-        long waypointId = service.insertWaypoint(null, null, null, null);
-        Assert.assertNotEquals(-1L, waypointId);
-        Waypoint wpt = contentProviderUtils.getWaypoint(waypointId);
-        Assert.assertEquals(context.getString(R.string.marker_waypoint_icon_url), wpt.getIcon());
-        Assert.assertEquals(context.getString(R.string.marker_name_format, 1), wpt.getName());
-        Assert.assertEquals(trackId, wpt.getTrackId());
-        Assert.assertEquals(0.0, wpt.getLength(), 0.01);
-        Assert.assertNotNull(wpt.getLocation());
-
-        service.endCurrentTrack();
     }
 }

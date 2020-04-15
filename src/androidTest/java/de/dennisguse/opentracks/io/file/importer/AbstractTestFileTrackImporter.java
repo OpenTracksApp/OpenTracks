@@ -101,7 +101,7 @@ public abstract class AbstractTestFileTrackImporter {
      * @param trackPointId the track point id
      */
     protected void expectFirstTrackPoint(TrackPoint trackPoint, long trackId, long trackPointId) {
-        when(contentProviderUtils.bulkInsertTrackPoint(trackPoint != null ? (TrackPoint[]) any() : (TrackPoint[]) any(), eq(1), eq(trackId))).thenReturn(1);
+        when(contentProviderUtils.bulkInsertTrackPoint(trackPoint != null ? (TrackPoint[]) any() : (TrackPoint[]) any(), eq(trackId))).thenReturn(1);
     }
 
     /**

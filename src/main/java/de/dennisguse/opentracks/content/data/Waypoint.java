@@ -38,14 +38,15 @@ public final class Waypoint {
     private long trackId = -1L;
     private double length = 0.0;
     private long duration = 0;
-    private Location location = null;
+    private Location location;
     private String photoUrl = "";
 
     @VisibleForTesting
-    public Waypoint() {
+    public Waypoint(@NonNull TrackPoint trackPoint) {
+        this.location = trackPoint.getLocation();
     }
 
-    public Waypoint(Location location) {
+    public Waypoint(@NonNull Location location) {
         this.location = location;
     }
 

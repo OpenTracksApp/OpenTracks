@@ -181,4 +181,10 @@ public class TrackPoint {
     public float bearingTo(@NonNull Location dest) {
         return location.bearingTo(dest);
     }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "time=" + getTime() + ": lat=" + getLatitude() + " lng=" + getLongitude() + " acc=" + getAccuracy();
+    }
 }
