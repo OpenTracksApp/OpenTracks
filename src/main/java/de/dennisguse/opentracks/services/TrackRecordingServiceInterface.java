@@ -20,6 +20,7 @@ import android.location.Location;
 import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 
 /**
  * App's service.
@@ -112,4 +113,13 @@ public interface TrackRecordingServiceInterface {
      * @return SensorDataSet object.
      */
     SensorDataSet getSensorData();
+
+    /**
+     * Disables processing of location updates from {@link android.location.LocationManager}.
+     */
+    @VisibleForTesting
+    void enableLocationExecutor(boolean enable);
+
+    @VisibleForTesting
+    void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager);
 }

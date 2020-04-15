@@ -34,6 +34,7 @@ import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.app.TaskStackBuilder;
 
 import java.util.concurrent.ExecutorService;
@@ -75,7 +76,7 @@ public class TrackRecordingService extends Service {
 
     // The following variables are set in onCreate:
     @Deprecated //TODO Should not be necessary
-    private ExecutorService executorService; // Enforces order of location changes.
+    private ExecutorService locationExecutorService; // Enforces order of location changes.
     private ContentProviderUtils contentProviderUtils;
     private LocationManager locationManager;
     private PeriodicTaskExecutor voiceExecutor;
@@ -146,10 +147,10 @@ public class TrackRecordingService extends Service {
 
         @Override
         public void onLocationChanged(final Location location) {
-            if (executorService == null || executorService.isShutdown() || executorService.isTerminated()) {
+            if (locationExecutorService == null || locationExecutorService.isShutdown() || locationExecutorService.isTerminated()) {
                 return;
             }
-            executorService.submit(new Runnable() {
+            locationExecutorService.submit(new Runnable() {
                 @Override
                 public void run() {
                     onLocationChangedAsync(location);
@@ -176,7 +177,7 @@ public class TrackRecordingService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        executorService = Executors.newSingleThreadExecutor();
+        locationExecutorService = Executors.newSingleThreadExecutor();
         contentProviderUtils = new ContentProviderUtils(this);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTaskFactory());
@@ -232,7 +233,7 @@ public class TrackRecordingService extends Service {
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
 
         // Shutdown the executorService last to avoid sending events to a dead executor.
-        executorService.shutdown();
+        locationExecutorService.shutdown();
         super.onDestroy();
     }
 
@@ -762,5 +763,23 @@ public class TrackRecordingService extends Service {
             stopForeground(true);
             notificationManager.cancelNotification();
         }
+    }
+
+    /**
+     * Disables processing of location updates from {@link android.location.LocationManager}.
+     */
+    @VisibleForTesting
+    public void enableLocationExecutor(boolean enable) {
+        if (enable) {
+            locationExecutorService = Executors.newSingleThreadExecutor();
+        } else {
+            locationExecutorService.shutdownNow();
+            locationExecutorService = null;
+        }
+    }
+
+    @VisibleForTesting
+    public void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager) {
+        this.remoteSensorManager = remoteSensorManager;
     }
 }

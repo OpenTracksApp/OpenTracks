@@ -1,5 +1,7 @@
 package de.dennisguse.opentracks.content.sensor;
 
+import androidx.annotation.NonNull;
+
 public final class SensorDataSet {
 
     public static final float DATA_UNAVAILABLE = Float.NaN;
@@ -11,14 +13,14 @@ public final class SensorDataSet {
     private float cadence;
     private float power;
     private float batteryLevel;
-    private long creationTimestamp;
+    private long time;
 
-    public SensorDataSet(float heartRate, float cadence, float power, float batteryLevel, long creationTimestamp) {
+    public SensorDataSet(float heartRate, float cadence, float power, float batteryLevel, long time) {
         this.heartRate = heartRate;
         this.cadence = cadence;
         this.power = power;
         this.batteryLevel = batteryLevel;
-        this.creationTimestamp = creationTimestamp;
+        this.time = time;
     }
 
     public SensorDataSet(float heartRate, float cadence, float power, float batteryLevel) {
@@ -63,8 +65,8 @@ public final class SensorDataSet {
         return power;
     }
 
-    public long getCreationTime() {
-        return creationTimestamp;
+    public long getTime() {
+        return time;
     }
 
     /**
@@ -73,7 +75,7 @@ public final class SensorDataSet {
      * @param maxAge the maximal age in milliseconds.
      */
     public boolean isRecent(long maxAge) {
-        return creationTimestamp + maxAge > System.currentTimeMillis();
+        return time + maxAge > System.currentTimeMillis();
     }
 
     public boolean hasBatteryLevel() {
@@ -90,5 +92,11 @@ public final class SensorDataSet {
 
     public String getSensorAddress() {
         return sensorAddress;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "time=" + getTime() + " sensor=" + getSensorAddress() + " heart=" + getHeartRate();
     }
 }

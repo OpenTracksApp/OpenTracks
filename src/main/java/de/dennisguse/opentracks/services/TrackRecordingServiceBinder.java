@@ -5,6 +5,7 @@ import android.location.Location;
 import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 
 /**
  * TODO: There is a bug in Android that leaks Binder instances. This bug is
@@ -90,6 +91,18 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
     @Override
     public SensorDataSet getSensorData() {
         return trackRecordingService.getSensorDataSet();
+    }
+
+    @VisibleForTesting
+    @Override
+    public void enableLocationExecutor(boolean enable) {
+        trackRecordingService.enableLocationExecutor(enable);
+    }
+
+    @VisibleForTesting
+    @Override
+    public void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager) {
+        trackRecordingService.setRemoteSensorManager(remoteSensorManager);
     }
 
     /**
