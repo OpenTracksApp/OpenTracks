@@ -176,6 +176,10 @@ public class TrackStatistics {
         this.maxSpeed_mps = maxSpeed;
     }
 
+    public boolean hasElevationMin() {
+        return !Double.isInfinite(getMinElevation());
+    }
+
     /**
      * Gets the minimum elevation.
      * This is calculated from the smoothed elevation, so this can actually be more than the current elevation.
@@ -191,6 +195,10 @@ public class TrackStatistics {
      */
     public void setMinElevation(double elevation) {
         elevationExtremities.setMin(elevation);
+    }
+
+    public boolean hasElevationMax() {
+        return !Double.isInfinite(getMaxElevation());
     }
 
     /**

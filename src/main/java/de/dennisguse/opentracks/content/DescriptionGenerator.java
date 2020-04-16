@@ -126,10 +126,14 @@ public class DescriptionGenerator {
         writePace(stats.getMaxSpeed(), builder, R.string.description_fastest_pace_in_minute, lineBreak);
 
         // Max elevation
-        writeElevation(stats.getMaxElevation(), builder, R.string.description_max_elevation, lineBreak);
+        if (stats.hasElevationMax()) {
+            writeElevation(stats.getMaxElevation(), builder, R.string.description_max_elevation, lineBreak);
+        }
 
         // Min elevation
-        writeElevation(stats.getMinElevation(), builder, R.string.description_min_elevation, lineBreak);
+        if (stats.hasElevationMin()) {
+            writeElevation(stats.getMinElevation(), builder, R.string.description_min_elevation, lineBreak);
+        }
 
         // Elevation gain
         writeElevation(stats.getTotalElevationGain(), builder, R.string.description_elevation_gain, lineBreak);

@@ -313,6 +313,9 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      */
     protected TrackPoint getTrackPoint() throws SAXException {
         TrackPoint trackPoint = createTrackPoint();
+        if (trackPoint == null) {
+            throw new SAXException(createErrorMessage("Invalid location detected: " + trackPoint));
+        }
 
         // Calculate derived attributes from the previous point
         if (trackData.lastLocationInCurrentSegment != null && trackData.lastLocationInCurrentSegment.getTime() != 0) {
