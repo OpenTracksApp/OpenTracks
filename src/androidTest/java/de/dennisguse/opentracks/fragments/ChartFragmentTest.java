@@ -33,7 +33,7 @@ import de.dennisguse.opentracks.TrackStubUtils;
 import de.dennisguse.opentracks.chart.ChartPoint;
 import de.dennisguse.opentracks.chart.ChartView;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.content.data.TrackPointSensorDataSet;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
@@ -82,7 +82,7 @@ public class ChartFragmentTest {
 
         // Input incorrect state.
         // Creates SensorData.
-        SensorDataSet sensorDataSet = new SensorDataSet(SensorDataSet.DATA_UNAVAILABLE, SensorDataSet.DATA_UNAVAILABLE);
+        TrackPointSensorDataSet sensorDataSet = new TrackPointSensorDataSet();
         trackPoint.setSensorDataSet(sensorDataSet);
         // Test.
         point = chartFragment.createPendingPoint(trackPoint);
@@ -104,7 +104,10 @@ public class ChartFragmentTest {
         Assert.assertEquals(Float.NaN, point.getPower(), 0.01);
 
         // Creates SensorData.
-        SensorDataSet sensorDataSet = new SensorDataSet(100, 101, 102);
+        TrackPointSensorDataSet sensorDataSet = new TrackPointSensorDataSet();
+        sensorDataSet.setHeartRate_bpm(100f);
+        sensorDataSet.setCyclingCadence(101);
+        sensorDataSet.setPower(102f);
 
         // Creates SensorDataSet.
         trackPoint.setSensorDataSet(sensorDataSet);

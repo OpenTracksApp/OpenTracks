@@ -45,6 +45,7 @@ import de.dennisguse.opentracks.TrackDetailActivity;
 import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.content.data.TrackPointSensorDataSet;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
@@ -575,7 +576,7 @@ public class TrackRecordingService extends Service {
             return;
         }
 
-        TrackPoint trackPoint = new TrackPoint(location, getSensorDataSet());
+        TrackPoint trackPoint = new TrackPoint(location, getTrackPointSensorDataSet());
         notificationManager.updateTrackPoint(this, trackPoint, recordingGpsAccuracy);
 
         if (!TrackPointUtils.fulfillsAccuracy(trackPoint, recordingGpsAccuracy)) {
@@ -708,10 +709,20 @@ public class TrackRecordingService extends Service {
     }
 
     SensorDataSet getSensorDataSet() {
-        if (remoteSensorManager == null || !remoteSensorManager.isEnabled() || !remoteSensorManager.isSensorDataSetValid()) {
+        if (remoteSensorManager == null || !remoteSensorManager.isEnabled()) {
             return null;
         }
-        return remoteSensorManager.getSensorDataSet();
+
+        return remoteSensorManager.getSensorData();
+    }
+
+    TrackPointSensorDataSet getTrackPointSensorDataSet() {
+        SensorDataSet sensorData = getSensorDataSet();
+        if (sensorData != null) {
+            return sensorData.createTrackPointSensorDataSet();
+        }
+
+        return null;
     }
 
     private void registerLocationListener() {

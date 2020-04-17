@@ -39,11 +39,11 @@ import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.content.data.TrackPointSensorDataSet;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
-import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -114,9 +114,12 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     }
 
     /* Views */
-    private View sensorContainerView;
+    private View heartRateContainer;
     private TextView heartRateValueView;
     private TextView heartRateSensorView;
+    private View cadenceContainer;
+    private TextView cadenceValueView;
+    private TextView cadenceSensorView;
 
     private TextView totalTimeValueView;
     private final Runnable updateUIeachSecond = new Runnable() {
@@ -162,9 +165,13 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        sensorContainerView = view.findViewById(R.id.stats_sensor_container);
+        heartRateContainer = view.findViewById(R.id.stats_sensor_heart_rate_container);
         heartRateValueView = view.findViewById(R.id.stats_sensor_heart_rate_value);
         heartRateSensorView = view.findViewById(R.id.stats_sensor_heart_rate_sensor_value);
+
+        cadenceContainer = view.findViewById(R.id.stats_sensor_cadence_container);
+        cadenceValueView = view.findViewById(R.id.stats_sensor_cadence_value);
+        cadenceSensorView = view.findViewById(R.id.stats_sensor_cadence_sensor_value);
 
         totalTimeValueView = view.findViewById(R.id.stats_total_time_value);
 
@@ -269,9 +276,12 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        sensorContainerView = null;
+        heartRateContainer = null;
         heartRateValueView = null;
         heartRateSensorView = null;
+        cadenceContainer = null;
+        cadenceValueView = null;
+        cadenceSensorView = null;
 
         totalTimeValueView = null;
 
@@ -426,7 +436,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     }
 
     /**
-     * Tries to fetch most recent {@link SensorDataSet} from {@link de.dennisguse.opentracks.services.TrackRecordingService}.
+     * Tries to fetch most recent {@link TrackPointSensorDataSet} from {@link de.dennisguse.opentracks.services.TrackRecordingService}.
      */
     private void updateSensorDataUI() {
         TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
@@ -435,33 +445,56 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         if (trackRecordingService == null) {
             Log.d(STATS_FRAGMENT_TAG, "Cannot get the track recording service.");
         } else {
-            //TODO sensorState = trackRecordingService.getSensorState();
             sensorDataSet = trackRecordingService.getSensorData();
         }
 
         setHeartRateSensorData(sensorDataSet, isSelectedTrackRecording());
+        setCadenceSensorData(sensorDataSet, isSelectedTrackRecording());
     }
 
     private void setHeartRateSensorData(SensorDataSet sensorDataSet, boolean isRecording) {
         // heart rate
         int isVisible = View.VISIBLE;
-        if (!isRecording || PreferencesUtils.isBluetoothHeartRateSensorAddressDefault(getContext())) {
+        if (!isRecording || PreferencesUtils.isBluetoothHeartRateSensorAddressNone(getContext())) {
             isVisible = View.INVISIBLE;
         }
-        sensorContainerView.setVisibility(isVisible);
+        heartRateContainer.setVisibility(isVisible);
 
         if (isRecording) {
-            String heartRate = getContext().getString(R.string.value_unknown);
+            String sensorValue = getContext().getString(R.string.value_unknown);
             String sensorName = getContext().getString(R.string.value_unknown);
-            if (sensorDataSet != null && sensorDataSet.isRecent(BluetoothRemoteSensorManager.MAX_SENSOR_DATE_SET_AGE_MS)) {
-                sensorName = sensorDataSet.getSensorName();
-                if (sensorDataSet.hasHeartRate()) {
-                    heartRate = StringUtils.formatDecimal(sensorDataSet.getHeartRate(), 0);
+            if (sensorDataSet != null && sensorDataSet.getHeartRate() != null) {
+                sensorName = sensorDataSet.getHeartRate().getSensorName();
+                if (sensorDataSet.getHeartRate().hasHeartRate_bpm() && sensorDataSet.getHeartRate().isRecent()) {
+                    sensorValue = StringUtils.formatDecimal(sensorDataSet.getHeartRate().getHeartRate_bpm(), 0);
                 }
             }
 
             heartRateSensorView.setText(sensorName);
-            heartRateValueView.setText(heartRate);
+            heartRateValueView.setText(sensorValue);
+        }
+    }
+
+    private void setCadenceSensorData(SensorDataSet sensorDataSet, boolean isRecording) {
+        // heart rate
+        int isVisible = View.VISIBLE;
+        if (!isRecording || PreferencesUtils.isBluetoothCyclingCadenceSensorAddressNone(getContext())) {
+            isVisible = View.INVISIBLE;
+        }
+        cadenceContainer.setVisibility(isVisible);
+
+        if (isRecording) {
+            String sensorValue = getContext().getString(R.string.value_unknown);
+            String sensorName = getContext().getString(R.string.value_unknown);
+            if (sensorDataSet != null && sensorDataSet.getCyclingCadence() != null) {
+                sensorName = sensorDataSet.getCyclingCadence().getSensorName();
+                if (sensorDataSet.getCyclingCadence().hasCadence_rpm() && sensorDataSet.getCyclingCadence().isRecent()) {
+                    sensorValue = StringUtils.formatDecimal(sensorDataSet.getCyclingCadence().getCadence_rpm(), 0);
+                }
+            }
+
+            cadenceSensorView.setText(sensorName);
+            cadenceValueView.setText(sensorValue);
         }
     }
 

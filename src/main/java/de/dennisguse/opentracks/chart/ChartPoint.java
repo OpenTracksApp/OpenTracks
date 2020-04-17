@@ -3,7 +3,7 @@ package de.dennisguse.opentracks.chart;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.content.data.TrackPointSensorDataSet;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.UnitConversions;
@@ -25,7 +25,7 @@ public class ChartPoint {
         this.elevation = elevation;
     }
 
-    public ChartPoint(@NonNull TrackStatisticsUpdater trackStatisticsUpdater, SensorDataSet sensorDataSet, boolean chartByDistance, boolean metricUnits) {
+    public ChartPoint(@NonNull TrackStatisticsUpdater trackStatisticsUpdater, TrackPointSensorDataSet sensorDataSet, boolean chartByDistance, boolean metricUnits) {
         TrackStatistics trackStatistics = trackStatisticsUpdater.getTrackStatistics();
 
         if (chartByDistance) {
@@ -50,10 +50,10 @@ public class ChartPoint {
         pace = speed == 0 ? 0.0 : 60.0 / speed;
         if (sensorDataSet != null) {
             if (sensorDataSet.hasHeartRate()) {
-                heartRate = sensorDataSet.getHeartRate();
+                heartRate = sensorDataSet.getHeartRate_bpm();
             }
-            if (sensorDataSet.hasCadence()) {
-                cadence = sensorDataSet.getCadence();
+            if (sensorDataSet.hasCyclingCadence()) {
+                cadence = sensorDataSet.getCyclingCadence_rpm();
             }
             if (sensorDataSet.hasPower()) {
                 power = sensorDataSet.getPower();

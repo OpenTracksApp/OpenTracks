@@ -27,8 +27,8 @@ import org.xml.sax.SAXException;
 import java.util.ArrayList;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.content.data.TrackPointSensorDataSet;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.exporter.KmlTrackWriter;
 
 /**
@@ -224,29 +224,25 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
             TrackPoint trackPoint = trackPoints.get(i);
 
             boolean hasSensorData = false;
-            float heartrate = SensorDataSet.DATA_UNAVAILABLE;
-            float cadence = SensorDataSet.DATA_UNAVAILABLE;
-            float power = SensorDataSet.DATA_UNAVAILABLE;
+            TrackPointSensorDataSet sensorDataSet = new TrackPointSensorDataSet(trackPoint.getTime());
 
             if (i < heartRateList.size()) {
-                heartrate = heartRateList.get(i);
+                sensorDataSet.setHeartRate_bpm(heartRateList.get(i));
                 hasSensorData = true;
             }
             if (i < cadenceList.size()) {
-                cadence = cadenceList.get(i);
+                sensorDataSet.setCyclingCadence(cadenceList.get(i));
                 hasSensorData = true;
             }
             if (i < powerList.size()) {
-                power = powerList.get(i);
+                sensorDataSet.setPower(cadenceList.get(i));
                 hasSensorData = true;
             }
 
             if (!hasSensorData) {
-                insertTrackPoint(trackPoint);
-            } else {
-                TrackPoint sensorDataSetLocation = new TrackPoint(trackPoint, new SensorDataSet(heartrate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, trackPoint.getTime()));
-                insertTrackPoint(sensorDataSetLocation);
+                trackPoint.setSensorDataSet(sensorDataSet);
             }
+            insertTrackPoint(trackPoint);
         }
     }
 

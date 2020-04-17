@@ -16,6 +16,8 @@
     <string name="settings_reset_key" translatable="false">settingsReset</string>
 
     <string name="settings_sensor_bluetooth_heart_rate_key" translatable="false">bluetoothSensor</string>
+    <string name="settings_sensor_bluetooth_cycling_cadence_key" translatable="false">bluetoothCyclingCadenceSensor</string>
+    <string name="settings_sensor_bluetooth_cycling_speed_key" translatable="false">bluetoothCyclingSpeedSensor</string>
     <string name="sensor_type_value_none" translatable="false">NONE</string>
 
     <string name="default_activity_key" translatable="false">defaultActivity</string>

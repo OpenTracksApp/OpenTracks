@@ -1,102 +1,97 @@
 package de.dennisguse.opentracks.content.sensor;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
+import de.dennisguse.opentracks.content.data.TrackPointSensorDataSet;
+
+/**
+ *
+ */
 public final class SensorDataSet {
 
-    public static final float DATA_UNAVAILABLE = Float.NaN;
+    private SensorDataHeartRate heartRate;
 
-    //TODO It might be necessary to consider: if sensor was connected as well.
-    private String sensorName;
-    private String sensorAddress;
-    private float heartRate;
-    private float cadence;
-    private float power;
-    private float batteryLevel;
-    private long time;
+    private SensorDataCycling.Cadence cyclingCadence;
 
-    public SensorDataSet(float heartRate, float cadence, float power, float batteryLevel, long time) {
+    private SensorDataCycling.Speed cyclingSpeed;
+
+    public SensorDataSet() {
+    }
+
+    @VisibleForTesting
+    public SensorDataSet(SensorDataHeartRate heartRate, SensorDataCycling.Cadence cyclingCadence, SensorDataCycling.Speed cyclingSpeed) {
         this.heartRate = heartRate;
-        this.cadence = cadence;
-        this.power = power;
-        this.batteryLevel = batteryLevel;
-        this.time = time;
+        this.cyclingCadence = cyclingCadence;
+        this.cyclingSpeed = cyclingSpeed;
     }
 
-    public SensorDataSet(float heartRate, float cadence, float power, float batteryLevel) {
-        this(heartRate, cadence, power, batteryLevel, System.currentTimeMillis());
-    }
-
-    public SensorDataSet(float heartRate, float cadence, float power) {
-        this(heartRate, cadence, power, DATA_UNAVAILABLE, System.currentTimeMillis());
-    }
-
-    public SensorDataSet(float heartRate, float cadence) {
-        this(heartRate, cadence, DATA_UNAVAILABLE, DATA_UNAVAILABLE, System.currentTimeMillis());
-    }
-
-    public SensorDataSet(float heartRate, String sensorName, String sensorAddress) {
-        this(heartRate, DATA_UNAVAILABLE, DATA_UNAVAILABLE, DATA_UNAVAILABLE, System.currentTimeMillis());
-        this.sensorName = sensorName;
-        this.sensorAddress = sensorAddress;
-    }
-
-    public boolean hasHeartRate() {
-        return !Float.isNaN(heartRate) && heartRate > 0;
-    }
-
-    public float getHeartRate() {
+    public SensorDataHeartRate getHeartRate() {
         return heartRate;
     }
 
-    public boolean hasCadence() {
-        return !Float.isNaN(cadence);
+    public SensorDataCycling.Cadence getCyclingCadence() {
+        return cyclingCadence;
     }
 
-    public float getCadence() {
-        return cadence;
+    public SensorDataCycling.Speed getCyclingSpeed() {
+        return cyclingSpeed;
     }
 
-    public boolean hasPower() {
-        return !Float.isNaN(power);
+    public void set(SensorData data) {
+        if (data == null) {
+            return;
+        }
+
+        if (data instanceof SensorDataHeartRate) {
+            this.heartRate = (SensorDataHeartRate) data;
+            return;
+        }
+
+        if (data instanceof SensorDataCycling.Cadence) {
+            this.cyclingCadence = (SensorDataCycling.Cadence) data;
+            return;
+        }
+        if (data instanceof SensorDataCycling.Speed) {
+            this.cyclingSpeed = (SensorDataCycling.Speed) data;
+            return;
+        }
+        if (data instanceof SensorDataCycling.CadenceAndSpeed) {
+            set(((SensorDataCycling.CadenceAndSpeed) data).getCadence());
+            set(((SensorDataCycling.CadenceAndSpeed) data).getSpeed());
+        }
+
+        throw new UnsupportedOperationException();
     }
 
-    public float getPower() {
-        return power;
+    public void clear() {
+        this.heartRate = null;
+        this.cyclingCadence = null;
+        this.cyclingSpeed = null;
     }
 
-    public long getTime() {
-        return time;
-    }
+    public TrackPointSensorDataSet createTrackPointSensorDataSet() {
+        TrackPointSensorDataSet sensorDataSet = new TrackPointSensorDataSet();
+        if (heartRate != null) {
+            sensorDataSet.setHeartRate_bpm(heartRate.getHeartRate_bpm());
+        }
 
-    /**
-     * Is the data recent considering the current time.
-     *
-     * @param maxAge the maximal age in milliseconds.
-     */
-    public boolean isRecent(long maxAge) {
-        return time + maxAge > System.currentTimeMillis();
-    }
+        if (cyclingCadence != null && cyclingCadence.hasCadence_rpm()) {
+            sensorDataSet.setCyclingCadence(cyclingCadence.getCadence_rpm());
+        }
 
-    public boolean hasBatteryLevel() {
-        return !Float.isNaN(batteryLevel);
-    }
+        if (cyclingSpeed != null && cyclingSpeed.hasSpeed()) {
+            sensorDataSet.setCyclingCadence(cyclingSpeed.getSpeed_ms());
+        }
 
-    public float getBatteryLevel() {
-        return batteryLevel;
-    }
-
-    public String getSensorName() {
-        return sensorName;
-    }
-
-    public String getSensorAddress() {
-        return sensorAddress;
+        return sensorDataSet;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return "time=" + getTime() + " sensor=" + getSensorAddress() + " heart=" + getHeartRate();
+        return (getHeartRate() != null ? "" + getHeartRate() : "")
+                + (getCyclingCadence() != null ? " " + getCyclingCadence() : "")
+                + (getCyclingSpeed() != null ? " " + getCyclingSpeed() : "");
     }
 }

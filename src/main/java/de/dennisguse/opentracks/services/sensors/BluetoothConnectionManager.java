@@ -30,27 +30,24 @@ import androidx.annotation.NonNull;
 
 import java.util.UUID;
 
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.content.sensor.SensorState;
+import de.dennisguse.opentracks.content.sensor.SensorData;
+import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
+import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
 import de.dennisguse.opentracks.util.BluetoothUtils;
 
 /**
- * Manages connection to Bluetooth LE heart rate monitor.
+ * Manages connection to a Bluetooth LE sensor and subscribes for onChange-notifications.
+ * Also parses the transferred data into {@link SensorDataObserver}.
  */
-public class BluetoothConnectionManager {
-
-    private static final UUID HEART_RATE_MEASUREMENT_CHAR_UUID = new UUID(0x2A3700001000L, 0x800000805f9b34fbL);
-    private static final UUID CLIENT_CHARACTERISTIC_CONFIG_UUID = new UUID(0x290200001000L, 0x800000805f9b34fbL);
+public abstract class BluetoothConnectionManager {
 
     private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
 
-    private final Context context;
-    private final EventCallback observer;
+    private final SensorDataObserver observer;
 
-    private SensorState sensorState;
-
+    private final UUID serviceUUUID;
+    private final UUID measurementUUID;
     private BluetoothGatt bluetoothGatt;
-    private final BluetoothDevice bluetoothDevice;
 
     private final BluetoothGattCallback connectCallback = new BluetoothGattCallback() {
         @Override
@@ -58,80 +55,70 @@ public class BluetoothConnectionManager {
             switch (newState) {
                 case BluetoothProfile.STATE_CONNECTING:
                     Log.d(TAG, "Connecting to sensor: " + gatt.getDevice());
-                    setState(SensorState.CONNECTING);
-
-                    observer.connecting(gatt.getDevice().getName());
                 case BluetoothProfile.STATE_CONNECTED:
                     Log.d(TAG, "Connected to sensor: " + gatt.getDevice());
-                    setState(SensorState.CONNECTED);
 
                     gatt.discoverServices();
-
-                    observer.connected(gatt.getDevice().getName());
                     break;
                 case BluetoothProfile.STATE_DISCONNECTING:
                     Log.d(TAG, "Disconnecting from sensor: " + gatt.getDevice());
-                    setState(SensorState.DISCONNECTING);
 
                 case BluetoothProfile.STATE_DISCONNECTED:
                     Log.d(TAG, "Disconnected from sensor: " + gatt.getDevice());
-                    setState(SensorState.DISCONNECTED);
-
-                    observer.disconnected(gatt.getDevice().getName());
             }
         }
 
         @Override
         public void onServicesDiscovered(@NonNull BluetoothGatt gatt, int status) {
-            BluetoothGattService service = gatt.getService(BluetoothUtils.HEART_RATE_SERVICE_UUID);
+            BluetoothGattService service = gatt.getService(serviceUUUID);
             if (service == null) {
-                Log.e(TAG, "Could not get heart rate service for " + gatt.getDevice().getAddress());
+                Log.e(TAG, "Could not get service for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + serviceUUUID);
                 return;
             }
 
-
-            BluetoothGattCharacteristic characteristic = service.getCharacteristic(HEART_RATE_MEASUREMENT_CHAR_UUID);
+            BluetoothGattCharacteristic characteristic = service.getCharacteristic(measurementUUID);
             if (characteristic == null) {
-                Log.e(TAG, "Could not get BluetoothCharacteristic for " + gatt.getDevice().getAddress());
+                Log.e(TAG, "Could not get BluetoothCharacteristic for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + serviceUUUID + " characteristicUUID=" + measurementUUID);
                 return;
             }
             gatt.setCharacteristicNotification(characteristic, true);
 
-            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(CLIENT_CHARACTERISTIC_CONFIG_UUID);
+            // Register for updates.
+            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(BluetoothUtils.CLIENT_CHARACTERISTIC_CONFIG_UUID);
             descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
             gatt.writeDescriptor(descriptor);
         }
 
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic) {
-            int heartRate = BluetoothUtils.parseHeartRate(characteristic);
-            String deviceName = gatt.getDevice().getName();
+            String sensorName = gatt.getDevice().getName();
+            Log.d(TAG, "Received data from " + sensorName);
 
-            Log.d(TAG, "Received heart beat rate " + deviceName + ": " + heartRate);
-            observer.onSensorDataReceived(new SensorDataSet(heartRate, deviceName, gatt.getDevice().getAddress()));
+            SensorData sensorData = parsePayload(sensorName, gatt.getDevice().getAddress(), characteristic);
+            if (sensorData != null) {
+                observer.onChanged(sensorData);
+            }
         }
     };
 
-    BluetoothConnectionManager(@NonNull Context context, @NonNull BluetoothDevice bluetoothDevice, EventCallback observer) {
-        this.context = context;
-        this.bluetoothDevice = bluetoothDevice;
-        this.sensorState = SensorState.NONE;
+    BluetoothConnectionManager(UUID serviceUUUID, UUID measurementUUID, SensorDataObserver observer) {
+        this.serviceUUUID = serviceUUUID;
+        this.measurementUUID = measurementUUID;
         this.observer = observer;
     }
 
-    public synchronized void connect() {
+    synchronized void connect(Context context, @NonNull BluetoothDevice device) {
         if (bluetoothGatt != null) {
             Log.w(TAG, "Already connected; ignoring.");
         }
 
-        Log.d(TAG, "Connecting to: " + bluetoothDevice);
+        Log.d(TAG, "Connecting to: " + device);
 
-        bluetoothGatt = bluetoothDevice.connectGatt(this.context, true, this.connectCallback);
+        bluetoothGatt = device.connectGatt(context, true, this.connectCallback);
 
-        setState(SensorState.CONNECTING);
     }
 
-    public synchronized void disconnect() {
+    synchronized void disconnect() {
         if (bluetoothGatt == null) {
             Log.w(TAG, "Cannot disconnect if not connected.");
             return;
@@ -140,27 +127,78 @@ public class BluetoothConnectionManager {
         bluetoothGatt = null;
     }
 
-    public synchronized boolean isSameBluetoothDevice(String address) {
-        return this.bluetoothDevice.getAddress().equals(address);
+    synchronized boolean isSameBluetoothDevice(String address) {
+        if (bluetoothGatt == null) {
+            return false;
+        }
+
+        return address.equals(bluetoothGatt.getDevice().getAddress());
     }
 
-    synchronized SensorState getSensorState() {
-        return sensorState;
+    /**
+     * @return null if data could not be parsed.
+     */
+    protected abstract de.dennisguse.opentracks.content.sensor.SensorData parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic);
+
+    public static class HeartRate extends BluetoothConnectionManager {
+
+        HeartRate(@NonNull SensorDataObserver observer) {
+            super(BluetoothUtils.HEART_RATE_SERVICE_UUID, BluetoothUtils.HEART_RATE_MEASUREMENT_CHAR_UUID, observer);
+        }
+
+        @Override
+        protected SensorDataHeartRate parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
+            Integer heartRate = BluetoothUtils.parseHeartRate(characteristic);
+
+            return heartRate != null ? new SensorDataHeartRate(address, sensorName, heartRate) : null;
+        }
     }
 
-    private synchronized void setState(SensorState sensorState) {
-        this.sensorState = sensorState;
+    public static class CyclingCadence extends BluetoothConnectionManager {
+
+        CyclingCadence(SensorDataObserver observer) {
+            super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPPED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
+        }
+
+        @Override
+        protected SensorDataCycling.Cadence parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
+            SensorDataCycling.CadenceAndSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);
+            if (cadenceAndSpeed == null) {
+                return null;
+            }
+
+            if (cadenceAndSpeed.getCadence() != null) {
+                return cadenceAndSpeed.getCadence();
+            }
+
+            //Workaround for Wahoo CADENCE: this sensor reports speed (instead of cadence)
+            if (cadenceAndSpeed.getSpeed() != null) {
+                return new SensorDataCycling.Cadence(cadenceAndSpeed.getSpeed());
+            }
+
+            return null;
+        }
     }
 
+    public static class CyclingSpeed extends BluetoothConnectionManager {
 
-    interface EventCallback {
+        CyclingSpeed(SensorDataObserver observer) {
+            super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPPED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
+        }
 
-        void connecting(String sensorName);
+        @Override
+        protected SensorDataCycling.Speed parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
+            SensorDataCycling.CadenceAndSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);
+            if (cadenceAndSpeed != null) {
+                return cadenceAndSpeed.getSpeed();
+            }
+            return null;
+        }
+    }
 
-        void connected(String sensorName);
+    interface SensorDataObserver {
 
-        void onSensorDataReceived(SensorDataSet sensorDataSet);
+        void onChanged(SensorData sensorData);
 
-        void disconnected(String sensorName);
     }
 }

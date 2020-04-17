@@ -21,52 +21,71 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.widget.Toast;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.util.BluetoothUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
- * Bluetooth LE sensor manager.
- * Should only be instantiated once!
+ * Bluetooth LE sensor manager: manages connections to Bluetooth LE sensors.
+ *
+ * Note: should only be instantiated once.
+ *
+ * TODO: listen for Bluetooth enabled/disabled events.
+ *
+ * TODO: In case, a cycling (Cadence and Speed) sensor reports both values, testing is required.
+ * We establish two GATT separate GATT connections (as if two different sensors were used).
+ * However, it is not clear if this is allowed.
+ * Even if this works, it is not clear what happens if a user (while recording) changes one of the sensors in the settings as this will trigger a disconnect of one GATT.
  *
  * @author Sandor Dornbush
  */
-public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.EventCallback {
+public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.SensorDataObserver {
 
-    public static final long MAX_SENSOR_DATE_SET_AGE_MS = 5000;
+    private static final String TAG = BluetoothRemoteSensorManager.class.getSimpleName();
 
-    private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
+    public static final long MAX_SENSOR_DATE_SET_AGE_MS = 5 * UnitConversions.S_TO_MS;
 
     private static final BluetoothAdapter bluetoothAdapter = BluetoothUtils.getDefaultBluetoothAdapter(TAG);
 
     private final Context context;
-
     private final SharedPreferences sharedPreferences;
+
+    private boolean started = false;
+
+    private final BluetoothConnectionManager heartRate = new BluetoothConnectionManager.HeartRate(this);
+    private final BluetoothConnectionManager cyclingCadence = new BluetoothConnectionManager.CyclingCadence(this);
+
+    private final SensorDataSet sensorDataSet = new SensorDataSet();
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-            if (bluetoothConnectionManager != null && PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_heart_rate_key, key)) {
-                if (PreferencesUtils.isBluetoothHeartRateSensorAddressDefault(context)) {
+            if (!started) return;
+
+            if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_heart_rate_key, key)) {
+                if (PreferencesUtils.isBluetoothHeartRateSensorAddressNone(context)) {
                     stop();
                     return;
                 }
                 String address = PreferencesUtils.getBluetoothHeartRateSensorAddress(context);
-                if (bluetoothConnectionManager.isSameBluetoothDevice(address)) {
+                connect(heartRate, address);
+            }
+
+            if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_cycling_cadence_key, key)) {
+                if (PreferencesUtils.isBluetoothCyclingCadenceSensorAddressNone(context)) {
+                    stop();
                     return;
                 }
+                String address = PreferencesUtils.getBluetoothCyclingCadenceSensorAddress(context);
 
-                disconnect();
-                startCurrentSensor();
+                connect(cyclingCadence, address);
             }
         }
     };
-
-    private SensorDataSet sensorDataSet = null;
-    private BluetoothConnectionManager bluetoothConnectionManager;
 
     /**
      * @param context the context
@@ -77,84 +96,76 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
     }
 
     public void start() {
+        started = true;
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        startCurrentSensor();
+
+        //Trigger connection startup
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
     }
 
-    public void stop() {
-        disconnect();
+    public synchronized void stop() {
+        // Disconnecting
+        heartRate.disconnect();
+        cyclingCadence.disconnect();
+
+        sensorDataSet.clear();
+
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        started = false;
     }
-
 
     public boolean isEnabled() {
         return bluetoothAdapter != null && bluetoothAdapter.isEnabled();
     }
 
-    public SensorDataSet getSensorDataSet() {
-        return sensorDataSet;
-    }
-
-    public boolean isSensorDataSetValid() {
-        SensorDataSet sensorDataSet = getSensorDataSet();
-        if (sensorDataSet == null) {
-            return false;
-        }
-        return sensorDataSet.isRecent(MAX_SENSOR_DATE_SET_AGE_MS);
-    }
-
-    private void startCurrentSensor() {
+    private synchronized void connect(BluetoothConnectionManager connectionManager, String address) {
         if (!isEnabled()) {
             Log.w(TAG, "Bluetooth not enabled.");
             return;
         }
 
-        if (PreferencesUtils.isBluetoothHeartRateSensorAddressDefault(context)) {
-            Log.w(TAG, "No bluetooth address.");
+        if (PreferencesUtils.isBluetoothSensorAddressNone(context, address)) {
+            Log.w(TAG, "No Bluetooth address.");
             return;
         }
-        String address = PreferencesUtils.getBluetoothHeartRateSensorAddress(context);
+
+        // Check if there is an ongoing connection; if yes, check if the address changed.
+        if (connectionManager.isSameBluetoothDevice(address)) {
+            return;
+        } else {
+            connectionManager.disconnect();
+        }
+
         Log.i(TAG, "Connecting to bluetooth address: " + address);
-
-        BluetoothDevice device;
         try {
-            device = bluetoothAdapter.getRemoteDevice(address);
+            BluetoothDevice device = bluetoothAdapter.getRemoteDevice(address);
+            connectionManager.connect(context, device);
         } catch (IllegalArgumentException e) {
-            Log.w(TAG, "Unable to get remote device for: " + address, e);
-
-            String toastMessage = context.getString(R.string.sensor_not_known, address);
-            Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show();
-
-            return;
-        }
-
-        disconnect();
-
-        bluetoothConnectionManager = new BluetoothConnectionManager(context, device, this);
-        bluetoothConnectionManager.connect();
-    }
-
-    private void disconnect() {
-        if (bluetoothConnectionManager != null) {
-            bluetoothConnectionManager.disconnect();
-            bluetoothConnectionManager = null;
+            Log.e(TAG, "Unable to get remote device for: " + address, e);
         }
     }
 
-    @Override
-    public void connecting(String sensorName) {
+    public SensorDataSet getSensorData() {
+        return sensorDataSet;
     }
 
     @Override
-    public void connected(String sensorName) {
-    }
+    public synchronized void onChanged(de.dennisguse.opentracks.content.sensor.SensorData sensorData) {
+        if (sensorData instanceof SensorDataCycling.Cadence) {
+            if (sensorData.equals(sensorDataSet.getCyclingCadence())) {
+                Log.d(TAG, "onChanged: cadence data repeated.");
+                return;
+            }
+            ((SensorDataCycling.Cadence) sensorData).compute(sensorDataSet.getCyclingCadence());
+        }
+        if (sensorData instanceof SensorDataCycling.Speed) {
+            if (sensorData.equals(sensorDataSet.getCyclingSpeed())) {
+                Log.d(TAG, "onChanged: speed data repeated.");
+                return;
+            }
+            ((SensorDataCycling.Speed) sensorData).compute(sensorDataSet.getCyclingSpeed());
+        }
 
-    @Override
-    public void onSensorDataReceived(SensorDataSet sensorDataSet) {
-        this.sensorDataSet = sensorDataSet;
-    }
-
-    @Override
-    public void disconnected(String sensorName) {
+        sensorDataSet.set(sensorData);
     }
 }

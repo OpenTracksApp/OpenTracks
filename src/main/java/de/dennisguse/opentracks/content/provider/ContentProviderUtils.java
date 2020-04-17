@@ -36,11 +36,11 @@ import de.dennisguse.opentracks.android.ContentResolverWrapper;
 import de.dennisguse.opentracks.android.IContentResolver;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.content.data.TrackPointSensorDataSet;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
 
@@ -621,12 +621,19 @@ public class ContentProviderUtils {
             trackPoint.setBearing(cursor.getFloat(indexes.bearingIndex));
         }
 
-        float heartRate = cursor.isNull(indexes.sensorHeartRateIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorHeartRateIndex);
-        float cadence = cursor.isNull(indexes.sensorCadenceIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorCadenceIndex);
-        float power = cursor.isNull(indexes.sensorPowerIndex) ? SensorDataSet.DATA_UNAVAILABLE : cursor.getFloat(indexes.sensorPowerIndex);
+        TrackPointSensorDataSet sensorDataSet = new TrackPointSensorDataSet();
 
-        trackPoint.setSensorDataSet(new SensorDataSet(heartRate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, trackPoint.getTime()));
+        if (cursor.isNull(indexes.sensorHeartRateIndex)) {
+            sensorDataSet.setHeartRate_bpm(cursor.getFloat(indexes.sensorHeartRateIndex));
+        }
+        if (cursor.isNull(indexes.sensorCadenceIndex)) {
+            sensorDataSet.setCyclingCadence(cursor.getFloat(indexes.sensorCadenceIndex));
+        }
+        if (cursor.isNull(indexes.sensorPowerIndex)) {
+            sensorDataSet.setCyclingSpeed(cursor.getFloat(indexes.sensorPowerIndex));
+        }
 
+        trackPoint.setSensorDataSet(sensorDataSet);
         return trackPoint;
     }
 
@@ -806,15 +813,15 @@ public class ContentProviderUtils {
         }
 
         //SensorData
-        SensorDataSet sensorDataSet = trackPoint.getSensorDataSet();
+        TrackPointSensorDataSet sensorDataSet = trackPoint.getSensorDataSet();
         if (sensorDataSet != null && sensorDataSet.hasHeartRate()) {
-            values.put(TrackPointsColumns.SENSOR_HEARTRATE, trackPoint.getSensorDataSet().getHeartRate());
+            values.put(TrackPointsColumns.SENSOR_HEARTRATE, sensorDataSet.getHeartRate_bpm());
         }
-        if (sensorDataSet != null && sensorDataSet.hasCadence()) {
-            values.put(TrackPointsColumns.SENSOR_CADENCE, trackPoint.getSensorDataSet().getCadence());
+        if (sensorDataSet != null && sensorDataSet.hasCyclingCadence()) {
+            values.put(TrackPointsColumns.SENSOR_CADENCE, sensorDataSet.getCyclingCadence_rpm());
         }
         if (sensorDataSet != null && sensorDataSet.hasPower()) {
-            values.put(TrackPointsColumns.SENSOR_POWER, trackPoint.getSensorDataSet().getPower());
+            values.put(TrackPointsColumns.SENSOR_POWER, sensorDataSet.getPower());
         }
         return values;
     }

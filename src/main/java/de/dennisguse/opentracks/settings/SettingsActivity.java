@@ -13,6 +13,9 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
+import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingCadenceAndSpeedPreference;
+import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeHeartRatePreference;
+import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeSensorPreference;
 import de.dennisguse.opentracks.util.BluetoothUtils;
 import de.dennisguse.opentracks.util.HackUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -111,8 +114,10 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             } else if (preference instanceof ActivityTypePreference) {
                 activityPreferenceDialog = ActivityTypePreference.ActivityPreferenceDialog.newInstance(preference.getKey());
                 dialogFragment = activityPreferenceDialog;
-            } else if (preference instanceof BluetoothLePreference) {
-                dialogFragment = BluetoothLePreference.BluetoothLePreferenceDialog.newInstance(preference.getKey());
+            } else if (preference instanceof BluetoothLeHeartRatePreference) {
+                dialogFragment = BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(preference.getKey(), BluetoothUtils.HEART_RATE_SERVICE_UUID);
+            } else if (preference instanceof BluetoothLeCyclingCadenceAndSpeedPreference) {
+                dialogFragment = BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(preference.getKey(), BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID);
             }
 
             if (dialogFragment != null) {
@@ -139,7 +144,7 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
 
         private void updateBluetooth() {
             // Disable Bluetooth preference if device does not have Bluetooth
-            BluetoothLePreference bluetoothPreference = findPreference(getString(R.string.settings_sensor_bluetooth_heart_rate_key));
+            BluetoothLeSensorPreference bluetoothPreference = findPreference(getString(R.string.settings_sensor_bluetooth_heart_rate_key));
             bluetoothPreference.setVisible(BluetoothUtils.hasBluetooth(TAG));
         }
 

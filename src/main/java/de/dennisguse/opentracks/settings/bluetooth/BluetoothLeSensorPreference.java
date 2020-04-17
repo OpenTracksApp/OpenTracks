@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.settings;
+package de.dennisguse.opentracks.settings.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.le.BluetoothLeScanner;
@@ -21,8 +21,10 @@ import androidx.preference.PreferenceDialogFragmentCompat;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.settings.BluetoothLeAdapter;
 import de.dennisguse.opentracks.util.BluetoothUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
@@ -30,25 +32,27 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  * Preference to select a discoverable Bluetooth LE device.
  * Based upon ListPreference.
  */
-public class BluetoothLePreference extends DialogPreference {
+public abstract class BluetoothLeSensorPreference extends DialogPreference {
 
-    private static final String TAG = BluetoothLePreference.class.getSimpleName();
+    private static final String TAG = BluetoothLeSensorPreference.class.getSimpleName();
+
+    private static final String ARG_BLUETOOTH_UUID = "bluetoothUUID";
 
     private static final int DEVICE_NONE_RESOURCEID = R.string.value_none;
 
-    public BluetoothLePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public BluetoothLeSensorPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public BluetoothLePreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BluetoothLeSensorPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public BluetoothLePreference(Context context, AttributeSet attrs) {
+    public BluetoothLeSensorPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public BluetoothLePreference(Context context) {
+    public BluetoothLeSensorPreference(Context context) {
         super(context);
     }
 
@@ -78,17 +82,19 @@ public class BluetoothLePreference extends DialogPreference {
 
     @Override
     public CharSequence getSummary() {
-        if (getValue() == null || PreferencesUtils.isBluetoothHeartRateSensorAddressDefault(getContext(), getValue())) {
+        if (getValue() == null || PreferencesUtils.isBluetoothSensorAddressNone(getContext(), getValue())) {
             return getContext().getString(DEVICE_NONE_RESOURCEID);
         }
 
         return getValue();
     }
 
-    public static class BluetoothLePreferenceDialog extends PreferenceDialogFragmentCompat {
+    public static class BluetoothLeSensorPreferenceDialog extends PreferenceDialogFragmentCompat {
 
         private int selectedEntryIndex;
         private final BluetoothLeAdapter listAdapter = new BluetoothLeAdapter();
+
+        private UUID sensorUUID;
 
         private BluetoothLeScanner scanner = null;
         private final ScanCallback scanCallback = new ScanCallback() {
@@ -116,10 +122,11 @@ public class BluetoothLePreference extends DialogPreference {
             }
         };
 
-        static BluetoothLePreferenceDialog newInstance(String key) {
-            final BluetoothLePreferenceDialog fragment = new BluetoothLePreferenceDialog();
+        public static BluetoothLeSensorPreferenceDialog newInstance(String preferenceKey, UUID sensorUUID) {
+            final BluetoothLeSensorPreferenceDialog fragment = new BluetoothLeSensorPreferenceDialog();
             final Bundle b = new Bundle(1);
-            b.putString(ARG_KEY, key);
+            b.putString(ARG_KEY, preferenceKey);
+            b.putSerializable(ARG_BLUETOOTH_UUID, sensorUUID);
             fragment.setArguments(b);
             return fragment;
         }
@@ -127,6 +134,9 @@ public class BluetoothLePreference extends DialogPreference {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+
+            sensorUUID = (UUID) getArguments().getSerializable(ARG_BLUETOOTH_UUID);
+            Log.i(TAG, "UUID: " + sensorUUID);
 
             BluetoothAdapter bluetoothAdapter = BluetoothUtils.getDefaultBluetoothAdapter(TAG);
             if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
@@ -152,14 +162,14 @@ public class BluetoothLePreference extends DialogPreference {
             listAdapter.add(getContext().getString(DEVICE_NONE_RESOURCEID), deviceNone);
             selectedEntryIndex = 0;
 
-            BluetoothLePreference preference = (BluetoothLePreference) getPreference();
+            BluetoothLeSensorPreference preference = (BluetoothLeSensorPreference) getPreference();
             String deviceSelected = preference.getValue();
             if (deviceSelected != null && !deviceNone.equals(deviceSelected)) {
                 listAdapter.add(preference.getValue(), preference.getValue());
                 selectedEntryIndex = 1;
             }
 
-            ScanFilter.Builder scanFilterBuilder = new ScanFilter.Builder().setServiceUuid(new ParcelUuid(BluetoothUtils.HEART_RATE_SERVICE_UUID));
+            ScanFilter.Builder scanFilterBuilder = new ScanFilter.Builder().setServiceUuid(new ParcelUuid(sensorUUID));
             List<ScanFilter> scanFilter = new ArrayList<>();
             scanFilter.add(scanFilterBuilder.build());
 
@@ -180,7 +190,7 @@ public class BluetoothLePreference extends DialogPreference {
                         public void onClick(DialogInterface dialog, int which) {
                             selectedEntryIndex = which;
 
-                            BluetoothLePreferenceDialog.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                            BluetoothLeSensorPreferenceDialog.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
                             dialog.dismiss();
                         }
                     });
@@ -196,7 +206,7 @@ public class BluetoothLePreference extends DialogPreference {
 
             if (positiveResult && selectedEntryIndex >= 0) {
                 String value = listAdapter.get(selectedEntryIndex).getAddress();
-                BluetoothLePreference preference = (BluetoothLePreference) getPreference();
+                BluetoothLeSensorPreference preference = (BluetoothLeSensorPreference) getPreference();
                 if (preference.callChangeListener(value)) {
                     preference.setValue(value);
                 }

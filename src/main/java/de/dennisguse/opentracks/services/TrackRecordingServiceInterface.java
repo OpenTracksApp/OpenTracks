@@ -95,8 +95,13 @@ public interface TrackRecordingServiceInterface {
     long insertWaypoint(String name, String category, String description, String photoUrl);
 
     /**
-     * ONLY FOR TESTING
+     * Gets the current sensor data. Returns null if there is no data.
      *
+     * @return SensorDataSet object.
+     */
+    SensorDataSet getSensorData();
+
+    /**
      * Inserts a location in the current recording track.
      * <p>
      * When recording a track, GPS locations are automatically inserted.
@@ -106,13 +111,6 @@ public interface TrackRecordingServiceInterface {
      */
     @VisibleForTesting
     void insertLocation(Location location);
-
-    /**
-     * Gets the current sensor data. Returns null if there is no data.
-     *
-     * @return SensorDataSet object.
-     */
-    SensorDataSet getSensorData();
 
     /**
      * Disables processing of location updates from {@link android.location.LocationManager}.

@@ -20,8 +20,6 @@ import android.location.LocationManager;
 
 import androidx.annotation.NonNull;
 
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-
 /**
  * This class extends the standard Android location with extra information.
  *
@@ -39,17 +37,17 @@ public class TrackPoint {
         this.location = location;
     }
 
-    public TrackPoint(@NonNull Location location, SensorDataSet sensorDataSet) {
+    public TrackPoint(@NonNull Location location, TrackPointSensorDataSet sensorDataSet) {
         this.location = location;
         this.sensorDataSet = sensorDataSet;
     }
 
-    public TrackPoint(@NonNull TrackPoint trackPoint, SensorDataSet sensorDataSet) {
+    public TrackPoint(@NonNull TrackPoint trackPoint, TrackPointSensorDataSet sensorDataSet) {
         this.location = trackPoint.getLocation();
         this.sensorDataSet = sensorDataSet;
     }
 
-    private SensorDataSet sensorDataSet = null;
+    private TrackPointSensorDataSet sensorDataSet = null;
 
     public TrackPoint(double latitude, double longitude, Double altitude, long time) {
         location = new Location(LocationManager.GPS_PROVIDER);
@@ -90,11 +88,11 @@ public class TrackPoint {
         return location;
     }
 
-    public SensorDataSet getSensorDataSet() {
+    public TrackPointSensorDataSet getSensorDataSet() {
         return sensorDataSet;
     }
 
-    public void setSensorDataSet(SensorDataSet sensorDataSet) {
+    public void setSensorDataSet(TrackPointSensorDataSet sensorDataSet) {
         this.sensorDataSet = sensorDataSet;
     }
 

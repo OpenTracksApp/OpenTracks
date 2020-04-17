@@ -244,13 +244,8 @@ public class TrackRecordingServiceTestLocation {
             }
 
             @Override
-            public boolean isSensorDataSetValid() {
-                return true;
-            }
-
-            @Override
-            public SensorDataSet getSensorDataSet() {
-                return new SensorDataSet(1, 2);
+            public SensorDataSet getSensorData() {
+                return new SensorDataSet();
             }
         });
 
