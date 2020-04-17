@@ -426,7 +426,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     }
 
     /**
-     * Tries to fetch most recent {@link SensorDataSet} {@link de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager}.
+     * Tries to fetch most recent {@link SensorDataSet} from {@link de.dennisguse.opentracks.services.TrackRecordingService}.
      */
     private void updateSensorDataUI() {
         TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();

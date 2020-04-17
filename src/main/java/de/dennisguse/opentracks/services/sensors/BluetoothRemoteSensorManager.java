@@ -20,9 +20,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -37,7 +34,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  *
  * @author Sandor Dornbush
  */
-public class BluetoothRemoteSensorManager {
+public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.EventCallback {
 
     public static final long MAX_SENSOR_DATE_SET_AGE_MS = 5000;
 
@@ -49,39 +46,6 @@ public class BluetoothRemoteSensorManager {
 
     private final SharedPreferences sharedPreferences;
 
-    // Handler that gets information back from the bluetoothConnectionManager
-    private final Handler messageHandler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(Message message) {
-            String toastMessage;
-            switch (message.what) {
-                case BluetoothConnectionManager.MESSAGE_CONNECTING:
-                    //Ignore for now.
-                    toastMessage = context.getString(R.string.settings_sensor_connecting, message.obj);
-                    Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show();
-                    break;
-                case BluetoothConnectionManager.MESSAGE_CONNECTED:
-                    toastMessage = context.getString(R.string.settings_sensor_connected, message.obj);
-                    Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show();
-                    break;
-                case BluetoothConnectionManager.MESSAGE_READ:
-                    if (!(message.obj instanceof SensorDataSet)) {
-                        Log.e(TAG, "Received message did not contain a SensorDataSet.");
-                        sensorDataSet = null;
-                    } else {
-                        sensorDataSet = (SensorDataSet) message.obj;
-                    }
-                    break;
-                case BluetoothConnectionManager.MESSAGE_DISCONNECTED:
-                    toastMessage = context.getString(R.string.settings_sensor_disconnected, message.obj);
-                    Toast.makeText(context, toastMessage, Toast.LENGTH_LONG).show();
-                    break;
-                default:
-                    Log.e(TAG, "Got an undefined case. Please check.");
-                    break;
-            }
-        }
-    };
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
@@ -166,7 +130,7 @@ public class BluetoothRemoteSensorManager {
 
         disconnect();
 
-        bluetoothConnectionManager = new BluetoothConnectionManager(context, device, messageHandler);
+        bluetoothConnectionManager = new BluetoothConnectionManager(context, device, this);
         bluetoothConnectionManager.connect();
     }
 
@@ -175,5 +139,22 @@ public class BluetoothRemoteSensorManager {
             bluetoothConnectionManager.disconnect();
             bluetoothConnectionManager = null;
         }
+    }
+
+    @Override
+    public void connecting(String sensorName) {
+    }
+
+    @Override
+    public void connected(String sensorName) {
+    }
+
+    @Override
+    public void onSensorDataReceived(SensorDataSet sensorDataSet) {
+        this.sensorDataSet = sensorDataSet;
+    }
+
+    @Override
+    public void disconnected(String sensorName) {
     }
 }

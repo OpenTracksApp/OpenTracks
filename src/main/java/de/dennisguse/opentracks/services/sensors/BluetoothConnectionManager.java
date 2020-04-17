@@ -24,7 +24,6 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -40,19 +39,13 @@ import de.dennisguse.opentracks.util.BluetoothUtils;
  */
 public class BluetoothConnectionManager {
 
-    // Message types sent to handler
-    static final int MESSAGE_CONNECTING = 1;
-    static final int MESSAGE_CONNECTED = 2;
-    static final int MESSAGE_READ = 3;
-    static final int MESSAGE_DISCONNECTED = 4;
-
     private static final UUID HEART_RATE_MEASUREMENT_CHAR_UUID = new UUID(0x2A3700001000L, 0x800000805f9b34fbL);
     private static final UUID CLIENT_CHARACTERISTIC_CONFIG_UUID = new UUID(0x290200001000L, 0x800000805f9b34fbL);
 
     private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
 
     private final Context context;
-    private final Handler handler;
+    private final EventCallback observer;
 
     private SensorState sensorState;
 
@@ -67,14 +60,14 @@ public class BluetoothConnectionManager {
                     Log.d(TAG, "Connecting to sensor: " + gatt.getDevice());
                     setState(SensorState.CONNECTING);
 
-                    handler.obtainMessage(MESSAGE_CONNECTING, gatt.getDevice().getName()).sendToTarget();
+                    observer.connecting(gatt.getDevice().getName());
                 case BluetoothProfile.STATE_CONNECTED:
                     Log.d(TAG, "Connected to sensor: " + gatt.getDevice());
                     setState(SensorState.CONNECTED);
 
                     gatt.discoverServices();
 
-                    handler.obtainMessage(MESSAGE_CONNECTED, gatt.getDevice().getName()).sendToTarget();
+                    observer.connected(gatt.getDevice().getName());
                     break;
                 case BluetoothProfile.STATE_DISCONNECTING:
                     Log.d(TAG, "Disconnecting from sensor: " + gatt.getDevice());
@@ -84,7 +77,7 @@ public class BluetoothConnectionManager {
                     Log.d(TAG, "Disconnected from sensor: " + gatt.getDevice());
                     setState(SensorState.DISCONNECTED);
 
-                    handler.obtainMessage(MESSAGE_DISCONNECTED, gatt.getDevice().getName()).sendToTarget();
+                    observer.disconnected(gatt.getDevice().getName());
             }
         }
 
@@ -115,21 +108,15 @@ public class BluetoothConnectionManager {
             String deviceName = gatt.getDevice().getName();
 
             Log.d(TAG, "Received heart beat rate " + deviceName + ": " + heartRate);
-            SensorDataSet sensorDataSet = new SensorDataSet(heartRate, deviceName, gatt.getDevice().getAddress());
-            handler.obtainMessage(MESSAGE_READ, sensorDataSet).sendToTarget();
+            observer.onSensorDataReceived(new SensorDataSet(heartRate, deviceName, gatt.getDevice().getAddress()));
         }
     };
 
-    /**
-     * Constructor.
-     *
-     * @param handler a handler for sending messages back to the UI activity
-     */
-    BluetoothConnectionManager(@NonNull Context context, @NonNull BluetoothDevice bluetoothDevice, @NonNull Handler handler) {
+    BluetoothConnectionManager(@NonNull Context context, @NonNull BluetoothDevice bluetoothDevice, EventCallback observer) {
         this.context = context;
         this.bluetoothDevice = bluetoothDevice;
-        this.handler = handler;
         this.sensorState = SensorState.NONE;
+        this.observer = observer;
     }
 
     public synchronized void connect() {
@@ -163,5 +150,17 @@ public class BluetoothConnectionManager {
 
     private synchronized void setState(SensorState sensorState) {
         this.sensorState = sensorState;
+    }
+
+
+    interface EventCallback {
+
+        void connecting(String sensorName);
+
+        void connected(String sensorName);
+
+        void onSensorDataReceived(SensorDataSet sensorDataSet);
+
+        void disconnected(String sensorName);
     }
 }
