@@ -99,7 +99,7 @@ class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         for (DocumentFile candidate : file.listFiles()) {
             if (!candidate.isDirectory()) {
                 String extension = FileUtils.getExtension(candidate.getName());
-                if (trackFileFormat.getExtension().equals(extension)) {
+                if (extension != null && trackFileFormat.getExtension().equals(extension)) {
                     files.add(candidate);
                 }
             } else {

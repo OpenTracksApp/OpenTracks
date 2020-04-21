@@ -95,11 +95,15 @@ public class FileUtils {
 
     /**
      * Gets the extension from a file name.
-     * Returns null if there is no extension.
+     * Returns null if there is no extension or fileName is null.
      *
      * @param fileName the file name
      */
     public static String getExtension(String fileName) {
+        if (fileName == null) {
+            return null;
+        }
+
         int index = fileName.lastIndexOf('.');
         if (index == -1) {
             return null;

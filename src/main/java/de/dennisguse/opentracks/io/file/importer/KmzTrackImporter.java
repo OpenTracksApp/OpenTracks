@@ -26,9 +26,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;
 import de.dennisguse.opentracks.util.FileUtils;
@@ -42,6 +45,13 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 public class KmzTrackImporter implements TrackImporter {
 
     private static final String TAG = KmzTrackImporter.class.getSimpleName();
+
+    public static final List<String> KMZ_IMAGES_EXT = new ArrayList<>();
+    static {
+        KMZ_IMAGES_EXT.add("jpeg");
+        KMZ_IMAGES_EXT.add("jpg");
+        KMZ_IMAGES_EXT.add("png");
+    }
 
     private static final int BUFFER_SIZE = 4096;
 
@@ -77,17 +87,19 @@ public class KmzTrackImporter implements TrackImporter {
             return -1L;
         }
 
+        deleteOrphanImages(context, trackId);
+
         return trackId;
     }
 
     /**
-     * Copies KMZ images that are inside KmzTrackExporter.KMZ_IMAGES_DIR to OpenTracks external storage.
+     * Copies all images that are inside KMZ to OpenTracks external storage.
      *
      * @return false if there are errors or true otherwise.
      */
     private boolean copyKmzImages() {
         try (InputStream inputStream = context.getContentResolver().openInputStream(uriKmzFile);
-             ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
+            ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
             ZipEntry zipEntry;
 
             while ((zipEntry = zipInputStream.getNextEntry()) != null) {
@@ -97,9 +109,8 @@ public class KmzTrackImporter implements TrackImporter {
                 }
 
                 String fileName = zipEntry.getName();
-                String prefix = KmzTrackExporter.KMZ_IMAGES_DIR + File.separatorChar;
-                if (fileName.startsWith(prefix)) {
-                    readImageFile(zipInputStream, fileName.substring(prefix.length()));
+                if (hasImageExtension(fileName)) {
+                    readAndSaveImageFile(zipInputStream, importNameForFilename(fileName));
                 }
 
                 zipInputStream.closeEntry();
@@ -110,6 +121,50 @@ public class KmzTrackImporter implements TrackImporter {
             Log.e(TAG, "Unable to import file", e);
             return false;
         }
+    }
+
+    /**
+     * From path fileName generates an import unique name and returns it.
+     * The name generator is simple: change the path fileName with '-' instead of File.separatorChar.
+     *
+     * @param fileName the file name.
+     */
+    public static String importNameForFilename(String fileName) {
+        // TODO this tricky code for maintain backward compatibility must be deleted some day.
+        /*
+         * In versions before v3.5.0 photo URL in KML files were wrong.
+         * For compatibility reasons it checks if fileName begins with "content://" or "file://".
+         * All fileName begins with "content:/" or "file://" are cooked.
+         * We cannot guess what's the folder name where images are so we use "images" that was the folder name expected in versions before v3.5.0.
+         */
+        if (fileName.startsWith("content://") || fileName.startsWith("file://")) {
+            fileName = "images/" + fileName.substring(fileName.lastIndexOf(File.separatorChar) + 1);
+        }
+
+        return fileName.replace(File.separatorChar, '-');
+    }
+
+    /**
+     * Returns true if fileName ends with some of the KMZ_IMAGES_EXT suffixes.
+     * Otherwise returns false.
+     */
+    private boolean hasImageExtension(String fileName)  {
+        if (fileName == null) {
+            return false;
+        }
+
+        String fileExt = FileUtils.getExtension(fileName.toLowerCase());
+        if (fileExt == null) {
+            return false;
+        }
+
+        for (String ext : KMZ_IMAGES_EXT) {
+            if (fileExt.equals(ext)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -145,6 +200,40 @@ public class KmzTrackImporter implements TrackImporter {
         } catch (IOException e) {
             Log.e(TAG, "Unable to import file", e);
             return -1L;
+        }
+    }
+
+    /**
+     * Deletes all images that remained in external storage that doesn't have waypoint (marker) associated.
+     *
+     * @param context the Context object.
+     * @param trackId the id of the Track.
+     */
+    private void deleteOrphanImages(Context context, long trackId) {
+        if (trackId != 1L) {
+            // 1.- Gets all photo names in the waypoints of the track identified by id.
+            ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
+            List<Waypoint> waypoints = contentProviderUtils.getWaypoints(trackId);
+            List<String> photosName = new ArrayList<>();
+            for (Waypoint w : waypoints) {
+                if (w.hasPhoto()) {
+                    String photoUrl = Uri.decode(w.getPhotoUrl());
+                    photosName.add(photoUrl.substring(photoUrl.lastIndexOf(File.separatorChar) + 1));
+                }
+            }
+
+            // 2.- Deletes all orphan photos from external storage.
+            File dir = FileUtils.getPhotoDir(context, trackId);
+            if (dir.exists() && dir.isDirectory()) {
+                for (File file : dir.listFiles()) {
+                    if (!photosName.contains(file.getName())) {
+                        file.delete();
+                    }
+                }
+                if (dir.listFiles().length == 0) {
+                    dir.delete();
+                }
+            }
         }
     }
 
@@ -201,12 +290,12 @@ public class KmzTrackImporter implements TrackImporter {
     }
 
     /**
-     * Reads an image file.
+     * Reads an image file (zipInputStream) and save it in a file called fileName inside photo folder.
      *
      * @param zipInputStream the zip input stream
      * @param fileName       the file name
      */
-    private void readImageFile(ZipInputStream zipInputStream, String fileName) throws IOException {
+    private void readAndSaveImageFile(ZipInputStream zipInputStream, String fileName) throws IOException {
         if (importTrackId == -1L || fileName.equals("")) {
             return;
         }

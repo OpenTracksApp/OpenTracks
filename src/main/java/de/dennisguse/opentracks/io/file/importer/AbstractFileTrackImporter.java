@@ -383,7 +383,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             return null;
         }
 
-        File file = FileUtils.getPhotoFileIfExists(context, importTrackId, Uri.parse(externalPhotoUrl));
+        String importFileName = KmzTrackImporter.importNameForFilename(externalPhotoUrl);
+        File file = FileUtils.getPhotoFileIfExists(context, importTrackId, Uri.parse(importFileName));
         if (file != null) {
             Uri photoUri = FileUtils.getUriForFile(context, file);
             return "" + photoUri;
