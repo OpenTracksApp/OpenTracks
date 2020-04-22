@@ -27,6 +27,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -46,12 +47,7 @@ public class KmzTrackImporter implements TrackImporter {
 
     private static final String TAG = KmzTrackImporter.class.getSimpleName();
 
-    public static final List<String> KMZ_IMAGES_EXT = new ArrayList<>();
-    static {
-        KMZ_IMAGES_EXT.add("jpeg");
-        KMZ_IMAGES_EXT.add("jpg");
-        KMZ_IMAGES_EXT.add("png");
-    }
+    public static final List<String> KMZ_IMAGES_EXT = Arrays.asList("jpeg", "jpg", "png");
 
     private static final int BUFFER_SIZE = 4096;
 
@@ -158,10 +154,8 @@ public class KmzTrackImporter implements TrackImporter {
             return false;
         }
 
-        for (String ext : KMZ_IMAGES_EXT) {
-            if (fileExt.equals(ext)) {
-                return true;
-            }
+        if (KMZ_IMAGES_EXT.contains(fileExt)) {
+            return true;
         }
 
         return false;

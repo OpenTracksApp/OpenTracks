@@ -330,7 +330,7 @@ public class KmlTrackWriter implements TrackWriter {
      * @param heading  the heading.
      */
     private void writePhotoOverlay(Waypoint waypoint, float heading) {
-        if (waypoint.getLocation() != null && exportTrackDetail) {
+        if (exportTrackDetail) {
             printWriter.println("<PhotoOverlay>");
             printWriter.println("<name>" + StringUtils.formatCData(waypoint.getName()) + "</name>");
             printWriter.println("<description>" + StringUtils.formatCData(waypoint.getDescription()) + "</description>");

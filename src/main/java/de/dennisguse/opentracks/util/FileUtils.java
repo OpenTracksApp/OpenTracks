@@ -95,9 +95,9 @@ public class FileUtils {
 
     /**
      * Gets the extension from a file name.
-     * Returns null if there is no extension or fileName is null.
      *
      * @param fileName the file name
+     * @return null if there is no extension or fileName is null.
      */
     public static String getExtension(String fileName) {
         if (fileName == null) {
