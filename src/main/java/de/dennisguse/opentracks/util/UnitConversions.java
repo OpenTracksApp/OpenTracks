@@ -29,6 +29,9 @@ public class UnitConversions {
     // 1 second in milliseconds
     public static final long ONE_SECOND_MS = UnitConversions.S_TO_MS;
     public static final long ONE_MINUTE_MS = (long) (UnitConversions.MIN_TO_S * UnitConversions.S_TO_MS);
+    public static final long ONE_HOUR_MS = 60 * ONE_MINUTE_MS;
+    public static final long ONE_DAY_MS = 24 * ONE_HOUR_MS;
+    public static final long ONE_WEEK_MS = 7 * ONE_DAY_MS;
 
     // multiplication factor to convert milliseconds to seconds
     public static final double MS_TO_S = 1d / S_TO_MS;
