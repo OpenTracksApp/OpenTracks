@@ -313,6 +313,9 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      */
     protected TrackPoint getTrackPoint() throws SAXException {
         TrackPoint trackPoint = createTrackPoint();
+        if (trackPoint == null) {
+            throw new SAXException(createErrorMessage("Invalid location detected: " + trackPoint));
+        }
 
         // Calculate derived attributes from the previous point
         if (trackData.lastLocationInCurrentSegment != null && trackData.lastLocationInCurrentSegment.getTime() != 0) {
@@ -380,23 +383,15 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             return null;
         }
 
-        Uri externalPhotoUri = Uri.parse(externalPhotoUrl);
-        if (externalPhotoUri == null) {
-            Log.w(TAG, "Could not parse external photo url.");
+        String importFileName = KmzTrackImporter.importNameForFilename(externalPhotoUrl);
+        File file = FileUtils.getPhotoFileIfExists(context, importTrackId, Uri.parse(importFileName));
+        if (file != null) {
+            Uri photoUri = FileUtils.getUriForFile(context, file);
+            return "" + photoUri;
+        }
+        else {
             return null;
         }
-        String filename = externalPhotoUri.getLastPathSegment();
-        if (filename == null) {
-            Log.w(TAG, "External photo contains no filename.");
-            return null;
-        }
-
-        File dir = FileUtils.getPhotoDir(context, importTrackId);
-        File file = new File(dir, filename);
-
-        Uri photoUri = FileUtils.getUriForFile(context, file);
-
-        return "" + photoUri;
     }
 
     /**

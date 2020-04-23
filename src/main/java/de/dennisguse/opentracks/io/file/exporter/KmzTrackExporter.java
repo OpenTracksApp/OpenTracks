@@ -112,7 +112,11 @@ public class KmzTrackExporter implements TrackExporter {
                         }
                         Waypoint waypoint = contentProviderUtils.createWaypoint(cursor);
                         if (waypoint.hasPhoto()) {
-                            addImage(context, zipOutputStream, waypoint.getPhotoUrl());
+                            Uri uriPhoto = waypoint.getPhotoURI();
+                            boolean existsPhoto = FileUtils.getPhotoFileIfExists(context, track.getId(), uriPhoto) != null;
+                            if (existsPhoto) {
+                                addImage(context, zipOutputStream, uriPhoto, waypoint);
+                            }
                         }
 
                         cursor.moveToNext();
@@ -122,11 +126,9 @@ public class KmzTrackExporter implements TrackExporter {
         }
     }
 
-    private void addImage(Context context, ZipOutputStream zipOutputStream, String photoUrl) throws IOException {
-        Uri uri = Uri.parse(photoUrl);
-
+    private void addImage(Context context, ZipOutputStream zipOutputStream, Uri uri, Waypoint waypoint) throws IOException {
         try (InputStream inputStream = context.getContentResolver().openInputStream(uri)) {
-            ZipEntry zipEntry = new ZipEntry(buildKmzImageFilePath(uri));
+            ZipEntry zipEntry = new ZipEntry(buildKmzImageFilePath(waypoint));
             zipOutputStream.putNextEntry(zipEntry);
 
             if (inputStream == null) throw new FileNotFoundException();
@@ -149,11 +151,13 @@ public class KmzTrackExporter implements TrackExporter {
     }
 
     /**
-     * Builds and returns the path for the file that will be saved inside KMZ_IMAGES_DIR.
+     * Builds and returns the path for the image that will be saved inside KMZ_IMAGES_DIR for the waypoint.
      *
-     * @param uri URI object.
+     * @param waypoint Waypoint object.
      */
-    public static String buildKmzImageFilePath(Uri uri) {
-        return KMZ_IMAGES_DIR + File.separatorChar + FileUtils.sanitizeFileName(uri.getLastPathSegment());
+    public static String buildKmzImageFilePath(Waypoint waypoint) {
+        String ext = FileUtils.getExtension(waypoint.getPhotoUrl());
+        ext = ext == null ? "" : "." + ext;
+        return KMZ_IMAGES_DIR + File.separatorChar + FileUtils.sanitizeFileName(waypoint.getId() + ext);
     }
 }

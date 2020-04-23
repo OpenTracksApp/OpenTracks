@@ -99,7 +99,7 @@ class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         for (DocumentFile candidate : file.listFiles()) {
             if (!candidate.isDirectory()) {
                 String extension = FileUtils.getExtension(candidate.getName());
-                if (trackFileFormat.getExtension().equals(extension)) {
+                if (extension != null && trackFileFormat.getExtension().equals(extension)) {
                     files.add(candidate);
                 }
             } else {
@@ -186,7 +186,7 @@ class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
                 Uri uri = contentProviderUtils.insertTrack(new Track());
                 long newId = Long.parseLong(uri.getLastPathSegment());
 
-                trackImporter = new KmzTrackImporter(importActivity, newId);
+                trackImporter = new KmzTrackImporter(importActivity, newId, file.getUri());
             }
         }
 

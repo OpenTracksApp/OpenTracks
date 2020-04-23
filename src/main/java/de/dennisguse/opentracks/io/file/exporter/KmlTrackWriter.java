@@ -32,6 +32,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
@@ -162,9 +163,10 @@ public class KmlTrackWriter implements TrackWriter {
     @Override
     public void writeWaypoint(Waypoint waypoint) {
         if (printWriter != null && exportTrackDetail) {
-            if (waypoint.hasPhoto() && exportPhotos) {
+            boolean existsPhoto = FileUtils.getPhotoFileIfExists(context, waypoint.getTrackId(), waypoint.getPhotoURI()) != null;
+            if (waypoint.hasPhoto() && exportPhotos && existsPhoto) {
                 float heading = getHeading(waypoint.getTrackId(), waypoint.getLocation());
-                writePhotoOverlay(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(), waypoint.getLocation(), waypoint.getPhotoUrl(), heading);
+                writePhotoOverlay(waypoint, heading);
             } else {
                 writePlacemark(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(), WAYPOINT_STYLE, waypoint.getLocation());
             }
@@ -322,32 +324,29 @@ public class KmlTrackWriter implements TrackWriter {
     }
 
     /**
-     * Writes a photo overlay.
-     *  @param name        the name
-     * @param category    the category
-     * @param description the description
-     * @param location    the location
-     * @param photoUrl    the photo url
-     * @param heading     the heading
+     * Writes a photo overlay from waypoint.
+     *
+     * @param waypoint Waypoint object.
+     * @param heading  the heading.
      */
-    private void writePhotoOverlay(String name, String category, String description, Location location, String photoUrl, float heading) {
-        if (location != null && exportTrackDetail) {
+    private void writePhotoOverlay(Waypoint waypoint, float heading) {
+        if (exportTrackDetail) {
             printWriter.println("<PhotoOverlay>");
-            printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
-            printWriter.println("<description>" + StringUtils.formatCData(description) + "</description>");
+            printWriter.println("<name>" + StringUtils.formatCData(waypoint.getName()) + "</name>");
+            printWriter.println("<description>" + StringUtils.formatCData(waypoint.getDescription()) + "</description>");
             printWriter.print("<Camera>");
-            printWriter.print("<longitude>" + location.getLongitude() + "</longitude>");
-            printWriter.print("<latitude>" + location.getLatitude() + "</latitude>");
+            printWriter.print("<longitude>" + waypoint.getLocation().getLongitude() + "</longitude>");
+            printWriter.print("<latitude>" + waypoint.getLocation().getLatitude() + "</latitude>");
             printWriter.print("<altitude>20</altitude>");
             printWriter.print("<heading>" + heading + "</heading>");
             printWriter.print("<tilt>90</tilt>");
             printWriter.println("</Camera>");
-            printWriter.println("<TimeStamp><when>" + getTime(location) + "</when></TimeStamp>");
+            printWriter.println("<TimeStamp><when>" + getTime(waypoint.getLocation()) + "</when></TimeStamp>");
             printWriter.println("<styleUrl>#" + KmlTrackWriter.WAYPOINT_STYLE + "</styleUrl>");
-            writeCategory(category);
+            writeCategory(waypoint.getCategory());
 
             if (exportPhotos) {
-                printWriter.println("<Icon><href>" + KmzTrackExporter.buildKmzImageFilePath(Uri.parse(photoUrl)) + "</href></Icon>");
+                printWriter.println("<Icon><href>" + KmzTrackExporter.buildKmzImageFilePath(waypoint) + "</href></Icon>");
             }
 
             printWriter.print("<ViewVolume>");
@@ -358,7 +357,7 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.print("<topFov>45</topFov>");
             printWriter.println("</ViewVolume>");
             printWriter.println("<Point>");
-            printWriter.println("<coordinates>" + getCoordinates(location, ",") + "</coordinates>");
+            printWriter.println("<coordinates>" + getCoordinates(waypoint.getLocation(), ",") + "</coordinates>");
             printWriter.println("</Point>");
             printWriter.println("</PhotoOverlay>");
         }
