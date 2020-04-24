@@ -313,7 +313,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     @VisibleForTesting
     ChartPoint createPendingPoint(@NonNull TrackPoint trackPoint) {
         trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
-        return new ChartPoint(trackStatisticsUpdater, trackPoint.getSensorDataSet(), chartByDistance, chartView.getMetricUnits());
+        return new ChartPoint(trackStatisticsUpdater, trackPoint, chartByDistance, chartView.getMetricUnits());
     }
 
     @VisibleForTesting

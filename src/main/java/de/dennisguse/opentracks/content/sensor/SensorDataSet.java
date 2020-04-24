@@ -1,9 +1,8 @@
 package de.dennisguse.opentracks.content.sensor;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
 
-import de.dennisguse.opentracks.content.data.TrackPointSensorDataSet;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 
 /**
  *
@@ -17,13 +16,6 @@ public final class SensorDataSet {
     private SensorDataCycling.Speed cyclingSpeed;
 
     public SensorDataSet() {
-    }
-
-    @VisibleForTesting
-    public SensorDataSet(SensorDataHeartRate heartRate, SensorDataCycling.Cadence cyclingCadence, SensorDataCycling.Speed cyclingSpeed) {
-        this.heartRate = heartRate;
-        this.cyclingCadence = cyclingCadence;
-        this.cyclingSpeed = cyclingSpeed;
     }
 
     public SensorDataHeartRate getHeartRate() {
@@ -70,21 +62,18 @@ public final class SensorDataSet {
         this.cyclingSpeed = null;
     }
 
-    public TrackPointSensorDataSet createTrackPointSensorDataSet() {
-        TrackPointSensorDataSet sensorDataSet = new TrackPointSensorDataSet();
+    public void fillTrackPoint(TrackPoint trackPoint) {
         if (heartRate != null) {
-            sensorDataSet.setHeartRate_bpm(heartRate.getHeartRate_bpm());
+            trackPoint.setHeartRate_bpm(heartRate.getHeartRate_bpm());
         }
 
         if (cyclingCadence != null && cyclingCadence.hasCadence_rpm()) {
-            sensorDataSet.setCyclingCadence(cyclingCadence.getCadence_rpm());
+            trackPoint.setCyclingCadence_rpm(cyclingCadence.getCadence_rpm());
         }
 
         if (cyclingSpeed != null && cyclingSpeed.hasSpeed()) {
-            sensorDataSet.setCyclingCadence(cyclingSpeed.getSpeed_ms());
+            trackPoint.setSpeed(cyclingSpeed.getSpeed_ms());
         }
-
-        return sensorDataSet;
     }
 
     @NonNull

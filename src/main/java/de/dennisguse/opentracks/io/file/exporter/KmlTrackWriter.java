@@ -28,7 +28,6 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.DescriptionGenerator;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.TrackPointSensorDataSet;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.util.FileUtils;
@@ -75,7 +74,7 @@ public class KmlTrackWriter implements TrackWriter {
      * @param context           the context
      * @param hasMultipleTracks should encode multiple tracks into one file?
      * @param exportTrackDetail should detailed information about the track be exported (e.g., title, description, waypoints, timing)?
-     * @param exportSensorData   should {@link TrackPointSensorDataSet} be exported?
+     * @param exportSensorData  should {@link TrackPointSensorDataSet} be exported?
      * @param exportPhotos      should pictures be exported (if true: exports to KMZ)?
      */
     public KmlTrackWriter(Context context, boolean hasMultipleTracks, boolean exportTrackDetail, boolean exportSensorData, boolean exportPhotos) {
@@ -268,17 +267,14 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.println("<gx:coord>" + getCoordinates(trackPoint.getLocation(), " ") + "</gx:coord>");
 
             if (exportSensorData) {
-                TrackPointSensorDataSet sensorDataSet = trackPoint.getSensorDataSet();
-                if (sensorDataSet != null) {
-                    if (sensorDataSet.hasHeartRate()) {
-                        heartRateList.add(sensorDataSet.getHeartRate_bpm());
-                    }
-                    if (sensorDataSet.hasCyclingCadence()) {
-                        cadenceList.add(sensorDataSet.getCyclingCadence_rpm());
-                    }
-                    if (sensorDataSet.hasPower()) {
-                        powerList.add(sensorDataSet.getPower());
-                    }
+                if (trackPoint.hasHeartRate()) {
+                    heartRateList.add(trackPoint.getHeartRate_bpm());
+                }
+                if (trackPoint.hasCyclingCadence()) {
+                    cadenceList.add(trackPoint.getCyclingCadence_rpm());
+                }
+                if (trackPoint.hasPower()) {
+                    powerList.add(trackPoint.getPower());
                 }
             }
         }

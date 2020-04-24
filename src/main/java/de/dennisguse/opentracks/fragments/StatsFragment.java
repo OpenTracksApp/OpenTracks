@@ -39,7 +39,6 @@ import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.TrackPointSensorDataSet;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
@@ -436,7 +435,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     }
 
     /**
-     * Tries to fetch most recent {@link TrackPointSensorDataSet} from {@link de.dennisguse.opentracks.services.TrackRecordingService}.
+     * Tries to fetch most recent {@link SensorDataSet} from {@link de.dennisguse.opentracks.services.TrackRecordingService}.
      */
     private void updateSensorDataUI() {
         TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();

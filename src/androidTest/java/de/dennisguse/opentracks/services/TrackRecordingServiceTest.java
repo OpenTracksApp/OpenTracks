@@ -331,7 +331,7 @@ public class TrackRecordingServiceTest {
         addTrack(dummyTrack, isRecording);
     }
 
-    static void insertLocation(TrackRecordingServiceInterface trackRecordingService) throws InterruptedException {
+    private static void insertLocation(TrackRecordingServiceInterface trackRecordingService) throws InterruptedException {
         insertLocation(trackRecordingService, 45.0f, 35f, 5, 10, System.currentTimeMillis());
     }
 
@@ -342,7 +342,7 @@ public class TrackRecordingServiceTest {
     /**
      * Inserts a location and waits for 200ms.
      */
-    static void insertLocation(TrackRecordingServiceInterface trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) throws InterruptedException {
+    private static void insertLocation(TrackRecordingServiceInterface trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) throws InterruptedException {
         Location location = new Location("gps");
         location.setLongitude(longitude);
         location.setLatitude(latitude);

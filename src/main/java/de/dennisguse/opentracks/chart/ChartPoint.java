@@ -3,7 +3,7 @@ package de.dennisguse.opentracks.chart;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
-import de.dennisguse.opentracks.content.data.TrackPointSensorDataSet;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.UnitConversions;
@@ -25,7 +25,7 @@ public class ChartPoint {
         this.elevation = elevation;
     }
 
-    public ChartPoint(@NonNull TrackStatisticsUpdater trackStatisticsUpdater, TrackPointSensorDataSet sensorDataSet, boolean chartByDistance, boolean metricUnits) {
+    public ChartPoint(@NonNull TrackStatisticsUpdater trackStatisticsUpdater, TrackPoint trackPoint, boolean chartByDistance, boolean metricUnits) {
         TrackStatistics trackStatistics = trackStatisticsUpdater.getTrackStatistics();
 
         if (chartByDistance) {
@@ -48,15 +48,15 @@ public class ChartPoint {
             speed *= UnitConversions.KM_TO_MI;
         }
         pace = speed == 0 ? 0.0 : 60.0 / speed;
-        if (sensorDataSet != null) {
-            if (sensorDataSet.hasHeartRate()) {
-                heartRate = sensorDataSet.getHeartRate_bpm();
+        if (trackPoint != null) {
+            if (trackPoint.hasHeartRate()) {
+                heartRate = trackPoint.getHeartRate_bpm();
             }
-            if (sensorDataSet.hasCyclingCadence()) {
-                cadence = sensorDataSet.getCyclingCadence_rpm();
+            if (trackPoint.hasCyclingCadence()) {
+                cadence = trackPoint.getCyclingCadence_rpm();
             }
-            if (sensorDataSet.hasPower()) {
-                power = sensorDataSet.getPower();
+            if (trackPoint.hasPower()) {
+                power = trackPoint.getPower();
             }
         }
     }

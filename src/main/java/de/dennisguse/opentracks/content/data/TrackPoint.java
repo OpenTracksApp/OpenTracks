@@ -29,6 +29,10 @@ public class TrackPoint {
 
     private final Location location;
 
+    private Float heartRate_bpm = null;
+    private Float cyclingCadence_rpm = null;
+    private Float power = null;
+
     public TrackPoint() {
         this.location = new Location("");
     }
@@ -37,17 +41,13 @@ public class TrackPoint {
         this.location = location;
     }
 
-    public TrackPoint(@NonNull Location location, TrackPointSensorDataSet sensorDataSet) {
-        this.location = location;
-        this.sensorDataSet = sensorDataSet;
-    }
-
-    public TrackPoint(@NonNull TrackPoint trackPoint, TrackPointSensorDataSet sensorDataSet) {
+    public TrackPoint(@NonNull TrackPoint trackPoint) {
         this.location = trackPoint.getLocation();
-        this.sensorDataSet = sensorDataSet;
-    }
 
-    private TrackPointSensorDataSet sensorDataSet = null;
+        this.heartRate_bpm = trackPoint.getHeartRate_bpm();
+        this.cyclingCadence_rpm = trackPoint.getCyclingCadence_rpm();
+        this.power = trackPoint.getPower();
+    }
 
     public TrackPoint(double latitude, double longitude, Double altitude, long time) {
         location = new Location(LocationManager.GPS_PROVIDER);
@@ -86,14 +86,6 @@ public class TrackPoint {
     public @NonNull
     Location getLocation() {
         return location;
-    }
-
-    public TrackPointSensorDataSet getSensorDataSet() {
-        return sensorDataSet;
-    }
-
-    public void setSensorDataSet(TrackPointSensorDataSet sensorDataSet) {
-        this.sensorDataSet = sensorDataSet;
     }
 
     public double getLatitude() {
@@ -178,6 +170,47 @@ public class TrackPoint {
 
     public float bearingTo(@NonNull Location dest) {
         return location.bearingTo(dest);
+    }
+
+    // Sensor data
+    public boolean hasSensorData() {
+        return hasHeartRate() || hasCyclingCadence() || hasPower();
+    }
+
+    public boolean hasHeartRate() {
+        return heartRate_bpm != null && heartRate_bpm > 0;
+    }
+
+    public float getHeartRate_bpm() {
+        return heartRate_bpm;
+    }
+
+    public void setHeartRate_bpm(Float heartRate_bpm) {
+        this.heartRate_bpm = heartRate_bpm;
+    }
+
+    public boolean hasCyclingCadence() {
+        return cyclingCadence_rpm != null;
+    }
+
+    public Float getCyclingCadence_rpm() {
+        return cyclingCadence_rpm;
+    }
+
+    public void setCyclingCadence_rpm(Float cyclingCadence_rpm) {
+        this.cyclingCadence_rpm = cyclingCadence_rpm;
+    }
+
+    public boolean hasPower() {
+        return power != null;
+    }
+
+    public Float getPower() {
+        return power;
+    }
+
+    public void setPower(Float power) {
+        this.power = power;
     }
 
     @NonNull

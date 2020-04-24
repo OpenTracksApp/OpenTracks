@@ -514,7 +514,7 @@ public class CustomContentProviderUtilsTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#bulkInsertTrackPoint(TrackPoint[], int, long)}.
+     * Tests the method {@link ContentProviderUtils#bulkInsertTrackPoint(TrackPoint[], long)}.
      */
     @Test
     public void testBulkInsertTrackPoint() {
@@ -533,44 +533,44 @@ public class CustomContentProviderUtilsTest {
     /**
      * Tests the method {@link ContentProviderUtils#createTrackPoint(Cursor)}.
      */
+    //TODO incomplete
     @Test
     public void testCreateTrackPoint() {
-        // Set index.
-        int index = 1;
-        when(cursorMock.getColumnIndex(TrackPointsColumns._ID)).thenReturn(index++);
-        when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.LONGITUDE)).thenReturn(index++);
-        when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE)).thenReturn(index++);
-        when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.TIME)).thenReturn(index++);
-        when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.SPEED)).thenReturn(index++);
-        when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.SENSOR_HEARTRATE)).thenReturn(index++);
+        // given
+        when(cursorMock.getColumnIndex(TrackPointsColumns._ID)).thenReturn(1);
 
-        // Set return value of isNull().
-        index = 2;
-        when(cursorMock.isNull(index++)).thenReturn(false);
-        when(cursorMock.isNull(index++)).thenReturn(false);
-        when(cursorMock.isNull(index++)).thenReturn(false);
-        when(cursorMock.isNull(index++)).thenReturn(false);
-        when(cursorMock.isNull(index++)).thenReturn(false);
-
-        // Set return value of getInt().
-        index = 2;
+        when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.LONGITUDE)).thenReturn(2);
+        when(cursorMock.isNull(2)).thenReturn(false);
         int longitude = 11;
-        when(cursorMock.getInt(index++)).thenReturn(longitude * 1000000);
+        when(cursorMock.getInt(2)).thenReturn(longitude * 1000000);
+
+        when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE)).thenReturn(3);
+        when(cursorMock.isNull(3)).thenReturn(false);
         int latitude = 22;
-        when(cursorMock.getInt(index++)).thenReturn(latitude * 1000000);
+        when(cursorMock.getInt(3)).thenReturn(latitude * 1000000);
+
+        when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.TIME)).thenReturn(4);
+        when(cursorMock.isNull(4)).thenReturn(false);
         long time = System.currentTimeMillis();
-        when(cursorMock.getLong(index++)).thenReturn(time);
+        when(cursorMock.getLong(4)).thenReturn(time);
+
+        when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.SPEED)).thenReturn(5);
+        when(cursorMock.isNull(5)).thenReturn(false);
         float speed = 2.2f;
-        when(cursorMock.getFloat(index++)).thenReturn(speed);
+        when(cursorMock.getFloat(5)).thenReturn(speed);
 
-        byte[] sensor = "Sensor state".getBytes();
-        when(cursorMock.getBlob(index++)).thenReturn(sensor);
+        when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.SENSOR_HEARTRATE)).thenReturn(6);
+        when(cursorMock.isNull(6)).thenReturn(false);
 
-        TrackPoint location = contentProviderUtils.createTrackPoint(cursorMock);
-        Assert.assertEquals(longitude, location.getLongitude(), 0.01);
-        Assert.assertEquals(latitude, location.getLatitude(), 0.01);
-        Assert.assertEquals(time, location.getTime(), 0.01);
-        Assert.assertEquals(speed, location.getSpeed(), 0.01);
+        // when
+        TrackPoint trackPoint = contentProviderUtils.createTrackPoint(cursorMock);
+
+        // then
+        Assert.assertEquals(longitude, trackPoint.getLongitude(), 0.01);
+        Assert.assertEquals(latitude, trackPoint.getLatitude(), 0.01);
+        Assert.assertEquals(time, trackPoint.getTime(), 0.01);
+        Assert.assertEquals(speed, trackPoint.getSpeed(), 0.01);
+        Assert.assertFalse(trackPoint.hasHeartRate());
     }
 
     /**
@@ -584,7 +584,29 @@ public class CustomContentProviderUtilsTest {
         Track track = TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
         contentProviderUtils.insertTrackPoint(TestDataUtil.createTrackPoint(22), trackId);
-        Assert.assertEquals(11, contentProviderUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
+        Assert.assertEquals(11, contentProviderUtils.getTrackPoints(trackId).size());
+    }
+
+    @Test
+    public void testInsertAndLoadTrackPoint() {
+        // given
+        long trackId = System.currentTimeMillis();
+        Track track = TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
+
+        TrackPoint trackPoint = TestDataUtil.createTrackPoint(5);
+        trackPoint.setHeartRate_bpm(1F);
+        trackPoint.setCyclingCadence_rpm(2F);
+        trackPoint.setPower(3F);
+
+        // when
+        contentProviderUtils.insertTrackPoint(trackPoint, trackId);
+
+        // then
+        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        Assert.assertTrue(trackPoints.get(10).hasHeartRate());
+        Assert.assertEquals(trackPoint.getHeartRate_bpm(), trackPoints.get(10).getHeartRate_bpm(), 0.01);
+        Assert.assertEquals(trackPoint.getCyclingCadence_rpm(), trackPoints.get(10).getCyclingCadence_rpm(), 0.01);
+        Assert.assertEquals(trackPoint.getPower(), trackPoints.get(10).getPower(), 0.01);
     }
 
     /**

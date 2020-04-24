@@ -27,7 +27,6 @@ import org.xml.sax.SAXException;
 import java.util.ArrayList;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.TrackPointSensorDataSet;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.exporter.KmlTrackWriter;
 
@@ -223,25 +222,16 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         for (int i = 0; i < trackPoints.size(); i++) {
             TrackPoint trackPoint = trackPoints.get(i);
 
-            boolean hasSensorData = false;
-            TrackPointSensorDataSet sensorDataSet = new TrackPointSensorDataSet(trackPoint.getTime());
-
             if (i < heartRateList.size()) {
-                sensorDataSet.setHeartRate_bpm(heartRateList.get(i));
-                hasSensorData = true;
+                trackPoint.setHeartRate_bpm(heartRateList.get(i));
             }
             if (i < cadenceList.size()) {
-                sensorDataSet.setCyclingCadence(cadenceList.get(i));
-                hasSensorData = true;
+                trackPoint.setCyclingCadence_rpm(cadenceList.get(i));
             }
             if (i < powerList.size()) {
-                sensorDataSet.setPower(cadenceList.get(i));
-                hasSensorData = true;
+                trackPoint.setPower(cadenceList.get(i));
             }
 
-            if (!hasSensorData) {
-                trackPoint.setSensorDataSet(sensorDataSet);
-            }
             insertTrackPoint(trackPoint);
         }
     }
