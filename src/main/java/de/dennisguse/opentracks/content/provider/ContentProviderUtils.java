@@ -182,6 +182,9 @@ public class ContentProviderUtils {
     public void deleteTrack(Context context, long trackId) {
         deleteTrackPointsAndWaypoints(context, trackId);
 
+        // Delete track folder resources.
+        deleteDirectoryRecurse(FileUtils.getPhotoDir(context, trackId));
+
         // Delete track last since it triggers a database vacuum call
         contentResolver.delete(TracksColumns.CONTENT_URI, TracksColumns._ID + "=?", new String[]{Long.toString(trackId)});
     }
@@ -197,20 +200,21 @@ public class ContentProviderUtils {
         contentResolver.delete(TrackPointsColumns.CONTENT_URI_BY_ID, where, selectionArgs);
 
         contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?", new String[]{Long.toString(trackId)});
-        deleteDirectoryRecurse(FileUtils.getPhotoDir(context, trackId));
     }
 
     /**
      * Delete the directory recursively.
      *
-     * @param dir the directory
+     * @param file the directory
      */
-    private void deleteDirectoryRecurse(File dir) {
-        if (dir != null && dir.exists() && dir.isDirectory()) {
-            for (File child : dir.listFiles()) {
+    private void deleteDirectoryRecurse(File file) {
+        if (file != null && file.exists() && file.isDirectory()) {
+            for (File child : file.listFiles()) {
                 deleteDirectoryRecurse(child);
             }
-            dir.delete();
+            file.delete();
+        } else if (file != null && file.isFile()) {
+            file.delete();
         }
     }
 
@@ -393,11 +397,11 @@ public class ContentProviderUtils {
         return waypoint;
     }
 
-    public void deleteWaypoint(long waypointId) {
+    public void deleteWaypoint(Context context, long waypointId) {
         final Waypoint waypoint = getWaypoint(waypointId);
         if (waypoint != null && waypoint.hasPhoto()) {
             Uri uri = waypoint.getPhotoURI();
-            File file = new File(uri.getPath());
+            File file = FileUtils.getPhotoFileIfExists(context, waypoint.getTrackId(), uri);
             if (file.exists()) {
                 File parent = file.getParentFile();
                 file.delete();
