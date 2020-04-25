@@ -20,6 +20,21 @@
     <string name="settings_sensor_bluetooth_cycling_speed_key" translatable="false">bluetoothCyclingSpeedSensor</string>
     <string name="sensor_type_value_none" translatable="false">NONE</string>
 
+    <string name="settings_sensor_bluetooth_cycling_speed_wheel_circumference_key" translatable="false">bluetoothCyclingSpeedWheelCircumference</string>
+    <string name="settings_sensor_bluetooth_cycling_speed_wheel_circumference_default" translatable="false">2135</string>
+    <string-array name="wheel_circumference_values">
+        <item>2100</item>
+        <item>2125</item>
+        <item>@string/settings_sensor_bluetooth_cycling_speed_wheel_circumference_default</item>
+        <item>2150</item>
+    </string-array>
+    <string-array name="wheel_circumference_options">
+        <item>20-622</item>
+        <item>23-622</item>
+        <item>25-622</item>
+        <item>28-622</item>
+    </string-array>
+
     <string name="default_activity_key" translatable="false">defaultActivity</string>
     <string name="default_activity_default" translatable="false">@string/activity_type_unknown</string>
     <string-array name="activity_types">

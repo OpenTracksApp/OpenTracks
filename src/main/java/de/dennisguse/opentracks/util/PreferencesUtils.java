@@ -49,7 +49,7 @@ public class PreferencesUtils {
 
     @Deprecated
     //NOTE: is at the moment still used to determine if a track is currently recorded; better ask the service directly.
-    //NOTE: This was also used to recover from a reboot, but this data should not be exposed to the whole application.
+    //NOTE: This was also used to recover from a service restart, but this data should not be exposed to the whole application.
     public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
 
     public static long getRecordingTrackId(Context context) {
@@ -250,6 +250,10 @@ public class PreferencesUtils {
         return getString(context, R.string.settings_sensor_bluetooth_cycling_speed_key, getBluetoothSensorAddressNone(context));
     }
 
+    public static int getWheelCircumference(Context context) {
+        final int DEFAULT = Integer.parseInt(context.getResources().getString(R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_default));
+        return getInt(context, R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key, DEFAULT);
+    }
 
     public static boolean shouldShowStatsOnLockscreen(Context context) {
         final boolean STATS_SHOW_ON_LOCKSCREEN_DEFAULT = context.getResources().getBoolean(R.bool.stats_show_on_lockscreen_while_recording_default);

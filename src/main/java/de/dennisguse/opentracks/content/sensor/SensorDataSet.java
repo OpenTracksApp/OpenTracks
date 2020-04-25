@@ -71,8 +71,8 @@ public final class SensorDataSet {
             trackPoint.setCyclingCadence_rpm(cyclingCadence.getCadence_rpm());
         }
 
-        if (cyclingSpeed != null && cyclingSpeed.hasSpeed()) {
-            trackPoint.setSpeed(cyclingSpeed.getSpeed_ms());
+        if (cyclingSpeed != null && cyclingSpeed.hasSpeed_mps()) {
+            trackPoint.setSpeed(cyclingSpeed.getSpeed_mps());
         }
     }
 

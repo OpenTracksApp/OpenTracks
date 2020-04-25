@@ -4,7 +4,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.util.UintUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
@@ -43,13 +42,6 @@ public final class SensorDataCycling {
             this(speed.getSensorAddress(), speed.getSensorName(), speed.getWheelRevolutionsCount(), speed.getWheelRevolutionsTime());
         }
 
-        @VisibleForTesting
-        public Cadence(long crankRevolutionsCount, int crankRevolutionsTime) {
-            super("sensorAddress", "sensorName");
-            this.crankRevolutionsCount = crankRevolutionsCount;
-            this.crankRevolutionsTime = crankRevolutionsTime;
-        }
-
         public boolean hasData() {
             return crankRevolutionsCount != INVALID_VALUE_INT && crankRevolutionsTime != INVALID_VALUE_INT;
         }
@@ -72,8 +64,7 @@ public final class SensorDataCycling {
 
         public void compute(Cadence previous) {
             if (hasData() && previous != null && previous.hasData()) {
-                Log.e(TAG, previous.getCrankRevolutionsTime() + " " + previous.getCrankRevolutionsCount() + " - " + this.getCrankRevolutionsTime() + " " + getCrankRevolutionsCount()); //TODO REMOVE
-                long timeDiff_ms = UintUtils.diff(crankRevolutionsTime, previous.crankRevolutionsTime, UintUtils.UINT16_MAX) * 1024 / UnitConversions.S_TO_MS;
+                long timeDiff_ms = UintUtils.diff(crankRevolutionsTime, previous.crankRevolutionsTime, UintUtils.UINT16_MAX) / 1024 * UnitConversions.S_TO_MS;
                 if (timeDiff_ms <= 0) {
                     Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
                     cadence_rpm = INVALID_VALUE_FLOAT;
@@ -100,12 +91,11 @@ public final class SensorDataCycling {
         }
     }
 
-    //TODO Speed computation; needs wheel diameter / circumference
     public static class Speed extends SensorData {
 
         private int wheelRevolutionsCount; // UINT16
         private int wheelRevolutionsTime; // UINT16; 1/1024s
-        private float speed_ms = INVALID_VALUE_FLOAT;
+        private float speed_mps = INVALID_VALUE_FLOAT;
 
         public Speed(String sensorAddress, String sensorName, int wheelRevolutionsCount, int wheelRevolutionsTime) {
             super(sensorAddress, sensorName);
@@ -125,23 +115,24 @@ public final class SensorDataCycling {
             return wheelRevolutionsTime;
         }
 
-        public boolean hasSpeed() {
-            return !Float.isNaN(speed_ms);
+        public boolean hasSpeed_mps() {
+            return !Float.isNaN(speed_mps);
         }
 
-        public float getSpeed_ms() {
-            return speed_ms;
+        public float getSpeed_mps() {
+            return speed_mps;
         }
 
-        public void compute(Speed previous) {
+        public void compute(Speed previous, int wheel_circumference_mm) {
             if (hasData() && previous != null && previous.hasData()) {
-                long timeDiff_ms = UintUtils.diff(wheelRevolutionsTime, previous.wheelRevolutionsTime, UintUtils.UINT16_MAX) * 1024 / UnitConversions.S_TO_MS;
+                long timeDiff_ms = UintUtils.diff(wheelRevolutionsTime, previous.wheelRevolutionsTime, UintUtils.UINT16_MAX) / 1024 * UnitConversions.S_TO_MS;
                 if (timeDiff_ms <= 0) {
                     Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
-                    speed_ms = INVALID_VALUE_FLOAT;
+                    speed_mps = INVALID_VALUE_FLOAT;
                 } else {
-                    long crankDiff = UintUtils.diff(wheelRevolutionsCount, previous.wheelRevolutionsCount, UintUtils.UINT32_MAX);
-                    speed_ms = crankDiff / (float) timeDiff_ms;
+                    long wheelDiff = UintUtils.diff(wheelRevolutionsCount, previous.wheelRevolutionsCount, UintUtils.UINT16_MAX);
+                    double timeDiff_s = timeDiff_ms * UnitConversions.MS_TO_S;
+                    speed_mps = (float) (wheelDiff * wheel_circumference_mm * UnitConversions.MM_TO_M / timeDiff_s);
                 }
             }
         }
@@ -149,7 +140,7 @@ public final class SensorDataCycling {
         @NonNull
         @Override
         public String toString() {
-            return "speed=" + getSpeed_ms() + "_" + getWheelRevolutionsTime();
+            return "speed=" + getSpeed_mps() + "_" + getWheelRevolutionsTime();
         }
 
         @Override

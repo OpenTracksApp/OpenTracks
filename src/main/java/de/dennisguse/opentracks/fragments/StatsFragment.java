@@ -449,10 +449,10 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
         setHeartRateSensorData(sensorDataSet, isSelectedTrackRecording());
         setCadenceSensorData(sensorDataSet, isSelectedTrackRecording());
+        setSpeedSensorData(sensorDataSet, isSelectedTrackRecording());
     }
 
     private void setHeartRateSensorData(SensorDataSet sensorDataSet, boolean isRecording) {
-        // heart rate
         int isVisible = View.VISIBLE;
         if (!isRecording || PreferencesUtils.isBluetoothHeartRateSensorAddressNone(getContext())) {
             isVisible = View.INVISIBLE;
@@ -475,7 +475,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     }
 
     private void setCadenceSensorData(SensorDataSet sensorDataSet, boolean isRecording) {
-        // heart rate
         int isVisible = View.VISIBLE;
         if (!isRecording || PreferencesUtils.isBluetoothCyclingCadenceSensorAddressNone(getContext())) {
             isVisible = View.INVISIBLE;
@@ -494,6 +493,16 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
             cadenceSensorView.setText(sensorName);
             cadenceValueView.setText(sensorValue);
+        }
+    }
+
+    private void setSpeedSensorData(SensorDataSet sensorDataSet, boolean isRecording) {
+        if (isRecording) {
+            if (sensorDataSet != null && sensorDataSet.getCyclingSpeed() != null) {
+                if (sensorDataSet.getCyclingSpeed().hasSpeed_mps() && sensorDataSet.getCyclingSpeed().isRecent()) {
+                    setSpeed(sensorDataSet.getCyclingSpeed().getSpeed_mps());
+                }
+            }
         }
     }
 
@@ -600,12 +609,8 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         // Set speed/pace
         speedContainer.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
         if (isRecording) {
-            speedLabel.setText(reportSpeed ? R.string.stats_speed : R.string.stats_pace);
-
             double speed = lastTrackPoint != null && lastTrackPoint.hasSpeed() ? lastTrackPoint.getSpeed() : Double.NaN;
-            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
-            speedValue.setText(parts.first);
-            speedUnit.setText(parts.second);
+            setSpeed(speed);
         }
 
         // Set elevation
@@ -634,5 +639,16 @@ public class StatsFragment extends Fragment implements TrackDataListener {
             String longitudeText = Double.isNaN(longitude) || Double.isInfinite(longitude) ? getContext().getString(R.string.value_unknown) : StringUtils.formatCoordinate(longitude);
             longitudeValue.setText(longitudeText);
         }
+    }
+
+    private void setSpeed(double speed) {
+        boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
+        boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext());
+
+        speedLabel.setText(reportSpeed ? R.string.stats_speed : R.string.stats_pace);
+
+        Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
+        speedValue.setText(parts.first);
+        speedUnit.setText(parts.second);
     }
 }

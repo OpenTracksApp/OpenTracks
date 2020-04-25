@@ -56,8 +56,9 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
 
     private boolean started = false;
 
-    private final BluetoothConnectionManager heartRate = new BluetoothConnectionManager.HeartRate(this);
-    private final BluetoothConnectionManager cyclingCadence = new BluetoothConnectionManager.CyclingCadence(this);
+    private final BluetoothConnectionManager.HeartRate heartRate = new BluetoothConnectionManager.HeartRate(this);
+    private final BluetoothConnectionManager.CyclingCadence cyclingCadence = new BluetoothConnectionManager.CyclingCadence(this);
+    private final BluetoothConnectionManager.CyclingSpeed cyclingSpeed = new BluetoothConnectionManager.CyclingSpeed(this);
 
     private final SensorDataSet sensorDataSet = new SensorDataSet();
 
@@ -67,22 +68,19 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
             if (!started) return;
 
             if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_heart_rate_key, key)) {
-                if (PreferencesUtils.isBluetoothHeartRateSensorAddressNone(context)) {
-                    stop();
-                    return;
-                }
                 String address = PreferencesUtils.getBluetoothHeartRateSensorAddress(context);
                 connect(heartRate, address);
             }
 
             if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_cycling_cadence_key, key)) {
-                if (PreferencesUtils.isBluetoothCyclingCadenceSensorAddressNone(context)) {
-                    stop();
-                    return;
-                }
                 String address = PreferencesUtils.getBluetoothCyclingCadenceSensorAddress(context);
-
                 connect(cyclingCadence, address);
+            }
+
+            if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_cycling_cadence_key, key)) {
+                String address = PreferencesUtils.getBluetoothCyclingSpeedSensorAddress(context);
+
+                connect(cyclingSpeed, address);
             }
         }
     };
@@ -163,7 +161,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
                 Log.d(TAG, "onChanged: speed data repeated.");
                 return;
             }
-            ((SensorDataCycling.Speed) sensorData).compute(sensorDataSet.getCyclingSpeed());
+            ((SensorDataCycling.Speed) sensorData).compute(sensorDataSet.getCyclingSpeed(), PreferencesUtils.getWheelCircumference(context));
         }
 
         sensorDataSet.set(sensorData);
