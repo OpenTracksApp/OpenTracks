@@ -171,7 +171,7 @@ public class ContentProviderUtils {
         contentResolver.delete(TracksColumns.CONTENT_URI, null, null);
 
         File dir = FileUtils.getPhotoDir(context);
-        deleteDirectoryRecurse(dir);
+        FileUtils.deleteDirectoryRecurse(dir);
     }
 
     /**
@@ -183,7 +183,7 @@ public class ContentProviderUtils {
         deleteTrackPointsAndWaypoints(context, trackId);
 
         // Delete track folder resources.
-        deleteDirectoryRecurse(FileUtils.getPhotoDir(context, trackId));
+        FileUtils.deleteDirectoryRecurse(FileUtils.getPhotoDir(context, trackId));
 
         // Delete track last since it triggers a database vacuum call
         contentResolver.delete(TracksColumns.CONTENT_URI, TracksColumns._ID + "=?", new String[]{Long.toString(trackId)});
@@ -200,22 +200,6 @@ public class ContentProviderUtils {
         contentResolver.delete(TrackPointsColumns.CONTENT_URI_BY_ID, where, selectionArgs);
 
         contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?", new String[]{Long.toString(trackId)});
-    }
-
-    /**
-     * Delete the directory recursively.
-     *
-     * @param file the directory
-     */
-    private void deleteDirectoryRecurse(File file) {
-        if (file != null && file.exists() && file.isDirectory()) {
-            for (File child : file.listFiles()) {
-                deleteDirectoryRecurse(child);
-            }
-            file.delete();
-        } else if (file != null && file.isFile()) {
-            file.delete();
-        }
     }
 
     /**

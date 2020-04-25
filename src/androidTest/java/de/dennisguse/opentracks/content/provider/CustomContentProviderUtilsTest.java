@@ -77,17 +77,6 @@ public class CustomContentProviderUtilsTest {
         contentProviderUtils.deleteAllTracks(context);
     }
 
-    private void cleanPhotoDir(File file) {
-        if (file != null && file.exists() && file.isDirectory()) {
-            for (File child : file.listFiles()) {
-                cleanPhotoDir(child);
-            }
-            file.delete();
-        } else if (file != null && file.isFile()) {
-            file.delete();
-        }
-    }
-
     @Test
     public void testLocationIterator_noPoints() {
         testIterator(1, 0, 1, false);

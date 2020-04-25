@@ -284,4 +284,20 @@ public class FileUtils {
 
         return file;
     }
+
+    /**
+     * Delete the directory recursively.
+     *
+     * @param file the directory
+     */
+    public static void deleteDirectoryRecurse(File file) {
+        if (file != null && file.exists() && file.isDirectory()) {
+            for (File child : file.listFiles()) {
+                deleteDirectoryRecurse(child);
+            }
+            file.delete();
+        } else if (file != null && file.isFile()) {
+            file.delete();
+        }
+    }
 }
