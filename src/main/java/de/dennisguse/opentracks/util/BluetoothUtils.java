@@ -21,8 +21,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.UUID;
+
+import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 
 /**
  * Utilities for dealing with bluetooth devices.
@@ -31,11 +35,21 @@ import java.util.UUID;
  */
 public class BluetoothUtils {
 
+    public static final UUID CLIENT_CHARACTERISTIC_CONFIG_UUID = new UUID(0x290200001000L, 0x800000805f9b34fbL);
+
     public static final UUID HEART_RATE_SERVICE_UUID = new UUID(0x180D00001000L, 0x800000805f9b34fbL);
+    public static final UUID HEART_RATE_MEASUREMENT_CHAR_UUID = new UUID(0x2A3700001000L, 0x800000805f9b34fbL);
+
+    public static final UUID CYCLING_SPEED_CADENCE_SERVICE_UUID = new UUID(0x181600001000L, 0x800000805f9b34fbL);
+    public static final UUID CYCLING_SPPED_CADENCE_MEASUREMENT_CHAR_UUID = new UUID(0x2A5B00001000L, 0x800000805f9b34fbL);
 
     private BluetoothUtils() {
     }
 
+    /**
+     * If called from UI: use a background thread to get the default Bluetooth adapter.
+     * TODO Check if this is necessary.
+     */
     public static BluetoothAdapter getDefaultBluetoothAdapter(final String TAG) {
         // If from the main application thread, return directly
         if (Thread.currentThread().equals(Looper.getMainLooper().getThread())) {
@@ -77,12 +91,56 @@ public class BluetoothUtils {
         return BluetoothUtils.getDefaultBluetoothAdapter(TAG) != null;
     }
 
-    public static int parseHeartRate(BluetoothGattCharacteristic characteristic) {
+    public static Integer parseHeartRate(BluetoothGattCharacteristic characteristic) {
         //DOCUMENTATION https://www.bluetooth.com/specifications/gatt/characteristics/
         byte[] raw = characteristic.getValue();
-        int index = ((raw[0] & 0x1) == 1) ? 2 : 1;
-        int format = (index == 1) ? BluetoothGattCharacteristic.FORMAT_UINT8 : BluetoothGattCharacteristic.FORMAT_UINT16;
-        return characteristic.getIntValue(format, index);
+        if (raw.length == 0) {
+            return null;
+        }
+
+        boolean formatUINT16 = ((raw[0] & 0x1) == 1);
+        if (formatUINT16 && raw.length >= 3) {
+            return characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, 1);
+        }
+        if (!formatUINT16 && raw.length >= 2) {
+            return characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 1);
+        }
+
+        return null;
     }
 
+    /**
+     * Documentation: https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=261449
+     */
+    public static SensorDataCycling.CadenceAndSpeed parseCyclingCrankAndWheel(String address, String sensorName, @NonNull BluetoothGattCharacteristic characteristic) {
+        int valueLength = characteristic.getValue().length;
+        if (valueLength == 0) {
+            return null;
+        }
+
+        int flags = characteristic.getValue()[0];
+        boolean hasCrank = (flags & 0x01) > 0;
+        boolean hasWheel = (flags & 0x02) > 0;
+
+        SensorDataCycling.Cadence cadence = null;
+        int index = 1;
+        if (hasCrank && valueLength - index >= 6) {
+            long crankCount = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, index);
+            index += 4;
+
+            int crankTime = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index); // 1/1024s
+            index += 2;
+            cadence = new SensorDataCycling.Cadence(address, sensorName, crankCount, crankTime);
+        }
+
+        SensorDataCycling.Speed speed = null;
+        if (hasWheel && valueLength - index >= 4) {
+            int wheelCount = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index);
+            index += 2;
+            int wheelTime = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index); // 1/1024s
+            speed = new SensorDataCycling.Speed(address, sensorName, wheelCount, wheelTime);
+        }
+
+        return new SensorDataCycling.CadenceAndSpeed(address, sensorName, cadence, speed);
+    }
 }

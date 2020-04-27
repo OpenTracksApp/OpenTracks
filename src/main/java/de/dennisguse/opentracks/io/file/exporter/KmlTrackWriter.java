@@ -18,7 +18,6 @@ package de.dennisguse.opentracks.io.file.exporter;
 import android.content.Context;
 import android.database.Cursor;
 import android.location.Location;
-import android.net.Uri;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -31,7 +30,6 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
@@ -73,11 +71,11 @@ public class KmlTrackWriter implements TrackWriter {
     private TrackPoint startTrackPoint;
 
     /**
-     * @param context            the context
-     * @param hasMultipleTracks  should encode multiple tracks into one file?
-     * @param exportTrackDetail  should detailed information about the track be exported (e.g., title, description, waypoints, timing)?
-     * @param exportSensorData   should {@link SensorDataSet} be exported?
-     * @param exportPhotos       should pictures be exported (if true: exports to KMZ)?
+     * @param context           the context
+     * @param hasMultipleTracks should encode multiple tracks into one file?
+     * @param exportTrackDetail should detailed information about the track be exported (e.g., title, description, waypoints, timing)?
+     * @param exportSensorData  should {@link TrackPointSensorDataSet} be exported?
+     * @param exportPhotos      should pictures be exported (if true: exports to KMZ)?
      */
     public KmlTrackWriter(Context context, boolean hasMultipleTracks, boolean exportTrackDetail, boolean exportSensorData, boolean exportPhotos) {
         this.context = context;
@@ -269,17 +267,14 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.println("<gx:coord>" + getCoordinates(trackPoint.getLocation(), " ") + "</gx:coord>");
 
             if (exportSensorData) {
-                SensorDataSet sensorDataSet = trackPoint.getSensorDataSet();
-                if (sensorDataSet != null) {
-                    if (sensorDataSet.hasHeartRate()) {
-                        heartRateList.add(sensorDataSet.getHeartRate());
-                    }
-                    if (sensorDataSet.hasCadence()) {
-                        cadenceList.add(sensorDataSet.getCadence());
-                    }
-                    if (sensorDataSet.hasPower()) {
-                        powerList.add(sensorDataSet.getPower());
-                    }
+                if (trackPoint.hasHeartRate()) {
+                    heartRateList.add(trackPoint.getHeartRate_bpm());
+                }
+                if (trackPoint.hasCyclingCadence()) {
+                    cadenceList.add(trackPoint.getCyclingCadence_rpm());
+                }
+                if (trackPoint.hasPower()) {
+                    powerList.add(trackPoint.getPower());
                 }
             }
         }
@@ -453,7 +448,7 @@ public class KmlTrackWriter implements TrackWriter {
     /**
      * Writes a sensor style.
      *
-     * @param name        the name of the sesnor
+     * @param name       the name of the sesnor
      * @param sensorType the sensor display name
      */
     private void writeSensorStyle(String name, String sensorType) {

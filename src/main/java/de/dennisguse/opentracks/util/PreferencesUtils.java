@@ -49,7 +49,7 @@ public class PreferencesUtils {
 
     @Deprecated
     //NOTE: is at the moment still used to determine if a track is currently recorded; better ask the service directly.
-    //NOTE: This was also used to recover from a reboot, but this data should not be exposed to the whole application.
+    //NOTE: This was also used to recover from a service restart, but this data should not be exposed to the whole application.
     public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
 
     public static long getRecordingTrackId(Context context) {
@@ -215,20 +215,44 @@ public class PreferencesUtils {
         setBoolean(context, R.string.recording_track_paused_key, RECORDING_TRACK_PAUSED);
     }
 
-    private static String getBluetoothHeartRateSensorAddressNone(Context context) {
+    private static String getBluetoothSensorAddressNone(Context context) {
         return context.getString(R.string.sensor_type_value_none);
     }
 
-    public static boolean isBluetoothHeartRateSensorAddressDefault(Context context) {
-        return getBluetoothHeartRateSensorAddressNone(context).equals(getBluetoothHeartRateSensorAddress(context));
+    public static boolean isBluetoothSensorAddressNone(Context context, String currentValue) {
+        return getBluetoothSensorAddressNone(context).equals(currentValue);
     }
 
-    public static boolean isBluetoothHeartRateSensorAddressDefault(Context context, String currentValue) {
-        return getBluetoothHeartRateSensorAddressNone(context).equals(currentValue);
+
+    public static boolean isBluetoothHeartRateSensorAddressNone(Context context) {
+        return isBluetoothSensorAddressNone(context, getBluetoothHeartRateSensorAddress(context));
     }
 
     public static String getBluetoothHeartRateSensorAddress(Context context) {
-        return getString(context, R.string.settings_sensor_bluetooth_heart_rate_key, getBluetoothHeartRateSensorAddressNone(context));
+        return getString(context, R.string.settings_sensor_bluetooth_heart_rate_key, getBluetoothSensorAddressNone(context));
+    }
+
+
+    public static boolean isBluetoothCyclingCadenceSensorAddressNone(Context context) {
+        return isBluetoothSensorAddressNone(context, getBluetoothCyclingCadenceSensorAddress(context));
+    }
+
+    public static String getBluetoothCyclingCadenceSensorAddress(Context context) {
+        return getString(context, R.string.settings_sensor_bluetooth_cycling_cadence_key, getBluetoothSensorAddressNone(context));
+    }
+
+
+    public static boolean isBluetoothCyclingSpeedSensorAddressNone(Context context) {
+        return isBluetoothSensorAddressNone(context, getBluetoothCyclingSpeedSensorAddress(context));
+    }
+
+    public static String getBluetoothCyclingSpeedSensorAddress(Context context) {
+        return getString(context, R.string.settings_sensor_bluetooth_cycling_speed_key, getBluetoothSensorAddressNone(context));
+    }
+
+    public static int getWheelCircumference(Context context) {
+        final int DEFAULT = Integer.parseInt(context.getResources().getString(R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_default));
+        return getInt(context, R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key, DEFAULT);
     }
 
     public static boolean shouldShowStatsOnLockscreen(Context context) {

@@ -33,7 +33,6 @@ import de.dennisguse.opentracks.TrackStubUtils;
 import de.dennisguse.opentracks.chart.ChartPoint;
 import de.dennisguse.opentracks.chart.ChartView;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
@@ -72,20 +71,13 @@ public class ChartFragmentTest {
      */
     @Test
     public void testCreatePendingPoint_sensorIncorrect() {
+        // given
         TrackPoint trackPoint = TrackStubUtils.createDefaultTrackPoint();
 
-        // No input.
+        // when
         ChartPoint point = chartFragment.createPendingPoint(trackPoint);
-        Assert.assertEquals(Float.NaN, point.getHeartRate(), 0.01);
-        Assert.assertEquals(Float.NaN, point.getCadence(), 0.01);
-        Assert.assertEquals(Float.NaN, point.getPower(), 0.01);
 
-        // Input incorrect state.
-        // Creates SensorData.
-        SensorDataSet sensorDataSet = new SensorDataSet(SensorDataSet.DATA_UNAVAILABLE, SensorDataSet.DATA_UNAVAILABLE);
-        trackPoint.setSensorDataSet(sensorDataSet);
-        // Test.
-        point = chartFragment.createPendingPoint(trackPoint);
+        // then
         Assert.assertEquals(Float.NaN, point.getHeartRate(), 0.01);
         Assert.assertEquals(Float.NaN, point.getCadence(), 0.01);
         Assert.assertEquals(Float.NaN, point.getPower(), 0.01);
@@ -96,20 +88,16 @@ public class ChartFragmentTest {
      */
     @Test
     public void testCreatePendingPoint_sensorCorrect() {
+        // given
         TrackPoint trackPoint = TrackStubUtils.createDefaultTrackPoint();
-        // No input.
+        trackPoint.setHeartRate_bpm(100f);
+        trackPoint.setCyclingCadence_rpm(101f);
+        trackPoint.setPower(102f);
+
+        // when
         ChartPoint point = chartFragment.createPendingPoint(trackPoint);
-        Assert.assertEquals(Float.NaN, point.getHeartRate(), 0.01);
-        Assert.assertEquals(Float.NaN, point.getCadence(), 0.01);
-        Assert.assertEquals(Float.NaN, point.getPower(), 0.01);
 
-        // Creates SensorData.
-        SensorDataSet sensorDataSet = new SensorDataSet(100, 101, 102);
-
-        // Creates SensorDataSet.
-        trackPoint.setSensorDataSet(sensorDataSet);
-        // Test.
-        point = chartFragment.createPendingPoint(trackPoint);
+        // then
         Assert.assertEquals(100.0, point.getHeartRate(), 0.01);
         Assert.assertEquals(101.0, point.getCadence(), 0.01);
         Assert.assertEquals(102.0, point.getPower(), 0.01);

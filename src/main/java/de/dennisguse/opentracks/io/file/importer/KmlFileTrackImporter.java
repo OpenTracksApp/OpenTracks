@@ -28,7 +28,6 @@ import java.util.ArrayList;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.exporter.KmlTrackWriter;
 
 /**
@@ -223,30 +222,17 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         for (int i = 0; i < trackPoints.size(); i++) {
             TrackPoint trackPoint = trackPoints.get(i);
 
-            boolean hasSensorData = false;
-            float heartrate = SensorDataSet.DATA_UNAVAILABLE;
-            float cadence = SensorDataSet.DATA_UNAVAILABLE;
-            float power = SensorDataSet.DATA_UNAVAILABLE;
-
             if (i < heartRateList.size()) {
-                heartrate = heartRateList.get(i);
-                hasSensorData = true;
+                trackPoint.setHeartRate_bpm(heartRateList.get(i));
             }
             if (i < cadenceList.size()) {
-                cadence = cadenceList.get(i);
-                hasSensorData = true;
+                trackPoint.setCyclingCadence_rpm(cadenceList.get(i));
             }
             if (i < powerList.size()) {
-                power = powerList.get(i);
-                hasSensorData = true;
+                trackPoint.setPower(cadenceList.get(i));
             }
 
-            if (!hasSensorData) {
-                insertTrackPoint(trackPoint);
-            } else {
-                TrackPoint sensorDataSetLocation = new TrackPoint(trackPoint, new SensorDataSet(heartrate, cadence, power, SensorDataSet.DATA_UNAVAILABLE, trackPoint.getTime()));
-                insertTrackPoint(sensorDataSetLocation);
-            }
+            insertTrackPoint(trackPoint);
         }
     }
 

@@ -397,6 +397,9 @@ limitations under the License.
     <string name="settings_sensor_connecting">Connected to %1$s</string>
     <string name="settings_sensor_connected">Connected to %1$s</string>
     <string name="settings_sensor_disconnected">Disconnected from %1$s</string>
+
+    <string name="settings_sensor_wheel_circumference">Wheel size (ETRTO)</string>
+
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Latitude/Longitude</string>
     <string name="settings_stats_rate_title">Preferred rate</string>

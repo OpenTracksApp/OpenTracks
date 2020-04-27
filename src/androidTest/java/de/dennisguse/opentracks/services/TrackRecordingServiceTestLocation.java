@@ -27,6 +27,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
+import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -244,13 +245,10 @@ public class TrackRecordingServiceTestLocation {
             }
 
             @Override
-            public boolean isSensorDataSetValid() {
-                return true;
-            }
-
-            @Override
-            public SensorDataSet getSensorDataSet() {
-                return new SensorDataSet(1, 2);
+            public SensorDataSet getSensorData() {
+                SensorDataSet sensorDataSet = new SensorDataSet();
+                sensorDataSet.set(new SensorDataHeartRate("sensorName", "sensorAddress", 5f));
+                return sensorDataSet;
             }
         });
 

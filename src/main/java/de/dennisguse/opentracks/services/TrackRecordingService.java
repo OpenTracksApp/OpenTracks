@@ -575,7 +575,9 @@ public class TrackRecordingService extends Service {
             return;
         }
 
-        TrackPoint trackPoint = new TrackPoint(location, getSensorDataSet());
+        TrackPoint trackPoint = new TrackPoint(location);
+        fillWithSensorDataSet(trackPoint);
+
         notificationManager.updateTrackPoint(this, trackPoint, recordingGpsAccuracy);
 
         if (!TrackPointUtils.fulfillsAccuracy(trackPoint, recordingGpsAccuracy)) {
@@ -626,7 +628,7 @@ public class TrackRecordingService extends Service {
             return;
         }
 
-        if (trackPoint.getSensorDataSet() != null || distanceToLastTrackLocation >= recordingDistanceInterval) {
+        if (trackPoint.hasSensorData() || distanceToLastTrackLocation >= recordingDistanceInterval) {
             insertTrackPointIfNewer(track, lastTrackPoint);
             insertTrackPoint(track, trackPoint);
             isIdle = false;
@@ -708,10 +710,18 @@ public class TrackRecordingService extends Service {
     }
 
     SensorDataSet getSensorDataSet() {
-        if (remoteSensorManager == null || !remoteSensorManager.isEnabled() || !remoteSensorManager.isSensorDataSetValid()) {
+        if (remoteSensorManager == null || !remoteSensorManager.isEnabled()) {
             return null;
         }
-        return remoteSensorManager.getSensorDataSet();
+
+        return remoteSensorManager.getSensorData();
+    }
+
+    void fillWithSensorDataSet(TrackPoint trackPoint) {
+        SensorDataSet sensorData = getSensorDataSet();
+        if (sensorData != null) {
+            sensorData.fillTrackPoint(trackPoint);
+        }
     }
 
     private void registerLocationListener() {

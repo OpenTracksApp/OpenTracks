@@ -267,17 +267,23 @@ limitations under the License.
             android:id="@+id/stats_sensor_separator"
             style="@style/StatsHorizontalLine" />
 
-        <!-- Sensor data: heart rate-->
+        <!-- Sensor data -->
         <LinearLayout
-            android:id="@+id/stats_sensor_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout style="@style/StatsLargeItemContainer">
+            <LinearLayout
+                android:id="@+id/stats_sensor_heart_rate_container"
+                style="@style/StatsLargeItemContainer">
 
                 <TextView
                     style="@style/StatsLargeLabel"
                     android:text="@string/sensor_state_heart_rate" />
+
+                <TextView
+                    android:id="@+id/stats_sensor_heart_rate_sensor_value"
+                    style="@style/StatsTinyValue"
+                    android:text="@string/value_unknown" />
 
                 <LinearLayout style="@style/StatsLargeValueContainer">
 
@@ -291,20 +297,36 @@ limitations under the License.
                         android:text="@string/sensor_unit_beats_per_minute" />
 
                 </LinearLayout>
+
             </LinearLayout>
 
-            <LinearLayout style="@style/StatsSmallGroupContainer">
+            <LinearLayout
+                android:id="@+id/stats_sensor_cadence_container"
+                style="@style/StatsLargeItemContainer">
 
                 <TextView
-                    style="@style/StatsSmallLabel"
-                    android:text="@string/settings_sensor_bluetooth_sensor" />
+                    style="@style/StatsLargeLabel"
+                    android:text="@string/sensor_state_cadence" />
 
                 <TextView
-                    android:id="@+id/stats_sensor_heart_rate_sensor_value"
+                    android:id="@+id/stats_sensor_cadence_sensor_value"
                     style="@style/StatsTinyValue"
-                    android:value="@string/value_unknown" />
+                    android:text="@string/value_unknown" />
 
+                <LinearLayout style="@style/StatsLargeValueContainer">
+
+                    <TextView
+                        android:id="@+id/stats_sensor_cadence_value"
+                        style="@style/StatsLargeValue"
+                        android:value="@string/value_unknown" />
+
+                    <TextView
+                        style="@style/StatsUnit"
+                        android:text="@string/sensor_unit_rounds_per_minute" />
+
+                </LinearLayout>
             </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

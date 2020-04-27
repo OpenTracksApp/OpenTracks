@@ -19,7 +19,6 @@ package de.dennisguse.opentracks;
 import android.location.Location;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 
 /**
  * Commons utilities for creating stubs of track, location.
@@ -63,6 +62,6 @@ public class TrackStubUtils {
         location.setTime(INITIAL_TIME);
         location.setBearing(INITIAL_BEARING);
 
-        return new TrackPoint(location, new SensorDataSet(Float.NaN, Float.NaN));
+        return new TrackPoint(location);
     }
 }
