@@ -33,6 +33,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -225,7 +226,7 @@ public class CustomContentProviderUtilsTest {
      * Tests the method {@link ContentProviderUtils#deleteAllTracks(Context)}
      */
     @Test
-    public void testDeleteAllTracks_withWaypointAndPhoto() {
+    public void testDeleteAllTracks_withWaypointAndPhoto() throws IOException {
         // Insert track, points and waypoint with photo at first.
         long trackId = System.currentTimeMillis();
         Track track = TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
@@ -298,7 +299,7 @@ public class CustomContentProviderUtilsTest {
      * Tests the method {@link ContentProviderUtils#deleteTrack(Context, long)}.
      */
     @Test
-    public void testDeleteTrack_withWaypointPhoto() {
+    public void testDeleteTrack_withWaypointPhoto() throws IOException {
         // Insert three tracks.
         long trackId = System.currentTimeMillis();
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
@@ -509,7 +510,7 @@ public class CustomContentProviderUtilsTest {
      * when there is only one waypoint in the track.
      */
     @Test
-    public void testDeleteWaypoint_onlyOneWayPointWithPhotoUrl() {
+    public void testDeleteWaypoint_onlyOneWayPointWithPhotoUrl() throws IOException {
         long trackId = System.currentTimeMillis();
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 

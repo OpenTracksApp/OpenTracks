@@ -88,7 +88,7 @@ public class TestDataUtil {
      * @param location The location.
      * @return the Waypoint created.
      */
-    public static  Waypoint createWaypointWithPhoto(Context context, long trackId, Location location) {
+    public static  Waypoint createWaypointWithPhoto(Context context, long trackId, Location location) throws IOException {
         String photoUrl = "";
         try {
             File dstFile = new File(FileUtils.getImageUrl(context, trackId));
@@ -96,7 +96,7 @@ public class TestDataUtil {
             Uri photoUri = FileUtils.getUriForFile(context, dstFile);
             photoUrl = photoUri.toString();
         } catch (IOException ioe) {
-            throw new RuntimeException(ioe);
+            throw ioe;
         }
 
         return new Waypoint("Waypoint name", "Waypoint description", "Waypoint category", "", trackId, 0.0, 0, location, photoUrl);
