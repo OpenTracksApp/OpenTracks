@@ -189,7 +189,6 @@ public class KmzTrackImporter implements TrackImporter {
 
                 zipInputStream.closeEntry();
             }
-
             return trackId;
         } catch (IOException e) {
             Log.e(TAG, "Unable to import file", e);
@@ -240,16 +239,6 @@ public class KmzTrackImporter implements TrackImporter {
         if (PreferencesUtils.isRecording(trackId)) {
             ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
             contentProviderUtils.deleteTrack(context, trackId);
-        }
-
-        if (importTrackId != -1L) {
-            File dir = FileUtils.getPhotoDir(context, importTrackId);
-            if (dir.exists() && dir.isDirectory()) {
-                for (File file : dir.listFiles()) {
-                    file.delete();
-                }
-                dir.delete();
-            }
         }
     }
 

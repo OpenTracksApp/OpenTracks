@@ -32,6 +32,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,6 +46,7 @@ import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.stats.TrackStatistics;
+import de.dennisguse.opentracks.util.FileUtils;
 
 import static org.mockito.Mockito.when;
 
@@ -220,6 +223,44 @@ public class CustomContentProviderUtilsTest {
     }
 
     /**
+     * Tests the method {@link ContentProviderUtils#deleteAllTracks(Context)}
+     */
+    @Test
+    public void testDeleteAllTracks_withWaypointAndPhoto() throws IOException {
+        // Insert track, points and waypoint with photo at first.
+        long trackId = System.currentTimeMillis();
+        Track track = TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
+
+        TrackPoint trackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
+        Waypoint waypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
+        contentProviderUtils.insertWaypoint(waypoint);
+
+        ContentResolver contentResolver = context.getContentResolver();
+        Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
+        Assert.assertEquals(1, tracksCursor.getCount());
+        Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
+        Assert.assertEquals(10, tracksPointsCursor.getCount());
+        Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
+        Assert.assertEquals(1, waypointCursor.getCount());
+        // Check waypoint has photo and it's in the external storage.
+        Assert.assertTrue(waypoint.hasPhoto());
+        File dir = FileUtils.getPhotoDir(context, trackId);
+        Assert.assertTrue(dir.isDirectory());
+        Assert.assertEquals(1, dir.list().length);
+        Assert.assertTrue(dir.exists());
+        // Delete all.
+        contentProviderUtils.deleteAllTracks(context);
+        // Check whether all have been deleted.
+        tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
+        Assert.assertEquals(0, tracksCursor.getCount());
+        tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
+        Assert.assertEquals(0, tracksPointsCursor.getCount());
+        waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
+        Assert.assertEquals(0, waypointCursor.getCount());
+        Assert.assertFalse(dir.exists());
+    }
+
+    /**
      * Tests the method {@link ContentProviderUtils#deleteTrack(Context, long)}.
      */
     @Test
@@ -252,6 +293,56 @@ public class CustomContentProviderUtilsTest {
         Assert.assertEquals(20, tracksPointsCursor.getCount());
         waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
         Assert.assertEquals(0, waypointCursor.getCount());
+    }
+
+    /**
+     * Tests the method {@link ContentProviderUtils#deleteTrack(Context, long)}.
+     */
+    @Test
+    public void testDeleteTrack_withWaypointPhoto() throws IOException {
+        // Insert three tracks.
+        long trackId = System.currentTimeMillis();
+        TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
+        TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId + 1, 10);
+        TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId + 2, 10);
+
+        // Insert a waypoint in tracks trackId and trackId + 1.
+        TrackPoint trackPoint1 = contentProviderUtils.getLastValidTrackPoint(trackId);
+        Waypoint waypoint1 = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint1.getLocation());
+        contentProviderUtils.insertWaypoint(waypoint1);
+        File dir1 = FileUtils.getPhotoDir(context, trackId);
+
+        TrackPoint trackPoint2 = contentProviderUtils.getLastValidTrackPoint(trackId + 1);
+        Waypoint waypoint2 = TestDataUtil.createWaypointWithPhoto(context, trackId + 1, trackPoint2.getLocation());
+        contentProviderUtils.insertWaypoint(waypoint2);
+        File dir2 = FileUtils.getPhotoDir(context, trackId + 1);
+
+        // Check.
+        ContentResolver contentResolver = context.getContentResolver();
+        Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
+        Assert.assertEquals(3, tracksCursor.getCount());
+        Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
+        Assert.assertEquals(30, tracksPointsCursor.getCount());
+        Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
+        Assert.assertEquals(2, waypointCursor.getCount());
+        Assert.assertTrue(waypoint1.hasPhoto());
+        Assert.assertTrue(dir1.isDirectory());
+        Assert.assertEquals(1, dir1.list().length);
+        Assert.assertTrue(dir1.exists());
+        Assert.assertTrue(dir2.isDirectory());
+        Assert.assertEquals(1, dir2.list().length);
+        Assert.assertTrue(dir2.exists());
+        // Delete one track.
+        contentProviderUtils.deleteTrack(context, trackId);
+        // Check whether all data of a track has been deleted.
+        tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
+        Assert.assertEquals(2, tracksCursor.getCount());
+        tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
+        Assert.assertEquals(20, tracksPointsCursor.getCount());
+        waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
+        Assert.assertEquals(1, waypointCursor.getCount());
+        Assert.assertFalse(dir1.exists());
+        Assert.assertTrue(dir2.exists());
     }
 
     /**
@@ -387,7 +478,7 @@ public class CustomContentProviderUtilsTest {
 
     /**
      * Tests the method
-     * {@link ContentProviderUtils#deleteWaypoint(long)}
+     * {@link ContentProviderUtils#deleteWaypoint(Context, long)}
      * when there is only one waypoint in the track.
      */
     @Test
@@ -401,14 +492,56 @@ public class CustomContentProviderUtilsTest {
         waypoint1.setTrackId(trackId);
         contentProviderUtils.insertWaypoint(waypoint1);
 
-        // Delete
-        contentProviderUtils.deleteWaypoint(1);
+        // Check insert was done.
+        Assert.assertEquals(contentProviderUtils.getWaypointCount(trackId), 1);
 
-        Assert.assertNull(contentProviderUtils.getWaypoint(1));
+        // Get waypoint id that needs to delete.
+        long waypoint1Id = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint1));
+
+        // Delete
+        contentProviderUtils.deleteWaypoint(context, waypoint1Id);
+
+        Assert.assertNull(contentProviderUtils.getWaypoint(waypoint1Id));
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#deleteWaypoint(long)} when there is more than one waypoint in the track.
+     * Tests the method
+     * {@link ContentProviderUtils#deleteWaypoint(Context, long)}
+     * when there is only one waypoint in the track.
+     */
+    @Test
+    public void testDeleteWaypoint_onlyOneWayPointWithPhotoUrl() throws IOException {
+        long trackId = System.currentTimeMillis();
+        TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
+
+        // Insert at first.
+        TrackPoint trackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
+        Waypoint waypoint1 = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
+        contentProviderUtils.insertWaypoint(waypoint1);
+
+        // Check insert was done.
+        Assert.assertEquals(contentProviderUtils.getWaypointCount(trackId), 1);
+
+        // Get waypoint id that needs to delete.
+        long waypoint1Id = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint1));
+
+        // Check waypoint has photo and it's in the external storage.
+        Assert.assertTrue(waypoint1.hasPhoto());
+        File dir = FileUtils.getPhotoDir(context, trackId);
+        Assert.assertTrue(dir.isDirectory());
+        Assert.assertEquals(1, dir.list().length);
+        Assert.assertTrue(dir.exists());
+
+        // Delete
+        contentProviderUtils.deleteWaypoint(context, waypoint1Id);
+
+        // Check waypoint doesn't exists and photo folder was deleted.
+        Assert.assertNull(contentProviderUtils.getWaypoint(waypoint1Id));
+        Assert.assertFalse(dir.exists());
+    }
+
+    /**
+     * Tests the method {@link ContentProviderUtils#deleteWaypoint(Context, long)} when there is more than one waypoint in the track.
      */
     @Test
     public void testDeleteWaypoint_hasNextWayPoint() {
@@ -444,7 +577,7 @@ public class CustomContentProviderUtilsTest {
 
         // Delete
         Assert.assertNotNull(contentProviderUtils.getWaypoint(waypoint1Id));
-        contentProviderUtils.deleteWaypoint(waypoint1Id);
+        contentProviderUtils.deleteWaypoint(context, waypoint1Id);
         Assert.assertNull(contentProviderUtils.getWaypoint(waypoint1Id));
 
         Assert.assertEquals(MOCK_DESC, contentProviderUtils.getWaypoint(waypoint2Id).getDescription());

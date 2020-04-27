@@ -1,9 +1,15 @@
 package de.dennisguse.opentracks.content.data;
 
+import android.content.Context;
 import android.location.Location;
+import android.net.Uri;
 import android.util.Pair;
 
+import java.io.File;
+import java.io.IOException;
+
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.util.FileUtils;
 
 public class TestDataUtil {
 
@@ -72,5 +78,27 @@ public class TestDataUtil {
     public static void insertTrackWithLocations(ContentProviderUtils contentProviderUtils, Track track, TrackPoint[] trackPoints) {
         contentProviderUtils.insertTrack(track);
         contentProviderUtils.bulkInsertTrackPoint(trackPoints, track.getId());
+    }
+
+    /**
+     * Creates a Waypoint with a photo.
+     *
+     * @param context  The context.
+     * @param trackId  The track id.
+     * @param location The location.
+     * @return the Waypoint created.
+     */
+    public static  Waypoint createWaypointWithPhoto(Context context, long trackId, Location location) throws IOException {
+        String photoUrl = "";
+        try {
+            File dstFile = new File(FileUtils.getImageUrl(context, trackId));
+            dstFile.createNewFile();
+            Uri photoUri = FileUtils.getUriForFile(context, dstFile);
+            photoUrl = photoUri.toString();
+        } catch (IOException ioe) {
+            throw ioe;
+        }
+
+        return new Waypoint("Waypoint name", "Waypoint description", "Waypoint category", "", trackId, 0.0, 0, location, photoUrl);
     }
 }
