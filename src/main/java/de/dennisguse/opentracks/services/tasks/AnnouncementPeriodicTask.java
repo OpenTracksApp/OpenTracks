@@ -26,10 +26,12 @@ import android.util.Log;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.AnnouncementUtils;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * This class will periodically announce the user's {@link TrackStatistics}.
@@ -162,7 +164,9 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
             Log.i(TAG, "Speech is not allowed at this time.");
             return;
         }
-        String announcement = AnnouncementUtils.getAnnouncement(context, trackStatistics);
+        Track track = contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context));
+        String category = track != null ? track.getCategory() : "";
+        String announcement = AnnouncementUtils.getAnnouncement(context, trackStatistics, category);
         speakAnnouncement(announcement);
     }
 

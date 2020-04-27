@@ -643,7 +643,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
     private void setSpeed(double speed) {
         boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
-        boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext());
+        boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext(), category);
 
         speedLabel.setText(reportSpeed ? R.string.stats_speed : R.string.stats_pace);
 
