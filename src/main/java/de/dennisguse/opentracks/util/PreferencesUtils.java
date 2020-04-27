@@ -197,9 +197,14 @@ public class PreferencesUtils {
         return STATS_UNIT.equals(getString(context, R.string.stats_units_key, STATS_UNIT));
     }
 
-    public static boolean isReportSpeed(Context context) {
+    public static boolean isReportSpeed(Context context, String category) {
         final String STATS_RATE_DEFAULT = context.getString(R.string.stats_rate_default);
-        return STATS_RATE_DEFAULT.equals(getString(context, R.string.stats_rate_key, STATS_RATE_DEFAULT));
+        String currentStatsRate = getString(context, R.string.stats_rate_key, STATS_RATE_DEFAULT);
+        if (currentStatsRate.equals(getString(context, R.string.stats_rate_default_speed_or_pace, STATS_RATE_DEFAULT))) {
+            return TrackIconUtils.isSpeedIcon(context, category);
+        }
+
+        return currentStatsRate.equals(context.getString(R.string.stats_rate_speed));
     }
 
     public static boolean isRecordingTrackPaused(Context context) {

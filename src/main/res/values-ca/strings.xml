@@ -93,6 +93,8 @@
     <string name="description_sensor_cadence">Cadència (rpm)</string>
     <string name="description_sensor_heart_rate">Freqüència cardíaca (bpm)</string>
     <string name="description_sensor_power">Potència (W)</string>
+    <string name="description_default_speed_or_pace_imperial">Per Defecte</string>
+    <string name="description_default_speed_or_pace_metric">Per Defecte</string>
     <string name="description_speed_imperial">Velocitat (mi/h)</string>
     <string name="description_speed_metric">Velocitat (km/h)</string>
     <string name="description_time">Temps</string>
