@@ -9,9 +9,9 @@ public class AnnouncementUtils {
 
     private AnnouncementUtils() {}
 
-    public static String getAnnouncement(Context context, TrackStatistics trackStatistics) {
+    public static String getAnnouncement(Context context, TrackStatistics trackStatistics, String category) {
         boolean metricUnits = PreferencesUtils.isMetricUnits(context);
-        boolean reportSpeed = PreferencesUtils.isReportSpeed(context);
+        boolean reportSpeed = PreferencesUtils.isReportSpeed(context, category);
         double distance = trackStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
         double distancePerTime = trackStatistics.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
 

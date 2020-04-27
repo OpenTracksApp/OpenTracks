@@ -199,6 +199,11 @@ public class ChartFragment extends Fragment implements TrackDataListener {
             }
 
             category = track.getCategory();
+            boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext(), category);
+            if (reportSpeed != chartView.getReportSpeed()) {
+                chartView.setReportSpeed(reportSpeed);
+                chartView.applyReportSpeed();
+            }
             startTime = track.getTrackStatistics().getStartTime_ms();
         }
     }
