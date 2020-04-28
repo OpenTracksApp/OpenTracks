@@ -4,5 +4,6 @@ Features:
 * Sport tracking: track your sport and outdoor activities
 * Photos and markers: mark interesting locations while tracking
 * Heart rate: supports Bluetooth LE sensors
+* Cycling (speed and cadence): supports Bluetooth LE sensors
 * Export data: export tracks either as KML or GPX
 * No Internet access: Internet is not used
