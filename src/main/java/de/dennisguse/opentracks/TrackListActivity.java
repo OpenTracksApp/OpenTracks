@@ -352,7 +352,8 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         searchMenuItem = menu.findItem(R.id.track_list_search);
         ActivityUtils.configureSearchWidget(this, searchMenuItem, trackController);
 
-        startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
+        // Workaround for https://github.com/OpenTracksApp/OpenTracks/issues/200
+        //startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
 
         return super.onCreateOptionsMenu(menu);
     }

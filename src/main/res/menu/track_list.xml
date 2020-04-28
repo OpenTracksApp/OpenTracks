@@ -21,10 +21,12 @@ limitations under the License.
         app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom" />
     <!-- Icon and title is overwritten by TrackListActivity -->
+    <!-- Hide icon as workaround for https://github.com/OpenTracksApp/OpenTracks/issues/200 -->
     <item
         android:id="@+id/track_list_start_gps"
         android:icon="@drawable/ic_gps_off_24dp"
         android:title="@string/menu_start_gps"
+        android:visible="false"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/track_list_markers"
