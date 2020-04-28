@@ -200,7 +200,7 @@ public class PreferencesUtils {
     public static boolean isReportSpeed(Context context, String category) {
         final String STATS_RATE_DEFAULT = context.getString(R.string.stats_rate_default);
         String currentStatsRate = getString(context, R.string.stats_rate_key, STATS_RATE_DEFAULT);
-        if (currentStatsRate.equals(getString(context, R.string.stats_rate_default_speed_or_pace, STATS_RATE_DEFAULT))) {
+        if (currentStatsRate.equals(getString(context, R.string.stats_rate_speed_or_pace_default, STATS_RATE_DEFAULT))) {
             return TrackIconUtils.isSpeedIcon(context, category);
         }
 

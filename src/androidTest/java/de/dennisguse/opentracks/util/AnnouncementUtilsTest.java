@@ -26,7 +26,7 @@ public class AnnouncementUtilsTest {
         stats.setTotalElevationGain(6000);
 
         // when
-        String announcement = AnnouncementUtils.getAnnouncement(context, stats);
+        String announcement = AnnouncementUtils.getAnnouncement(context, stats, "airplane");
 
         // then
         Assert.assertEquals("OpenTracks total distance 20.00 kilometers in 5 minutes 0 seconds at 240.0 kilometers per hour", announcement);
