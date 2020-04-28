@@ -38,20 +38,30 @@
         <item>-100</item>
     </string-array>
 
-    <string name="chart_show_cadence_key" translatable="false">chartShowCadence</string>
-    <bool name="chart_show_cadence_default" translatable="false">true</bool>
+    <string name="chart_show_cadence_key" translatable="false" tools:keep="@string/chart_show_cadence_key">chartShowCadence</string>
+    <bool name="chart_show_cadence_default" translatable="false" tools:keep="@bool/chart_show_cadence_default">
+        true
+    </bool>
 
-    <string name="chart_show_elevation_key" translatable="false">chartShowElevation</string>
-    <bool name="chart_show_elevation_default" translatable="false">true</bool>
+    <string name="chart_show_elevation_key" translatable="false" tools:keep="@string/chart_show_elevation_key">chartShowElevation</string>
+    <bool name="chart_show_elevation_default" translatable="false" tools:keep="@bool/chart_show_elevation_default">
+        true
+    </bool>
 
-    <string name="chart_show_heart_rate_key" translatable="false">chartShowHeartRate</string>
-    <bool name="chart_show_heart_rate_default" translatable="false">true</bool>
+    <string name="chart_show_heart_rate_key" translatable="false" tools:keep="@string/chart_show_heart_rate_key">chartShowHeartRate</string>
+    <bool name="chart_show_heart_rate_default" translatable="false" tools:keep="@bool/chart_show_heart_rate_default">
+        true
+    </bool>
 
-    <string name="chart_show_power_key" translatable="false">chartShowPower</string>
-    <bool name="chart_show_power_default" translatable="false">true</bool>
+    <string name="chart_show_power_key" translatable="false" tools:keep="@string/chart_show_power_key">chartShowPower</string>
+    <bool name="chart_show_power_default" translatable="false" tools:keep="@bool/chart_show_power_default">
+        true
+    </bool>
 
-    <string name="chart_show_speed_key" translatable="false">chartShowSpeed</string>
-    <bool name="chart_show_speed_default" translatable="false">true</bool>
+    <string name="chart_show_speed_key" translatable="false" tools:keep="@string/chart_show_speed_key">chartShowSpeed</string>
+    <bool name="chart_show_speed_default" translatable="false" tools:keep="@bool/chart_show_speed_default">
+        true
+    </bool>
 
     <!--    <string name="auto_resume_track_timeout_key" translatable="false">autoResumeTrackTimeout</string>-->
     <!--    <string name="auto_resume_track_timeout_default" translatable="false">10</string>-->

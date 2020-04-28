@@ -42,7 +42,7 @@ import de.dennisguse.opentracks.util.FileUtils;
  * @author Jimmy Shih
  */
 public class KmzTrackExporter implements TrackExporter {
-    public static final String KMZ_IMAGES_DIR = "images";
+    private static final String KMZ_IMAGES_DIR = "images";
     public static final String KMZ_KML_FILE = "doc.kml";
 
     private static final String TAG = KmzTrackExporter.class.getSimpleName();

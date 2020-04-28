@@ -17,9 +17,9 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
  */
 public class IntentDashboardUtils {
 
-    public static final String ACTION_DASHBOARD = "Intent.OpenTracks-Dashboard";
+    private static final String ACTION_DASHBOARD = "Intent.OpenTracks-Dashboard";
 
-    public static final String ACTION_DASHBOARD_PAYLOAD = ACTION_DASHBOARD + ".Payload";
+    private static final String ACTION_DASHBOARD_PAYLOAD = ACTION_DASHBOARD + ".Payload";
 
     private IntentDashboardUtils() {
     }

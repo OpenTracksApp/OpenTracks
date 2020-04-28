@@ -717,7 +717,7 @@ public class TrackRecordingService extends Service {
         return remoteSensorManager.getSensorData();
     }
 
-    void fillWithSensorDataSet(TrackPoint trackPoint) {
+    private void fillWithSensorDataSet(TrackPoint trackPoint) {
         SensorDataSet sensorData = getSensorDataSet();
         if (sensorData != null) {
             sensorData.fillTrackPoint(trackPoint);

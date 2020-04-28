@@ -47,7 +47,7 @@ public class KmzTrackImporter implements TrackImporter {
 
     private static final String TAG = KmzTrackImporter.class.getSimpleName();
 
-    public static final List<String> KMZ_IMAGES_EXT = Arrays.asList("jpeg", "jpg", "png");
+    private static final List<String> KMZ_IMAGES_EXT = Arrays.asList("jpeg", "jpg", "png");
 
     private static final int BUFFER_SIZE = 4096;
 
@@ -154,11 +154,7 @@ public class KmzTrackImporter implements TrackImporter {
             return false;
         }
 
-        if (KMZ_IMAGES_EXT.contains(fileExt)) {
-            return true;
-        }
-
-        return false;
+        return KMZ_IMAGES_EXT.contains(fileExt);
     }
 
     /**

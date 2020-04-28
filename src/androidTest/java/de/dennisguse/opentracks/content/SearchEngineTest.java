@@ -70,7 +70,7 @@ public class SearchEngineTest {
         providerUtils.deleteAllTracks(context);
     }
 
-    private long insertTrack(String title, String description, String category, double distance, long hoursAgo) {
+    private long insertTrack(String title, String description, String category, long hoursAgo) {
         Track track = new Track();
         track.setName(title);
         track.setDescription(description);
@@ -88,15 +88,11 @@ public class SearchEngineTest {
     }
 
     private long insertTrack(String title, String description, String category) {
-        return insertTrack(title, description, category, 0, -1);
-    }
-
-    private long insertTrack(String title, double distance) {
-        return insertTrack(title, "", "", distance, -1);
+        return insertTrack(title, description, category, -1);
     }
 
     private long insertTrack(String title, long hoursAgo) {
-        return insertTrack(title, "", "", 0.0, hoursAgo);
+        return insertTrack(title, "", "", hoursAgo);
     }
 
     private long insertWaypoint(String title, String description, String category, double distance, long hoursAgo, long trackId) {

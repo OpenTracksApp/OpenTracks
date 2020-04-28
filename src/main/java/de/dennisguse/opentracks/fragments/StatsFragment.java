@@ -603,7 +603,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
     private void setLocationValues() {
         boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
-        boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext(), category);
         boolean isRecording = isSelectedTrackRecording();
 
         // Set speed/pace

@@ -77,7 +77,7 @@ public class TrackRecordingServiceTestLocation {
     }
 
     @After
-    public void tearDown() throws TimeoutException {
+    public void tearDown() {
         // Reset service (if some previous test failed)
         service.enableLocationExecutor(true);
         if (service.isRecording() || service.isPaused()) {

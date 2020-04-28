@@ -94,8 +94,6 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
         private int selectedEntryIndex;
         private final BluetoothLeAdapter listAdapter = new BluetoothLeAdapter();
 
-        private UUID sensorUUID;
-
         private BluetoothLeScanner scanner = null;
         private final ScanCallback scanCallback = new ScanCallback() {
             @Override
@@ -135,7 +133,7 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
-            sensorUUID = (UUID) getArguments().getSerializable(ARG_BLUETOOTH_UUID);
+            UUID sensorUUID = (UUID) getArguments().getSerializable(ARG_BLUETOOTH_UUID);
             Log.i(TAG, "UUID: " + sensorUUID);
 
             BluetoothAdapter bluetoothAdapter = BluetoothUtils.getDefaultBluetoothAdapter(TAG);
@@ -147,7 +145,7 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
             }
 
             if (bluetoothAdapter.isDiscovering()) {
-                Log.i(TAG, "Cancelling ongoing bluetooth discovery.");
+                Log.i(TAG, "Cancelling ongoing B<aluetooth discovery.");
                 bluetoothAdapter.cancelDiscovery();
             }
 

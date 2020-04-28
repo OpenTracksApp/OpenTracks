@@ -47,8 +47,6 @@ public interface TrackRecordingServiceInterface {
 
     /**
      * Resumes the track identified by trackId.
-     *
-     * @param trackId
      */
     void resumeTrack(long trackId);
 

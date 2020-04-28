@@ -90,14 +90,10 @@ public class TestDataUtil {
      */
     public static  Waypoint createWaypointWithPhoto(Context context, long trackId, Location location) throws IOException {
         String photoUrl = "";
-        try {
-            File dstFile = new File(FileUtils.getImageUrl(context, trackId));
-            dstFile.createNewFile();
-            Uri photoUri = FileUtils.getUriForFile(context, dstFile);
-            photoUrl = photoUri.toString();
-        } catch (IOException ioe) {
-            throw ioe;
-        }
+        File dstFile = new File(FileUtils.getImageUrl(context, trackId));
+        dstFile.createNewFile();
+        Uri photoUri = FileUtils.getUriForFile(context, dstFile);
+        photoUrl = photoUri.toString();
 
         return new Waypoint("Waypoint name", "Waypoint description", "Waypoint category", "", trackId, 0.0, 0, location, photoUrl);
     }

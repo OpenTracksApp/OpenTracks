@@ -74,7 +74,7 @@ public class KmlTrackWriter implements TrackWriter {
      * @param context           the context
      * @param hasMultipleTracks should encode multiple tracks into one file?
      * @param exportTrackDetail should detailed information about the track be exported (e.g., title, description, waypoints, timing)?
-     * @param exportSensorData  should {@link TrackPointSensorDataSet} be exported?
+     * @param exportSensorData  should {@link TrackPoint}'s sensor data be exported?
      * @param exportPhotos      should pictures be exported (if true: exports to KMZ)?
      */
     public KmlTrackWriter(Context context, boolean hasMultipleTracks, boolean exportTrackDetail, boolean exportSensorData, boolean exportPhotos) {

@@ -35,8 +35,6 @@ public class TrackStubUtils {
     private static final float INITIAL_ACCURACY = 5;
     private static final float INITIAL_SPEED = 10;
     private static final float INITIAL_BEARING = 3.0f;
-    // Used to change the value of latitude, longitude, and altitude.
-    private static final double DIFFERENCE = 0.01;
 
     /**
      * Create a MyTracks location with default values.

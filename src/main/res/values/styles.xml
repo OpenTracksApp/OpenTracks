@@ -62,9 +62,6 @@ limitations under the License.
         <item name="android:layout_width">match_parent</item>
     </style>
     <!-- edit label with icon -->
-    <style name="EditLabel.WithIcon" parent="@style/TextMedium.WithIcon">
-        <item name="android:layout_width">match_parent</item>
-    </style>
     <!-- edit label with padding top -->
     <style name="EditLabel.WithPaddingTop">
         <item name="android:paddingTop">16dp</item>
@@ -84,22 +81,8 @@ limitations under the License.
         <item name="android:singleLine">true</item>
     </style>
     <!-- export radio group -->
-    <style name="ExportRadioGroup">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">8dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
-        <item name="android:layout_width">match_parent</item>
-    </style>
     <!-- help answer -->
-    <style name="HelpAnswer" parent="@style/TextSmall">
-        <item name="android:autoLink">web</item>
-        <item name="android:paddingBottom">8dp</item>
-    </style>
     <!-- help question -->
-    <style name="HelpQuestion" parent="@style/TextMedium">
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
     <!-- list empty text view -->
     <style name="ListEmptyTextView" parent="@style/TextLarge">
         <item name="android:gravity">center</item>
@@ -130,13 +113,6 @@ limitations under the License.
         <item name="android:layout_weight">1</item>
     </style>
     <!-- sensor state value -->
-    <style name="SensorStateValue" parent="@style/TextLarge">
-        <item name="android:background">@android:color/background_light</item>
-        <item name="android:gravity">right</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:paddingRight">8dp</item>
-        <item name="android:textColor">@android:color/primary_text_light</item>
-    </style>
     <!-- stats horizontal line -->
     <style name="StatsHorizontalLine">
         <item name="android:background">@color/stats_separator</item>
@@ -231,11 +207,6 @@ limitations under the License.
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:textColor">@android:color/white</item>
-    </style>
-
-    <style name="TextChooseActivity">
-        <!-- Same as TextChooseActivity in values/styles.xml except removing textSize and using textAppearance -->
-        <item name="android:textAppearance">?android:attr/textAppearanceListItemSmall</item>
     </style>
 
     <style name="TextLarge" parent="@android:style/TextAppearance.Holo.Large">
