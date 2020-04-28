@@ -28,7 +28,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -381,11 +380,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                     startActivity(intent);
                 } else {
                     startGps = !ServiceUtils.isTrackRecordingServiceRunning(this);
-
-                    // Show toast
-                    Toast toast = Toast.makeText(this, startGps ? R.string.gps_starting : R.string.gps_stopping, Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
 
                     // Invoke trackRecordingService
                     if (startGps) {
