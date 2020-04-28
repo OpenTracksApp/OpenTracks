@@ -482,8 +482,9 @@ public class TrackRecordingService extends Service {
         // Update database
         Track track = contentProviderUtils.getTrack(recordingTrackId);
         if (track != null) {
-            insertTrackPointIfNewer(track, lastTrackPoint);
-
+            if (lastTrackPoint != null) {
+                insertTrackPointIfNewer(track, lastTrackPoint);
+            }
             insertTrackPoint(track, TrackPoint.createPause());
         }
 
