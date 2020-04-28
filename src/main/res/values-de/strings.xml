@@ -19,7 +19,7 @@ limitations under the License.
     <string name="about_url">Projekt-Website: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Version Name: %1$s</string>
     <string name="about_version_code">Version Code: %1$d</string>
-    <string name="about_history">OpenTracks ist ein Fork von <a href="https://code.google.com/archive/p/mytracks/"><<i>Google\'s MyTracks</i><</a> (2016 eingestellt).</string>
+    <string name="about_history">OpenTracks ist ein Fork von <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (2016 eingestellt).</string>
     <string name="about_libraries">Bibliotheken</string>
     <!-- Help -->
     <string name="help_feature_title">OpenTracks hat die folgenden Funktionen:</string>
@@ -184,6 +184,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="description_sensor_cadence">Trittfrequenz (Umdrehungen pro Minute)</string>
     <string name="description_sensor_heart_rate">Herzfrequenz (Schläge pro Minute)</string>
     <string name="description_sensor_power">Leistung (W)</string>
+    <string name="description_default_speed_or_pace">Automatisch nach Art der Aktivität</string>
     <string name="description_speed_imperial">Geschwindigkeit (Meile/h)</string>
     <string name="description_speed_metric">Geschwindigkeit (km/h)</string>
     <string name="description_time">Zeit</string>
@@ -391,6 +392,8 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="settings_sensor_connecting">Verbunden mit %1$s</string>
     <string name="settings_sensor_connected">Verbunden mit %1$s</string>
     <string name="settings_sensor_disconnected">Verbindung getrennt von %1$s</string>
+
+    <string name="settings_sensor_wheel_circumference">Reifengröße (ETRTO)</string>
 
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Breiten-/Längengrad</string>
