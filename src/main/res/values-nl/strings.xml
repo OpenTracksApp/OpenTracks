@@ -1,5 +1,95 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <string name="about_preference_title">Over OpenTracks</string>
+    <string name="about_description"><i>OpenTracks</i> is een sporttrackingapplicatie die uw privacy volledig respecteert.</string>
+    <string name="about_url">Project webpagina: <a href="%1$s">%1$s</a></string>
+    <string name="about_version_name">Versie naam: %1$s</string>
+    <string name="about_version_code">Versiecode: %1$d</string>
+    <string name="about_history">OpenTracks is een vork van <a href="https://code.google.com/archive/p/mytracks/"><i>Google\s MyTracks</i></a> (stopgezet in 2016).</string>
+    <string name="about_libraries">Bibliotheken</string>
+    <!-- Help -->
+    <string name="help_feature_title">OpenTracks heeft de volgende kenmerken:</string>
+    <string name="help_feature_content">
+* creëer GPS tracks
+* gebruik een hartslagsensor (alleen Bluetooth LE)...
+* spraakaankondigingen (op tijd of afstand)...
+* creëer markers (incl. fotos)
+* werkt volledig offline
+* toon tracks op een kaart (zie hieronder)</string>
+
+    <string name="help_track_map_title">Hoe toon je een spoor op een kaart?</string>
+    <string name="help_track_map_content">
+Gebruik het kleine kaarticoontje.
+a)
+(live updates) Installeer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
+Het biedt online of offline kaarten via <a href="https://www.openstreetmap.org">OpenStreetmap</a>.\n
+Eigenlijk is OSMDashboard een aparte app die alleen (tijdelijk) toegang heeft tot de gegevens van track(s) die getoond gaan worden.
+
+\n
+b)
+Via een "normale" kaarttoepassing (bijv. <a href="http://osmand.net/">OsmAnd</a> en <a href="https://maps.me/">MAPS.ME</a>).
+Deze app moet het KMZ-bestandsformaat ondersteunen (alleen locaties en tijdstempels).
+In feite moet een app <i>ACTION_VIEW</i> ondersteunen met MIME <i>application/vnd.google-earth.kmz</i>.
+</string>
+
+    <string name="help_storage_pictures_title">Hoe slaat OpenTracks fotos op die als markers zijn genomen?</string>
+    <string name="help_storage_pictures_content">Deze worden opgeslagen in de interne opslag van de app (d.w.z. alleen toegankelijk binnen OpenTracks).</string>
+
+    <string name="help_track_export_title">Hoe kan ik opgenomen tracks exporteren/delen?</string>
+    <string name="help_track_export_content">
+Tracks kunnen worden geëxporteerd vanuit de instellingen als KMZ, KML of GPX.
+KMZ/KML alle gegevens; GPX alleen locaties.
+Tracks die worden gedeeld via het <i>share-icoontje</i> worden gedeeld als KMZ.</string>
+
+    <string name="help_data_google_play_services_title">Heeft OpenTracks Google Play Service nodig/gebruikt?</string>
+
+    <string name="help_recording_title">Hoe legt OpenTracks gegevens vast?</string>
+    <string name="help_recording_content">
+OpenTracks gebruikt de GPS-sensor van het apparaat om de locatie continu te registreren.
+Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid, hoogte), kan OpenTracks daar niets aan doen.</string>
+
+    <string name="help_data_storage_title">Hoe slaat OpenTracks sensorgegevens op?</string>
+    <string name="help_data_storage_content">
+ De sensorgegevens worden per opgenomen locatie opgeslagen.
+In termen van een hartslagsensor betekent dit dat slechts <i>een</i> hartslagmeting per locatie wordt opgeslagen.
+Als u stilstaat of binnenshuis bent, worden er geen sensorgegevens geregistreerd (maar wel getoond).</string>
+
+    <string name="help_gps_troubleshooting_title">OpenTracks neemt geen locaties op?</string>
+    <string name="help_gps_troubleshooting_content">
+Wat kun je doen?
+a) controleer of de GPS is ingeschakeld.
+b) het verbeteren van de GPS-ontvangst (bijv. naar buiten gaan),\n
+c) controleer of met <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app, en
+d) schakel stroombesparing uit.
+\n
+Als alles niet helpt, meldt u dan alstublieft een bug.</string>
+
+    <string name="help_support_title">Hoe kan ik OpenTracks ondersteunen?</string>
+    <string name="help_support_content">
+Je kunt...
+a) het woord verspreiden over OpenTracks, en...
+b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">voorstellen van functies</a>,\n
+c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">melding van bugs</a>,\n
+d) hulp bij de ontwikkeling van software.
+e) koop in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n
+f) doneert u, en
+g) doe wat je denkt dat OpenTracks helpt.</string>
+
+    <!-- Activity Type -->
     <string name="activity_type_airplane">vliegtuig</string>
     <string name="activity_type_atv">quad</string>
     <string name="activity_type_biking">fietsen</string>
@@ -66,6 +156,8 @@
     <string name="activity_type_walking">wandelen</string>
     <string name="activity_type_water_skiing">waterskiën</string>
     <string name="activity_type_wind_surfing">windsurfen</string>
+    <string name="app_not_installed_show_on_map">Installeer een app die de presentatie van kaartgegevens ondersteunt.</string>
+    <!-- Description -->
     <string name="description_activity_type">Type activiteit: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Gemiddeld verplaatsingstempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_moving_speed">Gemiddelde verplaatsingssnelheid: %1$.2f km/u (%2$.1f mi/u)</string>
@@ -93,6 +185,7 @@
     <string name="description_sensor_cadence">Cadans (tpm)</string>
     <string name="description_sensor_heart_rate">Hartslag (spm)</string>
     <string name="description_sensor_power">Vermogen (W)</string>
+    <string name="description_default_speed_or_pace">By activity type</string>
     <string name="description_speed_imperial">Snelheid (mi/u)</string>
     <string name="description_speed_metric">Snelheid (km/u)</string>
     <string name="description_time">Tijd</string>
@@ -100,22 +193,29 @@
     <string name="description_total_time">Totale tijd: %1$s</string>
     <string name="description_track_point">Punt</string>
     <string name="description_track_segment">Segment</string>
+    <!-- Export -->
     <string name="export_all_option">Alles als %1$s</string>
     <string name="export_all_title">Exporteren naar externe opslag</string>
+    <string name="export_with_photos">met fotos</string>
+    <string name="export_without_photos">zonder fotos</string>
     <string name="export_external_storage">Externe opslag</string>
     <string name="export_external_storage_error">%1$d van %2$s geëxporteerd naar %3$s</string>
     <string name="export_external_storage_option">als %1$s naar %2$s</string>
     <string name="export_external_storage_progress_message">Exporteren naar %1$s…</string>
     <string name="export_external_storage_success">%1$s geëxporteerd naar %2$s</string>
     <string name="export_title">Exporteren naar…</string>
+    <!-- External Storage -->
     <string name="external_storage_not_available">Externe opslag is niet beschikbaar</string>
     <string name="external_storage_not_writable">Kan niet schrijven naar externe opslag</string>
+    <string name="external_storage_not_readable">Externe opslag niet leesbaar</string>
+    <!-- Files -->
     <string name="files_few">%1$d bestanden</string>
     <string name="files_many">%1$d bestanden</string>
     <string name="files_one">1 bestand</string>
     <string name="files_other">%1$d bestanden</string>
     <string name="files_two">2 bestanden</string>
     <string name="files_zero">0 bestanden</string>
+    <!-- Generic -->
     <string name="generic_add">Toevoegen</string>
     <string name="generic_cancel">Annuleren</string>
     <string name="generic_delete_all_confirm_title">Alles verwijderen?</string>
@@ -134,6 +234,7 @@
     <string name="generic_success_title">Geslaagd</string>
     <string name="generic_tracks">Routes</string>
     <string name="generic_yes">Ja</string>
+    <!-- Gps -->
     <string name="gps_location_access">\'Locatietoegang\'</string>
     <string name="gps_disabled">GPS is niet ingeschakeld. Tik hier om naar %1$s te gaan. Druk op de knop \'Terug\' om terug te keren.</string>
     <string name="gps_disabled_location_mode">Selecteer de locatiemodus met hoge nauwkeurigheid. Tik hier om naar %1$s te gaan. Druk op de knop \'Terug\' om terug te keren.</string>
@@ -145,6 +246,7 @@
     <string name="gps_stopping">GPS stoppen</string>
     <string name="gps_wait_for_better_signal">Wachten op een beter GPS-signaal</string>
     <string name="gps_wait_for_signal">Wachten op GPS-signaal</string>
+    <!-- Image -->
     <string name="image_application">App</string>
     <string name="image_arrow">Pijl</string>
     <string name="image_marker">Markering</string>
@@ -155,6 +257,7 @@
     <string name="image_record">Opnemen</string>
     <string name="image_stop">Stoppen</string>
     <string name="image_track">Route</string>
+    <!-- Import -->
     <string name="import_error">%1$d van %2$s geïmporteerd uit %3$s</string>
     <string name="import_no_directory">%1$s bestaat niet</string>
     <string name="import_no_file">Er zijn geen bestanden om te importeren. Verbind uw apparaat met uw computer en plaats de bestanden die u wilt importeren in %1$s.</string>
@@ -163,9 +266,11 @@
     <string name="import_selection_option">Alle %1$s-bestanden</string>
     <string name="import_selection_title">Importeren uit externe opslag</string>
     <string name="import_success">%1$s geïmporteerd uit %2$s</string>
+    <!-- Marker -->
     <string name="marker_add_error">Kan geen markering invoegen. Er is geen GPS-signaal. Probeer het opnieuw.</string>
     <string name="marker_add_success">Markering is ingevoegd</string>
     <string name="marker_add_canceled">Geannuleerd, geen markering toegevoegd</string>
+    <string name="marker_add_photo_canceled">Geannuleerd, geen fotomarker toegevoegd</string>
     <string name="marker_delete_all_confirm_message">Alle markeringen voor deze route worden definitief verwijderd van het apparaat</string>
     <string name="marker_delete_one_confirm_message">De markering wordt definitief verwijderd van het apparaat</string>
     <string name="marker_delete_one_confirm_title">Markering verwijderen?</string>
@@ -175,10 +280,14 @@
     <string name="marker_name_format">Markering %1$d</string>
     <string name="marker_split_name_format">Splitsing %1$d</string>
     <string name="marker_title">%1$d van %2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">Sinds laatste splitsmarkering:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Type markering (bijv. waterval)</string>
     <string name="marker_edit_marker_type_hint">Type markering</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">U heeft geen markeringen</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">Statistieken</string>
     <string name="menu_delete">Verwijderen</string>
     <string name="menu_delete_all">Alles verwijderen</string>
@@ -192,6 +301,7 @@
     <string name="menu_import_all">Alles importeren</string>
     <string name="menu_insert_marker">Markering invoegen</string>
     <string name="menu_insert_photo">Foto invoegen</string>
+    <string name="menu_insert_gallery_img">Galerijafbeelding invoegen</string>
     <string name="menu_map">Kaart</string>
     <string name="menu_markers">Markeringen</string>
     <string name="menu_play">Afspelen</string>
@@ -206,12 +316,18 @@
     <string name="menu_stop_gps">GPS stoppen</string>
     <string name="menu_view_photo">Foto weergeven</string>
     <string name="menu_voice_frequency">Frequentie voor gesproken berichten</string>
+    <string name="menu_resume_track">Hervat spoor</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Opnameservice</string>
+    <!-- Permission -->
+    <string name="permission_gps_failed">Voor OpenTracks is toestemming nodig om GPS te gebruiken.</string>
+    <!-- Search -->
     <string name="search_global_description">Routes en markeringen</string>
     <string name="search_list_empty_message">Er zijn geen routes of markeringen gevonden die overeenkomen met uw zoekopdracht</string>
     <string name="search_list_marker_track_location">In route \'%1$s\'.</string>
     <string name="search_voice_prompt">Spreek de naam van een route of markering in</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">Accuniveau</string>
     <string name="sensor_state_cadence">Cadans</string>
     <string name="sensor_state_cadence_value">%1$d tpm</string>
@@ -224,12 +340,22 @@
     <string name="sensor_state_power">Vermogen</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_state_sending">Bezig met verzenden</string>
+    <string name="sensor_not_known">Sensor %1$s is onbekend. Controleer de instellingen.</string>
+    <string name="sensor_could_not_scan">Kon niet scannen naar Bluetooth-apparaten (fout %1$i).</string>
+    <string name="bluetooth_disabled">Schakel Bluetooth in.</string><!-- Settings -->
     <string name="settings_not_while_recording">Niet beschikbaar tijdens het opnemen van een route</string>
     <string name="settings_show">Weergeven</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">Geavanceerd</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Op afstand</string>
     <string name="settings_chart_by_time">Op tijd</string>
     <string name="settings_chart_x_axis">X-as</string>
+    <!-- Settings Recording -->
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Toon de statistieken op het slotscherm.</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">Toon tijdens de opname de statistieken zonder het apparaat te ontgrendelen.</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">Houd het scherm aan</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">Houd tijdens de opname het scherm aan.</string>
     <string name="settings_recording">Opname</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Een opname altijd hervatten nadat het apparaat opnieuw is opgestart</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Een opname nooit hervatten nadat het apparaat opnieuw is opgestart</string>
@@ -247,10 +373,13 @@
     <string name="settings_recording_track_name_date_local_option">Datum (lokaal)</string>
     <string name="settings_recording_track_name_number_option">Nummer</string>
     <string name="settings_recording_track_name_title">Standaardroutenaam</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">Opnieuw instellen</string>
     <string name="settings_reset_confirm_message">Alle instellingen worden teruggezet op de standaardwaarden.</string>
     <string name="settings_reset_confirm_title">Nu opnieuw instellen?</string>
     <string name="settings_reset_done">Voor alle instellingen zijn de standaardwaarden teruggezet</string>
+    <string name="settings_error_initial_values_restored">Sorry, maar er is een fout gemaakt. Alle instellingen zijn teruggezet naar de standaardwaarden.</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">Sensor</string>
     <string name="settings_sensor_ant_reset_bike_cadence_sensor">Cadans opnieuw instellen</string>
     <string name="settings_sensor_ant_reset_combined_bike_sensor">Cad/snel opnieuw instellen</string>
@@ -260,17 +389,25 @@
     <string name="settings_sensor_bluetooth_pairing">Koppelen via Bluetooth</string>
     <string name="settings_sensor_bluetooth_pairing_summary">Bluetooth-instellingen voor Android openen om een sensor te koppelen</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth-sensor</string>
+    <string name="settings_sensor_connecting">Verbonden met %1$s</string>
     <string name="settings_sensor_connected">Verbonden met %1$s</string>
+    <string name="settings_sensor_disconnected">Ontkoppeld van %1$s</string>
+
+    <string name="settings_sensor_wheel_circumference">Wielmaat (ETRTO)</string>
+
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Breedte-/lengtegraad</string>
     <string name="settings_stats_rate_title">Voorkeursverhouding</string>
     <string name="settings_stats_units_imperial">Engels (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrisch (km, m)</string>
     <string name="settings_stats_units_title">Voorkeurseenheden</string>
+    <!-- Share Track -->
     <string name="share_track_emails_hint">E-mailadressen</string>
     <string name="share_track_picker_title">App selecteren</string>
     <string name="share_track_share_file">Routebestand delen</string>
     <string name="share_track_share_file_body">Ik denk dat u misschien wel geïnteresseerd bent in deze route.\n\nAls u deze route wilt weergeven, kunt u Google Earth of andere kaartsoftware gebruiken.\n\n%1$s</string>
     <string name="share_track_subject">Ik wil graag een route met u delen</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">Gem. verplaatsingstempo</string>
     <string name="stats_average_moving_speed">Gem. verplaatsingssnelheid</string>
     <string name="stats_average_pace">Gem. tempo</string>
@@ -289,28 +426,39 @@
     <string name="stats_speed">Snelheid</string>
     <string name="stats_distance">Afstand</string>
     <string name="stats_total_time">Totale tijd</string>
+    <!-- Track -->
     <string name="track_name_format">Route %1$d</string>
     <string name="track_record_notification">Uw route wordt opgenomen…</string>
+    <string name="track_recording_notification_accuracy">Locatie nauwkeurigheid: %1$s</string>
     <string name="track_markers">Markeringen voor %1$s</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">De route en de bijbehorende markeringen worden definitief verwijderd van het apparaat.</string>
     <string name="track_delete_one_confirm_title">Route verwijderen?</string>
     <string name="track_delete_multiple_confirm_message">De geselecteerde routes en de bijbehorende markeringen worden definitief verwijderd van het apparaat.</string>
     <string name="track_delete_progress_message">Verwijderen…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">Grafiek</string>
     <string name="track_detail_stats_tab">Statistieken</string>
+    <string name="track_detail_record_success">Nieuwe route wordt nu opgenomen</string>
+    <string name="track_detail_resume_success">Nu hervatting van de baan</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">Type activiteit (bijv. trektocht)</string>
     <string name="track_edit_activity_type_hint">Type activiteit</string>
     <string name="track_edit_new_track_title">Nieuwe route</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">Neem uw volgende avontuur hier op</string>
     <string name="track_list_record_error">Kan opname niet starten. Er is geen GPS-signaal. Probeer het opnieuw.</string>
     <string name="track_list_record_success">Nieuwe route wordt nu opgenomen</string>
+    <!-- Track Widget -->
     <string name="track_widget_config_title">Widget-items configureren</string>
+    <!-- Tracks -->
     <string name="tracks_few">%1$d routes</string>
     <string name="tracks_many">%1$d routes</string>
     <string name="tracks_one">1 route</string>
     <string name="tracks_other">%1$d routes</string>
     <string name="tracks_two">2 routes</string>
     <string name="tracks_zero">0 routes</string>
+    <!-- Unit -->
     <string name="unit_feet">ft</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/h</string>
@@ -319,6 +467,7 @@
     <string name="unit_mile_per_hour">mi/h</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/mi</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">Aanpassen voor nauwkeurigheid</string>
     <string name="value_adapt_battery_life">Aanpassen voor resterende accutijd</string>
     <string name="value_always">Altijd</string>
@@ -348,6 +497,7 @@
     <string name="value_off">Uit</string>
     <string name="value_smallest">Kleinste</string>
     <string name="value_smallest_recommended">Kleinste (aanbevolen)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d uur</string>
     <string name="voice_hours_many">%1$d uur</string>
     <string name="voice_hours_one">1 uur</string>
@@ -394,6 +544,7 @@
     <string name="voice_total_distance_miles_two">totale afstand 2 mijl</string>
     <string name="voice_total_distance_miles_zero">totale afstand 0 mijl</string>
     <string name="voice_total_distance_zero">Totale afstand van OpenTracks is nul.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Pinautomaat</string>
     <string name="waypoint_type_bank">bank</string>
     <string name="waypoint_type_bar">bar</string>
@@ -445,4 +596,7 @@
     <string name="waypoint_type_waterfall">waterval</string>
     <string name="waypoint_type_water_fountain">waterfontein</string>
     <string name="waypoint_type_waypoint">routepunt</string>
+    <!-- Share image -->
+    <string name="share_image_subject">Ik wil graag een beeld met u delen</string>
+    <string name="share_image_body">Ik denk dat je misschien geïnteresseerd bent in dit beeld.</string>
 </resources>
