@@ -85,7 +85,7 @@ public class DialogUtils {
      * @param formatArgs       the format arguments for the message id
      */
     private static ProgressDialog createProgressDialog(boolean spinner, final Context context, int messageId, DialogInterface.OnCancelListener onCancelListener, Object... formatArgs) {
-        final ProgressDialog progressDialog = new ProgressDialog(context);
+        final ProgressDialog progressDialog = new ProgressDialog(context, R.style.ThemeCustomNotTransparent);
         progressDialog.setCancelable(true);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setIcon(R.drawable.ic_dialog_info_24dp);
