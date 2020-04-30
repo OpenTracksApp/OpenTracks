@@ -205,7 +205,8 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             if (!PreferencesUtils.isRecording(recordingTrackId)) {
                 // Not recording -> Recording
                 updateMenuItems(false, true);
-                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class);
+                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
+                        .putExtra(TrackDetailActivity.EXTRA_RECORDING_REQUEST, true);
                 startActivity(newIntent);
             } else if (recordingTrackPaused) {
                 // Paused -> Resume
@@ -351,9 +352,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
         searchMenuItem = menu.findItem(R.id.track_list_search);
         ActivityUtils.configureSearchWidget(this, searchMenuItem, trackController);
-
-        // Workaround for https://github.com/OpenTracksApp/OpenTracks/issues/200
-        //startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
+        startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
 
         return super.onCreateOptionsMenu(menu);
     }

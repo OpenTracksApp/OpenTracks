@@ -62,6 +62,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
 
     public static final String EXTRA_TRACK_ID = "track_id";
     public static final String EXTRA_MARKER_ID = "marker_id";
+    public static final String EXTRA_RECORDING_REQUEST = "request_recording";
 
     private static final String TAG = TrackDetailActivity.class.getSimpleName();
 
@@ -77,6 +78,8 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
 
     // From intent
     private long trackId;
+
+    private boolean isRecordingRequest = false;
 
     // Preferences
     private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
@@ -99,6 +102,9 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                     Log.d(TAG, "could not get TrackRecordingService");
                     return;
                 }
+                if (!isRecordingRequest) {
+                    return;
+                }
 
                 // Starts or resumes a track.
                 int msg;
@@ -119,6 +125,8 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 trackDataHub.loadTrack(trackId);
                 trackController.update(true, false);
                 trackController.onResume(true, recordingTrackPaused);
+
+                isRecordingRequest = false;
             }
         }
     };
@@ -384,6 +392,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 deleteTracks(new long[]{trackId});
                 return true;
             case R.id.track_detail_resume_track:
+                isRecordingRequest = true;
                 startRecording();
                 return true;
             case R.id.track_detail_settings:
@@ -419,6 +428,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
 
     private void handleIntent(Intent intent) {
         trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
+        isRecordingRequest = intent.getBooleanExtra(EXTRA_RECORDING_REQUEST, false);
         long markerId = intent.getLongExtra(EXTRA_MARKER_ID, -1L);
         if (markerId != -1L) {
             // Use the trackId from the marker
