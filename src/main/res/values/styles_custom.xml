@@ -9,6 +9,7 @@
     <style name="ProgressBarCustom" parent="android:Widget.Holo.ProgressBar.Horizontal">
         <item name="android:progressTint">@color/holo_orange_dark</item>
         <item name="android:indeterminateTint">@color/holo_orange_dark</item>
+        <item name="android:indeterminateTintMode">src_in</item>
     </style>
 
     <style name="SpinnerCustom" parent="android:Widget.Holo.Spinner">
