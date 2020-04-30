@@ -29,7 +29,7 @@ public class TrackStatistics {
     // The min and max elevation (meters) seen on this track.
     private final ExtremityMonitor elevationExtremities = new ExtremityMonitor();
 
-    // The track start time. This is the system time, might not match the GPs time.
+    // The track start time. This is the system time, might not match the GPS time.
     private long startTime_ms = -1L;
     // The track stop time. This is the system time, might not match the GPS time.
     private long stopTime_ms = -1L;

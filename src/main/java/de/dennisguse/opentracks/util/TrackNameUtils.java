@@ -21,9 +21,11 @@ import android.content.Context;
 import androidx.annotation.VisibleForTesting;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Track;
 
 /**
  * Utilities for track name.
@@ -35,6 +37,7 @@ public class TrackNameUtils {
     //TODO Could be available in java.time?
     @VisibleForTesting
     static final String ISO_8601_FORMAT = "yyyy-MM-dd HH:mm";
+    static final String ISO_8601_COMPACT_FORMAT = "yyyyMMddHHmmss";
 
     private TrackNameUtils() {
     }
@@ -56,5 +59,21 @@ public class TrackNameUtils {
         } else {
             return context.getString(R.string.track_name_format, trackId);
         }
+    }
+
+    /**
+     * Gets the prefix to be used for the exported track name.
+     * It uses the track's start time in ISO 8601 compact format.
+     * If track's start time is wrong or it cannot get the track start time then it uses now time.
+     *
+     * @param track The track.
+     * @return the prefix to be used.
+     */
+    public static String getPrefixExportTrack(Track track) {
+        if (track.getTrackStatistics() != null && track.getTrackStatistics().getStartTime_ms() > 0) {
+            return new SimpleDateFormat(ISO_8601_COMPACT_FORMAT).format(track.getTrackStatistics().getStartTime_ms());
+        }
+
+        return new SimpleDateFormat(ISO_8601_COMPACT_FORMAT).format(new Date());
     }
 }
