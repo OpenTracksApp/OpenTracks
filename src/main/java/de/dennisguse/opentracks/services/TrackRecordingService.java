@@ -461,12 +461,6 @@ public class TrackRecordingService extends Service {
                 // Update the recording track time
                 updateTrackTotalTime(track);
             }
-
-            String trackName = TrackNameUtils.getTrackName(this, trackId, track.getTrackStatistics().getStartTime_ms());
-            if (trackName != null && !trackName.equals(track.getName())) {
-                track.setName(trackName);
-                contentProviderUtils.updateTrack(track);
-            }
         }
         endRecording(true);
     }
