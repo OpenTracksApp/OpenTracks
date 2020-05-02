@@ -32,6 +32,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import de.dennisguse.opentracks.BuildConfig;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
 /**
  * Utilities for dealing with files.
@@ -299,5 +301,44 @@ public class FileUtils {
         } else if (file != null && file.isFile()) {
             file.delete();
         }
+    }
+
+    /**
+     * Build the DocumentFile where track will be exported.
+     * The DocumentFile can be a new one or an existing one (overwriting).
+     * The file's name will be a prefix follow by the track name follow by a suffix.
+     *
+     * @param track           the Track object needed to build the name.
+     * @param directory       the directory where file will be exported.
+     * @param trackFileFormat the format of the file.
+     *
+     * @return the DocumentFile where track will be exported.
+     */
+    public static DocumentFile buildExportingFile(Track track, DocumentFile directory, TrackFileFormat trackFileFormat) {
+        String prefix = TrackNameUtils.getPrefixExportTrack(track) + "-";
+        String suffix = "." + trackFileFormat.getExtension();
+        String fileName = prefix + track.getName();
+
+        // If there already is a file name that starts with the same prefix and ends with the same suffix then overwrites it.
+        DocumentFile file = null;
+        for (DocumentFile documentFile : directory.listFiles()) {
+            if (documentFile.isFile()) {
+                if (documentFile.getName().equals(fileName)) {
+                    // Overwriting.
+                    file = documentFile;
+                    break;
+                } else if (documentFile.getName().startsWith(prefix) && documentFile.getName().endsWith(suffix)) {
+                    // Deletes old.
+                    documentFile.delete();
+                    break;
+                }
+            }
+        }
+        if (file == null) {
+            // New file.
+            file = directory.createFile(trackFileFormat.getMimeType(), fileName);
+        }
+
+        return file;
     }
 }

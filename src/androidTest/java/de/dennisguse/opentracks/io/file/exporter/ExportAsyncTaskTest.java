@@ -10,6 +10,8 @@ import org.junit.Assert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
 
 import java.io.File;
@@ -32,6 +34,13 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.TrackNameUtils;
 
+/**
+ * Tests for the export async task.
+ *
+ * //TODO ATTENTION: This tests deletes all stored tracks in the database.
+ * So, if it is executed on a real device, data might be lost.
+ */
+@RunWith(JUnit4.class)
 public class ExportAsyncTaskTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
@@ -74,15 +83,11 @@ public class ExportAsyncTaskTest {
 
     @After
     public void tearDown() {
-        for (int i = 0; i < trackIdList.length; i++) {
-            contentProviderUtils.deleteAllTracks(context);
-            contentProviderUtils.deleteTrack(context, trackIdList[i]);
-        }
-
+        contentProviderUtils.deleteAllTracks(context);
         FileUtils.deleteDirectoryRecurse(exportDirectoryFile);
     }
 
-    private String addOneDay(String dateTimeStr) throws ParseException {
+    private static String addOneDay(String dateTimeStr) throws ParseException {
         Calendar c = Calendar.getInstance();
         c.setTime(DATE_FORMAT.parse(dateTimeStr));
         c.add(Calendar.DATE, 1);

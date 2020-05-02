@@ -32,8 +32,8 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
-import de.dennisguse.opentracks.util.TrackNameUtils;
 
 /**
  * Async Task to save tracks to the external storage.
@@ -131,7 +131,7 @@ class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         };
 
         TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, new Track[]{track}, trackExporterListener);
-        DocumentFile file = buildFile(track);
+        DocumentFile file = FileUtils.buildExportingFile(track, directory, trackFileFormat);
 
         try (OutputStream outputStream = context.getContentResolver().openOutputStream(file.getUri())) {
             if (trackExporter.writeTrack(context, outputStream)) {
@@ -150,42 +150,6 @@ class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
             Log.e(TAG, "Unable to close file output stream", e);
             return false;
         }
-    }
-
-    /**
-     * Build the DocumentFile where track will be exported.
-     * The DocumentFile can be a new one or an existing one (overwriting).
-     * The file's name will be a prefix follow by the track name follow by a suffix.
-     *
-     * @param track the Track object needed to build the name.
-     * @return the DocumentFile where track will be exported.
-     */
-    private DocumentFile buildFile(Track track) {
-        String prefix = TrackNameUtils.getPrefixExportTrack(track) + "-";
-        String suffix = "." + trackFileFormat.getExtension();
-        String fileName = prefix + track.getName();
-
-        // If there already is a file name that starts with the same prefix and ends with the same suffix then overwrites it.
-        DocumentFile file = null;
-        for (DocumentFile documentFile : directory.listFiles()) {
-            if (documentFile.isFile()) {
-                if (documentFile.getName().equals(fileName)) {
-                    // Overwriting.
-                    file = documentFile;
-                    break;
-                } else if (documentFile.getName().startsWith(prefix) && documentFile.getName().endsWith(suffix)) {
-                    // Deletes old.
-                    documentFile.delete();
-                    break;
-                }
-            }
-        }
-        if (file == null) {
-            // New file.
-            file = directory.createFile(trackFileFormat.getMimeType(), fileName);
-        }
-
-        return file;
     }
 
     /**
