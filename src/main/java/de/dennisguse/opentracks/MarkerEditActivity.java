@@ -315,6 +315,6 @@ public class MarkerEditActivity extends AbstractActivity {
         waypoint.setDescription(waypointDescription.getText().toString());
         waypoint.setPhotoUrl(photoUri != null ? photoUri.toString() : null);
 
-        new ContentProviderUtils(this).updateWaypoint(waypoint);
+        new ContentProviderUtils(this).updateWaypoint(this, waypoint);
     }
 }

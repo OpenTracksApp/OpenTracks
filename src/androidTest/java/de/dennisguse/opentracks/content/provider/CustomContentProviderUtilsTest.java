@@ -62,6 +62,7 @@ public class CustomContentProviderUtilsTest {
     private static final String MOCK_DESC = "Mock Next Waypoint Desc!";
     private static final String TEST_DESC = "Test Desc!";
     private static final String TEST_DESC_NEW = "Test Desc new!";
+    private static final String TEST_NAME_NEW = "Test Name new!";
 
     private final Context context = ApplicationProvider.getApplicationContext();
     private ContentProviderUtils contentProviderUtils;
@@ -625,7 +626,7 @@ public class CustomContentProviderUtilsTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#updateWaypoint(Waypoint)}.
+     * Tests the method {@link ContentProviderUtils#updateWaypoint(Context, Waypoint)}.
      */
     @Test
     public void testUpdateWaypoint() {
@@ -641,9 +642,118 @@ public class CustomContentProviderUtilsTest {
         // Update
         waypoint = contentProviderUtils.getWaypoint(waypointId);
         waypoint.setDescription(TEST_DESC_NEW);
-        contentProviderUtils.updateWaypoint(waypoint);
+        contentProviderUtils.updateWaypoint(context, waypoint);
 
         Assert.assertEquals(TEST_DESC_NEW, contentProviderUtils.getWaypoint(waypointId).getDescription());
+    }
+
+    /**
+     * Tests the method {@link ContentProviderUtils#updateWaypoint(Context, Waypoint)}.
+     */
+    @Test
+    public void testUpdateWaypoint_withPhoto() throws IOException {
+        // tests after update waypoint with photo the photo remains in the storage.
+
+        long trackId = System.currentTimeMillis();
+        TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
+
+        // Insert at first.
+        TrackPoint trackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
+        Waypoint waypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
+        waypoint.setDescription(TEST_DESC);
+        waypoint.setTrackId(trackId);
+        long waypointId = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint));
+
+        File dir = new File(FileUtils.getPhotoDir(context), "" + trackId);
+        Assert.assertTrue(dir.exists());
+        Assert.assertTrue(dir.isDirectory());
+        Assert.assertEquals(1, dir.list().length);
+
+        // Update
+        waypoint = contentProviderUtils.getWaypoint(waypointId);
+        waypoint.setName(TEST_NAME_NEW);
+        waypoint.setDescription(TEST_DESC_NEW);
+        contentProviderUtils.updateWaypoint(context, waypoint);
+
+        Assert.assertEquals(TEST_NAME_NEW, contentProviderUtils.getWaypoint(waypointId).getName());
+        Assert.assertEquals(TEST_DESC_NEW, contentProviderUtils.getWaypoint(waypointId).getDescription());
+        Assert.assertTrue(waypoint.hasPhoto());
+        Assert.assertTrue(dir.exists());
+        Assert.assertTrue(dir.isDirectory());
+        Assert.assertEquals(1, dir.list().length);
+    }
+
+    /**
+     * Tests the method {@link ContentProviderUtils#updateWaypoint(Context, Waypoint)}.
+     */
+    @Test
+    public void testUpdateWaypoint_delPhotoAndDir() throws IOException {
+        // tests after update waypoint if user deletes the photo then file photo is deleted from the storage. Also empty directory is deleted.
+
+        long trackId = System.currentTimeMillis();
+        TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
+
+        // Insert at first.
+        TrackPoint trackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
+        Waypoint waypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
+        waypoint.setDescription(TEST_DESC);
+        waypoint.setTrackId(trackId);
+        long waypointId = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint));
+
+        File dir = new File(FileUtils.getPhotoDir(context), "" + trackId);
+        Assert.assertTrue(dir.exists());
+        Assert.assertTrue(dir.isDirectory());
+        Assert.assertEquals(1, dir.list().length);
+
+        // Update
+        waypoint = contentProviderUtils.getWaypoint(waypointId);
+        waypoint.setName(TEST_NAME_NEW);
+        waypoint.setDescription(TEST_DESC_NEW);
+        waypoint.setPhotoUrl(null);
+        contentProviderUtils.updateWaypoint(context, waypoint);
+
+        Assert.assertEquals(TEST_NAME_NEW, contentProviderUtils.getWaypoint(waypointId).getName());
+        Assert.assertEquals(TEST_DESC_NEW, contentProviderUtils.getWaypoint(waypointId).getDescription());
+        Assert.assertFalse(waypoint.hasPhoto());
+        Assert.assertFalse(dir.exists());
+    }
+
+    /**
+     * Tests the method {@link ContentProviderUtils#updateWaypoint(Context, Waypoint)}.
+     */
+    @Test
+    public void testUpdateWaypoint_delPhotoNotDir() throws IOException {
+        // tests after update waypoint if user deletes the photo then file photo is deleted from the storage. Directory remains if there are more photos from other waypoints.
+
+        long trackId = System.currentTimeMillis();
+        TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
+
+        // Insert two waypoints with photos.
+        TrackPoint trackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
+        Waypoint waypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
+        waypoint.setDescription(TEST_DESC);
+        waypoint.setTrackId(trackId);
+        Waypoint otherWaypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
+        otherWaypoint.setDescription(TEST_DESC);
+        otherWaypoint.setTrackId(trackId);
+        long waypointId = ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint));
+        long otherWaypointId = ContentUris.parseId(contentProviderUtils.insertWaypoint(otherWaypoint));
+
+        File dir = new File(FileUtils.getPhotoDir(context), "" + trackId);
+        Assert.assertTrue(dir.exists());
+        Assert.assertTrue(dir.isDirectory());
+        Assert.assertEquals(2, dir.list().length);
+
+        // Update one waypoint deleting photo.
+        waypoint = contentProviderUtils.getWaypoint(waypointId);
+        waypoint.setPhotoUrl(null);
+        contentProviderUtils.updateWaypoint(context, waypoint);
+
+        Assert.assertEquals(TEST_DESC, contentProviderUtils.getWaypoint(waypointId).getDescription());
+        Assert.assertFalse(waypoint.hasPhoto());
+        Assert.assertTrue(dir.exists());
+        Assert.assertTrue(dir.isDirectory());
+        Assert.assertEquals(1, dir.list().length);
     }
 
     /**
