@@ -382,17 +382,7 @@ public class ContentProviderUtils {
 
     public void deleteWaypoint(Context context, long waypointId) {
         final Waypoint waypoint = getWaypoint(waypointId);
-        if (waypoint != null && waypoint.hasPhoto()) {
-            Uri uri = waypoint.getPhotoURI();
-            File file = FileUtils.getPhotoFileIfExists(context, waypoint.getTrackId(), uri);
-            if (file.exists()) {
-                File parent = file.getParentFile();
-                file.delete();
-                if (parent.listFiles().length == 0) {
-                    parent.delete();
-                }
-            }
-        }
+        deleteWaypointPhoto(context, waypoint);
         contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns._ID + "=?", new String[]{Long.toString(waypointId)});
     }
 
@@ -515,13 +505,37 @@ public class ContentProviderUtils {
     }
 
     /**
+     * Delete waypoint's photo if any.
+     *
+     * @param context  the context object.
+     * @param waypoint the waypoint object.
+     */
+    private void deleteWaypointPhoto(Context context, Waypoint waypoint) {
+        if (waypoint != null && waypoint.hasPhoto()) {
+            Uri uri = waypoint.getPhotoURI();
+            File file = FileUtils.getPhotoFileIfExists(context, waypoint.getTrackId(), uri);
+            if (file.exists()) {
+                File parent = file.getParentFile();
+                file.delete();
+                if (parent.listFiles().length == 0) {
+                    parent.delete();
+                }
+            }
+        }
+    }
+
+    /**
      * Updates a waypoint.
      * Returns true if successful.
      *
-     * @param waypoint the waypoint
+     * @param updatedWaypoint the waypoint with updated data.
      */
-    public boolean updateWaypoint(Waypoint waypoint) {
-        int rows = contentResolver.update(WaypointsColumns.CONTENT_URI, createContentValues(waypoint), WaypointsColumns._ID + "=?", new String[]{Long.toString(waypoint.getId())});
+    public boolean updateWaypoint(Context context, Waypoint updatedWaypoint) {
+        Waypoint savedWaypoint = getWaypoint(updatedWaypoint.getId());
+        if (!updatedWaypoint.hasPhoto()) {
+            deleteWaypointPhoto(context, savedWaypoint);
+        }
+        int rows = contentResolver.update(WaypointsColumns.CONTENT_URI, createContentValues(updatedWaypoint), WaypointsColumns._ID + "=?", new String[]{Long.toString(updatedWaypoint.getId())});
         return rows == 1;
     }
 
