@@ -204,16 +204,12 @@ limitations under the License.
     <string name="export_all_title">Export to external storage</string>
     <string name="export_with_photos">with photos</string>
     <string name="export_without_photos">without photos</string>
-    <string name="export_external_storage">External storage</string>
-    <string name="export_external_storage_error">Exported %1$d of %2$s to %3$s</string>
-    <string name="export_external_storage_option">as %1$s to %2$s</string>
-    <string name="export_external_storage_progress_message">Exporting to %1$s&#8230;</string>
-    <string name="export_external_storage_success">Exported %1$s to %2$s</string>
+    <string name="export_error">Exported %1$d of %2$s to %3$s</string>
+    <string name="export_option">as %1$s to %2$s</string>
+    <string name="export_progress_message">Exporting to %1$s&#8230;</string>
+    <string name="export_success">Exported %1$s to %2$s</string>
     <string name="export_title">Export to&#8230;</string>
     <!-- External Storage -->
-    <string name="external_storage_not_available">External storage not available</string>
-    <string name="external_storage_not_writable">External storage not writable</string>
-    <string name="external_storage_not_readable">External storage not readable</string>
     <!-- Files -->
     <string name="files_few">%1$d files</string>
     <string name="files_many">%1$d files</string>

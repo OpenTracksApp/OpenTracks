@@ -197,16 +197,12 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="export_all_title">In externen Speicher exportieren</string>
     <string name="export_with_photos">mit Fotos</string>
     <string name="export_without_photos">ohne Fotos</string>
-    <string name="export_external_storage">Externer Speicher</string>
-    <string name="export_external_storage_error">%1$d von %2$s in %3$s exportiert</string>
-    <string name="export_external_storage_option">als %1$s in %2$s</string>
-    <string name="export_external_storage_progress_message">In %1$s exportieren…</string>
-    <string name="export_external_storage_success">%1$s in %2$s exportiert</string>
+    <string name="export_error">%1$d von %2$s in %3$s exportiert</string>
+    <string name="export_option">als %1$s in %2$s</string>
+    <string name="export_progress_message">In %1$s exportieren…</string>
+    <string name="export_success">%1$s in %2$s exportiert</string>
     <string name="export_title">Exportieren in…</string>
     <!-- External Storage -->
-    <string name="external_storage_not_available">Externer Speicher ist nicht verfügbar.</string>
-    <string name="external_storage_not_writable">Externer Speicher ist nicht beschreibbar.</string>
-    <string name="external_storage_not_readable">Externer Speicher nicht lesbar</string>
     <!-- Files -->
     <string name="files_few">%1$d Dateien</string>
     <string name="files_many">%1$d Dateien</string>

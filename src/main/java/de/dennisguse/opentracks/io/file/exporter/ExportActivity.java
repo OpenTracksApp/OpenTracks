@@ -24,7 +24,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.documentfile.provider.DocumentFile;
@@ -43,7 +42,7 @@ import de.dennisguse.opentracks.util.FileUtils;
  */
 public class ExportActivity extends FragmentActivity implements FileTypeDialogFragment.FileTypeCaller {
 
-    private static final int EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 6;
+    private static final int DIRECTORY_PICKER_REQUEST_CODE = 6;
 
     private static final int DIALOG_PROGRESS_ID = 0;
     private static final int DIALOG_RESULT_ID = 1;
@@ -64,18 +63,17 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
         intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
 
-        startActivityForResult(intent, EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
+        startActivityForResult(intent, DIRECTORY_PICKER_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent resultData) {
         super.onActivityResult(requestCode, resultCode, resultData);
-        if (requestCode == EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
+        if (requestCode == DIRECTORY_PICKER_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 directoryUri = resultData.getData();
                 fileTypeDialogStart();
             } else {
-                Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
                 finish();
             }
         }
@@ -108,7 +106,7 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
         switch (id) {
             case DIALOG_PROGRESS_ID:
                 progressDialog = DialogUtils.createHorizontalProgressDialog(this,
-                        R.string.export_external_storage_progress_message,
+                        R.string.export_progress_message,
                         new DialogInterface.OnCancelListener() {
                             @Override
                             public void onCancel(DialogInterface dialog) {
@@ -128,11 +126,11 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
                     iconId = R.drawable.ic_dialog_success_24dp;
                     titleId = R.string.generic_success_title;
                     message = getString(
-                            R.string.export_external_storage_success, totalTracks, directoryDisplayName);
+                            R.string.export_success, totalTracks, directoryDisplayName);
                 } else {
                     iconId = R.drawable.ic_dialog_error_24dp;
                     titleId = R.string.generic_error_title;
-                    message = getString(R.string.export_external_storage_error, processedTrackCount, totalTracks, directoryDisplayName);
+                    message = getString(R.string.export_error, processedTrackCount, totalTracks, directoryDisplayName);
                 }
                 AlertDialog.Builder builder = new AlertDialog.Builder(this).setCancelable(true)
                         .setIcon(iconId).setMessage(message)

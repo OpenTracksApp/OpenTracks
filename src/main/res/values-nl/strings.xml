@@ -198,16 +198,12 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="export_all_title">Exporteren naar externe opslag</string>
     <string name="export_with_photos">met fotos</string>
     <string name="export_without_photos">zonder fotos</string>
-    <string name="export_external_storage">Externe opslag</string>
-    <string name="export_external_storage_error">%1$d van %2$s geëxporteerd naar %3$s</string>
-    <string name="export_external_storage_option">als %1$s naar %2$s</string>
-    <string name="export_external_storage_progress_message">Exporteren naar %1$s…</string>
-    <string name="export_external_storage_success">%1$s geëxporteerd naar %2$s</string>
+    <string name="export_error">%1$d van %2$s geëxporteerd naar %3$s</string>
+    <string name="export_option">als %1$s naar %2$s</string>
+    <string name="export_progress_message">Exporteren naar %1$s…</string>
+    <string name="export_success">%1$s geëxporteerd naar %2$s</string>
     <string name="export_title">Exporteren naar…</string>
     <!-- External Storage -->
-    <string name="external_storage_not_available">Externe opslag is niet beschikbaar</string>
-    <string name="external_storage_not_writable">Kan niet schrijven naar externe opslag</string>
-    <string name="external_storage_not_readable">Externe opslag niet leesbaar</string>
     <!-- Files -->
     <string name="files_few">%1$d bestanden</string>
     <string name="files_many">%1$d bestanden</string>

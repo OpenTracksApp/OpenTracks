@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks.io.file.importer;
 
-import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.PowerManager.WakeLock;
@@ -46,39 +45,23 @@ class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     private static final String TAG = ImportAsyncTask.class.getSimpleName();
     private final TrackFileFormat trackFileFormat;
     private final DocumentFile directory;
-    // TODO Can be removed, or?
-    private Context context;
+
     // TODO Use weak reference
     private ImportActivity importActivity;
     private WakeLock wakeLock;
 
-    // true if the AsyncTask has completed
-    private boolean completed;
-
     private int importTrackCount;
-
     private int totalTrackCount;
+    private long lastSuccessfulTrackId;
 
-    // the last successfully imported track id
-    private long trackId;
-
-    /**
-     * Creates an AsyncTask.
-     *
-     * @param importActivity  the activity currently associated with this AsyncTask
-     * @param trackFileFormat the track file format
-     * @param directory            path to import GPX files
-     */
     public ImportAsyncTask(ImportActivity importActivity, TrackFileFormat trackFileFormat, DocumentFile directory) {
         this.importActivity = importActivity;
         this.trackFileFormat = trackFileFormat;
         this.directory = directory;
-        context = importActivity.getApplicationContext();
 
-        completed = false;
         importTrackCount = 0;
         totalTrackCount = 0;
-        trackId = -1L;
+        lastSuccessfulTrackId = -1L;
     }
 
     @Override
@@ -90,8 +73,6 @@ class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     /**
      * Gets a list of files.
-     * If importAll is true, returns a list of the files under the path directory.
-     * If importAll is false, returns a list containing just the path file.
      */
     private static List<DocumentFile> getFiles(DocumentFile file, TrackFileFormat trackFileFormat) {
         List<DocumentFile> files = new ArrayList<>();
@@ -119,7 +100,6 @@ class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean result) {
-        completed = true;
         if (importActivity != null) {
             importActivity.onAsyncTaskCompleted(importTrackCount, totalTrackCount);
         }
@@ -127,8 +107,6 @@ class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected void onCancelled() {
-        context = null;
-        completed = true;
         if (importActivity != null) {
             importActivity.onAsyncTaskCompleted(importTrackCount, totalTrackCount);
             importActivity = null;
@@ -190,9 +168,9 @@ class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
             }
         }
 
-        try (InputStream inputStream = context.getContentResolver().openInputStream(file.getUri())) {
-            trackId = trackImporter.importFile(inputStream);
-            return trackId != -1L;
+        try (InputStream inputStream = importActivity.getContentResolver().openInputStream(file.getUri())) {
+            lastSuccessfulTrackId = trackImporter.importFile(inputStream);
+            return lastSuccessfulTrackId != -1L;
         } catch (IOException e) {
             Log.e(TAG, "Unable to import file", e);
             return false;
