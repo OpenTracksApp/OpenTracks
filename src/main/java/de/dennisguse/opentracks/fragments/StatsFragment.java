@@ -40,6 +40,8 @@ import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
+import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
@@ -59,15 +61,14 @@ import de.dennisguse.opentracks.util.UnitConversions;
  */
 public class StatsFragment extends Fragment implements TrackDataListener {
 
-    private static final String STATS_FRAGMENT_TAG = StatsFragment.class.getSimpleName();
+    private static final String TAG = StatsFragment.class.getSimpleName();
 
     private static final long UI_UPDATE_INTERVAL = UnitConversions.ONE_SECOND_MS;
 
     private TrackDataHub trackDataHub;
     private Handler handlerUpdateUI;
 
-    //TODO Initialize immediately and remove in onDestroy()
-    private TrackRecordingServiceConnection trackRecordingServiceConnection;
+    private final TrackRecordingServiceConnection trackRecordingServiceConnection = new TrackRecordingServiceConnection();
 
     private TrackPoint lastTrackPoint = null;
     private TrackStatistics lastTrackStatistics = null;
@@ -96,9 +97,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                 if (PreferencesUtils.getRecordingTrackId(getContext()) != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
                     // A recording track id has been set -> Resumes track and starts timer.
                     resumeTrackDataHub();
-                    if (trackRecordingServiceConnection == null) {
-                        trackRecordingServiceConnection = new TrackRecordingServiceConnection(null);
-                    }
                     trackRecordingServiceConnection.startConnection(getContext());
 
                     handlerUpdateUI.post(updateUIeachSecond);
@@ -248,7 +246,6 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         resumeTrackDataHub();
         PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
 
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(null);
         trackRecordingServiceConnection.startConnection(getContext());
 
         handlerUpdateUI.post(updateUIeachSecond);
@@ -266,10 +263,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     @Override
     public void onStop() {
         super.onStop();
-        if (trackRecordingServiceConnection != null) {
-            trackRecordingServiceConnection.unbind(getContext());
-        }
-        trackRecordingServiceConnection = null;
+        trackRecordingServiceConnection.unbind(getContext());
     }
 
     @Override
@@ -442,7 +436,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
         SensorDataSet sensorDataSet = null;
         if (trackRecordingService == null) {
-            Log.d(STATS_FRAGMENT_TAG, "Cannot get the track recording service.");
+            Log.d(TAG, "Cannot get the track recording service.");
         } else {
             sensorDataSet = trackRecordingService.getSensorData();
         }
@@ -463,9 +457,11 @@ public class StatsFragment extends Fragment implements TrackDataListener {
             String sensorValue = getContext().getString(R.string.value_unknown);
             String sensorName = getContext().getString(R.string.value_unknown);
             if (sensorDataSet != null && sensorDataSet.getHeartRate() != null) {
-                sensorName = sensorDataSet.getHeartRate().getSensorName();
-                if (sensorDataSet.getHeartRate().hasHeartRate_bpm() && sensorDataSet.getHeartRate().isRecent()) {
-                    sensorValue = StringUtils.formatDecimal(sensorDataSet.getHeartRate().getHeartRate_bpm(), 0);
+                SensorDataHeartRate data = sensorDataSet.getHeartRate();
+
+                sensorName = data.getSensorName();
+                if (data.hasHeartRate_bpm() && data.isRecent()) {
+                    sensorValue = StringUtils.formatDecimal(data.getHeartRate_bpm(), 0);
                 }
             }
 
@@ -485,9 +481,11 @@ public class StatsFragment extends Fragment implements TrackDataListener {
             String sensorValue = getContext().getString(R.string.value_unknown);
             String sensorName = getContext().getString(R.string.value_unknown);
             if (sensorDataSet != null && sensorDataSet.getCyclingCadence() != null) {
-                sensorName = sensorDataSet.getCyclingCadence().getSensorName();
-                if (sensorDataSet.getCyclingCadence().hasCadence_rpm() && sensorDataSet.getCyclingCadence().isRecent()) {
-                    sensorValue = StringUtils.formatDecimal(sensorDataSet.getCyclingCadence().getCadence_rpm(), 0);
+                SensorDataCycling.Cadence data = sensorDataSet.getCyclingCadence();
+                sensorName = data.getSensorName();
+
+                if (data.hasCadence_rpm() && data.isRecent()) {
+                    sensorValue = StringUtils.formatDecimal(data.getCadence_rpm(), 0);
                 }
             }
 
@@ -499,8 +497,10 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     private void setSpeedSensorData(SensorDataSet sensorDataSet, boolean isRecording) {
         if (isRecording) {
             if (sensorDataSet != null && sensorDataSet.getCyclingSpeed() != null) {
-                if (sensorDataSet.getCyclingSpeed().hasSpeed_mps() && sensorDataSet.getCyclingSpeed().isRecent()) {
-                    setSpeed(sensorDataSet.getCyclingSpeed().getSpeed_mps());
+                SensorDataCycling.Speed data = sensorDataSet.getCyclingSpeed();
+
+                if (data.hasSpeed_mps() && data.isRecent()) {
+                    setSpeed(data.getSpeed_mps());
                 }
             }
         }

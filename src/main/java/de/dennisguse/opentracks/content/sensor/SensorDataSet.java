@@ -4,9 +4,6 @@ import androidx.annotation.NonNull;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
 
-/**
- *
- */
 public final class SensorDataSet {
 
     private SensorDataHeartRate heartRate;
@@ -31,10 +28,6 @@ public final class SensorDataSet {
     }
 
     public void set(SensorData data) {
-        if (data == null) {
-            return;
-        }
-
         if (data instanceof SensorDataHeartRate) {
             this.heartRate = (SensorDataHeartRate) data;
             return;
@@ -47,10 +40,6 @@ public final class SensorDataSet {
         if (data instanceof SensorDataCycling.Speed) {
             this.cyclingSpeed = (SensorDataCycling.Speed) data;
             return;
-        }
-        if (data instanceof SensorDataCycling.CadenceAndSpeed) {
-            set(((SensorDataCycling.CadenceAndSpeed) data).getCadence());
-            set(((SensorDataCycling.CadenceAndSpeed) data).getSpeed());
         }
 
         throw new UnsupportedOperationException();

@@ -51,12 +51,14 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
 
     private TrackRecordingServiceInterface trackRecordingService;
 
+    public TrackRecordingServiceConnection() {
+        callback = null;
+    }
+
     /**
-     * Constructor.
-     *
      * @param callback the callback to invoke when the service binding changes
      */
-    public TrackRecordingServiceConnection(Runnable callback) {
+    public TrackRecordingServiceConnection(@NonNull Runnable callback) {
         this.callback = callback;
     }
 

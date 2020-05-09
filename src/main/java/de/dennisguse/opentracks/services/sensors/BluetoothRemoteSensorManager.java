@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.sensor.SensorData;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.util.BluetoothUtils;
@@ -148,7 +149,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
     }
 
     @Override
-    public synchronized void onChanged(de.dennisguse.opentracks.content.sensor.SensorData sensorData) {
+    public synchronized void onChanged(SensorData sensorData) {
         if (sensorData instanceof SensorDataCycling.Cadence) {
             if (sensorData.equals(sensorDataSet.getCyclingCadence())) {
                 Log.d(TAG, "onChanged: cadence data repeated.");
