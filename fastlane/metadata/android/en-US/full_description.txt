@@ -3,7 +3,8 @@ OpenTracks is a sport tracking application that completely respects your privacy
 Features:
 * Sport tracking: track your sport and outdoor activities
 * Photos and markers: mark interesting locations while tracking
-* Heart rate: supports Bluetooth LE sensors
-* Cycling (speed and cadence): supports Bluetooth LE sensors
+* Supports Bluetooth LE sensors:
+  * heart rate
+  * cycling: speed and cadence
 * Export data: export tracks either as KML or GPX
 * No Internet access: Internet is not used

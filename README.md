@@ -5,8 +5,9 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
 <table>
     <tr>
         <th>Free</th>
-        <th>Paid</th>
+        <th>Paid (same as free)</th>
         <th>Donations</th>
+        <th>Translations</th>
     </tr>
     <tr>
         <td>
@@ -24,28 +25,34 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
                 <img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="45" align="middle">
             </a>
         </td>
+        <td>
+            <a href="https://www.transifex.com/opentracks/opentracks/">
+                Transifex
+            </a>
+        </td>
     </tr>
 </table>
 
 ## Features:
 * __Tracking:__ track your sport and outdoor activities 
 * __Photos and Markers:__ mark interesting locations while tracking (also with photos)
-* __Heart rate:__ supports Bluetooth LE sensors
-* __Cycling (speed and cadence)__: supports Bluetooth LE sensors
+* __Bluetooth LE sensors:__ 
+  * heart rate
+  * cycling: speed and cadence
 * __Export data:__ export tracks either as KMZ (incl. photos), KML or GPX
 * __No Internet access:__ Internet is not used
 * __Voice announcements__
 * __No advertising__
 * __Privacy:__
     * _does not contain any in-app analytics_
-    * _does not have Google Play Services_ 
+    * _does not use Google Play Services_ 
     * _has no cloud integration_
     
 __Only required permissions:__
 * _ACCESS_FINE_LOCATION_: required to use the GPS.
 
 _Please note:_
-_Tracks_ does not contain a _map_ (as this would required Internet access).
+_OpenTracks_ does not contain a _map_ (as this would required Internet access).
 To show your tracks on a map, a 3rd party application (e.g., [OsmAnd](https://play.google.com/store/apps/details?id=net.osmand) or [MAPS.ME](https://play.google.com/store/apps/details?id=com.mapswithme.maps.pro)) needs to be installed.  
 
 ## Custom Dashboards
@@ -54,10 +61,12 @@ The reference implementation is [OSMDashboard](https://github.com/OpenTracksApp/
 
 ## Screenshots
 <div>
-    <img width="20%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_1.png">
-    <img width="20%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_2.png">
-    <img width="20%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_3.png">
-    <img width="20%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_4.png">
+    <img width="15%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_1.png">
+    <img width="15%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_2.png">
+    <img width="15%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_3.png">
+    <img width="15%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_4.png">
+    <img width="15%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_5.png">
+    <img width="15%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_6.png">
 </div>
 
 ## Project history
