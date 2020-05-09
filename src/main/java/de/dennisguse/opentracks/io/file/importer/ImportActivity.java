@@ -24,7 +24,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.documentfile.provider.DocumentFile;
@@ -43,7 +42,7 @@ import de.dennisguse.opentracks.util.FileUtils;
  */
 public class ImportActivity extends FragmentActivity implements FileTypeDialogFragment.FileTypeCaller {
 
-    private static final int EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 6;
+    private static final int DIRECTORY_PICKER_REQUEST_CODE = 6;
 
     private static final int DIALOG_PROGRESS_ID = 0;
     private static final int DIALOG_RESULT_ID = 1;
@@ -65,18 +64,17 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-        startActivityForResult(intent, EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
+        startActivityForResult(intent, DIRECTORY_PICKER_REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent resultData) {
         super.onActivityResult(requestCode, resultCode, resultData);
-        if (requestCode == EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE) {
+        if (requestCode == DIRECTORY_PICKER_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 directoryUri = resultData.getData();
                 fileTypeDialogStart();
             } else {
-                Toast.makeText(this, R.string.external_storage_not_writable, Toast.LENGTH_LONG).show();
                 finish();
             }
         }
