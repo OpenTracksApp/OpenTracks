@@ -1,0 +1,6 @@
+v3.7.2: OpenTracks
+
+Bugfix:
+- Re-added start GPS button
+- Track name is not overwritten at the end of a recording
+- Markers: removing a photo also deletes the file
