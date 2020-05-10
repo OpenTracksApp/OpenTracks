@@ -232,13 +232,9 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <!-- Gps -->
     <string name="gps_location_access">\"Standortzugriff\"</string>
     <string name="gps_disabled">GPS ist nicht aktiviert. Tippen Sie hier, um zu %1$s wechseln. Drücken Sie \"Zurück\", um zurückzugehen.</string>
-    <string name="gps_disabled_location_mode">Wählen Sie den Standortmodus für hohe Genauigkeit aus. Tippen Sie hier, um \"%1$s\" zu öffnen. Tippen Sie auf \"Zurück\", um zu dieser Ansicht zurückzukehren.</string>
     <string name="gps_disabled_my_location">Der aktuelle Standort kann nicht ermittelt werden. Aktivieren Sie mehr Standortquellen unter \"%1$s\" und vergewissern Sie sich, dass der Himmel sichtbar ist. Bitte versuchen Sie es später erneut.</string>
-    <string name="gps_disabled_my_location_location_mode">Der aktuelle Standort kann nicht ermittelt werden. Aktivieren Sie den Standortmodus für hohe Genauigkeit unter \"%1$s\" und vergewissern Sie sich, dass der Himmel sichtbar ist. Bitte versuchen Sie es später erneut.</string>
     <string name="gps_not_found">Das Gerät sendet kein GPS-Signal.</string>
     <string name="gps_starting">GPS wird gestartet.</string>
-    <string name="gps_starting_error">GPS kann nicht gestartet werden.</string>
-    <string name="gps_stopping">GPS wird beendet.</string>
     <string name="gps_wait_for_better_signal">Warten auf besseres GPS-Signal</string>
     <string name="gps_wait_for_signal">Warten auf GPS-Signal</string>
     <!-- Image -->
@@ -286,21 +282,14 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <!-- Menu -->
     <string name="menu_aggregated_statistics">Gesammelte Statistiken</string>
     <string name="menu_delete">Löschen</string>
-    <string name="menu_delete_all">Alle löschen</string>
     <string name="menu_edit">Bearbeiten</string>
-    <string name="menu_export">Exportieren</string>
     <string name="menu_export_all">Alle exportieren</string>
-    <string name="menu_feedback">Feedback</string>
     <string name="menu_help">Hilfe</string>
-    <string name="menu_help_feedback">Hilfe &amp; Feedback</string>
-    <string name="menu_help_forum">Hilfeforum</string>
     <string name="menu_import_all">Alle importieren</string>
     <string name="menu_insert_marker">Markierung einfügen</string>
     <string name="menu_insert_photo">Foto einfügen</string>
     <string name="menu_insert_gallery_img">Galerie Bild einfügen</string>
-    <string name="menu_map">Karte</string>
     <string name="menu_markers">Markierungen</string>
-    <string name="menu_play">Wiedergeben</string>
     <string name="menu_search">Suche</string>
     <string name="menu_select_all">Alle auswählen</string>
     <string name="menu_sensor_state">Sensorstatus</string>
@@ -322,20 +311,15 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="search_global_description">Tracks und Markierungen</string>
     <string name="search_list_empty_message">Keine Tracks oder Markierungen gefunden, die Ihrer Suchanfrage entsprechen</string>
     <string name="search_list_marker_track_location">Im Track \"%1$s\".</string>
-    <string name="search_voice_prompt">Sprechen Sie den Namen eines Tracks oder einer Markierung.</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Akkustatus</string>
     <string name="sensor_state_cadence">Trittfrequenz</string>
     <string name="sensor_state_cadence_value">%1$d Umdrehungen pro Minute</string>
-    <string name="sensor_state_connected">Verbunden</string>
-    <string name="sensor_state_connecting">Verbindung wird hergestellt…</string>
     <string name="sensor_state_disconnected">Nicht verbunden</string>
     <string name="sensor_state_heart_rate">Herzfrequenz</string>
     <string name="sensor_state_heart_rate_value">%1$d Schläge pro Minute</string>
-    <string name="sensor_state_last_sensor_time">Letzte Sensorzeit</string>
     <string name="sensor_state_power">Leistung</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="sensor_state_sending">Wird gesendet</string>
     <string name="sensor_not_known">Sensor %1$s ist unbekannt. Bitte überprüfe die Einstellungen.</string>
     <string name="sensor_could_not_scan">Konnte nicht nach Bluetooth-Geräten scannen (Fehler %1$i).</string>
     <string name="bluetooth_disabled">Bitte Bluetooth aktivieren.</string><!-- Settings -->
@@ -377,16 +361,9 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="settings_error_initial_values_restored">Entschuldigung, es ist ein Fehler aufgetreten. Alle Einstellungen wurden auf die Standardwerte zurückgesetzt.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor">Sensor</string>
-    <string name="settings_sensor_ant_reset_bike_cadence_sensor">Trittfrequenz zurücksetzen</string>
-    <string name="settings_sensor_ant_reset_combined_bike_sensor">Radsensoren zurücksetzen</string>
-    <string name="settings_sensor_ant_reset_heart_rate_monitor">Herzfrequenz zurücksetzen</string>
-    <string name="settings_sensor_ant_reset_speed_distance_monitor">Laufsensor zurücksetzen</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_pairing">Bluetooth-Pairing</string>
-    <string name="settings_sensor_bluetooth_pairing_summary">Die Bluetooth-Einstellungen von Android öffnen, um ein Sensor-Pairing vorzunehmen</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth-Sensor</string>
     <string name="settings_sensor_connecting">Verbunden mit %1$s</string>
-    <string name="settings_sensor_connected">Verbunden mit %1$s</string>
     <string name="settings_sensor_disconnected">Verbindung getrennt von %1$s</string>
 
     <string name="settings_sensor_wheel_circumference">Reifengröße (ETRTO)</string>
@@ -398,16 +375,14 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="settings_stats_units_metric">Metrisch (km, m)</string>
     <string name="settings_stats_units_title">Bevorzugte Einheiten</string>
     <!-- Share Track -->
-    <string name="share_track_emails_hint">E-Mail-Adressen</string>
-    <string name="share_track_picker_title">App auswählen</string>
     <string name="share_track_share_file">Track-Datei teilen</string>
     <string name="share_track_share_file_body">Dieser Track könnte dich interessieren.\n\nDu kannst ihn dir mit Google Earth oder einer anderen Kartierungssoftware ansehen.\n\n%1$s</string>
     <string name="share_track_subject">Ich möchte einen Track mit dir teilen</string>
     <!-- Stats -->
-    <string name="stats_average_moving_pace">Durchschnittl. Bewegungstempo</string>
-    <string name="stats_average_moving_speed">Durchschnittl. Bewegungsgeschwindigkeit</string>
-    <string name="stats_average_pace">Durchschnittstempo</string>
-    <string name="stats_average_speed">Durchschnittsgeschwindigkeit</string>
+    <string name="stats_average_moving_pace">Durchschnitt\n(Bewegung)</string>
+    <string name="stats_average_moving_speed">Durchschnitt\n(Bewegung)</string>
+    <string name="stats_average_pace">Durchschnitt</string>
+    <string name="stats_average_speed">Durchschnitt</string>
     <string name="stats_elevation">Höhe</string>
     <string name="stats_fastest_pace">Schnellstes Tempo</string>
     <string name="stats_gain">Anstieg</string>
@@ -415,7 +390,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="stats_latitude">Breitengrad</string>
     <string name="stats_longitude">Längengrad</string>
     <string name="stats_max">Max.</string>
-    <string name="stats_max_speed">Höchstgeschwin-digkeit</string>
+    <string name="stats_max_speed">Max.</string>
     <string name="stats_min">Min.</string>
     <string name="stats_moving_time">Bewegungszeit</string>
     <string name="stats_pace">Tempo</string>
@@ -443,10 +418,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="track_edit_new_track_title">Neuer Track</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Zeichnen Sie Ihr nächstes Abenteuer hier auf.</string>
-    <string name="track_list_record_error">Die Aufzeichnung kann nicht gestartet werden, da kein GPS-Signal verfügbar ist. Bitte versuchen Sie es erneut.</string>
-    <string name="track_list_record_success">Neuer Track wird aufgezeichnet</string>
     <!-- Track Widget -->
-    <string name="track_widget_config_title">Widget-Elemente konfigurieren</string>
     <!-- Tracks -->
     <string name="tracks_few">%1$d Tracks</string>
     <string name="tracks_many">%1$d Tracks</string>
@@ -475,10 +447,8 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="value_integer_feet">%1$d Fuß</string>
     <string name="value_integer_feet_excellent_gps">%1$d Fuß (ausgezeichnetes GPS-Signal)</string>
     <string name="value_integer_feet_recommended">%1$d Fuß (empfohlen)</string>
-    <string name="value_integer_kilobyte">%1$d KB</string>
     <string name="value_integer_kilometer">%1$d km</string>
     <string name="value_integer_kilometer_hour">%1$d km/h</string>
-    <string name="value_integer_megabyte">%1$d MB</string>
     <string name="value_integer_meter">%1$d m</string>
     <string name="value_integer_meter_excellent_gps">%1$d m (ausgezeichnetes GPS-Signal)</string>
     <string name="value_integer_meter_poor_gps">%1$d m (schlechtes GPS-Signal)</string>
@@ -488,7 +458,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="value_integer_minute">%1$d min</string>
     <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
-    <string name="value_never">Nie</string>
     <string name="value_none">Keine</string>
     <string name="value_off">Aus</string>
     <string name="value_smallest">Kleinster</string>

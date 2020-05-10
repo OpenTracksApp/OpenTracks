@@ -233,13 +233,9 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <!-- Gps -->
     <string name="gps_location_access">\'Locatietoegang\'</string>
     <string name="gps_disabled">GPS is niet ingeschakeld. Tik hier om naar %1$s te gaan. Druk op de knop \'Terug\' om terug te keren.</string>
-    <string name="gps_disabled_location_mode">Selecteer de locatiemodus met hoge nauwkeurigheid. Tik hier om naar %1$s te gaan. Druk op de knop \'Terug\' om terug te keren.</string>
     <string name="gps_disabled_my_location">Huidige locatie kan niet worden bepaald. Schakel meer locatiebronnen in via %1$s en zorg ervoor dat de hemel zichtbaar is. Probeer het later opnieuw.</string>
-    <string name="gps_disabled_my_location_location_mode">Huidige locatie kan niet worden bepaald. Schakel de locatiemodus met hoge nauwkeurigheid in via %1$s en zorg ervoor dat de hemel zichtbaar is. Probeer het later opnieuw.</string>
     <string name="gps_not_found">Kan geen GPS vinden op het apparaat</string>
     <string name="gps_starting">GPS starten</string>
-    <string name="gps_starting_error">Kan GPS niet starten</string>
-    <string name="gps_stopping">GPS stoppen</string>
     <string name="gps_wait_for_better_signal">Wachten op een beter GPS-signaal</string>
     <string name="gps_wait_for_signal">Wachten op GPS-signaal</string>
     <!-- Image -->
@@ -286,21 +282,14 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <!-- Menu -->
     <string name="menu_aggregated_statistics">Statistieken</string>
     <string name="menu_delete">Verwijderen</string>
-    <string name="menu_delete_all">Alles verwijderen</string>
     <string name="menu_edit">Bewerken</string>
-    <string name="menu_export">Exporteren</string>
     <string name="menu_export_all">Alles exporteren</string>
-    <string name="menu_feedback">Feedback</string>
     <string name="menu_help">Help</string>
-    <string name="menu_help_feedback">Help en feedback</string>
-    <string name="menu_help_forum">Helpforum</string>
     <string name="menu_import_all">Alles importeren</string>
     <string name="menu_insert_marker">Markering invoegen</string>
     <string name="menu_insert_photo">Foto invoegen</string>
     <string name="menu_insert_gallery_img">Galerijafbeelding invoegen</string>
-    <string name="menu_map">Kaart</string>
     <string name="menu_markers">Markeringen</string>
-    <string name="menu_play">Afspelen</string>
     <string name="menu_search">Zoeken</string>
     <string name="menu_select_all">Alles selecteren</string>
     <string name="menu_sensor_state">Status van sensor</string>
@@ -322,20 +311,15 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="search_global_description">Routes en markeringen</string>
     <string name="search_list_empty_message">Er zijn geen routes of markeringen gevonden die overeenkomen met uw zoekopdracht</string>
     <string name="search_list_marker_track_location">In route \'%1$s\'.</string>
-    <string name="search_voice_prompt">Spreek de naam van een route of markering in</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Accuniveau</string>
     <string name="sensor_state_cadence">Cadans</string>
     <string name="sensor_state_cadence_value">%1$d tpm</string>
-    <string name="sensor_state_connected">Verbonden</string>
-    <string name="sensor_state_connecting">Verbinding maken</string>
     <string name="sensor_state_disconnected">Verbinding verbroken</string>
     <string name="sensor_state_heart_rate">Hartslag</string>
     <string name="sensor_state_heart_rate_value">%1$d spm</string>
-    <string name="sensor_state_last_sensor_time">Laatste sensortijd</string>
     <string name="sensor_state_power">Vermogen</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="sensor_state_sending">Bezig met verzenden</string>
     <string name="sensor_not_known">Sensor %1$s is onbekend. Controleer de instellingen.</string>
     <string name="sensor_could_not_scan">Kon niet scannen naar Bluetooth-apparaten (fout %1$i).</string>
     <string name="bluetooth_disabled">Schakel Bluetooth in.</string><!-- Settings -->
@@ -377,16 +361,9 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="settings_error_initial_values_restored">Sorry, maar er is een fout gemaakt. Alle instellingen zijn teruggezet naar de standaardwaarden.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor">Sensor</string>
-    <string name="settings_sensor_ant_reset_bike_cadence_sensor">Cadans opnieuw instellen</string>
-    <string name="settings_sensor_ant_reset_combined_bike_sensor">Cad/snel opnieuw instellen</string>
-    <string name="settings_sensor_ant_reset_heart_rate_monitor">Hartslag opnieuw instellen</string>
-    <string name="settings_sensor_ant_reset_speed_distance_monitor">Footpod opnieuw instellen</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_pairing">Koppelen via Bluetooth</string>
-    <string name="settings_sensor_bluetooth_pairing_summary">Bluetooth-instellingen voor Android openen om een sensor te koppelen</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth-sensor</string>
     <string name="settings_sensor_connecting">Verbonden met %1$s</string>
-    <string name="settings_sensor_connected">Verbonden met %1$s</string>
     <string name="settings_sensor_disconnected">Ontkoppeld van %1$s</string>
 
     <string name="settings_sensor_wheel_circumference">Wielmaat (ETRTO)</string>
@@ -398,8 +375,6 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="settings_stats_units_metric">Metrisch (km, m)</string>
     <string name="settings_stats_units_title">Voorkeurseenheden</string>
     <!-- Share Track -->
-    <string name="share_track_emails_hint">E-mailadressen</string>
-    <string name="share_track_picker_title">App selecteren</string>
     <string name="share_track_share_file">Routebestand delen</string>
     <string name="share_track_share_file_body">Ik denk dat u misschien wel geïnteresseerd bent in deze route.\n\nAls u deze route wilt weergeven, kunt u Google Earth of andere kaartsoftware gebruiken.\n\n%1$s</string>
     <string name="share_track_subject">Ik wil graag een route met u delen</string>
@@ -443,10 +418,7 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="track_edit_new_track_title">Nieuwe route</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Neem uw volgende avontuur hier op</string>
-    <string name="track_list_record_error">Kan opname niet starten. Er is geen GPS-signaal. Probeer het opnieuw.</string>
-    <string name="track_list_record_success">Nieuwe route wordt nu opgenomen</string>
     <!-- Track Widget -->
-    <string name="track_widget_config_title">Widget-items configureren</string>
     <!-- Tracks -->
     <string name="tracks_few">%1$d routes</string>
     <string name="tracks_many">%1$d routes</string>
@@ -475,10 +447,8 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (uitstekend GPS-signaal)</string>
     <string name="value_integer_feet_recommended">%1$d ft (aanbevolen)</string>
-    <string name="value_integer_kilobyte">%1$d KB</string>
     <string name="value_integer_kilometer">%1$d km</string>
     <string name="value_integer_kilometer_hour">%1$d km/u</string>
-    <string name="value_integer_megabyte">%1$d MB</string>
     <string name="value_integer_meter">%1$d m</string>
     <string name="value_integer_meter_excellent_gps">%1$d m (uitstekend GPS-signaal)</string>
     <string name="value_integer_meter_poor_gps">%1$d m (slecht GPS-signaal)</string>
@@ -488,7 +458,6 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="value_integer_minute">%1$d min</string>
     <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
-    <string name="value_never">Nooit</string>
     <string name="value_none">Geen</string>
     <string name="value_off">Uit</string>
     <string name="value_smallest">Kleinste</string>
