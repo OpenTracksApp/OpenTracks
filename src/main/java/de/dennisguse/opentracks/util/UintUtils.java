@@ -17,7 +17,7 @@ public class UintUtils {
         if (a < 0 || b < 0) {
             return -1;
         }
-        if (a > UINT_MAX && b > UINT_MAX) {
+        if (a > UINT_MAX || b > UINT_MAX) {
             return -1;
         }
 

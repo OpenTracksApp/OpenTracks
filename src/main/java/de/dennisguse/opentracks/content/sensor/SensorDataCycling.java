@@ -64,13 +64,13 @@ public final class SensorDataCycling {
 
         public void compute(Cadence previous) {
             if (hasData() && previous != null && previous.hasData()) {
-                long timeDiff_ms = UintUtils.diff(crankRevolutionsTime, previous.crankRevolutionsTime, UintUtils.UINT16_MAX) / 1024 * UnitConversions.S_TO_MS;
+                float timeDiff_ms = UintUtils.diff(crankRevolutionsTime, previous.crankRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * UnitConversions.S_TO_MS;
                 if (timeDiff_ms <= 0) {
                     Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
                     cadence_rpm = INVALID_VALUE_FLOAT;
                 } else {
                     long crankDiff = UintUtils.diff(crankRevolutionsCount, previous.crankRevolutionsCount, UintUtils.UINT32_MAX);
-                    float cadence_ms = crankDiff / (float) timeDiff_ms;
+                    float cadence_ms = crankDiff / timeDiff_ms;
                     cadence_rpm = (float) (cadence_ms / UnitConversions.MS_TO_S / UnitConversions.S_TO_MIN);
                 }
             }
@@ -79,7 +79,7 @@ public final class SensorDataCycling {
         @NonNull
         @Override
         public String toString() {
-            return "cadence=" + getCadence_rpm() + "_" + getCrankRevolutionsTime();
+            return "cadence=" + getCadence_rpm() + " time=" + getCrankRevolutionsTime() + " count=" + getCrankRevolutionsCount();
         }
 
         @Override
@@ -125,7 +125,7 @@ public final class SensorDataCycling {
 
         public void compute(Speed previous, int wheel_circumference_mm) {
             if (hasData() && previous != null && previous.hasData()) {
-                long timeDiff_ms = UintUtils.diff(wheelRevolutionsTime, previous.wheelRevolutionsTime, UintUtils.UINT16_MAX) / 1024 * UnitConversions.S_TO_MS;
+                float timeDiff_ms = UintUtils.diff(wheelRevolutionsTime, previous.wheelRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * UnitConversions.S_TO_MS;
                 if (timeDiff_ms <= 0) {
                     Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
                     speed_mps = INVALID_VALUE_FLOAT;
@@ -140,7 +140,7 @@ public final class SensorDataCycling {
         @NonNull
         @Override
         public String toString() {
-            return "speed=" + getSpeed_mps() + "_" + getWheelRevolutionsTime();
+            return "speed=" + getSpeed_mps() + " time=" + getWheelRevolutionsTime() + " count=" + getWheelRevolutionsCount();
         }
 
         @Override

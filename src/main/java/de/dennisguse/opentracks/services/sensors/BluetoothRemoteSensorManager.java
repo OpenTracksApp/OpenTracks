@@ -32,11 +32,11 @@ import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * Bluetooth LE sensor manager: manages connections to Bluetooth LE sensors.
- *
+ * <p>
  * Note: should only be instantiated once.
- *
+ * <p>
  * TODO: listen for Bluetooth enabled/disabled events.
- *
+ * <p>
  * TODO: In case, a cycling (Cadence and Speed) sensor reports both values, testing is required.
  * We establish two GATT separate GATT connections (as if two different sensors were used).
  * However, it is not clear if this is allowed.
@@ -151,18 +151,23 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
     @Override
     public synchronized void onChanged(SensorData sensorData) {
         if (sensorData instanceof SensorDataCycling.Cadence) {
-            if (sensorData.equals(sensorDataSet.getCyclingCadence())) {
+            SensorDataCycling.Cadence previous = sensorDataSet.getCyclingCadence();
+            Log.d(TAG, "previous " + previous + "; current" + sensorData);
+
+            if (sensorData.equals(previous)) {
                 Log.d(TAG, "onChanged: cadence data repeated.");
                 return;
             }
-            ((SensorDataCycling.Cadence) sensorData).compute(sensorDataSet.getCyclingCadence());
+            ((SensorDataCycling.Cadence) sensorData).compute(previous);
         }
         if (sensorData instanceof SensorDataCycling.Speed) {
-            if (sensorData.equals(sensorDataSet.getCyclingSpeed())) {
+            SensorDataCycling.Speed previous = sensorDataSet.getCyclingSpeed();
+            Log.d(TAG, "previous " + previous + "; current" + sensorData);
+            if (sensorData.equals(previous)) {
                 Log.d(TAG, "onChanged: speed data repeated.");
                 return;
             }
-            ((SensorDataCycling.Speed) sensorData).compute(sensorDataSet.getCyclingSpeed(), PreferencesUtils.getWheelCircumference(context));
+            ((SensorDataCycling.Speed) sensorData).compute(previous, PreferencesUtils.getWheelCircumference(context));
         }
 
         sensorDataSet.set(sensorData);

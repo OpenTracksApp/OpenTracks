@@ -12,7 +12,7 @@ import de.dennisguse.opentracks.util.UintUtils;
 public class SensorDataCyclingTest {
 
     @Test
-    public void compute_cadence() {
+    public void compute_cadence_1() {
         // given
         SensorDataCycling.Cadence previous = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 1, 1024); // 1s
         SensorDataCycling.Cadence current = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 2, 2048); // 2s
@@ -22,6 +22,19 @@ public class SensorDataCyclingTest {
 
         // then
         Assert.assertEquals(60, current.getCadence_rpm(), 0.01);
+    }
+
+    @Test
+    public void compute_cadence_2() {
+        // given
+        SensorDataCycling.Cadence previous = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 1, 6184);
+        SensorDataCycling.Cadence current = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 2, 8016);
+
+        // when
+        current.compute(previous);
+
+        // then
+        Assert.assertEquals(33.53, current.getCadence_rpm(), 0.01);
     }
 
     @Test
@@ -75,6 +88,19 @@ public class SensorDataCyclingTest {
 
         // then
         Assert.assertEquals(60, current.getCadence_rpm(), 0.01);
+    }
+
+    @Test
+    public void compute_speed() {
+        // given
+        SensorDataCycling.Speed previous = new SensorDataCycling.Speed("sensorAddress", "sensorName", 1, 6184);
+        SensorDataCycling.Speed current = new SensorDataCycling.Speed("sensorAddress", "sensorName", 2, 8016);
+
+        // when
+        current.compute(previous, 2150);
+
+        // then
+        Assert.assertEquals(1.20, current.getSpeed_mps(), 0.01);
     }
 
     @Test
