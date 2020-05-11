@@ -79,7 +79,11 @@ limitations under the License.
         </activity>
 
         <activity
-            android:name=".TrackDetailActivity"
+            android:name=".TrackRecordedActivity"
+            android:screenOrientation="userPortrait" />
+
+        <activity
+            android:name=".TrackRecordingActivity"
             android:screenOrientation="userPortrait" />
 
         <activity android:name=".TrackEditActivity" />

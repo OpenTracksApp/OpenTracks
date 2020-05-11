@@ -1,19 +1,3 @@
-/*
- * Copyright 2008 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
-
 package de.dennisguse.opentracks.fragments;
 
 import android.content.SharedPreferences;
@@ -34,7 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.TrackDetailActivity;
+import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.data.Track;
@@ -59,16 +43,17 @@ import de.dennisguse.opentracks.util.UnitConversions;
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
-public class StatsFragment extends Fragment implements TrackDataListener {
+public class StatisticsRecordingFragment extends Fragment implements TrackDataListener {
 
-    private static final String TAG = StatsFragment.class.getSimpleName();
+    private static final String TAG = StatisticsRecordingFragment.class.getSimpleName();
 
     private static final long UI_UPDATE_INTERVAL = UnitConversions.ONE_SECOND_MS;
 
     private TrackDataHub trackDataHub;
     private Handler handlerUpdateUI;
 
-    private final TrackRecordingServiceConnection trackRecordingServiceConnection = new TrackRecordingServiceConnection();
+    //TODO Initialize immediately and remove in onDestroy()
+    private TrackRecordingServiceConnection trackRecordingServiceConnection;
 
     private TrackPoint lastTrackPoint = null;
     private TrackStatistics lastTrackStatistics = null;
@@ -97,6 +82,9 @@ public class StatsFragment extends Fragment implements TrackDataListener {
                 if (PreferencesUtils.getRecordingTrackId(getContext()) != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
                     // A recording track id has been set -> Resumes track and starts timer.
                     resumeTrackDataHub();
+                    if (trackRecordingServiceConnection == null) {
+                        trackRecordingServiceConnection = new TrackRecordingServiceConnection(null);
+                    }
                     trackRecordingServiceConnection.startConnection(getContext());
 
                     handlerUpdateUI.post(updateUIeachSecond);
@@ -107,7 +95,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.stats, container, false);
+        return inflater.inflate(R.layout.statistics_recording, container, false);
     }
 
     /* Views */
@@ -224,7 +212,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    ((TrackDetailActivity) getActivity()).chooseActivityType(category);
+                    ((TrackRecordingActivity) getActivity()).chooseActivityType(category);
                 }
                 return true;
             }
@@ -233,7 +221,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-                    ((TrackDetailActivity) getActivity()).chooseActivityType(category);
+                    ((TrackRecordingActivity) getActivity()).chooseActivityType(category);
                 }
                 return true;
             }
@@ -246,6 +234,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
         resumeTrackDataHub();
         PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
 
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(null);
         trackRecordingServiceConnection.startConnection(getContext());
 
         handlerUpdateUI.post(updateUIeachSecond);
@@ -263,7 +252,10 @@ public class StatsFragment extends Fragment implements TrackDataListener {
     @Override
     public void onStop() {
         super.onStop();
-        trackRecordingServiceConnection.unbind(getContext());
+        if (trackRecordingServiceConnection != null) {
+            trackRecordingServiceConnection.unbind(getContext());
+        }
+        trackRecordingServiceConnection = null;
     }
 
     @Override
@@ -393,7 +385,7 @@ public class StatsFragment extends Fragment implements TrackDataListener {
      * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
      */
     private synchronized void resumeTrackDataHub() {
-        trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
+        trackDataHub = ((TrackRecordingActivity) getActivity()).getTrackDataHub();
         trackDataHub.registerTrackDataListener(this, true, false, true, true);
     }
 

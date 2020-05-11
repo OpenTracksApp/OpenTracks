@@ -26,7 +26,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * An abstract class for the following common tasks across
- * {@link TrackListActivity}, {@link TrackDetailActivity}, and
+ * {@link TrackListActivity}, {@link TrackRecordedActivity}, and
  * {@link SearchListActivity}:
  * <p>
  * - share track <br>

@@ -205,8 +205,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             if (!PreferencesUtils.isRecording(recordingTrackId)) {
                 // Not recording -> Recording
                 updateMenuItems(false, true);
-                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
-                        .putExtra(TrackDetailActivity.EXTRA_RECORDING_REQUEST, true);
+                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class);
                 startActivity(newIntent);
             } else if (recordingTrackPaused) {
                 // Paused -> Resume
@@ -251,10 +250,18 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         listView.setEmptyView(findViewById(R.id.track_list_empty_view));
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackDetailActivity.class)
-                        .putExtra(TrackDetailActivity.EXTRA_TRACK_ID, id);
-                startActivity(newIntent);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long trackId) {
+                if (trackId == recordingTrackId) {
+                    // Is recording -> open record activity.
+                    Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class)
+                            .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
+                    startActivity(newIntent);
+                } else {
+                    // Not recording -> open detail activity.
+                    Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordedActivity.class)
+                            .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
+                    startActivity(newIntent);
+                }
             }
         });
 
