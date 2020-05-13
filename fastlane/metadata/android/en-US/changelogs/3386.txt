@@ -1,0 +1,7 @@
+v3.7.3: OpenTracks
+
+Bugfix:
+- Fixed computation of cadence and speed (via Bluetooth LE sensor)
+
+Developer:
+- Removed unused translations
