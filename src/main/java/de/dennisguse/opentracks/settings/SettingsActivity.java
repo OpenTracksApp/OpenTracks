@@ -11,8 +11,11 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import java.util.Locale;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
+import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingCadenceAndSpeedPreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeHeartRatePreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeSensorPreference;
@@ -89,6 +92,8 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
 
                 setPreferencesFromResource(R.xml.settings, rootKey);
             }
+
+            setExportTrackFileFormatOptions();
         }
 
         @Override
@@ -171,6 +176,25 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             statsRatePreferences.setEntries(entries);
 
             HackUtils.invalidatePreference(statsRatePreferences);
+        }
+
+
+        private void setExportTrackFileFormatOptions() {
+            final TrackFileFormat[] trackFileFormats = {TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES, TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.GPX};
+            String[] entries = new String[trackFileFormats.length];
+            String[] entryValues = new String[trackFileFormats.length];
+
+            for (int i = 0; i < entries.length; i++) {
+                TrackFileFormat trackFileFormat = trackFileFormats[i];
+                String trackFileFormatUpperCase = trackFileFormat.getExtension().toUpperCase(Locale.US); //ASCII upper case
+                int photoMessageId = trackFileFormat.includesPhotos() ? R.string.export_with_photos : R.string.export_without_photos;
+                entries[i] = String.format("%s (%s)", trackFileFormatUpperCase, getString(photoMessageId));
+                entryValues[i] = trackFileFormat.name();
+            }
+
+            ListPreference listPreference = findPreference(getString(R.string.export_trackfileformat_key));
+            listPreference.setEntries(entries);
+            listPreference.setEntryValues(entryValues);
         }
     }
 }

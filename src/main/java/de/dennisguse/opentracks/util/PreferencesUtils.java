@@ -24,6 +24,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.preference.PreferenceManager;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
 /**
  * Utilities to access preferences stored in {@link SharedPreferences}.
@@ -318,6 +319,15 @@ public class PreferencesUtils {
     public static int getRecordingGPSAccuracy(Context context) {
         final int RECORDING_GPS_ACCURACY = Integer.parseInt(context.getResources().getString(R.string.recording_gps_accuracy_default));
         return getInt(context, R.string.recording_gps_accuracy_key, RECORDING_GPS_ACCURACY);
+    }
+
+    public static TrackFileFormat getExportTrackFileFormat(Context context) {
+        String trackFileFormatName = getString(context, R.string.export_trackfileformat_key, null);
+        try {
+            return TrackFileFormat.valueOf(trackFileFormatName);
+        } catch (Exception e) {
+            return TrackFileFormat.KML_ONLY_TRACK;
+        }
     }
 
     public static boolean isRecording(Context context) {
