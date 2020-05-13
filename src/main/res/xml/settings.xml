@@ -143,6 +143,10 @@ limitations under the License.
                 android:targetClass="de.dennisguse.opentracks.io.file.exporter.ExportActivity"
                 android:targetPackage="@string/applicationId" />
         </Preference>
+        <ListPreference
+            android:key="@string/export_trackfileformat_key"
+            android:title="@string/settings_default_trackfileformat"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_reset">

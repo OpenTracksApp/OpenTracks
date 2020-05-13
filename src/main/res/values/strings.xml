@@ -333,6 +333,7 @@ limitations under the License.
     <string name="settings_show">Show</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Advanced</string>
+    <string name="settings_default_trackfileformat">Export/sharing file format</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">By distance</string>
     <string name="settings_chart_by_time">By time</string>

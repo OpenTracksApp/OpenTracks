@@ -92,9 +92,10 @@ public class IntentUtils {
             Track track = contentProviderUtils.getTrack(trackId);
             if (track == null) {
                 Log.e(TAG, "TrackId " + trackId + " could not be resolved.");
+                continue;
             }
 
-            Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(new long[]{trackId}, track.getName(), TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES);
+            Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(new long[]{trackId}, track.getName(), PreferencesUtils.getExportTrackFileFormat(context));
             uris.add(uriAndMime.first);
             mime = uriAndMime.second;
         }
