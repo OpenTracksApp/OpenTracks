@@ -9,23 +9,34 @@ from every activity showing a menu.
 endlegend
 
 [*] --> TrackListActivity
-TrackListActivity --> TrackDetailActivity : Start recording
+TrackListActivity --> TrackRecordingActivity : Start recording
 TrackListActivity --> SearchListActivity
 TrackListActivity --> MarkerListActivity : Show all markers
-TrackListActivity --> TrackDetailActivity : Show track
+TrackListActivity --> TrackRecordedActivity : Show track
 TrackListActivity --> TrackDeleteActivity
 
 SearchListActivity --> MarkerDetailActivity : Search result
 SearchListActivity --> TrackDetailActivity : Search result
 
-TrackDetailActivity --> TrackDeleteActivity
-TrackDetailActivity --> TrackEditActivity
-TrackDetailActivity --> MarkerListActivity
-TrackDetailActivity --> MarkerEditActivity : Add marker
-TrackDetailActivity --> CameraIntent : Add marker (with photo)
-TrackDetailActivity --> ShareFileIntent
-TrackDetailActivity --> DashboardIntent : Database cursor
-TrackDetailActivity --> TrackOnMapIntent : KMZ
+TrackRecordedActivity --> TrackDeleteActivity
+TrackRecordedActivity --> TrackEditActivity
+TrackRecordedActivity --> MarkerListActivity
+TrackRecordedActivity --> MarkerEditActivity : Add marker
+TrackRecordedActivity --> CameraIntent : Add marker (with photo)
+TrackRecordedActivity --> ShareFileIntent
+TrackRecordedActivity --> DashboardIntent : Database cursor
+TrackRecordedActivity --> TrackOnMapIntent : KMZ
+TrackRecordedActivity --> TrackRecordingActivity
+TrackRecordedActivity --> SettingsActivity
+TrackRecordedActivity --> TrackListActivity : Back button
+
+TrackRecordingActivity --> TrackOnMapIntent
+TrackRecordingActivity --> MarkerEditActivity : Add marker
+TrackRecordingActivity --> MarkerListActivity
+TrackRecordingActivity --> TrackEditActivity
+TrackRecordingActivity --> SettingsActivity
+TrackRecordingActivity --> TrackRecordedActivity : Stop recording
+TrackRecordingActivity --> TrackListActivity : Back button
 
 MarkerListActivity --> MarkerDetailActivity
 

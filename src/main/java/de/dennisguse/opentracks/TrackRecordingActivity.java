@@ -1,5 +1,6 @@
 package de.dennisguse.opentracks;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -166,6 +167,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             Intent newIntent = IntentUtils.newIntent(TrackRecordingActivity.this, TrackRecordedActivity.class)
                     .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
             startActivity(newIntent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             updateMenuItems(true);
             finish();
         }

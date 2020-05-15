@@ -251,17 +251,17 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long trackId) {
+                Intent newIntent;
                 if (trackId == recordingTrackId) {
                     // Is recording -> open record activity.
-                    Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class)
+                    newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class)
                             .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
-                    startActivity(newIntent);
                 } else {
                     // Not recording -> open detail activity.
-                    Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordedActivity.class)
+                    newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordedActivity.class)
                             .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
-                    startActivity(newIntent);
                 }
+                startActivity(newIntent);
             }
         });
 

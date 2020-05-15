@@ -16,6 +16,7 @@
 
 package de.dennisguse.opentracks;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +41,7 @@ import de.dennisguse.opentracks.fragments.StatisticsRecordedFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.IntentUtils;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
@@ -169,6 +171,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.track_detail_markers).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+        menu.findItem(R.id.track_detail_resume_track).setVisible(!PreferencesUtils.isRecording(this));
         Track track = contentProviderUtils.getTrack(trackId);
         setTitle(track != null ? track.getName() : "");
         return super.onPrepareOptionsMenu(menu);
@@ -203,6 +206,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
                 Intent newIntent = IntentUtils.newIntent(TrackRecordedActivity.this, TrackRecordingActivity.class)
                         .putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, trackId);
                 startActivity(newIntent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
                 return true;
             case R.id.track_detail_settings:
