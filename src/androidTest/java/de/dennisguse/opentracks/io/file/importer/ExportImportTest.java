@@ -97,7 +97,7 @@ public class ExportImportTest {
         Track track = contentProviderUtils.getTrack(trackId);
 
         TrackFileFormat trackFileFormat = TrackFileFormat.KML_WITH_TRACKDETAIL;
-        TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, new Track[]{track}, null);
+        TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, new Track[]{track});
 
         // when
         // 1. export
@@ -169,7 +169,7 @@ public class ExportImportTest {
         Track track = contentProviderUtils.getTrack(trackId);
 
         TrackFileFormat trackFileFormat = TrackFileFormat.GPX;
-        TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, new Track[]{track}, null);
+        TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, new Track[]{track});
 
         // when
         // 1. export

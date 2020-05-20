@@ -322,11 +322,12 @@ public class PreferencesUtils {
     }
 
     public static TrackFileFormat getExportTrackFileFormat(Context context) {
-        String trackFileFormatName = getString(context, R.string.export_trackfileformat_key, null);
+        final String TRACKFILEFORMAT_NAME_DEFAULT = getString(context, R.string.export_trackfileformat_default, null);
+        String trackFileFormatName = getString(context, R.string.export_trackfileformat_key, TRACKFILEFORMAT_NAME_DEFAULT);
         try {
             return TrackFileFormat.valueOf(trackFileFormatName);
         } catch (Exception e) {
-            return TrackFileFormat.KML_ONLY_TRACK;
+            return TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA;
         }
     }
 
