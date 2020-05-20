@@ -12,7 +12,6 @@ import de.dennisguse.opentracks.io.file.exporter.GpxTrackWriter;
 import de.dennisguse.opentracks.io.file.exporter.KmlTrackWriter;
 import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
-import de.dennisguse.opentracks.io.file.exporter.TrackExporterListener;
 import de.dennisguse.opentracks.io.file.exporter.TrackWriter;
 
 /**
@@ -74,8 +73,8 @@ public enum TrackFileFormat {
             return new KmlTrackWriter(context, multiple, false, false, exportPhotos);
         }
 
-        public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
-            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), tracks, trackExporterListener, exportPhotos);
+        public TrackExporter newTrackExporter(Context context, Track[] tracks) {
+            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), tracks, exportPhotos);
         }
 
         @Override
@@ -101,8 +100,8 @@ public enum TrackFileFormat {
             return new KmlTrackWriter(context, multiple, true, false, exportPhotos);
         }
 
-        public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
-            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), tracks, trackExporterListener, exportPhotos);
+        public TrackExporter newTrackExporter(Context context, Track[] tracks) {
+            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), tracks, exportPhotos);
         }
 
         @Override
@@ -134,8 +133,8 @@ public enum TrackFileFormat {
             return MIME_KMZ;
         }
 
-        public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
-            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), tracks, trackExporterListener, exportPhotos);
+        public TrackExporter newTrackExporter(Context context, Track[] tracks) {
+            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), tracks, exportPhotos);
         }
 
         public String getExtension() {
@@ -163,8 +162,8 @@ public enum TrackFileFormat {
             return MIME_KMZ;
         }
 
-        public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
-            return newKmzTrackExporter(context, newTrackWriter(context, tracks.length > 1), tracks, trackExporterListener, exportPhotos);
+        public TrackExporter newTrackExporter(Context context, Track[] tracks) {
+            return newKmzTrackExporter(context, newTrackWriter(context, tracks.length > 1), tracks, exportPhotos);
         }
 
         public String getExtension() {
@@ -197,10 +196,10 @@ public enum TrackFileFormat {
 
     private static final String MIME_KML = "application/vnd.google-earth.kml+xml";
 
-    private static TrackExporter newKmzTrackExporter(Context context, TrackWriter trackWriter, Track[] tracks, TrackExporterListener trackExporterListener, boolean exportPhotos) {
+    private static TrackExporter newKmzTrackExporter(Context context, TrackWriter trackWriter, Track[] tracks, boolean exportPhotos) {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
 
-        FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, trackWriter, tracks, trackExporterListener);
+        FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, trackWriter, tracks);
 
         return new KmzTrackExporter(contentProviderUtils, fileTrackExporter, tracks, exportPhotos);
     }
@@ -210,10 +209,10 @@ public enum TrackFileFormat {
      */
     public abstract String getMimeType();
 
-    public TrackExporter newTrackExporter(Context context, Track[] tracks, TrackExporterListener trackExporterListener) {
+    public TrackExporter newTrackExporter(Context context, Track[] tracks) {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
         TrackWriter trackWriter = newTrackWriter(context, tracks.length > 1);
-        return new FileTrackExporter(contentProviderUtils, trackWriter, tracks, trackExporterListener);
+        return new FileTrackExporter(contentProviderUtils, trackWriter, tracks);
     }
 
     /**

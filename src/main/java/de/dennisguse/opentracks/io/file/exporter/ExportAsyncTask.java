@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks.io.file.exporter;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.PowerManager.WakeLock;
@@ -45,12 +44,9 @@ class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     private static final String TAG = ExportAsyncTask.class.getSimpleName();
     private final TrackFileFormat trackFileFormat;
     private final DocumentFile directory;
-    private final Context context;
     private final ContentProviderUtils contentProviderUtils;
     private ExportActivity exportActivity;
     private WakeLock wakeLock;
-
-    private boolean completed = false;
 
     private int processedTrackCount = 0;
     private int totalTrackCount = 0;
@@ -66,8 +62,7 @@ class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
         this.exportActivity = exportActivity;
         this.trackFileFormat = trackFileFormat;
         this.directory = directory;
-        context = exportActivity.getApplicationContext();
-        contentProviderUtils = new ContentProviderUtils(context);
+        contentProviderUtils = new ContentProviderUtils(exportActivity);
     }
 
     @Override
@@ -99,7 +94,6 @@ class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean result) {
-        completed = true;
         if (exportActivity != null) {
             exportActivity.onAsyncTaskCompleted(processedTrackCount, totalTrackCount);
         }
@@ -107,7 +101,6 @@ class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
 
     @Override
     protected void onCancelled() {
-        completed = true;
         if (exportActivity != null) {
             exportActivity.onAsyncTaskCompleted(processedTrackCount, totalTrackCount);
         }
@@ -119,17 +112,7 @@ class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
      * @param track the track
      */
     private Boolean exportTrack(Track track) {
-        TrackExporterListener trackExporterListener = new TrackExporterListener() {
-            @Override
-            public void onProgressUpdate(int number, int max) {
-                //Update the progress dialog once every 500 points.
-                if (number % 500 == 0) {
-                    publishProgress(number, max);
-                }
-            }
-        };
-
-        TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, new Track[]{track}, trackExporterListener);
+        TrackExporter trackExporter = trackFileFormat.newTrackExporter(exportActivity, new Track[]{track});
 
         String fileName = track.getId() + "." + trackFileFormat.getExtension();
 
@@ -139,8 +122,8 @@ class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
             file = directory.createFile(trackFileFormat.getMimeType(), fileName);
         }
 
-        try (OutputStream outputStream = context.getContentResolver().openOutputStream(file.getUri())) {
-            if (trackExporter.writeTrack(context, outputStream)) {
+        try (OutputStream outputStream = exportActivity.getContentResolver().openOutputStream(file.getUri())) {
+            if (trackExporter.writeTrack(exportActivity, outputStream)) {
                 return true;
             } else {
                 if (!file.delete()) {
@@ -167,6 +150,7 @@ class ExportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
                 return false;
             }
             totalTrackCount = cursor.getCount();
+
             for (int i = 0; i < totalTrackCount; i++) {
                 if (isCancelled()) {
                     return false;

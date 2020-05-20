@@ -209,7 +209,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
             tracks[i] = contentProviderUtils.getTrack(trackIds[i]);
         }
 
-        final TrackExporter trackExporter = getTrackFileFormat(uri).newTrackExporter(getContext(), tracks, null);
+        final TrackExporter trackExporter = getTrackFileFormat(uri).newTrackExporter(getContext(), tracks);
 
         PipeDataWriter pipeDataWriter = new PipeDataWriter<String>() {
             @Override
