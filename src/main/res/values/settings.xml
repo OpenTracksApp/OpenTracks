@@ -221,6 +221,8 @@
     </string-array>
 
     <string name="export_trackfileformat_key" translatable="false">exportTrackFileFormat</string>
+    <!-- See TrackFileFormat -->
+    <string name="export_trackfileformat_default" translatable="false">KMZ_WITH_TRACKDETAIL_AND_SENSORDATA</string>
 
     <string name="settings_recording_key" translatable="false">settingsRecordingKey</string>
 </resources>

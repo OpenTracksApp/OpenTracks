@@ -144,6 +144,7 @@ limitations under the License.
                 android:targetPackage="@string/applicationId" />
         </Preference>
         <ListPreference
+            android:defaultValue="@string/export_trackfileformat_default"
             android:key="@string/export_trackfileformat_key"
             android:title="@string/settings_default_trackfileformat"
             app:useSimpleSummaryProvider="true" />

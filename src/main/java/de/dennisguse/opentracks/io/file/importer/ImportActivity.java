@@ -30,17 +30,17 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.FragmentActivity;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.fragments.FileTypeDialogFragment;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.DialogUtils;
 import de.dennisguse.opentracks.util.FileUtils;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * An activity to import files from the external storage.
  *
  * @author Rodrigo Damazio
  */
-public class ImportActivity extends FragmentActivity implements FileTypeDialogFragment.FileTypeCaller {
+public class ImportActivity extends FragmentActivity {
 
     private static final int DIRECTORY_PICKER_REQUEST_CODE = 6;
 
@@ -54,8 +54,6 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
 
     private int importedTrackCount;
     private int totalTrackCount;
-
-    private Uri directoryUri;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,32 +70,18 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
         super.onActivityResult(requestCode, resultCode, resultData);
         if (requestCode == DIRECTORY_PICKER_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                directoryUri = resultData.getData();
-                fileTypeDialogStart();
+                Uri directoryUri = resultData.getData();
+                DocumentFile pickedDirectory = DocumentFile.fromTreeUri(this, directoryUri);
+
+                directoryDisplayName = FileUtils.getPath(pickedDirectory);
+                TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(this);
+
+                importAsyncTask = new ImportAsyncTask(this, trackFileFormat, pickedDirectory);
+                importAsyncTask.execute();
             } else {
                 finish();
             }
         }
-    }
-
-
-    private void fileTypeDialogStart() {
-        FileTypeDialogFragment.showDialog(getSupportFragmentManager(), R.string.import_selection_title, R.string.import_selection_option);
-    }
-
-    @Override
-    public void onFileTypeDone(TrackFileFormat trackFileFormat) {
-        DocumentFile pickedDirectory = DocumentFile.fromTreeUri(this, directoryUri);
-
-        directoryDisplayName = FileUtils.getPath(pickedDirectory);
-
-        importAsyncTask = new ImportAsyncTask(this, trackFileFormat, pickedDirectory);
-        importAsyncTask.execute();
-    }
-
-    @Override
-    public void onDismissed() {
-        finish();
     }
 
     @Override
@@ -110,7 +94,7 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
                             public void onCancel(DialogInterface dialog) {
                                 importAsyncTask.cancel(true);
                                 dialog.dismiss();
-                                onDismissed();
+                                finish();
                             }
                         }, directoryDisplayName);
                 return progressDialog;
@@ -140,13 +124,13 @@ public class ImportActivity extends FragmentActivity implements FileTypeDialogFr
                             @Override
                             public void onCancel(DialogInterface dialogInterface) {
                                 dialogInterface.dismiss();
-                                onDismissed();
+                                finish();
                             }
                         }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int which) {
                                 dialogInterface.dismiss();
-                                onDismissed();
+                                finish();
                             }
                         }).setTitle(titleId).create();
             default:

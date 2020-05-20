@@ -43,7 +43,7 @@ public class PreferencesUtilsTest {
         TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(context);
 
         // then
-        Assert.assertEquals(TrackFileFormat.KML_ONLY_TRACK, trackFileFormat);
+        Assert.assertEquals(TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA, trackFileFormat);
     }
 
     @Test
@@ -57,6 +57,6 @@ public class PreferencesUtilsTest {
         TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(context);
 
         // then
-        Assert.assertEquals(TrackFileFormat.KML_ONLY_TRACK, trackFileFormat);
+        Assert.assertEquals(TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA, trackFileFormat);
     }
 }

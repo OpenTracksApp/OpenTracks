@@ -30,17 +30,17 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.FragmentActivity;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.fragments.FileTypeDialogFragment;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.DialogUtils;
 import de.dennisguse.opentracks.util.FileUtils;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * An activity for saving tracks to the external storage.
  *
  * @author Rodrigo Damazio
  */
-public class ExportActivity extends FragmentActivity implements FileTypeDialogFragment.FileTypeCaller {
+public class ExportActivity extends FragmentActivity {
 
     private static final int DIRECTORY_PICKER_REQUEST_CODE = 6;
 
@@ -54,8 +54,6 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
 
     private int processedTrackCount;
     private int totalTrackCount;
-
-    private Uri directoryUri;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,34 +69,22 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
         super.onActivityResult(requestCode, resultCode, resultData);
         if (requestCode == DIRECTORY_PICKER_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                directoryUri = resultData.getData();
-                fileTypeDialogStart();
+                Uri directoryUri = resultData.getData();
+                DocumentFile pickedDirectory = DocumentFile.fromTreeUri(this, directoryUri);
+                DocumentFile exportDirectory = pickedDirectory.findFile(FileUtils.EXPORT_DIR);
+                if (exportDirectory == null) {
+                    exportDirectory = pickedDirectory.createDirectory(FileUtils.EXPORT_DIR);
+                }
+
+                TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(this);
+
+                directoryDisplayName = FileUtils.getPath(exportDirectory);
+                exportAsyncTask = new ExportAsyncTask(this, trackFileFormat, exportDirectory);
+                exportAsyncTask.execute();
             } else {
                 finish();
             }
         }
-    }
-
-    private void fileTypeDialogStart() {
-        FileTypeDialogFragment.showDialog(getSupportFragmentManager(), R.string.export_all_title, R.string.export_all_option);
-    }
-
-    @Override
-    public void onFileTypeDone(TrackFileFormat trackFileFormat) {
-        DocumentFile pickedDirectory = DocumentFile.fromTreeUri(this, directoryUri);
-        DocumentFile exportDirectory = pickedDirectory.findFile(FileUtils.EXPORT_DIR);
-        if (exportDirectory == null) {
-            exportDirectory = pickedDirectory.createDirectory(FileUtils.EXPORT_DIR);
-        }
-
-        directoryDisplayName = FileUtils.getPath(exportDirectory);
-        exportAsyncTask = new ExportAsyncTask(this, trackFileFormat, exportDirectory);
-        exportAsyncTask.execute();
-    }
-
-    @Override
-    public void onDismissed() {
-        finish();
     }
 
     @Override
@@ -112,7 +98,7 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
                             public void onCancel(DialogInterface dialog) {
                                 exportAsyncTask.cancel(true);
                                 dialog.dismiss();
-                                onDismissed();
+                                finish();
                             }
                         }, directoryDisplayName);
                 return progressDialog;
@@ -138,13 +124,13 @@ public class ExportActivity extends FragmentActivity implements FileTypeDialogFr
                             @Override
                             public void onCancel(DialogInterface dialog) {
                                 dialog.dismiss();
-                                onDismissed();
+                                finish();
                             }
                         }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int arg1) {
                                 dialog.dismiss();
-                                onDismissed();
+                                finish();
                             }
                         }).setTitle(titleId);
                 return builder.create();
