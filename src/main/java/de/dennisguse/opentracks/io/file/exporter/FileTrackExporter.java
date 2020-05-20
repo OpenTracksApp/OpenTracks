@@ -44,7 +44,6 @@ public class FileTrackExporter implements TrackExporter {
     private final ContentProviderUtils contentProviderUtils;
     private final Track[] tracks;
     private final TrackWriter trackWriter;
-    private final TrackExporterListener trackExporterListener;
 
     /**
      * Constructor.
@@ -52,13 +51,11 @@ public class FileTrackExporter implements TrackExporter {
      * @param contentProviderUtils  the content provider utils
      * @param trackWriter           the track writer
      * @param tracks                the tracks
-     * @param trackExporterListener the track export listener
      */
-    public FileTrackExporter(ContentProviderUtils contentProviderUtils, TrackWriter trackWriter, Track[] tracks, TrackExporterListener trackExporterListener) {
+    public FileTrackExporter(ContentProviderUtils contentProviderUtils, TrackWriter trackWriter, Track[] tracks) {
         this.contentProviderUtils = contentProviderUtils;
         this.tracks = tracks;
         this.trackWriter = trackWriter;
-        this.trackExporterListener = trackExporterListener;
     }
 
     @Override
@@ -158,9 +155,6 @@ public class FileTrackExporter implements TrackExporter {
 
                     // Write the current trackPoint
                     trackWriter.writeTrackPoint(trackPoint);
-                    if (trackExporterListener != null) {
-                        trackExporterListener.onProgressUpdate(locationNumber, trackPointIterator.getCount());
-                    }
                 } else {
                     if (wroteSegment) {
                         trackWriter.writeCloseSegment();
