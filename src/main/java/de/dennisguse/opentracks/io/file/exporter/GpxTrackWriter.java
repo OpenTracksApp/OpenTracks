@@ -39,7 +39,10 @@ public class GpxTrackWriter implements TrackWriter {
     private static final NumberFormat ELEVATION_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat COORDINATE_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat HEARTRATE_FORMAT = NumberFormat.getInstance(Locale.US);
+<<<<<<< HEAD
     private static final NumberFormat CADENCE_FORMAT = NumberFormat.getInstance(Locale.US);
+=======
+>>>>>>> added heartrate trackpoint info
 
     static {
         /*
@@ -55,9 +58,12 @@ public class GpxTrackWriter implements TrackWriter {
 
         HEARTRATE_FORMAT.setMaximumFractionDigits(1);
         HEARTRATE_FORMAT.setGroupingUsed(false);
+<<<<<<< HEAD
 
         CADENCE_FORMAT.setMaximumFractionDigits(1);
         CADENCE_FORMAT.setGroupingUsed(false);
+=======
+>>>>>>> added heartrate trackpoint info
     }
 
     private final String creator;
@@ -184,11 +190,16 @@ public class GpxTrackWriter implements TrackWriter {
                 printWriter.println("<ele>" + ELEVATION_FORMAT.format(trackPoint.getAltitude()) + "</ele>");
             }
 
+<<<<<<< HEAD
             if (trackPoint.hasHeartRate() || trackPoint.hasCyclingCadence()) {
                 printWriter.println("<extensions><gpxtpx:TrackPointExtension>"
                         + "<gpxtpx:hr>" + HEARTRATE_FORMAT.format(trackPoint.getHeartRate_bpm()) + "</gpxtpx:hr>"
                         + "<gpxtpx:hr>" + CADENCE_FORMAT.format(trackPoint.getCyclingCadence_rpm()) + "</gpxtpx:hr>"
                         + "</gpxtpx:TrackPointExtension></extensions>");
+=======
+            if (trackPoint.hasHeartRate()) {
+                printWriter.println("<extensions><gpxtpx:TrackPointExtension><gpxtpx:hr>" + HEARTRATE_FORMAT.format(trackPoint.getHeartRate_bpm()) + "</gpxtpx:hr></gpxtpx:TrackPointExtension></extensions>");
+>>>>>>> added heartrate trackpoint info
             }
 
             printWriter.println(
