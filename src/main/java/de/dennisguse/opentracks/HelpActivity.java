@@ -1,6 +1,19 @@
 package de.dennisguse.opentracks;
 
+import android.os.Bundle;
+import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
+
+import de.dennisguse.opentracks.util.ViewUtils;
+
 public class HelpActivity extends AbstractActivity {
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ViewUtils.makeClickableLinks((ViewGroup) findViewById(android.R.id.content));
+    }
 
     @Override
     protected int getLayoutResId() {

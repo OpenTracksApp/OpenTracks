@@ -6,82 +6,95 @@
 
     <include layout="@layout/toolbar" />
 
-    <ImageView
-        android:id="@+id/imageView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="239dp"
-        android:contentDescription="@string/app_name"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_logo_color_24dp" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        style="@style/TextLarge"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textSize="24sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-    <View style="@style/StatsHorizontalLine" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="239dp"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_logo_color_24dp" />
 
-    <TextView
-        android:id="@+id/about_text_description"
-        style="@style/TextMedium"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="12dp" />
+            <TextView
+                style="@style/TextLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textSize="24sp" />
 
-    <View style="@style/StatsHorizontalLine" />
+            <View style="@style/StatsHorizontalLine" />
 
-    <TextView
-        android:id="@+id/about_text_version_name"
-        style="@style/TextSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="6dp" />
+            <TextView
+                android:id="@+id/about_text_description"
+                style="@style/TextMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="12dp" />
 
-    <TextView
-        android:id="@+id/about_text_version_code"
-        style="@style/TextSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="6dp" />
+            <View style="@style/StatsHorizontalLine" />
 
-    <TextView
-        android:id="@+id/about_app_url"
-        style="@style/TextSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autoLink="web"
-        android:gravity="center"
-        android:padding="6dp" />
+            <TextView
+                android:id="@+id/about_text_version_name"
+                style="@style/TextSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dp" />
 
-    <TextView
-        style="@style/TextSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autoLink="web"
-        android:gravity="center"
-        android:padding="6dp"
-        android:text="@string/about_history" />
+            <TextView
+                android:id="@+id/about_text_version_code"
+                style="@style/TextSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dp" />
 
-    <View style="@style/StatsHorizontalLine" />
+            <TextView
+                android:id="@+id/about_app_url"
+                style="@style/TextSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="web"
+                android:gravity="center"
+                android:padding="6dp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="12dp"
-        android:text="@string/about_libraries" />
+            <TextView
+                style="@style/TextSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="6dp"
+                android:linksClickable="true"
+                android:text="@string/about_history" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autoLink="web"
-        android:gravity="center"
-        android:text="@string/third_party_libraries" />
+            <View style="@style/StatsHorizontalLine" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="@string/about_libraries" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:linksClickable="true"
+                android:text="@string/third_party_libraries" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
