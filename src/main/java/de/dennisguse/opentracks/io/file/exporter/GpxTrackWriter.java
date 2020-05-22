@@ -38,6 +38,7 @@ public class GpxTrackWriter implements TrackWriter {
 
     private static final NumberFormat ELEVATION_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat COORDINATE_FORMAT = NumberFormat.getInstance(Locale.US);
+    private static final NumberFormat HEARTRATE_FORMAT = NumberFormat.getInstance(Locale.US);
 
     static {
         /*
@@ -50,6 +51,9 @@ public class GpxTrackWriter implements TrackWriter {
         COORDINATE_FORMAT.setMaximumFractionDigits(6);
         COORDINATE_FORMAT.setMaximumIntegerDigits(3);
         COORDINATE_FORMAT.setGroupingUsed(false);
+
+        HEARTRATE_FORMAT.setMaximumFractionDigits(1);
+        HEARTRATE_FORMAT.setGroupingUsed(false);
     }
 
     private final String creator;
@@ -85,7 +89,8 @@ public class GpxTrackWriter implements TrackWriter {
             printWriter.println("xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1"
                     + " http://www.topografix.com/GPX/1/1/gpx.xsd"
                     + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1"
-                    + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd\">");
+                    + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd\"");
+            printWriter.println("xmlns:gpxtpx=\"http://www.garmin.com/xmlschemes/TrackPointExtension/v1\">");
             printWriter.println("<metadata>");
             Track track = tracks[0];
             printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
@@ -174,6 +179,11 @@ public class GpxTrackWriter implements TrackWriter {
             if (trackPoint.hasAltitude()) {
                 printWriter.println("<ele>" + ELEVATION_FORMAT.format(trackPoint.getAltitude()) + "</ele>");
             }
+
+            if (trackPoint.hasHeartRate()) {
+                printWriter.println("<extensions><gpxtpx:TrackPointExtension><gpxtpx:hr>" + HEARTRATE_FORMAT.format(trackPoint.getHeartRate_bpm()) + "</gpxtpx:hr></gpxtpx:TrackPointExtension></extensions>");
+            }
+
             printWriter.println(
                     "<time>" + StringUtils.formatDateTimeIso8601(trackPoint.getTime()) + "</time>");
             printWriter.println("</trkpt>");
