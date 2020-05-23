@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/StatsScrollView">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Distance and activity type -->
+
+        <LinearLayout
+            android:id="@+id/stats_speed_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/stats_speed_label"
+                style="@style/StatsLargeLabel"
+                android:text="@string/stats_speed"
+                android:textAppearance="@style/StatsLargeLabel" />
+
+            <LinearLayout
+                style="@style/StatsSmallValueContainer"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/stats_speed_value"
+                    style="@style/StatsLargeValue" />
+
+                <TextView
+                    android:id="@+id/stats_speed_unit"
+                    style="@style/StatsUnit"
+                    android:text="@string/unit_kilometer_per_hour" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#999999" />
+
+        <LinearLayout
+            android:id="@+id/stats_distance_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="top"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/stats_distance_label"
+                    style="@style/StatsLargeLabel"
+                    android:text="@string/stats_distance"
+                    android:textAppearance="@style/StatsLargeLabel" />
+
+                <LinearLayout
+                    style="@style/StatsLargeItemContainer"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/stats_distance_value"
+                        style="@style/StatsLargeValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <TextView
+                        android:id="@+id/stats_distance_unit"
+                        style="@style/StatsUnit"
+                        android:text="@string/unit_kilometer" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider8"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#999999" />
+
+            <LinearLayout
+                android:id="@+id/stats_sensor_heart_rate_container"
+                style="@style/StatsLargeItemContainer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="top"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/StatsLargeLabel"
+                    android:gravity="center|top"
+                    android:text="@string/sensor_state_heart_rate" />
+
+                <TextView
+                    android:id="@+id/stats_sensor_heart_rate_sensor_value"
+                    style="@style/StatsTinyValue"
+                    android:text="@string/value_unknown" />
+
+                <LinearLayout style="@style/StatsLargeValueContainer">
+
+                    <TextView
+                        android:id="@+id/stats_sensor_heart_rate_value"
+                        style="@style/StatsLargeValue"
+                        android:value="@string/value_unknown" />
+
+                    <TextView
+                        android:id="@+id/stat_heartrate_unit"
+                        style="@style/StatsUnit"
+                        android:text="@string/sensor_unit_beats_per_minute" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider5"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#999999" />
+
+        <LinearLayout
+            android:id="@+id/stats_total_time_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/stats_total_time_label"
+                style="@style/StatsLargeLabel"
+                android:text="@string/stats_total_time"
+                android:textAppearance="`" />
+
+            <LinearLayout
+                style="@style/StatsLargeItemContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Total time -->
+                <TextView
+                    android:id="@+id/stats_total_time_value"
+                    style="@style/StatsLargeValue" />
+
+                <!-- Moving time -->
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Total time and moving time -->
+
+        <!-- Horizontal line -->
+        <View
+            android:id="@+id/divider6"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#999999" />
+
+        <!-- Speed/pace and average -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+            <!-- Distance -->
+
+            <!-- Activity type -->
+
+            <include
+                android:id="@+id/stats_activity_type"
+                layout="@layout/stats_activity_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <View
+                android:id="@+id/divider9"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#999999" />
+
+            <LinearLayout
+                style="@style/StatsSmallGroupContainer"
+                android:layout_weight="1">
+
+                <TextView
+                    style="@style/StatsLargeLabel"
+                    android:text="@string/stats_elevation"
+                    android:textAppearance="@style/StatsLargeLabel"
+                    android:textColor="@color/stats_large_label"
+                    android:textSize="14pt" />
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <!-- Current elevation -->
+                    <LinearLayout
+                        style="@style/StatsSmallValueContainer"
+                        android:layout_gravity="start|bottom">
+
+                        <TextView
+                            android:id="@+id/stats_elevation_current_value"
+                            style="@style/StatsSmallValue"
+                            android:value="@string/value_unknown" />
+
+                        <TextView
+                            android:id="@+id/stats_elevation_current_unit"
+                            style="@style/StatsUnit"
+                            android:text="@string/unit_meter" />
+                    </LinearLayout>
+                </TableLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider10"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#999999" />
+
+        <LinearLayout
+            android:id="@+id/speed_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Speed/pace -->
+
+                <!-- Average -->
+                <TextView
+                    android:id="@+id/stats_average_speed_label"
+                    style="@style/StatsSmallLabel"
+                    android:text="@string/stats_average_speed" />
+
+                <LinearLayout style="@style/StatsSmallValueContainer">
+
+                    <TextView
+                        android:id="@+id/stats_average_speed_value"
+                        style="@style/StatsSmallValue"
+                        android:value="@string/value_unknown" />
+
+                    <TextView
+                        android:id="@+id/stats_average_speed_unit"
+                        style="@style/StatsUnit" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider11"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#999999" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <!-- Speed max -->
+                <TextView
+                    android:id="@+id/stats_max_speed_label"
+                    style="@style/StatsSmallLabel"
+                    android:text="@string/stats_max_speed" />
+
+                <LinearLayout style="@style/StatsSmallValueContainer">
+
+                    <TextView
+                        android:id="@+id/stats_max_speed_value"
+                        style="@style/StatsSmallValue"
+                        android:value="@string/value_unknown" />
+
+                    <TextView
+                        android:id="@+id/stats_max_speed_unit"
+                        style="@style/StatsUnit" />
+                </LinearLayout>
+
+                <!-- Speed moving -->
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider12"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#999999" />
+
+        <!-- Speed max and moving -->
+
+        <!-- Horizontal line -->
+
+        <!-- Latitude and longitude -->
+
+        <!-- Sensor data -->
+    </LinearLayout>
+</ScrollView>
