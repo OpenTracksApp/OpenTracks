@@ -117,8 +117,7 @@ limitations under the License.
     <style name="StatsHorizontalLine">
         <item name="android:background">@color/stats_separator</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:layout_marginLeft">8dp</item>
-        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_margin">8dp</item>
         <item name="android:layout_width">match_parent</item>
     </style>
     <!-- stats large item container -->
@@ -140,6 +139,9 @@ limitations under the License.
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/stats_large_label</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingRight">4dp</item>
+        <item name="android:layout_marginTop">16dp</item>
     </style>
 
     <style name="StatsLargeValue">
@@ -179,6 +181,7 @@ limitations under the License.
         <item name="android:singleLine">false</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">16dp</item>
     </style>
     <!-- stats small value -->
     <style name="StatsSmallValue" parent="@style/TextLarge">

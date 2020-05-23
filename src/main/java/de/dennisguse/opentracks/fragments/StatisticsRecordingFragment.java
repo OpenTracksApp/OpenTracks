@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 
 import de.dennisguse.opentracks.R;
@@ -99,10 +100,11 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     }
 
     /* Views */
-    private View heartRateContainer;
+    private View sensorHorizontalLine;
+    private Group heartRateGroup;
     private TextView heartRateValueView;
     private TextView heartRateSensorView;
-    private View cadenceContainer;
+    private Group cadenceGroup;
     private TextView cadenceValueView;
     private TextView cadenceSensorView;
 
@@ -133,16 +135,13 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private TextView speedMovingLabel;
     private TextView speedMovingValue;
     private TextView speedMovingUnit;
-    private View elevationSeparator;
-    private View elevationContainer;
-    private View speedContainer;
+    private Group elevationGroup;
     private TextView speedLabel;
     private TextView speedValue;
     private TextView speedUnit;
     private TextView elevationValue;
     private TextView elevationUnit;
-    private View coordinateSeparator;
-    private View coordinateContainer;
+    private Group coordinateGroup;
     private TextView latitudeValue;
     private TextView longitudeValue;
 
@@ -150,11 +149,13 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        heartRateContainer = view.findViewById(R.id.stats_sensor_heart_rate_container);
+        sensorHorizontalLine = view.findViewById(R.id.stats_sensor_horizontal_line);
+
+        heartRateGroup = view.findViewById(R.id.stats_sensor_heart_rate_group);
         heartRateValueView = view.findViewById(R.id.stats_sensor_heart_rate_value);
         heartRateSensorView = view.findViewById(R.id.stats_sensor_heart_rate_sensor_value);
 
-        cadenceContainer = view.findViewById(R.id.stats_sensor_cadence_container);
+        cadenceGroup = view.findViewById(R.id.stats_sensor_cadence_group);
         cadenceValueView = view.findViewById(R.id.stats_sensor_cadence_value);
         cadenceSensorView = view.findViewById(R.id.stats_sensor_cadence_sensor_value);
 
@@ -180,10 +181,8 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         speedMovingValue = view.findViewById(R.id.stats_moving_speed_value);
         speedMovingUnit = view.findViewById(R.id.stats_moving_speed_unit);
 
-        elevationSeparator = view.findViewById(R.id.stats_elevation_separator);
-        elevationContainer = view.findViewById(R.id.stats_elevation_container);
+        elevationGroup = view.findViewById(R.id.stats_elevation_current_group);
 
-        speedContainer = view.findViewById(R.id.stats_speed);
         speedLabel = view.findViewById(R.id.stats_speed_label);
         speedValue = view.findViewById(R.id.stats_speed_value);
         speedUnit = view.findViewById(R.id.stats_speed_unit);
@@ -191,8 +190,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         elevationValue = view.findViewById(R.id.stats_elevation_current_value);
         elevationUnit = view.findViewById(R.id.stats_elevation_current_unit);
 
-        coordinateSeparator = view.findViewById(R.id.stats_coordinate_separator);
-        coordinateContainer = view.findViewById(R.id.stats_coordinate_container);
+        coordinateGroup = view.findViewById(R.id.stats_coordinate_group);
 
         latitudeValue = view.findViewById(R.id.stats_latitude_value);
         longitudeValue = view.findViewById(R.id.stats_longitude_value);
@@ -261,10 +259,12 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        heartRateContainer = null;
+        sensorHorizontalLine = null;
+
+        heartRateGroup = null;
         heartRateValueView = null;
         heartRateSensorView = null;
-        cadenceContainer = null;
+        cadenceGroup = null;
         cadenceValueView = null;
         cadenceSensorView = null;
 
@@ -290,10 +290,8 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         speedMovingValue = null;
         speedMovingUnit = null;
 
-        elevationSeparator = null;
-        elevationContainer = null;
+        elevationGroup = null;
 
-        speedContainer = null;
         speedLabel = null;
         speedValue = null;
         speedUnit = null;
@@ -301,8 +299,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         elevationValue = null;
         elevationUnit = null;
 
-        coordinateSeparator = null;
-        coordinateContainer = null;
+        coordinateGroup = null;
 
         latitudeValue = null;
         longitudeValue = null;
@@ -433,57 +430,65 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
             sensorDataSet = trackRecordingService.getSensorData();
         }
 
-        setHeartRateSensorData(sensorDataSet, isSelectedTrackRecording());
-        setCadenceSensorData(sensorDataSet, isSelectedTrackRecording());
+        setHeartRateSensorData(sensorDataSet);
+        setCadenceSensorData(sensorDataSet);
         setSpeedSensorData(sensorDataSet, isSelectedTrackRecording());
     }
 
-    private void setHeartRateSensorData(SensorDataSet sensorDataSet, boolean isRecording) {
+    private void setHeartRateSensorData(SensorDataSet sensorDataSet) {
         int isVisible = View.VISIBLE;
-        if (!isRecording || PreferencesUtils.isBluetoothHeartRateSensorAddressNone(getContext())) {
-            isVisible = View.INVISIBLE;
+        if (PreferencesUtils.isBluetoothHeartRateSensorAddressNone(getContext())) {
+            isVisible = View.GONE;
         }
-        heartRateContainer.setVisibility(isVisible);
+        heartRateGroup.setVisibility(isVisible);
+        setVisibilitySensorHorizontalLine();
 
-        if (isRecording) {
-            String sensorValue = getContext().getString(R.string.value_unknown);
-            String sensorName = getContext().getString(R.string.value_unknown);
-            if (sensorDataSet != null && sensorDataSet.getHeartRate() != null) {
-                SensorDataHeartRate data = sensorDataSet.getHeartRate();
+        String sensorValue = getContext().getString(R.string.value_unknown);
+        String sensorName = getContext().getString(R.string.value_unknown);
+        if (sensorDataSet != null && sensorDataSet.getHeartRate() != null) {
+            SensorDataHeartRate data = sensorDataSet.getHeartRate();
 
-                sensorName = data.getSensorName();
-                if (data.hasHeartRate_bpm() && data.isRecent()) {
-                    sensorValue = StringUtils.formatDecimal(data.getHeartRate_bpm(), 0);
-                }
+            sensorName = data.getSensorName();
+            if (data.hasHeartRate_bpm() && data.isRecent()) {
+                sensorValue = StringUtils.formatDecimal(data.getHeartRate_bpm(), 0);
             }
-
-            heartRateSensorView.setText(sensorName);
-            heartRateValueView.setText(sensorValue);
         }
+
+        heartRateSensorView.setText(sensorName);
+        heartRateValueView.setText(sensorValue);
     }
 
-    private void setCadenceSensorData(SensorDataSet sensorDataSet, boolean isRecording) {
+    private void setCadenceSensorData(SensorDataSet sensorDataSet) {
         int isVisible = View.VISIBLE;
-        if (!isRecording || PreferencesUtils.isBluetoothCyclingCadenceSensorAddressNone(getContext())) {
-            isVisible = View.INVISIBLE;
+        if (PreferencesUtils.isBluetoothCyclingCadenceSensorAddressNone(getContext())) {
+            isVisible = View.GONE;
         }
-        cadenceContainer.setVisibility(isVisible);
+        cadenceGroup.setVisibility(isVisible);
+        setVisibilitySensorHorizontalLine();
 
-        if (isRecording) {
-            String sensorValue = getContext().getString(R.string.value_unknown);
-            String sensorName = getContext().getString(R.string.value_unknown);
-            if (sensorDataSet != null && sensorDataSet.getCyclingCadence() != null) {
-                SensorDataCycling.Cadence data = sensorDataSet.getCyclingCadence();
-                sensorName = data.getSensorName();
+        String sensorValue = getContext().getString(R.string.value_unknown);
+        String sensorName = getContext().getString(R.string.value_unknown);
+        if (sensorDataSet != null && sensorDataSet.getCyclingCadence() != null) {
+            SensorDataCycling.Cadence data = sensorDataSet.getCyclingCadence();
+            sensorName = data.getSensorName();
 
-                if (data.hasCadence_rpm() && data.isRecent()) {
-                    sensorValue = StringUtils.formatDecimal(data.getCadence_rpm(), 0);
-                }
+            if (data.hasCadence_rpm() && data.isRecent()) {
+                sensorValue = StringUtils.formatDecimal(data.getCadence_rpm(), 0);
             }
-
-            cadenceSensorView.setText(sensorName);
-            cadenceValueView.setText(sensorValue);
         }
+
+        cadenceSensorView.setText(sensorName);
+        cadenceValueView.setText(sensorValue);
+    }
+
+    /**
+     * If cadence and hear rate groups are invisible then sensor horizontal line hast to be invisible too.
+     */
+    private void setVisibilitySensorHorizontalLine() {
+        if (cadenceGroup.getVisibility() != View.VISIBLE && heartRateGroup.getVisibility() != View.VISIBLE) {
+            sensorHorizontalLine.setVisibility(View.GONE);
+        }
+
     }
 
     private void setSpeedSensorData(SensorDataSet sensorDataSet, boolean isRecording) {
@@ -566,7 +571,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         // Make elevation visible?
         {
             boolean showElevation = PreferencesUtils.isShowStatsElevation(getContext());
-            elevationSeparator.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+            elevationGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -595,18 +600,14 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
     private void setLocationValues() {
         boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
-        boolean isRecording = isSelectedTrackRecording();
 
         // Set speed/pace
-        speedContainer.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
-        if (isRecording) {
-            double speed = lastTrackPoint != null && lastTrackPoint.hasSpeed() ? lastTrackPoint.getSpeed() : Double.NaN;
-            setSpeed(speed);
-        }
+        double speed = lastTrackPoint != null && lastTrackPoint.hasSpeed() ? lastTrackPoint.getSpeed() : Double.NaN;
+        setSpeed(speed);
 
         // Set elevation
-        boolean showElevation = isRecording && PreferencesUtils.isShowStatsElevation(getContext());
-        elevationContainer.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+        boolean showElevation = PreferencesUtils.isShowStatsElevation(getContext());
+        elevationGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
 
         if (showElevation) {
             double altitude = lastTrackPoint != null && lastTrackPoint.hasAltitude() ? lastTrackPoint.getAltitude() : Double.NaN;
@@ -617,10 +618,9 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         }
 
         // Set coordinate
-        boolean showCoordinate = isRecording && PreferencesUtils.isStatsShowCoordinate(getContext());
+        boolean showCoordinate = PreferencesUtils.isStatsShowCoordinate(getContext());
 
-        coordinateSeparator.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
-        coordinateContainer.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
+        coordinateGroup.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
         if (showCoordinate) {
             double latitude = lastTrackPoint != null ? lastTrackPoint.getLatitude() : Double.NaN;
             String latitudeText = Double.isNaN(latitude) || Double.isInfinite(latitude) ? getContext().getString(R.string.value_unknown) : StringUtils.formatCoordinate(latitude);

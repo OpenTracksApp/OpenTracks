@@ -16,7 +16,7 @@ TrackListActivity --> TrackRecordedActivity : Show track
 TrackListActivity --> TrackDeleteActivity
 
 SearchListActivity --> MarkerDetailActivity : Search result
-SearchListActivity --> TrackDetailActivity : Search result
+SearchListActivity --> TrackRecordedActivity : Search result
 
 TrackRecordedActivity --> TrackDeleteActivity
 TrackRecordedActivity --> TrackEditActivity

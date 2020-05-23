@@ -42,7 +42,7 @@ import java.util.concurrent.Executors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
-import de.dennisguse.opentracks.TrackRecordedActivity;
+import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.Waypoint;
@@ -743,10 +743,10 @@ public class TrackRecordingService extends Service {
 
     private void showNotification(boolean isGpsStarted) {
         if (isRecording()) {
-            Intent intent = IntentUtils.newIntent(this, TrackRecordedActivity.class)
-                    .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, recordingTrackId);
+            Intent intent = IntentUtils.newIntent(this, TrackRecordingActivity.class)
+                    .putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, recordingTrackId);
             PendingIntent pendingIntent = TaskStackBuilder.create(this)
-                    .addParentStack(TrackRecordedActivity.class)
+                    .addParentStack(TrackRecordingActivity.class)
                     .addNextIntent(intent)
                     .getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
