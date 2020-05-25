@@ -1,21 +1,6 @@
-/*
- * Copyright 2008 Google Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- */
-
 package de.dennisguse.opentracks;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -38,12 +23,10 @@ import com.google.android.material.tabs.TabLayout;
 
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
-import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
-import de.dennisguse.opentracks.fragments.StatsFragment;
+import de.dennisguse.opentracks.fragments.StatisticsRecordingFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.settings.SettingsActivity;
@@ -58,13 +41,11 @@ import de.dennisguse.opentracks.util.TrackUtils;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackDetailActivity extends AbstractListActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
+public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackActivityDataHubInterface {
 
     public static final String EXTRA_TRACK_ID = "track_id";
-    public static final String EXTRA_MARKER_ID = "marker_id";
-    public static final String EXTRA_RECORDING_REQUEST = "request_recording";
 
-    private static final String TAG = TrackDetailActivity.class.getSimpleName();
+    private static final String TAG = TrackRecordingActivity.class.getSimpleName();
 
     private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
 
@@ -79,8 +60,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     // From intent
     private long trackId;
 
-    private boolean isRecordingRequest = false;
-
     // Preferences
     private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     private boolean recordingTrackPaused;
@@ -92,7 +71,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    trackController.update(isRecording(), recordingTrackPaused);
+                    trackController.update(true, recordingTrackPaused);
                 }
             });
 
@@ -100,9 +79,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
                 if (service == null) {
                     Log.d(TAG, "could not get TrackRecordingService");
-                    return;
-                }
-                if (!isRecordingRequest) {
                     return;
                 }
 
@@ -121,12 +97,10 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                 }
 
                 // A recording track is on.
-                Toast.makeText(TrackDetailActivity.this, msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(TrackRecordingActivity.this, msg, Toast.LENGTH_SHORT).show();
                 trackDataHub.loadTrack(trackId);
                 trackController.update(true, false);
                 trackController.onResume(true, recordingTrackPaused);
-
-                isRecordingRequest = false;
             }
         }
     };
@@ -134,23 +108,23 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-            if (PreferencesUtils.isKey(TrackDetailActivity.this, R.string.recording_track_id_key, key)) {
-                recordingTrackId = PreferencesUtils.getRecordingTrackId(TrackDetailActivity.this);
+            if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.recording_track_id_key, key)) {
+                recordingTrackId = PreferencesUtils.getRecordingTrackId(TrackRecordingActivity.this);
                 setLockscreenPolicy();
                 setScreenOnPolicy();
             }
 
-            if (PreferencesUtils.isKey(TrackDetailActivity.this, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(TrackDetailActivity.this);
+            if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.recording_track_paused_key, key)) {
+                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(TrackRecordingActivity.this);
                 setLockscreenPolicy();
                 setScreenOnPolicy();
             }
 
-            if (PreferencesUtils.isKey(TrackDetailActivity.this, R.string.stats_show_on_lockscreen_while_recording_key, key)) {
+            if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.stats_show_on_lockscreen_while_recording_key, key)) {
                 setLockscreenPolicy();
             }
 
-            if (PreferencesUtils.isKey(TrackDetailActivity.this, R.string.stats_keep_screen_on_while_recording_key, key)) {
+            if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.stats_keep_screen_on_while_recording_key, key)) {
                 setScreenOnPolicy();
             }
 
@@ -159,9 +133,8 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    TrackDetailActivity.this.invalidateOptionsMenu();
-                    boolean isRecording = isRecording();
-                    trackController.update(isRecording, recordingTrackPaused);
+                    TrackRecordingActivity.this.invalidateOptionsMenu();
+                    trackController.update(true, recordingTrackPaused);
                 }
             });
         }
@@ -169,8 +142,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
 
     private MenuItem insertMarkerMenuItem;
     private MenuItem markerListMenuItem;
-    private MenuItem shareMenuItem;
-    private MenuItem resumeMenuItem;
 
     private final OnClickListener recordListener = new OnClickListener() {
         @Override
@@ -192,8 +163,13 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     private final OnClickListener stopListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            trackRecordingServiceConnection.stopRecording(TrackDetailActivity.this, true);
+            trackRecordingServiceConnection.stopRecording(TrackRecordingActivity.this, true);
+            Intent newIntent = IntentUtils.newIntent(TrackRecordingActivity.this, TrackRecordedActivity.class)
+                    .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
+            startActivity(newIntent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             updateMenuItems(true);
+            finish();
         }
     };
 
@@ -220,12 +196,14 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
             @Override
             public Fragment getItem(int position) {
                 switch (position) {
+                    case 0:
+                        return new StatisticsRecordingFragment();
                     case 1:
                         return ChartFragment.newInstance(false);
                     case 2:
                         return ChartFragment.newInstance(true);
-                    default: //0
-                        return new StatsFragment();
+                    default:
+                        throw new RuntimeException("There isn't Fragment associated with the position: " + position);
                 }
             }
 
@@ -261,7 +239,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     }
 
     private void setLockscreenPolicy() {
-        boolean showOnLockScreen = PreferencesUtils.shouldShowStatsOnLockscreen(TrackDetailActivity.this)
+        boolean showOnLockScreen = PreferencesUtils.shouldShowStatsOnLockscreen(TrackRecordingActivity.this)
                 && PreferencesUtils.isRecording(this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
@@ -274,7 +252,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
     }
 
     private void setScreenOnPolicy() {
-        boolean keepScreenOn = PreferencesUtils.shouldKeepScreenOn(TrackDetailActivity.this)
+        boolean keepScreenOn = PreferencesUtils.shouldKeepScreenOn(TrackRecordingActivity.this)
                 && PreferencesUtils.isRecording(this);
 
         if (keepScreenOn) {
@@ -304,10 +282,10 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
 
         if (trackId != -1L) {
             trackDataHub.loadTrack(trackId);
-            trackController.onResume(isRecording(), recordingTrackPaused);
-        } else {
-            startRecording();
+            trackController.onResume(true, recordingTrackPaused);
         }
+
+        startRecording();
     }
 
     @Override
@@ -332,7 +310,7 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.track_detail;
+        return R.layout.track_record;
     }
 
     @Override
@@ -344,12 +322,10 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.track_detail, menu);
+        getMenuInflater().inflate(R.menu.track_record, menu);
 
         insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
-        shareMenuItem = menu.findItem(R.id.track_detail_share);
         markerListMenuItem = menu.findItem(R.id.track_detail_markers);
-        resumeMenuItem = menu.findItem(R.id.track_detail_resume_track);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -370,11 +346,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                         .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
                 startActivity(intent);
                 return true;
-            case R.id.track_detail_share:
-                intent = IntentUtils.newShareFileIntent(this, new long[]{trackId});
-                intent = Intent.createChooser(intent, null);
-                startActivity(intent);
-                return true;
             case R.id.track_detail_menu_show_on_map:
                 IntentUtils.showTrackOnMap(this, new long[]{trackId});
                 return true;
@@ -388,13 +359,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
                         .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
                 startActivity(intent);
                 return true;
-            case R.id.track_detail_delete:
-                deleteTracks(new long[]{trackId});
-                return true;
-            case R.id.track_detail_resume_track:
-                isRecordingRequest = true;
-                startRecording();
-                return true;
             case R.id.track_detail_settings:
                 intent = IntentUtils.newIntent(this, SettingsActivity.class);
                 startActivity(intent);
@@ -404,58 +368,25 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         }
     }
 
-    @Override
-    protected TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
-        return trackRecordingServiceConnection;
-    }
-
-    @Override
-    protected void onDeleted() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                finish();
-            }
-        });
-    }
-
     /**
      * Gets the {@link TrackDataHub}.
      */
+    @Override
     public TrackDataHub getTrackDataHub() {
         return trackDataHub;
     }
 
     private void handleIntent(Intent intent) {
         trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
-        isRecordingRequest = intent.getBooleanExtra(EXTRA_RECORDING_REQUEST, false);
-        long markerId = intent.getLongExtra(EXTRA_MARKER_ID, -1L);
-        if (markerId != -1L) {
-            // Use the trackId from the marker
-            Waypoint waypoint = contentProviderUtils.getWaypoint(markerId);
-            if (waypoint == null) {
-                finish();
-                return;
-            }
-            trackId = waypoint.getTrackId();
-            if (trackId == -1L) {
-                finish();
-                return;
-            }
-        }
-
         if (trackId == -1L) {
             return;
         }
         Track track = contentProviderUtils.getTrack(trackId);
         if (track == null) {
-            // Use the last track if markerId is not set
-            if (markerId == -1L) {
-                track = contentProviderUtils.getLastTrack();
-                if (track != null) {
-                    trackId = track.getId();
-                    return;
-                }
+            track = contentProviderUtils.getLastTrack();
+            if (track != null) {
+                trackId = track.getId();
+                return;
             }
             finish();
         }
@@ -465,20 +396,9 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
      * Updates the menu items.
      */
     private void updateMenuItems(boolean isPaused) {
-        insertMarkerMenuItem.setVisible(isRecording() && !isPaused);
-        shareMenuItem.setVisible(!isRecording());
-        markerListMenuItem.setShowAsAction(isRecording() ? MenuItem.SHOW_AS_ACTION_NEVER : MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        String title;
-        if (isRecording()) {
-            title = getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
-            resumeMenuItem.setVisible(false);
-        } else {
-            Track track = contentProviderUtils.getTrack(trackId);
-            title = track != null ? track.getName() : "";
-            // Only visible if there aren't other tracks that is recording.
-            resumeMenuItem.setVisible(recordingTrackId == -1L);
-        }
-        setTitle(title);
+        insertMarkerMenuItem.setVisible(!isPaused);
+        markerListMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+        setTitle(getString(isPaused ? R.string.generic_paused : R.string.generic_recording));
     }
 
     public void chooseActivityType(String category) {
@@ -490,10 +410,6 @@ public class TrackDetailActivity extends AbstractListActivity implements ChooseA
         Track track = contentProviderUtils.getTrack(trackId);
         String category = getString(TrackIconUtils.getIconActivityType(iconValue));
         TrackUtils.updateTrack(this, track, null, category, null, contentProviderUtils);
-    }
-
-    private boolean isRecording() {
-        return trackId == recordingTrackId;
     }
 
     private void startRecording() {

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/StatsScrollView">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Guidelines -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="8dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="8dp" />
+
+        <!-- Distance -->
+        <TextView
+            android:id="@+id/stats_distance_label"
+            style="@style/StatsLargeLabel"
+            android:text="@string/stats_distance"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintLeft_toRightOf="@+id/guideline"
+            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/stats_distance_value"
+            style="@style/StatsLargeValue"
+            android:value="@string/value_unknown"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toRightOf="@+id/guideline"
+            app:layout_constraintRight_toLeftOf="@+id/stats_distance_unit"
+            app:layout_constraintTop_toBottomOf="@+id/stats_distance_label"
+            tools:text="100" />
+
+        <TextView
+            android:id="@+id/stats_distance_unit"
+            style="@style/StatsUnit"
+            app:layout_constraintBottom_toBottomOf="@+id/stats_distance_value"
+            app:layout_constraintLeft_toRightOf="@+id/stats_distance_value"
+            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            tools:text="km" />
+
+        <!-- Activity Type -->
+        <TextView
+            android:id="@+id/stats_activity_type_label"
+            style="@style/StatsLargeLabel"
+            android:text="@string/track_edit_activity_type_hint"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/stats_activity_type_icon"
+            style="@style/StatsLargeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintBottom_toBottomOf="@+id/stats_distance_value"
+            app:layout_constraintTop_toTopOf="@+id/stats_distance_value" />
+
+        <!-- Total time -->
+        <TextView
+            android:id="@+id/stats_total_time_label"
+            style="@style/StatsLargeLabel"
+            android:text="@string/stats_total_time"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintLeft_toRightOf="@+id/guideline"
+            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/stats_distance_value" />
+
+        <TextView
+            android:id="@+id/stats_total_time_value"
+            style="@style/StatsLargeValue"
+            app:layout_constraintLeft_toRightOf="@+id/guideline"
+            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@+id/stats_total_time_label"
+            tools:text="00:00:00" />
+
+        <!-- Moving time -->
+        <TextView
+            android:id="@+id/stats_moving_time_label"
+            style="@style/StatsLargeLabel"
+            android:text="@string/stats_moving_time"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="@+id/stats_total_time_label"
+            app:layout_constraintBottom_toBottomOf="@+id/stats_total_time_label" />
+
+        <TextView
+            android:id="@+id/stats_moving_time_value"
+            style="@style/StatsLargeValue"
+            android:value="@string/value_unknown"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/stats_moving_time_label"
+            tools:text="00:00:00" />
+
+        <!-- Horizontal line -->
+        <View
+            android:id="@+id/stats_speed_horizontal_line"
+            style="@style/StatsHorizontalLine"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintLeft_toRightOf="@+id/guideline"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/stats_moving_time_value" />
+
+        <!-- Average speed/pace -->
+        <TextView
+            android:id="@+id/stats_average_speed_label"
+            style="@style/StatsSmallLabel"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_speed_horizontal_line"
+            tools:text="Avg. Speed" />
+
+        <TextView
+            android:id="@+id/stats_average_speed_value"
+            style="@style/StatsSmallValue"
+            android:value="@string/value_unknown"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/stats_average_speed_unit"
+            app:layout_constraintTop_toBottomOf="@+id/stats_average_speed_label"
+            tools:text="30.00" />
+
+        <TextView
+            android:id="@+id/stats_average_speed_unit"
+            style="@style/StatsUnit"
+            app:layout_constraintBottom_toBottomOf="@+id/stats_average_speed_value"
+            app:layout_constraintLeft_toRightOf="@+id/stats_average_speed_value"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            tools:text="km/h" />
+
+        <!-- Speed max -->
+        <TextView
+            android:id="@+id/stats_max_speed_label"
+            style="@style/StatsSmallLabel"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintLeft_toRightOf="@+id/guideline"
+            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            app:layout_constraintTop_toBottomOf="@id/stats_average_speed_value"
+            tools:text="Max. Speed" />
+
+        <TextView
+            android:id="@+id/stats_max_speed_value"
+            style="@style/StatsSmallValue"
+            android:value="@string/value_unknown"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toRightOf="@+id/guideline"
+            app:layout_constraintRight_toLeftOf="@+id/stats_max_speed_unit"
+            app:layout_constraintTop_toBottomOf="@+id/stats_max_speed_label"
+            tools:text="30.00" />
+
+        <TextView
+            android:id="@+id/stats_max_speed_unit"
+            style="@style/StatsUnit"
+            app:layout_constraintBottom_toBottomOf="@+id/stats_max_speed_value"
+            app:layout_constraintLeft_toRightOf="@+id/stats_max_speed_value"
+            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            tools:text="km/h" />
+
+        <!-- Moving speed max -->
+        <TextView
+            android:id="@+id/stats_moving_speed_label"
+            style="@style/StatsSmallLabel"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_average_speed_value"
+            tools:text="Max. Moving Speed" />
+
+        <TextView
+            android:id="@+id/stats_moving_speed_value"
+            style="@style/StatsSmallValue"
+            android:value="@string/value_unknown"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/stats_moving_speed_unit"
+            app:layout_constraintTop_toBottomOf="@+id/stats_moving_speed_label"
+            tools:text="30.00" />
+
+        <TextView
+            android:id="@+id/stats_moving_speed_unit"
+            style="@style/StatsUnit"
+            app:layout_constraintBottom_toBottomOf="@+id/stats_moving_speed_value"
+            app:layout_constraintLeft_toRightOf="@+id/stats_moving_speed_value"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            tools:text="km/h" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

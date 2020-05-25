@@ -16,16 +16,16 @@ limitations under the License.
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/track_detail_insert_marker"
+        android:icon="@drawable/ic_marker_add_24dp"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"
+        android:title="@string/menu_insert_marker" />
+    <item
         android:id="@+id/track_detail_menu_show_on_map"
         android:icon="@drawable/ic_map_24dp"
         app:showAsAction="ifRoom"
         android:title="@string/menu_show_on_map" />
-    <item
-        android:id="@+id/track_detail_share"
-        android:icon="@drawable/ic_share_24dp"
-        android:orderInCategory="4"
-        app:showAsAction="ifRoom"
-        android:title="@string/menu_share" />
     <item
         android:id="@+id/track_detail_markers"
         android:icon="@drawable/ic_marker_show_24dp"
@@ -37,16 +37,6 @@ limitations under the License.
         android:icon="@drawable/ic_edit_24dp"
         android:orderInCategory="9"
         android:title="@string/menu_edit" />
-    <item
-        android:id="@+id/track_detail_delete"
-        android:icon="@drawable/ic_delete_forever_24dp"
-        android:orderInCategory="10"
-        android:title="@string/menu_delete" />
-    <item
-        android:id="@+id/track_detail_resume_track"
-        android:icon="@drawable/ic_play_circle_24dp"
-        android:orderInCategory="10"
-        android:title="@string/menu_resume_track" />
     <item
         android:id="@+id/track_detail_settings"
         android:icon="@drawable/ic_settings_24dp"

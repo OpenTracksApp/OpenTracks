@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.TrackDetailActivity;
+import de.dennisguse.opentracks.TrackActivityDataHubInterface;
 import de.dennisguse.opentracks.chart.ChartPoint;
 import de.dennisguse.opentracks.chart.ChartView;
 import de.dennisguse.opentracks.content.TrackDataHub;
@@ -286,7 +286,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
      * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
      */
     private synchronized void resumeTrackDataHub() {
-        trackDataHub = ((TrackDetailActivity) getActivity()).getTrackDataHub();
+        trackDataHub = ((TrackActivityDataHubInterface) getActivity()).getTrackDataHub();
         trackDataHub.registerTrackDataListener(this, true, true, true, true);
     }
 

@@ -214,11 +214,11 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
                 Map<String, Object> item = arrayAdapter.getItem(position);
                 Long trackId = (Long) item.get(TRACK_ID_FIELD);
                 Long markerId = (Long) item.get(MARKER_ID_FIELD);
-                Intent intent = IntentUtils.newIntent(SearchListActivity.this, TrackDetailActivity.class);
+                Intent intent = IntentUtils.newIntent(SearchListActivity.this, TrackRecordedActivity.class);
                 if (markerId != null) {
-                    intent = intent.putExtra(TrackDetailActivity.EXTRA_MARKER_ID, markerId);
+                    intent = intent.putExtra(TrackRecordedActivity.EXTRA_MARKER_ID, markerId);
                 } else {
-                    intent = intent.putExtra(TrackDetailActivity.EXTRA_TRACK_ID, trackId);
+                    intent = intent.putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
                 }
                 startActivity(intent);
             }
