@@ -1,0 +1,12 @@
+v3.7.4: OpenTracks
+
+Changes:
+- Sharing/export format configurable
+
+Bugfix:
+- Wheel diameter not stored correctly (for speed sensor)
+- Help: links are clickable
+
+Developer:
+- Split TrackDetailActivity
+- StatsFragement successor uses ConstraintLayout
