@@ -118,4 +118,16 @@ public interface TrackRecordingServiceInterface {
 
     @VisibleForTesting
     void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager);
+
+    /**
+     * Set GPS change callback.
+     *
+     * @param gpsChangeCallback  the callback.
+     */
+    void setGpsChangeCallback(Runnable gpsChangeCallback);
+
+    /**
+     * @return the current status of GPS. See {@link GpsStatus} and {@link GpsStatusValue}.
+     */
+    GpsStatusValue getGpsStatus();
 }

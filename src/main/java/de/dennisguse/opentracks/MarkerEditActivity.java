@@ -88,7 +88,7 @@ public class MarkerEditActivity extends AbstractActivity {
 
         trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
         markerId = getIntent().getLongExtra(EXTRA_MARKER_ID, -1L);
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(null);
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(null, null);
 
         hasCamera = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
 

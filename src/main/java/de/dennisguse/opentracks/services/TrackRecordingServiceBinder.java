@@ -112,4 +112,14 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
     void detachFromService() {
         trackRecordingService = null;
     }
+
+    @Override
+    public void setGpsChangeCallback(Runnable gpsChangeCallback) {
+        trackRecordingService.setGpsChangeCallback(gpsChangeCallback);
+    }
+
+    @Override
+    public GpsStatusValue getGpsStatus() {
+        return trackRecordingService.getGpsStatus();
+    }
 }

@@ -172,7 +172,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
 
         contentProviderUtils = new ContentProviderUtils(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(null);
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(null, null);
         searchEngine = new SearchEngine(contentProviderUtils);
 
         arrayAdapter = new ArrayAdapter<Map<String, Object>>(this, R.layout.list_item, R.id.list_item_name) {

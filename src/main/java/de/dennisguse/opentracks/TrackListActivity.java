@@ -52,6 +52,7 @@ import java.util.Locale;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
+import de.dennisguse.opentracks.services.GpsStatusValue;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.settings.SettingsActivity;
@@ -200,6 +201,17 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         }
     };
 
+    private final Runnable gpsBindChangedCallback = new Runnable() {
+        @Override
+        public void run() {
+            TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
+            if (service != null) {
+                GpsStatusValue status = service.getGpsStatus();
+                startGpsMenuItem.setIcon(status.icon);
+            }
+        }
+    };
+
     private final OnClickListener recordListener = new OnClickListener() {
         public void onClick(View v) {
             if (!PreferencesUtils.isRecording(recordingTrackId)) {
@@ -230,7 +242,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         contentProviderUtils = new ContentProviderUtils(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback, gpsBindChangedCallback);
         trackController = new TrackController(this, trackRecordingServiceConnection, true, recordListener, stopListener);
 
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
