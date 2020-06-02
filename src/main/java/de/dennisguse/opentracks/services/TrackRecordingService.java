@@ -815,6 +815,24 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
 
     @Override
     public void onGpsStatusChanged(GpsStatusValue oldStatus, GpsStatusValue newStatus) {
+        switch (newStatus) {
+            case GPS_NONE:
+            case GPS_DISABLED:
+                notificationManager.updateContent(getString(R.string.gps_disabled_msg));
+                break;
+            case GPS_ENABLED:
+            case GPS_SIGNAL_LOST:
+                notificationManager.updateContent(getString(R.string.gps_wait_for_signal));
+                break;
+            case GPS_FIRST_FIX:
+            case GPS_SIGNAL_OKAY:
+                notificationManager.updateContent(getString(R.string.gps_fixed_and_ready));
+                break;
+            case GPS_SIGNAL_BAD:
+                notificationManager.updateContent(getString(R.string.gps_wait_for_better_signal));
+                break;
+        }
+
         if (gpsCallback != null) {
             gpsCallback.run();
         }
