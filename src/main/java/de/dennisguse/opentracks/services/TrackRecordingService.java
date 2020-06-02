@@ -70,7 +70,7 @@ import de.dennisguse.opentracks.util.UnitConversions;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackRecordingService extends Service {
+public class TrackRecordingService extends Service implements GpsStatus.GpsStatusListener {
 
     private static final String TAG = TrackRecordingService.class.getSimpleName();
 
@@ -131,6 +131,16 @@ public class TrackRecordingService extends Service {
             if (PreferencesUtils.isKey(context, R.string.recording_gps_accuracy_key, key)) {
                 recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(context);
             }
+            if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
+                if (gpsStatus != null) {
+                    gpsStatus.onMinRecordingIntervalChanged(PreferencesUtils.getMinRecordingInterval(context));
+                }
+            }
+            if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
+                if (gpsStatus != null) {
+                    gpsStatus.onRecordingDistanceChanged(PreferencesUtils.getRecordingDistanceInterval(context));
+                }
+            }
         }
     };
 
@@ -142,14 +152,25 @@ public class TrackRecordingService extends Service {
     private TrackPoint lastTrackPoint;
     private boolean isIdle;
 
+    private GpsStatus gpsStatus;
+
     private TrackRecordingServiceBinder binder = new TrackRecordingServiceBinder(this);
     private final LocationListener locationListener = new LocationListener() {
 
         @Override
         public void onLocationChanged(final Location location) {
+            gpsStatus.onLocationChanged(location);
+
             if (locationExecutorService == null || locationExecutorService.isShutdown() || locationExecutorService.isTerminated()) {
                 return;
             }
+
+            locationExecutorService.submit(new Runnable() {
+                @Override
+                public void run() {
+                    onLocationChangedAsync(location);
+                }
+            });
             locationExecutorService.submit(() -> onLocationChangedAsync(location));
         }
 
@@ -161,17 +182,22 @@ public class TrackRecordingService extends Service {
         @Override
         public void onProviderEnabled(String provider) {
             Log.w(TAG, "LocationListener.onProviderEnabled(): is not implemented.");
+            gpsStatus.onGpsEnabled();
         }
 
         @Override
         public void onProviderDisabled(String provider) {
             Log.w(TAG, "LocationListener.onProviderDisabled(): is not implemented.");
+            gpsStatus.onGpsDisabled();
         }
     };
+    private Runnable gpsCallback = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        gpsStatus = new GpsStatus(this, this);
+
         locationExecutorService = Executors.newSingleThreadExecutor();
         contentProviderUtils = new ContentProviderUtils(this);
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -781,5 +807,20 @@ public class TrackRecordingService extends Service {
     @VisibleForTesting
     public void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager) {
         this.remoteSensorManager = remoteSensorManager;
+    }
+
+    public void setGpsChangeCallback(Runnable gpsChangeCallback) {
+        this.gpsCallback = gpsChangeCallback;
+    }
+
+    @Override
+    public void onGpsStatusChanged(GpsStatusValue oldStatus, GpsStatusValue newStatus) {
+        if (gpsCallback != null) {
+            gpsCallback.run();
+        }
+    }
+
+    public GpsStatusValue getGpsStatus() {
+        return gpsStatus.getGpsStatus();
     }
 }

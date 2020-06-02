@@ -175,7 +175,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback, null);
         trackDataHub = new TrackDataHub(this);
 
         FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager(), 1) {
