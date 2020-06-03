@@ -153,13 +153,16 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
     private boolean isIdle;
 
     private GpsStatus gpsStatus;
+    private Runnable gpsCallback = null;
 
     private TrackRecordingServiceBinder binder = new TrackRecordingServiceBinder(this);
     private final LocationListener locationListener = new LocationListener() {
 
         @Override
         public void onLocationChanged(final Location location) {
-            gpsStatus.onLocationChanged(location);
+            if (gpsStatus != null) {
+                gpsStatus.onLocationChanged(location);
+            }
 
             if (locationExecutorService == null || locationExecutorService.isShutdown() || locationExecutorService.isTerminated()) {
                 return;
@@ -181,21 +184,23 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
         @Override
         public void onProviderEnabled(String provider) {
             Log.w(TAG, "LocationListener.onProviderEnabled(): is not implemented.");
-            gpsStatus.onGpsEnabled();
+            if (gpsStatus != null) {
+                gpsStatus.onGpsEnabled();
+            }
         }
 
         @Override
         public void onProviderDisabled(String provider) {
             Log.w(TAG, "LocationListener.onProviderDisabled(): is not implemented.");
-            gpsStatus.onGpsDisabled();
+            if (gpsStatus != null) {
+                gpsStatus.onGpsDisabled();
+            }
         }
     };
-    private Runnable gpsCallback = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        gpsStatus = new GpsStatus(this, this);
 
         locationExecutorService = Executors.newSingleThreadExecutor();
         contentProviderUtils = new ContentProviderUtils(this);
@@ -225,6 +230,10 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
 
     @Override
     public void onDestroy() {
+        if (gpsStatus != null) {
+            gpsStatus.stop();
+        }
+
         if (remoteSensorManager != null) {
             remoteSensorManager.stop();
             remoteSensorManager = null;
@@ -808,10 +817,26 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
         this.remoteSensorManager = remoteSensorManager;
     }
 
+    /**
+     * Set gps callback.
+     * When Activity pass the Runnable through {@link TrackRecordingServiceConnection} then {@link GpsStatus} is on for receive the status changes.
+     *
+     * @param gpsChangeCallback the Runnable.
+     */
     public void setGpsChangeCallback(Runnable gpsChangeCallback) {
-        this.gpsCallback = gpsChangeCallback;
+        if (gpsChangeCallback != null) {
+            this.gpsCallback = gpsChangeCallback;
+            this.gpsStatus = new GpsStatus(this, this);
+            gpsStatus.onGpsEnabled();
+        }
     }
 
+    /**
+     * Called from {@link GpsStatus} to inform to the service that GPS status has changed.
+     *
+     * @param oldStatus old {@link GpsStatusValue}.
+     * @param newStatus new {@link GpsStatusValue}.
+     */
     @Override
     public void onGpsStatusChanged(GpsStatusValue oldStatus, GpsStatusValue newStatus) {
         switch (newStatus) {
@@ -820,6 +845,8 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
                 notificationManager.updateContent(getString(R.string.gps_disabled_msg));
                 break;
             case GPS_ENABLED:
+                notificationManager.updateContent(getString(R.string.gps_wait_for_signal));
+                break;
             case GPS_SIGNAL_LOST:
                 notificationManager.updateContent(getString(R.string.gps_wait_for_signal));
                 break;
@@ -837,7 +864,17 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
         }
     }
 
+    /**
+     * This method can be called from Activities to know the current GPS status.
+     * Only ready if Activity pass to {@link TrackRecordingServiceConnection} a Runnable for gps callback.
+     *
+     * @return the status from {@link GpsStatus}. See {@link GpsStatusValue}.
+     */
     public GpsStatusValue getGpsStatus() {
-        return gpsStatus.getGpsStatus();
+        if (gpsStatus != null) {
+            return gpsStatus.getGpsStatus();
+        } else {
+            return GpsStatusValue.GPS_NONE;
+        }
     }
 }
