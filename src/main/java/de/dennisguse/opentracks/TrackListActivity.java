@@ -189,6 +189,9 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 service.startGps();
                 startGps = false;
             }
+            if (gpsBindChangedCallback != null) {
+                gpsBindChangedCallback.run();
+            }
         }
     };
 
@@ -196,7 +199,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         @Override
         public void run() {
             TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
-            if (service != null) {
+            if (service != null && startGpsMenuItem != null) {
                 GpsStatusValue status = service.getGpsStatus();
                 startGpsMenuItem.setIcon(status.icon);
             }
@@ -475,6 +478,9 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             if (!isRecording) {
                 startGpsMenuItem.setTitle(isGpsStarted ? R.string.menu_stop_gps : R.string.menu_start_gps);
                 startGpsMenuItem.setIcon(isGpsStarted ? R.drawable.ic_gps_not_fixed_24dp : R.drawable.ic_gps_off_24dp);
+                if (gpsBindChangedCallback != null) {
+                    gpsBindChangedCallback.run();
+                }
             }
         }
     }
