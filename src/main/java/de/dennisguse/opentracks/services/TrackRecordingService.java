@@ -37,6 +37,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.TaskStackBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -153,7 +155,7 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
     private boolean isIdle;
 
     private GpsStatus gpsStatus;
-    private Runnable gpsCallback = null;
+    private List<Runnable> gpsCallbacks = new ArrayList<>();
 
     private TrackRecordingServiceBinder binder = new TrackRecordingServiceBinder(this);
     private final LocationListener locationListener = new LocationListener() {
@@ -826,8 +828,10 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
      */
     public void setGpsChangeCallback(Runnable gpsChangeCallback) {
         if (gpsChangeCallback != null) {
-            this.gpsCallback = gpsChangeCallback;
-            this.gpsStatus = new GpsStatus(this, this);
+            this.gpsCallbacks.add(gpsChangeCallback);
+            if (this.gpsStatus == null) {
+                this.gpsStatus = new GpsStatus(this, this);
+            }
             gpsStatus.onGpsEnabled();
         }
     }
@@ -840,27 +844,8 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
      */
     @Override
     public void onGpsStatusChanged(GpsStatusValue oldStatus, GpsStatusValue newStatus) {
-        switch (newStatus) {
-            case GPS_NONE:
-            case GPS_DISABLED:
-                notificationManager.updateContent(getString(R.string.gps_disabled_msg));
-                break;
-            case GPS_ENABLED:
-                notificationManager.updateContent(getString(R.string.gps_wait_for_signal));
-                break;
-            case GPS_SIGNAL_LOST:
-                notificationManager.updateContent(getString(R.string.gps_wait_for_signal));
-                break;
-            case GPS_FIRST_FIX:
-            case GPS_SIGNAL_OKAY:
-                notificationManager.updateContent(getString(R.string.gps_fixed_and_ready));
-                break;
-            case GPS_SIGNAL_BAD:
-                notificationManager.updateContent(getString(R.string.gps_wait_for_better_signal));
-                break;
-        }
-
-        if (gpsCallback != null) {
+        notificationManager.updateContent(getString(newStatus.message));
+        for (Runnable gpsCallback : gpsCallbacks) {
             gpsCallback.run();
         }
     }

@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.services;
 
 import android.content.Context;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Handler;
 
 import de.dennisguse.opentracks.R;
@@ -131,7 +132,6 @@ class GpsStatus {
                     GpsStatusValue oldStatus = gpsStatus;
                     gpsStatus = GpsStatusValue.GPS_FIRST_FIX;
                     service.onGpsStatusChanged(oldStatus, gpsStatus);
-                    gpsStatus = GpsStatusValue.GPS_FIRST_FIX;
                     startStatusRunner();
                 } else if (gpsStatus != GpsStatusValue.GPS_SIGNAL_OKAY) {
                     GpsStatusValue oldStatus = gpsStatus;
@@ -161,13 +161,19 @@ class GpsStatus {
 
     /**
      * This method must be called from service every time the GPS sensor is enabled.
+     * Anyway, it checks that GPS is enabled because the service assumes that if it's on then GPS is enabled but user can disable GPS by hand.
      */
     public void onGpsEnabled() {
         if (gpsStatus != GpsStatusValue.GPS_ENABLED) {
-            GpsStatusValue oldStatus = gpsStatus;
-            gpsStatus = GpsStatusValue.GPS_ENABLED;
-            service.onGpsStatusChanged(oldStatus, gpsStatus);
-            startStatusRunner();
+            LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            if (locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                GpsStatusValue oldStatus = gpsStatus;
+                gpsStatus = GpsStatusValue.GPS_ENABLED;
+                service.onGpsStatusChanged(oldStatus, gpsStatus);
+                startStatusRunner();
+            } else {
+                onGpsDisabled();
+            }
         }
     }
 
