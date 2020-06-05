@@ -21,6 +21,8 @@ public class IntentDashboardUtils {
 
     private static final String ACTION_DASHBOARD_PAYLOAD = ACTION_DASHBOARD + ".Payload";
 
+    private static final String EXTRAS_SHOULD_KEEP_SCREEN_ON = "EXTRAS_SHOULD_KEEP_SCREEN_ON";
+
     private IntentDashboardUtils() {
     }
 
@@ -35,6 +37,7 @@ public class IntentDashboardUtils {
         intent.putParcelableArrayListExtra(ACTION_DASHBOARD_PAYLOAD, uris);
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(EXTRAS_SHOULD_KEEP_SCREEN_ON, PreferencesUtils.shouldKeepScreenOn(context));
 
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         ClipData clipData = ClipData.newRawUri(null, uris.get(0));
