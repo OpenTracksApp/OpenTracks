@@ -22,6 +22,7 @@ public class IntentDashboardUtils {
     private static final String ACTION_DASHBOARD_PAYLOAD = ACTION_DASHBOARD + ".Payload";
 
     private static final String EXTRAS_SHOULD_KEEP_SCREEN_ON = "EXTRAS_SHOULD_KEEP_SCREEN_ON";
+    private static final String EXTRAS_SHOW_WHEN_LOCKED = "EXTRAS_SHOULD_KEEP_SCREEN_ON";
 
     private IntentDashboardUtils() {
     }
@@ -38,6 +39,7 @@ public class IntentDashboardUtils {
 
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(EXTRAS_SHOULD_KEEP_SCREEN_ON, PreferencesUtils.shouldKeepScreenOn(context));
+        intent.putExtra(EXTRAS_SHOW_WHEN_LOCKED, PreferencesUtils.shouldShowStatsOnLockscreen(context));
 
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         ClipData clipData = ClipData.newRawUri(null, uris.get(0));
