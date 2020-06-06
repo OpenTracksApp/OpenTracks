@@ -424,7 +424,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         } else {
             try {
                 timeValue = StringUtils.parseTime(time);
-            } catch (IllegalArgumentException e) {
+            } catch (Exception e) {
                 throw new SAXException(createErrorMessage(String.format(Locale.US, "Unable to parse time: %s", time)), e);
             }
         }
