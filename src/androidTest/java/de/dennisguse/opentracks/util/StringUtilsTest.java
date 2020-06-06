@@ -128,6 +128,7 @@ public class StringUtilsTest {
      */
     @Test
     public void testGetTime_timezone() {
+        assertGetTime("2010-05-04T03:02:01", 2010, 5, 4, 3, 2, 1, 0);
         assertGetTime("2010-05-04T03:02:01Z", 2010, 5, 4, 3, 2, 1, 0);
         assertGetTime("2010-05-04T03:02:01+00:00", 2010, 5, 4, 3, 2, 1, 0);
         assertGetTime("2010-05-04T03:02:01-00:00", 2010, 5, 4, 3, 2, 1, 0);
