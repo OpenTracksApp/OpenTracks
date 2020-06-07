@@ -9,10 +9,9 @@ public enum GpsStatusValue {
     GPS_NONE(R.drawable.ic_gps_off_24dp, R.string.gps_disabled_msg),
     GPS_ENABLED(R.drawable.ic_gps_not_fixed_24dp, R.string.gps_wait_for_signal),
     GPS_DISABLED(R.drawable.ic_gps_off_24dp, R.string.gps_disabled_msg),
-    GPS_FIRST_FIX(R.drawable.ic_gps_fixed_24dp, R.string.gps_fixed_and_ready),
+    GPS_SIGNAL_FIX(R.drawable.ic_gps_fixed_24dp, R.string.gps_fixed_and_ready),
     GPS_SIGNAL_BAD(R.drawable.ic_gps_fixed_24dp, R.string.gps_wait_for_better_signal),
-    GPS_SIGNAL_LOST(R.drawable.ic_gps_not_fixed_24dp, R.string.gps_wait_for_signal),
-    GPS_SIGNAL_OKAY(R.drawable.ic_gps_fixed_24dp, R.string.gps_fixed_and_ready);
+    GPS_SIGNAL_LOST(R.drawable.ic_gps_not_fixed_24dp, R.string.gps_wait_for_signal);
 
     public final int icon;
     public final int message;

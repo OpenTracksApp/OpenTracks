@@ -829,7 +829,7 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
         if (gpsChangeCallback != null) {
             this.gpsCallbacks.add(gpsChangeCallback);
             if (this.gpsStatus == null) {
-                this.gpsStatus = new GpsStatus(this, this);
+                this.gpsStatus = new GpsStatus(this, this, PreferencesUtils.getMinRecordingInterval(this));
             }
             gpsStatus.onGpsEnabled();
         }

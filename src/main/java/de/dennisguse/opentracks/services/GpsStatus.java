@@ -5,8 +5,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Handler;
 
-import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * This class handle GPS status according to received locations and some thresholds.
@@ -15,8 +15,8 @@ class GpsStatus {
 
     private static final String TAG = GpsStatus.class.getSimpleName();
 
-    // If recording interval not set in preferences then it uses 10 seconds like signal lost threshold.
-    private static final int SIGNAL_LOST_THRESHOLD_DEFAULT = 10000;
+    // Minimal value for consider the GPS signal lost.
+    private static final int SIGNAL_LOST_THRESHOLD_MIN_VALUE = 10000;
 
     // Threshold for accuracy.
     private double signalBadThreshold;
@@ -35,10 +35,8 @@ class GpsStatus {
         @Override
         public void run() {
             if (gpsStatus != null && !stopped) {
-                if (!stopped) {
-                    onLocationChanged(null);
-                    gpsStatusHandler.postDelayed(gpsStatusRunner, getIntervalThreshold());
-                }
+                onLocationChanged(null);
+                gpsStatusHandler.postDelayed(gpsStatusRunner, getIntervalThreshold());
             }
         }
 
@@ -50,11 +48,16 @@ class GpsStatus {
     private Handler gpsStatusHandler = null;
     private GpsStatusRunner gpsStatusRunner = null;
 
-    public GpsStatus(Context context, GpsStatusListener service) {
+    /**
+     * @param context              The context object.
+     * @param service              The service.
+     * @param minRecordingInterval Value of min recording interval in preferences.
+     */
+    public GpsStatus(Context context, GpsStatusListener service, int minRecordingInterval) {
         this.service = service;
         this.context = context;
         signalBadThreshold = PreferencesUtils.getRecordingDistanceInterval(context);
-        signalLostThreshold = getRecordingIntervalInMillis(PreferencesUtils.getMinRecordingInterval(context));
+        signalLostThreshold = SIGNAL_LOST_THRESHOLD_MIN_VALUE;
         gpsStatusHandler = new Handler();
     }
 
@@ -79,27 +82,16 @@ class GpsStatus {
 
     /**
      * Method to change the lost threshold from outside.
+     * If value time is greater than SIGNAL_LOST_THRESHOLD_DEFAULT use it, otherwise uses SIGNAL_LOST_THRESHOLD_DEFAULT.
      *
-     * @param value New preference value to signalLostThreshold.
+     * @param value New min recording interval preference value. It's an integer value representing seconds or an special value: -1, -2, 0.
      */
     public void onMinRecordingIntervalChanged(int value) {
-        signalLostThreshold = getRecordingIntervalInMillis(value);
-    }
-
-    /**
-     * @param value the preference value for recording interval.
-     * @return the preference value in milliseconds or SIGNAL_LOST_THRESHOLD_DEFAULT if the preference value is a default one.
-     */
-    private int getRecordingIntervalInMillis(int value) {
-        String minDefault = context.getString(R.string.min_recording_interval_default);
-        String minAdaptAccuracy = context.getString(R.string.min_recording_interval_adapt_accuracy);
-        String minAdaptBatteryLife = context.getString(R.string.min_recording_interval_adapt_battery_life);
-        if (value != Integer.valueOf(minDefault) &&
-                value != Integer.valueOf(minAdaptAccuracy) &&
-                value != Integer.valueOf(minAdaptBatteryLife)) {
-            return value * 1000; // in millis.
+        int valueInMillis = value * (int) UnitConversions.ONE_SECOND_MS;
+        if (valueInMillis > SIGNAL_LOST_THRESHOLD_MIN_VALUE) {
+            signalLostThreshold = value;
         } else {
-            return SIGNAL_LOST_THRESHOLD_DEFAULT;
+            signalLostThreshold = SIGNAL_LOST_THRESHOLD_MIN_VALUE;
         }
     }
 
@@ -110,47 +102,32 @@ class GpsStatus {
      */
     public void onLocationChanged(final Location location) {
         if (lastLocation != null) {
-            if (System.currentTimeMillis() - lastLocation.getTime() > signalLostThreshold) {
+            if (System.currentTimeMillis() - lastLocation.getTime() > signalLostThreshold && gpsStatus != GpsStatusValue.GPS_SIGNAL_LOST) {
                 // So much time without receiving signal -> signal lost.
-                if (gpsStatus != GpsStatusValue.GPS_SIGNAL_LOST) {
-                    GpsStatusValue oldStatus = gpsStatus;
-                    gpsStatus = GpsStatusValue.GPS_SIGNAL_LOST;
-                    service.onGpsStatusChanged(oldStatus, gpsStatus);
-                    stopStatusRunner();
-                }
-            } else if (lastLocation.getAccuracy() > signalBadThreshold) {
+                GpsStatusValue oldStatus = gpsStatus;
+                gpsStatus = GpsStatusValue.GPS_SIGNAL_LOST;
+                service.onGpsStatusChanged(oldStatus, gpsStatus);
+                stopStatusRunner();
+            } else if (lastLocation.getAccuracy() > signalBadThreshold && gpsStatus != GpsStatusValue.GPS_SIGNAL_BAD) {
                 // Too little accuracy -> bad signal.
-                if (gpsStatus != GpsStatusValue.GPS_SIGNAL_BAD) {
-                    GpsStatusValue oldStatus = gpsStatus;
-                    gpsStatus = GpsStatusValue.GPS_SIGNAL_BAD;
-                    service.onGpsStatusChanged(oldStatus, gpsStatus);
-                    startStatusRunner();
-                }
-            } else {
-                // Otherwise -> gps fix (the first time) or signal okay.
-                if (gpsStatus == GpsStatusValue.GPS_NONE) {
-                    GpsStatusValue oldStatus = gpsStatus;
-                    gpsStatus = GpsStatusValue.GPS_FIRST_FIX;
-                    service.onGpsStatusChanged(oldStatus, gpsStatus);
-                    startStatusRunner();
-                } else if (gpsStatus != GpsStatusValue.GPS_SIGNAL_OKAY) {
-                    GpsStatusValue oldStatus = gpsStatus;
-                    gpsStatus = GpsStatusValue.GPS_SIGNAL_OKAY;
-                    service.onGpsStatusChanged(oldStatus, gpsStatus);
-                    startStatusRunner();
-                }
+                GpsStatusValue oldStatus = gpsStatus;
+                gpsStatus = GpsStatusValue.GPS_SIGNAL_BAD;
+                service.onGpsStatusChanged(oldStatus, gpsStatus);
+                startStatusRunner();
+            } else if (gpsStatus != GpsStatusValue.GPS_SIGNAL_FIX) {
+                // Gps okay.
+                GpsStatusValue oldStatus = gpsStatus;
+                gpsStatus = GpsStatusValue.GPS_SIGNAL_FIX;
+                service.onGpsStatusChanged(oldStatus, gpsStatus);
+                startStatusRunner();
             }
-        } else if (lastValidLocation != null) {
+        } else if (lastValidLocation != null && System.currentTimeMillis() - lastValidLocation.getTime() > signalLostThreshold) {
             // Too much time without locations -> lost signal? (wait signalLostThreshold from last valid location).
-            if (System.currentTimeMillis() - lastValidLocation.getTime() > signalLostThreshold) {
-                if (gpsStatus != GpsStatusValue.GPS_SIGNAL_LOST) {
-                    GpsStatusValue oldStatus = gpsStatus;
-                    gpsStatus = GpsStatusValue.GPS_SIGNAL_LOST;
-                    service.onGpsStatusChanged(oldStatus, gpsStatus);
-                    stopStatusRunner();
-                }
-                lastValidLocation = null;
-            }
+            GpsStatusValue oldStatus = gpsStatus;
+            gpsStatus = GpsStatusValue.GPS_SIGNAL_LOST;
+            service.onGpsStatusChanged(oldStatus, gpsStatus);
+            stopStatusRunner();
+            lastValidLocation = null;
         }
 
         lastLocation = location;
