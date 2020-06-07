@@ -396,6 +396,10 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                     this.invalidateOptionsMenu();
                 }
                 return true;
+            case R.id.track_list_aggregated_stats:
+                intent = IntentUtils.newIntent(this, AggregatedStatisticsActivity.class);
+                startActivity(intent);
+                return true;
             case R.id.track_list_markers:
                 intent = IntentUtils.newIntent(this, MarkerListActivity.class);
                 startActivity(intent);

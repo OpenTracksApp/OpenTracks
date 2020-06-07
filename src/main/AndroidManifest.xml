@@ -99,6 +99,11 @@ limitations under the License.
         </activity>
 
         <activity
+            android:name=".AggregatedStatisticsActivity"
+            android:screenOrientation="userPortrait"
+            android:label="@string/menu_aggregated_statistics"/>
+
+        <activity
             android:name=".io.file.exporter.ExportActivity"
             android:theme="@style/ThemeCustomTransparent" />
 

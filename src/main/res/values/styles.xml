@@ -195,6 +195,13 @@ limitations under the License.
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+    <!-- stats small label -->
+    <style name="StatsTinyLabel" parent="@style/TextSmall">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:textColor">@android:color/secondary_text_light_nodisable</item>
+    </style>
     <!-- stats small value container -->
     <style name="StatsSmallValueContainer" parent="@style/StatsLargeValueContainer">
         <item name="android:layout_marginTop">-2dp</item>
