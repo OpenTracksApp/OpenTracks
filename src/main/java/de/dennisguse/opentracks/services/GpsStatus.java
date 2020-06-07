@@ -15,8 +15,8 @@ class GpsStatus {
 
     private static final String TAG = GpsStatus.class.getSimpleName();
 
-    // Minimal value for consider the GPS signal lost.
-    private static final int SIGNAL_LOST_THRESHOLD_MIN_VALUE = 10000;
+    // The quantity of milliseconds that GpsStatus waits from minimal interval to consider GPS lost.
+    private static final int SIGNAL_LOST_THRESHOLD = 10000;
 
     // Threshold for accuracy.
     private double signalBadThreshold;
@@ -51,13 +51,13 @@ class GpsStatus {
     /**
      * @param context              The context object.
      * @param service              The service.
-     * @param minRecordingInterval Value of min recording interval in preferences.
+     * @param minRecordingInterval Value of min recording interval preference.
      */
     public GpsStatus(Context context, GpsStatusListener service, int minRecordingInterval) {
         this.service = service;
         this.context = context;
         signalBadThreshold = PreferencesUtils.getRecordingDistanceInterval(context);
-        signalLostThreshold = SIGNAL_LOST_THRESHOLD_MIN_VALUE;
+        signalLostThreshold = minRecordingInterval > 0 ? minRecordingInterval * (int) UnitConversions.ONE_SECOND_MS + SIGNAL_LOST_THRESHOLD : SIGNAL_LOST_THRESHOLD;
         gpsStatusHandler = new Handler();
     }
 
@@ -82,17 +82,11 @@ class GpsStatus {
 
     /**
      * Method to change the lost threshold from outside.
-     * If value time is greater than SIGNAL_LOST_THRESHOLD_DEFAULT use it, otherwise uses SIGNAL_LOST_THRESHOLD_DEFAULT.
      *
-     * @param value New min recording interval preference value. It's an integer value representing seconds or an special value: -1, -2, 0.
+     * @param value Minimal recording interval preference value in seconds or an special value: -1, -2, 0.
      */
     public void onMinRecordingIntervalChanged(int value) {
-        int valueInMillis = value * (int) UnitConversions.ONE_SECOND_MS;
-        if (valueInMillis > SIGNAL_LOST_THRESHOLD_MIN_VALUE) {
-            signalLostThreshold = value;
-        } else {
-            signalLostThreshold = SIGNAL_LOST_THRESHOLD_MIN_VALUE;
-        }
+        signalLostThreshold = value > 0 ? value * (int) UnitConversions.ONE_SECOND_MS + SIGNAL_LOST_THRESHOLD : SIGNAL_LOST_THRESHOLD;
     }
 
     /**
