@@ -41,10 +41,9 @@ Eigenlijk is OSMDashboard een aparte app die alleen (tijdelijk) toegang heeft to
 
 \n
 b)
-Via een "normale" kaarttoepassing (bijv. <a href="http://osmand.net/">OsmAnd</a> en <a href="https://maps.me/">MAPS.ME</a>).
+Via een normale kaarttoepassing (bijv. <a href="http://osmand.net/">OsmAnd</a> en <a href="https://maps.me/">MAPS.ME</a>).
 Deze app moet het KMZ-bestandsformaat ondersteunen (alleen locaties en tijdstempels).
-In feite moet een app <i>ACTION_VIEW</i> ondersteunen met MIME <i>application/vnd.google-earth.kmz</i>.
-</string>
+In feite moet een app <i>ACTION_VIEW</i> ondersteunen met MIME <i>application/vnd.google-earth.kmz</i>.</string>
 
     <string name="help_storage_pictures_title">Hoe slaat OpenTracks fotos op die als markers zijn genomen?</string>
     <string name="help_storage_pictures_content">Deze worden opgeslagen in de interne opslag van de app (d.w.z. alleen toegankelijk binnen OpenTracks).</string>
@@ -322,7 +321,7 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_not_known">Sensor %1$s is onbekend. Controleer de instellingen.</string>
     <string name="sensor_could_not_scan">Kon niet scannen naar Bluetooth-apparaten (fout %1$i).</string>
-    <string name="bluetooth_disabled">Schakel Bluetooth in.</string><!-- Settings -->
+    <string name="bluetooth_disabled">Schakel Bluetooth in.</string>
     <string name="settings_not_while_recording">Niet beschikbaar tijdens het opnemen van een route</string>
     <string name="settings_show">Weergeven</string>
     <!-- Settings Advanced -->
