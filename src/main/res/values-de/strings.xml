@@ -327,6 +327,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="settings_show">Anzeigen</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Erweitert</string>
+    <string name="settings_default_trackfileformat">Dateiformat für export/teilen</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Nach Strecke</string>
     <string name="settings_chart_by_time">Nach Zeit</string>
@@ -379,10 +380,10 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="share_track_share_file_body">Dieser Track könnte dich interessieren.\n\nDu kannst ihn dir mit Google Earth oder einer anderen Kartierungssoftware ansehen.\n\n%1$s</string>
     <string name="share_track_subject">Ich möchte einen Track mit dir teilen</string>
     <!-- Stats -->
-    <string name="stats_average_moving_pace">Durchschnittl. Bewegungstempo</string>
-    <string name="stats_average_moving_speed">Durchschnittl. Bewegungsgeschwindigkeit</string>
-    <string name="stats_average_pace">Durchschnittstempo</string>
-    <string name="stats_average_speed">Durchschnittsgeschwindigkeit</string>
+    <string name="stats_average_moving_pace">Durchschnitt\n(Bewegung)</string>
+    <string name="stats_average_moving_speed">Durchschnitt\n(Bewegung)</string>
+    <string name="stats_average_pace">Durchschnitt</string>
+    <string name="stats_average_speed">Durchschnitt</string>
     <string name="stats_elevation">Höhe</string>
     <string name="stats_fastest_pace">Schnellstes Tempo</string>
     <string name="stats_gain">Anstieg</string>
@@ -390,7 +391,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="stats_latitude">Breitengrad</string>
     <string name="stats_longitude">Längengrad</string>
     <string name="stats_max">Max.</string>
-    <string name="stats_max_speed">Höchstgeschwin-digkeit</string>
+    <string name="stats_max_speed">Max.</string>
     <string name="stats_min">Min.</string>
     <string name="stats_moving_time">Bewegungszeit</string>
     <string name="stats_pace">Tempo</string>
