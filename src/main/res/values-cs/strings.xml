@@ -1,5 +1,94 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <string name="about_preference_title">O OpenTracks</string>
+    <string name="about_description"><i> OpenTracks </i> je sportovní sledovací aplikace, která zcela respektuje vaše soukromí.</string>
+    <string name="about_url">Webová stránka projektu: <a href="%1$s">%1$s</a></string>
+    <string name="about_version_name">Název verze: %1$s</string>
+    <string name="about_version_code">Kód verze: %1$d</string>
+    <string name="about_history">OpenTracks je vidlička <a href="https://code.google.com/archive/p/mytracks/"> <i> MyTracks Google </i> </a> (v roce 2016 ukončena).</string>
+    <string name="about_libraries">Knihovny</string>
+    <!-- Help -->
+    <string name="help_feature_title">OpenTracks má následující funkce:</string>
+    <string name="help_feature_content">
+* vytvářet GPS stopy \ n
+* použijte snímač srdeční frekvence (pouze Bluetooth LE) \ n
+* hlasová oznámení (podle času nebo vzdálenosti) \ n
+* vytvářejte značky (včetně obrázků) \ n
+* funguje zcela offline \ n
+* zobrazit skladby na mapě (viz níže)</string>
+
+    <string name="help_track_map_title">Jak ukázat skladbu na mapě?</string>
+    <string name="help_track_map_content">
+Použijte malou ikonu mapy. \ N
+a)
+(živé aktualizace) Nainstalujte <a href="https://github.com/OpenTracksApp/OSMDashboard"> OSMDashboard </a>.
+Poskytuje online nebo offline mapy prostřednictvím <a href="https://www.openstreetmap.org"> OpenStreetmap </a>. \ N
+Ve skutečnosti je OSMDashboard samostatná aplikace, která má přístup (dočasně) pouze k datům stop, které se bud(ou) zobrazovat.
+
+\ n
+b)
+Prostřednictvím „normální“ mapové aplikace (např. <a href="http://osmand.net/"> OsmAnd </a> a <a href="https://maps.me/"> MAPS.ME < / a>).
+Tyto aplikace musí podporovat formát souboru KMZ (pouze umístění a časová razítka).
+Ve skutečnosti musí aplikace podporovat <i> ACTION_VIEW </i> pomocí MIME <i> application / vnd.google-earth.kmz </i>.</string>
+
+    <string name="help_storage_pictures_title">Jak ukládá OpenTracks obrázky pořízené jako značky?</string>
+    <string name="help_storage_pictures_content">Jsou uloženy v interním úložišti aplikace (tj. Přístupné pouze v rámci OpenTracks).</string>
+
+    <string name="help_track_export_title">Jak mohu exportovat / sdílet zaznamenané stopy?</string>
+    <string name="help_track_export_content">
+Skladby lze exportovat z Nastavení jako KMZ, KML nebo GPX.
+KMZ / KML všechna data; Pouze umístění GPX.
+Skladby sdílené pomocí ikony sdílení <i> </i> jsou sdíleny jako KMZ.</string>
+
+    <string name="help_data_google_play_services_title">Vyžaduje služba OpenTracks / používá službu Google Play?</string>
+
+    <string name="help_recording_title">Jak OpenTracks zaznamenává data?</string>
+    <string name="help_recording_content">
+OpenTracks používá GPS senzor zařízení k nepřetržitému zaznamenávání polohy.
+Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořskou výšku), OpenTracks s tím nemůže nic udělat.</string>
+
+    <string name="help_data_storage_title">Jak OpenTracks ukládá data senzorů?</string>
+    <string name="help_data_storage_content">
+Data senzoru se ukládají na zaznamenané místo.
+Pokud jde o snímač srdeční frekvence, znamená to, že na každé místo je uloženo pouze <i> jedno </i> měření srdeční frekvence.
+Pokud stojíte v klidu nebo jste uvnitř, nebudou zaznamenána žádná data ze senzorů (ale budou zobrazena).</string>
+
+    <string name="help_gps_troubleshooting_title">OpenTracks nezaznamenává místa?</string>
+    <string name="help_gps_troubleshooting_content">
+Co můžete udělat: \ n
+a) zkontrolujte, zda je GPS povoleno, \ n
+b) zlepšit příjem GPS (např. jít venku), \ n
+c) zkontrolujte, zda používáte aplikaci <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/"> GPSTest </a> a \ n
+d) deaktivujte úsporu energie. \ n
+\ n
+Pokud všechno nepomůže, nahláste chybu.</string>
+
+    <string name="help_support_title">Jak mohu podporovat OpenTracks?</string>
+    <string name="help_support_content">
+Můžete: \ n
+a) šířit slovo o OpenTracks, \ n
+b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues"> navrhnout funkce </a>, \ n
+c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues"> nahlaste chyby </a>, \ n
+d) pomoc při vývoji softwaru, \ n
+e) nakupujte v <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore"> Obchod Google Play </a>, \ n
+f) darovat, a \ n
+g) udělejte, co si myslíte, že pomůže OpenTracks.</string>
+
+    <!-- Activity Type -->
     <string name="activity_type_airplane">letadlo</string>
     <string name="activity_type_atv">terénní auta</string>
     <string name="activity_type_biking">cyklistika</string>
@@ -66,6 +155,8 @@
     <string name="activity_type_walking">chůze</string>
     <string name="activity_type_water_skiing">vodní lyžování</string>
     <string name="activity_type_wind_surfing">windsurfing</string>
+    <string name="app_not_installed_show_on_map">Nainstalujte prosím aplikaci, která podporuje prezentaci mapových dat.</string>
+    <!-- Description -->
     <string name="description_activity_type">Typ aktivity: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Průměrné tempo pohybu: %1$s min/km (%2$s min/míli)</string>
     <string name="description_average_moving_speed">Průměrná rychlost přesunu: %1$.2f km/h (%2$.1f mil/h)</string>
@@ -93,6 +184,7 @@
     <string name="description_sensor_cadence">Tempo šlapání (ot./min)</string>
     <string name="description_sensor_heart_rate">Srdeční frekvence (údery/min)</string>
     <string name="description_sensor_power">Výkon (W)</string>
+    <string name="description_default_speed_or_pace">Podle typu činnosti</string>
     <string name="description_speed_imperial">Rychlost (míle/h)</string>
     <string name="description_speed_metric">Rychlost (km/h)</string>
     <string name="description_time">Doba</string>
@@ -100,19 +192,25 @@
     <string name="description_total_time">Celková doba: %1$s</string>
     <string name="description_track_point">Bod</string>
     <string name="description_track_segment">Segment</string>
+    <!-- Export -->
     <string name="export_all_option">Vše ve formátu %1$s</string>
     <string name="export_all_title">Export do externího úložiště</string>
+    <string name="export_with_photos">s fotkami</string>
+    <string name="export_without_photos">bez fotografií</string>
     <string name="export_error">Trasy byly exportovány do složky %3$s (%1$d z %2$s).</string>
     <string name="export_option">jako %1$s do složky %2$s</string>
     <string name="export_progress_message">Exportování do složky %1$s…</string>
     <string name="export_success">Trasy (celkem %1$s) byly exportovány do složky %2$s.</string>
     <string name="export_title">Export do…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d soubory</string>
     <string name="files_many">%1$d souborů</string>
     <string name="files_one">1 soubor</string>
     <string name="files_other">%1$d souborů</string>
     <string name="files_two">2 soubory</string>
     <string name="files_zero">0 souborů</string>
+    <!-- Generic -->
     <string name="generic_add">Přidat</string>
     <string name="generic_cancel">Zrušit</string>
     <string name="generic_delete_all_confirm_title">Smazat vše?</string>
@@ -131,6 +229,7 @@
     <string name="generic_success_title">Úspěch</string>
     <string name="generic_tracks">Trasy</string>
     <string name="generic_yes">Ano</string>
+    <!-- Gps -->
     <string name="gps_location_access">Přístup k poloze</string>
     <string name="gps_disabled">Systém GPS není zapnutý. Klepnutím sem přejdete na možnost %1$s. Stisknutím tlačítka Zpět se vrátíte.</string>
     <string name="gps_disabled_my_location">Aktuální polohu nelze určit. V části %1$s aktivujte další zdroje pro zjišťování polohy a ujistěte se, že vidíte oblohu. Zkuste to znovu později.</string>
@@ -138,6 +237,7 @@
     <string name="gps_starting">Spouštění GPS</string>
     <string name="gps_wait_for_better_signal">Čekání na lepší signál GPS</string>
     <string name="gps_wait_for_signal">Čekání na signál GPS</string>
+    <!-- Image -->
     <string name="image_application">Aplikace</string>
     <string name="image_arrow">Šipka</string>
     <string name="image_marker">Značka</string>
@@ -148,6 +248,7 @@
     <string name="image_record">Zaznamenat</string>
     <string name="image_stop">Ukončit</string>
     <string name="image_track">Trasa</string>
+    <!-- Import -->
     <string name="import_error">Trasy byly importovány ze složky %3$s (%1$d z %2$s).</string>
     <string name="import_no_directory">Složka %1$s neexistuje.</string>
     <string name="import_no_file">Nebyly nalezeny žádné soubory, které by bylo možné importovat. Připojte zařízení k počítači a umístěte soubory, které chcete importovat, do složky %1$s.</string>
@@ -156,9 +257,11 @@
     <string name="import_selection_option">Všechny soubory %1$s</string>
     <string name="import_selection_title">Import z externího úložiště</string>
     <string name="import_success">Trasy (celkem %1$s) byly importovány ze složky %2$s.</string>
+    <!-- Marker -->
     <string name="marker_add_error">Značku nelze vložit. Signál GPS není dostupný. Zkuste to znovu.</string>
     <string name="marker_add_success">Značka byla vložena.</string>
     <string name="marker_add_canceled">Zrušeno, značky nebyly přidány.</string>
+    <string name="marker_add_photo_canceled">Zrušeno, nebyla přidána žádná značka</string>
     <string name="marker_delete_all_confirm_message">Všechny značky této trasy budou trvale smazány ze zařízení.</string>
     <string name="marker_delete_one_confirm_message">Značka bude trvale smazána ze zařízení.</string>
     <string name="marker_delete_one_confirm_title">Smazat značku?</string>
@@ -168,10 +271,14 @@
     <string name="marker_name_format">Značka %1$d</string>
     <string name="marker_split_name_format">Dělicí značka %1$d</string>
     <string name="marker_title">%1$d z %2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">Od poslední dělicí značky:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Typ značky (například vodopád…)</string>
     <string name="marker_edit_marker_type_hint">Typ značky</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">Nemáte žádné značky.</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">Souhrnná statistika</string>
     <string name="menu_delete">Smazat</string>
     <string name="menu_edit">Upravit</string>
@@ -180,6 +287,7 @@
     <string name="menu_import_all">Importovat vše</string>
     <string name="menu_insert_marker">Vložit značku</string>
     <string name="menu_insert_photo">Vložit fotku</string>
+    <string name="menu_insert_gallery_img">Vložte obrázek galerie</string>
     <string name="menu_markers">Značky</string>
     <string name="menu_search">Vyhledat</string>
     <string name="menu_select_all">Vybrat vše</string>
@@ -192,11 +300,17 @@
     <string name="menu_stop_gps">Ukončit GPS</string>
     <string name="menu_view_photo">Zobrazit fotku</string>
     <string name="menu_voice_frequency">Frekvence oznámení</string>
+    <string name="menu_resume_track">Obnovit skladbu</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Služba pro záznam</string>
+    <!-- Permission -->
+    <string name="permission_gps_failed">OpenTracks vyžaduje povolení k používání GPS.</string>
+    <!-- Search -->
     <string name="search_global_description">Trasy a značky</string>
     <string name="search_list_empty_message">Vyhledávacímu dotazu neodpovídají žádné trasy ani značky.</string>
     <string name="search_list_marker_track_location">Na trase %1$s</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">Stav baterie</string>
     <string name="sensor_state_cadence">Frekvence šlapání</string>
     <string name="sensor_state_cadence_value">%1$d ot./min</string>
@@ -205,12 +319,22 @@
     <string name="sensor_state_heart_rate_value">%1$d úderů/min</string>
     <string name="sensor_state_power">Napájení</string>
     <string name="sensor_state_power_value">%1$d W</string>
+    <string name="sensor_not_known">Senzor %1$s není znám. Zkontrolujte nastavení.</string>
+    <string name="sensor_could_not_scan">Nelze vyhledat zařízení Bluetooth (chyba %1$i).</string>
+    <string name="bluetooth_disabled">Aktivujte prosím Bluetooth.</string>
     <string name="settings_not_while_recording">Při záznamu trasy není tato funkce dostupná.</string>
     <string name="settings_show">Zobrazit</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">Pokročilé</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Podle vzdálenosti</string>
     <string name="settings_chart_by_time">Podle doby</string>
     <string name="settings_chart_x_axis">Osa X</string>
+    <!-- Settings Recording -->
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Zobrazit statistiky na obrazovce uzamčení</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">Během nahrávání zobrazte statistiky bez odemknutí zařízení.</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">Nechte obrazovku zapnutou</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">Během nahrávání udržujte obrazovku zapnutou.</string>
     <string name="settings_recording">Záznam</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Po restartu vždy pokračovat v záznamu</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Po restartu nikdy nepokračovat v záznamu</string>
@@ -228,21 +352,32 @@
     <string name="settings_recording_track_name_date_local_option">Datum (místní)</string>
     <string name="settings_recording_track_name_number_option">Číslo</string>
     <string name="settings_recording_track_name_title">Výchozí název trasy</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">Resetovat</string>
     <string name="settings_reset_confirm_message">Všechna nastavení budou obnovena na výchozí hodnoty.</string>
     <string name="settings_reset_confirm_title">Resetovat nyní?</string>
     <string name="settings_reset_done">Všechna nastavení byla obnovena na výchozí hodnoty.</string>
+    <string name="settings_error_initial_values_restored">Litujeme, ale došlo k chybě. Všechna nastavení byla vrácena na výchozí hodnoty.</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">Senzor</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Senzor Bluetooth</string>
+    <string name="settings_sensor_connecting">Připojeno k senzoru %1$s</string>
+    <string name="settings_sensor_disconnected">Odpojeno od %1$s</string>
+
+    <string name="settings_sensor_wheel_circumference">Velikost kola (ETRTO)</string>
+
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Zeměpisná šířka/délka</string>
     <string name="settings_stats_rate_title">Preferovaná rychlost</string>
     <string name="settings_stats_units_imperial">Imperiální jednotky (míle, stopy)</string>
     <string name="settings_stats_units_metric">Metrické jednotky (km, m)</string>
     <string name="settings_stats_units_title">Preferované jednotky</string>
+    <!-- Share Track -->
     <string name="share_track_share_file">Sdílet soubor trasy</string>
     <string name="share_track_share_file_body">Možná by vás mohla zajímat tato trasa.\n\nChcete-li ji zobrazit, použijte Google Earth nebo jiný mapový software.\n\n%1$s</string>
     <string name="share_track_subject">Chci s vámi sdílet trasu</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">Průměrné tempo pohybu</string>
     <string name="stats_average_moving_speed">Průměrná rychlost pohybu</string>
     <string name="stats_average_pace">Průměrné tempo</string>
@@ -261,25 +396,36 @@
     <string name="stats_speed">Rychlost</string>
     <string name="stats_distance">Vzdálenost</string>
     <string name="stats_total_time">Celková doba</string>
+    <!-- Track -->
     <string name="track_name_format">Trasa %1$d</string>
     <string name="track_record_notification">Záznam trasy…</string>
+    <string name="track_recording_notification_accuracy">Přesnost polohy: %1$s</string>
     <string name="track_markers">Značky na trase %1$s</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Trasa a související značky budou trvale smazány ze zařízení.</string>
     <string name="track_delete_one_confirm_title">Smazat trasu?</string>
     <string name="track_delete_multiple_confirm_message">Vybrané trasy a jejich značky budou trvale smazány ze zařízení.</string>
     <string name="track_delete_progress_message">Mazání…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">Graf</string>
     <string name="track_detail_stats_tab">Statistika</string>
+    <string name="track_detail_record_success">Zaznamenávání nové trasy</string>
+    <string name="track_detail_resume_success">Nyní se obnovuje skladba</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">Typ aktivity (například chůze…)</string>
     <string name="track_edit_activity_type_hint">Typ aktivity</string>
     <string name="track_edit_new_track_title">Nová trasa</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">Zde zaznamenejte příští výpravu</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d trasy</string>
     <string name="tracks_many">%1$d tras</string>
     <string name="tracks_one">1 trasa</string>
     <string name="tracks_other">%1$d tras</string>
     <string name="tracks_two">2 trasy</string>
     <string name="tracks_zero">0 tras</string>
+    <!-- Unit -->
     <string name="unit_feet">stop</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/h</string>
@@ -288,6 +434,7 @@
     <string name="unit_mile_per_hour">mil/h</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/míle</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">Přizpůsobit na přesnost</string>
     <string name="value_adapt_battery_life">Přizpůsobit výdrži baterie</string>
     <string name="value_always">Vždy</string>
@@ -314,6 +461,7 @@
     <string name="value_off">Vypnuto</string>
     <string name="value_smallest">Nejmenší</string>
     <string name="value_smallest_recommended">Nejnižší hodnota (doporučeno)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d hodiny</string>
     <string name="voice_hours_many">%1$d hodin</string>
     <string name="voice_hours_one">1 hodina</string>
@@ -360,6 +508,7 @@
     <string name="voice_total_distance_miles_two">celková vzdálenost 2 míle</string>
     <string name="voice_total_distance_miles_zero">celková vzdálenost 0 mil</string>
     <string name="voice_total_distance_zero">Celková vzdálenost Mých tras je nulová.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Bankomat</string>
     <string name="waypoint_type_bank">banka</string>
     <string name="waypoint_type_bar">bar</string>
@@ -411,4 +560,7 @@
     <string name="waypoint_type_waterfall">vodopád</string>
     <string name="waypoint_type_water_fountain">kašna</string>
     <string name="waypoint_type_waypoint">navigační bod</string>
+    <!-- Share image -->
+    <string name="share_image_subject">Chtěl bych s vámi sdílet obrázek</string>
+    <string name="share_image_body">Myslím, že by vás mohl tento obrázek zajímat.</string>
 </resources>
