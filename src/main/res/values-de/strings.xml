@@ -322,11 +322,12 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_not_known">Sensor %1$s ist unbekannt. Bitte überprüfe die Einstellungen.</string>
     <string name="sensor_could_not_scan">Konnte nicht nach Bluetooth-Geräten scannen (Fehler %1$i).</string>
-    <string name="bluetooth_disabled">Bitte Bluetooth aktivieren.</string><!-- Settings -->
+    <string name="bluetooth_disabled">Bitte Bluetooth aktivieren.</string>
     <string name="settings_not_while_recording">Während der Aufzeichnung eines Tracks nicht verfügbar</string>
     <string name="settings_show">Anzeigen</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Erweitert</string>
+    <string name="settings_default_trackfileformat">Dateiformat für export/teilen</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Nach Strecke</string>
     <string name="settings_chart_by_time">Nach Zeit</string>
