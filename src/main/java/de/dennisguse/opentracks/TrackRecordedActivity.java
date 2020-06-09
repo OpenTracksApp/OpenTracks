@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -226,12 +225,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
 
     @Override
     protected void onDeleted() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                finish();
-            }
-        });
+        runOnUiThread(this::finish);
     }
 
     /**
@@ -259,7 +253,6 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
         if (trackId == -1L) {
             Log.e(TAG, "TrackDetailActivity needs EXTRA_TRACK_ID.");
             finish();
-            return;
         }
     }
 

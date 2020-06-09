@@ -59,12 +59,9 @@ public class StatisticsRecordedFragment extends Fragment implements TrackDataLis
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
             if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
                 if (isResumed()) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (isResumed()) {
-                                updateUI();
-                            }
+                    getActivity().runOnUiThread(() -> {
+                        if (isResumed()) {
+                            updateUI();
                         }
                     });
                 }
@@ -195,14 +192,11 @@ public class StatisticsRecordedFragment extends Fragment implements TrackDataLis
     @Override
     public void onTrackUpdated(final Track track) {
         if (isResumed()) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (isResumed()) {
-                        trackStatistics = track != null ? track.getTrackStatistics() : null;
-                        category = track != null ? track.getCategory() : "";
-                        updateUI();
-                    }
+            getActivity().runOnUiThread(() -> {
+                if (isResumed()) {
+                    trackStatistics = track != null ? track.getTrackStatistics() : null;
+                    category = track != null ? track.getCategory() : "";
+                    updateUI();
                 }
             });
         }

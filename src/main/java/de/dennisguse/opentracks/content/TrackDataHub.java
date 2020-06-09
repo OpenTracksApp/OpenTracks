@@ -144,12 +144,9 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
 
         PreferencesUtils.register(context, this);
         onSharedPreferenceChanged(null, null);
-        runInHandlerThread(new Runnable() {
-            @Override
-            public void run() {
-                if (started) {
-                    loadDataForAll();
-                }
+        runInHandlerThread(() -> {
+            if (started) {
+                loadDataForAll();
             }
         });
     }
@@ -178,16 +175,13 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
     }
 
     public void loadTrack(final long trackId) {
-        runInHandlerThread(new Runnable() {
-            @Override
-            public void run() {
-                if (trackId == selectedTrackId) {
-                    Log.i(TAG, "Not reloading track " + trackId);
-                    return;
-                }
-                selectedTrackId = trackId;
-                loadDataForAll();
+        runInHandlerThread(() -> {
+            if (trackId == selectedTrackId) {
+                Log.i(TAG, "Not reloading track " + trackId);
+                return;
             }
+            selectedTrackId = trackId;
+            loadDataForAll();
         });
     }
 
@@ -197,13 +191,10 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
      * @param trackDataListener the track data listener
      */
     public void registerTrackDataListener(final TrackDataListener trackDataListener, final boolean tracksTable, final boolean waypointsTable, final boolean trackPointsTable_SampleIn, final boolean trackPointsTable_SampleOut) {
-        runInHandlerThread(new Runnable() {
-            @Override
-            public void run() {
-                trackDataManager.registerTrackDataListener(trackDataListener, tracksTable, waypointsTable, trackPointsTable_SampleIn, trackPointsTable_SampleOut);
-                if (started) {
-                    loadDataForListener(trackDataListener);
-                }
+        runInHandlerThread(() -> {
+            trackDataManager.registerTrackDataListener(trackDataListener, tracksTable, waypointsTable, trackPointsTable_SampleIn, trackPointsTable_SampleOut);
+            if (started) {
+                loadDataForListener(trackDataListener);
             }
         });
     }
@@ -214,12 +205,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
      * @param trackDataListener the track data listener
      */
     public void unregisterTrackDataListener(final TrackDataListener trackDataListener) {
-        runInHandlerThread(new Runnable() {
-            @Override
-            public void run() {
-                trackDataManager.unregisterTrackDataListener(trackDataListener);
-            }
-        });
+        runInHandlerThread(() -> trackDataManager.unregisterTrackDataListener(trackDataListener));
     }
 
     /**
@@ -238,15 +224,12 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, final String key) {
-        runInHandlerThread(new Runnable() {
-            @Override
-            public void run() {
-                if (PreferencesUtils.isKey(context, R.string.recording_track_id_key, key)) {
-                    recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
-                }
-                if (PreferencesUtils.isKey(context, R.string.recording_track_paused_key, key)) {
-                    recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(context);
-                }
+        runInHandlerThread(() -> {
+            if (PreferencesUtils.isKey(context, R.string.recording_track_id_key, key)) {
+                recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
+            }
+            if (PreferencesUtils.isKey(context, R.string.recording_track_paused_key, key)) {
+                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(context);
             }
         });
     }
@@ -289,7 +272,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
             if (isOnlyListener) {
                 resetSamplingState();
             }
-            Set<TrackDataListener> sampledOutListeners = hasSampledOut ? trackDataListeners : Collections.<TrackDataListener>emptySet();
+            Set<TrackDataListener> sampledOutListeners = hasSampledOut ? trackDataListeners : Collections.emptySet();
             notifyTrackPointsTableUpdate(isOnlyListener, trackDataListeners, sampledOutListeners);
         }
 

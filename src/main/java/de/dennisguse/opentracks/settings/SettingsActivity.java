@@ -60,20 +60,10 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             @Override
             public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
                 if (PreferencesUtils.isKey(getActivity(), R.string.recording_track_id_key, key)) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            updateReset();
-                        }
-                    });
+                    getActivity().runOnUiThread(() -> updateReset());
                 }
                 if (PreferencesUtils.isKey(getActivity(), R.string.stats_units_key, key)) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            updateUnits();
-                        }
-                    });
+                    getActivity().runOnUiThread(() -> updateUnits());
                 }
             }
         };

@@ -80,15 +80,12 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
                 fragmentActivity, titleId, getString(messageId), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ContentProviderUtils contentProviderUtils = new ContentProviderUtils(fragmentActivity);
-                                for (long markerId : markerIds) {
-                                    contentProviderUtils.deleteWaypoint(getContext(), markerId);
-                                }
-                                caller.onDeleteMarkerDone();
+                        new Thread(() -> {
+                            ContentProviderUtils contentProviderUtils = new ContentProviderUtils(fragmentActivity);
+                            for (long markerId : markerIds) {
+                                contentProviderUtils.deleteWaypoint(getContext(), markerId);
                             }
+                            caller.onDeleteMarkerDone();
                         }).start();
                     }
                 });

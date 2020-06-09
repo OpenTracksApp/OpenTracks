@@ -143,14 +143,11 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(TrackListActivity.this);
             }
             if (key != null) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        TrackListActivity.this.invalidateOptionsMenu();
-                        LoaderManager.getInstance(TrackListActivity.this).restartLoader(0, null, loaderCallbacks);
-                        boolean isRecording = PreferencesUtils.isRecording(recordingTrackId);
-                        trackController.update(isRecording, recordingTrackPaused);
-                    }
+                runOnUiThread(() -> {
+                    TrackListActivity.this.invalidateOptionsMenu();
+                    LoaderManager.getInstance(TrackListActivity.this).restartLoader(0, null, loaderCallbacks);
+                    boolean isRecording = PreferencesUtils.isRecording(recordingTrackId);
+                    trackController.update(isRecording, recordingTrackPaused);
                 });
             }
         }
@@ -177,12 +174,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             /*
              * After binding changes (e.g., becomes available), update the total time in trackController.
              */
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    trackController.update(PreferencesUtils.isRecording(recordingTrackId), recordingTrackPaused);
-                }
-            });
+            runOnUiThread(() -> trackController.update(PreferencesUtils.isRecording(recordingTrackId), recordingTrackPaused));
 
             if (!startGps) {
                 return;

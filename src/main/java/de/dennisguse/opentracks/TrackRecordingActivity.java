@@ -1,6 +1,5 @@
 package de.dennisguse.opentracks;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -68,12 +67,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         @Override
         public void run() {
             // After binding changes (is available), update the total time in trackController.
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    trackController.update(true, recordingTrackPaused);
-                }
-            });
+            runOnUiThread(() -> trackController.update(true, recordingTrackPaused));
 
             if (recordingTrackId == -1L) {
                 TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
@@ -130,12 +124,9 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
             if (key == null) return;
 
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    TrackRecordingActivity.this.invalidateOptionsMenu();
-                    trackController.update(true, recordingTrackPaused);
-                }
+            runOnUiThread(() -> {
+                TrackRecordingActivity.this.invalidateOptionsMenu();
+                trackController.update(true, recordingTrackPaused);
             });
         }
     };
