@@ -33,17 +33,13 @@ limitations under the License.
 
     <string name="help_track_map_title">Nola erakutsi pista batean mapa batean?</string>
     <string name="help_track_map_content">
-Erabili maparen ikono txikia. \ N
-a)
-(zuzeneko eguneratzeak) Instalatu <a href="https://github.com/OpenTracksApp/OSMDashboard"> OSMDashboard </a>.
-Lineako edo lineaz kanpoko mapak eskaintzen ditu <a href="https://www.openstreetmap.org"> OpenStreetmap </a>. \ N
-Egia esan, OSMDashboard erakundea da erakutsiko diren pista (k) datuetara sartzeko soilik (aldi baterako) sar daitekeena.
-
-\ n
-b)
-Mapa aplikazio normal baten bidez (adibidez, <a href="http://osmand.net/"> OsmAnd </a> eta <a href="https://maps.me/"> MAPS.ME < / a>).
+Erabili maparen ikono txikia.\n
+a) (zuzeneko eguneratzeak) Instalatu <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
+Lineako edo lineaz kanpoko mapak eskaintzen ditu <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n
+Egia esan, OSMDashboard erakundea da erakutsiko diren pista (k) datuetara sartzeko soilik (aldi baterako) sar daitekeena.\n
+b) Mapa aplikazio normal baten bidez (adibidez, <a href="http://osmand.net/">OsmAnd</a> eta <a href="https://maps.me/">MAPS.ME</a>).
 Aplikazio horiek KMZ fitxategi formatua onartzen dute (kokapenak eta timestamps soilik).
-Izan ere, aplikazio batek <i> ACTION_VIEW </i> onartzen du MIME <i> application / vnd.google-earth.kmz </i> rekin.</string>
+Izan ere, aplikazio batek <i>ACTION_VIEW</i> onartzen du MIME <i>application/vnd.google-earth.kmz</i> rekin.</string>
 
     <string name="help_storage_pictures_title">Nola gordetzen du OpenTracks markatzaile gisa ateratako argazkiak?</string>
     <string name="help_storage_pictures_content">Aplikazioaren barne biltegian gordetzen dira (hau da, OpenTracks en soilik eskura daiteke).</string>

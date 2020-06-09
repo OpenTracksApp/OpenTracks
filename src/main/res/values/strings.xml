@@ -37,7 +37,7 @@ limitations under the License.
         Use the small map icon.\n
         a)
         (live updates) Install <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
-        It provides online or offline maps via <a href="https://www.openstreetmap.org">OpenStreetmap</a>.\n
+        It provides online or offline maps via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n
         Actually, OSMDashboard is a separate app that only can access (temporarily) access the data of track(s) that are going to be shown.
 
         \n

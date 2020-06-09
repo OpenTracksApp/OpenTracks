@@ -33,17 +33,13 @@ limitations under the License.
 
     <string name="help_track_map_title">Jak ukázat skladbu na mapě?</string>
     <string name="help_track_map_content">
-Použijte malou ikonu mapy. \ N
-a)
-(živé aktualizace) Nainstalujte <a href="https://github.com/OpenTracksApp/OSMDashboard"> OSMDashboard </a>.
-Poskytuje online nebo offline mapy prostřednictvím <a href="https://www.openstreetmap.org"> OpenStreetmap </a>. \ N
-Ve skutečnosti je OSMDashboard samostatná aplikace, která má přístup (dočasně) pouze k datům stop, které se bud(ou) zobrazovat.
-
-\ n
-b)
-Prostřednictvím „normální“ mapové aplikace (např. <a href="http://osmand.net/"> OsmAnd </a> a <a href="https://maps.me/"> MAPS.ME < / a>).
+Použijte malou ikonu mapy.\n
+a) (živé aktualizace) Nainstalujte <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
+Poskytuje online nebo offline mapy prostřednictvím <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n
+Ve skutečnosti je OSMDashboard samostatná aplikace, která má přístup (dočasně) pouze k datům stop, které se bud(ou) zobrazovat.\n
+b) Prostřednictvím „normální“ mapové aplikace (např. <a href="http://osmand.net/">OsmAnd</a> a <a href="https://maps.me/">MAPS.ME</a>).
 Tyto aplikace musí podporovat formát souboru KMZ (pouze umístění a časová razítka).
-Ve skutečnosti musí aplikace podporovat <i> ACTION_VIEW </i> pomocí MIME <i> application / vnd.google-earth.kmz </i>.</string>
+Ve skutečnosti musí aplikace podporovat <i>ACTION_VIEW</i> pomocí MIME <i>application/vnd.google-earth.kmz</i>.</string>
 
     <string name="help_storage_pictures_title">Jak ukládá OpenTracks obrázky pořízené jako značky?</string>
     <string name="help_storage_pictures_content">Jsou uloženy v interním úložišti aplikace (tj. Přístupné pouze v rámci OpenTracks).</string>

@@ -24,26 +24,23 @@ limitations under the License.
     <!-- Help -->
     <string name="help_feature_title">OpenTracks har følgende funktioner:</string>
     <string name="help_feature_content">
-* Opret GPS-spor \ n
-* Brug en pulssensor (kun Bluetooth LE) \ n
-* stemmemeddelelser (efter tid eller afstand) \ n
-* Opret markører (inkl. billeder) \ n
-* fungerer helt offline \ n
+* Opret GPS-spor \n
+* Brug en pulssensor (kun Bluetooth LE) \n
+* stemmemeddelelser (efter tid eller afstand) \n
+* Opret markører (inkl. billeder) \n
+* fungerer helt offline \n
 * vis spor på et kort (se nedenfor)</string>
 
     <string name="help_track_map_title">Hvordan viser man et spor på et kort?</string>
     <string name="help_track_map_content">
-Brug det lille kortikon. \ N
-en)
-(liveopdateringer) Installer <a href="https://github.com/OpenTracksApp/OSMDashboard"> OSMDashboard </a>.
-Det giver online eller offline kort via <a href="https://www.openstreetmap.org"> OpenStreetmap </a>. \ N
-Faktisk er OSMDashboard en separat app, der kun kan få adgang til (midlertidigt) adgang til dataene fra spor (e), der skal vises.
-
-\ n
-b)
-Via et normalt kortprogram (f.eks. <a href="http://osmand.net/"> OsmAnd </a> og <a href="https://maps.me/"> MAPS.ME < / a>).
+Brug det lille kortikon. \n
+a)
+(liveopdateringer) Installer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
+Det giver online eller offline kort via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n
+Faktisk er OSMDashboard en separat app, der kun kan få adgang til (midlertidigt) adgang til dataene fra spor (e), der skal vises.\n
+b) Via et normalt kortprogram (f.eks. <a href="http://osmand.net/">OsmAnd</a> og <a href="https://maps.me/">MAPS.ME</a>).
 Disse app skal understøtte KMZ-filformatet (kun placeringer og tidsstempler).
-Faktisk skal en app understøtte <i> ACTION_VIEW </i> med MIME <i> -programmet / vnd.google-earth.kmz </i>.</string>
+Faktisk skal en app understøtte <i>ACTION_VIEW</i> med MIME <i>application/vnd.google-earth.kmz</i>.</string>
 
     <string name="help_storage_pictures_title">Hvordan gemmer OpenTracks billeder, der blev taget som markører?</string>
     <string name="help_storage_pictures_content">Disse gemmes i appens interne lager (dvs. kun tilgængelig inden for OpenTracks).</string>
@@ -52,7 +49,7 @@ Faktisk skal en app understøtte <i> ACTION_VIEW </i> med MIME <i> -programmet /
     <string name="help_track_export_content">
 Spor kan eksporteres fra indstillingerne som KMZ, KML eller GPX.
 KMZ / KML alle data; GPX kun placeringer.
-Spor, der deles via <i> delingsikonet </i> deles som KMZ.</string>
+Spor, der deles via <i>delingsikonet</i> deles som KMZ.</string>
 
     <string name="help_data_google_play_services_title">Kræver/bruger OpenTracks Google Play Service?</string>
 
@@ -71,21 +68,21 @@ Hvis du står stille eller er indendørs, registreres ingen sensordata (men de v
     <string name="help_gps_troubleshooting_content">
 Hvad du kan gøre:\n
 a) Kontroller, om GPS er aktiveret,\n
-b) forbedre GPS-modtagelse (f.eks. gå udendørs), \ n
-c) Kontroller, om du har appen <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/"> GPSTest </a> og \ n
-d) deaktiver strømbesparelse. \ n
-\ n
+b) forbedre GPS-modtagelse (f.eks. gå udendørs), \n
+c) Kontroller, om du har appen <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/"> GPSTest </a> og \n
+d) deaktiver strømbesparelse. \n
+\n
 Hvis alt ikke hjælper, skal du rapportere en fejl.</string>
 
     <string name="help_support_title">Hvordan kan jeg støtte OpenTracks?</string>
     <string name="help_support_content">
-Du kan: \ n
-a) sprede ordet om OpenTracks, \ n
-b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues"> foreslå funktioner </a>, \ n
-c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues"> rapportfejl </a>, \ n
-d) hjælp til softwareudvikling, \ n
-e) køb i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore"> Google Play Store </a>, \ n
-f) donere, og \ n
+Du kan: \n
+a) sprede ordet om OpenTracks, \n
+b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues"> foreslå funktioner </a>, \n
+c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues"> rapportfejl </a>, \n
+d) hjælp til softwareudvikling, \n
+e) køb i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore"> Google Play Store </a>, \n
+f) donere, og \n
 g) gør hvad du synes hjælper OpenTracks.</string>
 
     <!-- Activity Type -->

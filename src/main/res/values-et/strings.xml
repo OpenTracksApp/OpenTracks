@@ -33,17 +33,15 @@ limitations under the License.
 
     <string name="help_track_map_title">Kuidas näidata pala kaardil?</string>
     <string name="help_track_map_content">
-Kasutage väikest kaardiikooni. \ N
+Kasutage väikest kaardiikooni. \n
 a)
-(reaalajas värskendused) Installige <a href="https://github.com/OpenTracksApp/OSMDashboard"> OSMDashboard </a>.
-See pakub võrgu- või võrguühenduseta kaarte <a href="https://www.openstreetmap.org"> OpenStreetmap </a> kaudu. \ N
+(reaalajas värskendused) Installige <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
+See pakub võrgu- või võrguühenduseta kaarte <a href="https://www.openstreetmap.org">OpenStreetMap</a> kaudu.\n
 Tegelikult on OSMDashboard eraldiseisev rakendus, mis pääseb juurde (ajutiselt) ainult kuvatavate rada(de) andmetele.
-
-\ n
-b)
-„Tavalise” kaardirakenduse (nt <a href="http://osmand.net/"> OsmAnd </a> ja <a href="https://maps.me/"> MAPS.ME <) kaudu / a>.
+\n
+b) „Tavalise” kaardirakenduse (nt <a href="http://osmand.net/">OsmAnd</a> ja <a href="https://maps.me/">MAPS.ME</a>.
 Need rakendused peavad toetama KMZ-failivormingut (ainult asukohad ja ajatemplid).
-Tegelikult peab rakendus toetama rakendust MIME <i> rakendus / vnd.google-earth.kmz </i> <i> ACTION_VIEW </i>.</string>
+Tegelikult peab rakendus toetama rakendust MIME <i>application/vnd.google-earth.</i> <i>ACTION_VIEW</i>.</string>
 
     <string name="help_storage_pictures_title">Kuidas OpenTracks salvestab markeritena tehtud pilte?</string>
     <string name="help_storage_pictures_content">Neid hoitakse rakenduse sisemises salvestusruumis (st pääseb juurde ainult OpenTracks is).</string>
