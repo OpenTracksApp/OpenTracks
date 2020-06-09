@@ -60,7 +60,7 @@ android {
     defaultConfig {
         applicationId "de.dennisguse.opentracks"
         manifestPlaceholders = [
-                applicationLogo: "@drawable/ic_logo_color_24dp",
+                applicationLogo: "@mipmap/ic_launcher",
                 applicationName: "@string/app_name"
         ]
 
@@ -83,7 +83,7 @@ android {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
             manifestPlaceholders = [
-                    applicationLogo: "@drawable/ic_logo_black_24dp",
+                    applicationLogo: "@mipmap/ic_launcher_debug",
                     applicationName: "OpenTracks (Debug)"
             ]
         }
