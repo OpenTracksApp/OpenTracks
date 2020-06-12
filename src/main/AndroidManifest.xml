@@ -16,7 +16,14 @@ limitations under the License.
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.dennisguse.opentracks"
     android:installLocation="auto">
-    <!-- Permission to initialize services -->
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
     <application
         android:name=".Startup"
         android:allowBackup="false"
@@ -128,12 +135,7 @@ limitations under the License.
             android:icon="@drawable/ic_logo_color_24dp"
             android:label="@string/recording_service" />
     </application>
-    <supports-screens
-        android:anyDensity="true"
-        android:largeScreens="true"
-        android:normalScreens="true"
-        android:smallScreens="true"
-        android:xlargeScreens="true" />
+
     <!-- Permissions to record locations -->
     <uses-feature
         android:name="android.hardware.location.gps"
