@@ -11,7 +11,14 @@ import de.dennisguse.opentracks.io.file.TrackFileFormat;
 public class ShareContentProviderTest {
 
     @Test
-    public void testCreateandParseURI() {
+    public void testCreateandParseURI_invalid() {
+        Uri uri = Uri.parse("content://de.dennisguse.opentracks.debug.content/tracks/1");
+
+        Assert.assertArrayEquals(new long[]{}, ShareContentProvider.parseURI(uri));
+    }
+
+    @Test
+    public void testCreateandParseURI_valid() {
         long[] trackIds = {1, 3, 5};
         Pair<Uri, String> shareURIandMIME = ShareContentProvider.createURI(trackIds, "TrackName", TrackFileFormat.KML_ONLY_TRACK);
 

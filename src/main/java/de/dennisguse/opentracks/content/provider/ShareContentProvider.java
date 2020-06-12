@@ -92,7 +92,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
 
     static long[] parseURI(Uri uri) {
         List<String> uriPaths = uri.getPathSegments();
-        if (uriPaths == null || uriPaths.size() < 2) {
+        if (uriPaths == null || uriPaths.size() < 3) {
             Log.d(TAG, "URI does not contain any trackIds.");
             return new long[]{};
         }
