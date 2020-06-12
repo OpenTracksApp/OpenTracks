@@ -16,15 +16,15 @@
 
 package de.dennisguse.opentracks.util;
 
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Pair;
-import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import java.io.File;
@@ -51,6 +51,8 @@ public class IntentUtils {
     private static final String TAG = IntentUtils.class.getSimpleName();
 
     private static final String JPEG_EXTENSION = "jpeg";
+
+    private static final TrackFileFormat SHOWONMAP_TRACKFILEFORMAT = TrackFileFormat.KMZ_WITH_TRACKDETAIL;
 
     private IntentUtils() {
     }
@@ -153,41 +155,45 @@ public class IntentUtils {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(uri));
 
-        try {
-            context.startActivity(intent);
-        } catch (ActivityNotFoundException e) {
-            Toast.makeText(context, context.getString(R.string.app_not_installed_show_on_map), Toast.LENGTH_SHORT).show();
-        }
+
+        context.startActivity(Intent.createChooser(intent, null));
     }
 
 
     /**
-     * Send intent to show tracks on a map (needs an another app).
+     * Send intent to show tracks on a map (needs an another app) as resource URIs.
      *
      * @param context  the context
      * @param trackIds the track ids
      */
-    public static void showTrackOnMap(Context context, long[] trackIds) {
+    public static void showTrackOnMapDashboard(Context context, long[] trackIds) {
         if (trackIds.length == 0) {
             return;
         }
 
-        if (IntentDashboardUtils.startDashboard(context, trackIds)) {
+        IntentDashboardUtils.startDashboard(context, trackIds);
+    }
+
+    /**
+     * Send intent to show tracks on a map (needs an another app) as KMZ.
+     *
+     * @param context  the context
+     * @param trackIds the track ids
+     */
+    public static void showTrackOnMapKMZ(Context context, long[] trackIds) {
+        if (trackIds.length == 0) {
             return;
         }
 
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(TrackPointsColumns.TRACKID, trackIds[0]);
-        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, "SharingTrack", TrackFileFormat.KMZ_WITH_TRACKDETAIL);
+        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, "SharingTrack", SHOWONMAP_TRACKFILEFORMAT);
         intent.setDataAndType(uriAndMime.first, uriAndMime.second);
 
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        if (intent.resolveActivity(context.getPackageManager()) != null) {
-            context.startActivity(intent);
-        } else {
-            Toast.makeText(context, context.getString(R.string.app_not_installed_show_on_map), Toast.LENGTH_SHORT).show();
-        }
+
+        context.startActivity(Intent.createChooser(intent, context.getString(R.string.open_track_as_trackfileformat, SHOWONMAP_TRACKFILEFORMAT.getExtension())));
     }
 
     /**
@@ -208,5 +214,20 @@ public class IntentUtils {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 .putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
         return new Pair<>(intent, photoUri);
+    }
+
+    /**
+     * Used to convert showTrackOnMapDashboard-requests to showTrackOnMapKMZ.
+     */
+    public static class ShowOnMapProxyActivity extends AppCompatActivity {
+
+        protected void onCreate(final Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            long[] trackIds = IntentDashboardUtils.extractTrackIdsFromIntent(getIntent());
+
+            showTrackOnMapKMZ(this, trackIds);
+
+            finish();
+        }
     }
 }
