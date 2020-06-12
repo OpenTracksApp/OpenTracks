@@ -338,7 +338,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 startActivity(intent);
                 return true;
             case R.id.track_detail_menu_show_on_map:
-                IntentUtils.showTrackOnMap(this, new long[]{trackId});
+                IntentUtils.showTrackOnMapDashboard(this, new long[]{trackId});
                 return true;
             case R.id.track_detail_markers:
                 intent = IntentUtils.newIntent(this, MarkerListActivity.class)

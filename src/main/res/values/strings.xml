@@ -95,6 +95,10 @@ limitations under the License.
         g) do whatever you think helps OpenTracks.
     </string>
 
+    <string name="open_track_using_dashboard">Open using OpenTracks-Dashboard</string>
+    <string name="open_track_as_file">Open as file</string>
+    <string name="open_track_as_trackfileformat">Open as %1$s</string>
+
     <!-- Activity Type -->
     <string name="activity_type_airplane">airplane</string>
     <string name="activity_type_atv">ATV</string>

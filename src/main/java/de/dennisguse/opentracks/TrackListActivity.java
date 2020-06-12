@@ -171,9 +171,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
         public void run() {
-            /*
-             * After binding changes (e.g., becomes available), update the total time in trackController.
-             */
+            // After binding changes (e.g., becomes available), update the total time in trackController.
             runOnUiThread(() -> trackController.update(PreferencesUtils.isRecording(recordingTrackId), recordingTrackPaused));
 
             if (!startGps) {
@@ -479,7 +477,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         Intent intent;
         switch (itemId) {
             case R.id.list_context_menu_show_on_map:
-                IntentUtils.showTrackOnMap(this, trackIds);
+                IntentUtils.showTrackOnMapDashboard(this, trackIds);
                 return true;
             case R.id.list_context_menu_share:
                 intent = IntentUtils.newShareFileIntent(this, trackIds);

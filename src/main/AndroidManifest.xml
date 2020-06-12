@@ -111,6 +111,13 @@ limitations under the License.
 
         <activity android:name=".settings.SettingsActivity" />
 
+        <activity android:name=".util.IntentUtils$ShowOnMapProxyActivity">
+            <intent-filter android:label="@string/open_track_as_file">
+                <action android:name="Intent.OpenTracks-Dashboard" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <provider
             android:name=".content.provider.ShareContentProvider"
             android:authorities="${applicationId}.content"
