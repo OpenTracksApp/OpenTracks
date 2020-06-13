@@ -19,12 +19,10 @@ package de.dennisguse.opentracks.util;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Pair;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
 import java.io.File;
@@ -35,11 +33,9 @@ import java.util.Date;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.DescriptionGenerator;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.ShareContentProvider;
-import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
 /**
  * Utilities for creating intents.
@@ -51,8 +47,6 @@ public class IntentUtils {
     private static final String TAG = IntentUtils.class.getSimpleName();
 
     private static final String JPEG_EXTENSION = "jpeg";
-
-    private static final TrackFileFormat SHOWONMAP_TRACKFILEFORMAT = TrackFileFormat.KMZ_WITH_TRACKDETAIL;
 
     private IntentUtils() {
     }
@@ -160,41 +154,6 @@ public class IntentUtils {
     }
 
 
-    /**
-     * Send intent to show tracks on a map (needs an another app) as resource URIs.
-     *
-     * @param context  the context
-     * @param trackIds the track ids
-     */
-    public static void showTrackOnMapDashboard(Context context, long[] trackIds) {
-        if (trackIds.length == 0) {
-            return;
-        }
-
-        IntentDashboardUtils.startDashboard(context, trackIds);
-    }
-
-    /**
-     * Send intent to show tracks on a map (needs an another app) as KMZ.
-     *
-     * @param context  the context
-     * @param trackIds the track ids
-     */
-    public static void showTrackOnMapKMZ(Context context, long[] trackIds) {
-        if (trackIds.length == 0) {
-            return;
-        }
-
-        Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(TrackPointsColumns.TRACKID, trackIds[0]);
-        Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, "SharingTrack", SHOWONMAP_TRACKFILEFORMAT);
-        intent.setDataAndType(uriAndMime.first, uriAndMime.second);
-
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-        context.startActivity(Intent.createChooser(intent, context.getString(R.string.open_track_as_trackfileformat, SHOWONMAP_TRACKFILEFORMAT.getExtension())));
-    }
 
     /**
      * Sends a take picture request to the camera app.
@@ -214,20 +173,5 @@ public class IntentUtils {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 .putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
         return new Pair<>(intent, photoUri);
-    }
-
-    /**
-     * Used to convert showTrackOnMapDashboard-requests to showTrackOnMapKMZ.
-     */
-    public static class ShowOnMapProxyActivity extends AppCompatActivity {
-
-        protected void onCreate(final Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            long[] trackIds = IntentDashboardUtils.extractTrackIdsFromIntent(getIntent());
-
-            showTrackOnMapKMZ(this, trackIds);
-
-            finish();
-        }
     }
 }
