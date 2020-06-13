@@ -29,6 +29,7 @@ import de.dennisguse.opentracks.fragments.StatisticsRecordingFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.settings.SettingsActivity;
+import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
@@ -338,7 +339,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 startActivity(intent);
                 return true;
             case R.id.track_detail_menu_show_on_map:
-                IntentUtils.showTrackOnMapDashboard(this, new long[]{trackId});
+                IntentDashboardUtils.startDashboard(this, trackId);
                 return true;
             case R.id.track_detail_markers:
                 intent = IntentUtils.newIntent(this, MarkerListActivity.class)

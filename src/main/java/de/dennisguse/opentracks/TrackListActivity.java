@@ -56,6 +56,7 @@ import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.ActivityUtils;
+import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -477,7 +478,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         Intent intent;
         switch (itemId) {
             case R.id.list_context_menu_show_on_map:
-                IntentUtils.showTrackOnMapDashboard(this, trackIds);
+                IntentDashboardUtils.startDashboard(this, trackIds);
                 return true;
             case R.id.list_context_menu_share:
                 intent = IntentUtils.newShareFileIntent(this, trackIds);

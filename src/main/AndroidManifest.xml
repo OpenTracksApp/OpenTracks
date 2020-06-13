@@ -111,8 +111,14 @@ limitations under the License.
 
         <activity android:name=".settings.SettingsActivity" />
 
-        <activity android:name=".util.IntentUtils$ShowOnMapProxyActivity">
-            <intent-filter android:label="@string/open_track_as_file">
+        <activity android:name=".ShowOnMapProxyActivity$KMZ">
+            <intent-filter android:label="@string/open_track_as_KMZ">
+                <action android:name="Intent.OpenTracks-Dashboard" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ShowOnMapProxyActivity$GPX">
+            <intent-filter android:label="@string/open_track_as_GPX">
                 <action android:name="Intent.OpenTracks-Dashboard" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

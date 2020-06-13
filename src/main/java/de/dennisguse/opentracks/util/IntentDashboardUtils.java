@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
-import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
@@ -33,7 +32,17 @@ public class IntentDashboardUtils {
     private IntentDashboardUtils() {
     }
 
+    /**
+     * Send intent to show tracks on a map (needs an another app) as resource URIs.
+     *
+     * @param context  the context
+     * @param trackIds the track ids
+     */
     public static void startDashboard(Context context, long[] trackIds) {
+        if (trackIds.length == 0) {
+            return;
+        }
+
         ArrayList<Uri> uris = new ArrayList<>();
         String trackIdList = ContentProviderUtils.formatIdListForUri(trackIds);
 
@@ -52,7 +61,11 @@ public class IntentDashboardUtils {
         clipData.addItem(new ClipData.Item(uris.get(TRACKPOINTS_URI_INDEX)));
         intent.setClipData(clipData);
 
-        context.startActivity(Intent.createChooser(intent, context.getString(R.string.open_track_using_dashboard)));
+        context.startActivity(intent);
+    }
+
+    public static void startDashboard(Context context, long trackId) {
+        startDashboard(context, new long[]{trackId});
     }
 
     public static long[] extractTrackIdsFromIntent(@NonNull Intent intent) {
