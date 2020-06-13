@@ -20,12 +20,16 @@ import android.location.Location;
 import android.os.Build;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.util.Pair;
 
 import java.text.DecimalFormat;
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
 import java.util.Date;
@@ -43,6 +47,8 @@ import de.dennisguse.opentracks.R;
  * @author Rodrigo Damazio
  */
 public class StringUtils {
+
+    private static final String TAG = StringUtils.class.getSimpleName();
 
     private static final String COORDINATE_DEGREE = "\u00B0";
 
@@ -280,22 +286,27 @@ public class StringUtils {
     }
 
     /**
-     * Gets the time, in milliseconds, from an XML date time string as defined at http://www.w3.org/TR/xmlschema-2/#dateTime
+     * Gets the time, in milliseconds, from an XML date time string (ISO8601) as defined at http://www.w3.org/TR/xmlschema-2/#dateTime
+     * Let's be lenient: if timezone information is not provided, UTC will be used.
      *
      * @param xmlDateTime the XML date time string
      */
     public static long parseTime(String xmlDateTime) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             try {
-                TemporalAccessor t = DateTimeFormatter.ISO_DATE_TIME.parse(xmlDateTime);
+                TemporalAccessor t = DateTimeFormatter.ISO_DATE_TIME.parseBest(xmlDateTime, ZonedDateTime::from, LocalDateTime::from);
+                if (t instanceof LocalDateTime) {
+                    Log.w(TAG, "Date does not contain timezone information: using UTC.");
+                    t = ((LocalDateTime) t).atZone(ZoneOffset.UTC);
+                }
                 return Instant.from(t).toEpochMilli();
             } catch (Exception e) {
-                throw new IllegalArgumentException("Invalid XML dateTime value: " + e);
+                Log.e(TAG, "Invalid XML dateTime value");
+                throw e;
             }
         }
 
         //TODO Remove the following when upgrading to API level 26+.
-        //ATTENTION: The following code does not require a time zone (+01 or Z); while ISO_DATE_TIME requires this!
 
         // Parse the date time base
         ParsePosition position = new ParsePosition(0);

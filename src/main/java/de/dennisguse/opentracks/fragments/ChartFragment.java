@@ -90,12 +90,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
                 boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
                 if (metricUnits != chartView.getMetricUnits()) {
                     chartView.setMetricUnits(metricUnits);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (isResumed()) {
-                                chartView.requestLayout();
-                            }
+                    runOnUiThread(() -> {
+                        if (isResumed()) {
+                            chartView.requestLayout();
                         }
                     });
                 }
@@ -106,12 +103,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
                     chartView.setReportSpeed(reportSpeed);
                     chartView.applyReportSpeed();
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (isResumed()) {
-                                chartView.requestLayout();
-                            }
+                    runOnUiThread(() -> {
+                        if (isResumed()) {
+                            chartView.requestLayout();
                         }
                     });
                 }
@@ -214,12 +208,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
             trackStatisticsUpdater = startTime != -1L ? new TrackStatisticsUpdater(startTime) : null;
             pendingPoints.clear();
             chartView.reset();
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (isResumed()) {
-                        chartView.resetScroll();
-                    }
+            runOnUiThread(() -> {
+                if (isResumed()) {
+                    chartView.resetScroll();
                 }
             });
         }

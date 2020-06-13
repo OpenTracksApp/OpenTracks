@@ -169,13 +169,8 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
             if (locationExecutorService == null || locationExecutorService.isShutdown() || locationExecutorService.isTerminated()) {
                 return;
             }
-
-            locationExecutorService.submit(new Runnable() {
-                @Override
-                public void run() {
-                    onLocationChangedAsync(location);
-                }
-            });
+            
+            locationExecutorService.submit(() -> onLocationChangedAsync(location));
         }
 
         @Override

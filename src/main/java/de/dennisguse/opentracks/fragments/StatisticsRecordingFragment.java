@@ -68,12 +68,9 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
             if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
                 if (isResumed()) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (isResumed()) {
-                                updateUI();
-                            }
+                    getActivity().runOnUiThread(() -> {
+                        if (isResumed()) {
+                            updateUI();
                         }
                     });
                 }
@@ -308,14 +305,11 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     @Override
     public void onTrackUpdated(final Track track) {
         if (isResumed()) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (isResumed()) {
-                        lastTrackStatistics = track != null ? track.getTrackStatistics() : null;
-                        category = track != null ? track.getCategory() : "";
-                        updateUI();
-                    }
+            getActivity().runOnUiThread(() -> {
+                if (isResumed()) {
+                    lastTrackStatistics = track != null ? track.getTrackStatistics() : null;
+                    category = track != null ? track.getCategory() : "";
+                    updateUI();
                 }
             });
         }
@@ -339,24 +333,21 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     @Override
     public void onNewTrackPointsDone() {
         if (isResumed()) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (isResumed()) {
-                        if (!isSelectedTrackRecording() || isSelectedTrackPaused()) {
+            getActivity().runOnUiThread(() -> {
+                if (isResumed()) {
+                    if (!isSelectedTrackRecording() || isSelectedTrackPaused()) {
+                        lastTrackPoint = null;
+                    }
+
+                    if (lastTrackPoint != null) {
+                        boolean hasFix = !LocationUtils.isLocationOld(lastTrackPoint.getLocation());
+                        boolean hasGoodFix = TrackPointUtils.fulfillsAccuracy(lastTrackPoint, recordingGpsAccuracy);
+
+                        if (!hasFix || !hasGoodFix) {
                             lastTrackPoint = null;
                         }
-
-                        if (lastTrackPoint != null) {
-                            boolean hasFix = !LocationUtils.isLocationOld(lastTrackPoint.getLocation());
-                            boolean hasGoodFix = TrackPointUtils.fulfillsAccuracy(lastTrackPoint, recordingGpsAccuracy);
-
-                            if (!hasFix || !hasGoodFix) {
-                                lastTrackPoint = null;
-                            }
-                        }
-                        setLocationValues();
                     }
+                    setLocationValues();
                 }
             });
         }

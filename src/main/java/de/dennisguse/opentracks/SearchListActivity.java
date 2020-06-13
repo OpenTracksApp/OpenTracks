@@ -153,12 +153,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
                 recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(SearchListActivity.this);
             }
             if (key != null) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        arrayAdapter.notifyDataSetChanged();
-                    }
-                });
+                runOnUiThread(() -> arrayAdapter.notifyDataSetChanged());
             }
         }
     };
@@ -346,12 +341,9 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         final List<Map<String, Object>> displayResults = prepareResultsforDisplay(scoredResults);
 
         // Use the UI thread to display the results
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                arrayAdapter.clear();
-                arrayAdapter.addAll(displayResults);
-            }
+        runOnUiThread(() -> {
+            arrayAdapter.clear();
+            arrayAdapter.addAll(displayResults);
         });
     }
 
@@ -448,12 +440,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
 
     @Override
     public void onDeleteMarkerDone() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                handleIntent(getIntent());
-            }
-        });
+        runOnUiThread(() -> handleIntent(getIntent()));
     }
 
     @Override
@@ -463,11 +450,6 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
 
     @Override
     protected void onDeleted() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                handleIntent(getIntent());
-            }
-        });
+        runOnUiThread(() -> handleIntent(getIntent()));
     }
 }

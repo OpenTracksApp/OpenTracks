@@ -61,13 +61,10 @@ public class BluetoothUtils {
         final Object mutex = new Object();
 
         Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                adapters.add(BluetoothAdapter.getDefaultAdapter());
-                synchronized (mutex) {
-                    mutex.notify();
-                }
+        handler.post(() -> {
+            adapters.add(BluetoothAdapter.getDefaultAdapter());
+            synchronized (mutex) {
+                mutex.notify();
             }
         });
 
