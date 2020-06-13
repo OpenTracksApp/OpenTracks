@@ -43,11 +43,11 @@ public class IntentDashboardUtils {
             return;
         }
 
-        ArrayList<Uri> uris = new ArrayList<>();
         String trackIdList = ContentProviderUtils.formatIdListForUri(trackIds);
 
-        uris.add(0, Uri.withAppendedPath(TracksColumns.CONTENT_URI, trackIdList));
-        uris.add(1, Uri.withAppendedPath(TrackPointsColumns.CONTENT_URI_BY_TRACKID, trackIdList));
+        ArrayList<Uri> uris = new ArrayList<>();
+        uris.add(TRACK_URI_INDEX, Uri.withAppendedPath(TracksColumns.CONTENT_URI, trackIdList));
+        uris.add(TRACKPOINTS_URI_INDEX, Uri.withAppendedPath(TrackPointsColumns.CONTENT_URI_BY_TRACKID, trackIdList));
 
         Intent intent = new Intent(ACTION_DASHBOARD);
         intent.putParcelableArrayListExtra(ACTION_DASHBOARD_PAYLOAD, uris);
