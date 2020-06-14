@@ -64,9 +64,9 @@ android {
                 applicationName: "@string/app_name"
         ]
 
-        versionCode 3396
+        versionCode 3427
         //versionCode getVersionCode() //Useful for debugging.
-        versionName "v3.7.4"
+        versionName "v3.7.5"
 
         buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
 
