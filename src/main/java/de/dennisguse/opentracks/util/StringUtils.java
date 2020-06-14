@@ -426,4 +426,8 @@ public class StringUtils {
         }
         return new Pair<>(value, unit);
     }
+
+    public static String valueInParentheses(String text) {
+        return "(" + text + ")";
+    }
 }
