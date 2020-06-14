@@ -51,13 +51,19 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
 __Only required permissions:__
 * _ACCESS_FINE_LOCATION_: required to use the GPS.
 
+An overview of Bluetooth LE sensors that are known to work with OpenTracks is in [README_TESTED_SENSORS.md](README_TESTED_SENSORS.md).
+
 _Please note:_
 _OpenTracks_ does not contain a _map_ (as this would required Internet access).
-To show your tracks on a map, a 3rd party application (e.g., [OsmAnd](https://play.google.com/store/apps/details?id=net.osmand) or [MAPS.ME](https://play.google.com/store/apps/details?id=com.mapswithme.maps.pro)) needs to be installed.  
 
-## Custom Dashboards
+## Custom Dashboards (incl. Map)
 As of v3.3.1 OpenTracks enables to use custom dashboards.
 The reference implementation is [OSMDashboard](https://github.com/OpenTracksApp/OSMDashboard), which presents an OpenStreetMap map (showing the current track, incl. updates).
+The developer documentation is in [README_API.md](README_API.md).
+
+Alternatively, recorded tracks can be shared as KMZ/GPX to installed applications (e.g., [OsmAnd](https://play.google.com/store/apps/details?id=net.osmand) or [MAPS.ME](https://play.google.com/store/apps/details?id=com.mapswithme.maps.pro)).
+However, this is rather slow and does not provide updates while recording.
+
 
 ## Screenshots
 <div>
@@ -87,7 +93,7 @@ Rework of _OpenTracks_ included:
 * removing calorie estimation and activity estimation,
 * removing support for ANT+ and Classic Bluetooth,
 * adding support for Bluetooth LE heart rate sensors,
-* removing Protobuf (store sensor data in SQLite columns directly), and
+* removing Protobuf (store sensosensorr data in SQLite columns directly), and
 * removing Android Service API for other apps.
 
 Artwork, logos and user interface remained more or less unchanged. 

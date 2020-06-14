@@ -7,9 +7,6 @@ Although this might be (mostly) sufficient, it has some limitations.
 This include limited configurability (e.g., ordering of shown elements) and the lack of Internet access.
 In fact, the later is considered a feature but severely limits the implementation presenting a map (at least in an easy way). 
 
-_NOTE:_ for showing a track on a map a workaround was implemented in OpenTracks.
-Data could be exported as KMZ and presented in 3rd-party application (e.g., [OsmAnd](https://play.google.com/store/apps/details?id=net.osmand) or [MAPS.ME](https://play.google.com/store/apps/details?id=com.mapswithme.maps.pro)). 
-
 For the time being, the OpenTracks Data API can be used to implement mainly custom dashboards.
 
 ## Implementation
