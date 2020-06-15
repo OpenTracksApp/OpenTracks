@@ -36,12 +36,12 @@ limitations under the License.
 Gebruik het kleine kaarticoontje.
 a)
 (live updates) Installeer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
-Het biedt online of offline kaarten via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n
+Dit biedt online of offline kaarten via <a href="https://www.openstreetmap.org">OpenStreetmap</a>.\n
 Eigenlijk is OSMDashboard een aparte app die alleen (tijdelijk) toegang heeft tot de gegevens van track(s) die getoond gaan worden.
 
 \n
 b)
-Via een normale kaarttoepassing (bijv. <a href="http://osmand.net/">OsmAnd</a> en <a href="https://maps.me/">MAPS.ME</a>).
+Via een reguliere kaarttoepassing (zoals <a href="http://osmand.net/">OsmAnd</a> en <a href="https://maps.me/">MAPS.ME</a>).
 Deze app moet het KMZ-bestandsformaat ondersteunen (alleen locaties en tijdstempels).
 In feite moet een app <i>ACTION_VIEW</i> ondersteunen met MIME <i>application/vnd.google-earth.kmz</i>.</string>
 
@@ -87,6 +87,11 @@ d) hulp bij de ontwikkeling van software.
 e) koop in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n
 f) doneert u, en
 g) doe wat je denkt dat OpenTracks helpt.</string>
+
+    <string name="open_track_using_dashboard">Open via OpenTracks-Dashboard</string>
+    <string name="open_track_as_KMZ">Open als KMZ</string>
+    <string name="open_track_as_GPX">Open als GPX</string>
+    <string name="open_track_as_trackfileformat">Open als %1$s</string>
 
     <!-- Activity Type -->
     <string name="activity_type_airplane">vliegtuig</string>
@@ -326,6 +331,7 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="settings_show">Weergeven</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Geavanceerd</string>
+    <string name="settings_default_trackfileformat">Bestandsformaat voor exporteren/delen</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Op afstand</string>
     <string name="settings_chart_by_time">Op tijd</string>
