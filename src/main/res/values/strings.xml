@@ -430,6 +430,8 @@ limitations under the License.
     <string name="track_edit_new_track_title">New Track</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Start recording your next adventure here</string>
+    <!-- Aggregated Statistics -->
+    <string name="aggregated_stats_empty_message">Record your first track to see aggregated statistics</string>
     <!-- Track Widget -->
     <!-- Tracks -->
     <string name="tracks_few">%1$d tracks</string>
