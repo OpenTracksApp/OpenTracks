@@ -11,4 +11,32 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.0" />
+
+    <RelativeLayout
+        android:id="@+id/aggregated_stats_empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        
+            <TextView
+                style="@style/TextLarge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="center_horizontal|center_vertical"
+                android:text="@string/aggregated_stats_empty_message"
+                android:textColor="@color/list_empty_text" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+    </RelativeLayout>
+
 </LinearLayout>

@@ -12,6 +12,7 @@ endlegend
 TrackListActivity --> TrackRecordingActivity : Start recording
 TrackListActivity --> SearchListActivity
 TrackListActivity --> MarkerListActivity : Show all markers
+TrackListActivity --> AggregatedStatisticsActivity : Aggregated stats
 TrackListActivity --> TrackRecordedActivity : Show track
 TrackListActivity --> TrackDeleteActivity
 

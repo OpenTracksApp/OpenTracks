@@ -20,6 +20,7 @@ public class AggregatedStatisticsActivity extends AbstractActivity {
         super.onCreate(savedInstanceState);
 
         listView = findViewById(R.id.aggregated_stats_list);
+        listView.setEmptyView(findViewById(R.id.aggregated_stats_empty_view));
 
         final AggregatedStatisticsModel viewModel = new ViewModelProvider(this).get(AggregatedStatisticsModel.class);
         viewModel.getAggregatedStats().observe(this, new Observer<AggregatedStatistics>() {
