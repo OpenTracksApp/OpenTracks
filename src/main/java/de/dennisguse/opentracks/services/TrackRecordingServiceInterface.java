@@ -107,14 +107,14 @@ public interface TrackRecordingServiceInterface {
      *
      * @param location the location to be inserted
      */
-    @VisibleForTesting
-    void insertLocation(Location location);
+    /*@VisibleForTesting
+    void insertLocation(Location location);*/
 
     /**
      * Disables processing of location updates from {@link android.location.LocationManager}.
      */
-    @VisibleForTesting
-    void enableLocationExecutor(boolean enable);
+    /*@VisibleForTesting
+    void enableLocationExecutor(boolean enable);*/
 
     @VisibleForTesting
     void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager);
@@ -124,10 +124,10 @@ public interface TrackRecordingServiceInterface {
      *
      * @param gpsChangeCallback  the callback.
      */
-    void setGpsChangeCallback(Runnable gpsChangeCallback);
+    //void setGpsChangeCallback(Runnable gpsChangeCallback);
 
     /**
      * @return the current status of GPS. See {@link GpsStatus} and {@link GpsStatusValue}.
      */
-    GpsStatusValue getGpsStatus();
+    //GpsStatusValue getGpsStatus();
 }

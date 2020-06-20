@@ -82,22 +82,22 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
         return trackRecordingService.insertWaypoint(name, category, description, photoUrl);
     }
 
-    @VisibleForTesting
+    /*@VisibleForTesting
     @Override
     public void insertLocation(Location location) {
-        trackRecordingService.onLocationChangedAsync(location);
-    }
+        trackRecordingService.newLocation(location);
+    }*/
 
     @Override
     public SensorDataSet getSensorData() {
         return trackRecordingService.getSensorDataSet();
     }
 
-    @VisibleForTesting
+    /*@VisibleForTesting
     @Override
     public void enableLocationExecutor(boolean enable) {
         trackRecordingService.enableLocationExecutor(enable);
-    }
+    }*/
 
     @VisibleForTesting
     @Override
@@ -113,7 +113,7 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
         trackRecordingService = null;
     }
 
-    @Override
+    /*@Override
     public void setGpsChangeCallback(Runnable gpsChangeCallback) {
         trackRecordingService.setGpsChangeCallback(gpsChangeCallback);
     }
@@ -121,5 +121,5 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
     @Override
     public GpsStatusValue getGpsStatus() {
         return trackRecordingService.getGpsStatus();
-    }
+    }*/
 }

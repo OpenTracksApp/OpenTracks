@@ -25,10 +25,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.sqlite.SQLiteException;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.IBinder;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
@@ -39,8 +36,6 @@ import androidx.core.app.TaskStackBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
@@ -72,25 +67,20 @@ import de.dennisguse.opentracks.util.UnitConversions;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackRecordingService extends Service implements GpsStatus.GpsStatusListener {
+public class TrackRecordingService extends Service implements HandlerServer.HandlerSubscriber {
 
     private static final String TAG = TrackRecordingService.class.getSimpleName();
 
     // The following variables are set in onCreate:
-    @Deprecated //TODO Should not be necessary
-    private ExecutorService locationExecutorService; // Enforces order of location changes.
     private ContentProviderUtils contentProviderUtils;
-    private LocationManager locationManager;
     private PeriodicTaskExecutor voiceExecutor;
     private TrackRecordingServiceNotificationManager notificationManager;
-    private LocationListenerPolicy locationListenerPolicy;
 
     private long recordingTrackId;
     private boolean recordingTrackPaused;
     private int recordingDistanceInterval;
     private int maxRecordingDistance;
     private int recordingGpsAccuracy;
-    private long currentRecordingInterval;
 
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
@@ -112,18 +102,6 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
             if (PreferencesUtils.isKey(context, R.string.voice_frequency_key, key)) {
                 voiceExecutor.setTaskFrequency(PreferencesUtils.getVoiceFrequency(context));
             }
-            if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
-                int minRecordingInterval = PreferencesUtils.getMinRecordingInterval(context);
-                if (minRecordingInterval == PreferencesUtils.getMinRecordingIntervalAdaptBatteryLife(context)) {
-                    // Choose battery life over moving time accuracy.
-                    locationListenerPolicy = new AdaptiveLocationListenerPolicy(30 * UnitConversions.ONE_SECOND_MS, 5 * UnitConversions.ONE_MINUTE_MS, 5);
-                } else if (minRecordingInterval == PreferencesUtils.getMinRecordingIntervalAdaptAccuracy(context)) {
-                    // Get all the updates.
-                    locationListenerPolicy = new AdaptiveLocationListenerPolicy(UnitConversions.ONE_SECOND_MS, 30 * UnitConversions.ONE_SECOND_MS, 0);
-                } else {
-                    locationListenerPolicy = new AbsoluteLocationListenerPolicy(minRecordingInterval * UnitConversions.ONE_SECOND_MS);
-                }
-            }
             if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
                 recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(context);
             }
@@ -133,6 +111,7 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
             if (PreferencesUtils.isKey(context, R.string.recording_gps_accuracy_key, key)) {
                 recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(context);
             }
+            /*
             if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
                 if (gpsStatus != null) {
                     gpsStatus.onMinRecordingIntervalChanged(PreferencesUtils.getMinRecordingInterval(context));
@@ -143,6 +122,7 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
                     gpsStatus.onRecordingDistanceChanged(PreferencesUtils.getRecordingDistanceInterval(context));
                 }
             }
+            */
         }
     };
 
@@ -154,60 +134,16 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
     private TrackPoint lastTrackPoint;
     private boolean isIdle;
 
-    private GpsStatus gpsStatus;
-    private List<Runnable> gpsCallbacks = new ArrayList<>();
+    //private GpsStatus gpsStatus;
+    //private List<Runnable> gpsCallbacks = new ArrayList<>();
 
     private TrackRecordingServiceBinder binder = new TrackRecordingServiceBinder(this);
-    private final LocationListener locationListener = new LocationListener() {
-
-        @Override
-        public void onLocationChanged(final Location location) {
-            if (gpsStatus != null) {
-                gpsStatus.onLocationChanged(location);
-            }
-
-            if (locationExecutorService == null || locationExecutorService.isShutdown() || locationExecutorService.isTerminated()) {
-                return;
-            }
-
-            locationExecutorService.submit(new Runnable() {
-                @Override
-                public void run() {
-                    onLocationChangedAsync(location);
-                }
-            });
-            locationExecutorService.submit(() -> onLocationChangedAsync(location));
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-            Log.w(TAG, "LocationListener.onStatusChanged(): is not implemented.");
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-            Log.w(TAG, "LocationListener.onProviderEnabled(): is not implemented.");
-            if (gpsStatus != null) {
-                gpsStatus.onGpsEnabled();
-            }
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-            Log.w(TAG, "LocationListener.onProviderDisabled(): is not implemented.");
-            if (gpsStatus != null) {
-                gpsStatus.onGpsDisabled();
-            }
-        }
-    };
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        locationExecutorService = Executors.newSingleThreadExecutor();
         contentProviderUtils = new ContentProviderUtils(this);
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTaskFactory());
 
         notificationManager = new TrackRecordingServiceNotificationManager(this);
@@ -233,9 +169,11 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
 
     @Override
     public void onDestroy() {
-        if (gpsStatus != null) {
+        /*if (gpsStatus != null) {
             gpsStatus.stop();
-        }
+        }*/
+
+        HandlerServer.getInstance(this).unsubscribe(this);
 
         if (remoteSensorManager != null) {
             remoteSensorManager.stop();
@@ -244,9 +182,6 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
 
         // Reverse order from onCreate
         showNotification(false); //TODO Why?
-
-        unregisterLocationListener();
-        locationManager = null;
 
         PreferencesUtils.unregister(this, sharedPreferenceChangeListener);
 
@@ -264,8 +199,6 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
         // This should be the next to last operation
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
 
-        // Shutdown the executorService last to avoid sending events to a dead executor.
-        locationExecutorService.shutdown();
         super.onDestroy();
     }
 
@@ -465,7 +398,7 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
 
     private void startGps() {
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
-        registerLocationListener();
+        HandlerServer.getInstance(this).subscribe(this);
         showNotification(true);
     }
 
@@ -535,6 +468,8 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
         }
         lastTrackPoint = null;
 
+        HandlerServer.getInstance(this).unsubscribe(this);
+
         stopGps(trackStopped);
     }
 
@@ -546,7 +481,7 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
     void stopGps(boolean shutdown) {
         if (!isRecording()) return;
 
-        unregisterLocationListener();
+        HandlerServer.getInstance(this).unsubscribe(this);
         showNotification(false);
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
         if (shutdown) {
@@ -585,7 +520,8 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
         PreferencesUtils.setBoolean(this, R.string.recording_track_paused_key, recordingTrackPaused);
     }
 
-    void onLocationChangedAsync(Location location) {
+    @Override
+    public void newLocation(Location location) {
         if (!isRecording() || isPaused()) {
             Log.w(TAG, "Ignore onLocationChangedAsync. Not recording or paused.");
             return;
@@ -616,7 +552,7 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
 
         //TODO Figure out how to avoid loading the lastValidTrackPoint from the database
         TrackPoint lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(track.getId());
-        long idleTime = 0L;
+        /*long idleTime = 0L;
         if (TrackPointUtils.after(trackPoint, lastValidTrackPoint)) {
             idleTime = trackPoint.getTime() - lastValidTrackPoint.getTime();
         }
@@ -624,7 +560,7 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
         locationListenerPolicy.updateIdleTime(idleTime);
         if (currentRecordingInterval != locationListenerPolicy.getDesiredPollingInterval()) {
             registerLocationListener();
-        }
+        }*/
 
         //Storing trackPoint
 
@@ -751,28 +687,6 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
         }
     }
 
-    private void registerLocationListener() {
-        if (locationManager == null) {
-            Log.e(TAG, "locationManager is null.");
-            return;
-        }
-        try {
-            long interval = locationListenerPolicy.getDesiredPollingInterval();
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, interval, locationListenerPolicy.getMinDistance_m(), locationListener);
-            currentRecordingInterval = interval;
-        } catch (SecurityException e) {
-            Log.e(TAG, "Could not register location listener; permissions not granted.", e);
-        }
-    }
-
-    private void unregisterLocationListener() {
-        if (locationManager == null) {
-            Log.e(TAG, "locationManager is null.");
-            return;
-        }
-        locationManager.removeUpdates(locationListener);
-    }
-
     private void showNotification(boolean isGpsStarted) {
         if (isRecording()) {
             Intent intent = IntentUtils.newIntent(this, TrackRecordingActivity.class)
@@ -802,19 +716,6 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
         }
     }
 
-    /**
-     * Disables processing of location updates from {@link android.location.LocationManager}.
-     */
-    @VisibleForTesting
-    public void enableLocationExecutor(boolean enable) {
-        if (enable) {
-            locationExecutorService = Executors.newSingleThreadExecutor();
-        } else {
-            locationExecutorService.shutdownNow();
-            locationExecutorService = null;
-        }
-    }
-
     @VisibleForTesting
     public void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager) {
         this.remoteSensorManager = remoteSensorManager;
@@ -826,6 +727,7 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
      *
      * @param gpsChangeCallback the Runnable.
      */
+    /*
     public void setGpsChangeCallback(Runnable gpsChangeCallback) {
         if (gpsChangeCallback != null) {
             this.gpsCallbacks.add(gpsChangeCallback);
@@ -834,7 +736,7 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
             }
             gpsStatus.onGpsEnabled();
         }
-    }
+    }*/
 
     /**
      * Called from {@link GpsStatus} to inform to the service that GPS status has changed.
@@ -842,13 +744,14 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
      * @param oldStatus old {@link GpsStatusValue}.
      * @param newStatus new {@link GpsStatusValue}.
      */
+    /*
     @Override
     public void onGpsStatusChanged(GpsStatusValue oldStatus, GpsStatusValue newStatus) {
         notificationManager.updateContent(getString(newStatus.message));
         for (Runnable gpsCallback : gpsCallbacks) {
             gpsCallback.run();
         }
-    }
+    }*/
 
     /**
      * This method can be called from Activities to know the current GPS status.
@@ -856,11 +759,12 @@ public class TrackRecordingService extends Service implements GpsStatus.GpsStatu
      *
      * @return the status from {@link GpsStatus}. See {@link GpsStatusValue}.
      */
+    /*
     public GpsStatusValue getGpsStatus() {
         if (gpsStatus != null) {
             return gpsStatus.getGpsStatus();
         } else {
             return GpsStatusValue.GPS_NONE;
         }
-    }
+    }*/
 }

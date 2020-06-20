@@ -199,10 +199,10 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         @Override
         public void run() {
             TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
-            if (service != null && startGpsMenuItem != null) {
+            /*if (service != null && startGpsMenuItem != null) {
                 GpsStatusValue status = service.getGpsStatus();
                 startGpsMenuItem.setIcon(status.icon);
-            }
+            }*/
         }
     };
 
@@ -236,7 +236,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         contentProviderUtils = new ContentProviderUtils(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback, gpsBindChangedCallback);
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback/*, gpsBindChangedCallback*/);
         trackController = new TrackController(this, trackRecordingServiceConnection, true, recordListener, stopListener);
 
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);

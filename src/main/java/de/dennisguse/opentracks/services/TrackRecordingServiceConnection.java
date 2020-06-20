@@ -48,21 +48,21 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     private static final String TAG = TrackRecordingServiceConnection.class.getSimpleName();
 
     private final Runnable callback;
-    private final Runnable gpsCallback;
+    //private final Runnable gpsCallback;
 
     private TrackRecordingServiceInterface trackRecordingService;
 
     public TrackRecordingServiceConnection() {
         callback = null;
-        gpsCallback = null;
+        //gpsCallback = null;
     }
 
     /**
      * @param callback the callback to invoke when the service binding changes
      */
-    public TrackRecordingServiceConnection(@NonNull Runnable callback, @NonNull Runnable gpsCallback) {
+    public TrackRecordingServiceConnection(@NonNull Runnable callback/*, @NonNull Runnable gpsCallback*/) {
         this.callback = callback;
-        this.gpsCallback = gpsCallback;
+        //this.gpsCallback = gpsCallback;
     }
 
     /**
@@ -105,9 +105,9 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         if (callback != null) {
             callback.run();
         }
-        if (trackRecordingService != null) {
+        /*if (trackRecordingService != null) {
             trackRecordingService.setGpsChangeCallback(gpsCallback);
-        }
+        }*/
     }
 
     /**
