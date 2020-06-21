@@ -135,8 +135,6 @@ public class StatisticsRecordedFragment extends Fragment {
         speedMovingValue = view.findViewById(R.id.stats_moving_speed_value);
         speedMovingUnit = view.findViewById(R.id.stats_moving_speed_unit);
 
-        elevationCurrentGroup = view.findViewById(R.id.stats_elevation_current_group);
-
         elevationTotalGainValue = view.findViewById(R.id.stats_elevation_gain_value);
         elevationTotalGainUnit = view.findViewById(R.id.stats_elevation_gain_unit);
     }

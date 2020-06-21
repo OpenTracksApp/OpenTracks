@@ -20,10 +20,11 @@ public class PressureSensorUtilsTest {
         }
     }
 
+    // Simulate a sudden drop of elevation.
     // test data
     @Test
     public void computeChanges_downhill() {
-        float[] sensorValues_hPa = new float[]{1015f, 1015.01f, 1015.02f, 1015.03f, 1015.04f, 1015.05f, 1015.06f, 1015.07f, 1015.08f, 1015.09f, 1015.10f, 1015.11f, 1015.12f, 1015.13f, 1015.14f, 1015.15f};
+        float[] sensorValues_hPa = new float[]{1015f, 1015.01f, 1015.02f, 1015.03f, 1015.04f, 1015.05f, 1015.06f, 1015.07f, 1015.08f, 1015.09f, 1015.10f, 1015.11f, 1015.12f, 1015.13f, 1018f, 1018.1f, 1018.1f, 1018.1f, 1018.1f};
         float firstSensorValue = sensorValues_hPa[0];
 
         // when
@@ -34,18 +35,15 @@ public class PressureSensorUtilsTest {
         for (float v : sensorValues_hPa) {
             PressureSensorUtils.ElevationChange elevationChange = PressureSensorUtils.computeChanges_m(lastUsedPressureValue_hPa, v);
             if (elevationChange != null) {
-                if (elevationChange.getElevationChange_m() > 0) {
-                    elevationGain_m += elevationChange.getElevationChange_m();
-                } else {
-                    elevationLoss_m += elevationChange.getElevationChange_m();
-                }
+                elevationGain_m += elevationChange.getElevationGain_m();
+                elevationLoss_m += elevationChange.getElevationLoss_m();
                 lastUsedPressureValue_hPa = elevationChange.getCurrentSensorValue_hPa();
             }
         }
 
         // then
         assertEquals(0f, elevationGain_m, 0.01);
-        assertEquals(-1.08f, elevationLoss_m, 0.01);
-        assertEquals(1015.13, lastUsedPressureValue_hPa, 0.01);
+        assertEquals(-25.0f, elevationLoss_m, 0.01);
+        assertEquals(1018.01f, lastUsedPressureValue_hPa, 0.01);
     }
 }

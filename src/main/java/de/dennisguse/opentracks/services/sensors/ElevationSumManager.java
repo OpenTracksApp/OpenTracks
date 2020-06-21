@@ -23,7 +23,9 @@ public class ElevationSumManager implements SensorEventListener {
 
     private boolean isConnected = false;
 
-    private float lastUsedPressureValue_hPa;
+    private float lastAcceptedPressureValue_hPa;
+
+    private float lastSeenSensorValue_hPa;
 
     private float elevationGain_m;
     private float elevationLoss_m;
@@ -38,7 +40,7 @@ public class ElevationSumManager implements SensorEventListener {
         }
 
         isConnected = sensorManager.registerListener(this, pressureSensor, SAMPLING_RATE);
-        lastUsedPressureValue_hPa = Float.NaN;
+        lastAcceptedPressureValue_hPa = Float.NaN;
         reset();
     }
 
@@ -82,20 +84,20 @@ public class ElevationSumManager implements SensorEventListener {
 
     @VisibleForTesting
     void onSensorValueChanged(float value_hPa) {
-        if (Float.isNaN(lastUsedPressureValue_hPa)) {
-            lastUsedPressureValue_hPa = value_hPa;
+        if (Float.isNaN(lastAcceptedPressureValue_hPa)) {
+            lastAcceptedPressureValue_hPa = value_hPa;
+            lastSeenSensorValue_hPa = value_hPa;
             return;
         }
 
-        PressureSensorUtils.ElevationChange elevationChange = PressureSensorUtils.computeChanges_m(lastUsedPressureValue_hPa, value_hPa);
+        PressureSensorUtils.ElevationChange elevationChange = PressureSensorUtils.computeChangesWithSmoothing_m(lastAcceptedPressureValue_hPa, lastSeenSensorValue_hPa, value_hPa);
         if (elevationChange != null) {
-            if (elevationChange.getElevationChange_m() > 0) {
-                elevationGain_m += elevationChange.getElevationChange_m();
-            } else {
-                elevationLoss_m += elevationChange.getElevationChange_m();
-            }
-            lastUsedPressureValue_hPa = elevationChange.getCurrentSensorValue_hPa();
+            elevationGain_m += elevationChange.getElevationGain_m();
+            elevationLoss_m += elevationChange.getElevationLoss_m();
+            lastAcceptedPressureValue_hPa = elevationChange.getCurrentSensorValue_hPa();
         }
+
+        lastSeenSensorValue_hPa = value_hPa;
 
         Log.v(TAG, "elevation gain: " + elevationGain_m);
     }
