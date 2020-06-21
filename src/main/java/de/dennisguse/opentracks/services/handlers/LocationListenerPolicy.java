@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.services;
+package de.dennisguse.opentracks.services.handlers;
 
 /**
  * This is an interface for classes that will manage the location listener policy.

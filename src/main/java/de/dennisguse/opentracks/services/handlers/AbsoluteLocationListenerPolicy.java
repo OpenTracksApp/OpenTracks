@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.services;
+package de.dennisguse.opentracks.services.handlers;
 
 /**
  * This is a simple location listener policy that will always dictate the same polling interval.
