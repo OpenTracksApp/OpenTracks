@@ -73,11 +73,6 @@ public class LocationHandler implements LocationListener {
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        /*if (gpsStatus != null) {
-            gpsStatus.onLocationChanged(location);
-        }*/
-
-        Log.e(TAG + " probando", "onLocationChanged: " + location);
         new Thread(() -> onLocationChangedAsync(location)).run();
     }
 
@@ -88,16 +83,10 @@ public class LocationHandler implements LocationListener {
 
     @Override
     public void onProviderEnabled(@NonNull String provider) {
-        /*if (gpsStatus != null) {
-            gpsStatus.onGpsEnabled();
-        }*/
     }
 
     @Override
     public void onProviderDisabled(@NonNull String provider) {
-        /*if (gpsStatus != null) {
-            gpsStatus.onGpsDisabled();
-        }*/
     }
 
     private void onLocationChangedAsync(Location location) {

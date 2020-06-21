@@ -52,7 +52,6 @@ import java.util.Locale;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
-import de.dennisguse.opentracks.services.GpsStatusValue;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.settings.SettingsActivity;
@@ -189,20 +188,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 service.startGps();
                 startGps = false;
             }
-            if (gpsBindChangedCallback != null) {
-                gpsBindChangedCallback.run();
-            }
-        }
-    };
-
-    private final Runnable gpsBindChangedCallback = new Runnable() {
-        @Override
-        public void run() {
-            TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
-            /*if (service != null && startGpsMenuItem != null) {
-                GpsStatusValue status = service.getGpsStatus();
-                startGpsMenuItem.setIcon(status.icon);
-            }*/
         }
     };
 
@@ -477,10 +462,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             startGpsMenuItem.setVisible(!isRecording);
             if (!isRecording) {
                 startGpsMenuItem.setTitle(isGpsStarted ? R.string.menu_stop_gps : R.string.menu_start_gps);
-                startGpsMenuItem.setIcon(isGpsStarted ? R.drawable.ic_gps_not_fixed_24dp : R.drawable.ic_gps_off_24dp);
-                if (gpsBindChangedCallback != null) {
-                    gpsBindChangedCallback.run();
-                }
+                startGpsMenuItem.setIcon(isGpsStarted ? R.drawable.ic_gps_fixed_24dp : R.drawable.ic_gps_off_24dp);
             }
         }
     }

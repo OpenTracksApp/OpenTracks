@@ -34,9 +34,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.TaskStackBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.TrackRecordingActivity;
@@ -59,7 +56,6 @@ import de.dennisguse.opentracks.util.SystemUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackNameUtils;
 import de.dennisguse.opentracks.util.TrackPointUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * A background service that registers a location listener and records track points.
@@ -111,18 +107,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             if (PreferencesUtils.isKey(context, R.string.recording_gps_accuracy_key, key)) {
                 recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(context);
             }
-            /*
-            if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
-                if (gpsStatus != null) {
-                    gpsStatus.onMinRecordingIntervalChanged(PreferencesUtils.getMinRecordingInterval(context));
-                }
-            }
-            if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
-                if (gpsStatus != null) {
-                    gpsStatus.onRecordingDistanceChanged(PreferencesUtils.getRecordingDistanceInterval(context));
-                }
-            }
-            */
         }
     };
 
@@ -133,9 +117,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private TrackStatisticsUpdater trackStatisticsUpdater;
     private TrackPoint lastTrackPoint;
     private boolean isIdle;
-
-    //private GpsStatus gpsStatus;
-    //private List<Runnable> gpsCallbacks = new ArrayList<>();
 
     private TrackRecordingServiceBinder binder = new TrackRecordingServiceBinder(this);
 
@@ -169,10 +150,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     @Override
     public void onDestroy() {
-        /*if (gpsStatus != null) {
-            gpsStatus.stop();
-        }*/
-
         HandlerServer.getInstance(this).unsubscribe(this);
 
         if (remoteSensorManager != null) {
@@ -720,51 +697,4 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     public void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager) {
         this.remoteSensorManager = remoteSensorManager;
     }
-
-    /**
-     * Set gps callback.
-     * When Activity pass the Runnable through {@link TrackRecordingServiceConnection} then {@link GpsStatus} is on for receive the status changes.
-     *
-     * @param gpsChangeCallback the Runnable.
-     */
-    /*
-    public void setGpsChangeCallback(Runnable gpsChangeCallback) {
-        if (gpsChangeCallback != null) {
-            this.gpsCallbacks.add(gpsChangeCallback);
-            if (this.gpsStatus == null) {
-                this.gpsStatus = new GpsStatus(this, this, PreferencesUtils.getMinRecordingInterval(this));
-            }
-            gpsStatus.onGpsEnabled();
-        }
-    }*/
-
-    /**
-     * Called from {@link GpsStatus} to inform to the service that GPS status has changed.
-     *
-     * @param oldStatus old {@link GpsStatusValue}.
-     * @param newStatus new {@link GpsStatusValue}.
-     */
-    /*
-    @Override
-    public void onGpsStatusChanged(GpsStatusValue oldStatus, GpsStatusValue newStatus) {
-        notificationManager.updateContent(getString(newStatus.message));
-        for (Runnable gpsCallback : gpsCallbacks) {
-            gpsCallback.run();
-        }
-    }*/
-
-    /**
-     * This method can be called from Activities to know the current GPS status.
-     * Only ready if Activity pass to {@link TrackRecordingServiceConnection} a Runnable for gps callback.
-     *
-     * @return the status from {@link GpsStatus}. See {@link GpsStatusValue}.
-     */
-    /*
-    public GpsStatusValue getGpsStatus() {
-        if (gpsStatus != null) {
-            return gpsStatus.getGpsStatus();
-        } else {
-            return GpsStatusValue.GPS_NONE;
-        }
-    }*/
 }

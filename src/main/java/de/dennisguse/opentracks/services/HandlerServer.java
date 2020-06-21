@@ -2,7 +2,6 @@ package de.dennisguse.opentracks.services;
 
 import android.content.Context;
 import android.location.Location;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,22 +29,17 @@ public class HandlerServer {
     }
 
     public void subscribe(HandlerSubscriber s) {
-        Log.e(TAG + " probando", "subscribe: " + s);
         if (subscriberList.isEmpty()) {
-            Log.e(TAG + " probando", "es empty así que inicia el LocationHandler.");
             locationHandler.onStart(context);
         }
         if (!subscriberList.contains(s)) {
-            Log.e(TAG + " probando", "como es nuevo lo inserta.");
             subscriberList.add(s);
         }
     }
 
     public void unsubscribe(HandlerSubscriber s) {
-        Log.e(TAG + " probando", "unsubscribe: " + s);
         subscriberList.remove(s);
         if (subscriberList.isEmpty()) {
-            Log.e(TAG + " probando", "se queda empty así que para el LocationHandler.");
             locationHandler.onStop();
         }
     }
