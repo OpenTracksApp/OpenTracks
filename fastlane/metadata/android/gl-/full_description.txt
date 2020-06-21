@@ -1,0 +1,10 @@
+OpenTracks é unha aplicación de gravación de rutas que respecta completamente a túa privacidade.
+
+Características:
+* Seguimento de rutas: actividades en exterior e deportivas
+* Fotos e marcadores: marca as localizacións interesantes mentras rexistra
+* Soporta sensores Bluetooth LE:
+* pulso cardíaco
+* ciclismo: velocidade e cadencia
+* Exporta datos: exporta as rutas ben como KML ou GPX
+* Non precisa internet: a conexión non se utiliza
