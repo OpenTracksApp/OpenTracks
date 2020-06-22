@@ -17,6 +17,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import de.dennisguse.opentracks.content.data.TestDataUtil;
@@ -35,6 +36,7 @@ import static org.junit.Assert.assertNotNull;
  * Export a track to {@link TrackFileFormat} and verify that the import is identical.
  * <p>
  * TODO: test ignores {@link TrackStatistics} for now.
+ * TODO: enable verify speed.
  */
 @RunWith(JUnit4.class)
 public class ExportImportTest {
@@ -48,7 +50,10 @@ public class ExportImportTest {
     private static final String TRACK_ICON = "the track icon";
     private static final String TRACK_CATEGORY = "the category";
     private static final String TRACK_DESCRIPTION = "the description";
+
     private final List<Waypoint> waypoints = new ArrayList<>();
+    private final List<TrackPoint> trackPoints = new ArrayList<>();
+
     private long importTrackId;
     private final long trackId = System.currentTimeMillis();
 
@@ -60,6 +65,9 @@ public class ExportImportTest {
         track.first.setDescription(TRACK_DESCRIPTION);
         contentProviderUtils.insertTrack(track.first);
         contentProviderUtils.bulkInsertTrackPoint(track.second, track.first.getId());
+
+        trackPoints.clear();
+        trackPoints.addAll(Arrays.asList(track.second));
 
         for (int i = 0; i < 3; i++) {
             Waypoint waypoint = new Waypoint(track.second[i].getLocation());
@@ -104,7 +112,40 @@ public class ExportImportTest {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         trackExporter.writeTrack(context, outputStream);
 
-        System.out.println(outputStream.toString());
+        // 2. import
+        InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+        AbstractFileTrackImporter trackImporter = new KmlFileTrackImporter(context, -1L);
+        importTrackId = trackImporter.importFile(inputStream);
+
+        // then
+        // 1. track
+        Track importedTrack = contentProviderUtils.getTrack(importTrackId);
+        assertNotNull(importedTrack);
+        assertEquals(track.getCategory(), importedTrack.getCategory());
+        assertEquals(track.getDescription(), importedTrack.getDescription());
+        assertEquals(track.getName(), importedTrack.getName());
+        assertEquals(track.getIcon(), importedTrack.getIcon());
+
+        // 2. waypoints
+        assertWaypoints();
+
+        // 3. trackpoints
+        assertTrackpoints(false, false, false, false);
+    }
+
+    @LargeTest
+    @Test
+    public void kml_with_trackdetail_and_sensordata() {
+        // given
+        Track track = contentProviderUtils.getTrack(trackId);
+
+        TrackFileFormat trackFileFormat = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA;
+        TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, new Track[]{track});
+
+        // when
+        // 1. export
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        trackExporter.writeTrack(context, outputStream);
 
         // 2. import
         InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
@@ -115,7 +156,6 @@ public class ExportImportTest {
         // 1. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
-        //TODO assertEquals(track.getTrackPoints(), importedTrack.getTrackPoints());
         assertEquals(track.getCategory(), importedTrack.getCategory());
         assertEquals(track.getDescription(), importedTrack.getDescription());
         assertEquals(track.getName(), importedTrack.getName());
@@ -124,14 +164,8 @@ public class ExportImportTest {
         // 2. waypoints
         assertWaypoints();
 
-        //TODO Check absolute time of trackpoints
-    }
-
-    @LargeTest
-    @Test
-    public void kml_with_trackdetail_and_sensordata() {
-        // TODO
-        Log.e(TAG, "Test not implemented.");
+        // 3. trackpoints
+        assertTrackpoints(false, true, true, true);
     }
 
     @LargeTest
@@ -185,7 +219,6 @@ public class ExportImportTest {
         // 1. track
         Track trackImported = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(trackImported);
-        //TODO assertEquals(track.getTrackPoints(), trackImported.getTrackPoints());
         assertEquals(track.getCategory(), trackImported.getCategory());
         assertEquals(track.getDescription(), trackImported.getDescription());
         assertEquals(track.getName(), trackImported.getName());
@@ -196,7 +229,9 @@ public class ExportImportTest {
         // 2. waypoints
         assertWaypoints();
 
-        //TODO Check absolute time of trackpoints
+        // 3. trackpoints
+        //TODO Verify speed
+        assertTrackpoints(false, false, false, false);
     }
 
     private void assertWaypoints() {
@@ -215,6 +250,37 @@ public class ExportImportTest {
             assertEquals(waypoint.getLocation().getLatitude(), importedWaypoint.getLocation().getLatitude(), 0.001);
             assertEquals(waypoint.getLocation().getLongitude(), importedWaypoint.getLocation().getLongitude(), 0.001);
             assertEquals(waypoint.getLocation().getAltitude(), importedWaypoint.getLocation().getAltitude(), 0.001);
+        }
+    }
+
+    private void assertTrackpoints(boolean verifySpeed, boolean verifyPower, boolean verifyHeartrate, boolean verifyCadence) {
+        List<TrackPoint> importedTrackPoints = contentProviderUtils.getTrackPoints(importTrackId);
+        assertEquals(trackPoints.size(), importedTrackPoints.size());
+
+        for (int i = 0; i < trackPoints.size(); i++) {
+            TrackPoint trackPoint = trackPoints.get(i);
+            TrackPoint importedTrackPoint = importedTrackPoints.get(i);
+
+            assertEquals(trackPoint.getTime(), importedTrackPoint.getTime(), 0.01);
+
+            // TODO Not exported for GPX/KML
+            //   assertEquals(trackPoint.getAccuracy(), importedTrackPoint.getAccuracy(), 0.01);
+
+            assertEquals(trackPoint.getLatitude(), importedTrackPoint.getLatitude(), 0.001);
+            assertEquals(trackPoint.getLongitude(), importedTrackPoint.getLongitude(), 0.001);
+            assertEquals(trackPoint.getAltitude(), importedTrackPoint.getAltitude(), 0.001);
+            if (verifySpeed) {
+                assertEquals(trackPoint.getSpeed(), importedTrackPoint.getSpeed(), 0.01);
+            }
+            if (verifyHeartrate) {
+                assertEquals(trackPoint.getHeartRate_bpm(), importedTrackPoint.getHeartRate_bpm(), 0.01);
+            }
+            if (verifyCadence) {
+                assertEquals(trackPoint.getCyclingCadence_rpm(), importedTrackPoint.getCyclingCadence_rpm(), 0.01);
+            }
+            if (verifyPower) {
+                assertEquals(trackPoint.getPower(), importedTrackPoint.getPower(), 0.01);
+            }
         }
     }
 }

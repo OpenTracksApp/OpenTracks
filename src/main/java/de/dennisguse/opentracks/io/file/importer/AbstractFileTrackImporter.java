@@ -323,7 +323,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
             // Check for negative time change
             if (timeDifference <= 0) {
-                Log.w(TAG, "Time difference not postive.");
+                Log.w(TAG, "Time difference not positive.");
             } else {
 
                 /*
@@ -389,9 +389,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             Uri photoUri = FileUtils.getUriForFile(context, file);
             return "" + photoUri;
         }
-        else {
-            return null;
-        }
+
+        return null;
     }
 
     /**

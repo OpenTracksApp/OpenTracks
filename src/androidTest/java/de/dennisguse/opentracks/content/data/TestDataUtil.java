@@ -39,7 +39,7 @@ public class TestDataUtil {
 
         TrackPoint[] trackPoints = new TrackPoint[numPoints];
         for (int i = 0; i < numPoints; i++) {
-            trackPoints[i] = (createTrackPoint(i));
+            trackPoints[i] = createTrackPoint(i);
         }
 
         return new Pair<>(track, trackPoints);
@@ -56,17 +56,21 @@ public class TestDataUtil {
     /**
      * Creates a location.
      *
-     * @param i the index to set the value of location.
-     * @return created location
+     * @param i the index for the TrackPoint.
      */
     public static TrackPoint createTrackPoint(int i) {
-        Location location = new Location("test");
-        location.setLatitude(INITIAL_LATITUDE + (double) i / 10000.0);
-        location.setLongitude(INITIAL_LONGITUDE - (double) i / 10000.0);
-        location.setAccuracy((float) i / 100.0f);
-        location.setAltitude(i * ALTITUDE_INTERVAL);
-        location.setTime(i + 1);
-        return new TrackPoint(location);
+        TrackPoint trackPoint = new TrackPoint();
+        trackPoint.setLatitude(INITIAL_LATITUDE + (double) i / 10000.0);
+        trackPoint.setLongitude(INITIAL_LONGITUDE - (double) i / 10000.0);
+        trackPoint.setAccuracy((float) i / 100.0f);
+        trackPoint.setAltitude(i * ALTITUDE_INTERVAL);
+        trackPoint.setTime(i + 1);
+
+        trackPoint.setHeartRate_bpm(100f + i);
+        trackPoint.setCyclingCadence_rpm(200f + i);
+        trackPoint.setCyclingCadence_rpm(300f + i);
+        trackPoint.setPower(400f + i);
+        return trackPoint;
     }
 
     /**

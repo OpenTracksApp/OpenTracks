@@ -229,7 +229,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
                 trackPoint.setCyclingCadence_rpm(cadenceList.get(i));
             }
             if (i < powerList.size()) {
-                trackPoint.setPower(cadenceList.get(i));
+                trackPoint.setPower(powerList.get(i));
             }
 
             insertTrackPoint(trackPoint);
