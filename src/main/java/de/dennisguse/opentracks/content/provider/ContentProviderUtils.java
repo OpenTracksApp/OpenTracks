@@ -42,6 +42,7 @@ import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
+import de.dennisguse.opentracks.util.UUIDUtils;
 
 /**
  * {@link ContentProviderUtils} implementation.
@@ -99,6 +100,7 @@ public class ContentProviderUtils {
      */
     public Track createTrack(Cursor cursor) {
         int idIndex = cursor.getColumnIndexOrThrow(TracksColumns._ID);
+        int uuidIndex = cursor.getColumnIndexOrThrow(TracksColumns.UUID);
         int nameIndex = cursor.getColumnIndexOrThrow(TracksColumns.NAME);
         int descriptionIndex = cursor.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
         int categoryIndex = cursor.getColumnIndexOrThrow(TracksColumns.CATEGORY);
@@ -117,6 +119,9 @@ public class ContentProviderUtils {
         TrackStatistics trackStatistics = track.getTrackStatistics();
         if (!cursor.isNull(idIndex)) {
             track.setId(cursor.getLong(idIndex));
+        }
+        if (!cursor.isNull(uuidIndex)) {
+            track.setUuid(UUIDUtils.fromBytes(cursor.getBlob(uuidIndex)));
         }
         if (!cursor.isNull(nameIndex)) {
             track.setName(cursor.getString(nameIndex));
@@ -287,6 +292,7 @@ public class ContentProviderUtils {
         if (track.getId() >= 0) {
             values.put(TracksColumns._ID, track.getId());
         }
+        values.put(TracksColumns.UUID, UUIDUtils.toBytes(track.getUuid()));
         values.put(TracksColumns.NAME, track.getName());
         values.put(TracksColumns.DESCRIPTION, track.getDescription());
         values.put(TracksColumns.CATEGORY, track.getCategory());

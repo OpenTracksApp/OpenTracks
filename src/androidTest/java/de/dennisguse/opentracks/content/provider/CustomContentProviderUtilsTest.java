@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
@@ -47,6 +48,7 @@ import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
+import de.dennisguse.opentracks.util.UUIDUtils;
 
 import static org.mockito.Mockito.when;
 
@@ -171,22 +173,26 @@ public class CustomContentProviderUtilsTest {
      */
     @Test
     public void testCreateTrack() {
-        int startColumnIndex = 1;
-        int columnIndex = startColumnIndex;
-        when(cursorMock.getColumnIndexOrThrow(TracksColumns._ID)).thenReturn(columnIndex++);
-        when(cursorMock.getColumnIndexOrThrow(TracksColumns.NAME)).thenReturn(columnIndex++);
-        columnIndex = startColumnIndex;
-        // Id
-        when(cursorMock.isNull(columnIndex++)).thenReturn(false);
-        // Name
-        when(cursorMock.isNull(columnIndex++)).thenReturn(false);
         long trackId = System.currentTimeMillis();
-        columnIndex = startColumnIndex;
+
+        int columnIndex = 1;
         // Id
-        when(cursorMock.getLong(columnIndex++)).thenReturn(trackId);
+        when(cursorMock.getColumnIndexOrThrow(TracksColumns._ID)).thenReturn(columnIndex);
+        when(cursorMock.isNull(columnIndex)).thenReturn(false);
+        when(cursorMock.getLong(columnIndex)).thenReturn(trackId);
+
+        //Uuid
+        columnIndex++;
+        when(cursorMock.getColumnIndexOrThrow(TracksColumns.UUID)).thenReturn(columnIndex);
+        when(cursorMock.isNull(columnIndex)).thenReturn(false);
+        when(cursorMock.getBlob(columnIndex)).thenReturn(UUIDUtils.toBytes(UUID.randomUUID()));
+
         // Name
+        columnIndex++;
         String name = NAME_PREFIX + trackId;
-        when(cursorMock.getString(columnIndex++)).thenReturn(name);
+        when(cursorMock.getColumnIndexOrThrow(TracksColumns.NAME)).thenReturn(columnIndex);
+        when(cursorMock.isNull(columnIndex)).thenReturn(false);
+        when(cursorMock.getString(columnIndex)).thenReturn(name);
 
         Track track = contentProviderUtils.createTrack(cursorMock);
         Assert.assertEquals(trackId, track.getId());

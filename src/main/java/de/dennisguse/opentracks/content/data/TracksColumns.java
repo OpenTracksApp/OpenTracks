@@ -35,6 +35,7 @@ public interface TracksColumns extends BaseColumns {
     String DEFAULT_SORT_ORDER = "_id";
 
     // Columns
+    String UUID = "uuid";
     String NAME = "name"; // track name
     String DESCRIPTION = "description"; // track description
     String CATEGORY = "category"; // track activity type
@@ -71,5 +72,9 @@ public interface TracksColumns extends BaseColumns {
             + MINELEVATION + " FLOAT, " // min elevation
             + MAXELEVATION + " FLOAT, " // max elevation
             + ELEVATIONGAIN + " FLOAT, " // elevation gain
-            + ICON + " TEXT)"; // icon
+            + ICON + " TEXT, " // icon
+            + UUID + " BLOB)"; // UUID
+
+    String CREATE_TABLE_INDEX = "CREATE UNIQUE INDEX " + TABLE_NAME + "_" + UUID + "_index ON " + TABLE_NAME + "(" + UUID + ")";
+
 }

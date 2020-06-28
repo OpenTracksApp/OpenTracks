@@ -16,6 +16,8 @@
 
 package de.dennisguse.opentracks.content.data;
 
+import java.util.UUID;
+
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
@@ -27,6 +29,8 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 public class Track {
 
     private long id = -1L;
+    private UUID uuid = UUID.randomUUID();
+
     private String name = "";
     private String description = "";
     private String category = "";
@@ -44,6 +48,14 @@ public class Track {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {

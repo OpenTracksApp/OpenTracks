@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -36,7 +37,8 @@ public class CustomSQLiteOpenHelperTest {
      *
      * @return Map(TableName, SQL)
      */
-    private static Map<String, String> getTableSQL(SQLiteDatabase db) {
+    @VisibleForTesting
+    public static Map<String, String> getTableSQL(SQLiteDatabase db) {
         HashMap<String, String> tableSQL = new HashMap<>();
         try (Cursor cursor = db.query("sqlite_master", new String[]{"name", "SQL"}, "name IN ('" + TracksColumns.TABLE_NAME + "', '" + TrackPointsColumns.TABLE_NAME + "', '" + WaypointsColumns.TABLE_NAME + "')", null, null, null, "name")) {
             if (cursor != null) {
@@ -53,6 +55,7 @@ public class CustomSQLiteOpenHelperTest {
      *
      * @return Map(tableName, SQL)
      */
+    @VisibleForTesting
     public static Map<String, String> getIndexSQL(SQLiteDatabase db) {
         HashMap<String, String> indexSQL = new HashMap<>();
         try (Cursor cursor = db.rawQuery("SELECT tbl_name, SQL FROM sqlite_master WHERE type = 'index'", null)) {
@@ -104,24 +107,7 @@ public class CustomSQLiteOpenHelperTest {
 
     @Test
     public void onUpgrade_FromVersion23() {
-        // Manually create database schema with version 23 (base version)
-        {
-            SQLiteDatabase dbBase = new SQLiteOpenHelper(context, DATABASE_NAME, null, 23) {
-                @Override
-                public void onCreate(SQLiteDatabase db) {
-                }
-
-                @Override
-                public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-                }
-            }.getWritableDatabase();
-
-            dbBase.execSQL(TRACKS_CREATE_TABLE_V23);
-            dbBase.execSQL(TRACKPOINTS_CREATE_TABLE_V23);
-            dbBase.execSQL(WAYPOINTS_CREATE_TABLE_V23);
-
-            dbBase.close();
-        }
+        createVersion23();
 
         // Open database with SQL upgrade
         Map<String, String> tableByUpgrade;
@@ -130,10 +116,9 @@ public class CustomSQLiteOpenHelperTest {
             tableByUpgrade = getTableSQL(dbUpgraded);
             indicesByUpgrade = getIndexSQL(dbUpgraded);
         }
-
-        // Open database via
         context.deleteDatabase(DATABASE_NAME);
 
+        // Open database via creation script
         Map<String, String> tablesByCreate;
         Map<String, String> indicesByCreate;
         try (SQLiteDatabase dbCreated = new CustomSQLiteOpenHelper(context, DATABASE_NAME).getReadableDatabase()) {
@@ -150,7 +135,8 @@ public class CustomSQLiteOpenHelperTest {
         Assert.assertEquals(tablesByCreate.get(WaypointsColumns.TABLE_NAME), tableByUpgrade.get(WaypointsColumns.TABLE_NAME));
 
         // then - verify custom indices
-        Assert.assertEquals(2, indicesByCreate.size());
+        Assert.assertEquals(3, indicesByCreate.size());
+        Assert.assertEquals(indicesByUpgrade.get(TracksColumns.TABLE_NAME), indicesByCreate.get(TracksColumns.TABLE_NAME));
         Assert.assertEquals(indicesByUpgrade.get(TrackPointsColumns.TABLE_NAME), indicesByCreate.get(TrackPointsColumns.TABLE_NAME));
         Assert.assertEquals(indicesByUpgrade.get(WaypointsColumns.TABLE_NAME), indicesByCreate.get(WaypointsColumns.TABLE_NAME));
     }
@@ -175,5 +161,24 @@ public class CustomSQLiteOpenHelperTest {
 
         // then - verify custom indices
         Assert.assertEquals(0, indicesByDowngrade.size());
+    }
+
+    private void createVersion23() {
+        // Manually create database schema with version 23 (base version)
+        SQLiteDatabase dbBase = new SQLiteOpenHelper(context, DATABASE_NAME, null, 23) {
+            @Override
+            public void onCreate(SQLiteDatabase db) {
+            }
+
+            @Override
+            public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+            }
+        }.getWritableDatabase();
+
+        dbBase.execSQL(TRACKS_CREATE_TABLE_V23);
+        dbBase.execSQL(TRACKPOINTS_CREATE_TABLE_V23);
+        dbBase.execSQL(WAYPOINTS_CREATE_TABLE_V23);
+
+        dbBase.close();
     }
 }

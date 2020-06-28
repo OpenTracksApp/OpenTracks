@@ -1,15 +1,20 @@
 package de.dennisguse.opentracks.content.provider;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
 
+import java.util.UUID;
+
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
+import de.dennisguse.opentracks.util.UUIDUtils;
 
 /**
  * Database helper for creating and upgrading the database.
@@ -17,13 +22,11 @@ import de.dennisguse.opentracks.content.data.WaypointsColumns;
 @VisibleForTesting
 class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
-    @VisibleForTesting
-    private static final int DATABASE_VERSION = 25;
     private static final String TAG = CustomSQLiteOpenHelper.class.getSimpleName();
 
-    @VisibleForTesting
-    private static final String DATABASE_NAME = "database.db";
+    private static final int DATABASE_VERSION = 26;
 
+    private static final String DATABASE_NAME = "database.db";
 
     public CustomSQLiteOpenHelper(Context context) {
         this(context, DATABASE_NAME);
@@ -45,6 +48,7 @@ class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL(TrackPointsColumns.CREATE_TABLE_INDEX);
 
         db.execSQL(TracksColumns.CREATE_TABLE);
+        db.execSQL(TracksColumns.CREATE_TABLE_INDEX);
 
         db.execSQL(WaypointsColumns.CREATE_TABLE);
         db.execSQL(WaypointsColumns.CREATE_TABLE_INDEX);
@@ -60,6 +64,9 @@ class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                     break;
                 case 25:
                     upgradeFrom24to25(db);
+                    break;
+                case 26:
+                    upgradeFrom25to26(db);
                     break;
 
                 default:
@@ -78,6 +85,9 @@ class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                     break;
                 case 24:
                     downgradeFrom25to24(db);
+                    break;
+                case 25:
+                    downgradeFrom26to25(db);
                     break;
 
                 default:
@@ -107,7 +117,7 @@ class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
     }
 
     private void downgradeFrom24to23(SQLiteDatabase db) {
-        //Not needed as the delete columns did not contain any data
+        //Not needed as the deleted columns did not contain any data
         db.beginTransaction();
         db.execSQL("ALTER TABLE tracks RENAME TO tracks_old");
         db.execSQL("CREATE TABLE tracks (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT, category TEXT, starttime INTEGER, stoptime INTEGER, numpoints INTEGER, totaldistance FLOAT, totaltime INTEGER, movingtime INTEGER, avgspeed FLOAT, avgmovingspeed FLOAT, maxspeed FLOAT, minelevation FLOAT, maxelevation FLOAT, elevationgain FLOAT, mingrade FLOAT, maxgrade FLOAT, icon TEXT)");
@@ -138,6 +148,42 @@ class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
         db.execSQL("DROP INDEX trackpoints_trackid_index");
         db.execSQL("DROP INDEX waypoints_trackid_index");
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    private void upgradeFrom25to26(SQLiteDatabase db) {
+        db.beginTransaction();
+
+        db.execSQL("ALTER TABLE tracks ADD COLUMN uuid BLOB");
+        try (Cursor cursor = db.query("tracks", new String[]{"_id"}, null, null, null, null, null)) {
+            if (cursor.moveToFirst()) {
+                int trackIdIndex = cursor.getColumnIndexOrThrow("_id");
+                do {
+                    long trackId = cursor.getLong(trackIdIndex);
+                    ContentValues cv = new ContentValues();
+                    cv.put("uuid", UUIDUtils.toBytes(UUID.randomUUID()));
+                    db.update("tracks", cv, "_id = ?", new String[]{String.valueOf(trackId)});
+                } while (cursor.moveToNext());
+            }
+        }
+
+        db.execSQL("CREATE UNIQUE INDEX tracks_uuid_index ON tracks(uuid)");
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    private void downgradeFrom26to25(SQLiteDatabase db) {
+        db.beginTransaction();
+
+        db.execSQL("DROP INDEX tracks_uuid_index");
+
+        db.execSQL("ALTER TABLE tracks RENAME TO tracks_old");
+        db.execSQL("CREATE TABLE tracks (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT, category TEXT, starttime INTEGER, stoptime INTEGER, numpoints INTEGER, totaldistance FLOAT, totaltime INTEGER, movingtime INTEGER, avgspeed FLOAT, avgmovingspeed FLOAT, maxspeed FLOAT, minelevation FLOAT, maxelevation FLOAT, elevationgain FLOAT, mingrade FLOAT, maxgrade FLOAT, icon TEXT)");
+        db.execSQL("INSERT INTO tracks SELECT _id, name, description, category, starttime, stoptime, numpoints, totaldistance, totaltime, movingtime, avgspeed, avgmovingspeed, maxspeed, minelevation, maxelevation, elevationgain, 0, 0, icon FROM tracks_old");
+        db.execSQL("DROP TABLE tracks_old");
 
         db.setTransactionSuccessful();
         db.endTransaction();
