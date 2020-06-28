@@ -80,6 +80,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     protected String longitude;
     protected String altitude;
     protected String time;
+    protected String speed;
     protected String waypointType;
     protected String photoUrl;
 
@@ -319,20 +320,22 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
         // Calculate derived attributes from the previous point
         if (trackData.lastLocationInCurrentSegment != null && trackData.lastLocationInCurrentSegment.getTime() != 0) {
-            long timeDifference = trackPoint.getTime() - trackData.lastLocationInCurrentSegment.getTime();
+            if (!trackPoint.hasSpeed()) {
+                long timeDifference = trackPoint.getTime() - trackData.lastLocationInCurrentSegment.getTime();
 
-            // Check for negative time change
-            if (timeDifference <= 0) {
-                Log.w(TAG, "Time difference not positive.");
-            } else {
+                // Check for negative time change
+                if (timeDifference <= 0) {
+                    Log.w(TAG, "Time difference not positive.");
+                } else {
 
-                /*
-                 * We don't have a speed and bearing in GPX, make something up from the last two points.
-                 * GPS points tend to have some inherent imprecision, speed and bearing will likely be off, so the statistics for things like max speed will also be off.
-                 */
-                double duration = timeDifference * UnitConversions.MS_TO_S;
-                double speed = trackData.lastLocationInCurrentSegment.distanceTo(trackPoint) / duration;
-                trackPoint.setSpeed((float) speed);
+                    /*
+                     * We don't have a speed and bearing in GPX, make something up from the last two points.
+                     * GPS points tend to have some inherent imprecision, speed and bearing will likely be off, so the statistics for things like max speed will also be off.
+                     */
+                    double duration = timeDifference * UnitConversions.MS_TO_S;
+                    double speed = trackData.lastLocationInCurrentSegment.distanceTo(trackPoint) / duration;
+                    trackPoint.setSpeed((float) speed);
+                }
             }
             trackPoint.setBearing(trackData.lastLocationInCurrentSegment.bearingTo(trackPoint));
         }
@@ -427,7 +430,20 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                 throw new SAXException(createErrorMessage(String.format(Locale.US, "Unable to parse time: %s", time)), e);
             }
         }
-        return new TrackPoint(latitudeValue, longitudeValue, altitudeValue, timeValue);
+
+        TrackPoint trackPoint = new TrackPoint(latitudeValue, longitudeValue, altitudeValue, timeValue);
+
+        float speedValue;
+        if (speed != null) {
+            try {
+                speedValue = Float.valueOf(speed);
+                trackPoint.setSpeed(speedValue);
+            } catch (Exception e) {
+                throw new SAXException(createErrorMessage(String.format(Locale.US, "Unable to parse speed: %s", speed)), e);
+            }
+        }
+
+        return trackPoint;
     }
 
     /**
