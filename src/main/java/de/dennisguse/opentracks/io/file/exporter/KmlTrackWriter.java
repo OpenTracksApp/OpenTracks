@@ -46,9 +46,10 @@ public class KmlTrackWriter implements TrackWriter {
     private static final String TRACK_STYLE = "track";
     private static final String SCHEMA_ID = "schema";
 
-    public static final String SENSOR_TYPE_CADENCE = "cadence";
-    public static final String SENSOR_TYPE_HEART_RATE = "heart_rate";
-    public static final String SENSOR_TYPE_POWER = "power";
+    public static final String EXTENDED_DATA_TYPE_SPEED = "speed";
+    public static final String EXTENDED_DATA_TYPE_CADENCE = "cadence";
+    public static final String EXTENDED_DATA_TYPE_HEART_RATE = "heart_rate";
+    public static final String EXTENDED_DATA_TYPE_POWER = "power";
 
     private static final String WAYPOINT_ICON = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png";
     private static final String START_ICON = "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png";
@@ -64,6 +65,7 @@ public class KmlTrackWriter implements TrackWriter {
     private final ContentProviderUtils contentProviderUtils;
 
     private PrintWriter printWriter;
+    private final List<Float> speedList = new ArrayList<>();
     private final List<Float> powerList = new ArrayList<>();
     private final List<Float> cadenceList = new ArrayList<>();
     private final List<Float> heartRateList = new ArrayList<>();
@@ -123,10 +125,12 @@ public class KmlTrackWriter implements TrackWriter {
             writePlacemarkerStyle(WAYPOINT_STYLE, WAYPOINT_ICON, 20, 2);
             printWriter.println("<Schema id=\"" + SCHEMA_ID + "\">");
 
+            writeSimpleArrayStyle(EXTENDED_DATA_TYPE_SPEED, context.getString(R.string.description_speed_ms));
+
             if (exportSensorData) {
-                writeSensorStyle(SENSOR_TYPE_POWER, context.getString(R.string.description_sensor_power));
-                writeSensorStyle(SENSOR_TYPE_CADENCE, context.getString(R.string.description_sensor_cadence));
-                writeSensorStyle(SENSOR_TYPE_HEART_RATE, context.getString(R.string.description_sensor_heart_rate));
+                writeSimpleArrayStyle(EXTENDED_DATA_TYPE_POWER, context.getString(R.string.description_sensor_power));
+                writeSimpleArrayStyle(EXTENDED_DATA_TYPE_CADENCE, context.getString(R.string.description_sensor_cadence));
+                writeSimpleArrayStyle(EXTENDED_DATA_TYPE_HEART_RATE, context.getString(R.string.description_sensor_heart_rate));
             }
             printWriter.println("</Schema>");
         }
@@ -229,6 +233,7 @@ public class KmlTrackWriter implements TrackWriter {
     public void writeOpenSegment() {
         if (printWriter != null) {
             printWriter.println("<gx:Track>");
+            speedList.clear();
             powerList.clear();
             cadenceList.clear();
             heartRateList.clear();
@@ -240,15 +245,18 @@ public class KmlTrackWriter implements TrackWriter {
         if (printWriter != null) {
             printWriter.println("<ExtendedData>");
             printWriter.println("<SchemaData schemaUrl=\"#" + SCHEMA_ID + "\">");
+            if (speedList.size() > 0) {
+                writeSimpleArrayData(speedList, EXTENDED_DATA_TYPE_SPEED);
+            }
             if (exportSensorData) {
                 if (powerList.size() > 0) {
-                    writeSensorData(powerList, SENSOR_TYPE_POWER);
+                    writeSimpleArrayData(powerList, EXTENDED_DATA_TYPE_POWER);
                 }
                 if (cadenceList.size() > 0) {
-                    writeSensorData(cadenceList, SENSOR_TYPE_CADENCE);
+                    writeSimpleArrayData(cadenceList, EXTENDED_DATA_TYPE_CADENCE);
                 }
                 if (heartRateList.size() > 0) {
-                    writeSensorData(heartRateList, SENSOR_TYPE_HEART_RATE);
+                    writeSimpleArrayData(heartRateList, EXTENDED_DATA_TYPE_HEART_RATE);
                 }
             }
             printWriter.println("</SchemaData>");
@@ -266,6 +274,10 @@ public class KmlTrackWriter implements TrackWriter {
 
             printWriter.println("<gx:coord>" + getCoordinates(trackPoint.getLocation(), " ") + "</gx:coord>");
 
+            if (trackPoint.hasSpeed()) {
+                speedList.add(trackPoint.getSpeed());
+            }
+
             if (exportSensorData) {
                 if (trackPoint.hasHeartRate()) {
                     heartRateList.add(trackPoint.getHeartRate_bpm());
@@ -281,12 +293,12 @@ public class KmlTrackWriter implements TrackWriter {
     }
 
     /**
-     * Writes the sensor data.
+     * Writes the simple array data.
      *
-     * @param list a list of sensor data
-     * @param name the name of the sensor data
+     * @param list a list of simple array data
+     * @param name the name of the simple array data
      */
-    private void writeSensorData(List<Float> list, String name) {
+    private void writeSimpleArrayData(List<Float> list, String name) {
         printWriter.println("<gx:SimpleArrayData name=\"" + name + "\">");
         for (int i = 0; i < list.size(); i++) {
             printWriter.println("<gx:value>" + list.get(i) + "</gx:value>");
@@ -446,14 +458,14 @@ public class KmlTrackWriter implements TrackWriter {
     }
 
     /**
-     * Writes a sensor style.
+     * Writes a simple array style.
      *
-     * @param name       the name of the sesnor
-     * @param sensorType the sensor display name
+     * @param name       the name of the simple array.
+     * @param extendedDataType the extended data display name
      */
-    private void writeSensorStyle(String name, String sensorType) {
+    private void writeSimpleArrayStyle(String name, String extendedDataType) {
         printWriter.println("<gx:SimpleArrayField name=\"" + name + "\" type=\"float\">");
-        printWriter.println("<displayName>" + StringUtils.formatCData(sensorType) + "</displayName>");
+        printWriter.println("<displayName>" + StringUtils.formatCData(extendedDataType) + "</displayName>");
         printWriter.println("</gx:SimpleArrayField>");
     }
 }
