@@ -292,6 +292,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         switch (extendedDataType) {
             case KmlTrackWriter.EXTENDED_DATA_TYPE_SPEED:
                 speedList.add(value);
+                break;
             case KmlTrackWriter.EXTENDED_DATA_TYPE_POWER:
                 powerList.add(value);
                 break;

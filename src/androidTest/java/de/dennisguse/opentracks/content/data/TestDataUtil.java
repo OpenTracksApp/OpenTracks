@@ -65,6 +65,7 @@ public class TestDataUtil {
         trackPoint.setAccuracy((float) i / 100.0f);
         trackPoint.setAltitude(i * ALTITUDE_INTERVAL);
         trackPoint.setTime(i + 1);
+        trackPoint.setSpeed(5f + (i / 10));
 
         trackPoint.setHeartRate_bpm(100f + i);
         trackPoint.setCyclingCadence_rpm(200f + i);

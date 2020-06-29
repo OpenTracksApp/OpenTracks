@@ -130,7 +130,7 @@ public class ExportImportTest {
         assertWaypoints();
 
         // 3. trackpoints
-        assertTrackpoints(false, false, false, false);
+        assertTrackpoints(true, false, false, false);
     }
 
     @LargeTest
@@ -165,7 +165,7 @@ public class ExportImportTest {
         assertWaypoints();
 
         // 3. trackpoints
-        assertTrackpoints(false, true, true, true);
+        assertTrackpoints(true, true, true, true);
     }
 
     @LargeTest
@@ -230,8 +230,7 @@ public class ExportImportTest {
         assertWaypoints();
 
         // 3. trackpoints
-        //TODO Verify speed
-        assertTrackpoints(false, false, false, false);
+        assertTrackpoints(true, false, false, false);
     }
 
     private void assertWaypoints() {
@@ -270,7 +269,7 @@ public class ExportImportTest {
             assertEquals(trackPoint.getLongitude(), importedTrackPoint.getLongitude(), 0.001);
             assertEquals(trackPoint.getAltitude(), importedTrackPoint.getAltitude(), 0.001);
             if (verifySpeed) {
-                assertEquals(trackPoint.getSpeed(), importedTrackPoint.getSpeed(), 0.01);
+                assertEquals(trackPoint.getSpeed(), importedTrackPoint.getSpeed(), 0.001);
             }
             if (verifyHeartrate) {
                 assertEquals(trackPoint.getHeartRate_bpm(), importedTrackPoint.getHeartRate_bpm(), 0.01);
