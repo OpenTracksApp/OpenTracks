@@ -39,6 +39,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
     private static final String TAG_GPX = "gpx";
     private static final String TAG_NAME = "name";
     private static final String TAG_TIME = "time";
+    private static final String TAG_SPEED = "speed";
     private static final String TAG_TRACK = "trk";
     private static final String TAG_TRACK_POINT = "trkpt";
     private static final String TAG_TRACK_SEGMENT = "trkseg";
@@ -115,6 +116,11 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
                     time = content.trim();
                 }
                 break;
+            case TAG_SPEED:
+                if (content != null) {
+                    speed = content.trim();
+                }
+                break;
             case TAG_ELEVATION:
                 if (content != null) {
                     altitude = content.trim();
@@ -149,6 +155,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
         longitude = attributes.getValue(ATTRIBUTE_LON);
         altitude = null;
         time = null;
+        speed = null;
     }
 
     /**

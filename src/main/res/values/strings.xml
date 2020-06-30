@@ -193,6 +193,7 @@ limitations under the License.
     <string name="description_pace_imperial">Pace (min/mi)</string>
     <string name="description_pace_metric">Pace (min/km)</string>
     <string name="description_recorded_time">Recorded: %1$s</string>
+    <string name="description_speed_ms">Speed (m/s)</string>
     <string name="description_sensor_cadence">Cadence (rpm)</string>
     <string name="description_sensor_heart_rate">Heart rate (bpm)</string>
     <string name="description_sensor_power">Power (W)</string>

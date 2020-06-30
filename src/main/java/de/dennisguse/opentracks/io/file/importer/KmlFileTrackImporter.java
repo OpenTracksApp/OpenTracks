@@ -61,8 +61,9 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     private static final String ATTRIBUTE_NAME = "name";
 
     private boolean trackStarted = false;
-    private String sensorType;
+    private String extendedDataType;
     private ArrayList<TrackPoint> trackPoints;
+    private ArrayList<Float> speedList;
     private ArrayList<Float> cadenceList;
     private ArrayList<Float> heartRateList;
     private ArrayList<Float> powerList;
@@ -102,7 +103,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
                 onTrackSegmentStart();
                 break;
             case TAG_GX_SIMPLE_ARRAY_DATA:
-                onSensorDataStart(attributes);
+                onExtendedDataStart(attributes);
                 break;
         }
     }
@@ -124,7 +125,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         } else if (tag.equals(TAG_GX_COORD)) {
             onTrackPointEnd();
         } else if (tag.equals(TAG_GX_VALUE)) {
-            onSensorValueEnd();
+            onExtendedDataValueEnd();
         } else if (tag.equals(TAG_NAME)) {
             if (content != null) {
                 name = content.trim();
@@ -209,6 +210,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     protected void onTrackSegmentStart() {
         super.onTrackSegmentStart();
         trackPoints = new ArrayList<>();
+        speedList = new ArrayList<>();
         heartRateList = new ArrayList<>();
         cadenceList = new ArrayList<>();
         powerList = new ArrayList<>();
@@ -222,6 +224,9 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         for (int i = 0; i < trackPoints.size(); i++) {
             TrackPoint trackPoint = trackPoints.get(i);
 
+            if (i < speedList.size()) {
+                trackPoint.setSpeed(speedList.get(i));
+            }
             if (i < heartRateList.size()) {
                 trackPoint.setHeartRate_bpm(heartRateList.get(i));
             }
@@ -261,16 +266,16 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     }
 
     /**
-     * On sensor data start. gx:SimpleArrayData start tag.
+     * On extended data start. gx:SimpleArrayData start tag.
      */
-    private void onSensorDataStart(Attributes attributes) {
-        sensorType = attributes.getValue(ATTRIBUTE_NAME);
+    private void onExtendedDataStart(Attributes attributes) {
+        extendedDataType = attributes.getValue(ATTRIBUTE_NAME);
     }
 
     /**
-     * On sensor value end. gx:value end tag.
+     * On extended data value end. gx:value end tag.
      */
-    private void onSensorValueEnd() throws SAXException {
+    private void onExtendedDataValueEnd() throws SAXException {
         if (content == null) {
             return;
         }
@@ -284,18 +289,21 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         } catch (NumberFormatException e) {
             throw new SAXException(createErrorMessage("Unable to parse gx:value:" + content), e);
         }
-        switch (sensorType) {
-            case KmlTrackWriter.SENSOR_TYPE_POWER:
+        switch (extendedDataType) {
+            case KmlTrackWriter.EXTENDED_DATA_TYPE_SPEED:
+                speedList.add(value);
+                break;
+            case KmlTrackWriter.EXTENDED_DATA_TYPE_POWER:
                 powerList.add(value);
                 break;
-            case KmlTrackWriter.SENSOR_TYPE_HEART_RATE:
+            case KmlTrackWriter.EXTENDED_DATA_TYPE_HEART_RATE:
                 heartRateList.add(value);
                 break;
-            case KmlTrackWriter.SENSOR_TYPE_CADENCE:
+            case KmlTrackWriter.EXTENDED_DATA_TYPE_CADENCE:
                 cadenceList.add(value);
                 break;
             default:
-                Log.w(TAG, "Data from sensor " + sensorType + " is not (yet) supported.");
+                Log.w(TAG, "Data from extended data " + extendedDataType + " is not (yet) supported.");
         }
     }
 }

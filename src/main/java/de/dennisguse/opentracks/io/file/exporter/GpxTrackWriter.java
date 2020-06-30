@@ -176,6 +176,7 @@ public class GpxTrackWriter implements TrackWriter {
             }
             printWriter.println(
                     "<time>" + StringUtils.formatDateTimeIso8601(trackPoint.getTime()) + "</time>");
+            printWriter.println("<speed>" + trackPoint.getSpeed() + "</speed>");
             printWriter.println("</trkpt>");
         }
     }

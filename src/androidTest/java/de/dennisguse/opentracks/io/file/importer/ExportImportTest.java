@@ -36,7 +36,6 @@ import static org.junit.Assert.assertNotNull;
  * Export a track to {@link TrackFileFormat} and verify that the import is identical.
  * <p>
  * TODO: test ignores {@link TrackStatistics} for now.
- * TODO: enable verify speed.
  */
 @RunWith(JUnit4.class)
 public class ExportImportTest {
@@ -130,7 +129,7 @@ public class ExportImportTest {
         assertWaypoints();
 
         // 3. trackpoints
-        assertTrackpoints(false, false, false, false);
+        assertTrackpoints(false, false, false);
     }
 
     @LargeTest
@@ -165,7 +164,7 @@ public class ExportImportTest {
         assertWaypoints();
 
         // 3. trackpoints
-        assertTrackpoints(false, true, true, true);
+        assertTrackpoints(true, true, true);
     }
 
     @LargeTest
@@ -230,8 +229,7 @@ public class ExportImportTest {
         assertWaypoints();
 
         // 3. trackpoints
-        //TODO Verify speed
-        assertTrackpoints(false, false, false, false);
+        assertTrackpoints(false, false, false);
     }
 
     private void assertWaypoints() {
@@ -253,7 +251,7 @@ public class ExportImportTest {
         }
     }
 
-    private void assertTrackpoints(boolean verifySpeed, boolean verifyPower, boolean verifyHeartrate, boolean verifyCadence) {
+    private void assertTrackpoints(boolean verifyPower, boolean verifyHeartrate, boolean verifyCadence) {
         List<TrackPoint> importedTrackPoints = contentProviderUtils.getTrackPoints(importTrackId);
         assertEquals(trackPoints.size(), importedTrackPoints.size());
 
@@ -269,9 +267,7 @@ public class ExportImportTest {
             assertEquals(trackPoint.getLatitude(), importedTrackPoint.getLatitude(), 0.001);
             assertEquals(trackPoint.getLongitude(), importedTrackPoint.getLongitude(), 0.001);
             assertEquals(trackPoint.getAltitude(), importedTrackPoint.getAltitude(), 0.001);
-            if (verifySpeed) {
-                assertEquals(trackPoint.getSpeed(), importedTrackPoint.getSpeed(), 0.01);
-            }
+            assertEquals(trackPoint.getSpeed(), importedTrackPoint.getSpeed(), 0.001);
             if (verifyHeartrate) {
                 assertEquals(trackPoint.getHeartRate_bpm(), importedTrackPoint.getHeartRate_bpm(), 0.01);
             }
