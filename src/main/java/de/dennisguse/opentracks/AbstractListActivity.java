@@ -62,17 +62,15 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
     @Override
     public void onConfirmDeleteDone(long[] trackIds) {
         boolean stopRecording = false;
-        if (trackIds.length == 1 && trackIds[0] == -1L) {
-            stopRecording = true;
-        } else {
-            long recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
-            for (long trackId : trackIds) {
-                if (trackId == recordingTrackId) {
-                    stopRecording = true;
-                    break;
-                }
+
+        long recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
+        for (long trackId : trackIds) {
+            if (trackId == recordingTrackId) {
+                stopRecording = true;
+                break;
             }
         }
+
         if (stopRecording) {
             getTrackRecordingServiceConnection().stopRecording(this, false);
         }

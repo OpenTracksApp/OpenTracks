@@ -16,18 +16,22 @@
 
 package de.dennisguse.opentracks;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
 /**
  * An activity for deleting tracks.
  *
  * @author Jimmy Shih
  */
-public class TrackDeleteActivity extends Activity {
+public class TrackDeleteActivity extends AbstractActivity {
 
     public static final String EXTRA_TRACK_IDS = "track_ids";
+
+    private long[] trackIds;
 
     private DeleteAsyncTask deleteAsyncTask;
 
@@ -35,21 +39,18 @@ public class TrackDeleteActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.track_delete);
-
         setResult(RESULT_CANCELED);
 
         Intent intent = getIntent();
-        long[] trackIds = intent.getLongArrayExtra(EXTRA_TRACK_IDS);
+        trackIds = intent.getLongArrayExtra(EXTRA_TRACK_IDS);
 
-        Object retained = getLastNonConfigurationInstance();
-        if (retained instanceof DeleteAsyncTask) {
-            deleteAsyncTask = (DeleteAsyncTask) retained;
-            deleteAsyncTask.setActivity(this);
-        } else {
-            deleteAsyncTask = new DeleteAsyncTask(this, trackIds);
-            deleteAsyncTask.execute();
-        }
+        deleteAsyncTask = new DeleteAsyncTask();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        deleteAsyncTask.execute();
     }
 
     @Override
@@ -59,13 +60,34 @@ public class TrackDeleteActivity extends Activity {
     }
 
     @Override
-    public Object onRetainNonConfigurationInstance() {
-        deleteAsyncTask.setActivity(null);
-        return deleteAsyncTask;
+    protected int getLayoutResId() {
+        return R.layout.track_delete;
     }
 
     public void onAsyncTaskCompleted() {
         setResult(RESULT_OK);
         finish();
+    }
+
+    class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            ContentProviderUtils contentProviderUtils = new ContentProviderUtils(TrackDeleteActivity.this);
+
+            for (long id : trackIds) {
+                if (isCancelled()) {
+                    return false;
+                }
+                contentProviderUtils.deleteTrack(TrackDeleteActivity.this, id);
+            }
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            TrackDeleteActivity.this.onAsyncTaskCompleted();
+        }
     }
 }
