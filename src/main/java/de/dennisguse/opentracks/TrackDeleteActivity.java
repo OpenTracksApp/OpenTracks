@@ -17,15 +17,11 @@
 package de.dennisguse.opentracks;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
-import de.dennisguse.opentracks.util.DialogUtils;
-
 /**
- * An activity for delete tracks.
+ * An activity for deleting tracks.
  *
  * @author Jimmy Shih
  */
@@ -33,13 +29,13 @@ public class TrackDeleteActivity extends Activity {
 
     public static final String EXTRA_TRACK_IDS = "track_ids";
 
-    private static final int DIALOG_PROGRESS_ID = 0;
-
     private DeleteAsyncTask deleteAsyncTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.track_delete);
 
         setResult(RESULT_CANCELED);
 
@@ -57,40 +53,19 @@ public class TrackDeleteActivity extends Activity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        deleteAsyncTask.cancel(true);
+    }
+
+    @Override
     public Object onRetainNonConfigurationInstance() {
         deleteAsyncTask.setActivity(null);
         return deleteAsyncTask;
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        if (id != DIALOG_PROGRESS_ID) {
-            return null;
-        }
-        return DialogUtils.createSpinnerProgressDialog(
-                this, R.string.track_delete_progress_message, new DialogInterface.OnCancelListener() {
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        deleteAsyncTask.cancel(true);
-                        dialog.dismiss();
-                        finish();
-                    }
-                });
-    }
-
-    /**
-     * Invokes when the associated AsyncTask completes.
-     */
     public void onAsyncTaskCompleted() {
-        removeDialog(DIALOG_PROGRESS_ID);
         setResult(RESULT_OK);
         finish();
-    }
-
-    /**
-     * Shows the progress dialog.
-     */
-    public void showProgressDialog() {
-        showDialog(DIALOG_PROGRESS_ID);
     }
 }

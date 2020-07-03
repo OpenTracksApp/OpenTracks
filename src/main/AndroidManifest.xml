@@ -38,7 +38,7 @@ limitations under the License.
 
         <activity
             android:name=".TrackDeleteActivity"
-            android:theme="@style/ThemeCustomTransparent" />
+            android:theme="@style/TrackDeleteActivity" />
 
         <activity
             android:name=".HelpActivity"
@@ -46,7 +46,7 @@ limitations under the License.
 
         <activity
             android:name=".io.file.importer.ImportActivity"
-            android:theme="@style/ThemeCustomTransparent">
+            android:theme="@style/ThemeCustomTransparentActivity">
             <intent-filter>
                 <action android:name="android.intent.action.ATTACH_DATA" />
                 <action android:name="android.intent.action.VIEW" />
@@ -105,7 +105,7 @@ limitations under the License.
 
         <activity
             android:name=".io.file.exporter.ExportActivity"
-            android:theme="@style/ThemeCustomTransparent" />
+            android:theme="@style/ThemeCustomTransparentActivity" />
 
         <activity android:name=".settings.SettingsActivity" />
 
