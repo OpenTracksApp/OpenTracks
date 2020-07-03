@@ -61,13 +61,6 @@ class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
     }
 
     @Override
-    protected void onPreExecute() {
-        if (deleteActivity != null) {
-            deleteActivity.showProgressDialog();
-        }
-    }
-
-    @Override
     protected Boolean doInBackground(Void... params) {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
 

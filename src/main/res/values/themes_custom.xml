@@ -35,8 +35,8 @@ limitations under the License.
         <item name="android:colorAccent">@color/holo_orange_dark</item>
         <item name="windowActionModeOverlay">true</item>
     </style>
-     
-    <style name="ThemeCustomNotTransparent" parent="ThemeCustom">
+
+    <style name="ThemeCustomNotTransparentDialog" parent="ThemeCustom">
         <!-- TODO Remove when moving to settings to fragments. -->
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
@@ -44,7 +44,7 @@ limitations under the License.
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
-    <style name="ThemeCustomTransparent" parent="ThemeCustom">
+    <style name="ThemeCustomTransparentActivity" parent="ThemeCustom">
         <!-- TODO Remove when moving to settings to fragments. -->
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
@@ -52,5 +52,12 @@ limitations under the License.
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="TrackDeleteActivity" parent="ThemeCustom">
+        <!-- TODO Remove when moving to TrackDeleteActivity to fragments. -->
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsFloating">true</item>
     </style>
 </resources>
