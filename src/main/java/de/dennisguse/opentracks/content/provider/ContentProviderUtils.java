@@ -165,9 +165,7 @@ public class ContentProviderUtils {
         return track;
     }
 
-    /**
-     * Deletes all tracks (including waypoints and trackPoints).
-     */
+    @VisibleForTesting
     public void deleteAllTracks(Context context) {
         contentResolver.delete(TrackPointsColumns.CONTENT_URI_BY_ID, null, null);
         contentResolver.delete(WaypointsColumns.CONTENT_URI, null, null);
