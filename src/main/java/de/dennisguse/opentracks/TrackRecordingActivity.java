@@ -57,10 +57,11 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     private ViewPager pager;
     private TrackController trackController;
 
-    // From intent
+    // Initialized from Intent; if a new track recording is started new TrackId will be provided by TrackRecordingService
     private long trackId;
 
     // Preferences
+    @Deprecated //TODO Do we really need two trackIds here?
     private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     private boolean recordingTrackPaused;
 
@@ -208,8 +209,9 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                         return getString(R.string.settings_chart_by_time);
                     case 2:
                         return getString(R.string.settings_chart_by_distance);
+                    default:
+                        throw new RuntimeException("There isn't Fragment associated with the position: " + position);
                 }
-                return "Unknown Tab";
             }
         };
         pager = findViewById(R.id.track_detail_activity_view_pager);
@@ -272,12 +274,23 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         // Update UI
         this.invalidateOptionsMenu();
 
+        //TODO Temporary fix, so that the TrackController is initialized properly after rotation when a new recording was started.
+        if (trackId == -1L && trackId != recordingTrackId) {
+            trackId = recordingTrackId;
+        }
+
         if (trackId != -1L) {
             trackDataHub.loadTrack(trackId);
             trackController.onResume(true, recordingTrackPaused);
         }
 
-        startRecording();
+        /*
+         * If the binding has happened, then invoke the callback to start a new recording.
+         * If the binding hasn't happened, then invoking the callback will have no effect.
+         * But when the binding occurs, the callback will get invoked.
+         */
+        trackRecordingServiceConnection.startAndBind(this);
+        bindChangedCallback.run();
     }
 
     @Override
@@ -402,16 +415,5 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         Track track = contentProviderUtils.getTrack(trackId);
         String category = getString(TrackIconUtils.getIconActivityType(iconValue));
         TrackUtils.updateTrack(this, track, null, category, null, contentProviderUtils);
-    }
-
-    private void startRecording() {
-        trackRecordingServiceConnection.startAndBind(this);
-
-        /*
-         * If the binding has happened, then invoke the callback to start a new recording.
-         * If the binding hasn't happened, then invoking the callback will have no effect.
-         * But when the binding occurs, the callback will get invoked.
-         */
-        bindChangedCallback.run();
     }
 }

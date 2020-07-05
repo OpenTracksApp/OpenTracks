@@ -51,7 +51,6 @@ public class TrackController {
     private boolean isPaused;
     private long totalTime = 0;
 
-    // the timestamp for the toal time
     private long totalTimeTimestamp = 0;
 
     private boolean isResumed = false;

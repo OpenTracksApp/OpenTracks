@@ -85,13 +85,9 @@ limitations under the License.
                 android:resource="@xml/searchable" />
         </activity>
 
-        <activity
-            android:name=".TrackRecordedActivity"
-            android:screenOrientation="userPortrait" />
+        <activity android:name=".TrackRecordedActivity" />
 
-        <activity
-            android:name=".TrackRecordingActivity"
-            android:screenOrientation="userPortrait" />
+        <activity android:name=".TrackRecordingActivity" />
 
         <activity android:name=".TrackEditActivity" />
 
@@ -105,10 +101,7 @@ limitations under the License.
                 android:value=".SearchListActivity" />
         </activity>
 
-        <activity
-            android:name=".AggregatedStatisticsActivity"
-            android:screenOrientation="userPortrait"
-            android:label="@string/menu_aggregated_statistics"/>
+        <activity android:name=".AggregatedStatisticsActivity" />
 
         <activity
             android:name=".io.file.exporter.ExportActivity"
