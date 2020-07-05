@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -41,6 +42,8 @@ import de.dennisguse.opentracks.util.TrackUtils;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
+//NOTE: This activity does NOT react to preference changes of R.string.recording_track_id_key.
+//This mode of communication should be removed anyhow.
 public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackActivityDataHubInterface {
 
     public static final String EXTRA_TRACK_ID = "track_id";
@@ -57,12 +60,10 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     private ViewPager pager;
     private TrackController trackController;
 
-    // Initialized from Intent; if a new track recording is started new TrackId will be provided by TrackRecordingService
+    // Initialized from Intent; if a new track recording is started, a new TrackId will be provided by TrackRecordingService
     private long trackId;
 
     // Preferences
-    @Deprecated //TODO Do we really need two trackIds here?
-    private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     private boolean recordingTrackPaused;
 
     private final Runnable bindChangedCallback = new Runnable() {
@@ -71,23 +72,20 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             // After binding changes (is available), update the total time in trackController.
             runOnUiThread(() -> trackController.update(true, recordingTrackPaused));
 
-            if (recordingTrackId == -1L) {
-                TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
-                if (service == null) {
-                    Log.d(TAG, "could not get TrackRecordingService");
-                    return;
-                }
-
+            TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
+            if (service == null) {
+                Log.d(TAG, "could not get TrackRecordingService");
+                return;
+            }
+            if (!service.isRecording()) {
                 // Starts or resumes a track.
                 int msg;
                 if (trackId == -1L) {
                     // trackId isn't initialized -> leads a new recording.
                     trackId = service.startNewTrack();
-                    recordingTrackId = trackId;
                     msg = R.string.track_detail_record_success;
                 } else {
                     // trackId is initialized -> resumes the track.
-                    recordingTrackId = trackId;
                     service.resumeTrack(trackId);
                     msg = R.string.track_detail_resume_success;
                 }
@@ -104,12 +102,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-            if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.recording_track_id_key, key)) {
-                recordingTrackId = PreferencesUtils.getRecordingTrackId(TrackRecordingActivity.this);
-                setLockscreenPolicy();
-                setScreenOnPolicy();
-            }
-
             if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.recording_track_paused_key, key)) {
                 recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(TrackRecordingActivity.this);
                 setLockscreenPolicy();
@@ -169,53 +161,27 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
-
         contentProviderUtils = new ContentProviderUtils(this);
-        handleIntent(getIntent());
 
+        trackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+        if (savedInstanceState != null) {
+            //Activity was recreated.
+            trackId = savedInstanceState.getLong(EXTRA_TRACK_ID, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+        } else {
+            trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+            if (trackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT && contentProviderUtils.getTrack(trackId) == null) {
+                finish();
+            }
+        }
+
+        recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
         trackDataHub = new TrackDataHub(this);
 
-        FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager(), 1) {
-            @Override
-            public int getCount() {
-                return 3;
-            }
-
-            @NonNull
-            @Override
-            public Fragment getItem(int position) {
-                switch (position) {
-                    case 0:
-                        return new StatisticsRecordingFragment();
-                    case 1:
-                        return ChartFragment.newInstance(false);
-                    case 2:
-                        return ChartFragment.newInstance(true);
-                    default:
-                        throw new RuntimeException("There isn't Fragment associated with the position: " + position);
-                }
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                switch (position) {
-                    case 0:
-                        return getString(R.string.track_detail_stats_tab);
-                    case 1:
-                        return getString(R.string.settings_chart_by_time);
-                    case 2:
-                        return getString(R.string.settings_chart_by_distance);
-                    default:
-                        throw new RuntimeException("There isn't Fragment associated with the position: " + position);
-                }
-            }
-        };
         pager = findViewById(R.id.track_detail_activity_view_pager);
-        pager.setAdapter(adapter);
+        pager.setAdapter(new CustomFragmentPagerAdapter(getSupportFragmentManager(), 1));
         TabLayout tabs = findViewById(R.id.track_detail_activity_tablayout);
         tabs.setupWithViewPager(pager);
         if (savedInstanceState != null) {
@@ -274,11 +240,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         // Update UI
         this.invalidateOptionsMenu();
 
-        //TODO Temporary fix, so that the TrackController is initialized properly after rotation when a new recording was started.
-        if (trackId == -1L && trackId != recordingTrackId) {
-            trackId = recordingTrackId;
-        }
-
         if (trackId != -1L) {
             trackDataHub.loadTrack(trackId);
             trackController.onResume(true, recordingTrackPaused);
@@ -291,6 +252,13 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
          */
         trackRecordingServiceConnection.startAndBind(this);
         bindChangedCallback.run();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(CURRENT_TAB_TAG_KEY, pager.getCurrentItem());
+        outState.putLong(EXTRA_TRACK_ID, trackId);
     }
 
     @Override
@@ -308,21 +276,8 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     }
 
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(CURRENT_TAB_TAG_KEY, pager.getCurrentItem());
-    }
-
-    @Override
     protected int getLayoutResId() {
         return R.layout.track_record;
-    }
-
-    @Override
-    public void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        setIntent(intent);
-        handleIntent(intent);
     }
 
     @Override
@@ -381,22 +336,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         return trackDataHub;
     }
 
-    private void handleIntent(Intent intent) {
-        trackId = intent.getLongExtra(EXTRA_TRACK_ID, -1L);
-        if (trackId == -1L) {
-            return;
-        }
-        Track track = contentProviderUtils.getTrack(trackId);
-        if (track == null) {
-            track = contentProviderUtils.getLastTrack();
-            if (track != null) {
-                trackId = track.getId();
-                return;
-            }
-            finish();
-        }
-    }
-
     /**
      * Updates the menu items.
      */
@@ -415,5 +354,46 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         Track track = contentProviderUtils.getTrack(trackId);
         String category = getString(TrackIconUtils.getIconActivityType(iconValue));
         TrackUtils.updateTrack(this, track, null, category, null, contentProviderUtils);
+    }
+
+    private class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
+
+        public CustomFragmentPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+            super(fm, behavior);
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new StatisticsRecordingFragment();
+                case 1:
+                    return ChartFragment.newInstance(false);
+                case 2:
+                    return ChartFragment.newInstance(true);
+                default:
+                    throw new RuntimeException("There isn't Fragment associated with the position: " + position);
+            }
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return getString(R.string.track_detail_stats_tab);
+                case 1:
+                    return getString(R.string.settings_chart_by_time);
+                case 2:
+                    return getString(R.string.settings_chart_by_distance);
+                default:
+                    throw new RuntimeException("There isn't Fragment associated with the position: " + position);
+            }
+        }
     }
 }
