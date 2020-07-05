@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -79,19 +78,15 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             }
             if (!service.isRecording()) {
                 // Starts or resumes a track.
-                int msg;
                 if (trackId == -1L) {
                     // trackId isn't initialized -> leads a new recording.
                     trackId = service.startNewTrack();
-                    msg = R.string.track_detail_record_success;
                 } else {
                     // trackId is initialized -> resumes the track.
                     service.resumeTrack(trackId);
-                    msg = R.string.track_detail_resume_success;
                 }
 
                 // A recording track is on.
-                Toast.makeText(TrackRecordingActivity.this, msg, Toast.LENGTH_SHORT).show();
                 trackDataHub.loadTrack(trackId);
                 trackController.update(true, false);
                 trackController.onResume(true, recordingTrackPaused);
