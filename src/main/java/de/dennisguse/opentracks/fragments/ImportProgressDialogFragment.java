@@ -205,9 +205,9 @@ public class ImportProgressDialogFragment extends DialogFragment {
             if (TrackFileFormat.GPX.getExtension().equals(fileExtension)) {
                 trackImporter = new GpxFileTrackImporter(context);
             } else if (TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.getExtension().equals(fileExtension)) {
-                trackImporter = new KmlFileTrackImporter(ImportProgressDialogFragment.this.getContext(), -1L);
+                trackImporter = new KmlFileTrackImporter(ImportProgressDialogFragment.this.getContext());
             } else if (TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.getExtension().equals(fileExtension)) {
-                trackImporter = new KmzTrackImporter(context, -1L, file.getUri());
+                trackImporter = new KmzTrackImporter(context, file.getUri());
             } else {
                 Log.i(TAG, "Unsupported file format.");
                 return false;

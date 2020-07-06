@@ -31,6 +31,7 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
  * Export a track to {@link TrackFileFormat} and verify that the import is identical.
@@ -109,10 +110,11 @@ public class ExportImportTest {
         // 1. export
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         trackExporter.writeTrack(context, outputStream);
+        contentProviderUtils.deleteTrack(context, trackId);
 
         // 2. import
         InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-        AbstractFileTrackImporter trackImporter = new KmlFileTrackImporter(context, -1L);
+        AbstractFileTrackImporter trackImporter = new KmlFileTrackImporter(context);
         importTrackId = trackImporter.importFile(inputStream);
 
         // then
@@ -123,6 +125,7 @@ public class ExportImportTest {
         assertEquals(track.getDescription(), importedTrack.getDescription());
         assertEquals(track.getName(), importedTrack.getName());
         assertEquals(track.getIcon(), importedTrack.getIcon());
+        assertEquals(track.getUuid(), importedTrack.getUuid());
 
         // 2. waypoints
         assertWaypoints();
@@ -143,10 +146,11 @@ public class ExportImportTest {
         // 1. export
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         trackExporter.writeTrack(context, outputStream);
+        contentProviderUtils.deleteTrack(context, trackId);
 
         // 2. import
         InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
-        AbstractFileTrackImporter trackImporter = new KmlFileTrackImporter(context, -1L);
+        AbstractFileTrackImporter trackImporter = new KmlFileTrackImporter(context);
         importTrackId = trackImporter.importFile(inputStream);
 
         // then
@@ -163,6 +167,29 @@ public class ExportImportTest {
 
         // 3. trackpoints
         assertTrackpoints(true, true, true);
+    }
+
+    @LargeTest
+    @Test
+    public void kml_with_trackdetail_and_sensordata_duplicate_trackUUID() {
+        // given
+        Track track = contentProviderUtils.getTrack(trackId);
+
+        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.newTrackExporter(context, new Track[]{track});
+
+        // when
+        // 1. export
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        trackExporter.writeTrack(context, outputStream);
+
+        // 2. import
+        InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+        AbstractFileTrackImporter trackImporter = new KmlFileTrackImporter(context);
+        importTrackId = trackImporter.importFile(inputStream);
+
+        // then
+        Track importedTrack = contentProviderUtils.getTrack(importTrackId);
+        assertNull(importedTrack);
     }
 
     @LargeTest
@@ -205,6 +232,7 @@ public class ExportImportTest {
         // 1. export
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         trackExporter.writeTrack(context, outputStream);
+        contentProviderUtils.deleteTrack(context, trackId);
 
         // 2. import
         InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
@@ -227,6 +255,30 @@ public class ExportImportTest {
 
         // 3. trackpoints
         assertTrackpoints(false, true, true);
+    }
+
+    @LargeTest
+    @Test
+    public void gpx_duplicate_trackUUID() {
+        // given
+        Track track = contentProviderUtils.getTrack(trackId);
+
+        TrackExporter trackExporter = TrackFileFormat.GPX.newTrackExporter(context, new Track[]{track});
+
+        // when
+        // 1. export
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        trackExporter.writeTrack(context, outputStream);
+
+        // 2. import
+        InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+        AbstractFileTrackImporter trackImporter = new GpxFileTrackImporter(context, contentProviderUtils);
+        importTrackId = trackImporter.importFile(inputStream);
+
+        // then
+        // 1. track
+        Track trackImported = contentProviderUtils.getTrack(importTrackId);
+        assertNull(trackImported);
     }
 
     private void assertWaypoints() {
