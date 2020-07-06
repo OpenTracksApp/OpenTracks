@@ -77,6 +77,7 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
         Intent intent = IntentUtils.newIntent(this, TrackDeleteActivity.class);
         intent.putExtra(TrackDeleteActivity.EXTRA_TRACK_IDS, trackIds);
         startActivityForResult(intent, DELETE_REQUEST_CODE);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     /**

@@ -19,6 +19,7 @@ package de.dennisguse.opentracks;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
@@ -65,6 +66,7 @@ public class TrackDeleteActivity extends AbstractActivity {
     }
 
     public void onAsyncTaskCompleted() {
+        findViewById(R.id.progressbar).setVisibility(View.INVISIBLE);
         setResult(RESULT_OK);
         finish();
     }
