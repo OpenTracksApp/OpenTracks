@@ -116,7 +116,7 @@ public class KmlTrackWriter implements TrackWriter {
             if (exportTrackDetail) {
                 Track track = tracks[0];
                 printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
-                printWriter.println("<atom:author><atom:name>" + StringUtils.formatCData(context.getString(R.string.app_name)) + "</atom:name></atom:author>");
+                printWriter.println("<atom:generator>" + StringUtils.formatCData(context.getString(R.string.app_name)) + "</atom:generator>");
             }
 
             writeTrackStyle();
