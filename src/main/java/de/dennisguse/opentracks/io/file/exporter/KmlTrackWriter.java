@@ -108,7 +108,10 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             printWriter.println("<kml xmlns=\"http://www.opengis.net/kml/2.2\"");
             printWriter.println("xmlns:gx=\"http://www.google.com/kml/ext/2.2\"");
-            printWriter.println("xmlns:atom=\"http://www.w3.org/2005/Atom\">");
+            printWriter.println("xmlns:atom=\"http://www.w3.org/2005/Atom\"");
+            printWriter.println("xmlns:opentracks=\"http://opentracksapp.com/xmlschemas/v1\">");
+            //TODO ADD xsi:schemaLocation here!
+
             printWriter.println("<Document>");
             printWriter.println("<open>1</open>");
             printWriter.println("<visibility>1</visibility>");
@@ -204,6 +207,7 @@ public class KmlTrackWriter implements TrackWriter {
                 printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
                 printWriter.println("<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
                 printWriter.println("<icon>" + StringUtils.formatCData(track.getIcon()) + "</icon>");
+                printWriter.println("<opentracks:trackid>" + track.getUuid() + "</opentracks:trackid>");
             }
 
             printWriter.println("<styleUrl>#" + TRACK_STYLE + "</styleUrl>");
@@ -460,7 +464,7 @@ public class KmlTrackWriter implements TrackWriter {
     /**
      * Writes a simple array style.
      *
-     * @param name       the name of the simple array.
+     * @param name             the name of the simple array.
      * @param extendedDataType the extended data display name
      */
     private void writeSimpleArrayStyle(String name, String extendedDataType) {

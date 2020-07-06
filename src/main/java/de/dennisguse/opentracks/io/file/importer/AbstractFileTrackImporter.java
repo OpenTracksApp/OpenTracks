@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
 import android.util.Log;
 
@@ -62,11 +63,12 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
     // The maximum number of buffered locations for bulk-insertion
     private static final int MAX_BUFFERED_LOCATIONS = 512;
+
     private final Context context;
-    private final long importTrackId;
     private final ContentProviderUtils contentProviderUtils;
     private final int recordingDistanceInterval;
 
+    private long importTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     private final List<Long> trackIds = new ArrayList<>();
     private final List<Waypoint> waypoints = new ArrayList<>();
 
@@ -96,17 +98,15 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     // The SAX locator to get the current line information
     private Locator locator;
 
-    /**
-     * @param context       the context
-     * @param importTrackId the track id to import to. -1L to import to a new track.
-     */
-    @Deprecated
-    // Remove importTrackId
-    AbstractFileTrackImporter(Context context, long importTrackId, ContentProviderUtils contentProviderUtils) {
+    AbstractFileTrackImporter(Context context, ContentProviderUtils contentProviderUtils) {
         this.context = context;
-        this.importTrackId = importTrackId;
         this.contentProviderUtils = contentProviderUtils;
         this.recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(context);
+    }
+
+    AbstractFileTrackImporter(Context context, ContentProviderUtils contentProviderUtils, long importTrackId) {
+        this(context, contentProviderUtils);
+        this.importTrackId = importTrackId;
     }
 
     @Override
@@ -134,12 +134,10 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             saxParser.parse(inputStream, this);
             Log.d(TAG, "Total import time: " + (System.currentTimeMillis() - start) + "ms");
             if (trackIds.size() != 1) {
-                Log.d(TAG, trackIds.size() + " tracks imported");
-                cleanImport();
-                return -1L;
+                throw new MultiTracksImportException();
             }
             return trackIds.get(0);
-        } catch (IOException | SAXException | ParserConfigurationException e) {
+        } catch (MultiTracksImportException | IOException | SAXException | SQLiteConstraintException | ParserConfigurationException e) {
             Log.e(TAG, "Unable to import file", e);
             cleanImport();
             return -1L;
@@ -543,5 +541,10 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
         // The number of buffered locations
         int numBufferedTrackPoints = 0;
+    }
+
+    @Deprecated
+    //TODO According to the reader AND writer, we support multiple tracks per file; we should implement it here also.
+    private static class MultiTracksImportException extends RuntimeException {
     }
 }
