@@ -29,13 +29,13 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 
 import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
+import java.util.TimeZone;
 
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.TracksColumns;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
@@ -64,11 +64,11 @@ public abstract class AbstractTestFileTrackImporter {
 
     static final SimpleDateFormat DATE_FORMAT_0 = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.US);
     static final SimpleDateFormat DATE_FORMAT_1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
-    static final long TRACK_ID_0 = 1;
+
     static final long TRACK_POINT_ID_0 = 1;
     static final long TRACK_POINT_ID_1 = 2;
     static final long TRACK_POINT_ID_3 = 4;
-    static final Uri TRACK_ID_0_URI = ContentUris.appendId(TracksColumns.CONTENT_URI.buildUpon(), TRACK_ID_0).build();
+
     private static final long WAYPOINT_ID_0 = 1;
     private static final Uri WAYPOINT_ID_O_URI = ContentUris.appendId(WaypointsColumns.CONTENT_URI.buildUpon(), WAYPOINT_ID_0).build();
 
@@ -76,7 +76,7 @@ public abstract class AbstractTestFileTrackImporter {
 
     static {
         // We can't omit the timezones in the test, otherwise it'll use the local timezone and fail depending on where the test runner is.
-        SimpleTimeZone utc = new SimpleTimeZone(0, "UTC");
+        TimeZone utc = SimpleTimeZone.getTimeZone(ZoneOffset.UTC);
         DATE_FORMAT_0.setTimeZone(utc);
         DATE_FORMAT_1.setTimeZone(utc);
     }
@@ -114,7 +114,7 @@ public abstract class AbstractTestFileTrackImporter {
     protected void expectTrackUpdate(ArgumentCaptor<Track> trackCaptor, boolean lastTrack, long trackId) {
         contentProviderUtils.updateTrack(trackCaptor.capture());
 
-        when(contentProviderUtils.insertWaypoint((Waypoint) any())).thenReturn(WAYPOINT_ID_O_URI);
+        when(contentProviderUtils.insertWaypoint(any())).thenReturn(WAYPOINT_ID_O_URI);
         if (lastTrack) {
             // Return null to not add waypoints
             when(contentProviderUtils.getTrack(trackId)).thenReturn(null);

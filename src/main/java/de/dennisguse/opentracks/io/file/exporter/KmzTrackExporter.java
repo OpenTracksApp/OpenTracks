@@ -42,6 +42,7 @@ import de.dennisguse.opentracks.util.FileUtils;
  * @author Jimmy Shih
  */
 public class KmzTrackExporter implements TrackExporter {
+
     private static final String KMZ_IMAGES_DIR = "images";
     public static final String KMZ_KML_FILE = "doc.kml";
 
@@ -49,7 +50,7 @@ public class KmzTrackExporter implements TrackExporter {
     private static final int BUFFER_SIZE = 4096;
 
     private final ContentProviderUtils contentProviderUtils;
-    private final TrackExporter fileTrackExporter;
+    private final FileTrackExporter fileTrackExporter;
     private final Track[] tracks;
 
     private final boolean exportPhotos;
@@ -58,10 +59,10 @@ public class KmzTrackExporter implements TrackExporter {
      * Constructor.
      *
      * @param contentProviderUtils the content provider utils
-     * @param trackExporter    the file track exporter
+     * @param trackExporter        the file track exporter
      * @param tracks               the tracks to export
      */
-    public KmzTrackExporter(ContentProviderUtils contentProviderUtils, TrackExporter trackExporter, Track[] tracks, boolean exportPhotos) {
+    public KmzTrackExporter(ContentProviderUtils contentProviderUtils, FileTrackExporter trackExporter, Track[] tracks, boolean exportPhotos) {
         this.contentProviderUtils = contentProviderUtils;
         this.fileTrackExporter = trackExporter;
         this.tracks = tracks;

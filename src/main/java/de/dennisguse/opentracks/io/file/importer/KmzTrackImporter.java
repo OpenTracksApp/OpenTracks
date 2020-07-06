@@ -52,18 +52,15 @@ public class KmzTrackImporter implements TrackImporter {
     private static final int BUFFER_SIZE = 4096;
 
     private final Context context;
-    private final long importTrackId;
+    private long importTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
     private final Uri uriKmzFile;
 
     /**
-     * @param context       the context
-     * @param importTrackId track id to import to. This should not be -1L so that images in the kmz file can be imported.
-     * @param uriFile       URI of the kmz file.
+     * @param context the context
+     * @param uriFile URI of the kmz file.
      */
-    @Deprecated //TODO Do not pass importTrackId here; get it from somewhere else
-    public KmzTrackImporter(Context context, long importTrackId, Uri uriFile) {
+    public KmzTrackImporter(Context context, Uri uriFile) {
         this.context = context;
-        this.importTrackId = importTrackId;
         this.uriKmzFile = uriFile;
     }
 
@@ -244,7 +241,7 @@ public class KmzTrackImporter implements TrackImporter {
      * @return the imported track id or -1L
      */
     private long parseKml(ZipInputStream zipInputStream) throws IOException {
-        KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(context, importTrackId);
+        KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(context);
 
         try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(getKml(zipInputStream))) {
             return kmlFileTrackImporter.importFile(byteArrayInputStream);

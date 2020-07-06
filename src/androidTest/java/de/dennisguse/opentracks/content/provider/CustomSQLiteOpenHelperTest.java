@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.content.provider;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -9,7 +10,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.Assert;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +21,10 @@ import java.util.Map;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
 public class CustomSQLiteOpenHelperTest {
@@ -88,6 +93,7 @@ public class CustomSQLiteOpenHelperTest {
     }
 
     @Before
+    @After
     public void setUp() {
         context.deleteDatabase(DATABASE_NAME);
     }
@@ -95,13 +101,15 @@ public class CustomSQLiteOpenHelperTest {
     @Test
     public void onCreate() {
         try (SQLiteDatabase db = new CustomSQLiteOpenHelper(context, DATABASE_NAME).getWritableDatabase()) {
-            Assert.assertTrue(hasSqlCreate(db, TracksColumns.CREATE_TABLE));
+            assertTrue(hasSqlCreate(db, TracksColumns.CREATE_TABLE));
 
-            Assert.assertTrue(hasSqlCreate(db, TrackPointsColumns.CREATE_TABLE));
-            Assert.assertTrue(hasSqlCreate(db, TrackPointsColumns.CREATE_TABLE_INDEX));
+            assertTrue(hasSqlCreate(db, TrackPointsColumns.CREATE_TABLE));
+            assertTrue(hasSqlCreate(db, TrackPointsColumns.CREATE_TABLE_INDEX));
 
-            Assert.assertTrue(hasSqlCreate(db, WaypointsColumns.CREATE_TABLE));
-            Assert.assertTrue(hasSqlCreate(db, WaypointsColumns.CREATE_TABLE_INDEX));
+            assertTrue(hasSqlCreate(db, WaypointsColumns.CREATE_TABLE));
+            assertTrue(hasSqlCreate(db, WaypointsColumns.CREATE_TABLE_INDEX));
+        } catch (Exception e) {
+            fail();
         }
     }
 
@@ -127,18 +135,18 @@ public class CustomSQLiteOpenHelperTest {
         }
 
         // then - verify table structure
-        Assert.assertEquals(3, tableByUpgrade.size());
-        Assert.assertEquals(tableByUpgrade.size(), tablesByCreate.size());
+        assertEquals(3, tableByUpgrade.size());
+        assertEquals(tableByUpgrade.size(), tablesByCreate.size());
 
-        Assert.assertEquals(tablesByCreate.get(TracksColumns.TABLE_NAME), tableByUpgrade.get(TracksColumns.TABLE_NAME));
-        Assert.assertEquals(tablesByCreate.get(TrackPointsColumns.TABLE_NAME), tableByUpgrade.get(TrackPointsColumns.TABLE_NAME));
-        Assert.assertEquals(tablesByCreate.get(WaypointsColumns.TABLE_NAME), tableByUpgrade.get(WaypointsColumns.TABLE_NAME));
+        assertEquals(tablesByCreate.get(TracksColumns.TABLE_NAME), tableByUpgrade.get(TracksColumns.TABLE_NAME));
+        assertEquals(tablesByCreate.get(TrackPointsColumns.TABLE_NAME), tableByUpgrade.get(TrackPointsColumns.TABLE_NAME));
+        assertEquals(tablesByCreate.get(WaypointsColumns.TABLE_NAME), tableByUpgrade.get(WaypointsColumns.TABLE_NAME));
 
         // then - verify custom indices
-        Assert.assertEquals(3, indicesByCreate.size());
-        Assert.assertEquals(indicesByUpgrade.get(TracksColumns.TABLE_NAME), indicesByCreate.get(TracksColumns.TABLE_NAME));
-        Assert.assertEquals(indicesByUpgrade.get(TrackPointsColumns.TABLE_NAME), indicesByCreate.get(TrackPointsColumns.TABLE_NAME));
-        Assert.assertEquals(indicesByUpgrade.get(WaypointsColumns.TABLE_NAME), indicesByCreate.get(WaypointsColumns.TABLE_NAME));
+        assertEquals(3, indicesByCreate.size());
+        assertEquals(indicesByUpgrade.get(TracksColumns.TABLE_NAME), indicesByCreate.get(TracksColumns.TABLE_NAME));
+        assertEquals(indicesByUpgrade.get(TrackPointsColumns.TABLE_NAME), indicesByCreate.get(TrackPointsColumns.TABLE_NAME));
+        assertEquals(indicesByUpgrade.get(WaypointsColumns.TABLE_NAME), indicesByCreate.get(WaypointsColumns.TABLE_NAME));
     }
 
     @Test
@@ -155,12 +163,23 @@ public class CustomSQLiteOpenHelperTest {
         }
 
         // then - verify table structure
-        Assert.assertEquals(TRACKS_CREATE_TABLE_V23, tablesByDowngrade.get("tracks"));
-        Assert.assertEquals(TRACKPOINTS_CREATE_TABLE_V23, tablesByDowngrade.get("trackpoints"));
-        Assert.assertEquals(WAYPOINTS_CREATE_TABLE_V23, tablesByDowngrade.get("waypoints"));
+        assertEquals(TRACKS_CREATE_TABLE_V23, tablesByDowngrade.get("tracks"));
+        assertEquals(TRACKPOINTS_CREATE_TABLE_V23, tablesByDowngrade.get("trackpoints"));
+        assertEquals(WAYPOINTS_CREATE_TABLE_V23, tablesByDowngrade.get("waypoints"));
 
         // then - verify custom indices
-        Assert.assertEquals(0, indicesByDowngrade.size());
+        assertEquals(0, indicesByDowngrade.size());
+    }
+
+    @Test
+    public void track_uuid_unique() {
+        try (SQLiteDatabase db = new CustomSQLiteOpenHelper(context, DATABASE_NAME).getWritableDatabase()) {
+            db.execSQL("INSERT INTO tracks (uuid) VALUES (0x00)");
+            db.execSQL("INSERT INTO tracks (uuid) VALUES (0x00)");
+            fail("unique constraint not enforced");
+        } catch (SQLiteConstraintException e) {
+            assertTrue(e.getMessage().contains("UNIQUE constraint failed: tracks.uuid"));
+        }
     }
 
     private void createVersion23() {

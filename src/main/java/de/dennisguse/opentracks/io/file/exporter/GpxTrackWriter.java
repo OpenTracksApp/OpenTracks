@@ -33,6 +33,7 @@ import de.dennisguse.opentracks.util.StringUtils;
  *
  * @author Sandor Dornbush
  */
+//TODO Export waypoints
 public class GpxTrackWriter implements TrackWriter {
 
     private static final NumberFormat ELEVATION_FORMAT = NumberFormat.getInstance(Locale.US);
@@ -93,10 +94,15 @@ public class GpxTrackWriter implements TrackWriter {
             printWriter.println("xmlns=\"http://www.topografix.com/GPX/1/1\"");
             printWriter.println("xmlns:topografix=\"http://www.topografix.com/GPX/Private/TopoGrafix/0/1\"");
             printWriter.println("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
+            printWriter.println("xmlns:atom=\"http://www.w3.org/2005/Atom\"");
+            printWriter.println("xmlns:opentracks=\"http://opentracksapp.com/xmlschemas/v1\"");
             printWriter.println("xmlns:gpxtpx=\"http://www.garmin.com/xmlschemes/TrackPointExtension/v2\"");
-            printWriter.println("xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
+            printWriter.println("xsi:schemaLocation=" +
+                    "\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
                     + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1 http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd"
-                    + " http://www.garmin.com/xmlschemas/TrackPointExtension/v2 https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd\">");
+                    + " http://www.garmin.com/xmlschemas/TrackPointExtension/v2 https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd"
+                    + " http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd\">");
+
             printWriter.println("<metadata>");
 
             Track track = tracks[0];
@@ -127,17 +133,15 @@ public class GpxTrackWriter implements TrackWriter {
     public void writeWaypoint(Waypoint waypoint) {
         if (printWriter != null) {
             Location location = waypoint.getLocation();
-            if (location != null) {
-                printWriter.println("<wpt " + formatLocation(location) + ">");
-                if (location.hasAltitude()) {
-                    printWriter.println("<ele>" + ELEVATION_FORMAT.format(location.getAltitude()) + "</ele>");
-                }
-                printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
-                printWriter.println("<name>" + StringUtils.formatCData(waypoint.getName()) + "</name>");
-                printWriter.println("<desc>" + StringUtils.formatCData(waypoint.getDescription()) + "</desc>");
-                printWriter.println("<type>" + StringUtils.formatCData(waypoint.getCategory()) + "</type>");
-                printWriter.println("</wpt>");
+            printWriter.println("<wpt " + formatLocation(location) + ">");
+            if (location.hasAltitude()) {
+                printWriter.println("<ele>" + ELEVATION_FORMAT.format(location.getAltitude()) + "</ele>");
             }
+            printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
+            printWriter.println("<name>" + StringUtils.formatCData(waypoint.getName()) + "</name>");
+            printWriter.println("<desc>" + StringUtils.formatCData(waypoint.getDescription()) + "</desc>");
+            printWriter.println("<type>" + StringUtils.formatCData(waypoint.getCategory()) + "</type>");
+            printWriter.println("</wpt>");
         }
     }
 
@@ -158,7 +162,11 @@ public class GpxTrackWriter implements TrackWriter {
             printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
             printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
             printWriter.println("<type>" + StringUtils.formatCData(track.getCategory()) + "</type>");
-            printWriter.println("<extensions><topografix:color>c0c0c0</topografix:color></extensions>");
+
+            printWriter.println("<extensions>");
+            printWriter.println("<topografix:color>c0c0c0</topografix:color>");
+            printWriter.println("<opentracks:trackid>" + track.getUuid() + "</opentracks:trackid>");
+            printWriter.println("</extensions>");
         }
     }
 

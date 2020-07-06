@@ -57,6 +57,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     private static final String TAG_STYLE_URL = "styleUrl";
     private static final String TAG_VALUE = "value";
     private static final String TAG_WHEN = "when";
+    private static final String TAG_UUID = "opentracks:trackid";
 
     private static final String ATTRIBUTE_NAME = "name";
 
@@ -68,23 +69,17 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     private ArrayList<Float> heartRateList;
     private ArrayList<Float> powerList;
 
-    /**
-     * @param context       the context
-     * @param importTrackId track id to import to. This should not be -1L so that images in the kmz file can be imported.
-     */
-    @Deprecated //TODO Do not pass importTrackId here; get it from somewhere else
-    public KmlFileTrackImporter(Context context, long importTrackId) {
-        this(context, importTrackId, new ContentProviderUtils(context));
+    public KmlFileTrackImporter(Context context) {
+        this(context, new ContentProviderUtils(context));
     }
 
     @VisibleForTesting
-    KmlFileTrackImporter(Context context, long importTrackId, ContentProviderUtils contentProviderUtils) {
-        super(context, importTrackId, contentProviderUtils);
+    KmlFileTrackImporter(Context context, ContentProviderUtils contentProviderUtils) {
+        super(context, contentProviderUtils);
     }
 
     @Override
-    public void startElement(String uri, String localName, String tag, Attributes attributes)
-            throws SAXException {
+    public void startElement(String uri, String localName, String tag, Attributes attributes) throws SAXException {
         switch (tag) {
             case TAG_PLACEMARK:
             case TAG_PHOTO_OVERLAY:
@@ -109,50 +104,70 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
 
     @Override
     public void endElement(String uri, String localName, String tag) throws SAXException {
-        //TODO Check if order is relevant (uses localname and tag); and convert to switch statement
-        if (tag.equals(TAG_KML)) {
-            onFileEnd();
-        } else if (tag.equals(TAG_PLACEMARK) || tag.equals(TAG_PHOTO_OVERLAY)) {
-            // Note that a track is contained in a Placemark, calling onWaypointend is save since waypointType is not set for a track.
-            onWaypointEnd();
-        } else if (localName.equals(TAG_COORDINATES)) {
-            onWaypointLocationEnd();
-        } else if (tag.equals(TAG_GX_MULTI_TRACK)) {
-            onTrackEnd();
-        } else if (tag.equals(TAG_GX_TRACK)) {
-            onTrackSegmentEnd();
-        } else if (tag.equals(TAG_GX_COORD)) {
-            onTrackPointEnd();
-        } else if (tag.equals(TAG_GX_VALUE)) {
-            onExtendedDataValueEnd();
-        } else if (tag.equals(TAG_NAME)) {
-            if (content != null) {
-                name = content.trim();
-            }
-        } else if (localName.equals(TAG_DESCRIPTION)) {
-            if (content != null) {
-                description = content.trim();
-            }
-        } else if (localName.equals(TAG_ICON)) {
-            if (content != null) {
-                icon = content.trim();
-            }
-        } else if (localName.equals(TAG_VALUE)) {
-            if (content != null) {
-                category = content.trim();
-            }
-        } else if (localName.equals(TAG_WHEN)) {
-            if (content != null) {
-                time = content.trim();
-            }
-        } else if (localName.equals(TAG_STYLE_URL)) {
-            if (content != null) {
-                waypointType = content.trim();
-            }
-        } else if (localName.equals(TAG_HREF)) {
-            if (content != null) {
-                photoUrl = content.trim();
-            }
+        switch (tag) {
+            case TAG_KML:
+                onFileEnd();
+                break;
+            case TAG_PLACEMARK:
+            case TAG_PHOTO_OVERLAY:
+                // Note that a track is contained in a Placemark, calling onWaypointend is save since waypointType is not set for a track.
+                onWaypointEnd();
+                break;
+            case TAG_COORDINATES:
+                onWaypointLocationEnd();
+                break;
+            case TAG_GX_MULTI_TRACK:
+                onTrackEnd();
+                break;
+            case TAG_GX_TRACK:
+                onTrackSegmentEnd();
+                break;
+            case TAG_GX_COORD:
+                onTrackPointEnd();
+                break;
+            case TAG_GX_VALUE:
+                onExtendedDataValueEnd();
+                break;
+            case TAG_NAME:
+                if (content != null) {
+                    name = content.trim();
+                }
+                break;
+            case TAG_UUID:
+                if (content != null) {
+                    uuid = content.trim();
+                }
+                break;
+            case TAG_DESCRIPTION:
+                if (content != null) {
+                    description = content.trim();
+                }
+                break;
+            case TAG_ICON:
+                if (content != null) {
+                    icon = content.trim();
+                }
+                break;
+            case TAG_VALUE:
+                if (content != null) {
+                    category = content.trim();
+                }
+                break;
+            case TAG_WHEN:
+                if (content != null) {
+                    time = content.trim();
+                }
+                break;
+            case TAG_STYLE_URL:
+                if (content != null) {
+                    waypointType = content.trim();
+                }
+                break;
+            case TAG_HREF:
+                if (content != null) {
+                    photoUrl = content.trim();
+                }
+                break;
         }
 
         // Reset element content

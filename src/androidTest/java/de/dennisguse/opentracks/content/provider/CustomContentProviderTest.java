@@ -22,13 +22,15 @@ import android.net.Uri;
 
 import androidx.test.core.app.ApplicationProvider;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests {@link CustomContentProvider}.
@@ -51,7 +53,7 @@ public class CustomContentProviderTest {
      */
     @Test
     public void testOnCreate() {
-        Assert.assertTrue(customContentProvider.onCreate(context));
+        assertTrue(customContentProvider.onCreate(context));
     }
 
     /**
@@ -59,13 +61,13 @@ public class CustomContentProviderTest {
      */
     @Test
     public void testGetType() {
-        Assert.assertEquals(TracksColumns.CONTENT_TYPE, customContentProvider.getType(TracksColumns.CONTENT_URI));
-        Assert.assertEquals(TracksColumns.CONTENT_ITEMTYPE, customContentProvider.getType(ContentUris.appendId(TracksColumns.CONTENT_URI.buildUpon(), 1).build()));
+        assertEquals(TracksColumns.CONTENT_TYPE, customContentProvider.getType(TracksColumns.CONTENT_URI));
+        assertEquals(TracksColumns.CONTENT_ITEMTYPE, customContentProvider.getType(ContentUris.appendId(TracksColumns.CONTENT_URI.buildUpon(), 1).build()));
 
-        Assert.assertEquals(TrackPointsColumns.CONTENT_TYPE, customContentProvider.getType(TrackPointsColumns.CONTENT_URI_BY_ID));
-        Assert.assertEquals(TrackPointsColumns.CONTENT_ITEMTYPE, customContentProvider.getType(ContentUris.appendId(TrackPointsColumns.CONTENT_URI_BY_TRACKID.buildUpon(), 1).build()));
+        assertEquals(TrackPointsColumns.CONTENT_TYPE, customContentProvider.getType(TrackPointsColumns.CONTENT_URI_BY_ID));
+        assertEquals(TrackPointsColumns.CONTENT_ITEMTYPE, customContentProvider.getType(ContentUris.appendId(TrackPointsColumns.CONTENT_URI_BY_TRACKID.buildUpon(), 1).build()));
 
-        Assert.assertEquals(WaypointsColumns.CONTENT_TYPE, customContentProvider.getType(WaypointsColumns.CONTENT_URI));
-        Assert.assertEquals(WaypointsColumns.CONTENT_ITEMTYPE, customContentProvider.getType(ContentUris.appendId(WaypointsColumns.CONTENT_URI.buildUpon(), 1).build()));
+        assertEquals(WaypointsColumns.CONTENT_TYPE, customContentProvider.getType(WaypointsColumns.CONTENT_URI));
+        assertEquals(WaypointsColumns.CONTENT_ITEMTYPE, customContentProvider.getType(ContentUris.appendId(WaypointsColumns.CONTENT_URI.buildUpon(), 1).build()));
     }
 }
