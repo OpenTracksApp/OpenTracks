@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 
@@ -34,7 +33,7 @@ public class TrackDeleteActivity extends AbstractActivity {
 
     private long[] trackIds;
 
-    private DeleteAsyncTask deleteAsyncTask;
+    private Thread deleteThread;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,20 +43,30 @@ public class TrackDeleteActivity extends AbstractActivity {
 
         Intent intent = getIntent();
         trackIds = intent.getLongArrayExtra(EXTRA_TRACK_IDS);
+        deleteThread = new Thread(() -> {
+            ContentProviderUtils contentProviderUtils = new ContentProviderUtils(TrackDeleteActivity.this);
 
-        deleteAsyncTask = new DeleteAsyncTask();
+            for (long id : trackIds) {
+                if (Thread.interrupted()) {
+                    return;
+                }
+                contentProviderUtils.deleteTrack(TrackDeleteActivity.this, id);
+            }
+
+            runOnUiThread(TrackDeleteActivity.this::onAsyncTaskCompleted);
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        deleteAsyncTask.execute();
+        deleteThread.start();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        deleteAsyncTask.cancel(true);
+        deleteThread.interrupt();
     }
 
     @Override
@@ -69,27 +78,5 @@ public class TrackDeleteActivity extends AbstractActivity {
         findViewById(R.id.progressbar).setVisibility(View.INVISIBLE);
         setResult(RESULT_OK);
         finish();
-    }
-
-    class DeleteAsyncTask extends AsyncTask<Void, Integer, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            ContentProviderUtils contentProviderUtils = new ContentProviderUtils(TrackDeleteActivity.this);
-
-            for (long id : trackIds) {
-                if (isCancelled()) {
-                    return false;
-                }
-                contentProviderUtils.deleteTrack(TrackDeleteActivity.this, id);
-            }
-
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            TrackDeleteActivity.this.onAsyncTaskCompleted();
-        }
     }
 }
