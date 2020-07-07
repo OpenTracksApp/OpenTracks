@@ -44,6 +44,8 @@ limitations under the License.
             android:name=".HelpActivity"
             android:label="@string/menu_help" />
 
+        <activity android:name=".io.file.importer.DirectoryChooserActivity" />
+
         <activity
             android:name=".io.file.importer.ImportActivity"
             android:theme="@style/ThemeCustomTransparentActivity">

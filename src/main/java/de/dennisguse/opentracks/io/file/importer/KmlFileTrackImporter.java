@@ -72,7 +72,6 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
      * Constructor.
      *
      * @param context       the context
-     * @param importTrackId track id to import to. -1L to import to a new track.
      */
     public KmlFileTrackImporter(Context context, long importTrackId) {
         this(context, importTrackId, new ContentProviderUtils(context));

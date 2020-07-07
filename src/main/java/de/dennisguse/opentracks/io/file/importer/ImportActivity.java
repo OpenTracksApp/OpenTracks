@@ -16,24 +16,24 @@
 
 package de.dennisguse.opentracks.io.file.importer;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
-import androidx.annotation.Nullable;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.FragmentActivity;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.DialogUtils;
 import de.dennisguse.opentracks.util.FileUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * An activity to import files from the external storage.
@@ -42,14 +42,18 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  */
 public class ImportActivity extends FragmentActivity {
 
-    private static final int DIRECTORY_PICKER_REQUEST_CODE = 6;
+    private static final String TAG = ImportActivity.class.getSimpleName();
+
+    public static final String EXTRA_DIRECTORY_URI_KEY = "directory_uri";
 
     private static final int DIALOG_PROGRESS_ID = 0;
     private static final int DIALOG_RESULT_ID = 1;
 
+    private DocumentFile pickedDirectory;
     private String directoryDisplayName;
 
-    private ImportAsyncTask importAsyncTask;
+
+    private Thread importTask = new ImportThread();
     private ProgressDialog progressDialog;
 
     private int importedTrackCount;
@@ -59,29 +63,22 @@ public class ImportActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-        startActivityForResult(intent, DIRECTORY_PICKER_REQUEST_CODE);
+        Uri directoryUri = getIntent().getParcelableExtra(EXTRA_DIRECTORY_URI_KEY);
+        pickedDirectory = DocumentFile.fromTreeUri(this, directoryUri);
+        directoryDisplayName = FileUtils.getPath(pickedDirectory);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent resultData) {
-        super.onActivityResult(requestCode, resultCode, resultData);
-        if (requestCode == DIRECTORY_PICKER_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
-                Uri directoryUri = resultData.getData();
-                DocumentFile pickedDirectory = DocumentFile.fromTreeUri(this, directoryUri);
+    protected void onStart() {
+        super.onStart();
+        showDialog(DIALOG_PROGRESS_ID);
+        importTask.start();
+    }
 
-                directoryDisplayName = FileUtils.getPath(pickedDirectory);
-                TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(this);
-
-                importAsyncTask = new ImportAsyncTask(this, trackFileFormat, pickedDirectory);
-                importAsyncTask.execute();
-            } else {
-                finish();
-            }
-        }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        importTask.interrupt();
     }
 
     @Override
@@ -89,13 +86,10 @@ public class ImportActivity extends FragmentActivity {
         switch (id) {
             case DIALOG_PROGRESS_ID:
                 progressDialog = DialogUtils.createHorizontalProgressDialog(
-                        this, R.string.import_progress_message, new DialogInterface.OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface dialog) {
-                                importAsyncTask.cancel(true);
-                                dialog.dismiss();
-                                finish();
-                            }
+                        this, R.string.import_progress_message, dialog -> {
+                            importTask.interrupt();
+                            dialog.dismiss();
+                            finish();
                         }, directoryDisplayName);
                 return progressDialog;
             case DIALOG_RESULT_ID:
@@ -120,18 +114,12 @@ public class ImportActivity extends FragmentActivity {
                     message = getString(R.string.import_error, importedTrackCount, totalFiles, directoryDisplayName);
                 }
                 return new AlertDialog.Builder(this).setCancelable(true).setIcon(iconId)
-                        .setMessage(message).setOnCancelListener(new DialogInterface.OnCancelListener() {
-                            @Override
-                            public void onCancel(DialogInterface dialogInterface) {
-                                dialogInterface.dismiss();
-                                finish();
-                            }
-                        }).setPositiveButton(R.string.generic_ok, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int which) {
-                                dialogInterface.dismiss();
-                                finish();
-                            }
+                        .setMessage(message).setOnCancelListener(dialogInterface -> {
+                            dialogInterface.dismiss();
+                            finish();
+                        }).setPositiveButton(R.string.generic_ok, (dialogInterface, which) -> {
+                            dialogInterface.dismiss();
+                            finish();
                         }).setTitle(titleId).create();
             default:
                 return null;
@@ -145,17 +133,12 @@ public class ImportActivity extends FragmentActivity {
      * @param aTotalCount   the number of files to import
      */
     public void onAsyncTaskCompleted(int aSuccessCount, int aTotalCount) {
-        importedTrackCount = aSuccessCount;
-        totalTrackCount = aTotalCount;
-        removeDialog(DIALOG_PROGRESS_ID);
-        showDialog(DIALOG_RESULT_ID);
-    }
-
-    /**
-     * Shows the progress dialog.
-     */
-    public void showProgressDialog() {
-        showDialog(DIALOG_PROGRESS_ID);
+        runOnUiThread(() -> {
+            importedTrackCount = aSuccessCount;
+            totalTrackCount = aTotalCount;
+            removeDialog(DIALOG_PROGRESS_ID);
+            showDialog(DIALOG_RESULT_ID);
+        });
     }
 
     /**
@@ -169,6 +152,56 @@ public class ImportActivity extends FragmentActivity {
             progressDialog.setIndeterminate(false);
             progressDialog.setMax(max);
             progressDialog.setProgress(Math.min(number, max));
+        }
+    }
+
+    public class ImportThread extends Thread {
+
+        @Override
+        public void run() {
+            List<DocumentFile> files = FileUtils.getFiles(pickedDirectory);
+            int totalTrackCount = files.size();
+            int importedTrackCount = 0;
+
+            for (int i = 0; i < totalTrackCount; i++) {
+                if (Thread.interrupted()) {
+                    return;
+                }
+                if (importFile(files.get(i))) {
+                    importedTrackCount++;
+                }
+                setProgressDialogValue(i + 1, totalTrackCount);
+            }
+
+            onAsyncTaskCompleted(importedTrackCount, totalTrackCount);
+        }
+
+        /**
+         * Imports a file.
+         *
+         * @param file the file
+         */
+        private boolean importFile(final DocumentFile file) {
+            TrackImporter trackImporter;
+            String fileExtension = FileUtils.getExtension(file);
+
+            if (TrackFileFormat.GPX.getExtension().equals(fileExtension)) {
+                trackImporter = new GpxFileTrackImporter(ImportActivity.this);
+            } else if (TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.getExtension().equals(fileExtension)) {
+                trackImporter = new KmlFileTrackImporter(ImportActivity.this, -1L);
+            } else if (TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.getExtension().equals(fileExtension)) {
+                trackImporter = new KmzTrackImporter(ImportActivity.this, -1L, file.getUri());
+            } else {
+                Log.i(TAG, "Unsupported file format.");
+                return false;
+            }
+
+            try (InputStream inputStream = ImportActivity.this.getContentResolver().openInputStream(file.getUri())) {
+                return trackImporter.importFile(inputStream) != -1L;
+            } catch (IOException e) {
+                Log.e(TAG, "Unable to import file", e);
+                return false;
+            }
         }
     }
 }
