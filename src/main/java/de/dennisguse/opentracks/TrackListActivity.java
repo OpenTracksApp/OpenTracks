@@ -495,9 +495,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 startActivity(intent);
                 return true;
             case R.id.list_context_menu_delete:
-                if (trackIds.length > 1 && trackIds.length == listView.getCount()) {
-                    trackIds = new long[]{-1L};
-                }
                 deleteTracks(trackIds);
                 return true;
             case R.id.list_context_menu_select_all:

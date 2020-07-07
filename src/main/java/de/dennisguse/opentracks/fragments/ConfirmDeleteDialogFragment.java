@@ -43,7 +43,7 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
     /**
      * Create a new instance.
      *
-     * @param trackIds list of track ids to delete. To delete all, set to size 1 with trackIds[0] == -1L
+     * @param trackIds list of track ids to delete.
      */
     public static void showDialog(FragmentManager fragmentManager, long[] trackIds) {
         Bundle bundle = new Bundle();
