@@ -56,8 +56,6 @@ public class KmzTrackImporter implements TrackImporter {
     private Uri uriKmzFile;
 
     /**
-     * Constructor.
-     *
      * @param context       the context
      * @param importTrackId track id to import to. This should not be -1L so that images in the kmz file can be imported.
      * @param uriFile       URI of the kmz file.

@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -72,6 +73,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     // The current element content
     //TODO Should be made private and getter be used by child classes.
     protected String content;
+
     protected String icon;
     protected String name;
     protected String description;
@@ -83,6 +85,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     protected String speed;
     protected String waypointType;
     protected String photoUrl;
+    protected String uuid;
 
     // The current track data
     private TrackData trackData;
@@ -91,11 +94,11 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     private Locator locator;
 
     /**
-     * Constructor.
-     *
      * @param context       the context
      * @param importTrackId the track id to import to. -1L to import to a new track.
      */
+    @Deprecated
+    // Remove importTrackId
     AbstractFileTrackImporter(Context context, long importTrackId, ContentProviderUtils contentProviderUtils) {
         this.context = context;
         this.importTrackId = importTrackId;
@@ -244,6 +247,16 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         if (name != null) {
             trackData.track.setName(name);
         }
+
+        UUID uuidParsed;
+        try {
+            uuidParsed = UUID.fromString(uuid);
+        } catch (IllegalArgumentException | NullPointerException e) {
+            Log.w(TAG, "could not parse Track UUID, generating a new one.");
+            uuidParsed = UUID.randomUUID();
+        }
+        trackData.track.setUuid(uuidParsed);
+
         if (description != null) {
             trackData.track.setDescription(description);
         }
