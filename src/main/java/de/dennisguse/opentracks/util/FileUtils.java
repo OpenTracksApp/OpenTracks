@@ -309,6 +309,8 @@ public class FileUtils {
     public static ArrayList<DocumentFile> getFiles(DocumentFile file) {
         ArrayList<DocumentFile> files = new ArrayList<>();
 
+        if (!file.isDirectory()) return files;
+
         for (DocumentFile candidate : file.listFiles()) {
             if (!candidate.isDirectory()) {
                 files.add(candidate);
