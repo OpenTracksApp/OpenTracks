@@ -22,7 +22,7 @@ import java.io.InputStream;
  *
  * @author Jimmy Shih
  */
-interface TrackImporter {
+public interface TrackImporter {
 
     /**
      * Import a file.

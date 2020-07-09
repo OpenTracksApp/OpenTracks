@@ -18,7 +18,6 @@ package de.dennisguse.opentracks.fragments;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -69,17 +68,14 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final long[] trackIds = getArguments().getLongArray(KEY_TRACK_IDS);
 
-        int titleId;
-        int messageId;
-        titleId = trackIds.length > 1 ? R.string.generic_delete_selected_confirm_title : R.string.track_delete_one_confirm_title;
-        messageId = trackIds.length > 1 ? R.string.track_delete_multiple_confirm_message : R.string.track_delete_one_confirm_message;
+        int titleId = trackIds.length > 1 ? R.string.generic_delete_selected_confirm_title : R.string.track_delete_one_confirm_title;
+        int messageId = trackIds.length > 1 ? R.string.track_delete_multiple_confirm_message : R.string.track_delete_one_confirm_message;
         return DialogUtils.createConfirmationDialog(
-                getActivity(), titleId, getString(messageId), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        caller.onConfirmDeleteDone(trackIds);
-                    }
-                });
+                getActivity(),
+                titleId,
+                getString(messageId),
+                (dialog, which) -> caller.onConfirmDeleteDone(trackIds)
+        );
     }
 
     /**
@@ -89,12 +85,6 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
      */
     public interface ConfirmDeleteCaller {
 
-        /**
-         * Called when confirm delete is done.
-         *
-         * @param trackIds list of track ids to delete. To delete all, set to size 1
-         *                 with trackIds[0] == -1L
-         */
         void onConfirmDeleteDone(long[] trackIds);
     }
 }
