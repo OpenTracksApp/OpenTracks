@@ -100,18 +100,19 @@ public class ImportProgressDialogFragment extends DialogFragment {
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        ProgressDialog dialog = DialogUtils.createHorizontalProgressDialog(
+        ProgressDialog progressDialog = DialogUtils.createHorizontalProgressDialog(
                 getContext(), R.string.import_progress_message,
                 dialogInterface -> {
                     importThread.interrupt();
                     dialogInterface.dismiss();
+                    caller.onImportCanceled(directoryDisplayName, trackImportSuccessCount, fileCount);
                 }, directoryDisplayName);
-        if (trackImportSuccessCount == 0) {
-            dialog.setIndeterminate(true);
-        } else {
-            setProgress();
-        }
-        return dialog;
+
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMax(fileCount);
+        progressDialog.setProgress(Math.min(trackImportSuccessCount, fileCount));
+
+        return progressDialog;
     }
 
     @Override
@@ -169,7 +170,6 @@ public class ImportProgressDialogFragment extends DialogFragment {
 
         @Override
         public void run() {
-            Log.w(TAG, "" + this);
             Context context = ImportProgressDialogFragment.this.getContext();
 
             List<DocumentFile> files = FileUtils.getFiles(file);
@@ -219,6 +219,8 @@ public class ImportProgressDialogFragment extends DialogFragment {
     }
 
     public interface DismissCallback {
+        void onImportCanceled(String directoryDisplayName, int successCount, int fileCount);
+
         void onImportFinished(String directoryDisplayName, int successCount, int fileCount);
     }
 }

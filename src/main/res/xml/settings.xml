@@ -135,12 +135,12 @@ limitations under the License.
     <PreferenceCategory android:title="@string/generic_tracks">
         <Preference android:title="@string/menu_import_all">
             <intent
-                android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity"
+                android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$ImportDirectoryChooserActivity"
                 android:targetPackage="@string/applicationId" />
         </Preference>
         <Preference android:title="@string/menu_export_all">
             <intent
-                android:targetClass="de.dennisguse.opentracks.io.file.exporter.ExportActivity"
+                android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$ExportDirectoryChooserActivity"
                 android:targetPackage="@string/applicationId" />
         </Preference>
         <ListPreference
