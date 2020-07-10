@@ -48,6 +48,8 @@ SettingsActivity --> AboutActivity
 SettingsActivity --> HelpActivity
 SettingsActivity --> ExportActivity
 SettingsActivity --> DirectoryChooserActivity
-DirectoryChooserActivity --> ImportActivity
+SettingsActivity --> DirectoryChooserActivity
+DirectoryChooserActivity$ImportDirectoryChooserActivity --> ImportActivity
+DirectoryChooserActivity$ExportDirectoryChooserActivity --> ExportActivity
 
 @enduml

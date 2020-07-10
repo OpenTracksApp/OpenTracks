@@ -44,7 +44,7 @@ limitations under the License.
             android:name=".HelpActivity"
             android:label="@string/menu_help" />
 
-        <activity android:name=".io.file.importer.DirectoryChooserActivity" />
+        <activity android:name=".io.file.importer.DirectoryChooserActivity$ImportDirectoryChooserActivity" />
 
         <activity
             android:name=".io.file.importer.ImportActivity"
@@ -104,6 +104,8 @@ limitations under the License.
         </activity>
 
         <activity android:name=".AggregatedStatisticsActivity" />
+
+        <activity android:name=".io.file.importer.DirectoryChooserActivity$ExportDirectoryChooserActivity" />
 
         <activity
             android:name=".io.file.exporter.ExportActivity"

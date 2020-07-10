@@ -8,9 +8,11 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import de.dennisguse.opentracks.io.file.exporter.ExportActivity;
 import de.dennisguse.opentracks.util.IntentUtils;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
-public class DirectoryChooserActivity extends AppCompatActivity {
+public abstract class DirectoryChooserActivity extends AppCompatActivity {
 
     private static final int DIRECTORY_PICKER_REQUEST_CODE = 6;
 
@@ -31,11 +33,34 @@ public class DirectoryChooserActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 Uri directoryUri = resultData.getData();
 
-                Intent intent = IntentUtils.newIntent(this, ImportActivity.class);
-                intent.putExtra(ImportActivity.EXTRA_DIRECTORY_URI_KEY, directoryUri);
-                startActivity(intent);
+
+                startActivity(createIntent(directoryUri));
             }
             finish();
+        }
+    }
+
+    protected abstract Intent createIntent(Uri directoryUri);
+
+
+    public static class ImportDirectoryChooserActivity extends DirectoryChooserActivity {
+
+        @Override
+        protected Intent createIntent(Uri directoryUri) {
+            Intent intent = IntentUtils.newIntent(this, ImportActivity.class);
+            intent.putExtra(ImportActivity.EXTRA_DIRECTORY_URI_KEY, directoryUri);
+            return intent;
+        }
+    }
+
+    public static class ExportDirectoryChooserActivity extends DirectoryChooserActivity {
+
+        @Override
+        protected Intent createIntent(Uri directoryUri) {
+            Intent intent = IntentUtils.newIntent(this, ExportActivity.class);
+            intent.putExtra(ExportActivity.EXTRA_DIRECTORY_URI_KEY, directoryUri);
+            intent.putExtra(ExportActivity.EXTRA_TRACKFILEFORMAT_KEY, PreferencesUtils.getExportTrackFileFormat(this));
+            return intent;
         }
     }
 }

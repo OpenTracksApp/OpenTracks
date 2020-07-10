@@ -55,6 +55,11 @@ public class ImportActivity extends FragmentActivity implements ImportProgressDi
     }
 
     @Override
+    public void onImportCanceled(String directoryDisplayName, int successCount, int fileCount) {
+        onImportFinished(directoryDisplayName, successCount, fileCount);
+    }
+
+    @Override
     public void onImportFinished(final String directoryDisplayName, final int successCount, final int fileCount) {
         runOnUiThread(() -> {
             ImportFinishedDialogFragment.showDialog(getSupportFragmentManager(), directoryDisplayName, successCount, fileCount);
