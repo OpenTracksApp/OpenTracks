@@ -178,7 +178,7 @@ public class KmzTrackImporter implements TrackImporter {
                 if (KmzTrackExporter.KMZ_KML_FILE.equals(fileName)) {
                     trackId = parseKml(zipInputStream);
                     if (trackId == -1L) {
-                        Log.d(TAG, "Unable to parse kml in kmz");
+                        Log.d(TAG, "Unable to parse kml in kmz: " + fileName);
                         return -1L;
                     }
                 }

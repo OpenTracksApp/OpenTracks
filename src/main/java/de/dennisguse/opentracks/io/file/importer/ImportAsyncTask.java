@@ -168,6 +168,7 @@ class ImportAsyncTask extends AsyncTask<Void, Integer, Boolean> {
             }
         }
 
+        Log.d(TAG, "Importing file: " + file.getName());
         try (InputStream inputStream = importActivity.getContentResolver().openInputStream(file.getUri())) {
             lastSuccessfulTrackId = trackImporter.importFile(inputStream);
             return lastSuccessfulTrackId != -1L;

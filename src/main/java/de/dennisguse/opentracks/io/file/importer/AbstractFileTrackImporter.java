@@ -289,7 +289,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         TrackPoint trackPoint = createTrackPoint();
 
         if (!LocationUtils.isValidLocation(trackPoint.getLocation())) {
-            throw new SAXException(createErrorMessage("Invalid location detected: " + trackPoint));
+            Log.w(TAG, "Invalid location skipped: " + trackPoint);
+            return;
         }
         Waypoint waypoint = new Waypoint(trackPoint.getLocation());
 
