@@ -60,6 +60,7 @@ public class KmzTrackImporter implements TrackImporter {
      * @param importTrackId track id to import to. This should not be -1L so that images in the kmz file can be imported.
      * @param uriFile       URI of the kmz file.
      */
+    @Deprecated //TODO Do not pass importTrackId here; get it from somewhere else
     public KmzTrackImporter(Context context, long importTrackId, Uri uriFile) {
         this.context = context;
         this.importTrackId = importTrackId;

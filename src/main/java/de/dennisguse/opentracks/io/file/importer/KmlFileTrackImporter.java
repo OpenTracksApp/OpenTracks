@@ -69,10 +69,10 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     private ArrayList<Float> powerList;
 
     /**
-     * Constructor.
-     *
      * @param context       the context
+     * @param importTrackId track id to import to. This should not be -1L so that images in the kmz file can be imported.
      */
+    @Deprecated //TODO Do not pass importTrackId here; get it from somewhere else
     public KmlFileTrackImporter(Context context, long importTrackId) {
         this(context, importTrackId, new ContentProviderUtils(context));
     }

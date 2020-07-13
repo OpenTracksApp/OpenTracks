@@ -18,9 +18,11 @@ package de.dennisguse.opentracks;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.view.View;
 
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.util.SystemUtils;
 
 /**
  * An activity for deleting tracks.
@@ -46,11 +48,18 @@ public class TrackDeleteActivity extends AbstractActivity {
         deleteThread = new Thread(() -> {
             ContentProviderUtils contentProviderUtils = new ContentProviderUtils(TrackDeleteActivity.this);
 
+            PowerManager.WakeLock wakeLock = SystemUtils.acquireWakeLock(TrackDeleteActivity.this, null);
+
             for (long id : trackIds) {
                 if (Thread.interrupted()) {
-                    return;
+                    break;
                 }
                 contentProviderUtils.deleteTrack(TrackDeleteActivity.this, id);
+            }
+
+            wakeLock = SystemUtils.releaseWakeLock(wakeLock);
+            if (Thread.interrupted()) {
+                return;
             }
 
             runOnUiThread(TrackDeleteActivity.this::onAsyncTaskCompleted);
