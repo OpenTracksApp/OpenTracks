@@ -2,7 +2,7 @@
 
 ## Craft new releases
 
-1. Get next _version code_ (master main): `git rev-list HEAD --count main`
+1. Get next _version code_ (main): `git rev-list HEAD --count main`
 2. Decide on _version name_ (semantic versioning)
 3. Manually update _version code_ and _version name_ in `build.gradle`
 4. Create changelog (`_version code_.txt`)
