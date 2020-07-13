@@ -50,7 +50,7 @@ public class ExportProgressDialogFragment extends DialogFragment {
 
     private static final String TAG = ExportProgressDialogFragment.class.getSimpleName();
 
-    public static final String EXPORT_DIALOG_TAG = "import_dialog_tag";
+    public static final String EXPORT_DIALOG_TAG = "export_dialog_tag";
 
     private DismissCallback caller;
 
@@ -64,10 +64,10 @@ public class ExportProgressDialogFragment extends DialogFragment {
     /**
      * Create a new instance.
      */
-    public static void showDialog(FragmentManager fragmentManager, String trackFileFormat, Uri documentFileUri) {
+    public static void showDialog(FragmentManager fragmentManager, TrackFileFormat trackFileFormat, Uri documentFileUri) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(EXTRA_DIRECTORY_URI_KEY, documentFileUri);
-        bundle.putString(EXTRA_DIRECTORY_URI_KEY, trackFileFormat);
+        bundle.putSerializable(EXTRA_TRACKFILEFORMAT_KEY, trackFileFormat);
 
         ExportProgressDialogFragment dialogFragment = new ExportProgressDialogFragment();
         dialogFragment.setArguments(bundle);
@@ -83,7 +83,7 @@ public class ExportProgressDialogFragment extends DialogFragment {
         setRetainInstance(true);
 
         Uri directoryUri = getArguments().getParcelable(EXTRA_DIRECTORY_URI_KEY);
-        TrackFileFormat trackFileFormat = TrackFileFormat.valueOf(getArguments().getString(EXTRA_TRACKFILEFORMAT_KEY));
+        TrackFileFormat trackFileFormat = (TrackFileFormat) getArguments().getSerializable(EXTRA_TRACKFILEFORMAT_KEY);
         DocumentFile documentFile = DocumentFile.fromTreeUri(getContext(), directoryUri);
 
         directoryDisplayName = FileUtils.getPath(documentFile);

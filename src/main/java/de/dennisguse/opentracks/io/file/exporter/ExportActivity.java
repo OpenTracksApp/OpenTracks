@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import de.dennisguse.opentracks.fragments.ExportFinishedDialogFragment;
 import de.dennisguse.opentracks.fragments.ExportProgressDialogFragment;
+import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
 /**
  * An activity for saving tracks to the external storage.
@@ -44,7 +45,7 @@ public class ExportActivity extends FragmentActivity implements ExportProgressDi
 
         if (savedInstanceState == null || !savedInstanceState.getBoolean(BUNDLE_ACTIVITY_RECREATED, false)) {
             Uri directoryUri = getIntent().getParcelableExtra(EXTRA_DIRECTORY_URI_KEY);
-            String trackfileformat = getIntent().getStringExtra(EXTRA_TRACKFILEFORMAT_KEY);
+            TrackFileFormat trackfileformat = (TrackFileFormat) getIntent().getSerializableExtra(EXTRA_TRACKFILEFORMAT_KEY);
             ExportProgressDialogFragment.showDialog(getSupportFragmentManager(), trackfileformat, directoryUri);
         }
     }
