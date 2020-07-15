@@ -83,12 +83,15 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         protected TextView distanceUnit;
         protected TextView time;
         protected boolean metricsUnits;
+        protected boolean reportSpeed;
 
         public ViewHolder() {
             metricsUnits = PreferencesUtils.isMetricUnits(context);
         }
 
         public void setValues(View view, int iconDrawable, String name, AggregatedStatistics.AggregatedStatistic aggregatedStats) {
+            reportSpeed = PreferencesUtils.isReportSpeed(context, name);
+
             sportIcon = view.findViewById(R.id.aggregated_stats_sport_icon);
             typeLabel = view.findViewById(R.id.aggregated_stats_type_label);
             numTracks = view.findViewById(R.id.aggregated_stats_num_tracks);
@@ -128,14 +131,14 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
             maxSpeedLabel = view.findViewById(R.id.aggregated_stats_max_rate_label);
 
             {
-                Pair<String, String> parts = StringUtils.getSpeedParts(context, aggregatedStats.getTrackStatistics().getAverageMovingSpeed(), metricsUnits, true);
+                Pair<String, String> parts = StringUtils.getSpeedParts(context, aggregatedStats.getTrackStatistics().getAverageMovingSpeed(), metricsUnits, reportSpeed);
                 avgSpeed.setText(parts.first);
                 avgSpeedUnit.setText(parts.second);
                 avgSpeedLabel.setText(context.getString(R.string.stats_average_moving_speed));
             }
 
             {
-                Pair<String, String> parts = StringUtils.getSpeedParts(context, aggregatedStats.getTrackStatistics().getMaxSpeed(), metricsUnits, true);
+                Pair<String, String> parts = StringUtils.getSpeedParts(context, aggregatedStats.getTrackStatistics().getMaxSpeed(), metricsUnits, reportSpeed);
                 maxSpeed.setText(parts.first);
                 maxSpeedUnit.setText(parts.second);
                 maxSpeedLabel.setText(context.getString(R.string.stats_max_speed));
@@ -164,14 +167,14 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
             maxPaceLabel = view.findViewById(R.id.aggregated_stats_max_rate_label);
 
             {
-                Pair<String, String> parts = StringUtils.getSpeedParts(context, aggregatedStats.getTrackStatistics().getAverageMovingSpeed(), metricsUnits, false);
+                Pair<String, String> parts = StringUtils.getSpeedParts(context, aggregatedStats.getTrackStatistics().getAverageMovingSpeed(), metricsUnits, reportSpeed);
                 avgPace.setText(parts.first);
                 avgPaceUnit.setText(parts.second);
                 avgPaceLabel.setText(R.string.stats_average_moving_pace);
             }
 
             {
-                Pair<String, String> parts = StringUtils.getSpeedParts(context, aggregatedStats.getTrackStatistics().getMaxSpeed(), metricsUnits, false);
+                Pair<String, String> parts = StringUtils.getSpeedParts(context, aggregatedStats.getTrackStatistics().getMaxSpeed(), metricsUnits, reportSpeed);
                 maxPace.setText(parts.first);
                 maxPaceUnit.setText(parts.second);
                 maxPaceLabel.setText(R.string.stats_fastest_pace);

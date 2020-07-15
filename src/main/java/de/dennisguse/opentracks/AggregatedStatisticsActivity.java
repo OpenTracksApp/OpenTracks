@@ -23,15 +23,12 @@ public class AggregatedStatisticsActivity extends AbstractActivity {
         listView.setEmptyView(findViewById(R.id.aggregated_stats_empty_view));
 
         final AggregatedStatisticsModel viewModel = new ViewModelProvider(this).get(AggregatedStatisticsModel.class);
-        viewModel.getAggregatedStats().observe(this, new Observer<AggregatedStatistics>() {
-            @Override
-            public void onChanged(AggregatedStatistics aggregatedStatistics) {
-                if (aggregatedStatistics != null) {
-                    adapter = new AggregatedStatisticsAdapter(getApplicationContext(), aggregatedStatistics);
-                    listView.setAdapter(adapter);
-                }
-                adapter.notifyDataSetChanged();
+        viewModel.getAggregatedStats().observe(this, aggregatedStatistics -> {
+            if (aggregatedStatistics != null) {
+                adapter = new AggregatedStatisticsAdapter(getApplicationContext(), aggregatedStatistics);
+                listView.setAdapter(adapter);
             }
+            adapter.notifyDataSetChanged();
         });
     }
 
