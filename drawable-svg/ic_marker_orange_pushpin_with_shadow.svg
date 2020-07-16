@@ -19,7 +19,17 @@
      id="defs2">
     <linearGradient
        inkscape:collect="always"
-       id="linearGradient871">
+       id="linearGradient871"
+       
+       x1="91.712517"
+       y1="266.48581"
+       x2="95.902588"
+       y2="266.72339"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="rotate(22.027833,208.46275,168.26892)"
+       
+       
+       >
       <stop
          style="stop-color:#ffffff;stop-opacity:1"
          offset="0"
@@ -29,16 +39,6 @@
          offset="1"
          id="stop869" />
     </linearGradient>
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient871"
-       id="linearGradient873"
-       x1="91.712517"
-       y1="266.48581"
-       x2="95.902588"
-       y2="266.72339"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="rotate(22.027833,208.46275,168.26892)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -80,7 +80,7 @@
        style="fill:#333333;fill-opacity:0.49421525;stroke:#000000;stroke-width:0.138931px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0.265501"
        id="path839" />
     <path
-       style="fill:url(#linearGradient873);fill-opacity:1;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0.265501"
+       style="fill:url(#linearGradient871);fill-opacity:1;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:0.265501"
        d="M 70.603317,174.30832 33.024148,288.94657 94.566672,183.19473 Z"
        id="path865"
        sodipodi:nodetypes="cccc" />
