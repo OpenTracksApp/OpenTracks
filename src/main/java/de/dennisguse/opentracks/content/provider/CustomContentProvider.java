@@ -63,6 +63,7 @@ public abstract class CustomContentProvider extends ContentProvider {
 
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, WaypointsColumns.CONTENT_URI.getPath(), UrlType.WAYPOINTS.ordinal());
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, WaypointsColumns.CONTENT_URI.getPath() + "/#", UrlType.WAYPOINTS_BY_ID.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, WaypointsColumns.CONTENT_URI_BY_TRACKID.getPath() + "/*", UrlType.WAYPOINTS_BY_TRACKID.ordinal());
     }
 
     @Override
@@ -140,6 +141,7 @@ public abstract class CustomContentProvider extends ContentProvider {
             case WAYPOINTS:
                 return WaypointsColumns.CONTENT_TYPE;
             case WAYPOINTS_BY_ID:
+            case WAYPOINTS_BY_TRACKID:
                 return WaypointsColumns.CONTENT_ITEMTYPE;
             default:
                 throw new IllegalArgumentException("Unknown URL " + url);
@@ -218,6 +220,10 @@ public abstract class CustomContentProvider extends ContentProvider {
             case WAYPOINTS_BY_ID:
                 queryBuilder.setTables(WaypointsColumns.TABLE_NAME);
                 queryBuilder.appendWhere(WaypointsColumns._ID + "=" + ContentUris.parseId(url));
+                break;
+            case WAYPOINTS_BY_TRACKID:
+                queryBuilder.setTables(WaypointsColumns.TABLE_NAME);
+                queryBuilder.appendWhere(WaypointsColumns.TRACKID + " IN (" + TextUtils.join(SQL_LIST_DELIMITER, ContentProviderUtils.parseTrackIdsFromUri(url)) + ")");
                 break;
             default:
                 throw new IllegalArgumentException("Unknown url " + url);
@@ -382,6 +388,7 @@ public abstract class CustomContentProvider extends ContentProvider {
         TRACKS,
         TRACKS_BY_ID,
         WAYPOINTS,
-        WAYPOINTS_BY_ID
+        WAYPOINTS_BY_ID,
+        WAYPOINTS_BY_TRACKID
     }
 }
