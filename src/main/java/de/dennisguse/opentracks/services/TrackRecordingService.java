@@ -33,6 +33,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.TaskStackBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.TrackRecordingActivity;
@@ -43,6 +46,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.HandlerServer;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTaskFactory;
@@ -120,6 +124,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     private HandlerServer handlerServer;
 
+    private List<BoundServiceListener> listeners = new ArrayList<>();
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -153,6 +159,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     @Override
     public void onDestroy() {
         handlerServer.stop(this);
+        handlerServer = null;
 
         if (remoteSensorManager != null) {
             remoteSensorManager.stop();
@@ -579,6 +586,18 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         Log.d(TAG, "Not recording TrackPoint, idle");
         lastTrackPoint = trackPoint;
+    }
+
+    @Override
+    public void newGpsStatus(GpsStatusValue gpsStatusValue) {
+        notificationManager.updateContent(getString(gpsStatusValue.message));
+        for (BoundServiceListener listener : listeners) {
+            listener.onGpsStatusChange(gpsStatusValue);
+        }
+    }
+
+    public void addListener(BoundServiceListener listener) {
+        listeners.add(listener);
     }
 
     /**

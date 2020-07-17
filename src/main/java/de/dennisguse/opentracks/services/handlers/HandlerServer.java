@@ -56,15 +56,18 @@ public class HandlerServer {
         serviceExecutor.execute(() -> service.newTrackPoint(trackPoint, recordingGpsAccuracy));
     }
 
+    void sendGpsStatus(GpsStatusValue gpsStatusValue) {
+        service.newGpsStatus(gpsStatusValue);
+    }
+
     public interface HandlerServerInterface {
         void newTrackPoint(TrackPoint trackPoint, int gpsAccuracy);
+        void newGpsStatus(GpsStatusValue gpsStatusValue);
     }
 
     public interface Handler {
         void onStart(Context context);
-
         void onStop(Context context);
-
         void onSharedPreferenceChanged(Context context, SharedPreferences preferences, String key);
     }
 }

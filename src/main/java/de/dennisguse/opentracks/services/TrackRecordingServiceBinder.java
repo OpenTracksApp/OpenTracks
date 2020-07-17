@@ -23,6 +23,11 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
     }
 
     @Override
+    public void setListener(BoundServiceListener listener) {
+        trackRecordingService.addListener(listener);
+    }
+
+    @Override
     public void startGps() {
         trackRecordingService.tryStartGps();
     }
