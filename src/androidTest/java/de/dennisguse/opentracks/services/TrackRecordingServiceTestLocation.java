@@ -72,14 +72,11 @@ public class TrackRecordingServiceTestLocation {
         sharedPreferences.edit().clear().commit();
 
         service = ((TrackRecordingServiceInterface) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)));
-        //Disable executorService to not insert locations from GPS via LocationManager
-        service.enableLocationExecutor(false);
     }
 
     @After
     public void tearDown() {
         // Reset service (if some previous test failed)
-        service.enableLocationExecutor(true);
         if (service.isRecording() || service.isPaused()) {
             service.endCurrentTrack();
         }
@@ -95,12 +92,12 @@ public class TrackRecordingServiceTestLocation {
         long trackId = service.startNewTrack();
 
         // when
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 5, 15);
-        TrackRecordingServiceTest.insertLocation(service, 45.0001, 35.0, 5, 15);
-        TrackRecordingServiceTest.insertLocation(service, 45.0002, 35.0, 5, 15);
-        TrackRecordingServiceTest.insertLocation(service, 45.0003, 35.0, 5, 15);
-        TrackRecordingServiceTest.insertLocation(service, 45.0004, 35.0, 5, 15);
-        TrackRecordingServiceTest.insertLocation(service, 45.0005, 35.0, 5, 15);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 5, 15);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0001, 35.0, 5, 15);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0002, 35.0, 5, 15);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0003, 35.0, 5, 15);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0004, 35.0, 5, 15);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0005, 35.0, 5, 15);
 
         service.endCurrentTrack();
 
@@ -114,40 +111,17 @@ public class TrackRecordingServiceTestLocation {
 
     @MediumTest
     @Test
-    public void testOnLocationChangedAsync_movingInaccurate() throws Exception {
-        // given
-        long trackId = service.startNewTrack();
-
-        // when
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 5, 15);
-        TrackRecordingServiceTest.insertLocation(service, 45.1, 35.0, Long.MAX_VALUE, 15);
-        TrackRecordingServiceTest.insertLocation(service, 45.2, 35.0, Long.MAX_VALUE, 15);
-        TrackRecordingServiceTest.insertLocation(service, 45.3, 35.0, Long.MAX_VALUE, 15);
-        TrackRecordingServiceTest.insertLocation(service, 99.0, 35.0, Long.MAX_VALUE, 15);
-
-        service.endCurrentTrack();
-
-        // then
-        Assert.assertFalse(service.isRecording());
-
-        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
-        Assert.assertEquals(1, trackPoints.size());
-        Assert.assertEquals(45.0, trackPoints.get(0).getLatitude(), 0.01);
-    }
-
-    @MediumTest
-    @Test
     public void testOnLocationChangedAsync_slowMovingAccurate() throws Exception {
         // given
         long trackId = service.startNewTrack();
 
         // when
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 5, 15);
-        TrackRecordingServiceTest.insertLocation(service, 45.000001, 35.0, 5, 15);
-        TrackRecordingServiceTest.insertLocation(service, 45.000002, 35.0, 5, 15);
-        TrackRecordingServiceTest.insertLocation(service, 45.000003, 35.0, 5, 15);
-        TrackRecordingServiceTest.insertLocation(service, 45.000004, 35.0, 5, 15);
-        TrackRecordingServiceTest.insertLocation(service, 45.000005, 35.0, 5, 15);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 5, 15);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.000001, 35.0, 5, 15);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.000002, 35.0, 5, 15);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.000003, 35.0, 5, 15);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.000004, 35.0, 5, 15);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.000005, 35.0, 5, 15);
 
         service.endCurrentTrack();
 
@@ -184,12 +158,12 @@ public class TrackRecordingServiceTestLocation {
         long trackId = service.startNewTrack();
 
         // when
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 1, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 2, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 3, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 4, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 5, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 6, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 2, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 3, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 4, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 5, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 6, 0);
 
         service.endCurrentTrack();
 
@@ -210,12 +184,12 @@ public class TrackRecordingServiceTestLocation {
         long trackId = service.startNewTrack();
 
         // when
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 1, 15);
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 2, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 3, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 4, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 5, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 6, 15);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 15);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 2, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 3, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 4, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 5, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 6, 15);
 
         service.endCurrentTrack();
 
@@ -253,12 +227,12 @@ public class TrackRecordingServiceTestLocation {
         });
 
         // when
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 0, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 1, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 2, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 3, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 4, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 5, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 0, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 2, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 3, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 4, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 5, 0);
 
         service.endCurrentTrack();
 
@@ -282,11 +256,11 @@ public class TrackRecordingServiceTestLocation {
         long trackId = service.startNewTrack();
 
         // when
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 1, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.1, 35.0, 2, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.1, 35.0, 3, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.2, 35.0, 4, 0);
-        TrackRecordingServiceTest.insertLocation(service, 45.2, 35.0, 5, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.1, 35.0, 2, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.1, 35.0, 3, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.2, 35.0, 4, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.2, 35.0, 5, 0);
 
         service.endCurrentTrack();
 
@@ -302,26 +276,5 @@ public class TrackRecordingServiceTestLocation {
         Assert.assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(4).getLatitude(), 0.01);
         Assert.assertEquals(4, trackPoints.get(5).getAccuracy(), 0.01);
         Assert.assertEquals(5, trackPoints.get(6).getAccuracy(), 0.01);
-    }
-
-    @MediumTest
-    @Test
-    public void testOnLocationChangedAsync_firstTrackPointInvalid() throws Exception {
-        // given
-        long trackId = service.startNewTrack();
-
-        // when
-        service.insertLocation(TrackPoint.createPause().getLocation());
-        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 0, 0);
-        service.insertLocation(TrackPoint.createPause().getLocation());
-
-        service.endCurrentTrack();
-
-        // then
-        Assert.assertFalse(service.isRecording());
-
-        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
-        Assert.assertEquals(1, trackPoints.size());
-        Assert.assertEquals(0, trackPoints.get(0).getAccuracy(), 0.01);
     }
 }

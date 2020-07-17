@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.services;
+package de.dennisguse.opentracks.services.handlers;
 
 /**
  * A {@link LocationListenerPolicy} that will change based on how long the user has been stationary.

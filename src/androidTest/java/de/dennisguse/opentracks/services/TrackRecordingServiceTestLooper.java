@@ -26,6 +26,7 @@ import java.util.concurrent.TimeoutException;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -215,7 +216,9 @@ public class TrackRecordingServiceTestLooper {
             location.setSpeed(10);
             location.setTime(startTime + i * 10000);
             location.setBearing(3.0f);
-            service.insertLocation(location);
+            TrackPoint trackPoint = new TrackPoint(location);
+            int prefAccuracy = PreferencesUtils.getRecordingGPSAccuracy(context);
+            service.newTrackPoint(trackPoint, prefAccuracy);
 
             if (i % 7 == 0) {
                 service.insertWaypoint(null, null, null, null);

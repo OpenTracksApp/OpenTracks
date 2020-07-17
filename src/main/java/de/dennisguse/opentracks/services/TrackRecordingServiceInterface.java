@@ -15,10 +15,9 @@
  */
 package de.dennisguse.opentracks.services;
 
-import android.location.Location;
-
 import androidx.annotation.VisibleForTesting;
 
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 
@@ -99,23 +98,16 @@ public interface TrackRecordingServiceInterface {
      */
     SensorDataSet getSensorData();
 
-    /**
-     * Inserts a location in the current recording track.
-     * <p>
-     * When recording a track, GPS locations are automatically inserted.
-     * This is used for inserting special track points or for testing.
-     *
-     * @param location the location to be inserted
-     */
-    @VisibleForTesting
-    void insertLocation(Location location);
-
-    /**
-     * Disables processing of location updates from {@link android.location.LocationManager}.
-     */
-    @VisibleForTesting
-    void enableLocationExecutor(boolean enable);
-
     @VisibleForTesting
     void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager);
+
+    /**
+     * Inserts a track point in the current recording track.
+     * This is used for inserting special track points or for testing.
+     *
+     * @param trackPoint           the track point object to be inserted.
+     * @param recordingGpsAccuracy recording GPS accuracy.
+     */
+    @VisibleForTesting
+    void newTrackPoint(TrackPoint trackPoint, int recordingGpsAccuracy);
 }

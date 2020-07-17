@@ -172,7 +172,7 @@ public class TrackRecordingServiceTest {
         // given
         createDummyTrack(trackId, -1L, true);
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
-        insertLocation(service);
+        newTrackPoint(service);
 
         // when
         service.pauseCurrentTrack();
@@ -182,7 +182,7 @@ public class TrackRecordingServiceTest {
 
         //when
         service.resumeTrack(trackId);
-        insertLocation(service);
+        newTrackPoint(service);
 
         // then
         Assert.assertTrue(service.isRecording());
@@ -201,14 +201,14 @@ public class TrackRecordingServiceTest {
         // given
         createDummyTrack(trackId, -1L, true);
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
-        insertLocation(service);
+        newTrackPoint(service);
         service.endCurrentTrack();
 
         Assert.assertEquals(1, contentProviderUtils.getTrackPoints(trackId).size());
 
         // when
         service.resumeTrack(trackId);
-        insertLocation(service);
+        newTrackPoint(service);
 
         // then
         Assert.assertTrue(service.isRecording());
@@ -294,7 +294,7 @@ public class TrackRecordingServiceTest {
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         service.startNewTrack();
         Assert.assertTrue(service.isRecording());
-        insertLocation(service);
+        newTrackPoint(service);
         long trackId = service.getRecordingTrackId();
 
         // when
@@ -331,18 +331,18 @@ public class TrackRecordingServiceTest {
         addTrack(dummyTrack, isRecording);
     }
 
-    private static void insertLocation(TrackRecordingServiceInterface trackRecordingService) throws InterruptedException {
-        insertLocation(trackRecordingService, 45.0f, 35f, 5, 10, System.currentTimeMillis());
+    private static void newTrackPoint(TrackRecordingServiceInterface trackRecordingService) throws InterruptedException {
+        newTrackPoint(trackRecordingService, 45.0f, 35f, 5, 10, System.currentTimeMillis());
     }
 
-    static void insertLocation(TrackRecordingServiceInterface trackRecordingService, double latitude, double longitude, float accuracy, long speed) throws InterruptedException {
-        insertLocation(trackRecordingService, latitude, longitude, accuracy, speed, System.currentTimeMillis());
+    static void newTrackPoint(TrackRecordingServiceInterface trackRecordingService, double latitude, double longitude, float accuracy, long speed) throws InterruptedException {
+        newTrackPoint(trackRecordingService, latitude, longitude, accuracy, speed, System.currentTimeMillis());
     }
 
     /**
      * Inserts a location and waits for 200ms.
      */
-    private static void insertLocation(TrackRecordingServiceInterface trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) throws InterruptedException {
+    private static void newTrackPoint(TrackRecordingServiceInterface trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) throws InterruptedException {
         Location location = new Location("gps");
         location.setLongitude(longitude);
         location.setLatitude(latitude);
@@ -350,7 +350,9 @@ public class TrackRecordingServiceTest {
         location.setSpeed(speed);
         location.setTime(time);
         location.setBearing(3.0f);
-        trackRecordingService.insertLocation(location);
+        TrackPoint trackPoint = new TrackPoint(location);
+        int prefAccuracy = PreferencesUtils.getRecordingGPSAccuracy(ApplicationProvider.getApplicationContext());
+        trackRecordingService.newTrackPoint(trackPoint, prefAccuracy);
 
         //TODO Needed?
         Thread.sleep(200);
