@@ -44,7 +44,9 @@ import de.dennisguse.opentracks.util.FileUtils;
 
 public class ImportProgressDialogFragment extends DialogFragment {
 
-    private static final String EXTRA_DIRECTORY_URI_KEY = "directory_uri";
+    private static final String EXTRA_IS_TREE_KEY = "tree_uri";
+
+    private static final String EXTRA_DATA_URI_KEY = "data_uri";
 
     private static final String TAG = ImportProgressDialogFragment.class.getSimpleName();
 
@@ -59,12 +61,10 @@ public class ImportProgressDialogFragment extends DialogFragment {
     private int trackImportSuccessCount;
     private int fileCount;
 
-    /**
-     * Create a new instance.
-     */
-    public static void showDialog(FragmentManager fragmentManager, Uri documentFileUri) {
+    public static void showDialog(FragmentManager fragmentManager, Uri documentFileUri, boolean isDirectory) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(EXTRA_DIRECTORY_URI_KEY, documentFileUri);
+        bundle.putParcelable(EXTRA_DATA_URI_KEY, documentFileUri);
+        bundle.putBoolean(EXTRA_IS_TREE_KEY, isDirectory);
 
         ImportProgressDialogFragment dialogFragment = new ImportProgressDialogFragment();
         dialogFragment.setArguments(bundle);
@@ -79,9 +79,13 @@ public class ImportProgressDialogFragment extends DialogFragment {
         // This fragment uses a background thread, so it should not be recreated during activity re-creation.
         setRetainInstance(true);
 
-        Uri directoryUri = getArguments().getParcelable(EXTRA_DIRECTORY_URI_KEY);
-        DocumentFile documentFile = DocumentFile.fromTreeUri(getContext(), directoryUri);
-
+        Uri directoryUri = getArguments().getParcelable(EXTRA_DATA_URI_KEY);
+        DocumentFile documentFile;
+        if (getArguments().getBoolean(EXTRA_IS_TREE_KEY)) {
+            documentFile = DocumentFile.fromTreeUri(getContext(), directoryUri);
+        } else {
+            documentFile = DocumentFile.fromSingleUri(getContext(), directoryUri);
+        }
         directoryDisplayName = FileUtils.getPath(documentFile);
 
         importThread = new ImportThread(documentFile);
