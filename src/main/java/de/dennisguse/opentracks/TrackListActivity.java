@@ -48,8 +48,10 @@ import androidx.loader.content.Loader;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
+import de.dennisguse.opentracks.services.BoundServiceListener;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
+import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
@@ -168,8 +170,10 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
         public void run() {
+            boolean isRecording = PreferencesUtils.isRecording(recordingTrackId);
+
             // After binding changes (e.g., becomes available), update the total time in trackController.
-            runOnUiThread(() -> trackController.update(PreferencesUtils.isRecording(recordingTrackId), recordingTrackPaused));
+            runOnUiThread(() -> trackController.update(isRecording, recordingTrackPaused));
 
             if (!startGps) {
                 return;
@@ -184,6 +188,12 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 service.startGps();
                 startGps = false;
             }
+            service.setListener(new BoundServiceListener() {
+                @Override
+                public void onGpsStatusChange(GpsStatusValue newStatus) {
+                    updateGpsMenuItem(true, isRecording, newStatus.icon);
+                }
+            });
         }
     };
 
@@ -432,17 +442,28 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     }
 
     /**
-     * Updates the menu items.
+     * Updates the menu items with not fixed icon for gps option.
      *
      * @param isGpsStarted true if gps is started
      * @param isRecording  true if recording
      */
     private void updateMenuItems(boolean isGpsStarted, boolean isRecording) {
+        updateGpsMenuItem(isGpsStarted, isRecording, R.drawable.ic_gps_not_fixed_24dp);
+    }
+
+    /**
+     * Updates the menu items with the icon specified.
+     *
+     * @param isGpsStarted true if gps is started
+     * @param isRecording  true if recording
+     * @param icon         the icon drawable value
+     */
+    private void updateGpsMenuItem(boolean isGpsStarted, boolean isRecording, int icon) {
         if (startGpsMenuItem != null) {
             startGpsMenuItem.setVisible(!isRecording);
             if (!isRecording) {
                 startGpsMenuItem.setTitle(isGpsStarted ? R.string.menu_stop_gps : R.string.menu_start_gps);
-                startGpsMenuItem.setIcon(isGpsStarted ? R.drawable.ic_gps_fixed_24dp : R.drawable.ic_gps_off_24dp);
+                startGpsMenuItem.setIcon(isGpsStarted ? icon : R.drawable.ic_gps_off_24dp);
             }
         }
     }
