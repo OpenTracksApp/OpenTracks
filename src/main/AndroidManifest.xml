@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="de.dennisguse.opentracks"
     android:installLocation="auto">
 
@@ -24,6 +25,28 @@ limitations under the License.
         android:smallScreens="true"
         android:xlargeScreens="true" />
 
+    <uses-feature
+        android:name="android.hardware.location.gps"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.android.hardware.bluetooth_le"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.sensor.compass"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:name=".Startup"
         android:allowBackup="false"
@@ -33,7 +56,6 @@ limitations under the License.
         android:label="${applicationName}"
         android:theme="@style/ThemeCustom">
 
-        <!-- Activities -->
         <activity android:name=".AboutActivity" />
 
         <activity
@@ -49,18 +71,41 @@ limitations under the License.
         <activity
             android:name=".io.file.importer.ImportActivity"
             android:theme="@style/ThemeCustomTransparentActivity">
+
             <intent-filter>
-                <action android:name="android.intent.action.ATTACH_DATA" />
                 <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="*"
+                    android:mimeType="application/vnd.google-earth.kmz" />
+            </intent-filter>
 
-                <data android:mimeType="application/gpx" />
-                <data android:mimeType="application/gpx+xml" />
-                <data android:mimeType="application/vnd.google-earth.gpx" />
-                <data android:mimeType="application/vnd.google-earth.gpx+xml" />
-                <data android:scheme="file" />
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="*"
+                    android:mimeType="application/vnd.google-earth.kml+xml" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.kmz"
+                    android:scheme="file" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathPattern=".*\\.kml"
+                    android:scheme="file" />
             </intent-filter>
         </activity>
 
@@ -150,27 +195,4 @@ limitations under the License.
             android:icon="@drawable/ic_logo_color_24dp"
             android:label="@string/recording_service" />
     </application>
-
-    <!-- Permissions to record locations -->
-    <uses-feature
-        android:name="android.hardware.location.gps"
-        android:required="true" />
-    <uses-feature
-        android:name="android.hardware.android.hardware.bluetooth_le"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.sensor.compass"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.touchscreen"
-        android:required="false" />
-
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 </manifest>

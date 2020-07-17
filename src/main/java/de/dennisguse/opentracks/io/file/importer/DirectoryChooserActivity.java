@@ -33,7 +33,6 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 Uri directoryUri = resultData.getData();
 
-
                 startActivity(createIntent(directoryUri));
             }
             finish();
