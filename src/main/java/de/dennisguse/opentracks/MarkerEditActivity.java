@@ -29,7 +29,6 @@ import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -59,6 +58,8 @@ public class MarkerEditActivity extends AbstractActivity {
     public static final String EXTRA_TRACK_ID = "track_id";
     public static final String EXTRA_MARKER_ID = "marker_id";
 
+    private static final String BUNDLE_PHOTO_URI = "photo_uri";
+
     private static final int CAMERA_REQUEST_CODE = 5;
     private static final int GALLERY_IMG_REQUEST_CODE = 7;
 
@@ -83,14 +84,18 @@ public class MarkerEditActivity extends AbstractActivity {
     private Button done;
 
     @Override
-    protected void onCreate(Bundle bundle) {
-        super.onCreate(bundle);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
         trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
         markerId = getIntent().getLongExtra(EXTRA_MARKER_ID, -1L);
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(null);
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection();
 
         hasCamera = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
+
+        if (savedInstanceState != null) {
+            photoUri = savedInstanceState.getParcelable(BUNDLE_PHOTO_URI);
+        }
 
         // Setup UI elements
         waypointName = findViewById(R.id.marker_edit_waypoint_name);
@@ -101,24 +106,17 @@ public class MarkerEditActivity extends AbstractActivity {
         waypointPhoto = findViewById(R.id.marker_edit_waypoint_photo);
 
         waypointDeletePhotoBtn = findViewById(R.id.marker_edit_waypoint_photo_delete);
-        waypointDeletePhotoBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (waypoint != null && waypoint.hasPhoto())
-                    waypoint.setPhotoUrl(null);
-                waypointPhoto.setImageBitmap(null);
-                photoUri = null;
-                hideAndShowOptions();
+        waypointDeletePhotoBtn.setOnClickListener(v -> {
+            if (waypoint != null && waypoint.hasPhoto()) {
+                waypoint.setPhotoUrl(null);
             }
+            waypointPhoto.setImageBitmap(null);
+            photoUri = null;
+            hideAndShowOptions();
         });
 
         Button cancel = findViewById(R.id.marker_edit_cancel);
-        cancel.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        cancel.setOnClickListener(v -> finish());
         done = findViewById(R.id.marker_edit_done);
         updateUiByMarkerId();
     }
@@ -127,6 +125,12 @@ public class MarkerEditActivity extends AbstractActivity {
     protected void onStart() {
         super.onStart();
         trackRecordingServiceConnection.startConnection(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(BUNDLE_PHOTO_URI, photoUri);
     }
 
     @Override
@@ -272,13 +276,13 @@ public class MarkerEditActivity extends AbstractActivity {
      *
      * @param uri the uri photo.
      */
-    private void setWaypointImageView(Uri uri) {
+    private void setWaypointImageView(@NonNull Uri uri) {
         try (ParcelFileDescriptor pfd = getContentResolver().openFileDescriptor(uri, "r")) {
             FileDescriptor fd = pfd.getFileDescriptor();
             Bitmap bitmap = BitmapFactory.decodeFileDescriptor(fd);
             waypointPhoto.setImageBitmap(bitmap);
             hideAndShowOptions();
-        } catch(IOException e) {
+        } catch (IOException e) {
             Log.e(TAG, e.getMessage());
             Toast.makeText(this, R.string.marker_add_photo_canceled, Toast.LENGTH_LONG).show();
         }
@@ -295,9 +299,6 @@ public class MarkerEditActivity extends AbstractActivity {
         startActivityForResult(intent, GALLERY_IMG_REQUEST_CODE);
     }
 
-    /**
-     * Adds a marker.
-     */
     private void addMarker() {
         trackRecordingServiceConnection.addMarker(this,
                 waypointName.getText().toString(),
@@ -306,9 +307,6 @@ public class MarkerEditActivity extends AbstractActivity {
                 photoUri != null ? photoUri.toString() : null);
     }
 
-    /**
-     * Saves a marker.
-     */
     private void saveMarker() {
         waypoint.setName(waypointName.getText().toString());
         waypoint.setCategory(waypointMarkerType.getText().toString());

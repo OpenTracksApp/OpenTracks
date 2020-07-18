@@ -39,6 +39,7 @@ public final class Waypoint {
     private double length = 0.0;
     private long duration = 0;
     private Location location;
+    @Deprecated //TODO Make an URI instead of String
     private String photoUrl = "";
 
     @VisibleForTesting
