@@ -9,7 +9,7 @@ import de.dennisguse.opentracks.R;
 
 public class MarkerUtils {
 
-    public static final int ICON_ID = R.drawable.ic_marker_blue_pushpin;
+    public static final int ICON_ID = R.drawable.ic_marker_orange_pushpin_with_shadow;
 
     private MarkerUtils() {
     }

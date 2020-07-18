@@ -40,7 +40,7 @@ limitations under the License.
                 <EditText
                     android:id="@+id/marker_edit_waypoint_name"
                     style="@style/EditNameMarker"
-                    android:drawableLeft="@drawable/ic_marker_blue_pushpin"
+                    android:drawableStart="@drawable/ic_marker_orange_pushpin_with_shadow"
                     android:hint="@string/generic_name"
                     android:imeOptions="actionNext"
                     android:importantForAutofill="no" />
