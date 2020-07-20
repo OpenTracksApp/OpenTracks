@@ -30,6 +30,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.android.ContentResolverWrapper;
@@ -205,11 +206,6 @@ public class ContentProviderUtils {
         contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?", new String[]{Long.toString(trackId)});
     }
 
-    /**
-     * Gets all the tracks.
-     *
-     * @return the tracks do not have any trackPoints attached.
-     */
     @VisibleForTesting
     public List<Track> getAllTracks() {
         ArrayList<Track> tracks = new ArrayList<>();
@@ -236,13 +232,24 @@ public class ContentProviderUtils {
 
     /**
      * @param trackId the track id.
-     * @return the track doesn't have any trackPoints attached
      */
     public Track getTrack(long trackId) {
         if (trackId < 0) {
             return null;
         }
         try (Cursor cursor = getTrackCursor(TracksColumns._ID + "=?", new String[]{Long.toString(trackId)}, TracksColumns._ID)) {
+            if (cursor != null && cursor.moveToNext()) {
+                return createTrack(cursor);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param uuid the UUID of a track.
+     */
+    public Track getTrack(UUID uuid) {
+        try (Cursor cursor = getTrackCursor(TracksColumns.UUID + "=?", new String[]{uuid.toString()}, TracksColumns._ID)) {
             if (cursor != null && cursor.moveToNext()) {
                 return createTrack(cursor);
             }
