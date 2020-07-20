@@ -67,31 +67,13 @@ class LocationHandler implements HandlerServer.Handler, LocationListener {
         }
     }
 
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
-        // TODO do we still need to process the location processing in an asynchronous manner? Let's go to check it out.
-        computeLocation(location);
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(@NonNull String provider) {
-    }
-
-    @Override
-    public void onProviderDisabled(@NonNull String provider) {
-    }
-
     /**
      * Checks if location is valid and builds a track point that will be send through HandlerServer.
      *
      * @param location {@link Location} object.
      */
-    private void computeLocation(Location location) {
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
         if (!LocationUtils.isValidLocation(location)) {
             Log.w(TAG, "Ignore newTrackPoint. location is invalid.");
             return;
@@ -116,6 +98,18 @@ class LocationHandler implements HandlerServer.Handler, LocationListener {
 
         lastValidTrackPoint = trackPoint;
         handlerServer.sendTrackPoint(trackPoint, recordingGpsAccuracy);
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
+
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+    }
+
+    @Override
+    public void onProviderDisabled(@NonNull String provider) {
     }
 
     private void registerLocationListener() {

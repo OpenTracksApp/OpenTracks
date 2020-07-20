@@ -5,29 +5,32 @@ import android.content.SharedPreferences;
 import android.location.Location;
 
 import androidx.test.core.app.ApplicationProvider;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(MockitoJUnitRunner.class)
 public class LocationHandlerTest {
+
     private final Context context = ApplicationProvider.getApplicationContext();
+
+    @Mock
     private HandlerServer handlerServer;
+
+    @InjectMocks
     private LocationHandler locationHandler;
-    private TrackRecordingService mockService;
 
     @Before
     public void setUp() {
@@ -35,18 +38,9 @@ public class LocationHandlerTest {
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         sharedPreferences.edit().clear().commit();
 
-        mockService = Mockito.mock(TrackRecordingService.class);
-        handlerServer = new HandlerServer(mockService);
-        locationHandler = new LocationHandler(handlerServer);
         locationHandler.onSharedPreferenceChanged(context, PreferencesUtils.getSharedPreferences(context), context.getString(R.string.recording_gps_accuracy_key));
         locationHandler.onSharedPreferenceChanged(context, PreferencesUtils.getSharedPreferences(context), context.getString(R.string.min_recording_interval_key));
-    }
-
-    @After
-    public void tearDown() {
-        mockService = null;
-        handlerServer = null;
-        locationHandler = null;
+        locationHandler.onStart(context);
     }
 
     /**
@@ -58,7 +52,7 @@ public class LocationHandlerTest {
         locationHandler.onLocationChanged(createLocation(45f, 35f, 3, 5, System.currentTimeMillis()));
 
         // then
-        verify(mockService, times(1)).newTrackPoint(any(TrackPoint.class), any(Integer.class));
+        verify(handlerServer, times(1)).sendTrackPoint(any(TrackPoint.class), any(Integer.class));
     }
 
     /**
@@ -74,7 +68,7 @@ public class LocationHandlerTest {
         locationHandler.onLocationChanged(createLocation(latitude, 35f, 3, 5, System.currentTimeMillis()));
 
         // then
-        verify(mockService, times(0)).newTrackPoint(any(TrackPoint.class), any(Integer.class));
+        verify(handlerServer, times(0)).sendTrackPoint(any(TrackPoint.class), any(Integer.class));
     }
 
     /**
@@ -91,25 +85,20 @@ public class LocationHandlerTest {
 
         // then
         // no newTrackPoint called
-        verify(mockService, times(0)).newTrackPoint(any(TrackPoint.class), any(Integer.class));
+        verify(handlerServer, times(0)).sendTrackPoint(any(TrackPoint.class), any(Integer.class));
     }
 
     @Test
-    public void testOnLocationChanged_movingInaccurate() throws Exception {
+    public void testOnLocationChanged_movingInaccurate() {
         // when
-        locationHandler.onLocationChanged(
-                createLocation(45.0, 35.0, 5, 15, System.currentTimeMillis()));
-        locationHandler.onLocationChanged(
-                createLocation(45.1, 35.0, Long.MAX_VALUE, 15, System.currentTimeMillis()));
-        locationHandler.onLocationChanged(
-                createLocation(45.2, 35.0, Long.MAX_VALUE, 15, System.currentTimeMillis()));
-        locationHandler.onLocationChanged(
-                createLocation(45.3, 35.0, Long.MAX_VALUE, 15, System.currentTimeMillis()));
-        locationHandler.onLocationChanged(
-                createLocation(99.0, 35.0, Long.MAX_VALUE, 15, System.currentTimeMillis()));
+        locationHandler.onLocationChanged(createLocation(45.0, 35.0, 5, 15, System.currentTimeMillis()));
+        locationHandler.onLocationChanged(createLocation(45.1, 35.0, Long.MAX_VALUE, 15, System.currentTimeMillis()));
+        locationHandler.onLocationChanged(createLocation(45.2, 35.0, Long.MAX_VALUE, 15, System.currentTimeMillis()));
+        locationHandler.onLocationChanged(createLocation(45.3, 35.0, Long.MAX_VALUE, 15, System.currentTimeMillis()));
+        locationHandler.onLocationChanged(createLocation(99.0, 35.0, Long.MAX_VALUE, 15, System.currentTimeMillis()));
 
         // then
-        verify(mockService, times(1)).newTrackPoint(any(TrackPoint.class), any(Integer.class));
+        verify(handlerServer, times(1)).sendTrackPoint(any(TrackPoint.class), any(Integer.class));
     }
 
     /**
