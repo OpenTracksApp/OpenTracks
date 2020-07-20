@@ -33,8 +33,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -229,31 +227,23 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         // Show trackController when search dialog is dismissed
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         if (searchManager != null) {
-            searchManager.setOnDismissListener(new SearchManager.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    trackController.show();
-                }
-            });
+            searchManager.setOnDismissListener(() -> trackController.show());
         }
 
         listView = findViewById(R.id.track_list);
         listView.setEmptyView(findViewById(R.id.track_list_empty_view));
-        listView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long trackId) {
-                Intent newIntent;
-                if (trackId == recordingTrackId) {
-                    // Is recording -> open record activity.
-                    newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class)
-                            .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
-                } else {
-                    // Not recording -> open detail activity.
-                    newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordedActivity.class)
-                            .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
-                }
-                startActivity(newIntent);
+        listView.setOnItemClickListener((parent, view, position, trackId) -> {
+            Intent newIntent;
+            if (trackId == recordingTrackId) {
+                // Is recording -> open record activity.
+                newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class)
+                        .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
+            } else {
+                // Not recording -> open detail activity.
+                newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordedActivity.class)
+                        .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
             }
+            startActivity(newIntent);
         });
 
         resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {

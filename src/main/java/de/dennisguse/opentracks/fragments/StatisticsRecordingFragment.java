@@ -203,23 +203,17 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
         Spinner activityTypeIcon = getView().findViewById(R.id.stats_activity_type_icon);
         activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(getActivity(), ""));
-        activityTypeIcon.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    ((TrackRecordingActivity) getActivity()).chooseActivityType(category);
-                }
-                return true;
+        activityTypeIcon.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                ((TrackRecordingActivity) getActivity()).chooseActivityType(category);
             }
+            return true;
         });
-        activityTypeIcon.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-                    ((TrackRecordingActivity) getActivity()).chooseActivityType(category);
-                }
-                return true;
+        activityTypeIcon.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+                ((TrackRecordingActivity) getActivity()).chooseActivityType(category);
             }
+            return true;
         });
     }
 

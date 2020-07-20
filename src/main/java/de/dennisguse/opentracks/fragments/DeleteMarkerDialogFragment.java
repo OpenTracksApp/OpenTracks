@@ -18,7 +18,6 @@ package de.dennisguse.opentracks.fragments;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -77,18 +76,13 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
             messageId = markerIds.length > 1 ? R.string.marker_delete_multiple_confirm_message : R.string.marker_delete_one_confirm_message;
         }
         return DialogUtils.createConfirmationDialog(
-                fragmentActivity, titleId, getString(messageId), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        new Thread(() -> {
-                            ContentProviderUtils contentProviderUtils = new ContentProviderUtils(fragmentActivity);
-                            for (long markerId : markerIds) {
-                                contentProviderUtils.deleteWaypoint(getContext(), markerId);
-                            }
-                            caller.onDeleteMarkerDone();
-                        }).start();
+                fragmentActivity, titleId, getString(messageId), (dialog, which) -> new Thread(() -> {
+                    ContentProviderUtils contentProviderUtils = new ContentProviderUtils(fragmentActivity);
+                    for (long markerId : markerIds) {
+                        contentProviderUtils.deleteWaypoint(getContext(), markerId);
                     }
-                });
+                    caller.onDeleteMarkerDone();
+                }).start());
     }
 
     /**

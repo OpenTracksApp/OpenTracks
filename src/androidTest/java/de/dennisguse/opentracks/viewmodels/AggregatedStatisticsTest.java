@@ -60,7 +60,7 @@ public class AggregatedStatisticsTest {
 
         // then
         Assert.assertEquals(1, aggregatedStatistics.getCount());
-        Assert.assertTrue(aggregatedStatistics.get(biking) != null);
+        Assert.assertNotNull(aggregatedStatistics.get(biking));
         Assert.assertEquals(1, aggregatedStatistics.get(biking).getCountTracks());
 
         TrackStatistics statistics2 = aggregatedStatistics.get(biking).getTrackStatistics();
@@ -82,7 +82,7 @@ public class AggregatedStatisticsTest {
         aggregatedStatistics.aggregate(track);
 
         // then
-        Assert.assertTrue(aggregatedStatistics.get(mountainBiking) != null);
+        Assert.assertNotNull(aggregatedStatistics.get(mountainBiking));
     }
 
     @Test
@@ -99,7 +99,7 @@ public class AggregatedStatisticsTest {
         aggregatedStatistics.aggregate(track);
 
         // then
-        Assert.assertTrue(aggregatedStatistics.get(trailRunning) != null);
+        Assert.assertNotNull(aggregatedStatistics.get(trailRunning));
     }
 
     @Test
@@ -121,7 +121,7 @@ public class AggregatedStatisticsTest {
 
         // then
         Assert.assertEquals(1, aggregatedStatistics.getCount());
-        Assert.assertTrue(aggregatedStatistics.get(biking) != null);
+        Assert.assertNotNull(aggregatedStatistics.get(biking));
         Assert.assertEquals(2, aggregatedStatistics.get(biking).getCountTracks());
 
         TrackStatistics statistics2 = aggregatedStatistics.get(biking).getTrackStatistics();
@@ -153,9 +153,9 @@ public class AggregatedStatisticsTest {
 
         // then
         Assert.assertEquals(3, aggregatedStatistics.getCount());
-        Assert.assertTrue(aggregatedStatistics.get(biking) != null);
-        Assert.assertTrue(aggregatedStatistics.get(running) != null);
-        Assert.assertTrue(aggregatedStatistics.get(walking) != null);
+        Assert.assertNotNull(aggregatedStatistics.get(biking));
+        Assert.assertNotNull(aggregatedStatistics.get(running));
+        Assert.assertNotNull(aggregatedStatistics.get(walking));
         Assert.assertEquals(1, aggregatedStatistics.get(biking).getCountTracks());
         Assert.assertEquals(1, aggregatedStatistics.get(running).getCountTracks());
         Assert.assertEquals(1, aggregatedStatistics.get(walking).getCountTracks());
@@ -215,10 +215,10 @@ public class AggregatedStatisticsTest {
         Assert.assertEquals(4, aggregatedStatistics.getCount());
 
         // There is a map for every sport.
-        Assert.assertTrue(aggregatedStatistics.get(biking) != null);
-        Assert.assertTrue(aggregatedStatistics.get(running) != null);
-        Assert.assertTrue(aggregatedStatistics.get(walking) != null);
-        Assert.assertTrue(aggregatedStatistics.get(driving) != null);
+        Assert.assertNotNull(aggregatedStatistics.get(biking));
+        Assert.assertNotNull(aggregatedStatistics.get(running));
+        Assert.assertNotNull(aggregatedStatistics.get(walking));
+        Assert.assertNotNull(aggregatedStatistics.get(driving));
 
         // Number of tracks by sport.
         Assert.assertEquals(5, aggregatedStatistics.get(biking).getCountTracks()); // Biking.

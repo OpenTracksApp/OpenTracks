@@ -1,18 +1,16 @@
 package de.dennisguse.opentracks.viewmodels;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.stats.TrackStatistics;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 public class AggregatedStatistics {
 
-    private HashMap<String, AggregatedStatistic> aggregatedStatistics = new HashMap<>();
+    private final Map<String, AggregatedStatistic> aggregatedStatistics = new HashMap<>();
 
     public void aggregate(List<Track> tracks) {
         for (Track track : tracks) {
@@ -50,7 +48,7 @@ public class AggregatedStatistics {
     }
 
     public static class AggregatedStatistic {
-        private TrackStatistics trackStatistics;
+        private final TrackStatistics trackStatistics;
         private int countTracks;
 
         public AggregatedStatistic(TrackStatistics trackStatistics) {

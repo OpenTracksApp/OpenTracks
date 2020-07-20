@@ -18,7 +18,7 @@ import de.dennisguse.opentracks.util.IntentDashboardUtils;
  */
 public abstract class ShowOnMapProxyActivity extends AppCompatActivity {
 
-    private TrackFileFormat trackFileFormat;
+    private final TrackFileFormat trackFileFormat;
 
     protected ShowOnMapProxyActivity(TrackFileFormat trackFileFormat) {
         this.trackFileFormat = trackFileFormat;

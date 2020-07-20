@@ -22,7 +22,6 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Spinner;
@@ -51,12 +50,7 @@ public class ActivityTypePreference extends DialogPreference {
         setDialogIcon(null);
         setPersistent(true);
 
-        SummaryProvider<DialogPreference> summaryProvider = new SummaryProvider<DialogPreference>() {
-            @Override
-            public CharSequence provideSummary(DialogPreference preference) {
-                return PreferencesUtils.getDefaultActivity(ActivityTypePreference.this.getContext());
-            }
-        };
+        SummaryProvider<DialogPreference> summaryProvider = preference -> PreferencesUtils.getDefaultActivity(ActivityTypePreference.this.getContext());
         setSummaryProvider(summaryProvider);
     }
 
@@ -90,43 +84,31 @@ public class ActivityTypePreference extends DialogPreference {
             textView.setText(category);
             ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
             textView.setAdapter(adapter);
-            textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                    String iconValue = TrackIconUtils.getIconValue(context, (String) textView.getAdapter().getItem(position));
-                    TrackIconUtils.setIconSpinner(spinner, iconValue);
-                }
+            textView.setOnItemClickListener((parent, v, position, id) -> {
+                String iconValue = TrackIconUtils.getIconValue(context, (String) textView.getAdapter().getItem(position));
+                TrackIconUtils.setIconSpinner(spinner, iconValue);
             });
-            textView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (!hasFocus) {
-                        String iconValue = TrackIconUtils.getIconValue(context, textView.getText().toString());
-                        TrackIconUtils.setIconSpinner(spinner, iconValue);
-                    }
+            textView.setOnFocusChangeListener((v, hasFocus) -> {
+                if (!hasFocus) {
+                    String iconValue = TrackIconUtils.getIconValue(context, textView.getText().toString());
+                    TrackIconUtils.setIconSpinner(spinner, iconValue);
                 }
             });
 
             String iconValue = TrackIconUtils.getIconValue(context, category);
             spinner = view.findViewById(R.id.activity_type_preference_spinner);
             spinner.setAdapter(TrackIconUtils.getIconSpinnerAdapter(context, iconValue));
-            spinner.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_UP) {
-                        showIconSelectDialog();
-                    }
-                    return true;
+            spinner.setOnTouchListener((v, event) -> {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    showIconSelectDialog();
                 }
+                return true;
             });
-            spinner.setOnKeyListener(new View.OnKeyListener() {
-                @Override
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-                        showIconSelectDialog();
-                    }
-                    return true;
+            spinner.setOnKeyListener((v, keyCode, event) -> {
+                if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+                    showIconSelectDialog();
                 }
+                return true;
             });
         }
 

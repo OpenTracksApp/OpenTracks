@@ -27,9 +27,9 @@ public class IntentDashboardUtils {
     private static final String EXTRAS_SHOULD_KEEP_SCREEN_ON = "EXTRAS_SHOULD_KEEP_SCREEN_ON";
     private static final String EXTRAS_SHOW_WHEN_LOCKED = "EXTRAS_SHOULD_KEEP_SCREEN_ON";
 
-    private static int TRACK_URI_INDEX = 0;
-    private static int TRACKPOINTS_URI_INDEX = 1;
-    private static int WAYPOINTS_URI_INDEX = 2;
+    private static final int TRACK_URI_INDEX = 0;
+    private static final int TRACKPOINTS_URI_INDEX = 1;
+    private static final int WAYPOINTS_URI_INDEX = 2;
 
     private IntentDashboardUtils() {
     }

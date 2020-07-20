@@ -21,7 +21,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -89,20 +88,12 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
         activityType.setAdapter(adapter);
-        activityType.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        activityType.setOnItemClickListener((parent, view, position, id) -> setActivityTypeIcon(TrackIconUtils.getIconValue(
+                TrackEditActivity.this, (String) activityType.getAdapter().getItem(position))));
+        activityType.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
                 setActivityTypeIcon(TrackIconUtils.getIconValue(
-                        TrackEditActivity.this, (String) activityType.getAdapter().getItem(position)));
-            }
-        });
-        activityType.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    setActivityTypeIcon(TrackIconUtils.getIconValue(
-                            TrackEditActivity.this, activityType.getText().toString()));
-                }
+                        TrackEditActivity.this, activityType.getText().toString()));
             }
         });
 
@@ -116,37 +107,28 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
 
         activityTypeIcon = findViewById(R.id.track_edit_activity_type_icon);
         activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(this, iconValue));
-        activityTypeIcon.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), activityType.getText().toString());
-                }
-                return true;
+        activityTypeIcon.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), activityType.getText().toString());
             }
+            return true;
         });
-        activityTypeIcon.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-                    ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), activityType.getText().toString());
-                }
-                return true;
+        activityTypeIcon.setOnKeyListener((v, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+                ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), activityType.getText().toString());
             }
+            return true;
         });
 
         description = findViewById(R.id.track_edit_description);
         description.setText(track.getDescription());
 
         Button saveButton = findViewById(R.id.track_edit_save);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TrackUtils.updateTrack(TrackEditActivity.this, track, nameEditText.getText().toString(),
-                        activityType.getText().toString(), description.getText().toString(),
-                        contentProviderUtils);
-                finish();
-            }
+        saveButton.setOnClickListener(v -> {
+            TrackUtils.updateTrack(TrackEditActivity.this, track, nameEditText.getText().toString(),
+                    activityType.getText().toString(), description.getText().toString(),
+                    contentProviderUtils);
+            finish();
         });
 
         Button cancel = findViewById(R.id.track_edit_cancel);
@@ -155,12 +137,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
             cancel.setVisibility(View.GONE);
         } else {
             setTitle(R.string.menu_edit);
-            cancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish();
-                }
-            });
+            cancel.setOnClickListener(v -> finish());
             cancel.setVisibility(View.VISIBLE);
         }
     }

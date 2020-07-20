@@ -26,8 +26,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -203,20 +201,17 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         ListView listView = findViewById(R.id.search_list);
         listView.setAdapter(arrayAdapter);
         listView.setEmptyView(findViewById(R.id.search_list_empty));
-        listView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Map<String, Object> item = arrayAdapter.getItem(position);
-                Long trackId = (Long) item.get(TRACK_ID_FIELD);
-                Long markerId = (Long) item.get(MARKER_ID_FIELD);
-                Intent intent = IntentUtils.newIntent(SearchListActivity.this, TrackRecordedActivity.class);
-                if (markerId != null) {
-                    intent = intent.putExtra(TrackRecordedActivity.EXTRA_MARKER_ID, markerId);
-                } else {
-                    intent = intent.putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
-                }
-                startActivity(intent);
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            Map<String, Object> item = arrayAdapter.getItem(position);
+            Long trackId = (Long) item.get(TRACK_ID_FIELD);
+            Long markerId = (Long) item.get(MARKER_ID_FIELD);
+            Intent intent = IntentUtils.newIntent(SearchListActivity.this, TrackRecordedActivity.class);
+            if (markerId != null) {
+                intent = intent.putExtra(TrackRecordedActivity.EXTRA_MARKER_ID, markerId);
+            } else {
+                intent = intent.putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
             }
+            startActivity(intent);
         });
         ActivityUtils.configureListViewContextualMenu(listView, contextualActionModeCallback);
         handleIntent(getIntent());

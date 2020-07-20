@@ -19,7 +19,6 @@ package de.dennisguse.opentracks.services.tasks;
 import android.content.Context;
 import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
-import android.speech.tts.TextToSpeech.OnInitListener;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 
@@ -50,7 +49,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
     private final AudioManager audioManager;
 
-    private ContentProviderUtils contentProviderUtils;
+    private final ContentProviderUtils contentProviderUtils;
 
     private final AudioManager.OnAudioFocusChangeListener audioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
@@ -116,12 +115,9 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         Log.d(TAG, "Start");
 
         if (tts == null) {
-            tts = new TextToSpeech(context, new OnInitListener() {
-                @Override
-                public void onInit(int status) {
-                    Log.i(TAG, "TextToSpeech initialized with status " + status);
-                    ttsInitStatus = status;
-                }
+            tts = new TextToSpeech(context, status -> {
+                Log.i(TAG, "TextToSpeech initialized with status " + status);
+                ttsInitStatus = status;
             });
         }
     }

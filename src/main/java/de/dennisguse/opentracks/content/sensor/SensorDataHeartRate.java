@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 public class SensorDataHeartRate extends SensorData {
 
-    private float heartRate_bpm;
+    private final float heartRate_bpm;
 
     public SensorDataHeartRate(String name, String address, float heartRate_bpm) {
         super(name, address);

@@ -2,8 +2,8 @@ package de.dennisguse.opentracks.util;
 
 public class UintUtils {
 
-    public static int UINT16_MAX = 0xFFFF;
-    public static long UINT32_MAX = 0xFFFFFFFFL;
+    public static final int UINT16_MAX = 0xFFFF;
+    public static final long UINT32_MAX = 0xFFFFFFFFL;
 
     private UintUtils() {
     }

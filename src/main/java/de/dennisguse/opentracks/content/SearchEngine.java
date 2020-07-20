@@ -108,28 +108,25 @@ public class SearchEngine {
     /**
      * Comparator for scored results.
      */
-    private static final Comparator<ScoredResult> SCORED_RESULT_COMPARATOR = new Comparator<ScoredResult>() {
-        @Override
-        public int compare(ScoredResult r1, ScoredResult r2) {
-            // Score ordering.
-            int scoreDiff = Double.compare(r2.score, r1.score);
-            if (scoreDiff != 0) {
-                return scoreDiff;
-            }
-
-            // Make tracks come before waypoints.
-            if (r1.waypoint != null && r2.track != null) {
-                return 1;
-            } else if (r1.track != null && r2.waypoint != null) {
-                return -1;
-            }
-
-            // Finally, use arbitrary ordering, by ID.
-            long id1 = r1.track != null ? r1.track.getId() : r1.waypoint.getId();
-            long id2 = r2.track != null ? r2.track.getId() : r2.waypoint.getId();
-            long idDiff = id2 - id1;
-            return Long.signum(idDiff);
+    private static final Comparator<ScoredResult> SCORED_RESULT_COMPARATOR = (r1, r2) -> {
+        // Score ordering.
+        int scoreDiff = Double.compare(r2.score, r1.score);
+        if (scoreDiff != 0) {
+            return scoreDiff;
         }
+
+        // Make tracks come before waypoints.
+        if (r1.waypoint != null && r2.track != null) {
+            return 1;
+        } else if (r1.track != null && r2.waypoint != null) {
+            return -1;
+        }
+
+        // Finally, use arbitrary ordering, by ID.
+        long id1 = r1.track != null ? r1.track.getId() : r1.waypoint.getId();
+        long id2 = r2.track != null ? r2.track.getId() : r2.waypoint.getId();
+        long idDiff = id2 - id1;
+        return Long.signum(idDiff);
     };
 
     private final ContentProviderUtils providerUtils;

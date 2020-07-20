@@ -19,10 +19,10 @@ import de.dennisguse.opentracks.util.UnitConversions;
 
 class LocationHandler implements HandlerServer.Handler, LocationListener {
 
-    private String TAG = LocationHandler.class.getSimpleName();
+    private final String TAG = LocationHandler.class.getSimpleName();
 
     private LocationManager locationManager;
-    private HandlerServer handlerServer;
+    private final HandlerServer handlerServer;
     private LocationListenerPolicy locationListenerPolicy;
     private long currentRecordingInterval;
     private int recordingGpsAccuracy;

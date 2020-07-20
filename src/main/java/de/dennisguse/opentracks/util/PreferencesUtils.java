@@ -53,6 +53,7 @@ public class PreferencesUtils {
     //NOTE: This was also used to recover from a service restart, but this data should not be exposed to the whole application.
     public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
 
+    @Deprecated //Use the TrackRecordingService
     public static long getRecordingTrackId(Context context) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         return sharedPreferences.getLong(getKey(context, R.string.recording_track_id_key), RECORDING_TRACK_ID_DEFAULT);
@@ -208,14 +209,17 @@ public class PreferencesUtils {
         return currentStatsRate.equals(context.getString(R.string.stats_rate_speed));
     }
 
+    @Deprecated //Use TrackRecordingService
     public static boolean isRecordingTrackPaused(Context context) {
         return getBoolean(context, R.string.recording_track_paused_key, isRecordingTrackPausedDefault(context));
     }
 
+    @Deprecated //Use TrackRecordingService
     public static boolean isRecordingTrackPausedDefault(Context context) {
         return context.getResources().getBoolean(R.bool.recording_track_paused_default);
     }
 
+    @Deprecated //Use TrackRecordingService
     public static void defaultRecordingTrackPaused(Context context) {
         final boolean RECORDING_TRACK_PAUSED = context.getResources().getBoolean(R.bool.recording_track_paused_default);
         setBoolean(context, R.string.recording_track_paused_key, RECORDING_TRACK_PAUSED);
@@ -331,6 +335,7 @@ public class PreferencesUtils {
         }
     }
 
+    @Deprecated //Use TrackRecordingService
     public static boolean isRecording(Context context) {
         long recordingTrackId = getRecordingTrackId(context);
         return isRecording(recordingTrackId);

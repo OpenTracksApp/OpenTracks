@@ -6,7 +6,6 @@ import android.content.pm.ProviderInfo;
 import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.provider.OpenableColumns;
 import android.util.Log;
@@ -211,14 +210,11 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
 
         final TrackExporter trackExporter = getTrackFileFormat(uri).newTrackExporter(getContext(), tracks);
 
-        PipeDataWriter pipeDataWriter = new PipeDataWriter<String>() {
-            @Override
-            public void writeDataToPipe(@NonNull ParcelFileDescriptor output, @NonNull Uri uri, @NonNull String mimeType, @Nullable Bundle opts, @Nullable String args) {
-                try (FileOutputStream fileOutputStream = new FileOutputStream(output.getFileDescriptor())) {
-                    trackExporter.writeTrack(getContext(), fileOutputStream);
-                } catch (IOException e) {
-                    Log.w(TAG, "there occurred an error while sharing a file: " + e);
-                }
+        PipeDataWriter<String> pipeDataWriter = (PipeDataWriter<String>) (output, uri1, mimeType, opts, args) -> {
+            try (FileOutputStream fileOutputStream = new FileOutputStream(output.getFileDescriptor())) {
+                trackExporter.writeTrack(getContext(), fileOutputStream);
+            } catch (IOException e) {
+                Log.w(TAG, "there occurred an error while sharing a file: " + e);
             }
         };
 

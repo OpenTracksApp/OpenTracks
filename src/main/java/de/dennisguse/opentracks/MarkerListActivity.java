@@ -26,8 +26,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -82,7 +80,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
                 recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(MarkerListActivity.this);
             }
             if (key != null) {
-                runOnUiThread(() -> MarkerListActivity.this.invalidateOptionsMenu());
+                runOnUiThread(MarkerListActivity.this::invalidateOptionsMenu);
             }
         }
     };
@@ -129,13 +127,10 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
         listView = findViewById(R.id.marker_list);
         listView.setEmptyView(findViewById(R.id.marker_list_empty));
-        listView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = IntentUtils.newIntent(MarkerListActivity.this, MarkerDetailActivity.class)
-                        .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, id);
-                startActivity(intent);
-            }
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = IntentUtils.newIntent(MarkerListActivity.this, MarkerDetailActivity.class)
+                    .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, id);
+            startActivity(intent);
         });
         resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
             @Override
@@ -272,8 +267,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
                 DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), markerIds);
                 return true;
             case R.id.list_context_menu_select_all:
-                int size = listView.getCount();
-                for (int i = 0; i < size; i++) {
+                for (int i = 0; i < listView.getCount(); i++) {
                     listView.setItemChecked(i, true);
                 }
                 return false;

@@ -8,8 +8,8 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 public class HandlerServer {
     private String TAG = HandlerServer.class.getSimpleName();
 
-    private LocationHandler locationHandler;
-    private HandlerServerInterface service;
+    private final LocationHandler locationHandler;
+    private final HandlerServerInterface service;
 
     public HandlerServer(HandlerServerInterface service) {
         this.locationHandler = new LocationHandler(this);

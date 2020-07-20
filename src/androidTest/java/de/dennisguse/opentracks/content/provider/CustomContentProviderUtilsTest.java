@@ -206,7 +206,7 @@ public class CustomContentProviderUtilsTest {
     public void testDeleteAllTracks() {
         // Insert track, points and waypoint at first.
         long trackId = System.currentTimeMillis();
-        Track track = TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
+        TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
         Waypoint waypoint = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
         contentProviderUtils.insertWaypoint(waypoint);

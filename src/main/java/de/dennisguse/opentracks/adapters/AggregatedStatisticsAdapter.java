@@ -17,8 +17,8 @@ import de.dennisguse.opentracks.viewmodels.AggregatedStatistics;
 
 public class AggregatedStatisticsAdapter extends BaseAdapter {
 
-    private AggregatedStatistics aggregatedStatistics;
-    private Context context;
+    private final AggregatedStatistics aggregatedStatistics;
+    private final Context context;
 
     public AggregatedStatisticsAdapter(Context context, AggregatedStatistics aggregatedStatistics) {
         this.context = context;
@@ -85,12 +85,9 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         protected boolean metricsUnits;
         protected boolean reportSpeed;
 
-        public ViewHolder() {
-            metricsUnits = PreferencesUtils.isMetricUnits(context);
-        }
-
         public void setValues(View view, int iconDrawable, String name, AggregatedStatistics.AggregatedStatistic aggregatedStats) {
             reportSpeed = PreferencesUtils.isReportSpeed(context, name);
+            metricsUnits = PreferencesUtils.isMetricUnits(context);
 
             sportIcon = view.findViewById(R.id.aggregated_stats_sport_icon);
             typeLabel = view.findViewById(R.id.aggregated_stats_type_label);

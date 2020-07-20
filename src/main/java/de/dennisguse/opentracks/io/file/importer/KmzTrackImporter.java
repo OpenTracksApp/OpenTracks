@@ -53,7 +53,7 @@ public class KmzTrackImporter implements TrackImporter {
 
     private final Context context;
     private final long importTrackId;
-    private Uri uriKmzFile;
+    private final Uri uriKmzFile;
 
     /**
      * @param context       the context

@@ -166,9 +166,9 @@ public class ExportProgressDialogFragment extends DialogFragment {
 
     private class ExportThread extends Thread {
 
-        private TrackFileFormat trackFileFormat;
+        private final TrackFileFormat trackFileFormat;
 
-        private DocumentFile directory;
+        private final DocumentFile directory;
 
         ExportThread(TrackFileFormat trackFileFormat, DocumentFile directory) {
             this.directory = directory;

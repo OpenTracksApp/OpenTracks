@@ -109,7 +109,7 @@ public class MarkerDetailFragment extends Fragment {
         long markerId = getArguments().getLong(KEY_MARKER_ID);
         if (markerId == -1L) {
             Log.d(TAG, "invalid marker id");
-            getFragmentManager().popBackStack();
+            getParentFragmentManager().popBackStack();
             return;
         }
         contentProviderUtils = new ContentProviderUtils(getActivity());
@@ -125,16 +125,13 @@ public class MarkerDetailFragment extends Fragment {
         textGradient = view.findViewById(R.id.marker_detail_waypoint_text_gradient);
         waypointInfo = view.findViewById(R.id.marker_detail_waypoint_info);
 
-        photoView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handler.removeCallbacks(hideText);
-                int visibility = waypointInfo.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
-                textGradient.setVisibility(visibility);
-                waypointInfo.setVisibility(visibility);
-                if (visibility == View.VISIBLE) {
-                    handler.postDelayed(hideText, HIDE_TEXT_DELAY);
-                }
+        photoView.setOnClickListener(v -> {
+            handler.removeCallbacks(hideText);
+            int visibility = waypointInfo.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
+            textGradient.setVisibility(visibility);
+            waypointInfo.setVisibility(visibility);
+            if (visibility == View.VISIBLE) {
+                handler.postDelayed(hideText, HIDE_TEXT_DELAY);
             }
         });
         return view;
@@ -222,7 +219,7 @@ public class MarkerDetailFragment extends Fragment {
             waypoint = contentProviderUtils.getWaypoint(getArguments().getLong(KEY_MARKER_ID));
             if (waypoint == null) {
                 Log.d(TAG, "waypoint is null");
-                getFragmentManager().popBackStack();
+                getParentFragmentManager().popBackStack();
             }
         }
     }

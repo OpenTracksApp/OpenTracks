@@ -166,7 +166,7 @@ public class ImportProgressDialogFragment extends DialogFragment {
 
     private class ImportThread extends Thread {
 
-        private DocumentFile file;
+        private final DocumentFile file;
 
         ImportThread(DocumentFile file) {
             this.file = file;

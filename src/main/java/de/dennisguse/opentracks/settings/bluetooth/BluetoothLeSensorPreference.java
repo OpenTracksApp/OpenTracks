@@ -183,14 +183,11 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
             super.onPrepareDialogBuilder(builder);
 
             builder.setSingleChoiceItems(listAdapter, selectedEntryIndex,
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            selectedEntryIndex = which;
+                    (dialog, which) -> {
+                        selectedEntryIndex = which;
 
-                            BluetoothLeSensorPreferenceDialog.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-                            dialog.dismiss();
-                        }
+                        BluetoothLeSensorPreferenceDialog.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+                        dialog.dismiss();
                     });
             builder.setIcon(android.R.drawable.stat_sys_data_bluetooth);
             builder.setPositiveButton(null, null);

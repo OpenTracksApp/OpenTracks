@@ -9,7 +9,6 @@ import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
@@ -94,17 +93,13 @@ public class ActivityUtils {
         }
         searchView.setQueryRefinementEnabled(true);
         searchView.setSubmitButtonEnabled(true);
-        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                // Hide and show trackController when searchable widget has focus/no focus
-                if (trackController != null) {
-                    if (hasFocus) {
-                        trackController.hide();
-                    } else {
-                        trackController.show();
-                    }
+        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
+            // Hide and show trackController when searchable widget has focus/no focus
+            if (trackController != null) {
+                if (hasFocus) {
+                    trackController.hide();
+                } else {
+                    trackController.show();
                 }
             }
         });

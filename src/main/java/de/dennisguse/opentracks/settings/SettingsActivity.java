@@ -56,15 +56,12 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
 
     public static class PrefsFragment extends PreferenceFragmentCompat {
 
-        private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-                if (PreferencesUtils.isKey(getActivity(), R.string.recording_track_id_key, key)) {
-                    getActivity().runOnUiThread(() -> updateReset());
-                }
-                if (PreferencesUtils.isKey(getActivity(), R.string.stats_units_key, key)) {
-                    getActivity().runOnUiThread(() -> updateUnits());
-                }
+        private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
+            if (PreferencesUtils.isKey(getActivity(), R.string.recording_track_id_key, key)) {
+                getActivity().runOnUiThread(this::updateReset);
+            }
+            if (PreferencesUtils.isKey(getActivity(), R.string.stats_units_key, key)) {
+                getActivity().runOnUiThread(this::updateUnits);
             }
         };
 
@@ -117,7 +114,7 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
 
             if (dialogFragment != null) {
                 dialogFragment.setTargetFragment(this, 0);
-                dialogFragment.show(getFragmentManager(), getClass().getSimpleName());
+                dialogFragment.show(getParentFragmentManager(), getClass().getSimpleName());
                 return;
             }
 

@@ -48,8 +48,6 @@ public class FileUtils {
      */
     static final String FILEPROVIDER = BuildConfig.APPLICATION_ID + ".fileprovider";
 
-    public static final String EXPORT_DIR = "OpenTracks";
-
     private static final String JPEG_EXTENSION = "jpeg";
 
     /**

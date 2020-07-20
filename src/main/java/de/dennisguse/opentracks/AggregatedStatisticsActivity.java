@@ -3,11 +3,9 @@ package de.dennisguse.opentracks;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import de.dennisguse.opentracks.adapters.AggregatedStatisticsAdapter;
-import de.dennisguse.opentracks.viewmodels.AggregatedStatistics;
 import de.dennisguse.opentracks.viewmodels.AggregatedStatisticsModel;
 
 public class AggregatedStatisticsActivity extends AbstractActivity {

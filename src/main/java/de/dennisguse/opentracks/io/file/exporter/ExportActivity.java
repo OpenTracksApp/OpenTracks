@@ -63,9 +63,7 @@ public class ExportActivity extends FragmentActivity implements ExportProgressDi
 
     @Override
     public void onExportFinished(final String directoryDisplayName, final int successCount, final int fileCount) {
-        runOnUiThread(() -> {
-            ExportFinishedDialogFragment.showDialog(getSupportFragmentManager(), directoryDisplayName, successCount, fileCount);
-        });
+        runOnUiThread(() -> ExportFinishedDialogFragment.showDialog(getSupportFragmentManager(), directoryDisplayName, successCount, fileCount));
     }
 
     @Override

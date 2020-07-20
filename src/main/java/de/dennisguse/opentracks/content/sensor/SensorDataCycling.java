@@ -25,8 +25,8 @@ public final class SensorDataCycling {
 
     public static class Cadence extends SensorData {
 
-        private long crankRevolutionsCount; // UINT32
-        private int crankRevolutionsTime; // UINT16; 1/1024s
+        private final long crankRevolutionsCount; // UINT32
+        private final int crankRevolutionsTime; // UINT16; 1/1024s
         private float cadence_rpm = INVALID_VALUE_FLOAT;
 
         public Cadence(String sensorAddress, String sensorName, long crankRevolutionsCount, int crankRevolutionsTime) {
@@ -93,8 +93,8 @@ public final class SensorDataCycling {
 
     public static class Speed extends SensorData {
 
-        private int wheelRevolutionsCount; // UINT16
-        private int wheelRevolutionsTime; // UINT16; 1/1024s
+        private final int wheelRevolutionsCount; // UINT16
+        private final int wheelRevolutionsTime; // UINT16; 1/1024s
         private float speed_mps = INVALID_VALUE_FLOAT;
 
         public Speed(String sensorAddress, String sensorName, int wheelRevolutionsCount, int wheelRevolutionsTime) {
@@ -154,8 +154,8 @@ public final class SensorDataCycling {
 
     public static class CadenceAndSpeed extends SensorData {
 
-        private Cadence cadence;
-        private Speed speed;
+        private final Cadence cadence;
+        private final Speed speed;
 
         public CadenceAndSpeed(String sensorAddress, String sensorName, @NonNull Cadence cadence, @NonNull Speed speed) {
             super(sensorAddress, sensorName);

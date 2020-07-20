@@ -6,10 +6,10 @@ import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 
 public class SensorData {
 
-    private String sensorAddress;
-    private String sensorName;
+    private final String sensorAddress;
+    private final String sensorName;
 
-    private long timestamp_ms;
+    private final long timestamp_ms;
 
     SensorData(String sensorAddress, String sensorName) {
         this(sensorAddress, sensorName, System.currentTimeMillis());

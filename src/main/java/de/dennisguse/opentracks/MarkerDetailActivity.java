@@ -120,7 +120,7 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
     private class MarkerDetailPagerAdapter extends FragmentStatePagerAdapter {
 
         MarkerDetailPagerAdapter(FragmentManager fragmentManager) {
-            super(fragmentManager);
+            super(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         }
 
         @Override

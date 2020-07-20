@@ -449,7 +449,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         float speedValue;
         if (speed != null) {
             try {
-                speedValue = Float.valueOf(speed);
+                speedValue = Float.parseFloat(speed);
                 trackPoint.setSpeed(speedValue);
             } catch (Exception e) {
                 throw new SAXException(createErrorMessage(String.format(Locale.US, "Unable to parse speed: %s", speed)), e);
