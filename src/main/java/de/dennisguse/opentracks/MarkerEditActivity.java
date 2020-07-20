@@ -65,8 +65,7 @@ public class MarkerEditActivity extends AbstractActivity {
 
     private static final String TAG = MarkerEditActivity.class.getSimpleName();
     private long trackId;
-    private long markerId;
-    private TrackRecordingServiceConnection trackRecordingServiceConnection;
+    private TrackRecordingServiceConnection trackRecordingServiceConnection = new TrackRecordingServiceConnection();
     private Waypoint waypoint;
 
     private MenuItem insertPhotoMenuItem;
@@ -81,21 +80,15 @@ public class MarkerEditActivity extends AbstractActivity {
     private EditText waypointDescription;
     private ImageView waypointPhoto;
     private ImageView waypointDeletePhotoBtn;
-    private Button done;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
-        markerId = getIntent().getLongExtra(EXTRA_MARKER_ID, -1L);
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection();
+        long markerId = getIntent().getLongExtra(EXTRA_MARKER_ID, -1L);
 
         hasCamera = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
-
-        if (savedInstanceState != null) {
-            photoUri = savedInstanceState.getParcelable(BUNDLE_PHOTO_URI);
-        }
 
         // Setup UI elements
         waypointName = findViewById(R.id.marker_edit_waypoint_name);
@@ -117,8 +110,53 @@ public class MarkerEditActivity extends AbstractActivity {
 
         Button cancel = findViewById(R.id.marker_edit_cancel);
         cancel.setOnClickListener(v -> finish());
-        done = findViewById(R.id.marker_edit_done);
-        updateUiByMarkerId();
+
+        final boolean isNewMarker = markerId == -1L;
+
+        setTitle(isNewMarker ? R.string.menu_insert_marker : R.string.menu_edit);
+        Button done = findViewById(R.id.marker_edit_done);
+        done.setText(isNewMarker ? R.string.generic_add : R.string.generic_save);
+        done.setOnClickListener(v -> {
+            if (isNewMarker) {
+                addMarker();
+            } else {
+                saveMarker();
+            }
+            finish();
+        });
+
+        if (isNewMarker) {
+            int nextWaypointNumber = trackId == -1L ? -1 : new ContentProviderUtils(this).getNextWaypointNumber(trackId);
+            if (nextWaypointNumber == -1) {
+                nextWaypointNumber = 0;
+            }
+            waypointName.setText(getString(R.string.marker_name_format, nextWaypointNumber));
+            waypointName.selectAll();
+            waypointMarkerType.setText("");
+            waypointDescription.setText("");
+        } else {
+            waypoint = new ContentProviderUtils(this).getWaypoint(markerId);
+            if (waypoint == null) {
+                Log.d(TAG, "waypoint is null");
+                finish();
+                return;
+            }
+            waypointName.setText(waypoint.getName());
+            waypointMarkerType.setText(waypoint.getCategory());
+            waypointDescription.setText(waypoint.getDescription());
+            if (waypoint.hasPhoto()) {
+                photoUri = waypoint.getPhotoURI();
+            }
+        }
+
+        if (savedInstanceState != null) {
+            photoUri = savedInstanceState.getParcelable(BUNDLE_PHOTO_URI);
+        }
+        if (photoUri != null) {
+            setWaypointImageView(photoUri);
+        }
+
+        hideAndShowOptions();
     }
 
     @Override
@@ -200,54 +238,6 @@ public class MarkerEditActivity extends AbstractActivity {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    /**
-     * Updates the UI based on the marker id.
-     */
-    private void updateUiByMarkerId() {
-        final boolean newMarker = markerId == -1L;
-
-        setTitle(newMarker ? R.string.menu_insert_marker : R.string.menu_edit);
-        done.setText(newMarker ? R.string.generic_add : R.string.generic_save);
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (newMarker) {
-                    addMarker();
-                } else {
-                    saveMarker();
-                }
-                finish();
-            }
-        });
-
-        if (newMarker) {
-            int nextWaypointNumber = trackId == -1L ? -1 : new ContentProviderUtils(this).getNextWaypointNumber(trackId);
-            if (nextWaypointNumber == -1) {
-                nextWaypointNumber = 0;
-            }
-            waypointName.setText(getString(R.string.marker_name_format, nextWaypointNumber));
-            waypointName.selectAll();
-            waypointMarkerType.setText("");
-            waypointDescription.setText("");
-        } else {
-            waypoint = new ContentProviderUtils(this).getWaypoint(markerId);
-            if (waypoint == null) {
-                Log.d(TAG, "waypoint is null");
-                finish();
-                return;
-            }
-            waypointName.setText(waypoint.getName());
-            waypointMarkerType.setText(waypoint.getCategory());
-            waypointDescription.setText(waypoint.getDescription());
-            if (waypoint.hasPhoto()) {
-                photoUri = waypoint.getPhotoURI();
-                setWaypointImageView(photoUri);
-            }
-        }
-
-        hideAndShowOptions();
     }
 
     /**
