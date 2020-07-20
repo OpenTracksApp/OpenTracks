@@ -4,6 +4,8 @@ import android.app.Application;
 import android.os.StrictMode;
 import android.util.Log;
 
+import java.util.Locale;
+
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
@@ -25,6 +27,10 @@ public class Startup extends Application {
 
         //Set default values of preferences on first start.
         PreferencesUtils.resetPreferences(this, false);
+        if (PreferencesUtils.getString(this, R.string.stats_units_key, "").equals("")) {
+            String statsUnits = getString(Locale.US.equals(Locale.getDefault()) ? R.string.stats_units_imperial : R.string.stats_units_metric);
+            PreferencesUtils.setString(this, R.string.stats_units_key, statsUnits);
+        }
 
 
         //In debug builds: show thread and VM warnings.

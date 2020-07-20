@@ -45,8 +45,6 @@ import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
-import java.util.Locale;
-
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
@@ -280,7 +278,8 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         ActivityUtils.configureListViewContextualMenu(listView, contextualActionModeCallback);
 
         LoaderManager.getInstance(this).initLoader(0, null, loaderCallbacks);
-        showStartupDialogs();
+
+        requestGPSPermissions();
     }
 
     @Override
@@ -424,19 +423,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     @Override
     protected void onDeleted() {
         // Do nothing
-    }
-
-    /**
-     * Shows start up dialogs.
-     */
-    private void showStartupDialogs() {
-        // If stats_units_key is undefined, set it
-        if (PreferencesUtils.getString(this, R.string.stats_units_key, "").equals("")) {
-            String statsUnits = getString(Locale.US.equals(Locale.getDefault()) ? R.string.stats_units_imperial : R.string.stats_units_metric);
-            PreferencesUtils.setString(this, R.string.stats_units_key, statsUnits);
-        }
-
-        requestGPSPermissions();
     }
 
     private void requestGPSPermissions() {
