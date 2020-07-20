@@ -33,7 +33,6 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackEditActivity;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.util.ServiceUtils;
 
 /**
  * Wrapper for the track recording service.
@@ -66,14 +65,43 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
      * Starts and binds the service.
      */
     public void startAndBind(Context context) {
-        bindService(context, true);
+        if (trackRecordingService != null) {
+            // Service is already started and bound.
+            return;
+        }
+
+        Log.i(TAG, "Starting the service.");
+        context.startService(new Intent(context, TrackRecordingService.class));
+
+        startConnection(context);
     }
 
     /**
-     * Binds the service if it is started.
+     * Resumes the track recording service connection.
+     *
+     * @param context the context
      */
-    private void bindIfStarted(Context context) {
-        bindService(context, false);
+    public void startConnection(@NonNull Context context) {
+        if (trackRecordingService != null) {
+            // Service is already started and bound.
+            return;
+        }
+
+        Log.i(TAG, "Binding the service.");
+        int flags = BuildConfig.DEBUG ? Context.BIND_DEBUG_UNBIND : 0;
+        context.bindService(new Intent(context, TrackRecordingService.class), this, flags);
+    }
+
+    /**
+     * Unbinds the service (but leave it running).
+     */
+    public void unbind(Context context) {
+        try {
+            context.unbindService(this);
+        } catch (IllegalArgumentException e) {
+            // Means not bound to the service. OK to ignore.
+        }
+        setTrackRecordingService(null);
     }
 
     /**
@@ -91,7 +119,6 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         return trackRecordingService;
     }
 
-
     /**
      * Sets the trackRecordingService.
      *
@@ -102,18 +129,6 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         if (callback != null) {
             callback.run();
         }
-    }
-
-    /**
-     * Unbinds the service (but leave it running).
-     */
-    public void unbind(Context context) {
-        try {
-            context.unbindService(this);
-        } catch (IllegalArgumentException e) {
-            // Means not bound to the service. OK to ignore.
-        }
-        setTrackRecordingService(null);
     }
 
     @Override
@@ -140,44 +155,6 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     }
 
     /**
-     * Binds the service if it is started.
-     *
-     * @param startIfNeeded start the service if needed
-     */
-    private void bindService(Context context, boolean startIfNeeded) {
-        if (trackRecordingService != null) {
-            // Service is already started and bound.
-            return;
-        }
-
-        if (!startIfNeeded && !ServiceUtils.isTrackRecordingServiceRunning(context)) {
-            Log.d(TAG, "Service is not started. Not binding it.");
-            return;
-        }
-
-        if (startIfNeeded) {
-            Log.i(TAG, "Starting the service.");
-            context.startService(new Intent(context, TrackRecordingService.class));
-        }
-
-        Log.i(TAG, "Binding the service.");
-        int flags = BuildConfig.DEBUG ? Context.BIND_DEBUG_UNBIND : 0;
-        context.bindService(new Intent(context, TrackRecordingService.class), this, flags);
-    }
-
-    /**
-     * Resumes the track recording service connection.
-     *
-     * @param context the context
-     */
-    public void startConnection(@NonNull Context context) {
-        bindIfStarted(context);
-        if (!ServiceUtils.isTrackRecordingServiceRunning(context)) {
-            resetRecordingState(context);
-        }
-    }
-
-    /**
      * Resumes the recording track.
      */
     public void resumeTrack() {
@@ -194,16 +171,6 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         TrackRecordingServiceInterface service = getServiceIfBound();
         if (service != null) {
             service.pauseCurrentTrack();
-        }
-    }
-
-    private static void resetRecordingState(Context context) {
-        if (PreferencesUtils.isRecording(context)) {
-            PreferencesUtils.setLong(context, R.string.recording_track_id_key, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
-        }
-        boolean recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(context);
-        if (!recordingTrackPaused) {
-            PreferencesUtils.defaultRecordingTrackPaused(context);
         }
     }
 
@@ -241,7 +208,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     public void stopRecording(@NonNull Context context, boolean showEditor) {
         TrackRecordingServiceInterface trackRecordingService = getServiceIfBound();
         if (trackRecordingService == null) {
-            resetRecordingState(context);
+            Log.e(TAG, "TrackRecordingService not connected.");
         } else {
             try {
                 if (showEditor) {

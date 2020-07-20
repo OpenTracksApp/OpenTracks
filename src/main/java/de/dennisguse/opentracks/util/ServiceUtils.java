@@ -18,7 +18,7 @@ public class ServiceUtils {
      *
      * @param context the current context
      */
-    @Deprecated
+    @Deprecated //TODO This method must be removed as the service will nowadays always be started
     public static boolean isTrackRecordingServiceRunning(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         if (activityManager == null) {
