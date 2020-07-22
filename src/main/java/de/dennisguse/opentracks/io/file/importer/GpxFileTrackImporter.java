@@ -40,6 +40,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
     private static final String TAG_NAME = "name";
     private static final String TAG_TIME = "time";
     private static final String TAG_SPEED = "speed";
+    private static final String TAG_HEARTRATE = "gpx:hr";
     private static final String TAG_TRACK = "trk";
     private static final String TAG_TRACK_POINT = "trkpt";
     private static final String TAG_TRACK_SEGMENT = "trkseg";
@@ -119,6 +120,10 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
             case TAG_SPEED:
                 if (content != null) {
                     speed = content.trim();
+                }
+            case TAG_HEARTRATE:
+                if (content != null) {
+                    heartrate = content.trim();
                 }
                 break;
             case TAG_ELEVATION:
