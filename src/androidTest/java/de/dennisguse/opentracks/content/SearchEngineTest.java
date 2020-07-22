@@ -58,7 +58,6 @@ public class SearchEngineTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
 
-
     @Before
     public void setUp() {
         providerUtils = new ContentProviderUtils(context);
