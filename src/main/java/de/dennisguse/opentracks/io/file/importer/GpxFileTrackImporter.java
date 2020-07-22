@@ -28,6 +28,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
 /**
  * Imports a GPX file.
+ * Uses https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd
  *
  * @author Jimmy Shih
  */
@@ -39,8 +40,6 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
     private static final String TAG_GPX = "gpx";
     private static final String TAG_NAME = "name";
     private static final String TAG_TIME = "time";
-    private static final String TAG_SPEED = "speed";
-    private static final String TAG_HEARTRATE = "gpx:hr";
     private static final String TAG_TRACK = "trk";
     private static final String TAG_TRACK_POINT = "trkpt";
     private static final String TAG_TRACK_SEGMENT = "trkseg";
@@ -49,6 +48,10 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
 
     private static final String ATTRIBUTE_LAT = "lat";
     private static final String ATTRIBUTE_LON = "lon";
+
+    private static final String TAG_EXTENSION_SPEED = "gpxtpx:speed";
+    private static final String TAG_EXTENSION_HEARTRATE = "gpxtpx:hr";
+    private static final String TAG_EXTENSION_CADENCE = "gpxtpx:cad";
 
     /**
      * Constructor.
@@ -117,15 +120,6 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
                     time = content.trim();
                 }
                 break;
-            case TAG_SPEED:
-                if (content != null) {
-                    speed = content.trim();
-                }
-            case TAG_HEARTRATE:
-                if (content != null) {
-                    heartrate = content.trim();
-                }
-                break;
             case TAG_ELEVATION:
                 if (content != null) {
                     altitude = content.trim();
@@ -134,6 +128,20 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
             case TAG_COMMENT:
                 if (content != null) {
                     waypointType = content.trim();
+                }
+                break;
+            case TAG_EXTENSION_SPEED:
+                if (content != null) {
+                    speed = content.trim();
+                }
+            case TAG_EXTENSION_HEARTRATE:
+                if (content != null) {
+                    heartrate = content.trim();
+                }
+                break;
+            case TAG_EXTENSION_CADENCE:
+                if (content != null) {
+                    cadence = content.trim();
                 }
                 break;
         }

@@ -33,11 +33,11 @@ import de.dennisguse.opentracks.util.StringUtils;
  *
  * @author Sandor Dornbush
  */
-//TODO Can we export SensorData in GPX?
 public class GpxTrackWriter implements TrackWriter {
 
     private static final NumberFormat ELEVATION_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat COORDINATE_FORMAT = NumberFormat.getInstance(Locale.US);
+    private static final NumberFormat SPEED_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat HEARTRATE_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat CADENCE_FORMAT = NumberFormat.getInstance(Locale.US);
 
@@ -53,10 +53,13 @@ public class GpxTrackWriter implements TrackWriter {
         COORDINATE_FORMAT.setMaximumIntegerDigits(3);
         COORDINATE_FORMAT.setGroupingUsed(false);
 
-        HEARTRATE_FORMAT.setMaximumFractionDigits(1);
+        SPEED_FORMAT.setMaximumFractionDigits(2);
+        SPEED_FORMAT.setGroupingUsed(false);
+
+        HEARTRATE_FORMAT.setMaximumFractionDigits(0);
         HEARTRATE_FORMAT.setGroupingUsed(false);
 
-        CADENCE_FORMAT.setMaximumFractionDigits(1);
+        CADENCE_FORMAT.setMaximumFractionDigits(0);
         CADENCE_FORMAT.setGroupingUsed(false);
     }
 
@@ -90,12 +93,12 @@ public class GpxTrackWriter implements TrackWriter {
             printWriter.println("xmlns=\"http://www.topografix.com/GPX/1/1\"");
             printWriter.println("xmlns:topografix=\"http://www.topografix.com/GPX/Private/TopoGrafix/0/1\"");
             printWriter.println("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
-            printWriter.println("xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1"
-                    + " http://www.topografix.com/GPX/1/1/gpx.xsd"
-                    + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1"
-                    + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd\"");
-            printWriter.println("xmlns:gpxtpx=\"http://www.garmin.com/xmlschemes/TrackPointExtension/v1\">");
+            printWriter.println("xmlns:gpxtpx=\"http://www.garmin.com/xmlschemes/TrackPointExtension/v2\"");
+            printWriter.println("xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
+                    + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1 http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd"
+                    + " http://www.garmin.com/xmlschemas/TrackPointExtension/v2 https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd\">");
             printWriter.println("<metadata>");
+
             Track track = tracks[0];
             printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
             printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
@@ -180,10 +183,20 @@ public class GpxTrackWriter implements TrackWriter {
     public void writeTrackPoint(TrackPoint trackPoint) {
         if (printWriter != null) {
             printWriter.println("<trkpt " + formatLocation(trackPoint.getLocation()) + ">");
-            if (trackPoint.hasAltitude()) { printWriter.println("<ele>" + ELEVATION_FORMAT.format(trackPoint.getAltitude()) + "</ele>"); }
+            if (trackPoint.hasAltitude()) {
+                printWriter.println("<ele>" + ELEVATION_FORMAT.format(trackPoint.getAltitude()) + "</ele>");
+            }
 
-            if (trackPoint.hasHeartRate() || trackPoint.hasCyclingCadence()) {
+            printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(trackPoint.getTime()) + "</time>");
+
+            if (trackPoint.hasSpeed() || trackPoint.hasHeartRate() || trackPoint.hasCyclingCadence()) {
                 printWriter.println("<extensions><gpxtpx:TrackPointExtension>");
+
+
+                if (trackPoint.hasSpeed()) {
+                    printWriter.println("<gpxtpx:speed>" + SPEED_FORMAT.format(trackPoint.getSpeed()) + "</gpxtpx:speed>");
+                }
+
                 if (trackPoint.hasHeartRate()) {
                     printWriter.println("<gpxtpx:hr>" + HEARTRATE_FORMAT.format(trackPoint.getHeartRate_bpm()) + "</gpxtpx:hr>");
                 }
@@ -195,9 +208,6 @@ public class GpxTrackWriter implements TrackWriter {
                 printWriter.println("</gpxtpx:TrackPointExtension></extensions>");
             }
 
-            printWriter.println(
-                    "<time>" + StringUtils.formatDateTimeIso8601(trackPoint.getTime()) + "</time>");
-            printWriter.println("<speed>" + trackPoint.getSpeed() + "</speed>");
             printWriter.println("</trkpt>");
         }
     }

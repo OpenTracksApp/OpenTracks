@@ -103,8 +103,7 @@ public class ExportImportTest {
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackFileFormat trackFileFormat = TrackFileFormat.KML_WITH_TRACKDETAIL;
-        TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, new Track[]{track});
+        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL.newTrackExporter(context, new Track[]{track});
 
         // when
         // 1. export
@@ -138,8 +137,7 @@ public class ExportImportTest {
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackFileFormat trackFileFormat = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA;
-        TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, new Track[]{track});
+        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.newTrackExporter(context, new Track[]{track});
 
         // when
         // 1. export
@@ -201,8 +199,7 @@ public class ExportImportTest {
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackFileFormat trackFileFormat = TrackFileFormat.GPX;
-        TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, new Track[]{track});
+        TrackExporter trackExporter = TrackFileFormat.GPX.newTrackExporter(context, new Track[]{track});
 
         // when
         // 1. export
@@ -229,7 +226,7 @@ public class ExportImportTest {
         assertWaypoints();
 
         // 3. trackpoints
-        assertTrackpoints(false, false, false);
+        assertTrackpoints(false, true, true);
     }
 
     private void assertWaypoints() {
