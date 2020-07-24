@@ -151,6 +151,7 @@ public class MarkerEditActivity extends AbstractActivity {
 
         if (savedInstanceState != null) {
             photoUri = savedInstanceState.getParcelable(BUNDLE_PHOTO_URI);
+            waypoint.setPhotoUrl(photoUri != null ? photoUri.toString() : null);
         }
         if (photoUri != null) {
             setWaypointImageView(photoUri);
