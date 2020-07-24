@@ -1,0 +1,16 @@
+v3.8.0: OpenTracks
+
+Breaking change:
+- GPX import/export speed, cadence, and heartrate via TrackPointExtension/v2
+
+Changes:
+- Dashboard API: provide access to markers (incl. callback to show in OpenTracks)
+- New marker icon (orange push pin, SVG)
+- Files to import can be selected via file manager
+
+Bugfixes:
+- Aggregated stats UI respects preferred rate
+- Editing a marker failed on orientation change
+
+Developer:
+- Refactored TrackRecordingService

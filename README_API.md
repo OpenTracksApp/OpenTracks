@@ -11,7 +11,7 @@ For the time being, the OpenTracks Data API can be used to implement mainly cust
 
 ## Implementation
 OpenTracks by default does not expose any data to 3rd-party applications.
-On the request of the user (i.e., pressing a button), an Intent is created that exposes the `Track` data (it's summary) as well as the `TrackPoint`s of one or more selected tracks.
+On the request of the user (i.e., pressing a button), an Intent is created that exposes the `Track` data (it's summary), the `TrackPoint`s, and the `Waypoint`s of one or more selected tracks.
 For each, one URI is provided.
 These URIs notify observers if on content changes (e.g., a new `TrackPoint` was added).
 
