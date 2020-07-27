@@ -20,13 +20,14 @@ import de.dennisguse.opentracks.util.UUIDUtils;
  * Database helper for creating and upgrading the database.
  */
 @VisibleForTesting
-class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
+public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final String TAG = CustomSQLiteOpenHelper.class.getSimpleName();
 
     private static final int DATABASE_VERSION = 26;
 
-    private static final String DATABASE_NAME = "database.db";
+    @VisibleForTesting
+    public static final String DATABASE_NAME = "database.db";
 
     public CustomSQLiteOpenHelper(Context context) {
         this(context, DATABASE_NAME);

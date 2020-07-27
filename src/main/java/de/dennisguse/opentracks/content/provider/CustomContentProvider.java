@@ -42,7 +42,7 @@ import de.dennisguse.opentracks.content.data.WaypointsColumns;
  *
  * @author Leif Hendrik Wilden
  */
-public abstract class CustomContentProvider extends ContentProvider {
+public class CustomContentProvider extends ContentProvider {
 
     private static final String TAG = CustomContentProvider.class.getSimpleName();
 

@@ -56,7 +56,8 @@ public class ContentProviderUtils {
     private static final int MAX_LATITUDE = 90000000;
 
     // The authority (the first part of the URI) for the app's content provider.
-    static final String AUTHORITY_PACKAGE = BuildConfig.APPLICATION_ID + ".content";
+    @VisibleForTesting
+    public static final String AUTHORITY_PACKAGE = BuildConfig.APPLICATION_ID + ".content";
 
     // The base URI for the app's content provider.
     public static final String CONTENT_BASE_URI = "content://" + AUTHORITY_PACKAGE;

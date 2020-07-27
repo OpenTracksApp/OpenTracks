@@ -17,18 +17,17 @@
 package de.dennisguse.opentracks.content;
 
 import android.content.ContentUris;
-import android.content.Context;
 import android.location.Location;
 import android.net.Uri;
 
-import androidx.test.core.app.ApplicationProvider;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.provider.ProviderTestRule;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +38,8 @@ import de.dennisguse.opentracks.content.SearchEngine.SearchQuery;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.content.provider.CustomContentProvider;
+import de.dennisguse.opentracks.content.provider.CustomSQLiteOpenHelper;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
@@ -48,25 +49,29 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
  *
  * @author Rodrigo Damazio
  */
-@RunWith(AndroidJUnit4.class)
 public class SearchEngineTest {
 
+    private static final String TAG = SearchEngineTest.class.getSimpleName();
+
     private static final Location HERE = new Location("gps");
-    private static final long NOW = SearchEngine.OLDEST_ALLOWED_TIMESTAMP + 1000;  // After OLDEST_ALLOWED_TIMESTAMP
+    private static final long NOW = SearchEngine.OLDEST_ALLOWED_TIMESTAMP + 1000;
+
+    @Rule
+    public ProviderTestRule sqliteContentProviderRule = new ProviderTestRule.Builder(CustomContentProvider.class, ContentProviderUtils.AUTHORITY_PACKAGE).setPrefix(TAG).build();
+
     private ContentProviderUtils providerUtils;
     private SearchEngine engine;
 
-    private final Context context = ApplicationProvider.getApplicationContext();
-
     @Before
     public void setUp() {
-        providerUtils = new ContentProviderUtils(context);
+        providerUtils = new ContentProviderUtils(sqliteContentProviderRule.getResolver());
+
         engine = new SearchEngine(providerUtils);
     }
 
     @After
     public void tearDown() {
-        providerUtils.deleteAllTracks(context);
+        InstrumentationRegistry.getInstrumentation().getTargetContext().deleteDatabase(TAG + CustomSQLiteOpenHelper.DATABASE_NAME);
     }
 
     private long insertTrack(String title, String description, String category, long hoursAgo) {
