@@ -5,7 +5,7 @@ import android.hardware.SensorManager;
 public class PressureSensorUtils {
 
     //Everything above is considered a meaningful change in elevation.
-    private static float ELEVATION_CHANGE_DIFF_M = 5.0f;
+    private static float ELEVATION_CHANGE_DIFF_M = 3.0f;
 
     private static float EXPONENTIAL_SMOOTHING = 0.3f;
 

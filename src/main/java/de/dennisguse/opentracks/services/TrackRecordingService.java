@@ -549,10 +549,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         //TODO Figure out how to avoid loading the lastValidTrackPoint from the database
         TrackPoint lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(track.getId());
 
-        if (elevationSumManager != null) {
-            trackPoint.setElevationGain(elevationSumManager.getElevationGain_m());
-        }
-
         //Storing trackPoint
 
         // Always insert the first segment location
@@ -576,7 +572,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             insertTrackPoint(track, TrackPoint.createPause());
 
             insertTrackPoint(track, trackPoint);
-            elevationSumManager.reset();
 
             isIdle = false;
             lastTrackPoint = trackPoint;
@@ -587,7 +582,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             insertTrackPointIfNewer(track, lastTrackPoint);
 
             insertTrackPoint(track, trackPoint);
-            elevationSumManager.reset();
 
             isIdle = false;
 
@@ -599,7 +593,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             insertTrackPointIfNewer(track, lastTrackPoint);
 
             insertTrackPoint(track, trackPoint);
-            elevationSumManager.reset();
 
             isIdle = true;
 
@@ -611,7 +604,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             insertTrackPointIfNewer(track, lastTrackPoint);
 
             insertTrackPoint(track, trackPoint);
-            elevationSumManager.reset();
 
             isIdle = false;
 
@@ -662,6 +654,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      */
     private void insertTrackPoint(@NonNull Track track, @NonNull TrackPoint trackPoint) {
         try {
+            if (elevationSumManager != null) {
+                trackPoint.setElevationGain(elevationSumManager.getElevationGain_m());
+                elevationSumManager.reset();
+            }
             contentProviderUtils.insertTrackPoint(trackPoint, track.getId());
             trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
             updateTrackTotalTime(track);
