@@ -76,12 +76,9 @@ limitations under the License.
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
 
+                <data android:mimeType="application/vnd.google-earth.kmz" />
                 <data
-                    android:host="*"
-                    android:mimeType="application/vnd.google-earth.kmz" />
-                <data
-                    android:host="*"
-                    android:mimeType="*/*"
+                    android:scheme="content"
                     android:pathPattern="*kmz" />
             </intent-filter>
 
@@ -89,12 +86,9 @@ limitations under the License.
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
 
+                <data android:mimeType="application/vnd.google-earth.kml+xml" />
                 <data
-                    android:host="*"
-                    android:mimeType="application/vnd.google-earth.kml+xml" />
-                <data
-                    android:host="*"
-                    android:mimeType="*/*"
+                    android:scheme="content"
                     android:pathPattern="*kml" />
             </intent-filter>
 
@@ -102,12 +96,9 @@ limitations under the License.
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
 
+                <data android:mimeType="application/gpx+xml" />
                 <data
-                    android:host="*"
-                    android:mimeType="application/gpx+xml" />
-                <data
-                    android:host="*"
-                    android:mimeType="*/*"
+                    android:scheme="content"
                     android:pathPattern="*gpx" />
             </intent-filter>
 
