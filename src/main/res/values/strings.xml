@@ -349,6 +349,8 @@ limitations under the License.
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">While recording, show statistics without unlocking the device.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Keep screen on</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">While recording, keep the screen on.</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">Fullscreen</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">While recording, present in fullscreen.</string>
     <string name="settings_recording">Recording</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Always resume a recording after reboot</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Never resume a recording after reboot</string>

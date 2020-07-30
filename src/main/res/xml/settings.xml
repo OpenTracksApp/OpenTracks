@@ -67,6 +67,11 @@ limitations under the License.
             android:key="@string/stats_keep_screen_on_while_recording_key"
             android:summary="@string/settings_recording_keep_screen_on_while_recording_summary"
             android:title="@string/settings_recording_keep_screen_on_while_recording_title" />
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/stats_fullscreen_while_recording_default"
+            android:key="@string/stats_fullscreen_while_recording_key"
+            android:summary="@string/settings_recording_fullscreen_on_while_recording_summary"
+            android:title="@string/settings_recording_fullscreen_on_while_recording_title" />
         <ListPreference
             android:defaultValue="@string/voice_frequency_default"
             android:entryValues="@array/frequency_values"

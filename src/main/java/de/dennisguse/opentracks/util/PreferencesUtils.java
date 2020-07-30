@@ -275,6 +275,11 @@ public class PreferencesUtils {
         return getBoolean(context, R.string.stats_keep_screen_on_while_recording_key, DEFAULT);
     }
 
+    public static boolean shouldUseFullscreen(Context context) {
+        final boolean DEFAULT = context.getResources().getBoolean(R.bool.stats_fullscreen_while_recording_default);
+        return getBoolean(context, R.string.stats_fullscreen_while_recording_key, DEFAULT);
+    }
+
     public static boolean isShowStatsElevation(Context context) {
         final boolean STATS_SHOW_ELEVATION = context.getResources().getBoolean(R.bool.stats_show_elevation_default);
         return getBoolean(context, R.string.stats_show_grade_elevation_key, STATS_SHOW_ELEVATION);

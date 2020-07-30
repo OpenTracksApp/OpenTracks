@@ -110,6 +110,9 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.stats_keep_screen_on_while_recording_key, key)) {
                 setScreenOnPolicy();
             }
+            if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.stats_fullscreen_while_recording_key, key)) {
+                setFullscreenPolicy();
+            }
 
             if (key == null) return;
 
@@ -190,12 +193,12 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     public void onAttachedToWindow() {
         setLockscreenPolicy();
         setScreenOnPolicy();
+        setFullscreenPolicy();
         super.onAttachedToWindow();
     }
 
     private void setLockscreenPolicy() {
-        boolean showOnLockScreen = PreferencesUtils.shouldShowStatsOnLockscreen(TrackRecordingActivity.this)
-                && PreferencesUtils.isRecording(this);
+        boolean showOnLockScreen = PreferencesUtils.shouldShowStatsOnLockscreen(TrackRecordingActivity.this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(showOnLockScreen);
@@ -207,13 +210,22 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     }
 
     private void setScreenOnPolicy() {
-        boolean keepScreenOn = PreferencesUtils.shouldKeepScreenOn(TrackRecordingActivity.this)
-                && PreferencesUtils.isRecording(this);
+        boolean keepScreenOn = PreferencesUtils.shouldKeepScreenOn(TrackRecordingActivity.this);
 
         if (keepScreenOn) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+    }
+
+    private void setFullscreenPolicy() {
+        boolean keepScreenOn = PreferencesUtils.shouldUseFullscreen(TrackRecordingActivity.this);
+
+        if (keepScreenOn) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
 
