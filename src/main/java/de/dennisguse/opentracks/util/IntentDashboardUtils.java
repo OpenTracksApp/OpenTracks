@@ -26,6 +26,7 @@ public class IntentDashboardUtils {
 
     private static final String EXTRAS_SHOULD_KEEP_SCREEN_ON = "EXTRAS_SHOULD_KEEP_SCREEN_ON";
     private static final String EXTRAS_SHOW_WHEN_LOCKED = "EXTRAS_SHOULD_KEEP_SCREEN_ON";
+    private static final String EXTRAS_SHOW_FULLSCREEN = "EXTRAS_SHOULD_FULLSCREEN";
 
     private static final int TRACK_URI_INDEX = 0;
     private static final int TRACKPOINTS_URI_INDEX = 1;
@@ -58,6 +59,7 @@ public class IntentDashboardUtils {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(EXTRAS_SHOULD_KEEP_SCREEN_ON, PreferencesUtils.shouldKeepScreenOn(context));
         intent.putExtra(EXTRAS_SHOW_WHEN_LOCKED, PreferencesUtils.shouldShowStatsOnLockscreen(context));
+        intent.putExtra(EXTRAS_SHOW_FULLSCREEN, PreferencesUtils.shouldUseFullscreen(context));
 
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         ClipData clipData = ClipData.newRawUri(null, uris.get(TRACK_URI_INDEX));

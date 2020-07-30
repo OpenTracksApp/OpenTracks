@@ -13,6 +13,9 @@
     <string name="stats_keep_screen_on_while_recording_key" translatable="false">trackdetail_keep_screen_on_while_recording</string>
     <bool name="stats_keep_screen_on_while_recording_default" translatable="false">false</bool>
 
+    <string name="stats_fullscreen_while_recording_key" translatable="false">trackdetail_fullscreen_while_recording</string>
+    <bool name="stats_fullscreen_while_recording_default" translatable="false">false</bool>
+
     <string name="settings_reset_key" translatable="false">settingsReset</string>
 
     <string name="settings_sensor_bluetooth_heart_rate_key" translatable="false">bluetoothSensor</string>
