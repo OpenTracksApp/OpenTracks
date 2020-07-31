@@ -29,7 +29,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.Scroller;
 
@@ -51,7 +50,8 @@ import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * Visualization of the chart.
- * Provides support for zooming (via pinch), scrolling, flinging, and selecting shown markers (single touch).
+ * Provides support for selecting shown markers (single touch).
+ * Support for zooming (via pinch), scrolling, and flinging was removed as it conflicts with the ViewPager this view is shown on.
  *
  * @author Sandor Dornbush
  * @author Leif Hendrik Wilden
@@ -120,30 +120,30 @@ public class ChartView extends View {
 
     private final GestureDetectorCompat detectorScrollFlingTab = new GestureDetectorCompat(getContext(), new GestureDetector.SimpleOnGestureListener() {
 
-        @Override
-        public boolean onDown(MotionEvent e) {
-            if (!scroller.isFinished()) {
-                scroller.abortAnimation();
-            }
-            return true;
-        }
-
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            if (Math.abs(distanceX) > 0) {
-                int availableToScroll = effectiveWidth * (zoomLevel - 1) - getScrollX();
-                if (availableToScroll > 0) {
-                    scrollBy(Math.min(availableToScroll, (int) distanceX));
-                }
-            }
-            return true;
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            fling((int) -velocityX);
-            return true;
-        }
+//        @Override
+//        public boolean onDown(MotionEvent e) {
+//            if (!scroller.isFinished()) {
+//                scroller.abortAnimation();
+//            }
+//            return true;
+//        }
+//
+//        @Override
+//        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+//            if (Math.abs(distanceX) > 0) {
+//                int availableToScroll = effectiveWidth * (zoomLevel - 1) - getScrollX();
+//                if (availableToScroll > 0) {
+//                    scrollBy(Math.min(availableToScroll, (int) distanceX));
+//                }
+//            }
+//            return true;
+//        }
+//
+//        @Override
+//        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+//            fling((int) -velocityX);
+//            return true;
+//        }
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent event) {
@@ -168,22 +168,6 @@ public class ChartView extends View {
                 }
             }
 
-            return false;
-        }
-    });
-
-    private final ScaleGestureDetector detectorZoom = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.SimpleOnScaleGestureListener() {
-
-        @Override
-        public boolean onScale(ScaleGestureDetector detector) {
-            float scaleFactor = detector.getScaleFactor();
-            if (scaleFactor >= 1.1f) {
-                zoomIn();
-                return true;
-            } else if (scaleFactor <= 0.9) {
-                zoomOut();
-                return true;
-            }
             return false;
         }
     });
@@ -506,8 +490,7 @@ public class ChartView extends View {
     }
 
     /**
-     * Called by the parent to indicate that the mScrollX/Y values need to be
-     * updated. Triggers a redraw during flinging.
+     * Called by the parent to indicate that the mScrollX/Y values need to be updated. Triggers a redraw during flinging.
      */
     @Override
     public void computeScroll() {
@@ -524,9 +507,7 @@ public class ChartView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        boolean isZoom = detectorZoom.onTouchEvent(event);
-        boolean isScrollTab = detectorScrollFlingTab.onTouchEvent(event);
-        return isZoom || isScrollTab;
+        return detectorScrollFlingTab.onTouchEvent(event);
     }
 
     @Override
