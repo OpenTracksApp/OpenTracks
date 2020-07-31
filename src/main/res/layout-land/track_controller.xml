@@ -24,11 +24,6 @@ limitations under the License.
         android:paddingLeft="8dp"
         android:paddingRight="8dp">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
         <ImageButton
             android:id="@+id/track_controller_record"
             android:layout_width="wrap_content"
@@ -69,9 +64,5 @@ limitations under the License.
             android:contentDescription="@string/image_stop"
             android:src="@drawable/ic_button_stop_disabled" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
     </LinearLayout>
 </merge>
