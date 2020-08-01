@@ -24,6 +24,7 @@ public class IntentDashboardUtils {
 
     private static final String ACTION_DASHBOARD_PAYLOAD = ACTION_DASHBOARD + ".Payload";
 
+    private static final String EXTRAS_OPENTRACKS_IS_RECORDING_THIS_TRACK = "EXTRAS_OPENTRACKS_IS_RECORDING_THIS_TRACK";
     private static final String EXTRAS_SHOULD_KEEP_SCREEN_ON = "EXTRAS_SHOULD_KEEP_SCREEN_ON";
     private static final String EXTRAS_SHOW_WHEN_LOCKED = "EXTRAS_SHOULD_KEEP_SCREEN_ON";
     private static final String EXTRAS_SHOW_FULLSCREEN = "EXTRAS_SHOULD_FULLSCREEN";
@@ -41,7 +42,7 @@ public class IntentDashboardUtils {
      * @param context  the context
      * @param trackIds the track ids
      */
-    public static void startDashboard(Context context, long[] trackIds) {
+    public static void startDashboard(Context context, long[] trackIds, boolean isRecording) {
         if (trackIds.length == 0) {
             return;
         }
@@ -56,10 +57,10 @@ public class IntentDashboardUtils {
         Intent intent = new Intent(ACTION_DASHBOARD);
         intent.putParcelableArrayListExtra(ACTION_DASHBOARD_PAYLOAD, uris);
 
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(EXTRAS_SHOULD_KEEP_SCREEN_ON, PreferencesUtils.shouldKeepScreenOn(context));
         intent.putExtra(EXTRAS_SHOW_WHEN_LOCKED, PreferencesUtils.shouldShowStatsOnLockscreen(context));
-        if (PreferencesUtils.isRecording(context)) {
+        intent.putExtra(EXTRAS_OPENTRACKS_IS_RECORDING_THIS_TRACK, isRecording);
+        if (isRecording) {
             intent.putExtra(EXTRAS_SHOW_FULLSCREEN, PreferencesUtils.shouldUseFullscreen(context));
         }
 
@@ -70,10 +71,6 @@ public class IntentDashboardUtils {
         intent.setClipData(clipData);
 
         context.startActivity(intent);
-    }
-
-    public static void startDashboard(Context context, long trackId) {
-        startDashboard(context, new long[]{trackId});
     }
 
     public static long[] extractTrackIdsFromIntent(@NonNull Intent intent) {
