@@ -458,7 +458,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         Intent intent;
         switch (itemId) {
             case R.id.list_context_menu_show_on_map:
-                IntentDashboardUtils.startDashboard(this, trackIds);
+                IntentDashboardUtils.startDashboard(this, trackIds, false);
                 return true;
             case R.id.list_context_menu_share:
                 intent = IntentUtils.newShareFileIntent(this, trackIds);
