@@ -25,7 +25,7 @@ limitations under the License.
     <string name="help_feature_title">OpenTracks heeft de volgende kenmerken:</string>
     <string name="help_feature_content">
 * creëer GPS tracks
-* gebruik een hartslagsensor (alleen Bluetooth LE)…
+* gebruik een hartslagsensor (alleen Bluetooth LE)...
 * spraakaankondigingen (op tijd of afstand)...
 * creëer markers (incl. fotos)
 * werkt volledig offline
@@ -36,12 +36,12 @@ limitations under the License.
 Gebruik het kleine kaarticoontje.
 a)
 (live updates) Installeer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
-Dit biedt online of offline kaarten via <a href="https://www.openstreetmap.org">OpenStreetmap</a>.\n
+Het biedt online of offline kaarten via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n
 Eigenlijk is OSMDashboard een aparte app die alleen (tijdelijk) toegang heeft tot de gegevens van track(s) die getoond gaan worden.
 
 \n
 b)
-Via een reguliere kaarttoepassing (zoals <a href="http://osmand.net/">OsmAnd</a> en <a href="https://maps.me/">MAPS.ME</a>).
+Via een normale kaarttoepassing (bijv. <a href="http://osmand.net/">OsmAnd</a> en <a href="https://maps.me/">MAPS.ME</a>).
 Deze app moet het KMZ-bestandsformaat ondersteunen (alleen locaties en tijdstempels).
 In feite moet een app <i>ACTION_VIEW</i> ondersteunen met MIME <i>application/vnd.google-earth.kmz</i>.</string>
 
@@ -79,7 +79,7 @@ Als alles niet helpt, meldt u dan alstublieft een bug.</string>
 
     <string name="help_support_title">Hoe kan ik OpenTracks ondersteunen?</string>
     <string name="help_support_content">
-Je kunt…
+Je kunt...
 a) het woord verspreiden over OpenTracks, en...
 b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">voorstellen van functies</a>,\n
 c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">melding van bugs</a>,\n
@@ -87,11 +87,6 @@ d) hulp bij de ontwikkeling van software.
 e) koop in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n
 f) doneert u, en
 g) doe wat je denkt dat OpenTracks helpt.</string>
-
-    <string name="open_track_using_dashboard">Open via OpenTracks-Dashboard</string>
-    <string name="open_track_as_KMZ">Open als KMZ</string>
-    <string name="open_track_as_GPX">Open als GPX</string>
-    <string name="open_track_as_trackfileformat">Open als %1$s</string>
 
     <!-- Activity Type -->
     <string name="activity_type_airplane">vliegtuig</string>
@@ -186,6 +181,7 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="description_pace_imperial">Tempo (min/mi)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
     <string name="description_recorded_time">Opgenomen: %1$s</string>
+    <string name="description_speed_ms">Snelheid (m/s)</string>
     <string name="description_sensor_cadence">Cadans (tpm)</string>
     <string name="description_sensor_heart_rate">Hartslag (spm)</string>
     <string name="description_sensor_power">Vermogen (W)</string>
@@ -331,7 +327,6 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="settings_show">Weergeven</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Geavanceerd</string>
-    <string name="settings_default_trackfileformat">Bestandsformaat voor exporteren/delen</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Op afstand</string>
     <string name="settings_chart_by_time">Op tijd</string>
