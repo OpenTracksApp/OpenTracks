@@ -177,6 +177,7 @@ g) Egin uste duzu OpenTracks-ek laguntzen duela.</string>
     <string name="description_pace_imperial">Abiadura (min/mi)</string>
     <string name="description_pace_metric">Abiadura (min/km)</string>
     <string name="description_recorded_time">Grabatuta: %1$s</string>
+    <string name="description_speed_ms">Abiadura (m/s)</string>
     <string name="description_sensor_cadence">Kadentzia (rpm)</string>
     <string name="description_sensor_heart_rate">Maiztasun kardiakoa (bpm)</string>
     <string name="description_sensor_power">Potentzia (W)</string>
