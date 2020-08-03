@@ -46,7 +46,7 @@ Diese Anwendungen müssen das KMZ-Dateiformat unterstützen (nur Orte und Zeitst
 In der Tat muss eine App <i>ACTION_VIEW</i> mit MIME <i>application/vnd.google-earth.kmz</i> unterstützen.</string>
 
     <string name="help_storage_pictures_title">Wie speichert OpenTracks Bilder, die als Markierungen aufgenommen wurden?</string>
-    <string name="help_storage_pictures_content">Diese werden App internen gespeichert (d.h. nur innerhalb von OpenTracks zugänglich).</string>
+    <string name="help_storage_pictures_content">Diese werden App-intern gespeichert (d.h. nur innerhalb von OpenTracks zugänglich).</string>
 
     <string name="help_track_export_title">Wie kann ich aufgezeichnete Tracks exportieren/teilen?</string>
     <string name="help_track_export_content">
@@ -88,10 +88,15 @@ e) kaufen in <a href="https://play.google.com/store/apps/details?id=de.dennisgus
 f) spenden, und\n
 g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
 
+    <string name="open_track_using_dashboard">Öffne mithilfe des OpenTracks-Dashboard</string>
+    <string name="open_track_as_KMZ">Als KMZ öffnen</string>
+    <string name="open_track_as_GPX">Als GPX öffnen</string>
+    <string name="open_track_as_trackfileformat">Als %1$s öffnen</string>
+
     <!-- Activity Type -->
     <string name="activity_type_airplane">Flugzeug</string>
     <string name="activity_type_atv">Quad</string>
-    <string name="activity_type_biking">Fahrrad fahren</string>
+    <string name="activity_type_biking">Fahrradfahren</string>
     <string name="activity_type_blimp">Luftschiff</string>
     <string name="activity_type_boat">Boot</string>
     <string name="activity_type_climbing">Klettern</string>
@@ -181,6 +186,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="description_pace_imperial">Tempo (min/Meile)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
     <string name="description_recorded_time">Aufgezeichnet: %1$s</string>
+    <string name="description_speed_ms">Geschwindigkeit (m/s)</string>
     <string name="description_sensor_cadence">Trittfrequenz (Umdrehungen pro Minute)</string>
     <string name="description_sensor_heart_rate">Herzfrequenz (Schläge pro Minute)</string>
     <string name="description_sensor_power">Leistung (W)</string>
@@ -251,8 +257,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <!-- Import -->
     <string name="import_error">%1$d von %2$s aus %3$s importiert</string>
     <string name="import_no_directory">%1$s ist nicht vorhanden.</string>
-    <string name="import_no_file">Es waren keine Dateien zum Importieren vorhanden. Schließen Sie Ihr Gerät an Ihren Computer an und stellen Sie die zu
-    importierenden Dateien in %1$s.</string>
+    <string name="import_no_file">Es waren keine Dateien zum Importieren vorhanden. Schließen Sie Ihr Gerät an Ihren Computer an und legen Sie die zu importierenden Dateien in %1$s.</string>
     <string name="import_no_file_title">Dateien importieren</string>
     <string name="import_progress_message">Dateien werden aus %1$s importiert…</string>
     <string name="import_selection_option">Alle %1$s-Dateien</string>
@@ -419,6 +424,8 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="track_edit_new_track_title">Neuer Track</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Zeichnen Sie Ihr nächstes Abenteuer hier auf.</string>
+    <!-- Aggregated Statistics -->
+    <string name="aggregated_stats_empty_message">Zeichnen Sie Ihren ersten Track auf um aggregierte Statistiken zu sehen</string>
     <!-- Track Widget -->
     <!-- Tracks -->
     <string name="tracks_few">%1$d Tracks</string>
