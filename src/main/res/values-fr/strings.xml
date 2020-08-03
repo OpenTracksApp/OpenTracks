@@ -180,6 +180,7 @@ g) faire tout ce qui vous semble utile à OpenTracks.</string>
     <string name="description_pace_imperial">Vitesse (min/mi)</string>
     <string name="description_pace_metric">Vitesse (min/km)</string>
     <string name="description_recorded_time">Date d\'enregistrement : %1$s</string>
+    <string name="description_speed_ms">Vitesse (m/s)</string>
     <string name="description_sensor_cadence">Cadence (tr/min)</string>
     <string name="description_sensor_heart_rate">Fréquence cardiaque (bpm)</string>
     <string name="description_sensor_power">Puissance (W)</string>
