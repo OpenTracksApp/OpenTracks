@@ -1,5 +1,100 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <string name="about_preference_title">Tietoja OpenTracksista</string>
+    <string name="about_description"><i> OpenTracks </i> on urheiluseurantaohjelma, joka kunnioittaa yksityisyyttäsi täysin.</string>
+    <string name="about_url">Hankkeen verkkosivu: <a href="%1$s">%1$s</a></string>
+    <string name="about_version_name">Version nimi: %1$s</string>
+    <string name="about_version_code">Versionumero: %1$d</string>
+    <string name="about_history">OpenTracks on haarukoitu <a href="https://code.google.com/archive/p/mytracks/"><i>Googlen MyTracksista</i></a>, joka lopetettiin vuonna 2016.</string>
+    <string name="about_libraries">Kirjastot</string>
+    <!-- Help -->
+    <string name="help_feature_title">OpenTracksissa on seuraavat ominaisuudet:</string>
+    <string name="help_feature_content">
+        * luo GPS-reittejä\n
+        * käytä sykeanturia (vain Bluetooth LE)\n
+        * ääni-ilmoitukset (ajan tai etäisyyden perusteella)\n
+        * luo merkkejä (mukaan lukien kuvia)\n
+        * toimii täysin ilman verkkoyhteyttä\n
+        * näytä jäljet kartalla (ks. alla)</string>
+
+    <string name="help_track_map_title">Kuinka näen jäljen kartalla?</string>
+    <string name="help_track_map_content">
+
+        Käytä karttakuvaketta.\n
+        a)
+        (livepäivitykset) Asenna <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
+        Se tarjoaa online- ja offlinekarttoja <a href="https://www.openstreetmap.org">OpenStreetMapista</a>.\n
+        Se on erillinen sovellus, jolla on pääsy ainoastaan sillä hetkellä näytettävään/näytettäviin jälkiin.
+
+        \n
+        b)
+        \"Normaalia\" karttasovellusta käyttäen (esimerkiksi <a href="http://osmand.net/">OsmAnd</a> tai <a href="https://maps.me/">MAPS.ME</a>).
+        Sovelluksen pitää tukea KMZ-tiedostomuotoa (vain sijainnit ja aikaleimat).
+        Sovelluksella pitää olla <i>ACTION_VIEW</i>-tuki MIME-tyypillä <i>application/vnd.google-earth.kmz</i>.</string>
+
+    <string name="help_storage_pictures_title">Miten OpenTracks tallentaa merkkeihin liittyen otetut kuvat?</string>
+    <string name="help_storage_pictures_content">Ne säilytetään sovelluksen sisäisessä tallennustilassa (eli ne näkyvät vain OpenTracksin sisällä).</string>
+
+    <string name="help_track_export_title">Miten vien tai jaan tallennettuja reittejä?</string>
+    <string name="help_track_export_content">
+        Jäljet voi viedä asetuksista KMZ, KML tai GPX -muodossa.
+        KMZ/KML sisältävät kaiken; GPX vain sijainnit.
+        <i>Jakokuvakkeella</i> jaetut jäljet jaetaan KMZ-muodossa.</string>
+
+    <string name="help_data_google_play_services_title">Käyttääkö tai vaatiiko OpenTracks Google Play -palveluita?</string>
+
+    <string name="help_recording_title">Miten OpenTracks tallentaa tietoja?</string>
+    <string name="help_recording_content">
+        OpenTracks käyttää laitteen GPS:ää paikkatietojen jatkuvaan tallentamiseen.
+        Jos GPS raportoi epätarkkoja tietoja (sijainti, nopeus, korkeus) OpenTracks ei voi tehdä sille mitään.</string>
+
+    <string name="help_data_storage_title">Miten OpenTracks tallentaa anturidatan?</string>
+    <string name="help_data_storage_content">
+        Anturidata tallennetaan jokaiselle paikkapisteelle.
+        Esimerkiksi sykemittarista tallennetaan vain <i>yksi</i> sykemittaus tallennettua paikkaa kohden.
+        Jos olet paikallaan tai sisätiloissa, mitään anturidataa ei tallenneta (mutta se näytetään).</string>
+
+    <string name="help_gps_troubleshooting_title">Miksi OpenTracks ei tallenna sijaintia?</string>
+    <string name="help_gps_troubleshooting_content">
+        Mitä voit tehdä:\n
+        a) tarkista että GPS on käytössä,\n
+        b) paranna GPS-signaalia (esim. mene ulos),\n
+        c) tarkista <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>-sovelluksella, ja\n
+        d) poista virransäästö käytöstä.\n
+        \n
+        Jos mikään muu ei auta, ilmoita ohjelmistovirheestä, kiitos.</string>
+
+    <string name="help_support_title">Miten voin tukea OpenTracksin kehitystä?</string>
+    <string name="help_support_content">
+        Voit:\n
+        a) levittää sanaa OpenTracksista,\n
+        b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">ehdottaa ominaisuuksia</a>,\n
+        c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">ilmoittaa ohjelmistovirheistä</a>,\n
+        d) auttaa ohjelmiston kehittämisessä,\n
+        e) ostaa sovelluksen <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play -kaupasta</a>,\n
+        f) lahjoittaa ja
+        g) tehdä mikä mielestäsi edistäisi OpenTracksia.</string>
+
+    <string name="open_track_using_dashboard">Avaa OpenTracks-Dashboardilla</string>
+    <string name="open_track_as_KMZ">Avaa KMZ-muodossa</string>
+    <string name="open_track_as_GPX">Avaa GPX-muodossa</string>
+    <string name="open_track_as_trackfileformat">Avaa %1$s-muodossa</string>
+
+    <!-- Activity Type -->
     <string name="activity_type_airplane">lentokone</string>
     <string name="activity_type_atv">mönkijä</string>
     <string name="activity_type_biking">pyöräily</string>
@@ -66,6 +161,8 @@
     <string name="activity_type_walking">kävely</string>
     <string name="activity_type_water_skiing">vesihiihto</string>
     <string name="activity_type_wind_surfing">purjelautailu</string>
+    <string name="app_not_installed_show_on_map">Asenna sovellus joka tukee karttatiedon näyttämistä.</string>
+    <!-- Description -->
     <string name="description_activity_type">Toiminnan tyyppi: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Keskimääräinen liikkumisvauhti: %1$s min/km (%2$s min/maili)</string>
     <string name="description_average_moving_speed">Keskimääräinen liikkumisnopeus: %1$.2f km/h (%2$.1f mailia/h)</string>
@@ -90,9 +187,11 @@
     <string name="description_pace_imperial">Vauhti (min/mi)</string>
     <string name="description_pace_metric">Vauhti (min/km)</string>
     <string name="description_recorded_time">Tallennettu: %1$s</string>
+    <string name="description_speed_ms">Nopeus (m/s)</string>
     <string name="description_sensor_cadence">Kierrokset (kierr./min)</string>
     <string name="description_sensor_heart_rate">Syke (bpm)</string>
     <string name="description_sensor_power">Teho (W)</string>
+    <string name="description_default_speed_or_pace">Toiminnan tyypin mukaan</string>
     <string name="description_speed_imperial">Nopeus (mailia/h)</string>
     <string name="description_speed_metric">Nopeus (km/h)</string>
     <string name="description_time">Aika</string>
@@ -100,19 +199,25 @@
     <string name="description_total_time">Kokonaisaika: %1$s</string>
     <string name="description_track_point">Piste</string>
     <string name="description_track_segment">Segmentti</string>
+    <!-- Export -->
     <string name="export_all_option">Kaikki %1$s-tiedostot</string>
     <string name="export_all_title">Vie ulkoiseen tallennustilaan</string>
+    <string name="export_with_photos">valokuvilla</string>
+    <string name="export_without_photos">ilman valokuvia</string>
     <string name="export_error">Viety %1$d/%2$s kohteeseen %3$s</string>
     <string name="export_option">%1$s-tiedostona kohteeseen %2$s</string>
     <string name="export_progress_message">Viedään kohteeseen %1$s…</string>
     <string name="export_success">%1$s vietiin kohteeseen %2$s</string>
     <string name="export_title">Vie kohteeseen…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d tiedostoa</string>
     <string name="files_many">%1$d tiedostoa</string>
     <string name="files_one">1 tiedosto</string>
     <string name="files_other">%1$d tiedostoa</string>
     <string name="files_two">2 tiedostoa</string>
     <string name="files_zero">0 tiedostoa</string>
+    <!-- Generic -->
     <string name="generic_add">Lisää</string>
     <string name="generic_cancel">Peruuta</string>
     <string name="generic_delete_all_confirm_title">Poistetaanko kaikki?</string>
@@ -131,6 +236,7 @@
     <string name="generic_success_title">Onnistui</string>
     <string name="generic_tracks">Reitit</string>
     <string name="generic_yes">Kyllä</string>
+    <!-- Gps -->
     <string name="gps_location_access">Sijainnin käyttöoikeus</string>
     <string name="gps_disabled">GPS ei ole käytössä. Siirry kohteeseen %1$s napauttamalla tätä. Palaa painamalla Takaisin-painiketta.</string>
     <string name="gps_disabled_my_location">Nykyistä sijaintia ei voi määrittää. Ota lisää sijaintilähteitä käyttöön kohteessa %1$s ja
@@ -139,6 +245,7 @@
     <string name="gps_starting">Käynnistetään GPS</string>
     <string name="gps_wait_for_better_signal">Odotetaan parempaa GPS-signaalia</string>
     <string name="gps_wait_for_signal">Odotetaan GPS-signaalia</string>
+    <!-- Image -->
     <string name="image_application">Sovellus</string>
     <string name="image_arrow">Nuoli</string>
     <string name="image_marker">Merkki</string>
@@ -149,6 +256,7 @@
     <string name="image_record">Tallenna</string>
     <string name="image_stop">Lopeta</string>
     <string name="image_track">Reitti</string>
+    <!-- Import -->
     <string name="import_error">Tuotu %1$d/%2$s kohteesta %3$s</string>
     <string name="import_no_directory">Kohdetta %1$s ei ole</string>
     <string name="import_no_file">Ei tuotavia tiedostoja. Kytke laite tietokoneeseen ja siirrä tiedostot laitteeseen,
@@ -158,9 +266,11 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="import_selection_option">Kaikki %1$s-tiedostot</string>
     <string name="import_selection_title">Tuo ulkoisesta laitteesta</string>
     <string name="import_success">%1$s tuotiin kohteesta %2$s</string>
+    <!-- Marker -->
     <string name="marker_add_error">Merkkiä ei voitu lisätä. Ei GPS-signaalia. Yritä uudelleen.</string>
     <string name="marker_add_success">Merkki lisättiin</string>
     <string name="marker_add_canceled">Peruutettiin, merkkiä ei lisätty</string>
+    <string name="marker_add_photo_canceled">Peruutettiin, valokuvamerkkiä ei lisätty</string>
     <string name="marker_delete_all_confirm_message">Kaikki tämän reitin merkit poistetaan laitteesta pysyvästi</string>
     <string name="marker_delete_one_confirm_message">Merkki poistetaan laitteesta pysyvästi</string>
     <string name="marker_delete_one_confirm_title">Poistetaanko merkki?</string>
@@ -170,10 +280,14 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="marker_name_format">Merkki %1$d</string>
     <string name="marker_split_name_format">Jako %1$d</string>
     <string name="marker_title">%1$d/%2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">Viimeisen jakomerkin jälkeen:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Merkin tyyppi (esim. vesiputous)</string>
     <string name="marker_edit_marker_type_hint">Merkkityyppi</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">Sinulla ei ole merkkejä</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">Kootut tilastot</string>
     <string name="menu_delete">Poista</string>
     <string name="menu_edit">Muokkaa</string>
@@ -182,6 +296,7 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="menu_import_all">Tuo kaikki</string>
     <string name="menu_insert_marker">Lisää merkki</string>
     <string name="menu_insert_photo">Lisää kuva</string>
+    <string name="menu_insert_gallery_img">Lisää kuva galleriasta</string>
     <string name="menu_markers">Merkit</string>
     <string name="menu_search">Haku</string>
     <string name="menu_select_all">Valitse kaikki</string>
@@ -194,11 +309,17 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="menu_stop_gps">Pysäytä GPS</string>
     <string name="menu_view_photo">Näytä kuva</string>
     <string name="menu_voice_frequency">Ilmoitustiheys</string>
+    <string name="menu_resume_track">Jatka reittiä</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Tallennuspalvelu</string>
+    <!-- Permission -->
+    <string name="permission_gps_failed">OpenTracks tarvitsee luvan käyttää satelliittipaikannusta.</string>
+    <!-- Search -->
     <string name="search_global_description">Reitit ja merkit</string>
     <string name="search_list_empty_message">Yksikään reitti tai merkki ei vastannut hakuasi</string>
     <string name="search_list_marker_track_location">Reitillä %1$s.</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">Akun taso</string>
     <string name="sensor_state_cadence">Kierrosluku</string>
     <string name="sensor_state_cadence_value">%1$d kierr./min</string>
@@ -207,12 +328,23 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Virransyöttö</string>
     <string name="sensor_state_power_value">%1$d W</string>
+    <string name="sensor_not_known">Anturi %1$s on tuntematon. Tarkista asetukset.</string>
+    <string name="sensor_could_not_scan">Bluetooth-laitteita ei saatu etsittyä (virhe %1$i).</string>
+    <string name="bluetooth_disabled">Ota Bluetooth käyttöön.</string>
     <string name="settings_not_while_recording">Ei saatavilla reitin tallennuksen aikana</string>
     <string name="settings_show">Näytä</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">Lisäasetukset</string>
+    <string name="settings_default_trackfileformat">Tiedostomuoto vientiä ja jakamista varten</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Etäisyyden mukaan</string>
     <string name="settings_chart_by_time">Ajan mukaan</string>
     <string name="settings_chart_x_axis">X-akseli</string>
+    <!-- Settings Recording -->
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Näytä tilastot lukitusnäytöllä</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">Näytä tilastot myös ilman laitteen lukituksen avaamista tallentaessa.</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">Pidä näyttö päällä</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">Pidä näyttö päällä tallentaessa.</string>
     <string name="settings_recording">Tallennus</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Jatka tallennusta aina uudelleenkäynnistyksen jälkeen</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Älä jatka tallennusta uudelleenkäynnistyksen jälkeen</string>
@@ -230,22 +362,33 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="settings_recording_track_name_date_local_option">Päiväys (paikallinen)</string>
     <string name="settings_recording_track_name_number_option">Numero</string>
     <string name="settings_recording_track_name_title">Reitin oletusnimi</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">Palauta</string>
     <string name="settings_reset_confirm_message">Kaikki asetukset palautetaan oletusarvoisiksi.</string>
     <string name="settings_reset_confirm_title">Palautetaanko oletukset nyt?</string>
     <string name="settings_reset_done">Kaikki asetukset on palautettu oletusarvoisiksi</string>
+    <string name="settings_error_initial_values_restored">Pahoittelut, mutta virhe tapahtui. Kaikki asetukset on palautettu oletuksiinsa.</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">Anturi</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth-anturi</string>
+    <string name="settings_sensor_connecting">Yhdistetty: %1$s</string>
+    <string name="settings_sensor_disconnected">Yhteys katkaistu: %1$s</string>
+
+    <string name="settings_sensor_wheel_circumference">Renkaan koko (ETRTO)</string>
+
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Leveys-/pituusaste</string>
     <string name="settings_stats_rate_title">Haluttu nopeus</string>
     <string name="settings_stats_units_imperial">Brittiläinen järj.
 (maili, jalka)</string>
     <string name="settings_stats_units_metric">Metrijärjestelmä (km, m)</string>
     <string name="settings_stats_units_title">Halutut yksiköt</string>
+    <!-- Share Track -->
     <string name="share_track_share_file">Jaa reittitiedosto</string>
     <string name="share_track_share_file_body">Luulen, että voisit olla kiinnostunut tästä reitistä.\n\nNäet reitin käyttämällä Google Earth -palvelua tai muuta kartoitusohjelmistoa.\n\n%1$s</string>
     <string name="share_track_subject">Haluaisin jakaa reitin kanssasi.</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">Keskim. liikkumisvauhti</string>
     <string name="stats_average_moving_speed">Keskim. liikkumisnopeus</string>
     <string name="stats_average_pace">Keskim. vauhti</string>
@@ -264,25 +407,38 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="stats_speed">Nopeus</string>
     <string name="stats_distance">Etäisyys</string>
     <string name="stats_total_time">Kokonaisaika</string>
+    <!-- Track -->
     <string name="track_name_format">Reitti %1$d</string>
     <string name="track_record_notification">Reittiä tallennetaan…</string>
+    <string name="track_recording_notification_accuracy">Sijainnin tarkkuus: %1$s</string>
     <string name="track_markers">Reitin %1$s merkit</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Reitti ja sen merkitsimet poistetaan laitteesta pysyvästi.</string>
     <string name="track_delete_one_confirm_title">Poistetaanko reitti?</string>
     <string name="track_delete_multiple_confirm_message">Valitut reitit ja niiden merkitsimet poistetaan laitteesta pysyvästi.</string>
     <string name="track_delete_progress_message">Poistetaan…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">Kaavio</string>
     <string name="track_detail_stats_tab">Tilastot</string>
+    <string name="track_detail_record_success">Uutta reittiä tallennetaan</string>
+    <string name="track_detail_resume_success">Jatketaan uutta reittiä</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">Toiminnan tyyppi (esim. vaellus)</string>
     <string name="track_edit_activity_type_hint">Toiminnan tyyppi</string>
     <string name="track_edit_new_track_title">Uusi reitti</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">Aloita seuraavan seikkailusi tallennus tästä</string>
+    <!-- Aggregated Statistics -->
+    <string name="aggregated_stats_empty_message">Tallenna ensimmäinen reittisi nähdäksesi koottuja tilastoja</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d reittiä</string>
     <string name="tracks_many">%1$d reittiä</string>
     <string name="tracks_one">1 reitti</string>
     <string name="tracks_other">%1$d reittiä</string>
     <string name="tracks_two">2 reittiä</string>
     <string name="tracks_zero">0 reittiä</string>
+    <!-- Unit -->
     <string name="unit_feet">jalkaa</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/h</string>
@@ -291,6 +447,7 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="unit_mile_per_hour">mailia/h</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/maili</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">Säädä tarkkuutta</string>
     <string name="value_adapt_battery_life">Sovita akun kestoon</string>
     <string name="value_always">Aina</string>
@@ -317,6 +474,7 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="value_off">Pois käytöstä</string>
     <string name="value_smallest">Pienin</string>
     <string name="value_smallest_recommended">Pienin (suositus)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d tuntia</string>
     <string name="voice_hours_many">%1$d tuntia</string>
     <string name="voice_hours_one">1 tunti</string>
@@ -363,6 +521,7 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="voice_total_distance_miles_two">kokonaisetäisyys 2 mailia</string>
     <string name="voice_total_distance_miles_zero">kokonaisetäisyys 0 mailia</string>
     <string name="voice_total_distance_zero">Oman reitin kokonaisetäisyys on nolla.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">pankkiautomaatti</string>
     <string name="waypoint_type_bank">pankki</string>
     <string name="waypoint_type_bar">baari</string>
@@ -414,4 +573,7 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="waypoint_type_waterfall">vesiputous</string>
     <string name="waypoint_type_water_fountain">juomavesiautomaatti</string>
     <string name="waypoint_type_waypoint">reittipiste</string>
+    <!-- Share image -->
+    <string name="share_image_subject">Haluaisin jakaa kuvan kanssasi</string>
+    <string name="share_image_body">Luulen, että voisit olla kiinnostunut tästä kuvasta.</string>
 </resources>
