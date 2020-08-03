@@ -69,7 +69,7 @@ Si está parado o en el interior, no se registrarán los datos del sensor (pero 
 
     <string name="help_gps_troubleshooting_title">OpenTracks no está grabando las localizaciones?</string>
     <string name="help_gps_troubleshooting_content">
-Lo que puedes hacer…
+Lo que puedes hacer...
 a) Comprobar si el GPS está activado.
 b) mejorar la recepción del GPS (por ejemplo, ir al exterior),\n
 c) comprueba si con <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app, y\n
@@ -79,7 +79,7 @@ Si todo no ayuda, por favor informe de un error.</string>
 
     <string name="help_support_title">¿Cómo puedo apoyar OpenTracks?</string>
     <string name="help_support_content">
-Puedes…
+Puedes...
 a) difundir la palabra sobre OpenTracks,...
 b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">proponer características</a>,\n
 c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">report bugs</a>,\n
@@ -181,6 +181,7 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <string name="description_pace_imperial">Ritmo (min/mi)</string>
     <string name="description_pace_metric">Ritmo (min/km)</string>
     <string name="description_recorded_time">Registro: %1$s</string>
+    <string name="description_speed_ms">Velocidad (m/s)</string>
     <string name="description_sensor_cadence">Cadencia (rpm)</string>
     <string name="description_sensor_heart_rate">Frecuencia cardíaca (bpm)</string>
     <string name="description_sensor_power">Potencia (W)</string>
