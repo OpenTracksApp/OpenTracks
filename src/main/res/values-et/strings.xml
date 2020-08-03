@@ -179,6 +179,7 @@ g) tehke kõike, mis teie arvates OpenTracks aitab.</string>
     <string name="description_pace_imperial">Tempo (min/mi)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
     <string name="description_recorded_time">Salvestatud: %1$s</string>
+    <string name="description_speed_ms">Kiirus (m/s)</string>
     <string name="description_sensor_cadence">Rütm (p/min)</string>
     <string name="description_sensor_heart_rate">Pulsisagedus (l/min)</string>
     <string name="description_sensor_power">Võimsus (W)</string>
