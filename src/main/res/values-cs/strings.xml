@@ -177,6 +177,7 @@ g) udělejte, co si myslíte, že pomůže OpenTracks.</string>
     <string name="description_pace_imperial">Tempo (min/míli)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
     <string name="description_recorded_time">Datum záznamu: %1$s</string>
+    <string name="description_speed_ms">Rychlost (m/s)</string>
     <string name="description_sensor_cadence">Tempo šlapání (ot./min)</string>
     <string name="description_sensor_heart_rate">Srdeční frekvence (údery/min)</string>
     <string name="description_sensor_power">Výkon (W)</string>
