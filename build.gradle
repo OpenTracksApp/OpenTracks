@@ -50,8 +50,8 @@ android {
                 applicationName: "@string/app_name"
         ]
 
-        versionCode 3466
-        versionName "v3.8.0"
+        versionCode 3474
+        versionName "v3.8.1"
 
         buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
 
