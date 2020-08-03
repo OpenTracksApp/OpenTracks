@@ -89,6 +89,11 @@ e) mercar a app na <a href="https://play.google.com/store/apps/details?id=de.den
 f) facer unha doazón, e\n
 g) calquera cousa que estimes axuda a OpenTracks.</string>
 
+    <string name="open_track_using_dashboard">Abrir usando OpenTracks-Dashboard</string>
+    <string name="open_track_as_KMZ">Abrir como KMZ</string>
+    <string name="open_track_as_GPX">Abrir como GPX</string>
+    <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
+
     <!-- Activity Type -->
     <string name="activity_type_airplane">avión</string>
     <string name="activity_type_atv">Quad</string>
@@ -182,6 +187,7 @@ g) calquera cousa que estimes axuda a OpenTracks.</string>
     <string name="description_pace_imperial">Ritmo (min/mi)</string>
     <string name="description_pace_metric">Ritmo (min/km)</string>
     <string name="description_recorded_time">Hora da gravación: %1$s</string>
+    <string name="description_speed_ms">Velocidade (m/s)</string>
     <string name="description_sensor_cadence">Cadencia (rpm)</string>
     <string name="description_sensor_heart_rate">Frecuencia cardíaca (pulsacións por minuto)</string>
     <string name="description_sensor_power">Potencia (W)</string>
