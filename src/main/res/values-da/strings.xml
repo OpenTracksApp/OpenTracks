@@ -178,6 +178,7 @@ g) gør hvad du synes hjælper OpenTracks.</string>
     <string name="description_pace_imperial">Tempo (min./mil)</string>
     <string name="description_pace_metric">Tempo (min./km)</string>
     <string name="description_recorded_time">Registreret: %1$s</string>
+    <string name="description_speed_ms">Hastighed (m/s)</string>
     <string name="description_sensor_cadence">Kadence (omdr./min.)</string>
     <string name="description_sensor_heart_rate">Puls (slag/min.)</string>
     <string name="description_sensor_power">Effekt (W)</string>
