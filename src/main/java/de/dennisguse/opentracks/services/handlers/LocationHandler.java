@@ -90,6 +90,10 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
      */
     @Override
     public void onLocationChanged(@NonNull Location location) {
+        if (gpsStatus != null) {
+            gpsStatus.onLocationChanged(location);
+        }
+
         if (!LocationUtils.isValidLocation(location)) {
             Log.w(TAG, "Ignore newTrackPoint. location is invalid.");
             return;
@@ -122,10 +126,16 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
 
     @Override
     public void onProviderEnabled(@NonNull String provider) {
+        if (gpsStatus != null) {
+            gpsStatus.onGpsEnabled();
+        }
     }
 
     @Override
     public void onProviderDisabled(@NonNull String provider) {
+        if (gpsStatus != null) {
+            gpsStatus.onGpsDisabled();
+        }
     }
 
     private void registerLocationListener() {
@@ -160,5 +170,9 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
     @Override
     public void onGpsStatusChanged(GpsStatusValue prevStatus, GpsStatusValue currentStatus) {
         handlerServer.sendGpsStatus(currentStatus);
+    }
+
+    public GpsStatusValue getGpsStatus() {
+        return gpsStatus != null ? gpsStatus.getGpsStatus() : GpsStatusValue.GPS_NONE;
     }
 }

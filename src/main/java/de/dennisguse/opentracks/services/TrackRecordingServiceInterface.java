@@ -19,6 +19,7 @@ import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 
 /**
@@ -112,4 +113,6 @@ public interface TrackRecordingServiceInterface {
     void newTrackPoint(TrackPoint trackPoint, int recordingGpsAccuracy);
 
     void setListener(BoundServiceListener listener);
+
+    GpsStatusValue getGpsStatus();
 }

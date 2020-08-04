@@ -83,6 +83,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     private TrackController trackController;
     private ListView listView;
     private ResourceCursorAdapter resourceCursorAdapter;
+    private GpsStatusValue gpsStatusValue;
 
     private final LoaderCallbacks<Cursor> loaderCallbacks = new LoaderCallbacks<Cursor>() {
         @Override
@@ -175,25 +176,28 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             // After binding changes (e.g., becomes available), update the total time in trackController.
             runOnUiThread(() -> trackController.update(isRecording, recordingTrackPaused));
 
-            if (!startGps) {
-                return;
-            }
-
             TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
             if (service == null) {
                 Log.d(TAG, "service not available to start gps or a new recording");
                 return;
             }
-            if (startGps) {
-                service.startGps();
-                startGps = false;
-            }
-            service.setListener(new BoundServiceListener() {
-                @Override
-                public void onGpsStatusChange(GpsStatusValue newStatus) {
-                    updateGpsMenuItem(true, isRecording, newStatus.icon);
-                }
+
+            // Get GPS status and listen GPS status changes.
+            gpsStatusValue = service.getGpsStatus();
+            updateGpsMenuItem(true, isRecording);
+            service.setListener(newStatus -> {
+                gpsStatusValue = newStatus;
+                updateGpsMenuItem(true, isRecording);
             });
+
+            if (!startGps) {
+                return;
+            }
+
+            service.startGps();
+            startGps = false;
+            gpsStatusValue = GpsStatusValue.GPS_ENABLED;
+            updateGpsMenuItem(true, isRecording);
         }
     };
 
@@ -221,6 +225,8 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        gpsStatusValue = GpsStatusValue.GPS_NONE;
 
         recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
 
@@ -448,22 +454,21 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
      * @param isRecording  true if recording
      */
     private void updateMenuItems(boolean isGpsStarted, boolean isRecording) {
-        updateGpsMenuItem(isGpsStarted, isRecording, R.drawable.ic_gps_not_fixed_24dp);
+        updateGpsMenuItem(isGpsStarted, isRecording);
     }
 
     /**
      * Updates the menu items with the icon specified.
      *
-     * @param isGpsStarted true if gps is started
-     * @param isRecording  true if recording
-     * @param icon         the icon drawable value
+     * @param isGpsStarted   true if gps is started
+     * @param isRecording    true if recording
      */
-    private void updateGpsMenuItem(boolean isGpsStarted, boolean isRecording, int icon) {
+    private void updateGpsMenuItem(boolean isGpsStarted, boolean isRecording) {
         if (startGpsMenuItem != null) {
             startGpsMenuItem.setVisible(!isRecording);
             if (!isRecording) {
                 startGpsMenuItem.setTitle(isGpsStarted ? R.string.menu_stop_gps : R.string.menu_start_gps);
-                startGpsMenuItem.setIcon(isGpsStarted ? icon : R.drawable.ic_gps_off_24dp);
+                startGpsMenuItem.setIcon(isGpsStarted ? gpsStatusValue.icon : R.drawable.ic_gps_off_24dp);
             }
         }
     }
