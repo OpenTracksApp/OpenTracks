@@ -27,9 +27,6 @@ jobs:
       with:
         languages: java
 
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v1
-
     - run: |
        ./gradlew build
 
