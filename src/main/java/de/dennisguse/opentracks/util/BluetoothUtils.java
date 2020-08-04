@@ -17,13 +17,12 @@ package de.dennisguse.opentracks.util;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.os.Handler;
-import android.os.Looper;
+import android.bluetooth.BluetoothManager;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
@@ -43,49 +42,23 @@ public class BluetoothUtils {
     public static final UUID CYCLING_SPEED_CADENCE_SERVICE_UUID = new UUID(0x181600001000L, 0x800000805f9b34fbL);
     public static final UUID CYCLING_SPPED_CADENCE_MEASUREMENT_CHAR_UUID = new UUID(0x2A5B00001000L, 0x800000805f9b34fbL);
 
+    private static final String TAG = BluetoothUtils.class.getSimpleName();
+
     private BluetoothUtils() {
     }
 
-    /**
-     * If called from UI: use a background thread to get the default Bluetooth adapter.
-     * TODO Check if this is necessary.
-     */
-    public static BluetoothAdapter getDefaultBluetoothAdapter(final String TAG) {
-        // If from the main application thread, return directly
-        if (Thread.currentThread().equals(Looper.getMainLooper().getThread())) {
-            return BluetoothAdapter.getDefaultAdapter();
+    public static BluetoothAdapter getAdapter(Context context) {
+        BluetoothManager bluetoothManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
+        if (bluetoothManager == null) {
+            Log.i(TAG, "BluetoothManager not available.");
+            return null;
+        } else {
+            return bluetoothManager.getAdapter();
         }
-
-        // Get the default adapter from the main application thread
-        final ArrayList<BluetoothAdapter> adapters = new ArrayList<>(1);
-        final Object mutex = new Object();
-
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(() -> {
-            adapters.add(BluetoothAdapter.getDefaultAdapter());
-            synchronized (mutex) {
-                mutex.notify();
-            }
-        });
-
-        while (adapters.isEmpty()) {
-            synchronized (mutex) {
-                try {
-                    mutex.wait(UnitConversions.ONE_SECOND_MS);
-                } catch (InterruptedException e) {
-                    Log.e(TAG, "Interrupted while waiting for default bluetooth adapter", e);
-                }
-            }
-        }
-
-        if (adapters.get(0) == null) {
-            Log.w(TAG, "No bluetooth adapter found.");
-        }
-        return adapters.get(0);
     }
 
-    public static boolean hasBluetooth(final String TAG) {
-        return BluetoothUtils.getDefaultBluetoothAdapter(TAG) != null;
+    public static boolean hasBluetooth(Context context) {
+        return BluetoothUtils.getAdapter(context) != null;
     }
 
     public static Integer parseHeartRate(BluetoothGattCharacteristic characteristic) {

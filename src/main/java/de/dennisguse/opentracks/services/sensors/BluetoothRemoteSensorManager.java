@@ -50,8 +50,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
 
     public static final long MAX_SENSOR_DATE_SET_AGE_MS = 5 * UnitConversions.S_TO_MS;
 
-    private static final BluetoothAdapter bluetoothAdapter = BluetoothUtils.getDefaultBluetoothAdapter(TAG);
-
+    private final BluetoothAdapter bluetoothAdapter;
     private final Context context;
     private final SharedPreferences sharedPreferences;
 
@@ -86,12 +85,10 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         }
     };
 
-    /**
-     * @param context the context
-     */
     public BluetoothRemoteSensorManager(Context context) {
         this.context = context;
         sharedPreferences = PreferencesUtils.getSharedPreferences(context);
+        bluetoothAdapter = BluetoothUtils.getAdapter(context);
     }
 
     public void start() {
@@ -103,7 +100,6 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
     }
 
     public synchronized void stop() {
-        // Disconnecting
         heartRate.disconnect();
         cyclingCadence.disconnect();
 
