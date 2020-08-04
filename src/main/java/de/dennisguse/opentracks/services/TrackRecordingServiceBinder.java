@@ -4,6 +4,7 @@ import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 
 /**
@@ -25,6 +26,11 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
     @Override
     public void setListener(BoundServiceListener listener) {
         trackRecordingService.addListener(listener);
+    }
+
+    @Override
+    public GpsStatusValue getGpsStatus() {
+        return trackRecordingService.getGpsStatus();
     }
 
     @Override

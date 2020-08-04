@@ -698,4 +698,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     public void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager) {
         this.remoteSensorManager = remoteSensorManager;
     }
+
+    public GpsStatusValue getGpsStatus() {
+        return handlerServer.getGpsStatus();
+    }
 }
