@@ -75,33 +75,32 @@ limitations under the License.
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:mimeType="application/vnd.google-earth.kmz" />
                 <data
                     android:scheme="content"
+                    android:host="*"
                     android:pathPattern="*kmz" />
             </intent-filter>
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:mimeType="application/vnd.google-earth.kml+xml" />
                 <data
                     android:scheme="content"
+                    android:host="*"
                     android:pathPattern="*kml" />
             </intent-filter>
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:mimeType="application/gpx+xml" />
                 <data
                     android:scheme="content"
+                    android:host="*"
                     android:pathPattern="*gpx" />
             </intent-filter>
-
         </activity>
 
         <activity android:name=".MarkerDetailActivity">
