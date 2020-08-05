@@ -21,7 +21,7 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
             </a>
         </td>
         <td>
-            <a href="https://liberapay.com/dennis.guse/donate">
+            <a href="https://liberapay.com/OpenTracks/donate">
                 <img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="45" align="middle">
             </a>
         </td>
