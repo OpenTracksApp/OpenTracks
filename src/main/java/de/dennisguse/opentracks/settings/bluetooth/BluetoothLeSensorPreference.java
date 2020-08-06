@@ -189,7 +189,7 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
                         BluetoothLeSensorPreferenceDialog.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
                         dialog.dismiss();
                     });
-            builder.setIcon(android.R.drawable.stat_sys_data_bluetooth);
+            builder.setIcon(R.drawable.ic_bluetooth_searching_24dp);
             builder.setPositiveButton(null, null);
         }
 
