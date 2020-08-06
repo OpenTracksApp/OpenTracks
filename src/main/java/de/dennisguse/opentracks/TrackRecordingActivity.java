@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.documentfile.provider.DocumentFile;
@@ -314,7 +315,8 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         try (OutputStream outputStream = getApplicationContext().getContentResolver().openOutputStream(file.getUri())) {
             SingleTrackExportThread exportThread = new SingleTrackExportThread(outputStream, contentProviderUtils);
             exportThread.run();
-        }         catch (FileNotFoundException e) {
+            Toast.makeText(getApplicationContext(), R.string.toast_message_instant_track_was_exported, Toast.LENGTH_SHORT).show();
+        }   catch (FileNotFoundException e) {
             Log.e(TAG, "Unable to open file " + file.getName(), e);
         } catch (IOException e) {
             Log.e(TAG, "Unable to close file output stream", e);
