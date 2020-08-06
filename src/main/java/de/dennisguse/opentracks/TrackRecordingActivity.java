@@ -160,7 +160,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contentProviderUtils = new ContentProviderUtils(this);
-
+        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
         trackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
         if (savedInstanceState != null) {
             //Activity was recreated.
@@ -173,7 +173,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         }
 
         recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
-        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
         trackDataHub = new TrackDataHub(this);
