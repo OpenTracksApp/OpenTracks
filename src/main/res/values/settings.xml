@@ -17,6 +17,7 @@
     <bool name="stats_fullscreen_while_recording_default" translatable="false">false</bool>
 
     <string name="settings_reset_key" translatable="false">settingsReset</string>
+    <string name="settings_single_export_directory_key" translatable="false">settingsSingleExportDirectory</string>
 
     <string name="settings_sensor_bluetooth_heart_rate_key" translatable="false">bluetoothSensor</string>
     <string name="settings_sensor_bluetooth_cycling_cadence_key" translatable="false">bluetoothCyclingCadenceSensor</string>
@@ -37,6 +38,8 @@
         <item>25–622</item>
         <item>28–622</item>
     </string-array>
+
+    <string name="single_export_uri" translatable="false">singleExportUri</string>
 
     <string name="default_activity_key" translatable="false">defaultActivity</string>
     <string name="default_activity_default" translatable="false">@string/activity_type_unknown</string>

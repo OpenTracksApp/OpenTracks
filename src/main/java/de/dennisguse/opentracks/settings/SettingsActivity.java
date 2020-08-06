@@ -1,5 +1,6 @@
 package de.dennisguse.opentracks.settings;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -26,9 +27,13 @@ import de.dennisguse.opentracks.util.StringUtils;
 
 public class SettingsActivity extends AppCompatActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, ResetDialogPreference.ResetCallback {
 
+    private static final int DIRECTORY_PICKER_REQUEST_CODE = 6;
+
     private static final String TAG = SettingsActivity.class.getSimpleName();
 
     private PrefsFragment prefsFragment;
+
+    //@todo add another fragment with button and directory chooser intent here?
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,13 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             }
             if (PreferencesUtils.isKey(getActivity(), R.string.stats_units_key, key)) {
                 getActivity().runOnUiThread(this::updateUnits);
+            }
+            if (PreferencesUtils.isKey(getActivity(), R.string.single_export_uri, key)) {
+                Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                startActivityForResult(intent, DIRECTORY_PICKER_REQUEST_CODE);
+
             }
         };
 
@@ -183,5 +195,7 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             listPreference.setEntries(entries);
             listPreference.setEntryValues(entryValues);
         }
+
     }
+
 }

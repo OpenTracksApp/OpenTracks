@@ -148,6 +148,11 @@ limitations under the License.
                 android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$ExportDirectoryChooserActivity"
                 android:targetPackage="@string/applicationId" />
         </Preference>
+        <Preference android:title="@string/single_export_uri">
+            <intent
+                android:targetClass="de.dennisguse.opentracks.io.file.importer.SingleTrackExportDirectoryChooserActivity"
+                android:targetPackage="@string/applicationId" />
+        </Preference>
         <ListPreference
             android:defaultValue="@string/export_trackfileformat_default"
             android:key="@string/export_trackfileformat_key"
