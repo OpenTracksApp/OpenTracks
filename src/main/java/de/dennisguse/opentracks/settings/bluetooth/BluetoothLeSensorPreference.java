@@ -8,6 +8,8 @@ import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.text.TextUtils;
@@ -16,6 +18,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
 import androidx.preference.DialogPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 
@@ -189,7 +192,11 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
                         BluetoothLeSensorPreferenceDialog.this.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
                         dialog.dismiss();
                     });
-            builder.setIcon(R.drawable.ic_bluetooth_searching_24dp);
+
+            Drawable icon = ContextCompat.getDrawable(getContext(), R.drawable.ic_bluetooth_searching_animated_24dp);
+            ((Animatable) icon).start();
+            builder.setIcon(icon);
+
             builder.setPositiveButton(null, null);
         }
 

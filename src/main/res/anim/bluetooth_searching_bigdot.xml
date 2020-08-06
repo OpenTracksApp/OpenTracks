@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android"
+    android:ordering="sequentially">
+
+    <objectAnimator
+        android:duration="650"
+        android:interpolator="@android:interpolator/linear"
+        android:propertyName="fillAlpha"
+        android:repeatCount="infinite"
+        android:repeatMode="reverse"
+        android:startOffset="400"
+        android:valueFrom="0"
+        android:valueTo="1"
+        android:valueType="floatType" />
+</set>
