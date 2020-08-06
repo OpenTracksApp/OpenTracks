@@ -584,4 +584,5 @@ limitations under the License.
     <!-- Share image -->
     <string name="share_image_subject">I would like to share an image with you</string>
     <string name="share_image_body">I think you might be interested in this image.</string>
+    <string name="toast_message_instant_track_was_exported">Last track exported</string>
 </resources>
