@@ -151,7 +151,20 @@ limitations under the License.
         </Preference>
         <Preference android:title="@string/menu_export_all">
             <intent
-                android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$ExportDirectoryChooserActivity"
+                android:targetClass="de.dennisguse.opentracks.io.file.InitiateExportActivity"
+                android:targetPackage="@string/applicationId" />
+        </Preference>
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/instant_export_enabled_default"
+            android:key="@string/instant_export_enabled_key"
+            android:summary="@string/instant_export_enabled_summary"
+            android:title="@string/instant_export_enabled_title" />
+        <Preference
+            android:key="@string/settings_default_export_uri_key"
+            android:title="@string/settings_default_export_uri_title"
+            >
+            <intent
+                android:targetClass="de.dennisguse.opentracks.io.file.importer.DefaultTrackExportDirectoryChooserActivity"
                 android:targetPackage="@string/applicationId" />
         </Preference>
         <ListPreference

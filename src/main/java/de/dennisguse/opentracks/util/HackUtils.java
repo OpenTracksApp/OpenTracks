@@ -16,7 +16,7 @@ public class HackUtils {
      */
     public static void invalidatePreference(@NonNull Preference preference) {
         boolean isEnabled = preference.isEnabled();
-        preference.setEnabled(!isEnabled);
-        preference.setEnabled(isEnabled);
+        preference.setVisible(!isEnabled);
+        preference.setVisible(isEnabled);
     }
 }

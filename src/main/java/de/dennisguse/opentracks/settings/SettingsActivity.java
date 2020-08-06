@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.settings;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -88,6 +89,17 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
 
             setExportTrackFileFormatOptions();
             setWheelCircumferenceInputFilter();
+            Preference instantExportDirectoryPreference = findPreference(getString(R.string.preference_key_default_export_uri));
+            if (instantExportDirectoryPreference != null) {
+                instantExportDirectoryPreference.setSummaryProvider(preference -> {
+                    Uri uri = PreferencesUtils.getDefaultExportDirectoryUri(getContext());
+                    return uri != null ? uri.getPath() : getString(R.string.summay_default_export_directory_not_set_yet);
+                });
+            }
+        }
+
+        private boolean isDefaultExportDirectorySet() {
+            return PreferencesUtils.getDefaultExportDirectoryUri(getContext()) != null;
         }
 
         @Override
@@ -97,6 +109,20 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             updateUnits();
             updateReset();
             updateBluetooth();
+            updateExportDirectory();
+            setInstantExportPreferenceEnabled();
+        }
+
+        private void setInstantExportPreferenceEnabled() {
+            Preference instantExportEnabledPreference = findPreference("instantExportEnabled");
+            assert instantExportEnabledPreference != null;
+            instantExportEnabledPreference.setEnabled(isDefaultExportDirectorySet());
+        }
+
+        private void updateExportDirectory() {
+            Preference defaultExportDirectoryPreference = findPreference("defaultExportUri");
+            assert defaultExportDirectoryPreference != null;
+            HackUtils.invalidatePreference(defaultExportDirectoryPreference);
         }
 
         @Override
@@ -206,4 +232,5 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             });
         }
     }
+
 }

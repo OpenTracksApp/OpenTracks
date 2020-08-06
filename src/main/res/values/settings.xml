@@ -26,6 +26,12 @@
     <string name="settings_sensor_bluetooth_cycling_speed_wheel_circumference_key" translatable="false">bluetoothCyclingSpeedWheelCircumference</string>
     <string name="settings_sensor_bluetooth_cycling_speed_wheel_circumference_default" translatable="false">2135</string>
 
+    <string name="settings_default_export_directory_key" translatable="false">settingsDefaultExportDirectory</string>
+    <bool name="instant_export_enabled_default" translatable="false">false</bool>
+    <string name="instant_export_enabled_title" translatable="false">Instant post-workout export</string>
+    <string name="instant_export_enabled_key" translatable="false">instantExportEnabled</string>
+    <string name="settings_default_export_uri_key" translatable="false">defaultExportUri</string>
+
     <string name="default_activity_key" translatable="false">defaultActivity</string>
     <string name="default_activity_default" translatable="false">@string/activity_type_unknown</string>
     <string-array name="activity_types">

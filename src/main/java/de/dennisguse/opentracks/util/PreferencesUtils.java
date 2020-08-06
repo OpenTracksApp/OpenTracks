@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.Uri;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.preference.PreferenceManager;
@@ -337,6 +338,11 @@ public class PreferencesUtils {
         return getInt(context, R.string.recording_gps_accuracy_key, RECORDING_GPS_ACCURACY);
     }
 
+    public static boolean shouldInstantExportAfterWorkout(Context context) {
+        final boolean INSTANT_POST_WORKOUT_EXPORT_DEFAULT = context.getResources().getBoolean(R.bool.instant_export_enabled_default);
+        return getBoolean(context, R.string.instant_export_enabled_key, INSTANT_POST_WORKOUT_EXPORT_DEFAULT);
+    }
+
     public static TrackFileFormat getExportTrackFileFormat(Context context) {
         final String TRACKFILEFORMAT_NAME_DEFAULT = getString(context, R.string.export_trackfileformat_default, null);
         String trackFileFormatName = getString(context, R.string.export_trackfileformat_key, TRACKFILEFORMAT_NAME_DEFAULT);
@@ -382,5 +388,21 @@ public class PreferencesUtils {
             getSharedPreferences(context).edit().clear().commit();
         }
         PreferenceManager.setDefaultValues(context, R.xml.settings, readAgain);
+    }
+
+    public static Uri getDefaultExportDirectoryUri(Context context)
+    {
+        String singleExportDirectorySettingsKey = getString(context, R.string.settings_default_export_directory_key, null);
+        if (singleExportDirectorySettingsKey == null) {
+            return null;
+        }
+        return Uri.parse(singleExportDirectorySettingsKey);
+    }
+
+    public static void setDefaultExportDirectoryUri(Context context, Uri directoryUri) {
+        setString(context,
+                R.string.settings_default_export_directory_key,
+                directoryUri.toString()
+        );
     }
 }
