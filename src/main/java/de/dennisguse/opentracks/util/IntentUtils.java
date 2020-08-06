@@ -173,4 +173,11 @@ public class IntentUtils {
                 .putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
         return new Pair<>(intent, photoUri);
     }
+
+    public static void persistDirectoryAccessPermission(Context context, Intent resultData, Uri directoryUri) {
+        final int takeFlags = resultData.getFlags()
+                & (Intent.FLAG_GRANT_READ_URI_PERMISSION
+                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        context.getContentResolver().takePersistableUriPermission(directoryUri, takeFlags);
+    }
 }
