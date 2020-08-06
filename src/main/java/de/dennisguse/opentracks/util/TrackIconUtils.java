@@ -40,8 +40,10 @@ public class TrackIconUtils {
 
     private static final String AIRPLANE = "AIRPLANE";
     private static final String BIKE = "BIKE";
+    private static final String MOUNTAIN_BIKE = "MOUNTAIN_BIKE";
     private static final String MOTOR_BIKE = "MOTOR_BIKE";
     private static final String BOAT = "BOAT";
+    private static final String SAILING = "SAILING";
     private static final String DRIVE = "DRIVE";
     private static final String RUN = "RUN";
     private static final String SKI = "SKI";
@@ -51,17 +53,21 @@ public class TrackIconUtils {
     private static final String ESCOOTER = "ESCOOTER";
     private static final String INLINE_SKATING = "INLINES_SKATING";
     private static final String SKATE_BOARDING = "SKATE_BOARDING";
+    private static final String CLIMBING = "CLIMBING";
 
     private static final int ACTIVITY_UNKNOWN_LOGO = R.drawable.ic_logo_white_24dp;
 
     private static final int[] AIRPLANE_LIST = new int[]{R.string.activity_type_airplane, R.string.activity_type_commercial_airplane, R.string.activity_type_rc_airplane};
     private static final int[] BIKE_LIST = new int[]{R.string.activity_type_biking, R.string.activity_type_cycling, R.string.activity_type_dirt_bike, R.string.activity_type_mountain_biking, R.string.activity_type_road_biking, R.string.activity_type_track_cycling};
-    private static final int[] MOTOR_BIKE_LIST = new int[]{R.string.activity_type_motor_bike};
     private static final int[] BOAT_LIST = new int[]{R.string.activity_type_boat, R.string.activity_type_ferry, R.string.activity_type_motor_boating, R.string.activity_type_rc_boat};
+    private static final int[] CLIMBING_LIST = new int[]{R.string.activity_type_climbing};
     private static final int[] DRIVE_LIST = new int[]{R.string.activity_type_atv, R.string.activity_type_driving, R.string.activity_type_driving_bus, R.string.activity_type_driving_car};
+    private static final int[] MOTOR_BIKE_LIST = new int[]{R.string.activity_type_motor_bike};
+    private static final int[] MOUNTAIN_BIKE_LIST = new int[]{R.string.activity_type_mountain_biking};
     private static final int[] ESCOOTER_LIST = new int[]{R.string.activity_type_escooter};
     private static final int[] INLINE_SKATING_LIST = new int[]{R.string.activity_type_inline_skating};
     private static final int[] RUN_LIST = new int[]{R.string.activity_type_running, R.string.activity_type_street_running, R.string.activity_type_track_running, R.string.activity_type_trail_running};
+    private static final int[] SAILING_LIST = new int[]{R.string.activity_type_sailing};
     private static final int[] SKI_LIST = new int[]{R.string.activity_type_cross_country_skiing, R.string.activity_type_skiing};
     private static final int[] SNOW_BOARDING_LIST = new int[]{R.string.activity_type_snow_boarding};
     private static final int[] SKATE_BOARDING_LIST = new int[]{R.string.activity_type_skate_boarding};
@@ -76,7 +82,7 @@ public class TrackIconUtils {
             // All bike categories.
             R.string.activity_type_biking, R.string.activity_type_cycling, R.string.activity_type_dirt_bike, R.string.activity_type_motor_bike, R.string.activity_type_mountain_biking, R.string.activity_type_road_biking, R.string.activity_type_track_cycling, R.string.activity_type_inline_skating,
             // All boat categories.
-            R.string.activity_type_boat, R.string.activity_type_ferry, R.string.activity_type_motor_boating, R.string.activity_type_rc_boat,
+            R.string.activity_type_boat, R.string.activity_type_ferry, R.string.activity_type_motor_boating, R.string.activity_type_rc_boat, R.string.activity_type_sailing,
             // All drive categories.
             R.string.activity_type_atv, R.string.activity_type_driving, R.string.activity_type_driving_bus, R.string.activity_type_driving_car, R.string.activity_type_escooter, R.string.activity_type_skate_boarding,
             // All wintersport categories
@@ -92,15 +98,18 @@ public class TrackIconUtils {
         MAP.put(RUN, new Pair<>(R.string.activity_type_running, R.drawable.ic_activity_run_24dp));
         MAP.put(WALK, new Pair<>(R.string.activity_type_walking, R.drawable.ic_activity_walk_24dp));
         MAP.put(BIKE, new Pair<>(R.string.activity_type_biking, R.drawable.ic_activity_bike_24dp));
+        MAP.put(MOUNTAIN_BIKE, new Pair<>(R.string.activity_type_mountain_biking, R.drawable.ic_activity_mtb_24dp));
         MAP.put(MOTOR_BIKE, new Pair<>(R.string.activity_type_motor_bike, R.drawable.ic_activity_motorbike_24dp));
         MAP.put(DRIVE, new Pair<>(R.string.activity_type_driving, R.drawable.ic_activity_drive_24dp));
         MAP.put(SKI, new Pair<>(R.string.activity_type_skiing, R.drawable.ic_activity_skiing_24dp));
         MAP.put(AIRPLANE, new Pair<>(R.string.activity_type_airplane, R.drawable.ic_activity_flight_24dp));
         MAP.put(BOAT, new Pair<>(R.string.activity_type_boat, R.drawable.ic_activity_boat_24dp));
+        MAP.put(SAILING, new Pair<>(R.string.activity_type_sailing, R.drawable.ic_activity_sailing_24dp));
         MAP.put(ESCOOTER, new Pair<>(R.string.activity_type_escooter, R.drawable.ic_activity_escooter_24dp));
         MAP.put(INLINE_SKATING, new Pair<>(R.string.activity_type_inline_skating, R.drawable.ic_activity_inline_skating_24dp));
         MAP.put(SNOW_BOARDING, new Pair<>(R.string.activity_type_snow_boarding, R.drawable.ic_activity_snowboarding_24dp));
         MAP.put(SKATE_BOARDING, new Pair<>(R.string.activity_type_skate_boarding, R.drawable.ic_activity_skateboarding_24dp));
+        MAP.put(CLIMBING, new Pair<>(R.string.activity_type_climbing, R.drawable.ic_activity_climbing_24dp));
     }
 
     private TrackIconUtils() {
@@ -155,11 +164,20 @@ public class TrackIconUtils {
         if (inList(context, activityType, BIKE_LIST)) {
             return BIKE;
         }
+        if (inList(context, activityType, MOUNTAIN_BIKE_LIST)) {
+            return MOUNTAIN_BIKE;
+        }
+        if (inList(context, activityType, CLIMBING_LIST)) {
+            return CLIMBING;
+        }
         if (inList(context, activityType, MOTOR_BIKE_LIST)) {
             return MOTOR_BIKE;
         }
         if (inList(context, activityType, BOAT_LIST)) {
             return BOAT;
+        }
+        if (inList(context, activityType, SAILING_LIST)) {
+            return SAILING;
         }
         if (inList(context, activityType, DRIVE_LIST)) {
             return DRIVE;
