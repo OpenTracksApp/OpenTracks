@@ -294,7 +294,9 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         trackRecordingServiceConnection.unbind(this);
         trackDataHub.stop();
-        exportLastTrackToExternalStorage();
+        if (PreferencesUtils.shouldInstantExportAfterWorkout(getApplicationContext())) {
+            exportLastTrackToExternalStorage();
+        }
 
     }
 

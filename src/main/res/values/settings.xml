@@ -39,7 +39,11 @@
         <item>28–622</item>
     </string-array>
 
-    <string name="single_export_uri" translatable="false">singleExportUri</string>
+    <string name="instant_export_enabled_title" translatable="false">Instant post-workout export</string>
+    <string name="instant_export_enabled_key" translatable="false">trackdetail_keep_screen_on_while_recording</string>
+    <string name="instant_export_enabled_summary">Export Track to storage after recording stopped</string>
+    <bool name="instant_export_enabled_default" translatable="false">false</bool>
+    <string name="single_export_uri" translatable="false">Instant Post-Workout Export Directory</string>
 
     <string name="default_activity_key" translatable="false">defaultActivity</string>
     <string name="default_activity_default" translatable="false">@string/activity_type_unknown</string>
