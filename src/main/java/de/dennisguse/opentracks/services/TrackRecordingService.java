@@ -43,6 +43,8 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.io.file.post_workout_export.InstantPostWorkoutExport;
 import de.dennisguse.opentracks.services.handlers.HandlerServer;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTaskFactory;
@@ -164,16 +166,25 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         PreferencesUtils.unregister(this, sharedPreferenceChangeListener);
 
+
         try {
             voiceExecutor.shutdown();
         } finally {
             voiceExecutor = null;
         }
 
+        if (PreferencesUtils.shouldInstantExportAfterWorkout(getApplicationContext())) {
+            SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(this);
+            TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(this);
+            InstantPostWorkoutExport instantPostWorkoutExport = new InstantPostWorkoutExport(getApplicationContext(), contentProviderUtils, sharedPreferences, trackFileFormat);
+            instantPostWorkoutExport.exportLastTrackToExternalStorage(getString(R.string.settings_single_export_directory_key));
+        }
+
         contentProviderUtils = null;
 
         binder.detachFromService();
         binder = null;
+
 
         // This should be the next to last operation
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
