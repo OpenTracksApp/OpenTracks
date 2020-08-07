@@ -362,7 +362,7 @@ g) udělejte, co si myslíte, že pomůže OpenTracks.</string>
     <string name="settings_sensor_connecting">Připojeno k senzoru %1$s</string>
     <string name="settings_sensor_disconnected">Odpojeno od %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Velikost kola (ETRTO)</string>
+    <string name="settings_sensor_wheel_circumference">Velikost kola (mm)</string>
 
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Zeměpisná šířka/délka</string>

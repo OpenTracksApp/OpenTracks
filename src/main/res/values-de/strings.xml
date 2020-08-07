@@ -372,7 +372,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="settings_sensor_connecting">Verbunden mit %1$s</string>
     <string name="settings_sensor_disconnected">Verbindung getrennt von %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Reifengröße (ETRTO)</string>
+    <string name="settings_sensor_wheel_circumference">Reifengröße (mm)</string>
 
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Breiten-/Längengrad</string>

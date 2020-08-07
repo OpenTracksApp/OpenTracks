@@ -128,10 +128,9 @@ limitations under the License.
             android:defaultValue="@string/sensor_type_value_none"
             android:key="@string/settings_sensor_bluetooth_cycling_speed_key"
             android:title="@string/stats_speed" />
-        <ListPreference
+        <EditTextPreference
             android:defaultValue="@string/settings_sensor_bluetooth_cycling_speed_wheel_circumference_default"
-            android:entries="@array/wheel_circumference_options"
-            android:entryValues="@array/wheel_circumference_values"
+            android:inputType="number"
             android:key="@string/settings_sensor_bluetooth_cycling_speed_wheel_circumference_key"
             android:title="@string/settings_sensor_wheel_circumference"
             app:useSimpleSummaryProvider="true" />

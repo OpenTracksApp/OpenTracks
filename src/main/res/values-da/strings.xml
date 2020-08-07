@@ -365,7 +365,7 @@ g) gør hvad du synes hjælper OpenTracks.</string>
     <string name="settings_sensor_connecting">Tilsluttet %1$s</string>
     <string name="settings_sensor_disconnected">Frakoblet %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Hjulstørrelse (ETRTO)</string>
+    <string name="settings_sensor_wheel_circumference">Hjulstørrelse (mm)</string>
 
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Breddegrad/længdegrad</string>

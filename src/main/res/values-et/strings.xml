@@ -364,7 +364,7 @@ g) tehke kõike, mis teie arvates OpenTracks aitab.</string>
     <string name="settings_sensor_connecting">Ühendatud anduriga %1$s</string>
     <string name="settings_sensor_disconnected">Lahti ühendatud %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Ratta suurus (ETRTO)</string>
+    <string name="settings_sensor_wheel_circumference">Ratta suurus (mm)</string>
 
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Laiuskraad/pikkuskraad</string>

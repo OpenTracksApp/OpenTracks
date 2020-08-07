@@ -362,7 +362,7 @@ g) Egin uste duzu OpenTracks-ek laguntzen duela.</string>
     <string name="settings_sensor_connecting">Honekin konektatuta: %1$s</string>
     <string name="settings_sensor_disconnected">Deskonektatuta %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Gurpilaren tamaina (ETRTO)</string>
+    <string name="settings_sensor_wheel_circumference">Gurpilaren tamaina (mm)</string>
 
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Latitudea/Longitudea</string>
