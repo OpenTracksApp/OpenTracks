@@ -366,7 +366,7 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="settings_sensor_connecting">Verbonden met %1$s</string>
     <string name="settings_sensor_disconnected">Ontkoppeld van %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Wielmaat (ETRTO)</string>
+    <string name="settings_sensor_wheel_circumference">Wielmaat (mm)</string>
 
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Breedte-/lengtegraad</string>

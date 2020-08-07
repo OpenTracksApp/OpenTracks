@@ -2,11 +2,13 @@ package de.dennisguse.opentracks.settings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -81,6 +83,7 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             }
 
             setExportTrackFileFormatOptions();
+            setWheelCircumferenceInputFilter();
         }
 
         @Override
@@ -182,6 +185,21 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             ListPreference listPreference = findPreference(getString(R.string.export_trackfileformat_key));
             listPreference.setEntries(entries);
             listPreference.setEntryValues(entryValues);
+        }
+
+        private void setWheelCircumferenceInputFilter() {
+            EditTextPreference wheelPreference = findPreference(getString(R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key));
+            wheelPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                if (newValue instanceof String) {
+                    try {
+                        int newValueInt = Integer.parseInt((String) newValue);
+                        return newValueInt > 500 && newValueInt < 4000;
+                    } catch (NumberFormatException e) {
+                        Log.w(TAG, "Entered string is no number.");
+                    }
+                }
+                return false;
+            });
         }
     }
 }

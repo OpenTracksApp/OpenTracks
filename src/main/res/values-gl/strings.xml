@@ -373,7 +373,7 @@ g) calquera cousa que estimes axuda a OpenTracks.</string>
     <string name="settings_sensor_connecting">Conectado a %1$s</string>
     <string name="settings_sensor_disconnected">Desconectado de %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Tamaño da roda (ETRTO)</string>
+    <string name="settings_sensor_wheel_circumference">Tamaño da roda (mm)</string>
 
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Latitude/lonxitude</string>
