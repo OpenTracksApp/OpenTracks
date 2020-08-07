@@ -1,10 +1,8 @@
 package de.dennisguse.opentracks;
 
-import android.content.ContentUris;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,10 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -24,31 +20,21 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URI;
-
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordingFragment;
-import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.io.file.post_workout_export.InstantPostWorkoutExport;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
-
-import static de.dennisguse.opentracks.io.file.TrackFileFormat.GPX;
 
 /**
  * An activity to show the track detail, record a new track or resumes an existing one.
@@ -73,6 +59,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     private TrackDataHub trackDataHub;
     private ViewPager pager;
     private TrackController trackController;
+    private InstantPostWorkoutExport instantPostWorkoutExport;
 
     // Initialized from Intent; if a new track recording is started, a new TrackId will be provided by TrackRecordingService
     private long trackId;
@@ -175,6 +162,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contentProviderUtils = new ContentProviderUtils(this);
+        instantPostWorkoutExport = new InstantPostWorkoutExport(getApplicationContext(), contentProviderUtils, sharedPreferences);
 
         trackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
         if (savedInstanceState != null) {
@@ -296,31 +284,9 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         trackRecordingServiceConnection.unbind(this);
         trackDataHub.stop();
         if (PreferencesUtils.shouldInstantExportAfterWorkout(getApplicationContext())) {
-            exportLastTrackToExternalStorage();
+            instantPostWorkoutExport.exportLastTrackToExternalStorage(getString(R.string.settings_single_export_directory_key));
         }
 
-    }
-
-    private void exportLastTrackToExternalStorage() {
-        String directoryAsString = sharedPreferences.getString(getString(R.string.settings_single_export_directory_key), "invalid uri");
-        Uri directoryUri = Uri.parse(directoryAsString);
-        DocumentFile directory = DocumentFile.fromTreeUri(getApplicationContext(), directoryUri);
-        String startdateString = StringUtils.formatDateTimeIso8601(contentProviderUtils.getLastTrack().getTrackStatistics().getStartTime_ms());
-        String fileName = startdateString + "." + GPX;
-        assert directory != null;
-        DocumentFile file = directory.findFile(fileName);
-        if (file == null) {
-            file = directory.createFile(GPX.getMimeType(), fileName);
-        }
-        try (OutputStream outputStream = getApplicationContext().getContentResolver().openOutputStream(file.getUri())) {
-            SingleTrackExportThread exportThread = new SingleTrackExportThread(outputStream, contentProviderUtils);
-            exportThread.run();
-            Toast.makeText(getApplicationContext(), R.string.toast_message_instant_track_was_exported, Toast.LENGTH_SHORT).show();
-        }   catch (FileNotFoundException e) {
-            Log.e(TAG, "Unable to open file " + file.getName(), e);
-        } catch (IOException e) {
-            Log.e(TAG, "Unable to close file output stream", e);
-        }
     }
 
     @Override

@@ -1,6 +1,4 @@
-package de.dennisguse.opentracks;
-
-import android.util.Log;
+package de.dennisguse.opentracks.io.file.post_workout_export;
 
 import java.io.OutputStream;
 
