@@ -115,6 +115,7 @@ limitations under the License.
     <string name="activity_type_driving">driving</string>
     <string name="activity_type_driving_bus">driving bus</string>
     <string name="activity_type_driving_car">driving car</string>
+    <string name="activity_type_escooter">escooter</string>
     <string name="activity_type_ferry">ferry</string>
     <string name="activity_type_frisbee">frisbee</string>
     <string name="activity_type_gliding">gliding</string>
