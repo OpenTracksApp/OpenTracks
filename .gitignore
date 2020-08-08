@@ -66,6 +66,9 @@ captures/
 .idea/sqlDataSources.xml
 .idea/vcs.xml
 .idea/uiDesigner.xml
+.idea/jarRepositories.xml
+.idea/markdown-navigator-enh.xml
+.idea/markdown-navigator.xml
 
 # Keystore files
 *.jks
