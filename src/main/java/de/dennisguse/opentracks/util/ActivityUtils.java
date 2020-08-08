@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
@@ -20,6 +23,8 @@ import de.dennisguse.opentracks.ContextualActionModeCallback;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.SearchListActivity;
 import de.dennisguse.opentracks.TrackController;
+
+import static android.content.Context.VIBRATOR_SERVICE;
 
 public class ActivityUtils {
 
@@ -128,5 +133,14 @@ public class ActivityUtils {
                 return false;
             }
         });
+    }
+
+    public static void vibrate(Activity activity, int milliseconds) {
+        final Vibrator vibrator = (Vibrator) activity.getSystemService(VIBRATOR_SERVICE);
+        if (Build.VERSION.SDK_INT >= 26) {
+            vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            vibrator.vibrate(milliseconds);
+        }
     }
 }

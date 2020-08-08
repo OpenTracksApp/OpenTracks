@@ -16,17 +16,27 @@
 
 package de.dennisguse.opentracks;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.os.Build;
 import android.os.Handler;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
+import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
+
+import static android.content.Context.VIBRATOR_SERVICE;
 
 /**
  * Track controller for record, pause, resume, and stop.
@@ -46,6 +56,7 @@ public class TrackController {
     private final ImageButton recordImageButton;
     private final ImageButton stopImageButton;
     private final boolean alwaysShow;
+    private StopDelay stopDelay;
 
     private boolean isRecording;
     private boolean isPaused;
@@ -65,6 +76,7 @@ public class TrackController {
         }
     };
 
+    @SuppressLint("ClickableViewAccessibility")
     TrackController(Activity activity, TrackRecordingServiceConnection trackRecordingServiceConnection, boolean alwaysShow, OnClickListener recordListener, OnClickListener stopListener) {
         this.activity = activity;
         this.trackRecordingServiceConnection = trackRecordingServiceConnection;
@@ -78,7 +90,56 @@ public class TrackController {
         recordImageButton.setOnClickListener(recordListener);
 
         stopImageButton = activity.findViewById(R.id.track_controller_stop);
-        stopImageButton.setOnClickListener(stopListener);
+        stopImageButton.setOnTouchListener((view, motionEvent) -> {
+            if (isRecording) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    final AnimatedVectorDrawable animatedDrawable = (AnimatedVectorDrawable) activity.getDrawable(R.drawable.ic_button_stop_anim);
+                    stopImageButton.setImageDrawable(animatedDrawable);
+                    animatedDrawable.start();
+                    stopDelay = new StopDelay(activity, stopListener, activity.getResources().getInteger(R.integer.stopDelayMillis));
+                    new Thread(stopDelay).start();
+                    ActivityUtils.vibrate(activity, 150);
+                    Toast.makeText(activity, R.string.hold_to_stop, Toast.LENGTH_SHORT).show();
+                    return true;
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP ) {
+                    stopImageButton.setImageResource(R.drawable.ic_button_stop);
+                    if (stopDelay != null) {
+                        stopDelay.canceled = true;
+                    }
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+
+    private static class StopDelay implements Runnable {
+
+        private boolean canceled = false;
+
+        private Activity activity;
+        private OnClickListener stopListener;
+        private final int stopDelayMillis;
+
+        private StopDelay(final Activity activity, final OnClickListener stopListener, final int stopDelayMillis) {
+            this.activity = activity;
+            this.stopListener = stopListener;
+            this.stopDelayMillis = stopDelayMillis;
+        }
+
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(stopDelayMillis);
+            } catch (InterruptedException ignored) {
+            }
+            if (!canceled) {
+                activity.runOnUiThread(()->{
+                    stopListener.onClick(null);
+                });
+                ActivityUtils.vibrate(activity, 1000);
+            }
+        }
     }
 
     public void update(boolean recording, boolean paused) {
@@ -98,7 +159,7 @@ public class TrackController {
         recordImageButton.setImageResource(isRecording && !isPaused ? R.drawable.button_pause : R.drawable.button_record);
         recordImageButton.setContentDescription(activity.getString(isRecording && !isPaused ? R.string.image_pause : R.string.image_record));
 
-        stopImageButton.setImageResource(isRecording ? R.drawable.button_stop : R.drawable.ic_button_stop_disabled);
+        stopImageButton.setImageResource(isRecording ? R.drawable.ic_button_stop : R.drawable.ic_button_stop_disabled);
         stopImageButton.setEnabled(isRecording);
 
         statusTextView.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
