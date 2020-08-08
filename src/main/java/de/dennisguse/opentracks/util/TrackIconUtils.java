@@ -97,19 +97,19 @@ public class TrackIconUtils {
         MAP.put(UNKNOWN, new Pair<>(R.string.activity_type_unknown, ACTIVITY_UNKNOWN_LOGO));
         MAP.put(RUN, new Pair<>(R.string.activity_type_running, R.drawable.ic_activity_run_24dp));
         MAP.put(WALK, new Pair<>(R.string.activity_type_walking, R.drawable.ic_activity_walk_24dp));
+        MAP.put(CLIMBING, new Pair<>(R.string.activity_type_climbing, R.drawable.ic_activity_climbing_24dp));
+        MAP.put(SKATE_BOARDING, new Pair<>(R.string.activity_type_skate_boarding, R.drawable.ic_activity_skateboarding_24dp));
+        MAP.put(INLINE_SKATING, new Pair<>(R.string.activity_type_inline_skating, R.drawable.ic_activity_inline_skating_24dp));
+        MAP.put(SNOW_BOARDING, new Pair<>(R.string.activity_type_snow_boarding, R.drawable.ic_activity_snowboarding_24dp));
+        MAP.put(SKI, new Pair<>(R.string.activity_type_skiing, R.drawable.ic_activity_skiing_24dp));
+        MAP.put(ESCOOTER, new Pair<>(R.string.activity_type_escooter, R.drawable.ic_activity_escooter_24dp));
         MAP.put(BIKE, new Pair<>(R.string.activity_type_biking, R.drawable.ic_activity_bike_24dp));
         MAP.put(MOUNTAIN_BIKE, new Pair<>(R.string.activity_type_mountain_biking, R.drawable.ic_activity_mtb_24dp));
         MAP.put(MOTOR_BIKE, new Pair<>(R.string.activity_type_motor_bike, R.drawable.ic_activity_motorbike_24dp));
         MAP.put(DRIVE, new Pair<>(R.string.activity_type_driving, R.drawable.ic_activity_drive_24dp));
-        MAP.put(SKI, new Pair<>(R.string.activity_type_skiing, R.drawable.ic_activity_skiing_24dp));
         MAP.put(AIRPLANE, new Pair<>(R.string.activity_type_airplane, R.drawable.ic_activity_flight_24dp));
         MAP.put(BOAT, new Pair<>(R.string.activity_type_boat, R.drawable.ic_activity_boat_24dp));
         MAP.put(SAILING, new Pair<>(R.string.activity_type_sailing, R.drawable.ic_activity_sailing_24dp));
-        MAP.put(ESCOOTER, new Pair<>(R.string.activity_type_escooter, R.drawable.ic_activity_escooter_24dp));
-        MAP.put(INLINE_SKATING, new Pair<>(R.string.activity_type_inline_skating, R.drawable.ic_activity_inline_skating_24dp));
-        MAP.put(SNOW_BOARDING, new Pair<>(R.string.activity_type_snow_boarding, R.drawable.ic_activity_snowboarding_24dp));
-        MAP.put(SKATE_BOARDING, new Pair<>(R.string.activity_type_skate_boarding, R.drawable.ic_activity_skateboarding_24dp));
-        MAP.put(CLIMBING, new Pair<>(R.string.activity_type_climbing, R.drawable.ic_activity_climbing_24dp));
     }
 
     private TrackIconUtils() {
