@@ -65,8 +65,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
     private TrackDataHub trackDataHub;
     private ViewPager pager;
 
-    // From intent.
-    private Track.Id trackId;
+    private Track track;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +87,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0:
-                        return new StatisticsRecordedFragment();
+                        return StatisticsRecordedFragment.newInstance(track.getId());
                     case 1:
                         return ChartFragment.newInstance(false);
                     case 2:
@@ -133,8 +132,8 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
         // Update UI
         this.invalidateOptionsMenu();
 
-        if (trackId.isValid()) {
-            trackDataHub.loadTrack(trackId);
+        if (track != null) {
+            trackDataHub.loadTrack(track.getId());
         }
     }
 
@@ -172,7 +171,6 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.track_detail_markers).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         menu.findItem(R.id.track_detail_resume_track).setVisible(!PreferencesUtils.isRecording(this));
-        Track track = contentProviderUtils.getTrack(trackId);
         setTitle(track != null ? track.getName() : "");
         return super.onPrepareOptionsMenu(menu);
     }
@@ -182,29 +180,29 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
         Intent intent;
         switch (item.getItemId()) {
             case R.id.track_detail_share:
-                intent = IntentUtils.newShareFileIntent(this, trackId);
+                intent = IntentUtils.newShareFileIntent(this, track.getId());
                 intent = Intent.createChooser(intent, null);
                 startActivity(intent);
                 return true;
             case R.id.track_detail_menu_show_on_map:
-                IntentDashboardUtils.startDashboard(this, false, trackId);
+                IntentDashboardUtils.startDashboard(this, false, track.getId());
                 return true;
             case R.id.track_detail_markers:
                 intent = IntentUtils.newIntent(this, MarkerListActivity.class)
-                        .putExtra(MarkerListActivity.EXTRA_TRACK_ID, trackId);
+                        .putExtra(MarkerListActivity.EXTRA_TRACK_ID, track.getId());
                 startActivity(intent);
                 return true;
             case R.id.track_detail_edit:
                 intent = IntentUtils.newIntent(this, TrackEditActivity.class)
-                        .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
+                        .putExtra(TrackEditActivity.EXTRA_TRACK_ID, track.getId());
                 startActivity(intent);
                 return true;
             case R.id.track_detail_delete:
-                deleteTracks(trackId);
+                deleteTracks(track.getId());
                 return true;
             case R.id.track_detail_resume_track:
                 Intent newIntent = IntentUtils.newIntent(TrackRecordedActivity.this, TrackRecordingActivity.class)
-                        .putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, trackId);
+                        .putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, track.getId());
                 startActivity(newIntent);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
@@ -238,7 +236,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
     }
 
     private void handleIntent(Intent intent) {
-        trackId = intent.getParcelableExtra(EXTRA_TRACK_ID);
+        Track.Id trackId = intent.getParcelableExtra(EXTRA_TRACK_ID);
 
         Waypoint.Id waypointId = intent.getParcelableExtra(EXTRA_MARKER_ID);
         if (waypointId != null) {
@@ -255,6 +253,8 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
             Log.e(TAG, "TrackDetailActivity needs EXTRA_TRACK_ID.");
             finish();
         }
+
+        track = contentProviderUtils.getTrack(trackId);
     }
 
     public void chooseActivityType(String category) {
@@ -263,7 +263,6 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
 
     @Override
     public void onChooseActivityTypeDone(String iconValue) {
-        Track track = contentProviderUtils.getTrack(trackId);
         String category = getString(TrackIconUtils.getIconActivityType(iconValue));
         TrackUtils.updateTrack(this, track, null, category, null, contentProviderUtils);
     }

@@ -33,11 +33,8 @@ import androidx.fragment.app.Fragment;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordedActivity;
-import de.dennisguse.opentracks.content.TrackDataHub;
-import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -49,10 +46,13 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
-public class StatisticsRecordedFragment extends Fragment implements TrackDataListener {
+public class StatisticsRecordedFragment extends Fragment {
+
+    private static final String TRACK_ID_KEY = "trackId";
 
     private TrackStatistics trackStatistics = null;
     private String category = "";
+    private Track track;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
@@ -87,6 +87,24 @@ public class StatisticsRecordedFragment extends Fragment implements TrackDataLis
     private TextView speedMovingLabel;
     private TextView speedMovingValue;
     private TextView speedMovingUnit;
+
+    public static StatisticsRecordedFragment newInstance(Track.Id trackId) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(TRACK_ID_KEY, trackId);
+
+        StatisticsRecordedFragment fragment = new StatisticsRecordedFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Track.Id trackId = getArguments().getParcelable(TRACK_ID_KEY);
+        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(getContext());
+        track = contentProviderUtils.getTrack(trackId);
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -140,17 +158,13 @@ public class StatisticsRecordedFragment extends Fragment implements TrackDataLis
         super.onResume();
         PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
 
-        TrackDataHub trackDataHub = ((TrackRecordedActivity) getActivity()).getTrackDataHub();
-        trackDataHub.registerTrackDataListener(this, true, false, true, true);
+        loadStatistics();
     }
 
     @Override
     public void onPause() {
         super.onPause();
         PreferencesUtils.unregister(getContext(), sharedPreferenceChangeListener);
-
-        TrackDataHub trackDataHub = ((TrackRecordedActivity) getActivity()).getTrackDataHub();
-        trackDataHub.unregisterTrackDataListener(this);
     }
 
     @Override
@@ -180,8 +194,7 @@ public class StatisticsRecordedFragment extends Fragment implements TrackDataLis
         speedMovingUnit = null;
     }
 
-    @Override
-    public void onTrackUpdated(final Track track) {
+    public void loadStatistics() {
         if (isResumed()) {
             getActivity().runOnUiThread(() -> {
                 if (isResumed()) {
@@ -191,41 +204,6 @@ public class StatisticsRecordedFragment extends Fragment implements TrackDataLis
                 }
             });
         }
-    }
-
-    @Override
-    public void clearTrackPoints() {
-        // We don't care.
-    }
-
-    @Override
-    public void onSampledInTrackPoint(TrackPoint trackPoint) {
-        // We don't care.
-    }
-
-    @Override
-    public void onSampledOutTrackPoint(TrackPoint trackPoint) {
-        // We don't care.
-    }
-
-    @Override
-    public void onNewTrackPointsDone() {
-        // We don't care.
-    }
-
-    @Override
-    public void clearWaypoints() {
-        // We don't care.
-    }
-
-    @Override
-    public void onNewWaypoint(Waypoint wpt) {
-        // We don't care.
-    }
-
-    @Override
-    public void onNewWaypointsDone() {
-        // We don't care.
     }
 
     private void updateUI() {
