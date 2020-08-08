@@ -5,6 +5,7 @@
     style="@style/StatsScrollView">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -208,6 +209,15 @@
             app:layout_constraintLeft_toRightOf="@+id/stats_moving_speed_value"
             app:layout_constraintRight_toLeftOf="@+id/guideline3"
             tools:text="km/h" />
+
+        <!-- Horizontal line -->
+        <View
+            android:id="@+id/stats_speed_horizontal_end_line"
+            style="@style/StatsHorizontalLine"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintLeft_toRightOf="@+id/guideline"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/stats_max_speed_value" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
