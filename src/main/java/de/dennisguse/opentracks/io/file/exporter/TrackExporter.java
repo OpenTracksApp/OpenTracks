@@ -33,8 +33,7 @@ public interface TrackExporter {
      * Write track to an output stream.
      * Depending on the implementation a context might be required.
      *
-     * @param context the context
      * @param outputStream the output stream
      */
-    boolean writeTrack(@NonNull Context context, @NonNull OutputStream outputStream);
+    boolean writeTrack(@NonNull OutputStream outputStream);
 }

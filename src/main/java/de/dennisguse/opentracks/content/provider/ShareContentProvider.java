@@ -212,7 +212,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
 
         PipeDataWriter<String> pipeDataWriter = (PipeDataWriter<String>) (output, uri1, mimeType, opts, args) -> {
             try (FileOutputStream fileOutputStream = new FileOutputStream(output.getFileDescriptor())) {
-                trackExporter.writeTrack(getContext(), fileOutputStream);
+                trackExporter.writeTrack(fileOutputStream);
             } catch (IOException e) {
                 Log.w(TAG, "there occurred an error while sharing a file: " + e);
             }
