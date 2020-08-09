@@ -201,7 +201,7 @@ public enum TrackFileFormat {
 
         FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, trackWriter, tracks);
 
-        return new KmzTrackExporter(contentProviderUtils, fileTrackExporter, tracks, exportPhotos);
+        return new KmzTrackExporter(context, contentProviderUtils, fileTrackExporter, tracks, exportPhotos);
     }
 
     /**

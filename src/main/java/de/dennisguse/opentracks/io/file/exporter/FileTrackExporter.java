@@ -59,7 +59,7 @@ public class FileTrackExporter implements TrackExporter {
     }
 
     @Override
-    public boolean writeTrack(@NonNull Context context, @NonNull OutputStream outputStream) {
+    public boolean writeTrack(@NonNull OutputStream outputStream) {
         try {
             trackWriter.prepare(outputStream);
             trackWriter.writeHeader(tracks);
