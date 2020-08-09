@@ -54,15 +54,18 @@ public class KmzTrackExporter implements TrackExporter {
     private final Track[] tracks;
 
     private final boolean exportPhotos;
+    private Context context;
 
     /**
      * Constructor.
      *
+     * @param context the context
      * @param contentProviderUtils the content provider utils
      * @param trackExporter        the file track exporter
      * @param tracks               the tracks to export
      */
-    public KmzTrackExporter(ContentProviderUtils contentProviderUtils, FileTrackExporter trackExporter, Track[] tracks, boolean exportPhotos) {
+    public KmzTrackExporter(Context context, ContentProviderUtils contentProviderUtils, FileTrackExporter trackExporter, Track[] tracks, boolean exportPhotos) {
+        this.context = context;
         this.contentProviderUtils = contentProviderUtils;
         this.fileTrackExporter = trackExporter;
         this.tracks = tracks;
@@ -70,7 +73,7 @@ public class KmzTrackExporter implements TrackExporter {
     }
 
     @Override
-    public boolean writeTrack(@NonNull Context context, @NonNull OutputStream outputStream) {
+    public boolean writeTrack(@NonNull OutputStream outputStream) {
         ZipOutputStream zipOutputStream = null;
         try {
             zipOutputStream = new ZipOutputStream(outputStream);
@@ -79,7 +82,7 @@ public class KmzTrackExporter implements TrackExporter {
             ZipEntry zipEntry = new ZipEntry(KMZ_KML_FILE);
             zipOutputStream.putNextEntry(zipEntry);
 
-            boolean success = fileTrackExporter.writeTrack(context, zipOutputStream);
+            boolean success = fileTrackExporter.writeTrack(zipOutputStream);
             zipOutputStream.closeEntry();
             if (!success) {
                 Log.e(TAG, "Unable to write kml in kmz");
