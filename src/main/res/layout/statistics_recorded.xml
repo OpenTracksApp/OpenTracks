@@ -219,5 +219,15 @@
             app:layout_constraintRight_toLeftOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/stats_max_speed_value" />
 
+        <LinearLayout
+            android:id="@+id/linear_layout_extra"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintLeft_toRightOf="@+id/guideline"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/stats_speed_horizontal_end_line"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

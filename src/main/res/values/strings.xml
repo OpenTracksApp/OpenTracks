@@ -417,6 +417,8 @@ limitations under the License.
     <string name="stats_speed">Speed</string>
     <string name="stats_distance">Distance</string>
     <string name="stats_total_time">Total time</string>
+    <string name="stats_intervals">Intervals</string>
+    <string name="stats_split_interval">Split interval</string>
     <!-- Track -->
     <string name="track_name_format">Track %1$d</string>
     <string name="track_record_notification">Recording your track&#8230;</string>

@@ -51,6 +51,8 @@ public class UnitConversions {
     public static final double MM_TO_M = 0.001;
 
     // Distance
+    // multiplication factor to convert miles to meters
+    public static final double MI_TO_M = 1609.344;
     // multiplication factor to convert miles to feet
     public static final double MI_TO_FT = 5280.0;
     // multiplication factor to convert feet to miles
