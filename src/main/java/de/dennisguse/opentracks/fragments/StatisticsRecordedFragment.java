@@ -24,12 +24,14 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordedActivity;
@@ -39,6 +41,8 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
+import de.dennisguse.opentracks.viewmodels.IntervalStatisticsModel;
+import de.dennisguse.opentracks.views.IntervalListView;
 
 /**
  * A fragment to display track statistics to the user.
@@ -46,13 +50,16 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
-public class StatisticsRecordedFragment extends Fragment {
+public class StatisticsRecordedFragment extends Fragment implements IntervalListView.IntervalListListener {
 
     private static final String TRACK_ID_KEY = "trackId";
 
     private TrackStatistics trackStatistics = null;
     private String category = "";
     private Track track;
+
+    private IntervalStatisticsModel viewModel = null;
+    private IntervalListView intervalListView = null;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
@@ -72,6 +79,7 @@ public class StatisticsRecordedFragment extends Fragment {
     }
 
     /* Views */
+    private ViewGroup rootView;
     private TextView totalTimeValueView;
     private TextView distanceValue;
     private TextView distanceUnit;
@@ -109,6 +117,8 @@ public class StatisticsRecordedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        rootView = view.findViewById(R.id.root_view);
 
         totalTimeValueView = view.findViewById(R.id.stats_total_time_value);
 
@@ -150,6 +160,21 @@ public class StatisticsRecordedFragment extends Fragment {
                 ((TrackRecordedActivity) getActivity()).chooseActivityType(category);
             }
             return true;
+        });
+    }
+
+    private void addIntervals() {
+        intervalListView = new IntervalListView(getActivity(), this);
+        intervalListView.setId(View.generateViewId());
+        LinearLayout linearLayoutExtra = rootView.findViewById(R.id.linear_layout_extra);
+        linearLayoutExtra.removeAllViews();
+        linearLayoutExtra.addView(intervalListView);
+
+        viewModel = new ViewModelProvider(this).get(IntervalStatisticsModel.class);
+        viewModel.getIntervalStats(track.getId()).observe(getActivity(), intervalStatistics -> {
+            if (intervalStatistics != null) {
+                intervalListView.display(intervalStatistics.getIntervalList());
+            }
         });
     }
 
@@ -268,6 +293,21 @@ public class StatisticsRecordedFragment extends Fragment {
             Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
             speedMovingValue.setText(parts.first);
             speedMovingUnit.setText(parts.second);
+        }
+
+        // Set intervals.
+        addIntervals();
+    }
+
+    @Override
+    public void intervalChanged(IntervalStatisticsModel.IntervalOption interval) {
+        if (viewModel != null && intervalListView != null) {
+            viewModel = new ViewModelProvider(this).get(IntervalStatisticsModel.class);
+            viewModel.getIntervalStats(track.getId(), interval).observe(getActivity(), intervalStatistics -> {
+                if (intervalStatistics != null) {
+                    intervalListView.display(intervalStatistics.getIntervalList());
+                }
+            });
         }
     }
 }
