@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks.io.file.exporter;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
@@ -42,7 +41,6 @@ public class FileTrackExporter implements TrackExporter {
     private static final String TAG = FileTrackExporter.class.getSimpleName();
 
     private final ContentProviderUtils contentProviderUtils;
-    private final Track[] tracks;
     private final TrackWriter trackWriter;
 
     /**
@@ -50,16 +48,14 @@ public class FileTrackExporter implements TrackExporter {
      *
      * @param contentProviderUtils  the content provider utils
      * @param trackWriter           the track writer
-     * @param tracks                the tracks
      */
-    public FileTrackExporter(ContentProviderUtils contentProviderUtils, TrackWriter trackWriter, Track[] tracks) {
+    public FileTrackExporter(ContentProviderUtils contentProviderUtils, TrackWriter trackWriter) {
         this.contentProviderUtils = contentProviderUtils;
-        this.tracks = tracks;
         this.trackWriter = trackWriter;
     }
 
     @Override
-    public boolean writeTrack(@NonNull OutputStream outputStream) {
+    public boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream) {
         try {
             trackWriter.prepare(outputStream);
             trackWriter.writeHeader(tracks);
@@ -126,7 +122,6 @@ public class FileTrackExporter implements TrackExporter {
         boolean wroteTrack = false;
         boolean wroteSegment = false;
         boolean isLastLocationValid = false;
-        int locationNumber = 0;
         TrackPoint lastTrackPoint = null;
 
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false)) {
@@ -138,7 +133,6 @@ public class FileTrackExporter implements TrackExporter {
                 TrackPoint trackPoint = trackPointIterator.next();
 
                 setLocationTime(trackPoint, offset);
-                locationNumber++;
 
                 boolean isLocationValid = LocationUtils.isValidLocation(trackPoint.getLocation());
                 boolean isSegmentValid = isLocationValid && isLastLocationValid;
