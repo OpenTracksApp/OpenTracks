@@ -199,7 +199,7 @@ public enum TrackFileFormat {
     private static TrackExporter newKmzTrackExporter(Context context, TrackWriter trackWriter, Track[] tracks, boolean exportPhotos) {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
 
-        FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, trackWriter, tracks);
+        FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, trackWriter);
 
         return new KmzTrackExporter(context, contentProviderUtils, fileTrackExporter, exportPhotos);
     }
@@ -212,7 +212,7 @@ public enum TrackFileFormat {
     public TrackExporter newTrackExporter(Context context, Track[] tracks) {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
         TrackWriter trackWriter = newTrackWriter(context, tracks.length > 1);
-        return new FileTrackExporter(contentProviderUtils, trackWriter, tracks);
+        return new FileTrackExporter(contentProviderUtils, trackWriter);
     }
 
     /**

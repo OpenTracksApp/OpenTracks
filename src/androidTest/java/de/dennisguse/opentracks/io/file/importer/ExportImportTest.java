@@ -109,7 +109,7 @@ public class ExportImportTest {
         // when
         // 1. export
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        trackExporter.writeTrack(outputStream);
+        trackExporter.writeTrack(new Track[]{track}, outputStream);
         contentProviderUtils.deleteTrack(context, trackId);
 
         // 2. import
@@ -145,7 +145,7 @@ public class ExportImportTest {
         // when
         // 1. export
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        trackExporter.writeTrack(outputStream);
+        trackExporter.writeTrack(new Track[]{track}, outputStream);
         contentProviderUtils.deleteTrack(context, trackId);
 
         // 2. import
@@ -231,7 +231,7 @@ public class ExportImportTest {
         // when
         // 1. export
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        trackExporter.writeTrack(outputStream);
+        trackExporter.writeTrack(new Track[]{track}, outputStream);
         contentProviderUtils.deleteTrack(context, trackId);
 
         // 2. import
