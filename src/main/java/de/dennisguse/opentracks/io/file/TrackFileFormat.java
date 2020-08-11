@@ -74,7 +74,7 @@ public enum TrackFileFormat {
         }
 
         public TrackExporter newTrackExporter(Context context, Track[] tracks) {
-            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), tracks, exportPhotos);
+            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), exportPhotos);
         }
 
         @Override
@@ -101,7 +101,7 @@ public enum TrackFileFormat {
         }
 
         public TrackExporter newTrackExporter(Context context, Track[] tracks) {
-            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), tracks, exportPhotos);
+            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), exportPhotos);
         }
 
         @Override
@@ -134,7 +134,7 @@ public enum TrackFileFormat {
         }
 
         public TrackExporter newTrackExporter(Context context, Track[] tracks) {
-            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), tracks, exportPhotos);
+            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), exportPhotos);
         }
 
         public String getExtension() {
@@ -163,7 +163,7 @@ public enum TrackFileFormat {
         }
 
         public TrackExporter newTrackExporter(Context context, Track[] tracks) {
-            return newKmzTrackExporter(context, newTrackWriter(context, tracks.length > 1), tracks, exportPhotos);
+            return newKmzTrackExporter(context, newTrackWriter(context, tracks.length > 1), exportPhotos);
         }
 
         public String getExtension() {
@@ -196,10 +196,10 @@ public enum TrackFileFormat {
 
     private static final String MIME_KML = "application/vnd.google-earth.kml+xml";
 
-    private static TrackExporter newKmzTrackExporter(Context context, TrackWriter trackWriter, Track[] tracks, boolean exportPhotos) {
+    private static TrackExporter newKmzTrackExporter(Context context, TrackWriter trackWriter, boolean exportPhotos) {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
 
-        FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, trackWriter, tracks);
+        FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, trackWriter);
 
         return new KmzTrackExporter(context, contentProviderUtils, fileTrackExporter, exportPhotos);
     }
@@ -212,7 +212,7 @@ public enum TrackFileFormat {
     public TrackExporter newTrackExporter(Context context, Track[] tracks) {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
         TrackWriter trackWriter = newTrackWriter(context, tracks.length > 1);
-        return new FileTrackExporter(contentProviderUtils, trackWriter, tracks);
+        return new FileTrackExporter(contentProviderUtils, trackWriter);
     }
 
     /**
