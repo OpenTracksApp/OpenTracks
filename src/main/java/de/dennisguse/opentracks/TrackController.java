@@ -23,6 +23,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -90,27 +91,31 @@ public class TrackController {
         recordImageButton.setOnClickListener(recordListener);
 
         stopImageButton = activity.findViewById(R.id.track_controller_stop);
-        stopImageButton.setOnTouchListener((view, motionEvent) -> {
-            if (isRecording) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    final AnimatedVectorDrawable animatedDrawable = (AnimatedVectorDrawable) activity.getDrawable(R.drawable.ic_button_stop_anim);
-                    stopImageButton.setImageDrawable(animatedDrawable);
-                    animatedDrawable.start();
-                    stopDelay = new StopDelay(activity, stopListener, activity.getResources().getInteger(R.integer.stopDelayMillis));
-                    new Thread(stopDelay).start();
-                    ActivityUtils.vibrate(activity, 150);
-                    Toast.makeText(activity, R.string.hold_to_stop, Toast.LENGTH_SHORT).show();
-                    return true;
-                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP ) {
-                    stopImageButton.setImageResource(R.drawable.ic_button_stop);
-                    if (stopDelay != null) {
-                        stopDelay.canceled = true;
-                    }
-                    return true;
+        stopImageButton.setOnTouchListener((view, motionEvent) -> onStopTouch(activity, stopListener, motionEvent));
+    }
+
+    private boolean onStopTouch(final Activity activity, final OnClickListener stopListener, final MotionEvent motionEvent) {
+        if (isRecording) {
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                final AnimatedVectorDrawable animatedDrawable = (AnimatedVectorDrawable) activity.getDrawable(R.drawable.ic_button_stop_anim);
+                stopImageButton.setImageDrawable(animatedDrawable);
+                animatedDrawable.start();
+                stopDelay = new StopDelay(activity, stopListener, activity.getResources().getInteger(R.integer.stopDelayMillis));
+                new Thread(stopDelay).start();
+                ActivityUtils.vibrate(activity, 150);
+                final Toast toast = Toast.makeText(activity, R.string.hold_to_stop, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.TOP, 0, 0);
+                toast.show();
+                return true;
+            } else if (motionEvent.getAction() == MotionEvent.ACTION_UP ) {
+                stopImageButton.setImageResource(R.drawable.ic_button_stop);
+                if (stopDelay != null) {
+                    stopDelay.canceled = true;
                 }
+                return true;
             }
-            return false;
-        });
+        }
+        return false;
     }
 
     private static class StopDelay implements Runnable {
