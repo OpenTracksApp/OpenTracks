@@ -67,7 +67,7 @@ public class DescriptionGeneratorTest {
         track.setTrackStatistics(stats);
         track.setCategory("hiking");
         String expected = //"Created by"
-                "<a href='https://github.com/OpenTracksApp/OpenTracks'>OpenTracks</a><p>"
+                "<a href='https://github.com/OpenTracksApp/OpenTracks'>OpenTracks (Debug)</a><p>"
                 + "Name: -<br>"
                 + "Activity type: hiking<br>"
                 + "Description: -<br>"
@@ -103,7 +103,7 @@ public class DescriptionGeneratorTest {
         track.setTrackStatistics(stats);
         track.setCategory("hiking");
         String expected = //"Created by"
-                "<a href='https://github.com/OpenTracksApp/OpenTracks'>OpenTracks</a><p>"
+                "<a href='https://github.com/OpenTracksApp/OpenTracks'>OpenTracks (Debug)</a><p>"
                         + "Name: -<br>"
                         + "Activity type: hiking<br>"
                         + "Description: -<br>"
