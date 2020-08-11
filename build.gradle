@@ -45,11 +45,6 @@ android {
 
     defaultConfig {
         applicationId "de.dennisguse.opentracks"
-        manifestPlaceholders = [
-                applicationLogo: "@mipmap/ic_launcher",
-                applicationName: "@string/app_name"
-        ]
-
         versionCode 3474
         versionName "v3.8.1"
 
@@ -67,10 +62,6 @@ android {
         debug {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
-            manifestPlaceholders = [
-                    applicationLogo: "@mipmap/ic_launcher_debug",
-                    applicationName: "OpenTracks (Debug)"
-            ]
         }
 
         release {
