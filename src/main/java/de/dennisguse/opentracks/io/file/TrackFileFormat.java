@@ -21,7 +21,7 @@ public enum TrackFileFormat {
 
     KML_ONLY_TRACK {
         @Override
-        public TrackWriter newTrackWriter(Context context, boolean multiple) {
+        public TrackWriter newTrackWriter(Context context, boolean hasMultipleTracks) {
             return new KmlTrackWriter(context,false, false, false);
         }
 
@@ -36,7 +36,7 @@ public enum TrackFileFormat {
     },
     KML_WITH_TRACKDETAIL {
         @Override
-        public TrackWriter newTrackWriter(Context context, boolean multiple) {
+        public TrackWriter newTrackWriter(Context context, boolean hasMultipleTracks) {
             return new KmlTrackWriter(context,true, false, false);
         }
 
@@ -51,7 +51,7 @@ public enum TrackFileFormat {
     },
     KML_WITH_TRACKDETAIL_AND_SENSORDATA {
         @Override
-        public TrackWriter newTrackWriter(Context context, boolean multiple) {
+        public TrackWriter newTrackWriter(Context context, boolean hasMultipleTracks) {
             return new KmlTrackWriter(context,true, true, false);
         }
 
@@ -69,12 +69,12 @@ public enum TrackFileFormat {
         private static final boolean exportPhotos = false;
 
         @Override
-        public TrackWriter newTrackWriter(Context context, boolean multiple) {
+        public TrackWriter newTrackWriter(Context context, boolean hasMultipleTracks) {
             return new KmlTrackWriter(context,false, false, exportPhotos);
         }
 
-        public TrackExporter newTrackExporter(Context context, Track[] tracks) {
-            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), exportPhotos);
+        public TrackExporter newTrackExporter(Context context, boolean hasMultipleTracks) {
+            return newKmzTrackExporter(context, this.newTrackWriter(context, hasMultipleTracks), exportPhotos);
         }
 
         @Override
@@ -96,12 +96,12 @@ public enum TrackFileFormat {
         private static final boolean exportPhotos = false;
 
         @Override
-        public TrackWriter newTrackWriter(Context context, boolean multiple) {
+        public TrackWriter newTrackWriter(Context context, boolean hasMultipleTracks) {
             return new KmlTrackWriter(context,true, false, exportPhotos);
         }
 
-        public TrackExporter newTrackExporter(Context context, Track[] tracks) {
-            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), exportPhotos);
+        public TrackExporter newTrackExporter(Context context, boolean hasMultipleTracks) {
+            return newKmzTrackExporter(context, this.newTrackWriter(context, hasMultipleTracks), exportPhotos);
         }
 
         @Override
@@ -124,7 +124,7 @@ public enum TrackFileFormat {
         private static final boolean exportPhotos = false;
 
         @Override
-        public TrackWriter newTrackWriter(Context context, boolean multiple) {
+        public TrackWriter newTrackWriter(Context context, boolean hasMultipleTracks) {
             return new KmlTrackWriter(context,true, true, exportPhotos);
         }
 
@@ -133,8 +133,8 @@ public enum TrackFileFormat {
             return MIME_KMZ;
         }
 
-        public TrackExporter newTrackExporter(Context context, Track[] tracks) {
-            return newKmzTrackExporter(context, this.newTrackWriter(context, tracks.length > 1), exportPhotos);
+        public TrackExporter newTrackExporter(Context context, boolean hasMultipleTracks) {
+            return newKmzTrackExporter(context, this.newTrackWriter(context, hasMultipleTracks), exportPhotos);
         }
 
         public String getExtension() {
@@ -153,7 +153,7 @@ public enum TrackFileFormat {
         private static final boolean exportPhotos = true;
 
         @Override
-        public TrackWriter newTrackWriter(Context context, boolean multiple) {
+        public TrackWriter newTrackWriter(Context context, boolean hasMultipleTracks) {
             return new KmlTrackWriter(context,true, true, exportPhotos);
         }
 
@@ -162,8 +162,8 @@ public enum TrackFileFormat {
             return MIME_KMZ;
         }
 
-        public TrackExporter newTrackExporter(Context context, Track[] tracks) {
-            return newKmzTrackExporter(context, newTrackWriter(context, tracks.length > 1), exportPhotos);
+        public TrackExporter newTrackExporter(Context context, boolean hasMultipleTracks) {
+            return newKmzTrackExporter(context, newTrackWriter(context, hasMultipleTracks), exportPhotos);
         }
 
         public String getExtension() {
@@ -178,7 +178,7 @@ public enum TrackFileFormat {
     },
     GPX {
         @Override
-        public TrackWriter newTrackWriter(Context context, boolean multiple) {
+        public TrackWriter newTrackWriter(Context context, boolean hasMultipleTracks) {
             return new GpxTrackWriter(context.getString(R.string.app_name));
         }
 
@@ -209,9 +209,13 @@ public enum TrackFileFormat {
      */
     public abstract String getMimeType();
 
-    public TrackExporter newTrackExporter(Context context, Track[] tracks) {
+    public TrackExporter newTrackExporter(Context context) {
+        return newTrackExporter(context, false);
+    }
+
+    public TrackExporter newTrackExporter(Context context, boolean hasMultipleTracks) {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
-        TrackWriter trackWriter = newTrackWriter(context, tracks.length > 1);
+        TrackWriter trackWriter = newTrackWriter(context, hasMultipleTracks);
         return new FileTrackExporter(contentProviderUtils, trackWriter);
     }
 
@@ -221,7 +225,7 @@ public enum TrackFileFormat {
      * @param context  the context
      * @param multiple true for writing multiple tracks
      */
-    public abstract TrackWriter newTrackWriter(Context context, boolean multiple);
+    public abstract TrackWriter newTrackWriter(Context context, boolean hasMultipleTracks);
 
     /**
      * Returns the file extension for each format.

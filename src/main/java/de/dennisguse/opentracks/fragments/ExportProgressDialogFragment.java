@@ -206,7 +206,7 @@ public class ExportProgressDialogFragment extends DialogFragment {
         }
 
         private Boolean exportTrack(Context context, Track track) {
-            TrackExporter trackExporter = trackFileFormat.newTrackExporter(context, new Track[]{track});
+            TrackExporter trackExporter = trackFileFormat.newTrackExporter(context);
 
             //TODO Move to helper function
             String fileName = track.getId() + "." + trackFileFormat.getExtension();
