@@ -146,12 +146,12 @@ public class GpxTrackWriter implements TrackWriter {
     }
 
     @Override
-    public void writeBeginTracks() {
+    public void writeMultiTrackBegin() {
         // Do nothing
     }
 
     @Override
-    public void writeEndTracks() {
+    public void writeMultiTrackEnd() {
         // Do nothing
     }
 

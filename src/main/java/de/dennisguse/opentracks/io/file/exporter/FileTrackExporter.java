@@ -66,13 +66,18 @@ public class FileTrackExporter implements TrackExporter {
             for (Track track1 : tracks) {
                 writeWaypoints(track1);
             }
-            trackWriter.writeBeginTracks();
+            boolean hasMultipleTracks = tracks.length > 1;
+            if (hasMultipleTracks) {
+                trackWriter.writeMultiTrackBegin();
+            }
             long startTime = tracks[0].getTrackStatistics().getStartTime_ms();
             for (Track track : tracks) {
                 long offset = track.getTrackStatistics().getStartTime_ms() - startTime;
                 writeLocations(track, offset);
             }
-            trackWriter.writeEndTracks();
+            if (hasMultipleTracks) {
+                trackWriter.writeMultiTrackEnd();
+            }
             trackWriter.writeFooter();
             trackWriter.close();
 
