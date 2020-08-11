@@ -35,9 +35,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import de.dennisguse.opentracks.MarkerDetailActivity;
 import de.dennisguse.opentracks.MarkerEditActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Waypoint;
@@ -124,14 +126,22 @@ public class MarkerDetailFragment extends Fragment {
         photoView = view.findViewById(R.id.marker_detail_waypoint_photo);
         textGradient = view.findViewById(R.id.marker_detail_waypoint_text_gradient);
         waypointInfo = view.findViewById(R.id.marker_detail_waypoint_info);
+        final Toolbar toolbar = ((MarkerDetailActivity)getActivity()).getToolbar();
 
         photoView.setOnClickListener(v -> {
             handler.removeCallbacks(hideText);
             int visibility = waypointInfo.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
             textGradient.setVisibility(visibility);
             waypointInfo.setVisibility(visibility);
+            toolbar.setVisibility(visibility);
             if (visibility == View.VISIBLE) {
                 handler.postDelayed(hideText, HIDE_TEXT_DELAY);
+                view.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+            } else {
+                view.setSystemUiVisibility(
+                        View.SYSTEM_UI_FLAG_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_IMMERSIVE);
             }
         });
         return view;

@@ -17,7 +17,7 @@ limitations under the License.
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/marker_detail_waypoint_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

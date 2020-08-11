@@ -22,6 +22,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -49,6 +50,8 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
     private static final String TAG = MarkerDetailActivity.class.getSimpleName();
 
     private List<Long> markerIds;
+
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -81,6 +84,8 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
             }
         }
 
+        toolbar = findViewById(R.id.toolbar);
+
         final ViewPager viewPager = findViewById(R.id.maker_detail_activity_view_pager);
         final MarkerDetailPagerAdapter markerAdapter = new MarkerDetailPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(markerAdapter);
@@ -110,6 +115,10 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
     @Override
     public void onDeleteMarkerDone() {
         runOnUiThread(this::finish);
+    }
+
+    public Toolbar getToolbar() {
+        return toolbar;
     }
 
     /**
