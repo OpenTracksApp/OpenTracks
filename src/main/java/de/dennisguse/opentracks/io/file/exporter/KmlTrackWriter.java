@@ -57,7 +57,6 @@ public class KmlTrackWriter implements TrackWriter {
     private static final String TRACK_ICON = "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
 
     private final Context context;
-    private final boolean hasMultipleTracks;
     private final boolean exportPhotos;
     private final boolean exportTrackDetail;
     private final boolean exportSensorData;
@@ -74,14 +73,12 @@ public class KmlTrackWriter implements TrackWriter {
 
     /**
      * @param context           the context
-     * @param hasMultipleTracks should encode multiple tracks into one file?
      * @param exportTrackDetail should detailed information about the track be exported (e.g., title, description, waypoints, timing)?
      * @param exportSensorData  should {@link TrackPoint}'s sensor data be exported?
      * @param exportPhotos      should pictures be exported (if true: exports to KMZ)?
      */
-    public KmlTrackWriter(Context context, boolean hasMultipleTracks, boolean exportTrackDetail, boolean exportSensorData, boolean exportPhotos) {
+    public KmlTrackWriter(Context context, boolean exportTrackDetail, boolean exportSensorData, boolean exportPhotos) {
         this.context = context;
-        this.hasMultipleTracks = hasMultipleTracks;
         this.exportTrackDetail = exportTrackDetail;
         this.exportSensorData = exportSensorData;
         this.exportPhotos = exportPhotos;
@@ -178,18 +175,16 @@ public class KmlTrackWriter implements TrackWriter {
         }
     }
 
-    @Override
-    public void writeBeginTracks() {
-        if (printWriter != null && hasMultipleTracks) {
+    public void writeMultiTrackBegin() {
+        if (printWriter != null) {
             printWriter.println("<Folder id=tour>");
             printWriter.println("<name>" + context.getString(R.string.generic_tracks) + "</name>");
             printWriter.println("<open>1</open>");
         }
     }
 
-    @Override
-    public void writeEndTracks() {
-        if (printWriter != null && hasMultipleTracks) {
+    public void writeMultiTrackEnd() {
+        if (printWriter != null) {
             printWriter.println("</Folder>");
         }
     }

@@ -22,7 +22,7 @@ public enum TrackFileFormat {
     KML_ONLY_TRACK {
         @Override
         public TrackWriter newTrackWriter(Context context, boolean multiple) {
-            return new KmlTrackWriter(context, multiple, false, false, false);
+            return new KmlTrackWriter(context,false, false, false);
         }
 
         @Override
@@ -37,7 +37,7 @@ public enum TrackFileFormat {
     KML_WITH_TRACKDETAIL {
         @Override
         public TrackWriter newTrackWriter(Context context, boolean multiple) {
-            return new KmlTrackWriter(context, multiple, true, false, false);
+            return new KmlTrackWriter(context,true, false, false);
         }
 
         @Override
@@ -52,7 +52,7 @@ public enum TrackFileFormat {
     KML_WITH_TRACKDETAIL_AND_SENSORDATA {
         @Override
         public TrackWriter newTrackWriter(Context context, boolean multiple) {
-            return new KmlTrackWriter(context, multiple, true, true, false);
+            return new KmlTrackWriter(context,true, true, false);
         }
 
         @Override
@@ -70,7 +70,7 @@ public enum TrackFileFormat {
 
         @Override
         public TrackWriter newTrackWriter(Context context, boolean multiple) {
-            return new KmlTrackWriter(context, multiple, false, false, exportPhotos);
+            return new KmlTrackWriter(context,false, false, exportPhotos);
         }
 
         public TrackExporter newTrackExporter(Context context, Track[] tracks) {
@@ -97,7 +97,7 @@ public enum TrackFileFormat {
 
         @Override
         public TrackWriter newTrackWriter(Context context, boolean multiple) {
-            return new KmlTrackWriter(context, multiple, true, false, exportPhotos);
+            return new KmlTrackWriter(context,true, false, exportPhotos);
         }
 
         public TrackExporter newTrackExporter(Context context, Track[] tracks) {
@@ -125,7 +125,7 @@ public enum TrackFileFormat {
 
         @Override
         public TrackWriter newTrackWriter(Context context, boolean multiple) {
-            return new KmlTrackWriter(context, multiple, true, true, exportPhotos);
+            return new KmlTrackWriter(context,true, true, exportPhotos);
         }
 
         @Override
@@ -154,7 +154,7 @@ public enum TrackFileFormat {
 
         @Override
         public TrackWriter newTrackWriter(Context context, boolean multiple) {
-            return new KmlTrackWriter(context, multiple, true, true, exportPhotos);
+            return new KmlTrackWriter(context,true, true, exportPhotos);
         }
 
         @Override
@@ -201,7 +201,7 @@ public enum TrackFileFormat {
 
         FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, trackWriter, tracks);
 
-        return new KmzTrackExporter(context, contentProviderUtils, fileTrackExporter, tracks, exportPhotos);
+        return new KmzTrackExporter(context, contentProviderUtils, fileTrackExporter, exportPhotos);
     }
 
     /**
