@@ -104,7 +104,7 @@ public class ExportImportTest {
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL.newTrackExporter(context, new Track[]{track});
+        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL.newTrackExporter(context);
 
         // when
         // 1. export
@@ -140,7 +140,7 @@ public class ExportImportTest {
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.newTrackExporter(context, new Track[]{track});
+        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.newTrackExporter(context);
 
         // when
         // 1. export
@@ -226,7 +226,7 @@ public class ExportImportTest {
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackExporter trackExporter = TrackFileFormat.GPX.newTrackExporter(context, new Track[]{track});
+        TrackExporter trackExporter = TrackFileFormat.GPX.newTrackExporter(context);
 
         // when
         // 1. export
