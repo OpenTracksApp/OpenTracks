@@ -19,10 +19,7 @@ package de.dennisguse.opentracks;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.drawable.AnimatedVectorDrawable;
-import android.os.Build;
 import android.os.Handler;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -36,8 +33,6 @@ import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
-
-import static android.content.Context.VIBRATOR_SERVICE;
 
 /**
  * Track controller for record, pause, resume, and stop.
@@ -57,7 +52,7 @@ public class TrackController {
     private final ImageButton recordImageButton;
     private final ImageButton stopImageButton;
     private final boolean alwaysShow;
-    private StopDelay stopDelay;
+    private ButtonDelay buttonDelay;
 
     private boolean isRecording;
     private boolean isPaused;
@@ -88,29 +83,42 @@ public class TrackController {
         totalTimeTextView = activity.findViewById(R.id.track_controller_total_time);
 
         recordImageButton = activity.findViewById(R.id.track_controller_record);
-        recordImageButton.setOnClickListener(recordListener);
+        recordImageButton.setOnTouchListener((view, motionEvent) -> onRecordTouch(activity, recordListener, motionEvent));
 
         stopImageButton = activity.findViewById(R.id.track_controller_stop);
         stopImageButton.setOnTouchListener((view, motionEvent) -> onStopTouch(activity, stopListener, motionEvent));
     }
 
+    private boolean onRecordTouch(final Activity activity, final OnClickListener recordListener, final MotionEvent motionEvent) {
+        if (isRecording && !isPaused) {
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                buttonDelay = new ButtonDelay(activity, recordImageButton, R.drawable.ic_button_pause_anim, R.string.hold_to_pause, recordListener);
+                new Thread(buttonDelay).start();
+                return true;
+            } else if (motionEvent.getAction() == MotionEvent.ACTION_UP ) {
+                recordImageButton.setImageResource(R.drawable.ic_button_pause);
+                if (buttonDelay != null) {
+                    buttonDelay.canceled = true;
+                }
+                return true;
+            }
+        } else if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+            recordListener.onClick(null);
+            return true;
+        }
+        return false;
+    }
+
     private boolean onStopTouch(final Activity activity, final OnClickListener stopListener, final MotionEvent motionEvent) {
         if (isRecording) {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                final AnimatedVectorDrawable animatedDrawable = (AnimatedVectorDrawable) activity.getDrawable(R.drawable.ic_button_stop_anim);
-                stopImageButton.setImageDrawable(animatedDrawable);
-                animatedDrawable.start();
-                stopDelay = new StopDelay(activity, stopListener, activity.getResources().getInteger(R.integer.stopDelayMillis));
-                new Thread(stopDelay).start();
-                ActivityUtils.vibrate(activity, 150);
-                final Toast toast = Toast.makeText(activity, R.string.hold_to_stop, Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.TOP, 0, 0);
-                toast.show();
+                buttonDelay = new ButtonDelay(activity, stopImageButton, R.drawable.ic_button_stop_anim, R.string.hold_to_stop, stopListener);
+                new Thread(buttonDelay).start();
                 return true;
             } else if (motionEvent.getAction() == MotionEvent.ACTION_UP ) {
                 stopImageButton.setImageResource(R.drawable.ic_button_stop);
-                if (stopDelay != null) {
-                    stopDelay.canceled = true;
+                if (buttonDelay != null) {
+                    buttonDelay.canceled = true;
                 }
                 return true;
             }
@@ -118,30 +126,39 @@ public class TrackController {
         return false;
     }
 
-    private static class StopDelay implements Runnable {
+    private static class ButtonDelay implements Runnable {
 
         private boolean canceled = false;
 
-        private Activity activity;
-        private OnClickListener stopListener;
-        private final int stopDelayMillis;
+        private final ImageButton imageButton;
+        private final Activity activity;
+        private final OnClickListener clickListener;
+        private final int delayMillis;
+        private final AnimatedVectorDrawable animatedDrawable;
+        private final int delayMessageId;
 
-        private StopDelay(final Activity activity, final OnClickListener stopListener, final int stopDelayMillis) {
+        private ButtonDelay(final Activity activity, final ImageButton imageButton, final int animDrawableId, final int delayMessageId, final OnClickListener clickListener) {
             this.activity = activity;
-            this.stopListener = stopListener;
-            this.stopDelayMillis = stopDelayMillis;
+            this.clickListener = clickListener;
+            this.delayMillis = activity.getResources().getInteger(R.integer.buttonDelayMillis);
+            this.imageButton = imageButton;
+            this.animatedDrawable = (AnimatedVectorDrawable) activity.getDrawable(animDrawableId);
+            this.delayMessageId = delayMessageId;
         }
 
         @Override
         public void run() {
+            imageButton.setImageDrawable(animatedDrawable);
+            activity.runOnUiThread(animatedDrawable::start);
+
+            ActivityUtils.vibrate(activity, 150);
+            activity.runOnUiThread(()-> ActivityUtils.toast(activity, delayMessageId, Toast.LENGTH_SHORT, Gravity.TOP));
             try {
-                Thread.sleep(stopDelayMillis);
+                Thread.sleep(delayMillis);
             } catch (InterruptedException ignored) {
             }
             if (!canceled) {
-                activity.runOnUiThread(()->{
-                    stopListener.onClick(null);
-                });
+                activity.runOnUiThread(()-> clickListener.onClick(null));
                 ActivityUtils.vibrate(activity, 1000);
             }
         }
@@ -161,7 +178,7 @@ public class TrackController {
             return;
         }
 
-        recordImageButton.setImageResource(isRecording && !isPaused ? R.drawable.button_pause : R.drawable.button_record);
+        recordImageButton.setImageResource(isRecording && !isPaused ? R.drawable.ic_button_pause : R.drawable.button_record);
         recordImageButton.setContentDescription(activity.getString(isRecording && !isPaused ? R.string.image_pause : R.string.image_record));
 
         stopImageButton.setImageResource(isRecording ? R.drawable.ic_button_stop : R.drawable.ic_button_stop_disabled);

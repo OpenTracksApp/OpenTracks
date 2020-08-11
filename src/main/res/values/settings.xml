@@ -229,5 +229,5 @@
 
     <string name="settings_recording_key" translatable="false">settingsRecordingKey</string>
 
-    <integer name="stopDelayMillis">1500</integer>
+    <integer name="buttonDelayMillis">1500</integer>
 </resources>

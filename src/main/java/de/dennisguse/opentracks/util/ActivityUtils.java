@@ -10,10 +10,12 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 
@@ -137,10 +139,17 @@ public class ActivityUtils {
 
     public static void vibrate(Activity activity, int milliseconds) {
         final Vibrator vibrator = (Vibrator) activity.getSystemService(VIBRATOR_SERVICE);
-        if (Build.VERSION.SDK_INT >= 26) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
             vibrator.vibrate(milliseconds);
         }
     }
+
+    public static void toast(final Activity activity, final int resId, final int duration, final int gravity) {
+        final Toast toast = Toast.makeText(activity, resId, duration);
+        toast.setGravity(gravity, 0, 0);
+        toast.show();
+    }
+
 }
