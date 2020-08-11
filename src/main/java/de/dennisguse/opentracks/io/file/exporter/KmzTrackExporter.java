@@ -51,7 +51,6 @@ public class KmzTrackExporter implements TrackExporter {
 
     private final ContentProviderUtils contentProviderUtils;
     private final FileTrackExporter fileTrackExporter;
-    private final Track[] tracks;
 
     private final boolean exportPhotos;
     private Context context;
@@ -62,18 +61,16 @@ public class KmzTrackExporter implements TrackExporter {
      * @param context the context
      * @param contentProviderUtils the content provider utils
      * @param trackExporter        the file track exporter
-     * @param tracks               the tracks to export
      */
-    public KmzTrackExporter(Context context, ContentProviderUtils contentProviderUtils, FileTrackExporter trackExporter, Track[] tracks, boolean exportPhotos) {
+    public KmzTrackExporter(Context context, ContentProviderUtils contentProviderUtils, FileTrackExporter trackExporter, boolean exportPhotos) {
         this.context = context;
         this.contentProviderUtils = contentProviderUtils;
         this.fileTrackExporter = trackExporter;
-        this.tracks = tracks;
         this.exportPhotos = exportPhotos;
     }
 
     @Override
-    public boolean writeTrack(@NonNull OutputStream outputStream) {
+    public boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream) {
         ZipOutputStream zipOutputStream = null;
         try {
             zipOutputStream = new ZipOutputStream(outputStream);
@@ -82,7 +79,7 @@ public class KmzTrackExporter implements TrackExporter {
             ZipEntry zipEntry = new ZipEntry(KMZ_KML_FILE);
             zipOutputStream.putNextEntry(zipEntry);
 
-            boolean success = fileTrackExporter.writeTrack(zipOutputStream);
+            boolean success = fileTrackExporter.writeTrack(tracks, zipOutputStream);
             zipOutputStream.closeEntry();
             if (!success) {
                 Log.e(TAG, "Unable to write kml in kmz");
@@ -90,7 +87,7 @@ public class KmzTrackExporter implements TrackExporter {
             }
 
             // Add photos
-            if (exportPhotos) addImages(context, zipOutputStream);
+            if (exportPhotos) addImages(context, tracks ,zipOutputStream);
             return true;
         } catch (InterruptedException | IOException e) {
             Log.e(TAG, "Unable to write track", e);
@@ -106,7 +103,7 @@ public class KmzTrackExporter implements TrackExporter {
         }
     }
 
-    private void addImages(Context context, ZipOutputStream zipOutputStream) throws InterruptedException, IOException {
+    private void addImages(Context context, Track[] tracks, ZipOutputStream zipOutputStream) throws InterruptedException, IOException {
         for (Track track : tracks) {
             try (Cursor cursor = contentProviderUtils.getWaypointCursor(track.getId(), -1L, -1)) {
                 if (cursor != null && cursor.moveToFirst()) {

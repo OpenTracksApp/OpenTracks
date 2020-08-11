@@ -218,7 +218,7 @@ public class ExportProgressDialogFragment extends DialogFragment {
             }
 
             try (OutputStream outputStream = context.getContentResolver().openOutputStream(file.getUri())) {
-                if (trackExporter.writeTrack(outputStream)) {
+                if (trackExporter.writeTrack(new Track[]{track}, outputStream)) {
                     return true;
                 } else {
                     if (!file.delete()) {
