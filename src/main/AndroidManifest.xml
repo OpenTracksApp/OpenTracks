@@ -52,8 +52,8 @@ limitations under the License.
         android:allowBackup="false"
         android:hasFragileUserData="true"
         android:hardwareAccelerated="true"
-        android:icon="${applicationLogo}"
-        android:label="${applicationName}"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:theme="@style/ThemeCustom">
 
         <activity android:name=".AboutActivity" />
