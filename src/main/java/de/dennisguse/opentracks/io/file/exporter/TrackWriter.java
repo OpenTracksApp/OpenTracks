@@ -32,7 +32,7 @@ import de.dennisguse.opentracks.content.data.Waypoint;
  *     For each waypoint:
  *         {@link #writeWaypoint(Waypoint)}
  *     {@link #writeEndWaypoints()}
- * {@link #writeBeginTracks()}
+ * {@link #writeMultiTrackBegin()}
  * For each track:
  *     {@link #writeBeginTrack(Track, TrackPoint)}
  *     For each segment:
@@ -41,7 +41,7 @@ import de.dennisguse.opentracks.content.data.Waypoint;
  *             {@link #writeTrackPoint(TrackPoint)}
  *         {@link #writeCloseSegment()}
  *     {@link #writeEndTrack(Track, TrackPoint)}
- * {@link #writeEndTracks()}
+ * {@link #writeMultiTrackEnd()}
  * {@link #writeFooter()}
  * {@link #close()}
  * </pre>
@@ -96,12 +96,12 @@ public interface TrackWriter {
     /**
      * Writes the beginning of the tracks.
      */
-    void writeBeginTracks();
+    void writeMultiTrackBegin();
 
     /**
      * Writes the end of the tracks,
      */
-    void writeEndTracks();
+    void writeMultiTrackEnd();
 
     /**
      * Writes the beginning of a track.
