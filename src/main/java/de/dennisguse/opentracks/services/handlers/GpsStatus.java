@@ -70,6 +70,7 @@ class GpsStatus {
         if (gpsStatusRunner != null) {
             gpsStatusRunner.stop();
             gpsStatusRunner = null;
+            client = null;
         }
     }
 
