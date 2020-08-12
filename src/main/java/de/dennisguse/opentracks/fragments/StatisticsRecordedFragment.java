@@ -141,6 +141,14 @@ public class StatisticsRecordedFragment extends Fragment implements IntervalList
         speedMovingLabel = view.findViewById(R.id.stats_moving_speed_label);
         speedMovingValue = view.findViewById(R.id.stats_moving_speed_value);
         speedMovingUnit = view.findViewById(R.id.stats_moving_speed_unit);
+
+        intervalListView = new IntervalListView(getActivity(), this);
+        intervalListView.setId(View.generateViewId());
+        LinearLayout linearLayoutExtra = rootView.findViewById(R.id.linear_layout_extra);
+        linearLayoutExtra.removeAllViews();
+        linearLayoutExtra.addView(intervalListView);
+
+        viewModel = new ViewModelProvider(this).get(IntervalStatisticsModel.class);
     }
 
     @Override
@@ -164,13 +172,6 @@ public class StatisticsRecordedFragment extends Fragment implements IntervalList
     }
 
     private void addIntervals() {
-        intervalListView = new IntervalListView(getActivity(), this);
-        intervalListView.setId(View.generateViewId());
-        LinearLayout linearLayoutExtra = rootView.findViewById(R.id.linear_layout_extra);
-        linearLayoutExtra.removeAllViews();
-        linearLayoutExtra.addView(intervalListView);
-
-        viewModel = new ViewModelProvider(this).get(IntervalStatisticsModel.class);
         viewModel.getIntervalStats(track.getId()).observe(getActivity(), intervalStatistics -> {
             if (intervalStatistics != null) {
                 intervalListView.display(intervalStatistics.getIntervalList());
@@ -302,7 +303,6 @@ public class StatisticsRecordedFragment extends Fragment implements IntervalList
     @Override
     public void intervalChanged(IntervalStatisticsModel.IntervalOption interval) {
         if (viewModel != null && intervalListView != null) {
-            viewModel = new ViewModelProvider(this).get(IntervalStatisticsModel.class);
             viewModel.getIntervalStats(track.getId(), interval).observe(getActivity(), intervalStatistics -> {
                 if (intervalStatistics != null) {
                     intervalListView.display(intervalStatistics.getIntervalList());
