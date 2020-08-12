@@ -1,5 +1,7 @@
 package de.dennisguse.opentracks.viewmodels;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,8 +33,18 @@ public class IntervalStatistics {
                 interval.time += trackPoint.getTime() - prevTrackPoint.getTime();
 
                 if (interval.distance >= distanceInterval) {
-                    intervalList.add(interval);
-                    interval = new Interval();
+                    float adjustFactor = distanceInterval / interval.distance;
+                    Interval adjustedInterval = new Interval(interval);
+                    adjustedInterval.distance *= adjustFactor;
+                    adjustedInterval.time *= adjustFactor;
+
+                    intervalList.add(adjustedInterval);
+
+                    Interval newInterval = new Interval();
+                    newInterval.distance = interval.distance - adjustedInterval.distance;
+                    newInterval.time = interval.time - adjustedInterval.time;
+
+                    interval = newInterval;
                 }
             }
         }
@@ -52,6 +64,13 @@ public class IntervalStatistics {
 
         public float getDistance() {
             return distance;
+        }
+
+        public Interval() {}
+
+        public Interval(Interval i) {
+            distance = i.distance;
+            time = i.time;
         }
 
         /**
