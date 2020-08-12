@@ -57,7 +57,6 @@ import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.util.ServiceUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
@@ -164,8 +163,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         }
     };
 
-    private boolean startGps = false; // true to start gps
-
     // Callback when the trackRecordingServiceConnection binding changes.
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
@@ -178,6 +175,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
             if (service == null) {
                 Log.d(TAG, "service not available to start gps or a new recording");
+                gpsStatusValue = GpsStatusValue.GPS_NONE;
                 return;
             }
 
@@ -189,12 +187,11 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 updateGpsMenuItem(true, isRecording);
             });
 
-            if (!startGps) {
+            if (isGpsStarted()) {
                 return;
             }
 
             service.startGps();
-            startGps = false;
             gpsStatusValue = GpsStatusValue.GPS_ENABLED;
             updateGpsMenuItem(true, isRecording);
         }
@@ -361,7 +358,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean isGpsStarted = ServiceUtils.isTrackRecordingServiceRunning(this);
+        boolean isGpsStarted = isGpsStarted();
         boolean isRecording = PreferencesUtils.isRecording(recordingTrackId);
         updateMenuItems(isGpsStarted, isRecording);
 
@@ -381,10 +378,8 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                     intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivity(intent);
                 } else {
-                    startGps = !ServiceUtils.isTrackRecordingServiceRunning(this);
-
                     // Invoke trackRecordingService
-                    if (startGps) {
+                    if (!isGpsStarted()) {
                         trackRecordingServiceConnection.startAndBind(this);
                         bindChangedCallback.run();
                     } else {
@@ -438,6 +433,10 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     @Override
     protected void onDeleted() {
         // Do nothing
+    }
+
+    private boolean isGpsStarted() {
+        return gpsStatusValue != GpsStatusValue.GPS_NONE && gpsStatusValue != GpsStatusValue.GPS_DISABLED;
     }
 
     private void requestGPSPermissions() {
