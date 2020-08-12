@@ -22,6 +22,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
 
     public IntervalStatisticsModel(@NonNull Application application) {
         super(application);
+        interval = IntervalOption.OPTION_1;
     }
 
     public LiveData<IntervalStatistics> getIntervalStats(long trackId, IntervalOption interval) {
@@ -34,7 +35,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
     }
 
     public LiveData<IntervalStatistics> getIntervalStats(long trackId) {
-        return getIntervalStats(trackId, IntervalOption.OPTION_1);
+        return getIntervalStats(trackId, interval);
     }
 
     private void loadIntervalStats(long trackId) {
