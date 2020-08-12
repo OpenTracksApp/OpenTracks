@@ -38,6 +38,10 @@ public class IntervalStatisticsModel extends AndroidViewModel {
         return getIntervalStats(trackId, interval);
     }
 
+    public void invalidate() {
+        intervalStats = null;
+    }
+
     private void loadIntervalStats(long trackId) {
         new Thread(() -> {
             Context context = getApplication().getApplicationContext();
