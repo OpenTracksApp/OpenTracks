@@ -10,10 +10,6 @@ import de.dennisguse.opentracks.util.UnitConversions;
 public class IntervalStatistics {
     List<Interval> intervalList;
 
-    public IntervalStatistics() {
-        intervalList = new ArrayList<>();
-    }
-
     public void build(List<TrackPoint> trackPointList, float distanceInterval) {
         intervalList = new ArrayList<>();
 
@@ -57,8 +53,8 @@ public class IntervalStatistics {
     }
 
     public static class Interval {
-        float distance = 0f;
-        float time = 0f;
+        private float distance = 0f;
+        private float time = 0f;
 
         public float getDistance() {
             return distance;
