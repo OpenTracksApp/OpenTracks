@@ -1,7 +1,5 @@
 package de.dennisguse.opentracks.viewmodels;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 

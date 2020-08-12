@@ -63,6 +63,9 @@ public class StatisticsRecordedFragment extends Fragment implements IntervalList
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
+            if (viewModel != null) {
+                viewModel.invalidate();
+            }
             if (isResumed()) {
                 getActivity().runOnUiThread(() -> {
                     if (isResumed()) {
@@ -188,14 +191,10 @@ public class StatisticsRecordedFragment extends Fragment implements IntervalList
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        PreferencesUtils.unregister(getContext(), sharedPreferenceChangeListener);
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        PreferencesUtils.unregister(getContext(), sharedPreferenceChangeListener);
 
         totalTimeValueView = null;
 
@@ -218,6 +217,10 @@ public class StatisticsRecordedFragment extends Fragment implements IntervalList
         speedMovingLabel = null;
         speedMovingValue = null;
         speedMovingUnit = null;
+
+        intervalListView.destroy();
+        intervalListView = null;
+        viewModel = null;
     }
 
     public void loadStatistics() {

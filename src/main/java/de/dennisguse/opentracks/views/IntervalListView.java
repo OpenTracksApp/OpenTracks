@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.views;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,10 +27,19 @@ public class IntervalListView extends LinearLayout {
     private Context context;
     private IntervalListListener listener;
 
+    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
+        if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
+            if (spinnerIntervalsUnit != null) {
+                spinnerIntervalsUnit.setText(PreferencesUtils.isMetricUnits(context) ? context.getString(R.string.unit_kilometer) : context.getString(R.string.unit_mile));
+            }
+        }
+    };
+
     public IntervalListView(Context context, IntervalListListener listener) {
         super(context);
         this.context = context;
         this.listener = listener;
+        PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
         init();
     }
 
@@ -53,6 +63,16 @@ public class IntervalListView extends LinearLayout {
 
             }
         });
+    }
+
+    public void destroy() {
+        PreferencesUtils.unregister(getContext(), sharedPreferenceChangeListener);
+        adapter = null;
+        linearLayoutIntervals = null;
+        spinnerIntervals = null;
+        spinnerIntervalsUnit = null;
+        context = null;
+        listener = null;
     }
 
     public void display(List<IntervalStatistics.Interval> intervalList) {
