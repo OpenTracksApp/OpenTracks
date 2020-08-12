@@ -112,7 +112,7 @@ public interface TrackRecordingServiceInterface {
     @VisibleForTesting
     void newTrackPoint(TrackPoint trackPoint, int recordingGpsAccuracy);
 
-    void setListener(BoundServiceListener listener);
+    void addListener(TrackRecordingServiceCallback listener);
 
     GpsStatusValue getGpsStatus();
 }

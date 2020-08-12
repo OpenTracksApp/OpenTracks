@@ -124,7 +124,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     private HandlerServer handlerServer;
 
-    private List<BoundServiceListener> listeners = new ArrayList<>();
+    private List<TrackRecordingServiceCallback> listeners = new ArrayList<>();
 
     @Override
     public void onCreate() {
@@ -160,6 +160,11 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     public void onDestroy() {
         handlerServer.stop(this);
         handlerServer = null;
+
+        if (listeners != null) {
+            listeners.clear();
+            listeners = null;
+        }
 
         if (remoteSensorManager != null) {
             remoteSensorManager.stop();
@@ -591,12 +596,12 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     @Override
     public void newGpsStatus(GpsStatusValue gpsStatusValue) {
         notificationManager.updateContent(getString(gpsStatusValue.message));
-        for (BoundServiceListener listener : listeners) {
+        for (TrackRecordingServiceCallback listener : listeners) {
             listener.onGpsStatusChange(gpsStatusValue);
         }
     }
 
-    public void addListener(BoundServiceListener listener) {
+    public void addListener(TrackRecordingServiceCallback listener) {
         listeners.add(listener);
     }
 

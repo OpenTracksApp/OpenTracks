@@ -48,7 +48,6 @@ import androidx.loader.content.Loader;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
-import de.dennisguse.opentracks.services.BoundServiceListener;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
@@ -185,7 +184,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             // Get GPS status and listen GPS status changes.
             gpsStatusValue = service.getGpsStatus();
             updateGpsMenuItem(true, isRecording);
-            service.setListener(newStatus -> {
+            service.addListener(newStatus -> {
                 gpsStatusValue = newStatus;
                 updateGpsMenuItem(true, isRecording);
             });

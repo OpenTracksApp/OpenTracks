@@ -27,7 +27,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordingFragment;
-import de.dennisguse.opentracks.services.BoundServiceListener;
+import de.dennisguse.opentracks.services.TrackRecordingServiceCallback;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
@@ -94,7 +94,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 trackController.update(true, false);
                 trackController.onResume(true, recordingTrackPaused);
             }
-            service.setListener(new BoundServiceListener() {
+            service.addListener(new TrackRecordingServiceCallback() {
                 @Override
                 public void onGpsStatusChange(GpsStatusValue newStatus) {
                     // TODO 2020-07-17 Add some visible View in the Layout to inform about this and then delete the Toast message.
