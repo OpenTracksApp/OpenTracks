@@ -24,6 +24,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -467,6 +468,9 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             if (!isRecording) {
                 startGpsMenuItem.setTitle(isGpsStarted ? R.string.menu_stop_gps : R.string.menu_start_gps);
                 startGpsMenuItem.setIcon(isGpsStarted ? gpsStatusValue.icon : R.drawable.ic_gps_off_24dp);
+                if (startGpsMenuItem.getIcon() instanceof AnimatedVectorDrawable) {
+                    ((AnimatedVectorDrawable) startGpsMenuItem.getIcon()).start();
+                }
             }
         }
     }

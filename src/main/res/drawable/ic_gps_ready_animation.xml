@@ -1,0 +1,37 @@
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+    <aapt:attr name="android:drawable">
+        <vector
+            android:name="vector"
+            android:width="24dp"
+            android:height="24dp"
+            android:viewportWidth="24"
+            android:viewportHeight="24"
+            android:tint="#FFFFFF">
+            <path
+                android:name="path"
+                android:pathData="M 20.94 11 C 20.48 6.83 17.17 3.52 13 3.06 L 13 1 L 11 1 L 11 3.06 C 6.83 3.52 3.52 6.83 3.06 11 L 1 11 L 1 13 L 3.06 13 C 3.52 17.17 6.83 20.48 11 20.94 L 11 23 L 13 23 L 13 20.94 C 17.17 20.48 20.48 17.17 20.94 13 L 23 13 L 23 11 L 20.94 11 Z M 12 19 C 8.13 19 5 15.87 5 12 C 5 8.13 8.13 5 12 5 C 15.87 5 19 8.13 19 12 C 19 15.87 15.87 19 12 19 Z"
+                android:fillColor="#000"
+                android:strokeWidth="1"/>
+            <path
+                android:name="path_1"
+                android:pathData="M 12 8 C 10.94 8 9.921 8.422 9.172 9.172 C 8.422 9.921 8 10.94 8 12 C 8 13.06 8.422 14.079 9.172 14.828 C 9.921 15.578 10.94 16 12 16 C 13.06 16 14.079 15.578 14.828 14.828 C 15.578 14.079 16 13.06 16 12 C 16 10.94 15.578 9.921 14.828 9.172 C 14.079 8.422 13.06 8 12 8 Z"
+                android:fillColor="#000001"
+                android:strokeWidth="1"/>
+        </vector>
+    </aapt:attr>
+    <target android:name="path_1">
+        <aapt:attr name="android:animation">
+            <objectAnimator
+                android:propertyName="fillAlpha"
+                android:duration="2000"
+                android:valueFrom="1"
+                android:valueTo="0"
+                android:valueType="floatType"
+                android:interpolator="@android:anim/linear_interpolator"
+                android:repeatCount="infinite"
+                android:repeatMode="restart"/>
+        </aapt:attr>
+    </target>
+</animated-vector>
