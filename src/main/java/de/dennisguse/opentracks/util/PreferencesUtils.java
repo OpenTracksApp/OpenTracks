@@ -340,6 +340,11 @@ public class PreferencesUtils {
         }
     }
 
+    public static boolean getPreventReimportTracks(Context context) {
+        final boolean defaultValue = getBoolean(context, R.bool.import_prevent_reimport_title_default, false);
+        return getBoolean(context, R.string.import_prevent_reimport_title_key, defaultValue);
+    }
+
     @Deprecated //Use TrackRecordingService
     public static boolean isRecording(Context context) {
         long recordingTrackId = getRecordingTrackId(context);
