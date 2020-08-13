@@ -227,5 +227,8 @@
     <!-- See TrackFileFormat -->
     <string name="export_trackfileformat_default" translatable="false">KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES</string>
 
+    <string name="import_prevent_reimport_title_key" translatable="false">preventReimportTrackKey</string>
+    <bool name="import_prevent_reimport_title_default">false</bool>
+
     <string name="settings_recording_key" translatable="false">settingsRecordingKey</string>
 </resources>

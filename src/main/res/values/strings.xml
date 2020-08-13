@@ -390,6 +390,8 @@ limitations under the License.
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
     <string name="settings_stats_units_metric">Metric (km, m)</string>
     <string name="settings_stats_units_title">Preferred units</string>
+
+    <string name="settings_prevent_reimport_tracks_title" translatable="false">Prevent re-import of tracks</string>
     <!-- Share Track -->
     <string name="share_track_share_file">Share track file</string>
     <string name="share_track_share_file_body">I think you might be interested in this track.\n\n%1$s</string>

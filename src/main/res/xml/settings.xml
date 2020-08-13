@@ -153,6 +153,10 @@ limitations under the License.
             android:key="@string/export_trackfileformat_key"
             android:title="@string/settings_default_trackfileformat"
             app:useSimpleSummaryProvider="true" />
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/import_prevent_reimport_title_default"
+            android:key="@string/import_prevent_reimport_title_key"
+            android:title="@string/settings_prevent_reimport_tracks_title" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_reset">
