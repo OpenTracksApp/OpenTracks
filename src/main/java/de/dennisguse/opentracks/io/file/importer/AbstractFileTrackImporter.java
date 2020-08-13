@@ -273,7 +273,18 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             trackData.trackStatisticsUpdater.updateTime(trackData.importTime);
         }
         trackData.track.setTrackStatistics(trackData.trackStatisticsUpdater.getTrackStatistics());
-        contentProviderUtils.updateTrack(trackData.track);
+
+        try {
+            contentProviderUtils.updateTrack(trackData.track);
+        } catch (SQLiteConstraintException e) {
+            if (PreferencesUtils.getPreventReimportTracks(context)) {
+                throw e;
+            }
+
+            //TODO This is a workaround until we have proper UI.
+            trackData.track.setUuid(UUID.randomUUID());
+            contentProviderUtils.updateTrack(trackData.track);
+        }
     }
 
     /**
