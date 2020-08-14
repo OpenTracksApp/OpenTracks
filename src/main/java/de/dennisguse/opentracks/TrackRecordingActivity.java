@@ -94,16 +94,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 trackController.update(true, false);
                 trackController.onResume(true, recordingTrackPaused);
             }
-            service.addListener(new TrackRecordingServiceCallback() {
-                @Override
-                public void onGpsStatusChange(GpsStatusValue newStatus) {
-                    // TODO 2020-07-17 Add some visible View in the Layout to inform about this and then delete the Toast message.
-                    // Inform through Toast the bad news: GPS is not fixed.
-                    if (newStatus == GpsStatusValue.GPS_NONE || newStatus == GpsStatusValue.GPS_DISABLED || newStatus == GpsStatusValue.GPS_SIGNAL_LOST) {
-                        Toast.makeText(getApplicationContext(), getString(newStatus.message), Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
         }
     };
 

@@ -158,13 +158,16 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     @Override
     public void onDestroy() {
-        handlerServer.stop(this);
-        handlerServer = null;
-
         if (listeners != null) {
+            for (TrackRecordingServiceCallback listener : listeners) {
+                listener.onGpsStatusChange(GpsStatusValue.GPS_NONE);
+            }
             listeners.clear();
             listeners = null;
         }
+
+        handlerServer.stop(this);
+        handlerServer = null;
 
         if (remoteSensorManager != null) {
             remoteSensorManager.stop();
@@ -595,9 +598,11 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     @Override
     public void newGpsStatus(GpsStatusValue gpsStatusValue) {
-        notificationManager.updateContent(getString(gpsStatusValue.message));
-        for (TrackRecordingServiceCallback listener : listeners) {
-            listener.onGpsStatusChange(gpsStatusValue);
+        if (listeners != null) {
+            notificationManager.updateContent(getString(gpsStatusValue.message));
+            for (TrackRecordingServiceCallback listener : listeners) {
+                listener.onGpsStatusChange(gpsStatusValue);
+            }
         }
     }
 
