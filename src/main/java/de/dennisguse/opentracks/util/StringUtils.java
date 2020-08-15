@@ -227,19 +227,19 @@ public class StringUtils {
             speed_mps = 0;
         }
 
-        speed_mps *= UnitConversions.MS_TO_KMH;
+        double speed = speed_mps * UnitConversions.M_TO_KM; //KM p sec
         if (!metricUnits) {
-            speed_mps *= UnitConversions.KM_TO_MI;
+            speed *= UnitConversions.KM_TO_MI;
         }
 
         if (reportSpeed) {
-            return new Pair<>(StringUtils.formatDecimal(speed_mps), unitString);
+            return new Pair<>(StringUtils.formatDecimal(speed * UnitConversions.S_TO_HR), unitString);
         }
 
-        // convert from hours to minutes
-        double pace = speed_mps == 0 ? 0.0 : 60.0 / speed_mps;
-        int minutes = (int) pace;
-        int seconds = (int) Math.round((pace - minutes) * 60.0);
+        int pace = speed == 0 ? 0 : (int) Math.round(1 / speed); //sec / [KM | MI]
+
+        int minutes = pace / 60;
+        int seconds = pace % 60;
         return new Pair<>(String.format(Locale.US, "%d:%02d", minutes, seconds), unitString);
     }
 

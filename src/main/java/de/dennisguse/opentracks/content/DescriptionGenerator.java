@@ -185,7 +185,7 @@ public class DescriptionGenerator {
      */
     @VisibleForTesting
     void writeSpeed(double speed, StringBuilder builder, int resId, String lineBreak) {
-        double speedInKmHr = speed * UnitConversions.MS_TO_KMH;
+        double speedInKmHr = speed * UnitConversions.MPS_TO_KMH;
         double speedInMiHr = speedInKmHr * UnitConversions.KM_TO_MI;
         builder.append(context.getString(resId, speedInKmHr, speedInMiHr));
         builder.append(lineBreak);

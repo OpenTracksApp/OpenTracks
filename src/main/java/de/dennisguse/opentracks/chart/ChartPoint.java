@@ -43,7 +43,7 @@ public class ChartPoint {
             elevation *= UnitConversions.M_TO_FT;
         }
 
-        speed = trackStatisticsUpdater.getSmoothedSpeed() * UnitConversions.MS_TO_KMH;
+        speed = trackStatisticsUpdater.getSmoothedSpeed() * UnitConversions.MPS_TO_KMH;
         if (!metricUnits) {
             speed *= UnitConversions.KM_TO_MI;
         }

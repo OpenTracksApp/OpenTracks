@@ -253,7 +253,7 @@ public class ChartFragmentTest {
         trackPoint2.setTime(trackPoint1.getTime() + 222);
         trackPoint2.setSpeed(130);
         point = chartFragment.createPendingPoint(trackPoint2);
-        Assert.assertEquals(130.0 * UnitConversions.MS_TO_KMH, point.getSpeed(), 0.01);
+        Assert.assertEquals(130.0 * UnitConversions.MPS_TO_KMH, point.getSpeed(), 0.01);
     }
 
     /**
@@ -278,7 +278,7 @@ public class ChartFragmentTest {
         trackPoint2.setTime(trackPoint2.getTime() + 222);
         trackPoint2.setSpeed(102);
         point = chartFragment.createPendingPoint(trackPoint2);
-        Assert.assertEquals(102.0 * UnitConversions.MS_TO_KMH * UnitConversions.KM_TO_MI, point.getSpeed(), 0.01);
+        Assert.assertEquals(102.0 * UnitConversions.MPS_TO_KMH * UnitConversions.KM_TO_MI, point.getSpeed(), 0.01);
     }
 
     /**
@@ -303,7 +303,7 @@ public class ChartFragmentTest {
         trackPoint2.setTime(trackPoint2.getTime() + 222);
         trackPoint2.setSpeed(102);
         point = chartFragment.createPendingPoint(trackPoint2);
-        Assert.assertEquals(HOURS_PER_UNIT / (102.0 * UnitConversions.MS_TO_KMH), point.getPace(), 0.01);
+        Assert.assertEquals(HOURS_PER_UNIT / (102.0 * UnitConversions.MPS_TO_KMH), point.getPace(), 0.01);
     }
 
     /**

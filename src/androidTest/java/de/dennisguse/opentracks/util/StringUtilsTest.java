@@ -212,4 +212,16 @@ public class StringUtilsTest {
 
         Assert.assertEquals("1", StringUtils.formatDecimal(0.99, 1));
     }
+
+    @Test
+    public void testGetSpeedParts() {
+        Assert.assertEquals("4:59", StringUtils.getSpeedParts(context, 3.34, true, false).first);
+        Assert.assertEquals("5:00", StringUtils.getSpeedParts(context, 3.33, true, false).first);
+
+        Assert.assertEquals("11.99", StringUtils.getSpeedParts(context, 3.33, true, true).first);
+        Assert.assertEquals("7.45", StringUtils.getSpeedParts(context, 3.33, false, true).first);
+
+        Assert.assertEquals("min/km", StringUtils.getSpeedParts(context, 0, true, false).second);
+        Assert.assertEquals("min/mi", StringUtils.getSpeedParts(context, 0, false, false).second);
+    }
 }

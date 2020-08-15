@@ -43,6 +43,8 @@ public class UnitConversions {
     public static final double HR_TO_MIN = 60.0;
     // multiplication factor to convert minutes to hours
     public static final double MIN_TO_HR = 1 / HR_TO_MIN;
+    public static final double S_TO_HR = 1d / (S_TO_MIN * MIN_TO_HR);
+
     // multiplication factor to convert kilometers to miles
     public static final double KM_TO_MI = 0.621371192;
 
@@ -62,7 +64,7 @@ public class UnitConversions {
     // multiplication factor to convert meters to feet
     public static final double M_TO_FT = M_TO_MI * MI_TO_FT;
     // multiplication factor to convert meters per second to kilometers per hour
-    public static final double MS_TO_KMH = M_TO_KM / (S_TO_MIN * MIN_TO_HR);
+    public static final double MPS_TO_KMH = M_TO_KM / (S_TO_MIN * MIN_TO_HR);
 
     // Others
     // multiplication factor to convert degrees to radians

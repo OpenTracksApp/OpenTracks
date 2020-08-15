@@ -13,7 +13,7 @@ public class AnnouncementUtils {
         boolean metricUnits = PreferencesUtils.isMetricUnits(context);
         boolean reportSpeed = PreferencesUtils.isReportSpeed(context, category);
         double distance = trackStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
-        double distancePerTime = trackStatistics.getAverageMovingSpeed() * UnitConversions.MS_TO_KMH;
+        double distancePerTime = trackStatistics.getAverageMovingSpeed() * UnitConversions.MPS_TO_KMH;
 
         if (distance == 0) {
             return context.getString(R.string.voice_total_distance_zero);
