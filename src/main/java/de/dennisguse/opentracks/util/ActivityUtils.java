@@ -4,13 +4,18 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
 
@@ -20,6 +25,8 @@ import de.dennisguse.opentracks.ContextualActionModeCallback;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.SearchListActivity;
 import de.dennisguse.opentracks.TrackController;
+
+import static android.content.Context.VIBRATOR_SERVICE;
 
 public class ActivityUtils {
 
@@ -129,4 +136,20 @@ public class ActivityUtils {
             }
         });
     }
+
+    public static void vibrate(Activity activity, int milliseconds) {
+        final Vibrator vibrator = (Vibrator) activity.getSystemService(VIBRATOR_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            vibrator.vibrate(milliseconds);
+        }
+    }
+
+    public static void toast(final Activity activity, final int resId, final int duration, final int gravity) {
+        final Toast toast = Toast.makeText(activity, resId, duration);
+        toast.setGravity(gravity, 0, 0);
+        toast.show();
+    }
+
 }

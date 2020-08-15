@@ -231,4 +231,6 @@
     <bool name="import_prevent_reimport_default">true</bool>
 
     <string name="settings_recording_key" translatable="false">settingsRecordingKey</string>
+
+    <integer name="buttonDelayMillis">1500</integer>
 </resources>
