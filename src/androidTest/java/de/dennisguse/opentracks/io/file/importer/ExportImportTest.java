@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -28,6 +29,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.stats.TrackStatistics;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -173,6 +175,7 @@ public class ExportImportTest {
     @Test
     public void kml_with_trackdetail_and_sensordata_duplicate_trackUUID() {
         // given
+        PreferencesUtils.setBoolean(context, R.string.import_prevent_reimport_key, true);
         Track track = contentProviderUtils.getTrack(trackId);
 
         TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.newTrackExporter(context, new Track[]{track});
@@ -261,6 +264,7 @@ public class ExportImportTest {
     @Test
     public void gpx_duplicate_trackUUID() {
         // given
+        PreferencesUtils.setBoolean(context, R.string.import_prevent_reimport_key, true);
         Track track = contentProviderUtils.getTrack(trackId);
 
         TrackExporter trackExporter = TrackFileFormat.GPX.newTrackExporter(context, new Track[]{track});
