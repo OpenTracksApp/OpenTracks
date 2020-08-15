@@ -333,9 +333,10 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
                         lastTrackPoint = null;
                     }
 
-                    if (lastTrackPoint != null) {
-                        boolean hasFix = !LocationUtils.isLocationOld(lastTrackPoint.getLocation());
-                        boolean hasGoodFix = TrackPointUtils.fulfillsAccuracy(lastTrackPoint, recordingGpsAccuracy);
+                    TrackPoint trackPoint = lastTrackPoint; //NOTE: There seems to be a race condition; just fix the symptom for now.
+                    if (trackPoint != null) {
+                        boolean hasFix = !LocationUtils.isLocationOld(trackPoint.getLocation());
+                        boolean hasGoodFix = TrackPointUtils.fulfillsAccuracy(trackPoint, recordingGpsAccuracy);
 
                         if (!hasFix || !hasGoodFix) {
                             lastTrackPoint = null;
