@@ -151,7 +151,7 @@ public class ShowWorkoutsAggregatedDiagramActivity extends AbstractActivity {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 selectedWorkoutType = workoutTypes.get(position);
-                List<Track> tracks = contentProviderUtils.getAllTracks();
+                List<Track> tracks = contentProviderUtils.getTracksByCategory(selectedWorkoutType);
 
                 AggregatedWorkoutValues aggregatedWorkoutValues = new AggregatedWorkoutValues(tracks);
                 setMaxValues(aggregatedWorkoutValues);

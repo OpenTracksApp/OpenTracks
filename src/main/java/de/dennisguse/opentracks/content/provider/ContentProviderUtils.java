@@ -220,6 +220,23 @@ public class ContentProviderUtils {
         return tracks;
     }
 
+    @VisibleForTesting
+    public List<Track> getTracksByCategory(String targetCategory) {
+        ArrayList<Track> tracks = new ArrayList<>();
+        try (Cursor cursor = getTrackCursor(null, null, TracksColumns._ID)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                tracks.ensureCapacity(cursor.getCount());
+                do {
+                    Track track = createTrack(cursor);
+                    if (track.getIcon().equals(targetCategory)) {
+                        tracks.add(track);
+                    }
+                } while (cursor.moveToNext());
+            }
+        }
+        return tracks;
+    }
+
     public Track getLastTrack() {
         try (Cursor cursor = getTrackCursor(null, null, TracksColumns.STARTTIME + " DESC")) {
             // Using the same order as shown in the track list
