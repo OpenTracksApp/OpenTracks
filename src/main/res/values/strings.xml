@@ -586,6 +586,13 @@ limitations under the License.
     <!-- Share image -->
     <string name="share_image_subject">I would like to share an image with you</string>
     <string name="share_image_body">I think you might be interested in this image.</string>
+    <string name="workout_statistics">Aggregated workout charts</string>
+    <string name="no_workouts_recorded_for_this_activity">No workouts recorded for this type</string>
+    <string name="maximum_average_speed">Maximum average speed</string>
+    <string name="average_speed">Average Speed</string>
+    <string name="greatest_distance">greatest distance</string>
+    <string name="fastest_average">fastest average speed</string>
+    <string name="menu_aggregated_statistics_diagram">Aggregates stats diagram</string>
 
     <string name="hold_to_stop">Hold to stop recording</string>
     <string name="hold_to_pause">Hold to pause recording</string>

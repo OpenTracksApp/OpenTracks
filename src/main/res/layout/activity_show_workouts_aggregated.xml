@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/showWorkoutsAggregatedRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="ShowWorkoutsAggregatedDiagramActivity">
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:gravity="start"
+        android:layout_margin="5dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/showWorkoutsAggregatedSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/fastestAverageLabel"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:text="@string/fastest_average"
+            />
+
+        <TextView
+            android:id="@+id/fastestAverage"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:textColor="?android:textColorPrimary"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/fastestAverageDate"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:layout_gravity="center"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/showWorkoutsAggregatedDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/greatestLabel"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:text="@string/greatest_distance"
+            />
+
+        <TextView
+            android:id="@+id/greatestDistance"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:textColor="?android:textColorPrimary"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/greatestDistanceDate"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="15sp"
+            android:layout_gravity="center"
+            />
+
+
+    </LinearLayout>
+
+    <com.github.mikephil.charting.charts.CombinedChart
+        android:id="@+id/combinedChartAggregatedWorkouts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="20dp"
+        />
+
+</LinearLayout>
