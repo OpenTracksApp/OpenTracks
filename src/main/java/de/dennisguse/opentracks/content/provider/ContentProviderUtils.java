@@ -24,12 +24,14 @@ import android.location.Location;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.android.ContentResolverWrapper;
@@ -236,7 +238,20 @@ public class ContentProviderUtils {
         if (trackId < 0) {
             return null;
         }
-        try (Cursor cursor = getTrackCursor(TracksColumns._ID + "=?", new String[]{Long.toString(trackId)}, TracksColumns._ID)) {
+        try (Cursor cursor = getTrackCursor(TracksColumns._ID + "=?", new String[]{Long.toString(trackId)}, null)) {
+            if (cursor != null && cursor.moveToNext()) {
+                return createTrack(cursor);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * @param trackUUID the track uuid.
+     */
+    public Track getTrack(@NonNull UUID trackUUID) {
+        String trackUUIDsearch = UUIDUtils.toHex(trackUUID);
+        try (Cursor cursor = getTrackCursor("hex(" + TracksColumns.UUID + ")=?", new String[]{trackUUIDsearch}, null)) {
             if (cursor != null && cursor.moveToNext()) {
                 return createTrack(cursor);
             }

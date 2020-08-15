@@ -384,10 +384,27 @@ public class CustomContentProviderUtilsTest {
      * Tests the method {@link ContentProviderUtils#getTrack(long)}
      */
     @Test
-    public void testGetTrack() {
+    public void testGetTrack_by_id() {
+        // given
         long trackId = System.currentTimeMillis();
         contentProviderUtils.insertTrack(TestDataUtil.createTrack(trackId));
+
+        // when / then
         Assert.assertNotNull(contentProviderUtils.getTrack(trackId));
+    }
+
+    /**
+     * Tests the method {@link ContentProviderUtils#getTrack(long)}
+     */
+    @Test
+    public void testGetTrack_by_uuid() {
+        // given
+        long trackId = System.currentTimeMillis();
+        Track track = TestDataUtil.createTrack(trackId);
+        contentProviderUtils.insertTrack(track);
+
+        // when / then
+        Assert.assertNotNull(contentProviderUtils.getTrack(track.getUuid()));
     }
 
     /**

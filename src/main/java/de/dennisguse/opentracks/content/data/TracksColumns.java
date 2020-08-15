@@ -32,7 +32,7 @@ public interface TracksColumns extends BaseColumns {
     Uri CONTENT_URI = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/" + TABLE_NAME);
     String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.de.dennisguse.track";
     String CONTENT_ITEMTYPE = "vnd.android.cursor.item/vnd.de.dennisguse.track";
-    String DEFAULT_SORT_ORDER = "_id";
+    String DEFAULT_SORT_ORDER = _ID;
 
     // Columns
     String UUID = "uuid";
