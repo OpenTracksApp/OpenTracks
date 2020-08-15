@@ -33,7 +33,7 @@ public interface TrackPointsColumns extends BaseColumns {
     Uri CONTENT_URI_BY_TRACKID = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/" + TABLE_NAME + "/trackid");
     String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.de.dennisguse.trackpoint";
     String CONTENT_ITEMTYPE = "vnd.android.cursor.item/vnd.de.dennisguse.trackpoint";
-    String DEFAULT_SORT_ORDER = "_id";
+    String DEFAULT_SORT_ORDER = _ID;
 
     // Columns
     String TRACKID = "trackid";
