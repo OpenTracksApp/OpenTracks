@@ -2,7 +2,6 @@ package de.dennisguse.opentracks;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -30,7 +29,7 @@ public class AboutActivity extends AbstractActivity {
         TextView textURL = findViewById(R.id.about_app_url);
         textURL.setText(getString(R.string.about_url, getString(R.string.app_web_url)));
 
-        ViewUtils.makeClickableLinks((ViewGroup) findViewById(android.R.id.content));
+        ViewUtils.makeClickableLinks(findViewById(android.R.id.content));
     }
 
     protected int getLayoutResId() {

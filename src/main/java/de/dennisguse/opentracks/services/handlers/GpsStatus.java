@@ -48,7 +48,7 @@ class GpsStatus {
         }
     }
 
-    private Handler gpsStatusHandler = null;
+    private Handler gpsStatusHandler;
     private GpsStatusRunner gpsStatusRunner = null;
 
     /**

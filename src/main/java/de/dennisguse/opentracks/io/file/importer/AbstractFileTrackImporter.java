@@ -234,7 +234,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                 throw new SAXException(createErrorMessage("Cannot import more than one track to an existing track " + importTrackId));
             }
             trackId = importTrackId;
-            contentProviderUtils.clearTrack(context, trackId);
+            contentProviderUtils.clearTrack(trackId);
         }
         trackIds.add(trackId);
         trackData.track.setId(trackId);

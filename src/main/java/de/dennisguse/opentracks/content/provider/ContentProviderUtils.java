@@ -89,8 +89,8 @@ public class ContentProviderUtils {
      *
      * @param trackId the track id
      */
-    public void clearTrack(Context context, long trackId) {
-        deleteTrackPointsAndWaypoints(context, trackId);
+    public void clearTrack(long trackId) {
+        deleteTrackPointsAndWaypoints(trackId);
         Track track = new Track();
         track.setId(trackId);
         updateTrack(track);
@@ -185,7 +185,7 @@ public class ContentProviderUtils {
      * @param trackId the track id
      */
     public void deleteTrack(Context context, long trackId) {
-        deleteTrackPointsAndWaypoints(context, trackId);
+        deleteTrackPointsAndWaypoints(trackId);
 
         // Delete track folder resources.
         FileUtils.deleteDirectoryRecurse(FileUtils.getPhotoDir(context, trackId));
@@ -199,12 +199,11 @@ public class ContentProviderUtils {
      *
      * @param trackId the track id
      */
-    private void deleteTrackPointsAndWaypoints(Context context, long trackId) {
-        String where = TrackPointsColumns.TRACKID + "=?";
+    private void deleteTrackPointsAndWaypoints(long trackId) {
         String[] selectionArgs = new String[]{Long.toString(trackId)};
-        contentResolver.delete(TrackPointsColumns.CONTENT_URI_BY_ID, where, selectionArgs);
 
-        contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?", new String[]{Long.toString(trackId)});
+        contentResolver.delete(TrackPointsColumns.CONTENT_URI_BY_ID, TrackPointsColumns.TRACKID + "=?", selectionArgs);
+        contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?", selectionArgs);
     }
 
     @VisibleForTesting

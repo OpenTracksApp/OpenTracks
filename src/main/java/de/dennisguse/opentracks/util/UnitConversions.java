@@ -66,10 +66,6 @@ public class UnitConversions {
     // multiplication factor to convert meters per second to kilometers per hour
     public static final double MPS_TO_KMH = M_TO_KM / (S_TO_MIN * MIN_TO_HR);
 
-    // Others
-    // multiplication factor to convert degrees to radians
-    public static final double DEG_TO_RAD = Math.PI / 180.0;
-
     private UnitConversions() {
     }
 }

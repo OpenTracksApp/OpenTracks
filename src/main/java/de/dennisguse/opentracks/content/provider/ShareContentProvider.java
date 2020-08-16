@@ -210,7 +210,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
 
         final TrackExporter trackExporter = getTrackFileFormat(uri).newTrackExporter(getContext(), tracks);
 
-        PipeDataWriter<String> pipeDataWriter = (PipeDataWriter<String>) (output, uri1, mimeType, opts, args) -> {
+        PipeDataWriter<String> pipeDataWriter = (output, uri1, mimeType, opts, args) -> {
             try (FileOutputStream fileOutputStream = new FileOutputStream(output.getFileDescriptor())) {
                 trackExporter.writeTrack(getContext(), fileOutputStream);
             } catch (IOException e) {
