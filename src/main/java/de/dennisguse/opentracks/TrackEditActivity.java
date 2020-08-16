@@ -64,7 +64,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(null);
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection();
         long trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
         if (trackId == -1L) {
             Log.e(TAG, "invalid trackId");

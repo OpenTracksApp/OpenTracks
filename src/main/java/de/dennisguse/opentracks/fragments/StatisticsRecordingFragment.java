@@ -53,8 +53,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private TrackDataHub trackDataHub;
     private Handler handlerUpdateUI;
 
-    //TODO Initialize immediately and remove in onDestroy()
-    private TrackRecordingServiceConnection trackRecordingServiceConnection;
+    private TrackRecordingServiceConnection trackRecordingServiceConnection = new TrackRecordingServiceConnection();
 
     private TrackPoint lastTrackPoint = null;
     private TrackStatistics lastTrackStatistics = null;
@@ -80,9 +79,6 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
                 if (PreferencesUtils.getRecordingTrackId(getContext()) != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
                     // A recording track id has been set -> Resumes track and starts timer.
                     resumeTrackDataHub();
-                    if (trackRecordingServiceConnection == null) {
-                        trackRecordingServiceConnection = new TrackRecordingServiceConnection(null);
-                    }
                     trackRecordingServiceConnection.startConnection(getContext());
 
                     handlerUpdateUI.post(updateUIeachSecond);
@@ -222,8 +218,6 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         super.onResume();
         resumeTrackDataHub();
         PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
-
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(null);
         trackRecordingServiceConnection.startConnection(getContext());
 
         handlerUpdateUI.post(updateUIeachSecond);
@@ -241,10 +235,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     @Override
     public void onStop() {
         super.onStop();
-        if (trackRecordingServiceConnection != null) {
-            trackRecordingServiceConnection.unbind(getContext());
-        }
-        trackRecordingServiceConnection = null;
+        trackRecordingServiceConnection.unbind(getContext());
     }
 
     @Override
@@ -294,6 +285,12 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
         latitudeValue = null;
         longitudeValue = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        trackRecordingServiceConnection = null;
     }
 
     @Override
