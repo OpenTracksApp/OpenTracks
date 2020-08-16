@@ -8,3 +8,6 @@ A clear and concise description of what the pull request changes/adds.
 
 **License agreement**
 By opening this pull request, you are providing your contribution under the _Apache License 2.0_ (see [LICENSE.md](LICENSE.md)).
+
+**Note: new dependencies/libraries**
+Please refrain from introducing new libraries without consulting the team.
