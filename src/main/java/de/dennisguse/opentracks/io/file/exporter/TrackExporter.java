@@ -29,12 +29,7 @@ import de.dennisguse.opentracks.content.data.Track;
  */
 public interface TrackExporter {
 
-    /**
-     * Write track to an output stream.
-     * Depending on the implementation a context might be required.
-     *
-     * @param tracks
-     * @param outputStream the output stream
-     */
     boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream);
+
+    boolean writeTrack(Track track, @NonNull OutputStream outputStream);
 }
