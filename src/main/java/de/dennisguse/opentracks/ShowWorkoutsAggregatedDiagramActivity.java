@@ -17,8 +17,8 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.CombinedData;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.ValueFormatter;
@@ -40,7 +40,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
-import static android.widget.AdapterView.*;
+import static android.widget.AdapterView.OnItemSelectedListener;
 import static com.github.mikephil.charting.charts.CombinedChart.*;
 
 public class ShowWorkoutsAggregatedDiagramActivity extends AbstractActivity {
@@ -82,7 +82,6 @@ public class ShowWorkoutsAggregatedDiagramActivity extends AbstractActivity {
         lineDataSetAverageSpeed.setValueTextSize(10f);
         lineDataSetAverageSpeed.setDrawCircles(true);
         lineDataSetAverageSpeed.setLineWidth(4);
-        lineDataSetAverageSpeed.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
 
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(lineDataSetAverageSpeed);
