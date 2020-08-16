@@ -55,6 +55,11 @@ public class FileTrackExporter implements TrackExporter {
     }
 
     @Override
+    public boolean writeTrack(Track track, @NonNull OutputStream outputStream) {
+        return writeTrack(new Track[]{track}, outputStream);
+    }
+
+    @Override
     public boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream) {
         try {
             trackWriter.prepare(outputStream);
