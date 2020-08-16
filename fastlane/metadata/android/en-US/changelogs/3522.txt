@@ -1,0 +1,14 @@
+v3.9.0: OpenTracks
+
+Changes:
+- Export tracks with their UUID
+- Prevent import of already existing tracks by UUID (configurable; default yes)
+- Pause/stop button now require long press
+- GPS pre-start shows status of fix
+- Added new activity icons
+- Speed sensor: wheelsize now configurable in millimeter
+
+Bugfixes:
+- Fixed some rare crashes (NPE)
+- Pace formatting corrected
+- App icon in launcher repositioned
