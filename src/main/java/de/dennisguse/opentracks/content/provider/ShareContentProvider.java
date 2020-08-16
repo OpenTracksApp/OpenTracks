@@ -208,8 +208,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
             tracks[i] = contentProviderUtils.getTrack(trackIds[i]);
         }
 
-        boolean hasMultipleTracks = tracks.length > 1;
-        final TrackExporter trackExporter = getTrackFileFormat(uri).newTrackExporter(getContext(), hasMultipleTracks);
+        final TrackExporter trackExporter = getTrackFileFormat(uri).newTrackExporter(getContext());
 
         PipeDataWriter<String> pipeDataWriter = (output, uri1, mimeType, opts, args) -> {
             try (FileOutputStream fileOutputStream = new FileOutputStream(output.getFileDescriptor())) {
