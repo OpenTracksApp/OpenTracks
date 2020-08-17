@@ -432,6 +432,7 @@ limitations under the License.
     <!-- Track Detail -->
     <string name="track_detail_chart_tab">Chart</string>
     <string name="track_detail_stats_tab">Stats</string>
+    <string name="track_detail_intervals_tab">Intervals</string>
     <string name="track_detail_record_success">Now recording a new track</string>
     <string name="track_detail_resume_success">Now resuming the track</string>
     <!-- Track Edit -->

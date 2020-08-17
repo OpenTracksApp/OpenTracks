@@ -17,17 +17,21 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 import de.dennisguse.opentracks.viewmodels.IntervalStatisticsModel;
 
+/**
+ * LinearLayout view used to build a list of intervals.
+ * See {@link IntervalStatisticsAdapter}.
+ */
 public class IntervalListView extends LinearLayout {
 
-    private IntervalStatisticsAdapter adapter;
-    private LinearLayout linearLayoutIntervals;
-    private Spinner spinnerIntervals;
-    private TextView spinnerIntervalsUnit;
+    protected IntervalStatisticsAdapter adapter;
+    protected LinearLayout linearLayoutIntervals;
+    protected Spinner spinnerIntervals;
+    protected TextView spinnerIntervalsUnit;
 
-    private Context context;
-    private IntervalListListener listener;
+    protected Context context;
+    protected IntervalListListener listener;
 
-    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
+    protected final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
             if (spinnerIntervalsUnit != null) {
                 spinnerIntervalsUnit.setText(PreferencesUtils.isMetricUnits(context) ? context.getString(R.string.unit_kilometer) : context.getString(R.string.unit_mile));
@@ -43,7 +47,7 @@ public class IntervalListView extends LinearLayout {
         init();
     }
 
-    private void init() {
+    protected void init() {
         inflate(getContext(), R.layout.interval_list_view, this);
         linearLayoutIntervals = findViewById(R.id.interval_list);
         spinnerIntervals = findViewById(R.id.spinner_intervals);
