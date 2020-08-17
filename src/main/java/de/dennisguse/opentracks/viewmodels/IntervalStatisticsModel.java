@@ -15,6 +15,10 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
+/**
+ * This view model is used to load intervals for a track.
+ * It uses a default interval but it can be set from outside to manage the interval length.
+ */
 public class IntervalStatisticsModel extends AndroidViewModel {
 
     private MutableLiveData<IntervalStatistics> intervalStats;
@@ -38,6 +42,9 @@ public class IntervalStatisticsModel extends AndroidViewModel {
         return getIntervalStats(trackId, interval);
     }
 
+    /**
+     * Call this method when you want to force the view model to re-load intervals.
+     */
     public void invalidate() {
         intervalStats = null;
     }
@@ -56,6 +63,9 @@ public class IntervalStatisticsModel extends AndroidViewModel {
         }).start();
     }
 
+    /**
+     * Intervals length this view model support.
+     */
     public enum IntervalOption {
         OPTION_1(1),
         OPTION_2(2),

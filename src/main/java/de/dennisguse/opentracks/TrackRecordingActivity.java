@@ -25,6 +25,7 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
+import de.dennisguse.opentracks.fragments.IntervalsRecordingFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordingFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
@@ -372,7 +373,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @NonNull
@@ -382,8 +383,10 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 case 0:
                     return new StatisticsRecordingFragment();
                 case 1:
-                    return ChartFragment.newInstance(false);
+                    return new IntervalsRecordingFragment();
                 case 2:
+                    return ChartFragment.newInstance(false);
+                case 3:
                     return ChartFragment.newInstance(true);
                 default:
                     throw new RuntimeException("There isn't Fragment associated with the position: " + position);
@@ -396,8 +399,10 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 case 0:
                     return getString(R.string.track_detail_stats_tab);
                 case 1:
-                    return getString(R.string.settings_chart_by_time);
+                    return getString(R.string.track_detail_intervals_tab);
                 case 2:
+                    return getString(R.string.settings_chart_by_time);
+                case 3:
                     return getString(R.string.settings_chart_by_distance);
                 default:
                     throw new RuntimeException("There isn't Fragment associated with the position: " + position);
