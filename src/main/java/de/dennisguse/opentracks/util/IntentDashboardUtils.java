@@ -8,7 +8,10 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
@@ -42,7 +45,7 @@ public class IntentDashboardUtils {
      * @param context  the context
      * @param trackIds the track ids
      */
-    public static void startDashboard(Context context, long[] trackIds, boolean isRecording) {
+    public static void startDashboard(Context context, boolean isRecording, Track.Id... trackIds) {
         if (trackIds.length == 0) {
             return;
         }
@@ -73,14 +76,14 @@ public class IntentDashboardUtils {
         context.startActivity(intent);
     }
 
-    public static long[] extractTrackIdsFromIntent(@NonNull Intent intent) {
+    public static Set<Track.Id> extractTrackIdsFromIntent(@NonNull Intent intent) {
         final ArrayList<Uri> uris = intent.getParcelableArrayListExtra(ACTION_DASHBOARD_PAYLOAD);
         final Uri tracksUri = uris.get(TRACK_URI_INDEX);
 
         String[] trackIdsString = ContentProviderUtils.parseTrackIdsFromUri(tracksUri);
-        long[] trackIds = new long[trackIdsString.length];
-        for (int i = 0; i < trackIdsString.length; i++) {
-            trackIds[i] = Long.parseLong(trackIdsString[i]);
+        Set<Track.Id> trackIds = new HashSet<>(trackIdsString.length);
+        for (String s : trackIdsString) {
+            trackIds.add(new Track.Id(Long.parseLong(s)));
         }
 
         return trackIds;

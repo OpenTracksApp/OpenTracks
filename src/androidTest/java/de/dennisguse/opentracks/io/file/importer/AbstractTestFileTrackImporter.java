@@ -96,11 +96,11 @@ public abstract class AbstractTestFileTrackImporter {
     /**
      * Expects the first track point to be added.
      *
-     * @param trackPoint     the trackPoint
+     * @param trackPoint   the trackPoint
      * @param trackId      the track id
      * @param trackPointId the track point id
      */
-    protected void expectFirstTrackPoint(TrackPoint trackPoint, long trackId, long trackPointId) {
+    protected void expectFirstTrackPoint(TrackPoint trackPoint, Track.Id trackId, long trackPointId) {
         when(contentProviderUtils.bulkInsertTrackPoint(trackPoint != null ? (TrackPoint[]) any() : (TrackPoint[]) any(), eq(trackId))).thenReturn(1);
     }
 
@@ -111,7 +111,7 @@ public abstract class AbstractTestFileTrackImporter {
      * @param lastTrack   true if it is the last track in the gpx
      * @param trackId     the track id
      */
-    protected void expectTrackUpdate(ArgumentCaptor<Track> trackCaptor, boolean lastTrack, long trackId) {
+    protected void expectTrackUpdate(ArgumentCaptor<Track> trackCaptor, boolean lastTrack, Track.Id trackId) {
         contentProviderUtils.updateTrack(trackCaptor.capture());
 
         when(contentProviderUtils.insertWaypoint(any())).thenReturn(WAYPOINT_ID_O_URI);

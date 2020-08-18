@@ -388,7 +388,7 @@ public class KmlTrackWriter implements TrackWriter {
      * @param trackId  the track id containing the location
      * @param location the location
      */
-    private float getHeading(long trackId, Location location) {
+    private float getHeading(Track.Id trackId, Location location) {
         long trackPointId = contentProviderUtils.getTrackPointId(trackId, location);
         if (trackPointId == -1L) {
             return location.getBearing();

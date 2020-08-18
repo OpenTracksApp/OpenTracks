@@ -98,7 +98,7 @@ public class FileTrackExporter implements TrackExporter {
          *  I am leaving the number of waypoints very high which should not be a problem, because we don't try to load them into objects all at the same time.
          */
         boolean hasWaypoints = false;
-        try (Cursor cursor = contentProviderUtils.getWaypointCursor(track.getId(), -1L, ContentProviderUtils.MAX_LOADED_WAYPOINTS_POINTS)) {
+        try (Cursor cursor = contentProviderUtils.getWaypointCursor(track.getId(), null, ContentProviderUtils.MAX_LOADED_WAYPOINTS_POINTS)) {
             if (cursor != null && cursor.moveToFirst()) {
                 for (int i = 0; i < cursor.getCount(); i++) {
                     if (Thread.interrupted()) {

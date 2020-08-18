@@ -36,6 +36,7 @@ import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
@@ -66,7 +67,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
     private SharedPreferences sharedPreferences;
 
-    private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+    private Track.Id recordingTrackId;
     private boolean recordingTrackPaused;
 
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
@@ -117,13 +118,13 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
-        long trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
+        Track.Id trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
         recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
 
         contentProviderUtils = new ContentProviderUtils(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
-        track = trackId != -1L ? contentProviderUtils.getTrack(trackId) : null;
+        track = !trackId.isValid() ? contentProviderUtils.getTrack(trackId) : null;
 
         listView = findViewById(R.id.marker_list);
         listView.setEmptyView(findViewById(R.id.marker_list_empty));
@@ -223,7 +224,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        insertMarkerMenuItem.setVisible(track != null && track.getId() == recordingTrackId && !recordingTrackPaused);
+        insertMarkerMenuItem.setVisible(track != null && track.getId().equals(recordingTrackId) && !recordingTrackPaused);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -241,30 +242,35 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     /**
      * Handles a context item selection.
      *
-     * @param itemId    the menu item id
-     * @param markerIds the marker ids
+     * @param itemId      the menu item id
+     * @param waypointIds the marker ids
      * @return true if handled.
      */
-    private boolean handleContextItem(int itemId, long[] markerIds) {
+    private boolean handleContextItem(int itemId, long... longWaypointIds) {
+        Waypoint.Id[] waypointIds = new Waypoint.Id[longWaypointIds.length];
+        for (int i = 0; i < longWaypointIds.length; i++) {
+            waypointIds[i] = new Waypoint.Id(longWaypointIds[i]);
+        }
+
         Intent intent;
         switch (itemId) {
             case R.id.list_context_menu_show_on_map:
-                if (markerIds.length == 1) {
-                    IntentUtils.showCoordinateOnMap(this, contentProviderUtils.getWaypoint(markerIds[0]));
+                if (waypointIds.length == 1) {
+                    IntentUtils.showCoordinateOnMap(this, contentProviderUtils.getWaypoint(waypointIds[0]));
                 }
                 return true;
             case R.id.list_context_menu_edit:
-                if (markerIds.length == 1) {
+                if (waypointIds.length == 1) {
                     intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
-                            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerIds[0]);
+                            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, waypointIds[0]);
                     startActivity(intent);
                 }
                 return true;
             case R.id.list_context_menu_delete:
-                if (markerIds.length > 1 && markerIds.length == listView.getCount()) {
-                    markerIds = new long[]{-1L};
+                if (waypointIds.length > 1 && waypointIds.length == listView.getCount()) {
+                    waypointIds = null;
                 }
-                DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), markerIds);
+                DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), waypointIds);
                 return true;
             case R.id.list_context_menu_select_all:
                 for (int i = 0; i < listView.getCount(); i++) {

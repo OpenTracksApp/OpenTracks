@@ -67,7 +67,7 @@ public class IntentUtils {
      * @param context  the context
      * @param trackIds the track ids
      */
-    public static Intent newShareFileIntent(Context context, long[] trackIds) {
+    public static Intent newShareFileIntent(Context context, Track.Id... trackIds) {
         if (trackIds.length == 0) {
             throw new RuntimeException("Need to share at least one track.");
         }
@@ -84,14 +84,14 @@ public class IntentUtils {
         String mime = "";
 
         ArrayList<Uri> uris = new ArrayList<>();
-        for (long trackId : trackIds) {
+        for (Track.Id trackId : trackIds) {
             Track track = contentProviderUtils.getTrack(trackId);
             if (track == null) {
                 Log.e(TAG, "TrackId " + trackId + " could not be resolved.");
                 continue;
             }
 
-            Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(new long[]{trackId}, track.getName(), PreferencesUtils.getExportTrackFileFormat(context));
+            Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackId, track.getName(), PreferencesUtils.getExportTrackFileFormat(context));
             uris.add(uriAndMime.first);
             mime = uriAndMime.second;
         }
@@ -154,7 +154,6 @@ public class IntentUtils {
     }
 
 
-
     /**
      * Sends a take picture request to the camera app.
      * The picture is then stored in the track's folder.
@@ -162,7 +161,7 @@ public class IntentUtils {
      * @param context the context
      * @param trackId the track id
      */
-    public static Pair<Intent, Uri> createTakePictureIntent(Context context, long trackId) {
+    public static Pair<Intent, Uri> createTakePictureIntent(Context context, Track.Id trackId) {
         File dir = FileUtils.getPhotoDir(context, trackId);
 
         String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());

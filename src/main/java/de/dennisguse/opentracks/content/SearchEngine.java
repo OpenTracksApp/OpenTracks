@@ -123,8 +123,8 @@ public class SearchEngine {
         }
 
         // Finally, use arbitrary ordering, by ID.
-        long id1 = r1.track != null ? r1.track.getId() : r1.waypoint.getId();
-        long id2 = r2.track != null ? r2.track.getId() : r2.waypoint.getId();
+        long id1 = r1.track != null ? r1.track.getId().getId() : r1.waypoint.getId().getId();
+        long id2 = r2.track != null ? r2.track.getId().getId() : r2.waypoint.getId().getId();
         long idDiff = id2 - id1;
         return Long.signum(idDiff);
     };
@@ -290,7 +290,7 @@ public class SearchEngine {
         score *= getTimeBoost(query, location.getTime());
 
         // Score waypoints in the currently-selected track higher (searching inside the current track).
-        if (query.currentTrackId != -1 && waypoint.getTrackId() == query.currentTrackId) {
+        if (query.currentTrackId.isValid() && waypoint.getTrackId().equals(query.currentTrackId)) {
             score *= CURRENT_TRACK_WAYPOINT_PROMOTION;
         }
 
@@ -382,10 +382,10 @@ public class SearchEngine {
     public static class SearchQuery {
         final String textQuery;
         final Location currentLocation;
-        final long currentTrackId;
+        final Track.Id currentTrackId;
         final long currentTimestamp;
 
-        public SearchQuery(String textQuery, Location currentLocation, long currentTrackId, long currentTimestamp) {
+        public SearchQuery(String textQuery, Location currentLocation, Track.Id currentTrackId, long currentTimestamp) {
             this.textQuery = textQuery.toLowerCase(Locale.getDefault());
             this.currentLocation = currentLocation;
             this.currentTrackId = currentTrackId;

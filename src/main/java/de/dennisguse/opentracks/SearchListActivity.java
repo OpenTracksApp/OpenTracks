@@ -97,7 +97,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
 
     private boolean metricUnits = true;
 
-    private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+    private Track.Id recordingTrackId;
 
     private boolean recordingTrackPaused;
 
@@ -203,7 +203,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         listView.setEmptyView(findViewById(R.id.search_list_empty));
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Map<String, Object> item = arrayAdapter.getItem(position);
-            Long trackId = (Long) item.get(TRACK_ID_FIELD);
+            Track.Id trackId = (Track.Id) item.get(TRACK_ID_FIELD);
             Long markerId = (Long) item.get(MARKER_ID_FIELD);
             Intent intent = IntentUtils.newIntent(SearchListActivity.this, TrackRecordedActivity.class);
             if (markerId != null) {
@@ -270,22 +270,22 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
             return false;
         }
         Map<String, Object> item = arrayAdapter.getItem(positions[0]);
-        Long trackId = (Long) item.get(TRACK_ID_FIELD);
-        Long markerId = (Long) item.get(MARKER_ID_FIELD);
+        Track.Id trackId = (Track.Id) item.get(TRACK_ID_FIELD);
+        Waypoint.Id waypointId = (Waypoint.Id) item.get(MARKER_ID_FIELD);
         Intent intent;
         switch (itemId) {
             case R.id.list_context_menu_show_on_map:
                 IntentUtils.showCoordinateOnMap(this, (double) item.get(MARKER_LATITUDE_FIELD), (double) item.get(MARKER_LONGITUDE_FIELD), item.get(NAME_FIELD) + "");
                 return true;
             case R.id.list_context_menu_share:
-                intent = IntentUtils.newShareFileIntent(this, new long[]{trackId});
+                intent = IntentUtils.newShareFileIntent(this, trackId);
                 intent = Intent.createChooser(intent, null);
                 startActivity(intent);
                 return true;
             case R.id.list_context_menu_edit:
-                if (markerId != null) {
+                if (waypointId != null) {
                     intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
-                            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
+                            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, waypointId);
                 } else {
                     intent = IntentUtils.newIntent(this, TrackEditActivity.class)
                             .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
@@ -296,10 +296,10 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
                 finish();
                 return true;
             case R.id.list_context_menu_delete:
-                if (markerId != null) {
-                    DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), new long[]{markerId});
+                if (waypointId != null) {
+                    DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), waypointId);
                 } else {
-                    deleteTracks(new long[]{trackId});
+                    deleteTracks(trackId);
                 }
                 return true;
             default:
@@ -331,7 +331,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
      * @param textQuery the query
      */
     private void doSearch(String textQuery) {
-        SearchQuery query = new SearchQuery(textQuery, null, -1L, System.currentTimeMillis());
+        SearchQuery query = new SearchQuery(textQuery, null, null, System.currentTimeMillis());
         SortedSet<ScoredResult> scoredResults = searchEngine.search(query);
         final List<Map<String, Object>> displayResults = prepareResultsforDisplay(scoredResults);
 
@@ -372,8 +372,8 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
 
         //TODO: It may be more appropriate to obtain the track name as a join in the retrieval phase of the searchable.
         String trackName = null;
-        long trackId = waypoint.getTrackId();
-        if (trackId != -1L) {
+        Track.Id trackId = waypoint.getTrackId();
+        if (!trackId.isValid()) {
             Track track = contentProviderUtils.getTrack(trackId);
             if (track != null) {
                 trackName = track.getName();

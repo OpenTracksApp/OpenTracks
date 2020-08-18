@@ -214,7 +214,7 @@ public class ImportProgressDialogFragment extends DialogFragment {
             }
 
             try (InputStream inputStream = context.getContentResolver().openInputStream(file.getUri())) {
-                return trackImporter.importFile(inputStream) != -1L;
+                return trackImporter.importFile(inputStream) != null;
             } catch (IOException e) {
                 Log.e(TAG, "Unable to import file", e);
                 return false;

@@ -20,7 +20,7 @@ public class TestDataUtil {
     /**
      * Create a track without any trackPoints.
      */
-    public static Track createTrack(long trackId) {
+    public static Track createTrack(Track.Id trackId) {
         Track track = new Track();
         track.setId(trackId);
         track.setName("Test: " + trackId);
@@ -34,7 +34,7 @@ public class TestDataUtil {
      * @param trackId   the trackId of the track
      * @param numPoints the trackPoints number in the track
      */
-    public static Pair<Track, TrackPoint[]> createTrack(long trackId, int numPoints) {
+    public static Pair<Track, TrackPoint[]> createTrack(Track.Id trackId, int numPoints) {
         Track track = createTrack(trackId);
 
         TrackPoint[] trackPoints = new TrackPoint[numPoints];
@@ -45,7 +45,7 @@ public class TestDataUtil {
         return new Pair<>(track, trackPoints);
     }
 
-    public static Track createTrackAndInsert(ContentProviderUtils contentProviderUtils, long trackId, int numPoints) {
+    public static Track createTrackAndInsert(ContentProviderUtils contentProviderUtils, Track.Id trackId, int numPoints) {
         Pair<Track, TrackPoint[]> pair = createTrack(trackId, numPoints);
 
         insertTrackWithLocations(contentProviderUtils, pair.first, pair.second);
@@ -93,7 +93,7 @@ public class TestDataUtil {
      * @param location The location.
      * @return the Waypoint created.
      */
-    public static  Waypoint createWaypointWithPhoto(Context context, long trackId, Location location) throws IOException {
+    public static Waypoint createWaypointWithPhoto(Context context, Track.Id trackId, Location location) throws IOException {
         File dstFile = new File(FileUtils.getImageUrl(context, trackId));
         dstFile.createNewFile();
         Uri photoUri = FileUtils.getUriForFile(context, dstFile);

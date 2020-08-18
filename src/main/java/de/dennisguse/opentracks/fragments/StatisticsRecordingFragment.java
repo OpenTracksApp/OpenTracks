@@ -76,7 +76,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
             }
             if (PreferencesUtils.isKey(getContext(), R.string.recording_track_id_key, key)) {
                 recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(getContext());
-                if (PreferencesUtils.getRecordingTrackId(getContext()) != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT) {
+                if (PreferencesUtils.getRecordingTrackId(getContext()).isValid()) {
                     // A recording track id has been set -> Resumes track and starts timer.
                     resumeTrackDataHub();
                     trackRecordingServiceConnection.startConnection(getContext());

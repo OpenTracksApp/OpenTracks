@@ -78,8 +78,8 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
     private Handler handler;
 
     // Preference values
-    private long selectedTrackId;
-    private long recordingTrackId;
+    private Track.Id selectedTrackId;
+    private Track.Id recordingTrackId;
     private boolean recordingTrackPaused;
 
     // Track points sampling state
@@ -174,7 +174,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         handler = null;
     }
 
-    public void loadTrack(final long trackId) {
+    public void loadTrack(final Track.Id trackId) {
         runInHandlerThread(() -> {
             if (trackId == selectedTrackId) {
                 Log.i(TAG, "Not reloading track " + trackId);
@@ -311,7 +311,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
             trackDataListener.clearWaypoints();
         }
 
-        try (Cursor cursor = contentProviderUtils.getWaypointCursor(selectedTrackId, -1L, MAX_DISPLAYED_WAYPOINTS)) {
+        try (Cursor cursor = contentProviderUtils.getWaypointCursor(selectedTrackId, null, MAX_DISPLAYED_WAYPOINTS)) {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     Waypoint waypoint = contentProviderUtils.createWaypoint(cursor);

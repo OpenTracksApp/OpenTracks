@@ -16,9 +16,16 @@
 
 package de.dennisguse.opentracks.content.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
+import java.util.Objects;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.stats.TrackStatistics;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * A track.
@@ -28,7 +35,7 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
  */
 public class Track {
 
-    private long id = -1L;
+    private Track.Id id;
     private UUID uuid = UUID.randomUUID();
 
     private String name = "";
@@ -42,11 +49,11 @@ public class Track {
     public Track() {
     }
 
-    public long getId() {
+    public Id getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Id id) {
         this.id = id;
     }
 
@@ -96,5 +103,60 @@ public class Track {
 
     public void setTrackStatistics(TrackStatistics trackStatistics) {
         this.trackStatistics = trackStatistics;
+    }
+
+    public static class Id implements Parcelable {
+
+        private final long id;
+
+        public Id(long id) {
+            this.id = id;
+        }
+
+        public Id(@NonNull String id) {
+            this(Long.parseLong(id));
+        }
+
+        //TOOD Limit visibility to TrackRecordingService / ContentProvider
+        public long getId() {
+            return id;
+        }
+
+        public boolean isValid() {
+            return id != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Id id1 = (Id) o;
+            return id == id1.id;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeLong(id);
+        }
+
+        public static final Parcelable.Creator<Track.Id> CREATOR = new Parcelable.Creator<Track.Id>() {
+            public Track.Id createFromParcel(Parcel in) {
+                return new Track.Id(in.readLong());
+            }
+
+            public Track.Id[] newArray(int size) {
+                return new Track.Id[size];
+            }
+        };
     }
 }

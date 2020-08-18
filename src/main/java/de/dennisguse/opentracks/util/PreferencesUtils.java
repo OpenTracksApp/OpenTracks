@@ -24,6 +24,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.preference.PreferenceManager;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
 /**
@@ -54,9 +55,9 @@ public class PreferencesUtils {
     public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
 
     @Deprecated //Use the TrackRecordingService
-    public static long getRecordingTrackId(Context context) {
+    public static Track.Id getRecordingTrackId(Context context) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
-        return sharedPreferences.getLong(getKey(context, R.string.recording_track_id_key), RECORDING_TRACK_ID_DEFAULT);
+        return new Track.Id(sharedPreferences.getLong(getKey(context, R.string.recording_track_id_key), RECORDING_TRACK_ID_DEFAULT));
     }
 
     public static String getDefaultActivity(Context context) {
@@ -347,14 +348,13 @@ public class PreferencesUtils {
 
     @Deprecated //Use TrackRecordingService
     public static boolean isRecording(Context context) {
-        long recordingTrackId = getRecordingTrackId(context);
-        return isRecording(recordingTrackId);
+        return isRecording(getRecordingTrackId(context));
     }
 
     @Deprecated
     //TODO Method is very misleading: it only checks if the provided trackId not the default value (i.e., not recording).
-    public static boolean isRecording(long recordingTrackId) {
-        return recordingTrackId != RECORDING_TRACK_ID_DEFAULT;
+    public static boolean isRecording(Track.Id recordingTrackId) {
+        return recordingTrackId == null || recordingTrackId.getId() != RECORDING_TRACK_ID_DEFAULT;
     }
 
     public static void resetPreferences(Context context, boolean readAgain) {

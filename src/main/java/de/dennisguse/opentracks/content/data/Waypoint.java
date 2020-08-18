@@ -18,9 +18,15 @@ package de.dennisguse.opentracks.content.data;
 
 import android.location.Location;
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+
+import java.util.Objects;
+
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * A waypoint.
@@ -30,12 +36,12 @@ import androidx.annotation.VisibleForTesting;
  */
 public final class Waypoint {
 
-    private long id = -1L;
+    private Id id;
     private String name = "";
     private String description = "";
     private String category = "";
     private String icon = "";
-    private long trackId = -1L;
+    private Track.Id trackId;
     private double length = 0.0;
     private long duration = 0;
     private Location location;
@@ -51,7 +57,7 @@ public final class Waypoint {
         this.location = location;
     }
 
-    public Waypoint(String name, String description, String category, String icon, long trackId, double length, long duration, @NonNull Location location, String photoUrl) {
+    public Waypoint(String name, String description, String category, String icon, @NonNull Track.Id trackId, double length, long duration, @NonNull Location location, String photoUrl) {
         this.name = name;
         this.description = description;
         this.category = category;
@@ -63,11 +69,11 @@ public final class Waypoint {
         this.photoUrl = photoUrl;
     }
 
-    public long getId() {
+    public Id getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Id id) {
         this.id = id;
     }
 
@@ -103,11 +109,11 @@ public final class Waypoint {
         this.icon = icon;
     }
 
-    public long getTrackId() {
+    public Track.Id getTrackId() {
         return trackId;
     }
 
-    public void setTrackId(long trackId) {
+    public void setTrackId(Track.Id trackId) {
         this.trackId = trackId;
     }
 
@@ -146,5 +152,60 @@ public final class Waypoint {
 
     public boolean hasPhoto() {
         return photoUrl != null && !"".equals(photoUrl);
+    }
+
+    public static class Id implements Parcelable {
+
+        private final long id;
+
+        public Id(long id) {
+            this.id = id;
+        }
+
+        public Id(@NonNull String id) {
+            this(Long.parseLong(id));
+        }
+
+        //TOOD Limit visibility to TrackRecordingService / ContentProvider
+        public long getId() {
+            return id;
+        }
+
+        public boolean isValid() {
+            return id != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Id id1 = (Id) o;
+            return id == id1.id;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id);
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeLong(id);
+        }
+
+        public static final Parcelable.Creator<Id> CREATOR = new Parcelable.Creator<Id>() {
+            public Id createFromParcel(Parcel in) {
+                return new Id(in.readLong());
+            }
+
+            public Id[] newArray(int size) {
+                return new Id[size];
+            }
+        };
     }
 }

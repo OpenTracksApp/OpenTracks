@@ -46,6 +46,7 @@ import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
@@ -104,7 +105,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     // Preferences
     private boolean metricUnits = true;
-    private long recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+    private Track.Id recordingTrackId = new Track.Id(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
 
     // Callback when an item is selected in the contextual action mode
     private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
@@ -245,7 +246,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         listView.setEmptyView(findViewById(R.id.track_list_empty_view));
         listView.setOnItemClickListener((parent, view, position, trackId) -> {
             Intent newIntent;
-            if (trackId == recordingTrackId) {
+            if (trackId == recordingTrackId.getId()) {
                 // Is recording -> open record activity.
                 newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class)
                         .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
@@ -269,7 +270,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 int categoryIndex = cursor.getColumnIndex(TracksColumns.CATEGORY);
                 int descriptionIndex = cursor.getColumnIndex(TracksColumns.DESCRIPTION);
 
-                long trackId = cursor.getLong(idIndex);
+                Track.Id trackId = new Track.Id(cursor.getLong(idIndex));
                 boolean isRecording = trackId == recordingTrackId;
                 String icon = cursor.getString(iconIndex);
                 int iconId = TrackIconUtils.getIconDrawable(icon);
@@ -459,8 +460,8 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     /**
      * Updates the menu items with the icon specified.
      *
-     * @param isGpsStarted   true if gps is started
-     * @param isRecording    true if recording
+     * @param isGpsStarted true if gps is started
+     * @param isRecording  true if recording
      */
     private void updateGpsMenuItem(boolean isGpsStarted, boolean isRecording) {
         if (startGpsMenuItem != null) {
@@ -482,11 +483,16 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
      * @param trackIds the track ids
      * @return true if handled.
      */
-    private boolean handleContextItem(int itemId, long[] trackIds) {
+    private boolean handleContextItem(int itemId, long... longTrackIds) {
+        Track.Id[] trackIds = new Track.Id[longTrackIds.length];
+        for (int i = 0; i < longTrackIds.length; i++) {
+            trackIds[i] = new Track.Id(longTrackIds[i]);
+        }
+
         Intent intent;
         switch (itemId) {
             case R.id.list_context_menu_show_on_map:
-                IntentDashboardUtils.startDashboard(this, trackIds, false);
+                IntentDashboardUtils.startDashboard(this, false, trackIds);
                 return true;
             case R.id.list_context_menu_share:
                 intent = IntentUtils.newShareFileIntent(this, trackIds);
