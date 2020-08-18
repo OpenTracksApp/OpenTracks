@@ -18,6 +18,7 @@ package de.dennisguse.opentracks;
 
 import android.content.Intent;
 
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
@@ -55,17 +56,17 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
      *
      * @param trackIds the track ids
      */
-    protected void deleteTracks(long[] trackIds) {
+    protected void deleteTracks(Track.Id... trackIds) {
         ConfirmDeleteDialogFragment.showDialog(getSupportFragmentManager(), trackIds);
     }
 
     @Override
-    public void onConfirmDeleteDone(long[] trackIds) {
+    public void onConfirmDeleteDone(Track.Id... trackIds) {
         boolean stopRecording = false;
 
-        long recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
-        for (long trackId : trackIds) {
-            if (trackId == recordingTrackId) {
+        Track.Id recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
+        for (Track.Id trackId : trackIds) {
+            if (trackId.equals(recordingTrackId)) {
                 stopRecording = true;
                 break;
             }

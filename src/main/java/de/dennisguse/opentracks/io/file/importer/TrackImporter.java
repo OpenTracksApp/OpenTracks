@@ -17,6 +17,8 @@ package de.dennisguse.opentracks.io.file.importer;
 
 import java.io.InputStream;
 
+import de.dennisguse.opentracks.content.data.Track;
+
 /**
  * Interface for a track importer.
  *
@@ -28,8 +30,8 @@ public interface TrackImporter {
      * Import a file.
      *
      * @param inputStream the file's input stream
-     * @return the imported track id or RECORDING_TRACK_ID_DEFAULT.
+     * @return the imported track id or null.
      */
     //TODO Figure out how can make the import an atomic operation (incl. database transaction rollback).
-    long importFile(InputStream inputStream);
+    Track.Id importFile(InputStream inputStream);
 }

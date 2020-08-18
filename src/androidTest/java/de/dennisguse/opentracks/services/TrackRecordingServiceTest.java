@@ -72,7 +72,7 @@ public class TrackRecordingServiceTest {
     private final Context context = ApplicationProvider.getApplicationContext();
     private ContentProviderUtils contentProviderUtils;
 
-    private final long trackId = Math.abs(new Random().nextLong());
+    private final Track.Id trackId = new Track.Id(Math.abs(new Random().nextLong()));
 
     static Intent createStartIntent(Context context) {
         return new Intent(context, TrackRecordingService.class);
@@ -245,13 +245,13 @@ public class TrackRecordingServiceTest {
         service.startNewTrack();
         Assert.assertTrue(service.isRecording());
 
-        long trackId = service.getRecordingTrackId();
+        Track.Id trackId = service.getRecordingTrackId();
 
         // when
-        long newTrackId = service.startNewTrack();
+        Track.Id newTrackId = service.startNewTrack();
 
         // then
-        Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, newTrackId);
+        Assert.assertNotNull(newTrackId);
 
         Assert.assertEquals(trackId, PreferencesUtils.getRecordingTrackId(context));
         Assert.assertEquals(trackId, service.getRecordingTrackId());
@@ -281,10 +281,10 @@ public class TrackRecordingServiceTest {
         Assert.assertFalse(service.isRecording());
 
         // when
-        long waypointId = service.insertWaypoint(null, null, null, null);
+        Waypoint.Id waypointId = service.insertWaypoint(null, null, null, null);
 
         // then
-        Assert.assertEquals(-1L, waypointId);
+        Assert.assertNull(waypointId);
     }
 
     @MediumTest
@@ -295,10 +295,10 @@ public class TrackRecordingServiceTest {
         service.startNewTrack();
         Assert.assertTrue(service.isRecording());
         newTrackPoint(service);
-        long trackId = service.getRecordingTrackId();
+        Track.Id trackId = service.getRecordingTrackId();
 
         // when
-        long waypointId = service.insertWaypoint(null, null, null, null);
+        Waypoint.Id waypointId = service.insertWaypoint(null, null, null, null);
 
         // then
         Assert.assertNotEquals(-1L, waypointId);
@@ -313,15 +313,15 @@ public class TrackRecordingServiceTest {
     }
 
     private void addTrack(Track track, boolean isRecording) {
-        Assert.assertTrue(track.getId() >= 0);
+        Assert.assertTrue(track.getId().isValid());
         contentProviderUtils.insertTrack(track);
         Assert.assertEquals(track.getId(), contentProviderUtils.getTrack(track.getId()).getId());
-        PreferencesUtils.setLong(context, R.string.recording_track_id_key, isRecording ? track.getId() : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+        PreferencesUtils.setLong(context, R.string.recording_track_id_key, isRecording ? track.getId().getId() : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
         PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, !isRecording);
     }
 
     // NOTE: Do not use to create a track that is currently recording.
-    private void createDummyTrack(long id, long stopTime, boolean isRecording) {
+    private void createDummyTrack(Track.Id id, long stopTime, boolean isRecording) {
         Track dummyTrack = new Track();
         dummyTrack.setId(id);
         dummyTrack.setName("Dummy Track");

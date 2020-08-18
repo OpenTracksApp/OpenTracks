@@ -31,6 +31,8 @@ import androidx.annotation.NonNull;
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackEditActivity;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
@@ -177,18 +179,18 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     /**
      * Adds a marker.
      *
-     * @return the id of the marker or -1L if none could be created.
+     * @return the id of the marker or null if none could be created.
      */
-    public long addMarker(Context context, String name, String category, String description, String photoUrl) {
+    public Waypoint.Id addMarker(Context context, String name, String category, String description, String photoUrl) {
         TrackRecordingServiceInterface trackRecordingService = getServiceIfBound();
         if (trackRecordingService == null) {
             Log.d(TAG, "Unable to add marker, no track recording service");
         } else {
             try {
-                long markerId = trackRecordingService.insertWaypoint(name, category, description, photoUrl);
-                if (markerId != -1L) {
+                Waypoint.Id waypoint = trackRecordingService.insertWaypoint(name, category, description, photoUrl);
+                if (waypoint != null) {
                     Toast.makeText(context, R.string.marker_add_success, Toast.LENGTH_SHORT).show();
-                    return markerId;
+                    return waypoint;
                 }
             } catch (IllegalStateException e) {
                 Log.e(TAG, "Unable to add marker.", e);
@@ -196,7 +198,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         }
 
         Toast.makeText(context, R.string.marker_add_error, Toast.LENGTH_LONG).show();
-        return -1L;
+        return null;
     }
 
     /**
@@ -213,7 +215,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
             try {
                 if (showEditor) {
                     // Need to remember the recordingTrackId before calling endCurrentTrack() as endCurrentTrack() sets the value to -1L.
-                    long recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
+                    Track.Id recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
                     trackRecordingService.endCurrentTrack();
                     if (PreferencesUtils.isRecording(context)) {
                         Intent intent = IntentUtils.newIntent(context, TrackEditActivity.class)

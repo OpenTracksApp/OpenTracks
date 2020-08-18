@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import de.dennisguse.opentracks.BuildConfig;
+import de.dennisguse.opentracks.content.data.Track;
 
 /**
  * Utilities for dealing with files.
@@ -63,8 +64,8 @@ public class FileUtils {
         return context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
     }
 
-    public static File getPhotoDir(Context context, long trackId) {
-        File photoDirectory = new File(getPhotoDir(context), "" + trackId);
+    public static File getPhotoDir(Context context, Track.Id trackId) {
+        File photoDirectory = new File(getPhotoDir(context), "" + trackId.getId());
         photoDirectory.mkdirs();
         return photoDirectory;
     }
@@ -223,7 +224,7 @@ public class FileUtils {
      * @param context the context.
      * @param trackId the track id.
      */
-    public static String getImageUrl(Context context, long trackId) {
+    public static String getImageUrl(Context context, Track.Id trackId) {
         File dir = FileUtils.getPhotoDir(context, trackId);
 
         String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
@@ -267,7 +268,7 @@ public class FileUtils {
      * @param uri     the uri to check.
      * @return File object or null.
      */
-    public static File getPhotoFileIfExists(Context context, long trackId, Uri uri) {
+    public static File getPhotoFileIfExists(Context context, Track.Id trackId, Uri uri) {
         if (uri == null) {
             Log.w(TAG, "URI object is null.");
             return null;

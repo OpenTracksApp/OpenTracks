@@ -56,8 +56,8 @@ public class ExportImportTest {
     private final List<Waypoint> waypoints = new ArrayList<>();
     private final List<TrackPoint> trackPoints = new ArrayList<>();
 
-    private long importTrackId;
-    private final long trackId = System.currentTimeMillis();
+    private Track.Id importTrackId;
+    private final Track.Id trackId = new Track.Id(System.currentTimeMillis());
 
     @Before
     public void setUp() {

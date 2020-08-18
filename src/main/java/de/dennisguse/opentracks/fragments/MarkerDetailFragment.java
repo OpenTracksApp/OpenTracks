@@ -93,9 +93,9 @@ public class MarkerDetailFragment extends Fragment {
         }
     };
 
-    public static MarkerDetailFragment newInstance(long markerId) {
+    public static MarkerDetailFragment newInstance(Waypoint.Id waypointId) {
         Bundle bundle = new Bundle();
-        bundle.putLong(KEY_MARKER_ID, markerId);
+        bundle.putParcelable(KEY_MARKER_ID, waypointId);
 
         MarkerDetailFragment fragment = new MarkerDetailFragment();
         fragment.setArguments(bundle);
@@ -106,8 +106,8 @@ public class MarkerDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        long markerId = getArguments().getLong(KEY_MARKER_ID);
-        if (markerId == -1L) {
+        Waypoint.Id waypointId = getArguments().getParcelable(KEY_MARKER_ID);
+        if (waypointId == null) {
             Log.d(TAG, "invalid marker id");
             getParentFragmentManager().popBackStack();
             return;
@@ -182,7 +182,7 @@ public class MarkerDetailFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        long markerId = getArguments().getLong(KEY_MARKER_ID);
+        Waypoint.Id waypointId = getArguments().getParcelable(KEY_MARKER_ID); //TODO Should only happen in onCreate?
         FragmentActivity fragmentActivity = getActivity();
         Intent intent;
         switch (item.getItemId()) {
@@ -191,7 +191,7 @@ public class MarkerDetailFragment extends Fragment {
                 return true;
             case R.id.marker_detail_edit:
                 intent = IntentUtils.newIntent(fragmentActivity, MarkerEditActivity.class)
-                        .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
+                        .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, waypointId);
                 startActivity(intent);
                 return true;
             case R.id.marker_detail_share:
@@ -202,7 +202,7 @@ public class MarkerDetailFragment extends Fragment {
                 }
                 return true;
             case R.id.marker_detail_delete:
-                DeleteMarkerDialogFragment.showDialog(getChildFragmentManager(), new long[]{markerId});
+                DeleteMarkerDialogFragment.showDialog(getChildFragmentManager(), waypointId);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -216,7 +216,7 @@ public class MarkerDetailFragment extends Fragment {
      */
     private void updateWaypoint(boolean refresh) {
         if (refresh || waypoint == null) {
-            waypoint = contentProviderUtils.getWaypoint(getArguments().getLong(KEY_MARKER_ID));
+            waypoint = contentProviderUtils.getWaypoint(getArguments().getParcelable(KEY_MARKER_ID)); //TODO Should only happen in onCreate?
             if (waypoint == null) {
                 Log.d(TAG, "waypoint is null");
                 getParentFragmentManager().popBackStack();

@@ -11,6 +11,7 @@ import androidx.annotation.VisibleForTesting;
 
 import java.util.UUID;
 
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
@@ -162,7 +163,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 int trackIdIndex = cursor.getColumnIndexOrThrow("_id");
                 do {
-                    long trackId = cursor.getLong(trackIdIndex);
+                    Track.Id trackId = new Track.Id(cursor.getLong(trackIdIndex));
                     ContentValues cv = new ContentValues();
                     cv.put("uuid", UUIDUtils.toBytes(UUID.randomUUID()));
                     db.update("tracks", cv, "_id = ?", new String[]{String.valueOf(trackId)});

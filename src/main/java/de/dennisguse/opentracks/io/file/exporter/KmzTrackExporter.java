@@ -110,7 +110,7 @@ public class KmzTrackExporter implements TrackExporter {
 
     private void addImages(Context context, Track[] tracks, ZipOutputStream zipOutputStream) throws InterruptedException, IOException {
         for (Track track : tracks) {
-            try (Cursor cursor = contentProviderUtils.getWaypointCursor(track.getId(), -1L, -1)) {
+            try (Cursor cursor = contentProviderUtils.getWaypointCursor(track.getId(), null, -1)) {
                 if (cursor != null && cursor.moveToFirst()) {
                     for (int i = 0; i < cursor.getCount(); i++) {
                         if (Thread.interrupted()) {

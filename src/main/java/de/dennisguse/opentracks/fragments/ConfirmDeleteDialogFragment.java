@@ -25,6 +25,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.util.DialogUtils;
 
 /**
@@ -44,9 +45,9 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
      *
      * @param trackIds list of track ids to delete.
      */
-    public static void showDialog(FragmentManager fragmentManager, long[] trackIds) {
+    public static void showDialog(FragmentManager fragmentManager, Track.Id... trackIds) {
         Bundle bundle = new Bundle();
-        bundle.putLongArray(KEY_TRACK_IDS, trackIds);
+        bundle.putParcelableArray(KEY_TRACK_IDS, trackIds);
 
         ConfirmDeleteDialogFragment deleteTrackDialogFragment = new ConfirmDeleteDialogFragment();
         deleteTrackDialogFragment.setArguments(bundle);
@@ -66,7 +67,7 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final long[] trackIds = getArguments().getLongArray(KEY_TRACK_IDS);
+        final Track.Id[] trackIds = (Track.Id[]) getArguments().getParcelableArray(KEY_TRACK_IDS);
 
         int titleId = trackIds.length > 1 ? R.string.generic_delete_selected_confirm_title : R.string.track_delete_one_confirm_title;
         int messageId = trackIds.length > 1 ? R.string.track_delete_multiple_confirm_message : R.string.track_delete_one_confirm_message;
@@ -85,6 +86,6 @@ public class ConfirmDeleteDialogFragment extends DialogFragment {
      */
     public interface ConfirmDeleteCaller {
 
-        void onConfirmDeleteDone(long[] trackIds);
+        void onConfirmDeleteDone(Track.Id... trackIds);
     }
 }

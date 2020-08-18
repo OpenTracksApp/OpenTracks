@@ -76,7 +76,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private PeriodicTaskExecutor voiceExecutor;
     private TrackRecordingServiceNotificationManager notificationManager;
 
-    private long recordingTrackId;
+    private Track.Id recordingTrackId;
     private boolean recordingTrackPaused;
     private int recordingDistanceInterval;
     private int maxRecordingDistance;
@@ -138,7 +138,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         notificationManager = new TrackRecordingServiceNotificationManager(this);
 
         // onSharedPreferenceChanged might not set recordingTrackId.
-        recordingTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+        recordingTrackId = new Track.Id(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
 
         PreferencesUtils.register(this, sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
@@ -204,7 +204,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         return recordingTrackPaused;
     }
 
-    public long getRecordingTrackId() {
+    public Track.Id getRecordingTrackId() {
         return recordingTrackId;
     }
 
@@ -230,9 +230,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      *
      * @return the waypoint id
      */
-    public long insertWaypoint(String name, String category, String description, String photoUrl) {
+    public Waypoint.Id insertWaypoint(String name, String category, String description, String photoUrl) {
         if (!isRecording() || isPaused()) {
-            return -1L;
+            return null;
         }
 
         if (name == null) {
@@ -246,7 +246,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         TrackPoint trackPoint = getLastValidTrackPointInCurrentSegment(recordingTrackId);
         if (trackPoint == null) {
             Log.i(TAG, "Could not create a waypoint as trackPoint is unknown.");
-            return -1L;
+            return null;
         }
 
         category = category != null ? category : "";
@@ -261,7 +261,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         // Insert waypoint
         Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, length, duration, trackPoint.getLocation(), photoUrl);
         Uri uri = contentProviderUtils.insertWaypoint(waypoint);
-        return ContentUris.parseId(uri);
+        return new Waypoint.Id(ContentUris.parseId(uri));
     }
 
     /**
@@ -269,10 +269,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      *
      * @return the track id
      */
-    long startNewTrack() {
+    Track.Id startNewTrack() {
         if (isRecording()) {
             Log.d(TAG, "Ignore startNewTrack. Already recording.");
-            return -1L;
+            return null;
         }
         long now = System.currentTimeMillis();
         trackStatisticsUpdater = new TrackStatisticsUpdater(now);
@@ -280,7 +280,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         // Insert a track
         Track track = new Track();
         Uri uri = contentProviderUtils.insertTrack(track);
-        long trackId = ContentUris.parseId(uri);
+        Track.Id trackId = new Track.Id(ContentUris.parseId(uri));
 
         // Update shared preferences
         updateRecordingState(trackId, false);
@@ -305,7 +305,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      *
      * @param trackId the id of the track to be resumed.
      */
-    void resumeTrack(long trackId) {
+    void resumeTrack(Track.Id trackId) {
         Track track = contentProviderUtils.getTrack(trackId);
         if (track == null) {
             Log.e(TAG, "Ignore resumeTrack. Track " + trackId + " does not exists.");
@@ -333,7 +333,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         if (track == null) {
             if (isRecording()) {
                 Log.w(TAG, "track is null, but recordingTrackId not -1L. " + recordingTrackId);
-                updateRecordingState(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, true);
+                updateRecordingState(new Track.Id(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT), true);
             }
             showNotification(false);
             return;
@@ -403,10 +403,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         }
 
         // Need to remember the recordingTrackId before setting it to -1L
-        long trackId = recordingTrackId;
+        Track.Id trackId = recordingTrackId;
         boolean wasPaused = recordingTrackPaused;
 
-        updateRecordingState(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, true);
+        updateRecordingState(new Track.Id(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT), true);
 
         // Update database
         Track track = contentProviderUtils.getTrack(trackId);
@@ -489,7 +489,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      * @param trackId the track id
      * @return the location or null
      */
-    private TrackPoint getLastValidTrackPointInCurrentSegment(long trackId) {
+    private TrackPoint getLastValidTrackPointInCurrentSegment(Track.Id trackId) {
         if (!currentSegmentHasTrackPoint()) {
             return null;
         }
@@ -507,9 +507,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      * @param trackId the recording track id
      * @param paused  true if the recording is paused
      */
-    private void updateRecordingState(long trackId, boolean paused) {
+    private void updateRecordingState(Track.Id trackId, boolean paused) {
         recordingTrackId = trackId;
-        PreferencesUtils.setLong(this, R.string.recording_track_id_key, trackId);
+        PreferencesUtils.setLong(this, R.string.recording_track_id_key, trackId.getId());
         recordingTrackPaused = paused;
         PreferencesUtils.setBoolean(this, R.string.recording_track_paused_key, recordingTrackPaused);
     }

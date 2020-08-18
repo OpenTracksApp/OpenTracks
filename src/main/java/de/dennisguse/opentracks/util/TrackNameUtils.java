@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Track;
 
 /**
  * Utilities for track name.
@@ -46,7 +47,7 @@ public class TrackNameUtils {
      * @param trackId   the track id
      * @param startTime the track start time
      */
-    public static String getTrackName(Context context, long trackId, long startTime) {
+    public static String getTrackName(Context context, Track.Id trackId, long startTime) {
         String trackName = PreferencesUtils.getString(context, R.string.track_name_key, context.getString(R.string.track_name_default));
 
         if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_local_value))) {
@@ -54,7 +55,7 @@ public class TrackNameUtils {
         } else if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_iso_8601_value))) {
             return new SimpleDateFormat(ISO_8601_FORMAT, Locale.US).format(startTime);
         } else {
-            return context.getString(R.string.track_name_format, trackId);
+            return context.getString(R.string.track_name_format, trackId.getId());
         }
     }
 }

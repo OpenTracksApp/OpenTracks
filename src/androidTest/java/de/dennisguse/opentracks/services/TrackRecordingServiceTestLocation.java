@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
@@ -89,7 +90,7 @@ public class TrackRecordingServiceTestLocation {
     @Test
     public void testOnLocationChangedAsync_movingAccurate() throws Exception {
         // given
-        long trackId = service.startNewTrack();
+        Track.Id trackId = service.startNewTrack();
 
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 5, 15);
@@ -113,7 +114,7 @@ public class TrackRecordingServiceTestLocation {
     @Test
     public void testOnLocationChangedAsync_slowMovingAccurate() throws Exception {
         // given
-        long trackId = service.startNewTrack();
+        Track.Id trackId = service.startNewTrack();
 
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 5, 15);
@@ -155,7 +156,7 @@ public class TrackRecordingServiceTestLocation {
     @Test
     public void testOnLocationChangedAsync_idle() throws Exception {
         // given
-        long trackId = service.startNewTrack();
+        Track.Id trackId = service.startNewTrack();
 
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 0);
@@ -181,7 +182,7 @@ public class TrackRecordingServiceTestLocation {
     @Test
     public void testOnLocationChangedAsync_idle_withMovement() throws Exception {
         // given
-        long trackId = service.startNewTrack();
+        Track.Id trackId = service.startNewTrack();
 
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 15);
@@ -209,7 +210,7 @@ public class TrackRecordingServiceTestLocation {
     @Test
     public void testOnLocationChangedAsync_idle_withSensorData() throws Exception {
         // given
-        long trackId = service.startNewTrack();
+        Track.Id trackId = service.startNewTrack();
 
         service.setRemoteSensorManager(new BluetoothRemoteSensorManager(context) {
 
@@ -253,7 +254,7 @@ public class TrackRecordingServiceTestLocation {
     @Test
     public void testOnLocationChangedAsync_segment() throws Exception {
         // given
-        long trackId = service.startNewTrack();
+        Track.Id trackId = service.startNewTrack();
 
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 0);

@@ -8,6 +8,9 @@ import android.util.Pair;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Set;
+
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.provider.ShareContentProvider;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
@@ -26,7 +29,7 @@ public abstract class ShowOnMapProxyActivity extends AppCompatActivity {
 
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        long[] trackIds = IntentDashboardUtils.extractTrackIdsFromIntent(getIntent());
+        Set<Track.Id> trackIds = IntentDashboardUtils.extractTrackIdsFromIntent(getIntent());
 
         showTrackTrackfileFormat(this, trackFileFormat, trackIds);
 
@@ -39,14 +42,14 @@ public abstract class ShowOnMapProxyActivity extends AppCompatActivity {
      * @param context  the context
      * @param trackIds the track ids
      */
-    private static void showTrackTrackfileFormat(Context context, TrackFileFormat trackFileFormat, long[] trackIds) {
-        if (trackIds.length == 0) {
+    private static void showTrackTrackfileFormat(Context context, TrackFileFormat trackFileFormat, Set<Track.Id> trackIds) {
+        if (trackIds.size() == 0) {
             return;
         }
 
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra(TrackPointsColumns.TRACKID, trackIds[0]);
+        intent.putExtra(TrackPointsColumns.TRACKID, trackIds.toArray(new Track.Id[0])[0]);
         Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackIds, "SharingTrack", trackFileFormat);
         intent.setDataAndType(uriAndMime.first, uriAndMime.second);
 

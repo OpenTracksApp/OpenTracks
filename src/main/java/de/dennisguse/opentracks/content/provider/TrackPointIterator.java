@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 
 /**
@@ -16,14 +17,14 @@ public class TrackPointIterator implements Iterator<TrackPoint>, AutoCloseable {
     private static final String TAG = TrackPointIterator.class.getSimpleName();
 
     private final ContentProviderUtils contentProviderUtils;
-    private final long trackId;
+    private final Track.Id trackId;
     private final boolean descending;
     private final CachedTrackPointsIndexes indexes;
     private long lastTrackPointId = -1L;
     private Cursor cursor;
 
 
-    public TrackPointIterator(ContentProviderUtils contentProviderUtils, long trackId, long startTrackPointId, boolean descending) {
+    public TrackPointIterator(ContentProviderUtils contentProviderUtils, Track.Id trackId, long startTrackPointId, boolean descending) {
         this.contentProviderUtils = contentProviderUtils;
         this.trackId = trackId;
         this.descending = descending;

@@ -68,8 +68,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     private final ContentProviderUtils contentProviderUtils;
     private final int recordingDistanceInterval;
 
-    private long importTrackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-    private final List<Long> trackIds = new ArrayList<>();
+    private Track.Id importTrackId;
+    private final List<Track.Id> trackIds = new ArrayList<>();
     private final List<Waypoint> waypoints = new ArrayList<>();
 
     // The current element content
@@ -104,7 +104,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         this.recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(context);
     }
 
-    AbstractFileTrackImporter(Context context, ContentProviderUtils contentProviderUtils, long importTrackId) {
+    AbstractFileTrackImporter(Context context, ContentProviderUtils contentProviderUtils, Track.Id importTrackId) {
         this(context, contentProviderUtils);
         this.importTrackId = importTrackId;
     }
@@ -126,7 +126,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     }
 
     @Override
-    public long importFile(InputStream inputStream) {
+    public Track.Id importFile(InputStream inputStream) {
         try {
             SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
             long start = System.currentTimeMillis();
@@ -140,7 +140,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         } catch (MultiTracksImportException | IOException | SAXException | SQLiteConstraintException | ParserConfigurationException e) {
             Log.e(TAG, "Unable to import file", e);
             cleanImport();
-            return -1L;
+            return null;
         }
     }
 
@@ -153,7 +153,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         if (size == 0) {
             return;
         }
-        long trackId = trackIds.get(size - 1);
+        Track.Id trackId = trackIds.get(size - 1);
         Track track = contentProviderUtils.getTrack(trackId);
         if (track == null) {
             return;
@@ -225,10 +225,10 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      */
     protected void onTrackStart() throws SAXException {
         trackData = new TrackData();
-        long trackId;
-        if (importTrackId == -1L) {
+        Track.Id trackId;
+        if (importTrackId == null) {
             Uri uri = contentProviderUtils.insertTrack(trackData.track);
-            trackId = Long.parseLong(uri.getLastPathSegment());
+            trackId = new Track.Id(Long.parseLong(uri.getLastPathSegment()));
         } else {
             if (trackIds.size() > 0) {
                 throw new SAXException(createErrorMessage("Cannot import more than one track to an existing track " + importTrackId));
@@ -399,7 +399,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      * @param externalPhotoUrl the file name
      */
     protected String getInternalPhotoUrl(String externalPhotoUrl) {
-        if (importTrackId == -1L) {
+        if (importTrackId == null) {
             Log.e(TAG, "Track id is invalid.");
             return null;
         }
@@ -517,7 +517,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      * Cleans up import.
      */
     private void cleanImport() {
-        for (long trackId : trackIds) {
+        for (Track.Id trackId : trackIds) {
             contentProviderUtils.deleteTrack(context, trackId);
         }
     }

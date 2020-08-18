@@ -60,7 +60,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     private TrackController trackController;
 
     // Initialized from Intent; if a new track recording is started, a new TrackId will be provided by TrackRecordingService
-    private long trackId;
+    private Track.Id trackId;
 
     // Preferences
     private boolean recordingTrackPaused;
@@ -78,7 +78,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             }
             if (!service.isRecording()) {
                 // Starts or resumes a track.
-                if (trackId == -1L) {
+                if (trackId == null) {
                     // trackId isn't initialized -> leads a new recording.
                     trackId = service.startNewTrack();
                 } else {
@@ -161,13 +161,13 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         super.onCreate(savedInstanceState);
         contentProviderUtils = new ContentProviderUtils(this);
 
-        trackId = PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+        trackId = null;
         if (savedInstanceState != null) {
             //Activity was recreated.
-            trackId = savedInstanceState.getLong(EXTRA_TRACK_ID, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+            trackId = savedInstanceState.getParcelable(EXTRA_TRACK_ID);
         } else {
-            trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
-            if (trackId != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT && contentProviderUtils.getTrack(trackId) == null) {
+            trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
+            if (contentProviderUtils.getTrack(trackId) == null) {
                 finish();
             }
         }
@@ -247,7 +247,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         // Update UI
         this.invalidateOptionsMenu();
 
-        if (trackId != -1L) {
+        if (!trackId.isValid()) {
             trackDataHub.loadTrack(trackId);
             trackController.onResume(true, recordingTrackPaused);
         }
@@ -265,7 +265,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(CURRENT_TAB_TAG_KEY, pager.getCurrentItem());
-        outState.putLong(EXTRA_TRACK_ID, trackId);
+        outState.putParcelable(EXTRA_TRACK_ID, trackId);
     }
 
     @Override
@@ -314,7 +314,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 startActivity(intent);
                 return true;
             case R.id.track_detail_menu_show_on_map:
-                IntentDashboardUtils.startDashboard(this, new long[]{trackId}, true);
+                IntentDashboardUtils.startDashboard(this, true, trackId);
                 return true;
             case R.id.track_detail_markers:
                 intent = IntentUtils.newIntent(this, MarkerListActivity.class)

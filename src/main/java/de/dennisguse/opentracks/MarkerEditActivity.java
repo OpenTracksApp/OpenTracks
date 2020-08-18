@@ -42,6 +42,7 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
 
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
@@ -64,7 +65,7 @@ public class MarkerEditActivity extends AbstractActivity {
     private static final int GALLERY_IMG_REQUEST_CODE = 7;
 
     private static final String TAG = MarkerEditActivity.class.getSimpleName();
-    private long trackId;
+    private Track.Id trackId;
     private TrackRecordingServiceConnection trackRecordingServiceConnection = new TrackRecordingServiceConnection();
     private Waypoint waypoint;
 
@@ -85,8 +86,8 @@ public class MarkerEditActivity extends AbstractActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        trackId = getIntent().getLongExtra(EXTRA_TRACK_ID, -1L);
-        long markerId = getIntent().getLongExtra(EXTRA_MARKER_ID, -1L);
+        trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
+        Waypoint.Id waypointId = getIntent().getParcelableExtra(EXTRA_MARKER_ID);
 
         hasCamera = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
 
@@ -111,7 +112,7 @@ public class MarkerEditActivity extends AbstractActivity {
         Button cancel = findViewById(R.id.marker_edit_cancel);
         cancel.setOnClickListener(v -> finish());
 
-        final boolean isNewMarker = markerId == -1L;
+        final boolean isNewMarker = waypointId == null;
 
         setTitle(isNewMarker ? R.string.menu_insert_marker : R.string.menu_edit);
         Button done = findViewById(R.id.marker_edit_done);
@@ -126,7 +127,7 @@ public class MarkerEditActivity extends AbstractActivity {
         });
 
         if (isNewMarker) {
-            int nextWaypointNumber = trackId == -1L ? -1 : new ContentProviderUtils(this).getNextWaypointNumber(trackId);
+            int nextWaypointNumber = trackId == null ? -1 : new ContentProviderUtils(this).getNextWaypointNumber(trackId);
             if (nextWaypointNumber == -1) {
                 nextWaypointNumber = 0;
             }
@@ -135,7 +136,7 @@ public class MarkerEditActivity extends AbstractActivity {
             waypointMarkerType.setText("");
             waypointDescription.setText("");
         } else {
-            waypoint = new ContentProviderUtils(this).getWaypoint(markerId);
+            waypoint = new ContentProviderUtils(this).getWaypoint(waypointId);
             if (waypoint == null) {
                 Log.d(TAG, "waypoint is null");
                 finish();
@@ -260,8 +261,8 @@ public class MarkerEditActivity extends AbstractActivity {
     /**
      * Returns the trackId. If trackId == -1 then get it from waypoint object.
      */
-    private long getTrackId() {
-        return trackId == -1 ? waypoint.getTrackId() : trackId;
+    private Track.Id getTrackId() {
+        return trackId == null ? waypoint.getTrackId() : trackId;
     }
 
     /**

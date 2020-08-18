@@ -197,14 +197,14 @@ public class TrackRecordingServiceTestLooper {
         Assert.assertFalse(service.isRecording());
 
         // Start a track.
-        long id = service.startNewTrack();
-        Assert.assertTrue(id >= 0);
+        Track.Id trackId = service.startNewTrack();
+        Assert.assertTrue(trackId.isValid());
         Assert.assertTrue(service.isRecording());
-        Track track = contentProviderUtils.getTrack(id);
+        Track track = contentProviderUtils.getTrack(trackId);
         Assert.assertNotNull(track);
-        Assert.assertEquals(id, track.getId());
-        Assert.assertEquals(id, PreferencesUtils.getRecordingTrackId(context));
-        Assert.assertEquals(id, service.getRecordingTrackId());
+        Assert.assertEquals(trackId, track.getId());
+        Assert.assertEquals(trackId, PreferencesUtils.getRecordingTrackId(context));
+        Assert.assertEquals(trackId, service.getRecordingTrackId());
 
         // Insert a few points, markers and statistics.
         long startTime = System.currentTimeMillis();
@@ -229,9 +229,9 @@ public class TrackRecordingServiceTestLooper {
         service.endCurrentTrack();
         Assert.assertFalse(service.isRecording());
         Assert.assertEquals(-1L, service.getRecordingTrackId());
-        track = contentProviderUtils.getTrack(id);
+        track = contentProviderUtils.getTrack(trackId);
         Assert.assertNotNull(track);
-        Assert.assertEquals(id, track.getId());
+        Assert.assertEquals(trackId, track.getId());
         TrackStatistics trackStatistics = track.getTrackStatistics();
         Assert.assertNotNull(trackStatistics);
         Assert.assertTrue(trackStatistics.getStartTime_ms() > 0);

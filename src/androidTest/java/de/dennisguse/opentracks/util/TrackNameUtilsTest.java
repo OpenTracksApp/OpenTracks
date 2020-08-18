@@ -30,6 +30,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Track;
 
 /**
  * Tests {@link TrackNameUtils}.
@@ -39,7 +40,7 @@ import de.dennisguse.opentracks.R;
 @RunWith(AndroidJUnit4.class)
 public class TrackNameUtilsTest {
 
-    private static final long TRACK_ID = 1L;
+    private static final Track.Id TRACK_ID = new Track.Id(1L);
     private static final long START_TIME = 1288213406000L;
 
     private static final Context CONTEXT = ApplicationProvider.getApplicationContext();
@@ -69,6 +70,6 @@ public class TrackNameUtilsTest {
     @Test
     public void testTrackName_number() {
         PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_number_value));
-        Assert.assertEquals("Track " + TRACK_ID, TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
+        Assert.assertEquals("Track " + TRACK_ID.getId(), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
     }
 }
