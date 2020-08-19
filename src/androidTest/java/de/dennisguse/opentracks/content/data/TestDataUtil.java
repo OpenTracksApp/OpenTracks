@@ -23,7 +23,7 @@ public class TestDataUtil {
     public static Track createTrack(Track.Id trackId) {
         Track track = new Track();
         track.setId(trackId);
-        track.setName("Test: " + trackId);
+        track.setName("Test: " + trackId.getId());
 
         return track;
     }

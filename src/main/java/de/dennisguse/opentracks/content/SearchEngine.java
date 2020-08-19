@@ -290,7 +290,7 @@ public class SearchEngine {
         score *= getTimeBoost(query, location.getTime());
 
         // Score waypoints in the currently-selected track higher (searching inside the current track).
-        if (query.currentTrackId.isValid() && waypoint.getTrackId().equals(query.currentTrackId)) {
+        if (waypoint.getTrackId() != null && waypoint.getTrackId().equals(query.currentTrackId)) {
             score *= CURRENT_TRACK_WAYPOINT_PROMOTION;
         }
 
@@ -417,8 +417,8 @@ public class SearchEngine {
         @Override
         public String toString() {
             return "ScoredResult ["
-                    + (track != null ? ("trackId=" + track.getId() + ", ") : "")
-                    + (waypoint != null ? ("wptId=" + waypoint.getId() + ", ") : "")
+                    + (track != null ? ("trackId=" + track.getId().getId() + ", ") : "")
+                    + (waypoint != null ? ("wptId=" + waypoint.getId().getId() + ", ") : "")
                     + "score=" + score + "]";
         }
     }

@@ -78,7 +78,7 @@ public interface TrackRecordingServiceInterface {
     boolean isPaused();
 
     /**
-     * Gets the current recording track ID. Returns -1 if not recording.
+     * Gets the current recording track ID. Returns null if not recording.
      */
     Track.Id getRecordingTrackId();
 

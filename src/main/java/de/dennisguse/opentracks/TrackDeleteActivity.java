@@ -21,6 +21,8 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.View;
 
+import java.util.List;
+
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
@@ -34,7 +36,7 @@ public class TrackDeleteActivity extends AbstractActivity {
 
     public static final String EXTRA_TRACK_IDS = "track_ids";
 
-    private Track.Id[] trackIds;
+    private List<Track.Id> trackIds;
 
     private Thread deleteThread;
 
@@ -45,7 +47,7 @@ public class TrackDeleteActivity extends AbstractActivity {
         setResult(RESULT_CANCELED);
 
         Intent intent = getIntent();
-        trackIds = (Track.Id[]) intent.getParcelableArrayExtra(EXTRA_TRACK_IDS);
+        trackIds = intent.getParcelableArrayListExtra(EXTRA_TRACK_IDS);
         deleteThread = new Thread(() -> {
             ContentProviderUtils contentProviderUtils = new ContentProviderUtils(TrackDeleteActivity.this);
 

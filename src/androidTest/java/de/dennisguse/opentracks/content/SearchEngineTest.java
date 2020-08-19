@@ -280,7 +280,12 @@ public class SearchEngineTest {
     }
 
     private void assertTrackResults(List<ScoredResult> results, Track.Id... trackIds) {
-        String errMsg = "Expected IDs=" + Arrays.toString(trackIds) + "; results=" + results;
+        long[] longTrackIds = new long[trackIds.length];
+        for (int i = 0; i < trackIds.length; i++) {
+            longTrackIds[i] = trackIds[i].getId();
+        }
+
+        String errMsg = "Expected IDs=" + Arrays.toString(longTrackIds) + "; results=" + results;
         Assert.assertEquals(results.size(), trackIds.length);
         for (int i = 0; i < results.size(); i++) {
             ScoredResult result = results.get(i);
@@ -297,7 +302,12 @@ public class SearchEngineTest {
     }
 
     private void assertWaypointResults(List<ScoredResult> results, Waypoint.Id... waypointIds) {
-        String errMsg = "Expected IDs=" + Arrays.toString(waypointIds) + "; results=" + results;
+        long[] longWaypointIds = new long[waypointIds.length];
+        for (int i = 0; i < waypointIds.length; i++) {
+            longWaypointIds[i] = waypointIds[i].getId();
+        }
+
+        String errMsg = "Expected IDs=" + Arrays.toString(longWaypointIds) + "; results=" + results;
         Assert.assertEquals(results.size(), waypointIds.length);
         for (int i = 0; i < results.size(); i++) {
             ScoredResult result = results.get(i);

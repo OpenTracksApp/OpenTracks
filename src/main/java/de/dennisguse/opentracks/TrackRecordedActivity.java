@@ -133,7 +133,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
         // Update UI
         this.invalidateOptionsMenu();
 
-        if (!trackId.isValid()) {
+        if (trackId.isValid()) {
             trackDataHub.loadTrack(trackId);
         }
     }
@@ -251,7 +251,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
             trackId = waypoint.getTrackId();
         }
 
-        if (!trackId.isValid()) {
+        if (trackId == null) {
             Log.e(TAG, "TrackDetailActivity needs EXTRA_TRACK_ID.");
             finish();
         }

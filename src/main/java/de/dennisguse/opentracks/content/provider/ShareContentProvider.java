@@ -86,7 +86,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
 
         StringBuilder trackIdBuilder = new StringBuilder();
         for (Track.Id trackId : trackIds) {
-            trackIdBuilder.append(trackId).append(TRACKID_DELIMITER);
+            trackIdBuilder.append(trackId.getId()).append(TRACKID_DELIMITER);
         }
         trackIdBuilder.deleteCharAt(trackIdBuilder.lastIndexOf(TRACKID_DELIMITER));
 
@@ -221,7 +221,7 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
 
         PipeDataWriter<String> pipeDataWriter = (output, uri1, mimeType, opts, args) -> {
             try (FileOutputStream fileOutputStream = new FileOutputStream(output.getFileDescriptor())) {
-                trackExporter.writeTrack(tracks, fileOutputStream);
+                trackExporter.writeTrack(tracks.toArray(new Track[0]), fileOutputStream);
             } catch (IOException e) {
                 Log.w(TAG, "there occurred an error while sharing a file: " + e);
             }

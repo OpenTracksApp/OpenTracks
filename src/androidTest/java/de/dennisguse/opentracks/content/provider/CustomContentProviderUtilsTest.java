@@ -135,7 +135,7 @@ public class CustomContentProviderUtilsTest {
     private long initializeTrack(Track.Id id, int numPoints) {
         Track track = new Track();
         track.setId(id);
-        track.setName("Test: " + id);
+        track.setName("Test: " + id.getId());
         contentProviderUtils.insertTrack(track);
         track = contentProviderUtils.getTrack(id);
         Assert.assertNotNull(track);
@@ -173,13 +173,13 @@ public class CustomContentProviderUtilsTest {
      */
     @Test
     public void testCreateTrack() {
-        long trackId = System.currentTimeMillis();
+        Track.Id trackId = new Track.Id(System.currentTimeMillis());
 
         int columnIndex = 1;
         // Id
         when(cursorMock.getColumnIndexOrThrow(TracksColumns._ID)).thenReturn(columnIndex);
         when(cursorMock.isNull(columnIndex)).thenReturn(false);
-        when(cursorMock.getLong(columnIndex)).thenReturn(trackId);
+        when(cursorMock.getLong(columnIndex)).thenReturn(trackId.getId());
 
         //Uuid
         columnIndex++;
@@ -189,7 +189,7 @@ public class CustomContentProviderUtilsTest {
 
         // Name
         columnIndex++;
-        String name = NAME_PREFIX + trackId;
+        String name = NAME_PREFIX + trackId.getId();
         when(cursorMock.getColumnIndexOrThrow(TracksColumns.NAME)).thenReturn(columnIndex);
         when(cursorMock.isNull(columnIndex)).thenReturn(false);
         when(cursorMock.getString(columnIndex)).thenReturn(name);
@@ -468,7 +468,7 @@ public class CustomContentProviderUtilsTest {
         Waypoint.Id waypointId = new Waypoint.Id(System.currentTimeMillis());
         waypoint.setId(waypointId);
         ContentValues contentValues = contentProviderUtils.createContentValues(waypoint);
-        Assert.assertEquals(waypointId, contentValues.get(WaypointsColumns._ID));
+        Assert.assertEquals(waypointId.getId(), contentValues.get(WaypointsColumns._ID));
         Assert.assertEquals((int) (TestDataUtil.INITIAL_LONGITUDE * 1000000), contentValues.get(WaypointsColumns.LONGITUDE));
         Assert.assertEquals(TEST_DESC, contentValues.get(WaypointsColumns.DESCRIPTION));
     }
@@ -694,7 +694,7 @@ public class CustomContentProviderUtilsTest {
         waypoint.setTrackId(trackId);
         Waypoint.Id waypointId = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint)));
 
-        File dir = new File(FileUtils.getPhotoDir(context), "" + trackId);
+        File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.getId());
         Assert.assertTrue(dir.exists());
         Assert.assertTrue(dir.isDirectory());
         Assert.assertEquals(1, dir.list().length);
@@ -730,7 +730,7 @@ public class CustomContentProviderUtilsTest {
         waypoint.setTrackId(trackId);
         Waypoint.Id waypointId = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint)));
 
-        File dir = new File(FileUtils.getPhotoDir(context), "" + trackId);
+        File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.getId());
         Assert.assertTrue(dir.exists());
         Assert.assertTrue(dir.isDirectory());
         Assert.assertEquals(1, dir.list().length);
@@ -769,7 +769,7 @@ public class CustomContentProviderUtilsTest {
         Waypoint.Id waypointId = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint)));
         contentProviderUtils.insertWaypoint(otherWaypoint);
 
-        File dir = new File(FileUtils.getPhotoDir(context), "" + trackId);
+        File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.getId());
         Assert.assertTrue(dir.exists());
         Assert.assertTrue(dir.isDirectory());
         Assert.assertEquals(2, dir.list().length);

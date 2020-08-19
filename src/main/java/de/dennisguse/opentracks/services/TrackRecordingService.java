@@ -138,7 +138,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         notificationManager = new TrackRecordingServiceNotificationManager(this);
 
         // onSharedPreferenceChanged might not set recordingTrackId.
-        recordingTrackId = new Track.Id(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+        recordingTrackId = null;
 
         PreferencesUtils.register(this, sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
@@ -333,7 +333,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         if (track == null) {
             if (isRecording()) {
                 Log.w(TAG, "track is null, but recordingTrackId not -1L. " + recordingTrackId);
-                updateRecordingState(new Track.Id(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT), true);
+                updateRecordingState(null, true);
             }
             showNotification(false);
             return;
@@ -406,7 +406,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         Track.Id trackId = recordingTrackId;
         boolean wasPaused = recordingTrackPaused;
 
-        updateRecordingState(new Track.Id(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT), true);
+        updateRecordingState(null, true);
 
         // Update database
         Track track = contentProviderUtils.getTrack(trackId);
@@ -509,7 +509,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      */
     private void updateRecordingState(Track.Id trackId, boolean paused) {
         recordingTrackId = trackId;
-        PreferencesUtils.setLong(this, R.string.recording_track_id_key, trackId.getId());
+        long currentTrackId = trackId != null ? trackId.getId() : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
+        PreferencesUtils.setLong(this, R.string.recording_track_id_key, currentTrackId);
         recordingTrackPaused = paused;
         PreferencesUtils.setBoolean(this, R.string.recording_track_paused_key, recordingTrackPaused);
     }

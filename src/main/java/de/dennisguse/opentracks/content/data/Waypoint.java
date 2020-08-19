@@ -22,6 +22,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import java.util.Objects;
@@ -69,7 +70,11 @@ public final class Waypoint {
         this.photoUrl = photoUrl;
     }
 
-    public Id getId() {
+    /**
+     * May be null if the waypoint was not loaded from the database.
+     */
+    public @Nullable
+    Id getId() {
         return id;
     }
 
@@ -171,6 +176,7 @@ public final class Waypoint {
             return id;
         }
 
+        @Deprecated //TODO Use a Waypoint.Id of null instead
         public boolean isValid() {
             return id != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
         }
@@ -186,6 +192,12 @@ public final class Waypoint {
         @Override
         public int hashCode() {
             return Objects.hash(id);
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            throw new RuntimeException("Not supported");
         }
 
         @Override

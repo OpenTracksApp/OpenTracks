@@ -167,7 +167,8 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             trackId = savedInstanceState.getParcelable(EXTRA_TRACK_ID);
         } else {
             trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
-            if (contentProviderUtils.getTrack(trackId) == null) {
+            if (trackId != null && contentProviderUtils.getTrack(trackId) == null) {
+                Log.w(TAG, "TrackId does not exists; cannot continue the recording.");
                 finish();
             }
         }
@@ -247,7 +248,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         // Update UI
         this.invalidateOptionsMenu();
 
-        if (!trackId.isValid()) {
+        if (trackId != null) {
             trackDataHub.loadTrack(trackId);
             trackController.onResume(true, recordingTrackPaused);
         }
