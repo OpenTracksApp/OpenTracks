@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -186,6 +187,9 @@ public class ContentProviderUtils {
      * @param trackId the track id
      */
     public void deleteTrack(Context context, Track.Id trackId) {
+        if (trackId == null) {
+            return;
+        }
         deleteTrackPointsAndWaypoints(trackId);
 
         // Delete track folder resources.
@@ -200,7 +204,7 @@ public class ContentProviderUtils {
      *
      * @param trackId the track id
      */
-    private void deleteTrackPointsAndWaypoints(Track.Id trackId) {
+    private void deleteTrackPointsAndWaypoints(@NonNull Track.Id trackId) {
         String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
 
         contentResolver.delete(TrackPointsColumns.CONTENT_URI_BY_ID, TrackPointsColumns.TRACKID + "=?", selectionArgs);
@@ -297,7 +301,7 @@ public class ContentProviderUtils {
         TrackStatistics trackStatistics = track.getTrackStatistics();
 
         // Value < 0 indicates no id is available
-        if (track.getId().isValid()) {
+        if (track.getId() != null && track.getId().isValid()) {
             values.put(TracksColumns._ID, track.getId().getId());
         }
         values.put(TracksColumns.UUID, UUIDUtils.toBytes(track.getUuid()));
@@ -513,7 +517,7 @@ public class ContentProviderUtils {
      * @param waypoint the waypoint
      * @return the content provider URI of the inserted waypoint.
      */
-    public Uri insertWaypoint(Waypoint waypoint) {
+    public Uri insertWaypoint(@NonNull Waypoint waypoint) {
         waypoint.setId(null);
         return contentResolver.insert(WaypointsColumns.CONTENT_URI, createContentValues(waypoint));
     }
@@ -556,14 +560,16 @@ public class ContentProviderUtils {
     ContentValues createContentValues(@NonNull Waypoint waypoint) {
         ContentValues values = new ContentValues();
 
-        if (waypoint.getId().isValid()) {
+        if (waypoint.getId() != null && waypoint.getId().isValid()) {
             values.put(WaypointsColumns._ID, waypoint.getId().getId());
         }
         values.put(WaypointsColumns.NAME, waypoint.getName());
         values.put(WaypointsColumns.DESCRIPTION, waypoint.getDescription());
         values.put(WaypointsColumns.CATEGORY, waypoint.getCategory());
         values.put(WaypointsColumns.ICON, waypoint.getIcon());
-        values.put(WaypointsColumns.TRACKID, waypoint.getTrackId().getId());
+        if (waypoint.getTrackId() != null) {
+            values.put(WaypointsColumns.TRACKID, waypoint.getTrackId().getId());
+        }
         values.put(WaypointsColumns.LENGTH, waypoint.getLength());
         values.put(WaypointsColumns.DURATION, waypoint.getDuration());
 
@@ -693,7 +699,8 @@ public class ContentProviderUtils {
      */
     @Deprecated
     public long getLastTrackPointId(Track.Id trackId) {
-        if (!trackId.isValid()) {
+        if (trackId == null || !trackId.isValid()) {
+            Log.w(TAG, "Fix callers who do this.");
             return -1L;
         }
         String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") from " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=?)";

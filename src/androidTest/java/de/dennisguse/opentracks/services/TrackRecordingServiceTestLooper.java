@@ -228,7 +228,7 @@ public class TrackRecordingServiceTestLooper {
         // Stop the track. Validate if it has correct data.
         service.endCurrentTrack();
         Assert.assertFalse(service.isRecording());
-        Assert.assertEquals(-1L, service.getRecordingTrackId());
+        Assert.assertNull(service.getRecordingTrackId());
         track = contentProviderUtils.getTrack(trackId);
         Assert.assertNotNull(track);
         Assert.assertEquals(trackId, track.getId());

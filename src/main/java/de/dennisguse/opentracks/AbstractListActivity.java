@@ -18,6 +18,9 @@ package de.dennisguse.opentracks;
 
 import android.content.Intent;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
@@ -76,7 +79,7 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
             getTrackRecordingServiceConnection().stopRecording(this, false);
         }
         Intent intent = IntentUtils.newIntent(this, TrackDeleteActivity.class);
-        intent.putExtra(TrackDeleteActivity.EXTRA_TRACK_IDS, trackIds);
+        intent.putParcelableArrayListExtra(TrackDeleteActivity.EXTRA_TRACK_IDS, new ArrayList<>(Arrays.asList(trackIds)));
         startActivityForResult(intent, DELETE_REQUEST_CODE);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }

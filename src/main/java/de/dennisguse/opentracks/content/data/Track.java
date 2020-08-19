@@ -20,6 +20,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -49,7 +50,11 @@ public class Track {
     public Track() {
     }
 
-    public Id getId() {
+    /**
+     * May be null if the track was not loaded from the database.
+     */
+    public @Nullable
+    Id getId() {
         return id;
     }
 
@@ -122,6 +127,7 @@ public class Track {
             return id;
         }
 
+        @Deprecated //TODO Use a Track.Id of null instead
         public boolean isValid() {
             return id != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
         }
@@ -142,6 +148,12 @@ public class Track {
         @Override
         public int describeContents() {
             return 0;
+        }
+
+        @NonNull
+        @Override
+        public String toString() {
+            throw new RuntimeException("Not supported");
         }
 
         @Override

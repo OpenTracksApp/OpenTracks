@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.IBinder;
+import android.os.Looper;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -33,6 +34,7 @@ import androidx.test.rule.ServiceTestRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -68,6 +70,13 @@ public class TrackRecordingServiceTest {
 
     @Rule
     public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
+
+    @BeforeClass
+    public static void preSetUp() {
+        // Prepare looper for Android's message queue
+        if (Looper.myLooper() == null) Looper.prepare();
+    }
+
 
     private final Context context = ApplicationProvider.getApplicationContext();
     private ContentProviderUtils contentProviderUtils;
@@ -136,7 +145,7 @@ public class TrackRecordingServiceTest {
         // then
         // Test if we start in no-recording mode by default.
         Assert.assertFalse(service.isRecording());
-        Assert.assertEquals(-1L, service.getRecordingTrackId());
+        Assert.assertNull(service.getRecordingTrackId());
     }
 
     @MediumTest
@@ -150,7 +159,7 @@ public class TrackRecordingServiceTest {
 
         // then
         Assert.assertFalse(service.isRecording());
-        Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
+        Assert.assertNull(service.getRecordingTrackId());
     }
 
     @MediumTest
@@ -234,7 +243,7 @@ public class TrackRecordingServiceTest {
 
         // then
         Assert.assertFalse(service.isRecording());
-        Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
+        Assert.assertNull(service.getRecordingTrackId());
     }
 
     @MediumTest
@@ -251,7 +260,7 @@ public class TrackRecordingServiceTest {
         Track.Id newTrackId = service.startNewTrack();
 
         // then
-        Assert.assertNotNull(newTrackId);
+        Assert.assertNull(newTrackId);
 
         Assert.assertEquals(trackId, PreferencesUtils.getRecordingTrackId(context));
         Assert.assertEquals(trackId, service.getRecordingTrackId());
@@ -270,7 +279,7 @@ public class TrackRecordingServiceTest {
 
         // then
         Assert.assertFalse(PreferencesUtils.isRecording(context));
-        Assert.assertEquals(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT, service.getRecordingTrackId());
+        Assert.assertNull(service.getRecordingTrackId());
     }
 
     @MediumTest

@@ -354,7 +354,10 @@ public class PreferencesUtils {
     @Deprecated
     //TODO Method is very misleading: it only checks if the provided trackId not the default value (i.e., not recording).
     public static boolean isRecording(Track.Id recordingTrackId) {
-        return recordingTrackId == null || recordingTrackId.getId() != RECORDING_TRACK_ID_DEFAULT;
+        if (recordingTrackId == null) {
+            return false;
+        }
+        return recordingTrackId.getId() != RECORDING_TRACK_ID_DEFAULT;
     }
 
     public static void resetPreferences(Context context, boolean readAgain) {

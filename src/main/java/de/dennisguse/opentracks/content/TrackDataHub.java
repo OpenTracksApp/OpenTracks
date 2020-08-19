@@ -25,6 +25,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import java.util.Collections;
@@ -174,10 +175,10 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         handler = null;
     }
 
-    public void loadTrack(final Track.Id trackId) {
+    public void loadTrack(final @NonNull Track.Id trackId) {
         runInHandlerThread(() -> {
-            if (trackId == selectedTrackId) {
-                Log.i(TAG, "Not reloading track " + trackId);
+            if (trackId.equals(selectedTrackId)) {
+                Log.i(TAG, "Not reloading track " + trackId.getId());
                 return;
             }
             selectedTrackId = trackId;
@@ -212,14 +213,14 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
      * Returns true if the selected track is recording.
      */
     public boolean isSelectedTrackRecording() {
-        return selectedTrackId == recordingTrackId && PreferencesUtils.isRecording(recordingTrackId);
+        return selectedTrackId != null && selectedTrackId.equals(recordingTrackId) && PreferencesUtils.isRecording(recordingTrackId);
     }
 
     /**
      * Returns true if the selected track is paused.
      */
     public boolean isSelectedTrackPaused() {
-        return selectedTrackId == recordingTrackId && recordingTrackPaused;
+        return selectedTrackId != null && selectedTrackId.equals(recordingTrackId) && recordingTrackPaused;
     }
 
     @Override
@@ -355,6 +356,11 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         long localFirstSeenTrackPointId = updateSamplingState ? firstSeenTrackPointId : -1L;
         long localLastSeenTrackPointIdId = updateSamplingState ? lastSeenTrackPointId : -1L;
         long maxPointId = updateSamplingState ? -1L : lastSeenTrackPointId;
+
+        if (selectedTrackId == null) {
+            Log.w(TAG, "This should not happen, but it does"); //TODO
+            return;
+        }
 
         long lastTrackPointId = contentProviderUtils.getLastTrackPointId(selectedTrackId);
         int samplingFrequency = -1;

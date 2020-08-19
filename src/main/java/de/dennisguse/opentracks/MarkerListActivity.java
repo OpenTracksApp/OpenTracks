@@ -124,13 +124,13 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         contentProviderUtils = new ContentProviderUtils(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
-        track = !trackId.isValid() ? contentProviderUtils.getTrack(trackId) : null;
+        track = trackId != null ? contentProviderUtils.getTrack(trackId) : null;
 
         listView = findViewById(R.id.marker_list);
         listView.setEmptyView(findViewById(R.id.marker_list_empty));
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = IntentUtils.newIntent(MarkerListActivity.this, MarkerDetailActivity.class)
-                    .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, id);
+                    .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, new Waypoint.Id(id));
             startActivity(intent);
         });
         resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
@@ -167,7 +167,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
                 if (track != null) {
                     return new CursorLoader(MarkerListActivity.this, WaypointsColumns.CONTENT_URI, PROJECTION,
                             WaypointsColumns.TRACKID + "=?",
-                            new String[]{String.valueOf(track.getId())}, null);
+                            new String[]{String.valueOf(track.getId().getId())}, null);
                 } else {
                     return new CursorLoader(MarkerListActivity.this, WaypointsColumns.CONTENT_URI, PROJECTION,
                             null, null, null);
@@ -242,8 +242,8 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     /**
      * Handles a context item selection.
      *
-     * @param itemId      the menu item id
-     * @param waypointIds the marker ids
+     * @param itemId          the menu item id
+     * @param longWaypointIds the marker ids
      * @return true if handled.
      */
     private boolean handleContextItem(int itemId, long... longWaypointIds) {

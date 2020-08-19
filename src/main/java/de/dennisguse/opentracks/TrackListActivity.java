@@ -105,7 +105,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     // Preferences
     private boolean metricUnits = true;
-    private Track.Id recordingTrackId = new Track.Id(PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+    private Track.Id recordingTrackId = null;
 
     // Callback when an item is selected in the contextual action mode
     private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
@@ -249,11 +249,11 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             if (trackId == recordingTrackId.getId()) {
                 // Is recording -> open record activity.
                 newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class)
-                        .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
+                        .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, new Track.Id(trackId));
             } else {
                 // Not recording -> open detail activity.
                 newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordedActivity.class)
-                        .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
+                        .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, new Track.Id(trackId));
             }
             startActivity(newIntent);
         });
@@ -479,8 +479,8 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     /**
      * Handles a context item selection.
      *
-     * @param itemId   the menu item id
-     * @param trackIds the track ids
+     * @param itemId       the menu item id
+     * @param longTrackIds the track ids
      * @return true if handled.
      */
     private boolean handleContextItem(int itemId, long... longTrackIds) {
