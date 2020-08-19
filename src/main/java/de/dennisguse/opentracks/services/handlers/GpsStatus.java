@@ -32,6 +32,9 @@ class GpsStatus {
     // The last valid (not null) location. Null value means that there have not been any location yet.
     private Location lastValidLocation = null;
 
+    // Flag to prevent GpsStatus checks two or more locations at the same time.
+    private boolean checking = false;
+
     private class GpsStatusRunner implements Runnable {
         private boolean stopped = false;
 
@@ -95,20 +98,28 @@ class GpsStatus {
 
     /**
      * This method must be called from the client every time a new location is received.
-     * Receive new location and calculate the new status if needed.
+     * Receive new location and calculatsrc/main/java/de/dennisguse/opentracks/services/handlers/LocationHandler.java the new status if needed.
      * It look for GPS changes in lastLocation if it's not null. If it's null then look for in lastValidLocation if any.
      */
     public void onLocationChanged(final Location location) {
+        if (checking == true) {
+            return;
+        }
+
+        checking = true;
         if (lastLocation != null) {
             checkStatusFromLastLocation();
         } else if (lastValidLocation != null) {
             checkStatusFromLastValidLocation();
         }
 
-        lastLocation = location;
         if (location != null) {
+            // Update location's time to the current time millis when location has been received.
+            location.setTime(System.currentTimeMillis());
             lastValidLocation = location;
         }
+        lastLocation = location;
+        checking = false;
     }
 
     /**
@@ -119,7 +130,7 @@ class GpsStatus {
      */
     private void checkStatusFromLastLocation() {
         if (System.currentTimeMillis() - lastLocation.getTime() > signalLostThreshold && gpsStatus != GpsStatusValue.GPS_SIGNAL_LOST) {
-            // So much time without receiving signal -> signal lost.
+            // Too much time without receiving signal -> signal lost.
             GpsStatusValue oldStatus = gpsStatus;
             gpsStatus = GpsStatusValue.GPS_SIGNAL_LOST;
             sendStatus(oldStatus, gpsStatus);
