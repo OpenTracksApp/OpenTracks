@@ -98,7 +98,7 @@ class GpsStatus {
 
     /**
      * This method must be called from the client every time a new location is received.
-     * Receive new location and calculatsrc/main/java/de/dennisguse/opentracks/services/handlers/LocationHandler.java the new status if needed.
+     * Receive new location and calculate the new status if needed.
      * It look for GPS changes in lastLocation if it's not null. If it's null then look for in lastValidLocation if any.
      */
     public void onLocationChanged(final Location location) {
