@@ -204,9 +204,10 @@ public class ShowWorkoutsAggregatedDiagramActivity extends AbstractActivity {
 
         chart.getAxisLeft().setTextColor(Color.DKGRAY);
         chart.getAxisLeft().setTextSize(15f);
+        chart.getAxisLeft().setAxisMinimum(0);
         chart.getAxisRight().setTextColor(Color.DKGRAY);
         chart.getAxisRight().setTextSize(15f);
-
+        chart.getAxisRight().setAxisMinimum(0);
         chart.getXAxis().setTextColor(Color.DKGRAY);
         chart.getXAxis().setTextSize(15f);
 
