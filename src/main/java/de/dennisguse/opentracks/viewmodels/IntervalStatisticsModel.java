@@ -72,7 +72,9 @@ public class IntervalStatisticsModel extends AndroidViewModel {
         OPTION_3(3),
         OPTION_4(4),
         OPTION_5(5),
-        OPTION_10(10);
+        OPTION_10(10),
+        OPTION_20(20),
+        OPTION_50(50);
 
         private int value;
 
