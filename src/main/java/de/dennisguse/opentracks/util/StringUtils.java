@@ -17,26 +17,19 @@ package de.dennisguse.opentracks.util;
 
 import android.content.Context;
 import android.location.Location;
-import android.os.Build;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.Pair;
 
 import java.text.DecimalFormat;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
-import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import de.dennisguse.opentracks.R;
 
@@ -51,23 +44,6 @@ public class StringUtils {
     private static final String TAG = StringUtils.class.getSimpleName();
 
     private static final String COORDINATE_DEGREE = "\u00B0";
-
-    //TODO Remove when upgrading to API level 26+.
-    @Deprecated
-    private static final SimpleDateFormat ISO_8601_DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
-
-    //TODO Remove when upgrading to API level 26+.
-    @Deprecated
-    private static final SimpleDateFormat ISO_8601_BASE = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
-
-    //TODO Remove when upgrading to API level 26+.
-    @Deprecated
-    private static final Pattern ISO_8601_EXTRAS = Pattern.compile("^(\\.\\d+)?(?:Z|([+-])(\\d{2}):(\\d{2}))?$");
-
-    static {
-        ISO_8601_DATE_TIME_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
-        ISO_8601_BASE.setTimeZone(TimeZone.getTimeZone("UTC"));
-    }
 
     private StringUtils() {
     }
@@ -84,17 +60,12 @@ public class StringUtils {
     }
 
     /**
-     * Formats the time using the ISO 8601 date time_ms format with fractional
-     * seconds in UTC time zone.
+     * Formats the time using the ISO 8601 date time_ms format with fractional seconds in UTC time zone.
      *
      * @param time_ms the time in milliseconds
      */
     public static String formatDateTimeIso8601(long time_ms) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            return Instant.ofEpochMilli(time_ms).toString();
-        } else {
-            return ISO_8601_DATE_TIME_FORMAT.format(time_ms);
-        }
+        return Instant.ofEpochMilli(time_ms).toString();
     }
 
     /**
@@ -292,72 +263,17 @@ public class StringUtils {
      * @param xmlDateTime the XML date time string
      */
     public static long parseTime(String xmlDateTime) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            try {
-                TemporalAccessor t = DateTimeFormatter.ISO_DATE_TIME.parseBest(xmlDateTime, ZonedDateTime::from, LocalDateTime::from);
-                if (t instanceof LocalDateTime) {
-                    Log.w(TAG, "Date does not contain timezone information: using UTC.");
-                    t = ((LocalDateTime) t).atZone(ZoneOffset.UTC);
-                }
-                return Instant.from(t).toEpochMilli();
-            } catch (Exception e) {
-                Log.e(TAG, "Invalid XML dateTime value");
-                throw e;
+        try {
+            TemporalAccessor t = DateTimeFormatter.ISO_DATE_TIME.parseBest(xmlDateTime, ZonedDateTime::from, LocalDateTime::from);
+            if (t instanceof LocalDateTime) {
+                Log.w(TAG, "Date does not contain timezone information: using UTC.");
+                t = ((LocalDateTime) t).atZone(ZoneOffset.UTC);
             }
+            return Instant.from(t).toEpochMilli();
+        } catch (Exception e) {
+            Log.e(TAG, "Invalid XML dateTime value");
+            throw e;
         }
-
-        //TODO Remove the following when upgrading to API level 26+.
-
-        // Parse the date time base
-        ParsePosition position = new ParsePosition(0);
-        Date date = ISO_8601_BASE.parse(xmlDateTime, position);
-        if (date == null) {
-            throw new IllegalArgumentException("Invalid XML dateTime value: " + xmlDateTime + " (at position " + position.getErrorIndex() + ")");
-        }
-
-        // Parse the date time extras
-        Matcher matcher = ISO_8601_EXTRAS.matcher(xmlDateTime.substring(position.getIndex()));
-        if (!matcher.matches()) {
-            // This will match even an empty string as all groups are optional. Thus a non-match means invalid content.
-            throw new IllegalArgumentException("Invalid XML dateTime value: " + xmlDateTime);
-        }
-
-        long time = date.getTime();
-
-        // Account for fractional seconds
-        String fractional = matcher.group(1);
-        if (fractional != null) {
-            // Regex ensures fractional part is in (0,1)
-            float fractionalSeconds = Float.parseFloat(fractional);
-            long fractionalMillis = Math.round(fractionalSeconds * UnitConversions.S_TO_MS);
-            time += fractionalMillis;
-        }
-
-        // Account for timezones
-        String sign = matcher.group(2);
-        String offsetHoursStr = matcher.group(3);
-        String offsetMinsStr = matcher.group(4);
-        if (sign != null && offsetHoursStr != null && offsetMinsStr != null) {
-            // Regex ensures sign is + or -
-            boolean plusSign = sign.equals("+");
-            int offsetHours = Integer.parseInt(offsetHoursStr);
-            int offsetMins = Integer.parseInt(offsetMinsStr);
-
-            // Regex ensures values are >= 0
-            if (offsetHours > 14 || offsetMins > 59) {
-                throw new IllegalArgumentException("Bad timezone: " + xmlDateTime);
-            }
-
-            long totalOffsetMillis = (offsetMins + offsetHours * 60L) * 60000L;
-
-            // Convert to UTC
-            if (plusSign) {
-                time -= totalOffsetMillis;
-            } else {
-                time += totalOffsetMillis;
-            }
-        }
-        return time;
     }
 
     /**
