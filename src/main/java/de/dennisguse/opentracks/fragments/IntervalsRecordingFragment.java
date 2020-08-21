@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.util.UnitConversions;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 import de.dennisguse.opentracks.viewmodels.IntervalStatisticsModel;
 import de.dennisguse.opentracks.views.IntervalListView;
@@ -27,6 +28,8 @@ public class IntervalsRecordingFragment extends Fragment implements IntervalList
 
     private static final String TAG = IntervalsRecordingFragment.class.getSimpleName();
 
+    private static final long UI_UPDATE_INTERVAL = 5 * UnitConversions.ONE_SECOND_MS;
+
     private IntervalStatisticsModel viewModel;
     private IntervalReverseListView intervalListView;
 
@@ -37,7 +40,7 @@ public class IntervalsRecordingFragment extends Fragment implements IntervalList
         public void run() {
             if (!stopped) {
                 updateIntervals();
-                intervalHandler.postDelayed(intervalRunner, 5000);
+                intervalHandler.postDelayed(intervalRunner, UI_UPDATE_INTERVAL);
             }
         }
 
