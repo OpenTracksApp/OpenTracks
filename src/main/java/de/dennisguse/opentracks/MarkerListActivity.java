@@ -32,7 +32,6 @@ import androidx.annotation.NonNull;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
-import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
 import de.dennisguse.opentracks.content.data.Track;
@@ -57,11 +56,6 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     public static final String EXTRA_TRACK_ID = "track_id";
 
     private static final String TAG = MarkerListActivity.class.getSimpleName();
-
-    private static final String[] PROJECTION = new String[]{WaypointsColumns._ID,
-            WaypointsColumns.NAME, WaypointsColumns.DESCRIPTION, WaypointsColumns.CATEGORY,
-            WaypointsColumns.TIME, WaypointsColumns.PHOTOURL,
-            WaypointsColumns.LATITUDE, WaypointsColumns.LONGITUDE};
 
     private ContentProviderUtils contentProviderUtils;
 
@@ -164,14 +158,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
             @NonNull
             @Override
             public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-                if (track != null) {
-                    return new CursorLoader(MarkerListActivity.this, WaypointsColumns.CONTENT_URI, PROJECTION,
-                            WaypointsColumns.TRACKID + "=?",
-                            new String[]{String.valueOf(track.getId().getId())}, null);
-                } else {
-                    return new CursorLoader(MarkerListActivity.this, WaypointsColumns.CONTENT_URI, PROJECTION,
-                            null, null, null);
-                }
+                return ContentProviderUtils.getWaypointsLoader(MarkerListActivity.this, track != null ? track.getId() : null);
             }
 
             @Override

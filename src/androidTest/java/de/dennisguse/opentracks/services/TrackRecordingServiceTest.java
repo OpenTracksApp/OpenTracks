@@ -134,7 +134,7 @@ public class TrackRecordingServiceTest {
     @Test
     public void testRecording_noTracks() throws Exception {
         // given
-        List<Track> tracks = contentProviderUtils.getAllTracks();
+        List<Track> tracks = contentProviderUtils.getTracks();
         Assert.assertTrue(tracks.isEmpty());
 
         // when

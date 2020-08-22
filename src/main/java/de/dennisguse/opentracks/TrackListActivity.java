@@ -43,7 +43,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
-import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
 import de.dennisguse.opentracks.content.data.Track;
@@ -61,7 +60,6 @@ import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
  * An activity displaying a list of tracks.
@@ -71,10 +69,6 @@ import de.dennisguse.opentracks.util.TrackUtils;
 public class TrackListActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
     private static final String TAG = TrackListActivity.class.getSimpleName();
-
-    private static final String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.NAME,
-            TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
-            TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON};
 
     // The following are set in onCreate
     private ContentProviderUtils contentProviderUtils;
@@ -88,8 +82,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     private final LoaderCallbacks<Cursor> loaderCallbacks = new LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-            return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, null,
-                    null, TrackUtils.TRACK_SORT_ORDER);
+            return ContentProviderUtils.getTracksCursorLoader(TrackListActivity.this);
         }
 
         @Override
@@ -126,8 +119,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     private boolean recordingTrackPaused;
 
-    private final OnSharedPreferenceChangeListener
-            sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
+    private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
             if (PreferencesUtils.isKey(TrackListActivity.this, R.string.stats_units_key, key)) {

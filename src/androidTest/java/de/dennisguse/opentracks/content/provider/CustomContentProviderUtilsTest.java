@@ -360,17 +360,17 @@ public class CustomContentProviderUtilsTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#getAllTracks()}
+     * Tests the method {@link ContentProviderUtils#getTracks()}
      */
     @Test
     public void testGetAllTracks() {
         // given
-        int initialTrackNumber = contentProviderUtils.getAllTracks().size();
+        int initialTrackNumber = contentProviderUtils.getTracks().size();
         Track.Id trackId = new Track.Id(System.currentTimeMillis());
         contentProviderUtils.insertTrack(TestDataUtil.createTrack(trackId));
 
         // when
-        List<Track> allTracks = contentProviderUtils.getAllTracks();
+        List<Track> allTracks = contentProviderUtils.getTracks();
 
         // then
         Assert.assertEquals(initialTrackNumber + 1, allTracks.size());

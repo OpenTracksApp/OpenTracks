@@ -28,6 +28,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.loader.content.CursorLoader;
+import androidx.loader.content.Loader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
+import de.dennisguse.opentracks.util.TrackUtils;
 import de.dennisguse.opentracks.util.UUIDUtils;
 
 /**
@@ -212,7 +215,7 @@ public class ContentProviderUtils {
     }
 
     @VisibleForTesting
-    public List<Track> getAllTracks() {
+    public List<Track> getTracks() {
         ArrayList<Track> tracks = new ArrayList<>();
         try (Cursor cursor = getTrackCursor(null, null, TracksColumns._ID)) {
             if (cursor != null && cursor.moveToFirst()) {
@@ -225,6 +228,17 @@ public class ContentProviderUtils {
         return tracks;
     }
 
+    public static Loader<Cursor> getTracksCursorLoader(Context context) {
+        String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.NAME,
+                TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
+                TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON};
+
+        return new CursorLoader(context, TracksColumns.CONTENT_URI, PROJECTION, null, null, TrackUtils.TRACK_SORT_ORDER);
+    }
+
+    @Deprecated
+    //TODO Do not use; rather get the proper TrackId (e.g., resume a track might give you some weird effects).
+    @VisibleForTesting
     public Track getLastTrack() {
         try (Cursor cursor = getTrackCursor(null, null, TracksColumns.STARTTIME + " DESC")) {
             // Using the same order as shown in the track list
@@ -487,6 +501,21 @@ public class ContentProviderUtils {
             }
         }
         return waypoints;
+    }
+
+    public static Loader<Cursor> getWaypointsLoader(Context context, @Nullable Track.Id trackId) {
+        final String[] PROJECTION = new String[]{WaypointsColumns._ID,
+                WaypointsColumns.NAME, WaypointsColumns.DESCRIPTION, WaypointsColumns.CATEGORY,
+                WaypointsColumns.TIME, WaypointsColumns.PHOTOURL,
+                WaypointsColumns.LATITUDE, WaypointsColumns.LONGITUDE};
+
+        if (trackId != null) {
+            return new CursorLoader(context, WaypointsColumns.CONTENT_URI, PROJECTION,
+                    WaypointsColumns.TRACKID + "=?",
+                    new String[]{String.valueOf(trackId.getId())}, null);
+        } else {
+            return new CursorLoader(context, WaypointsColumns.CONTENT_URI, PROJECTION, null, null, null);
+        }
     }
 
     /**

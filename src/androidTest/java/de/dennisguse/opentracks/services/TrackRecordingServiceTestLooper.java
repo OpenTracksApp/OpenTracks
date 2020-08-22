@@ -187,7 +187,7 @@ public class TrackRecordingServiceTestLooper {
     @MediumTest
     @Test
     public void testIntegration_completeRecordingSession() throws TimeoutException {
-        List<Track> tracks = contentProviderUtils.getAllTracks();
+        List<Track> tracks = contentProviderUtils.getTracks();
         Assert.assertTrue(tracks.isEmpty());
         fullRecordingSession();
     }
