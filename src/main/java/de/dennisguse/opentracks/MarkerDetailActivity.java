@@ -67,12 +67,13 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
         waypointIds = new ArrayList<>();
         int markerIndex = -1;
 
+        //TODO Load only waypointIds, not the whole waypoint
         try (Cursor cursor = contentProviderUtils.getWaypointCursor(waypoint.getTrackId(), null, -1)) {
             if (cursor != null && cursor.moveToFirst()) {
                 for (int i = 0; i < cursor.getCount(); i++) {
                     Waypoint currentMarker = contentProviderUtils.createWaypoint(cursor);
                     waypointIds.add(currentMarker.getId());
-                    if (currentMarker.getId() == waypointId) {
+                    if (waypointId.equals(currentMarker.getId())) {
                         markerIndex = waypointIds.size() - 1;
                     }
 
