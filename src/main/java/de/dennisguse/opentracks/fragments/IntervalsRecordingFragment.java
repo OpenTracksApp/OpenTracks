@@ -14,6 +14,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
@@ -109,7 +110,7 @@ public class IntervalsRecordingFragment extends Fragment implements IntervalList
             return;
         }
 
-        long trackId = PreferencesUtils.getRecordingTrackId(getContext());
+        Track.Id trackId = PreferencesUtils.getRecordingTrackId(getContext());
         viewModel.invalidate();
         LiveData<IntervalStatistics> liveData;
         if (interval == null) {

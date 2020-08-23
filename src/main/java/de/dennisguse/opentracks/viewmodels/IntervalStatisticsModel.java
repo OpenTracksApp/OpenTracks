@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -29,7 +30,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
         interval = IntervalOption.OPTION_1;
     }
 
-    public LiveData<IntervalStatistics> getIntervalStats(long trackId, IntervalOption interval) {
+    public LiveData<IntervalStatistics> getIntervalStats(Track.Id trackId, IntervalOption interval) {
         if (intervalStats == null || this.interval != interval) {
             intervalStats = new MutableLiveData<>();
             this.interval = interval;
@@ -38,7 +39,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
         return intervalStats;
     }
 
-    public LiveData<IntervalStatistics> getIntervalStats(long trackId) {
+    public LiveData<IntervalStatistics> getIntervalStats(Track.Id trackId) {
         return getIntervalStats(trackId, interval);
     }
 
@@ -49,7 +50,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
         intervalStats = null;
     }
 
-    private void loadIntervalStats(long trackId) {
+    private void loadIntervalStats(Track.Id trackId) {
         new Thread(() -> {
             Context context = getApplication().getApplicationContext();
             ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
