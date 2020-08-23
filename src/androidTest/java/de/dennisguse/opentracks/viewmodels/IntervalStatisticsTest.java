@@ -22,7 +22,7 @@ public class IntervalStatisticsTest {
     private static final String TAG = IntervalStatisticsTest.class.getSimpleName();
 
     private List<TrackPoint> buildTrackPoints(int numberOfTrackPoints) {
-		Pair<Track, TrackPoint[]> pair = TestDataUtil.createTrack(System.currentTimeMillis(), numberOfTrackPoints);
+		Pair<Track, TrackPoint[]> pair = TestDataUtil.createTrack(new Track.Id(System.currentTimeMillis()), numberOfTrackPoints);
 		List<TrackPoint> trackPoints = Arrays.asList(pair.second);
 
 		return trackPoints;
