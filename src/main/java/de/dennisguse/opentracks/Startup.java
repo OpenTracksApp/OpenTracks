@@ -32,6 +32,11 @@ public class Startup extends Application {
             PreferencesUtils.setString(this, R.string.stats_units_key, statsUnits);
         }
 
+        //TODO Workaround to reset recordingTrackId on app startup as the TrackRecordingService (likely) crashed.
+        if (PreferencesUtils.isRecording(this)) {
+            Log.e(TAG, "Reset recordingTrackId; likely the TrackRecordingService crashed.");
+            PreferencesUtils.setLong(this, R.string.recording_track_id_key, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+        }
 
         //In debug builds: show thread and VM warnings.
         if (BuildConfig.DEBUG) {
