@@ -83,34 +83,8 @@ public class IntervalStatisticsModel extends AndroidViewModel {
             this.value = value;
         }
 
-        /**
-         * @param pos position of the interval option.
-         * @return    the interval option that is in the position pos.
-         */
-        public static IntervalOption getIntervalOption(int pos) {
-            if (values().length > pos) {
-                return values()[pos];
-            } else {
-                return OPTION_1;
-            }
-        }
-
         public int getValue() {
             return value;
-        }
-
-        /**
-         * @return a string array with all options.
-         */
-        public static String[] getAllValues() {
-            IntervalOption[] options = values();
-            String[] values = new String[options.length];
-
-            for (int i = 0; i < options.length; i++) {
-                values[i] = String.valueOf(options[i].getValue());
-            }
-
-            return values;
         }
     }
 }

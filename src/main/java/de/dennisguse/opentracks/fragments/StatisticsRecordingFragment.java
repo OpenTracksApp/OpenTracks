@@ -55,12 +55,16 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
     private TrackRecordingServiceConnection trackRecordingServiceConnection = new TrackRecordingServiceConnection();
 
-    private TrackPoint lastTrackPoint = null;
-    private TrackStatistics lastTrackStatistics = null;
+    private TrackPoint lastTrackPoint;
+    private TrackStatistics lastTrackStatistics;
 
     private String category = "";
     @Deprecated //TODO This should be handled somewhere else; not in the UI.
     private int recordingGpsAccuracy;
+
+    public static Fragment newInstance() {
+        return new StatisticsRecordingFragment();
+    }
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
