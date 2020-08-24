@@ -51,8 +51,6 @@ public class UnitConversions {
     public static final double MM_TO_M = 0.001;
 
     // Distance
-    // multiplication factor to convert miles to meters
-    public static final double MI_TO_M = 1609.344;
     // multiplication factor to convert miles to feet
     public static final double MI_TO_FT = 5280.0;
     // multiplication factor to convert feet to miles
@@ -67,6 +65,10 @@ public class UnitConversions {
     public static final double M_TO_FT = M_TO_MI * MI_TO_FT;
     // multiplication factor to convert meters per second to kilometers per hour
     public static final double MPS_TO_KMH = M_TO_KM / (S_TO_MIN * MIN_TO_HR);
+    // multiplication factor to convert miles to km
+    public static final double MI_TO_KM = 1 / KM_TO_MI;
+    // multiplication factor to convert miles to m
+    public static final double MI_TO_M = MI_TO_KM * KM_TO_M;
 
     private UnitConversions() {
     }

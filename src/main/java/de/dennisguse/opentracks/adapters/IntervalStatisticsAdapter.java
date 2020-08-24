@@ -21,7 +21,7 @@ import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.Interval> {
 
     private boolean metricUnits;
-    private float accDistance = 0f;
+    private float sumDistance_m = 0f;
 
     public IntervalStatisticsAdapter(Context context, List<IntervalStatistics.Interval> intervalList) {
         super(context, R.layout.interval_stats_list_item, intervalList);
@@ -48,11 +48,14 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
             viewHolder = (ViewHolder) intervalView.getTag();
         }
 
-        accDistance += interval.getDistance();
-        viewHolder.distance.setText(StringUtils.formatDistance(getContext(), accDistance, metricUnits));
-        Pair<String, String> speedParts = StringUtils.getSpeedParts(getContext(), interval.getSpeed(), metricUnits, true);
+        sumDistance_m += interval.getDistance_m();
+        viewHolder.distance.setText(StringUtils.formatDistance(getContext(), sumDistance_m, metricUnits));
+
+        Pair<String, String> speedParts = StringUtils.getSpeedParts(getContext(), interval.getSpeed_ms(), metricUnits, true);
         viewHolder.speed.setText(speedParts.first + " " + speedParts.second);
-        viewHolder.pace.setText(StringUtils.getSpeedParts(getContext(), interval.getSpeed(), metricUnits, false).first);
+
+        Pair<String, String> paceParts = StringUtils.getSpeedParts(getContext(), interval.getSpeed_ms(), metricUnits, false);
+        viewHolder.pace.setText(paceParts.first + " " + paceParts.second);
 
         return intervalView;
     }

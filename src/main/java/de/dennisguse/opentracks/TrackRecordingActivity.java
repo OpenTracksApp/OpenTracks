@@ -381,9 +381,9 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new StatisticsRecordingFragment();
+                    return StatisticsRecordingFragment.newInstance();
                 case 1:
-                    return new IntervalsRecordingFragment();
+                    return IntervalsRecordingFragment.newInstance();
                 case 2:
                     return ChartFragment.newInstance(false);
                 case 3:

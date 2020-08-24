@@ -54,12 +54,12 @@ public class StatisticsRecordedFragment extends Fragment implements IntervalList
 
     private static final String TRACK_ID_KEY = "trackId";
 
-    private TrackStatistics trackStatistics = null;
+    private TrackStatistics trackStatistics;
     private String category = "";
     private Track track;
 
-    private IntervalStatisticsModel viewModel = null;
-    private IntervalListView intervalListView = null;
+    private IntervalStatisticsModel viewModel;
+    private IntervalListView intervalListView;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
@@ -299,7 +299,6 @@ public class StatisticsRecordedFragment extends Fragment implements IntervalList
             speedMovingUnit.setText(parts.second);
         }
 
-        // Set intervals.
         addIntervals();
     }
 

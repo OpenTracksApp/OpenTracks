@@ -8,10 +8,10 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 public class IntervalStatistics {
-    List<Interval> intervalList;
+    List<Interval> intervalList = new ArrayList<>();
 
     public void build(List<TrackPoint> trackPointList, float distanceInterval) {
-        intervalList = new ArrayList<>();
+        intervalList.clear();
 
         if (trackPointList == null || trackPointList.size() == 0) {
             return;
@@ -23,27 +23,22 @@ public class IntervalStatistics {
             TrackPoint trackPoint = trackPointList.get(i);
 
             if (LocationUtils.isValidLocation(trackPoint.getLocation()) && LocationUtils.isValidLocation(prevTrackPoint.getLocation())) {
-                interval.distance += prevTrackPoint.distanceTo(trackPoint);
-                interval.time += trackPoint.getTime() - prevTrackPoint.getTime();
+                interval.distance_m += prevTrackPoint.distanceTo(trackPoint);
+                interval.time_ms += trackPoint.getTime() - prevTrackPoint.getTime();
 
-                if (interval.distance >= distanceInterval) {
-                    float adjustFactor = distanceInterval / interval.distance;
+                if (interval.distance_m >= distanceInterval) {
+                    float adjustFactor = distanceInterval / interval.distance_m;
                     Interval adjustedInterval = new Interval(interval);
-                    adjustedInterval.distance *= adjustFactor;
-                    adjustedInterval.time *= adjustFactor;
+                    adjustedInterval.adjust(adjustFactor);
 
                     intervalList.add(adjustedInterval);
 
-                    Interval newInterval = new Interval();
-                    newInterval.distance = interval.distance - adjustedInterval.distance;
-                    newInterval.time = interval.time - adjustedInterval.time;
-
-                    interval = newInterval;
+                    interval = new Interval(interval.distance_m - adjustedInterval.distance_m, interval.time_ms - adjustedInterval.time_ms);
                 }
             }
         }
 
-        if (interval.distance > 1f) {
+        if (interval.distance_m > 1f) {
             intervalList.add(interval);
         }
     }
@@ -53,28 +48,38 @@ public class IntervalStatistics {
     }
 
     public static class Interval {
-        private float distance = 0f;
-        private float time = 0f;
-
-        public float getDistance() {
-            return distance;
-        }
+        private float distance_m = 0f;
+        private float time_ms = 0f;
 
         public Interval() {}
 
+        public Interval(float distance_m, float time_ms) {
+            this.distance_m = distance_m;
+            this.time_ms = time_ms;
+        }
+
         public Interval(Interval i) {
-            distance = i.distance;
-            time = i.time;
+            distance_m = i.distance_m;
+            time_ms = i.time_ms;
+        }
+
+        public float getDistance_m() {
+            return distance_m;
+        }
+
+        public void adjust(float adjustFactor) {
+            distance_m *= adjustFactor;
+            time_ms *= adjustFactor;
         }
 
         /**
          * @return speed of the interval in m/s.
          */
-        public float getSpeed() {
-            if (distance == 0f) {
+        public float getSpeed_ms() {
+            if (distance_m == 0f) {
                 return 0f;
             }
-            return distance / (float) (time * UnitConversions.MS_TO_S);
+            return distance_m / (float) (time_ms * UnitConversions.MS_TO_S);
         }
     }
 }

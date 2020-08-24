@@ -20,7 +20,6 @@ import de.dennisguse.opentracks.util.UnitConversions;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 import de.dennisguse.opentracks.viewmodels.IntervalStatisticsModel;
 import de.dennisguse.opentracks.views.IntervalListView;
-import de.dennisguse.opentracks.views.IntervalReverseListView;
 
 /**
  * A fragment to display the intervals from recording track.
@@ -29,29 +28,27 @@ public class IntervalsRecordingFragment extends Fragment implements IntervalList
 
     private static final String TAG = IntervalsRecordingFragment.class.getSimpleName();
 
+    // Refreshing intervals stats it's not so demanding so 5 seconds is enough to balance performance and user experience.
     private static final long UI_UPDATE_INTERVAL = 5 * UnitConversions.ONE_SECOND_MS;
 
     private IntervalStatisticsModel viewModel;
-    private IntervalReverseListView intervalListView;
+    private IntervalListView.IntervalReverseListView intervalListView;
 
-    private class IntervalRunner implements Runnable {
-        private boolean stopped = false;
+    public static Fragment newInstance() {
+        return new IntervalsRecordingFragment();
+    }
 
+    private final Runnable intervalRunner = new Runnable() {
         @Override
         public void run() {
-            if (!stopped) {
+            if (isResumed()) {
                 updateIntervals();
                 intervalHandler.postDelayed(intervalRunner, UI_UPDATE_INTERVAL);
             }
         }
+    };
 
-        public void stop() {
-            stopped = true;
-        }
-    }
-
-    private Handler intervalHandler = null;
-    private IntervalRunner intervalRunner = null;
+    private Handler intervalHandler;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,8 +61,9 @@ public class IntervalsRecordingFragment extends Fragment implements IntervalList
 
         intervalHandler = new Handler();
 
-        intervalListView = new IntervalReverseListView(getActivity(), this);
+        intervalListView = new IntervalListView.IntervalReverseListView(getActivity(), this);
         intervalListView.setId(View.generateViewId());
+        intervalListView.findViewById(R.id.interval_title_label).setVisibility(View.GONE);
         LinearLayout linearLayout = view.findViewById(R.id.root_view);
         linearLayout.removeAllViews();
         linearLayout.addView(intervalListView);
@@ -76,19 +74,13 @@ public class IntervalsRecordingFragment extends Fragment implements IntervalList
     @Override
     public void onResume() {
         super.onResume();
-        if (intervalRunner == null) {
-            intervalRunner = new IntervalRunner();
-            intervalRunner.run();
-        }
+        intervalHandler.post(intervalRunner);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (intervalRunner != null) {
-            intervalRunner.stop();
-            intervalRunner = null;
-        }
+        intervalHandler.removeCallbacks(intervalRunner);
     }
 
     @Override
@@ -106,7 +98,7 @@ public class IntervalsRecordingFragment extends Fragment implements IntervalList
      * @param interval intervals will split in this interval if not null. If it's null then view model will use the default one.
      */
     private void updateIntervals(@Nullable IntervalStatisticsModel.IntervalOption interval) {
-        if (viewModel == null | intervalListView == null) {
+        if (viewModel == null || intervalListView == null) {
             return;
         }
 
