@@ -148,18 +148,22 @@ public class TrackController {
 
         @Override
         public void run() {
-            imageButton.setImageDrawable(animatedDrawable);
-            activity.runOnUiThread(animatedDrawable::start);
+            activity.runOnUiThread(()->{
+                imageButton.setImageDrawable(animatedDrawable);
+                animatedDrawable.start();
+                ActivityUtils.vibrate(activity, 150);
+                ActivityUtils.toast(activity, delayMessageId, Toast.LENGTH_SHORT, Gravity.TOP);
+            });
 
-            ActivityUtils.vibrate(activity, 150);
-            activity.runOnUiThread(()-> ActivityUtils.toast(activity, delayMessageId, Toast.LENGTH_SHORT, Gravity.TOP));
             try {
                 Thread.sleep(delayMillis);
             } catch (InterruptedException ignored) {
             }
             if (!canceled) {
-                activity.runOnUiThread(()-> clickListener.onClick(null));
-                ActivityUtils.vibrate(activity, 1000);
+                activity.runOnUiThread(()-> {
+                    clickListener.onClick(null);
+                    ActivityUtils.vibrate(activity, 1000);
+                });
             }
         }
     }
