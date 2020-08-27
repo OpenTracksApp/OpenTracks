@@ -10,7 +10,11 @@ import de.dennisguse.opentracks.util.UnitConversions;
 public class IntervalStatistics {
     List<Interval> intervalList = new ArrayList<>();
 
-    public void build(List<TrackPoint> trackPointList, float distanceInterval) {
+    /**
+     * @param trackPointList     the list of TrackPoint.
+     * @param distanceInterval_m the meters of every interval.
+     */
+    public void build(List<TrackPoint> trackPointList, float distanceInterval_m) {
         intervalList.clear();
 
         if (trackPointList == null || trackPointList.size() == 0) {
@@ -26,8 +30,8 @@ public class IntervalStatistics {
                 interval.distance_m += prevTrackPoint.distanceTo(trackPoint);
                 interval.time_ms += trackPoint.getTime() - prevTrackPoint.getTime();
 
-                if (interval.distance_m >= distanceInterval) {
-                    float adjustFactor = distanceInterval / interval.distance_m;
+                if (interval.distance_m >= distanceInterval_m) {
+                    float adjustFactor = distanceInterval_m / interval.distance_m;
                     Interval adjustedInterval = new Interval(interval);
                     adjustedInterval.adjust(adjustFactor);
 

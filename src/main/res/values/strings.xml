@@ -521,6 +521,10 @@ limitations under the License.
     <string name="voice_speed_miles_per_hour_two">2 miles per hour</string>
     <string name="voice_speed_miles_per_hour_zero">0 miles per hour</string>
     <string name="voice_template">OpenTracks %1$s in %2$s at %3$s</string>
+    <string name="voice_speed_current_kilometer">With a current kilometer speed of %1$s</string>
+    <string name="voice_speed_current_mile">With a current mile speed of %1$s</string>
+    <string name="voice_pace_current_kilometer">With a current kilometer pace of %1$s</string>
+    <string name="voice_pace_current_mile">With a current mile pace of %1$s</string>
     <string name="voice_total_distance_kilometers_few">total distance %1$.2f kilometers</string>
     <string name="voice_total_distance_kilometers_many">total distance %1$.2f kilometers</string>
     <string name="voice_total_distance_kilometers_one">total distance 1 kilometer</string>

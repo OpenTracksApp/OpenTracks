@@ -836,7 +836,7 @@ public class ContentProviderUtils {
     /**
      * Creates the {@link ContentValues} for a {@link TrackPoint}.
      *
-     * @param trackPoint the trackPoint
+     * @param trackPoint the trackPointstats_pace_km#87
      * @param trackId    the track id
      */
     private ContentValues createContentValues(TrackPoint trackPoint, Track.Id trackId) {
