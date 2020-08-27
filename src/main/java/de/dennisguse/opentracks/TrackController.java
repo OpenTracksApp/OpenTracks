@@ -19,6 +19,7 @@ package de.dennisguse.opentracks;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -27,6 +28,8 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.core.content.ContextCompat;
 
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
@@ -134,7 +137,7 @@ public class TrackController {
         private final Activity activity;
         private final OnClickListener clickListener;
         private final int delayMillis;
-        private final AnimatedVectorDrawable animatedDrawable;
+        private final Drawable drawable;
         private final int delayMessageId;
 
         private ButtonDelay(final Activity activity, final ImageButton imageButton, final int animDrawableId, final int delayMessageId, final OnClickListener clickListener) {
@@ -142,24 +145,30 @@ public class TrackController {
             this.clickListener = clickListener;
             this.delayMillis = activity.getResources().getInteger(R.integer.buttonDelayMillis);
             this.imageButton = imageButton;
-            this.animatedDrawable = (AnimatedVectorDrawable) activity.getDrawable(animDrawableId);
+            this.drawable = ContextCompat.getDrawable(activity, animDrawableId);
             this.delayMessageId = delayMessageId;
         }
 
         @Override
         public void run() {
-            imageButton.setImageDrawable(animatedDrawable);
-            activity.runOnUiThread(animatedDrawable::start);
+            activity.runOnUiThread(()->{
+                imageButton.setImageDrawable(drawable);
+                if (drawable instanceof AnimatedVectorDrawable) {
+                    ((AnimatedVectorDrawable) drawable).start();
+                }
+                ActivityUtils.vibrate(activity, 150);
+                ActivityUtils.toast(activity, delayMessageId, Toast.LENGTH_SHORT, Gravity.TOP);
+            });
 
-            ActivityUtils.vibrate(activity, 150);
-            activity.runOnUiThread(()-> ActivityUtils.toast(activity, delayMessageId, Toast.LENGTH_SHORT, Gravity.TOP));
             try {
                 Thread.sleep(delayMillis);
             } catch (InterruptedException ignored) {
             }
             if (!canceled) {
-                activity.runOnUiThread(()-> clickListener.onClick(null));
-                ActivityUtils.vibrate(activity, 1000);
+                activity.runOnUiThread(()-> {
+                    clickListener.onClick(null);
+                    ActivityUtils.vibrate(activity, 1000);
+                });
             }
         }
     }
