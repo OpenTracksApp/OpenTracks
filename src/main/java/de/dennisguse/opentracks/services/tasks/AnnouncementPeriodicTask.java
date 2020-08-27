@@ -22,14 +22,18 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 
+import java.util.List;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.AnnouncementUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.util.UnitConversions;
+import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 
 /**
  * This class will periodically announce the user's {@link TrackStatistics}.
@@ -159,9 +163,17 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
             Log.i(TAG, "Speech is not allowed at this time.");
             return;
         }
+
         Track track = contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context));
         String category = track != null ? track.getCategory() : "";
-        String announcement = AnnouncementUtils.getAnnouncement(context, trackStatistics, category);
+
+        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(track.getId());
+        IntervalStatistics intervalStatistics = new IntervalStatistics();
+        intervalStatistics.build(trackPoints, (float) (PreferencesUtils.isMetricUnits(context) ? 1 * UnitConversions.KM_TO_M : 1 * UnitConversions.MI_TO_M));
+        int numIntervals = intervalStatistics.getIntervalList().size();
+        IntervalStatistics.Interval lastInterval = numIntervals > 0 ? intervalStatistics.getIntervalList().get(numIntervals - 1) : null;
+
+        String announcement = AnnouncementUtils.getAnnouncement(context, trackStatistics, category, lastInterval);
         speakAnnouncement(announcement);
     }
 
