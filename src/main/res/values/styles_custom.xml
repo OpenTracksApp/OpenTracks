@@ -16,4 +16,10 @@
         <item name="android:background">@drawable/spinner_background_holo_dark</item>
         <item name="android:dropDownSelector">@drawable/list_selector_holo_dark</item>
     </style>
+
+    <style name="SpinnerCustomText" parent="android:Widget.Holo.Spinner">
+        <item name="android:background">@drawable/spinner_background_holo_dark</item>
+        <item name="android:dropDownSelector">@drawable/list_selector_holo_dark</item>
+        <item name="android:padding">0dp</item>
+    </style>
 </resources>
