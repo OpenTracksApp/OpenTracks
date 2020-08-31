@@ -209,7 +209,7 @@ public class ExportProgressDialogFragment extends DialogFragment {
             TrackExporter trackExporter = trackFileFormat.newTrackExporter(context);
 
             //TODO Move to helper function
-            String fileName = track.getId() + "." + trackFileFormat.getExtension();
+            String fileName = track.getId().getId() + "." + trackFileFormat.getExtension();
 
             // Overwrite a file if it exists; DocumentFile.createFile() creates a new file appending a suffix if the displayname already exists.
             DocumentFile file = directory.findFile(fileName);
