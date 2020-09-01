@@ -24,6 +24,7 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -36,6 +37,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
+import de.dennisguse.opentracks.fragments.IntervalsRecordedFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordedFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.SettingsActivity;
@@ -76,42 +78,8 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
 
         trackDataHub = new TrackDataHub(this);
 
-        FragmentPagerAdapter adapter = new FragmentPagerAdapter(getSupportFragmentManager(), 1) {
-            @Override
-            public int getCount() {
-                return 3;
-            }
-
-            @NonNull
-            @Override
-            public Fragment getItem(int position) {
-                switch (position) {
-                    case 0:
-                        return StatisticsRecordedFragment.newInstance(track.getId());
-                    case 1:
-                        return ChartFragment.newInstance(false);
-                    case 2:
-                        return ChartFragment.newInstance(true);
-                    default:
-                        throw new RuntimeException("There isn't Fragment associated with the position: " + position);
-                }
-            }
-
-            @Override
-            public CharSequence getPageTitle(int position) {
-                switch (position) {
-                    case 0:
-                        return getString(R.string.track_detail_stats_tab);
-                    case 1:
-                        return getString(R.string.settings_chart_by_time);
-                    case 2:
-                        return getString(R.string.settings_chart_by_distance);
-                }
-                return "Unknown Tab";
-            }
-        };
         pager = findViewById(R.id.track_detail_activity_view_pager);
-        pager.setAdapter(adapter);
+        pager.setAdapter(new CustomFragmentPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
         TabLayout tabs = findViewById(R.id.track_detail_activity_tablayout);
         tabs.setupWithViewPager(pager);
         if (savedInstanceState != null) {
@@ -265,5 +233,50 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
     public void onChooseActivityTypeDone(String iconValue) {
         String category = getString(TrackIconUtils.getIconActivityType(iconValue));
         TrackUtils.updateTrack(this, track, null, category, null, contentProviderUtils);
+    }
+
+    private class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
+
+        public CustomFragmentPagerAdapter(@NonNull FragmentManager fm, int behavior) {
+            super(fm, behavior);
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return StatisticsRecordedFragment.newInstance(track.getId());
+                case 1:
+                    return IntervalsRecordedFragment.newInstance(track.getId());
+                case 2:
+                    return ChartFragment.newInstance(false);
+                case 3:
+                    return ChartFragment.newInstance(true);
+                default:
+                    throw new RuntimeException("There isn't Fragment associated with the position: " + position);
+            }
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return getString(R.string.track_detail_stats_tab);
+                case 1:
+                    return getString(R.string.track_detail_intervals_tab);
+                case 2:
+                    return getString(R.string.settings_chart_by_time);
+                case 3:
+                    return getString(R.string.settings_chart_by_distance);
+                default:
+                    throw new RuntimeException("There isn't Fragment associated with the position: " + position);
+            }
+        }
     }
 }

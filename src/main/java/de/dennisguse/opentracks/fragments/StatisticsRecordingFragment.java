@@ -48,6 +48,8 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
     private static final String TAG = StatisticsRecordingFragment.class.getSimpleName();
 
+    private static final String TRACK_ID_KEY = "trackId";
+
     private static final long UI_UPDATE_INTERVAL = UnitConversions.ONE_SECOND_MS;
 
     private TrackDataHub trackDataHub;

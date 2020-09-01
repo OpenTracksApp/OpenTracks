@@ -24,14 +24,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordedActivity;
@@ -41,8 +39,6 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.viewmodels.IntervalStatisticsModel;
-import de.dennisguse.opentracks.views.IntervalListView;
 
 /**
  * A fragment to display track statistics to the user.
@@ -50,7 +46,7 @@ import de.dennisguse.opentracks.views.IntervalListView;
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
-public class StatisticsRecordedFragment extends Fragment implements IntervalListView.IntervalListListener {
+public class StatisticsRecordedFragment extends Fragment {
 
     private static final String TRACK_ID_KEY = "trackId";
 
@@ -58,14 +54,8 @@ public class StatisticsRecordedFragment extends Fragment implements IntervalList
     private String category = "";
     private Track track;
 
-    private IntervalStatisticsModel viewModel;
-    private IntervalListView intervalListView;
-
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
-            if (viewModel != null) {
-                viewModel.invalidate();
-            }
             if (isResumed()) {
                 getActivity().runOnUiThread(() -> {
                     if (isResumed()) {
@@ -81,8 +71,6 @@ public class StatisticsRecordedFragment extends Fragment implements IntervalList
         return inflater.inflate(R.layout.statistics_recorded, container, false);
     }
 
-    /* Views */
-    private ViewGroup rootView;
     private TextView totalTimeValueView;
     private TextView distanceValue;
     private TextView distanceUnit;
@@ -121,7 +109,7 @@ public class StatisticsRecordedFragment extends Fragment implements IntervalList
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        rootView = view.findViewById(R.id.root_view);
+        ViewGroup rootView = view.findViewById(R.id.root_view);
 
         totalTimeValueView = view.findViewById(R.id.stats_total_time_value);
 
@@ -144,14 +132,6 @@ public class StatisticsRecordedFragment extends Fragment implements IntervalList
         speedMovingLabel = view.findViewById(R.id.stats_moving_speed_label);
         speedMovingValue = view.findViewById(R.id.stats_moving_speed_value);
         speedMovingUnit = view.findViewById(R.id.stats_moving_speed_unit);
-
-        intervalListView = new IntervalListView(getActivity(), this);
-        intervalListView.setId(View.generateViewId());
-        LinearLayout linearLayoutExtra = rootView.findViewById(R.id.linear_layout_extra);
-        linearLayoutExtra.removeAllViews();
-        linearLayoutExtra.addView(intervalListView);
-
-        viewModel = new ViewModelProvider(this).get(IntervalStatisticsModel.class);
     }
 
     @Override
@@ -171,14 +151,6 @@ public class StatisticsRecordedFragment extends Fragment implements IntervalList
                 ((TrackRecordedActivity) getActivity()).chooseActivityType(category);
             }
             return true;
-        });
-    }
-
-    private void addIntervals() {
-        viewModel.getIntervalStats(track.getId()).observe(getActivity(), intervalStatistics -> {
-            if (intervalStatistics != null) {
-                intervalListView.display(intervalStatistics.getIntervalList());
-            }
         });
     }
 
@@ -217,10 +189,6 @@ public class StatisticsRecordedFragment extends Fragment implements IntervalList
         speedMovingLabel = null;
         speedMovingValue = null;
         speedMovingUnit = null;
-
-        intervalListView.destroy();
-        intervalListView = null;
-        viewModel = null;
     }
 
     public void loadStatistics() {
@@ -297,19 +265,6 @@ public class StatisticsRecordedFragment extends Fragment implements IntervalList
             Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
             speedMovingValue.setText(parts.first);
             speedMovingUnit.setText(parts.second);
-        }
-
-        addIntervals();
-    }
-
-    @Override
-    public void intervalChanged(IntervalStatisticsModel.IntervalOption interval) {
-        if (viewModel != null && intervalListView != null) {
-            viewModel.getIntervalStats(track.getId(), interval).observe(getActivity(), intervalStatistics -> {
-                if (intervalStatistics != null) {
-                    intervalListView.display(intervalStatistics.getIntervalList());
-                }
-            });
         }
     }
 }
