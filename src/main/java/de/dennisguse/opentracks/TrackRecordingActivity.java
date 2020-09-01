@@ -181,7 +181,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         trackDataHub = new TrackDataHub(this);
 
         pager = findViewById(R.id.track_detail_activity_view_pager);
-        pager.setAdapter(new CustomFragmentPagerAdapter(getSupportFragmentManager(), 1));
+        pager.setAdapter(new CustomFragmentPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
         TabLayout tabs = findViewById(R.id.track_detail_activity_tablayout);
         tabs.setupWithViewPager(pager);
         if (savedInstanceState != null) {
@@ -383,7 +383,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 case 0:
                     return StatisticsRecordingFragment.newInstance();
                 case 1:
-                    return IntervalsRecordingFragment.newInstance();
+                    return IntervalsRecordingFragment.newInstance(trackId);
                 case 2:
                     return ChartFragment.newInstance(false);
                 case 3:
