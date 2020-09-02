@@ -28,7 +28,7 @@ public class IntervalsRecordedFragment extends Fragment implements IntervalListV
     private static final String TRACK_ID_KEY = "trackId";
 
     private IntervalStatisticsModel viewModel;
-    private IntervalListView.IntervalReverseListView intervalListView;
+    private IntervalListView intervalListView;
 
     private Track.Id trackId;
 
@@ -52,7 +52,7 @@ public class IntervalsRecordedFragment extends Fragment implements IntervalListV
 
         trackId = getArguments().getParcelable(TRACK_ID_KEY);
 
-        intervalListView = new IntervalListView.IntervalReverseListView(getActivity(), this);
+        intervalListView = new IntervalListView(getActivity(), this);
         intervalListView.setId(View.generateViewId());
         LinearLayout linearLayout = view.findViewById(R.id.root_view);
         linearLayout.removeAllViews();
