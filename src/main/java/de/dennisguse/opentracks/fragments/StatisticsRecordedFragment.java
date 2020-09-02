@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 
 import de.dennisguse.opentracks.R;
@@ -87,7 +88,7 @@ public class StatisticsRecordedFragment extends Fragment {
     private TextView speedMovingValue;
     private TextView speedMovingUnit;
 
-    private TextView elevationCurrentGroup;
+    private Group elevationGroup;
     private TextView elevationTotalGainValue;
     private TextView elevationTotalGainUnit;
 
@@ -135,6 +136,7 @@ public class StatisticsRecordedFragment extends Fragment {
         speedMovingValue = view.findViewById(R.id.stats_moving_speed_value);
         speedMovingUnit = view.findViewById(R.id.stats_moving_speed_unit);
 
+        elevationGroup = view.findViewById(R.id.stats_elevation_group);
         elevationTotalGainValue = view.findViewById(R.id.stats_elevation_gain_value);
         elevationTotalGainUnit = view.findViewById(R.id.stats_elevation_gain_unit);
     }
@@ -195,6 +197,7 @@ public class StatisticsRecordedFragment extends Fragment {
         speedMovingValue = null;
         speedMovingUnit = null;
 
+        elevationGroup = null;
         elevationTotalGainValue = null;
         elevationTotalGainUnit = null;
     }
@@ -277,6 +280,10 @@ public class StatisticsRecordedFragment extends Fragment {
 
         // Set elevation gain
         {
+            // Make elevation visible?
+            boolean showElevation = PreferencesUtils.isShowStatsElevation(getContext());
+            elevationGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+
             double elevationGain_m = trackStatistics != null ? trackStatistics.getTotalElevationGain() : 0f;
 
             Pair<String, String> parts = StringUtils.formatElevation(getContext(), elevationGain_m, metricUnits);

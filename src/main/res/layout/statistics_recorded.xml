@@ -219,10 +219,10 @@
             app:layout_constraintTop_toBottomOf="@+id/stats_moving_speed_value" />
 
         <androidx.constraintlayout.widget.Group
-            android:id="@+id/stats_elevation_gain_group"
+            android:id="@+id/stats_elevation_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="stats_elevation_current_label,stats_elevation_current_value,stats_elevation_current_unit,stats_elevation_horizontal_line" />
+            app:constraint_referenced_ids="stats_elevation_horizontal_line,stats_elevation_gain_label,stats_elevation_gain_value,stats_elevation_gain_unit" />
 
         <TextView
             android:id="@+id/stats_elevation_gain_label"

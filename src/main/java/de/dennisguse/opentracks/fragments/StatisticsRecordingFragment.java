@@ -135,7 +135,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private TextView speedLabel;
     private TextView speedValue;
     private TextView speedUnit;
-    private Group elevationCurrentGroup;
+    private Group elevationGroup;
     private TextView elevationCurrentValue;
     private TextView elevationCurrentUnit;
     private TextView elevationTotalGainValue;
@@ -184,7 +184,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         speedValue = view.findViewById(R.id.stats_speed_value);
         speedUnit = view.findViewById(R.id.stats_speed_unit);
 
-        elevationCurrentGroup = view.findViewById(R.id.stats_elevation_current_group);
+        elevationGroup = view.findViewById(R.id.stats_elevation_group);
         elevationCurrentValue = view.findViewById(R.id.stats_elevation_current_value);
         elevationCurrentUnit = view.findViewById(R.id.stats_elevation_current_unit);
 
@@ -284,7 +284,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         speedValue = null;
         speedUnit = null;
 
-        elevationCurrentGroup = null;
+        elevationGroup = null;
         elevationCurrentValue = null;
         elevationCurrentUnit = null;
 
@@ -586,7 +586,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         {
             // Make elevation visible?
             boolean showElevation = PreferencesUtils.isShowStatsElevation(getContext());
-            elevationCurrentGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+            elevationGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -622,7 +622,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
         // Set elevation
         boolean showElevation = PreferencesUtils.isShowStatsElevation(getContext());
-        elevationCurrentGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+        elevationGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
 
         if (showElevation) {
             // Current elevation
