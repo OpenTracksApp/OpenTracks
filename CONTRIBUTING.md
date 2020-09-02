@@ -8,7 +8,7 @@ If we broke things (happens now and then), please tell us also.
 
 ## Coding new features
 
-You have cool idea for a feature that is missing in OpenTracks?
+You have a cool idea for a feature that is missing in OpenTracks?
 And you would like to help by implementing it?
 If not, you can just take a look at the [issue tracker](https://github.com/OpenTracksApp/OpenTracks/issues).
 
