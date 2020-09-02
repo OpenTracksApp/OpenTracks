@@ -109,8 +109,6 @@ public class StatisticsRecordedFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ViewGroup rootView = view.findViewById(R.id.root_view);
-
         totalTimeValueView = view.findViewById(R.id.stats_total_time_value);
 
         distanceValue = view.findViewById(R.id.stats_distance_value);

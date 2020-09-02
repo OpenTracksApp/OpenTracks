@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -22,17 +23,15 @@ import de.dennisguse.opentracks.util.UnitConversions;
  */
 public class IntervalStatisticsModel extends AndroidViewModel {
 
-    private MutableLiveData<IntervalStatistics> intervalStats;
-    private IntervalOption interval;
+    private MutableLiveData<IntervalStatistics> intervalStats = new MutableLiveData<>();
+    private IntervalOption interval = IntervalOption.OPTION_1;
 
     public IntervalStatisticsModel(@NonNull Application application) {
         super(application);
-        interval = IntervalOption.OPTION_1;
     }
 
-    public LiveData<IntervalStatistics> getIntervalStats(Track.Id trackId, IntervalOption interval) {
-        if (intervalStats == null || this.interval != interval) {
-            intervalStats = new MutableLiveData<>();
+    public LiveData<IntervalStatistics> getIntervalStats(@Nullable Track.Id trackId, IntervalOption interval) {
+        if (trackId != null && this.interval != interval) {
             this.interval = interval;
             loadIntervalStats(trackId);
         }
@@ -47,10 +46,10 @@ public class IntervalStatisticsModel extends AndroidViewModel {
      * Call this method when you want to force the view model to re-load intervals.
      */
     public void invalidate() {
-        intervalStats = null;
+        intervalStats = new MutableLiveData<>();
     }
 
-    private void loadIntervalStats(Track.Id trackId) {
+    private void loadIntervalStats(final Track.Id trackId) {
         new Thread(() -> {
             Context context = getApplication().getApplicationContext();
             ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);

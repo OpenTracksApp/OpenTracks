@@ -106,7 +106,8 @@ public class IntervalsRecordingFragment extends Fragment implements IntervalList
      *
      * @param interval intervals will split in this interval if not null. If it's null then view model will use the default one.
      */
-    private void updateIntervals(@Nullable IntervalStatisticsModel.IntervalOption interval) {
+    @Override
+    public void intervalChanged(IntervalStatisticsModel.IntervalOption interval) {
         if (viewModel == null || intervalListView == null) {
             return;
         }
@@ -126,11 +127,7 @@ public class IntervalsRecordingFragment extends Fragment implements IntervalList
     }
 
     private void updateIntervals() {
-        updateIntervals(null);
+        intervalChanged(null);
     }
 
-    @Override
-    public void intervalChanged(IntervalStatisticsModel.IntervalOption interval) {
-        updateIntervals(interval);
-    }
 }

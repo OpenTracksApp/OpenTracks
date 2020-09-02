@@ -167,6 +167,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             //Activity was recreated.
             trackId = savedInstanceState.getParcelable(EXTRA_TRACK_ID);
         } else {
+            // Resume a track
             trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
             if (trackId != null && contentProviderUtils.getTrack(trackId) == null) {
                 Log.w(TAG, "TrackId does not exists; cannot continue the recording.");

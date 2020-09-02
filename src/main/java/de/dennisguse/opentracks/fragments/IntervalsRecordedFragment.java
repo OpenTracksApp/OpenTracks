@@ -60,7 +60,7 @@ public class IntervalsRecordedFragment extends Fragment implements IntervalListV
 
         viewModel = new ViewModelProvider(this).get(IntervalStatisticsModel.class);
 
-        updateIntervals(null);
+        intervalChanged(null);
     }
 
     @Override
@@ -77,7 +77,8 @@ public class IntervalsRecordedFragment extends Fragment implements IntervalListV
      *
      * @param interval intervals will split in this interval if not null. If it's null then view model will use the default one.
      */
-    private void updateIntervals(@Nullable IntervalStatisticsModel.IntervalOption interval) {
+    @Override
+    public void intervalChanged(IntervalStatisticsModel.IntervalOption interval) {
         if (viewModel == null || intervalListView == null) {
             return;
         }
@@ -94,10 +95,5 @@ public class IntervalsRecordedFragment extends Fragment implements IntervalListV
                 intervalListView.display(intervalStatistics.getIntervalList());
             }
         });
-    }
-
-    @Override
-    public void intervalChanged(IntervalStatisticsModel.IntervalOption interval) {
-        updateIntervals(interval);
     }
 }
