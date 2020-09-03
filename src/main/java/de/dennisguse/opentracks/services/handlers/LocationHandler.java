@@ -42,8 +42,8 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
 
     @Override
     public void onStop(Context context) {
-        locationManager = null;
         unregisterLocationListener();
+        locationManager = null;
         if (gpsStatus != null) {
             gpsStatus.stop();
             gpsStatus = null;
