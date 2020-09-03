@@ -24,6 +24,7 @@ import de.dennisguse.opentracks.util.UnitConversions;
 public class IntervalStatisticsModel extends AndroidViewModel {
 
     private MutableLiveData<IntervalStatistics> intervalStats = new MutableLiveData<>();
+    private IntervalOption interval = IntervalOption.OPTION_1;
 
     public IntervalStatisticsModel(@NonNull Application application) {
         super(application);

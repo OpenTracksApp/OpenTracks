@@ -35,6 +35,7 @@ public class IntervalListView extends LinearLayout {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
             if (spinnerIntervalsUnit != null) {
                 spinnerIntervalsUnit.setText(PreferencesUtils.isMetricUnits(getContext()) ? getContext().getString(R.string.unit_kilometer) : getContext().getString(R.string.unit_mile));
+                listener.unitChanged();
             }
         }
     };
@@ -92,6 +93,7 @@ public class IntervalListView extends LinearLayout {
 
     public interface IntervalListListener {
         void intervalChanged(IntervalStatisticsModel.IntervalOption interval);
+        void unitChanged();
     }
 
     /**

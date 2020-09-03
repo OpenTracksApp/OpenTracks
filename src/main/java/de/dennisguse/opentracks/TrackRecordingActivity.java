@@ -66,6 +66,9 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     // Preferences
     private boolean recordingTrackPaused;
 
+    // Intervals recording fragment needs Track.Id when the activity creates it.
+    private OnTrackIdListener intervalsListener;
+
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
         public void run() {
@@ -82,6 +85,9 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 if (trackId == null) {
                     // trackId isn't initialized -> leads a new recording.
                     trackId = service.startNewTrack();
+                    if (intervalsListener != null) {
+                        intervalsListener.onTrackId(trackId);
+                    }
                 } else {
                     // trackId is initialized -> resumes the track.
                     service.resumeTrack(trackId);
@@ -409,5 +415,13 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                     throw new RuntimeException("There isn't Fragment associated with the position: " + position);
             }
         }
+    }
+
+    public interface OnTrackIdListener {
+        void onTrackId(Track.Id trackId);
+    }
+
+    public void setTrackIdListener(OnTrackIdListener listener) {
+        this.intervalsListener = listener;
     }
 }

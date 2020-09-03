@@ -14,6 +14,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.util.UnitConversions;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
@@ -23,7 +24,7 @@ import de.dennisguse.opentracks.views.IntervalListView;
 /**
  * A fragment to display the intervals from recording track.
  */
-public class IntervalsRecordingFragment extends Fragment implements IntervalListView.IntervalListListener {
+public class IntervalsRecordingFragment extends Fragment implements IntervalListView.IntervalListListener, TrackRecordingActivity.OnTrackIdListener {
 
     private static final String TAG = IntervalsRecordingFragment.class.getSimpleName();
 
@@ -68,6 +69,7 @@ public class IntervalsRecordingFragment extends Fragment implements IntervalList
         super.onViewCreated(view, savedInstanceState);
 
         trackId = getArguments().getParcelable(TRACK_ID_KEY);
+        ((TrackRecordingActivity) getActivity()).setTrackIdListener(this);
 
         intervalHandler = new Handler();
 
@@ -124,4 +126,20 @@ public class IntervalsRecordingFragment extends Fragment implements IntervalList
         intervalChanged(null);
     }
 
+    @Override
+    public void unitChanged() {
+        if (viewModel != null) {
+            LiveData<IntervalStatistics> liveData = viewModel.getIntervalStats(trackId, null);
+            liveData.observe(getActivity(), intervalStatistics -> {
+                if (intervalStatistics != null) {
+                    intervalListView.display(intervalStatistics.getIntervalList());
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onTrackId(Track.Id trackId) {
+        this.trackId = trackId;
+    }
 }
