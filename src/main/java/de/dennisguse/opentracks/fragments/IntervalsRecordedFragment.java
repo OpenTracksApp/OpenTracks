@@ -90,4 +90,16 @@ public class IntervalsRecordedFragment extends Fragment implements IntervalListV
             }
         });
     }
+
+    @Override
+    public void unitChanged() {
+        if (viewModel != null) {
+            LiveData<IntervalStatistics> liveData = viewModel.getIntervalStats(trackId, null);
+            liveData.observe(getActivity(), intervalStatistics -> {
+            if (intervalStatistics != null) {
+                intervalListView.display(intervalStatistics.getIntervalList());
+            }
+        });
+        }
+    }
 }
