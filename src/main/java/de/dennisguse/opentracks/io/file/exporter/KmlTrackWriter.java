@@ -50,6 +50,7 @@ public class KmlTrackWriter implements TrackWriter {
     public static final String EXTENDED_DATA_TYPE_CADENCE = "cadence";
     public static final String EXTENDED_DATA_TYPE_HEART_RATE = "heart_rate";
     public static final String EXTENDED_DATA_TYPE_POWER = "power";
+    public static final String EXTENDED_DATA_TYPE_ELEVATION_GAIN = "elevation_gain";
 
     private static final String WAYPOINT_ICON = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png";
     private static final String START_ICON = "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png";
@@ -68,6 +69,7 @@ public class KmlTrackWriter implements TrackWriter {
     private final List<Float> powerList = new ArrayList<>();
     private final List<Float> cadenceList = new ArrayList<>();
     private final List<Float> heartRateList = new ArrayList<>();
+    private final List<Float> elevationGainList = new ArrayList<>();
 
     private TrackPoint startTrackPoint;
 
@@ -257,6 +259,9 @@ public class KmlTrackWriter implements TrackWriter {
                 if (heartRateList.size() > 0) {
                     writeSimpleArrayData(heartRateList, EXTENDED_DATA_TYPE_HEART_RATE);
                 }
+                if (elevationGainList.size() > 0) {
+                    writeSimpleArrayData(elevationGainList, EXTENDED_DATA_TYPE_ELEVATION_GAIN);
+                }
             }
             printWriter.println("</SchemaData>");
             printWriter.println("</ExtendedData>");
@@ -286,6 +291,9 @@ public class KmlTrackWriter implements TrackWriter {
                 }
                 if (trackPoint.hasPower()) {
                     powerList.add(trackPoint.getPower());
+                }
+                if (trackPoint.hasElevationGain()) {
+                    elevationGainList.add(trackPoint.getElevationGain());
                 }
             }
         }

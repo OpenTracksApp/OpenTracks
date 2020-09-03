@@ -68,9 +68,9 @@ public class TestDataUtil {
         trackPoint.setSpeed(5f + (i / 10));
 
         trackPoint.setHeartRate_bpm(100f + i);
-        trackPoint.setCyclingCadence_rpm(200f + i);
         trackPoint.setCyclingCadence_rpm(300f + i);
         trackPoint.setPower(400f + i);
+        trackPoint.setElevationGain(500f + i);
         return trackPoint;
     }
 

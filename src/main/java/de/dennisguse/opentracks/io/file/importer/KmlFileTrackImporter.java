@@ -63,11 +63,12 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
 
     private boolean trackStarted = false;
     private String extendedDataType;
-    private ArrayList<TrackPoint> trackPoints;
-    private ArrayList<Float> speedList;
-    private ArrayList<Float> cadenceList;
-    private ArrayList<Float> heartRateList;
-    private ArrayList<Float> powerList;
+    private ArrayList<TrackPoint> trackPoints = new ArrayList<>();
+    private ArrayList<Float> speedList = new ArrayList<>();
+    private ArrayList<Float> cadenceList = new ArrayList<>();
+    private ArrayList<Float> heartRateList = new ArrayList<>();
+    private ArrayList<Float> powerList = new ArrayList<>();
+    private ArrayList<Float> elevationGainList = new ArrayList<>();
 
     public KmlFileTrackImporter(Context context) {
         this(context, new ContentProviderUtils(context));
@@ -223,11 +224,12 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     @Override
     protected void onTrackSegmentStart() {
         super.onTrackSegmentStart();
-        trackPoints = new ArrayList<>();
-        speedList = new ArrayList<>();
-        heartRateList = new ArrayList<>();
-        cadenceList = new ArrayList<>();
-        powerList = new ArrayList<>();
+        trackPoints.clear();
+        speedList.clear();
+        heartRateList.clear();
+        cadenceList.clear();
+        powerList.clear();
+        elevationGainList.clear();
     }
 
     /**
@@ -249,6 +251,9 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
             }
             if (i < powerList.size()) {
                 trackPoint.setPower(powerList.get(i));
+            }
+            if (i < elevationGainList.size()) {
+                trackPoint.setElevationGain(elevationGainList.get(i));
             }
 
             insertTrackPoint(trackPoint);
@@ -315,6 +320,9 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
                 break;
             case KmlTrackWriter.EXTENDED_DATA_TYPE_CADENCE:
                 cadenceList.add(value);
+                break;
+            case KmlTrackWriter.EXTENDED_DATA_TYPE_ELEVATION_GAIN:
+                elevationGainList.add(value);
                 break;
             default:
                 Log.w(TAG, "Data from extended data " + extendedDataType + " is not (yet) supported.");
