@@ -215,6 +215,8 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO trackpoints SELECT _id, trackid, longitude, latitude, time, elevation, accuracy, speed, bearing, sensor_heartrate, sensor_cadence, sensor_power FROM trackpoints_old");
         db.execSQL("DROP TABLE trackpoints_old");
 
+        db.execSQL("CREATE INDEX trackpoints_trackid_index ON trackpoints(trackid)");
+
         db.setTransactionSuccessful();
         db.endTransaction();
     }
