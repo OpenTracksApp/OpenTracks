@@ -836,6 +836,11 @@ public class ContentProviderUtils {
         if (trackPoint.hasPower()) {
             values.put(TrackPointsColumns.SENSOR_POWER, trackPoint.getPower());
         }
+
+        if (trackPoint.hasElevationGain()) {
+            values.put(TrackPointsColumns.ELEVATION_GAIN, trackPoint.getElevationGain());
+        }
+
         return values;
     }
 
