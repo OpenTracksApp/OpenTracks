@@ -107,18 +107,12 @@ public class IntervalsRecordingFragment extends Fragment implements IntervalList
      * @param interval intervals will split in this interval if not null. If it's null then view model will use the default one.
      */
     @Override
-    public void intervalChanged(IntervalStatisticsModel.IntervalOption interval) {
+    public void intervalChanged(@Nullable IntervalStatisticsModel.IntervalOption interval) {
         if (viewModel == null || intervalListView == null) {
             return;
         }
 
-        viewModel.invalidate();
-        LiveData<IntervalStatistics> liveData;
-        if (interval == null) {
-            liveData = viewModel.getIntervalStats(trackId);
-        } else {
-            liveData = viewModel.getIntervalStats(trackId, interval);
-        }
+        LiveData<IntervalStatistics> liveData = viewModel.getIntervalStats(trackId, interval);
         liveData.observe(getActivity(), intervalStatistics -> {
             if (intervalStatistics != null) {
                 intervalListView.display(intervalStatistics.getIntervalList());
