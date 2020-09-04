@@ -1,9 +1,10 @@
 package de.dennisguse.opentracks.util;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
+
+import static org.junit.Assert.assertEquals;
 
 public class TrackPointUtilsTest {
 
@@ -18,7 +19,7 @@ public class TrackPointUtilsTest {
         TrackPointUtils.fixTime(trackPoint);
 
         // then
-        Assert.assertEquals(time, trackPoint.getTime());
+        assertEquals(time, trackPoint.getTime());
     }
 
     @Test
@@ -32,7 +33,7 @@ public class TrackPointUtilsTest {
         TrackPointUtils.fixTime(trackPoint);
 
         // then
-        Assert.assertEquals(time, trackPoint.getTime(), 1000);
+        assertEquals(time, trackPoint.getTime(), 1000);
     }
 
     @Test
@@ -46,7 +47,7 @@ public class TrackPointUtilsTest {
         TrackPointUtils.fixTime(trackPoint);
 
         // then
-        Assert.assertEquals(time, trackPoint.getTime());
+        assertEquals(time, trackPoint.getTime());
     }
 
 }

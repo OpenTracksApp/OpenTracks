@@ -32,7 +32,6 @@ import androidx.test.rule.GrantPermissionRule;
 import androidx.test.rule.ServiceTestRule;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -53,6 +52,13 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the track recording service.
@@ -120,14 +126,14 @@ public class TrackRecordingServiceTest {
     @Test
     public void testStartable() throws TimeoutException {
         mServiceRule.startService(createStartIntent(context));
-        Assert.assertNotNull(mServiceRule.bindService(createStartIntent(context)));
+        assertNotNull(mServiceRule.bindService(createStartIntent(context)));
     }
 
     @MediumTest
     @Test
     public void testBindable() throws TimeoutException {
         IBinder service = mServiceRule.bindService(createStartIntent(context));
-        Assert.assertNotNull(service);
+        assertNotNull(service);
     }
 
     @MediumTest
@@ -135,7 +141,7 @@ public class TrackRecordingServiceTest {
     public void testRecording_noTracks() throws Exception {
         // given
         List<Track> tracks = contentProviderUtils.getTracks();
-        Assert.assertTrue(tracks.isEmpty());
+        assertTrue(tracks.isEmpty());
 
         // when
         Intent startIntent = createStartIntent(context);
@@ -144,8 +150,8 @@ public class TrackRecordingServiceTest {
 
         // then
         // Test if we start in no-recording mode by default.
-        Assert.assertFalse(service.isRecording());
-        Assert.assertNull(service.getRecordingTrackId());
+        assertFalse(service.isRecording());
+        assertNull(service.getRecordingTrackId());
     }
 
     @MediumTest
@@ -158,8 +164,8 @@ public class TrackRecordingServiceTest {
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
 
         // then
-        Assert.assertFalse(service.isRecording());
-        Assert.assertNull(service.getRecordingTrackId());
+        assertFalse(service.isRecording());
+        assertNull(service.getRecordingTrackId());
     }
 
     @MediumTest
@@ -172,7 +178,7 @@ public class TrackRecordingServiceTest {
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
 
         // then
-        Assert.assertTrue(service.isRecording());
+        assertTrue(service.isRecording());
     }
 
     @MediumTest
@@ -187,21 +193,21 @@ public class TrackRecordingServiceTest {
         service.pauseCurrentTrack();
 
         // then
-        Assert.assertEquals(2, contentProviderUtils.getTrackPoints(trackId).size());
+        assertEquals(2, contentProviderUtils.getTrackPoints(trackId).size());
 
         //when
         service.resumeTrack(trackId);
         newTrackPoint(service);
 
         // then
-        Assert.assertTrue(service.isRecording());
-        Assert.assertEquals(trackId, service.getRecordingTrackId());
+        assertTrue(service.isRecording());
+        assertEquals(trackId, service.getRecordingTrackId());
 
         List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
-        Assert.assertEquals(5, trackPoints.size());
-        Assert.assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(1).getLatitude(), 0.01);
-        Assert.assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(2).getLatitude(), 0.01);
-        Assert.assertEquals(TrackPointsColumns.RESUME_LATITUDE, trackPoints.get(3).getLatitude(), 0.01);
+        assertEquals(5, trackPoints.size());
+        assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(1).getLatitude(), 0.01);
+        assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(2).getLatitude(), 0.01);
+        assertEquals(TrackPointsColumns.RESUME_LATITUDE, trackPoints.get(3).getLatitude(), 0.01);
     }
 
     @MediumTest
@@ -213,20 +219,20 @@ public class TrackRecordingServiceTest {
         newTrackPoint(service);
         service.endCurrentTrack();
 
-        Assert.assertEquals(1, contentProviderUtils.getTrackPoints(trackId).size());
+        assertEquals(1, contentProviderUtils.getTrackPoints(trackId).size());
 
         // when
         service.resumeTrack(trackId);
         newTrackPoint(service);
 
         // then
-        Assert.assertTrue(service.isRecording());
-        Assert.assertEquals(trackId, service.getRecordingTrackId());
+        assertTrue(service.isRecording());
+        assertEquals(trackId, service.getRecordingTrackId());
 
         List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
-        Assert.assertEquals(4, trackPoints.size());
-        Assert.assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(1).getLatitude(), 0.01);
-        Assert.assertEquals(TrackPointsColumns.RESUME_LATITUDE, trackPoints.get(2).getLatitude(), 0.01);
+        assertEquals(4, trackPoints.size());
+        assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(1).getLatitude(), 0.01);
+        assertEquals(TrackPointsColumns.RESUME_LATITUDE, trackPoints.get(2).getLatitude(), 0.01);
     }
 
     @FlakyTest(detail = "Sometimes fails on CI.")
@@ -242,8 +248,8 @@ public class TrackRecordingServiceTest {
         PreferencesUtils.setLong(context, R.string.recording_track_id_key, 123L);
 
         // then
-        Assert.assertFalse(service.isRecording());
-        Assert.assertNull(service.getRecordingTrackId());
+        assertFalse(service.isRecording());
+        assertNull(service.getRecordingTrackId());
     }
 
     @MediumTest
@@ -252,7 +258,7 @@ public class TrackRecordingServiceTest {
         // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         service.startNewTrack();
-        Assert.assertTrue(service.isRecording());
+        assertTrue(service.isRecording());
 
         Track.Id trackId = service.getRecordingTrackId();
 
@@ -260,10 +266,10 @@ public class TrackRecordingServiceTest {
         Track.Id newTrackId = service.startNewTrack();
 
         // then
-        Assert.assertNull(newTrackId);
+        assertNull(newTrackId);
 
-        Assert.assertEquals(trackId, PreferencesUtils.getRecordingTrackId(context));
-        Assert.assertEquals(trackId, service.getRecordingTrackId());
+        assertEquals(trackId, PreferencesUtils.getRecordingTrackId(context));
+        assertEquals(trackId, service.getRecordingTrackId());
     }
 
     @MediumTest
@@ -271,15 +277,15 @@ public class TrackRecordingServiceTest {
     public void testEndCurrentTrack_noRecording() throws Exception {
         // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
-        Assert.assertFalse(service.isRecording());
+        assertFalse(service.isRecording());
 
         // when
         // Ending the current track when there is no recording should not result in any error.
         service.endCurrentTrack();
 
         // then
-        Assert.assertFalse(PreferencesUtils.isRecording(context));
-        Assert.assertNull(service.getRecordingTrackId());
+        assertFalse(PreferencesUtils.isRecording(context));
+        assertNull(service.getRecordingTrackId());
     }
 
     @MediumTest
@@ -287,13 +293,13 @@ public class TrackRecordingServiceTest {
     public void testInsertWaypointMarker_noRecordingTrack() throws Exception {
         // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
-        Assert.assertFalse(service.isRecording());
+        assertFalse(service.isRecording());
 
         // when
         Waypoint.Id waypointId = service.insertWaypoint(null, null, null, null);
 
         // then
-        Assert.assertNull(waypointId);
+        assertNull(waypointId);
     }
 
     @MediumTest
@@ -302,7 +308,7 @@ public class TrackRecordingServiceTest {
         // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         service.startNewTrack();
-        Assert.assertTrue(service.isRecording());
+        assertTrue(service.isRecording());
         newTrackPoint(service);
         Track.Id trackId = service.getRecordingTrackId();
 
@@ -310,21 +316,21 @@ public class TrackRecordingServiceTest {
         Waypoint.Id waypointId = service.insertWaypoint(null, null, null, null);
 
         // then
-        Assert.assertNotEquals(-1L, waypointId);
+        assertNotEquals(-1L, waypointId);
         Waypoint wpt = contentProviderUtils.getWaypoint(waypointId);
-        Assert.assertEquals(context.getString(R.string.marker_waypoint_icon_url), wpt.getIcon());
-        Assert.assertEquals(context.getString(R.string.marker_name_format, 1), wpt.getName());
-        Assert.assertEquals(trackId, wpt.getTrackId());
-        Assert.assertEquals(0.0, wpt.getLength(), 0.01);
-        Assert.assertNotNull(wpt.getLocation());
+        assertEquals(context.getString(R.string.marker_waypoint_icon_url), wpt.getIcon());
+        assertEquals(context.getString(R.string.marker_name_format, 1), wpt.getName());
+        assertEquals(trackId, wpt.getTrackId());
+        assertEquals(0.0, wpt.getLength(), 0.01);
+        assertNotNull(wpt.getLocation());
 
         service.endCurrentTrack();
     }
 
     private void addTrack(Track track, boolean isRecording) {
-        Assert.assertTrue(track.getId().isValid());
+        assertTrue(track.getId().isValid());
         contentProviderUtils.insertTrack(track);
-        Assert.assertEquals(track.getId(), contentProviderUtils.getTrack(track.getId()).getId());
+        assertEquals(track.getId(), contentProviderUtils.getTrack(track.getId()).getId());
         PreferencesUtils.setLong(context, R.string.recording_track_id_key, isRecording ? track.getId().getId() : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
         PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, !isRecording);
     }

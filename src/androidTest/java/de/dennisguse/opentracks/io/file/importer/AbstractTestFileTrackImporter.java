@@ -24,7 +24,6 @@ import android.net.Uri;
 
 import androidx.test.core.app.ApplicationProvider;
 
-import org.junit.Assert;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 
@@ -39,6 +38,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.when;
@@ -122,10 +122,10 @@ public abstract class AbstractTestFileTrackImporter {
     }
 
     protected void verifyTrack(Track track, String name, String description, long time) {
-        Assert.assertEquals(name, track.getName());
-        Assert.assertEquals(description, track.getDescription());
+        assertEquals(name, track.getName());
+        assertEquals(description, track.getDescription());
         if (time != -1L) {
-            Assert.assertEquals(time, track.getTrackStatistics().getStartTime_ms());
+            assertEquals(time, track.getTrackStatistics().getStartTime_ms());
         }
     }
 }

@@ -24,7 +24,6 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.provider.ProviderTestRule;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,6 +40,10 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.content.provider.CustomSQLiteOpenHelper;
 import de.dennisguse.opentracks.stats.TrackStatistics;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 /**
  * Tests for {@link SearchEngine}.
@@ -200,7 +203,7 @@ public class SearchEngineTest {
         ArrayList<ScoredResult> results = new ArrayList<>(engine.search(query));
 
         // Title > Description > Category.
-        Assert.assertEquals(results.toString(), 3, results.size());
+        assertEquals(results.toString(), 3, results.size());
         assertTrackResult(trackId, results.get(0));
         assertWaypointResult(titleWaypointId, results.get(1));
         assertWaypointResult(descriptionWaypointId, results.get(2));
@@ -274,9 +277,9 @@ public class SearchEngineTest {
     }
 
     private void assertTrackResult(Track.Id trackId, ScoredResult result) {
-        Assert.assertNotNull("Not a track", result.track);
-        Assert.assertNull("Ambiguous result", result.waypoint);
-        Assert.assertEquals(trackId, result.track.getId());
+        assertNotNull("Not a track", result.track);
+        assertNull("Ambiguous result", result.waypoint);
+        assertEquals(trackId, result.track.getId());
     }
 
     private void assertTrackResults(List<ScoredResult> results, Track.Id... trackIds) {
@@ -286,19 +289,19 @@ public class SearchEngineTest {
         }
 
         String errMsg = "Expected IDs=" + Arrays.toString(longTrackIds) + "; results=" + results;
-        Assert.assertEquals(results.size(), trackIds.length);
+        assertEquals(results.size(), trackIds.length);
         for (int i = 0; i < results.size(); i++) {
             ScoredResult result = results.get(i);
-            Assert.assertNotNull(errMsg, result.track);
-            Assert.assertNull(errMsg, result.waypoint);
-            Assert.assertEquals(errMsg, trackIds[i], result.track.getId());
+            assertNotNull(errMsg, result.track);
+            assertNull(errMsg, result.waypoint);
+            assertEquals(errMsg, trackIds[i], result.track.getId());
         }
     }
 
     private void assertWaypointResult(Waypoint.Id waypointId, ScoredResult result) {
-        Assert.assertNotNull("Not a waypoint", result.waypoint);
-        Assert.assertNull("Ambiguous result", result.track);
-        Assert.assertEquals(waypointId, result.waypoint.getId());
+        assertNotNull("Not a waypoint", result.waypoint);
+        assertNull("Ambiguous result", result.track);
+        assertEquals(waypointId, result.waypoint.getId());
     }
 
     private void assertWaypointResults(List<ScoredResult> results, Waypoint.Id... waypointIds) {
@@ -308,12 +311,12 @@ public class SearchEngineTest {
         }
 
         String errMsg = "Expected IDs=" + Arrays.toString(longWaypointIds) + "; results=" + results;
-        Assert.assertEquals(results.size(), waypointIds.length);
+        assertEquals(results.size(), waypointIds.length);
         for (int i = 0; i < results.size(); i++) {
             ScoredResult result = results.get(i);
-            Assert.assertNotNull(errMsg, result.waypoint);
-            Assert.assertNull(errMsg, result.track);
-            Assert.assertEquals(errMsg, waypointIds[i], result.waypoint.getId());
+            assertNotNull(errMsg, result.waypoint);
+            assertNull(errMsg, result.track);
+            assertEquals(errMsg, waypointIds[i], result.waypoint.getId());
         }
     }
 }

@@ -21,7 +21,6 @@ import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +29,8 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for {@link DescriptionGenerator}.
@@ -85,7 +86,7 @@ public class DescriptionGeneratorTest {
                 + "Elevation gain: 6000 m (19685 ft)<br>"
                 + "Recorded: " + StringUtils.formatDateTime(context, START_TIME) + "<br>";
 
-        Assert.assertEquals(expected, descriptionGenerator.generateTrackDescription(track, true));
+        assertEquals(expected, descriptionGenerator.generateTrackDescription(track, true));
     }
 
     @Test
@@ -119,7 +120,7 @@ public class DescriptionGeneratorTest {
                         + "Elevation gain: 6000 m (19685 ft)<br>"
                         + "Recorded: " + StringUtils.formatDateTime(context, START_TIME) + "<br>";
 
-        Assert.assertEquals(expected, descriptionGenerator.generateTrackDescription(track, true));
+        assertEquals(expected, descriptionGenerator.generateTrackDescription(track, true));
     }
 
 
@@ -130,7 +131,7 @@ public class DescriptionGeneratorTest {
     public void testWriteDistance() {
         StringBuilder builder = new StringBuilder();
         descriptionGenerator.writeDistance(1100, builder, R.string.description_total_distance, "<br>");
-        Assert.assertEquals("Total distance: 1.10 km (0.7 mi)<br>", builder.toString());
+        assertEquals("Total distance: 1.10 km (0.7 mi)<br>", builder.toString());
     }
 
     /**
@@ -140,7 +141,7 @@ public class DescriptionGeneratorTest {
     public void testWriteTime() {
         StringBuilder builder = new StringBuilder();
         descriptionGenerator.writeTime(1000, builder, R.string.description_total_time, "<br>");
-        Assert.assertEquals("Total time: 00:01<br>", builder.toString());
+        assertEquals("Total time: 00:01<br>", builder.toString());
     }
 
     /**
@@ -150,7 +151,7 @@ public class DescriptionGeneratorTest {
     public void testWriteSpeed() {
         StringBuilder builder = new StringBuilder();
         descriptionGenerator.writeSpeed(1.1, builder, R.string.description_average_speed, "\n");
-        Assert.assertEquals("Average speed: 3.96 km/h (2.5 mi/h)\n", builder.toString());
+        assertEquals("Average speed: 3.96 km/h (2.5 mi/h)\n", builder.toString());
     }
 
     /**
@@ -160,7 +161,7 @@ public class DescriptionGeneratorTest {
     public void testWriteElevation() {
         StringBuilder builder = new StringBuilder();
         descriptionGenerator.writeElevation(4.2, builder, R.string.description_min_elevation, "<br>");
-        Assert.assertEquals("Min elevation: 4 m (14 ft)<br>", builder.toString());
+        assertEquals("Min elevation: 4 m (14 ft)<br>", builder.toString());
     }
 
     /**
@@ -170,6 +171,6 @@ public class DescriptionGeneratorTest {
     public void testWritePace() {
         StringBuilder builder = new StringBuilder();
         descriptionGenerator.writePace(1.1, builder, R.string.description_average_pace_in_minute, "\n");
-        Assert.assertEquals("Average pace: 15:09 min/km (24:23 min/mi)\n", builder.toString());
+        assertEquals("Average pace: 15:09 min/km (24:23 min/mi)\n", builder.toString());
     }
 }

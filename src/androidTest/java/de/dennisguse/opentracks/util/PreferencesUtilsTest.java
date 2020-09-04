@@ -6,12 +6,13 @@ import android.content.SharedPreferences;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class PreferencesUtilsTest {
@@ -29,7 +30,7 @@ public class PreferencesUtilsTest {
         TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(context);
 
         // then
-        Assert.assertEquals(TrackFileFormat.KMZ_WITH_TRACKDETAIL, trackFileFormat);
+        assertEquals(TrackFileFormat.KMZ_WITH_TRACKDETAIL, trackFileFormat);
     }
 
     @Test
@@ -43,7 +44,7 @@ public class PreferencesUtilsTest {
         TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(context);
 
         // then
-        Assert.assertEquals(TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA, trackFileFormat);
+        assertEquals(TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA, trackFileFormat);
     }
 
     @Test
@@ -57,6 +58,6 @@ public class PreferencesUtilsTest {
         TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(context);
 
         // then
-        Assert.assertEquals(TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA, trackFileFormat);
+        assertEquals(TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA, trackFileFormat);
     }
 }

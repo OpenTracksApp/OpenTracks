@@ -21,12 +21,14 @@ import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for {@link StringUtils}.
@@ -44,7 +46,7 @@ public class StringUtilsTest {
      */
     @Test
     public void testFormatDateTimeIso8601() {
-        Assert.assertEquals("1970-01-01T00:00:12.345Z", StringUtils.formatDateTimeIso8601(12345));
+        assertEquals("1970-01-01T00:00:12.345Z", StringUtils.formatDateTimeIso8601(12345));
     }
 
     /**
@@ -53,19 +55,19 @@ public class StringUtilsTest {
     @Test
     public void testformatElapsedTime() {
         // 1 second
-        Assert.assertEquals("00:01", StringUtils.formatElapsedTime(1000));
+        assertEquals("00:01", StringUtils.formatElapsedTime(1000));
         // 10 seconds
-        Assert.assertEquals("00:10", StringUtils.formatElapsedTime(10000));
+        assertEquals("00:10", StringUtils.formatElapsedTime(10000));
         // 1 minute
-        Assert.assertEquals("01:00", StringUtils.formatElapsedTime(60000));
+        assertEquals("01:00", StringUtils.formatElapsedTime(60000));
         // 10 minutes
-        Assert.assertEquals("10:00", StringUtils.formatElapsedTime(600000));
+        assertEquals("10:00", StringUtils.formatElapsedTime(600000));
         // 1 hour
-        Assert.assertEquals("1:00:00", StringUtils.formatElapsedTime(3600000));
+        assertEquals("1:00:00", StringUtils.formatElapsedTime(3600000));
         // 10 hours
-        Assert.assertEquals("10:00:00", StringUtils.formatElapsedTime(36000000));
+        assertEquals("10:00:00", StringUtils.formatElapsedTime(36000000));
         // 100 hours
-        Assert.assertEquals("100:00:00", StringUtils.formatElapsedTime(360000000));
+        assertEquals("100:00:00", StringUtils.formatElapsedTime(360000000));
     }
 
     /**
@@ -74,19 +76,19 @@ public class StringUtilsTest {
     @Test
     public void testformatElapsedTimeWithHour() {
         // 1 second
-        Assert.assertEquals("0:00:01", StringUtils.formatElapsedTimeWithHour(1000));
+        assertEquals("0:00:01", StringUtils.formatElapsedTimeWithHour(1000));
         // 10 seconds
-        Assert.assertEquals("0:00:10", StringUtils.formatElapsedTimeWithHour(10000));
+        assertEquals("0:00:10", StringUtils.formatElapsedTimeWithHour(10000));
         // 1 minute
-        Assert.assertEquals("0:01:00", StringUtils.formatElapsedTimeWithHour(60000));
+        assertEquals("0:01:00", StringUtils.formatElapsedTimeWithHour(60000));
         // 10 minutes
-        Assert.assertEquals("0:10:00", StringUtils.formatElapsedTimeWithHour(600000));
+        assertEquals("0:10:00", StringUtils.formatElapsedTimeWithHour(600000));
         // 1 hour
-        Assert.assertEquals("1:00:00", StringUtils.formatElapsedTimeWithHour(3600000));
+        assertEquals("1:00:00", StringUtils.formatElapsedTimeWithHour(3600000));
         // 10 hours
-        Assert.assertEquals("10:00:00", StringUtils.formatElapsedTimeWithHour(36000000));
+        assertEquals("10:00:00", StringUtils.formatElapsedTimeWithHour(36000000));
         // 100 hours
-        Assert.assertEquals("100:00:00", StringUtils.formatElapsedTimeWithHour(360000000));
+        assertEquals("100:00:00", StringUtils.formatElapsedTimeWithHour(360000000));
     }
 
     /**
@@ -96,13 +98,13 @@ public class StringUtilsTest {
     @Test
     public void testFormatDistance() {
         // A large number in metric
-        Assert.assertEquals("5.00 km", StringUtils.formatDistance(context, 5000, true));
+        assertEquals("5.00 km", StringUtils.formatDistance(context, 5000, true));
         // A large number in imperial
-        Assert.assertEquals("3.11 mi", StringUtils.formatDistance(context, 5000, false));
+        assertEquals("3.11 mi", StringUtils.formatDistance(context, 5000, false));
         // A small number in metric
-        Assert.assertEquals("100.00 m", StringUtils.formatDistance(context, 100, true));
+        assertEquals("100.00 m", StringUtils.formatDistance(context, 100, true));
         // A small number in imperial
-        Assert.assertEquals("328.08 ft", StringUtils.formatDistance(context, 100, false));
+        assertEquals("328.08 ft", StringUtils.formatDistance(context, 100, false));
     }
 
     /**
@@ -110,8 +112,8 @@ public class StringUtilsTest {
      */
     @Test
     public void testFormatCData() {
-        Assert.assertEquals("<![CDATA[hello]]>", StringUtils.formatCData("hello"));
-        Assert.assertEquals("<![CDATA[hello]]]]><![CDATA[>there]]>", StringUtils.formatCData("hello]]>there"));
+        assertEquals("<![CDATA[hello]]>", StringUtils.formatCData("hello"));
+        assertEquals("<![CDATA[hello]]]]><![CDATA[>there]]>", StringUtils.formatCData("hello]]>there"));
     }
 
     /**
@@ -168,7 +170,7 @@ public class StringUtilsTest {
 
         // This comparision tends to be flaky (difference of 1ms)
         // Assert.assertEquals(calendar.getTimeInMillis(), StringUtils.parseTime(xmlDateTime));
-        Assert.assertTrue(calendar.getTimeInMillis() + " vs. " + StringUtils.parseTime(xmlDateTime), Math.abs(calendar.getTimeInMillis() - StringUtils.parseTime(xmlDateTime)) <= 1);
+        assertTrue(calendar.getTimeInMillis() + " vs. " + StringUtils.parseTime(xmlDateTime), Math.abs(calendar.getTimeInMillis() - StringUtils.parseTime(xmlDateTime)) <= 1);
     }
 
     /**
@@ -177,9 +179,9 @@ public class StringUtilsTest {
     @Test
     public void testGetTimeParts_positive() {
         int[] parts = StringUtils.getTimeParts(61000);
-        Assert.assertEquals(1, parts[0]);
-        Assert.assertEquals(1, parts[1]);
-        Assert.assertEquals(0, parts[2]);
+        assertEquals(1, parts[0]);
+        assertEquals(1, parts[1]);
+        assertEquals(0, parts[2]);
     }
 
     /**
@@ -188,40 +190,40 @@ public class StringUtilsTest {
     @Test
     public void testGetTimeParts_negative() {
         int[] parts = StringUtils.getTimeParts(-61000);
-        Assert.assertEquals(-1, parts[0]);
-        Assert.assertEquals(-1, parts[1]);
-        Assert.assertEquals(0, parts[2]);
+        assertEquals(-1, parts[0]);
+        assertEquals(-1, parts[1]);
+        assertEquals(0, parts[2]);
     }
 
     @Test
     public void testFormatDecimal() {
-        Assert.assertEquals("0", StringUtils.formatDecimal(0.0, 0));
-        Assert.assertEquals("0", StringUtils.formatDecimal(0.1, 0));
-        Assert.assertEquals("1", StringUtils.formatDecimal(1.1, 0));
-        Assert.assertEquals("10", StringUtils.formatDecimal(10, 0));
-        Assert.assertEquals("10", StringUtils.formatDecimal(10.1, 0));
-        Assert.assertEquals("0", StringUtils.formatDecimal(-0.1, 0));
+        assertEquals("0", StringUtils.formatDecimal(0.0, 0));
+        assertEquals("0", StringUtils.formatDecimal(0.1, 0));
+        assertEquals("1", StringUtils.formatDecimal(1.1, 0));
+        assertEquals("10", StringUtils.formatDecimal(10, 0));
+        assertEquals("10", StringUtils.formatDecimal(10.1, 0));
+        assertEquals("0", StringUtils.formatDecimal(-0.1, 0));
 
-        Assert.assertEquals("0", StringUtils.formatDecimal(0.0, 2));
-        Assert.assertEquals("0.1", StringUtils.formatDecimal(0.1, 2));
-        Assert.assertEquals("1.1", StringUtils.formatDecimal(1.1, 2));
-        Assert.assertEquals("10", StringUtils.formatDecimal(10, 2));
-        Assert.assertEquals("10.1", StringUtils.formatDecimal(10.1, 2));
-        Assert.assertEquals("10.11", StringUtils.formatDecimal(10.111, 2));
-        Assert.assertEquals("-0.1", StringUtils.formatDecimal(-0.1, 2));
+        assertEquals("0", StringUtils.formatDecimal(0.0, 2));
+        assertEquals("0.1", StringUtils.formatDecimal(0.1, 2));
+        assertEquals("1.1", StringUtils.formatDecimal(1.1, 2));
+        assertEquals("10", StringUtils.formatDecimal(10, 2));
+        assertEquals("10.1", StringUtils.formatDecimal(10.1, 2));
+        assertEquals("10.11", StringUtils.formatDecimal(10.111, 2));
+        assertEquals("-0.1", StringUtils.formatDecimal(-0.1, 2));
 
-        Assert.assertEquals("1", StringUtils.formatDecimal(0.99, 1));
+        assertEquals("1", StringUtils.formatDecimal(0.99, 1));
     }
 
     @Test
     public void testGetSpeedParts() {
-        Assert.assertEquals("4:59", StringUtils.getSpeedParts(context, 3.34, true, false).first);
-        Assert.assertEquals("5:00", StringUtils.getSpeedParts(context, 3.33, true, false).first);
+        assertEquals("4:59", StringUtils.getSpeedParts(context, 3.34, true, false).first);
+        assertEquals("5:00", StringUtils.getSpeedParts(context, 3.33, true, false).first);
 
-        Assert.assertEquals("11.99", StringUtils.getSpeedParts(context, 3.33, true, true).first);
-        Assert.assertEquals("7.45", StringUtils.getSpeedParts(context, 3.33, false, true).first);
+        assertEquals("11.99", StringUtils.getSpeedParts(context, 3.33, true, true).first);
+        assertEquals("7.45", StringUtils.getSpeedParts(context, 3.33, false, true).first);
 
-        Assert.assertEquals("min/km", StringUtils.getSpeedParts(context, 0, true, false).second);
-        Assert.assertEquals("min/mi", StringUtils.getSpeedParts(context, 0, false, false).second);
+        assertEquals("min/km", StringUtils.getSpeedParts(context, 0, true, false).second);
+        assertEquals("min/mi", StringUtils.getSpeedParts(context, 0, false, false).second);
     }
 }

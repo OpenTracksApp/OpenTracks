@@ -25,7 +25,6 @@ import android.util.Pair;
 
 import androidx.test.core.app.ApplicationProvider;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,6 +49,11 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.UUIDUtils;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 /**
@@ -122,13 +126,13 @@ public class CustomContentProviderUtilsTest {
         try (TrackPointIterator it = contentProviderUtils.getTrackPointLocationIterator(trackId, -1L, descending)) {
             while (it.hasNext()) {
                 TrackPoint loc = it.next();
-                Assert.assertNotNull(loc);
+                assertNotNull(loc);
                 locations.add(loc);
                 // Make sure the IDs are returned in the right order.
-                Assert.assertEquals(descending ? lastPointId - locations.size() + 1
+                assertEquals(descending ? lastPointId - locations.size() + 1
                         : lastPointId - numPoints + locations.size(), it.getTrackPointId());
             }
-            Assert.assertEquals(numPoints, locations.size());
+            assertEquals(numPoints, locations.size());
         }
     }
 
@@ -138,7 +142,7 @@ public class CustomContentProviderUtilsTest {
         track.setName("Test: " + id.getId());
         contentProviderUtils.insertTrack(track);
         track = contentProviderUtils.getTrack(id);
-        Assert.assertNotNull(track);
+        assertNotNull(track);
 
         TrackPoint[] trackPoints = new TrackPoint[numPoints];
         for (int i = 0; i < numPoints; ++i) {
@@ -162,8 +166,8 @@ public class CustomContentProviderUtilsTest {
             }
         }
 
-        Assert.assertTrue(numPoints == 0 || lastPointId > 0);
-        Assert.assertEquals(numPoints, counter);
+        assertTrue(numPoints == 0 || lastPointId > 0);
+        assertEquals(numPoints, counter);
 
         return lastPointId;
     }
@@ -195,8 +199,8 @@ public class CustomContentProviderUtilsTest {
         when(cursorMock.getString(columnIndex)).thenReturn(name);
 
         Track track = contentProviderUtils.createTrack(cursorMock);
-        Assert.assertEquals(trackId, track.getId());
-        Assert.assertEquals(name, track.getName());
+        assertEquals(trackId, track.getId());
+        assertEquals(name, track.getName());
     }
 
     /**
@@ -213,20 +217,20 @@ public class CustomContentProviderUtilsTest {
 
         ContentResolver contentResolver = context.getContentResolver();
         Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        Assert.assertEquals(1, tracksCursor.getCount());
+        assertEquals(1, tracksCursor.getCount());
         Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        Assert.assertEquals(10, tracksPointsCursor.getCount());
+        assertEquals(10, tracksPointsCursor.getCount());
         Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
-        Assert.assertEquals(1, waypointCursor.getCount());
+        assertEquals(1, waypointCursor.getCount());
         // Delete all.
         contentProviderUtils.deleteAllTracks(context);
         // Check whether all have been deleted.
         tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        Assert.assertEquals(0, tracksCursor.getCount());
+        assertEquals(0, tracksCursor.getCount());
         tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        Assert.assertEquals(0, tracksPointsCursor.getCount());
+        assertEquals(0, tracksPointsCursor.getCount());
         waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
-        Assert.assertEquals(0, waypointCursor.getCount());
+        assertEquals(0, waypointCursor.getCount());
     }
 
     /**
@@ -244,27 +248,27 @@ public class CustomContentProviderUtilsTest {
 
         ContentResolver contentResolver = context.getContentResolver();
         Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        Assert.assertEquals(1, tracksCursor.getCount());
+        assertEquals(1, tracksCursor.getCount());
         Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        Assert.assertEquals(10, tracksPointsCursor.getCount());
+        assertEquals(10, tracksPointsCursor.getCount());
         Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
-        Assert.assertEquals(1, waypointCursor.getCount());
+        assertEquals(1, waypointCursor.getCount());
         // Check waypoint has photo and it's in the external storage.
-        Assert.assertTrue(waypoint.hasPhoto());
+        assertTrue(waypoint.hasPhoto());
         File dir = FileUtils.getPhotoDir(context, trackId);
-        Assert.assertTrue(dir.isDirectory());
-        Assert.assertEquals(1, dir.list().length);
-        Assert.assertTrue(dir.exists());
+        assertTrue(dir.isDirectory());
+        assertEquals(1, dir.list().length);
+        assertTrue(dir.exists());
         // Delete all.
         contentProviderUtils.deleteAllTracks(context);
         // Check whether all have been deleted.
         tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        Assert.assertEquals(0, tracksCursor.getCount());
+        assertEquals(0, tracksCursor.getCount());
         tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        Assert.assertEquals(0, tracksPointsCursor.getCount());
+        assertEquals(0, tracksPointsCursor.getCount());
         waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
-        Assert.assertEquals(0, waypointCursor.getCount());
-        Assert.assertFalse(dir.exists());
+        assertEquals(0, waypointCursor.getCount());
+        assertFalse(dir.exists());
     }
 
     /**
@@ -289,20 +293,20 @@ public class CustomContentProviderUtilsTest {
 
         ContentResolver contentResolver = context.getContentResolver();
         Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        Assert.assertEquals(3, tracksCursor.getCount());
+        assertEquals(3, tracksCursor.getCount());
         Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        Assert.assertEquals(20, tracksPointsCursor.getCount());
+        assertEquals(20, tracksPointsCursor.getCount());
         Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
-        Assert.assertEquals(1, waypointCursor.getCount());
+        assertEquals(1, waypointCursor.getCount());
         // Delete one track.
         contentProviderUtils.deleteTrack(context, trackId1);
         // Check whether all data of a track has been deleted.
         tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        Assert.assertEquals(2, tracksCursor.getCount());
+        assertEquals(2, tracksCursor.getCount());
         tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        Assert.assertEquals(20, tracksPointsCursor.getCount());
+        assertEquals(20, tracksPointsCursor.getCount());
         waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
-        Assert.assertEquals(0, waypointCursor.getCount());
+        assertEquals(0, waypointCursor.getCount());
     }
 
     /**
@@ -334,29 +338,29 @@ public class CustomContentProviderUtilsTest {
         // Check.
         ContentResolver contentResolver = context.getContentResolver();
         Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        Assert.assertEquals(3, tracksCursor.getCount());
+        assertEquals(3, tracksCursor.getCount());
         Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        Assert.assertEquals(30, tracksPointsCursor.getCount());
+        assertEquals(30, tracksPointsCursor.getCount());
         Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
-        Assert.assertEquals(2, waypointCursor.getCount());
-        Assert.assertTrue(waypoint1.hasPhoto());
-        Assert.assertTrue(dir1.isDirectory());
-        Assert.assertEquals(1, dir1.list().length);
-        Assert.assertTrue(dir1.exists());
-        Assert.assertTrue(dir2.isDirectory());
-        Assert.assertEquals(1, dir2.list().length);
-        Assert.assertTrue(dir2.exists());
+        assertEquals(2, waypointCursor.getCount());
+        assertTrue(waypoint1.hasPhoto());
+        assertTrue(dir1.isDirectory());
+        assertEquals(1, dir1.list().length);
+        assertTrue(dir1.exists());
+        assertTrue(dir2.isDirectory());
+        assertEquals(1, dir2.list().length);
+        assertTrue(dir2.exists());
         // Delete one track.
         contentProviderUtils.deleteTrack(context, trackId1);
         // Check whether all data of a track has been deleted.
         tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        Assert.assertEquals(2, tracksCursor.getCount());
+        assertEquals(2, tracksCursor.getCount());
         tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        Assert.assertEquals(20, tracksPointsCursor.getCount());
+        assertEquals(20, tracksPointsCursor.getCount());
         waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
-        Assert.assertEquals(1, waypointCursor.getCount());
-        Assert.assertFalse(dir1.exists());
-        Assert.assertTrue(dir2.exists());
+        assertEquals(1, waypointCursor.getCount());
+        assertFalse(dir1.exists());
+        assertTrue(dir2.exists());
     }
 
     /**
@@ -373,8 +377,8 @@ public class CustomContentProviderUtilsTest {
         List<Track> allTracks = contentProviderUtils.getTracks();
 
         // then
-        Assert.assertEquals(initialTrackNumber + 1, allTracks.size());
-        Assert.assertEquals(trackId, allTracks.get(allTracks.size() - 1).getId());
+        assertEquals(initialTrackNumber + 1, allTracks.size());
+        assertEquals(trackId, allTracks.get(allTracks.size() - 1).getId());
     }
 
     /**
@@ -384,7 +388,7 @@ public class CustomContentProviderUtilsTest {
     public void testGetLastTrack() {
         Track.Id trackId = new Track.Id(System.currentTimeMillis());
         contentProviderUtils.insertTrack(TestDataUtil.createTrack(trackId));
-        Assert.assertEquals(trackId, contentProviderUtils.getLastTrack().getId());
+        assertEquals(trackId, contentProviderUtils.getLastTrack().getId());
     }
 
     /**
@@ -397,7 +401,7 @@ public class CustomContentProviderUtilsTest {
         contentProviderUtils.insertTrack(TestDataUtil.createTrack(trackId));
 
         // when / then
-        Assert.assertNotNull(contentProviderUtils.getTrack(trackId));
+        assertNotNull(contentProviderUtils.getTrack(trackId));
     }
 
     /**
@@ -411,7 +415,7 @@ public class CustomContentProviderUtilsTest {
         contentProviderUtils.insertTrack(track);
 
         // when / then
-        Assert.assertNotNull(contentProviderUtils.getTrack(track.getUuid()));
+        assertNotNull(contentProviderUtils.getTrack(track.getUuid()));
     }
 
     /**
@@ -428,10 +432,10 @@ public class CustomContentProviderUtilsTest {
 
         // when / then
         contentProviderUtils.insertTrack(track);
-        Assert.assertEquals(nameOld, contentProviderUtils.getTrack(trackId).getName());
+        assertEquals(nameOld, contentProviderUtils.getTrack(trackId).getName());
         track.setName(nameNew);
         contentProviderUtils.updateTrack(track);
-        Assert.assertEquals(nameNew, contentProviderUtils.getTrack(trackId).getName());
+        assertEquals(nameNew, contentProviderUtils.getTrack(trackId).getName());
     }
 
     /**
@@ -468,9 +472,9 @@ public class CustomContentProviderUtilsTest {
         Waypoint.Id waypointId = new Waypoint.Id(System.currentTimeMillis());
         waypoint.setId(waypointId);
         ContentValues contentValues = contentProviderUtils.createContentValues(waypoint);
-        Assert.assertEquals(waypointId.getId(), contentValues.get(WaypointsColumns._ID));
-        Assert.assertEquals((int) (TestDataUtil.INITIAL_LONGITUDE * 1000000), contentValues.get(WaypointsColumns.LONGITUDE));
-        Assert.assertEquals(TEST_DESC, contentValues.get(WaypointsColumns.DESCRIPTION));
+        assertEquals(waypointId.getId(), contentValues.get(WaypointsColumns._ID));
+        assertEquals((int) (TestDataUtil.INITIAL_LONGITUDE * 1000000), contentValues.get(WaypointsColumns.LONGITUDE));
+        assertEquals(TEST_DESC, contentValues.get(WaypointsColumns.DESCRIPTION));
     }
 
     /**
@@ -502,9 +506,9 @@ public class CustomContentProviderUtilsTest {
         when(cursorMock.getLong(columnIndex++)).thenReturn(trackId);
 
         Waypoint waypoint = contentProviderUtils.createWaypoint(cursorMock);
-        Assert.assertEquals(id, waypoint.getId().getId());
-        Assert.assertEquals(name, waypoint.getName());
-        Assert.assertEquals(trackId, waypoint.getTrackId().getId());
+        assertEquals(id, waypoint.getId().getId());
+        assertEquals(name, waypoint.getName());
+        assertEquals(trackId, waypoint.getTrackId().getId());
     }
 
     /**
@@ -524,7 +528,7 @@ public class CustomContentProviderUtilsTest {
         contentProviderUtils.insertWaypoint(waypoint1);
 
         // Check insert was done.
-        Assert.assertEquals(contentProviderUtils.getWaypointCount(trackId), 1);
+        assertEquals(contentProviderUtils.getWaypointCount(trackId), 1);
 
         // Get waypoint id that needs to delete.
         Waypoint.Id waypoint1Id = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint1)));
@@ -532,7 +536,7 @@ public class CustomContentProviderUtilsTest {
         // Delete
         contentProviderUtils.deleteWaypoint(context, waypoint1Id);
 
-        Assert.assertNull(contentProviderUtils.getWaypoint(waypoint1Id));
+        assertNull(contentProviderUtils.getWaypoint(waypoint1Id));
     }
 
     /**
@@ -551,24 +555,24 @@ public class CustomContentProviderUtilsTest {
         contentProviderUtils.insertWaypoint(waypoint1);
 
         // Check insert was done.
-        Assert.assertEquals(contentProviderUtils.getWaypointCount(trackId), 1);
+        assertEquals(contentProviderUtils.getWaypointCount(trackId), 1);
 
         // Get waypoint id that needs to delete.
         Waypoint.Id waypoint1Id = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint1)));
 
         // Check waypoint has photo and it's in the external storage.
-        Assert.assertTrue(waypoint1.hasPhoto());
+        assertTrue(waypoint1.hasPhoto());
         File dir = FileUtils.getPhotoDir(context, trackId);
-        Assert.assertTrue(dir.isDirectory());
-        Assert.assertEquals(1, dir.list().length);
-        Assert.assertTrue(dir.exists());
+        assertTrue(dir.isDirectory());
+        assertEquals(1, dir.list().length);
+        assertTrue(dir.exists());
 
         // Delete
         contentProviderUtils.deleteWaypoint(context, waypoint1Id);
 
         // Check waypoint doesn't exists and photo folder was deleted.
-        Assert.assertNull(contentProviderUtils.getWaypoint(waypoint1Id));
-        Assert.assertFalse(dir.exists());
+        assertNull(contentProviderUtils.getWaypoint(waypoint1Id));
+        assertFalse(dir.exists());
     }
 
     /**
@@ -607,11 +611,11 @@ public class CustomContentProviderUtilsTest {
         Waypoint.Id waypoint2Id = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint2)));
 
         // Delete
-        Assert.assertNotNull(contentProviderUtils.getWaypoint(waypoint1Id));
+        assertNotNull(contentProviderUtils.getWaypoint(waypoint1Id));
         contentProviderUtils.deleteWaypoint(context, waypoint1Id);
-        Assert.assertNull(contentProviderUtils.getWaypoint(waypoint1Id));
+        assertNull(contentProviderUtils.getWaypoint(waypoint1Id));
 
-        Assert.assertEquals(MOCK_DESC, contentProviderUtils.getWaypoint(waypoint2Id).getDescription());
+        assertEquals(MOCK_DESC, contentProviderUtils.getWaypoint(waypoint2Id).getDescription());
     }
 
     /**
@@ -635,7 +639,7 @@ public class CustomContentProviderUtilsTest {
         contentProviderUtils.insertWaypoint(waypoint3);
         contentProviderUtils.insertWaypoint(waypoint4);
 
-        Assert.assertEquals(4, contentProviderUtils.getNextWaypointNumber(trackId));
+        assertEquals(4, contentProviderUtils.getNextWaypointNumber(trackId));
     }
 
     /**
@@ -652,7 +656,7 @@ public class CustomContentProviderUtilsTest {
         waypoint.setTrackId(trackId);
         Waypoint.Id waypointId = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint)));
 
-        Assert.assertEquals(TEST_DESC, contentProviderUtils.getWaypoint(waypointId).getDescription());
+        assertEquals(TEST_DESC, contentProviderUtils.getWaypoint(waypointId).getDescription());
     }
 
     /**
@@ -674,7 +678,7 @@ public class CustomContentProviderUtilsTest {
         waypoint.setDescription(TEST_DESC_NEW);
         contentProviderUtils.updateWaypoint(context, waypoint);
 
-        Assert.assertEquals(TEST_DESC_NEW, contentProviderUtils.getWaypoint(waypointId).getDescription());
+        assertEquals(TEST_DESC_NEW, contentProviderUtils.getWaypoint(waypointId).getDescription());
     }
 
     /**
@@ -695,9 +699,9 @@ public class CustomContentProviderUtilsTest {
         Waypoint.Id waypointId = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint)));
 
         File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.getId());
-        Assert.assertTrue(dir.exists());
-        Assert.assertTrue(dir.isDirectory());
-        Assert.assertEquals(1, dir.list().length);
+        assertTrue(dir.exists());
+        assertTrue(dir.isDirectory());
+        assertEquals(1, dir.list().length);
 
         // Update
         waypoint = contentProviderUtils.getWaypoint(waypointId);
@@ -705,12 +709,12 @@ public class CustomContentProviderUtilsTest {
         waypoint.setDescription(TEST_DESC_NEW);
         contentProviderUtils.updateWaypoint(context, waypoint);
 
-        Assert.assertEquals(TEST_NAME_NEW, contentProviderUtils.getWaypoint(waypointId).getName());
-        Assert.assertEquals(TEST_DESC_NEW, contentProviderUtils.getWaypoint(waypointId).getDescription());
-        Assert.assertTrue(waypoint.hasPhoto());
-        Assert.assertTrue(dir.exists());
-        Assert.assertTrue(dir.isDirectory());
-        Assert.assertEquals(1, dir.list().length);
+        assertEquals(TEST_NAME_NEW, contentProviderUtils.getWaypoint(waypointId).getName());
+        assertEquals(TEST_DESC_NEW, contentProviderUtils.getWaypoint(waypointId).getDescription());
+        assertTrue(waypoint.hasPhoto());
+        assertTrue(dir.exists());
+        assertTrue(dir.isDirectory());
+        assertEquals(1, dir.list().length);
     }
 
     /**
@@ -731,9 +735,9 @@ public class CustomContentProviderUtilsTest {
         Waypoint.Id waypointId = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint)));
 
         File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.getId());
-        Assert.assertTrue(dir.exists());
-        Assert.assertTrue(dir.isDirectory());
-        Assert.assertEquals(1, dir.list().length);
+        assertTrue(dir.exists());
+        assertTrue(dir.isDirectory());
+        assertEquals(1, dir.list().length);
 
         // Update
         waypoint = contentProviderUtils.getWaypoint(waypointId);
@@ -742,10 +746,10 @@ public class CustomContentProviderUtilsTest {
         waypoint.setPhotoUrl(null);
         contentProviderUtils.updateWaypoint(context, waypoint);
 
-        Assert.assertEquals(TEST_NAME_NEW, contentProviderUtils.getWaypoint(waypointId).getName());
-        Assert.assertEquals(TEST_DESC_NEW, contentProviderUtils.getWaypoint(waypointId).getDescription());
-        Assert.assertFalse(waypoint.hasPhoto());
-        Assert.assertFalse(dir.exists());
+        assertEquals(TEST_NAME_NEW, contentProviderUtils.getWaypoint(waypointId).getName());
+        assertEquals(TEST_DESC_NEW, contentProviderUtils.getWaypoint(waypointId).getDescription());
+        assertFalse(waypoint.hasPhoto());
+        assertFalse(dir.exists());
     }
 
     /**
@@ -770,20 +774,20 @@ public class CustomContentProviderUtilsTest {
         contentProviderUtils.insertWaypoint(otherWaypoint);
 
         File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.getId());
-        Assert.assertTrue(dir.exists());
-        Assert.assertTrue(dir.isDirectory());
-        Assert.assertEquals(2, dir.list().length);
+        assertTrue(dir.exists());
+        assertTrue(dir.isDirectory());
+        assertEquals(2, dir.list().length);
 
         // Update one waypoint deleting photo.
         waypoint = contentProviderUtils.getWaypoint(waypointId);
         waypoint.setPhotoUrl(null);
         contentProviderUtils.updateWaypoint(context, waypoint);
 
-        Assert.assertEquals(TEST_DESC, contentProviderUtils.getWaypoint(waypointId).getDescription());
-        Assert.assertFalse(waypoint.hasPhoto());
-        Assert.assertTrue(dir.exists());
-        Assert.assertTrue(dir.isDirectory());
-        Assert.assertEquals(1, dir.list().length);
+        assertEquals(TEST_DESC, contentProviderUtils.getWaypoint(waypointId).getDescription());
+        assertFalse(waypoint.hasPhoto());
+        assertTrue(dir.exists());
+        assertTrue(dir.isDirectory());
+        assertEquals(1, dir.list().length);
     }
 
     /**
@@ -798,9 +802,9 @@ public class CustomContentProviderUtilsTest {
 
         // when / then
         contentProviderUtils.bulkInsertTrackPoint(track.second, trackId);
-        Assert.assertEquals(20, contentProviderUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
+        assertEquals(20, contentProviderUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
         contentProviderUtils.bulkInsertTrackPoint(Arrays.copyOfRange(track.second, 0, 8), trackId);
-        Assert.assertEquals(28, contentProviderUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
+        assertEquals(28, contentProviderUtils.getTrackPointCursor(trackId, -1L, 1000, false).getCount());
     }
 
     /**
@@ -839,11 +843,11 @@ public class CustomContentProviderUtilsTest {
         TrackPoint trackPoint = contentProviderUtils.createTrackPoint(cursorMock);
 
         // then
-        Assert.assertEquals(longitude, trackPoint.getLongitude(), 0.01);
-        Assert.assertEquals(latitude, trackPoint.getLatitude(), 0.01);
-        Assert.assertEquals(time, trackPoint.getTime(), 0.01);
-        Assert.assertEquals(speed, trackPoint.getSpeed(), 0.01);
-        Assert.assertFalse(trackPoint.hasHeartRate());
+        assertEquals(longitude, trackPoint.getLongitude(), 0.01);
+        assertEquals(latitude, trackPoint.getLatitude(), 0.01);
+        assertEquals(time, trackPoint.getTime(), 0.01);
+        assertEquals(speed, trackPoint.getSpeed(), 0.01);
+        assertFalse(trackPoint.hasHeartRate());
     }
 
     /**
@@ -857,7 +861,7 @@ public class CustomContentProviderUtilsTest {
         Track track = TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
         contentProviderUtils.insertTrackPoint(TestDataUtil.createTrackPoint(22), trackId);
-        Assert.assertEquals(11, contentProviderUtils.getTrackPoints(trackId).size());
+        assertEquals(11, contentProviderUtils.getTrackPoints(trackId).size());
     }
 
     @Test
@@ -876,10 +880,10 @@ public class CustomContentProviderUtilsTest {
 
         // then
         List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
-        Assert.assertTrue(trackPoints.get(10).hasHeartRate());
-        Assert.assertEquals(trackPoint.getHeartRate_bpm(), trackPoints.get(10).getHeartRate_bpm(), 0.01);
-        Assert.assertEquals(trackPoint.getCyclingCadence_rpm(), trackPoints.get(10).getCyclingCadence_rpm(), 0.01);
-        Assert.assertEquals(trackPoint.getPower(), trackPoints.get(10).getPower(), 0.01);
+        assertTrue(trackPoints.get(10).hasHeartRate());
+        assertEquals(trackPoint.getHeartRate_bpm(), trackPoints.get(10).getHeartRate_bpm(), 0.01);
+        assertEquals(trackPoint.getCyclingCadence_rpm(), trackPoints.get(10).getCyclingCadence_rpm(), 0.01);
+        assertEquals(trackPoint.getPower(), trackPoints.get(10).getPower(), 0.01);
     }
 
     /**
@@ -914,7 +918,7 @@ public class CustomContentProviderUtilsTest {
         Cursor cursor = contentProviderUtils.getTrackPointCursor(trackId, trackpointIds[1], 5, true);
 
         // then
-        Assert.assertEquals(2, cursor.getCount());
+        assertEquals(2, cursor.getCount());
     }
 
     /**
@@ -936,7 +940,7 @@ public class CustomContentProviderUtilsTest {
         Cursor cursor = contentProviderUtils.getTrackPointCursor(trackId, trackpointIds[8], 5, false);
 
         // then
-        Assert.assertEquals(2, cursor.getCount());
+        assertEquals(2, cursor.getCount());
     }
 
     /**
@@ -960,12 +964,12 @@ public class CustomContentProviderUtilsTest {
 
         // then
         for (int i = 0; i < trackpointIds.length; i++) {
-            Assert.assertTrue(trackPointIterator.hasNext());
+            assertTrue(trackPointIterator.hasNext());
             TrackPoint trackPoint = trackPointIterator.next();
-            Assert.assertEquals(startTrackPointId - i, trackPointIterator.getTrackPointId());
+            assertEquals(startTrackPointId - i, trackPointIterator.getTrackPointId());
             checkLocation((trackpointIds.length - 1) - i, trackPoint.getLocation());
         }
-        Assert.assertFalse(trackPointIterator.hasNext());
+        assertFalse(trackPointIterator.hasNext());
     }
 
     /**
@@ -990,13 +994,13 @@ public class CustomContentProviderUtilsTest {
 
         // then
         for (int i = 0; i < trackpointIds.length; i++) {
-            Assert.assertTrue(trackPointIterator.hasNext());
+            assertTrue(trackPointIterator.hasNext());
             TrackPoint trackPoint = trackPointIterator.next();
-            Assert.assertEquals(startTrackPointId + i, trackPointIterator.getTrackPointId());
+            assertEquals(startTrackPointId + i, trackPointIterator.getTrackPointId());
 
             checkLocation(i, trackPoint.getLocation());
         }
-        Assert.assertFalse(trackPointIterator.hasNext());
+        assertFalse(trackPointIterator.hasNext());
     }
 
     /**
@@ -1006,16 +1010,16 @@ public class CustomContentProviderUtilsTest {
      * @param location the location to be checked
      */
     private void checkLocation(int i, Location location) {
-        Assert.assertEquals(TestDataUtil.INITIAL_LATITUDE + (double) i / 10000.0, location.getLatitude(), 0.01);
-        Assert.assertEquals(TestDataUtil.INITIAL_LONGITUDE - (double) i / 10000.0, location.getLongitude(), 0.01);
-        Assert.assertEquals((float) i / 100.0f, location.getAccuracy(), 0.01);
-        Assert.assertEquals(i * TestDataUtil.ALTITUDE_INTERVAL, location.getAltitude(), 0.01);
+        assertEquals(TestDataUtil.INITIAL_LATITUDE + (double) i / 10000.0, location.getLatitude(), 0.01);
+        assertEquals(TestDataUtil.INITIAL_LONGITUDE - (double) i / 10000.0, location.getLongitude(), 0.01);
+        assertEquals((float) i / 100.0f, location.getAccuracy(), 0.01);
+        assertEquals(i * TestDataUtil.ALTITUDE_INTERVAL, location.getAltitude(), 0.01);
     }
 
     @Test
     public void testFormatIdListForUri() {
-        Assert.assertEquals("", ContentProviderUtils.formatIdListForUri());
-        Assert.assertEquals("12", ContentProviderUtils.formatIdListForUri(new Track.Id(12)));
-        Assert.assertEquals("42,43,44", ContentProviderUtils.formatIdListForUri(new Track.Id(42), new Track.Id(43), new Track.Id(44)));
+        assertEquals("", ContentProviderUtils.formatIdListForUri());
+        assertEquals("12", ContentProviderUtils.formatIdListForUri(new Track.Id(12)));
+        assertEquals("42,43,44", ContentProviderUtils.formatIdListForUri(new Track.Id(42), new Track.Id(43), new Track.Id(44)));
     }
 }

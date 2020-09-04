@@ -13,7 +13,6 @@ import androidx.test.rule.ServiceTestRule;
 
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -31,6 +30,12 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the track recording service, which require a {@link Looper}.
@@ -188,23 +193,23 @@ public class TrackRecordingServiceTestLooper {
     @Test
     public void testIntegration_completeRecordingSession() throws TimeoutException {
         List<Track> tracks = contentProviderUtils.getTracks();
-        Assert.assertTrue(tracks.isEmpty());
+        assertTrue(tracks.isEmpty());
         fullRecordingSession();
     }
 
     private void fullRecordingSession() throws TimeoutException {
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)));
-        Assert.assertFalse(service.isRecording());
+        assertFalse(service.isRecording());
 
         // Start a track.
         Track.Id trackId = service.startNewTrack();
-        Assert.assertTrue(trackId.isValid());
-        Assert.assertTrue(service.isRecording());
+        assertTrue(trackId.isValid());
+        assertTrue(service.isRecording());
         Track track = contentProviderUtils.getTrack(trackId);
-        Assert.assertNotNull(track);
-        Assert.assertEquals(trackId, track.getId());
-        Assert.assertEquals(trackId, PreferencesUtils.getRecordingTrackId(context));
-        Assert.assertEquals(trackId, service.getRecordingTrackId());
+        assertNotNull(track);
+        assertEquals(trackId, track.getId());
+        assertEquals(trackId, PreferencesUtils.getRecordingTrackId(context));
+        assertEquals(trackId, service.getRecordingTrackId());
 
         // Insert a few points, markers and statistics.
         long startTime = System.currentTimeMillis();
@@ -227,14 +232,14 @@ public class TrackRecordingServiceTestLooper {
 
         // Stop the track. Validate if it has correct data.
         service.endCurrentTrack();
-        Assert.assertFalse(service.isRecording());
-        Assert.assertNull(service.getRecordingTrackId());
+        assertFalse(service.isRecording());
+        assertNull(service.getRecordingTrackId());
         track = contentProviderUtils.getTrack(trackId);
-        Assert.assertNotNull(track);
-        Assert.assertEquals(trackId, track.getId());
+        assertNotNull(track);
+        assertEquals(trackId, track.getId());
         TrackStatistics trackStatistics = track.getTrackStatistics();
-        Assert.assertNotNull(trackStatistics);
-        Assert.assertTrue(trackStatistics.getStartTime_ms() > 0);
-        Assert.assertTrue(trackStatistics.getStopTime_ms() >= trackStatistics.getStartTime_ms());
+        assertNotNull(trackStatistics);
+        assertTrue(trackStatistics.getStartTime_ms() > 0);
+        assertTrue(trackStatistics.getStopTime_ms() >= trackStatistics.getStartTime_ms());
     }
 }

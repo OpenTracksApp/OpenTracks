@@ -23,10 +23,11 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for {@link AnnouncementPeriodicTaskFactory}.
@@ -53,6 +54,6 @@ public class AnnouncementPeriodicTaskFactoryTest {
     public void testCreate() {
         PeriodicTaskFactory factory = new AnnouncementPeriodicTaskFactory();
         PeriodicTask task = factory.create(context);
-        Assert.assertTrue(task instanceof AnnouncementPeriodicTask);
+        assertTrue(task instanceof AnnouncementPeriodicTask);
     }
 }

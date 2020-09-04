@@ -19,12 +19,15 @@ import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.dennisguse.opentracks.R;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests {@link ChartValueSeries}.
@@ -60,16 +63,16 @@ public class ChartValueSeriesTest {
 
     @Test
     public void testInitialConditions() {
-        Assert.assertEquals(1, series.getInterval());
-        Assert.assertEquals(0, series.getMinMarkerValue());
-        Assert.assertEquals(5, series.getMaxMarkerValue());
-        Assert.assertTrue(series.isEnabled());
+        assertEquals(1, series.getInterval());
+        assertEquals(0, series.getMinMarkerValue());
+        assertEquals(5, series.getMaxMarkerValue());
+        assertTrue(series.isEnabled());
     }
 
     @Test
     public void testEnabled() {
         series.setEnabled(false);
-        Assert.assertFalse(series.isEnabled());
+        assertFalse(series.isEnabled());
     }
 
     @Test
@@ -77,9 +80,9 @@ public class ChartValueSeriesTest {
         series.update(new ChartPoint(0));
         series.update(new ChartPoint(10));
         series.updateDimension();
-        Assert.assertEquals(100, series.getInterval());
-        Assert.assertEquals(0, series.getMinMarkerValue());
-        Assert.assertEquals(500, series.getMaxMarkerValue());
+        assertEquals(100, series.getInterval());
+        assertEquals(0, series.getMinMarkerValue());
+        assertEquals(500, series.getMaxMarkerValue());
     }
 
     @Test
@@ -87,9 +90,9 @@ public class ChartValueSeriesTest {
         series.update(new ChartPoint(0));
         series.update(new ChartPoint(901));
         series.updateDimension();
-        Assert.assertEquals(1000, series.getInterval());
-        Assert.assertEquals(0, series.getMinMarkerValue());
-        Assert.assertEquals(5000, series.getMaxMarkerValue());
+        assertEquals(1000, series.getInterval());
+        assertEquals(0, series.getMinMarkerValue());
+        assertEquals(5000, series.getMaxMarkerValue());
     }
 
     @Test
@@ -97,8 +100,8 @@ public class ChartValueSeriesTest {
         series.update(new ChartPoint(220));
         series.update(new ChartPoint(250));
         series.updateDimension();
-        Assert.assertEquals(100, series.getInterval());
-        Assert.assertEquals(200, series.getMinMarkerValue());
-        Assert.assertEquals(700, series.getMaxMarkerValue());
+        assertEquals(100, series.getInterval());
+        assertEquals(200, series.getMinMarkerValue());
+        assertEquals(700, series.getMaxMarkerValue());
     }
 }

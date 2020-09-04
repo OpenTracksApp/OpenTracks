@@ -21,7 +21,6 @@ import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -31,6 +30,8 @@ import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests {@link TrackNameUtils}.
@@ -51,7 +52,7 @@ public class TrackNameUtilsTest {
     @Test
     public void testTrackName_date_local() {
         PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_local_value));
-        Assert.assertEquals(StringUtils.formatDateTime(CONTEXT, START_TIME), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
+        assertEquals(StringUtils.formatDateTime(CONTEXT, START_TIME), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
     }
 
     /**
@@ -61,7 +62,7 @@ public class TrackNameUtilsTest {
     public void testTrackName_date_iso_8601() {
         PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_iso_8601_value));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(TrackNameUtils.ISO_8601_FORMAT, Locale.US);
-        Assert.assertEquals(simpleDateFormat.format(new Date(START_TIME)), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
+        assertEquals(simpleDateFormat.format(new Date(START_TIME)), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
     }
 
     /**
@@ -70,6 +71,6 @@ public class TrackNameUtilsTest {
     @Test
     public void testTrackName_number() {
         PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_number_value));
-        Assert.assertEquals("Track " + TRACK_ID.getId(), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
+        assertEquals("Track " + TRACK_ID.getId(), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
     }
 }

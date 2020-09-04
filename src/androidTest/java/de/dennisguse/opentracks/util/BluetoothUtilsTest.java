@@ -2,10 +2,12 @@ package de.dennisguse.opentracks.util;
 
 import android.bluetooth.BluetoothGattCharacteristic;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class BluetoothUtilsTest {
 
@@ -19,7 +21,7 @@ public class BluetoothUtilsTest {
         int heartRate = BluetoothUtils.parseHeartRate(characteristic);
 
         // then
-        Assert.assertEquals(60, heartRate);
+        assertEquals(60, heartRate);
     }
 
     @Test
@@ -32,7 +34,7 @@ public class BluetoothUtilsTest {
         int heartRate = BluetoothUtils.parseHeartRate(characteristic);
 
         // then
-        Assert.assertEquals(257, heartRate);
+        assertEquals(257, heartRate);
     }
 
     @Test
@@ -44,8 +46,8 @@ public class BluetoothUtilsTest {
         SensorDataCycling.CadenceAndSpeed sensor = BluetoothUtils.parseCyclingCrankAndWheel("address", "sensorName", characteristic);
 
         // then
-        Assert.assertEquals(200, sensor.getCadence().getCrankRevolutionsCount());
-        Assert.assertNull(sensor.getSpeed());
+        assertEquals(200, sensor.getCadence().getCrankRevolutionsCount());
+        assertNull(sensor.getSpeed());
     }
 
     @Test
@@ -57,8 +59,8 @@ public class BluetoothUtilsTest {
         SensorDataCycling.CadenceAndSpeed sensor = BluetoothUtils.parseCyclingCrankAndWheel("address", "sensorName", characteristic);
 
         // then
-        Assert.assertNull(sensor.getCadence());
-        Assert.assertEquals(225, sensor.getSpeed().getWheelRevolutionsCount());
+        assertNull(sensor.getCadence());
+        assertEquals(225, sensor.getSpeed().getWheelRevolutionsCount());
     }
 
     @Test
@@ -70,7 +72,7 @@ public class BluetoothUtilsTest {
         SensorDataCycling.CadenceAndSpeed sensor = BluetoothUtils.parseCyclingCrankAndWheel("address", "sensorName", characteristic);
 
         // then
-        Assert.assertEquals(200, sensor.getCadence().getCrankRevolutionsCount());
-        Assert.assertEquals(225, sensor.getSpeed().getWheelRevolutionsCount());
+        assertEquals(200, sensor.getCadence().getCrankRevolutionsCount());
+        assertEquals(225, sensor.getSpeed().getWheelRevolutionsCount());
     }
 }

@@ -15,13 +15,14 @@
  */
 package de.dennisguse.opentracks.util;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.io.File;
 import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for {@link FileUtils}.
@@ -37,7 +38,7 @@ public class FileUtilsTest {
     @Test
     public void testBuildUniqueFileName_new() {
         String filename = FileUtils.buildUniqueFileName(new File("/dir"), "Filename", "ext");
-        Assert.assertEquals("Filename.ext", filename);
+        assertEquals("Filename.ext", filename);
     }
 
     /**
@@ -47,7 +48,7 @@ public class FileUtilsTest {
     public void testBuildUniqueFileName_exist() {
         // Expect "/default.prop" to exist on the phone/emulator
         String filename = FileUtils.buildUniqueFileName(new File("/"), "default", "prop");
-        Assert.assertEquals("default(1).prop", filename);
+        assertEquals("default(1).prop", filename);
     }
 
     /**
@@ -58,13 +59,13 @@ public class FileUtilsTest {
     public void testSanitizeFileName() {
         String name = "Swim\10ming-^across:/the/ pacific (ocean).";
         String expected = "Swim_ming-^across_the_ pacific (ocean).";
-        Assert.assertEquals(expected, FileUtils.sanitizeFileName(name));
+        assertEquals(expected, FileUtils.sanitizeFileName(name));
     }
 
     @Test
     public void testSanitizeFileNameWithSuffix() {
         String name = "FileName.jpeg";
-        Assert.assertEquals(name, FileUtils.sanitizeFileName(name));
+        assertEquals(name, FileUtils.sanitizeFileName(name));
     }
 
     /**
@@ -75,7 +76,7 @@ public class FileUtilsTest {
     public void testSanitizeFileName_i18n() {
         String name = "您好-привет";
         String expected = "您好-привет";
-        Assert.assertEquals(expected, FileUtils.sanitizeFileName(name));
+        assertEquals(expected, FileUtils.sanitizeFileName(name));
     }
 
     /**
@@ -86,7 +87,7 @@ public class FileUtilsTest {
     public void testSanitizeFileName_special_characters() {
         String name = "$%'-_@~`!(){}^#&+,;=[] ";
         String expected = "$%'-_@~`!(){}^#&+,;=[] ";
-        Assert.assertEquals(expected, FileUtils.sanitizeFileName(name));
+        assertEquals(expected, FileUtils.sanitizeFileName(name));
     }
 
     /**
@@ -97,7 +98,7 @@ public class FileUtilsTest {
     public void testSanitizeFileName_collapse() {
         String name = "hello//there";
         String expected = "hello_there";
-        Assert.assertEquals(expected, FileUtils.sanitizeFileName(name));
+        assertEquals(expected, FileUtils.sanitizeFileName(name));
     }
 
     /**
@@ -114,8 +115,8 @@ public class FileUtilsTest {
         String truncated = FileUtils.truncateFileName(directory, nameString, suffix);
 
         for (int i = 0; i < truncated.length(); i++) {
-            Assert.assertEquals('a', truncated.charAt(i));
+            assertEquals('a', truncated.charAt(i));
         }
-        Assert.assertEquals(FileUtils.MAX_FAT32_PATH_LENGTH, new File(directory, truncated + suffix).getPath().length());
+        assertEquals(FileUtils.MAX_FAT32_PATH_LENGTH, new File(directory, truncated + suffix).getPath().length());
     }
 }

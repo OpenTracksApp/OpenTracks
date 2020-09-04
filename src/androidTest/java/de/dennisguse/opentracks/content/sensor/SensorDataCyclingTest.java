@@ -2,11 +2,13 @@ package de.dennisguse.opentracks.content.sensor;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.dennisguse.opentracks.util.UintUtils;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 @RunWith(AndroidJUnit4.class)
 public class SensorDataCyclingTest {
@@ -21,7 +23,7 @@ public class SensorDataCyclingTest {
         current.compute(previous);
 
         // then
-        Assert.assertEquals(60, current.getCadence_rpm(), 0.01);
+        assertEquals(60, current.getCadence_rpm(), 0.01);
     }
 
     @Test
@@ -34,7 +36,7 @@ public class SensorDataCyclingTest {
         current.compute(previous);
 
         // then
-        Assert.assertEquals(33.53, current.getCadence_rpm(), 0.01);
+        assertEquals(33.53, current.getCadence_rpm(), 0.01);
     }
 
     @Test
@@ -47,7 +49,7 @@ public class SensorDataCyclingTest {
         current.compute(previous);
 
         // then
-        Assert.assertEquals(0, current.getCadence_rpm(), 0.01);
+        assertEquals(0, current.getCadence_rpm(), 0.01);
     }
 
 
@@ -61,7 +63,7 @@ public class SensorDataCyclingTest {
         current.compute(previous);
 
         // then
-        Assert.assertFalse(current.hasCadence_rpm());
+        assertFalse(current.hasCadence_rpm());
     }
 
     @Test
@@ -74,7 +76,7 @@ public class SensorDataCyclingTest {
         current.compute(previous);
 
         // then
-        Assert.assertEquals(60, current.getCadence_rpm(), 0.01);
+        assertEquals(60, current.getCadence_rpm(), 0.01);
     }
 
     @Test
@@ -87,7 +89,7 @@ public class SensorDataCyclingTest {
         current.compute(previous);
 
         // then
-        Assert.assertEquals(60, current.getCadence_rpm(), 0.01);
+        assertEquals(60, current.getCadence_rpm(), 0.01);
     }
 
     @Test
@@ -100,7 +102,7 @@ public class SensorDataCyclingTest {
         current.compute(previous, 2150);
 
         // then
-        Assert.assertEquals(1.20, current.getSpeed_mps(), 0.01);
+        assertEquals(1.20, current.getSpeed_mps(), 0.01);
     }
 
     @Test
@@ -113,6 +115,6 @@ public class SensorDataCyclingTest {
         current.compute(previous, 2000);
 
         // then
-        Assert.assertEquals(2, current.getSpeed_mps(), 0.01);
+        assertEquals(2, current.getSpeed_mps(), 0.01);
     }
 }

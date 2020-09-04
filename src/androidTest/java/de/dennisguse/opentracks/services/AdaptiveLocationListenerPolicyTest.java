@@ -15,13 +15,14 @@
  */
 package de.dennisguse.opentracks.services;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import de.dennisguse.opentracks.services.handlers.AdaptiveLocationListenerPolicy;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests the {@link AdaptiveLocationListenerPolicy}.
@@ -57,17 +58,17 @@ public class AdaptiveLocationListenerPolicyTest {
     @Test
     public void testGetDesiredPollingInterval() {
         adaptiveLocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_BIG);
-        Assert.assertEquals(MAX, adaptiveLocationListenerPolicy.getDesiredPollingInterval());
+        assertEquals(MAX, adaptiveLocationListenerPolicy.getDesiredPollingInterval());
 
         adaptiveLocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_NORMAL);
         // First get the half of NEW_IDLE_TIME_NORMAL, and then round it to the nearest second.
-        Assert.assertEquals((NEW_IDLE_TIME_NORMAL / 2 / 1000) * 1000, adaptiveLocationListenerPolicy.getDesiredPollingInterval());
+        assertEquals((NEW_IDLE_TIME_NORMAL / 2 / 1000) * 1000, adaptiveLocationListenerPolicy.getDesiredPollingInterval());
 
         adaptiveLocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_SMALL);
-        Assert.assertEquals(MIN, adaptiveLocationListenerPolicy.getDesiredPollingInterval());
+        assertEquals(MIN, adaptiveLocationListenerPolicy.getDesiredPollingInterval());
 
         adaptiveLocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_LESS_THAN_MIN);
-        Assert.assertEquals(MIN, adaptiveLocationListenerPolicy.getDesiredPollingInterval());
+        assertEquals(MIN, adaptiveLocationListenerPolicy.getDesiredPollingInterval());
     }
 
     /**
@@ -75,6 +76,6 @@ public class AdaptiveLocationListenerPolicyTest {
      */
     @Test
     public void testGetMinDistance() {
-        Assert.assertEquals(MIN_DISTANCE, adaptiveLocationListenerPolicy.getMinDistance_m());
+        assertEquals(MIN_DISTANCE, adaptiveLocationListenerPolicy.getMinDistance_m());
     }
 }

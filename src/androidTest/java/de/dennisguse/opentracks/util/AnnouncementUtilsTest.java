@@ -5,7 +5,6 @@ import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -18,6 +17,8 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class AnnouncementUtilsTest {
@@ -37,7 +38,7 @@ public class AnnouncementUtilsTest {
         String announcement = AnnouncementUtils.getAnnouncement(context, stats, "airplane", null);
 
         // then
-        Assert.assertEquals("OpenTracks total distance 20.00 kilometers in 5 minutes 0 seconds at 240.0 kilometers per hour", announcement);
+        assertEquals("OpenTracks total distance 20.00 kilometers in 5 minutes 0 seconds at 240.0 kilometers per hour", announcement);
     }
 
     @Test
@@ -65,7 +66,7 @@ public class AnnouncementUtilsTest {
         String announcement = AnnouncementUtils.getAnnouncement(context, stats, "airplane", lastInterval);
 
         // then
-        Assert.assertEquals(msg, announcement);
+        assertEquals(msg, announcement);
     }
 
     private int getQuantityCount(double d) {

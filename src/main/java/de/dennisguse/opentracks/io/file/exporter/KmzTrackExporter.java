@@ -76,10 +76,7 @@ public class KmzTrackExporter implements TrackExporter {
 
     @Override
     public boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream) {
-        ZipOutputStream zipOutputStream = null;
-        try {
-            zipOutputStream = new ZipOutputStream(outputStream);
-
+        try (ZipOutputStream zipOutputStream = new ZipOutputStream(outputStream)) {
             // Add kml file
             ZipEntry zipEntry = new ZipEntry(KMZ_KML_FILE);
             zipOutputStream.putNextEntry(zipEntry);
@@ -97,14 +94,6 @@ public class KmzTrackExporter implements TrackExporter {
         } catch (InterruptedException | IOException e) {
             Log.e(TAG, "Unable to write track", e);
             return false;
-        } finally {
-            if (zipOutputStream != null) {
-                try {
-                    zipOutputStream.close();
-                } catch (IOException e) {
-                    Log.e(TAG, "Unable to close zip input stream", e);
-                }
-            }
         }
     }
 

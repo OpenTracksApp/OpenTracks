@@ -12,7 +12,6 @@ import androidx.test.rule.GrantPermissionRule;
 import androidx.test.rule.ServiceTestRule;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -32,6 +31,9 @@ import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.util.PreferencesUtils;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Tests insert location.
@@ -103,11 +105,11 @@ public class TrackRecordingServiceTestLocation {
         service.endCurrentTrack();
 
         // then
-        Assert.assertFalse(service.isRecording());
+        assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
-        Assert.assertEquals(6, trackPoints.size());
-        Assert.assertEquals(45.0005, trackPoints.get(5).getLatitude(), 0.01);
+        assertEquals(6, trackPoints.size());
+        assertEquals(45.0005, trackPoints.get(5).getLatitude(), 0.01);
     }
 
     @MediumTest
@@ -127,11 +129,11 @@ public class TrackRecordingServiceTestLocation {
         service.endCurrentTrack();
 
         // then
-        Assert.assertFalse(service.isRecording());
+        assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
-        Assert.assertEquals(2, trackPoints.size());
-        Assert.assertEquals(45.000005, trackPoints.get(1).getLatitude(), 0.01);
+        assertEquals(2, trackPoints.size());
+        assertEquals(45.000005, trackPoints.get(1).getLatitude(), 0.01);
     }
 
 //    @MediumTest
@@ -169,13 +171,13 @@ public class TrackRecordingServiceTestLocation {
         service.endCurrentTrack();
 
         // then
-        Assert.assertFalse(service.isRecording());
+        assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
-        Assert.assertEquals(3, trackPoints.size());
-        Assert.assertEquals(1, trackPoints.get(0).getAccuracy(), 0.01);
-        Assert.assertEquals(2, trackPoints.get(1).getAccuracy(), 0.01);
-        Assert.assertEquals(6, trackPoints.get(2).getAccuracy(), 0.01);
+        assertEquals(3, trackPoints.size());
+        assertEquals(1, trackPoints.get(0).getAccuracy(), 0.01);
+        assertEquals(2, trackPoints.get(1).getAccuracy(), 0.01);
+        assertEquals(6, trackPoints.get(2).getAccuracy(), 0.01);
     }
 
     @MediumTest
@@ -195,14 +197,14 @@ public class TrackRecordingServiceTestLocation {
         service.endCurrentTrack();
 
         // then
-        Assert.assertFalse(service.isRecording());
+        assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
-        Assert.assertEquals(4, trackPoints.size());
-        Assert.assertEquals(1, trackPoints.get(0).getAccuracy(), 0.01);
-        Assert.assertEquals(2, trackPoints.get(1).getAccuracy(), 0.01);
-        Assert.assertEquals(5, trackPoints.get(2).getAccuracy(), 0.01); //TODO Check why this trackPoint is inserted.
-        Assert.assertEquals(6, trackPoints.get(3).getAccuracy(), 0.01);
+        assertEquals(4, trackPoints.size());
+        assertEquals(1, trackPoints.get(0).getAccuracy(), 0.01);
+        assertEquals(2, trackPoints.get(1).getAccuracy(), 0.01);
+        assertEquals(5, trackPoints.get(2).getAccuracy(), 0.01); //TODO Check why this trackPoint is inserted.
+        assertEquals(6, trackPoints.get(3).getAccuracy(), 0.01);
     }
 
 
@@ -238,16 +240,16 @@ public class TrackRecordingServiceTestLocation {
         service.endCurrentTrack();
 
         // then
-        Assert.assertFalse(service.isRecording());
+        assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
-        Assert.assertEquals(6, trackPoints.size());
-        Assert.assertEquals(0, trackPoints.get(0).getAccuracy(), 0.01);
-        Assert.assertEquals(1, trackPoints.get(1).getAccuracy(), 0.01);
-        Assert.assertEquals(2, trackPoints.get(2).getAccuracy(), 0.01);
-        Assert.assertEquals(3, trackPoints.get(3).getAccuracy(), 0.01);
-        Assert.assertEquals(4, trackPoints.get(4).getAccuracy(), 0.01);
-        Assert.assertEquals(5, trackPoints.get(5).getAccuracy(), 0.01);
+        assertEquals(6, trackPoints.size());
+        assertEquals(0, trackPoints.get(0).getAccuracy(), 0.01);
+        assertEquals(1, trackPoints.get(1).getAccuracy(), 0.01);
+        assertEquals(2, trackPoints.get(2).getAccuracy(), 0.01);
+        assertEquals(3, trackPoints.get(3).getAccuracy(), 0.01);
+        assertEquals(4, trackPoints.get(4).getAccuracy(), 0.01);
+        assertEquals(5, trackPoints.get(5).getAccuracy(), 0.01);
     }
 
     @MediumTest
@@ -266,16 +268,16 @@ public class TrackRecordingServiceTestLocation {
         service.endCurrentTrack();
 
         // then
-        Assert.assertFalse(service.isRecording());
+        assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
-        Assert.assertEquals(7, trackPoints.size());
-        Assert.assertEquals(1, trackPoints.get(0).getAccuracy(), 0.01);
-        Assert.assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(1).getLatitude(), 0.01);
-        Assert.assertEquals(2, trackPoints.get(2).getAccuracy(), 0.01);
-        Assert.assertEquals(3, trackPoints.get(3).getAccuracy(), 0.01);
-        Assert.assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(4).getLatitude(), 0.01);
-        Assert.assertEquals(4, trackPoints.get(5).getAccuracy(), 0.01);
-        Assert.assertEquals(5, trackPoints.get(6).getAccuracy(), 0.01);
+        assertEquals(7, trackPoints.size());
+        assertEquals(1, trackPoints.get(0).getAccuracy(), 0.01);
+        assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(1).getLatitude(), 0.01);
+        assertEquals(2, trackPoints.get(2).getAccuracy(), 0.01);
+        assertEquals(3, trackPoints.get(3).getAccuracy(), 0.01);
+        assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(4).getLatitude(), 0.01);
+        assertEquals(4, trackPoints.get(5).getAccuracy(), 0.01);
+        assertEquals(5, trackPoints.get(6).getAccuracy(), 0.01);
     }
 }
