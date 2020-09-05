@@ -226,7 +226,7 @@ public class TrackRecordingServiceTestLooper {
             service.newTrackPoint(trackPoint, prefAccuracy);
 
             if (i % 7 == 0) {
-                service.insertWaypoint(null, null, null, null);
+                service.insertMarker(null, null, null, null);
             }
         }
 

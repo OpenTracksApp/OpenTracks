@@ -187,10 +187,10 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
             Log.d(TAG, "Unable to add marker, no track recording service");
         } else {
             try {
-                Marker.Id waypoint = trackRecordingService.insertWaypoint(name, category, description, photoUrl);
-                if (waypoint != null) {
+                Marker.Id marker = trackRecordingService.insertMarker(name, category, description, photoUrl);
+                if (marker != null) {
                     Toast.makeText(context, R.string.marker_add_success, Toast.LENGTH_SHORT).show();
-                    return waypoint;
+                    return marker;
                 }
             } catch (IllegalStateException e) {
                 Log.e(TAG, "Unable to add marker.", e);
@@ -201,12 +201,6 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         return null;
     }
 
-    /**
-     * Stops the recording.
-     *
-     * @param context    the context
-     * @param showEditor true to show the editor
-     */
     public void stopRecording(@NonNull Context context, boolean showEditor) {
         TrackRecordingServiceInterface trackRecordingService = getServiceIfBound();
         if (trackRecordingService == null) {

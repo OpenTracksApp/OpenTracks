@@ -90,8 +90,8 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
     }
 
     @Override
-    public Marker.Id insertWaypoint(String name, String category, String description, String photoUrl) {
-        return trackRecordingService.insertWaypoint(name, category, description, photoUrl);
+    public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
+        return trackRecordingService.insertMarker(name, category, description, photoUrl);
     }
 
     @Override

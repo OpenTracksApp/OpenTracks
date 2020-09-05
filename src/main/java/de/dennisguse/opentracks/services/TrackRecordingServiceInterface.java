@@ -30,46 +30,20 @@ import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
  */
 public interface TrackRecordingServiceInterface {
 
-    /**
-     * Starts gps.
-     */
     void startGps();
 
-    /**
-     * Stops gps.
-     */
     void stopGps();
 
-    /**
-     * Starts recording a new track.
-     *
-     * @return the track ID of the new track.
-     */
     Track.Id startNewTrack();
 
-    /**
-     * Resumes the track identified by trackId.
-     */
-    void resumeTrack(Track.Id trackId);
-
-    /**
-     * Pauses the current recording track.
-     */
     void pauseCurrentTrack();
 
-    /**
-     * Resumes the current recording track.
-     */
     void resumeCurrentTrack();
 
-    /**
-     * Ends the current recording track.
-     */
+    void resumeTrack(Track.Id trackId);
+
     void endCurrentTrack();
 
-    /**
-     * Returns true if currently recording a track.
-     */
     boolean isRecording();
 
     /**
@@ -88,12 +62,7 @@ public interface TrackRecordingServiceInterface {
     //TODO milliseconds?
     long getTotalTime();
 
-    /**
-     * Inserts a waypoint in the current recording track.
-     *
-     * @return the ID of the inserted waypoint
-     */
-    Marker.Id insertWaypoint(String name, String category, String description, String photoUrl);
+    Marker.Id insertMarker(String name, String category, String description, String photoUrl);
 
     /**
      * Gets the current sensor data. Returns null if there is no data.

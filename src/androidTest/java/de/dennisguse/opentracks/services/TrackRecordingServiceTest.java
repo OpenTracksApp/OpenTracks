@@ -296,7 +296,7 @@ public class TrackRecordingServiceTest {
         assertFalse(service.isRecording());
 
         // when
-        Marker.Id waypointId = service.insertWaypoint(null, null, null, null);
+        Marker.Id waypointId = service.insertMarker(null, null, null, null);
 
         // then
         assertNull(waypointId);
@@ -313,7 +313,7 @@ public class TrackRecordingServiceTest {
         Track.Id trackId = service.getRecordingTrackId();
 
         // when
-        Marker.Id waypointId = service.insertWaypoint(null, null, null, null);
+        Marker.Id waypointId = service.insertMarker(null, null, null, null);
 
         // then
         assertNotEquals(-1L, waypointId);

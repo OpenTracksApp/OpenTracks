@@ -215,6 +215,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         return trackStatisticsUpdater.getTrackStatistics();
     }
 
+    //TODO Throw exception, when not recording.
     public long getTotalTime() {
         if (trackStatisticsUpdater == null) {
             return 0;
@@ -225,27 +226,22 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         return trackStatisticsUpdater.getTrackStatistics().getTotalTime();
     }
 
-    /**
-     * Inserts a waypoint.
-     *
-     * @return the waypoint id
-     */
-    public Marker.Id insertWaypoint(String name, String category, String description, String photoUrl) {
+    public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
         if (!isRecording() || isPaused()) {
             return null;
         }
 
         if (name == null) {
-            int nextWaypointNumber = contentProviderUtils.getNextMarkerNumber(recordingTrackId);
-            if (nextWaypointNumber == -1) {
-                nextWaypointNumber = 1;
+            int nextMarkerNumber = contentProviderUtils.getNextMarkerNumber(recordingTrackId);
+            if (nextMarkerNumber == -1) {
+                nextMarkerNumber = 1;
             }
-            name = getString(R.string.marker_name_format, nextWaypointNumber + 1);
+            name = getString(R.string.marker_name_format, nextMarkerNumber + 1);
         }
 
         TrackPoint trackPoint = getLastValidTrackPointInCurrentSegment(recordingTrackId);
         if (trackPoint == null) {
-            Log.i(TAG, "Could not create a waypoint as trackPoint is unknown.");
+            Log.i(TAG, "Could not create a marker as trackPoint is unknown.");
             return null;
         }
 
@@ -258,9 +254,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         double length = stats.getTotalDistance();
         long duration = stats.getTotalTime();
 
-        // Insert waypoint
-        Marker waypoint = new Marker(name, description, category, icon, recordingTrackId, length, duration, trackPoint.getLocation(), photoUrl);
-        Uri uri = contentProviderUtils.insertMarker(waypoint);
+        // Insert marker
+        Marker marker = new Marker(name, description, category, icon, recordingTrackId, length, duration, trackPoint.getLocation(), photoUrl);
+        Uri uri = contentProviderUtils.insertMarker(marker);
         return new Marker.Id(ContentUris.parseId(uri));
     }
 
