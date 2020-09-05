@@ -60,20 +60,20 @@ public interface TrackDataListener {
     void onNewTrackPointsDone();
 
     /**
-     * Called to clear previously sent waypoints.
+     * Called to clear previously sent markers.
      */
-    void clearWaypoints();
+    void clearMarkers();
 
     /**
-     * Called when a new waypoint is read.
+     * Called when a new marker is read.
      *
-     * @param waypoint the waypoint
+     * @param marker the marker
      */
-    void onNewWaypoint(Marker waypoint);
+    void onNewMarker(Marker marker);
 
     /**
-     * Called when finish sending new waypoints.
-     * This gets called after every batch of calls to {@link #clearWaypoints()} and {@link #onNewWaypoint(Marker)}.
+     * Called when finish sending new markers.
+     * This gets called after every batch of calls to {@link #clearMarkers()} and {@link #onNewMarker(Marker)}.
      */
-    void onNewWaypointsDone();
+    void onNewMarkersDone();
 }

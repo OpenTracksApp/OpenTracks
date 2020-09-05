@@ -30,8 +30,6 @@ import java.util.Objects;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
- * A waypoint.
- *
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */

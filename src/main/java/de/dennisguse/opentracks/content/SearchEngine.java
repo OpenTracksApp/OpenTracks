@@ -38,7 +38,7 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
- * Engine for searching for tracks and waypoints by text.
+ * Engine for searching for tracks and markers by text.
  *
  * @author Rodrigo Damazio
  */
@@ -53,9 +53,9 @@ public class SearchEngine {
                     TracksColumns.CATEGORY + " LIKE ?";
 
     /**
-     * WHERE query to get waypoints by name.
+     * WHERE query to get markers by name.
      */
-    private static final String WAYPOINT_SELECTION_QUERY =
+    private static final String MARKER_SELECTION_QUERY =
             MarkerColumns.NAME + " LIKE ? OR " +
                     MarkerColumns.DESCRIPTION + " LIKE ? OR " +
                     MarkerColumns.CATEGORY + " LIKE ?";
@@ -66,9 +66,9 @@ public class SearchEngine {
     private static final String TRACK_SELECTION_ORDER = TracksColumns._ID + " DESC LIMIT 1000";
 
     /**
-     * Order of waypoint results.
+     * Order of marker results.
      */
-    private static final String WAYPOINT_SELECTION_ORDER = MarkerColumns._ID + " DESC";
+    private static final String MARKER_SELECTION_ORDER = MarkerColumns._ID + " DESC";
 
     /**
      * How much we promote a match in the track category.
@@ -86,9 +86,9 @@ public class SearchEngine {
     private static final double TRACK_NAME_PROMOTION = 16.0;
 
     /**
-     * How much we promote a waypoint result if it's in the currently-selected track.
+     * How much we promote a marker result if it's in the currently-selected track.
      */
-    private static final double CURRENT_TRACK_WAYPOINT_PROMOTION = 2.0;
+    private static final double CURRENT_TRACK_MARKER_PROMOTION = 2.0;
 
     /**
      * How much we promote a track result if it's the currently-selected track.
@@ -96,9 +96,9 @@ public class SearchEngine {
     private static final double CURRENT_TRACK_DEMOTION = 0.5;
 
     /**
-     * Maximum number of waypoints which will be retrieved and scored.
+     * Maximum number of markers which will be retrieved and scored.
      */
-    private static final int MAX_SCORED_WAYPOINTS = 100;
+    private static final int MAX_SCORED_MARKERS = 100;
 
     /**
      * Oldest timestamp for which we rank based on time (2000-01-01 00:00:00.000)
@@ -115,16 +115,16 @@ public class SearchEngine {
             return scoreDiff;
         }
 
-        // Make tracks come before waypoints.
-        if (r1.waypoint != null && r2.track != null) {
+        // Make tracks come before markers.
+        if (r1.marker != null && r2.track != null) {
             return 1;
-        } else if (r1.track != null && r2.waypoint != null) {
+        } else if (r1.track != null && r2.marker != null) {
             return -1;
         }
 
         // Finally, use arbitrary ordering, by ID.
-        long id1 = r1.track != null ? r1.track.getId().getId() : r1.waypoint.getId().getId();
-        long id2 = r2.track != null ? r2.track.getId().getId() : r2.waypoint.getId().getId();
+        long id1 = r1.track != null ? r1.track.getId().getId() : r1.marker.getId().getId();
+        long id2 = r2.track != null ? r2.track.getId().getId() : r2.marker.getId().getId();
         long idDiff = id2 - id1;
         return Long.signum(idDiff);
     };
@@ -153,7 +153,7 @@ public class SearchEngine {
         TreeSet<ScoredResult> scoredResults = new TreeSet<>(SCORED_RESULT_COMPARATOR);
 
         scoreTrackResults(retrieveTracks(query), query, scoredResults);
-        scoreWaypointResults(retrieveWaypoints(query), query, scoredResults);
+        scoreMarkersResults(retrieveMarkers(query), query, scoredResults);
 
         return scoredResults;
     }
@@ -186,33 +186,33 @@ public class SearchEngine {
     }
 
     /**
-     * Retrieves waypoints matching the given query from the database.
+     * Retrieves markers matching the given query from the database.
      *
      * @param query the query to retrieve for
      */
-    private List<Marker> retrieveWaypoints(SearchQuery query) {
-        ArrayList<Marker> waypoints = new ArrayList<>();
+    private List<Marker> retrieveMarkers(SearchQuery query) {
+        ArrayList<Marker> markers = new ArrayList<>();
 
         String queryLikeSelection2 = "%" + query.textQuery + "%";
-        String[] waypointSelectionArgs = new String[]{
+        String[] markersSelectionArgs = new String[]{
                 queryLikeSelection2,
                 queryLikeSelection2,
                 queryLikeSelection2
         };
 
-        try (Cursor cursor = providerUtils.getMarkerCursor(WAYPOINT_SELECTION_QUERY, waypointSelectionArgs, WAYPOINT_SELECTION_ORDER, MAX_SCORED_WAYPOINTS)) {
+        try (Cursor cursor = providerUtils.getMarkerCursor(MARKER_SELECTION_QUERY, markersSelectionArgs, MARKER_SELECTION_ORDER, MAX_SCORED_MARKERS)) {
             if (cursor != null) {
-                waypoints.ensureCapacity(cursor.getCount());
+                markers.ensureCapacity(cursor.getCount());
                 while (cursor.moveToNext()) {
-                    Marker waypoint = providerUtils.createMarker(cursor);
-                    if (LocationUtils.isValidLocation(waypoint.getLocation())) {
-                        waypoints.add(waypoint);
+                    Marker marker = providerUtils.createMarker(cursor);
+                    if (LocationUtils.isValidLocation(marker.getLocation())) {
+                        markers.add(marker);
                     }
                 }
             }
         }
 
-        return waypoints;
+        return markers;
     }
 
     /**
@@ -258,40 +258,40 @@ public class SearchEngine {
     }
 
     /**
-     * Scores a collection of waypoint results.
+     * Scores a collection of marker results.
      *
-     * @param waypoints the results to score
-     * @param query     the query to score for
-     * @param output    the collection to fill with scored results
+     * @param markers the results to score
+     * @param query   the query to score for
+     * @param output  the collection to fill with scored results
      */
-    private void scoreWaypointResults(Collection<Marker> waypoints, SearchQuery query, Collection<ScoredResult> output) {
-        for (Marker waypoint : waypoints) {
+    private void scoreMarkersResults(Collection<Marker> markers, SearchQuery query, Collection<ScoredResult> output) {
+        for (Marker marker : markers) {
             // Calculate the score.
-            double score = scoreWaypointResult(query, waypoint);
+            double score = scoreMarkerResult(query, marker);
 
             // Add to the output.
-            output.add(new ScoredResult(waypoint, score));
+            output.add(new ScoredResult(marker, score));
         }
     }
 
     /**
-     * Scores a single waypoint result.
+     * Scores a single marker result.
      *
-     * @param query    the query to score for
-     * @param waypoint the results to score
-     * @return the score for the waypoint
+     * @param query  the query to score for
+     * @param marker the results to score
+     * @return the score for the marker
      */
-    private double scoreWaypointResult(SearchQuery query, Marker waypoint) {
+    private double scoreMarkerResult(SearchQuery query, Marker marker) {
         double score = 1.0;
 
-        Location location = waypoint.getLocation();
-        score *= getTitleBoost(query, waypoint.getName(), waypoint.getDescription(), waypoint.getCategory());
+        Location location = marker.getLocation();
+        score *= getTitleBoost(query, marker.getName(), marker.getDescription(), marker.getCategory());
         score *= getDistanceBoost(query, location.getLatitude(), location.getLongitude());
         score *= getTimeBoost(query, location.getTime());
 
-        // Score waypoints in the currently-selected track higher (searching inside the current track).
-        if (waypoint.getTrackId() != null && waypoint.getTrackId().equals(query.currentTrackId)) {
-            score *= CURRENT_TRACK_WAYPOINT_PROMOTION;
+        // Score markers in the currently-selected track higher (searching inside the current track).
+        if (marker.getTrackId() != null && marker.getTrackId().equals(query.currentTrackId)) {
+            score *= CURRENT_TRACK_MARKER_PROMOTION;
         }
 
         return score;
@@ -301,9 +301,9 @@ public class SearchEngine {
      * Calculates the boosting of the score due to the field(s) in which the match occured.
      *
      * @param query       the query to boost for
-     * @param name        the name of the track or waypoint
-     * @param description the description of the track or waypoint
-     * @param category    the category of the track or waypoint
+     * @param name        the name of the track or marker
+     * @param description the description of the track or marker
+     * @param category    the category of the track or marker
      * @return the total boost to be applied to the result
      */
     private double getTitleBoost(SearchQuery query, String name, String description, String category) {
@@ -398,18 +398,18 @@ public class SearchEngine {
      */
     public static class ScoredResult {
         public final Track track;
-        public final Marker waypoint;
+        public final Marker marker;
         final double score;
 
         ScoredResult(Track track, double score) {
             this.track = track;
-            this.waypoint = null;
+            this.marker = null;
             this.score = score;
         }
 
-        ScoredResult(Marker waypoint, double score) {
+        ScoredResult(Marker marker, double score) {
             this.track = null;
-            this.waypoint = waypoint;
+            this.marker = marker;
             this.score = score;
         }
 
@@ -418,7 +418,7 @@ public class SearchEngine {
         public String toString() {
             return "ScoredResult ["
                     + (track != null ? ("trackId=" + track.getId().getId() + ", ") : "")
-                    + (waypoint != null ? ("wptId=" + waypoint.getId().getId() + ", ") : "")
+                    + (marker != null ? ("wptId=" + marker.getId().getId() + ", ") : "")
                     + "score=" + score + "]";
         }
     }

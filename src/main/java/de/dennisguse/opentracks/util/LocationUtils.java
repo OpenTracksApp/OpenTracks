@@ -41,6 +41,7 @@ public class LocationUtils {
      * @return true if the location is a valid location.
      */
     //TODO Move to TrackPoint
+    @Deprecated //See #316
     public static boolean isValidLocation(Location location) {
         return location != null
                 && Math.abs(location.getLatitude()) <= 90

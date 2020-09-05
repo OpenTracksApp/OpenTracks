@@ -58,14 +58,14 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
      * We may display more than this number of points.
      */
     @Deprecated
-    private static final int TARGET_DISPLAYED_TRACK_POINTS = 5000;
+    private static final int TARGET_DISPLAYED_TRACKPOINTS = 5000;
 
     /**
-     * Maximum number of waypoints to displayed.
+     * Maximum number of markers to displayed.
      */
     @VisibleForTesting
     @Deprecated
-    private static final int MAX_DISPLAYED_WAYPOINTS = 128;
+    private static final int MAX_DISPLAYED_MARKERS = 128;
 
     private static final String TAG = TrackDataHub.class.getSimpleName();
 
@@ -90,11 +90,11 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
 
     // Registered listeners
     private ContentObserver tracksTableObserver;
-    private ContentObserver waypointsTableObserver;
+    private ContentObserver markersTableObserver;
     private ContentObserver trackPointsTableObserver;
 
     public TrackDataHub(Context context) {
-        this(context, new TrackDataManager(), new ContentProviderUtils(context), TARGET_DISPLAYED_TRACK_POINTS);
+        this(context, new TrackDataManager(), new ContentProviderUtils(context), TARGET_DISPLAYED_TRACKPOINTS);
     }
 
     @VisibleForTesting
@@ -126,13 +126,13 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         };
         contentResolver.registerContentObserver(TracksColumns.CONTENT_URI, false, tracksTableObserver);
 
-        waypointsTableObserver = new ContentObserver(handler) {
+        markersTableObserver = new ContentObserver(handler) {
             @Override
             public void onChange(boolean selfChange) {
-                notifyWaypointsTableUpdate(trackDataManager.getListenerWaypoints());
+                notifyMarkersTableUpdate(trackDataManager.getListenerMarkers());
             }
         };
-        contentResolver.registerContentObserver(MarkerColumns.CONTENT_URI, false, waypointsTableObserver);
+        contentResolver.registerContentObserver(MarkerColumns.CONTENT_URI, false, markersTableObserver);
 
         trackPointsTableObserver = new ContentObserver(handler) {
             @Override
@@ -165,7 +165,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         //Unregister listeners
         ContentResolver contentResolver = context.getContentResolver();
         contentResolver.unregisterContentObserver(tracksTableObserver);
-        contentResolver.unregisterContentObserver(waypointsTableObserver);
+        contentResolver.unregisterContentObserver(markersTableObserver);
         contentResolver.unregisterContentObserver(trackPointsTableObserver);
 
         if (handlerThread != null) {
@@ -191,9 +191,9 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
      *
      * @param trackDataListener the track data listener
      */
-    public void registerTrackDataListener(final TrackDataListener trackDataListener, final boolean tracksTable, final boolean waypointsTable, final boolean trackPointsTable_SampleIn, final boolean trackPointsTable_SampleOut) {
+    public void registerTrackDataListener(final TrackDataListener trackDataListener, final boolean tracksTable, final boolean markersTable, final boolean trackPointsTable_SampleIn, final boolean trackPointsTable_SampleOut) {
         runInHandlerThread(() -> {
-            trackDataManager.registerTrackDataListener(trackDataListener, tracksTable, waypointsTable, trackPointsTable_SampleIn, trackPointsTable_SampleOut);
+            trackDataManager.registerTrackDataListener(trackDataListener, tracksTable, markersTable, trackPointsTable_SampleIn, trackPointsTable_SampleOut);
             if (started) {
                 loadDataForListener(trackDataListener);
             }
@@ -250,7 +250,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
             listener.clearTrackPoints();
         }
         notifyTrackPointsTableUpdate(true, trackDataManager.getListenerTrackPoints_SampledIn(), trackDataManager.getListenerTrackPoints_SampledOut());
-        notifyWaypointsTableUpdate(trackDataManager.getListenerWaypoints());
+        notifyMarkersTableUpdate(trackDataManager.getListenerMarkers());
     }
 
     /**
@@ -277,8 +277,8 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
             notifyTrackPointsTableUpdate(isOnlyListener, trackDataListeners, sampledOutListeners);
         }
 
-        if (trackDataManager.listensForWaypoints(trackDataListener)) {
-            notifyWaypointsTableUpdate(trackDataListeners);
+        if (trackDataManager.listensForMarkers(trackDataListener)) {
+            notifyMarkersTableUpdate(trackDataListeners);
         }
     }
 
@@ -298,36 +298,36 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
     }
 
     /**
-     * Notifies waypoint table update.
-     * Currently, reloads all the waypoints up to {@link #MAX_DISPLAYED_WAYPOINTS}. To be run in the {@link #handler} thread.
+     * Notifies marker table update.
+     * Currently, reloads all the markers up to {@link #MAX_DISPLAYED_MARKERS}. To be run in the {@link #handler} thread.
      *
      * @param trackDataListeners the track data listeners to notify
      */
-    private void notifyWaypointsTableUpdate(Set<TrackDataListener> trackDataListeners) {
+    private void notifyMarkersTableUpdate(Set<TrackDataListener> trackDataListeners) {
         if (trackDataListeners.isEmpty()) {
             return;
         }
 
         for (TrackDataListener trackDataListener : trackDataListeners) {
-            trackDataListener.clearWaypoints();
+            trackDataListener.clearMarkers();
         }
 
-        try (Cursor cursor = contentProviderUtils.getMarkerCursor(selectedTrackId, null, MAX_DISPLAYED_WAYPOINTS)) {
+        try (Cursor cursor = contentProviderUtils.getMarkerCursor(selectedTrackId, null, MAX_DISPLAYED_MARKERS)) {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    Marker waypoint = contentProviderUtils.createMarker(cursor);
-                    if (!LocationUtils.isValidLocation(waypoint.getLocation())) {
+                    Marker marker = contentProviderUtils.createMarker(cursor);
+                    if (!LocationUtils.isValidLocation(marker.getLocation())) {
                         continue;
                     }
                     for (TrackDataListener trackDataListener : trackDataListeners) {
-                        trackDataListener.onNewWaypoint(waypoint);
+                        trackDataListener.onNewMarker(marker);
                     }
                 } while (cursor.moveToNext());
             }
         }
 
         for (TrackDataListener trackDataListener : trackDataListeners) {
-            trackDataListener.onNewWaypointsDone();
+            trackDataListener.onNewMarkersDone();
         }
     }
 

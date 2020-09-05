@@ -350,17 +350,17 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     }
 
     @Override
-    public void clearWaypoints() {
+    public void clearMarkers() {
         // We don't care.
     }
 
     @Override
-    public void onNewWaypoint(Marker wpt) {
+    public void onNewMarker(Marker marker) {
         // We don't care.
     }
 
     @Override
-    public void onNewWaypointsDone() {
+    public void onNewMarkersDone() {
         // We don't care.
     }
 

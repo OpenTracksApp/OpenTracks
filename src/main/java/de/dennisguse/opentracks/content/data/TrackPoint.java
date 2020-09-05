@@ -59,10 +59,12 @@ public class TrackPoint {
         location.setTime(time);
     }
 
+    @Deprecated //See #316
     public static TrackPoint createPause() {
         return createPauseWithTime(System.currentTimeMillis());
     }
 
+    @Deprecated //See #316
     public static TrackPoint createPauseWithTime(long time) {
         Location pause = new Location(LocationManager.GPS_PROVIDER);
         pause.setLongitude(0);
@@ -71,10 +73,12 @@ public class TrackPoint {
         return new TrackPoint(pause);
     }
 
+    @Deprecated //See #316
     public static TrackPoint createResume() {
         return createResumeWithTime(System.currentTimeMillis());
     }
 
+    @Deprecated //See #316
     public static TrackPoint createResumeWithTime(long time) {
         Location resume = new Location(LocationManager.GPS_PROVIDER);
         resume.setLongitude(0);

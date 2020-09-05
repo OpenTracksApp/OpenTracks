@@ -278,7 +278,7 @@ public class SearchEngineTest {
 
     private void assertTrackResult(Track.Id trackId, ScoredResult result) {
         assertNotNull("Not a track", result.track);
-        assertNull("Ambiguous result", result.waypoint);
+        assertNull("Ambiguous result", result.marker);
         assertEquals(trackId, result.track.getId());
     }
 
@@ -293,15 +293,15 @@ public class SearchEngineTest {
         for (int i = 0; i < results.size(); i++) {
             ScoredResult result = results.get(i);
             assertNotNull(errMsg, result.track);
-            assertNull(errMsg, result.waypoint);
+            assertNull(errMsg, result.marker);
             assertEquals(errMsg, trackIds[i], result.track.getId());
         }
     }
 
     private void assertWaypointResult(Marker.Id waypointId, ScoredResult result) {
-        assertNotNull("Not a waypoint", result.waypoint);
+        assertNotNull("Not a waypoint", result.marker);
         assertNull("Ambiguous result", result.track);
-        assertEquals(waypointId, result.waypoint.getId());
+        assertEquals(waypointId, result.marker.getId());
     }
 
     private void assertWaypointResults(List<ScoredResult> results, Marker.Id... waypointIds) {
@@ -314,9 +314,9 @@ public class SearchEngineTest {
         assertEquals(results.size(), waypointIds.length);
         for (int i = 0; i < results.size(); i++) {
             ScoredResult result = results.get(i);
-            assertNotNull(errMsg, result.waypoint);
+            assertNotNull(errMsg, result.marker);
             assertNull(errMsg, result.track);
-            assertEquals(errMsg, waypointIds[i], result.waypoint.getId());
+            assertEquals(errMsg, waypointIds[i], result.marker.getId());
         }
     }
 }

@@ -242,21 +242,21 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     @Override
-    public void clearWaypoints() {
+    public void clearMarkers() {
         if (isResumed()) {
             chartView.clearWaypoints();
         }
     }
 
     @Override
-    public void onNewWaypoint(Marker waypoint) {
-        if (isResumed() && waypoint != null && LocationUtils.isValidLocation(waypoint.getLocation())) {
-            chartView.addWaypoint(waypoint);
+    public void onNewMarker(Marker marker) {
+        if (isResumed() && marker != null && LocationUtils.isValidLocation(marker.getLocation())) {
+            chartView.addWaypoint(marker);
         }
     }
 
     @Override
-    public void onNewWaypointsDone() {
+    public void onNewMarkersDone() {
         if (isResumed()) {
             runOnUiThread(updateChart);
         }

@@ -355,7 +355,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
             if (result.track != null) {
                 output.add(prepareTrackForDisplay(result.track));
             } else {
-                output.add(prepareMarkerForDisplay(result.waypoint));
+                output.add(prepareMarkerForDisplay(result.marker));
             }
         }
         return output;

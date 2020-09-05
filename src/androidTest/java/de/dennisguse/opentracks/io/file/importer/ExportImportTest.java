@@ -53,7 +53,7 @@ public class ExportImportTest {
     private static final String TRACK_CATEGORY = "the category";
     private static final String TRACK_DESCRIPTION = "the description";
 
-    private final List<Marker> waypoints = new ArrayList<>();
+    private final List<Marker> markers = new ArrayList<>();
     private final List<TrackPoint> trackPoints = new ArrayList<>();
 
     private Track.Id importTrackId;
@@ -72,19 +72,19 @@ public class ExportImportTest {
         trackPoints.addAll(Arrays.asList(track.second));
 
         for (int i = 0; i < 3; i++) {
-            Marker waypoint = new Marker(track.second[i].getLocation());
-            waypoint.setName("the waypoint " + i);
-            waypoint.setDescription("the waypoint description " + i);
-            waypoint.setCategory("the waypoint category" + i);
-            waypoint.setIcon("the waypoing icon" + i);
-            waypoint.setPhotoUrl("the photo url" + i);
-            waypoint.setTrackId(trackId);
-            contentProviderUtils.insertMarker(waypoint);
+            Marker marker = new Marker(track.second[i].getLocation());
+            marker.setName("the marker " + i);
+            marker.setDescription("the marker description " + i);
+            marker.setCategory("the marker category" + i);
+            marker.setIcon("the waypoing icon" + i);
+            marker.setPhotoUrl("the photo url" + i);
+            marker.setTrackId(trackId);
+            contentProviderUtils.insertMarker(marker);
 
-            waypoints.add(waypoint);
+            markers.add(marker);
         }
 
-        assertEquals(waypoints.size(), contentProviderUtils.getMarkerCount(trackId));
+        assertEquals(markers.size(), contentProviderUtils.getMarkerCount(trackId));
     }
 
     @After
@@ -129,8 +129,8 @@ public class ExportImportTest {
         assertEquals(track.getIcon(), importedTrack.getIcon());
         assertEquals(track.getUuid(), importedTrack.getUuid());
 
-        // 2. waypoints
-        assertWaypoints();
+        // 2. markers
+        assertMarkers();
 
         // 3. trackpoints
         assertTrackpoints(false, false, false);
@@ -164,8 +164,8 @@ public class ExportImportTest {
         assertEquals(track.getName(), importedTrack.getName());
         assertEquals(track.getIcon(), importedTrack.getIcon());
 
-        // 2. waypoints
-        assertWaypoints();
+        // 2. markers
+        assertMarkers();
 
         // 3. trackpoints
         assertTrackpoints(true, true, true);
@@ -253,8 +253,8 @@ public class ExportImportTest {
         //TODO exporting and importing a track icon is not yet supported by GpxTrackWriter.
         //assertEquals(track.getIcon(), trackImported.getIcon());
 
-        // 2. waypoints
-        assertWaypoints();
+        // 2. markers
+        assertMarkers();
 
         // 3. trackpoints
         assertTrackpoints(false, true, true);
@@ -285,22 +285,22 @@ public class ExportImportTest {
         assertNull(trackImported);
     }
 
-    private void assertWaypoints() {
-        assertEquals(waypoints.size(), contentProviderUtils.getMarkerCount(importTrackId));
+    private void assertMarkers() {
+        assertEquals(markers.size(), contentProviderUtils.getMarkerCount(importTrackId));
 
-        List<Marker> importedWaypoints = contentProviderUtils.getMarkers(importTrackId);
-        for (int i = 0; i < waypoints.size(); i++) {
-            Marker waypoint = waypoints.get(i);
-            Marker importedWaypoint = importedWaypoints.get(i);
-            assertEquals(waypoint.getCategory(), importedWaypoint.getCategory());
-            assertEquals(waypoint.getDescription(), importedWaypoint.getDescription());
-            // assertEquals(waypoint.getIcon(), importedWaypoint.getIcon()); // TODO for KML
-            assertEquals(waypoint.getName(), importedWaypoint.getName());
-            assertEquals("", importedWaypoint.getPhotoUrl());
+        List<Marker> importedMarkers = contentProviderUtils.getMarkers(importTrackId);
+        for (int i = 0; i < markers.size(); i++) {
+            Marker marker = markers.get(i);
+            Marker importMarker = importedMarkers.get(i);
+            assertEquals(marker.getCategory(), importMarker.getCategory());
+            assertEquals(marker.getDescription(), importMarker.getDescription());
+            // assertEquals(marker.getIcon(), importMarker.getIcon()); // TODO for KML
+            assertEquals(marker.getName(), importMarker.getName());
+            assertEquals("", importMarker.getPhotoUrl());
 
-            assertEquals(waypoint.getLocation().getLatitude(), importedWaypoint.getLocation().getLatitude(), 0.001);
-            assertEquals(waypoint.getLocation().getLongitude(), importedWaypoint.getLocation().getLongitude(), 0.001);
-            assertEquals(waypoint.getLocation().getAltitude(), importedWaypoint.getLocation().getAltitude(), 0.001);
+            assertEquals(marker.getLocation().getLatitude(), importMarker.getLocation().getLatitude(), 0.001);
+            assertEquals(marker.getLocation().getLongitude(), importMarker.getLocation().getLongitude(), 0.001);
+            assertEquals(marker.getLocation().getAltitude(), importMarker.getLocation().getAltitude(), 0.001);
         }
     }
 

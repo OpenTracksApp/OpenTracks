@@ -29,32 +29,32 @@ class TrackDataManager {
     private static final String TAG = TrackDataManager.class.getSimpleName();
 
     private final Set<TrackDataListener> dataListenerTracks = new HashSet<>();
-    private final Set<TrackDataListener> dataListenerWaypoints = new HashSet<>();
+    private final Set<TrackDataListener> dataListenerMarkers = new HashSet<>();
     private final Set<TrackDataListener> dataListenerTrackPoints_SampledIn = new HashSet<>();
     private final Set<TrackDataListener> dataListenerTrackPoints_SampledOut = new HashSet<>();
 
-    void registerTrackDataListener(final TrackDataListener trackDataListener, boolean tracksTable, boolean waypointsTable, boolean trackPointsTable_SampleIn, boolean trackPointsTable_SampleOut) {
+    void registerTrackDataListener(final TrackDataListener trackDataListener, boolean tracksTable, boolean markersTable, boolean trackPointsTable_SampleIn, boolean trackPointsTable_SampleOut) {
         if (tracksTable) dataListenerTracks.add(trackDataListener);
-        if (waypointsTable) dataListenerWaypoints.add(trackDataListener);
+        if (markersTable) dataListenerMarkers.add(trackDataListener);
         if (trackPointsTable_SampleIn) dataListenerTrackPoints_SampledIn.add(trackDataListener);
         if (trackPointsTable_SampleOut) dataListenerTrackPoints_SampledOut.add(trackDataListener);
     }
 
     void unregisterTrackDataListener(TrackDataListener trackDataListener) {
         dataListenerTracks.add(trackDataListener);
-        dataListenerWaypoints.add(trackDataListener);
+        dataListenerMarkers.add(trackDataListener);
         dataListenerTrackPoints_SampledIn.add(trackDataListener);
         dataListenerTrackPoints_SampledOut.add(trackDataListener);
     }
 
     boolean hasListeners() {
-        return dataListenerTracks.size() + dataListenerWaypoints.size() + dataListenerTrackPoints_SampledIn.size() + dataListenerTrackPoints_SampledOut.size() > 0;
+        return dataListenerTracks.size() + dataListenerMarkers.size() + dataListenerTrackPoints_SampledIn.size() + dataListenerTrackPoints_SampledOut.size() > 0;
     }
 
     int getNumberOfListeners() {
         Set<TrackDataListener> listener = new HashSet<>();
         listener.addAll(dataListenerTracks);
-        listener.addAll(dataListenerWaypoints);
+        listener.addAll(dataListenerMarkers);
         listener.addAll(dataListenerTrackPoints_SampledIn);
         listener.addAll(dataListenerTrackPoints_SampledOut);
 
@@ -65,8 +65,8 @@ class TrackDataManager {
         return dataListenerTracks.contains(listener);
     }
 
-    boolean listensForWaypoints(TrackDataListener listener) {
-        return dataListenerWaypoints.contains(listener);
+    boolean listensForMarkers(TrackDataListener listener) {
+        return dataListenerMarkers.contains(listener);
     }
 
     boolean listensForTrackPoints_SampledIn(TrackDataListener listener) {
@@ -81,8 +81,8 @@ class TrackDataManager {
         return dataListenerTracks;
     }
 
-    Set<TrackDataListener> getListenerWaypoints() {
-        return dataListenerWaypoints;
+    Set<TrackDataListener> getListenerMarkers() {
+        return dataListenerMarkers;
     }
 
     Set<TrackDataListener> getListenerTrackPoints_SampledIn() {

@@ -28,7 +28,7 @@ import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
- * Generates descriptions for tracks and waypoints.
+ * Generates descriptions for tracks and markers.
  *
  * @author Jimmy Shih
  */
