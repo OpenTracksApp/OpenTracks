@@ -22,6 +22,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.Pair;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -125,12 +126,10 @@ public class StringUtils {
      * Format a decimal number while removing trailing zeros of the decimal part (if present).
      */
     public static String formatDecimal(double value, int decimalPlaces) {
-        if (decimalPlaces < 1) {
-            return Long.toString(Math.round(value));
-        }
-
-        String format = "#." + new String(new char[decimalPlaces]).replace("\0", "#");
-        return new DecimalFormat(format).format(value);
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(decimalPlaces);
+        df.setRoundingMode(RoundingMode.HALF_EVEN);
+        return df.format(value);
     }
 
     /**
@@ -204,7 +203,7 @@ public class StringUtils {
         }
 
         if (reportSpeed) {
-            return new Pair<>(StringUtils.formatDecimal(speed * UnitConversions.S_TO_HR), unitString);
+            return new Pair<>(StringUtils.formatDecimal(speed * UnitConversions.S_TO_HR, 1), unitString);
         }
 
         int pace = speed == 0 ? 0 : (int) Math.round(1 / speed); //sec / [KM | MI]

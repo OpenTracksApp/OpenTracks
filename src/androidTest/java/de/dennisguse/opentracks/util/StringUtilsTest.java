@@ -202,7 +202,7 @@ public class StringUtilsTest {
         assertEquals("1", StringUtils.formatDecimal(1.1, 0));
         assertEquals("10", StringUtils.formatDecimal(10, 0));
         assertEquals("10", StringUtils.formatDecimal(10.1, 0));
-        assertEquals("0", StringUtils.formatDecimal(-0.1, 0));
+        assertEquals("-0", StringUtils.formatDecimal(-0.1, 0));
 
         assertEquals("0", StringUtils.formatDecimal(0.0, 2));
         assertEquals("0.1", StringUtils.formatDecimal(0.1, 2));
@@ -220,8 +220,8 @@ public class StringUtilsTest {
         assertEquals("4:59", StringUtils.getSpeedParts(context, 3.34, true, false).first);
         assertEquals("5:00", StringUtils.getSpeedParts(context, 3.33, true, false).first);
 
-        assertEquals("11.99", StringUtils.getSpeedParts(context, 3.33, true, true).first);
-        assertEquals("7.45", StringUtils.getSpeedParts(context, 3.33, false, true).first);
+        assertEquals("11.9", StringUtils.getSpeedParts(context, 3.31, true, true).first);
+        assertEquals("7.5", StringUtils.getSpeedParts(context, 3.34, false, true).first);
 
         assertEquals("min/km", StringUtils.getSpeedParts(context, 0, true, false).second);
         assertEquals("min/mi", StringUtils.getSpeedParts(context, 0, false, false).second);
