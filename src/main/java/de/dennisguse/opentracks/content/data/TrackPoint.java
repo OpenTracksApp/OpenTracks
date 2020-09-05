@@ -32,7 +32,7 @@ public class TrackPoint {
     private Float heartRate_bpm = null;
     private Float cyclingCadence_rpm = null;
     private Float power = null;
-    private float elevationGain = Float.NaN;
+    private Float elevationGain = null;
 
     public TrackPoint() {
         this.location = new Location("");
@@ -94,14 +94,14 @@ public class TrackPoint {
     }
 
     public boolean hasElevationGain() {
-        return !Float.isNaN(elevationGain);
+        return elevationGain != null;
     }
 
     public float getElevationGain() {
         return elevationGain;
     }
 
-    public void setElevationGain(float elevationGain) {
+    public void setElevationGain(Float elevationGain) {
         this.elevationGain = elevationGain;
     }
 

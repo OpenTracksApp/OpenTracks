@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.util.PressureSensorUtils;
@@ -37,9 +38,10 @@ public class ElevationSumManager implements SensorEventListener {
         if (pressureSensor == null) {
             Log.w(TAG, "No pressure sensor available.");
             isConnected = false;
+        } else {
+            isConnected = sensorManager.registerListener(this, pressureSensor, SAMPLING_RATE);
         }
 
-        isConnected = sensorManager.registerListener(this, pressureSensor, SAMPLING_RATE);
         lastAcceptedPressureValue_hPa = Float.NaN;
         reset();
     }
@@ -58,12 +60,19 @@ public class ElevationSumManager implements SensorEventListener {
         return isConnected;
     }
 
-    public float getElevationGain_m() {
-        return elevationGain_m;
+    @VisibleForTesting
+    public void setConnected(boolean isConnected) {
+        this.isConnected = isConnected;
     }
 
-    public float getElevationLoss_m() {
-        return elevationLoss_m;
+    public @Nullable
+    Float getElevationGain_m() {
+        return isConnected ? elevationGain_m : null;
+    }
+
+    public @Nullable
+    Float getElevationLoss_m() {
+        return isConnected ? elevationLoss_m : null;
     }
 
     public void reset() {
@@ -79,6 +88,10 @@ public class ElevationSumManager implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        if (!isConnected) {
+            Log.w(TAG, "Not connected to sensor, cannot process data.");
+            return;
+        }
         onSensorValueChanged(event.values[0]);
     }
 
