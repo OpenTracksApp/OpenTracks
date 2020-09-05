@@ -25,9 +25,9 @@ import androidx.test.core.app.ApplicationProvider;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
-import de.dennisguse.opentracks.content.data.WaypointsColumns;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -67,7 +67,7 @@ public class CustomContentProviderTest {
         assertEquals(TrackPointsColumns.CONTENT_TYPE, customContentProvider.getType(TrackPointsColumns.CONTENT_URI_BY_ID));
         assertEquals(TrackPointsColumns.CONTENT_ITEMTYPE, customContentProvider.getType(ContentUris.appendId(TrackPointsColumns.CONTENT_URI_BY_TRACKID.buildUpon(), 1).build()));
 
-        assertEquals(WaypointsColumns.CONTENT_TYPE, customContentProvider.getType(WaypointsColumns.CONTENT_URI));
-        assertEquals(WaypointsColumns.CONTENT_ITEMTYPE, customContentProvider.getType(ContentUris.appendId(WaypointsColumns.CONTENT_URI.buildUpon(), 1).build()));
+        assertEquals(MarkerColumns.CONTENT_TYPE, customContentProvider.getType(MarkerColumns.CONTENT_URI));
+        assertEquals(MarkerColumns.CONTENT_ITEMTYPE, customContentProvider.getType(ContentUris.appendId(MarkerColumns.CONTENT_URI.buildUpon(), 1).build()));
     }
 }

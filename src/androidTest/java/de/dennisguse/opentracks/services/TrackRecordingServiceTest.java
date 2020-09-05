@@ -44,10 +44,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -296,7 +296,7 @@ public class TrackRecordingServiceTest {
         assertFalse(service.isRecording());
 
         // when
-        Waypoint.Id waypointId = service.insertWaypoint(null, null, null, null);
+        Marker.Id waypointId = service.insertWaypoint(null, null, null, null);
 
         // then
         assertNull(waypointId);
@@ -313,11 +313,11 @@ public class TrackRecordingServiceTest {
         Track.Id trackId = service.getRecordingTrackId();
 
         // when
-        Waypoint.Id waypointId = service.insertWaypoint(null, null, null, null);
+        Marker.Id waypointId = service.insertWaypoint(null, null, null, null);
 
         // then
         assertNotEquals(-1L, waypointId);
-        Waypoint wpt = contentProviderUtils.getWaypoint(waypointId);
+        Marker wpt = contentProviderUtils.getMarker(waypointId);
         assertEquals(context.getString(R.string.marker_waypoint_icon_url), wpt.getIcon());
         assertEquals(context.getString(R.string.marker_name_format, 1), wpt.getName());
         assertEquals(trackId, wpt.getTrackId());

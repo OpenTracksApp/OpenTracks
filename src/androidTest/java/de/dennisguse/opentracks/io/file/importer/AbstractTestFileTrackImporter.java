@@ -33,9 +33,9 @@ import java.util.Locale;
 import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
+import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
 import static org.junit.Assert.assertEquals;
@@ -70,7 +70,7 @@ public abstract class AbstractTestFileTrackImporter {
     static final long TRACK_POINT_ID_3 = 4;
 
     private static final long WAYPOINT_ID_0 = 1;
-    private static final Uri WAYPOINT_ID_O_URI = ContentUris.appendId(WaypointsColumns.CONTENT_URI.buildUpon(), WAYPOINT_ID_0).build();
+    private static final Uri WAYPOINT_ID_O_URI = ContentUris.appendId(MarkerColumns.CONTENT_URI.buildUpon(), WAYPOINT_ID_0).build();
 
     protected final Context context = ApplicationProvider.getApplicationContext();
 
@@ -114,7 +114,7 @@ public abstract class AbstractTestFileTrackImporter {
     protected void expectTrackUpdate(ArgumentCaptor<Track> trackCaptor, boolean lastTrack, Track.Id trackId) {
         contentProviderUtils.updateTrack(trackCaptor.capture());
 
-        when(contentProviderUtils.insertWaypoint(any())).thenReturn(WAYPOINT_ID_O_URI);
+        when(contentProviderUtils.insertMarker(any())).thenReturn(WAYPOINT_ID_O_URI);
         if (lastTrack) {
             // Return null to not add waypoints
             when(contentProviderUtils.getTrack(trackId)).thenReturn(null);

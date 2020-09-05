@@ -26,7 +26,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public interface WaypointsColumns extends BaseColumns {
+public interface MarkerColumns extends BaseColumns {
 
     String TABLE_NAME = "waypoints";
     Uri CONTENT_URI = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/" + TABLE_NAME);

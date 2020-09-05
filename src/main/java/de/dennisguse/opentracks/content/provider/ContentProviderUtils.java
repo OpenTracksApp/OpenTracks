@@ -40,12 +40,12 @@ import java.util.UUID;
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.android.ContentResolverWrapper;
 import de.dennisguse.opentracks.android.IContentResolver;
+import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
-import de.dennisguse.opentracks.content.data.Waypoint;
-import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
@@ -69,8 +69,8 @@ public class ContentProviderUtils {
     // The base URI for the app's content provider.
     public static final String CONTENT_BASE_URI = "content://" + AUTHORITY_PACKAGE;
 
-    // Maximum number of waypoints that will be loaded at one time.
-    public static final int MAX_LOADED_WAYPOINTS_POINTS = 10000;
+    // Maximum number of markers that will be loaded at one time.
+    public static final int MAX_LOADED_MARKERS = 10000;
     private static final String ID_SEPARATOR = ",";
 
     private final IContentResolver contentResolver;
@@ -89,13 +89,13 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Clears a track: removes waypoints and trackPoints.
+     * Clears a track: removes markers and trackPoints.
      * Only keeps the track id.
      *
      * @param trackId the track id
      */
     public void clearTrack(Track.Id trackId) {
-        deleteTrackPointsAndWaypoints(trackId);
+        deleteTrackPointsAndMarkers(trackId);
         Track track = new Track();
         track.setId(trackId);
         updateTrack(track);
@@ -176,7 +176,7 @@ public class ContentProviderUtils {
     @VisibleForTesting
     public void deleteAllTracks(Context context) {
         contentResolver.delete(TrackPointsColumns.CONTENT_URI_BY_ID, null, null);
-        contentResolver.delete(WaypointsColumns.CONTENT_URI, null, null);
+        contentResolver.delete(MarkerColumns.CONTENT_URI, null, null);
         // Delete tracks last since it triggers a database vaccum call
         contentResolver.delete(TracksColumns.CONTENT_URI, null, null);
 
@@ -193,7 +193,7 @@ public class ContentProviderUtils {
         if (trackId == null) {
             return;
         }
-        deleteTrackPointsAndWaypoints(trackId);
+        deleteTrackPointsAndMarkers(trackId);
 
         // Delete track folder resources.
         FileUtils.deleteDirectoryRecurse(FileUtils.getPhotoDir(context, trackId));
@@ -202,16 +202,11 @@ public class ContentProviderUtils {
         contentResolver.delete(TracksColumns.CONTENT_URI, TracksColumns._ID + "=?", new String[]{Long.toString(trackId.getId())});
     }
 
-    /**
-     * Deletes trackPoints and waypoints of a track.
-     *
-     * @param trackId the track id
-     */
-    private void deleteTrackPointsAndWaypoints(@NonNull Track.Id trackId) {
+    private void deleteTrackPointsAndMarkers(@NonNull Track.Id trackId) {
         String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
 
         contentResolver.delete(TrackPointsColumns.CONTENT_URI_BY_ID, TrackPointsColumns.TRACKID + "=?", selectionArgs);
-        contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns.TRACKID + "=?", selectionArgs);
+        contentResolver.delete(MarkerColumns.CONTENT_URI, MarkerColumns.TRACKID + "=?", selectionArgs);
     }
 
     @VisibleForTesting
@@ -338,28 +333,22 @@ public class ContentProviderUtils {
         return values;
     }
 
-
-    /**
-     * Creates a waypoint from a cursor.
-     *
-     * @param cursor the cursor pointing to the waypoint
-     */
-    public Waypoint createWaypoint(Cursor cursor) {
-        int idIndex = cursor.getColumnIndexOrThrow(WaypointsColumns._ID);
-        int nameIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.NAME);
-        int descriptionIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.DESCRIPTION);
-        int categoryIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.CATEGORY);
-        int iconIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.ICON);
-        int trackIdIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TRACKID);
-        int lengthIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.LENGTH);
-        int durationIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.DURATION);
-        int longitudeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.LONGITUDE);
-        int latitudeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.LATITUDE);
-        int timeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TIME);
-        int altitudeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.ALTITUDE);
-        int accuracyIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.ACCURACY);
-        int bearingIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.BEARING);
-        int photoUrlIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.PHOTOURL);
+    public Marker createMarker(Cursor cursor) {
+        int idIndex = cursor.getColumnIndexOrThrow(MarkerColumns._ID);
+        int nameIndex = cursor.getColumnIndexOrThrow(MarkerColumns.NAME);
+        int descriptionIndex = cursor.getColumnIndexOrThrow(MarkerColumns.DESCRIPTION);
+        int categoryIndex = cursor.getColumnIndexOrThrow(MarkerColumns.CATEGORY);
+        int iconIndex = cursor.getColumnIndexOrThrow(MarkerColumns.ICON);
+        int trackIdIndex = cursor.getColumnIndexOrThrow(MarkerColumns.TRACKID);
+        int lengthIndex = cursor.getColumnIndexOrThrow(MarkerColumns.LENGTH);
+        int durationIndex = cursor.getColumnIndexOrThrow(MarkerColumns.DURATION);
+        int longitudeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.LONGITUDE);
+        int latitudeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.LATITUDE);
+        int timeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.TIME);
+        int altitudeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.ALTITUDE);
+        int accuracyIndex = cursor.getColumnIndexOrThrow(MarkerColumns.ACCURACY);
+        int bearingIndex = cursor.getColumnIndexOrThrow(MarkerColumns.BEARING);
+        int photoUrlIndex = cursor.getColumnIndexOrThrow(MarkerColumns.PHOTOURL);
 
         Location location = new Location("");
         if (!cursor.isNull(longitudeIndex) && !cursor.isNull(latitudeIndex)) {
@@ -379,59 +368,56 @@ public class ContentProviderUtils {
             location.setBearing(cursor.getFloat(bearingIndex));
         }
 
-        Waypoint waypoint = new Waypoint(location);
+        Marker marker = new Marker(location);
 
         if (!cursor.isNull(idIndex)) {
-            waypoint.setId(new Waypoint.Id(cursor.getLong(idIndex)));
+            marker.setId(new Marker.Id(cursor.getLong(idIndex)));
         }
         if (!cursor.isNull(nameIndex)) {
-            waypoint.setName(cursor.getString(nameIndex));
+            marker.setName(cursor.getString(nameIndex));
         }
         if (!cursor.isNull(descriptionIndex)) {
-            waypoint.setDescription(cursor.getString(descriptionIndex));
+            marker.setDescription(cursor.getString(descriptionIndex));
         }
         if (!cursor.isNull(categoryIndex)) {
-            waypoint.setCategory(cursor.getString(categoryIndex));
+            marker.setCategory(cursor.getString(categoryIndex));
         }
         if (!cursor.isNull(iconIndex)) {
-            waypoint.setIcon(cursor.getString(iconIndex));
+            marker.setIcon(cursor.getString(iconIndex));
         }
         if (!cursor.isNull(trackIdIndex)) {
-            waypoint.setTrackId(new Track.Id(cursor.getLong(trackIdIndex)));
+            marker.setTrackId(new Track.Id(cursor.getLong(trackIdIndex)));
         }
         if (!cursor.isNull(lengthIndex)) {
-            waypoint.setLength(cursor.getFloat(lengthIndex));
+            marker.setLength(cursor.getFloat(lengthIndex));
         }
         if (!cursor.isNull(durationIndex)) {
-            waypoint.setDuration(cursor.getLong(durationIndex));
+            marker.setDuration(cursor.getLong(durationIndex));
         }
 
         if (!cursor.isNull(photoUrlIndex)) {
-            waypoint.setPhotoUrl(cursor.getString(photoUrlIndex));
+            marker.setPhotoUrl(cursor.getString(photoUrlIndex));
         }
-        return waypoint;
+        return marker;
     }
 
-    public void deleteWaypoint(Context context, Waypoint.Id waypointId) {
-        final Waypoint waypoint = getWaypoint(waypointId);
-        deleteWaypointPhoto(context, waypoint);
-        contentResolver.delete(WaypointsColumns.CONTENT_URI, WaypointsColumns._ID + "=?", new String[]{Long.toString(waypointId.getId())});
+    public void deleteMarker(Context context, Marker.Id markerId) {
+        final Marker marker = getMarker(markerId);
+        deleteMarkerPhoto(context, marker);
+        contentResolver.delete(MarkerColumns.CONTENT_URI, MarkerColumns._ID + "=?", new String[]{Long.toString(markerId.getId())});
     }
 
     /**
-     * Gets the next waypoint number.
-     *
-     * @param trackId the track id
-     * @return -1 if not able to get the next waypoint number.
+     * @return -1 if not able to get the next marker number.
      */
-    public int getNextWaypointNumber(Track.Id trackId) {
+    public int getNextMarkerNumber(Track.Id trackId) {
         if (!trackId.isValid()) {
             return -1;
         }
-        String[] projection = {WaypointsColumns._ID};
-        String selection = WaypointsColumns.TRACKID + "=?";
+        String[] projection = {MarkerColumns._ID};
+        String selection = MarkerColumns.TRACKID + "=?";
         String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
-        try (Cursor cursor = getWaypointCursor(projection, selection, selectionArgs, WaypointsColumns._ID, -1)) {
+        try (Cursor cursor = getMarkerCursor(projection, selection, selectionArgs, MarkerColumns._ID, -1)) {
             if (cursor != null) {
                 return cursor.getCount();
             }
@@ -439,99 +425,94 @@ public class ContentProviderUtils {
         return -1;
     }
 
-    public Waypoint getWaypoint(Waypoint.Id waypointId) {
-        if (!waypointId.isValid()) {
+    public Marker getMarker(Marker.Id markerId) {
+        if (!markerId.isValid()) {
             return null;
         }
-        try (Cursor cursor = getWaypointCursor(null, WaypointsColumns._ID + "=?",
-                new String[]{Long.toString(waypointId.getId())}, WaypointsColumns._ID, 1)) {
+        try (Cursor cursor = getMarkerCursor(null, MarkerColumns._ID + "=?",
+                new String[]{Long.toString(markerId.getId())}, MarkerColumns._ID, 1)) {
             if (cursor != null && cursor.moveToFirst()) {
-                return createWaypoint(cursor);
+                return createMarker(cursor);
             }
         }
         return null;
     }
 
     /**
-     * Gets a waypoint cursor.
-     * he caller owns the returned cursor and is responsible for closing it.
+     * The caller owns the returned cursor and is responsible for closing it.
      *
      * @param selection     the selection. Can be null
      * @param selectionArgs the selection arguments. Can be null
      * @param sortOrder     the sort order. Can be null
-     * @param maxWaypoints  the maximum number of waypoints to return. -1 for no limit
+     * @param maxCount      the maximum number of markers to return. -1 for no limit
      */
-    public Cursor getWaypointCursor(String selection, String[] selectionArgs, String sortOrder, int maxWaypoints) {
-        return getWaypointCursor(null, selection, selectionArgs, sortOrder, maxWaypoints);
+    public Cursor getMarkerCursor(String selection, String[] selectionArgs, String sortOrder, int maxCount) {
+        return getMarkerCursor(null, selection, selectionArgs, sortOrder, maxCount);
     }
 
     /**
-     * Gets a waypoint cursor for a track.
      * The caller owns the returned cursor and is responsible for closing it.
      *
-     * @param trackId       the track id
-     * @param minWaypointId the minimum waypoint id. null to ignore
-     * @param maxWaypoints  the maximum number of waypoints to return. -1 for no limit
+     * @param trackId     the track id
+     * @param minMarkerId the minimum marker id. null to ignore
+     * @param maxCount    the maximum number of markers to return. -1 for no limit
      */
-    public Cursor getWaypointCursor(Track.Id trackId, @Nullable Waypoint.Id minWaypointId, int maxWaypoints) {
+    public Cursor getMarkerCursor(Track.Id trackId, @Nullable Marker.Id minMarkerId, int maxCount) {
         if (!trackId.isValid()) {
             return null;
         }
 
         String selection;
         String[] selectionArgs;
-        if (minWaypointId != null && minWaypointId.isValid()) {
-            selection = WaypointsColumns.TRACKID + "=? AND " + WaypointsColumns._ID + ">=?";
-            selectionArgs = new String[]{Long.toString(trackId.getId()), Long.toString(minWaypointId.getId())};
+        if (minMarkerId != null && minMarkerId.isValid()) {
+            selection = MarkerColumns.TRACKID + "=? AND " + MarkerColumns._ID + ">=?";
+            selectionArgs = new String[]{Long.toString(trackId.getId()), Long.toString(minMarkerId.getId())};
         } else {
-            selection = WaypointsColumns.TRACKID + "=?";
+            selection = MarkerColumns.TRACKID + "=?";
             selectionArgs = new String[]{Long.toString(trackId.getId())};
         }
-        return getWaypointCursor(null, selection, selectionArgs, WaypointsColumns._ID, maxWaypoints);
+        return getMarkerCursor(null, selection, selectionArgs, MarkerColumns._ID, maxCount);
     }
 
+    @Deprecated //TODO Move to test package
     @VisibleForTesting
-    public List<Waypoint> getWaypoints(Track.Id trackId) {
-        ArrayList<Waypoint> waypoints = new ArrayList<>();
-        try (Cursor cursor = getWaypointCursor(trackId, null, -1)) {
+    public List<Marker> getMarkers(Track.Id trackId) {
+        ArrayList<Marker> markers = new ArrayList<>();
+        try (Cursor cursor = getMarkerCursor(trackId, null, -1)) {
             if (cursor.moveToFirst()) {
                 do {
-                    waypoints.add(createWaypoint(cursor));
+                    markers.add(createMarker(cursor));
                 } while (cursor.moveToNext());
             }
         }
-        return waypoints;
+        return markers;
     }
 
-    public static Loader<Cursor> getWaypointsLoader(Context context, @Nullable Track.Id trackId) {
-        final String[] PROJECTION = new String[]{WaypointsColumns._ID,
-                WaypointsColumns.NAME, WaypointsColumns.DESCRIPTION, WaypointsColumns.CATEGORY,
-                WaypointsColumns.TIME, WaypointsColumns.PHOTOURL,
-                WaypointsColumns.LATITUDE, WaypointsColumns.LONGITUDE};
+    public static Loader<Cursor> getMarkersLoader(Context context, @Nullable Track.Id trackId) {
+        final String[] PROJECTION = new String[]{MarkerColumns._ID,
+                MarkerColumns.NAME, MarkerColumns.DESCRIPTION, MarkerColumns.CATEGORY,
+                MarkerColumns.TIME, MarkerColumns.PHOTOURL,
+                MarkerColumns.LATITUDE, MarkerColumns.LONGITUDE};
 
         if (trackId != null) {
-            return new CursorLoader(context, WaypointsColumns.CONTENT_URI, PROJECTION,
-                    WaypointsColumns.TRACKID + "=?",
+            return new CursorLoader(context, MarkerColumns.CONTENT_URI, PROJECTION,
+                    MarkerColumns.TRACKID + "=?",
                     new String[]{String.valueOf(trackId.getId())}, null);
         } else {
-            return new CursorLoader(context, WaypointsColumns.CONTENT_URI, PROJECTION, null, null, null);
+            return new CursorLoader(context, MarkerColumns.CONTENT_URI, PROJECTION, null, null, null);
         }
     }
 
-    /**
-     * Gets the number of waypoints for a track.
-     *
-     * @param trackId the track id
-     */
-    public int getWaypointCount(Track.Id trackId) {
+    @Deprecated //TODO Expose information via Cursor
+    public int getMarkerCount(Track.Id trackId) {
         if (!trackId.isValid()) {
             return 0;
         }
 
         String[] projection = new String[]{"count(*) AS count"};
-        String selection = WaypointsColumns.TRACKID + "=?";
+        String selection = MarkerColumns.TRACKID + "=?";
         String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
-        try (Cursor cursor = contentResolver.query(WaypointsColumns.CONTENT_URI, projection, selection, selectionArgs, WaypointsColumns._ID)) {
+        try (Cursor cursor = contentResolver.query(MarkerColumns.CONTENT_URI, projection, selection, selectionArgs, MarkerColumns._ID)) {
             if (cursor == null) {
                 return 0;
             }
@@ -541,26 +522,17 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Inserts a waypoint.
-     *
-     * @param waypoint the waypoint
-     * @return the content provider URI of the inserted waypoint.
+     * @return the content provider URI of the inserted marker.
      */
-    public Uri insertWaypoint(@NonNull Waypoint waypoint) {
-        waypoint.setId(null);
-        return contentResolver.insert(WaypointsColumns.CONTENT_URI, createContentValues(waypoint));
+    public Uri insertMarker(@NonNull Marker marker) {
+        marker.setId(null);
+        return contentResolver.insert(MarkerColumns.CONTENT_URI, createContentValues(marker));
     }
 
-    /**
-     * Delete waypoint's photo if any.
-     *
-     * @param context  the context object.
-     * @param waypoint the waypoint object.
-     */
-    private void deleteWaypointPhoto(Context context, Waypoint waypoint) {
-        if (waypoint != null && waypoint.hasPhoto()) {
-            Uri uri = waypoint.getPhotoURI();
-            File file = FileUtils.getPhotoFileIfExists(context, waypoint.getTrackId(), uri);
+    private void deleteMarkerPhoto(Context context, Marker marker) {
+        if (marker != null && marker.hasPhoto()) {
+            Uri uri = marker.getPhotoURI();
+            File file = FileUtils.getPhotoFileIfExists(context, marker.getTrackId(), uri);
             if (file.exists()) {
                 File parent = file.getParentFile();
                 file.delete();
@@ -572,71 +544,67 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Updates a waypoint.
-     * Returns true if successful.
-     *
-     * @param updatedWaypoint the waypoint with updated data.
+     * @param updateMarker the marker with updated data.
+     * @return true if successful.
      */
-    public boolean updateWaypoint(Context context, Waypoint updatedWaypoint) {
-        Waypoint savedWaypoint = getWaypoint(updatedWaypoint.getId());
-        if (!updatedWaypoint.hasPhoto()) {
-            deleteWaypointPhoto(context, savedWaypoint);
+    public boolean updateMarker(Context context, Marker updateMarker) {
+        Marker savedMarker = getMarker(updateMarker.getId());
+        if (!updateMarker.hasPhoto()) {
+            deleteMarkerPhoto(context, savedMarker);
         }
-        int rows = contentResolver.update(WaypointsColumns.CONTENT_URI, createContentValues(updatedWaypoint), WaypointsColumns._ID + "=?", new String[]{Long.toString(updatedWaypoint.getId().getId())});
+        int rows = contentResolver.update(MarkerColumns.CONTENT_URI, createContentValues(updateMarker), MarkerColumns._ID + "=?", new String[]{Long.toString(updateMarker.getId().getId())});
         return rows == 1;
     }
 
-    ContentValues createContentValues(@NonNull Waypoint waypoint) {
+    ContentValues createContentValues(@NonNull Marker marker) {
         ContentValues values = new ContentValues();
 
-        if (waypoint.getId() != null && waypoint.getId().isValid()) {
-            values.put(WaypointsColumns._ID, waypoint.getId().getId());
+        if (marker.getId() != null && marker.getId().isValid()) {
+            values.put(MarkerColumns._ID, marker.getId().getId());
         }
-        values.put(WaypointsColumns.NAME, waypoint.getName());
-        values.put(WaypointsColumns.DESCRIPTION, waypoint.getDescription());
-        values.put(WaypointsColumns.CATEGORY, waypoint.getCategory());
-        values.put(WaypointsColumns.ICON, waypoint.getIcon());
-        if (waypoint.getTrackId() != null) {
-            values.put(WaypointsColumns.TRACKID, waypoint.getTrackId().getId());
+        values.put(MarkerColumns.NAME, marker.getName());
+        values.put(MarkerColumns.DESCRIPTION, marker.getDescription());
+        values.put(MarkerColumns.CATEGORY, marker.getCategory());
+        values.put(MarkerColumns.ICON, marker.getIcon());
+        if (marker.getTrackId() != null) {
+            values.put(MarkerColumns.TRACKID, marker.getTrackId().getId());
         }
-        values.put(WaypointsColumns.LENGTH, waypoint.getLength());
-        values.put(WaypointsColumns.DURATION, waypoint.getDuration());
+        values.put(MarkerColumns.LENGTH, marker.getLength());
+        values.put(MarkerColumns.DURATION, marker.getDuration());
 
-        Location location = waypoint.getLocation();
-        values.put(WaypointsColumns.LONGITUDE, (int) (location.getLongitude() * 1E6));
-        values.put(WaypointsColumns.LATITUDE, (int) (location.getLatitude() * 1E6));
-        values.put(WaypointsColumns.TIME, location.getTime());
+        Location location = marker.getLocation();
+        values.put(MarkerColumns.LONGITUDE, (int) (location.getLongitude() * 1E6));
+        values.put(MarkerColumns.LATITUDE, (int) (location.getLatitude() * 1E6));
+        values.put(MarkerColumns.TIME, location.getTime());
         if (location.hasAltitude()) {
-            values.put(WaypointsColumns.ALTITUDE, location.getAltitude());
+            values.put(MarkerColumns.ALTITUDE, location.getAltitude());
         }
         if (location.hasAccuracy()) {
-            values.put(WaypointsColumns.ACCURACY, location.getAccuracy());
+            values.put(MarkerColumns.ACCURACY, location.getAccuracy());
         }
         if (location.hasBearing()) {
-            values.put(WaypointsColumns.BEARING, location.getBearing());
+            values.put(MarkerColumns.BEARING, location.getBearing());
         }
 
-        values.put(WaypointsColumns.PHOTOURL, waypoint.getPhotoUrl());
+        values.put(MarkerColumns.PHOTOURL, marker.getPhotoUrl());
         return values;
     }
 
     /**
-     * Gets a waypoint cursor.
-     *
      * @param projection    the projection
      * @param selection     the selection
      * @param selectionArgs the selection args
      * @param sortOrder     the sort order
-     * @param maxWaypoints  the maximum number of waypoints
+     * @param maxCount      the maximum number of markers
      */
-    private Cursor getWaypointCursor(String[] projection, String selection, String[] selectionArgs, String sortOrder, int maxWaypoints) {
+    private Cursor getMarkerCursor(String[] projection, String selection, String[] selectionArgs, String sortOrder, int maxCount) {
         if (sortOrder == null) {
-            sortOrder = WaypointsColumns._ID;
+            sortOrder = MarkerColumns._ID;
         }
-        if (maxWaypoints >= 0) {
-            sortOrder += " LIMIT " + maxWaypoints;
+        if (maxCount >= 0) {
+            sortOrder += " LIMIT " + maxCount;
         }
-        return contentResolver.query(WaypointsColumns.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
+        return contentResolver.query(MarkerColumns.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
     }
 
     /**

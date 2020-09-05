@@ -11,10 +11,10 @@ import androidx.annotation.VisibleForTesting;
 
 import java.util.UUID;
 
+import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
-import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.util.UUIDUtils;
 
 /**
@@ -52,8 +52,8 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL(TracksColumns.CREATE_TABLE);
         db.execSQL(TracksColumns.CREATE_TABLE_INDEX);
 
-        db.execSQL(WaypointsColumns.CREATE_TABLE);
-        db.execSQL(WaypointsColumns.CREATE_TABLE_INDEX);
+        db.execSQL(MarkerColumns.CREATE_TABLE);
+        db.execSQL(MarkerColumns.CREATE_TABLE_INDEX);
     }
 
     @Override

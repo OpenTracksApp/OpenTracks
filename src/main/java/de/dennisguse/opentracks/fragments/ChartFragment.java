@@ -37,9 +37,9 @@ import de.dennisguse.opentracks.chart.ChartPoint;
 import de.dennisguse.opentracks.chart.ChartView;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.LocationUtils;
@@ -249,7 +249,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     @Override
-    public void onNewWaypoint(Waypoint waypoint) {
+    public void onNewWaypoint(Marker waypoint) {
         if (isResumed() && waypoint != null && LocationUtils.isValidLocation(waypoint.getLocation())) {
             chartView.addWaypoint(waypoint);
         }

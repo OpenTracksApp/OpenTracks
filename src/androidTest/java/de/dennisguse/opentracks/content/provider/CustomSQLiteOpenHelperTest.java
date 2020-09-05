@@ -18,9 +18,9 @@ import org.junit.runner.RunWith;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
-import de.dennisguse.opentracks.content.data.WaypointsColumns;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -45,7 +45,7 @@ public class CustomSQLiteOpenHelperTest {
     @VisibleForTesting
     public static Map<String, String> getTableSQL(SQLiteDatabase db) {
         HashMap<String, String> tableSQL = new HashMap<>();
-        try (Cursor cursor = db.query("sqlite_master", new String[]{"name", "SQL"}, "name IN ('" + TracksColumns.TABLE_NAME + "', '" + TrackPointsColumns.TABLE_NAME + "', '" + WaypointsColumns.TABLE_NAME + "')", null, null, null, "name")) {
+        try (Cursor cursor = db.query("sqlite_master", new String[]{"name", "SQL"}, "name IN ('" + TracksColumns.TABLE_NAME + "', '" + TrackPointsColumns.TABLE_NAME + "', '" + MarkerColumns.TABLE_NAME + "')", null, null, null, "name")) {
             if (cursor != null) {
                 while (cursor.moveToNext()) {
                     tableSQL.put(cursor.getString(0), cursor.getString(1));
@@ -106,8 +106,8 @@ public class CustomSQLiteOpenHelperTest {
             assertTrue(hasSqlCreate(db, TrackPointsColumns.CREATE_TABLE));
             assertTrue(hasSqlCreate(db, TrackPointsColumns.CREATE_TABLE_INDEX));
 
-            assertTrue(hasSqlCreate(db, WaypointsColumns.CREATE_TABLE));
-            assertTrue(hasSqlCreate(db, WaypointsColumns.CREATE_TABLE_INDEX));
+            assertTrue(hasSqlCreate(db, MarkerColumns.CREATE_TABLE));
+            assertTrue(hasSqlCreate(db, MarkerColumns.CREATE_TABLE_INDEX));
         } catch (Exception e) {
             fail();
         }
@@ -140,13 +140,13 @@ public class CustomSQLiteOpenHelperTest {
 
         assertEquals(tablesByCreate.get(TracksColumns.TABLE_NAME), tableByUpgrade.get(TracksColumns.TABLE_NAME));
         assertEquals(tablesByCreate.get(TrackPointsColumns.TABLE_NAME), tableByUpgrade.get(TrackPointsColumns.TABLE_NAME));
-        assertEquals(tablesByCreate.get(WaypointsColumns.TABLE_NAME), tableByUpgrade.get(WaypointsColumns.TABLE_NAME));
+        assertEquals(tablesByCreate.get(MarkerColumns.TABLE_NAME), tableByUpgrade.get(MarkerColumns.TABLE_NAME));
 
         // then - verify custom indices
         assertEquals(3, indicesByCreate.size());
         assertEquals(indicesByUpgrade.get(TracksColumns.TABLE_NAME), indicesByCreate.get(TracksColumns.TABLE_NAME));
         assertEquals(indicesByUpgrade.get(TrackPointsColumns.TABLE_NAME), indicesByCreate.get(TrackPointsColumns.TABLE_NAME));
-        assertEquals(indicesByUpgrade.get(WaypointsColumns.TABLE_NAME), indicesByCreate.get(WaypointsColumns.TABLE_NAME));
+        assertEquals(indicesByUpgrade.get(MarkerColumns.TABLE_NAME), indicesByCreate.get(MarkerColumns.TABLE_NAME));
     }
 
     @Test

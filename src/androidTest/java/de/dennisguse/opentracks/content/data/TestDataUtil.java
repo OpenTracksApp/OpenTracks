@@ -93,12 +93,12 @@ public class TestDataUtil {
      * @param location The location.
      * @return the Waypoint created.
      */
-    public static Waypoint createWaypointWithPhoto(Context context, Track.Id trackId, Location location) throws IOException {
+    public static Marker createWaypointWithPhoto(Context context, Track.Id trackId, Location location) throws IOException {
         File dstFile = new File(FileUtils.getImageUrl(context, trackId));
         dstFile.createNewFile();
         Uri photoUri = FileUtils.getUriForFile(context, dstFile);
         String photoUrl = photoUri.toString();
 
-        return new Waypoint("Waypoint name", "Waypoint description", "Waypoint category", "", trackId, 0.0, 0, location, photoUrl);
+        return new Marker("Waypoint name", "Waypoint description", "Waypoint category", "", trackId, 0.0, 0, location, photoUrl);
     }
 }

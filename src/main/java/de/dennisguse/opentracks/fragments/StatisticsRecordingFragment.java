@@ -22,9 +22,9 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
@@ -355,7 +355,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     }
 
     @Override
-    public void onNewWaypoint(Waypoint wpt) {
+    public void onNewWaypoint(Marker wpt) {
         // We don't care.
     }
 

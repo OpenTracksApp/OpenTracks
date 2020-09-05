@@ -28,10 +28,10 @@ import java.util.Locale;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
-import de.dennisguse.opentracks.content.data.Waypoint;
-import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.LocationUtils;
@@ -56,9 +56,9 @@ public class SearchEngine {
      * WHERE query to get waypoints by name.
      */
     private static final String WAYPOINT_SELECTION_QUERY =
-            WaypointsColumns.NAME + " LIKE ? OR " +
-                    WaypointsColumns.DESCRIPTION + " LIKE ? OR " +
-                    WaypointsColumns.CATEGORY + " LIKE ?";
+            MarkerColumns.NAME + " LIKE ? OR " +
+                    MarkerColumns.DESCRIPTION + " LIKE ? OR " +
+                    MarkerColumns.CATEGORY + " LIKE ?";
 
     /**
      * Order of track results.
@@ -68,7 +68,7 @@ public class SearchEngine {
     /**
      * Order of waypoint results.
      */
-    private static final String WAYPOINT_SELECTION_ORDER = WaypointsColumns._ID + " DESC";
+    private static final String WAYPOINT_SELECTION_ORDER = MarkerColumns._ID + " DESC";
 
     /**
      * How much we promote a match in the track category.
@@ -190,8 +190,8 @@ public class SearchEngine {
      *
      * @param query the query to retrieve for
      */
-    private List<Waypoint> retrieveWaypoints(SearchQuery query) {
-        ArrayList<Waypoint> waypoints = new ArrayList<>();
+    private List<Marker> retrieveWaypoints(SearchQuery query) {
+        ArrayList<Marker> waypoints = new ArrayList<>();
 
         String queryLikeSelection2 = "%" + query.textQuery + "%";
         String[] waypointSelectionArgs = new String[]{
@@ -200,11 +200,11 @@ public class SearchEngine {
                 queryLikeSelection2
         };
 
-        try (Cursor cursor = providerUtils.getWaypointCursor(WAYPOINT_SELECTION_QUERY, waypointSelectionArgs, WAYPOINT_SELECTION_ORDER, MAX_SCORED_WAYPOINTS)) {
+        try (Cursor cursor = providerUtils.getMarkerCursor(WAYPOINT_SELECTION_QUERY, waypointSelectionArgs, WAYPOINT_SELECTION_ORDER, MAX_SCORED_WAYPOINTS)) {
             if (cursor != null) {
                 waypoints.ensureCapacity(cursor.getCount());
                 while (cursor.moveToNext()) {
-                    Waypoint waypoint = providerUtils.createWaypoint(cursor);
+                    Marker waypoint = providerUtils.createMarker(cursor);
                     if (LocationUtils.isValidLocation(waypoint.getLocation())) {
                         waypoints.add(waypoint);
                     }
@@ -264,8 +264,8 @@ public class SearchEngine {
      * @param query     the query to score for
      * @param output    the collection to fill with scored results
      */
-    private void scoreWaypointResults(Collection<Waypoint> waypoints, SearchQuery query, Collection<ScoredResult> output) {
-        for (Waypoint waypoint : waypoints) {
+    private void scoreWaypointResults(Collection<Marker> waypoints, SearchQuery query, Collection<ScoredResult> output) {
+        for (Marker waypoint : waypoints) {
             // Calculate the score.
             double score = scoreWaypointResult(query, waypoint);
 
@@ -281,7 +281,7 @@ public class SearchEngine {
      * @param waypoint the results to score
      * @return the score for the waypoint
      */
-    private double scoreWaypointResult(SearchQuery query, Waypoint waypoint) {
+    private double scoreWaypointResult(SearchQuery query, Marker waypoint) {
         double score = 1.0;
 
         Location location = waypoint.getLocation();
@@ -398,7 +398,7 @@ public class SearchEngine {
      */
     public static class ScoredResult {
         public final Track track;
-        public final Waypoint waypoint;
+        public final Marker waypoint;
         final double score;
 
         ScoredResult(Track track, double score) {
@@ -407,7 +407,7 @@ public class SearchEngine {
             this.score = score;
         }
 
-        ScoredResult(Waypoint waypoint, double score) {
+        ScoredResult(Marker waypoint, double score) {
             this.track = null;
             this.waypoint = waypoint;
             this.score = score;

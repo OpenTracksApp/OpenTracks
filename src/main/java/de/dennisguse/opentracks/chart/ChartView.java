@@ -42,7 +42,7 @@ import java.util.List;
 
 import de.dennisguse.opentracks.MarkerDetailActivity;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.stats.ExtremityMonitor;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.MarkerUtils;
@@ -87,7 +87,7 @@ public class ChartView extends View {
     private final ChartValueSeries paceSeries;
 
     private final List<ChartPoint> chartPoints = new ArrayList<>();
-    private final List<Waypoint> waypoints = new ArrayList<>();
+    private final List<Marker> waypoints = new ArrayList<>();
     private final ExtremityMonitor xExtremityMonitor = new ExtremityMonitor();
     private final Paint axisPaint;
     private final Paint xAxisMarkerPaint;
@@ -150,9 +150,9 @@ public class ChartView extends View {
             // Check if the y event is within markerHeight of the marker center
             if (Math.abs(event.getY() - topBorder - spacer - markerHeight / 2f) < markerHeight) {
                 int minDistance = Integer.MAX_VALUE;
-                Waypoint nearestWaypoint = null;
+                Marker nearestWaypoint = null;
                 synchronized (waypoints) {
-                    for (Waypoint waypoint : waypoints) {
+                    for (Marker waypoint : waypoints) {
                         int distance = Math.abs(getX(getWaypointXValue(waypoint)) - (int) event.getX() - getScrollX());
                         if (distance < minDistance) {
                             minDistance = distance;
@@ -434,7 +434,7 @@ public class ChartView extends View {
         scrollTo(0, 0);
     }
 
-    public void addWaypoint(Waypoint waypoint) {
+    public void addWaypoint(Marker waypoint) {
         synchronized (waypoints) {
             waypoints.add(waypoint);
         }
@@ -594,7 +594,7 @@ public class ChartView extends View {
      */
     private void drawWaypoints(Canvas canvas) {
         synchronized (waypoints) {
-            for (Waypoint waypoint : waypoints) {
+            for (Marker waypoint : waypoints) {
                 double xValue = getWaypointXValue(waypoint);
                 if (xValue > maxX) {
                     continue;
@@ -980,7 +980,7 @@ public class ChartView extends View {
      *
      * @param waypoint the waypoint
      */
-    private double getWaypointXValue(Waypoint waypoint) {
+    private double getWaypointXValue(Marker waypoint) {
         if (chartByDistance) {
             double lenghtInKm = waypoint.getLength() * UnitConversions.M_TO_KM;
             return metricUnits ? lenghtInKm : lenghtInKm * UnitConversions.KM_TO_MI;

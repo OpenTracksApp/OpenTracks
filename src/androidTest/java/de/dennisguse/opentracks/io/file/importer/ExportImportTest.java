@@ -21,10 +21,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
@@ -53,7 +53,7 @@ public class ExportImportTest {
     private static final String TRACK_CATEGORY = "the category";
     private static final String TRACK_DESCRIPTION = "the description";
 
-    private final List<Waypoint> waypoints = new ArrayList<>();
+    private final List<Marker> waypoints = new ArrayList<>();
     private final List<TrackPoint> trackPoints = new ArrayList<>();
 
     private Track.Id importTrackId;
@@ -72,19 +72,19 @@ public class ExportImportTest {
         trackPoints.addAll(Arrays.asList(track.second));
 
         for (int i = 0; i < 3; i++) {
-            Waypoint waypoint = new Waypoint(track.second[i].getLocation());
+            Marker waypoint = new Marker(track.second[i].getLocation());
             waypoint.setName("the waypoint " + i);
             waypoint.setDescription("the waypoint description " + i);
             waypoint.setCategory("the waypoint category" + i);
             waypoint.setIcon("the waypoing icon" + i);
             waypoint.setPhotoUrl("the photo url" + i);
             waypoint.setTrackId(trackId);
-            contentProviderUtils.insertWaypoint(waypoint);
+            contentProviderUtils.insertMarker(waypoint);
 
             waypoints.add(waypoint);
         }
 
-        assertEquals(waypoints.size(), contentProviderUtils.getWaypointCount(trackId));
+        assertEquals(waypoints.size(), contentProviderUtils.getMarkerCount(trackId));
     }
 
     @After
@@ -286,12 +286,12 @@ public class ExportImportTest {
     }
 
     private void assertWaypoints() {
-        assertEquals(waypoints.size(), contentProviderUtils.getWaypointCount(importTrackId));
+        assertEquals(waypoints.size(), contentProviderUtils.getMarkerCount(importTrackId));
 
-        List<Waypoint> importedWaypoints = contentProviderUtils.getWaypoints(importTrackId);
+        List<Marker> importedWaypoints = contentProviderUtils.getMarkers(importTrackId);
         for (int i = 0; i < waypoints.size(); i++) {
-            Waypoint waypoint = waypoints.get(i);
-            Waypoint importedWaypoint = importedWaypoints.get(i);
+            Marker waypoint = waypoints.get(i);
+            Marker importedWaypoint = importedWaypoints.get(i);
             assertEquals(waypoint.getCategory(), importedWaypoint.getCategory());
             assertEquals(waypoint.getDescription(), importedWaypoint.getDescription());
             // assertEquals(waypoint.getIcon(), importedWaypoint.getIcon()); // TODO for KML

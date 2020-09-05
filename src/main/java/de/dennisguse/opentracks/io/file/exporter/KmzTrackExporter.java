@@ -31,8 +31,8 @@ import java.io.OutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.util.FileUtils;
 
@@ -99,13 +99,13 @@ public class KmzTrackExporter implements TrackExporter {
 
     private void addImages(Context context, Track[] tracks, ZipOutputStream zipOutputStream) throws InterruptedException, IOException {
         for (Track track : tracks) {
-            try (Cursor cursor = contentProviderUtils.getWaypointCursor(track.getId(), null, -1)) {
+            try (Cursor cursor = contentProviderUtils.getMarkerCursor(track.getId(), null, -1)) {
                 if (cursor != null && cursor.moveToFirst()) {
                     for (int i = 0; i < cursor.getCount(); i++) {
                         if (Thread.interrupted()) {
                             throw new InterruptedException();
                         }
-                        Waypoint waypoint = contentProviderUtils.createWaypoint(cursor);
+                        Marker waypoint = contentProviderUtils.createMarker(cursor);
                         if (waypoint.hasPhoto()) {
                             Uri uriPhoto = waypoint.getPhotoURI();
                             boolean existsPhoto = FileUtils.getPhotoFileIfExists(context, track.getId(), uriPhoto) != null;
@@ -121,7 +121,7 @@ public class KmzTrackExporter implements TrackExporter {
         }
     }
 
-    private void addImage(Context context, ZipOutputStream zipOutputStream, Uri uri, Waypoint waypoint) throws IOException {
+    private void addImage(Context context, ZipOutputStream zipOutputStream, Uri uri, Marker waypoint) throws IOException {
         try (InputStream inputStream = context.getContentResolver().openInputStream(uri)) {
             ZipEntry zipEntry = new ZipEntry(buildKmzImageFilePath(waypoint));
             zipOutputStream.putNextEntry(zipEntry);
@@ -150,7 +150,7 @@ public class KmzTrackExporter implements TrackExporter {
      *
      * @param waypoint Waypoint object.
      */
-    public static String buildKmzImageFilePath(Waypoint waypoint) {
+    public static String buildKmzImageFilePath(Marker waypoint) {
         String ext = FileUtils.getExtension(waypoint.getPhotoUrl());
         ext = ext == null ? "" : "." + ext;
         return KMZ_IMAGES_DIR + File.separatorChar + FileUtils.sanitizeFileName(waypoint.getId() + ext);

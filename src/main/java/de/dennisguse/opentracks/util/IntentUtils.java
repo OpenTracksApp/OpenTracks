@@ -32,8 +32,8 @@ import java.util.Date;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.DescriptionGenerator;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.ShareContentProvider;
 
@@ -128,7 +128,7 @@ public class IntentUtils {
                 .putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_image_body));
     }
 
-    public static void showCoordinateOnMap(Context context, Waypoint waypoint) {
+    public static void showCoordinateOnMap(Context context, Marker waypoint) {
         showCoordinateOnMap(context, waypoint.getLocation().getLatitude(), waypoint.getLocation().getLongitude(), waypoint.getName());
     }
 

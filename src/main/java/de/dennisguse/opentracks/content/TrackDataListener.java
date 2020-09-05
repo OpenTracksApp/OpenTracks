@@ -16,9 +16,9 @@
 
 package de.dennisguse.opentracks.content;
 
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.Waypoint;
 
 /**
  * Listener for track data changes.
@@ -69,11 +69,11 @@ public interface TrackDataListener {
      *
      * @param waypoint the waypoint
      */
-    void onNewWaypoint(Waypoint waypoint);
+    void onNewWaypoint(Marker waypoint);
 
     /**
      * Called when finish sending new waypoints.
-     * This gets called after every batch of calls to {@link #clearWaypoints()} and {@link #onNewWaypoint(Waypoint)}.
+     * This gets called after every batch of calls to {@link #clearWaypoints()} and {@link #onNewWaypoint(Marker)}.
      */
     void onNewWaypointsDone();
 }

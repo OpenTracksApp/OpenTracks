@@ -40,7 +40,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import de.dennisguse.opentracks.MarkerEditActivity;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
@@ -67,7 +67,7 @@ public class MarkerDetailFragment extends Fragment {
     private ImageView photoView;
     private ImageView textGradient;
     private LinearLayout waypointInfo;
-    private Waypoint waypoint;
+    private Marker waypoint;
     private final Runnable hideText = new Runnable() {
         @Override
         public void run() {
@@ -93,7 +93,7 @@ public class MarkerDetailFragment extends Fragment {
         }
     };
 
-    public static MarkerDetailFragment newInstance(Waypoint.Id waypointId) {
+    public static MarkerDetailFragment newInstance(Marker.Id waypointId) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(KEY_MARKER_ID, waypointId);
 
@@ -106,7 +106,7 @@ public class MarkerDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Waypoint.Id waypointId = getArguments().getParcelable(KEY_MARKER_ID);
+        Marker.Id waypointId = getArguments().getParcelable(KEY_MARKER_ID);
         if (waypointId == null) {
             Log.d(TAG, "invalid marker id");
             getParentFragmentManager().popBackStack();
@@ -182,7 +182,7 @@ public class MarkerDetailFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Waypoint.Id waypointId = getArguments().getParcelable(KEY_MARKER_ID); //TODO Should only happen in onCreate?
+        Marker.Id waypointId = getArguments().getParcelable(KEY_MARKER_ID); //TODO Should only happen in onCreate?
         FragmentActivity fragmentActivity = getActivity();
         Intent intent;
         switch (item.getItemId()) {
@@ -216,7 +216,7 @@ public class MarkerDetailFragment extends Fragment {
      */
     private void updateWaypoint(boolean refresh) {
         if (refresh || waypoint == null) {
-            waypoint = contentProviderUtils.getWaypoint(getArguments().getParcelable(KEY_MARKER_ID)); //TODO Should only happen in onCreate?
+            waypoint = contentProviderUtils.getMarker(getArguments().getParcelable(KEY_MARKER_ID)); //TODO Should only happen in onCreate?
             if (waypoint == null) {
                 Log.d(TAG, "waypoint is null");
                 getParentFragmentManager().popBackStack();

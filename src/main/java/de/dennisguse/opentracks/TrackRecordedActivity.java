@@ -31,8 +31,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 
 import de.dennisguse.opentracks.content.TrackDataHub;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
@@ -206,10 +206,10 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
     private void handleIntent(Intent intent) {
         Track.Id trackId = intent.getParcelableExtra(EXTRA_TRACK_ID);
 
-        Waypoint.Id waypointId = intent.getParcelableExtra(EXTRA_MARKER_ID);
+        Marker.Id waypointId = intent.getParcelableExtra(EXTRA_MARKER_ID);
         if (waypointId != null) {
             // Use the trackId from the marker
-            Waypoint waypoint = contentProviderUtils.getWaypoint(waypointId);
+            Marker waypoint = contentProviderUtils.getMarker(waypointId);
             if (waypoint == null) {
                 finish();
                 return;

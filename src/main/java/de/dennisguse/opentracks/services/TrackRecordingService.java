@@ -39,9 +39,9 @@ import java.util.List;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.TrackRecordingActivity;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
@@ -230,13 +230,13 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      *
      * @return the waypoint id
      */
-    public Waypoint.Id insertWaypoint(String name, String category, String description, String photoUrl) {
+    public Marker.Id insertWaypoint(String name, String category, String description, String photoUrl) {
         if (!isRecording() || isPaused()) {
             return null;
         }
 
         if (name == null) {
-            int nextWaypointNumber = contentProviderUtils.getNextWaypointNumber(recordingTrackId);
+            int nextWaypointNumber = contentProviderUtils.getNextMarkerNumber(recordingTrackId);
             if (nextWaypointNumber == -1) {
                 nextWaypointNumber = 1;
             }
@@ -259,9 +259,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         long duration = stats.getTotalTime();
 
         // Insert waypoint
-        Waypoint waypoint = new Waypoint(name, description, category, icon, recordingTrackId, length, duration, trackPoint.getLocation(), photoUrl);
-        Uri uri = contentProviderUtils.insertWaypoint(waypoint);
-        return new Waypoint.Id(ContentUris.parseId(uri));
+        Marker waypoint = new Marker(name, description, category, icon, recordingTrackId, length, duration, trackPoint.getLocation(), photoUrl);
+        Uri uri = contentProviderUtils.insertMarker(waypoint);
+        return new Marker.Id(ContentUris.parseId(uri));
     }
 
     /**

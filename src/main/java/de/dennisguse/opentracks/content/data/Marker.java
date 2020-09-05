@@ -35,7 +35,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public final class Waypoint {
+public final class Marker {
 
     private Id id;
     private String name = "";
@@ -50,15 +50,15 @@ public final class Waypoint {
     private String photoUrl = "";
 
     @VisibleForTesting
-    public Waypoint(@NonNull TrackPoint trackPoint) {
+    public Marker(@NonNull TrackPoint trackPoint) {
         this.location = trackPoint.getLocation();
     }
 
-    public Waypoint(@NonNull Location location) {
+    public Marker(@NonNull Location location) {
         this.location = location;
     }
 
-    public Waypoint(String name, String description, String category, String icon, @NonNull Track.Id trackId, double length, long duration, @NonNull Location location, String photoUrl) {
+    public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, double length, long duration, @NonNull Location location, String photoUrl) {
         this.name = name;
         this.description = description;
         this.category = category;

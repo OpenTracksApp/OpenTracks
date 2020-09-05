@@ -17,9 +17,9 @@ package de.dennisguse.opentracks.services;
 
 import androidx.annotation.VisibleForTesting;
 
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
@@ -93,7 +93,7 @@ public interface TrackRecordingServiceInterface {
      *
      * @return the ID of the inserted waypoint
      */
-    Waypoint.Id insertWaypoint(String name, String category, String description, String photoUrl);
+    Marker.Id insertWaypoint(String name, String category, String description, String photoUrl);
 
     /**
      * Gets the current sensor data. Returns null if there is no data.

@@ -269,7 +269,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 String name = cursor.getString(nameIndex);
                 String totalTime = StringUtils.formatElapsedTime(cursor.getLong(totalTimeIndex));
                 String totalDistance = StringUtils.formatDistance(TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
-                int markerCount = contentProviderUtils.getWaypointCount(trackId);
+                int markerCount = contentProviderUtils.getMarkerCount(trackId);
                 long startTime = cursor.getLong(startTimeIndex);
                 String category = icon != null && !icon.equals("") ? null : cursor.getString(categoryIndex);
                 String description = cursor.getString(descriptionIndex);

@@ -26,9 +26,9 @@ import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.DescriptionGenerator;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -163,7 +163,7 @@ public class KmlTrackWriter implements TrackWriter {
     }
 
     @Override
-    public void writeWaypoint(Waypoint waypoint) {
+    public void writeWaypoint(Marker waypoint) {
         if (printWriter != null && exportTrackDetail) {
             boolean existsPhoto = FileUtils.getPhotoFileIfExists(context, waypoint.getTrackId(), waypoint.getPhotoURI()) != null;
             if (waypoint.hasPhoto() && exportPhotos && existsPhoto) {
@@ -335,7 +335,7 @@ public class KmlTrackWriter implements TrackWriter {
      * @param waypoint Waypoint object.
      * @param heading  the heading.
      */
-    private void writePhotoOverlay(Waypoint waypoint, float heading) {
+    private void writePhotoOverlay(Marker waypoint, float heading) {
         if (exportTrackDetail) {
             printWriter.println("<PhotoOverlay>");
             printWriter.println("<name>" + StringUtils.formatCData(waypoint.getName()) + "</name>");

@@ -26,7 +26,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.util.DialogUtils;
 
@@ -42,7 +42,7 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
 
     private DeleteMarkerCaller caller;
 
-    public static void showDialog(FragmentManager fragmentManager, Waypoint.Id... waypointIds) {
+    public static void showDialog(FragmentManager fragmentManager, Marker.Id... waypointIds) {
         Bundle bundle = new Bundle();
         bundle.putParcelableArray(KEY_MARKER_IDS, waypointIds);
 
@@ -64,7 +64,7 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Waypoint.Id[] waypointIds = (Waypoint.Id[]) getArguments().getParcelableArray(KEY_MARKER_IDS);
+        final Marker.Id[] waypointIds = (Marker.Id[]) getArguments().getParcelableArray(KEY_MARKER_IDS);
 
         final FragmentActivity fragmentActivity = getActivity();
         int titleId;
@@ -79,8 +79,8 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
         return DialogUtils.createConfirmationDialog(
                 fragmentActivity, titleId, getString(messageId), (dialog, which) -> new Thread(() -> {
                     ContentProviderUtils contentProviderUtils = new ContentProviderUtils(fragmentActivity);
-                    for (Waypoint.Id waypointId : waypointIds) {
-                        contentProviderUtils.deleteWaypoint(getContext(), waypointId);
+                    for (Marker.Id waypointId : waypointIds) {
+                        contentProviderUtils.deleteMarker(getContext(), waypointId);
                     }
                     caller.onDeleteMarkerDone();
                 }).start());

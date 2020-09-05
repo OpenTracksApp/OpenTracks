@@ -32,12 +32,12 @@ import java.util.Collections;
 import java.util.Set;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
-import de.dennisguse.opentracks.content.data.Waypoint;
-import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.util.LocationUtils;
@@ -132,7 +132,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
                 notifyWaypointsTableUpdate(trackDataManager.getListenerWaypoints());
             }
         };
-        contentResolver.registerContentObserver(WaypointsColumns.CONTENT_URI, false, waypointsTableObserver);
+        contentResolver.registerContentObserver(MarkerColumns.CONTENT_URI, false, waypointsTableObserver);
 
         trackPointsTableObserver = new ContentObserver(handler) {
             @Override
@@ -312,10 +312,10 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
             trackDataListener.clearWaypoints();
         }
 
-        try (Cursor cursor = contentProviderUtils.getWaypointCursor(selectedTrackId, null, MAX_DISPLAYED_WAYPOINTS)) {
+        try (Cursor cursor = contentProviderUtils.getMarkerCursor(selectedTrackId, null, MAX_DISPLAYED_WAYPOINTS)) {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
-                    Waypoint waypoint = contentProviderUtils.createWaypoint(cursor);
+                    Marker waypoint = contentProviderUtils.createMarker(cursor);
                     if (!LocationUtils.isValidLocation(waypoint.getLocation())) {
                         continue;
                     }

@@ -39,9 +39,9 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
@@ -70,7 +70,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
     private Track.Id importTrackId;
     private final List<Track.Id> trackIds = new ArrayList<>();
-    private final List<Waypoint> waypoints = new ArrayList<>();
+    private final List<Marker> waypoints = new ArrayList<>();
 
     // The current element content
     //TODO Should be made private and getter be used by child classes.
@@ -160,7 +160,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         }
 
         int waypointPosition = -1;
-        Waypoint waypoint = null;
+        Marker waypoint = null;
         TrackPoint trackPoint = null;
         TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics().getStartTime_ms());
         // TODO Should not be necessary anymore?
@@ -209,8 +209,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                         long duration = trackStatisticsUpdater.getTrackStatistics().getTotalTime();
 
                         // Insert waypoint
-                        Waypoint newWaypoint = new Waypoint(waypoint.getName(), waypointDescription, waypoint.getCategory(), icon, track.getId(), length, duration, trackPoint.getLocation(), waypoint.getPhotoUrl());
-                        contentProviderUtils.insertWaypoint(newWaypoint);
+                        Marker newWaypoint = new Marker(waypoint.getName(), waypointDescription, waypoint.getCategory(), icon, track.getId(), length, duration, trackPoint.getLocation(), waypoint.getPhotoUrl());
+                        contentProviderUtils.insertMarker(newWaypoint);
                     }
 
                     // Load the next waypoint
@@ -314,7 +314,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         if (!LocationUtils.isValidLocation(trackPoint.getLocation())) {
             throw new SAXException(createErrorMessage("Invalid location detected: " + trackPoint));
         }
-        Waypoint waypoint = new Waypoint(trackPoint.getLocation());
+        Marker waypoint = new Marker(trackPoint.getLocation());
 
         if (name != null) {
             waypoint.setName(name);

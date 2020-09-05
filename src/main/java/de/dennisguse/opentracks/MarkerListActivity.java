@@ -34,9 +34,9 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.Loader;
 
+import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.Waypoint;
-import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
@@ -124,19 +124,19 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         listView.setEmptyView(findViewById(R.id.marker_list_empty));
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = IntentUtils.newIntent(MarkerListActivity.this, MarkerDetailActivity.class)
-                    .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, new Waypoint.Id(id));
+                    .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, new Marker.Id(id));
             startActivity(intent);
         });
         resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
             @Override
             public void bindView(View view, Context context, Cursor cursor) {
-                int nameIndex = cursor.getColumnIndex(WaypointsColumns.NAME);
-                int timeIndex = cursor.getColumnIndexOrThrow(WaypointsColumns.TIME);
-                int categoryIndex = cursor.getColumnIndex(WaypointsColumns.CATEGORY);
-                int descriptionIndex = cursor.getColumnIndex(WaypointsColumns.DESCRIPTION);
-                int photoUrlIndex = cursor.getColumnIndex(WaypointsColumns.PHOTOURL);
-                int latitudeIndex = cursor.getColumnIndex(WaypointsColumns.LATITUDE);
-                int longitudeIndex = cursor.getColumnIndex(WaypointsColumns.LONGITUDE);
+                int nameIndex = cursor.getColumnIndex(MarkerColumns.NAME);
+                int timeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.TIME);
+                int categoryIndex = cursor.getColumnIndex(MarkerColumns.CATEGORY);
+                int descriptionIndex = cursor.getColumnIndex(MarkerColumns.DESCRIPTION);
+                int photoUrlIndex = cursor.getColumnIndex(MarkerColumns.PHOTOURL);
+                int latitudeIndex = cursor.getColumnIndex(MarkerColumns.LATITUDE);
+                int longitudeIndex = cursor.getColumnIndex(MarkerColumns.LONGITUDE);
 
                 int iconId = MarkerUtils.ICON_ID;
                 String name = cursor.getString(nameIndex);
@@ -158,7 +158,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
             @NonNull
             @Override
             public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-                return ContentProviderUtils.getWaypointsLoader(MarkerListActivity.this, track != null ? track.getId() : null);
+                return ContentProviderUtils.getMarkersLoader(MarkerListActivity.this, track != null ? track.getId() : null);
             }
 
             @Override
@@ -234,16 +234,16 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
      * @return true if handled.
      */
     private boolean handleContextItem(int itemId, long... longWaypointIds) {
-        Waypoint.Id[] waypointIds = new Waypoint.Id[longWaypointIds.length];
+        Marker.Id[] waypointIds = new Marker.Id[longWaypointIds.length];
         for (int i = 0; i < longWaypointIds.length; i++) {
-            waypointIds[i] = new Waypoint.Id(longWaypointIds[i]);
+            waypointIds[i] = new Marker.Id(longWaypointIds[i]);
         }
 
         Intent intent;
         switch (itemId) {
             case R.id.list_context_menu_show_on_map:
                 if (waypointIds.length == 1) {
-                    IntentUtils.showCoordinateOnMap(this, contentProviderUtils.getWaypoint(waypointIds[0]));
+                    IntentUtils.showCoordinateOnMap(this, contentProviderUtils.getMarker(waypointIds[0]));
                 }
                 return true;
             case R.id.list_context_menu_edit:

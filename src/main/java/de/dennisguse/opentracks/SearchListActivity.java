@@ -41,8 +41,8 @@ import java.util.SortedSet;
 import de.dennisguse.opentracks.content.SearchEngine;
 import de.dennisguse.opentracks.content.SearchEngine.ScoredResult;
 import de.dennisguse.opentracks.content.SearchEngine.SearchQuery;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
@@ -271,7 +271,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         }
         Map<String, Object> item = arrayAdapter.getItem(positions[0]);
         Track.Id trackId = (Track.Id) item.get(TRACK_ID_FIELD);
-        Waypoint.Id waypointId = (Waypoint.Id) item.get(MARKER_ID_FIELD);
+        Marker.Id waypointId = (Marker.Id) item.get(MARKER_ID_FIELD);
         Intent intent;
         switch (itemId) {
             case R.id.list_context_menu_show_on_map:
@@ -367,7 +367,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
      * @param waypoint the marker
      * @return the result map
      */
-    private Map<String, Object> prepareMarkerForDisplay(Waypoint waypoint) {
+    private Map<String, Object> prepareMarkerForDisplay(Marker waypoint) {
         Map<String, Object> resultMap = new HashMap<>();
 
         //TODO: It may be more appropriate to obtain the track name as a join in the retrieval phase of the searchable.
@@ -422,7 +422,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         resultMap.put(NAME_FIELD, track.getName());
         resultMap.put(TOTAL_TIME_FIELD, StringUtils.formatElapsedTime(trackStatistics.getTotalTime()));
         resultMap.put(TOTAL_DISTANCE_FIELD, StringUtils.formatDistance(this, trackStatistics.getTotalDistance(), metricUnits));
-        resultMap.put(MARKER_COUNT_FIELD, contentProviderUtils.getWaypointCount(track.getId()));
+        resultMap.put(MARKER_COUNT_FIELD, contentProviderUtils.getMarkerCount(track.getId()));
         resultMap.put(START_TIME_FIELD, trackStatistics.getStartTime_ms());
         resultMap.put(CATEGORY_FIELD, category);
         resultMap.put(DESCRIPTION_FIELD, track.getDescription());

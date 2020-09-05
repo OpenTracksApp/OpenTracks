@@ -23,9 +23,9 @@ import java.io.PrintWriter;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
@@ -130,7 +130,7 @@ public class GpxTrackWriter implements TrackWriter {
     }
 
     @Override
-    public void writeWaypoint(Waypoint waypoint) {
+    public void writeWaypoint(Marker waypoint) {
         if (printWriter != null) {
             Location location = waypoint.getLocation();
             printWriter.println("<wpt " + formatLocation(location) + ">");

@@ -30,7 +30,7 @@ import androidx.viewpager.widget.ViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.dennisguse.opentracks.content.data.Waypoint;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import de.dennisguse.opentracks.fragments.MarkerDetailFragment;
@@ -48,13 +48,13 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
 
     private static final String TAG = MarkerDetailActivity.class.getSimpleName();
 
-    private List<Waypoint.Id> waypointIds;
+    private List<Marker.Id> waypointIds;
 
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        Waypoint.Id waypointId = getIntent().getParcelableExtra(EXTRA_MARKER_ID);
+        Marker.Id waypointId = getIntent().getParcelableExtra(EXTRA_MARKER_ID);
         if (waypointId == null) {
             Log.d(TAG, "invalid marker id");
             finish();
@@ -62,16 +62,16 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
         }
 
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
-        Waypoint waypoint = contentProviderUtils.getWaypoint(waypointId);
+        Marker waypoint = contentProviderUtils.getMarker(waypointId);
 
         waypointIds = new ArrayList<>();
         int markerIndex = -1;
 
         //TODO Load only waypointIds, not the whole waypoint
-        try (Cursor cursor = contentProviderUtils.getWaypointCursor(waypoint.getTrackId(), null, -1)) {
+        try (Cursor cursor = contentProviderUtils.getMarkerCursor(waypoint.getTrackId(), null, -1)) {
             if (cursor != null && cursor.moveToFirst()) {
                 for (int i = 0; i < cursor.getCount(); i++) {
-                    Waypoint currentMarker = contentProviderUtils.createWaypoint(cursor);
+                    Marker currentMarker = contentProviderUtils.createMarker(cursor);
                     waypointIds.add(currentMarker.getId());
                     if (waypointId.equals(currentMarker.getId())) {
                         markerIndex = waypointIds.size() - 1;

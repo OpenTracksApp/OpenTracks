@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
-import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
 /**
@@ -55,7 +55,7 @@ public class IntentDashboardUtils {
         ArrayList<Uri> uris = new ArrayList<>();
         uris.add(TRACK_URI_INDEX, Uri.withAppendedPath(TracksColumns.CONTENT_URI, trackIdList));
         uris.add(TRACKPOINTS_URI_INDEX, Uri.withAppendedPath(TrackPointsColumns.CONTENT_URI_BY_TRACKID, trackIdList));
-        uris.add(WAYPOINTS_URI_INDEX, Uri.withAppendedPath(WaypointsColumns.CONTENT_URI_BY_TRACKID, trackIdList));
+        uris.add(WAYPOINTS_URI_INDEX, Uri.withAppendedPath(MarkerColumns.CONTENT_URI_BY_TRACKID, trackIdList));
 
         Intent intent = new Intent(ACTION_DASHBOARD);
         intent.putParcelableArrayListExtra(ACTION_DASHBOARD_PAYLOAD, uris);

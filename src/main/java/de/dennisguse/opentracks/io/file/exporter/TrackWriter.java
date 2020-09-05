@@ -17,9 +17,9 @@ package de.dennisguse.opentracks.io.file.exporter;
 
 import java.io.OutputStream;
 
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.Waypoint;
 
 /**
  * Interface for writing tracks to a file. The expected sequence of calls is:
@@ -30,7 +30,7 @@ import de.dennisguse.opentracks.content.data.Waypoint;
  * For each track:
  *     {@link #writeBeginWaypoints(Track)}
  *     For each waypoint:
- *         {@link #writeWaypoint(Waypoint)}
+ *         {@link #writeWaypoint(Marker)}
  *     {@link #writeEndWaypoints()}
  * {@link #writeMultiTrackBegin()}
  * For each track:
@@ -91,7 +91,7 @@ public interface TrackWriter {
      *
      * @param waypoint the waypoint
      */
-    void writeWaypoint(Waypoint waypoint);
+    void writeWaypoint(Marker waypoint);
 
     /**
      * Writes the beginning of the tracks.

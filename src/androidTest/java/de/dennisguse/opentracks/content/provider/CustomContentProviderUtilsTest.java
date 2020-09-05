@@ -38,13 +38,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
-import de.dennisguse.opentracks.content.data.Waypoint;
-import de.dennisguse.opentracks.content.data.WaypointsColumns;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.UUIDUtils;
@@ -212,15 +212,15 @@ public class CustomContentProviderUtilsTest {
         Track.Id trackId = new Track.Id(System.currentTimeMillis());
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
-        Waypoint waypoint = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
-        contentProviderUtils.insertWaypoint(waypoint);
+        Marker waypoint = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
+        contentProviderUtils.insertMarker(waypoint);
 
         ContentResolver contentResolver = context.getContentResolver();
         Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         assertEquals(1, tracksCursor.getCount());
         Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
         assertEquals(10, tracksPointsCursor.getCount());
-        Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
+        Cursor waypointCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
         assertEquals(1, waypointCursor.getCount());
         // Delete all.
         contentProviderUtils.deleteAllTracks(context);
@@ -229,7 +229,7 @@ public class CustomContentProviderUtilsTest {
         assertEquals(0, tracksCursor.getCount());
         tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
         assertEquals(0, tracksPointsCursor.getCount());
-        waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
+        waypointCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
         assertEquals(0, waypointCursor.getCount());
     }
 
@@ -243,15 +243,15 @@ public class CustomContentProviderUtilsTest {
         Track track = TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
         TrackPoint trackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
-        Waypoint waypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
-        contentProviderUtils.insertWaypoint(waypoint);
+        Marker waypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
+        contentProviderUtils.insertMarker(waypoint);
 
         ContentResolver contentResolver = context.getContentResolver();
         Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         assertEquals(1, tracksCursor.getCount());
         Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
         assertEquals(10, tracksPointsCursor.getCount());
-        Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
+        Cursor waypointCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
         assertEquals(1, waypointCursor.getCount());
         // Check waypoint has photo and it's in the external storage.
         assertTrue(waypoint.hasPhoto());
@@ -266,7 +266,7 @@ public class CustomContentProviderUtilsTest {
         assertEquals(0, tracksCursor.getCount());
         tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
         assertEquals(0, tracksPointsCursor.getCount());
-        waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
+        waypointCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
         assertEquals(0, waypointCursor.getCount());
         assertFalse(dir.exists());
     }
@@ -287,16 +287,16 @@ public class CustomContentProviderUtilsTest {
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId2, 10);
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId3, 10);
 
-        Waypoint waypoint = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId2));
+        Marker waypoint = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId2));
         waypoint.setTrackId(trackId1);
-        contentProviderUtils.insertWaypoint(waypoint);
+        contentProviderUtils.insertMarker(waypoint);
 
         ContentResolver contentResolver = context.getContentResolver();
         Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         assertEquals(3, tracksCursor.getCount());
         Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
         assertEquals(20, tracksPointsCursor.getCount());
-        Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
+        Cursor waypointCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
         assertEquals(1, waypointCursor.getCount());
         // Delete one track.
         contentProviderUtils.deleteTrack(context, trackId1);
@@ -305,7 +305,7 @@ public class CustomContentProviderUtilsTest {
         assertEquals(2, tracksCursor.getCount());
         tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
         assertEquals(20, tracksPointsCursor.getCount());
-        waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
+        waypointCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
         assertEquals(0, waypointCursor.getCount());
     }
 
@@ -326,13 +326,13 @@ public class CustomContentProviderUtilsTest {
 
         // Insert a waypoint in tracks trackId and trackId + 1.
         TrackPoint trackPoint1 = contentProviderUtils.getLastValidTrackPoint(trackId1);
-        Waypoint waypoint1 = TestDataUtil.createWaypointWithPhoto(context, trackId1, trackPoint1.getLocation());
-        contentProviderUtils.insertWaypoint(waypoint1);
+        Marker waypoint1 = TestDataUtil.createWaypointWithPhoto(context, trackId1, trackPoint1.getLocation());
+        contentProviderUtils.insertMarker(waypoint1);
         File dir1 = FileUtils.getPhotoDir(context, trackId1);
 
         TrackPoint trackPoint2 = contentProviderUtils.getLastValidTrackPoint(trackId2);
-        Waypoint waypoint2 = TestDataUtil.createWaypointWithPhoto(context, trackId2, trackPoint2.getLocation());
-        contentProviderUtils.insertWaypoint(waypoint2);
+        Marker waypoint2 = TestDataUtil.createWaypointWithPhoto(context, trackId2, trackPoint2.getLocation());
+        contentProviderUtils.insertMarker(waypoint2);
         File dir2 = FileUtils.getPhotoDir(context, trackId2);
 
         // Check.
@@ -341,7 +341,7 @@ public class CustomContentProviderUtilsTest {
         assertEquals(3, tracksCursor.getCount());
         Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
         assertEquals(30, tracksPointsCursor.getCount());
-        Cursor waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
+        Cursor waypointCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
         assertEquals(2, waypointCursor.getCount());
         assertTrue(waypoint1.hasPhoto());
         assertTrue(dir1.isDirectory());
@@ -357,7 +357,7 @@ public class CustomContentProviderUtilsTest {
         assertEquals(2, tracksCursor.getCount());
         tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
         assertEquals(20, tracksPointsCursor.getCount());
-        waypointCursor = contentResolver.query(WaypointsColumns.CONTENT_URI, null, null, null, WaypointsColumns._ID);
+        waypointCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
         assertEquals(1, waypointCursor.getCount());
         assertFalse(dir1.exists());
         assertTrue(dir2.exists());
@@ -439,7 +439,7 @@ public class CustomContentProviderUtilsTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#createContentValues(Waypoint)}.
+     * Tests the method {@link ContentProviderUtils#createContentValues(Marker)}.
      */
     @Test
     public void testCreateContentValues_waypoint() {
@@ -463,30 +463,30 @@ public class CustomContentProviderUtilsTest {
         track.first.setTrackStatistics(statistics);
         contentProviderUtils.insertTrack(track.first);
 
-        Waypoint waypoint = new Waypoint(track.second[0]);
+        Marker waypoint = new Marker(track.second[0]);
         waypoint.setDescription(TEST_DESC);
-        contentProviderUtils.insertWaypoint(waypoint);
+        contentProviderUtils.insertMarker(waypoint);
 
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(contentResolverMock);
 
-        Waypoint.Id waypointId = new Waypoint.Id(System.currentTimeMillis());
+        Marker.Id waypointId = new Marker.Id(System.currentTimeMillis());
         waypoint.setId(waypointId);
         ContentValues contentValues = contentProviderUtils.createContentValues(waypoint);
-        assertEquals(waypointId.getId(), contentValues.get(WaypointsColumns._ID));
-        assertEquals((int) (TestDataUtil.INITIAL_LONGITUDE * 1000000), contentValues.get(WaypointsColumns.LONGITUDE));
-        assertEquals(TEST_DESC, contentValues.get(WaypointsColumns.DESCRIPTION));
+        assertEquals(waypointId.getId(), contentValues.get(MarkerColumns._ID));
+        assertEquals((int) (TestDataUtil.INITIAL_LONGITUDE * 1000000), contentValues.get(MarkerColumns.LONGITUDE));
+        assertEquals(TEST_DESC, contentValues.get(MarkerColumns.DESCRIPTION));
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#createWaypoint(Cursor)}.
+     * Tests the method {@link ContentProviderUtils#createMarker(Cursor)}.
      */
     @Test
     public void testCreateWaypoint() {
         int startColumnIndex = 1;
         int columnIndex = startColumnIndex;
-        when(cursorMock.getColumnIndexOrThrow(WaypointsColumns._ID)).thenReturn(columnIndex++);
-        when(cursorMock.getColumnIndexOrThrow(WaypointsColumns.NAME)).thenReturn(columnIndex++);
-        when(cursorMock.getColumnIndexOrThrow(WaypointsColumns.TRACKID)).thenReturn(columnIndex++);
+        when(cursorMock.getColumnIndexOrThrow(MarkerColumns._ID)).thenReturn(columnIndex++);
+        when(cursorMock.getColumnIndexOrThrow(MarkerColumns.NAME)).thenReturn(columnIndex++);
+        when(cursorMock.getColumnIndexOrThrow(MarkerColumns.TRACKID)).thenReturn(columnIndex++);
         columnIndex = startColumnIndex;
         // Id
         when(cursorMock.isNull(columnIndex++)).thenReturn(false);
@@ -505,7 +505,7 @@ public class CustomContentProviderUtilsTest {
         long trackId = 11L;
         when(cursorMock.getLong(columnIndex++)).thenReturn(trackId);
 
-        Waypoint waypoint = contentProviderUtils.createWaypoint(cursorMock);
+        Marker waypoint = contentProviderUtils.createMarker(cursorMock);
         assertEquals(id, waypoint.getId().getId());
         assertEquals(name, waypoint.getName());
         assertEquals(trackId, waypoint.getTrackId().getId());
@@ -513,7 +513,7 @@ public class CustomContentProviderUtilsTest {
 
     /**
      * Tests the method
-     * {@link ContentProviderUtils#deleteWaypoint(Context, Waypoint.Id)}
+     * {@link ContentProviderUtils#deleteMarker(Context, Marker.Id)}
      * when there is only one waypoint in the track.
      */
     @Test
@@ -522,26 +522,26 @@ public class CustomContentProviderUtilsTest {
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
         // Insert at first.
-        Waypoint waypoint1 = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint1 = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint1.setDescription(TEST_DESC);
         waypoint1.setTrackId(trackId);
-        contentProviderUtils.insertWaypoint(waypoint1);
+        contentProviderUtils.insertMarker(waypoint1);
 
         // Check insert was done.
-        assertEquals(contentProviderUtils.getWaypointCount(trackId), 1);
+        assertEquals(contentProviderUtils.getMarkerCount(trackId), 1);
 
         // Get waypoint id that needs to delete.
-        Waypoint.Id waypoint1Id = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint1)));
+        Marker.Id waypoint1Id = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint1)));
 
         // Delete
-        contentProviderUtils.deleteWaypoint(context, waypoint1Id);
+        contentProviderUtils.deleteMarker(context, waypoint1Id);
 
-        assertNull(contentProviderUtils.getWaypoint(waypoint1Id));
+        assertNull(contentProviderUtils.getMarker(waypoint1Id));
     }
 
     /**
      * Tests the method
-     * {@link ContentProviderUtils#deleteWaypoint(Context, Waypoint.Id)}
+     * {@link ContentProviderUtils#deleteMarker(Context, Marker.Id)}
      * when there is only one waypoint in the track.
      */
     @Test
@@ -551,14 +551,14 @@ public class CustomContentProviderUtilsTest {
 
         // Insert at first.
         TrackPoint trackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
-        Waypoint waypoint1 = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
-        contentProviderUtils.insertWaypoint(waypoint1);
+        Marker waypoint1 = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
+        contentProviderUtils.insertMarker(waypoint1);
 
         // Check insert was done.
-        assertEquals(contentProviderUtils.getWaypointCount(trackId), 1);
+        assertEquals(contentProviderUtils.getMarkerCount(trackId), 1);
 
         // Get waypoint id that needs to delete.
-        Waypoint.Id waypoint1Id = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint1)));
+        Marker.Id waypoint1Id = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint1)));
 
         // Check waypoint has photo and it's in the external storage.
         assertTrue(waypoint1.hasPhoto());
@@ -568,15 +568,15 @@ public class CustomContentProviderUtilsTest {
         assertTrue(dir.exists());
 
         // Delete
-        contentProviderUtils.deleteWaypoint(context, waypoint1Id);
+        contentProviderUtils.deleteMarker(context, waypoint1Id);
 
         // Check waypoint doesn't exists and photo folder was deleted.
-        assertNull(contentProviderUtils.getWaypoint(waypoint1Id));
+        assertNull(contentProviderUtils.getMarker(waypoint1Id));
         assertFalse(dir.exists());
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#deleteWaypoint(Context, Waypoint.Id)} when there is more than one waypoint in the track.
+     * Tests the method {@link ContentProviderUtils#deleteMarker(Context, Marker.Id)} when there is more than one waypoint in the track.
      */
     @Test
     public void testDeleteWaypoint_hasNextWayPoint() {
@@ -600,67 +600,67 @@ public class CustomContentProviderUtilsTest {
 //        TestDataUtil.insertTrackWithLocations(contentProviderUtils, track);
 
         // Insert at first.
-        Waypoint waypoint1 = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint1 = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint1.setDescription(MOCK_DESC);
         waypoint1.setTrackId(trackId);
-        Waypoint.Id waypoint1Id = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint1)));
+        Marker.Id waypoint1Id = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint1)));
 
-        Waypoint waypoint2 = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint2 = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint2.setDescription(MOCK_DESC);
         waypoint2.setTrackId(trackId);
-        Waypoint.Id waypoint2Id = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint2)));
+        Marker.Id waypoint2Id = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint2)));
 
         // Delete
-        assertNotNull(contentProviderUtils.getWaypoint(waypoint1Id));
-        contentProviderUtils.deleteWaypoint(context, waypoint1Id);
-        assertNull(contentProviderUtils.getWaypoint(waypoint1Id));
+        assertNotNull(contentProviderUtils.getMarker(waypoint1Id));
+        contentProviderUtils.deleteMarker(context, waypoint1Id);
+        assertNull(contentProviderUtils.getMarker(waypoint1Id));
 
-        assertEquals(MOCK_DESC, contentProviderUtils.getWaypoint(waypoint2Id).getDescription());
+        assertEquals(MOCK_DESC, contentProviderUtils.getMarker(waypoint2Id).getDescription());
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#getNextWaypointNumber(Track.Id)}.
+     * Tests the method {@link ContentProviderUtils#getNextMarkerNumber(Track.Id)}.
      */
     @Test
     public void testGetNextWaypointNumber() {
         Track.Id trackId = new Track.Id(System.currentTimeMillis());
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
-        Waypoint waypoint1 = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint1 = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint1.setTrackId(trackId);
-        Waypoint waypoint2 = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint2 = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint2.setTrackId(trackId);
-        Waypoint waypoint3 = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint3 = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint3.setTrackId(trackId);
-        Waypoint waypoint4 = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint4 = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint4.setTrackId(trackId);
-        contentProviderUtils.insertWaypoint(waypoint1);
-        contentProviderUtils.insertWaypoint(waypoint2);
-        contentProviderUtils.insertWaypoint(waypoint3);
-        contentProviderUtils.insertWaypoint(waypoint4);
+        contentProviderUtils.insertMarker(waypoint1);
+        contentProviderUtils.insertMarker(waypoint2);
+        contentProviderUtils.insertMarker(waypoint3);
+        contentProviderUtils.insertMarker(waypoint4);
 
-        assertEquals(4, contentProviderUtils.getNextWaypointNumber(trackId));
+        assertEquals(4, contentProviderUtils.getNextMarkerNumber(trackId));
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#insertWaypoint(Waypoint)} and
-     * {@link ContentProviderUtils#getWaypoint(Waypoint.Id)}.
+     * Tests the method {@link ContentProviderUtils#insertMarker(Marker)} and
+     * {@link ContentProviderUtils#getMarker(Marker.Id)}.
      */
     @Test
     public void testInsertAndGetWaypoint() {
         Track.Id trackId = new Track.Id(System.currentTimeMillis());
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
-        Waypoint waypoint = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint.setDescription(TEST_DESC);
         waypoint.setTrackId(trackId);
-        Waypoint.Id waypointId = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint)));
+        Marker.Id waypointId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint)));
 
-        assertEquals(TEST_DESC, contentProviderUtils.getWaypoint(waypointId).getDescription());
+        assertEquals(TEST_DESC, contentProviderUtils.getMarker(waypointId).getDescription());
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#updateWaypoint(Context, Waypoint)}.
+     * Tests the method {@link ContentProviderUtils#updateMarker(Context, Marker)}.
      */
     @Test
     public void testUpdateWaypoint() {
@@ -668,21 +668,21 @@ public class CustomContentProviderUtilsTest {
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
         // Insert at first.
-        Waypoint waypoint = new Waypoint(contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint.setDescription(TEST_DESC);
         waypoint.setTrackId(trackId);
-        Waypoint.Id waypointId = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint)));
+        Marker.Id waypointId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint)));
 
         // Update
-        waypoint = contentProviderUtils.getWaypoint(waypointId);
+        waypoint = contentProviderUtils.getMarker(waypointId);
         waypoint.setDescription(TEST_DESC_NEW);
-        contentProviderUtils.updateWaypoint(context, waypoint);
+        contentProviderUtils.updateMarker(context, waypoint);
 
-        assertEquals(TEST_DESC_NEW, contentProviderUtils.getWaypoint(waypointId).getDescription());
+        assertEquals(TEST_DESC_NEW, contentProviderUtils.getMarker(waypointId).getDescription());
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#updateWaypoint(Context, Waypoint)}.
+     * Tests the method {@link ContentProviderUtils#updateMarker(Context, Marker)}.
      */
     @Test
     public void testUpdateWaypoint_withPhoto() throws IOException {
@@ -693,10 +693,10 @@ public class CustomContentProviderUtilsTest {
 
         // Insert at first.
         TrackPoint trackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
-        Waypoint waypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
+        Marker waypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
         waypoint.setDescription(TEST_DESC);
         waypoint.setTrackId(trackId);
-        Waypoint.Id waypointId = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint)));
+        Marker.Id waypointId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint)));
 
         File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.getId());
         assertTrue(dir.exists());
@@ -704,13 +704,13 @@ public class CustomContentProviderUtilsTest {
         assertEquals(1, dir.list().length);
 
         // Update
-        waypoint = contentProviderUtils.getWaypoint(waypointId);
+        waypoint = contentProviderUtils.getMarker(waypointId);
         waypoint.setName(TEST_NAME_NEW);
         waypoint.setDescription(TEST_DESC_NEW);
-        contentProviderUtils.updateWaypoint(context, waypoint);
+        contentProviderUtils.updateMarker(context, waypoint);
 
-        assertEquals(TEST_NAME_NEW, contentProviderUtils.getWaypoint(waypointId).getName());
-        assertEquals(TEST_DESC_NEW, contentProviderUtils.getWaypoint(waypointId).getDescription());
+        assertEquals(TEST_NAME_NEW, contentProviderUtils.getMarker(waypointId).getName());
+        assertEquals(TEST_DESC_NEW, contentProviderUtils.getMarker(waypointId).getDescription());
         assertTrue(waypoint.hasPhoto());
         assertTrue(dir.exists());
         assertTrue(dir.isDirectory());
@@ -718,7 +718,7 @@ public class CustomContentProviderUtilsTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#updateWaypoint(Context, Waypoint)}.
+     * Tests the method {@link ContentProviderUtils#updateMarker(Context, Marker)}.
      */
     @Test
     public void testUpdateWaypoint_delPhotoAndDir() throws IOException {
@@ -729,10 +729,10 @@ public class CustomContentProviderUtilsTest {
 
         // Insert at first.
         TrackPoint trackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
-        Waypoint waypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
+        Marker waypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
         waypoint.setDescription(TEST_DESC);
         waypoint.setTrackId(trackId);
-        Waypoint.Id waypointId = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint)));
+        Marker.Id waypointId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint)));
 
         File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.getId());
         assertTrue(dir.exists());
@@ -740,20 +740,20 @@ public class CustomContentProviderUtilsTest {
         assertEquals(1, dir.list().length);
 
         // Update
-        waypoint = contentProviderUtils.getWaypoint(waypointId);
+        waypoint = contentProviderUtils.getMarker(waypointId);
         waypoint.setName(TEST_NAME_NEW);
         waypoint.setDescription(TEST_DESC_NEW);
         waypoint.setPhotoUrl(null);
-        contentProviderUtils.updateWaypoint(context, waypoint);
+        contentProviderUtils.updateMarker(context, waypoint);
 
-        assertEquals(TEST_NAME_NEW, contentProviderUtils.getWaypoint(waypointId).getName());
-        assertEquals(TEST_DESC_NEW, contentProviderUtils.getWaypoint(waypointId).getDescription());
+        assertEquals(TEST_NAME_NEW, contentProviderUtils.getMarker(waypointId).getName());
+        assertEquals(TEST_DESC_NEW, contentProviderUtils.getMarker(waypointId).getDescription());
         assertFalse(waypoint.hasPhoto());
         assertFalse(dir.exists());
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#updateWaypoint(Context, Waypoint)}.
+     * Tests the method {@link ContentProviderUtils#updateMarker(Context, Marker)}.
      */
     @Test
     public void testUpdateWaypoint_delPhotoNotDir() throws IOException {
@@ -764,14 +764,14 @@ public class CustomContentProviderUtilsTest {
 
         // Insert two waypoints with photos.
         TrackPoint trackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
-        Waypoint waypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
+        Marker waypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
         waypoint.setDescription(TEST_DESC);
         waypoint.setTrackId(trackId);
-        Waypoint otherWaypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
+        Marker otherWaypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
         otherWaypoint.setDescription(TEST_DESC);
         otherWaypoint.setTrackId(trackId);
-        Waypoint.Id waypointId = new Waypoint.Id(ContentUris.parseId(contentProviderUtils.insertWaypoint(waypoint)));
-        contentProviderUtils.insertWaypoint(otherWaypoint);
+        Marker.Id waypointId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint)));
+        contentProviderUtils.insertMarker(otherWaypoint);
 
         File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.getId());
         assertTrue(dir.exists());
@@ -779,11 +779,11 @@ public class CustomContentProviderUtilsTest {
         assertEquals(2, dir.list().length);
 
         // Update one waypoint deleting photo.
-        waypoint = contentProviderUtils.getWaypoint(waypointId);
+        waypoint = contentProviderUtils.getMarker(waypointId);
         waypoint.setPhotoUrl(null);
-        contentProviderUtils.updateWaypoint(context, waypoint);
+        contentProviderUtils.updateMarker(context, waypoint);
 
-        assertEquals(TEST_DESC, contentProviderUtils.getWaypoint(waypointId).getDescription());
+        assertEquals(TEST_DESC, contentProviderUtils.getMarker(waypointId).getDescription());
         assertFalse(waypoint.hasPhoto());
         assertTrue(dir.exists());
         assertTrue(dir.isDirectory());

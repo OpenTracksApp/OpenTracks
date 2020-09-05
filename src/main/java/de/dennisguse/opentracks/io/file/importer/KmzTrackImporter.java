@@ -32,8 +32,8 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.Waypoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;
 import de.dennisguse.opentracks.util.FileUtils;
@@ -200,9 +200,9 @@ public class KmzTrackImporter implements TrackImporter {
         if (!trackId.isValid()) {
             // 1.- Gets all photo names in the waypoints of the track identified by id.
             ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
-            List<Waypoint> waypoints = contentProviderUtils.getWaypoints(trackId);
+            List<Marker> waypoints = contentProviderUtils.getMarkers(trackId);
             List<String> photosName = new ArrayList<>();
-            for (Waypoint w : waypoints) {
+            for (Marker w : waypoints) {
                 if (w.hasPhoto()) {
                     String photoUrl = Uri.decode(w.getPhotoUrl());
                     photosName.add(photoUrl.substring(photoUrl.lastIndexOf(File.separatorChar) + 1));
