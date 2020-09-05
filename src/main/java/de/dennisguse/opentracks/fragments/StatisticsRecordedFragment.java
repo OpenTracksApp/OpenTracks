@@ -284,7 +284,7 @@ public class StatisticsRecordedFragment extends Fragment {
             boolean showElevation = PreferencesUtils.isShowStatsElevation(getContext());
             elevationGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
 
-            double elevationGain_m = trackStatistics != null ? trackStatistics.getTotalElevationGain() : 0f;
+            Float elevationGain_m = trackStatistics != null ? trackStatistics.getTotalElevationGain() : null;
 
             Pair<String, String> parts = StringUtils.formatElevation(getContext(), elevationGain_m, metricUnits);
             elevationTotalGainValue.setText(parts.first);

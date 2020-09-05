@@ -136,7 +136,9 @@ public class DescriptionGenerator {
         }
 
         // Elevation gain
-        writeElevation(stats.getTotalElevationGain(), builder, R.string.description_elevation_gain, lineBreak);
+        if (stats.hasTotalElevationGain()) {
+            writeElevation(stats.getTotalElevationGain(), builder, R.string.description_elevation_gain, lineBreak);
+        }
 
         // Recorded time
         builder.append(context.getString(R.string.description_recorded_time, StringUtils.formatDateTime(context, stats.getStartTime_ms())));

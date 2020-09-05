@@ -324,21 +324,21 @@ public class StringUtils {
     }
 
     /**
-     * Sets an elevation value.
+     * Sets an elevation_m value.
      *
      * @param context     the context
-     * @param elevation   the elevation in meters
+     * @param elevation_m the elevation_m
      * @param metricUnits true if metric units
-     * @return the formatted elevation (or null) and it's unit as {@link Pair}
+     * @return the formatted elevation_m (or null) and it's unit as {@link Pair}
      */
-    public static Pair<String, String> formatElevation(Context context, double elevation, boolean metricUnits) {
+    public static Pair<String, String> formatElevation(Context context, Float elevation_m, boolean metricUnits) {
         String value = context.getString(R.string.value_unknown);
         String unit = context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet);
-        if (!Double.isNaN(elevation) && !Double.isInfinite(elevation)) {
+        if (elevation_m != null) {
             if (!metricUnits) {
-                elevation *= UnitConversions.M_TO_FT;
+                elevation_m *= (float) UnitConversions.M_TO_FT;
             }
-            value = StringUtils.formatDecimal(elevation, 0);
+            value = StringUtils.formatDecimal(elevation_m, 0);
         }
         return new Pair<>(value, unit);
     }

@@ -35,7 +35,7 @@ public class AggregatedStatisticsTest {
         statistics.setTotalTime(totalTime);
         statistics.setMovingTime(totalTime);
         statistics.setTotalDistance(totalDistance);
-        statistics.setTotalElevationGain(50.0);
+        statistics.setTotalElevationGain(50.0f);
         statistics.setMaxSpeed(50.0);  // Resulting max speed
         statistics.setMaxElevation(1250.0);
         statistics.setMinElevation(1200.0);  // Resulting min elevation

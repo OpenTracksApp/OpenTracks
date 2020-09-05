@@ -481,14 +481,17 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
     // Set elevation gain
     private void setTotalElevationGain(Float elevationGain_m) {
+        //TODO Check if we can distribute the total elevation gain via trackStatistics instead of doing some computation in the UI layer.
         boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
 
-        float totalElevationGain = 0;
-        if (elevationGain_m != null) {
-            totalElevationGain = elevationGain_m;
-        }
-        if (lastTrackStatistics != null) {
-            totalElevationGain += (float) lastTrackStatistics.getTotalElevationGain();
+        Float totalElevationGain = elevationGain_m;
+
+        if (lastTrackStatistics != null && lastTrackStatistics.hasTotalElevationGain()) {
+            if (elevationGain_m == null) {
+                totalElevationGain = lastTrackStatistics.getTotalElevationGain();
+            } else {
+                totalElevationGain += lastTrackStatistics.getTotalElevationGain();
+            }
         }
 
         Pair<String, String> parts = StringUtils.formatElevation(getContext(), totalElevationGain, metricUnits);
@@ -626,7 +629,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
         if (showElevation) {
             // Current elevation
-            double altitude = lastTrackPoint != null && lastTrackPoint.hasAltitude() ? lastTrackPoint.getAltitude() : Double.NaN;
+            Float altitude = lastTrackPoint != null && lastTrackPoint.hasAltitude() ? (float) lastTrackPoint.getAltitude() : null;
             Pair<String, String> parts = StringUtils.formatElevation(getContext(), altitude, metricUnits);
             elevationCurrentValue.setText(parts.first);
             elevationCurrentUnit.setText(parts.second);
