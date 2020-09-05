@@ -263,7 +263,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 int descriptionIndex = cursor.getColumnIndex(TracksColumns.DESCRIPTION);
 
                 Track.Id trackId = new Track.Id(cursor.getLong(idIndex));
-                boolean isRecording = trackId == recordingTrackId;
+                boolean isRecording = trackId.equals(recordingTrackId);
                 String icon = cursor.getString(iconIndex);
                 int iconId = TrackIconUtils.getIconDrawable(icon);
                 String name = cursor.getString(nameIndex);
