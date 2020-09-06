@@ -21,6 +21,7 @@ import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingCadenceAndSpeedPreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeHeartRatePreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeSensorPreference;
+import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.BluetoothUtils;
 import de.dennisguse.opentracks.util.HackUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -64,6 +65,9 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             }
             if (PreferencesUtils.isKey(getActivity(), R.string.stats_units_key, key)) {
                 getActivity().runOnUiThread(this::updateUnits);
+            }
+            if (PreferencesUtils.isKey(getActivity(), R.string.night_mode_key, key)) {
+                getActivity().runOnUiThread(() -> ActivityUtils.applyNightMode(getContext()));
             }
         };
 

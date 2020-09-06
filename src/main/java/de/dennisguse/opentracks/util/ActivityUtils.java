@@ -16,6 +16,7 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SearchView;
 
 import java.util.ArrayList;
@@ -151,4 +152,7 @@ public class ActivityUtils {
         toast.show();
     }
 
+    public static void applyNightMode(Context context) {
+        AppCompatDelegate.setDefaultNightMode(PreferencesUtils.getDefaultNightMode(context));
+    }
 }

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import java.util.Locale;
 
+import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
@@ -31,6 +32,8 @@ public class Startup extends Application {
             String statsUnits = getString(Locale.US.equals(Locale.getDefault()) ? R.string.stats_units_imperial : R.string.stats_units_metric);
             PreferencesUtils.setString(this, R.string.stats_units_key, statsUnits);
         }
+
+        ActivityUtils.applyNightMode(this);
 
         //TODO Workaround to reset recordingTrackId on app startup as the TrackRecordingService (likely) crashed.
         if (PreferencesUtils.isRecording(this)) {

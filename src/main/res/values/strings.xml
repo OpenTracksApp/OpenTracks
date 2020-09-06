@@ -371,6 +371,11 @@ limitations under the License.
     <string name="settings_recording_track_name_date_local_option">Date (local)</string>
     <string name="settings_recording_track_name_number_option">Number</string>
     <string name="settings_recording_track_name_title">Default track name</string>
+    <string name="settings_night_mode_title">UI Theme</string>
+    <string name="settings_night_mode_option_system">System</string>
+    <string name="settings_night_mode_option_day">Day</string>
+    <string name="settings_night_mode_option_night">Night</string>
+
     <!-- Settings Reset -->
     <string name="settings_reset">Reset</string>
     <string name="settings_reset_confirm_message">All settings will be reverted to the default values. This will not delete any tracks on the device.</string>
