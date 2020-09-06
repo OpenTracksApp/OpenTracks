@@ -204,7 +204,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Map<String, Object> item = arrayAdapter.getItem(position);
             Track.Id trackId = (Track.Id) item.get(TRACK_ID_FIELD);
-            Long markerId = (Long) item.get(MARKER_ID_FIELD);
+            Marker.Id markerId = (Marker.Id) item.get(MARKER_ID_FIELD);
             Intent intent = IntentUtils.newIntent(SearchListActivity.this, TrackRecordedActivity.class);
             if (markerId != null) {
                 intent = intent.putExtra(TrackRecordedActivity.EXTRA_MARKER_ID, markerId);
