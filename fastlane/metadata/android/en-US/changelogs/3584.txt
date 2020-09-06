@@ -1,0 +1,8 @@
+v3.9.5: OpenTracks
+
+Changes:
+- UI shows speed only with one fractional digit
+
+Bugfix:
+- App crash in search (due to Track.Id refactoring)
+- Track list did now show if a recording was ongoing (due to Track.Id refactoring)
