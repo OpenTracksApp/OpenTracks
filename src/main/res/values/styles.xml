@@ -15,7 +15,7 @@ limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="BottomButton" parent="@android:style/Widget.Holo.Button.Borderless">
+    <style name="BottomButton" parent="Widget.AppCompat.Button.Borderless">
         <!-- Same as BottomButton in values/styles.xml except inheriting from Widget.Holo.Button.Borderles. -->
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
@@ -23,7 +23,7 @@ limitations under the License.
         <item name="android:maxLines">2</item>
     </style>
 
-    <style name="BottomButtonBar" parent="@android:style/Holo.ButtonBar">
+    <style name="BottomButtonBar" parent="Widget.AppCompat.ButtonBar">
         <!--
         Same as BottomButtonBar in values/styles.xml except inheriting from Holo.ButtonBar and
         adding measureWithLargestChild.
@@ -219,13 +219,13 @@ limitations under the License.
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="TextLarge" parent="@android:style/TextAppearance.Holo.Large">
+    <style name="TextLarge" parent="TextAppearance.AppCompat.Large">
         <!-- same as TextLarge in values/styles.xml except inheriting from a parent instead of specifying textSize -->
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
     </style>
 
-    <style name="TextMedium" parent="@android:style/TextAppearance.Holo.Medium">
+    <style name="TextMedium" parent="TextAppearance.AppCompat.Medium">
         <!-- same as TextMedium in values/styles.xml except inheriting from a parent instead of specifying textSize -->
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
@@ -240,7 +240,7 @@ limitations under the License.
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="TextSmall" parent="@android:style/TextAppearance.Holo.Small">
+    <style name="TextSmall" parent="TextAppearance.AppCompat.Small">
         <!-- same as TextSmall in values/styles.xml except inheriting from a parent instead of specifying textSize -->
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
