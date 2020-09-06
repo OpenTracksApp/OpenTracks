@@ -135,7 +135,7 @@ limitations under the License.
     </FrameLayout>
 
     <View
-        style="@style/ListItem"
+        android:background="?android:attr/activatedBackgroundIndicator"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>

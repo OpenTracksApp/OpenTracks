@@ -74,8 +74,7 @@ limitations under the License.
                 android:layout_height="wrap_content"
                 android:layout_weight="22"
                 android:gravity="left"
-                android:text="@string/track_list_empty_message"
-                android:textColor="@color/list_empty_text" />
+                android:text="@string/track_list_empty_message" />
 
             <View
                 android:layout_width="0dp"
