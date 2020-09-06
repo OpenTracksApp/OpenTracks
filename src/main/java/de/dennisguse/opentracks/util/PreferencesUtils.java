@@ -108,6 +108,8 @@ public class PreferencesUtils {
      * @param keyId   the key id
      * @param value   the value
      */
+    //TODO Don't use; this function is only to be used TrackRecordingService and will be removed.
+    @VisibleForTesting
     public static void setBoolean(Context context, int keyId, boolean value) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         Editor editor = sharedPreferences.edit();
@@ -162,6 +164,8 @@ public class PreferencesUtils {
      * @param keyId   the key id
      * @param value   the value
      */
+    //TODO Don't use; this function is only to be used TrackRecordingService and will be removed.
+    @Deprecated
     @VisibleForTesting
     public static void setLong(Context context, int keyId, long value) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
@@ -189,6 +193,7 @@ public class PreferencesUtils {
      * @param keyId   the key id
      * @param value   the value
      */
+    @VisibleForTesting
     public static void setString(Context context, int keyId, String value) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         Editor editor = sharedPreferences.edit();
@@ -345,6 +350,16 @@ public class PreferencesUtils {
     public static boolean getPreventReimportTracks(Context context) {
         final boolean defaultValue = getBoolean(context, R.bool.import_prevent_reimport_default, false);
         return getBoolean(context, R.string.import_prevent_reimport_key, defaultValue);
+    }
+
+    /**
+     * @return {@link androidx.appcompat.app.AppCompatDelegate}.MODE_*
+     */
+    public static int getDefaultNightMode(Context context) {
+        final String defaultValue = getKey(context, R.string.night_mode_default);
+        final String value = getString(context, R.string.night_mode_key, defaultValue);
+
+        return Integer.parseInt(value);
     }
 
     @Deprecated //Use TrackRecordingService

@@ -51,6 +51,13 @@ limitations under the License.
             android:defaultValue="@bool/stats_show_coordinate_default"
             android:key="@string/stats_show_coordinate_key"
             android:title="@string/settings_stats_coordinate" />
+        <ListPreference
+            android:key="@string/night_mode_key"
+            android:title="@string/settings_night_mode_title"
+            android:defaultValue="@string/night_mode_default"
+            android:entries="@array/night_mode_options"
+            android:entryValues="@array/night_mode_values"
+            app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
     <PreferenceCategory
