@@ -74,7 +74,6 @@
     <TextView
         android:id="@+id/aggregated_stats_distance_unit"
         style="@style/StatsUnit"
-        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@+id/aggregated_stats_distance"
         app:layout_constraintLeft_toRightOf="@+id/aggregated_stats_distance"
         tools:text="km" />
@@ -103,7 +102,6 @@
     <TextView
         android:id="@+id/aggregated_stats_avg_rate_unit"
         style="@style/StatsUnit"
-        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@+id/aggregated_stats_avg_rate"
         app:layout_constraintLeft_toRightOf="@+id/aggregated_stats_avg_rate"
         app:layout_constraintRight_toRightOf="@id/guideline2"
@@ -132,7 +130,6 @@
     <TextView
         android:id="@+id/aggregated_stats_max_rate_unit"
         style="@style/StatsUnit"
-        android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@+id/aggregated_stats_max_rate"
         app:layout_constraintLeft_toRightOf="@+id/aggregated_stats_max_rate"
         app:layout_constraintRight_toLeftOf="@id/guideline3"
