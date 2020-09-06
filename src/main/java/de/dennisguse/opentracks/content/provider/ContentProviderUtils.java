@@ -648,6 +648,10 @@ public class ContentProviderUtils {
             trackPoint.setPower(cursor.getFloat(indexes.sensorPowerIndex));
         }
 
+        if (!cursor.isNull(indexes.elevationGainIndex)) {
+            trackPoint.setElevationGain(cursor.getFloat(indexes.elevationGainIndex));
+        }
+
         return trackPoint;
     }
 
@@ -836,6 +840,11 @@ public class ContentProviderUtils {
         if (trackPoint.hasPower()) {
             values.put(TrackPointsColumns.SENSOR_POWER, trackPoint.getPower());
         }
+
+        if (trackPoint.hasElevationGain()) {
+            values.put(TrackPointsColumns.ELEVATION_GAIN, trackPoint.getElevationGain());
+        }
+
         return values;
     }
 

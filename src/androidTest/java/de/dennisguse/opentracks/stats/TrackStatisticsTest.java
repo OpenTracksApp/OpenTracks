@@ -51,8 +51,8 @@ public class TrackStatisticsTest {
         statistics2.setMovingTime(600L);  // Result: 700+600
         statistics.setTotalDistance(750.0);
         statistics2.setTotalDistance(350.0);  // Result: 750+350
-        statistics.setTotalElevationGain(50.0);
-        statistics2.setTotalElevationGain(850.0);  // Result: 850+50
+        statistics.setTotalElevationGain(50.0f);
+        statistics2.setTotalElevationGain(850.0f);  // Result: 850+50
         statistics.setMaxSpeed(60.0);  // Resulting max speed
         statistics2.setMaxSpeed(30.0);
         statistics.setMaxElevation(1250.0);

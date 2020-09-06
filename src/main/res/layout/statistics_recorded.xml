@@ -116,6 +116,14 @@
             app:layout_constraintTop_toBottomOf="@+id/stats_moving_time_label"
             tools:text="00:00:00" />
 
+        <!-- Barrier -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/stats_time_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="stats_total_time_value,stats_moving_time_value" />
+
         <!-- Horizontal line -->
         <View
             android:id="@+id/stats_speed_horizontal_line"
@@ -123,7 +131,7 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintLeft_toRightOf="@+id/guideline"
             app:layout_constraintRight_toLeftOf="@+id/guideline3"
-            app:layout_constraintTop_toBottomOf="@+id/stats_moving_time_value" />
+            app:layout_constraintTop_toBottomOf="@+id/stats_time_barrier" />
 
         <!-- Average speed/pace -->
         <TextView
@@ -209,24 +217,73 @@
             app:layout_constraintRight_toLeftOf="@+id/guideline3"
             tools:text="km/h" />
 
+        <!-- Barrier -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/stats_speed_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="stats_moving_speed_value,stats_max_speed_value" />
+
         <!-- Horizontal line -->
         <View
-            android:id="@+id/stats_speed_horizontal_end_line"
+            android:id="@+id/stats_elevation_horizontal_line"
             style="@style/StatsHorizontalLine"
             android:layout_marginBottom="8dp"
             app:layout_constraintLeft_toRightOf="@+id/guideline"
             app:layout_constraintRight_toLeftOf="@+id/guideline3"
-            app:layout_constraintTop_toBottomOf="@+id/stats_max_speed_value" />
+            app:layout_constraintTop_toBottomOf="@+id/stats_speed_barrier" />
 
-        <LinearLayout
-            android:id="@+id/linear_layout_extra"
-            android:orientation="vertical"
-            android:layout_marginBottom="16dp"
+        <!-- Elevation gain -->
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/stats_elevation_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="stats_elevation_horizontal_line,stats_elevation_gain_label,stats_elevation_gain_value,stats_elevation_gain_unit" />
+
+        <TextView
+            android:id="@+id/stats_elevation_gain_label"
+            style="@style/StatsSmallLabel"
+            android:text="@string/stats_gain"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_elevation_horizontal_line" />
+
+        <TextView
+            android:id="@+id/stats_elevation_gain_value"
+            style="@style/StatsSmallValue"
+            android:value="@string/value_unknown"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/stats_elevation_gain_unit"
+            app:layout_constraintTop_toBottomOf="@+id/stats_elevation_gain_label"
+            tools:text="100" />
+
+        <TextView
+            android:id="@+id/stats_elevation_gain_unit"
+            style="@style/StatsUnit"
+            app:layout_constraintBottom_toBottomOf="@+id/stats_elevation_gain_value"
+            app:layout_constraintLeft_toRightOf="@+id/stats_elevation_gain_value"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            tools:text="m" />
+
+        <!-- Barrier -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/stats_elevation_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="stats_elevation_gain_value" />
+
+        <!-- Horizontal line -->
+        <View
+            android:id="@+id/stats_end_horizontal_line"
+            style="@style/StatsHorizontalLine"
+            android:layout_marginBottom="8dp"
             app:layout_constraintLeft_toRightOf="@+id/guideline"
             app:layout_constraintRight_toLeftOf="@+id/guideline3"
-            app:layout_constraintTop_toBottomOf="@+id/stats_speed_horizontal_end_line"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            app:layout_constraintTop_toBottomOf="@+id/stats_elevation_barrier" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

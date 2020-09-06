@@ -133,7 +133,7 @@ public class ExportImportTest {
         assertMarkers();
 
         // 3. trackpoints
-        assertTrackpoints(false, false, false);
+        assertTrackpoints(false, false, false, false);
     }
 
     @LargeTest
@@ -168,7 +168,7 @@ public class ExportImportTest {
         assertMarkers();
 
         // 3. trackpoints
-        assertTrackpoints(true, true, true);
+        assertTrackpoints(true, true, true, true);
     }
 
     @LargeTest
@@ -257,7 +257,7 @@ public class ExportImportTest {
         assertMarkers();
 
         // 3. trackpoints
-        assertTrackpoints(false, true, true);
+        assertTrackpoints(false, true, true, false);
     }
 
     @LargeTest
@@ -304,7 +304,7 @@ public class ExportImportTest {
         }
     }
 
-    private void assertTrackpoints(boolean verifyPower, boolean verifyHeartrate, boolean verifyCadence) {
+    private void assertTrackpoints(boolean verifyPower, boolean verifyHeartrate, boolean verifyCadence, boolean verifyElevationGain) {
         List<TrackPoint> importedTrackPoints = contentProviderUtils.getTrackPoints(importTrackId);
         assertEquals(trackPoints.size(), importedTrackPoints.size());
 
@@ -329,6 +329,9 @@ public class ExportImportTest {
             }
             if (verifyPower) {
                 assertEquals(trackPoint.getPower(), importedTrackPoint.getPower(), 0.01);
+            }
+            if (verifyElevationGain) {
+                assertEquals(trackPoint.getElevationGain(), importedTrackPoint.getElevationGain(), 0.01);
             }
         }
     }

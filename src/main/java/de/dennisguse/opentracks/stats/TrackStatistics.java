@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks.stats;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Statistical data about a {@link de.dennisguse.opentracks.content.data.Track}.
@@ -24,6 +25,7 @@ import androidx.annotation.NonNull;
  *
  * @author Rodrigo Damazio
  */
+//TODO Use null instead of Double.isInfinite
 public class TrackStatistics {
 
     // The min and max elevation (meters) seen on this track.
@@ -42,7 +44,7 @@ public class TrackStatistics {
     // The maximum speed (meters/second) that we believe is valid.
     private double maxSpeed_mps;
     // The total elevation gained (meters).
-    private double totalElevationGain_m;
+    private Float totalElevationGain_m = null;
 
     public TrackStatistics() {
     }
@@ -80,7 +82,15 @@ public class TrackStatistics {
             elevationExtremities.update(other.elevationExtremities.getMin());
             elevationExtremities.update(other.elevationExtremities.getMax());
         }
-        totalElevationGain_m += other.totalElevationGain_m;
+        if (totalElevationGain_m == null) {
+            if (other.totalElevationGain_m != null) {
+                totalElevationGain_m = other.totalElevationGain_m;
+            }
+        } else {
+            if (other.totalElevationGain_m != null) {
+                totalElevationGain_m += other.totalElevationGain_m;
+            }
+        }
     }
 
     /**
@@ -227,18 +237,23 @@ public class TrackStatistics {
         elevationExtremities.update(elevation_m);
     }
 
-    /**
-     * Gets the total elevation gain in meters. This is calculated as the sum of all positive differences in the smoothed elevation.
-     */
-    public double getTotalElevationGain() {
+    public boolean hasTotalElevationGain() {
+        return totalElevationGain_m != null;
+    }
+
+    public @Nullable
+    Float getTotalElevationGain() {
         return totalElevationGain_m;
     }
 
-    public void setTotalElevationGain(double totalElevationGain_m) {
+    public void setTotalElevationGain(float totalElevationGain_m) {
         this.totalElevationGain_m = totalElevationGain_m;
     }
 
-    public void addTotalElevationGain(double gain_m) {
+    public void addTotalElevationGain(float gain_m) {
+        if (totalElevationGain_m == null) {
+            totalElevationGain_m = 0f;
+        }
         totalElevationGain_m += gain_m;
     }
 

@@ -455,7 +455,7 @@ public class CustomContentProviderUtilsTest {
         statistics.setTotalTime(1500L);
         statistics.setMovingTime(700L);
         statistics.setTotalDistance(750.0);
-        statistics.setTotalElevationGain(50.0);
+        statistics.setTotalElevationGain(50.0f);
         statistics.setMaxSpeed(60.0);
         statistics.setMaxElevation(1250.0);
         statistics.setMinElevation(1200.0);

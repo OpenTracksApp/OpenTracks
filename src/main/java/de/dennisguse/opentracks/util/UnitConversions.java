@@ -26,7 +26,8 @@ public class UnitConversions {
     public static final long S_TO_MS = 1000;
 
     // Time
-    // 1 second in milliseconds
+    // TODO Use int instead of long.
+    public static final long ONE_SECOND_US = UnitConversions.S_TO_MS * 1000;
     public static final long ONE_SECOND_MS = UnitConversions.S_TO_MS;
     public static final long ONE_MINUTE_MS = (long) (UnitConversions.MIN_TO_S * UnitConversions.S_TO_MS);
     public static final long ONE_HOUR_MS = 60 * ONE_MINUTE_MS;

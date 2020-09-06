@@ -29,6 +29,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.Group;
 import androidx.fragment.app.Fragment;
 
 import de.dennisguse.opentracks.R;
@@ -87,6 +88,10 @@ public class StatisticsRecordedFragment extends Fragment {
     private TextView speedMovingValue;
     private TextView speedMovingUnit;
 
+    private Group elevationGroup;
+    private TextView elevationTotalGainValue;
+    private TextView elevationTotalGainUnit;
+
     public static StatisticsRecordedFragment newInstance(Track.Id trackId) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(TRACK_ID_KEY, trackId);
@@ -130,6 +135,10 @@ public class StatisticsRecordedFragment extends Fragment {
         speedMovingLabel = view.findViewById(R.id.stats_moving_speed_label);
         speedMovingValue = view.findViewById(R.id.stats_moving_speed_value);
         speedMovingUnit = view.findViewById(R.id.stats_moving_speed_unit);
+
+        elevationGroup = view.findViewById(R.id.stats_elevation_group);
+        elevationTotalGainValue = view.findViewById(R.id.stats_elevation_gain_value);
+        elevationTotalGainUnit = view.findViewById(R.id.stats_elevation_gain_unit);
     }
 
     @Override
@@ -187,6 +196,10 @@ public class StatisticsRecordedFragment extends Fragment {
         speedMovingLabel = null;
         speedMovingValue = null;
         speedMovingUnit = null;
+
+        elevationGroup = null;
+        elevationTotalGainValue = null;
+        elevationTotalGainUnit = null;
     }
 
     public void loadStatistics() {
@@ -263,6 +276,19 @@ public class StatisticsRecordedFragment extends Fragment {
             Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
             speedMovingValue.setText(parts.first);
             speedMovingUnit.setText(parts.second);
+        }
+
+        // Set elevation gain
+        {
+            // Make elevation visible?
+            boolean showElevation = PreferencesUtils.isShowStatsElevation(getContext());
+            elevationGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+
+            Float elevationGain_m = trackStatistics != null ? trackStatistics.getTotalElevationGain() : null;
+
+            Pair<String, String> parts = StringUtils.formatElevation(getContext(), elevationGain_m, metricUnits);
+            elevationTotalGainValue.setText(parts.first);
+            elevationTotalGainUnit.setText(parts.second);
         }
     }
 }

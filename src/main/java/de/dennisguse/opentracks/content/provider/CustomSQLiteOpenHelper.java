@@ -25,7 +25,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final String TAG = CustomSQLiteOpenHelper.class.getSimpleName();
 
-    private static final int DATABASE_VERSION = 26;
+    private static final int DATABASE_VERSION = 27;
 
     @VisibleForTesting
     public static final String DATABASE_NAME = "database.db";
@@ -70,6 +70,10 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                 case 26:
                     upgradeFrom25to26(db);
                     break;
+                case 27:
+                    upgradeFrom26to27(db);
+                    break;
+
 
                 default:
                     throw new RuntimeException("Not implemented: upgrade to " + toVersion);
@@ -90,6 +94,9 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                     break;
                 case 25:
                     downgradeFrom26to25(db);
+                    break;
+                case 26:
+                    downgradeFrom27to26(db);
                     break;
 
                 default:
@@ -186,6 +193,29 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE tracks (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT, category TEXT, starttime INTEGER, stoptime INTEGER, numpoints INTEGER, totaldistance FLOAT, totaltime INTEGER, movingtime INTEGER, avgspeed FLOAT, avgmovingspeed FLOAT, maxspeed FLOAT, minelevation FLOAT, maxelevation FLOAT, elevationgain FLOAT, mingrade FLOAT, maxgrade FLOAT, icon TEXT)");
         db.execSQL("INSERT INTO tracks SELECT _id, name, description, category, starttime, stoptime, numpoints, totaldistance, totaltime, movingtime, avgspeed, avgmovingspeed, maxspeed, minelevation, maxelevation, elevationgain, 0, 0, icon FROM tracks_old");
         db.execSQL("DROP TABLE tracks_old");
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    private void upgradeFrom26to27(SQLiteDatabase db) {
+        db.beginTransaction();
+
+        db.execSQL("ALTER TABLE trackpoints ADD COLUMN elevation_gain FLOAT");
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    private void downgradeFrom27to26(SQLiteDatabase db) {
+        db.beginTransaction();
+
+        db.execSQL("ALTER TABLE trackpoints RENAME TO trackpoints_old");
+        db.execSQL("CREATE TABLE trackpoints (_id INTEGER PRIMARY KEY AUTOINCREMENT, trackid INTEGER, longitude INTEGER, latitude INTEGER, time INTEGER, elevation FLOAT, accuracy FLOAT, speed FLOAT, bearing FLOAT, sensor_heartrate FLOAT, sensor_cadence FLOAT, sensor_power FLOAT)");
+        db.execSQL("INSERT INTO trackpoints SELECT _id, trackid, longitude, latitude, time, elevation, accuracy, speed, bearing, sensor_heartrate, sensor_cadence, sensor_power FROM trackpoints_old");
+        db.execSQL("DROP TABLE trackpoints_old");
+
+        db.execSQL("CREATE INDEX trackpoints_trackid_index ON trackpoints(trackid)");
 
         db.setTransactionSuccessful();
         db.endTransaction();

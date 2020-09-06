@@ -132,12 +132,14 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private TextView speedMovingLabel;
     private TextView speedMovingValue;
     private TextView speedMovingUnit;
-    private Group elevationGroup;
     private TextView speedLabel;
     private TextView speedValue;
     private TextView speedUnit;
-    private TextView elevationValue;
-    private TextView elevationUnit;
+    private Group elevationGroup;
+    private TextView elevationCurrentValue;
+    private TextView elevationCurrentUnit;
+    private TextView elevationTotalGainValue;
+    private TextView elevationTotalGainUnit;
     private Group coordinateGroup;
     private TextView latitudeValue;
     private TextView longitudeValue;
@@ -178,14 +180,16 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         speedMovingValue = view.findViewById(R.id.stats_moving_speed_value);
         speedMovingUnit = view.findViewById(R.id.stats_moving_speed_unit);
 
-        elevationGroup = view.findViewById(R.id.stats_elevation_current_group);
-
         speedLabel = view.findViewById(R.id.stats_speed_label);
         speedValue = view.findViewById(R.id.stats_speed_value);
         speedUnit = view.findViewById(R.id.stats_speed_unit);
 
-        elevationValue = view.findViewById(R.id.stats_elevation_current_value);
-        elevationUnit = view.findViewById(R.id.stats_elevation_current_unit);
+        elevationGroup = view.findViewById(R.id.stats_elevation_group);
+        elevationCurrentValue = view.findViewById(R.id.stats_elevation_current_value);
+        elevationCurrentUnit = view.findViewById(R.id.stats_elevation_current_unit);
+
+        elevationTotalGainValue = view.findViewById(R.id.stats_elevation_gain_value);
+        elevationTotalGainUnit = view.findViewById(R.id.stats_elevation_gain_unit);
 
         coordinateGroup = view.findViewById(R.id.stats_coordinate_group);
 
@@ -276,14 +280,16 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         speedMovingValue = null;
         speedMovingUnit = null;
 
-        elevationGroup = null;
-
         speedLabel = null;
         speedValue = null;
         speedUnit = null;
 
-        elevationValue = null;
-        elevationUnit = null;
+        elevationGroup = null;
+        elevationCurrentValue = null;
+        elevationCurrentUnit = null;
+
+        elevationTotalGainValue = null;
+        elevationTotalGainUnit = null;
 
         coordinateGroup = null;
 
@@ -406,20 +412,25 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
     /**
      * Tries to fetch most recent {@link SensorDataSet} from {@link de.dennisguse.opentracks.services.TrackRecordingService}.
+     * Also sets elevation gain.
      */
     private void updateSensorDataUI() {
         TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
 
         SensorDataSet sensorDataSet = null;
+        Float elevationGain_m = null;
         if (trackRecordingService == null) {
             Log.d(TAG, "Cannot get the track recording service.");
         } else {
             sensorDataSet = trackRecordingService.getSensorData();
+            elevationGain_m = trackRecordingService.getElevationGain_m();
         }
 
         setHeartRateSensorData(sensorDataSet);
         setCadenceSensorData(sensorDataSet);
         setSpeedSensorData(sensorDataSet, isSelectedTrackRecording());
+
+        setTotalElevationGain(elevationGain_m);
     }
 
     private void setHeartRateSensorData(SensorDataSet sensorDataSet) {
@@ -468,6 +479,26 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         cadenceValueView.setText(sensorValue);
     }
 
+    // Set elevation gain
+    private void setTotalElevationGain(Float elevationGain_m) {
+        //TODO Check if we can distribute the total elevation gain via trackStatistics instead of doing some computation in the UI layer.
+        boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
+
+        Float totalElevationGain = elevationGain_m;
+
+        if (lastTrackStatistics != null && lastTrackStatistics.hasTotalElevationGain()) {
+            if (elevationGain_m == null) {
+                totalElevationGain = lastTrackStatistics.getTotalElevationGain();
+            } else {
+                totalElevationGain += lastTrackStatistics.getTotalElevationGain();
+            }
+        }
+
+        Pair<String, String> parts = StringUtils.formatElevation(getContext(), totalElevationGain, metricUnits);
+        elevationTotalGainValue.setText(parts.first);
+        elevationTotalGainUnit.setText(parts.second);
+    }
+
     /**
      * If cadence and hear rate groups are invisible then sensor horizontal line hast to be invisible too.
      */
@@ -475,7 +506,6 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         if (cadenceGroup.getVisibility() != View.VISIBLE && heartRateGroup.getVisibility() != View.VISIBLE) {
             sensorHorizontalLine.setVisibility(View.GONE);
         }
-
     }
 
     private void setSpeedSensorData(SensorDataSet sensorDataSet, boolean isRecording) {
@@ -555,8 +585,9 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
             speedMovingUnit.setText(parts.second);
         }
 
-        // Make elevation visible?
+        // Set elevation (gain)
         {
+            // Make elevation visible?
             boolean showElevation = PreferencesUtils.isShowStatsElevation(getContext());
             elevationGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
         }
@@ -597,11 +628,11 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         elevationGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
 
         if (showElevation) {
-            double altitude = lastTrackPoint != null && lastTrackPoint.hasAltitude() ? lastTrackPoint.getAltitude() : Double.NaN;
+            // Current elevation
+            Float altitude = lastTrackPoint != null && lastTrackPoint.hasAltitude() ? (float) lastTrackPoint.getAltitude() : null;
             Pair<String, String> parts = StringUtils.formatElevation(getContext(), altitude, metricUnits);
-
-            elevationValue.setText(parts.first);
-            elevationUnit.setText(parts.second);
+            elevationCurrentValue.setText(parts.first);
+            elevationCurrentUnit.setText(parts.second);
         }
 
         // Set coordinate
