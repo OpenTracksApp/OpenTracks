@@ -25,7 +25,6 @@ limitations under the License.
         <item name="android:editTextBackground">@drawable/edit_text_holo_dark</item>
         <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
         <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_dark</item>
-        <item name="android:progressBarStyleHorizontal">@style/ProgressBarCustom</item>
 
         <!--        <item name="colorPrimary">TODO</item>-->
         <!--        <item name="colorPrimaryDark">TODO</item>-->
