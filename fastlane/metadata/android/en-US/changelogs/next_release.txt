@@ -1,4 +1,4 @@
-(tbd): OpenTracks
+(versionName): OpenTracks
 
 Changes:
 -
