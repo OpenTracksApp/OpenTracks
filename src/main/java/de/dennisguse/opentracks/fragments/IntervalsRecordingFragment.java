@@ -35,6 +35,7 @@ public class IntervalsRecordingFragment extends Fragment implements IntervalList
 
     private IntervalStatisticsModel viewModel;
     private IntervalListView.IntervalReverseListView intervalListView;
+    private IntervalStatisticsModel.IntervalOption selectedInterval;
 
     private Track.Id trackId;
 
@@ -114,6 +115,7 @@ public class IntervalsRecordingFragment extends Fragment implements IntervalList
             return;
         }
 
+        selectedInterval = interval;
         LiveData<IntervalStatistics> liveData = viewModel.getIntervalStats(trackId, interval);
         liveData.observe(getActivity(), intervalStatistics -> {
             if (intervalStatistics != null) {
@@ -123,13 +125,13 @@ public class IntervalsRecordingFragment extends Fragment implements IntervalList
     }
 
     private void updateIntervals() {
-        intervalChanged(null);
+        intervalChanged(selectedInterval);
     }
 
     @Override
     public void unitChanged() {
         if (viewModel != null) {
-            LiveData<IntervalStatistics> liveData = viewModel.getIntervalStats(trackId, null);
+            LiveData<IntervalStatistics> liveData = viewModel.getIntervalStats(trackId, selectedInterval);
             liveData.observe(getActivity(), intervalStatistics -> {
                 if (intervalStatistics != null) {
                     intervalListView.display(intervalStatistics.getIntervalList());
