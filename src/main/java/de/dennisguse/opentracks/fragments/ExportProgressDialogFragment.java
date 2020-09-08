@@ -38,6 +38,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.io.file.ExportFileName;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.util.DialogUtils;
@@ -208,8 +209,7 @@ public class ExportProgressDialogFragment extends DialogFragment {
         private Boolean exportTrack(Context context, Track track) {
             TrackExporter trackExporter = trackFileFormat.newTrackExporter(context);
 
-            //TODO Move to helper function
-            String fileName = track.getId().getId() + "." + trackFileFormat.getExtension();
+            String fileName = ExportFileName.getExportFileNameByTrackId(track.getId(), trackFileFormat.getExtension());
 
             // Overwrite a file if it exists; DocumentFile.createFile() creates a new file appending a suffix if the displayname already exists.
             DocumentFile file = directory.findFile(fileName);
