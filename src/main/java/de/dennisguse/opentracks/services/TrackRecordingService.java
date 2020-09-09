@@ -311,7 +311,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     void resumeTrack(Track.Id trackId) {
         Track track = contentProviderUtils.getTrack(trackId);
         if (track == null) {
-            Log.e(TAG, "Ignore resumeTrack. Track " + trackId + " does not exists.");
+            Log.e(TAG, "Ignore resumeTrack. Track " + trackId.getId() + " does not exists.");
             return;
         }
 
@@ -335,7 +335,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         Track track = contentProviderUtils.getTrack(recordingTrackId);
         if (track == null) {
             if (isRecording()) {
-                Log.w(TAG, "track is null, but recordingTrackId not -1L. " + recordingTrackId);
+                Log.w(TAG, "track is null, but recordingTrackId not -1L. " + recordingTrackId.getId());
                 updateRecordingState(null, true);
             }
             showNotification(false);
