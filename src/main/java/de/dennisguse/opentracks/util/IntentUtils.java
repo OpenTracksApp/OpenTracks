@@ -87,7 +87,7 @@ public class IntentUtils {
         for (Track.Id trackId : trackIds) {
             Track track = contentProviderUtils.getTrack(trackId);
             if (track == null) {
-                Log.e(TAG, "TrackId " + trackId + " could not be resolved.");
+                Log.e(TAG, "TrackId " + trackId.getId() + " could not be resolved.");
                 continue;
             }
 

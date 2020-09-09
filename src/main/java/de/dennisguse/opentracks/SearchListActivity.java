@@ -415,7 +415,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         String icon = track.getIcon();
         String category = icon != null && !icon.equals("") ? null : track.getCategory();
 
-        resultMap.put(IS_RECORDING_FIELD, track.getId() == recordingTrackId);
+        resultMap.put(IS_RECORDING_FIELD, track.getId().equals(recordingTrackId));
         resultMap.put(IS_PAUSED_FIELD, recordingTrackPaused);
         resultMap.put(ICON_ID_FIELD, TrackIconUtils.getIconDrawable(icon));
         resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.image_track);

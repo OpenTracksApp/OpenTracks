@@ -250,7 +250,7 @@ public class SearchEngine {
         score *= getTimeBoost(query, meanTimestamp);
 
         // Score the currently-selected track lower (user is already there, wouldn't be searching for it).
-        if (track.getId() == query.currentTrackId) {
+        if (track.getId().equals(query.currentTrackId)) {
             score *= CURRENT_TRACK_DEMOTION;
         }
 

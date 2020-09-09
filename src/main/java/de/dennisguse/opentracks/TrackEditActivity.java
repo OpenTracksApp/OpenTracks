@@ -75,7 +75,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
         contentProviderUtils = new ContentProviderUtils(this);
         track = contentProviderUtils.getTrack(trackId);
         if (track == null) {
-            Log.e(TAG, "No track for " + trackId);
+            Log.e(TAG, "No track for " + trackId.getId());
             finish();
             return;
         }
