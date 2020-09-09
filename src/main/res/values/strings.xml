@@ -443,6 +443,8 @@ limitations under the License.
     <string name="track_list_empty_message">Start recording your next adventure here</string>
     <!-- Aggregated Statistics -->
     <string name="aggregated_stats_empty_message">Record your first track to see aggregated statistics</string>
+    <!-- Interval List -->
+    <string name="interval_list_empty_message">There are not any interval yet</string>
     <!-- Track Widget -->
     <!-- Tracks -->
     <string name="tracks_few">%1$d tracks</string>
