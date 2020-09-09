@@ -214,6 +214,9 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Reset theme after splash
+        setTheme(R.style.ThemeCustom);
+
         super.onCreate(savedInstanceState);
 
         gpsStatusValue = GpsStatusValue.GPS_NONE;
