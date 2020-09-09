@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
+        android:layout_margin="8dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
+        android:layout_margin="8dp">
 
         <TextView
             android:id="@+id/interval_distance"
@@ -74,10 +74,26 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/stats_separator"/>
+
+    <ListView
         android:id="@+id/interval_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:layout_margin="8dp"/>
+
+    <TextView
+        android:id="@+id/interval_list_empty_view"
+        style="@style/TextLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/interval_list_empty_message"
+        android:textColor="@color/list_empty_text" />
 
 </LinearLayout>

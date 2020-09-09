@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,7 +49,7 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
             viewHolder = (ViewHolder) intervalView.getTag();
         }
 
-        sumDistance_m += interval.getDistance_m();
+        sumDistance_m = position + 1 == getCount() ? interval.getDistance_m() : (position + 1) * interval.getDistance_m();
         viewHolder.distance.setText(StringUtils.formatDistance(getContext(), sumDistance_m, metricUnits));
 
         Pair<String, String> speedParts = StringUtils.getSpeedParts(getContext(), interval.getSpeed_ms(), metricUnits, true);
