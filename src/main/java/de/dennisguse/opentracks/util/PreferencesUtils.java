@@ -162,6 +162,7 @@ public class PreferencesUtils {
      * @param keyId   the key id
      * @param value   the value
      */
+    @VisibleForTesting
     public static void setLong(Context context, int keyId, long value) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         Editor editor = sharedPreferences.edit();

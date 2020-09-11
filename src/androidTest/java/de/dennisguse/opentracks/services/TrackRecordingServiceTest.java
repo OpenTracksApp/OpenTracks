@@ -25,7 +25,6 @@ import android.os.Looper;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.FlakyTest;
 import androidx.test.filters.MediumTest;
 import androidx.test.filters.SmallTest;
 import androidx.test.rule.GrantPermissionRule;
@@ -34,6 +33,7 @@ import androidx.test.rule.ServiceTestRule;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -235,7 +235,7 @@ public class TrackRecordingServiceTest {
         assertEquals(TrackPointsColumns.RESUME_LATITUDE, trackPoints.get(2).getLatitude(), 0.01);
     }
 
-    @FlakyTest(detail = "Sometimes fails on CI.")
+    @Ignore("Sometimes fails on CI.")
     @MediumTest
     @Test
     public void testRecording_orphanedRecordingTrack() throws Exception {
