@@ -38,7 +38,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.io.file.ExportFileName;
+import de.dennisguse.opentracks.io.file.ExportFile;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.util.DialogUtils;
@@ -209,32 +209,32 @@ public class ExportProgressDialogFragment extends DialogFragment {
         private Boolean exportTrack(Context context, Track track) {
             TrackExporter trackExporter = trackFileFormat.newTrackExporter(context);
 
-            String fileName = ExportFileName.getExportFileNameByTrackId(track.getId(), trackFileFormat.getExtension());
+            DocumentFile exportDocumentFile = ExportFile.getExportDocumentFile(
+                    track.getId(),
+                    trackFileFormat.getExtension(),
+                    directory,
+                    trackFileFormat.getMimeType()
+            );
 
-            // Overwrite a file if it exists; DocumentFile.createFile() creates a new file appending a suffix if the displayname already exists.
-            DocumentFile file = directory.findFile(fileName);
-            if (file == null) {
-                file = directory.createFile(trackFileFormat.getMimeType(), fileName);
-            }
-
-            try (OutputStream outputStream = context.getContentResolver().openOutputStream(file.getUri())) {
+            try (OutputStream outputStream = context.getContentResolver().openOutputStream(exportDocumentFile.getUri())) {
                 if (trackExporter.writeTrack(track, outputStream)) {
                     return true;
                 } else {
-                    if (!file.delete()) {
-                        Log.e(TAG, "Unable to delete file");
+                    if (!exportDocumentFile.delete()) {
+                        Log.e(TAG, "Unable to delete exportDocumentFile");
                     }
                     Log.e(TAG, "Unable to export track");
                     return false;
                 }
             } catch (FileNotFoundException e) {
-                Log.e(TAG, "Unable to open file " + file.getName(), e);
+                Log.e(TAG, "Unable to open exportDocumentFile " + exportDocumentFile.getName(), e);
                 return false;
             } catch (IOException e) {
-                Log.e(TAG, "Unable to close file output stream", e);
+                Log.e(TAG, "Unable to close exportDocumentFile output stream", e);
                 return false;
             }
         }
+
     }
 
     public interface DismissCallback {
