@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="de.dennisguse.opentracks"
     android:installLocation="auto">
 
@@ -138,7 +137,9 @@ limitations under the License.
 
         <activity android:name=".TrackEditActivity" />
 
-        <activity android:name=".TrackListActivity">
+        <activity
+            android:name=".TrackListActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
