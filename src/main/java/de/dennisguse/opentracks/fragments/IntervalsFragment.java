@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +21,20 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.Arrays;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.adapters.IntervalStatisticsAdapter;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.util.UnitConversions;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 import de.dennisguse.opentracks.viewmodels.IntervalStatisticsModel;
 
 /**
  * A fragment to display the intervals from recorded track.
  */
-public class IntervalsRecordedFragment extends Fragment {
+public class IntervalsFragment extends Fragment {
 
-    private static final String TAG = IntervalsRecordedFragment.class.getSimpleName();
+    private static final String TAG = IntervalsFragment.class.getSimpleName();
 
     private static final String TRACK_ID_KEY = "trackId";
 
@@ -58,7 +61,7 @@ public class IntervalsRecordedFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putParcelable(TRACK_ID_KEY, trackId);
 
-        Fragment fragment = new IntervalsRecordedFragment();
+        Fragment fragment = new IntervalsFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -74,7 +77,11 @@ public class IntervalsRecordedFragment extends Fragment {
 
         PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
 
-        trackId = getArguments().getParcelable(TRACK_ID_KEY);
+        if (savedInstanceState != null) {
+            trackId = savedInstanceState.getParcelable(TRACK_ID_KEY);
+        } else {
+            trackId = getArguments().getParcelable(TRACK_ID_KEY);
+        }
 
         intervalListView = view.findViewById(R.id.interval_list);
         intervalListView.setEmptyView(view.findViewById(R.id.interval_list_empty_view));
@@ -118,6 +125,12 @@ public class IntervalsRecordedFragment extends Fragment {
         viewModel = null;
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(TRACK_ID_KEY, trackId);
+    }
+
     /**
      * Update intervals through {@link IntervalStatisticsModel} view model.
      */
@@ -133,5 +146,64 @@ public class IntervalsRecordedFragment extends Fragment {
                 intervalListView.setAdapter(adapter);
             }
         });
+    }
+
+    public void setTrackId(Track.Id trackId) {
+        this.trackId = trackId;
+    }
+
+    public static class IntervalsRecordingFragment extends IntervalsFragment implements TrackRecordingActivity.OnTrackIdListener {
+        // Refreshing intervals stats it's not so demanding so 5 seconds is enough to balance performance and user experience.
+        private static final long UI_UPDATE_INTERVAL = 5 * UnitConversions.ONE_SECOND_MS;
+
+        private Handler intervalHandler;
+
+        private final Runnable intervalRunner = new Runnable() {
+            @Override
+            public void run() {
+                if (isResumed()) {
+                    updateIntervals();
+                    intervalHandler.postDelayed(intervalRunner, UI_UPDATE_INTERVAL);
+                }
+            }
+        };
+
+        public static Fragment newInstance(Track.Id trackId) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(TRACK_ID_KEY, trackId);
+
+            Fragment fragment = new IntervalsRecordingFragment();
+            fragment.setArguments(bundle);
+            return fragment;
+        }
+
+        @Override
+        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+            ((TrackRecordingActivity) getActivity()).setTrackIdListener(this);
+            intervalHandler = new Handler();
+
+            super.onViewCreated(view, savedInstanceState);
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            intervalHandler.post(intervalRunner);
+        }
+
+        @Override
+        public void onPause() {
+            super.onPause();
+            intervalHandler.removeCallbacks(intervalRunner);
+        }
+
+        private void updateIntervals() {
+            intervalChanged();
+        }
+
+        @Override
+        public void onTrackId(Track.Id trackId) {
+            setTrackId(trackId);
+        }
     }
 }

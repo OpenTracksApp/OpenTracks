@@ -37,7 +37,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
-import de.dennisguse.opentracks.fragments.IntervalsRecordedFragment;
+import de.dennisguse.opentracks.fragments.IntervalsFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordedFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.SettingsActivity;
@@ -253,7 +253,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
                 case 0:
                     return StatisticsRecordedFragment.newInstance(track.getId());
                 case 1:
-                    return IntervalsRecordedFragment.newInstance(track.getId());
+                    return IntervalsFragment.newInstance(track.getId());
                 case 2:
                     return ChartFragment.newInstance(false);
                 case 3:
