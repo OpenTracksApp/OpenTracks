@@ -25,7 +25,7 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
-import de.dennisguse.opentracks.fragments.IntervalsRecordingFragment;
+import de.dennisguse.opentracks.fragments.IntervalsFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordingFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
@@ -390,7 +390,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 case 0:
                     return StatisticsRecordingFragment.newInstance();
                 case 1:
-                    return IntervalsRecordingFragment.newInstance(trackId);
+                    return IntervalsFragment.IntervalsRecordingFragment.newInstance(trackId);
                 case 2:
                     return ChartFragment.newInstance(false);
                 case 3:
@@ -423,5 +423,8 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
     public void setTrackIdListener(OnTrackIdListener listener) {
         this.intervalsListener = listener;
+        if (trackId != null) {
+            listener.onTrackId(trackId);
+        }
     }
 }
