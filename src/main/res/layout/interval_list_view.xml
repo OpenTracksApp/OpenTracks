@@ -89,7 +89,7 @@
 
     <TextView
         android:id="@+id/interval_list_empty_view"
-        style="@style/TextLarge"
+        style="@style/TextMedium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal|center_vertical"
