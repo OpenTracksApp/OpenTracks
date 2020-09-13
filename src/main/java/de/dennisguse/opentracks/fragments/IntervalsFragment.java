@@ -40,6 +40,7 @@ public class IntervalsFragment extends Fragment {
 
     private IntervalStatisticsModel viewModel;
     private ListView intervalListView;
+    protected IntervalStatisticsAdapter.StackMode stackModeListView;
     private IntervalStatisticsModel.IntervalOption selectedInterval;
     private IntervalStatisticsAdapter adapter;
 
@@ -85,6 +86,8 @@ public class IntervalsFragment extends Fragment {
 
         intervalListView = view.findViewById(R.id.interval_list);
         intervalListView.setEmptyView(view.findViewById(R.id.interval_list_empty_view));
+
+        stackModeListView = IntervalStatisticsAdapter.StackMode.STACK_FROM_TOP;
 
         viewModel = new ViewModelProvider(this).get(IntervalStatisticsModel.class);
 
@@ -142,7 +145,7 @@ public class IntervalsFragment extends Fragment {
         LiveData<IntervalStatistics> liveData = viewModel.getIntervalStats(trackId, selectedInterval);
         liveData.observe(getActivity(), intervalStatistics -> {
             if (intervalStatistics != null) {
-                adapter = new IntervalStatisticsAdapter(getContext(), intervalStatistics.getIntervalList());
+                adapter = new IntervalStatisticsAdapter(getContext(), intervalStatistics.getIntervalList(), stackModeListView);
                 intervalListView.setAdapter(adapter);
             }
         });
@@ -179,10 +182,10 @@ public class IntervalsFragment extends Fragment {
 
         @Override
         public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
             ((TrackRecordingActivity) getActivity()).setTrackIdListener(this);
             intervalHandler = new Handler();
-
-            super.onViewCreated(view, savedInstanceState);
+            stackModeListView = IntervalStatisticsAdapter.StackMode.STACK_FROM_BOTTOM;
         }
 
         @Override

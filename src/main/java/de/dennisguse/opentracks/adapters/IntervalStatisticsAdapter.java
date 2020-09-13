@@ -20,18 +20,21 @@ import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 
 public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.Interval> {
 
+    private StackMode stackMode;
     private boolean metricUnits;
-    private float sumDistance_m = 0f;
+    private float sumDistance_m;
 
-    public IntervalStatisticsAdapter(Context context, List<IntervalStatistics.Interval> intervalList) {
+    public IntervalStatisticsAdapter(Context context, List<IntervalStatistics.Interval> intervalList, StackMode stackMode) {
         super(context, R.layout.interval_stats_list_item, intervalList);
         metricUnits = PreferencesUtils.isMetricUnits(context);
+        this.stackMode = stackMode;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View intervalView, @NonNull ViewGroup parent) {
-        IntervalStatistics.Interval interval = getItem(position);
+        int actualPosition = stackMode == StackMode.STACK_FROM_TOP ? position : getCount() - 1 - position;
+        IntervalStatistics.Interval interval = getItem(actualPosition);
         ViewHolder viewHolder;
 
         if (intervalView == null) {
@@ -48,7 +51,11 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
             viewHolder = (ViewHolder) intervalView.getTag();
         }
 
-        sumDistance_m = position + 1 == getCount() && position > 0 ? (position * getItem(position - 1).getDistance_m()) + interval.getDistance_m() : (position + 1) * interval.getDistance_m();
+        if (actualPosition + 1 == getCount() && actualPosition > 0) {
+            sumDistance_m = actualPosition * getItem(actualPosition - 1).getDistance_m() + interval.getDistance_m();
+        } else {
+            sumDistance_m = (actualPosition + 1) * interval.getDistance_m();
+        }
         viewHolder.distance.setText(StringUtils.formatDistance(getContext(), sumDistance_m, metricUnits));
 
         Pair<String, String> speedParts = StringUtils.getSpeedParts(getContext(), interval.getSpeed_ms(), metricUnits, true);
@@ -58,6 +65,14 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
         viewHolder.pace.setText(paceParts.first + " " + paceParts.second);
 
         return intervalView;
+    }
+
+    /**
+     * Defines the two modes of list items stacking: from top or from bottom.
+     */
+    public enum StackMode {
+        STACK_FROM_BOTTOM,
+        STACK_FROM_TOP;
     }
 
     private static class ViewHolder {
