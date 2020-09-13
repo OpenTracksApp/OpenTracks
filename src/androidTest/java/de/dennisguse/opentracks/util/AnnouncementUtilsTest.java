@@ -59,7 +59,7 @@ public class AnnouncementUtilsTest {
         double kmPerHour = lastInterval.getSpeed_ms() * UnitConversions.MPS_TO_KMH;
 
         String firstPartMsg = "OpenTracks total distance 20.00 kilometers in 5 minutes 0 seconds at 240.0 kilometers per hour";
-        String rateMsg = " With a current kilometer speed of " + context.getResources().getQuantityString(speedId, getQuantityCount(kmPerHour), kmPerHour);
+        String rateMsg = " Lap speed of " + context.getResources().getQuantityString(speedId, getQuantityCount(kmPerHour), kmPerHour);
         String msg = firstPartMsg + rateMsg;
 
         // when

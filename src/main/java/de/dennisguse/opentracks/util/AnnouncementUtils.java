@@ -37,7 +37,7 @@ public class AnnouncementUtils {
             rate = context.getResources().getQuantityString(speedId, getQuantityCount(distancePerTime), distancePerTime);
 
             currentRate = context.getResources().getQuantityString(speedId, getQuantityCount(currentDistancePerTime), currentDistancePerTime);
-            currentRateMsg = metricUnits ? context.getString(R.string.voice_speed_current_kilometer, currentRate) : context.getString(R.string.voice_speed_current_mile, currentRate);
+            currentRateMsg = context.getString(R.string.voice_speed_lap, currentRate);
         } else {
             double timePerDistance = distancePerTime == 0 ? 0.0 : 1 / distancePerTime;
             int paceId = metricUnits ? R.string.voice_pace_per_kilometer : R.string.voice_pace_per_mile;
@@ -47,7 +47,7 @@ public class AnnouncementUtils {
             double currentTimePerDistance = currentDistancePerTime == 0 ? 0.0 : 1 / currentDistancePerTime;
             long currentTime = Math.round(currentTimePerDistance * UnitConversions.HR_TO_MIN * UnitConversions.MIN_TO_S * UnitConversions.S_TO_MS);
             currentRate = context.getString(paceId, getAnnounceTime(context, currentTime));
-            currentRateMsg = metricUnits ? context.getString(R.string.voice_pace_current_kilometer, currentRate) : context.getString(R.string.voice_pace_current_mile, currentRate);
+            currentRateMsg = context.getString(R.string.voice_pace_lap, currentRate);
         }
 
         int totalDistanceId = metricUnits ? R.plurals.voiceTotalDistanceKilometers : R.plurals.voiceTotalDistanceMiles;

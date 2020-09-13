@@ -497,10 +497,8 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <string name="voice_speed_miles_per_hour_two">2 millas por hora</string>
     <string name="voice_speed_miles_per_hour_zero">0 millas por hora</string>
     <string name="voice_template">OpenTracks de %1$s en %2$s a %3$s</string>
-    <string name="voice_speed_current_kilometer">Con una velocidad del kilómetro actual de %1$s</string>
-    <string name="voice_speed_current_mile">Con una velocidad de la milla actual de %1$s</string>
-    <string name="voice_pace_current_kilometer">Con un ritmo del kilómetro actual de %1$s</string>
-    <string name="voice_pace_current_mile">Con un ritmo de la milla actual de %1$s</string>
+    <string name="voice_speed_lap">Velocidad de vuelta de %1$s</string>
+    <string name="voice_pace_lap">Tiempo de vuelta de %1$s</string>
     <string name="voice_total_distance_kilometers_few">distancia total de %1$.2f kilómetros</string>
     <string name="voice_total_distance_kilometers_many">distancia total de %1$.2f kilómetros</string>
     <string name="voice_total_distance_kilometers_one">distancia total de 1 kilómetro</string>
