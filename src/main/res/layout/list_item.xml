@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <!-- Photo -->
@@ -68,15 +69,17 @@ limitations under the License.
                         <!-- Table 2: Row 1: Column 1: (name) -->
                         <TextView
                             android:id="@+id/list_item_name"
-                            style="@style/TextMedium"
+                            style="@style/TextLarge"
                             android:layout_width="match_parent"
                             android:layout_gravity="bottom"
                             android:ellipsize="end"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            tools:text="Main text" />
                         <!-- Table 2: Row 1: Column 2: (date) -->
                         <TextView
                             android:id="@+id/list_item_date"
-                            style="@style/ListItemDate" />
+                            style="@style/ListItemDate"
+                            tools:text="2020-09-09" />
                     </TableRow>
 
                     <TableRow>
@@ -92,7 +95,8 @@ limitations under the License.
                                 style="@style/TextSmall"
                                 android:layout_gravity="bottom"
                                 android:ellipsize="end"
-                                android:singleLine="true" />
+                                android:singleLine="true"
+                                tools:text="50:43 (50.00km)" />
 
                             <ImageView
                                 android:id="@+id/list_item_marker_count_icon"
@@ -111,7 +115,8 @@ limitations under the License.
                                 style="@style/TextSmall"
                                 android:layout_gravity="bottom"
                                 android:ellipsize="end"
-                                android:singleLine="true" />
+                                android:singleLine="true"
+                                tools:text="2" />
                         </LinearLayout>
                         <!-- Table 2: Row 2: Column 2: (time) -->
                         <TextView
@@ -129,13 +134,14 @@ limitations under the License.
                     android:layout_column="1"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:singleLine="false" />
+                    android:singleLine="false"
+                    tools:text="description" />
             </TableRow>
         </TableLayout>
     </FrameLayout>
 
     <View
-        android:background="?android:attr/activatedBackgroundIndicator"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="?android:attr/activatedBackgroundIndicator" />
 </FrameLayout>
