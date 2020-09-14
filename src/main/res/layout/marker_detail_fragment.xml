@@ -21,7 +21,6 @@ limitations under the License.
         android:id="@+id/marker_detail_waypoint_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/black"
         android:contentDescription="@string/image_photo_marker"
         android:scaleType="fitCenter" />
 
