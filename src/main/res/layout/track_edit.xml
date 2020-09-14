@@ -51,7 +51,6 @@ limitations under the License.
                     android:id="@+id/track_edit_activity_type"
                     style="@style/EditCategory"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:hint="@string/track_edit_activity_type_hint"
                     android:imeOptions="actionNext" />
