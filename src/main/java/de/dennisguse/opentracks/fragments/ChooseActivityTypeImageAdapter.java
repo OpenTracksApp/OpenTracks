@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import androidx.core.content.ContextCompat;
+
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
@@ -76,7 +78,8 @@ class ChooseActivityTypeImageAdapter extends BaseAdapter {
         }
 
         if (position == selected) {
-            imageView.setBackgroundResource(R.drawable.list_selector_background_transition_holo_dark);
+            //TODO Should use theme!
+            imageView.setBackgroundColor(ContextCompat.getColor(parent.getContext(), R.color.holo_orange_dark));
         } else {
             imageView.setBackgroundColor(Color.TRANSPARENT);
         }

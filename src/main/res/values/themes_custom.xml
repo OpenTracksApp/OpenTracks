@@ -16,16 +16,6 @@ limitations under the License.
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="ThemeCustom" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <!-- TODO Cleanup necessary due to change to appcompat -->
-        <!-- Auto generated -->
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background_holo_dark
-        </item>
-        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewCustom</item>
-        <item name="android:dropDownSpinnerStyle">@style/SpinnerCustom</item>
-        <item name="android:editTextBackground">@drawable/edit_text_holo_dark</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/list_selector_holo_dark</item>
-        <item name="android:listChoiceIndicatorMultiple">@drawable/btn_check_holo_dark</item>
-
         <!--        <item name="colorPrimary">TODO</item>-->
         <!--        <item name="colorPrimaryDark">TODO</item>-->
 
