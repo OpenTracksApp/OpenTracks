@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <!-- TODO REMOVE ALL: override only things that are really important. -->
     <style name="AutoCompleteTextViewCustom" parent="Widget.AppCompat.AutoCompleteTextView">
         <item name="android:dropDownSelector">@drawable/list_selector_holo_dark</item>
         <item name="android:background">@drawable/edit_text_holo_dark</item>
