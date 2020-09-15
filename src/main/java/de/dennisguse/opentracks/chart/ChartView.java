@@ -19,7 +19,6 @@ package de.dennisguse.opentracks.chart;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -47,6 +46,7 @@ import de.dennisguse.opentracks.stats.ExtremityMonitor;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.MarkerUtils;
 import de.dennisguse.opentracks.util.StringUtils;
+import de.dennisguse.opentracks.util.ThemeUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
@@ -89,6 +89,7 @@ public class ChartView extends View {
     private final List<ChartPoint> chartPoints = new ArrayList<>();
     private final List<Marker> waypoints = new ArrayList<>();
     private final ExtremityMonitor xExtremityMonitor = new ExtremityMonitor();
+    private final int backgroundColor;
     private final Paint axisPaint;
     private final Paint xAxisMarkerPaint;
     private final Paint gridPaint;
@@ -305,6 +306,8 @@ public class ChartView extends View {
                 return false;
             }
         });
+
+        backgroundColor = ThemeUtils.getBackgroundColor(context);
 
         float scale = context.getResources().getDisplayMetrics().density;
 
@@ -538,7 +541,7 @@ public class ChartView extends View {
         synchronized (chartPoints) {
             canvas.save();
 
-            canvas.drawColor(Color.WHITE);
+            canvas.drawColor(backgroundColor);
 
             canvas.save();
 
