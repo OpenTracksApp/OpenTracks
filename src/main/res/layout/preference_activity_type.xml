@@ -34,7 +34,7 @@ limitations under the License.
         <Spinner
             android:id="@+id/activity_type_preference_spinner"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="bottom" />
     </LinearLayout>
 </ScrollView>
