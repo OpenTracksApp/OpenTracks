@@ -51,5 +51,6 @@ limitations under the License.
 
     <style name="SplashTheme" parent="ThemeCustom">
         <item name="android:windowBackground">@drawable/splashscreen</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 </resources>
