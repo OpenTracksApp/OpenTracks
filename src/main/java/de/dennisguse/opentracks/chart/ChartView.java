@@ -313,7 +313,7 @@ public class ChartView extends View {
 
         axisPaint = new Paint();
         axisPaint.setStyle(Style.FILL_AND_STROKE);
-        axisPaint.setColor(context.getResources().getColor(R.color.chart_axis_text));
+        axisPaint.setColor(ThemeUtils.getTextColorPrimary(context));
         axisPaint.setAntiAlias(true);
         axisPaint.setTextSize(SMALL_TEXT_SIZE * scale);
 
@@ -322,7 +322,7 @@ public class ChartView extends View {
 
         gridPaint = new Paint();
         gridPaint.setStyle(Style.STROKE);
-        gridPaint.setColor(context.getResources().getColor(R.color.chart_grid));
+        gridPaint.setColor(ThemeUtils.getTextColorSecondary(context));
         gridPaint.setAntiAlias(false);
         gridPaint.setPathEffect(new DashPathEffect(new float[]{3, 2}, 0));
 
