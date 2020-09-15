@@ -91,10 +91,12 @@ abstract class ChartValueSeries {
         titlePaint = new Paint(strokePaint);
         titlePaint.setTextSize(ChartView.MEDIUM_TEXT_SIZE * scale);
         titlePaint.setTextAlign(Align.CENTER);
+        titlePaint.setStyle(Style.FILL_AND_STROKE);
 
         markerPaint = new Paint(strokePaint);
         markerPaint.setTextSize(ChartView.SMALL_TEXT_SIZE * scale);
         markerPaint.setTextAlign(Align.RIGHT);
+        markerPaint.setStyle(Style.FILL_AND_STROKE);
 
         // Set stroke paint thickness
         strokePaint.setStrokeWidth(STROKE_WIDTH);
