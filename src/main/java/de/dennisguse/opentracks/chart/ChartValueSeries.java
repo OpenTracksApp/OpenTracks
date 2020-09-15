@@ -47,9 +47,9 @@ abstract class ChartValueSeries {
     private final Paint strokePaint;
     private final Paint titlePaint;
     private final Paint markerPaint;
-    private final ExtremityMonitor extremityMonitor;
-    private final NumberFormat numberFormat;
-    private final Path path;
+    private final ExtremityMonitor extremityMonitor = new ExtremityMonitor();
+    private final NumberFormat numberFormat = NumberFormat.getIntegerInstance();
+    private final Path path = new Path();
 
     private int interval = 1;
     private int minMarkerValue = 0;
@@ -98,10 +98,6 @@ abstract class ChartValueSeries {
 
         // Set stroke paint thickness
         strokePaint.setStrokeWidth(STROKE_WIDTH);
-
-        extremityMonitor = new ExtremityMonitor();
-        numberFormat = NumberFormat.getIntegerInstance();
-        path = new Path();
     }
 
     /**
