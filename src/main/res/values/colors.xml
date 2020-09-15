@@ -26,6 +26,8 @@ limitations under the License.
     <color name="chart_power_fill">#40401465</color> <!-- transparent purple -->
     <color name="chart_speed_border">#FF0066FF</color> <!-- blue -->
     <color name="chart_speed_fill">#40C8E0FF</color> <!-- transparent blue -->
+    <color name="chart_grid">@android:color/darker_gray</color>
+    <color name="chart_axis_text">@android:color/black</color>
 
     <color name="holo_orange_dark">#FFFF8800</color>
 

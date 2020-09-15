@@ -310,7 +310,7 @@ public class ChartView extends View {
 
         axisPaint = new Paint();
         axisPaint.setStyle(Style.FILL_AND_STROKE);
-        axisPaint.setColor(context.getResources().getColor(android.R.color.black));
+        axisPaint.setColor(context.getResources().getColor(R.color.chart_axis_text));
         axisPaint.setAntiAlias(true);
         axisPaint.setTextSize(SMALL_TEXT_SIZE * scale);
 
@@ -319,13 +319,12 @@ public class ChartView extends View {
 
         gridPaint = new Paint();
         gridPaint.setStyle(Style.STROKE);
-        gridPaint.setColor(context.getResources().getColor(android.R.color.darker_gray));
+        gridPaint.setColor(context.getResources().getColor(R.color.chart_grid));
         gridPaint.setAntiAlias(false);
         gridPaint.setPathEffect(new DashPathEffect(new float[]{3, 2}, 0));
 
         markerPaint = new Paint();
         markerPaint.setStyle(Style.STROKE);
-        markerPaint.setColor(context.getResources().getColor(android.R.color.darker_gray));
         markerPaint.setAntiAlias(false);
 
         pointer = context.getResources().getDrawable(R.drawable.ic_logo_color_24dp);
