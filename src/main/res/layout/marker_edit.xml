@@ -28,45 +28,46 @@ limitations under the License.
             android:orientation="vertical"
             android:padding="8dp">
 
-            <TextView
-                style="@style/EditLabel"
-                android:text="@string/generic_name" />
-
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:hint="@string/generic_name"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no">
 
-                <EditText
-                    android:id="@+id/marker_edit_waypoint_name"
-                    style="@style/EditNameMarker"
+                <com.google.android.material.textfield.TextInputEditText
                     android:drawableStart="@drawable/ic_marker_orange_pushpin_with_shadow"
-                    android:hint="@string/generic_name"
-                    android:imeOptions="actionNext"
-                    android:importantForAutofill="no" />
+                    android:id="@+id/marker_edit_waypoint_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    style="@style/EditLabel.WithPaddingTop"
-                    android:text="@string/marker_edit_marker_type" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no">
 
                 <AutoCompleteTextView
                     android:id="@+id/marker_edit_waypoint_marker_type"
                     style="@style/EditCategory"
                     android:layout_width="match_parent"
-                    android:hint="@string/marker_edit_marker_type_hint"
+                    android:hint="@string/marker_edit_marker_type"
                     android:imeOptions="actionNext" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    style="@style/EditLabel.WithPaddingTop"
-                    android:text="@string/generic_description" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/generic_description"
+                android:imeOptions="actionNext"
+                android:importantForAutofill="no">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/marker_edit_waypoint_description"
-                    style="@style/EditDescription"
-                    android:hint="@string/generic_description"
-                    android:imeOptions="actionDone"
-                    android:importantForAutofill="no" />
-            </LinearLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
