@@ -24,10 +24,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
@@ -55,10 +56,10 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
     private Track track;
     private String iconValue;
 
-    private EditText nameEditText;
+    private TextInputEditText nameEditText;
     private AutoCompleteTextView activityType;
     private Spinner activityTypeIcon;
-    private EditText description;
+    private TextInputEditText description;
 
     @Override
     protected void onCreate(Bundle bundle) {

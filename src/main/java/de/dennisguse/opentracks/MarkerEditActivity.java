@@ -32,11 +32,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -76,9 +77,9 @@ public class MarkerEditActivity extends AbstractActivity {
     private boolean hasCamera;
 
     // UI elements
-    private EditText waypointName;
+    private TextInputEditText waypointName;
     private AutoCompleteTextView waypointMarkerType;
-    private EditText waypointDescription;
+    private TextInputEditText waypointDescription;
     private ImageView waypointPhoto;
     private ImageView waypointDeletePhotoBtn;
 
