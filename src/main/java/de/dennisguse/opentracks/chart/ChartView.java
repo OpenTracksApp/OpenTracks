@@ -191,7 +191,6 @@ public class ChartView extends View {
     public ChartView(Context context, final boolean chartByDistance) {
         super(context);
         this.chartByDistance = chartByDistance;
-
         seriesList.add(new ChartValueSeries(context,
                 Integer.MIN_VALUE,
                 Integer.MAX_VALUE,
@@ -310,7 +309,7 @@ public class ChartView extends View {
         float scale = context.getResources().getDisplayMetrics().density;
 
         axisPaint = new Paint();
-        axisPaint.setStyle(Style.STROKE);
+        axisPaint.setStyle(Style.FILL_AND_STROKE);
         axisPaint.setColor(context.getResources().getColor(android.R.color.black));
         axisPaint.setAntiAlias(true);
         axisPaint.setTextSize(SMALL_TEXT_SIZE * scale);
