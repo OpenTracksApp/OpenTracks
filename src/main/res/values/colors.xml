@@ -30,6 +30,7 @@ limitations under the License.
     <color name="chart_axis_text">@android:color/black</color>
 
     <color name="holo_orange_dark">#FFFF8800</color>
+    <color name="holo_orange_dark_activated">#55FF8800</color>
 
     <color name="recording_text">#FFBE161B</color> <!-- red -->
     <color name="stats_large_label">#FFFAAD2C</color> <!-- orange -->
