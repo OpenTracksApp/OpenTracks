@@ -69,7 +69,7 @@ limitations under the License.
                         <!-- Table 2: Row 1: Column 1: (name) -->
                         <TextView
                             android:id="@+id/list_item_name"
-                            style="@style/TextLarge"
+                            style="@style/TextMediumPrimary"
                             android:layout_width="match_parent"
                             android:layout_gravity="bottom"
                             android:ellipsize="end"
