@@ -45,7 +45,7 @@ public class DialogUtils {
     public static Dialog createConfirmationDialog(final Context context, int titleId, String message, DialogInterface.OnClickListener okListener) {
         return new AlertDialog.Builder(context)
                 .setCancelable(true)
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(R.drawable.ic_delete_forever_24dp)
                 .setMessage(message)
                 .setNegativeButton(R.string.generic_no, null)
                 .setPositiveButton(R.string.generic_yes, okListener)
