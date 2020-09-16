@@ -16,11 +16,12 @@
 
 package de.dennisguse.opentracks.util;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+
+import androidx.appcompat.app.AlertDialog;
 
 import de.dennisguse.opentracks.R;
 
