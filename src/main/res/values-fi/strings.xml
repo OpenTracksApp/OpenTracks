@@ -375,8 +375,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="settings_sensor_connecting">Yhdistetty: %1$s</string>
     <string name="settings_sensor_disconnected">Yhteys katkaistu: %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Renkaan koko (mm)</string>
-
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Leveys-/pituusaste</string>
     <string name="settings_stats_rate_title">Haluttu nopeus</string>
@@ -384,6 +382,7 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
 (maili, jalka)</string>
     <string name="settings_stats_units_metric">Metrijärjestelmä (km, m)</string>
     <string name="settings_stats_units_title">Halutut yksiköt</string>
+
     <!-- Share Track -->
     <string name="share_track_share_file">Jaa reittitiedosto</string>
     <string name="share_track_share_file_body">Luulen, että voisit olla kiinnostunut tästä reitistä.\n\nNäet reitin käyttämällä Google Earth -palvelua tai muuta kartoitusohjelmistoa.\n\n%1$s</string>
@@ -576,4 +575,5 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <!-- Share image -->
     <string name="share_image_subject">Haluaisin jakaa kuvan kanssasi</string>
     <string name="share_image_body">Luulen, että voisit olla kiinnostunut tästä kuvasta.</string>
+
 </resources>

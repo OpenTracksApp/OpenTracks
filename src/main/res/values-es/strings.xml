@@ -367,14 +367,13 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <string name="settings_sensor_connecting">Conectado a %1$s</string>
     <string name="settings_sensor_disconnected">Desconectado de %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Tamaño de la rueda (mm)</string>
-
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Latitud/Longitud</string>
     <string name="settings_stats_rate_title">Ritmo preferido</string>
     <string name="settings_stats_units_imperial">Imperiales (millas, pies)</string>
     <string name="settings_stats_units_metric">Métricas (km, m)</string>
     <string name="settings_stats_units_title">Unidades preferidas</string>
+
     <!-- Share Track -->
     <string name="share_track_share_file">Compartir el archivo de la ruta</string>
     <string name="share_track_share_file_body">Creo que esta ruta te podría interesar.\n\nPara ver esta ruta, usa Google Earth u otro software de mapas.\n\n%1$s</string>
@@ -497,8 +496,6 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <string name="voice_speed_miles_per_hour_two">2 millas por hora</string>
     <string name="voice_speed_miles_per_hour_zero">0 millas por hora</string>
     <string name="voice_template">OpenTracks de %1$s en %2$s a %3$s</string>
-    <string name="voice_speed_lap">Velocidad de vuelta de %1$s</string>
-    <string name="voice_pace_lap">Tiempo de vuelta de %1$s</string>
     <string name="voice_total_distance_kilometers_few">distancia total de %1$.2f kilómetros</string>
     <string name="voice_total_distance_kilometers_many">distancia total de %1$.2f kilómetros</string>
     <string name="voice_total_distance_kilometers_one">distancia total de 1 kilómetro</string>
@@ -567,4 +564,5 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <!-- Share image -->
     <string name="share_image_subject">Me gustaría compartir una imagen contigo</string>
     <string name="share_image_body">Creo que esta imagen te podría interesar.</string>
+
 </resources>

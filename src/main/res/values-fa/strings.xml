@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">هواپیما</string>
     <string name="activity_type_atv">تمام وسایل زمینی (ATV)</string>
     <string name="activity_type_biking">دوچرخه‌سواری</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">پیاده‌روی</string>
     <string name="activity_type_water_skiing">اسکی روی آب</string>
     <string name="activity_type_wind_surfing">موج‌سواری</string>
+    <!-- Description -->
     <string name="description_activity_type">نوع فعالیت: %1$s</string>
     <string name="description_average_moving_pace_in_minute">سرعت متوسط حرکت: %1$s دقیقه در کیلومتر (%2$s دقیقه در مایل)</string>
     <string name="description_average_moving_speed">سرعت متوسط حرکت: %1$.2f کیلومتر در ساعت (%2$.1f مایل در ساعت)</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">سرعت (دقیقه در مایل)</string>
     <string name="description_pace_metric">سرعت (دقیقه در کیلومتر)</string>
     <string name="description_recorded_time">ثبت شد: %1$s</string>
+    <string name="description_speed_ms">سرعت (متر بر ثانیه)</string>
     <string name="description_sensor_cadence">دوران (دور در دقیقه)</string>
     <string name="description_sensor_heart_rate">ضربان قلب (ضربه در دقیقه)</string>
     <string name="description_sensor_power">توان (W)</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">کل زمان: %1$s</string>
     <string name="description_track_point">نقطه</string>
     <string name="description_track_segment">بخش</string>
+    <!-- Export -->
     <string name="export_all_option">همه به عنوان %1$s</string>
     <string name="export_all_title">صادر کردن به حافظه خارجی</string>
     <string name="export_error">%1$d مسیر از %2$s مسیر به %3$s صادر شد</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">در حال صادر کردن به %1$s…</string>
     <string name="export_success">%1$s مسیر به %2$s صادر شد</string>
     <string name="export_title">صادر کردن به…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d فایل</string>
     <string name="files_many">%1$d فایل</string>
     <string name="files_one">۱ فایل</string>
     <string name="files_other">%1$d فایل</string>
     <string name="files_two">۲ فایل</string>
     <string name="files_zero">۰ فایل</string>
+    <!-- Generic -->
     <string name="generic_add">افزودن</string>
     <string name="generic_cancel">لغو</string>
     <string name="generic_delete_all_confirm_title">حذف همه؟</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">موفقیت‌آمیز بود</string>
     <string name="generic_tracks">مسیرها</string>
     <string name="generic_yes">بله</string>
+    <!-- Gps -->
     <string name="gps_location_access">«دسترسی به موقعیت مکانی»</string>
     <string name="gps_disabled">GPS فعال نیست. برای رفتن به %1$s اینجا ضربه بزنید. برای برگشت دکمه بازگشت را فشار دهید.</string>
     <string name="gps_disabled_my_location">موقعیت مکانی کنونی را نمی‌توان تعیین کرد. در %1$s منابع بیشتری را برای موقعیت مکانی فعال کنید و مطمئن شوید که چیزی مانع دیدن آسمان نباشد. بعداً دوباره امتحان کنید.</string>
@@ -138,6 +160,7 @@
     <string name="gps_starting">در حال راه‌اندازی GPS</string>
     <string name="gps_wait_for_better_signal">در انتظار سیگنال GPS بهتر</string>
     <string name="gps_wait_for_signal">در انتظار سیگنال GPS</string>
+    <!-- Image -->
     <string name="image_application">برنامه کاربردی</string>
     <string name="image_arrow">پیکان</string>
     <string name="image_marker">نشانگر</string>
@@ -148,6 +171,7 @@
     <string name="image_record">ضبط</string>
     <string name="image_stop">توقف</string>
     <string name="image_track">مسیر</string>
+    <!-- Import -->
     <string name="import_error">%1$d فایل از %2$s فایل از %3$s وارد شد</string>
     <string name="import_no_directory">%1$s وجود ندارد</string>
     <string name="import_no_file">هیچ فایلی برای وارد کردن وجود نداشت. دستگاه‌تان را به رایانه‌تان وصل کنید و فایل‌هایی که می خواهید وارد کنید در %1$s قرار دهید.</string>
@@ -156,6 +180,7 @@
     <string name="import_selection_option">همه %1$s</string>
     <string name="import_selection_title">وارد کردن از حافظه خارجی</string>
     <string name="import_success">%1$s فایل از %2$s وارد شد</string>
+    <!-- Marker -->
     <string name="marker_add_error">درج نشانگر امکان‌پذیر نیست. سیگنال GPS وجود ندارد. دوباره امتحان کنید.</string>
     <string name="marker_add_success">نشانگر درج شد</string>
     <string name="marker_add_canceled">لغو شد، نشانگری اضافه نشد</string>
@@ -168,10 +193,14 @@
     <string name="marker_name_format">نشانگر %1$d</string>
     <string name="marker_split_name_format">تقسیم گذر %1$d</string>
     <string name="marker_title">%1$d از %2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">از آخرین نشانگر تقسیم گذر:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">نوع نشانگر (برای مثال آبشار)</string>
     <string name="marker_edit_marker_type_hint">نوع نشانگر</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">شما هیچ نشانگری ندارید</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">آمار جمع‌آوری‌شده</string>
     <string name="menu_delete">حذف</string>
     <string name="menu_edit">ویرایش</string>
@@ -192,11 +221,14 @@
     <string name="menu_stop_gps">توقف GPS</string>
     <string name="menu_view_photo">مشاهده عکس</string>
     <string name="menu_voice_frequency">بسامد اعلان صوتی</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">خدمات ضبط</string>
+    <!-- Search -->
     <string name="search_global_description">گذرها و نشانگرها</string>
     <string name="search_list_empty_message">هیچ مسیر یا نشانگری با جستجوی شما مطابقت نداشت</string>
     <string name="search_list_marker_track_location">در گذر «%1$s».</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">مقدار شارژ باتری</string>
     <string name="sensor_state_cadence">سرعت دورانی</string>
     <string name="sensor_state_cadence_value">%1$d دور در دقیقه</string>
@@ -207,7 +239,9 @@
     <string name="sensor_state_power_value">%1$d وات</string>
     <string name="settings_not_while_recording">در حال ضبط گذر، در دسترس نیست</string>
     <string name="settings_show">نمایش</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">پیشرفته</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">بر حسب مسافت</string>
     <string name="settings_chart_by_time">بر حسب زمان</string>
     <string name="settings_chart_x_axis">محور X</string>
@@ -228,21 +262,27 @@
     <string name="settings_recording_track_name_date_local_option">تاریخ (محلی)</string>
     <string name="settings_recording_track_name_number_option">شماره</string>
     <string name="settings_recording_track_name_title">نام پیش‌فرض گذر</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">بازنشانی</string>
     <string name="settings_reset_confirm_message">همه تنظیمات به مقادیر پیش‌فرض برگردانده خواهند شد.</string>
     <string name="settings_reset_confirm_title">اکنون بازنشانی شود؟</string>
     <string name="settings_reset_done">تمام تنظیمات به مقادیر پیش‌فرض برگردانده شدند</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">حسگر</string>
     <string name="settings_sensor_bluetooth">بلوتوث</string>
     <string name="settings_sensor_bluetooth_sensor">حسگر بلوتوث</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">عرض جغرافیایی/ طول جغرافیایی</string>
     <string name="settings_stats_rate_title">اولویت سنجه سرعت</string>
     <string name="settings_stats_units_imperial">انگلیسی (مایل، فوت)</string>
     <string name="settings_stats_units_metric">متریک (کیلومتر، متر)</string>
     <string name="settings_stats_units_title">اولویت سیستم اندازه‌گیری</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">اشتراک‌گذاری فایل گذر</string>
     <string name="share_track_share_file_body">فکر می‌کنم به این گذر علاقه‌مند باشید.\n\nبرای مشاهدهٔ این گذر، از Google Earth یا دیگر نرم‌افزارهای نقشه‌برداری استفاده کنید.\n\n‏%1$s</string>
     <string name="share_track_subject">می‌خواهم یک گذر با شما به اشتراک بگذارم</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">میانگین سرعت حرکت</string>
     <string name="stats_average_moving_speed">میانگین سرعت حرکت</string>
     <string name="stats_average_pace">سرعت متوسط</string>
@@ -261,25 +301,33 @@
     <string name="stats_speed">سرعت</string>
     <string name="stats_distance">فاصله</string>
     <string name="stats_total_time">کل زمان</string>
+    <!-- Track -->
     <string name="track_name_format">گذر %1$d</string>
     <string name="track_record_notification">ضبط گذر شما…</string>
     <string name="track_markers">نشانگرهای %1$s</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">گذر و نشانگرهایش برای همیشه از روی دستگاه حذف خواهند شد.</string>
     <string name="track_delete_one_confirm_title">مسیر حذف شود؟</string>
     <string name="track_delete_multiple_confirm_message">گذرهای انتخاب شده و نشانگرهایشان برای همیشه از دستگاه حذف خواهند شد.</string>
     <string name="track_delete_progress_message">در حال حذف…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">نمودار</string>
     <string name="track_detail_stats_tab">آمار</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">نوع فعالیت (برای مثال پیاده‌روی)</string>
     <string name="track_edit_activity_type_hint">نوع فعالیت</string>
     <string name="track_edit_new_track_title">گذر جدید</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">ضبط ماجراجویی بعدی خودتان را از اینجا شروع کنید</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d گذر</string>
     <string name="tracks_many">%1$d گذر</string>
     <string name="tracks_one">۱ گذر</string>
     <string name="tracks_other">%1$d گذر</string>
     <string name="tracks_two">۲ گذر</string>
     <string name="tracks_zero">۰ گذر</string>
+    <!-- Unit -->
     <string name="unit_feet">فوت</string>
     <string name="unit_kilometer">کیلومتر</string>
     <string name="unit_kilometer_per_hour">کیلومتر در ساعت</string>
@@ -288,6 +336,7 @@
     <string name="unit_mile_per_hour">مایل در ساعت</string>
     <string name="unit_minute_per_kilometer">دقیقه در کیلومتر</string>
     <string name="unit_minute_per_mile">دقیقه در مایل</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">تعدیل به خاطر دقت</string>
     <string name="value_adapt_battery_life">تعدیل به خاطر عمر باتری</string>
     <string name="value_always">همیشه</string>
@@ -314,6 +363,7 @@
     <string name="value_off">خاموش</string>
     <string name="value_smallest">کوچکترین</string>
     <string name="value_smallest_recommended">کوچکترین (توصیه می‌شود)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d ساعت</string>
     <string name="voice_hours_many">%1$d ساعت</string>
     <string name="voice_hours_one">۱ ساعت</string>
@@ -360,6 +410,7 @@
     <string name="voice_total_distance_miles_two">کل مسافت 2 مایل</string>
     <string name="voice_total_distance_miles_zero">کل مسافت 0 مایل</string>
     <string name="voice_total_distance_zero">جمع مسافت OpenTracks صفر است.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">خودپرداز</string>
     <string name="waypoint_type_bank">بانک</string>
     <string name="waypoint_type_bar">بار</string>

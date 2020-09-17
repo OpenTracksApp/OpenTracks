@@ -366,14 +366,13 @@ g) faire tout ce qui vous semble utile à OpenTracks.</string>
     <string name="settings_sensor_connecting">Connecté à %1$s</string>
     <string name="settings_sensor_disconnected">Déconnecté de %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Taille des roues (mm)</string>
-
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Latitude/Longitude</string>
     <string name="settings_stats_rate_title">Mode de calcul souhaité</string>
     <string name="settings_stats_units_imperial">Unités impériales (mi, pi)</string>
     <string name="settings_stats_units_metric">Unités métriques (km, m)</string>
     <string name="settings_stats_units_title">Unités souhaitées</string>
+
     <!-- Share Track -->
     <string name="share_track_share_file">Partager le fichier du parcours</string>
     <string name="share_track_share_file_body">Je pense que ce parcours peut t\'intéresser.\n\nPour l\'afficher, utilise Google Earth ou un autre logiciel de cartographie.\n\n%1$s</string>
@@ -564,4 +563,5 @@ g) faire tout ce qui vous semble utile à OpenTracks.</string>
     <!-- Share image -->
     <string name="share_image_subject">J aimerais partager une image avec vous</string>
     <string name="share_image_body">Je pense que cette image pourrait vous intéresser.</string>
+
 </resources>

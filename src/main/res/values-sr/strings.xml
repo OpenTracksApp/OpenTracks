@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">авион</string>
     <string name="activity_type_atv">Возила за све терене</string>
     <string name="activity_type_biking">бициклизам</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">ходање</string>
     <string name="activity_type_water_skiing">скијање на води</string>
     <string name="activity_type_wind_surfing">једрење на дасци</string>
+    <!-- Description -->
     <string name="description_activity_type">Тип активности: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Просечни темпо кретања: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_moving_speed">Просечна брзина кретања: %1$.2f км/ч (%2$.1f ми/ч)</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">Темпо (min/mi)</string>
     <string name="description_pace_metric">Темпо (min/km)</string>
     <string name="description_recorded_time">Забележено: %1$s</string>
+    <string name="description_speed_ms">Брзина (м/с)</string>
     <string name="description_sensor_cadence">Каденца (обртаја у минуту)</string>
     <string name="description_sensor_heart_rate">Пулс (откуцаја у минуту)</string>
     <string name="description_sensor_power">Снага (W)</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">Укупно време: %1$s</string>
     <string name="description_track_point">Тачка</string>
     <string name="description_track_segment">Сегмент</string>
+    <!-- Export -->
     <string name="export_all_option">Све као %1$s</string>
     <string name="export_all_title">Извоз у спољну меморију</string>
     <string name="export_error">Датотеке (%1$d од %2$s) су извезене у %3$s</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">Извоз у %1$s…</string>
     <string name="export_success">Датотеке (%1$s) су извезене у %2$s</string>
     <string name="export_title">Извоз у…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d датотеке</string>
     <string name="files_many">%1$d датотека</string>
     <string name="files_one">1 датотека</string>
     <string name="files_other">%1$d датотека</string>
     <string name="files_two">2 датотеке</string>
     <string name="files_zero">0 датотека</string>
+    <!-- Generic -->
     <string name="generic_add">Додај</string>
     <string name="generic_cancel">Откажи</string>
     <string name="generic_delete_all_confirm_title">Желите да избришете све?</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">Успело je</string>
     <string name="generic_tracks">Праћења</string>
     <string name="generic_yes">Да</string>
+    <!-- Gps -->
     <string name="gps_location_access">„Приступ локацији“</string>
     <string name="gps_disabled">GPS није омогућен. Додирните овде да бисте отишли на %1$s. Притисните дугме за назад да бисте се вратили.</string>
     <string name="gps_disabled_my_location">Није могуће утврдити тренутну локацију. Омогућите још извора локације у %1$s и проверите да ли је небо видљиво. Покушајте поново касније.</string>
@@ -138,6 +160,7 @@
     <string name="gps_starting">GPS се покреће</string>
     <string name="gps_wait_for_better_signal">Чека се бољи GPS сигнал</string>
     <string name="gps_wait_for_signal">Чека се GPS сигнал</string>
+    <!-- Image -->
     <string name="image_application">Апликација</string>
     <string name="image_arrow">Стрелица</string>
     <string name="image_marker">Означивач</string>
@@ -148,6 +171,7 @@
     <string name="image_record">Снимите</string>
     <string name="image_stop">Зауставите</string>
     <string name="image_track">Праћење</string>
+    <!-- Import -->
     <string name="import_error">Датотеке (%1$d од %2$s) су увезене са %3$s</string>
     <string name="import_no_directory">%1$s не постоји</string>
     <string name="import_no_file">Нема датотека за увоз. Повежите уређај са рачунаром и ставите датотеке за увоз у %1$s.</string>
@@ -156,6 +180,7 @@
     <string name="import_selection_option">Све %1$s датотеке</string>
     <string name="import_selection_title">Увоз из спољне меморије</string>
     <string name="import_success">Датотеке (%1$s) су увезене са %2$s</string>
+    <!-- Marker -->
     <string name="marker_add_error">Није могуће уметнути означивач. Нема GPS сигнала. Покушајте поново.</string>
     <string name="marker_add_success">Означивач је уметнут</string>
     <string name="marker_add_canceled">Отказано је, није додат ниједан означивач</string>
@@ -168,10 +193,14 @@
     <string name="marker_name_format">Означивач %1$d</string>
     <string name="marker_split_name_format">Подела %1$d</string>
     <string name="marker_title">%1$d. од %2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">Од последњег разделног означивача:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Тип означивача (нпр. водопад)</string>
     <string name="marker_edit_marker_type_hint">Тип означивача</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">Немате ниједан означивач</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">Обједињена статистика</string>
     <string name="menu_delete">Избриши</string>
     <string name="menu_edit">Измени</string>
@@ -192,11 +221,14 @@
     <string name="menu_stop_gps">Заустави GPS</string>
     <string name="menu_view_photo">Прикажи слику</string>
     <string name="menu_voice_frequency">Учесталост гласа</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Услуга бележења</string>
+    <!-- Search -->
     <string name="search_global_description">Праћења и означивачи</string>
     <string name="search_list_empty_message">Ниједно праћење ни означивач не одговарају претрази</string>
     <string name="search_list_marker_track_location">У праћењу „%1$s“.</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">Ниво батерије</string>
     <string name="sensor_state_cadence">Каденца</string>
     <string name="sensor_state_cadence_value">%1$d обртаја у минуту</string>
@@ -207,7 +239,9 @@
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Није доступно при снимању праћења</string>
     <string name="settings_show">Прикажи</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">Напредно</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Према раздаљини</string>
     <string name="settings_chart_by_time">Према времену</string>
     <string name="settings_chart_x_axis">X оса</string>
@@ -228,21 +262,27 @@
     <string name="settings_recording_track_name_date_local_option">Датум (локални)</string>
     <string name="settings_recording_track_name_number_option">Број</string>
     <string name="settings_recording_track_name_title">Подразумевано име</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">Ресетуј</string>
     <string name="settings_reset_confirm_message">Сва подешавања ће бити враћена на подразумеване вредности.</string>
     <string name="settings_reset_confirm_title">Желите да ресетујете?</string>
     <string name="settings_reset_done">Сва подешавања су враћена на подразумеване вредности</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">Сензор</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth сензор</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Географска шир./дуж.</string>
     <string name="settings_stats_rate_title">Жељени темпо</string>
     <string name="settings_stats_units_imperial">Империјалне (ми, ст)</string>
     <string name="settings_stats_units_metric">Метричке (км, м)</string>
     <string name="settings_stats_units_title">Жељене јединице</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">Дели датотеку праћења</string>
     <string name="share_track_share_file_body">Мислим да ће вас можда занимати ово праћење.\n\nДа бисте погледали ово праћење, користите Google Earth или други софтвер за мапирање.\n\n%1$s</string>
     <string name="share_track_subject">Желим да делим праћење са вама</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">Прос. темпо кретања</string>
     <string name="stats_average_moving_speed">Прос. брзина кретања</string>
     <string name="stats_average_pace">Прос. темпо</string>
@@ -261,25 +301,33 @@
     <string name="stats_speed">Брзина</string>
     <string name="stats_distance">Раздаљина</string>
     <string name="stats_total_time">Укупно време</string>
+    <!-- Track -->
     <string name="track_name_format">Праћење %1$d</string>
     <string name="track_record_notification">Снимање праћења…</string>
     <string name="track_markers">%1$s – означивачи</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Праћење и његови означивачи ће бити трајно избрисани са уређаја.</string>
     <string name="track_delete_one_confirm_title">Желите да избришете праћење?</string>
     <string name="track_delete_multiple_confirm_message">Изабрана праћења и њихови означивачи ће бити трајно избрисани са уређаја.</string>
     <string name="track_delete_progress_message">Брисање…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">Графикон</string>
     <string name="track_detail_stats_tab">Статистика</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">Тип активности (нпр. пешачење)</string>
     <string name="track_edit_activity_type_hint">Тип активности</string>
     <string name="track_edit_new_track_title">Ново праћење</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">Започните бележење следеће авантуре овде</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d праћења</string>
     <string name="tracks_many">%1$d праћења</string>
     <string name="tracks_one">1 праћење</string>
     <string name="tracks_other">%1$d праћења</string>
     <string name="tracks_two">2 праћења</string>
     <string name="tracks_zero">0 праћења</string>
+    <!-- Unit -->
     <string name="unit_feet">ст</string>
     <string name="unit_kilometer">км</string>
     <string name="unit_kilometer_per_hour">км/ч</string>
@@ -288,6 +336,7 @@
     <string name="unit_mile_per_hour">ми/с</string>
     <string name="unit_minute_per_kilometer">мин/км</string>
     <string name="unit_minute_per_mile">мин/ми</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">Прилагоди за прецизност</string>
     <string name="value_adapt_battery_life">Прилагоди трајању батерије</string>
     <string name="value_always">Увек</string>
@@ -314,6 +363,7 @@
     <string name="value_off">Искључено</string>
     <string name="value_smallest">Најмање</string>
     <string name="value_smallest_recommended">Најмање (препоручено)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d сата</string>
     <string name="voice_hours_many">%1$d сати</string>
     <string name="voice_hours_one">1 сат</string>
@@ -360,6 +410,7 @@
     <string name="voice_total_distance_miles_two">укупна раздаљина 2 миље</string>
     <string name="voice_total_distance_miles_zero">укупна раздаљина 0 миља</string>
     <string name="voice_total_distance_zero">Укупна раздаљина у Мојим праћењима је једнака нули.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">банкомат</string>
     <string name="waypoint_type_bank">банка</string>
     <string name="waypoint_type_bar">бар</string>

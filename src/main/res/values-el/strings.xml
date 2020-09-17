@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">αεροπλάνο</string>
     <string name="activity_type_atv">ATV</string>
     <string name="activity_type_biking">ποδηλασία</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">βάδισμα</string>
     <string name="activity_type_water_skiing">θαλάσσιο σκι</string>
     <string name="activity_type_wind_surfing">Ιστιοσανίδα</string>
+    <!-- Description -->
     <string name="description_activity_type">Τύπος δραστηριότητας: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Μέσος ρυθμός κίνησης: %1$s λεπτά/χλμ (%2$s λεπτά/μίλι)</string>
     <string name="description_average_moving_speed">Μέση ταχύτητα κίνησης: %1$.2f χλμ/ώρα (%2$.1f μίλια/ώρα)</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">Ρυθμός (λεπτά/μίλι)</string>
     <string name="description_pace_metric">Ρυθμός (λεπτά/χλμ)</string>
     <string name="description_recorded_time">Εγγραφή: %1$s</string>
+    <string name="description_speed_ms">Ταχύτητα (μέτρα/δευτ)</string>
     <string name="description_sensor_cadence">Ρυθμός (σ.α.λ.)</string>
     <string name="description_sensor_heart_rate">Καρδιακός ρυθμός (χ.α.λ.)</string>
     <string name="description_sensor_power">Ισχύς (W)</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">Συνολικός χρόνος: %1$s</string>
     <string name="description_track_point">Σημείο</string>
     <string name="description_track_segment">Τμήμα</string>
+    <!-- Export -->
     <string name="export_all_option">Όλα σε μορφή %1$s</string>
     <string name="export_all_title">Εξαγωγή σε εξωτερικό αποθηκευτικό χώρο</string>
     <string name="export_error">Έγινε εξαγωγή %1$d από %2$s διαδρομών στον κατάλογο %3$s</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">Εξαγωγή στο %1$s…</string>
     <string name="export_success">Έγινε εξαγωγή %1$s διαδρομών στον κατάλογο %2$s</string>
     <string name="export_title">Εξαγωγή σε…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d αρχεία</string>
     <string name="files_many">%1$d αρχεία</string>
     <string name="files_one">1 αρχείο</string>
     <string name="files_other">%1$d αρχεία</string>
     <string name="files_two">2 αρχεία</string>
     <string name="files_zero">0 αρχεία</string>
+    <!-- Generic -->
     <string name="generic_add">Προσθήκη</string>
     <string name="generic_cancel">Ακύρωση</string>
     <string name="generic_delete_all_confirm_title">Διαγραφή όλων;</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">Επιτυχώς</string>
     <string name="generic_tracks">Διαδρομές</string>
     <string name="generic_yes">Ναι</string>
+    <!-- Gps -->
     <string name="gps_location_access">\'Πρόσβαση τοποθεσίας\'</string>
     <string name="gps_disabled">Το GPS δεν είναι ενεργοποιημένο. Πατήστε εδώ για να μεταβείτε στο %1$s. Πατήστε το κουμπί \"Πίσω\" για να επιστρέψετε.</string>
     <string name="gps_disabled_my_location">Η τρέχουσα τοποθεσία δεν μπορεί να προσδιοριστεί. Ενεργοποιήστε περισσότερες πηγές εντοπισμού στο μενού %1$s και βεβαιωθείτε ότι ο ουρανός είναι καθαρός. Δοκιμάστε ξανά αργότερα.</string>
@@ -138,6 +160,7 @@
     <string name="gps_starting">Εκκίνηση GPS</string>
     <string name="gps_wait_for_better_signal">Αναμονή για καλύτερο σήμα GPS</string>
     <string name="gps_wait_for_signal">Αναμονή για σήμα GPS</string>
+    <!-- Image -->
     <string name="image_application">Εφαρμογή</string>
     <string name="image_arrow">Βέλος</string>
     <string name="image_marker">Δείκτης</string>
@@ -148,6 +171,7 @@
     <string name="image_record">Εγγραφή</string>
     <string name="image_stop">Στοπ</string>
     <string name="image_track">Διαδρομή</string>
+    <!-- Import -->
     <string name="import_error">Έγινε εισαγωγή %1$d από %2$s αρχείων από τον κατάλογο %3$s</string>
     <string name="import_no_directory">Ο κατάλογος %1$s δεν υπάρχει</string>
     <string name="import_no_file">Δεν υπάρχουν αρχεία για εισαγωγή. Συνδέστε τη συσκευή σας στον υπολογιστή σας και τοποθετήστε τα αρχεία που θέλετε
@@ -157,6 +181,7 @@
     <string name="import_selection_option">Και τα %1$s</string>
     <string name="import_selection_title">Εισαγωγή από εξωτερικό αποθηκευτικό χώρο</string>
     <string name="import_success">Έγινε εισαγωγή %1$s αρχείων από τον κατάλογο %2$s</string>
+    <!-- Marker -->
     <string name="marker_add_error">Δεν είναι δυνατή η εισαγωγή σήμανσης. Δεν υπάρχει σήμα GPS. Δοκιμάστε ξανά.</string>
     <string name="marker_add_success">Έγινε εισαγωγή δείκτη</string>
     <string name="marker_add_canceled">Ακυρώθηκε, δεν προστέθηκε κανένας δείκτης</string>
@@ -169,10 +194,14 @@
     <string name="marker_name_format">Σήμανση %1$d</string>
     <string name="marker_split_name_format">Διαίρεση %1$d</string>
     <string name="marker_title">%1$d από %2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">Από την τελευταία σήμανση διαίρεσης:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Τύπος σήμανσης (π.χ. καταρράκτης)</string>
     <string name="marker_edit_marker_type_hint">Τύπος σήμανσης</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">Δεν έχετε κανένα δείκτη</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">Στατιστικά</string>
     <string name="menu_delete">Διαγραφή</string>
     <string name="menu_edit">Επεξεργασία</string>
@@ -193,11 +222,14 @@
     <string name="menu_stop_gps">Διακοπή GPS</string>
     <string name="menu_view_photo">Προβολή φωτογραφίας</string>
     <string name="menu_voice_frequency">Συχνότητα ανακοινώσεων</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Υπηρεσία καταγραφής</string>
+    <!-- Search -->
     <string name="search_global_description">Ίχνη και σημάνσεις</string>
     <string name="search_list_empty_message">Δεν υπάρχουν διαδρομές ή δείκτες που να ταιριάζουν στην αναζήτησή σας</string>
     <string name="search_list_marker_track_location">Στο ίχνος \"%1$s\".</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">Στάθμη μπαταρίας</string>
     <string name="sensor_state_cadence">Ρυθμός</string>
     <string name="sensor_state_cadence_value">%1$d rpm</string>
@@ -208,7 +240,9 @@
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Η επιλογή δεν είναι διαθέσιμη κατά την εγγραφή ίχνους</string>
     <string name="settings_show">Εμφάνιση</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">Προηγμένες</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Κατά απόσταση</string>
     <string name="settings_chart_by_time">Κατά χρόνο</string>
     <string name="settings_chart_x_axis">Άξονας Χ</string>
@@ -229,21 +263,27 @@
     <string name="settings_recording_track_name_date_local_option">Ημερομηνία (τοπική)</string>
     <string name="settings_recording_track_name_number_option">Αριθμός</string>
     <string name="settings_recording_track_name_title">Προεπιλεγμένο όνομα ίχνους</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">Επαναφορά</string>
     <string name="settings_reset_confirm_message">Όλες οι ρυθμίσεις θα επανέλθουν στις προεπιλεγμένες τιμές.</string>
     <string name="settings_reset_confirm_title">Επαναφορά τώρα;</string>
     <string name="settings_reset_done">Όλες οι ρυθμίσεις έχουν επανέλθει στις προεπιλεγμένες τιμές</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">Αισθητήρας</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Αισθητήρας Bluetooth</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Πλάτος/Μήκος</string>
     <string name="settings_stats_rate_title">Προτιμώμενος ρυθμός</string>
     <string name="settings_stats_units_imperial">Αγγλοσαξονικό (μίλια, πόδια)</string>
     <string name="settings_stats_units_metric">Μετρικό (χλμ, μέτρα)</string>
     <string name="settings_stats_units_title">Προτιμώμενες μονάδες</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">Κοινή χρήση αρχείου ίχνους</string>
     <string name="share_track_share_file_body">Νομίζω ότι μπορεί να σε ενδιαφέρει αυτό το ίχνος.\n\nΓια να δεις αυτό το ίχνος, χρησιμοποίησε το Google Earth ή άλλο λογισμικό χαρτογράφησης.\n\n%1$s</string>
     <string name="share_track_subject">Θα ήθελα να μοιραστώ μία διαδρομή μαζί σου</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">Μέσος ρυθμός κίνησης</string>
     <string name="stats_average_moving_speed">Μέση ταχύτητα κίνησης</string>
     <string name="stats_average_pace">Μέσος ρυθμός</string>
@@ -262,25 +302,33 @@
     <string name="stats_speed">Ταχύτητα</string>
     <string name="stats_distance">Απόσταση</string>
     <string name="stats_total_time">Συνολικός χρόνος</string>
+    <!-- Track -->
     <string name="track_name_format">Διαδρομή %1$d</string>
     <string name="track_record_notification">Καταγραφή του ίχνους σας…</string>
     <string name="track_markers">%1$s Δείκτες</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Η διαδρομή και οι δείκτες της θα διαγραφούν οριστικά από τη συσκευή.</string>
     <string name="track_delete_one_confirm_title">Διαγραφή διαδρομής;</string>
     <string name="track_delete_multiple_confirm_message">Οι επιλεγμένες διαδρομές και οι δείκτες τους θα διαγραφούν οριστικά από τη συσκευή.</string>
     <string name="track_delete_progress_message">Διαγραφή…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">Γράφημα</string>
     <string name="track_detail_stats_tab">Στατιστικά</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">Τύπος δραστηριότητας (π.χ. πεζοπορία)</string>
     <string name="track_edit_activity_type_hint">Τύπος δραστηριότητας</string>
     <string name="track_edit_new_track_title">Νέο ίχνος</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">Ξεκινήστε την εγγραφή της επόμενης περιπέτειάς σας εδώ</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d ίχνη</string>
     <string name="tracks_many">%1$d ίχνη</string>
     <string name="tracks_one">1 ίχνος</string>
     <string name="tracks_other">%1$d ίχνη</string>
     <string name="tracks_two">2 ίχνη</string>
     <string name="tracks_zero">0 ίχνη</string>
+    <!-- Unit -->
     <string name="unit_feet">πόδια</string>
     <string name="unit_kilometer">χλμ.</string>
     <string name="unit_kilometer_per_hour">χλμ/ώρα</string>
@@ -289,6 +337,7 @@
     <string name="unit_mile_per_hour">μίλια/ώρα</string>
     <string name="unit_minute_per_kilometer">λεπτά / χιλ.</string>
     <string name="unit_minute_per_mile">λεπτά/μίλι</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">Προσαρμογή για ακρίβεια</string>
     <string name="value_adapt_battery_life">Καλύτερο για μπατ.</string>
     <string name="value_always">Πάντα</string>
@@ -315,6 +364,7 @@
     <string name="value_off">Απενεργοποιημένο</string>
     <string name="value_smallest">Μικρότερη</string>
     <string name="value_smallest_recommended">Μικρότερη (συνιστάται)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d ώρες</string>
     <string name="voice_hours_many">%1$d ώρες</string>
     <string name="voice_hours_one">1 ώρα</string>
@@ -361,6 +411,7 @@
     <string name="voice_total_distance_miles_two">συνολική απόσταση 2 μίλια</string>
     <string name="voice_total_distance_miles_zero">συνολική απόσταση 0 μίλια</string>
     <string name="voice_total_distance_zero">OpenTracks συνολική απόσταση μηδέν.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">τράπεζα</string>
     <string name="waypoint_type_bar">μπαρ</string>

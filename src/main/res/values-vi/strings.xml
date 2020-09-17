@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">máy bay</string>
     <string name="activity_type_atv">ATV</string>
     <string name="activity_type_biking">đi xe đạp</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">đi bộ</string>
     <string name="activity_type_water_skiing">lướt ván nước</string>
     <string name="activity_type_wind_surfing">lướt ván buồm</string>
+    <!-- Description -->
     <string name="description_activity_type">Loại hoạt động: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Nhịp độ di chuyển bình quân: %1$s phút/km (%2$s phút/dặm)</string>
     <string name="description_average_moving_speed">Tốc độ di chuyển trung bình: %1$.2f km/h (%2$.1f dặm/h)</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">Nhịp độ (phút/dặm)</string>
     <string name="description_pace_metric">Nhịp độ (phút/km)</string>
     <string name="description_recorded_time">Đã lưu lại: %1$s</string>
+    <string name="description_speed_ms">Tốc độ (m/s)</string>
     <string name="description_sensor_cadence">Nhịp (vòng/phút)</string>
     <string name="description_sensor_heart_rate">Nhịp tim (lần/phút)</string>
     <string name="description_sensor_power">Công suất (W)</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">Tổng thời gian: %1$s</string>
     <string name="description_track_point">Điểm</string>
     <string name="description_track_segment">Đoạn đường</string>
+    <!-- Export -->
     <string name="export_all_option">Tất cả dưới dạng %1$s</string>
     <string name="export_all_title">Xuất sang bộ nhớ ngoài</string>
     <string name="export_error">Đã xuất %1$d / %2$s sang %3$s</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">Đang xuất sang %1$s…</string>
     <string name="export_success">Đã xuất %1$s sang %2$s</string>
     <string name="export_title">Xuất sang…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d tệp</string>
     <string name="files_many">%1$d tệp</string>
     <string name="files_one">1 tệp</string>
     <string name="files_other">%1$d tệp</string>
     <string name="files_two">2 tệp</string>
     <string name="files_zero">0 tệp</string>
+    <!-- Generic -->
     <string name="generic_add">Thêm</string>
     <string name="generic_cancel">Hủy</string>
     <string name="generic_delete_all_confirm_title">Xóa tất cả?</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">Thành công</string>
     <string name="generic_tracks">Đường đi</string>
     <string name="generic_yes">Có</string>
+    <!-- Gps -->
     <string name="gps_location_access">‘Quyền truy cập thông tin vị trí’</string>
     <string name="gps_disabled">GPS chưa được bật. Hãy chạm vào đây để chuyển tới %1$s. Nhấn nút quay lại để trở về.</string>
     <string name="gps_disabled_my_location">Không xác định được vị trí hiện tại. Hãy bật thêm nguồn vị trí tại %1$s và chắc chắn rằng bạn có thể nhìn thấy bầu trời. Vui lòng thử lại sau.</string>
@@ -138,6 +160,7 @@
     <string name="gps_starting">Đang khởi động GPS</string>
     <string name="gps_wait_for_better_signal">Đang chờ tín hiệu GPS tốt hơn</string>
     <string name="gps_wait_for_signal">Đang chờ tín hiệu GPS</string>
+    <!-- Image -->
     <string name="image_application">Ứng dụng</string>
     <string name="image_arrow">Mũi tên</string>
     <string name="image_marker">Điểm đánh dấu</string>
@@ -148,6 +171,7 @@
     <string name="image_record">Ghi</string>
     <string name="image_stop">Dừng</string>
     <string name="image_track">Đường đi</string>
+    <!-- Import -->
     <string name="import_error">Đã nhập %1$d / %2$s từ %3$s</string>
     <string name="import_no_directory">%1$s không tồn tại</string>
     <string name="import_no_file">Không có tệp nào để nhập. Hãy kết nối thiết bị của bạn với máy tính của bạn và đặt các tệp để
@@ -157,6 +181,7 @@
     <string name="import_selection_option">Tất cả %1$s</string>
     <string name="import_selection_title">Nhập từ bộ nhớ ngoài</string>
     <string name="import_success">Đã nhập %1$s từ %2$s</string>
+    <!-- Marker -->
     <string name="marker_add_error">Không thể chèn điểm đánh dấu. Không có tín hiệu GPS. Hãy thử lại.</string>
     <string name="marker_add_success">Đã chèn vào một điểm đánh dấu</string>
     <string name="marker_add_canceled">Đã hủy, điểm đánh dấu chưa được thêm vào</string>
@@ -169,10 +194,14 @@
     <string name="marker_name_format">Điểm đánh dấu %1$d</string>
     <string name="marker_split_name_format">Tách %1$d</string>
     <string name="marker_title">%1$d / %2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">Kể từ điểm đánh dấu phân chia cuối cùng:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Loại điểm đánh dấu (ví dụ: thác nước)</string>
     <string name="marker_edit_marker_type_hint">Loại điểm đánh dấu</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">Bạn không có bất kỳ điểm đánh dấu nào</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">Số liệu thống kê tổng hợp</string>
     <string name="menu_delete">Xóa</string>
     <string name="menu_edit">Chỉnh sửa</string>
@@ -193,11 +222,14 @@
     <string name="menu_stop_gps">Dừng GPS</string>
     <string name="menu_view_photo">Xem ảnh</string>
     <string name="menu_voice_frequency">Tần suất giọng nói</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Dịch vụ ghi</string>
+    <!-- Search -->
     <string name="search_global_description">Các tuyến đường và điểm đánh dấu</string>
     <string name="search_list_empty_message">Không có tuyến đường hoặc điểm đánh dấu nào phù hợp với tìm kiếm của bạn</string>
     <string name="search_list_marker_track_location">Trong tuyến đường \'%1$s\'.</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">Mức pin</string>
     <string name="sensor_state_cadence">Nhịp</string>
     <string name="sensor_state_cadence_value">%1$d rpm</string>
@@ -208,7 +240,9 @@
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Không khả dụng khi đang ghi tuyến đường</string>
     <string name="settings_show">Hiển thị</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">Nâng cao</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Theo khoảng cách</string>
     <string name="settings_chart_by_time">Theo thời gian</string>
     <string name="settings_chart_x_axis">Trục X</string>
@@ -229,21 +263,27 @@
     <string name="settings_recording_track_name_date_local_option">Ngày (địa phương)</string>
     <string name="settings_recording_track_name_number_option">Số</string>
     <string name="settings_recording_track_name_title">Tên mặc định của tuyến đường</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">Đặt lại</string>
     <string name="settings_reset_confirm_message">Tất cả cài đặt của bạn sẽ được hoàn nguyên về giá trị mặc định.</string>
     <string name="settings_reset_confirm_title">Đặt lại bây giờ?</string>
     <string name="settings_reset_done">Tất cả cài đặt đã được hoàn nguyên về giá trị mặc định</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">Cảm biến</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Cảm biến bluetooth</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Vĩ độ/Kinh độ</string>
     <string name="settings_stats_rate_title">Tốc độ ưa thích</string>
     <string name="settings_stats_units_imperial">Hệ đo lường Anh (mi, ft)</string>
     <string name="settings_stats_units_metric">Hệ mét (km, m)</string>
     <string name="settings_stats_units_title">Đơn vị ưa thích</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">Chia sẻ tệp tuyến đường</string>
     <string name="share_track_share_file_body">Tôi nghĩ rằng bạn có thể quan tâm đến tuyến đường này.\n\nĐể xem tuyến đường này, hãy sử dụng Google Earth hoặc phần mềm vẽ bản đồ khác.\n\n%1$s</string>
     <string name="share_track_subject">Tôi muốn chia sẻ một tuyến đường với bạn</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">Nhịp độ di chuyển trung bình</string>
     <string name="stats_average_moving_speed">Tốc độ di chuyển trung bình</string>
     <string name="stats_average_pace">Nhịp độ trung bình</string>
@@ -262,25 +302,33 @@
     <string name="stats_speed">Tốc độ</string>
     <string name="stats_distance">Khoảng cách</string>
     <string name="stats_total_time">Tổng thời gian</string>
+    <!-- Track -->
     <string name="track_name_format">Tuyến đường %1$d</string>
     <string name="track_record_notification">Đang ghi tuyến đường của bạn…</string>
     <string name="track_markers">%1$s Điểm đánh dấu</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Tuyến đường và các điểm đánh dấu của nó sẽ bị xóa vĩnh viễn khỏi thiết bị.</string>
     <string name="track_delete_one_confirm_title">Xóa tuyến đường</string>
     <string name="track_delete_multiple_confirm_message">Các tuyến đường được chọn và điểm đánh dấu của chúng sẽ bị xóa vĩnh viễn khỏi thiết bị.</string>
     <string name="track_delete_progress_message">Đang xóa…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">Biểu đồ</string>
     <string name="track_detail_stats_tab">Thống kê</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">Loại hoạt động (ví dụ: đi bộ đường dài)</string>
     <string name="track_edit_activity_type_hint">Loại hoạt động</string>
     <string name="track_edit_new_track_title">Tuyến đường mới</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">Bắt đầu ghi lại cuộc phiêu lưu tiếp theo của bạn ở đây</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d tuyến đường</string>
     <string name="tracks_many">%1$d tuyến đường</string>
     <string name="tracks_one">1 tuyến đường</string>
     <string name="tracks_other">%1$d tuyến đường</string>
     <string name="tracks_two">2 tuyến đường</string>
     <string name="tracks_zero">0 tuyến đường</string>
+    <!-- Unit -->
     <string name="unit_feet">ft</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/h</string>
@@ -289,6 +337,7 @@
     <string name="unit_mile_per_hour">dặm/giờ</string>
     <string name="unit_minute_per_kilometer">phút/km</string>
     <string name="unit_minute_per_mile">phút/dặm</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">Thích ứng với độ chính xác</string>
     <string name="value_adapt_battery_life">Thích ứng với tuổi thọ pin</string>
     <string name="value_always">Luôn luôn</string>
@@ -315,6 +364,7 @@
     <string name="value_off">Tắt</string>
     <string name="value_smallest">Nhỏ nhất</string>
     <string name="value_smallest_recommended">Nhỏ nhất (được đề nghị)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d giờ</string>
     <string name="voice_hours_many">%1$d giờ</string>
     <string name="voice_hours_one">1 giờ</string>
@@ -361,6 +411,7 @@
     <string name="voice_total_distance_miles_two">tổng khoảng cách là 2 dặm</string>
     <string name="voice_total_distance_miles_zero">tổng khoảng cách là 0 dặm</string>
     <string name="voice_total_distance_zero">Tổng khoảng cách Tuyến đường của tôi là 0.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">ngân hàng</string>
     <string name="waypoint_type_bar">bar</string>

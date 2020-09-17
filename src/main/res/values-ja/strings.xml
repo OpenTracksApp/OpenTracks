@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">飛行機</string>
     <string name="activity_type_atv">全地形対応車（ATV）</string>
     <string name="activity_type_biking">サイクリング</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">ウォーキング</string>
     <string name="activity_type_water_skiing">水上スキー</string>
     <string name="activity_type_wind_surfing">ウィンドサーフィン</string>
+    <!-- Description -->
     <string name="description_activity_type">活動タイプ： %1$s</string>
     <string name="description_average_moving_pace_in_minute">平均移動ペース: %1$s分/km（%2$s分/マイル）</string>
     <string name="description_average_moving_speed">平均移動速度： %1$.2fkm/時（%2$.1fマイル/時）</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">ペース（分/マイル）</string>
     <string name="description_pace_metric">ペース（分/km）</string>
     <string name="description_recorded_time">記録： %1$s</string>
+    <string name="description_speed_ms">速度（m/秒）</string>
     <string name="description_sensor_cadence">ケイデンス（rpm）</string>
     <string name="description_sensor_heart_rate">心拍数（bpm）</string>
     <string name="description_sensor_power">電力（W）</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">合計時間： %1$s</string>
     <string name="description_track_point">地点</string>
     <string name="description_track_segment">セグメント</string>
+    <!-- Export -->
     <string name="export_all_option">すべてを%1$s形式で</string>
     <string name="export_all_title">外部ストレージにエクスポート</string>
     <string name="export_error">%2$s中%1$d件を「%3$s」にエクスポートしました</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">%1$sにエクスポート中…</string>
     <string name="export_success">%1$sを「%2$s」にエクスポートしました</string>
     <string name="export_title">エクスポート先…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d個のファイル</string>
     <string name="files_many">%1$d個のファイル</string>
     <string name="files_one">1個のファイル</string>
     <string name="files_other">%1$d個のファイル</string>
     <string name="files_two">2個のファイル</string>
     <string name="files_zero">0個のファイル</string>
+    <!-- Generic -->
     <string name="generic_add">追加</string>
     <string name="generic_cancel">キャンセル</string>
     <string name="generic_delete_all_confirm_title">すべて削除しますか？</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">完了しました</string>
     <string name="generic_tracks">トラック</string>
     <string name="generic_yes">はい</string>
+    <!-- Gps -->
     <string name="gps_location_access">[位置情報アクセス]</string>
     <string name="gps_disabled">GPSが有効になっていません。%1$sにアクセスするにはここをタップします。前に戻るには[戻る]ボタンを押します。</string>
     <string name="gps_disabled_my_location">現在地を特定できません。[%1$s]で他の位置情報を有効にして、空が見える場所に移動してください。
@@ -139,6 +161,7 @@
     <string name="gps_starting">GPSを起動しています</string>
     <string name="gps_wait_for_better_signal">GPS信号の精度が上がるまで待機しています</string>
     <string name="gps_wait_for_signal">GPS信号を待機しています</string>
+    <!-- Image -->
     <string name="image_application">アプリ</string>
     <string name="image_arrow">矢印</string>
     <string name="image_marker">マーカー</string>
@@ -149,6 +172,7 @@
     <string name="image_record">記録</string>
     <string name="image_stop">停止</string>
     <string name="image_track">トラック</string>
+    <!-- Import -->
     <string name="import_error">%2$s中%1$d個を「%3$s」からインポートしました</string>
     <string name="import_no_directory">「%1$s」は存在しません</string>
     <string name="import_no_file">インポートするファイルがありませんでした。端末をパソコンに接続して、インポートするファイルを
@@ -158,6 +182,7 @@
     <string name="import_selection_option">すべての%1$s</string>
     <string name="import_selection_title">外部ストレージからインポート</string>
     <string name="import_success">「%2$s」から%1$sをインポートしました</string>
+    <!-- Marker -->
     <string name="marker_add_error">GPS信号がないため、マーカーを追加できません。もう一度やり直してください。</string>
     <string name="marker_add_success">マーカーを追加しました</string>
     <string name="marker_add_canceled">キャンセルしました。追加したマーカーはありません</string>
@@ -170,10 +195,14 @@
     <string name="marker_name_format">マーカー%1$d</string>
     <string name="marker_split_name_format">分割マーカー%1$d</string>
     <string name="marker_title">%1$d/%2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">分割マーカーが最後に挿入された後のデータ:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">マーカーの種類（例: 滝）</string>
     <string name="marker_edit_marker_type_hint">マーカーの種類</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">マーカーはありません</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">集計統計</string>
     <string name="menu_delete">削除</string>
     <string name="menu_edit">編集</string>
@@ -194,11 +223,14 @@
     <string name="menu_stop_gps">GPSを停止</string>
     <string name="menu_view_photo">写真を表示</string>
     <string name="menu_voice_frequency">音声アナウンスの頻度</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">記録サービス</string>
+    <!-- Search -->
     <string name="search_global_description">トラックとマーカー</string>
     <string name="search_list_empty_message">該当するトラックやマーカーは見つかりませんでした</string>
     <string name="search_list_marker_track_location">「%1$s」のトラック内。</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">電池残量</string>
     <string name="sensor_state_cadence">ケイデンス</string>
     <string name="sensor_state_cadence_value">%1$drpm</string>
@@ -209,7 +241,9 @@
     <string name="sensor_state_power_value">%1$dW</string>
     <string name="settings_not_while_recording">トラックの記録中はご利用いただけません</string>
     <string name="settings_show">表示</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">詳細設定</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">距離</string>
     <string name="settings_chart_by_time">時間</string>
     <string name="settings_chart_x_axis">X軸</string>
@@ -230,21 +264,27 @@
     <string name="settings_recording_track_name_date_local_option">日付（ローカル）</string>
     <string name="settings_recording_track_name_number_option">番号</string>
     <string name="settings_recording_track_name_title">デフォルトのトラック名</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">リセット</string>
     <string name="settings_reset_confirm_message">すべての設定がデフォルト値に戻されます。</string>
     <string name="settings_reset_confirm_title">リセットしますか？</string>
     <string name="settings_reset_done">すべての設定をデフォルト値に戻しました</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">センサー</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetoothのセンサー</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">緯度/経度</string>
     <string name="settings_stats_rate_title">計測方法</string>
     <string name="settings_stats_units_imperial">ヤード･ポンド法（マイル、フィート）</string>
     <string name="settings_stats_units_metric">メートル法（km、m）</string>
     <string name="settings_stats_units_title">計測単位</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">トラックファイルを共有</string>
     <string name="share_track_share_file_body">次のトラックを見てみてください。\n\nトラックを表示するには、Google Earthか他のマッピングソフトウェアを使用してください。\n\n%1$s</string>
     <string name="share_track_subject">トラック共有のお知らせ</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">平均移動ペース</string>
     <string name="stats_average_moving_speed">平均移動速度</string>
     <string name="stats_average_pace">平均ペース</string>
@@ -263,25 +303,33 @@
     <string name="stats_speed">速度</string>
     <string name="stats_distance">距離</string>
     <string name="stats_total_time">合計時間</string>
+    <!-- Track -->
     <string name="track_name_format">トラック%1$d</string>
     <string name="track_record_notification">トラックを記録中…</string>
     <string name="track_markers">%1$sのマーカー</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">トラックとマーカーが端末から完全に削除されます。</string>
     <string name="track_delete_one_confirm_title">トラックを削除しますか？</string>
     <string name="track_delete_multiple_confirm_message">選択したトラックとマーカーが端末から完全に削除されます。</string>
     <string name="track_delete_progress_message">削除中…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">グラフ</string>
     <string name="track_detail_stats_tab">統計情報</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">活動タイプ（例: ハイキング）</string>
     <string name="track_edit_activity_type_hint">活動タイプ</string>
     <string name="track_edit_new_track_title">新しいトラック</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">このボタンでトラックの記録を開始しよう</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d件のトラック</string>
     <string name="tracks_many">%1$d件のトラック</string>
     <string name="tracks_one">1件のトラック</string>
     <string name="tracks_other">%1$d件のトラック</string>
     <string name="tracks_two">2件のトラック</string>
     <string name="tracks_zero">0件のトラック</string>
+    <!-- Unit -->
     <string name="unit_feet">ft</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/時</string>
@@ -290,6 +338,7 @@
     <string name="unit_mile_per_hour">マイル/時</string>
     <string name="unit_minute_per_kilometer">分/km</string>
     <string name="unit_minute_per_mile">分/マイル</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">精度を重視</string>
     <string name="value_adapt_battery_life">電池残量を重視</string>
     <string name="value_always">常に使用する</string>
@@ -316,6 +365,7 @@
     <string name="value_off">オフ</string>
     <string name="value_smallest">最小</string>
     <string name="value_smallest_recommended">最小値（推奨）</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d時間</string>
     <string name="voice_hours_many">%1$d時間</string>
     <string name="voice_hours_one">1時間</string>
@@ -362,6 +412,7 @@
     <string name="voice_total_distance_miles_two">合計距離2マイル</string>
     <string name="voice_total_distance_miles_zero">合計距離0マイル</string>
     <string name="voice_total_distance_zero">OpenTracksの合計距離はゼロです。</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">銀行</string>
     <string name="waypoint_type_bar">バー</string>

@@ -362,14 +362,13 @@ g) Egin uste duzu OpenTracks-ek laguntzen duela.</string>
     <string name="settings_sensor_connecting">Honekin konektatuta: %1$s</string>
     <string name="settings_sensor_disconnected">Deskonektatuta %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Gurpilaren tamaina (mm)</string>
-
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Latitudea/Longitudea</string>
     <string name="settings_stats_rate_title">Erritmo hobetsia</string>
     <string name="settings_stats_units_imperial">Inperiala (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrikoa (km, m)</string>
     <string name="settings_stats_units_title">Unitate hobetsiak</string>
+
     <!-- Share Track -->
     <string name="share_track_share_file">Partekatu ibilbide-fitxategia</string>
     <string name="share_track_share_file_body">Ibilbidea interesgarria gerta dakizukeela uste dut.\n\nIbilbidea ikusteko, erabili Google Earth edo beste kartografia-softwareren bat.\n\n%1$s</string>
@@ -560,4 +559,5 @@ g) Egin uste duzu OpenTracks-ek laguntzen duela.</string>
     <!-- Share image -->
     <string name="share_image_subject">Irudi bat zurekin partekatu nahi nuke</string>
     <string name="share_image_body">Irudi hau interesatuko zaizuela uste dut.</string>
+
 </resources>

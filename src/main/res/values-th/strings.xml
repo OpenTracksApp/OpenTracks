@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">เครื่องบิน</string>
     <string name="activity_type_atv">รถ ATV</string>
     <string name="activity_type_biking">ขี่จักรยาน</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">เดิน</string>
     <string name="activity_type_water_skiing">สกีน้ำ</string>
     <string name="activity_type_wind_surfing">เล่นวินด์เซิร์ฟ</string>
+    <!-- Description -->
     <string name="description_activity_type">ประเภทกิจกรรม: %1$s</string>
     <string name="description_average_moving_pace_in_minute">ความเร็วก้าวเฉลี่ย: %1$s นาที/กม. (%2$s นาที/ไมล์)</string>
     <string name="description_average_moving_speed">ความเร็วการเคลื่อนที่เฉลี่ย: %1$.2f กม./ชม. (%2$.1f ไมล์/ชม.)</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">อัตราก้าว (นาที/ไมล์)</string>
     <string name="description_pace_metric">อัตราก้าว (นาที/กม.)</string>
     <string name="description_recorded_time">เวลาบันทึก: %1$s</string>
+    <string name="description_speed_ms">ความเร็ว (ม./วินาที)</string>
     <string name="description_sensor_cadence">จังหวะ (รอบต่อนาที)</string>
     <string name="description_sensor_heart_rate">อัตราการเต้นหัวใจ (ครั้งต่อนาที)</string>
     <string name="description_sensor_power">กำลัง (วัตต์)</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">เวลาทั้งหมด: %1$s</string>
     <string name="description_track_point">จุด</string>
     <string name="description_track_segment">ส่วน</string>
+    <!-- Export -->
     <string name="export_all_option">ทั้งหมดเป็น %1$s</string>
     <string name="export_all_title">ส่งออกไปยังที่จัดเก็บข้อมูลภายนอก</string>
     <string name="export_error">ส่งออกแล้ว %1$d จาก %2$s ไปยัง %3$s</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">ส่งออกลงใน %1$s…</string>
     <string name="export_success">ส่งออก %1$s ไปยัง %2$s แล้ว</string>
     <string name="export_title">ส่งออกลงใน…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d ไฟล์</string>
     <string name="files_many">%1$d ไฟล์</string>
     <string name="files_one">1 ไฟล์</string>
     <string name="files_other">%1$d ไฟล์</string>
     <string name="files_two">2 ไฟล์</string>
     <string name="files_zero">0 ไฟล์</string>
+    <!-- Generic -->
     <string name="generic_add">เพิ่ม</string>
     <string name="generic_cancel">ยกเลิก</string>
     <string name="generic_delete_all_confirm_title">ลบทั้งหมดใช่ไหม</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">สำเร็จ</string>
     <string name="generic_tracks">เส้นการเดินทาง</string>
     <string name="generic_yes">ใช่</string>
+    <!-- Gps -->
     <string name="gps_location_access">การเข้าถึงข้อมูลตำแหน่ง</string>
     <string name="gps_disabled">ไม่ได้เปิดใช้งาน GPS กดที่นี่เพื่อไปที่ %1$s โปรดกดปุ่มย้อนกลับเพื่อกลับไป</string>
     <string name="gps_disabled_my_location">ไม่สามารถกำหนดตำแหน่งปัจจุบันได้ เปิดใช้งานแหล่งข้อมูลตำแหน่งเพิ่มเติมที่ %1$s และตรวจดูให้แน่ใจว่าสามารถมองเห็นท้องฟ้าได้ แล้วลองอีกครั้งในภายหลัง</string>
@@ -138,6 +160,7 @@
     <string name="gps_starting">กำลังเริ่ม GPS</string>
     <string name="gps_wait_for_better_signal">กำลังรอสัญญาณ GPS ที่ดีกว่านี้</string>
     <string name="gps_wait_for_signal">กำลังรอสัญญาณ GPS</string>
+    <!-- Image -->
     <string name="image_application">แอปพลิเคชัน</string>
     <string name="image_arrow">ลูกศร</string>
     <string name="image_marker">เครื่องหมาย</string>
@@ -148,6 +171,7 @@
     <string name="image_record">บันทึก</string>
     <string name="image_stop">หยุด</string>
     <string name="image_track">เส้นการเดินทาง</string>
+    <!-- Import -->
     <string name="import_error">นำเข้าแล้ว %1$d จากทั้งหมด %2$s จาก %3$s</string>
     <string name="import_no_directory">ไม่มี %1$s</string>
     <string name="import_no_file">ไม่มีไฟล์ให้นำเข้า โปรดเชื่อมต่ออุปกรณ์เข้ากับคอมพิวเตอร์ และวางไฟล์ที่จะนำเข้าลงใน %1$s</string>
@@ -156,6 +180,7 @@
     <string name="import_selection_option">ทั้งหมด %1$s</string>
     <string name="import_selection_title">นำเข้าจากที่จัดเก็บข้อมูลภายนอก</string>
     <string name="import_success">นำเข้าแล้ว %1$s จาก %2$s</string>
+    <!-- Marker -->
     <string name="marker_add_error">ไม่สามารถใส่เครื่องหมายได้ เนื่องจากไม่มีสัญญาณ GPS โปรดลองอีกครั้ง</string>
     <string name="marker_add_success">ใส่เครื่องหมายแล้ว</string>
     <string name="marker_add_canceled">ยกเลิกแล้ว ไม่มีการเพิ่มเครื่องหมาย</string>
@@ -168,10 +193,14 @@
     <string name="marker_name_format">เครื่องหมาย %1$d</string>
     <string name="marker_split_name_format">แยก %1$d</string>
     <string name="marker_title">%1$d จาก %2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">ตั้งแต่เครื่องหมายแยกล่าสุด:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">ประเภทเครื่องหมาย (เช่น น้ำตก)</string>
     <string name="marker_edit_marker_type_hint">ประเภทเครื่องหมาย</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">คุณไม่มีเครื่องหมายเลย</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">สถิติที่รวบรวม</string>
     <string name="menu_delete">ลบ</string>
     <string name="menu_edit">แก้ไข</string>
@@ -192,11 +221,14 @@
     <string name="menu_stop_gps">หยุด GPS</string>
     <string name="menu_view_photo">ดูรูปภาพ</string>
     <string name="menu_voice_frequency">ความถี่เสียง</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">บริการการบันทึก</string>
+    <!-- Search -->
     <string name="search_global_description">เส้นการเดินทางและเครื่องหมาย</string>
     <string name="search_list_empty_message">ไม่มีเส้นการเดินทางหรือเครื่องหมายที่ตรงกับการค้นหาของคุณ</string>
     <string name="search_list_marker_track_location">ในเส้นการเดินทาง \"%1$s\"</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">ระดับแบตเตอรี่</string>
     <string name="sensor_state_cadence">รอบขา</string>
     <string name="sensor_state_cadence_value">%1$d รอบต่อนาที</string>
@@ -207,7 +239,9 @@
     <string name="sensor_state_power_value">%1$d วัตต์</string>
     <string name="settings_not_while_recording">ไม่สามารถใช้งานได้ในขณะบันทึกเส้นการเดินทาง</string>
     <string name="settings_show">แสดง</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">ขั้นสูง</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">ตามระยะทาง</string>
     <string name="settings_chart_by_time">ตามเวลา</string>
     <string name="settings_chart_x_axis">แกน X</string>
@@ -228,21 +262,27 @@
     <string name="settings_recording_track_name_date_local_option">วันที่ (ท้องถิ่น)</string>
     <string name="settings_recording_track_name_number_option">หมายเลข</string>
     <string name="settings_recording_track_name_title">ชื่อเส้นการเดินทางเริ่มต้น</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">รีเซ็ต</string>
     <string name="settings_reset_confirm_message">การตั้งค่าทั้งหมดจะกลับไปเป็นค่าเริ่มต้น </string>
     <string name="settings_reset_confirm_title">รีเซ็ตเลยไหม</string>
     <string name="settings_reset_done">การตั้งค่าทั้งหมดถูกเปลี่ยนกลับไปเป็นค่าเริ่มต้นแล้ว</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">เซ็นเซอร์</string>
     <string name="settings_sensor_bluetooth">บลูทูธ</string>
     <string name="settings_sensor_bluetooth_sensor">เซ็นเซอร์บลูทูธ</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">ละติจูด/ลองจิจูด</string>
     <string name="settings_stats_rate_title">อัตราที่ต้องการ</string>
     <string name="settings_stats_units_imperial">หน่วยอังกฤษ (ไมล์, ฟุต)</string>
     <string name="settings_stats_units_metric">หน่วยเมตริก (กม., เมตร)</string>
     <string name="settings_stats_units_title">หน่วยที่ต้องการ</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">แบ่งปันไฟล์เส้นการเดินทาง</string>
     <string name="share_track_share_file_body">ฉันคิดว่าคุณอาจจะสนใจในเส้นการเดินทางนี้\n\nเมื่อต้องการดูเส้นการเดินทางนี้ ให้ใช้ Google Earth หรือซอฟแวร์แผนที่อื่นๆ\n\n%1$s</string>
     <string name="share_track_subject">ฉันต้องการแบ่งปันเส้นทางกับคุณ</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">การก้าวโดยเฉลี่ย</string>
     <string name="stats_average_moving_speed">ความเร็วในการเคลื่อนที่เฉลี่ย</string>
     <string name="stats_average_pace">ก้าวเฉลี่ย</string>
@@ -261,25 +301,33 @@
     <string name="stats_speed">ความเร็ว</string>
     <string name="stats_distance">ระยะทาง</string>
     <string name="stats_total_time">เวลารวม</string>
+    <!-- Track -->
     <string name="track_name_format">เส้นทาง %1$d</string>
     <string name="track_record_notification">กำลังบันทึกเส้นการเดินทางของคุณ…</string>
     <string name="track_markers">%1$s เครื่องหมาย</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">ส้นการเดินทางและเครื่องหมายจะถูกลบออกจากอุปกรณ์อย่างถาวร</string>
     <string name="track_delete_one_confirm_title">ลบเส้นการเดินทางนี้ไหม</string>
     <string name="track_delete_multiple_confirm_message">ส้นการเดินทางและเครื่องหมายที่เลือกจะถูกลบออกจากอุปกรณ์อย่างถาวร</string>
     <string name="track_delete_progress_message">กำลังลบ…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">แผนภูมิ</string>
     <string name="track_detail_stats_tab">สถิติ</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">ประเภทกิจกรรม (เช่น เดินป่า)</string>
     <string name="track_edit_activity_type_hint">ประเภทกิจกรรม</string>
     <string name="track_edit_new_track_title">เส้นการเดินทางใหม่</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">เริ่มบันทึกผจญภัยต่อไปของคุณที่นี่</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d เส้นการเดินทาง</string>
     <string name="tracks_many">%1$d เส้นการเดินทาง</string>
     <string name="tracks_one">1 เส้นการเดินทาง</string>
     <string name="tracks_other">%1$d เส้นการเดินทาง</string>
     <string name="tracks_two">2 เส้นการเดินทาง</string>
     <string name="tracks_zero">0 เส้นการเดินทาง</string>
+    <!-- Unit -->
     <string name="unit_feet">ฟุต</string>
     <string name="unit_kilometer">กม.</string>
     <string name="unit_kilometer_per_hour">กม./ชม.</string>
@@ -288,6 +336,7 @@
     <string name="unit_mile_per_hour">ไมล์/ชม.</string>
     <string name="unit_minute_per_kilometer">นาที/กม.</string>
     <string name="unit_minute_per_mile">นาที/ไมล์</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">ปรับความแม่นยำ</string>
     <string name="value_adapt_battery_life">ปรับเพื่อแบตเตอรี่</string>
     <string name="value_always">เปิดใช้งานเสมอ</string>
@@ -314,6 +363,7 @@
     <string name="value_off">ปิด</string>
     <string name="value_smallest">น้อยที่สุด</string>
     <string name="value_smallest_recommended">น้อยที่สุด (แนะนำ)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d ชั่วโมง</string>
     <string name="voice_hours_many">%1$d ชั่วโมง</string>
     <string name="voice_hours_one">1 ชั่วโมง</string>
@@ -360,6 +410,7 @@
     <string name="voice_total_distance_miles_two">รวมระยะทาง 2 ไมล์</string>
     <string name="voice_total_distance_miles_zero">รวมระยะทาง 0 ไมล์</string>
     <string name="voice_total_distance_zero">ระยะเส้นการเดินทางทั้งหมดของฉันเป็นศูนย์</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">เอทีเอ็ม</string>
     <string name="waypoint_type_bank">ธนาคาร</string>
     <string name="waypoint_type_bar">บาร์</string>

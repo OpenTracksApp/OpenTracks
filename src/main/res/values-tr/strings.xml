@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">uçak</string>
     <string name="activity_type_atv">ATV</string>
     <string name="activity_type_biking">bisiklet</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">yürüyüş</string>
     <string name="activity_type_water_skiing">su kayağı</string>
     <string name="activity_type_wind_surfing">rüzgâr sörfü</string>
+    <!-- Description -->
     <string name="description_activity_type">Etkinlik türü: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Ortalama tempo (hareket halinde): %1$s dk/km (%2$s dk/mil)</string>
     <string name="description_average_moving_speed">Ortalama hareket hızı: %1$.2f km/sa (%2$.1f mil/sa)</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">Tempo (dk/mil)</string>
     <string name="description_pace_metric">Tempo (dk/km)</string>
     <string name="description_recorded_time">Kayıt zamanı: %1$s</string>
+    <string name="description_speed_ms">Hız (m/sn)</string>
     <string name="description_sensor_cadence">Kadans (rpm)</string>
     <string name="description_sensor_heart_rate">Kalp atış hızı (bmp)</string>
     <string name="description_sensor_power">Güç (W)</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">Toplam süre: %1$s</string>
     <string name="description_track_point">Nokta</string>
     <string name="description_track_segment">Segment</string>
+    <!-- Export -->
     <string name="export_all_option">Tümünü %1$s biçiminde</string>
     <string name="export_all_title">Harici depolama ortamına aktar</string>
     <string name="export_error">%1$d/%2$s %3$s hedefine dışa aktarıldı</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">%1$s dizinine aktarılıyor…</string>
     <string name="export_success">%1$s %2$s hedefine dışa aktarıldı</string>
     <string name="export_title">Şuraya aktar…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d dosya</string>
     <string name="files_many">%1$d dosya</string>
     <string name="files_one">1 dosya</string>
     <string name="files_other">%1$d dosya</string>
     <string name="files_two">2 dosya</string>
     <string name="files_zero">0 dosya</string>
+    <!-- Generic -->
     <string name="generic_add">Ekle</string>
     <string name="generic_cancel">İptal</string>
     <string name="generic_delete_all_confirm_title">Tümü silinsin mi?</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">Başarılı</string>
     <string name="generic_tracks">Parkurlar</string>
     <string name="generic_yes">Evet</string>
+    <!-- Gps -->
     <string name="gps_location_access">\"Konum erişimi\"</string>
     <string name="gps_disabled">GPS etkin değil. %1$s bölümüne gitmek için buraya hafifçe vurun. Geri dönmek için geri düğmesine basın.</string>
     <string name="gps_disabled_my_location">Geçerli konum belirlenemiyor. Daha fazla konum kaynağını etkinleştirmek için %1$s bölümüne gidin ve gökyüzünün görünür olduğundan emin olun. Daha sonra tekrar deneyin.</string>
@@ -138,6 +160,7 @@
     <string name="gps_starting">GPS başlatılıyor</string>
     <string name="gps_wait_for_better_signal">Daha iyi bir GPS sinyali bekleniyor</string>
     <string name="gps_wait_for_signal">GPS sinyali bekleniyor</string>
+    <!-- Image -->
     <string name="image_application">Uygulama</string>
     <string name="image_arrow">Ok</string>
     <string name="image_marker">İşaretçi</string>
@@ -148,6 +171,7 @@
     <string name="image_record">Kaydet</string>
     <string name="image_stop">Durdur</string>
     <string name="image_track">Parkur</string>
+    <!-- Import -->
     <string name="import_error">%1$d/%2$s %3$s kaynağından içe aktarıldı</string>
     <string name="import_no_directory">%1$s mevcut değil</string>
     <string name="import_no_file">İçe aktarılacak dosya bulunamadı. Cihazınızı bilgisayarınıza bağlayın ve içe aktaracağınız
@@ -157,6 +181,7 @@
     <string name="import_selection_option">%1$s biçimindeki tüm dosyalar</string>
     <string name="import_selection_title">Harici depolama ortamından aktar</string>
     <string name="import_success">%1$s %2$s kaynağından içe aktarıldı</string>
+    <!-- Marker -->
     <string name="marker_add_error">İşaretçi eklenemiyor. GPS sinyali yok. Tekrar deneyin.</string>
     <string name="marker_add_success">Bir işaretçi eklendi</string>
     <string name="marker_add_canceled">İptal edildi, işaretçi eklenmedi</string>
@@ -169,10 +194,14 @@
     <string name="marker_name_format">İşaretçi %1$d</string>
     <string name="marker_split_name_format">Bölüm %1$d</string>
     <string name="marker_title">%1$d/%2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">Son bölüm işaretçisinden beri:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">İşaretçi türü (ör. şelale)</string>
     <string name="marker_edit_marker_type_hint">İşaretçi türü</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">Hiç işaretçiniz yok</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">Toplu istatistikler</string>
     <string name="menu_delete">Sil</string>
     <string name="menu_edit">Düzenle</string>
@@ -193,11 +222,14 @@
     <string name="menu_stop_gps">GPS\'i kapat</string>
     <string name="menu_view_photo">Fotoğraf görüntüle</string>
     <string name="menu_voice_frequency">Ses sıklığı</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Kayıt hizmeti</string>
+    <!-- Search -->
     <string name="search_global_description">Parkurlar ve işaretçiler</string>
     <string name="search_list_empty_message">Aramanızla eşleşen parkur veya işaretçi yok</string>
     <string name="search_list_marker_track_location">\"%1$s\" parkurunda.</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">Pil seviyesi</string>
     <string name="sensor_state_cadence">Ritim</string>
     <string name="sensor_state_cadence_value">%1$d rpm</string>
@@ -208,7 +240,9 @@
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Parkur kaydı sırasında kullanılamaz</string>
     <string name="settings_show">Göster</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">Gelişmiş</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Mesafeye göre</string>
     <string name="settings_chart_by_time">Zamana göre</string>
     <string name="settings_chart_x_axis">X ekseni</string>
@@ -229,21 +263,27 @@
     <string name="settings_recording_track_name_date_local_option">Tarih (yerel)</string>
     <string name="settings_recording_track_name_number_option">Sayı</string>
     <string name="settings_recording_track_name_title">Varsayılan parkur adı</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">Sıfırla</string>
     <string name="settings_reset_confirm_message">Tüm ayarlar varsayılan değerlerine geri alınacak.</string>
     <string name="settings_reset_confirm_title">Şimdi sıfırlansın mı?</string>
     <string name="settings_reset_done">Tüm ayarlar varsayılan değerlere döndürüldü</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">Sensör</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth sensörü</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Enlem/Boylam</string>
     <string name="settings_stats_rate_title">Tercih edilen oran</string>
     <string name="settings_stats_units_imperial">İngiliz (mil, fit)</string>
     <string name="settings_stats_units_metric">Metrik (km, m)</string>
     <string name="settings_stats_units_title">Not sure.</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">Parkur dosyasını paylaş</string>
     <string name="share_track_share_file_body">Bu parkurun ilgini çekebileceğini düşünüyorum.\n\nBu parkuru görüntülemek için Google Earth\'ü veya başka bir harita yazılımını kullanabilirsin.\n\n%1$s</string>
     <string name="share_track_subject">Seninle bir parkur paylaşmak istiyorum</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">Ort. hareket temposu</string>
     <string name="stats_average_moving_speed">Ort. hareket hızı</string>
     <string name="stats_average_pace">Ort. tempo</string>
@@ -262,25 +302,33 @@
     <string name="stats_speed">Hız</string>
     <string name="stats_distance">Mesafe</string>
     <string name="stats_total_time">Toplam süre</string>
+    <!-- Track -->
     <string name="track_name_format">Parkur %1$d</string>
     <string name="track_record_notification">Parkurunuz kaydediliyor…</string>
     <string name="track_markers">%1$s İşaretçileri</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Parkur ve işaretçileri cihazdan kalıcı olarak silinecek.</string>
     <string name="track_delete_one_confirm_title">Parkur silinsin mi?</string>
     <string name="track_delete_multiple_confirm_message">Seçilen parkurlar ve işaretçileri cihazdan kalıcı olarak silinecek.</string>
     <string name="track_delete_progress_message">Siliniyor…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">Grafik</string>
     <string name="track_detail_stats_tab">İstatistikler</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">Aktivite türü (ör. yürüyüş)</string>
     <string name="track_edit_activity_type_hint">Aktivite türü</string>
     <string name="track_edit_new_track_title">Yeni Parkur</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">Bir sonraki maceranızı kaydetmeye buradan başlayın</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d parkur</string>
     <string name="tracks_many">%1$d parkur</string>
     <string name="tracks_one">1 parkur</string>
     <string name="tracks_other">%1$d parkur</string>
     <string name="tracks_two">2 parkur</string>
     <string name="tracks_zero">0 parkur</string>
+    <!-- Unit -->
     <string name="unit_feet">ft</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/sa.</string>
@@ -289,6 +337,7 @@
     <string name="unit_mile_per_hour">mil/sa.</string>
     <string name="unit_minute_per_kilometer">dk./km</string>
     <string name="unit_minute_per_mile">dk./mil</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">Doğruluk için uyarla</string>
     <string name="value_adapt_battery_life">Pil ömrü için uyarla</string>
     <string name="value_always">Her zaman</string>
@@ -315,6 +364,7 @@
     <string name="value_off">Kapalı</string>
     <string name="value_smallest">En küçük</string>
     <string name="value_smallest_recommended">En küçük (önerilir)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d saat</string>
     <string name="voice_hours_many">%1$d saat</string>
     <string name="voice_hours_one">1 saat</string>
@@ -361,6 +411,7 @@
     <string name="voice_total_distance_miles_two">toplam mesafe 2 mil</string>
     <string name="voice_total_distance_miles_zero">toplam mesafe 0 mil</string>
     <string name="voice_total_distance_zero">OpenTracks toplam mesafe sıfır.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">banka</string>
     <string name="waypoint_type_bar">bar</string>

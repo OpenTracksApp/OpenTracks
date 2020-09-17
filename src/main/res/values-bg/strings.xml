@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">самолет</string>
     <string name="activity_type_atv">мотовсъдеход</string>
     <string name="activity_type_biking">колоездене</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">ходене</string>
     <string name="activity_type_water_skiing">водни ски</string>
     <string name="activity_type_wind_surfing">уиндсърфинг</string>
+    <!-- Description -->
     <string name="description_activity_type">Вид дейност: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Средно темпо на движение: %1$s мин/км (%2$s мин/мил)</string>
     <string name="description_average_moving_speed">Средна скорост на движение: %1$.2f км/ч (%2$.1f мили/ч)</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">Темпо (мин/мил)</string>
     <string name="description_pace_metric">Темпо (мин/км)</string>
     <string name="description_recorded_time">Запис: %1$s</string>
+    <string name="description_speed_ms">Скорост (м/сек)</string>
     <string name="description_sensor_cadence">Честота на въртене (об./мин)</string>
     <string name="description_sensor_heart_rate">Сърдечна честота (удара/мин)</string>
     <string name="description_sensor_power">Мощност (W)</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">Общо време: %1$s</string>
     <string name="description_track_point">Точка</string>
     <string name="description_track_segment">Сегмент</string>
+    <!-- Export -->
     <string name="export_all_option">Всичко като %1$s</string>
     <string name="export_all_title">Експортиране във външно хранилище</string>
     <string name="export_error">Експортирахте %1$d от %2$s в/ъв %3$s.</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">Експортира се в/ъв %1$s…</string>
     <string name="export_success">Експортирахте %1$s в/ъв %2$s.</string>
     <string name="export_title">Експортиране във…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d файла</string>
     <string name="files_many">%1$d файла</string>
     <string name="files_one">1 файл</string>
     <string name="files_other">%1$d файла</string>
     <string name="files_two">2 файла</string>
     <string name="files_zero">0 файла</string>
+    <!-- Generic -->
     <string name="generic_add">Прибавяне</string>
     <string name="generic_cancel">Отказ</string>
     <string name="generic_delete_all_confirm_title">Да се изтрият ли всички?</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">Успех</string>
     <string name="generic_tracks">Маршрути</string>
     <string name="generic_yes">Да</string>
+    <!-- Gps -->
     <string name="gps_location_access">„Достъп до местоположението“</string>
     <string name="gps_disabled">GPS не е активиран. Докоснете тук, за да отидете на %1$s. Натиснете бутона за назад, за да се върнете.</string>
     <string name="gps_disabled_my_location">Текущото местоположение не може да бъде определено. Активирайте още източници на местоположение от %1$s и се уверете, че небето се вижда. Опитайте отново по-късно.</string>
@@ -138,6 +160,7 @@
     <string name="gps_starting">GPS се включва.</string>
     <string name="gps_wait_for_better_signal">Изчаква се по-добър сигнал за GPS.</string>
     <string name="gps_wait_for_signal">Изчаква се сигнал за GPS.</string>
+    <!-- Image -->
     <string name="image_application">Приложение</string>
     <string name="image_arrow">Стрелка</string>
     <string name="image_marker">Маркер</string>
@@ -148,6 +171,7 @@
     <string name="image_record">Запис</string>
     <string name="image_stop">Спиране</string>
     <string name="image_track">Маршрут</string>
+    <!-- Import -->
     <string name="import_error">Импортирахте %1$d от %2$s от %3$s.</string>
     <string name="import_no_directory">%1$s не съществува.</string>
     <string name="import_no_file">Няма файлове за импортиране. Свържете устройството с компютъра си и поставете файловете, които
@@ -157,6 +181,7 @@
     <string name="import_selection_option">Всички %1$s файлове</string>
     <string name="import_selection_title">Импортиране от външно хранилище</string>
     <string name="import_success">Импортирахте %1$s от %2$s.</string>
+    <!-- Marker -->
     <string name="marker_add_error">Маркерът не може да се вмъкне. Няма сигнал за GPS. Опитайте отново.</string>
     <string name="marker_add_success">Маркерът бе вмъкнат.</string>
     <string name="marker_add_canceled">Добавянето на маркер бе отменено.</string>
@@ -169,10 +194,14 @@
     <string name="marker_name_format">Маркер %1$d</string>
     <string name="marker_split_name_format">Разделяне %1$d</string>
     <string name="marker_title">%1$d от %2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">От последния разделителен маркер:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Тип маркер (напр. водопад)</string>
     <string name="marker_edit_marker_type_hint">Тип маркер</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">Нямате маркери.</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">Събрани статист. данни</string>
     <string name="menu_delete">Изтриване</string>
     <string name="menu_edit">Редактиране</string>
@@ -193,11 +222,14 @@
     <string name="menu_stop_gps">Спиране на GPS</string>
     <string name="menu_view_photo">Показв. на снимката</string>
     <string name="menu_voice_frequency">Честота на гласа</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Услуга за запис</string>
+    <!-- Search -->
     <string name="search_global_description">Маршрути и маркери</string>
     <string name="search_list_empty_message">Няма маршрути или маркери, отговарящи на търсените от вас.</string>
     <string name="search_list_marker_track_location">В маршрут „%1$s“.</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">Ниво на батерията</string>
     <string name="sensor_state_cadence">Такт</string>
     <string name="sensor_state_cadence_value">%1$d об/мин</string>
@@ -208,7 +240,9 @@
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Не е налице при записване на маршрут.</string>
     <string name="settings_show">Показване</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">Разширени</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">По разстояние</string>
     <string name="settings_chart_by_time">По време</string>
     <string name="settings_chart_x_axis">Ос X</string>
@@ -229,22 +263,28 @@
     <string name="settings_recording_track_name_date_local_option">Дата (местна)</string>
     <string name="settings_recording_track_name_number_option">Число</string>
     <string name="settings_recording_track_name_title">Стандартен маршрут: Име</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">Нулиране</string>
     <string name="settings_reset_confirm_message">Всички настройки ще бъдат върнати към стандартните им стойности.</string>
     <string name="settings_reset_confirm_title">Да се зададе ли повторно сега?</string>
     <string name="settings_reset_done">Всички настройки са възстановени до стойностите по подразбиране.</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">Сензор</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth сензор</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Ширина и дължина</string>
     <string name="settings_stats_rate_title">Предпочитана мярка</string>
     <string name="settings_stats_units_imperial">Имперски (мил, фт)</string>
     <string name="settings_stats_units_metric">Метрични (км, м)</string>
     <string name="settings_stats_units_title">Предпочитани единици</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">Споделяне на файл с маршрут</string>
     <string name="share_track_share_file_body">Мисля, че този маршрут може да Ви заинтересува.\n\nЗа да го видите, използвайте Google Земя или друг
     картографски софтуер.\n\n%1$s</string>
     <string name="share_track_subject">Искам да споделя път с Вас</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">Средно темпо на движение</string>
     <string name="stats_average_moving_speed">Средна скорост на движение</string>
     <string name="stats_average_pace">Средно темпо</string>
@@ -263,25 +303,33 @@
     <string name="stats_speed">Скорост</string>
     <string name="stats_distance">Разстояние</string>
     <string name="stats_total_time">Общо време</string>
+    <!-- Track -->
     <string name="track_name_format">Път %1$d</string>
     <string name="track_record_notification">Маршрутът ви се записва…</string>
     <string name="track_markers">Маркери за %1$s</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Маршрутът и маркерите му ще бъдат изтрити за постоянно от устройството.</string>
     <string name="track_delete_one_confirm_title">Да се изтрие ли маршрутът?</string>
     <string name="track_delete_multiple_confirm_message">Избраните маршрути и маркерите им ще бъдат изтрити за постоянно от устройството.</string>
     <string name="track_delete_progress_message">Изтрива се…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">Диаграма</string>
     <string name="track_detail_stats_tab">Статист. данни</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">Тип дейност (напр. пешеходни походи)</string>
     <string name="track_edit_activity_type_hint">Тип дейност</string>
     <string name="track_edit_new_track_title">Нов маршрут</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">Започнете да записвате следващото си приключение тук.</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d маршрута</string>
     <string name="tracks_many">%1$d маршрута</string>
     <string name="tracks_one">1 маршрут</string>
     <string name="tracks_other">%1$d маршрута</string>
     <string name="tracks_two">2 маршрута</string>
     <string name="tracks_zero">0 маршрута</string>
+    <!-- Unit -->
     <string name="unit_feet">фт</string>
     <string name="unit_kilometer">км</string>
     <string name="unit_kilometer_per_hour">км/ч</string>
@@ -290,6 +338,7 @@
     <string name="unit_mile_per_hour">мил/ч</string>
     <string name="unit_minute_per_kilometer">мин/км</string>
     <string name="unit_minute_per_mile">мин/мил</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">Адаптиране за точност</string>
     <string name="value_adapt_battery_life">Адаптиране спрямо батерията</string>
     <string name="value_always">Винаги</string>
@@ -316,6 +365,7 @@
     <string name="value_off">Изключено</string>
     <string name="value_smallest">Най-малката</string>
     <string name="value_smallest_recommended">Най-малкото (препоръчително)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d часа</string>
     <string name="voice_hours_many">%1$d часа</string>
     <string name="voice_hours_one">1 час</string>
@@ -362,6 +412,7 @@
     <string name="voice_total_distance_miles_two">общо разстояние 2 мили</string>
     <string name="voice_total_distance_miles_zero">общо разстояние 0 мили</string>
     <string name="voice_total_distance_zero">Общото разстояние в Моите маршрути е нула.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Банкомат</string>
     <string name="waypoint_type_bank">банка</string>
     <string name="waypoint_type_bar">бар</string>

@@ -365,14 +365,13 @@ g) gør hvad du synes hjælper OpenTracks.</string>
     <string name="settings_sensor_connecting">Tilsluttet %1$s</string>
     <string name="settings_sensor_disconnected">Frakoblet %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Hjulstørrelse (mm)</string>
-
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Breddegrad/længdegrad</string>
     <string name="settings_stats_rate_title">Foretrukkenfartenhed</string>
     <string name="settings_stats_units_imperial">Britisk (mil, ft)</string>
     <string name="settings_stats_units_metric">Metrisk (km, m)</string>
     <string name="settings_stats_units_title">Foretrukne enheder</string>
+
     <!-- Share Track -->
     <string name="share_track_share_file">Del rutefil</string>
     <string name="share_track_share_file_body">Du kunne måske være interesseret i denne rute.\n\nDu kan bruge Google Earth eller anden
@@ -564,4 +563,5 @@ g) gør hvad du synes hjælper OpenTracks.</string>
     <!-- Share image -->
     <string name="share_image_subject">Jeg vil gerne dele et billede med dig</string>
     <string name="share_image_body">Jeg tror, du måske er interesseret i dette billede.</string>
+
 </resources>

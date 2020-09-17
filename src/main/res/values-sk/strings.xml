@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">lietadlo</string>
     <string name="activity_type_atv">Všetky terénne vozidlá</string>
     <string name="activity_type_biking">cyklistika</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">chôdza</string>
     <string name="activity_type_water_skiing">vodné lyžovanie</string>
     <string name="activity_type_wind_surfing">windsurfing</string>
+    <!-- Description -->
     <string name="description_activity_type">Typ aktivity: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Priemerné tempo pohybu: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_moving_speed">Priemerná rýchlosť pohybu: %1$.2f km/h (%2$.1f míľ/h)</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">Tempo (min/mi)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
     <string name="description_recorded_time">Zaznamenané: %1$s</string>
+    <string name="description_speed_ms">Rýchlosť (m/s)</string>
     <string name="description_sensor_cadence">Rytmus (ot./min.)</string>
     <string name="description_sensor_heart_rate">Pulz (údery/min.)</string>
     <string name="description_sensor_power">Výkon (W)</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">Celkový čas: %1$s</string>
     <string name="description_track_point">Bod</string>
     <string name="description_track_segment">Segment</string>
+    <!-- Export -->
     <string name="export_all_option">Všetky vo formáte %1$s</string>
     <string name="export_all_title">Exportovať do externého úložiska</string>
     <string name="export_error">Do adresára %3$s bol exportovaný nasledujúci počet trás: %1$d z %2$s</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">Prebieha exportovanie do adresára %1$s…</string>
     <string name="export_success">Do adresára %2$s bol exportovaný nasledujúci počet trás: %1$s</string>
     <string name="export_title">Exportovať do…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d súbory</string>
     <string name="files_many">%1$d súborov</string>
     <string name="files_one">1 súbor</string>
     <string name="files_other">%1$d súborov</string>
     <string name="files_two">2 súbory</string>
     <string name="files_zero">0 súborov</string>
+    <!-- Generic -->
     <string name="generic_add">Pridať</string>
     <string name="generic_cancel">Zrušiť</string>
     <string name="generic_delete_all_confirm_title">Odstrániť všetko?</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">Úspech</string>
     <string name="generic_tracks">Trasy</string>
     <string name="generic_yes">Áno</string>
+    <!-- Gps -->
     <string name="gps_location_access">Prístup k polohe</string>
     <string name="gps_disabled">GPS nie je povolené. Kliknite sem pre prechod na %1$s . Stlačte tlačidlo \"späť\" pre návrat.</string>
     <string name="gps_disabled_my_location">Nemožno určiť aktuálnu polohu. Povoľte ďalšie zdroje určenia polohy v časti %1$s a uistite sa, že vidíte na oblohu. Skúste to znova neskôr.</string>
@@ -138,6 +160,7 @@
     <string name="gps_starting">Spúšťa sa systém GPS</string>
     <string name="gps_wait_for_better_signal">Čaká sa na lepší signál systému GPS</string>
     <string name="gps_wait_for_signal">Čaká sa na signál systému GPS</string>
+    <!-- Image -->
     <string name="image_application">Aplikácia</string>
     <string name="image_arrow">Šípka</string>
     <string name="image_marker">Značka</string>
@@ -148,6 +171,7 @@
     <string name="image_record">Zaznamenať</string>
     <string name="image_stop">Zastaviť</string>
     <string name="image_track">Trasa</string>
+    <!-- Import -->
     <string name="import_error">Z adresára %3$s bol importovaný nasledujúci počet súborov: %1$d z %2$s</string>
     <string name="import_no_directory">Adresár %1$s neexistuje</string>
     <string name="import_no_file">Neboli nájdené žiadne súbory na importovanie. Pripojte svoje zariadenie k počítaču a súbory určené na importovanie umiestnite do adresára %1$s.</string>
@@ -156,6 +180,7 @@
     <string name="import_selection_option">Všetky súbory vo formáte %1$s</string>
     <string name="import_selection_title">Importovať z externého úložiska</string>
     <string name="import_success">Z adresára %2$s bol importovaný nasledujúci počet súborov: %1$s</string>
+    <!-- Marker -->
     <string name="marker_add_error">Značku sa nepodarilo vložiť. Nie je k dispozícii signál GPS. Skúste to znova.</string>
     <string name="marker_add_success">Značka bola vložená</string>
     <string name="marker_add_canceled">Zrušené, nebola pridaná žiadna značka</string>
@@ -168,10 +193,14 @@
     <string name="marker_name_format">Značka %1$d</string>
     <string name="marker_split_name_format">Rozdeliť %1$d</string>
     <string name="marker_title">%1$d z %2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">Od poslednej rozdeľovacej značky:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Typ značky (napr. vodopád…)</string>
     <string name="marker_edit_marker_type_hint">Typ značky</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">Nemáte žiadne značky</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">Súhrnné štatistiky</string>
     <string name="menu_delete">Odstrániť</string>
     <string name="menu_edit">Upraviť</string>
@@ -192,11 +221,14 @@
     <string name="menu_stop_gps">Deaktivovať GPS</string>
     <string name="menu_view_photo">Zobraziť fotografiu</string>
     <string name="menu_voice_frequency">Hlasová frekvencia</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Služba na záznam</string>
+    <!-- Search -->
     <string name="search_global_description">Trasy a značky</string>
     <string name="search_list_empty_message">Vyhľadávaniu nezodpovedajú žiadne trasy ani značky</string>
     <string name="search_list_marker_track_location">Na trase „%1$s“.</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">Stav batérie</string>
     <string name="sensor_state_cadence">Kadencia</string>
     <string name="sensor_state_cadence_value">%1$d otáčok/min.</string>
@@ -207,7 +239,9 @@
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Počas záznamu trasy nie je k dispozícii</string>
     <string name="settings_show">Zobraziť</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">Rozšírené</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Podľa vzdialenosti</string>
     <string name="settings_chart_by_time">Podľa času</string>
     <string name="settings_chart_x_axis">Os X</string>
@@ -228,21 +262,27 @@
     <string name="settings_recording_track_name_date_local_option">Dátum (miestny)</string>
     <string name="settings_recording_track_name_number_option">Číslovanie</string>
     <string name="settings_recording_track_name_title">Predvolený názov trasy</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">Obnoviť</string>
     <string name="settings_reset_confirm_message">Obnovia sa predvolené hodnoty všetkých nastavení.</string>
     <string name="settings_reset_confirm_title">Obnoviť?</string>
     <string name="settings_reset_done">Boli vrátené predvolené hodnoty všetkých nastavení</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">Senzor</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Senzor Bluetooth</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Zemepis. šírka/dĺžka</string>
     <string name="settings_stats_rate_title">Preferovaná hodnota</string>
     <string name="settings_stats_units_imperial">Imperiálne jednotky (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrické jednotky (km, m)</string>
     <string name="settings_stats_units_title">Preferované jednotky</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">Zdieľať súbor trasy</string>
     <string name="share_track_share_file_body">Táto trasa by ťa mohla zaujímať.\n\nPre zobrazenie tejto trasy použi aplikáciu Google zem alebo iný mapový softvér.\n\n%1$s</string>
     <string name="share_track_subject">Chcem s vami zdieľať trasu</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">Priem. tempo pohybu</string>
     <string name="stats_average_moving_speed">Priem. rýchlosť pohybu</string>
     <string name="stats_average_pace">Priem. tempo</string>
@@ -261,25 +301,33 @@
     <string name="stats_speed">Rýchlosť</string>
     <string name="stats_distance">Vzdialenosť</string>
     <string name="stats_total_time">Celkový čas</string>
+    <!-- Track -->
     <string name="track_name_format">Trasa %1$d</string>
     <string name="track_record_notification">Vaša trasa sa zaznamenáva…</string>
     <string name="track_markers">Značky pre %1$s</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Trasa a jej značky sa natrvalo odstránia zo zariadenia.</string>
     <string name="track_delete_one_confirm_title">Odstrániť trasu?</string>
     <string name="track_delete_multiple_confirm_message">Zvolené trasy a ich značky budú zo zariadenia natrvalo odstránené.</string>
     <string name="track_delete_progress_message">Prebieha odstraňovanie…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">Graf</string>
     <string name="track_detail_stats_tab">Štatistiky</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">Typ aktivity (napr. turistika)</string>
     <string name="track_edit_activity_type_hint">Typ aktivity</string>
     <string name="track_edit_new_track_title">Nová trasa</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">Tu spustite zaznamenávanie ďalšieho dobrodružstva</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d trasy</string>
     <string name="tracks_many">%1$d trás</string>
     <string name="tracks_one">1 trasa</string>
     <string name="tracks_other">%1$d trás</string>
     <string name="tracks_two">2 trasy</string>
     <string name="tracks_zero">0 trás</string>
+    <!-- Unit -->
     <string name="unit_feet">st.</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/h</string>
@@ -288,6 +336,7 @@
     <string name="unit_mile_per_hour">mi./h</string>
     <string name="unit_minute_per_kilometer">min./km</string>
     <string name="unit_minute_per_mile">min./mi.</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">Prispôsobiť na presnosť</string>
     <string name="value_adapt_battery_life">Prispôsobiť na výdrž batérie</string>
     <string name="value_always">Vždy</string>
@@ -314,6 +363,7 @@
     <string name="value_off">Vypnúť</string>
     <string name="value_smallest">Najmenšie</string>
     <string name="value_smallest_recommended">Najmenšia (odporúčané)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d hodiny</string>
     <string name="voice_hours_many">%1$d hodín</string>
     <string name="voice_hours_one">1 hodina</string>
@@ -360,6 +410,7 @@
     <string name="voice_total_distance_miles_two">celková vzdialenosť 2 míle</string>
     <string name="voice_total_distance_miles_zero">celková vzdialenosť 0 míľ</string>
     <string name="voice_total_distance_zero">Moje trasy – celková vzdialenosť nula.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankomat</string>
     <string name="waypoint_type_bank">banka</string>
     <string name="waypoint_type_bar">bar</string>

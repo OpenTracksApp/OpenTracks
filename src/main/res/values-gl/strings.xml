@@ -109,6 +109,7 @@ g) calquera cousa que estimes axuda a OpenTracks.</string>
     <string name="activity_type_driving">en coche</string>
     <string name="activity_type_driving_bus">conducir un autobús</string>
     <string name="activity_type_driving_car">conducir un coche</string>
+    <string name="activity_type_escooter">motoreta</string>
     <string name="activity_type_ferry">transbordador</string>
     <string name="activity_type_frisbee">frisbee</string>
     <string name="activity_type_gliding">voo sen motor</string>
@@ -244,6 +245,8 @@ g) calquera cousa que estimes axuda a OpenTracks.</string>
     <string name="gps_starting">Iniciando o GPS</string>
     <string name="gps_wait_for_better_signal">Agardando un mellor sinal de GPS</string>
     <string name="gps_wait_for_signal">Agardando un sinal de GPS</string>
+    <string name="gps_disabled_msg">GPS desactivado</string>
+    <string name="gps_fixed_and_ready">GPS fixado e preparado</string>
     <!-- Image -->
     <string name="image_application">Aplicación</string>
     <string name="image_arrow">Frecha</string>
@@ -343,6 +346,8 @@ g) calquera cousa que estimes axuda a OpenTracks.</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Ao gravar, mostra estatísticas sen desbloquear o dispositivo.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Manter pantalla acesa</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Ao gravar, manten a pantalla acesa.</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">Pantalla completa</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Mentras grava, mostrar a pantalla completa.</string>
     <string name="settings_recording">Gravación</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Retomar sempre unha gravación ao reiniciar o sistema</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Non retomar nunca unha gravación ao reiniciar o sistema</string>
@@ -381,6 +386,7 @@ g) calquera cousa que estimes axuda a OpenTracks.</string>
     <string name="settings_stats_units_imperial">Imperiais (millas, pés)</string>
     <string name="settings_stats_units_metric">Métricas (km, m)</string>
     <string name="settings_stats_units_title">Unidades preferidas</string>
+
     <!-- Share Track -->
     <string name="share_track_share_file">Compartir ficheiro de traxecto</string>
     <string name="share_track_share_file_body">Creo que che pode interesar este traxecto.\n\nPara velo, utiliza Google Earth ou outro programa de mapas.\n\n%1$s</string>
@@ -425,6 +431,8 @@ g) calquera cousa que estimes axuda a OpenTracks.</string>
     <string name="track_edit_new_track_title">Novo traxecto</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Empeza a gravar aquí a túa próxima aventura</string>
+    <!-- Aggregated Statistics -->
+    <string name="aggregated_stats_empty_message">Grava a túa primeira ruta para ver estatísticas </string>
     <!-- Track Widget -->
     <!-- Tracks -->
     <string name="tracks_few">%1$d rutas</string>
@@ -571,4 +579,7 @@ g) calquera cousa que estimes axuda a OpenTracks.</string>
     <!-- Share image -->
     <string name="share_image_subject">Quixera compartir unha imaxe contigo</string>
     <string name="share_image_body">Creo que che podería gustar esta imaxe.</string>
+
+    <string name="hold_to_stop">Mantén preso para deixar de gravar</string>
+    <string name="hold_to_pause">Mantén preso para pausar a gravación</string>
 </resources>

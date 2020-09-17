@@ -364,14 +364,13 @@ g) tehke kõike, mis teie arvates OpenTracks aitab.</string>
     <string name="settings_sensor_connecting">Ühendatud anduriga %1$s</string>
     <string name="settings_sensor_disconnected">Lahti ühendatud %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Ratta suurus (mm)</string>
-
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Laiuskraad/pikkuskraad</string>
     <string name="settings_stats_rate_title">Eelistatud määr</string>
     <string name="settings_stats_units_imperial">Inglise mõõtühikud (miili, jalga)</string>
     <string name="settings_stats_units_metric">Meetermõõdustik (km, m)</string>
     <string name="settings_stats_units_title">Eelistatud ühikud</string>
+
     <!-- Share Track -->
     <string name="share_track_share_file">Jagage rajafaili</string>
     <string name="share_track_share_file_body">Teile võib see rada huvi pakkuda.\n\nRaja vaatamiseks kasutage rakendust Google Earth või muud kaardistamistarkvara.\n\n%1$s</string>
@@ -562,4 +561,5 @@ g) tehke kõike, mis teie arvates OpenTracks aitab.</string>
     <!-- Share image -->
     <string name="share_image_subject">Tahaksin teiega pilti jagada</string>
     <string name="share_image_body">Ma arvan, et see pilt võiks teid huvitada.</string>
+
 </resources>

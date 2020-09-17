@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">repülőgép</string>
     <string name="activity_type_atv">terepjáró</string>
     <string name="activity_type_biking">kerékpározás</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">gyaloglás</string>
     <string name="activity_type_water_skiing">vízisí</string>
     <string name="activity_type_wind_surfing">szörfözés</string>
+    <!-- Description -->
     <string name="description_activity_type">Tevékenység típusa: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Átlagos haladási tempó: %1$s perc/km (%2$s perc/mérföld)</string>
     <string name="description_average_moving_speed">Átlagos haladási sebesség: %1$.2f km/óra (%2$.1f mérföld/óra)</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">Tempó (perc/mérföld)</string>
     <string name="description_pace_metric">Tempó (perc/km)</string>
     <string name="description_recorded_time">Rögzítés: %1$s</string>
+    <string name="description_speed_ms">Sebesség (m/s)</string>
     <string name="description_sensor_cadence">Pedálfordulat (ford./perc)</string>
     <string name="description_sensor_heart_rate">Szívverés (ütés/perc)</string>
     <string name="description_sensor_power">Teljesítmény (W)</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">Teljes idő: %1$s</string>
     <string name="description_track_point">Pont</string>
     <string name="description_track_segment">Szakasz</string>
+    <!-- Export -->
     <string name="export_all_option">Mindent %1$s formátumban</string>
     <string name="export_all_title">Exportálás külső tárhelyre</string>
     <string name="export_error">%1$d/%2$s exportálva ide: %3$s</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">Exportálás ide: %1$s…</string>
     <string name="export_success">%1$s exportálva ide: %2$s</string>
     <string name="export_title">Exportálás ide:…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d fájl</string>
     <string name="files_many">%1$d fájl</string>
     <string name="files_one">1 fájl</string>
     <string name="files_other">%1$d fájl</string>
     <string name="files_two">2 fájl</string>
     <string name="files_zero">0 fájl</string>
+    <!-- Generic -->
     <string name="generic_add">Hozzáadás</string>
     <string name="generic_cancel">Mégse</string>
     <string name="generic_delete_all_confirm_title">Mindent töröl?</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">Sikerült</string>
     <string name="generic_tracks">Számok</string>
     <string name="generic_yes">Igen</string>
+    <!-- Gps -->
     <string name="gps_location_access">\'Helyhozzáférés\'</string>
     <string name="gps_disabled">A GPS nincs engedélyezve. Érintse meg itt, ha a következőre szeretne lépni: %1$s. A visszalépéshez nyomja meg a vissza gombot.</string>
     <string name="gps_disabled_my_location">Jelenlegi helyét nem lehet meghatározni. Engedélyezzen több helyforrást itt: %1$s, és gondoskodjon arról, hogy az ég látható legyen. Próbálja meg később.</string>
@@ -138,6 +160,7 @@
     <string name="gps_starting">GPS indítása</string>
     <string name="gps_wait_for_better_signal">Várakozás jobb GPS-jelre</string>
     <string name="gps_wait_for_signal">Várakozás GPS-jelre</string>
+    <!-- Image -->
     <string name="image_application">Alkalmazás</string>
     <string name="image_arrow">Nyíl</string>
     <string name="image_marker">Jelölő</string>
@@ -148,6 +171,7 @@
     <string name="image_record">Rögzítés</string>
     <string name="image_stop">Leállítás</string>
     <string name="image_track">Útvonal</string>
+    <!-- Import -->
     <string name="import_error">%1$d/%2$s importálva innen: %3$s</string>
     <string name="import_no_directory">%1$s nem létezik</string>
     <string name="import_no_file">Nem voltak importálandó fájlok. Csatlakoztassa az eszközt a számítógéphez, és helyezze az importálni
@@ -157,6 +181,7 @@
     <string name="import_selection_option">Minden %1$s formátumú</string>
     <string name="import_selection_title">Importálás külső tárhelyről</string>
     <string name="import_success">%1$s importálva innen: %2$s</string>
+    <!-- Marker -->
     <string name="marker_add_error">Nem sikerült jelölőt beilleszteni. Nincs GPS-jel. Próbálja újra.</string>
     <string name="marker_add_success">Jelölő beszúrása megtörtént</string>
     <string name="marker_add_canceled">Jelölő megadása nélkül megszakítva</string>
@@ -169,10 +194,14 @@
     <string name="marker_name_format">%1$d. jelölő</string>
     <string name="marker_split_name_format">%1$d. felosztott</string>
     <string name="marker_title">%1$d/%2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">Utolsó felosztott jelölő óta:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Jelölő típusa (pl. vízesés)</string>
     <string name="marker_edit_marker_type_hint">Jelölő típusa</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">Nincsenek jelölők</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">Összesítő statisztika</string>
     <string name="menu_delete">Törlés</string>
     <string name="menu_edit">Szerkesztés</string>
@@ -193,11 +222,14 @@
     <string name="menu_stop_gps">GPS leállítása</string>
     <string name="menu_view_photo">Fotó megtekintése</string>
     <string name="menu_voice_frequency">Utasítások gyakorisága</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Rögzítőszolgáltatás</string>
+    <!-- Search -->
     <string name="search_global_description">Útvonalak és jelölők</string>
     <string name="search_list_empty_message">Egyetlen útvonal vagy jelölő sem felelt meg a keresésnek</string>
     <string name="search_list_marker_track_location">„%1$s” pályán.</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">Akkumulátor töltöttségi szintje</string>
     <string name="sensor_state_cadence">Fordulatszám</string>
     <string name="sensor_state_cadence_value">%1$d fordulat/perc</string>
@@ -208,7 +240,9 @@
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Pálya rögzítése közben nem érhető el</string>
     <string name="settings_show">Megjelenítés</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">Speciális</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Távolság szerint</string>
     <string name="settings_chart_by_time">Idő szerint</string>
     <string name="settings_chart_x_axis">X tengely</string>
@@ -229,21 +263,27 @@
     <string name="settings_recording_track_name_date_local_option">Dátum (helyi)</string>
     <string name="settings_recording_track_name_number_option">Szám</string>
     <string name="settings_recording_track_name_title">Pálya alapértelmezett neve</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">Visszaállítás</string>
     <string name="settings_reset_confirm_message">Minden beállítás visszaáll az alapértelmezett értékekre.</string>
     <string name="settings_reset_confirm_title">Visszaállítja most?</string>
     <string name="settings_reset_done">Minden beállítás visszaállt az alapértelmezett értékre</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">Érzékelő</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth érzékelő</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Szélesség/hosszúság</string>
     <string name="settings_stats_rate_title">Mérték választása</string>
     <string name="settings_stats_units_imperial">Angolszász (mérföld, láb)</string>
     <string name="settings_stats_units_metric">Metrikus (km, m)</string>
     <string name="settings_stats_units_title">Mértékegység választása</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">Útvonal-fájl megosztása</string>
     <string name="share_track_share_file_body">Szerintem érdekelni fog ez a pálya.\n\nA pályát a Google Earth vagy más térképszoftver segítségével nézheted meg.\n\n%1$s</string>
     <string name="share_track_subject">Szeretnék megosztani veled egy pályát</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">Mozgás átlagos irama</string>
     <string name="stats_average_moving_speed">Mozgás átlagos sebessége</string>
     <string name="stats_average_pace">Átlagos iram</string>
@@ -262,25 +302,33 @@
     <string name="stats_speed">Sebesség</string>
     <string name="stats_distance">Távolság</string>
     <string name="stats_total_time">Összes idő</string>
+    <!-- Track -->
     <string name="track_name_format">%1$d. pálya</string>
     <string name="track_record_notification">Útvonal rögzítése…</string>
     <string name="track_markers">%1$s jelölői</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Az útvonal és a jelölők véglegesen törlődnek az eszközről.</string>
     <string name="track_delete_one_confirm_title">Törli az útvonalat?</string>
     <string name="track_delete_multiple_confirm_message">Az kiválasztott útvonalak és a jelölőik véglegesen törlődnek az eszközről.</string>
     <string name="track_delete_progress_message">Törlés folyamatban…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">Grafikon</string>
     <string name="track_detail_stats_tab">Statisztikák</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">Tevékenység típusa (pl. túrázás)</string>
     <string name="track_edit_activity_type_hint">Tevékenység típusa</string>
     <string name="track_edit_new_track_title">Új útvonal</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">Indítsa el következő kalandja rögzítését itt</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d pálya</string>
     <string name="tracks_many">%1$d pálya</string>
     <string name="tracks_one">1 pálya</string>
     <string name="tracks_other">%1$d pálya</string>
     <string name="tracks_two">2 pálya</string>
     <string name="tracks_zero">0 pálya</string>
+    <!-- Unit -->
     <string name="unit_feet">láb</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/ó</string>
@@ -289,6 +337,7 @@
     <string name="unit_mile_per_hour">mérföld/ó</string>
     <string name="unit_minute_per_kilometer">perc/km</string>
     <string name="unit_minute_per_mile">perc/mérföld</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">Beállítás pontossághoz</string>
     <string name="value_adapt_battery_life">Akkumulátor élettartama szerint</string>
     <string name="value_always">Mindig</string>
@@ -315,6 +364,7 @@
     <string name="value_off">Ki</string>
     <string name="value_smallest">Legkisebb</string>
     <string name="value_smallest_recommended">Legkisebb (ajánlott)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d óra</string>
     <string name="voice_hours_many">%1$d óra</string>
     <string name="voice_hours_one">1 óra</string>
@@ -361,6 +411,7 @@
     <string name="voice_total_distance_miles_two">össztávolság: 2 mérföld</string>
     <string name="voice_total_distance_miles_zero">össztávolság: 0 mérföld</string>
     <string name="voice_total_distance_zero">Saját útvonalak - össztávolság nulla.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankautomata</string>
     <string name="waypoint_type_bank">bank</string>
     <string name="waypoint_type_bar">bár</string>

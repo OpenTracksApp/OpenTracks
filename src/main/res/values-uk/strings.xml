@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">літак</string>
     <string name="activity_type_atv">Мотовсюдиходи</string>
     <string name="activity_type_biking">велосипедний спорт</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">ходьба</string>
     <string name="activity_type_water_skiing">водні лижі</string>
     <string name="activity_type_wind_surfing">віндсерфінг</string>
+    <!-- Description -->
     <string name="description_activity_type">Вид активного відпочинку: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Середній темп: %1$s хв/км (%2$s хв/мл)</string>
     <string name="description_average_moving_speed">Середня швидкість: %1$.2f км/год (%2$.1f мл/год)</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">Темп (хв/мл)</string>
     <string name="description_pace_metric">Темп (хв/км)</string>
     <string name="description_recorded_time">Записано: %1$s</string>
+    <string name="description_speed_ms">Швидкість (м/с)</string>
     <string name="description_sensor_cadence">Темп (об/хв)</string>
     <string name="description_sensor_heart_rate">Пульс (уд/хв)</string>
     <string name="description_sensor_power">Потужність (Вт)</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">Загальний час: %1$s</string>
     <string name="description_track_point">Точка</string>
     <string name="description_track_segment">Відрізок</string>
+    <!-- Export -->
     <string name="export_all_option">Усе як %1$s</string>
     <string name="export_all_title">Експортувати в зовнішню пам’ять</string>
     <string name="export_error">Файли експортовано в папку %3$s: %1$d з %2$s</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">Триває експорт у %1$s…</string>
     <string name="export_success">Експортовано в папку %2$s: %1$s</string>
     <string name="export_title">Експорт у…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d файли</string>
     <string name="files_many">%1$d файлів</string>
     <string name="files_one">1 файл</string>
     <string name="files_other">%1$d файлу</string>
     <string name="files_two">2 файли</string>
     <string name="files_zero">0 файлів</string>
+    <!-- Generic -->
     <string name="generic_add">Додати</string>
     <string name="generic_cancel">Скасувати</string>
     <string name="generic_delete_all_confirm_title">Видалити все?</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">Виконано</string>
     <string name="generic_tracks">Шляхи</string>
     <string name="generic_yes">Так</string>
+    <!-- Gps -->
     <string name="gps_location_access">\"Доступ до місцезнаходження\"</string>
     <string name="gps_disabled">GPS вимкнено. Натисніть тут, щоб перейти до меню %1$s. Щоб повернутися, натисніть кнопку \"Назад\".</string>
     <string name="gps_disabled_my_location">Неможливо визначити поточне місцезнаходження. Запустіть кілька джерел визначення місцезнаходження в меню %1$s і переконайтеся, що видно небо. Після цього повторіть спробу.</string>
@@ -138,6 +160,7 @@
     <string name="gps_starting">Запуск GPS…</string>
     <string name="gps_wait_for_better_signal">Очікується кращий GPS-сигнал…</string>
     <string name="gps_wait_for_signal">Очікується GPS-сигнал…</string>
+    <!-- Image -->
     <string name="image_application">Програма</string>
     <string name="image_arrow">Стрілка</string>
     <string name="image_marker">Маркер</string>
@@ -148,6 +171,7 @@
     <string name="image_record">Записати</string>
     <string name="image_stop">Зупинити</string>
     <string name="image_track">Шлях</string>
+    <!-- Import -->
     <string name="import_error">Імпортовано файли з каталогу %3$s: %1$d з %2$s</string>
     <string name="import_no_directory">Каталог %1$s не існує</string>
     <string name="import_no_file">Немає файлів для імпорту. Підключіть пристрій до комп’ютера та скопіюйте файли
@@ -157,6 +181,7 @@
     <string name="import_selection_option">Усі %1$s</string>
     <string name="import_selection_title">Імпортувати із зовнішньої пам’яті</string>
     <string name="import_success">Імпортовано %1$s з каталогу %2$s</string>
+    <!-- Marker -->
     <string name="marker_add_error">Неможливо вставити маркер, оскільки відсутній сигнал GPS. Повторіть спробу.</string>
     <string name="marker_add_success">Маркер вставлено</string>
     <string name="marker_add_canceled">Помилка: не додано маркер</string>
@@ -169,10 +194,14 @@
     <string name="marker_name_format">Маркер %1$d</string>
     <string name="marker_split_name_format">Сегмент %1$d</string>
     <string name="marker_title">%1$d із %2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">Починаючи з останнього розділювального маркера:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Тип маркера (наприклад, водоспад)</string>
     <string name="marker_edit_marker_type_hint">Тип маркера</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">Немає маркерів</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">Сукупна статистика</string>
     <string name="menu_delete">Видалити</string>
     <string name="menu_edit">Редагувати</string>
@@ -193,11 +222,14 @@
     <string name="menu_stop_gps">Вимкнути GPS</string>
     <string name="menu_view_photo">Переглянути фото</string>
     <string name="menu_voice_frequency">Голосові сповіщення</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Служба запису</string>
+    <!-- Search -->
     <string name="search_global_description">Шляхи та маркери</string>
     <string name="search_list_empty_message">За вашим запитом не знайдено жодних шляхів і маркерів</string>
     <string name="search_list_marker_track_location">На шляху \"%1$s\".</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">Рівень заряду батареї</string>
     <string name="sensor_state_cadence">Темп</string>
     <string name="sensor_state_cadence_value">%1$d об/хв</string>
@@ -208,7 +240,9 @@
     <string name="sensor_state_power_value">%1$d В</string>
     <string name="settings_not_while_recording">Недоступно під час записування шляху.</string>
     <string name="settings_show">Показати</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">Розширені</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">За відстанню</string>
     <string name="settings_chart_by_time">За часом</string>
     <string name="settings_chart_x_axis">Вісь X</string>
@@ -229,21 +263,27 @@
     <string name="settings_recording_track_name_date_local_option">Дата (локаль. формат)</string>
     <string name="settings_recording_track_name_number_option">Номер</string>
     <string name="settings_recording_track_name_title">Назва шляху за умовчанням</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">Скинути</string>
     <string name="settings_reset_confirm_message">Усі налаштування буде скинуто до значень за умовчанням.</string>
     <string name="settings_reset_confirm_title">Скинути зараз?</string>
     <string name="settings_reset_done">Для всіх налаштувань відновлено значення за умовчанням</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">Датчик</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Датчик Bluetooth</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Широта/довгота</string>
     <string name="settings_stats_rate_title">Система вимірювання</string>
     <string name="settings_stats_units_imperial">Британська (милі, фути)</string>
     <string name="settings_stats_units_metric">Метрична (км, м)</string>
     <string name="settings_stats_units_title">Одиниці вимірювання</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">Надати доступ до файлу шляху</string>
     <string name="share_track_share_file_body">Цей шлях може вас зацікавити.\n\nЩоб переглянути його, скористайтеся програмою Google Планета Земля або іншою програмою для відображення карт.\n\n%1$s</string>
     <string name="share_track_subject">Я хочу поділитися з вами інформацією про шлях.</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">Середній темп руху</string>
     <string name="stats_average_moving_speed">Середня швидкість руху</string>
     <string name="stats_average_pace">Середній темп</string>
@@ -262,25 +302,33 @@
     <string name="stats_speed">Швидкість</string>
     <string name="stats_distance">Відстань</string>
     <string name="stats_total_time">Загальний час</string>
+    <!-- Track -->
     <string name="track_name_format">Шлях %1$d</string>
     <string name="track_record_notification">Записування шляху…</string>
     <string name="track_markers">Маркери шляху \"%1$s\"</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Шлях і його маркери буде остаточно видалено з пристрою.</string>
     <string name="track_delete_one_confirm_title">Видалити шлях?</string>
     <string name="track_delete_multiple_confirm_message">Вибрані шляхи та їх маркери буде остаточно видалено з пристрою.</string>
     <string name="track_delete_progress_message">Видалення…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">Діаграма</string>
     <string name="track_detail_stats_tab">Статистика</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">Вид активного відпочинку (наприклад, піший туризм)</string>
     <string name="track_edit_activity_type_hint">Вид активного відпочинку</string>
     <string name="track_edit_new_track_title">Новий шлях</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">Запишіть свою наступну пригоду тут</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d шляхи</string>
     <string name="tracks_many">%1$d шляхів</string>
     <string name="tracks_one">1 шлях</string>
     <string name="tracks_other">%1$d шляху</string>
     <string name="tracks_two">2 шляхи</string>
     <string name="tracks_zero">0 шляхів</string>
+    <!-- Unit -->
     <string name="unit_feet">фут.</string>
     <string name="unit_kilometer">км</string>
     <string name="unit_kilometer_per_hour">км/год.</string>
@@ -289,6 +337,7 @@
     <string name="unit_mile_per_hour">миль/год.</string>
     <string name="unit_minute_per_kilometer">хв/км</string>
     <string name="unit_minute_per_mile">хв./милю</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">Адаптувати для точності</string>
     <string name="value_adapt_battery_life">Адаптувати до часу роботи батареї</string>
     <string name="value_always">Завжди</string>
@@ -315,6 +364,7 @@
     <string name="value_off">Вимк.</string>
     <string name="value_smallest">Найменше</string>
     <string name="value_smallest_recommended">Найменше (рекомендовано)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d години</string>
     <string name="voice_hours_many">%1$d годин</string>
     <string name="voice_hours_one">1 година</string>
@@ -361,6 +411,7 @@
     <string name="voice_total_distance_miles_two">загальна відстань: 2 милі</string>
     <string name="voice_total_distance_miles_zero">загальна відстань: 0 миль</string>
     <string name="voice_total_distance_zero">Загальна відстань Моїх шляхів дорівнює нулю.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Банкомат</string>
     <string name="waypoint_type_bank">банк</string>
     <string name="waypoint_type_bar">бар</string>

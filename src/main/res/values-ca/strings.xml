@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">avió</string>
     <string name="activity_type_atv">Vehicles tot terreny</string>
     <string name="activity_type_biking">anar en bicicleta</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">caminar</string>
     <string name="activity_type_water_skiing">esquí nàutic</string>
     <string name="activity_type_wind_surfing">surf de vela</string>
+    <!-- Description -->
     <string name="description_activity_type">Tipus d\'activitat: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Ritme de moviment mitjà: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_moving_speed">Velocitat mitjana en moviment: %1$.2f km/h (%2$.1f mi/h)</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">Ritme (min/mi)</string>
     <string name="description_pace_metric">Ritme (min/km)</string>
     <string name="description_recorded_time">Enregistrament: %1$s</string>
+    <string name="description_speed_ms">Velocitat (m/s)</string>
     <string name="description_sensor_cadence">Cadència (rpm)</string>
     <string name="description_sensor_heart_rate">Freqüència cardíaca (bpm)</string>
     <string name="description_sensor_power">Potència (W)</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">Temps total: %1$s</string>
     <string name="description_track_point">Punt</string>
     <string name="description_track_segment">Segment</string>
+    <!-- Export -->
     <string name="export_all_option">Totes com a %1$s</string>
     <string name="export_all_title">Exporta a la unitat d\'emmagatzematge extern</string>
     <string name="export_error">S\'han exportat %1$d de %2$s a %3$s.</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">S\'està exportant a %1$s…</string>
     <string name="export_success">S\'han exportat %1$s a %2$s.</string>
     <string name="export_title">Exportació a…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d fitxers</string>
     <string name="files_many">%1$d fitxers</string>
     <string name="files_one">1 fitxer</string>
     <string name="files_other">%1$d fitxers</string>
     <string name="files_two">2 fitxers</string>
     <string name="files_zero">0 fitxers</string>
+    <!-- Generic -->
     <string name="generic_add">Afegeix</string>
     <string name="generic_cancel">Cancel·la</string>
     <string name="generic_delete_all_confirm_title">Voleu suprimir-ho tot?</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">Correcte</string>
     <string name="generic_tracks">Rutes</string>
     <string name="generic_yes">Sí</string>
+    <!-- Gps -->
     <string name="gps_location_access">\"Accés a la ubicació\"</string>
     <string name="gps_disabled">El GPS no està activat. Premeu aquí per anar a %1$s. Premeu el botó Enrere per tornar.</string>
     <string name="gps_disabled_my_location">No es pot determinar la ubicació actual. Activeu més fonts d\'ubicació a %1$s i assegureu-vos que
@@ -139,6 +161,7 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="gps_starting">El GPS s\'està iniciant.</string>
     <string name="gps_wait_for_better_signal">S\'està esperant un senyal GPS de millor qualitat.</string>
     <string name="gps_wait_for_signal">S\'està esperant el senyal GPS.</string>
+    <!-- Image -->
     <string name="image_application">Aplicació</string>
     <string name="image_arrow">Fletxa</string>
     <string name="image_marker">Marcador</string>
@@ -149,6 +172,7 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="image_record">Enregistra</string>
     <string name="image_stop">Atura</string>
     <string name="image_track">Ruta</string>
+    <!-- Import -->
     <string name="import_error">S\'han importat %1$d de %2$s del directori %3$s.</string>
     <string name="import_no_directory">%1$s no existeix.</string>
     <string name="import_no_file">No s\'ha trobat cap fitxer per importar. Connecteu el dispositiu a l\'ordinador i col·loqueu a %1$s
@@ -158,6 +182,7 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="import_selection_option">Tots els %1$s</string>
     <string name="import_selection_title">Importació de la unitat d\'emmagatzematge extern</string>
     <string name="import_success">S\'han importat %1$s del directori %2$s.</string>
+    <!-- Marker -->
     <string name="marker_add_error">No es pot inserir un marcador. No hi ha senyal del GPS. Torneu-ho a provar.</string>
     <string name="marker_add_success">S\'ha inserit un marcador.</string>
     <string name="marker_add_canceled">L\'acció s\'ha cancel·lat. No s\'ha afegit cap marcador.</string>
@@ -170,10 +195,14 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="marker_name_format">Marcador %1$d</string>
     <string name="marker_split_name_format">Parcial %1$d</string>
     <string name="marker_title">%1$d de %2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">Des del darrer marcador parcial:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Tipus de marcador (p. ex. cascada)</string>
     <string name="marker_edit_marker_type_hint">Tipus de marcador</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">No teniu cap marcador.</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">Estadístiques globals</string>
     <string name="menu_delete">Suprimeix</string>
     <string name="menu_edit">Edita</string>
@@ -194,11 +223,14 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="menu_stop_gps">Desactiva el GPS</string>
     <string name="menu_view_photo">Mostra la foto</string>
     <string name="menu_voice_frequency">Freqüència de veu</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Servei d\'enregistrament</string>
+    <!-- Search -->
     <string name="search_global_description">Pistes i marcadors</string>
     <string name="search_list_empty_message">No hi ha cap ruta ni marcador que coincideixi amb els criteris de cerca.</string>
     <string name="search_list_marker_track_location">A la ruta \"%1$s\".</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">Nivell de la bateria</string>
     <string name="sensor_state_cadence">Cadència</string>
     <string name="sensor_state_cadence_value">%1$d rpm</string>
@@ -209,7 +241,9 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">No està disponible durant l\'enregistrament d\'una ruta.</string>
     <string name="settings_show">Mostra\'n més</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">Avançades</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Per distància</string>
     <string name="settings_chart_by_time">Per temps</string>
     <string name="settings_chart_x_axis">Eix X</string>
@@ -230,21 +264,27 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="settings_recording_track_name_date_local_option">Data (local)</string>
     <string name="settings_recording_track_name_number_option">Número</string>
     <string name="settings_recording_track_name_title">Nom de la ruta</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">Restableix</string>
     <string name="settings_reset_confirm_message">Es tornaran a definir els valors predeterminats de la configuració.</string>
     <string name="settings_reset_confirm_title">Voleu restablir-ho ara?</string>
     <string name="settings_reset_done">S\'ha recuperat la configuració predeterminada.</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">Sensor</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Sensor de Bluetooth</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Latitud/Longitud:</string>
     <string name="settings_stats_rate_title">Mesura preferida</string>
     <string name="settings_stats_units_imperial">Sistema anglosaxó (milles, peus)</string>
     <string name="settings_stats_units_metric">Sistema mètric (km, m)</string>
     <string name="settings_stats_units_title">Unitats preferides</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">Comparteix el fitxer de la pista</string>
     <string name="share_track_share_file_body">Crec que aquesta ruta et podria interessar.\n\nLa pots veure amb Google Earth o qualsevol altre programari de mapatge.\n\n%1$s</string>
     <string name="share_track_subject">Vull compartir una ruta amb tu</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">Ritme de moviment mitjà</string>
     <string name="stats_average_moving_speed">Velocitat de moviment mitjana</string>
     <string name="stats_average_pace">Ritme mitjà</string>
@@ -263,25 +303,33 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="stats_speed">Velocitat</string>
     <string name="stats_distance">Distància</string>
     <string name="stats_total_time">Temps total</string>
+    <!-- Track -->
     <string name="track_name_format">Ruta %1$d</string>
     <string name="track_record_notification">S\'està enregistrant la ruta…</string>
     <string name="track_markers">Marcadors de %1$s</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">La ruta i els seus marcadors se suprimiran definitivament del dispositiu.</string>
     <string name="track_delete_one_confirm_title">Voleu suprimir la ruta?</string>
     <string name="track_delete_multiple_confirm_message">Les rutes seleccionades i els seus marcadors se suprimiran definitivament del dispositiu.</string>
     <string name="track_delete_progress_message">S\'està suprimint…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">Diagrama</string>
     <string name="track_detail_stats_tab">Estadístiques</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">Tipus d\'activitat (p. ex. senderisme)</string>
     <string name="track_edit_activity_type_hint">Tipus d\'activitat</string>
     <string name="track_edit_new_track_title">Nova ruta</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">Comenceu a enregistrar aquí la vostra pròxima aventura.</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d rutes</string>
     <string name="tracks_many">%1$d rutes</string>
     <string name="tracks_one">1 ruta</string>
     <string name="tracks_other">%1$d rutes</string>
     <string name="tracks_two">2 rutes</string>
     <string name="tracks_zero">0 rutes</string>
+    <!-- Unit -->
     <string name="unit_feet">peus</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/h</string>
@@ -290,6 +338,7 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="unit_mile_per_hour">milles/h</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/milles</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">Adapta\'n la precisió</string>
     <string name="value_adapt_battery_life">Adapta a la durada de la bateria</string>
     <string name="value_always">Sempre</string>
@@ -316,6 +365,7 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="value_off">Desactivat</string>
     <string name="value_smallest">Més petit</string>
     <string name="value_smallest_recommended">Més petit (recomanat)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d hores</string>
     <string name="voice_hours_many">%1$d hores</string>
     <string name="voice_hours_one">1 hora</string>
@@ -362,6 +412,7 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="voice_total_distance_miles_two">2 milles de distància total</string>
     <string name="voice_total_distance_miles_zero">0 milles de distància total</string>
     <string name="voice_total_distance_zero">La distància total de OpenTracks és zero.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">caixer</string>
     <string name="waypoint_type_bank">banc</string>
     <string name="waypoint_type_bar">bar</string>
@@ -416,4 +467,5 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <!-- Share image -->
     <string name="share_image_subject">Vull compartir una imatge amb tu</string>
     <string name="share_image_body">Crec que aquesta imatge et podria interessar.</string>
+
 </resources>

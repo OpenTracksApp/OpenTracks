@@ -372,14 +372,13 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="settings_sensor_connecting">Verbunden mit %1$s</string>
     <string name="settings_sensor_disconnected">Verbindung getrennt von %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Reifengröße (mm)</string>
-
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Breiten-/Längengrad</string>
     <string name="settings_stats_rate_title">Bevorzugtes Maß</string>
     <string name="settings_stats_units_imperial">Englisch (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrisch (km, m)</string>
     <string name="settings_stats_units_title">Bevorzugte Einheiten</string>
+
     <!-- Share Track -->
     <string name="share_track_share_file">Track-Datei teilen</string>
     <string name="share_track_share_file_body">Dieser Track könnte dich interessieren.\n\nDu kannst ihn dir mit Google Earth oder einer anderen Kartierungssoftware ansehen.\n\n%1$s</string>
@@ -572,4 +571,5 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <!-- Share image -->
     <string name="share_image_subject">Ich möchte gerne ein Bild mit Dir teilen</string>
     <string name="share_image_body">Ich denke, dieses Bild könnte Dich interessieren.</string>
+
 </resources>

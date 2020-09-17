@@ -362,14 +362,13 @@ g) udělejte, co si myslíte, že pomůže OpenTracks.</string>
     <string name="settings_sensor_connecting">Připojeno k senzoru %1$s</string>
     <string name="settings_sensor_disconnected">Odpojeno od %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Velikost kola (mm)</string>
-
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Zeměpisná šířka/délka</string>
     <string name="settings_stats_rate_title">Preferovaná rychlost</string>
     <string name="settings_stats_units_imperial">Imperiální jednotky (míle, stopy)</string>
     <string name="settings_stats_units_metric">Metrické jednotky (km, m)</string>
     <string name="settings_stats_units_title">Preferované jednotky</string>
+
     <!-- Share Track -->
     <string name="share_track_share_file">Sdílet soubor trasy</string>
     <string name="share_track_share_file_body">Možná by vás mohla zajímat tato trasa.\n\nChcete-li ji zobrazit, použijte Google Earth nebo jiný mapový software.\n\n%1$s</string>
@@ -560,4 +559,5 @@ g) udělejte, co si myslíte, že pomůže OpenTracks.</string>
     <!-- Share image -->
     <string name="share_image_subject">Chtěl bych s vámi sdílet obrázek</string>
     <string name="share_image_body">Myslím, že by vás mohl tento obrázek zajímat.</string>
+
 </resources>

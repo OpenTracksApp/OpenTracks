@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">비행기</string>
     <string name="activity_type_atv">ATV</string>
     <string name="activity_type_biking">자전거</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">도보</string>
     <string name="activity_type_water_skiing">수상 스키</string>
     <string name="activity_type_wind_surfing">윈드서핑</string>
+    <!-- Description -->
     <string name="description_activity_type">운동 유형: %1$s</string>
     <string name="description_average_moving_pace_in_minute">평균 이동 속도: %1$s분/km(%2$s분/마일)</string>
     <string name="description_average_moving_speed">평균 이동 속도: 시속 %1$.2fkm(시속 %2$.1f마일)</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">속도(분/마일)</string>
     <string name="description_pace_metric">속도(분/km)</string>
     <string name="description_recorded_time">기록 시간: %1$s</string>
+    <string name="description_speed_ms">속도(m/s)</string>
     <string name="description_sensor_cadence">페달 회전수(rpm)</string>
     <string name="description_sensor_heart_rate">심장박동수(bpm)</string>
     <string name="description_sensor_power">출력(W)</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">총 시간: %1$s</string>
     <string name="description_track_point">지점</string>
     <string name="description_track_segment">세그먼트</string>
+    <!-- Export -->
     <string name="export_all_option">모두 %1$s 형식으로</string>
     <string name="export_all_title">외부 저장소로 내보내기</string>
     <string name="export_error">%2$s개 중 %1$d개를 %3$s(으)로 내보냈습니다.</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">%1$s(으)로 내보내기 중…</string>
     <string name="export_success">%1$s개를 %2$s(으)로 내보냈습니다.</string>
     <string name="export_title">내보내기…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">파일 %1$d개</string>
     <string name="files_many">파일 %1$d개</string>
     <string name="files_one">파일 1개</string>
     <string name="files_other">파일 %1$d개</string>
     <string name="files_two">파일 2개</string>
     <string name="files_zero">파일 0개</string>
+    <!-- Generic -->
     <string name="generic_add">추가하기</string>
     <string name="generic_cancel">취소</string>
     <string name="generic_delete_all_confirm_title">모두 삭제하시겠습니까?</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">완료</string>
     <string name="generic_tracks">운동기록</string>
     <string name="generic_yes">예</string>
+    <!-- Gps -->
     <string name="gps_location_access">\'위치 액세스\'</string>
     <string name="gps_disabled">GPS를 사용하도록 설정하지 않았습니다. %1$s(으)로 이동하려면 여기를 누르세요. 돌아가려면 뒤로 버튼을 누르세요.</string>
     <string name="gps_disabled_my_location">현재 위치를 확인할 수 없습니다. %1$s에서 더 많은 위치 소스를 사용 설정하고
@@ -139,6 +161,7 @@
     <string name="gps_starting">GPS 시작</string>
     <string name="gps_wait_for_better_signal">더 나은 GPS 신호 대기 중</string>
     <string name="gps_wait_for_signal">GPS 신호 대기 중</string>
+    <!-- Image -->
     <string name="image_application">애플리케이션</string>
     <string name="image_arrow">화살표</string>
     <string name="image_marker">마커</string>
@@ -149,6 +172,7 @@
     <string name="image_record">기록</string>
     <string name="image_stop">중지</string>
     <string name="image_track">운동기록</string>
+    <!-- Import -->
     <string name="import_error">%3$s에서 %2$s개 중 %1$d개를 가져왔습니다.</string>
     <string name="import_no_directory">%1$s(이)가 없습니다.</string>
     <string name="import_no_file">가져올 파일이 없습니다. 기기를 컴퓨터에 연결하고 %1$s에 가져올 파일을 가져다 놓으세요.</string>
@@ -157,6 +181,7 @@
     <string name="import_selection_option">있는 모든 %1$s 파일</string>
     <string name="import_selection_title">외부 저장소에서 가져오기</string>
     <string name="import_success">%2$s에서 %1$s개를 가져왔습니다.</string>
+    <!-- Marker -->
     <string name="marker_add_error">아이콘을 삽입할 수 없습니다. GPS 신호가 없습니다. 다시 시도하세요.</string>
     <string name="marker_add_success">마커가 삽입되었습니다.</string>
     <string name="marker_add_canceled">취소되어 마커가 추가되지 않았습니다.</string>
@@ -169,10 +194,14 @@
     <string name="marker_name_format">아이콘 %1$d</string>
     <string name="marker_split_name_format">분할 %1$d</string>
     <string name="marker_title">%2$d개 중 %1$d개</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">마지막 분할 아이콘 이후:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">아이콘 유형(예: 폭포)</string>
     <string name="marker_edit_marker_type_hint">아이콘 유형</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">마커가 없습니다.</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">전체 통계</string>
     <string name="menu_delete">삭제</string>
     <string name="menu_edit">수정</string>
@@ -193,11 +222,14 @@
     <string name="menu_stop_gps">GPS 중지</string>
     <string name="menu_view_photo">사진 보기</string>
     <string name="menu_voice_frequency">음성 안내 빈도</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">기록 서비스</string>
+    <!-- Search -->
     <string name="search_global_description">운동기록 및 아이콘</string>
     <string name="search_list_empty_message">검색과 일치하는 운동기록 또는 마커가 없습니다.</string>
     <string name="search_list_marker_track_location">%1$s의 운동기록 결과</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">배터리 수준</string>
     <string name="sensor_state_cadence">페달 회전수</string>
     <string name="sensor_state_cadence_value">%1$d rpm</string>
@@ -208,7 +240,9 @@
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">운동기록을 기록하는 동안 사용할 수 없습니다.</string>
     <string name="settings_show">표시</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">고급</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">거리 기준</string>
     <string name="settings_chart_by_time">시간 기준</string>
     <string name="settings_chart_x_axis">X축</string>
@@ -229,21 +263,27 @@
     <string name="settings_recording_track_name_date_local_option">날짜 (현지)</string>
     <string name="settings_recording_track_name_number_option">숫자</string>
     <string name="settings_recording_track_name_title">기본 운동기록 이름</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">재설정</string>
     <string name="settings_reset_confirm_message">모든 설정이 기본값으로 복구됩니다.</string>
     <string name="settings_reset_confirm_title">지금 재설정하시겠습니까?</string>
     <string name="settings_reset_done">모든 설정을 기본값으로 되돌렸습니다.</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">센서</string>
     <string name="settings_sensor_bluetooth">블루투스</string>
     <string name="settings_sensor_bluetooth_sensor">블루투스 센서</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">위도/경도</string>
     <string name="settings_stats_rate_title">선호하는 속도</string>
     <string name="settings_stats_units_imperial">야드파운드법(마일, 피트)</string>
     <string name="settings_stats_units_metric">미터법(km,m)</string>
     <string name="settings_stats_units_title">선호하는 단위</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">운동기록 파일 공유</string>
     <string name="share_track_share_file_body">이 운동기록에 관심이 있으시군요.\n\n이 운동기록을 보려면 Google 어스 또는 기타 지도 소프트웨어를 사용하세요.\n\n%1$s</string>
     <string name="share_track_subject">운동기록을 공유하려고 합니다.</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">평균 이동 페이스</string>
     <string name="stats_average_moving_speed">평균 이동 속도</string>
     <string name="stats_average_pace">평균 페이스</string>
@@ -262,25 +302,33 @@
     <string name="stats_speed">속도</string>
     <string name="stats_distance">거리</string>
     <string name="stats_total_time">총 시간</string>
+    <!-- Track -->
     <string name="track_name_format">운동기록 %1$d</string>
     <string name="track_record_notification">내 운동기록을 기록 중…</string>
     <string name="track_markers">%1$s 마커</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">운동기록과 아이콘이 기기에서 영구적으로 삭제됩니다.</string>
     <string name="track_delete_one_confirm_title">운동기록을 삭제하시겠습니까?</string>
     <string name="track_delete_multiple_confirm_message">선택된 운동기록과 아이콘이 기기에서 영구적으로 삭제됩니다.</string>
     <string name="track_delete_progress_message">삭제 중…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">도표</string>
     <string name="track_detail_stats_tab">통계</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">운동 유형(예: 하이킹)</string>
     <string name="track_edit_activity_type_hint">운동 유형</string>
     <string name="track_edit_new_track_title">새 운동기록</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">여기에서 새로운 활동을 기록해 보세요.</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">운동기록 %1$d개</string>
     <string name="tracks_many">운동기록 %1$d개</string>
     <string name="tracks_one">운동기록 1개</string>
     <string name="tracks_other">운동기록 %1$d개</string>
     <string name="tracks_two">운동기록 2개</string>
     <string name="tracks_zero">운동기록 0개</string>
+    <!-- Unit -->
     <string name="unit_feet">피트</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/h</string>
@@ -289,6 +337,7 @@
     <string name="unit_mile_per_hour">mi/h</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/mi</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">정확도를 위해 조정</string>
     <string name="value_adapt_battery_life">배터리 수명을 위해 조정</string>
     <string name="value_always">항상</string>
@@ -315,6 +364,7 @@
     <string name="value_off">사용 안함</string>
     <string name="value_smallest">최소</string>
     <string name="value_smallest_recommended">최소(권장)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d시간</string>
     <string name="voice_hours_many">%1$d시간</string>
     <string name="voice_hours_one">1시간</string>
@@ -361,6 +411,7 @@
     <string name="voice_total_distance_miles_two">총 거리 2마일</string>
     <string name="voice_total_distance_miles_zero">총 거리 0마일</string>
     <string name="voice_total_distance_zero">내 운동기록의 총 거리는 0입니다.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">은행</string>
     <string name="waypoint_type_bar">바</string>

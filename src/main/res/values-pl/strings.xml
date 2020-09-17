@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">samolot</string>
     <string name="activity_type_atv">quady</string>
     <string name="activity_type_biking">jazda na rowerze</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">spacer</string>
     <string name="activity_type_water_skiing">narciarstwo wodne</string>
     <string name="activity_type_wind_surfing">windsurfing</string>
+    <!-- Description -->
     <string name="description_activity_type">Rodzaj aktywności: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Średnie tempo ruchu: %1$s min/km (%2$s min/milę)</string>
     <string name="description_average_moving_speed">Średnia prędkość ruchu: %1$.2f km/h (mil/h: %2$.1f)</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">Tempo (min/milę)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
     <string name="description_recorded_time">Zarejestrowano: %1$s</string>
+    <string name="description_speed_ms">Prędkość (m/s)</string>
     <string name="description_sensor_cadence">Prędkość obrotowa (obr./min)</string>
     <string name="description_sensor_heart_rate">Częstość akcji serca (uderzeń/min)</string>
     <string name="description_sensor_power">Moc (W)</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">Łączny czas: %1$s</string>
     <string name="description_track_point">Punkt</string>
     <string name="description_track_segment">Segment</string>
+    <!-- Export -->
     <string name="export_all_option">Wszystko jako pliki %1$s</string>
     <string name="export_all_title">Eksport do pamięci zewnętrznej</string>
     <string name="export_error">Wyeksportowano %1$d z %2$s do folderu %3$s</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">Eksportuję do %1$s…</string>
     <string name="export_success">Wyeksportowano %1$s do folderu %2$s</string>
     <string name="export_title">Wyeksportuj do…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d pliki</string>
     <string name="files_many">%1$d plików</string>
     <string name="files_one">1 plik</string>
     <string name="files_other">%1$d pliku</string>
     <string name="files_two">2 pliki</string>
     <string name="files_zero">0 plików</string>
+    <!-- Generic -->
     <string name="generic_add">Dodaj</string>
     <string name="generic_cancel">Anuluj</string>
     <string name="generic_delete_all_confirm_title">Usunąć wszystko?</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">Udało się</string>
     <string name="generic_tracks">Trasy</string>
     <string name="generic_yes">Tak</string>
+    <!-- Gps -->
     <string name="gps_location_access">„Dostęp do lokalizacji”</string>
     <string name="gps_disabled">GPS nie jest włączony. Kliknij tutaj, aby przejść do %1$s. Naciśnij przycisk Wstecz, aby wrócić.</string>
     <string name="gps_disabled_my_location">Nie można określić aktualnej lokalizacji. Otwórz %1$s, włącz więcej źródeł określania lokalizacji i upewnij się,
@@ -139,6 +161,7 @@
     <string name="gps_starting">Uruchamiam GPS</string>
     <string name="gps_wait_for_better_signal">Czekam na lepszy sygnał GPS</string>
     <string name="gps_wait_for_signal">Czekam na sygnał GPS</string>
+    <!-- Image -->
     <string name="image_application">Aplikacja</string>
     <string name="image_arrow">Strzałka</string>
     <string name="image_marker">Znacznik</string>
@@ -149,6 +172,7 @@
     <string name="image_record">Rejestruj</string>
     <string name="image_stop">Zatrzymaj</string>
     <string name="image_track">Trasa</string>
+    <!-- Import -->
     <string name="import_error">Zaimportowano %1$d z %2$s z katalogu %3$s</string>
     <string name="import_no_directory">Katalog %1$s nie istnieje</string>
     <string name="import_no_file">Brak plików do zaimportowania. Połącz urządzenie z komputerem i umieść pliki, które chcesz
@@ -158,6 +182,7 @@
     <string name="import_selection_option">Wszystkie pliki %1$s</string>
     <string name="import_selection_title">Import z pamięci zewnętrznej</string>
     <string name="import_success">Zaimportowano %1$s z katalogu %2$s</string>
+    <!-- Marker -->
     <string name="marker_add_error">Nie można wstawić znacznika. Brak sygnału GPS. Spróbuj ponownie.</string>
     <string name="marker_add_success">Wstawiono znacznik</string>
     <string name="marker_add_canceled">Anulowano, nie dodano znacznika</string>
@@ -170,10 +195,14 @@
     <string name="marker_name_format">Znacznik %1$d</string>
     <string name="marker_split_name_format">Podział %1$d</string>
     <string name="marker_title">%1$d z %2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">Od ostatniego znacznika podziału:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Typ znacznika (np. wodospad)</string>
     <string name="marker_edit_marker_type_hint">Typ znacznika</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">Nie masz żadnych znaczników</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">Statystyki łączne</string>
     <string name="menu_delete">Usuń</string>
     <string name="menu_edit">Edytuj</string>
@@ -194,11 +223,14 @@
     <string name="menu_stop_gps">Zatrzymaj GPS</string>
     <string name="menu_view_photo">Wyświetl zdjęcie</string>
     <string name="menu_voice_frequency">Częstość powiadomień</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Usługa rejestrowania</string>
+    <!-- Search -->
     <string name="search_global_description">Trasy i znaczniki</string>
     <string name="search_list_empty_message">Brak tras lub znaczników pasujących do wyszukiwania</string>
     <string name="search_list_marker_track_location">Na trasie „%1$s”.</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">Poziom naładowania baterii</string>
     <string name="sensor_state_cadence">Prędkość obrotowa</string>
     <string name="sensor_state_cadence_value">%1$d obr./min</string>
@@ -209,7 +241,9 @@
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Niedostępne podczas rejestrowania trasy</string>
     <string name="settings_show">Pokaż</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">Zaawansowane</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Wg odległości</string>
     <string name="settings_chart_by_time">Wg czasu</string>
     <string name="settings_chart_x_axis">Oś X</string>
@@ -230,22 +264,28 @@
     <string name="settings_recording_track_name_date_local_option">Data (lokalnie)</string>
     <string name="settings_recording_track_name_number_option">Numer</string>
     <string name="settings_recording_track_name_title">Domyślna nazwa trasy</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">Zresetuj</string>
     <string name="settings_reset_confirm_message">Wszystkie ustawienia zostaną zresetowane do wartości domyślnych.</string>
     <string name="settings_reset_confirm_title">Zresetować teraz?</string>
     <string name="settings_reset_done">Wszystkie ustawienia wróciły do wartości domyślnych</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">Czujnik</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Czujnik Bluetooth</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Szerokość/długość geo.</string>
     <string name="settings_stats_rate_title">Preferowana wartość</string>
     <string name="settings_stats_units_imperial">Imperialne (mile, stopy)</string>
     <string name="settings_stats_units_metric">Metryczne (km, m)</string>
     <string name="settings_stats_units_title">Preferowane jednostki</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">Udostępnij plik z trasą</string>
     <string name="share_track_share_file_body">Myślę, że ta trasa może Cię zainteresować.\n\nAby wyświetlić tę trasę, skorzystaj z Google Earth lub innego oprogramowania
     do obsługi map.\n\n%1$s</string>
     <string name="share_track_subject">Chcę udostępnić Ci trasę.</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">Średnie tempo ruchu</string>
     <string name="stats_average_moving_speed">Średnia prędkość ruchu</string>
     <string name="stats_average_pace">Średnie tempo</string>
@@ -264,25 +304,33 @@
     <string name="stats_speed">Prędkość</string>
     <string name="stats_distance">Odległość</string>
     <string name="stats_total_time">Łączny czas</string>
+    <!-- Track -->
     <string name="track_name_format">Trasa %1$d</string>
     <string name="track_record_notification">Rejestrowanie Twojej trasy…</string>
     <string name="track_markers">Znaczniki: %1$s</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Trasa wraz ze znacznikami zostanie trwale usunięta z urządzenia.</string>
     <string name="track_delete_one_confirm_title">Usunąć trasę?</string>
     <string name="track_delete_multiple_confirm_message">Wybrane trasy wraz ze znacznikami zostaną trwale usunięte z urządzenia.</string>
     <string name="track_delete_progress_message">Usuwam…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">Wykres</string>
     <string name="track_detail_stats_tab">Statystyki</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">Typ aktywności (np. turystyka piesza)</string>
     <string name="track_edit_activity_type_hint">Typ aktywności</string>
     <string name="track_edit_new_track_title">Nowa trasa</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">Rozpocznij rejestrowanie swojej następnej przygody</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d trasy</string>
     <string name="tracks_many">%1$d tras</string>
     <string name="tracks_one">1 trasa</string>
     <string name="tracks_other">%1$d trasy</string>
     <string name="tracks_two">2 trasy</string>
     <string name="tracks_zero">0 tras</string>
+    <!-- Unit -->
     <string name="unit_feet">ft</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/h</string>
@@ -291,6 +339,7 @@
     <string name="unit_mile_per_hour">mi/h</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/mi</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">Dostosuj pod kątem dokładności</string>
     <string name="value_adapt_battery_life">Dostosuj pod kątem żywotności baterii</string>
     <string name="value_always">Zawsze</string>
@@ -317,6 +366,7 @@
     <string name="value_off">Wyłącz</string>
     <string name="value_smallest">Najniższa</string>
     <string name="value_smallest_recommended">Najmniejsza (zalecane)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d godzin(y)</string>
     <string name="voice_hours_many">%1$d godzin(y)</string>
     <string name="voice_hours_one">1 godzina</string>
@@ -363,6 +413,7 @@
     <string name="voice_total_distance_miles_two">całkowita odległość: 2 mile</string>
     <string name="voice_total_distance_miles_zero">całkowita odległość: 0 mil</string>
     <string name="voice_total_distance_zero">Zerowa odległość w Moich trasach</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankomat</string>
     <string name="waypoint_type_bank">bank</string>
     <string name="waypoint_type_bar">bar</string>

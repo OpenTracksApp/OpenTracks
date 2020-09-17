@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">विमान</string>
     <string name="activity_type_atv">ATV</string>
     <string name="activity_type_biking">बाइकिंग</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">चलना</string>
     <string name="activity_type_water_skiing">वॉटर स्कीइंग</string>
     <string name="activity_type_wind_surfing">विंड सर्फ़िंग</string>
+    <!-- Description -->
     <string name="description_activity_type">गतिविधि प्रकार: %1$s</string>
     <string name="description_average_moving_pace_in_minute">चलने की औसत गति: %1$s मिनट/किमी (%2$s मिनट/मील)</string>
     <string name="description_average_moving_speed">चलने की औसत गति: %1$.2f किमी/घं ( %2$.1f मील/घं)</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">गति (मिनट/मील)</string>
     <string name="description_pace_metric">गति (मिनट/किमी)</string>
     <string name="description_recorded_time">रिकॉर्ड किया गया: %1$s</string>
+    <string name="description_speed_ms">गति (मी/से)</string>
     <string name="description_sensor_cadence">लय (आरपीएम)</string>
     <string name="description_sensor_heart_rate">हृदय दर (बीपीएम)</string>
     <string name="description_sensor_power">पावर (वाट)</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">कुल समय: %1$s</string>
     <string name="description_track_point">बिंदु</string>
     <string name="description_track_segment">खंड</string>
+    <!-- Export -->
     <string name="export_all_option">%1$s के रूप वाले सभी को</string>
     <string name="export_all_title">बाह्य संग्रहण पर निर्यात करें</string>
     <string name="export_error">%2$s में से %1$d को %3$s पर निर्यात गया</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">%1$s पर निर्यात किया जा रहा है…</string>
     <string name="export_success">%1$s को %2$s पर निर्यात किया गया</string>
     <string name="export_title">यहां निर्यात करें…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d फ़ाइलें</string>
     <string name="files_many">%1$d फ़ाइलें</string>
     <string name="files_one">1 फ़ाइल</string>
     <string name="files_other">%1$d फ़ाइलें</string>
     <string name="files_two">2 फ़ाइलें</string>
     <string name="files_zero">0 फ़ाइलें</string>
+    <!-- Generic -->
     <string name="generic_add">जोड़ें</string>
     <string name="generic_cancel">रद्द करें</string>
     <string name="generic_delete_all_confirm_title">सभी हटाएं?</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">सफलता</string>
     <string name="generic_tracks">ट्रैक</string>
     <string name="generic_yes">हां</string>
+    <!-- Gps -->
     <string name="gps_location_access">सही स्थान</string>
     <string name="gps_disabled">GPS अक्षम है. %1$s पर जाने के लिए यहां टैप करें. लौटने के लिए  वापस जाएं बटन को दबाएं.</string>
     <string name="gps_disabled_my_location">वर्तमान स्थान का निर्धारण नहीं किया जा सकता. %1$s पर अधिक स्थान स्रोतों को सक्षम करें और सुनिश्चित करें कि आसमान दिख रहा है. बाद में पुन: प्रयास करें.</string>
@@ -138,6 +160,7 @@
     <string name="gps_starting">GPS को प्रारंभ किया जा रहा है</string>
     <string name="gps_wait_for_better_signal">बेहतर GPS सिग्नल की प्रतीक्षा की जा रही है</string>
     <string name="gps_wait_for_signal">GPS सिग्नल की प्रतीक्षा की जा रही है</string>
+    <!-- Image -->
     <string name="image_application">एप्लिकेशन</string>
     <string name="image_arrow">तीर</string>
     <string name="image_marker">मार्कर</string>
@@ -148,6 +171,7 @@
     <string name="image_record">रिकॉर्ड करें</string>
     <string name="image_stop">रोकें</string>
     <string name="image_track">ट्रैक</string>
+    <!-- Import -->
     <string name="import_error">%3$s से %2$s में से %1$d आयातित</string>
     <string name="import_no_directory">%1$s मौजूद नहीं है</string>
     <string name="import_no_file">आयात करने के लिए कोई फ़ाइल नहीं थी. अपने उपकरण को अपने कंप्यूटर से कनेक्ट करें और आयात की जाने वाली फ़ाइलों को %1$s में रखें.</string>
@@ -156,6 +180,7 @@
     <string name="import_selection_option">सभी %1$s</string>
     <string name="import_selection_title">बाह्य संग्रहण से आयात करें</string>
     <string name="import_success">%2$s से %1$s आयातित</string>
+    <!-- Marker -->
     <string name="marker_add_error">मार्कर नहीं डाल सके. कोई GPS सिग्नल नहीं है. फिर से कोशिश करें.</string>
     <string name="marker_add_success">एक मार्कर सम्मिलित किया गया</string>
     <string name="marker_add_canceled">रद्द किया गया, कोई मार्कर जोड़ा नहीं गया</string>
@@ -168,10 +193,14 @@
     <string name="marker_name_format">मार्कर %1$d</string>
     <string name="marker_split_name_format">विभाजन %1$d</string>
     <string name="marker_title">%2$d में से %1$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">पिछले विभाजन मार्कर के बाद से:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">मार्कर प्रकार (उदा., झरना)</string>
     <string name="marker_edit_marker_type_hint">मार्कर प्रकार</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">आपके पास कोई मार्कर नहीं है</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">सकल आंकड़े</string>
     <string name="menu_delete">हटाएं</string>
     <string name="menu_edit">संपादित करें</string>
@@ -192,11 +221,14 @@
     <string name="menu_stop_gps">GPS बंद करें</string>
     <string name="menu_view_photo">फ़ोटो देखें</string>
     <string name="menu_voice_frequency">ध्वनि आवृत्ति</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">रिकॉर्डिंग सेवा</string>
+    <!-- Search -->
     <string name="search_global_description">ट्रैक और मार्कर</string>
     <string name="search_list_empty_message">किसी भी ट्रैक या मार्कर का आपकी खोज से मिलान नहीं हुआ</string>
     <string name="search_list_marker_track_location">ट्रैक \'%1$s\' में.</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">बैटरी स्‍तर</string>
     <string name="sensor_state_cadence">केडेंस</string>
     <string name="sensor_state_cadence_value">%1$d rpm</string>
@@ -207,7 +239,9 @@
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">ट्रैक रिकॉर्ड करते समय उपलब्ध नहीं</string>
     <string name="settings_show">दिखाएं</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">उन्नत</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">दूरी के अनुसार</string>
     <string name="settings_chart_by_time">समय के अनुसार</string>
     <string name="settings_chart_x_axis">एक्स अक्ष</string>
@@ -228,21 +262,27 @@
     <string name="settings_recording_track_name_date_local_option">तिथि (स्थानीय)</string>
     <string name="settings_recording_track_name_number_option">नंबर</string>
     <string name="settings_recording_track_name_title">डिफ़ॉल्ट ट्रैक नाम</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">रीसेट करें</string>
     <string name="settings_reset_confirm_message">सभी सेटिंग को डिफ़ॉल्ट मानों पर उलट दिया जाएगा.</string>
     <string name="settings_reset_confirm_title">अभी रीसेट करें?</string>
     <string name="settings_reset_done">सभी सेटिंग को सामान्य मानों में उलट दिया गया है</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">सेंसर</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth सेंसर</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">अक्षांश/देशांतर</string>
     <string name="settings_stats_rate_title">पसंदीदा दर</string>
     <string name="settings_stats_units_imperial">इंपीरियल (मील, फुट)</string>
     <string name="settings_stats_units_metric">मेट्रिक (किमी, मी)</string>
     <string name="settings_stats_units_title">पसंदीदा इकाइयां</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">ट्रैक फ़ाइल को साझा करें</string>
     <string name="share_track_share_file_body">मेरा विचार है कि आपको इस ट्रैक में रुचि हो सकती है.\n\nइस ट्रैक को देखने के लिए Google Earth या अन्य मानचित्रन सॉफ्टवेयर का उपयोग करें.\n\n%1$s</string>
     <string name="share_track_subject">मैं आपके साथ एक ट्रैक साझा करना चाहता/चाहती हूं</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">चलने की औसत प्रगति</string>
     <string name="stats_average_moving_speed">चलने की औसत गति</string>
     <string name="stats_average_pace">औसत प्रगति</string>
@@ -261,25 +301,33 @@
     <string name="stats_speed">गति</string>
     <string name="stats_distance">दूरी</string>
     <string name="stats_total_time">कुल समय</string>
+    <!-- Track -->
     <string name="track_name_format">ट्रैक %1$d</string>
     <string name="track_record_notification">आपका ट्रैक रिकॉर्ड कर रहा है…</string>
     <string name="track_markers">%1$s मार्कर</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">ट्रैक और इसके मार्कर को उपकरण से स्थायी रूप से हटा दिया जाएगा.</string>
     <string name="track_delete_one_confirm_title">ट्रैक हटाएं?</string>
     <string name="track_delete_multiple_confirm_message">चयनित ट्रैक और उनके मार्कर को उपकरण से स्थायी रूप से हटा दिया जाएगा.</string>
     <string name="track_delete_progress_message">हटा रहा है…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">चार्ट</string>
     <string name="track_detail_stats_tab">आंकड़े</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">गतिविधि प्रकार (उदा. हाइकिंग)</string>
     <string name="track_edit_activity_type_hint">गतिविधि प्रकार</string>
     <string name="track_edit_new_track_title">नया ट्रैक</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">अपनी अगली साहसिक यात्रा यहां रिकॉर्ड करना शुरू करें</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d ट्रैक</string>
     <string name="tracks_many">%1$d ट्रैक</string>
     <string name="tracks_one">1 ट्रैक</string>
     <string name="tracks_other">%1$d ट्रैक</string>
     <string name="tracks_two">2 ट्रैक</string>
     <string name="tracks_zero">0 ट्रैक</string>
+    <!-- Unit -->
     <string name="unit_feet">फ़ीट</string>
     <string name="unit_kilometer">किमी</string>
     <string name="unit_kilometer_per_hour">किमी/घं</string>
@@ -288,6 +336,7 @@
     <string name="unit_mile_per_hour">मि/घं</string>
     <string name="unit_minute_per_kilometer">मि/किमी</string>
     <string name="unit_minute_per_mile">मि/मील</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">सटीकता के लिए ग्रहण करें</string>
     <string name="value_adapt_battery_life">बैटरी जीवन के लिए ग्रहण करें</string>
     <string name="value_always">हमेशा</string>
@@ -314,6 +363,7 @@
     <string name="value_off">बंद करें</string>
     <string name="value_smallest">सबसे छोटा</string>
     <string name="value_smallest_recommended">सबसे छोटा (अनुशंसित)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d घंटे</string>
     <string name="voice_hours_many">%1$d घंटे</string>
     <string name="voice_hours_one">1 घंटा</string>
@@ -360,6 +410,7 @@
     <string name="voice_total_distance_miles_two">कुल दूरी 2 मील</string>
     <string name="voice_total_distance_miles_zero">कुल दूरी 0 मील</string>
     <string name="voice_total_distance_zero">मेरे ट्रैक की कुल दूरी शून्य है.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">बैंक</string>
     <string name="waypoint_type_bar">बार</string>

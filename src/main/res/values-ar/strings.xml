@@ -1,5 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--
+Copyright 2010 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <resources>
+    <!-- Activity Type -->
     <string name="activity_type_airplane">طائرة</string>
     <string name="activity_type_atv">ATV</string>
     <string name="activity_type_biking">ركوب الدراجات</string>
@@ -66,6 +81,7 @@
     <string name="activity_type_walking">مَشْي</string>
     <string name="activity_type_water_skiing">التزلج على الماء</string>
     <string name="activity_type_wind_surfing">ركوب الأمواج</string>
+    <!-- Description -->
     <string name="description_activity_type">نوع النشاط: %1$s</string>
     <string name="description_average_moving_pace_in_minute">متوسط سرعة التحرك:‏ %1$s‏ دقيقة/كم‏ (%2$s‏ دقيقة/ميل)‏</string>
     <string name="description_average_moving_speed">متوسط سرعة التحرك: %1$.2f كم/ساعة (%2$.1f ميل/ساعة)</string>
@@ -90,6 +106,7 @@
     <string name="description_pace_imperial">السرعة (دقيقة/ميل)</string>
     <string name="description_pace_metric">السرعة (دقيقة/كم)</string>
     <string name="description_recorded_time">مسجّل في: %1$s</string>
+    <string name="description_speed_ms">السرعة (متر/ثانية)</string>
     <string name="description_sensor_cadence">الإيقاع (دورة في الدقيقة)</string>
     <string name="description_sensor_heart_rate">معدل ضربات القلب (نبضة في الدقيقة)</string>
     <string name="description_sensor_power">الطاقة (واط)</string>
@@ -100,6 +117,7 @@
     <string name="description_total_time">الوقت الإجمالي: %1$s</string>
     <string name="description_track_point">نقطة</string>
     <string name="description_track_segment">جزء</string>
+    <!-- Export -->
     <string name="export_all_option">الكل كـ ‏%1$s‏</string>
     <string name="export_all_title">تصدير إلى وحدة التخزين الخارجية</string>
     <string name="export_error">تم تصدير %1$d‏ من %2$s‏ إلى %3$s</string>
@@ -107,12 +125,15 @@
     <string name="export_progress_message">جارٍ التصدير إلى‏ %1$s‏…</string>
     <string name="export_success">تم تصدير‏ %1$s‏ إلى‏ %2$s</string>
     <string name="export_title">تصدير إلى…</string>
+    <!-- External Storage -->
+    <!-- Files -->
     <string name="files_few">%1$d‏ ملفات</string>
     <string name="files_many">%1$d‏ ملفًا</string>
     <string name="files_one">1 ملف</string>
     <string name="files_other">%1$d‏ من الملفات</string>
     <string name="files_two">2 ملفان</string>
     <string name="files_zero">0 ملفات</string>
+    <!-- Generic -->
     <string name="generic_add">إضافة</string>
     <string name="generic_cancel">إلغاء</string>
     <string name="generic_delete_all_confirm_title">حذف الكل؟</string>
@@ -131,6 +152,7 @@
     <string name="generic_success_title">تم بنجاح</string>
     <string name="generic_tracks">المسارات</string>
     <string name="generic_yes">نعم</string>
+    <!-- Gps -->
     <string name="gps_location_access">\"الدخول إلى الموقع\"</string>
     <string name="gps_disabled">نظام تحديد المواقع العالمي (GPS) غير ممكّن. انقر هنا للانتقال إلى %1$s. اضغط على زر الرجوع للعودة.</string>
     <string name="gps_disabled_my_location">لا يمكن تحديد الموقع الحالي. تستطيع تمكين مصادر أكثر للموقع على‏ ‏%1$s‏ ‏وتأكد من أنك في مكان مفتوح. حاول مرة أخرى في وقت لاحق.</string>
@@ -138,6 +160,7 @@
     <string name="gps_starting">بدء نظام تحديد المواقع العالمي (GPS)</string>
     <string name="gps_wait_for_better_signal">في انتظار إشارة أفضل ‏‫لنظام تحديد المواقع العالمي (GPS)‬</string>
     <string name="gps_wait_for_signal">في انتظار إشارة نظام تحديد المواقع العالمي (GPS)‬</string>
+    <!-- Image -->
     <string name="image_application">تطبيق</string>
     <string name="image_arrow">سهم</string>
     <string name="image_marker">علامة</string>
@@ -148,6 +171,7 @@
     <string name="image_record">تسجيل</string>
     <string name="image_stop">إيقاف</string>
     <string name="image_track">مسار</string>
+    <!-- Import -->
     <string name="import_error">تم استيراد‏ %1$d‏ من‏ %2$s‏ من‏ %3$s</string>
     <string name="import_no_directory">%1$s‏ غير موجود</string>
     <string name="import_no_file">لا توجد ملفات للاستيراد. وصّل جهازك إلى جهاز الكمبيوتر واحفظ الملفات للاستيراد في %1$s.</string>
@@ -156,6 +180,7 @@
     <string name="import_selection_option">كل‏ %1$s‏</string>
     <string name="import_selection_title">استيراد من وحدة التخزين الخارجية</string>
     <string name="import_success">تم استيراد‏ %1$s‏ من‏ %2$s</string>
+    <!-- Marker -->
     <string name="marker_add_error">يتعذر إدراج مُحدد. ليس هناك إشارة لنظام تحديد المواقع العالمي (GPS). حاول مرة أخرى.</string>
     <string name="marker_add_success">تم إدراج علامة</string>
     <string name="marker_add_canceled">تم الإلغاء، لم تتم إضافة أية علامة</string>
@@ -168,10 +193,14 @@
     <string name="marker_name_format">مُحدد %1$d</string>
     <string name="marker_split_name_format">تقسيم %1$d</string>
     <string name="marker_title">%1$d‏ من‏ %2$d</string>
+    <!-- Marker Detail -->
     <string name="marker_detail_statistics_title">من آخر مُحدد تقسيم:</string>
+    <!-- Marker Edit -->
     <string name="marker_edit_marker_type">نوع المُحدد (على سبيل المثال شلال)</string>
     <string name="marker_edit_marker_type_hint">نوع المُحدد</string>
+    <!-- Marker List -->
     <string name="marker_list_empty_message">ليس لديك أية علامات</string>
+    <!-- Menu -->
     <string name="menu_aggregated_statistics">الإحصاءات المجمعة</string>
     <string name="menu_delete">حذف</string>
     <string name="menu_edit">تعديل</string>
@@ -192,11 +221,14 @@
     <string name="menu_stop_gps">إيقاف GPS</string>
     <string name="menu_view_photo">عرض الصورة</string>
     <string name="menu_voice_frequency">معدل الصوت</string>
+    <!-- OpenTracks -->
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">خدمة التسجيل</string>
+    <!-- Search -->
     <string name="search_global_description">المسارات والمحددات</string>
     <string name="search_list_empty_message">لم يطابق بحثك أي مسارات أو علامات</string>
     <string name="search_list_marker_track_location">في المسار ‘%1$s’.</string>
+    <!-- Sensor State -->
     <string name="sensor_state_battery">مستوى شحن البطارية</string>
     <string name="sensor_state_cadence">الإيقاع</string>
     <string name="sensor_state_cadence_value">%1$d دورة في الدقيقة</string>
@@ -207,7 +239,9 @@
     <string name="sensor_state_power_value">%1$d واط</string>
     <string name="settings_not_while_recording">غير متاح أثناء تسجيل مسار</string>
     <string name="settings_show">إظهار</string>
+    <!-- Settings Advanced -->
     <string name="settings_advanced">خيارات متقدمة</string>
+    <!-- Settings Chart -->
     <string name="settings_chart_by_distance">بحسب المسافة</string>
     <string name="settings_chart_by_time">بحسب الوقت</string>
     <string name="settings_chart_x_axis">المحور س</string>
@@ -228,21 +262,27 @@
     <string name="settings_recording_track_name_date_local_option">التاريخ (المحلي)</string>
     <string name="settings_recording_track_name_number_option">عدد</string>
     <string name="settings_recording_track_name_title">اسم المسار الافتراضي</string>
+    <!-- Settings Reset -->
     <string name="settings_reset">إعادة تعيين</string>
     <string name="settings_reset_confirm_message">ستتم إعادة جميع الإعدادات إلى القيم الافتراضية.</string>
     <string name="settings_reset_confirm_title">إعادة التعيين الآن؟</string>
     <string name="settings_reset_done">لقد تمت إعادة جميع الإعدادات إلى القيم الافتراضية</string>
+    <!-- Settings Sensor -->
     <string name="settings_sensor">المستشعر</string>
     <string name="settings_sensor_bluetooth">البلوتوث</string>
     <string name="settings_sensor_bluetooth_sensor">مستشعر بلوتوث</string>
+    <!-- Settings Stats -->
     <string name="settings_stats_coordinate">خط العرض/خط الطول</string>
     <string name="settings_stats_rate_title">المعدل المفضل</string>
     <string name="settings_stats_units_imperial">وحدات القياس البريطانية (ميل، قدم)</string>
     <string name="settings_stats_units_metric">وحدات القياس المترية (كم، م)</string>
     <string name="settings_stats_units_title">الوحدات المفضلة</string>
+
+    <!-- Share Track -->
     <string name="share_track_share_file">مشاركة ملف مسار</string>
     <string name="share_track_share_file_body">أعتقد أنك قد تكون مهتمًا بهذا المسار.\n\nلعرض هذا المسار، استخدام برنامج Google Earth أو غيره من البرامج تصميم الخرائط.\n\n%1$s</string>
     <string name="share_track_subject">أريد مشاركة مسار معك</string>
+    <!-- Stats -->
     <string name="stats_average_moving_pace">متوسط إيقاع التحرك</string>
     <string name="stats_average_moving_speed">متوسط سرعة التحرك</string>
     <string name="stats_average_pace">متوسط ​​الإيقاع</string>
@@ -261,25 +301,33 @@
     <string name="stats_speed">السرعة</string>
     <string name="stats_distance">المسافة</string>
     <string name="stats_total_time">الوقت الإجمالي</string>
+    <!-- Track -->
     <string name="track_name_format">المسار %1$d</string>
     <string name="track_record_notification">جارٍ تسجيل مسارك…</string>
     <string name="track_markers">%1$s علامات</string>
+    <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">سيتم حذف المسار والعلامات نهائيًا من الجهاز.</string>
     <string name="track_delete_one_confirm_title">حذف المسار؟</string>
     <string name="track_delete_multiple_confirm_message">سيتم حذف المسارات المحددة وعلاماتها نهائيًا من الجهاز.</string>
     <string name="track_delete_progress_message">جارٍ الحذف…</string>
+    <!-- Track Detail -->
     <string name="track_detail_chart_tab">الرسم البياني</string>
     <string name="track_detail_stats_tab">الإحصاءات</string>
+    <!-- Track Edit -->
     <string name="track_edit_activity_type">نوع النشاط (على سبيل المثال المشي)</string>
     <string name="track_edit_activity_type_hint">نوع النشاط</string>
     <string name="track_edit_new_track_title">مسار جديد</string>
+    <!-- Track List -->
     <string name="track_list_empty_message">بدء تسجيل مغامرتك التالية هنا</string>
+    <!-- Track Widget -->
+    <!-- Tracks -->
     <string name="tracks_few">%1$d‏ مسارات</string>
     <string name="tracks_many">%1$d‏ مسارًا</string>
     <string name="tracks_one">1 مسار</string>
     <string name="tracks_other">%1$d‏ من المسارات</string>
     <string name="tracks_two">2 مساران</string>
     <string name="tracks_zero">0 مسارات</string>
+    <!-- Unit -->
     <string name="unit_feet">قدم</string>
     <string name="unit_kilometer">كم</string>
     <string name="unit_kilometer_per_hour">كم/س</string>
@@ -288,6 +336,7 @@
     <string name="unit_mile_per_hour">ميل/ساعة</string>
     <string name="unit_minute_per_kilometer">د/كم</string>
     <string name="unit_minute_per_mile">دقيقة/ميل</string>
+    <!-- Value -->
     <string name="value_adapt_accuracy">تكييف من أجل الدقة</string>
     <string name="value_adapt_battery_life">التكيف بحسب عمر البطارية</string>
     <string name="value_always">دائمًا</string>
@@ -314,6 +363,7 @@
     <string name="value_off">إيقاف</string>
     <string name="value_smallest">الأصغر</string>
     <string name="value_smallest_recommended">الأصغر (موصى به)</string>
+    <!-- Voice -->
     <string name="voice_hours_few">%1$d ساعات</string>
     <string name="voice_hours_many">%1$d ساعة</string>
     <string name="voice_hours_one">ساعة واحدة</string>
@@ -360,6 +410,7 @@
     <string name="voice_total_distance_miles_two">المسافة الإجمالية 2 ميل</string>
     <string name="voice_total_distance_miles_zero">المسافة الإجمالية 0 ميل</string>
     <string name="voice_total_distance_zero">المسافة الإجمالية لمساراتي صفر.</string>
+    <!-- Waypoint Type -->
     <string name="waypoint_type_atm">أجهزة الصراف الآلي</string>
     <string name="waypoint_type_bank">مصرف</string>
     <string name="waypoint_type_bar">بار</string>

@@ -366,14 +366,13 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="settings_sensor_connecting">Verbonden met %1$s</string>
     <string name="settings_sensor_disconnected">Ontkoppeld van %1$s</string>
 
-    <string name="settings_sensor_wheel_circumference">Wielmaat (mm)</string>
-
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Breedte-/lengtegraad</string>
     <string name="settings_stats_rate_title">Voorkeursverhouding</string>
     <string name="settings_stats_units_imperial">Engels (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrisch (km, m)</string>
     <string name="settings_stats_units_title">Voorkeurseenheden</string>
+
     <!-- Share Track -->
     <string name="share_track_share_file">Routebestand delen</string>
     <string name="share_track_share_file_body">Ik denk dat u misschien wel geïnteresseerd bent in deze route.\n\nAls u deze route wilt weergeven, kunt u Google Earth of andere kaartsoftware gebruiken.\n\n%1$s</string>
@@ -564,4 +563,5 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <!-- Share image -->
     <string name="share_image_subject">Ik wil graag een beeld met u delen</string>
     <string name="share_image_body">Ik denk dat je misschien geïnteresseerd bent in dit beeld.</string>
+
 </resources>
