@@ -66,8 +66,8 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     // Preferences
     private boolean recordingTrackPaused;
 
-    // Intervals recording fragment needs Track.Id when the activity creates it.
-    private OnTrackIdListener intervalsListener;
+    // Intervals recording fragment needs Track.Id when the activity creates it and knowing when category change.
+    private OnTrackRecordingListener intervalsListener;
 
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
@@ -370,6 +370,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         Track track = contentProviderUtils.getTrack(trackId);
         String category = getString(TrackIconUtils.getIconActivityType(iconValue));
         TrackUtils.updateTrack(this, track, null, category, null, contentProviderUtils);
+        intervalsListener.onCategoryChanged(category);
     }
 
     private class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
@@ -417,11 +418,12 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         }
     }
 
-    public interface OnTrackIdListener {
+    public interface OnTrackRecordingListener {
         void onTrackId(Track.Id trackId);
+        void onCategoryChanged(String category);
     }
 
-    public void setTrackIdListener(OnTrackIdListener listener) {
+    public void setTrackIdListener(OnTrackRecordingListener listener) {
         this.intervalsListener = listener;
         if (trackId != null) {
             listener.onTrackId(trackId);

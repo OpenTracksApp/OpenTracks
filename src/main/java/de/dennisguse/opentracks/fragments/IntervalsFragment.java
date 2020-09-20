@@ -22,6 +22,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.adapters.IntervalStatisticsAdapter;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
@@ -46,7 +47,10 @@ public class IntervalsFragment extends Fragment {
     protected Spinner spinnerIntervals;
     private ArrayAdapter<IntervalStatisticsModel.IntervalOption> spinnerAdapter;
 
+    private TextView rateLabel;
+
     private Track.Id trackId;
+    private String category;
 
     protected final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
@@ -54,6 +58,7 @@ public class IntervalsFragment extends Fragment {
             if (adapter != null) {
                 adapter.notifyDataSetChanged();
                 spinnerAdapter.notifyDataSetChanged();
+                setRateLabel();
                 intervalChanged();
             }
         }
@@ -81,10 +86,12 @@ public class IntervalsFragment extends Fragment {
         intervalUnit = PreferencesUtils.isMetricUnits(getContext()) ? getContext().getString(R.string.unit_kilometer) : getContext().getString(R.string.unit_mile);
 
         if (savedInstanceState != null) {
-            trackId = savedInstanceState.getParcelable(TRACK_ID_KEY);
+            setTrackId(savedInstanceState.getParcelable(TRACK_ID_KEY));
         } else {
-            trackId = getArguments().getParcelable(TRACK_ID_KEY);
+            setTrackId(getArguments().getParcelable(TRACK_ID_KEY));
         }
+
+        rateLabel = view.findViewById(R.id.interval_rate);
 
         intervalListView = view.findViewById(R.id.interval_list);
         intervalListView.setEmptyView(view.findViewById(R.id.interval_list_empty_view));
@@ -126,6 +133,7 @@ public class IntervalsFragment extends Fragment {
             }
         });
 
+        setRateLabel();
         intervalChanged();
     }
 
@@ -147,6 +155,12 @@ public class IntervalsFragment extends Fragment {
         outState.putParcelable(TRACK_ID_KEY, trackId);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setTrackId(trackId);
+    }
+
     /**
      * Update intervals through {@link IntervalStatisticsModel} view model.
      */
@@ -158,7 +172,7 @@ public class IntervalsFragment extends Fragment {
         LiveData<IntervalStatistics> liveData = viewModel.getIntervalStats(trackId, selectedInterval);
         liveData.observe(getActivity(), intervalStatistics -> {
             if (intervalStatistics != null) {
-                adapter = new IntervalStatisticsAdapter(getContext(), intervalStatistics.getIntervalList(), stackModeListView);
+                adapter = new IntervalStatisticsAdapter(getContext(), intervalStatistics.getIntervalList(), category, stackModeListView);
                 intervalListView.setAdapter(adapter);
             }
         });
@@ -166,9 +180,29 @@ public class IntervalsFragment extends Fragment {
 
     public void setTrackId(Track.Id trackId) {
         this.trackId = trackId;
+        if (this.trackId != null) {
+            ContentProviderUtils contentProviderUtils = new ContentProviderUtils(getContext());
+            Track track = contentProviderUtils.getTrack(this.trackId);
+            setCategory(track.getCategory());
+        }
     }
 
-    public static class IntervalsRecordingFragment extends IntervalsFragment implements TrackRecordingActivity.OnTrackIdListener {
+    public void setCategory(String category) {
+        if (this.category == null || !this.category.equals(category)) {
+            this.category = category;
+            setRateLabel();
+            intervalChanged();
+        }
+    }
+
+    private void setRateLabel() {
+        if (rateLabel != null) {
+            boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext(), category);
+            rateLabel.setText(reportSpeed ? R.string.stats_speed : R.string.stats_pace);
+        }
+    }
+
+    public static class IntervalsRecordingFragment extends IntervalsFragment implements TrackRecordingActivity.OnTrackRecordingListener {
         // Refreshing intervals stats it's not so demanding so 5 seconds is enough to balance performance and user experience.
         private static final long UI_UPDATE_INTERVAL = 5 * UnitConversions.ONE_SECOND_MS;
 
@@ -220,6 +254,11 @@ public class IntervalsFragment extends Fragment {
         @Override
         public void onTrackId(Track.Id trackId) {
             setTrackId(trackId);
+        }
+
+        @Override
+        public void onCategoryChanged(String category) {
+            setCategory(category);
         }
     }
 }

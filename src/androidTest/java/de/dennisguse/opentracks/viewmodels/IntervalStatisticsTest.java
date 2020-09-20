@@ -80,7 +80,7 @@ public class IntervalStatisticsTest {
 		// given
 		List<TrackPoint> trackPoints = buildTrackPoints(200);
 		TrackStatistics trackStatistics = buildTrackStatistics(trackPoints);
-		float distanceInterval = 3000;
+		float distanceInterval = 3000f;
 		IntervalStatistics intervalStatistics = new IntervalStatistics();
 
 		// when and then
@@ -97,7 +97,7 @@ public class IntervalStatisticsTest {
 		// given
 		List<TrackPoint> trackPoints = buildTrackPoints(1000);
 		TrackStatistics trackStatistics = buildTrackStatistics(trackPoints);
-		float distanceInterval = 3000;
+		float distanceInterval = 3000f;
 		IntervalStatistics intervalStatistics = new IntervalStatistics();
 
 		// when and then
@@ -114,7 +114,7 @@ public class IntervalStatisticsTest {
 		// given
 		List<TrackPoint> trackPoints = buildTrackPoints(10000);
 		TrackStatistics trackStatistics = buildTrackStatistics(trackPoints);
-		float distanceInterval = 1000;
+		float distanceInterval = 1000f;
 		IntervalStatistics intervalStatistics = new IntervalStatistics();
 
 		// when and then
@@ -126,15 +126,18 @@ public class IntervalStatisticsTest {
 		List<IntervalStatistics.Interval> intervalList = intervalStatistics.getIntervalList();
 		double totalDistance = 0d;
 		long totalTime = 0L;
+		float totalGain = 0f;
 		for (IntervalStatistics.Interval i : intervalList) {
 			totalDistance += i.getDistance_m();
 			totalTime += ((i.getDistance_m() / i.getSpeed_ms()) * UnitConversions.S_TO_MS);
+			totalGain += i.getGain_m();
 		}
 
 		// then
 		assertEquals(trackStatistics.getTotalDistance(), totalDistance, 0.01);
 		assertEquals(trackStatistics.getTotalTime() * UnitConversions.MS_TO_S, totalTime * UnitConversions.MS_TO_S, 0.1);
 		assertEquals(intervalList.size(), (int) Math.ceil(trackStatistics.getTotalDistance() / distanceInterval));
+		assertEquals(totalGain, trackPoints.size() * TestDataUtil.ELEVATION_GAIN, 0.1);
 		for (int i = 0; i < intervalList.size() - 1; i++) {
 			assertEquals(intervalList.get(i).getDistance_m(), distanceInterval, 0.001);
 			totalDistance -= intervalList.get(i).getDistance_m();
