@@ -23,10 +23,12 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
     private StackMode stackMode;
     private boolean metricUnits;
     private float sumDistance_m;
+    private String category;
 
-    public IntervalStatisticsAdapter(Context context, List<IntervalStatistics.Interval> intervalList, StackMode stackMode) {
+    public IntervalStatisticsAdapter(Context context, List<IntervalStatistics.Interval> intervalList, String category, StackMode stackMode) {
         super(context, R.layout.interval_stats_list_item, intervalList);
         metricUnits = PreferencesUtils.isMetricUnits(context);
+        this.category = category;
         this.stackMode = stackMode;
     }
 
@@ -43,8 +45,8 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
             intervalView = LayoutInflater.from(getContext()).inflate(R.layout.interval_stats_list_item, parent, false);
 
             viewHolder.distance = intervalView.findViewById(R.id.interval_item_distance);
-            viewHolder.speed = intervalView.findViewById(R.id.interval_item_speed);
-            viewHolder.pace = intervalView.findViewById(R.id.interval_item_pace);
+            viewHolder.rate = intervalView.findViewById(R.id.interval_item_rate);
+            viewHolder.gain = intervalView.findViewById(R.id.interval_item_gain);
 
             intervalView.setTag(viewHolder);
         } else {
@@ -58,11 +60,16 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
         }
         viewHolder.distance.setText(StringUtils.formatDistance(getContext(), sumDistance_m, metricUnits));
 
-        Pair<String, String> speedParts = StringUtils.getSpeedParts(getContext(), interval.getSpeed_ms(), metricUnits, true);
-        viewHolder.speed.setText(speedParts.first + " " + speedParts.second);
+        if (PreferencesUtils.isReportSpeed(getContext(), category)) {
+            Pair<String, String> speedParts = StringUtils.getSpeedParts(getContext(), interval.getSpeed_ms(), metricUnits, true);
+            viewHolder.rate.setText(speedParts.first + " " + speedParts.second);
+        } else {
+            Pair<String, String> paceParts = StringUtils.getSpeedParts(getContext(), interval.getSpeed_ms(), metricUnits, false);
+            viewHolder.rate.setText(paceParts.first + " " + paceParts.second);
+        }
 
-        Pair<String, String> paceParts = StringUtils.getSpeedParts(getContext(), interval.getSpeed_ms(), metricUnits, false);
-        viewHolder.pace.setText(paceParts.first + " " + paceParts.second);
+        Pair<String, String> gainParts = StringUtils.formatElevation(getContext(), interval.getGain_m(), metricUnits);
+        viewHolder.gain.setText(gainParts.first + " " + gainParts.second);
 
         return intervalView;
     }
@@ -77,7 +84,7 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
 
     private static class ViewHolder {
         private TextView distance;
-        private TextView speed;
-        private TextView pace;
+        private TextView rate;
+        private TextView gain;
     }
 }
