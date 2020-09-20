@@ -31,7 +31,6 @@ limitations under the License.
     <color name="holo_orange_dark_activated">#55FF8800</color>
 
     <color name="recording_text">#FFBE161B</color> <!-- red -->
-    <color name="stats_large_label">#FFFAAD2C</color> <!-- orange -->
     <color name="stats_separator">#99999999</color> <!-- light gray -->
     <color name="text_gradient_center">#B2000000</color> <!-- black 70% opacity -->
     <color name="text_gradient_end">#00000000</color> <!-- black 0% opacity -->
