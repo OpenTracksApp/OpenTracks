@@ -101,6 +101,13 @@ public class IntervalsFragment extends Fragment {
                 v.setText(v.getText() + " " + intervalUnit);
                 return v;
             }
+
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                TextView v = (TextView) super.getDropDownView(position, convertView, parent);
+                v.setText(v.getText() + " " + intervalUnit);
+                return v;
+            }
         });
 
         spinnerIntervals.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
