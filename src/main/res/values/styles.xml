@@ -122,7 +122,7 @@ limitations under the License.
         <item name="android:layout_gravity">center</item>
         <item name="android:singleLine">false</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/stats_large_label</item>
+        <item name="android:textColor">?attr/colorAccent</item>
         <item name="android:textStyle">bold</item>
         <item name="android:paddingLeft">4dp</item>
         <item name="android:paddingRight">4dp</item>
