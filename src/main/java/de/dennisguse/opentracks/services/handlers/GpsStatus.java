@@ -102,7 +102,7 @@ class GpsStatus {
      * It look for GPS changes in lastLocation if it's not null. If it's null then look for in lastValidLocation if any.
      */
     public void onLocationChanged(final Location location) {
-        if (checking == true) {
+        if (checking) {
             return;
         }
 

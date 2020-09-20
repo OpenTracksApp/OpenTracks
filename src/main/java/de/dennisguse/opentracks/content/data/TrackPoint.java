@@ -48,6 +48,8 @@ public class TrackPoint {
         this.heartRate_bpm = trackPoint.getHeartRate_bpm();
         this.cyclingCadence_rpm = trackPoint.getCyclingCadence_rpm();
         this.power = trackPoint.getPower();
+
+        this.elevationGain = trackPoint.getElevationGain();
     }
 
     public TrackPoint(double latitude, double longitude, Double altitude, long time) {

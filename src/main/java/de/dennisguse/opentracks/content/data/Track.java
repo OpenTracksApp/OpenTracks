@@ -118,10 +118,6 @@ public class Track {
             this.id = id;
         }
 
-        public Id(@NonNull String id) {
-            this(Long.parseLong(id));
-        }
-
         //TOOD Limit visibility to TrackRecordingService / ContentProvider
         public long getId() {
             return id;

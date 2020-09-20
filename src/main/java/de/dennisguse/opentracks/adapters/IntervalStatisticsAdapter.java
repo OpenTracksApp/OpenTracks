@@ -72,7 +72,7 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
      */
     public enum StackMode {
         STACK_FROM_BOTTOM,
-        STACK_FROM_TOP;
+        STACK_FROM_TOP
     }
 
     private static class ViewHolder {
