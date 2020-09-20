@@ -18,8 +18,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
-import java.util.Arrays;
-
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.adapters.IntervalStatisticsAdapter;
@@ -42,17 +40,18 @@ public class IntervalsFragment extends Fragment {
     private ListView intervalListView;
     protected IntervalStatisticsAdapter.StackMode stackModeListView;
     private IntervalStatisticsModel.IntervalOption selectedInterval;
-    private IntervalStatisticsAdapter adapter;
 
+    private String intervalUnit;
+    private IntervalStatisticsAdapter adapter;
     protected Spinner spinnerIntervals;
-    protected TextView spinnerIntervalsUnit;
 
     private Track.Id trackId;
 
     protected final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
-            if (spinnerIntervalsUnit != null) {
-                spinnerIntervalsUnit.setText(PreferencesUtils.isMetricUnits(getContext()) ? getContext().getString(R.string.unit_kilometer) : getContext().getString(R.string.unit_mile));
+            intervalUnit = PreferencesUtils.isMetricUnits(getContext()) ? getContext().getString(R.string.unit_kilometer) : getContext().getString(R.string.unit_mile);
+            if (adapter != null) {
+                adapter.notifyDataSetChanged();
                 intervalChanged();
             }
         }
@@ -77,6 +76,7 @@ public class IntervalsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
+        intervalUnit = PreferencesUtils.isMetricUnits(getContext()) ? getContext().getString(R.string.unit_kilometer) : getContext().getString(R.string.unit_mile);
 
         if (savedInstanceState != null) {
             trackId = savedInstanceState.getParcelable(TRACK_ID_KEY);
@@ -93,11 +93,22 @@ public class IntervalsFragment extends Fragment {
 
         spinnerIntervals = view.findViewById(R.id.spinner_intervals);
 
-        int[] intValues = Arrays.stream(IntervalStatisticsModel.IntervalOption.values()).mapToInt(i -> i.getValue()).toArray();
+        spinnerIntervals.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                TextView v = (TextView) super.getView(position, convertView, parent);
+                v.setText(v.getText() + " " + intervalUnit);
+                return v;
+            }
 
-        spinnerIntervals.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, Arrays.stream(intValues).mapToObj(String::valueOf).toArray(String[]::new)));
-        spinnerIntervalsUnit = view.findViewById(R.id.spinner_intervals_unit);
-        spinnerIntervalsUnit.setText(PreferencesUtils.isMetricUnits(getContext()) ? getContext().getString(R.string.unit_kilometer) : getContext().getString(R.string.unit_mile));
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                TextView v = (TextView) super.getDropDownView(position, convertView, parent);
+                v.setText(v.getText() + " " + intervalUnit);
+                return v;
+            }
+        });
 
         spinnerIntervals.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -124,7 +135,6 @@ public class IntervalsFragment extends Fragment {
         intervalListView = null;
         adapter = null;
         spinnerIntervals = null;
-        spinnerIntervalsUnit = null;
         viewModel = null;
     }
 
