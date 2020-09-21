@@ -44,6 +44,7 @@ public class IntervalsFragment extends Fragment {
     private String intervalUnit;
     private IntervalStatisticsAdapter adapter;
     protected Spinner spinnerIntervals;
+    private ArrayAdapter spinnerAdapter;
 
     private Track.Id trackId;
 
@@ -52,6 +53,7 @@ public class IntervalsFragment extends Fragment {
             intervalUnit = PreferencesUtils.isMetricUnits(getContext()) ? getContext().getString(R.string.unit_kilometer) : getContext().getString(R.string.unit_mile);
             if (adapter != null) {
                 adapter.notifyDataSetChanged();
+                spinnerAdapter.notifyDataSetChanged();
                 intervalChanged();
             }
         }
@@ -93,7 +95,7 @@ public class IntervalsFragment extends Fragment {
 
         spinnerIntervals = view.findViewById(R.id.spinner_intervals);
 
-        spinnerIntervals.setAdapter(new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {
+        spinnerAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -108,7 +110,8 @@ public class IntervalsFragment extends Fragment {
                 v.setText(v.getText() + " " + intervalUnit);
                 return v;
             }
-        });
+        };
+        spinnerIntervals.setAdapter(spinnerAdapter);
 
         spinnerIntervals.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
