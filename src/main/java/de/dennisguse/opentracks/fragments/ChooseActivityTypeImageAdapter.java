@@ -78,8 +78,7 @@ class ChooseActivityTypeImageAdapter extends BaseAdapter {
         }
 
         if (position == selected) {
-            //TODO Should use theme!
-            imageView.setBackgroundColor(ContextCompat.getColor(parent.getContext(), R.color.holo_orange_dark));
+            imageView.setBackgroundColor(ContextCompat.getColor(parent.getContext(), R.color.colorAccent));
         } else {
             imageView.setBackgroundColor(Color.TRANSPARENT);
         }
