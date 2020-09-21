@@ -19,21 +19,19 @@ package de.dennisguse.opentracks.fragments;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Pair;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Spinner;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.Group;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.TrackRecordedActivity;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -76,7 +74,7 @@ public class StatisticsRecordedFragment extends Fragment {
     private TextView distanceValue;
     private TextView distanceUnit;
     private View activityLabel;
-    private Spinner activitySpinner;
+    private ImageView activitySpinner;
     private TextView movingTimeValue;
     private TextView speedAvgLabel;
     private TextView speedAvgValue;
@@ -142,26 +140,6 @@ public class StatisticsRecordedFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        Spinner activityTypeIcon = getView().findViewById(R.id.stats_activity_type_icon);
-        activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(getActivity(), ""));
-        activityTypeIcon.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                ((TrackRecordedActivity) getActivity()).chooseActivityType(category);
-            }
-            return true;
-        });
-        activityTypeIcon.setOnKeyListener((v, keyCode, event) -> {
-            if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-                ((TrackRecordedActivity) getActivity()).chooseActivityType(category);
-            }
-            return true;
-        });
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
@@ -215,8 +193,6 @@ public class StatisticsRecordedFragment extends Fragment {
     }
 
     private void updateUI() {
-        String trackIconValue = TrackIconUtils.getIconValue(getContext(), category);
-
         boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
         boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext(), category);
 
@@ -231,12 +207,14 @@ public class StatisticsRecordedFragment extends Fragment {
 
         // Set activity type
         {
+            String trackIconValue = TrackIconUtils.getIconValue(getContext(), category);
+
             activityLabel.setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
 
             activitySpinner.setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
             activitySpinner.setEnabled(false);
             if (trackIconValue != null) {
-                TrackIconUtils.setIconSpinner(activitySpinner, trackIconValue);
+                activitySpinner.setImageDrawable(ContextCompat.getDrawable(getContext(), TrackIconUtils.getIconDrawable(trackIconValue)));
             }
         }
 
