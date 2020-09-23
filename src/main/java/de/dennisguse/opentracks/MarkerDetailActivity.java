@@ -48,33 +48,33 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
 
     private static final String TAG = MarkerDetailActivity.class.getSimpleName();
 
-    private List<Marker.Id> waypointIds;
+    private List<Marker.Id> markerIds;
 
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
 
-        Marker.Id waypointId = getIntent().getParcelableExtra(EXTRA_MARKER_ID);
-        if (waypointId == null) {
+        Marker.Id markerId = getIntent().getParcelableExtra(EXTRA_MARKER_ID);
+        if (markerId == null) {
             Log.d(TAG, "invalid marker id");
             finish();
             return;
         }
 
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
-        Marker waypoint = contentProviderUtils.getMarker(waypointId);
+        Marker marker = contentProviderUtils.getMarker(markerId);
 
-        waypointIds = new ArrayList<>();
+        markerIds = new ArrayList<>();
         int markerIndex = -1;
 
-        //TODO Load only waypointIds, not the whole waypoint
-        try (Cursor cursor = contentProviderUtils.getMarkerCursor(waypoint.getTrackId(), null, -1)) {
+        //TODO Load only markerIds, not the whole marker
+        try (Cursor cursor = contentProviderUtils.getMarkerCursor(marker.getTrackId(), null, -1)) {
             if (cursor != null && cursor.moveToFirst()) {
                 for (int i = 0; i < cursor.getCount(); i++) {
                     Marker currentMarker = contentProviderUtils.createMarker(cursor);
-                    waypointIds.add(currentMarker.getId());
-                    if (waypointId.equals(currentMarker.getId())) {
-                        markerIndex = waypointIds.size() - 1;
+                    markerIds.add(currentMarker.getId());
+                    if (markerId.equals(currentMarker.getId())) {
+                        markerIndex = markerIds.size() - 1;
                     }
 
                     cursor.moveToNext();
@@ -127,7 +127,7 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
         @Override
         @NonNull
         public Fragment getItem(int position) {
-            return MarkerDetailFragment.newInstance(waypointIds.get(position));
+            return MarkerDetailFragment.newInstance(markerIds.get(position));
         }
 
         @Nullable
@@ -138,7 +138,7 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
 
         @Override
         public int getCount() {
-            return waypointIds.size();
+            return markerIds.size();
         }
     }
 }

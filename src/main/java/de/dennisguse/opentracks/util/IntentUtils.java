@@ -105,7 +105,7 @@ public class IntentUtils {
     }
 
     /**
-     * Creates an intent to share a waypoint image with an app.
+     * Creates an intent to share an image with an app.
      *
      * @param context the context.
      * @param uri     uri with the image to share.
@@ -128,8 +128,8 @@ public class IntentUtils {
                 .putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_image_body));
     }
 
-    public static void showCoordinateOnMap(Context context, Marker waypoint) {
-        showCoordinateOnMap(context, waypoint.getLocation().getLatitude(), waypoint.getLocation().getLongitude(), waypoint.getName());
+    public static void showCoordinateOnMap(Context context, Marker marker) {
+        showCoordinateOnMap(context, marker.getLocation().getLatitude(), marker.getLocation().getLongitude(), marker.getName());
     }
 
     /**

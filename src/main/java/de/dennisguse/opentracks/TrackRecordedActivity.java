@@ -206,15 +206,15 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
     private void handleIntent(Intent intent) {
         Track.Id trackId = intent.getParcelableExtra(EXTRA_TRACK_ID);
 
-        Marker.Id waypointId = intent.getParcelableExtra(EXTRA_MARKER_ID);
-        if (waypointId != null) {
+        Marker.Id markerId = intent.getParcelableExtra(EXTRA_MARKER_ID);
+        if (markerId != null) {
             // Use the trackId from the marker
-            Marker waypoint = contentProviderUtils.getMarker(waypointId);
-            if (waypoint == null) {
+            Marker marker = contentProviderUtils.getMarker(markerId);
+            if (marker == null) {
                 finish();
                 return;
             }
-            trackId = waypoint.getTrackId();
+            trackId = marker.getTrackId();
         }
 
         if (trackId == null) {

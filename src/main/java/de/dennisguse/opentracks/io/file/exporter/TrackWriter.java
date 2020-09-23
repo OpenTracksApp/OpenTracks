@@ -28,10 +28,10 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
  * {@link #prepare(OutputStream)}
  * {@link #writeHeader(Track[])}
  * For each track:
- *     {@link #writeBeginWaypoints(Track)}
- *     For each waypoint:
- *         {@link #writeWaypoint(Marker)}
- *     {@link #writeEndWaypoints()}
+ *     {@link #writeBeginMarkers(Track)}
+ *     For each marker:
+ *         {@link #writeMarker(Marker)}
+ *     {@link #writeEndMarkers()}
  * {@link #writeMultiTrackBegin()}
  * For each track:
  *     {@link #writeBeginTrack(Track, TrackPoint)}
@@ -50,11 +50,6 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
  */
 public interface TrackWriter {
 
-    /**
-     * Prepares the output stream.
-     *
-     * @param outputStream the output stream
-     */
     void prepare(OutputStream outputStream);
 
     /**
@@ -62,77 +57,27 @@ public interface TrackWriter {
      */
     void close();
 
-    /**
-     * Writes the header
-     *
-     * @param tracks the tracks
-     */
     void writeHeader(Track[] tracks);
 
-    /**
-     * Writes the footer.
-     */
     void writeFooter();
 
-    /**
-     * Writes the beginning of the waypoints.
-     *
-     * @param track the track
-     */
-    void writeBeginWaypoints(Track track);
+    void writeBeginMarkers(Track track);
 
-    /**
-     * Writes the end of the waypoints.
-     */
-    void writeEndWaypoints();
+    void writeEndMarkers();
 
-    /**
-     * Writes a waypoint.
-     *
-     * @param waypoint the waypoint
-     */
-    void writeWaypoint(Marker waypoint);
+    void writeMarker(Marker marker);
 
-    /**
-     * Writes the beginning of the tracks.
-     */
     void writeMultiTrackBegin();
 
-    /**
-     * Writes the end of the tracks,
-     */
     void writeMultiTrackEnd();
 
-    /**
-     * Writes the beginning of a track.
-     *
-     * @param track           the track
-     * @param startTrackPoint the start location
-     */
     void writeBeginTrack(Track track, TrackPoint startTrackPoint);
 
-    /**
-     * Writes the end of a track.
-     *
-     * @param track         the track
-     * @param endTrackPoint the end location
-     */
     void writeEndTrack(Track track, TrackPoint endTrackPoint);
 
-    /**
-     * Writes open segment.
-     */
     void writeOpenSegment();
 
-    /**
-     * Writes close segment.
-     */
     void writeCloseSegment();
 
-    /**
-     * Writes a trackPoint.
-     *
-     * @param trackPoint the trackPoint
-     */
     void writeTrackPoint(TrackPoint trackPoint);
 }

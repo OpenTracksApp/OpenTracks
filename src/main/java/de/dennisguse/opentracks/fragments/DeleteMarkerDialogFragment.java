@@ -42,9 +42,9 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
 
     private DeleteMarkerCaller caller;
 
-    public static void showDialog(FragmentManager fragmentManager, Marker.Id... waypointIds) {
+    public static void showDialog(FragmentManager fragmentManager, Marker.Id... markerIds) {
         Bundle bundle = new Bundle();
-        bundle.putParcelableArray(KEY_MARKER_IDS, waypointIds);
+        bundle.putParcelableArray(KEY_MARKER_IDS, markerIds);
 
         DeleteMarkerDialogFragment deleteMarkerDialogFragment = new DeleteMarkerDialogFragment();
         deleteMarkerDialogFragment.setArguments(bundle);

@@ -66,8 +66,8 @@ public class MarkerDetailFragment extends Fragment {
     private Handler handler;
     private ImageView photoView;
     private ImageView textGradient;
-    private LinearLayout waypointInfo;
-    private Marker waypoint;
+    private LinearLayout markerInfo;
+    private Marker marker;
     private final Runnable hideText = new Runnable() {
         @Override
         public void run() {
@@ -85,17 +85,17 @@ public class MarkerDetailFragment extends Fragment {
                 @Override
                 public void onAnimationEnd(Animation anim) {
                     textGradient.setVisibility(View.GONE);
-                    waypointInfo.setVisibility(View.GONE);
+                    markerInfo.setVisibility(View.GONE);
                 }
             });
             textGradient.startAnimation(animation);
-            waypointInfo.startAnimation(animation);
+            markerInfo.startAnimation(animation);
         }
     };
 
-    public static MarkerDetailFragment newInstance(Marker.Id waypointId) {
+    public static MarkerDetailFragment newInstance(Marker.Id markerId) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(KEY_MARKER_ID, waypointId);
+        bundle.putParcelable(KEY_MARKER_ID, markerId);
 
         MarkerDetailFragment fragment = new MarkerDetailFragment();
         fragment.setArguments(bundle);
@@ -106,8 +106,8 @@ public class MarkerDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Marker.Id waypointId = getArguments().getParcelable(KEY_MARKER_ID);
-        if (waypointId == null) {
+        Marker.Id markerId = getArguments().getParcelable(KEY_MARKER_ID);
+        if (markerId == null) {
             Log.d(TAG, "invalid marker id");
             getParentFragmentManager().popBackStack();
             return;
@@ -121,15 +121,15 @@ public class MarkerDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.marker_detail_fragment, container, false);
 
-        photoView = view.findViewById(R.id.marker_detail_waypoint_photo);
-        textGradient = view.findViewById(R.id.marker_detail_waypoint_text_gradient);
-        waypointInfo = view.findViewById(R.id.marker_detail_waypoint_info);
+        photoView = view.findViewById(R.id.marker_detail_marker_photo);
+        textGradient = view.findViewById(R.id.marker_detail_marker_text_gradient);
+        markerInfo = view.findViewById(R.id.marker_detail_marker_info);
 
         photoView.setOnClickListener(v -> {
             handler.removeCallbacks(hideText);
-            int visibility = waypointInfo.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
+            int visibility = markerInfo.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
             textGradient.setVisibility(visibility);
-            waypointInfo.setVisibility(visibility);
+            markerInfo.setVisibility(visibility);
             if (visibility == View.VISIBLE) {
                 handler.postDelayed(hideText, HIDE_TEXT_DELAY);
             }
@@ -141,8 +141,8 @@ public class MarkerDetailFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // Need to update the waypoint in case returning after an edit
-        updateWaypoint(true);
+        // Need to update the marker in case returning after an edit
+        updateMarker(true);
         updateUi();
         updateMenuItems();
     }
@@ -171,64 +171,59 @@ public class MarkerDetailFragment extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.marker_detail, menu);
         shareMarkerImageMenuItem = menu.findItem(R.id.marker_detail_share);
-        updateWaypoint(false);
+        updateMarker(false);
         updateMenuItems();
     }
 
     private void updateMenuItems() {
         if (shareMarkerImageMenuItem != null)
-            shareMarkerImageMenuItem.setVisible(waypoint.hasPhoto());
+            shareMarkerImageMenuItem.setVisible(marker.hasPhoto());
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Marker.Id waypointId = getArguments().getParcelable(KEY_MARKER_ID); //TODO Should only happen in onCreate?
+        Marker.Id markerId = getArguments().getParcelable(KEY_MARKER_ID); //TODO Should only happen in onCreate?
         FragmentActivity fragmentActivity = getActivity();
         Intent intent;
         switch (item.getItemId()) {
             case R.id.marker_detail_show_on_map:
-                IntentUtils.showCoordinateOnMap(getContext(), waypoint);
+                IntentUtils.showCoordinateOnMap(getContext(), marker);
                 return true;
             case R.id.marker_detail_edit:
                 intent = IntentUtils.newIntent(fragmentActivity, MarkerEditActivity.class)
-                        .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, waypointId);
+                        .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
                 startActivity(intent);
                 return true;
             case R.id.marker_detail_share:
-                if (waypoint.hasPhoto()) {
-                    intent = IntentUtils.newShareImageIntent(getContext(), waypoint.getPhotoURI());
+                if (marker.hasPhoto()) {
+                    intent = IntentUtils.newShareImageIntent(getContext(), marker.getPhotoURI());
                     intent = Intent.createChooser(intent, null);
                     startActivity(intent);
                 }
                 return true;
             case R.id.marker_detail_delete:
-                DeleteMarkerDialogFragment.showDialog(getChildFragmentManager(), waypointId);
+                DeleteMarkerDialogFragment.showDialog(getChildFragmentManager(), markerId);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    /**
-     * Updates the waypoint.
-     *
-     * @param refresh true to always update
-     */
-    private void updateWaypoint(boolean refresh) {
-        if (refresh || waypoint == null) {
-            waypoint = contentProviderUtils.getMarker(getArguments().getParcelable(KEY_MARKER_ID)); //TODO Should only happen in onCreate?
-            if (waypoint == null) {
-                Log.d(TAG, "waypoint is null");
+    private void updateMarker(boolean refresh) {
+        if (refresh || marker == null) {
+            marker = contentProviderUtils.getMarker(getArguments().getParcelable(KEY_MARKER_ID)); //TODO Should only happen in onCreate?
+            if (marker == null) {
+                Log.d(TAG, "marker is null");
                 getParentFragmentManager().popBackStack();
             }
         }
     }
 
     private void updateUi() {
-        boolean hasPhoto = waypoint.hasPhoto();
+        boolean hasPhoto = marker.hasPhoto();
         if (hasPhoto) {
             handler.removeCallbacks(hideText);
-            photoView.setImageURI(waypoint.getPhotoURI());
+            photoView.setImageURI(marker.getPhotoURI());
             handler.postDelayed(hideText, HIDE_TEXT_DELAY);
         } else {
             photoView.setImageResource(MarkerUtils.ICON_ID);
@@ -236,23 +231,23 @@ public class MarkerDetailFragment extends Fragment {
 
         setName(hasPhoto);
 
-        TextView category = getView().findViewById(R.id.marker_detail_waypoint_category);
-        ListItemUtils.setTextView(getActivity(), category, StringUtils.getCategory(waypoint.getCategory()), hasPhoto);
+        TextView category = getView().findViewById(R.id.marker_detail_marker_category);
+        ListItemUtils.setTextView(getActivity(), category, StringUtils.getCategory(marker.getCategory()), hasPhoto);
 
-        TextView description = getView().findViewById(R.id.marker_detail_waypoint_description);
-        ListItemUtils.setTextView(getActivity(), description, waypoint.getDescription(), hasPhoto);
+        TextView description = getView().findViewById(R.id.marker_detail_marker_description);
+        ListItemUtils.setTextView(getActivity(), description, marker.getDescription(), hasPhoto);
 
         setLocation(hasPhoto);
     }
 
     private void setName(boolean addShadow) {
-        TextView textView = getView().findViewById(R.id.marker_detail_waypoint_name);
-        ListItemUtils.setTextView(getActivity(), textView, waypoint.getName(), addShadow);
+        TextView textView = getView().findViewById(R.id.marker_detail_marker_name);
+        ListItemUtils.setTextView(getActivity(), textView, marker.getName(), addShadow);
     }
 
     private void setLocation(boolean addShadow) {
-        TextView textView = getView().findViewById(R.id.marker_detail_waypoint_location);
-        Location location = waypoint.getLocation();
+        TextView textView = getView().findViewById(R.id.marker_detail_marker_location);
+        Location location = marker.getLocation();
         String value;
         if (location == null) {
             value = null;

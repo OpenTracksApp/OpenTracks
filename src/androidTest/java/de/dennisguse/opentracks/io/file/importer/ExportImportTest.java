@@ -76,7 +76,7 @@ public class ExportImportTest {
             marker.setName("the marker " + i);
             marker.setDescription("the marker description " + i);
             marker.setCategory("the marker category" + i);
-            marker.setIcon("the waypoing icon" + i);
+            marker.setIcon("the marker icon" + i);
             marker.setPhotoUrl("the photo url" + i);
             marker.setTrackId(trackId);
             contentProviderUtils.insertMarker(marker);

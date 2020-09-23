@@ -22,7 +22,7 @@ import android.provider.BaseColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
 /**
- * Constants for waypoints table.
+ * Constants for markers table.
  *
  * @author Leif Hendrik Wilden
  */
@@ -36,10 +36,10 @@ public interface MarkerColumns extends BaseColumns {
     String DEFAULT_SORT_ORDER = _ID;
 
     // Columns
-    String NAME = "name"; // waypoint name
-    String DESCRIPTION = "description"; // waypoint description
-    String CATEGORY = "category"; // waypoint category
-    String ICON = "icon"; // waypoint icon
+    String NAME = "name"; // marker name
+    String DESCRIPTION = "description"; // marker description
+    String CATEGORY = "category"; // marker category
+    String ICON = "icon"; // marker icon
     String TRACKID = "trackid"; // track id
 
     String LENGTH = "length"; // length of the track (without smoothing)

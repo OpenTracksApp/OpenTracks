@@ -70,7 +70,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
     private Track.Id importTrackId;
     private final List<Track.Id> trackIds = new ArrayList<>();
-    private final List<Marker> waypoints = new ArrayList<>();
+    private final List<Marker> markers = new ArrayList<>();
 
     // The current element content
     //TODO Should be made private and getter be used by child classes.
@@ -88,7 +88,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     protected String heartrate;
     protected String cadence;
     protected String power;
-    protected String waypointType;
+    protected String markerType;
     protected String photoUrl;
     protected String uuid;
 
@@ -148,7 +148,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      * On file end.
      */
     protected void onFileEnd() {
-        // Add waypoints to the last imported track
+        // Add markers to the last imported track
         int size = trackIds.size();
         if (size == 0) {
             return;
@@ -159,8 +159,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             return;
         }
 
-        int waypointPosition = -1;
-        Marker waypoint = null;
+        int markerPosition = -1;
+        Marker marker = null;
         TrackPoint trackPoint = null;
         TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics().getStartTime_ms());
         // TODO Should not be necessary anymore?
@@ -169,18 +169,18 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false)) {
 
             while (true) {
-                if (waypoint == null) {
-                    waypointPosition++;
-                    waypoint = waypointPosition < waypoints.size() ? waypoints.get(waypointPosition) : null;
-                    if (waypoint == null) {
-                        // No more waypoints
+                if (marker == null) {
+                    markerPosition++;
+                    marker = markerPosition < markers.size() ? markers.get(markerPosition) : null;
+                    if (marker == null) {
+                        // No more markers
                         return;
                     }
                 }
 
                 if (trackPoint == null) {
                     if (!trackPointIterator.hasNext()) {
-                        // No more track points. Ignore the rest of the waypoints.
+                        // No more track points. Ignore the rest of the markers.
                         return;
                     }
                     trackPoint = trackPointIterator.next();
@@ -188,13 +188,13 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                     markerTrackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
                 }
 
-                if (waypoint.getLocation().getTime() > trackPoint.getTime()) {
+                if (marker.getLocation().getTime() > trackPoint.getTime()) {
                     trackPoint = null;
-                } else if (waypoint.getLocation().getTime() < trackPoint.getTime()) {
-                    Log.w(TAG, "Ignoring waypoint: current trackPoint was after waypoint.");
-                    waypoint = null;
+                } else if (marker.getLocation().getTime() < trackPoint.getTime()) {
+                    Log.w(TAG, "Ignoring marker: current trackPoint was after marker.");
+                    marker = null;
                 } else {
-                    // The waypoint trackPoint time matches the track point time
+                    // The marker trackPoint time matches the track point time
                     if (!LocationUtils.isValidLocation(trackPoint.getLocation())) {
                         // Invalid trackPoint, load the next trackPoint
                         trackPoint = null;
@@ -202,19 +202,19 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                     }
 
                     // Valid trackPoint
-                    if (trackPoint.getLatitude() == waypoint.getLocation().getLatitude() && trackPoint.getLongitude() == waypoint.getLocation().getLongitude()) {
-                        String waypointDescription = waypoint.getDescription();
-                        String icon = context.getString(R.string.marker_waypoint_icon_url);
+                    if (trackPoint.getLatitude() == marker.getLocation().getLatitude() && trackPoint.getLongitude() == marker.getLocation().getLongitude()) {
+                        String markerDescription = marker.getDescription();
+                        String icon = context.getString(R.string.marker_icon_url);
                         double length = trackStatisticsUpdater.getTrackStatistics().getTotalDistance();
                         long duration = trackStatisticsUpdater.getTrackStatistics().getTotalTime();
 
-                        // Insert waypoint
-                        Marker newWaypoint = new Marker(waypoint.getName(), waypointDescription, waypoint.getCategory(), icon, track.getId(), length, duration, trackPoint.getLocation(), waypoint.getPhotoUrl());
-                        contentProviderUtils.insertMarker(newWaypoint);
+                        // Insert marker
+                        Marker newMarker = new Marker(marker.getName(), markerDescription, marker.getCategory(), icon, track.getId(), length, duration, trackPoint.getLocation(), marker.getPhotoUrl());
+                        contentProviderUtils.insertMarker(newMarker);
                     }
 
-                    // Load the next waypoint
-                    waypoint = null;
+                    // Load the next marker
+                    marker = null;
                 }
             }
         }
@@ -300,11 +300,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         trackData.lastLocationInCurrentSegment = null;
     }
 
-    /**
-     * Adds a waypoint.
-     */
-    protected void addWaypoint() throws SAXException {
-        // Waypoint must have a time, else cannot match to the track points
+    protected void addMarker() throws SAXException {
+        // Markers must have a time, else cannot match to the track points
         if (time == null) {
             return;
         }
@@ -314,22 +311,22 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         if (!LocationUtils.isValidLocation(trackPoint.getLocation())) {
             throw new SAXException(createErrorMessage("Invalid location detected: " + trackPoint));
         }
-        Marker waypoint = new Marker(trackPoint.getLocation());
+        Marker marker = new Marker(trackPoint.getLocation());
 
         if (name != null) {
-            waypoint.setName(name);
+            marker.setName(name);
         }
         if (description != null) {
-            waypoint.setDescription(description);
+            marker.setDescription(description);
         }
         if (category != null) {
-            waypoint.setCategory(category);
+            marker.setCategory(category);
         }
 
         if (photoUrl != null) {
-            waypoint.setPhotoUrl(photoUrl);
+            marker.setPhotoUrl(photoUrl);
         }
-        waypoints.add(waypoint);
+        markers.add(marker);
     }
 
     /**

@@ -271,7 +271,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         }
         Map<String, Object> item = arrayAdapter.getItem(positions[0]);
         Track.Id trackId = (Track.Id) item.get(TRACK_ID_FIELD);
-        Marker.Id waypointId = (Marker.Id) item.get(MARKER_ID_FIELD);
+        Marker.Id markerId = (Marker.Id) item.get(MARKER_ID_FIELD);
         Intent intent;
         switch (itemId) {
             case R.id.list_context_menu_show_on_map:
@@ -283,9 +283,9 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
                 startActivity(intent);
                 return true;
             case R.id.list_context_menu_edit:
-                if (waypointId != null) {
+                if (markerId != null) {
                     intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
-                            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, waypointId);
+                            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
                 } else {
                     intent = IntentUtils.newIntent(this, TrackEditActivity.class)
                             .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
@@ -296,8 +296,8 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
                 finish();
                 return true;
             case R.id.list_context_menu_delete:
-                if (waypointId != null) {
-                    DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), waypointId);
+                if (markerId != null) {
+                    DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), markerId);
                 } else {
                     deleteTracks(trackId);
                 }
@@ -349,7 +349,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
      * @return a list of result maps
      */
     private List<Map<String, Object>> prepareResultsforDisplay(Collection<ScoredResult> scoredResults) {
-        //TODO Replace use of map<string, object>, but rather provide Track or Waypoint directly.
+        //TODO Replace use of map<string, object>, but rather provide Track or Marker directly.
         ArrayList<Map<String, Object>> output = new ArrayList<>(scoredResults.size());
         for (ScoredResult result : scoredResults) {
             if (result.track != null) {
@@ -361,18 +361,12 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         return output;
     }
 
-    /**
-     * Prepares a marker for display by filling in a result map.
-     *
-     * @param waypoint the marker
-     * @return the result map
-     */
-    private Map<String, Object> prepareMarkerForDisplay(Marker waypoint) {
+    private Map<String, Object> prepareMarkerForDisplay(Marker marker) {
         Map<String, Object> resultMap = new HashMap<>();
 
         //TODO: It may be more appropriate to obtain the track name as a join in the retrieval phase of the searchable.
         String trackName = null;
-        Track.Id trackId = waypoint.getTrackId();
+        Track.Id trackId = marker.getTrackId();
         if (!trackId.isValid()) {
             Track track = contentProviderUtils.getTrack(trackId);
             if (track != null) {
@@ -384,20 +378,20 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
         resultMap.put(IS_PAUSED_FIELD, true);
         resultMap.put(ICON_ID_FIELD, MarkerUtils.ICON_ID);
         resultMap.put(ICON_CONTENT_DESCRIPTION_ID_FIELD, R.string.image_marker);
-        resultMap.put(NAME_FIELD, waypoint.getName());
+        resultMap.put(NAME_FIELD, marker.getName());
         // Display the marker's track name in the total time field
         resultMap.put(TOTAL_TIME_FIELD, trackName == null ? null : getString(R.string.search_list_marker_track_location, trackName));
         resultMap.put(TOTAL_DISTANCE_FIELD, null);
         resultMap.put(MARKER_COUNT_FIELD, 0);
-        resultMap.put(START_TIME_FIELD, waypoint.getLocation().getTime());
-        resultMap.put(CATEGORY_FIELD, waypoint.getCategory());
-        resultMap.put(DESCRIPTION_FIELD, waypoint.getDescription());
-        resultMap.put(PHOTO_URL_FIELD, waypoint.getPhotoUrl());
-        resultMap.put(TRACK_ID_FIELD, waypoint.getTrackId());
-        resultMap.put(MARKER_ID_FIELD, waypoint.getId());
+        resultMap.put(START_TIME_FIELD, marker.getLocation().getTime());
+        resultMap.put(CATEGORY_FIELD, marker.getCategory());
+        resultMap.put(DESCRIPTION_FIELD, marker.getDescription());
+        resultMap.put(PHOTO_URL_FIELD, marker.getPhotoUrl());
+        resultMap.put(TRACK_ID_FIELD, marker.getTrackId());
+        resultMap.put(MARKER_ID_FIELD, marker.getId());
 
-        resultMap.put(MARKER_LATITUDE_FIELD, waypoint.getLocation().getLatitude());
-        resultMap.put(MARKER_LONGITUDE_FIELD, waypoint.getLocation().getLongitude());
+        resultMap.put(MARKER_LATITUDE_FIELD, marker.getLocation().getLatitude());
+        resultMap.put(MARKER_LONGITUDE_FIELD, marker.getLocation().getLongitude());
 
         return resultMap;
     }

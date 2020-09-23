@@ -254,7 +254,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         category = category != null ? category : "";
         description = description != null ? description : "";
-        String icon = getString(R.string.marker_waypoint_icon_url);
+        String icon = getString(R.string.marker_icon_url);
         photoUrl = photoUrl != null ? photoUrl : "";
 
         TrackStatistics stats = trackStatisticsUpdater.getTrackStatistics();

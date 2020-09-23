@@ -105,12 +105,12 @@ public class KmzTrackExporter implements TrackExporter {
                         if (Thread.interrupted()) {
                             throw new InterruptedException();
                         }
-                        Marker waypoint = contentProviderUtils.createMarker(cursor);
-                        if (waypoint.hasPhoto()) {
-                            Uri uriPhoto = waypoint.getPhotoURI();
+                        Marker marker = contentProviderUtils.createMarker(cursor);
+                        if (marker.hasPhoto()) {
+                            Uri uriPhoto = marker.getPhotoURI();
                             boolean existsPhoto = FileUtils.getPhotoFileIfExists(context, track.getId(), uriPhoto) != null;
                             if (existsPhoto) {
-                                addImage(context, zipOutputStream, uriPhoto, waypoint);
+                                addImage(context, zipOutputStream, uriPhoto, marker);
                             }
                         }
 
@@ -121,9 +121,9 @@ public class KmzTrackExporter implements TrackExporter {
         }
     }
 
-    private void addImage(Context context, ZipOutputStream zipOutputStream, Uri uri, Marker waypoint) throws IOException {
+    private void addImage(Context context, ZipOutputStream zipOutputStream, Uri uri, Marker marker) throws IOException {
         try (InputStream inputStream = context.getContentResolver().openInputStream(uri)) {
-            ZipEntry zipEntry = new ZipEntry(buildKmzImageFilePath(waypoint));
+            ZipEntry zipEntry = new ZipEntry(buildKmzImageFilePath(marker));
             zipOutputStream.putNextEntry(zipEntry);
 
             if (inputStream == null) throw new FileNotFoundException();
@@ -146,13 +146,11 @@ public class KmzTrackExporter implements TrackExporter {
     }
 
     /**
-     * Builds and returns the path for the image that will be saved inside KMZ_IMAGES_DIR for the waypoint.
-     *
-     * @param waypoint Waypoint object.
+     * Builds and returns the path for the image that will be saved inside KMZ_IMAGES_DIR for the marker.
      */
-    public static String buildKmzImageFilePath(Marker waypoint) {
-        String ext = FileUtils.getExtension(waypoint.getPhotoUrl());
+    public static String buildKmzImageFilePath(Marker marker) {
+        String ext = FileUtils.getExtension(marker.getPhotoUrl());
         ext = ext == null ? "" : "." + ext;
-        return KMZ_IMAGES_DIR + File.separatorChar + FileUtils.sanitizeFileName(waypoint.getId().getId() + ext);
+        return KMZ_IMAGES_DIR + File.separatorChar + FileUtils.sanitizeFileName(marker.getId().getId() + ext);
     }
 }

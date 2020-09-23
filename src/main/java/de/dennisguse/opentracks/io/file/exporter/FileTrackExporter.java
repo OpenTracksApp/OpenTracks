@@ -64,8 +64,8 @@ public class FileTrackExporter implements TrackExporter {
         try {
             trackWriter.prepare(outputStream);
             trackWriter.writeHeader(tracks);
-            for (Track track1 : tracks) {
-                writeWaypoints(track1);
+            for (Track track : tracks) {
+                writeMarkers(track);
             }
             boolean hasMultipleTracks = tracks.length > 1;
             if (hasMultipleTracks) {
@@ -89,34 +89,31 @@ public class FileTrackExporter implements TrackExporter {
         }
     }
 
-    /**
-     * Writes the waypoints.
-     */
-    private void writeWaypoints(Track track) throws InterruptedException {
+    private void writeMarkers(Track track) throws InterruptedException {
         /*
-         * TODO: Stream through the waypoints in chunks.
-         *  I am leaving the number of waypoints very high which should not be a problem, because we don't try to load them into objects all at the same time.
+         * TODO: Stream through the markers in chunks.
+         *  I am leaving the number of markers very high which should not be a problem, because we don't try to load them into objects all at the same time.
          */
-        boolean hasWaypoints = false;
+        boolean hasMarkers = false;
         try (Cursor cursor = contentProviderUtils.getMarkerCursor(track.getId(), null, ContentProviderUtils.MAX_LOADED_MARKERS)) {
             if (cursor != null && cursor.moveToFirst()) {
                 for (int i = 0; i < cursor.getCount(); i++) {
                     if (Thread.interrupted()) {
                         throw new InterruptedException();
                     }
-                    if (!hasWaypoints) {
-                        trackWriter.writeBeginWaypoints(track);
-                        hasWaypoints = true;
+                    if (!hasMarkers) {
+                        trackWriter.writeBeginMarkers(track);
+                        hasMarkers = true;
                     }
-                    Marker waypoint = contentProviderUtils.createMarker(cursor);
-                    trackWriter.writeWaypoint(waypoint);
+                    Marker marker = contentProviderUtils.createMarker(cursor);
+                    trackWriter.writeMarker(marker);
 
                     cursor.moveToNext();
                 }
             }
         }
-        if (hasWaypoints) {
-            trackWriter.writeEndWaypoints();
+        if (hasMarkers) {
+            trackWriter.writeEndMarkers();
         }
     }
 

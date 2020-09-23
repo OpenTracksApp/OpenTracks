@@ -75,7 +75,7 @@ public class ChartView extends View {
     private static final int Y_AXIS_OFFSET = 16;
 
     //TODO Determine from actual size of the used drawable
-    private static final float WAYPOINT_X_ANCHOR = 13f / 48f;
+    private static final float MARKER_X_ANCHOR = 13f / 48f;
 
     static {
         X_FRACTION_FORMAT.setMaximumFractionDigits(1);
@@ -87,7 +87,7 @@ public class ChartView extends View {
     private final ChartValueSeries paceSeries;
 
     private final List<ChartPoint> chartPoints = new ArrayList<>();
-    private final List<Marker> waypoints = new ArrayList<>();
+    private final List<Marker> markers = new ArrayList<>();
     private final ExtremityMonitor xExtremityMonitor = new ExtremityMonitor();
     private final int backgroundColor;
     private final Paint axisPaint;
@@ -95,7 +95,7 @@ public class ChartView extends View {
     private final Paint gridPaint;
     private final Paint markerPaint;
     private final Drawable pointer;
-    private final Drawable waypointMarker;
+    private final Drawable markerPin;
     private final int markerWidth;
     private final int markerHeight;
     private final Scroller scroller;
@@ -151,19 +151,19 @@ public class ChartView extends View {
             // Check if the y event is within markerHeight of the marker center
             if (Math.abs(event.getY() - topBorder - spacer - markerHeight / 2f) < markerHeight) {
                 int minDistance = Integer.MAX_VALUE;
-                Marker nearestWaypoint = null;
-                synchronized (waypoints) {
-                    for (Marker waypoint : waypoints) {
-                        int distance = Math.abs(getX(getWaypointXValue(waypoint)) - (int) event.getX() - getScrollX());
+                Marker nearestMarker = null;
+                synchronized (markers) {
+                    for (Marker marker : markers) {
+                        int distance = Math.abs(getX(getMarkerXValue(marker)) - (int) event.getX() - getScrollX());
                         if (distance < minDistance) {
                             minDistance = distance;
-                            nearestWaypoint = waypoint;
+                            nearestMarker = marker;
                         }
                     }
                 }
-                if (nearestWaypoint != null && minDistance < markerWidth) {
+                if (nearestMarker != null && minDistance < markerWidth) {
                     Intent intent = IntentUtils.newIntent(getContext(), MarkerDetailActivity.class)
-                            .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, nearestWaypoint.getId());
+                            .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, nearestMarker.getId());
                     getContext().startActivity(intent);
                     return true;
                 }
@@ -333,10 +333,10 @@ public class ChartView extends View {
         pointer = context.getResources().getDrawable(R.drawable.ic_logo_color_24dp);
         pointer.setBounds(0, 0, pointer.getIntrinsicWidth(), pointer.getIntrinsicHeight());
 
-        waypointMarker = MarkerUtils.getDefaultPhoto(context);
-        markerWidth = waypointMarker.getIntrinsicWidth();
-        markerHeight = waypointMarker.getIntrinsicHeight();
-        waypointMarker.setBounds(0, 0, markerWidth, markerHeight);
+        markerPin = MarkerUtils.getDefaultPhoto(context);
+        markerWidth = markerPin.getIntrinsicWidth();
+        markerHeight = markerPin.getIntrinsicHeight();
+        markerPin.setBounds(0, 0, markerWidth, markerHeight);
 
         scroller = new Scroller(context);
         setFocusable(true);
@@ -435,15 +435,15 @@ public class ChartView extends View {
         scrollTo(0, 0);
     }
 
-    public void addWaypoint(Marker waypoint) {
-        synchronized (waypoints) {
-            waypoints.add(waypoint);
+    public void addMarker(Marker marker) {
+        synchronized (markers) {
+            markers.add(marker);
         }
     }
 
-    public void clearWaypoints() {
-        synchronized (waypoints) {
-            waypoints.clear();
+    public void clearMarker() {
+        synchronized (markers) {
+            markers.clear();
         }
     }
 
@@ -547,7 +547,7 @@ public class ChartView extends View {
 
             clipToGraphArea(canvas);
             drawDataSeries(canvas);
-            drawWaypoints(canvas);
+            drawMarker(canvas);
             drawGrid(canvas);
 
             canvas.restore();
@@ -588,24 +588,19 @@ public class ChartView extends View {
         }
     }
 
-    /**
-     * Draws the waypoints.
-     *
-     * @param canvas the canvas
-     */
-    private void drawWaypoints(Canvas canvas) {
-        synchronized (waypoints) {
-            for (Marker waypoint : waypoints) {
-                double xValue = getWaypointXValue(waypoint);
+    private void drawMarker(Canvas canvas) {
+        synchronized (markers) {
+            for (Marker marker : markers) {
+                double xValue = getMarkerXValue(marker);
                 if (xValue > maxX) {
                     continue;
                 }
                 canvas.save();
-                float x = getX(getWaypointXValue(waypoint));
+                float x = getX(getMarkerXValue(marker));
                 canvas.drawLine(x, topBorder + spacer + markerHeight / 2, x, topBorder + effectiveHeight, markerPaint);
-                canvas.translate(x - (markerWidth * WAYPOINT_X_ANCHOR), topBorder + spacer);
+                canvas.translate(x - (markerWidth * MARKER_X_ANCHOR), topBorder + spacer);
 
-                waypointMarker.draw(canvas);
+                markerPin.draw(canvas);
                 canvas.restore();
             }
         }
@@ -976,17 +971,12 @@ public class ChartView extends View {
         return topBorder + yAxisOffset + (int) ((1 - percentage) * rangeHeight);
     }
 
-    /**
-     * Gets a waypoint's x value.
-     *
-     * @param waypoint the waypoint
-     */
-    private double getWaypointXValue(Marker waypoint) {
+    private double getMarkerXValue(Marker marker) {
         if (chartByDistance) {
-            double lenghtInKm = waypoint.getLength() * UnitConversions.M_TO_KM;
-            return metricUnits ? lenghtInKm : lenghtInKm * UnitConversions.KM_TO_MI;
+            double length_km = marker.getLength() * UnitConversions.M_TO_KM;
+            return metricUnits ? length_km : length_km * UnitConversions.KM_TO_MI;
         } else {
-            return waypoint.getDuration();
+            return marker.getDuration();
         }
     }
 

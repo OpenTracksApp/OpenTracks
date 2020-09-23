@@ -18,7 +18,7 @@ limitations under the License.
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/marker_detail_waypoint_photo"
+        android:id="@+id/marker_detail_marker_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/image_photo_marker"
@@ -29,7 +29,7 @@ limitations under the License.
         android:layout_height="wrap_content">
         <!-- A gradient on top of the text -->
         <ImageView
-            android:id="@+id/marker_detail_waypoint_text_gradient"
+            android:id="@+id/marker_detail_marker_text_gradient"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha=".6"
@@ -37,7 +37,7 @@ limitations under the License.
             android:src="@drawable/text_gradient" />
 
         <LinearLayout
-            android:id="@+id/marker_detail_waypoint_info"
+            android:id="@+id/marker_detail_marker_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="80dp"
@@ -45,20 +45,20 @@ limitations under the License.
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/marker_detail_waypoint_name"
+                android:id="@+id/marker_detail_marker_name"
                 style="@style/TextMedium"
                 android:paddingTop="8dp" />
 
             <TextView
-                android:id="@+id/marker_detail_waypoint_category"
+                android:id="@+id/marker_detail_marker_category"
                 style="@style/TextSmall" />
 
             <TextView
-                android:id="@+id/marker_detail_waypoint_description"
+                android:id="@+id/marker_detail_marker_description"
                 style="@style/TextSmall" />
 
             <TextView
-                android:id="@+id/marker_detail_waypoint_location"
+                android:id="@+id/marker_detail_marker_location"
                 style="@style/TextSmall" />
         </LinearLayout>
     </FrameLayout>

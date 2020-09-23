@@ -39,7 +39,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
 
     private static final String TAG = KmlFileTrackImporter.class.getSimpleName();
 
-    private static final String WAYPOINT_STYLE = "#" + KmlTrackWriter.WAYPOINT_STYLE;
+    private static final String MARKER_STYLE = "#" + KmlTrackWriter.MARKER_STYLE;
 
     private static final String TAG_COORDINATES = "coordinates";
     private static final String TAG_DESCRIPTION = "description";
@@ -84,8 +84,8 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         switch (tag) {
             case TAG_PLACEMARK:
             case TAG_PHOTO_OVERLAY:
-                // Note that a track is contained in a Placemark, calling onWaypointStart will clear various track variables like name, category, and description.
-                onWaypointStart();
+                // Note that a track is contained in a Placemark, calling onMarkerStart will clear various track variables like name, category, and description.
+                onMarkerStart();
                 break;
             case TAG_GX_MULTI_TRACK:
                 trackStarted = true;
@@ -111,11 +111,11 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
                 break;
             case TAG_PLACEMARK:
             case TAG_PHOTO_OVERLAY:
-                // Note that a track is contained in a Placemark, calling onWaypointend is save since waypointType is not set for a track.
-                onWaypointEnd();
+                // Note that a track is contained in a Placemark, calling onMarkerEnd is save since markerType is not set for a track.
+                onMarkerEnd();
                 break;
             case TAG_COORDINATES:
-                onWaypointLocationEnd();
+                onMarkerLocationEnd();
                 break;
             case TAG_GX_MULTI_TRACK:
                 onTrackEnd();
@@ -161,7 +161,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
                 break;
             case TAG_STYLE_URL:
                 if (content != null) {
-                    waypointType = content.trim();
+                    markerType = content.trim();
                 }
                 break;
             case TAG_HREF:
@@ -175,10 +175,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         content = null;
     }
 
-    /**
-     * On waypoint start.
-     */
-    private void onWaypointStart() {
+    private void onMarkerStart() {
         // Reset all Placemark variables
         name = null;
         icon = null;
@@ -189,27 +186,21 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         longitude = null;
         altitude = null;
         time = null;
-        waypointType = null;
+        markerType = null;
     }
 
-    /**
-     * On waypoint end.
-     */
-    private void onWaypointEnd() throws SAXException {
-        if (!WAYPOINT_STYLE.equals(waypointType)) {
+    private void onMarkerEnd() throws SAXException {
+        if (!MARKER_STYLE.equals(markerType)) {
             return;
         }
 
         // If there is photoUrl it has to be changed because that url in kml file is a relative path to the internal kmz file.
         photoUrl = getInternalPhotoUrl(photoUrl);
 
-        addWaypoint();
+        addMarker();
     }
 
-    /**
-     * On waypoint location end.
-     */
-    private void onWaypointLocationEnd() {
+    private void onMarkerLocationEnd() {
         if (content != null) {
             String[] parts = content.trim().split(",");
             if (parts.length != 2 && parts.length != 3) {

@@ -69,7 +69,7 @@ public final class Marker {
     }
 
     /**
-     * May be null if the waypoint was not loaded from the database.
+     * May be null if the it was not loaded from the database.
      */
     public @Nullable
     Id getId() {
@@ -170,7 +170,7 @@ public final class Marker {
             return id;
         }
 
-        @Deprecated //TODO Use a Waypoint.Id of null instead
+        @Deprecated //TODO Use a Id of null instead
         public boolean isValid() {
             return id != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
         }

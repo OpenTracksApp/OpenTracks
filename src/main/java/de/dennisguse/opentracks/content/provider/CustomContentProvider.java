@@ -38,7 +38,7 @@ import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 
 /**
- * A {@link ContentProvider} that handles access to track points, tracks, and waypoints tables.
+ * A {@link ContentProvider} that handles access to track points, tracks, and markers tables.
  *
  * @author Leif Hendrik Wilden
  */
@@ -61,9 +61,9 @@ public class CustomContentProvider extends ContentProvider {
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.CONTENT_URI.getPath(), UrlType.TRACKS.ordinal());
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.CONTENT_URI.getPath() + "/*", UrlType.TRACKS_BY_ID.ordinal());
 
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, MarkerColumns.CONTENT_URI.getPath(), UrlType.WAYPOINTS.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, MarkerColumns.CONTENT_URI.getPath() + "/#", UrlType.WAYPOINTS_BY_ID.ordinal());
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, MarkerColumns.CONTENT_URI_BY_TRACKID.getPath() + "/*", UrlType.WAYPOINTS_BY_TRACKID.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, MarkerColumns.CONTENT_URI.getPath(), UrlType.MARKERS.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, MarkerColumns.CONTENT_URI.getPath() + "/#", UrlType.MARKERS_BY_ID.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, MarkerColumns.CONTENT_URI_BY_TRACKID.getPath() + "/*", UrlType.MARKERS_BY_TRACKID.ordinal());
     }
 
     @Override
@@ -100,7 +100,7 @@ public class CustomContentProvider extends ContentProvider {
                 table = TracksColumns.TABLE_NAME;
                 shouldVacuum = true;
                 break;
-            case WAYPOINTS:
+            case MARKERS:
                 table = MarkerColumns.TABLE_NAME;
                 break;
             default:
@@ -138,10 +138,10 @@ public class CustomContentProvider extends ContentProvider {
                 return TracksColumns.CONTENT_TYPE;
             case TRACKS_BY_ID:
                 return TracksColumns.CONTENT_ITEMTYPE;
-            case WAYPOINTS:
+            case MARKERS:
                 return MarkerColumns.CONTENT_TYPE;
-            case WAYPOINTS_BY_ID:
-            case WAYPOINTS_BY_TRACKID:
+            case MARKERS_BY_ID:
+            case MARKERS_BY_TRACKID:
                 return MarkerColumns.CONTENT_ITEMTYPE;
             default:
                 throw new IllegalArgumentException("Unknown URL " + url);
@@ -213,15 +213,15 @@ public class CustomContentProvider extends ContentProvider {
                 queryBuilder.setTables(TracksColumns.TABLE_NAME);
                 queryBuilder.appendWhere(TracksColumns._ID + " IN (" + TextUtils.join(SQL_LIST_DELIMITER, ContentProviderUtils.parseTrackIdsFromUri(url)) + ")");
                 break;
-            case WAYPOINTS:
+            case MARKERS:
                 queryBuilder.setTables(MarkerColumns.TABLE_NAME);
                 sortOrder = sort != null ? sort : MarkerColumns.DEFAULT_SORT_ORDER;
                 break;
-            case WAYPOINTS_BY_ID:
+            case MARKERS_BY_ID:
                 queryBuilder.setTables(MarkerColumns.TABLE_NAME);
                 queryBuilder.appendWhere(MarkerColumns._ID + "=" + ContentUris.parseId(url));
                 break;
-            case WAYPOINTS_BY_TRACKID:
+            case MARKERS_BY_TRACKID:
                 queryBuilder.setTables(MarkerColumns.TABLE_NAME);
                 queryBuilder.appendWhere(MarkerColumns.TRACKID + " IN (" + TextUtils.join(SQL_LIST_DELIMITER, ContentProviderUtils.parseTrackIdsFromUri(url)) + ")");
                 break;
@@ -261,11 +261,11 @@ public class CustomContentProvider extends ContentProvider {
                     whereClause += " AND (" + where + ")";
                 }
                 break;
-            case WAYPOINTS:
+            case MARKERS:
                 table = MarkerColumns.TABLE_NAME;
                 whereClause = where;
                 break;
-            case WAYPOINTS_BY_ID:
+            case MARKERS_BY_ID:
                 table = MarkerColumns.TABLE_NAME;
                 whereClause = MarkerColumns._ID + "=" + ContentUris.parseId(url);
                 if (!TextUtils.isEmpty(where)) {
@@ -316,8 +316,8 @@ public class CustomContentProvider extends ContentProvider {
                 return insertTrackPoint(url, contentValues);
             case TRACKS:
                 return insertTrack(url, contentValues);
-            case WAYPOINTS:
-                return insertWaypoint(url, contentValues);
+            case MARKERS:
+                return insertMarker(url, contentValues);
             default:
                 throw new IllegalArgumentException("Unknown url " + url);
         }
@@ -361,25 +361,14 @@ public class CustomContentProvider extends ContentProvider {
         throw new SQLException("Failed to insert a track " + url);
     }
 
-    /**
-     * Inserts a waypoint.
-     *
-     * @param url           the content url
-     * @param contentValues the content values
-     */
-    private Uri insertWaypoint(Uri url, ContentValues contentValues) {
+    private Uri insertMarker(Uri url, ContentValues contentValues) {
         long rowId = db.insert(MarkerColumns.TABLE_NAME, MarkerColumns._ID, contentValues);
         if (rowId >= 0) {
             return ContentUris.appendId(MarkerColumns.CONTENT_URI.buildUpon(), rowId).build();
         }
-        throw new SQLException("Failed to insert a waypoint " + url);
+        throw new SQLException("Failed to insert a marker " + url);
     }
 
-    /**
-     * Types of url.
-     *
-     * @author Jimmy Shih
-     */
     @VisibleForTesting
     enum UrlType {
         TRACKPOINTS,
@@ -387,8 +376,8 @@ public class CustomContentProvider extends ContentProvider {
         TRACKPOINTS_BY_TRACKID,
         TRACKS,
         TRACKS_BY_ID,
-        WAYPOINTS,
-        WAYPOINTS_BY_ID,
-        WAYPOINTS_BY_TRACKID
+        MARKERS,
+        MARKERS_BY_ID,
+        MARKERS_BY_TRACKID
     }
 }

@@ -229,35 +229,35 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     /**
      * Handles a context item selection.
      *
-     * @param itemId          the menu item id
-     * @param longWaypointIds the marker ids
+     * @param itemId       the menu item id
+     * @param longMarkerds the marker ids
      * @return true if handled.
      */
-    private boolean handleContextItem(int itemId, long... longWaypointIds) {
-        Marker.Id[] waypointIds = new Marker.Id[longWaypointIds.length];
-        for (int i = 0; i < longWaypointIds.length; i++) {
-            waypointIds[i] = new Marker.Id(longWaypointIds[i]);
+    private boolean handleContextItem(int itemId, long... longMarkerds) {
+        Marker.Id[] markerIds = new Marker.Id[longMarkerds.length];
+        for (int i = 0; i < longMarkerds.length; i++) {
+            markerIds[i] = new Marker.Id(longMarkerds[i]);
         }
 
         Intent intent;
         switch (itemId) {
             case R.id.list_context_menu_show_on_map:
-                if (waypointIds.length == 1) {
-                    IntentUtils.showCoordinateOnMap(this, contentProviderUtils.getMarker(waypointIds[0]));
+                if (markerIds.length == 1) {
+                    IntentUtils.showCoordinateOnMap(this, contentProviderUtils.getMarker(markerIds[0]));
                 }
                 return true;
             case R.id.list_context_menu_edit:
-                if (waypointIds.length == 1) {
+                if (markerIds.length == 1) {
                     intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
-                            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, waypointIds[0]);
+                            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerIds[0]);
                     startActivity(intent);
                 }
                 return true;
             case R.id.list_context_menu_delete:
-                if (waypointIds.length > 1 && waypointIds.length == listView.getCount()) {
-                    waypointIds = null;
+                if (markerIds.length > 1 && markerIds.length == listView.getCount()) {
+                    markerIds = null;
                 }
-                DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), waypointIds);
+                DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), markerIds);
                 return true;
             case R.id.list_context_menu_select_all:
                 for (int i = 0; i < listView.getCount(); i++) {

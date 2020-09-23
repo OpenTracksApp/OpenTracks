@@ -191,20 +191,20 @@ public class KmzTrackImporter implements TrackImporter {
     }
 
     /**
-     * Deletes all images that remained in external storage that doesn't have waypoint (marker) associated.
+     * Deletes all images that remained in external storage that doesn't have a marker associated.
      *
      * @param context the Context object.
      * @param trackId the id of the Track.
      */
     private void deleteOrphanImages(Context context, Track.Id trackId) {
         if (!trackId.isValid()) {
-            // 1.- Gets all photo names in the waypoints of the track identified by id.
+            // 1.- Gets all photo names in the markers of the track identified by id.
             ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
-            List<Marker> waypoints = contentProviderUtils.getMarkers(trackId);
+            List<Marker> markers = contentProviderUtils.getMarkers(trackId);
             List<String> photosName = new ArrayList<>();
-            for (Marker w : waypoints) {
-                if (w.hasPhoto()) {
-                    String photoUrl = Uri.decode(w.getPhotoUrl());
+            for (Marker marker : markers) {
+                if (marker.hasPhoto()) {
+                    String photoUrl = Uri.decode(marker.getPhotoUrl());
                     photosName.add(photoUrl.substring(photoUrl.lastIndexOf(File.separatorChar) + 1));
                 }
             }

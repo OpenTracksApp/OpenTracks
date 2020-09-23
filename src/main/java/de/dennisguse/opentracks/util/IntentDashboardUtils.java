@@ -34,7 +34,7 @@ public class IntentDashboardUtils {
 
     private static final int TRACK_URI_INDEX = 0;
     private static final int TRACKPOINTS_URI_INDEX = 1;
-    private static final int WAYPOINTS_URI_INDEX = 2;
+    private static final int MARKERS_URI_INDEX = 2;
 
     private IntentDashboardUtils() {
     }
@@ -55,7 +55,7 @@ public class IntentDashboardUtils {
         ArrayList<Uri> uris = new ArrayList<>();
         uris.add(TRACK_URI_INDEX, Uri.withAppendedPath(TracksColumns.CONTENT_URI, trackIdList));
         uris.add(TRACKPOINTS_URI_INDEX, Uri.withAppendedPath(TrackPointsColumns.CONTENT_URI_BY_TRACKID, trackIdList));
-        uris.add(WAYPOINTS_URI_INDEX, Uri.withAppendedPath(MarkerColumns.CONTENT_URI_BY_TRACKID, trackIdList));
+        uris.add(MARKERS_URI_INDEX, Uri.withAppendedPath(MarkerColumns.CONTENT_URI_BY_TRACKID, trackIdList));
 
         Intent intent = new Intent(ACTION_DASHBOARD);
         intent.putParcelableArrayListExtra(ACTION_DASHBOARD_PAYLOAD, uris);
@@ -70,7 +70,7 @@ public class IntentDashboardUtils {
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         ClipData clipData = ClipData.newRawUri(null, uris.get(TRACK_URI_INDEX));
         clipData.addItem(new ClipData.Item(uris.get(TRACKPOINTS_URI_INDEX)));
-        clipData.addItem(new ClipData.Item(uris.get(WAYPOINTS_URI_INDEX)));
+        clipData.addItem(new ClipData.Item(uris.get(MARKERS_URI_INDEX)));
         intent.setClipData(clipData);
 
         context.startActivity(intent);

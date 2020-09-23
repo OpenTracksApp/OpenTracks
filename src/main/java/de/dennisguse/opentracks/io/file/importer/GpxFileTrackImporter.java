@@ -44,7 +44,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
     private static final String TAG_TRACK_POINT = "trkpt";
     private static final String TAG_TRACK_SEGMENT = "trkseg";
     private static final String TAG_TYPE = "type";
-    private static final String TAG_WAYPOINT = "wpt";
+    private static final String TAG_MARKER = "wpt";
     private static final String TAG_ID = "opentracks:trackid";
 
     private static final String ATTRIBUTE_LAT = "lat";
@@ -71,8 +71,8 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
     @Override
     public void startElement(String uri, String localName, String tag, Attributes attributes) throws SAXException {
         switch (tag) {
-            case TAG_WAYPOINT:
-                onWaypointStart(attributes);
+            case TAG_MARKER:
+                onMarkerStart(attributes);
                 break;
             case TAG_TRACK:
                 onTrackStart();
@@ -92,8 +92,8 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
             case TAG_GPX:
                 onFileEnd();
                 break;
-            case TAG_WAYPOINT:
-                onWaypointEnd();
+            case TAG_MARKER:
+                onMarkerEnd();
                 break;
             case TAG_TRACK:
                 onTrackEnd();
@@ -128,7 +128,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
                 break;
             case TAG_COMMENT:
                 if (content != null) {
-                    waypointType = content.trim();
+                    markerType = content.trim();
                 }
                 break;
             case TAG_EXTENSION_SPEED:
@@ -187,12 +187,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
         insertTrackPoint(trackPoint);
     }
 
-    /**
-     * On waypoint start.
-     *
-     * @param attributes the attributes
-     */
-    private void onWaypointStart(Attributes attributes) {
+    private void onMarkerStart(Attributes attributes) {
         name = null;
         description = null;
         category = null;
@@ -201,13 +196,10 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
         longitude = attributes.getValue(ATTRIBUTE_LON);
         altitude = null;
         time = null;
-        waypointType = null;
+        markerType = null;
     }
 
-    /**
-     * On waypoint end.
-     */
-    private void onWaypointEnd() throws SAXException {
-        addWaypoint();
+    private void onMarkerEnd() throws SAXException {
+        addMarker();
     }
 }

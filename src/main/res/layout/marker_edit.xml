@@ -37,7 +37,7 @@ limitations under the License.
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:drawableStart="@drawable/ic_marker_orange_pushpin_with_shadow"
-                    android:id="@+id/marker_edit_waypoint_name"
+                    android:id="@+id/marker_edit_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -49,7 +49,7 @@ limitations under the License.
                 android:importantForAutofill="no">
 
                 <AutoCompleteTextView
-                    android:id="@+id/marker_edit_waypoint_marker_type"
+                    android:id="@+id/marker_edit_marker_type"
                     style="@style/EditCategory"
                     android:layout_width="match_parent"
                     android:hint="@string/marker_edit_marker_type"
@@ -64,7 +64,7 @@ limitations under the License.
                 android:importantForAutofill="no">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/marker_edit_waypoint_description"
+                    android:id="@+id/marker_edit_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -75,7 +75,7 @@ limitations under the License.
                 android:layout_marginTop="16dp">
 
                 <ImageView
-                    android:id="@+id/marker_edit_waypoint_photo"
+                    android:id="@+id/marker_edit_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -87,7 +87,7 @@ limitations under the License.
                     android:scaleType="fitStart" />
 
                 <ImageView
-                    android:id="@+id/marker_edit_waypoint_photo_delete"
+                    android:id="@+id/marker_edit_photo_delete"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_alignParentTop="true"

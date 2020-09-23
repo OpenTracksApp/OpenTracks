@@ -40,7 +40,7 @@ import de.dennisguse.opentracks.util.StringUtils;
  */
 public class KmlTrackWriter implements TrackWriter {
 
-    public static final String WAYPOINT_STYLE = "waypoint";
+    public static final String MARKER_STYLE = "waypoint";
     private static final String START_STYLE = "start";
     private static final String END_STYLE = "end";
     private static final String TRACK_STYLE = "track";
@@ -52,7 +52,7 @@ public class KmlTrackWriter implements TrackWriter {
     public static final String EXTENDED_DATA_TYPE_POWER = "power";
     public static final String EXTENDED_DATA_TYPE_ELEVATION_GAIN = "elevation_gain";
 
-    private static final String WAYPOINT_ICON = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png";
+    private static final String MARKER_ICON = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png";
     private static final String START_ICON = "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png";
     private static final String END_ICON = "http://maps.google.com/mapfiles/kml/paddle/red-circle.png";
     private static final String TRACK_ICON = "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
@@ -75,7 +75,7 @@ public class KmlTrackWriter implements TrackWriter {
 
     /**
      * @param context           the context
-     * @param exportTrackDetail should detailed information about the track be exported (e.g., title, description, waypoints, timing)?
+     * @param exportTrackDetail should detailed information about the track be exported (e.g., title, description, markers, timing)?
      * @param exportSensorData  should {@link TrackPoint}'s sensor data be exported?
      * @param exportPhotos      should pictures be exported (if true: exports to KMZ)?
      */
@@ -124,7 +124,7 @@ public class KmlTrackWriter implements TrackWriter {
             writeTrackStyle();
             writePlacemarkerStyle(START_STYLE, START_ICON, 32, 1);
             writePlacemarkerStyle(END_STYLE, END_ICON, 32, 1);
-            writePlacemarkerStyle(WAYPOINT_STYLE, WAYPOINT_ICON, 20, 2);
+            writePlacemarkerStyle(MARKER_STYLE, MARKER_ICON, 20, 2);
             printWriter.println("<Schema id=\"" + SCHEMA_ID + "\">");
 
             writeSimpleArrayStyle(EXTENDED_DATA_TYPE_SPEED, context.getString(R.string.description_speed_ms));
@@ -147,7 +147,7 @@ public class KmlTrackWriter implements TrackWriter {
     }
 
     @Override
-    public void writeBeginWaypoints(Track track) {
+    public void writeBeginMarkers(Track track) {
         if (printWriter != null) {
             printWriter.println("<Folder>");
             if (exportTrackDetail) {
@@ -158,21 +158,21 @@ public class KmlTrackWriter implements TrackWriter {
     }
 
     @Override
-    public void writeEndWaypoints() {
+    public void writeEndMarkers() {
         if (printWriter != null) {
             printWriter.println("</Folder>");
         }
     }
 
     @Override
-    public void writeWaypoint(Marker waypoint) {
+    public void writeMarker(Marker marker) {
         if (printWriter != null && exportTrackDetail) {
-            boolean existsPhoto = FileUtils.getPhotoFileIfExists(context, waypoint.getTrackId(), waypoint.getPhotoURI()) != null;
-            if (waypoint.hasPhoto() && exportPhotos && existsPhoto) {
-                float heading = getHeading(waypoint.getTrackId(), waypoint.getLocation());
-                writePhotoOverlay(waypoint, heading);
+            boolean existsPhoto = FileUtils.getPhotoFileIfExists(context, marker.getTrackId(), marker.getPhotoURI()) != null;
+            if (marker.hasPhoto() && exportPhotos && existsPhoto) {
+                float heading = getHeading(marker.getTrackId(), marker.getLocation());
+                writePhotoOverlay(marker, heading);
             } else {
-                writePlacemark(waypoint.getName(), waypoint.getCategory(), waypoint.getDescription(), WAYPOINT_STYLE, waypoint.getLocation());
+                writePlacemark(marker.getName(), marker.getCategory(), marker.getDescription(), MARKER_STYLE, marker.getLocation());
             }
         }
     }
@@ -337,30 +337,24 @@ public class KmlTrackWriter implements TrackWriter {
         }
     }
 
-    /**
-     * Writes a photo overlay from waypoint.
-     *
-     * @param waypoint Waypoint object.
-     * @param heading  the heading.
-     */
-    private void writePhotoOverlay(Marker waypoint, float heading) {
+    private void writePhotoOverlay(Marker marker, float heading) {
         if (exportTrackDetail) {
             printWriter.println("<PhotoOverlay>");
-            printWriter.println("<name>" + StringUtils.formatCData(waypoint.getName()) + "</name>");
-            printWriter.println("<description>" + StringUtils.formatCData(waypoint.getDescription()) + "</description>");
+            printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
+            printWriter.println("<description>" + StringUtils.formatCData(marker.getDescription()) + "</description>");
             printWriter.print("<Camera>");
-            printWriter.print("<longitude>" + waypoint.getLocation().getLongitude() + "</longitude>");
-            printWriter.print("<latitude>" + waypoint.getLocation().getLatitude() + "</latitude>");
+            printWriter.print("<longitude>" + marker.getLocation().getLongitude() + "</longitude>");
+            printWriter.print("<latitude>" + marker.getLocation().getLatitude() + "</latitude>");
             printWriter.print("<altitude>20</altitude>");
             printWriter.print("<heading>" + heading + "</heading>");
             printWriter.print("<tilt>90</tilt>");
             printWriter.println("</Camera>");
-            printWriter.println("<TimeStamp><when>" + getTime(waypoint.getLocation()) + "</when></TimeStamp>");
-            printWriter.println("<styleUrl>#" + KmlTrackWriter.WAYPOINT_STYLE + "</styleUrl>");
-            writeCategory(waypoint.getCategory());
+            printWriter.println("<TimeStamp><when>" + getTime(marker.getLocation()) + "</when></TimeStamp>");
+            printWriter.println("<styleUrl>#" + KmlTrackWriter.MARKER_STYLE + "</styleUrl>");
+            writeCategory(marker.getCategory());
 
             if (exportPhotos) {
-                printWriter.println("<Icon><href>" + KmzTrackExporter.buildKmzImageFilePath(waypoint) + "</href></Icon>");
+                printWriter.println("<Icon><href>" + KmzTrackExporter.buildKmzImageFilePath(marker) + "</href></Icon>");
             }
 
             printWriter.print("<ViewVolume>");
@@ -371,7 +365,7 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.print("<topFov>45</topFov>");
             printWriter.println("</ViewVolume>");
             printWriter.println("<Point>");
-            printWriter.println("<coordinates>" + getCoordinates(waypoint.getLocation(), ",") + "</coordinates>");
+            printWriter.println("<coordinates>" + getCoordinates(marker.getLocation(), ",") + "</coordinates>");
             printWriter.println("</Point>");
             printWriter.println("</PhotoOverlay>");
         }

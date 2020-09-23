@@ -33,7 +33,7 @@ import de.dennisguse.opentracks.util.StringUtils;
  *
  * @author Sandor Dornbush
  */
-//TODO Export waypoints
+//TODO Export markers
 public class GpxTrackWriter implements TrackWriter {
 
     private static final NumberFormat ELEVATION_FORMAT = NumberFormat.getInstance(Locale.US);
@@ -120,27 +120,27 @@ public class GpxTrackWriter implements TrackWriter {
     }
 
     @Override
-    public void writeBeginWaypoints(Track track) {
+    public void writeBeginMarkers(Track track) {
         // Do nothing
     }
 
     @Override
-    public void writeEndWaypoints() {
+    public void writeEndMarkers() {
         // Do nothing
     }
 
     @Override
-    public void writeWaypoint(Marker waypoint) {
+    public void writeMarker(Marker marker) {
         if (printWriter != null) {
-            Location location = waypoint.getLocation();
+            Location location = marker.getLocation();
             printWriter.println("<wpt " + formatLocation(location) + ">");
             if (location.hasAltitude()) {
                 printWriter.println("<ele>" + ELEVATION_FORMAT.format(location.getAltitude()) + "</ele>");
             }
             printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
-            printWriter.println("<name>" + StringUtils.formatCData(waypoint.getName()) + "</name>");
-            printWriter.println("<desc>" + StringUtils.formatCData(waypoint.getDescription()) + "</desc>");
-            printWriter.println("<type>" + StringUtils.formatCData(waypoint.getCategory()) + "</type>");
+            printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
+            printWriter.println("<desc>" + StringUtils.formatCData(marker.getDescription()) + "</desc>");
+            printWriter.println("<type>" + StringUtils.formatCData(marker.getCategory()) + "</type>");
             printWriter.println("</wpt>");
         }
     }

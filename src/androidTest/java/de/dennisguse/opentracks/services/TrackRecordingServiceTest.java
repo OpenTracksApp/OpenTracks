@@ -318,7 +318,7 @@ public class TrackRecordingServiceTest {
         // then
         assertNotEquals(-1L, waypointId);
         Marker wpt = contentProviderUtils.getMarker(waypointId);
-        assertEquals(context.getString(R.string.marker_waypoint_icon_url), wpt.getIcon());
+        assertEquals(context.getString(R.string.marker_icon_url), wpt.getIcon());
         assertEquals(context.getString(R.string.marker_name_format, 1), wpt.getName());
         assertEquals(trackId, wpt.getTrackId());
         assertEquals(0.0, wpt.getLength(), 0.01);
