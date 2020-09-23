@@ -57,7 +57,6 @@ android {
         buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
 
 
-
         minSdkVersion 21
         targetSdkVersion 30
 
@@ -68,15 +67,25 @@ android {
         debug {
             applicationIdSuffix ".debug"
             versionNameSuffix "-debug"
+
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.txt'
         }
 
         release {
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
+
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.txt'
         }
 
         releasePlayStore {
             applicationIdSuffix ".playstore"
             versionNameSuffix "-PlayStore"
+
+            shrinkResources true
+            minifyEnabled true
+
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.txt'
         }
     }
 
