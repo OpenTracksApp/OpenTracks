@@ -23,7 +23,7 @@ public class AggregatedStatisticsActivity extends AbstractActivity {
         final AggregatedStatisticsModel viewModel = new ViewModelProvider(this).get(AggregatedStatisticsModel.class);
         viewModel.getAggregatedStats().observe(this, aggregatedStatistics -> {
             if (aggregatedStatistics != null) {
-                adapter = new AggregatedStatisticsAdapter(getApplicationContext(), aggregatedStatistics);
+                adapter = new AggregatedStatisticsAdapter(this, aggregatedStatistics);
                 listView.setAdapter(adapter);
             }
             adapter.notifyDataSetChanged();
