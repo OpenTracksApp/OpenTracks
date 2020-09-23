@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:opacity="opaque">
 
-    <!--    TODO DayNight: set background color for dayNight -->
-    <item android:drawable="@android:color/background_dark" />
+    <item android:drawable="@color/splashscreen_background" />
 
     <item
         android:width="300dp"

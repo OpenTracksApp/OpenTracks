@@ -36,4 +36,6 @@ limitations under the License.
     <color name="text_gradient_end">#00000000</color> <!-- black 0% opacity -->
     <color name="text_gradient_start">#FF000000</color> <!-- black 100% opacity -->
     <color name="track_controller_background">#FF0E0E0E</color> <!-- dark gray -->
+
+    <color name="splashscreen_background">#272727</color>
 </resources>
