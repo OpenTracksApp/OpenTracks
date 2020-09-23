@@ -31,7 +31,7 @@ public class AnnouncementUtils {
 
         String rate;
         String currentRate;
-        String currentRateMsg = "";
+        String currentRateMsg;
         if (reportSpeed) {
             int speedId = metricUnits ? R.plurals.voiceSpeedKilometersPerHour : R.plurals.voiceSpeedMilesPerHour;
             rate = context.getResources().getQuantityString(speedId, getQuantityCount(distancePerTime), distancePerTime);

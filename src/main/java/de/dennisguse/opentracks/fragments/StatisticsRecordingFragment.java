@@ -201,7 +201,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        recordingGpsAccuracy = Integer.parseInt(getContext().getResources().getString(R.string.recording_gps_accuracy_default));
+        recordingGpsAccuracy = Integer.parseInt(getResources().getString(R.string.recording_gps_accuracy_default));
 
         handlerUpdateUI = new Handler();
 

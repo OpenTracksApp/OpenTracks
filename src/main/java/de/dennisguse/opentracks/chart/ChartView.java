@@ -905,7 +905,7 @@ public class ChartView extends View {
         for (ChartValueSeries chartValueSeries : seriesList) {
             chartValueSeries.updateDimension();
         }
-        float density = getContext().getResources().getDisplayMetrics().density;
+        float density = getResources().getDisplayMetrics().density;
         spacer = (int) (density * SPACER);
         yAxisOffset = (int) (density * Y_AXIS_OFFSET);
 
