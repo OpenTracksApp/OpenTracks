@@ -13,6 +13,8 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
         <td>
             <a href="https://f-droid.org/packages/de.dennisguse.opentracks">
                 <img alt="Get it on F-Droid" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="60" align="middle">
+                <br />
+                <img alt="OpenTracks version published on F-Droid" src="https://img.shields.io/f-droid/v/de.dennisguse.opentracks.svg" align="middle" >
             </a>
         </td>
         <td>
