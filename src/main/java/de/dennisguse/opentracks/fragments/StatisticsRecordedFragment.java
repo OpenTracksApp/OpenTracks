@@ -51,7 +51,8 @@ public class StatisticsRecordedFragment extends Fragment {
 
     private TrackStatistics trackStatistics;
     private String category = "";
-    private Track track;
+    private Track.Id trackId;
+    private ContentProviderUtils contentProviderUtils;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
@@ -103,9 +104,8 @@ public class StatisticsRecordedFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Track.Id trackId = getArguments().getParcelable(TRACK_ID_KEY);
-        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(getContext());
-        track = contentProviderUtils.getTrack(trackId);
+        trackId = getArguments().getParcelable(TRACK_ID_KEY);
+        contentProviderUtils = new ContentProviderUtils(getContext());
     }
 
     @Override
@@ -184,6 +184,7 @@ public class StatisticsRecordedFragment extends Fragment {
         if (isResumed()) {
             getActivity().runOnUiThread(() -> {
                 if (isResumed()) {
+                    Track track = contentProviderUtils.getTrack(trackId);
                     trackStatistics = track != null ? track.getTrackStatistics() : null;
                     category = track != null ? track.getCategory() : "";
                     updateUI();

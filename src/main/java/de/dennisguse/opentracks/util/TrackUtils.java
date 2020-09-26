@@ -35,17 +35,22 @@ public class TrackUtils {
     }
 
     public static void updateTrack(Context context, Track track, String name, String category, String description, ContentProviderUtils contentProviderUtils) {
+        boolean update = false;
         if (name != null) {
             track.setName(name);
+            update = true;
         }
         if (category != null) {
             track.setCategory(category);
             track.setIcon(TrackIconUtils.getIconValue(context, category));
+            update = true;
         }
-
         if (description != null) {
             track.setDescription(description);
+            update = true;
         }
-        contentProviderUtils.updateTrack(track);
+        if (update) {
+            contentProviderUtils.updateTrack(track);
+        }
     }
 }
