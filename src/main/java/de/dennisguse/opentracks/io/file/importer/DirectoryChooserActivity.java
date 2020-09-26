@@ -21,7 +21,7 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        configureDirectoryChooserIntent(intent);
 
         startActivityForResult(intent, DIRECTORY_PICKER_REQUEST_CODE);
     }
@@ -33,19 +33,23 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 Uri directoryUri = resultData.getData();
 
-                startActivity(createIntent(directoryUri));
+                startActivity(createNextActivityIntent(directoryUri));
             }
             finish();
         }
     }
 
-    protected abstract Intent createIntent(Uri directoryUri);
+    protected void configureDirectoryChooserIntent(Intent intent) {
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+    }
+
+    protected abstract Intent createNextActivityIntent(Uri directoryUri);
 
 
     public static class ImportDirectoryChooserActivity extends DirectoryChooserActivity {
 
         @Override
-        protected Intent createIntent(Uri directoryUri) {
+        protected Intent createNextActivityIntent(Uri directoryUri) {
             Intent intent = IntentUtils.newIntent(this, ImportActivity.class);
             intent.putExtra(ImportActivity.EXTRA_DIRECTORY_URI_KEY, directoryUri);
             return intent;
@@ -55,11 +59,17 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
     public static class ExportDirectoryChooserActivity extends DirectoryChooserActivity {
 
         @Override
-        protected Intent createIntent(Uri directoryUri) {
+        protected Intent createNextActivityIntent(Uri directoryUri) {
             Intent intent = IntentUtils.newIntent(this, ExportActivity.class);
             intent.putExtra(ExportActivity.EXTRA_DIRECTORY_URI_KEY, directoryUri);
             intent.putExtra(ExportActivity.EXTRA_TRACKFILEFORMAT_KEY, PreferencesUtils.getExportTrackFileFormat(this));
             return intent;
+        }
+
+        @Override
+        protected void configureDirectoryChooserIntent(Intent intent) {
+            super.configureDirectoryChooserIntent(intent);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         }
     }
 }
