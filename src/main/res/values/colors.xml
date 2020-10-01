@@ -22,10 +22,10 @@ limitations under the License.
     <color name="chart_heart_rate_fill">#40E88A70</color> <!-- transparent red -->
     <color name="chart_pace_border">#FF0066FF</color> <!-- blue -->
     <color name="chart_pace_fill">#40C8E0FF</color> <!-- transparent blue -->
-    <color name="chart_power_border">#FF401465</color> <!-- purple -->
-    <color name="chart_power_fill">#40401465</color> <!-- transparent purple -->
     <color name="chart_speed_border">#FF0066FF</color> <!-- blue -->
     <color name="chart_speed_fill">#40C8E0FF</color> <!-- transparent blue -->
+    <color name="chart_power_border">#FF7A26C0</color> <!-- purple -->
+    <color name="chart_power_fill">#407A26C0</color> <!-- transparent purple -->
 
     <color name="colorAccent">@android:color/holo_orange_dark</color>
     <color name="colorAccentTransparent">#55FF8800</color>

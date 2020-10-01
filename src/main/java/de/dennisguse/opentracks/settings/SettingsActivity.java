@@ -20,6 +20,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingCadenceAndSpeedPreference;
+import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingPowerPreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeHeartRatePreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeSensorPreference;
 import de.dennisguse.opentracks.util.ActivityUtils;
@@ -132,6 +133,8 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
                 dialogFragment = BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(preference.getKey(), BluetoothUtils.HEART_RATE_SERVICE_UUID);
             } else if (preference instanceof BluetoothLeCyclingCadenceAndSpeedPreference) {
                 dialogFragment = BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(preference.getKey(), BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID);
+            } else if (preference instanceof BluetoothLeCyclingPowerPreference) {
+                dialogFragment = BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(preference.getKey(), BluetoothUtils.CYCLING_POWER_UUID);
             }
 
             if (dialogFragment != null) {

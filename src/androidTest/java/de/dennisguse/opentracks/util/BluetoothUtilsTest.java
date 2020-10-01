@@ -75,4 +75,16 @@ public class BluetoothUtilsTest {
         assertEquals(200, sensor.getCadence().getCrankRevolutionsCount());
         assertEquals(225, sensor.getSpeed().getWheelRevolutionsCount());
     }
+
+    @Test
+    public void parseCyclingPower_power() {
+        BluetoothGattCharacteristic characteristic = new BluetoothGattCharacteristic(BluetoothUtils.CYCLING_POWER_MEASUREMENT_CHAR_UUID, 0, 0);
+        characteristic.setValue(new byte[]{0, 0, 40, 0});
+
+        // when
+        int power_w = BluetoothUtils.parseCyclingPower(characteristic);
+
+        // then
+        assertEquals(40, power_w);
+    }
 }

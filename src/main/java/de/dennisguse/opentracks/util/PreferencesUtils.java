@@ -262,6 +262,15 @@ public class PreferencesUtils {
         return getInt(context, R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key, DEFAULT);
     }
 
+    public static boolean isBluetoothCyclingPowerSensorAddressNone(Context context) {
+        return isBluetoothSensorAddressNone(context, getBluetoothCyclingPowerSensorAddress(context));
+    }
+
+    public static String getBluetoothCyclingPowerSensorAddress(Context context) {
+        return getString(context, R.string.settings_sensor_bluetooth_cycling_power_key, getBluetoothSensorAddressNone(context));
+    }
+
+
     public static boolean shouldShowStatsOnLockscreen(Context context) {
         final boolean STATS_SHOW_ON_LOCKSCREEN_DEFAULT = context.getResources().getBoolean(R.bool.stats_show_on_lockscreen_while_recording_default);
         return getBoolean(context, R.string.stats_show_on_lockscreen_while_recording_key, STATS_SHOW_ON_LOCKSCREEN_DEFAULT);

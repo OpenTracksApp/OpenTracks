@@ -487,5 +487,47 @@
             app:layout_constraintRight_toLeftOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/stats_sensor_cadence_value" />
 
+        <!-- Cycling Power -->
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/stats_sensor_power_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="stats_sensor_power_label,stats_sensor_power_sensor_value,stats_sensor_power_value,stats_sensor_power_unit" />
+
+        <TextView
+            android:id="@+id/stats_sensor_power_label"
+            style="@style/StatsLargeLabel"
+            android:text="@string/sensor_state_power"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_sensor_horizontal_line" />
+
+        <TextView
+            android:id="@+id/stats_sensor_power_sensor_value"
+            style="@style/StatsTinyValue"
+            android:text="@string/value_unknown"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/stats_sensor_power_label"
+            tools:text="90" />
+
+        <TextView
+            android:id="@+id/stats_sensor_power_value"
+            style="@style/StatsLargeValue"
+            android:value="@string/value_unknown"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/stats_sensor_power_sensor_value"
+            tools:text="90" />
+
+        <TextView
+            android:id="@+id/stats_sensor_power_unit"
+            style="@style/StatsUnit"
+            android:text="@string/sensor_unit_power"
+            app:layout_constraintLeft_toRightOf="@+id/guideline2"
+            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@+id/stats_sensor_power_value" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

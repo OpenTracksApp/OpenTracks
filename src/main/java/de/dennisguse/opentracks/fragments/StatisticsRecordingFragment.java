@@ -22,6 +22,7 @@ import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
+import de.dennisguse.opentracks.content.sensor.SensorDataCyclingPower;
 import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.databinding.StatisticsRecordingBinding;
@@ -273,9 +274,9 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
             if (sensorDataSet != null) {
                 setHeartRateSensorData(sensorDataSet);
                 setCadenceSensorData(sensorDataSet);
-                setSpeedSensorData(sensorDataSet, isSelectedTrackRecording());
+                setPowerSensorData(sensorDataSet);
+                setSpeedSensorData(sensorDataSet);
             }
-
             setTotalElevationGain(trackRecordingService.getElevationGain_m());
         }
     }
@@ -320,6 +321,29 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         viewBinding.statsSensorCadenceValue.setText(sensorValue);
     }
 
+    private void setPowerSensorData(SensorDataSet sensorDataSet) {
+        int isVisible = View.VISIBLE;
+        if (PreferencesUtils.isBluetoothCyclingPowerSensorAddressNone(getContext())) {
+            isVisible = View.GONE;
+        }
+        viewBinding.statsSensorPowerGroup.setVisibility(isVisible);
+        setVisibilitySensorHorizontalLine();
+
+        String sensorValue = getContext().getString(R.string.value_unknown);
+        String sensorName = getContext().getString(R.string.value_unknown);
+        if (sensorDataSet != null && sensorDataSet.getCyclingPower() != null) {
+            SensorDataCyclingPower data = sensorDataSet.getCyclingPower();
+            sensorName = data.getSensorName();
+
+            if (data.hasPower_w() && data.isRecent()) {
+                sensorValue = StringUtils.formatDecimal(data.getPower_w(), 0);
+            }
+        }
+
+        viewBinding.statsSensorPowerSensorValue.setText(sensorName);
+        viewBinding.statsSensorPowerValue.setText(sensorValue);
+    }
+
     // Set elevation gain
     private void setTotalElevationGain(Float elevationGain_m) {
         //TODO Check if we can distribute the total elevation gain via trackStatistics instead of doing some computation in the UI layer.
@@ -349,14 +373,12 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         }
     }
 
-    private void setSpeedSensorData(SensorDataSet sensorDataSet, boolean isRecording) {
-        if (isRecording) {
-            if (sensorDataSet != null && sensorDataSet.getCyclingSpeed() != null) {
-                SensorDataCycling.Speed data = sensorDataSet.getCyclingSpeed();
+    private void setSpeedSensorData(SensorDataSet sensorDataSet) {
+        if (sensorDataSet != null && sensorDataSet.getCyclingSpeed() != null) {
+            SensorDataCycling.Speed data = sensorDataSet.getCyclingSpeed();
 
-                if (data.hasSpeed_mps() && data.isRecent()) {
-                    setSpeed(data.getSpeed_mps());
-                }
+            if (data.hasSpeed_mps() && data.isRecent()) {
+                setSpeed(data.getSpeed_mps());
             }
         }
     }
