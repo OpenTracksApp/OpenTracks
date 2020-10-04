@@ -63,7 +63,7 @@ As of v3.3.1 OpenTracks enables to use custom dashboards.
 The reference implementation is [OSMDashboard](https://github.com/OpenTracksApp/OSMDashboard), which presents an OpenStreetMap map (showing the current track, incl. updates).
 The developer documentation is in [README_API.md](README_API.md).
 
-Alternatively, recorded tracks can be shared as KMZ/GPX to installed applications (e.g., [OsmAnd](https://play.google.com/store/apps/details?id=net.osmand) or [MAPS.ME](https://play.google.com/store/apps/details?id=com.mapswithme.maps.pro)).
+Alternatively, recorded tracks can be shared as KMZ/GPX to installed applications (e.g., [OsmAnd](https://play.google.com/store/apps/details?id=net.osmand)).
 However, this is rather slow and does not provide updates while recording.
 
 
