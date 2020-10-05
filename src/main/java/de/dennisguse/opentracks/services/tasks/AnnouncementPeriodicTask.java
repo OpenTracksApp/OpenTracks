@@ -169,9 +169,8 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
         List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(track.getId());
         IntervalStatistics intervalStatistics = new IntervalStatistics();
-        intervalStatistics.build(trackPoints, (float) (PreferencesUtils.isMetricUnits(context) ? 1 * UnitConversions.KM_TO_M : 1 * UnitConversions.MI_TO_M));
-        int numIntervals = intervalStatistics.getIntervalList().size();
-        IntervalStatistics.Interval lastInterval = numIntervals > 0 ? intervalStatistics.getIntervalList().get(numIntervals - 1) : null;
+        intervalStatistics.build(trackPoints, (float) (PreferencesUtils.isMetricUnits(context) ? 1d * UnitConversions.KM_TO_M : 1d * UnitConversions.MI_TO_M));
+        IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
 
         String announcement = AnnouncementUtils.getAnnouncement(context, trackStatistics, category, lastInterval);
         speakAnnouncement(announcement);

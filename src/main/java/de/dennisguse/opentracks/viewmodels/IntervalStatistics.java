@@ -8,7 +8,8 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 public class IntervalStatistics {
-    List<Interval> intervalList = new ArrayList<>();
+    private List<Interval> intervalList = new ArrayList<>();
+    private float distanceInterval_m;
 
     /**
      * @param trackPointList     the list of TrackPoint.
@@ -16,6 +17,7 @@ public class IntervalStatistics {
      */
     public void build(List<TrackPoint> trackPointList, float distanceInterval_m) {
         intervalList.clear();
+        this.distanceInterval_m = distanceInterval_m;
 
         if (trackPointList == null || trackPointList.size() == 0) {
             return;
@@ -49,6 +51,30 @@ public class IntervalStatistics {
 
     public List<Interval> getIntervalList() {
         return intervalList;
+    }
+
+    /**
+     * Return the last completed interval.
+     * An interval is complete if its distance is equal to distanceInterval_m.
+     *
+     * @return the interval object or null if any interval is completed.
+     */
+    public Interval getLastInterval() {
+        if (intervalList == null) {
+            return null;
+        }
+
+        if (intervalList.size() == 1 && intervalList.get(0).getDistance_m() < distanceInterval_m) {
+            return null;
+        }
+
+        for (int i = intervalList.size() - 1; i >= 0; i--) {
+            if (intervalList.get(i).getDistance_m() >= distanceInterval_m) {
+                return this.intervalList.get(i);
+            }
+        }
+
+        return null;
     }
 
     public static class Interval {
