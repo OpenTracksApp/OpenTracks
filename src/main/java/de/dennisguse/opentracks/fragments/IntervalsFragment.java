@@ -44,7 +44,7 @@ public class IntervalsFragment extends Fragment {
     private String intervalUnit;
     private IntervalStatisticsAdapter adapter;
     protected Spinner spinnerIntervals;
-    private ArrayAdapter spinnerAdapter;
+    private ArrayAdapter<IntervalStatisticsModel.IntervalOption> spinnerAdapter;
 
     private Track.Id trackId;
 
@@ -95,7 +95,7 @@ public class IntervalsFragment extends Fragment {
 
         spinnerIntervals = view.findViewById(R.id.spinner_intervals);
 
-        spinnerAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {
+        spinnerAdapter = new ArrayAdapter<IntervalStatisticsModel.IntervalOption>(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
