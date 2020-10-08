@@ -135,6 +135,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
                 if (content != null) {
                     speed = content.trim();
                 }
+                break;
             case TAG_EXTENSION_HEARTRATE:
                 if (content != null) {
                     heartrate = content.trim();
@@ -149,6 +150,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
                 if (content != null) {
                     uuid = content.trim();
                 }
+                break;
         }
 
         // Reset element content
