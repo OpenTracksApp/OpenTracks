@@ -54,17 +54,15 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     /**
-     * Target number of track points displayed by the map overlay.
+     * Target number of track points displayed by the diagrams (recommended).
      * We may display more than this number of points.
      */
-    @Deprecated
     private static final int TARGET_DISPLAYED_TRACKPOINTS = 5000;
 
     /**
-     * Maximum number of markers to displayed.
+     * Maximum number of markers to displayed in the diagrams.
      */
     @VisibleForTesting
-    @Deprecated
     private static final int MAX_DISPLAYED_MARKERS = 128;
 
     private static final String TAG = TrackDataHub.class.getSimpleName();

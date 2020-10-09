@@ -1,56 +1,45 @@
 package de.dennisguse.opentracks.viewmodels;
 
-import android.app.Application;
-import android.content.Context;
-
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
- * This view model is used to load intervals for a track.
+ * This model is used to load intervals for a track.
  * It uses a default interval but it can be set from outside to manage the interval length.
  */
-public class IntervalStatisticsModel extends AndroidViewModel {
+public class IntervalStatisticsModel {
 
-    private MutableLiveData<IntervalStatistics> intervalStats = new MutableLiveData<>();
+    private IntervalStatistics intervalStats;
+    private List<TrackPoint> trackPoints = new ArrayList<>();
 
-    public IntervalStatisticsModel(@NonNull Application application) {
-        super(application);
+    public IntervalStatistics getIntervalStats(boolean metricUnits, @Nullable IntervalOption interval) {
+        synchronized (trackPoints) {
+            if (interval == null) {
+                interval = IntervalOption.OPTION_1;
+            }
+
+            intervalStats = new IntervalStatistics();
+            float distanceInterval = metricUnits ? (float) (interval.getValue() * UnitConversions.KM_TO_M) : (float) (interval.getValue() * UnitConversions.MI_TO_M);
+            intervalStats.build(trackPoints, distanceInterval);
+            return intervalStats;
+        }
     }
 
-    public LiveData<IntervalStatistics> getIntervalStats(@Nullable Track.Id trackId, @Nullable IntervalOption interval) {
-        if (interval == null) {
-            interval = IntervalOption.OPTION_1;
+    public void add(TrackPoint trackPoint) {
+        synchronized (trackPoints) {
+            trackPoints.add(trackPoint);
         }
-        if (trackId != null) {
-            loadIntervalStats(trackId, interval);
-        }
-        return intervalStats;
     }
 
-    private void loadIntervalStats(final Track.Id trackId, IntervalOption interval) {
-        new Thread(() -> {
-            Context context = getApplication().getApplicationContext();
-            ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
-            List<TrackPoint> trackPointList = contentProviderUtils.getTrackPoints(trackId);
-
-            IntervalStatistics intervalStatistics = new IntervalStatistics();
-            float distanceInterval = PreferencesUtils.isMetricUnits(context) ? (float) (interval.getValue() * UnitConversions.KM_TO_M) : (float) (interval.getValue() * UnitConversions.MI_TO_M);
-            intervalStatistics.build(trackPointList, distanceInterval);
-
-            intervalStats.postValue(intervalStatistics);
-        }).start();
+    public void clear() {
+        synchronized (trackPoints) {
+            trackPoints.clear();
+        }
     }
 
     /**

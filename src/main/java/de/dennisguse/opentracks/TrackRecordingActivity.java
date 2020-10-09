@@ -66,9 +66,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     // Preferences
     private boolean recordingTrackPaused;
 
-    // Intervals recording fragment needs Track.Id when the activity creates it and knowing when category change.
-    private OnTrackRecordingListener intervalsListener;
-
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
         public void run() {
@@ -85,9 +82,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 if (trackId == null) {
                     // trackId isn't initialized -> leads a new recording.
                     trackId = service.startNewTrack();
-                    if (intervalsListener != null) {
-                        intervalsListener.onTrackId(trackId);
-                    }
                 } else {
                     // trackId is initialized -> resumes the track.
                     service.resumeTrack(trackId);
@@ -370,7 +364,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         Track track = contentProviderUtils.getTrack(trackId);
         String category = getString(TrackIconUtils.getIconActivityType(iconValue));
         TrackUtils.updateTrack(this, track, null, category, null, contentProviderUtils);
-        intervalsListener.onCategoryChanged(category);
     }
 
     private class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
@@ -391,7 +384,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 case 0:
                     return StatisticsRecordingFragment.newInstance();
                 case 1:
-                    return IntervalsFragment.IntervalsRecordingFragment.newInstance(trackId);
+                    return IntervalsFragment.IntervalsRecordingFragment.newInstance();
                 case 2:
                     return ChartFragment.newInstance(false);
                 case 3:
@@ -415,18 +408,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 default:
                     throw new RuntimeException("There isn't Fragment associated with the position: " + position);
             }
-        }
-    }
-
-    public interface OnTrackRecordingListener {
-        void onTrackId(Track.Id trackId);
-        void onCategoryChanged(String category);
-    }
-
-    public void setTrackIdListener(OnTrackRecordingListener listener) {
-        this.intervalsListener = listener;
-        if (trackId != null) {
-            listener.onTrackId(trackId);
         }
     }
 }

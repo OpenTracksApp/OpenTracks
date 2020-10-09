@@ -253,7 +253,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
                 case 0:
                     return StatisticsRecordedFragment.newInstance(trackId);
                 case 1:
-                    return IntervalsFragment.newInstance(trackId);
+                    return IntervalsFragment.newInstance();
                 case 2:
                     return ChartFragment.newInstance(false);
                 case 3:
