@@ -20,8 +20,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.preference.PreferenceManager;
 
 import de.dennisguse.opentracks.R;
@@ -34,6 +36,8 @@ import de.dennisguse.opentracks.io.file.TrackFileFormat;
  * @author Jimmy Shih
  */
 public class PreferencesUtils {
+
+    private final static String TAG = PreferencesUtils.class.getSimpleName();
 
     private PreferencesUtils() {
     }
@@ -339,8 +343,8 @@ public class PreferencesUtils {
     }
 
     public static boolean shouldInstantExportAfterWorkout(Context context) {
-        final boolean INSTANT_POST_WORKOUT_EXPORT_DEFAULT = context.getResources().getBoolean(R.bool.instant_export_enabled_default);
-        return getBoolean(context, R.string.instant_export_enabled_key, INSTANT_POST_WORKOUT_EXPORT_DEFAULT);
+        final boolean INSTANT_POST_WORKOUT_EXPORT_DEFAULT = context.getResources().getBoolean(R.bool.post_workout_export_enabled_default);
+        return getBoolean(context, R.string.post_workout_export_enabled_key, INSTANT_POST_WORKOUT_EXPORT_DEFAULT);
     }
 
     public static TrackFileFormat getExportTrackFileFormat(Context context) {
@@ -390,19 +394,25 @@ public class PreferencesUtils {
         PreferenceManager.setDefaultValues(context, R.xml.settings, readAgain);
     }
 
-    public static Uri getDefaultExportDirectoryUri(Context context)
-    {
+    public static DocumentFile getDefaultExportDirectoryUri(Context context) {
         String singleExportDirectorySettingsKey = getString(context, R.string.settings_default_export_directory_key, null);
         if (singleExportDirectorySettingsKey == null) {
             return null;
         }
-        return Uri.parse(singleExportDirectorySettingsKey);
+        try {
+            return DocumentFile.fromTreeUri(context, Uri.parse(singleExportDirectorySettingsKey));
+        } catch (Exception e) {
+            Log.w(TAG, "Could not decode default export directory: " + e.getMessage());
+        }
+        return null;
     }
 
     public static void setDefaultExportDirectoryUri(Context context, Uri directoryUri) {
-        setString(context,
-                R.string.settings_default_export_directory_key,
-                directoryUri.toString()
-        );
+        String value = directoryUri != null ? directoryUri.toString() : null;
+        setString(context, R.string.settings_default_export_directory_key, value);
+    }
+
+    public static boolean isDefaultExportDirectoryUri(Context context) {
+        return getDefaultExportDirectoryUri(context) != null;
     }
 }

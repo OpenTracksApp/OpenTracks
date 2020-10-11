@@ -152,6 +152,7 @@ limitations under the License.
         <activity android:name=".AggregatedStatisticsActivity" />
 
         <activity android:name=".io.file.importer.DirectoryChooserActivity$ExportDirectoryChooserActivity" />
+        <activity android:name=".io.file.importer.DirectoryChooserActivity$DefaultTrackExportDirectoryChooserActivity" />
 
         <activity
             android:name=".io.file.exporter.ExportActivity"
@@ -171,8 +172,6 @@ limitations under the License.
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".io.file.importer.DefaultTrackExportDirectoryChooserActivity" />
-        <activity android:name=".io.file.InitiateExportActivity" />
 
         <provider
             android:name=".content.provider.ShareContentProvider"

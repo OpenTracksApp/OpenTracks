@@ -47,7 +47,6 @@ import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
-import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.services.handlers.HandlerServer;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.services.sensors.ElevationSumManager;
@@ -55,6 +54,7 @@ import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTaskFactory;
 import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
+import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -62,8 +62,6 @@ import de.dennisguse.opentracks.util.SystemUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackNameUtils;
 import de.dennisguse.opentracks.util.TrackPointUtils;
-
-import static de.dennisguse.opentracks.io.file.exporter.InstantPostWorkoutExport.exportTrackToUri;
 
 /**
  * A background service that registers a location listener and records track points.
@@ -130,7 +128,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private HandlerServer handlerServer;
 
     private List<TrackRecordingServiceCallback> listeners = new ArrayList<>();
-    private Track.Id lastTrackId;
 
     @Override
     public void onCreate() {
@@ -197,18 +194,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             voiceExecutor = null;
         }
 
-        if (PreferencesUtils.shouldInstantExportAfterWorkout(getApplicationContext())) {
-            TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(this);
-
-            Uri directoryUri = PreferencesUtils.getDefaultExportDirectoryUri(getApplicationContext());
-            exportTrackToUri(directoryUri, getApplicationContext(), contentProviderUtils, trackFileFormat, lastTrackId);
-        }
-
         contentProviderUtils = null;
 
         binder.detachFromService();
         binder = null;
-
 
         // This should be the next to last operation
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
@@ -424,7 +413,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         // Need to remember the recordingTrackId before setting it to -1L
         Track.Id trackId = recordingTrackId;
-        lastTrackId = recordingTrackId;
         boolean wasPaused = recordingTrackPaused;
 
         updateRecordingState(null, true);
@@ -442,6 +430,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
                 updateTrackTotalTime(track);
             }
         }
+
+        ExportUtils.postWorkoutExport(this, track);
+
         endRecording(true);
     }
 

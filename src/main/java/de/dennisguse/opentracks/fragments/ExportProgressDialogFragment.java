@@ -22,7 +22,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,18 +29,13 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
-
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.io.file.ExportFile;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
-import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.util.DialogUtils;
+import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.FileUtils;
 
 public class ExportProgressDialogFragment extends DialogFragment {
@@ -197,7 +191,7 @@ public class ExportProgressDialogFragment extends DialogFragment {
 
                     cursor.moveToPosition(i);
                     Track track = contentProviderUtils.createTrack(cursor);
-                    if (track != null && exportTrack(context, track)) {
+                    if (track != null && ExportUtils.exportTrack(context, trackFileFormat, directory, track)) {
                         trackExportSuccessCount++;
                     }
                 }
@@ -205,36 +199,6 @@ public class ExportProgressDialogFragment extends DialogFragment {
                 onExportCompleted(trackExportSuccessCount, trackCount);
             }
         }
-
-        private Boolean exportTrack(Context context, Track track) {
-            TrackExporter trackExporter = trackFileFormat.newTrackExporter(context);
-
-            DocumentFile exportDocumentFile = ExportFile.getExportDocumentFile(
-                    track.getId(),
-                    trackFileFormat.getExtension(),
-                    directory,
-                    trackFileFormat.getMimeType()
-            );
-
-            try (OutputStream outputStream = context.getContentResolver().openOutputStream(exportDocumentFile.getUri())) {
-                if (trackExporter.writeTrack(track, outputStream)) {
-                    return true;
-                } else {
-                    if (!exportDocumentFile.delete()) {
-                        Log.e(TAG, "Unable to delete exportDocumentFile");
-                    }
-                    Log.e(TAG, "Unable to export track");
-                    return false;
-                }
-            } catch (FileNotFoundException e) {
-                Log.e(TAG, "Unable to open exportDocumentFile " + exportDocumentFile.getName(), e);
-                return false;
-            } catch (IOException e) {
-                Log.e(TAG, "Unable to close exportDocumentFile output stream", e);
-                return false;
-            }
-        }
-
     }
 
     public interface DismissCallback {
