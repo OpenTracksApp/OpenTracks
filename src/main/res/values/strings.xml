@@ -602,8 +602,9 @@ limitations under the License.
     <string name="hold_to_stop">Hold to stop recording</string>
     <string name="hold_to_pause">Hold to pause recording</string>
     <string name="toast_message_instant_track_was_exported">Last track exported</string>
-    <string name="instant_export_enabled_summary">Export track to storage after recording finished</string>
-    <string name="settings_default_export_uri_title">Set track export directory</string>
-    <string name="preference_key_default_export_uri">defaultExportUri</string>
-    <string name="summay_default_export_directory_not_set_yet">not set yet</string>
+
+    <string name="instant_export_enabled_summary">Export track to storage after recording is finished</string>
+    <string name="instant_export_enabled_title">Instant post-workout export</string>
+
+    <string name="settings_default_export_uri_title">Track export directory</string>
 </resources>

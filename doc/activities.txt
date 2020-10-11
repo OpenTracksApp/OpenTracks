@@ -47,8 +47,9 @@ MarkerDetailActivity --> CoordinateOnMapIntent : URI
 SettingsActivity --> AboutActivity
 SettingsActivity --> HelpActivity
 SettingsActivity --> ExportActivity
-SettingsActivity --> DirectoryChooserActivity
-SettingsActivity --> DirectoryChooserActivity
+SettingsActivity --> DirectoryChooserActivity$ImportDirectoryChooserActivity
+SettingsActivity --> DirectoryChooserActivity$ExportDirectoryChooserActivity
+SettingsActivity --> DirectoryChooserActivity$DefaultTrackExportDirectoryChooserActivity
 DirectoryChooserActivity$ImportDirectoryChooserActivity --> ImportActivity
 DirectoryChooserActivity$ExportDirectoryChooserActivity --> ExportActivity
 

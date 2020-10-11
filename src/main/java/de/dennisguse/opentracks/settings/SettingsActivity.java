@@ -1,13 +1,13 @@
 package de.dennisguse.opentracks.settings;
 
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
@@ -89,17 +89,13 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
 
             setExportTrackFileFormatOptions();
             setWheelCircumferenceInputFilter();
-            Preference instantExportDirectoryPreference = findPreference(getString(R.string.preference_key_default_export_uri));
-            if (instantExportDirectoryPreference != null) {
-                instantExportDirectoryPreference.setSummaryProvider(preference -> {
-                    Uri uri = PreferencesUtils.getDefaultExportDirectoryUri(getContext());
-                    return uri != null ? uri.getPath() : getString(R.string.summay_default_export_directory_not_set_yet);
-                });
-            }
-        }
 
-        private boolean isDefaultExportDirectorySet() {
-            return PreferencesUtils.getDefaultExportDirectoryUri(getContext()) != null;
+            Preference instantExportDirectoryPreference = findPreference(getString(R.string.settings_default_export_directory_key));
+            instantExportDirectoryPreference.setSummaryProvider(preference -> {
+                DocumentFile directory = PreferencesUtils.getDefaultExportDirectoryUri(getContext());
+                //Use same value for not set as Androidx ListPreference and EditTextPreference
+                return directory != null ? directory.getName() : getString(R.string.not_set);
+            });
         }
 
         @Override
@@ -109,20 +105,13 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
             updateUnits();
             updateReset();
             updateBluetooth();
-            updateExportDirectory();
-            setInstantExportPreferenceEnabled();
+
+            updatePostWorkoutExport();
         }
 
-        private void setInstantExportPreferenceEnabled() {
-            Preference instantExportEnabledPreference = findPreference("instantExportEnabled");
-            assert instantExportEnabledPreference != null;
-            instantExportEnabledPreference.setEnabled(isDefaultExportDirectorySet());
-        }
-
-        private void updateExportDirectory() {
-            Preference defaultExportDirectoryPreference = findPreference("defaultExportUri");
-            assert defaultExportDirectoryPreference != null;
-            HackUtils.invalidatePreference(defaultExportDirectoryPreference);
+        private void updatePostWorkoutExport() {
+            Preference instantExportEnabledPreference = findPreference(getString(R.string.post_workout_export_enabled_key));
+            instantExportEnabledPreference.setEnabled(PreferencesUtils.isDefaultExportDirectoryUri(getContext()));
         }
 
         @Override
