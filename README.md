@@ -5,40 +5,52 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
 <table>
     <tr>
         <th>Free</th>
-        <th>Paid (same as free)</th>
         <th>Donations</th>
         <th>Translations</th>
     </tr>
     <tr>
-        <td>
+        <td align="center">
             <a href="https://f-droid.org/packages/de.dennisguse.opentracks">
                 <img alt="Get it on F-Droid" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="60" align="middle">
-                <br />
-                <img alt="OpenTracks version published on F-Droid" src="https://img.shields.io/f-droid/v/de.dennisguse.opentracks.svg" align="middle" >
             </a>
         </td>
-        <td>
-            <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">
-                <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="60" align="middle">
-            </a>
-        </td>
-        <td>
+        <td align="center">
             <a href="https://liberapay.com/OpenTracks/donate">
                 <img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="45" align="middle">
             </a>
         </td>
-        <td>
+        <td align="center">
             <a href="https://www.transifex.com/opentracks/opentracks/">
                 Transifex
             </a>
         </td>
     </tr>
+    <tr>
+        <td align="center">
+            <img alt="OpenTracks version published on F-Droid" src="https://img.shields.io/f-droid/v/de.dennisguse.opentracks.svg" align="middle" >
+        </td>
+        <td align="center">
+            <a href="bitcoin:BC1QCKPLS3LPJLCPYXZM66HCY65HNESAS9ZGACY6YC">
+                <img alt="bitcoin:BC1QCKPLS3LPJLCPYXZM66HCY65HNESAS9ZGACY6YC" src="promotion/donations-bitcoin.png" height="90" align="middle">
+            </a>
+        </td align="center">
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td align="center">
+            <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">
+                <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="60" align="middle">
+            </a>
+        </td>
+        <td></td>
+    </tr>
 </table>
 
 ## Features:
-* __Tracking:__ track your sport and outdoor activities 
+* __Tracking:__ track your sport and outdoor activities
 * __Photos and Markers:__ mark interesting locations while tracking (also with photos)
-* __Bluetooth LE sensors:__ 
+* __Bluetooth LE sensors:__
   * heart rate
   * cycling: speed and cadence
 * __Export data:__ export tracks either as KMZ (incl. photos), KML or GPX
@@ -47,9 +59,9 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
 * __No advertising__
 * __Privacy:__
     * _does not contain any in-app analytics_
-    * _does not use Google Play Services_ 
+    * _does not use Google Play Services_
     * _has no cloud integration_
-    
+
 __Only required permissions:__
 * _ACCESS_FINE_LOCATION_: required to use the GPS.
 
@@ -93,8 +105,8 @@ Plonk42's version is available [here](https://github.com/Plonk42/mytracks).
 In 2019, _OpenTracks_ was forked from Plonk42's _My Tracks_ and major rework was conducted.
 
 Rework of _OpenTracks_ included:
-* removing Google's analytics code, 
-* removing integration into Google Drive, 
+* removing Google's analytics code,
+* removing integration into Google Drive,
 * removing Google Maps integration,
 * removing Google Earth integration,
 * removing use of Google Play service,
@@ -104,7 +116,7 @@ Rework of _OpenTracks_ included:
 * removing Protobuf (store sensosensorr data in SQLite columns directly), and
 * removing Android Service API for other apps.
 
-Artwork, logos and user interface remained more or less unchanged. 
+Artwork, logos and user interface remained more or less unchanged.
 
 More information about _Google My Tracks_:
 * [Wikipedia page](https://en.wikipedia.org/wiki/MyTracks)
