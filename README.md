@@ -30,8 +30,8 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
             <img alt="OpenTracks version published on F-Droid" src="https://img.shields.io/f-droid/v/de.dennisguse.opentracks.svg" align="middle" >
         </td>
         <td align="center">
-            <a href="bitcoin:BC1QCKPLS3LPJLCPYXZM66HCY65HNESAS9ZGACY6YC">
-                <img alt="bitcoin:BC1QCKPLS3LPJLCPYXZM66HCY65HNESAS9ZGACY6YC" src="promotion/donations-bitcoin.png" height="90" align="middle">
+            <a href="bitcoin:bc1qckpls3lpjlcpyxzm66hcy65hnesas9zgacy6yc">
+                <img alt="bitcoin:bc1qckpls3lpjlcpyxzm66hcy65hnesas9zgacy6yc" src="promotion/donations-bitcoin.png" height="90" align="middle">
             </a>
         </td align="center">
         <td></td>
