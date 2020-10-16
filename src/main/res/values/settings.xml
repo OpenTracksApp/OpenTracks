@@ -228,7 +228,7 @@
 
     <!-- androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode() -->
     <string name="night_mode_key" translatable="false">nightMode</string>
-    <string name="night_mode_default" translatable="false">@string/night_mode_no_value</string>
+    <string name="night_mode_default" translatable="false">@string/night_mode_system_value</string>
     <string name="night_mode_no_value" translatable="false">1</string>
     <string name="night_mode_yes_value" translatable="false">2</string>
     <string name="night_mode_system_value" translatable="false">-1</string>
