@@ -85,6 +85,9 @@ e) køb i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.o
 f) donere, og \n
 g) gør hvad du synes hjælper OpenTracks.</string>
 
+    <string name="open_track_using_dashboard">Åben med OpenTracks-Dashboard</string>
+    <string name="open_track_as_KMZ">Åben som KMZ</string>
+    <string name="open_track_as_GPX">Åben som GPX</string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">fly</string>
     <string name="activity_type_atv">Terrængående køretøj</string>

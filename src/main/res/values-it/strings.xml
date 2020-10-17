@@ -14,6 +14,54 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
+    <string name="about_preference_title">A proposito di OpenTracks</string>
+    <string name="about_description"><i>OpenTracks</i>è un\'applicazione di tracciamento sportivo che rispetta completamente la tua privacy.</string>
+    <string name="about_url">Pagina web del progetto: <a href="%1$s">%1$s</a></string>
+    <string name="about_version_name">Nome versione: %1$s</string>
+    <string name="about_version_code">Codice versione: %1$d</string>
+    <string name="about_history">OpenTracks è un fork di <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (cessato nel 2016).</string>
+    <string name="about_libraries">Librerie</string>
+    <!-- Help -->
+    <string name="help_feature_title">OpenTracks ha le seguenti caratteristiche:</string>
+    <string name="help_feature_content">
+        * crea tracciamenti GPS\n
+        * utilizza un sensore di frequenza cardiaca (solo Bluetooth LE)\n
+        * comunicazioni vocali (per tempo o distanza)\n
+        * crea marcatori (incl. immagini)\n
+        * funziona completamente offline\n
+        * mostra i tracciamenti su una mappa (vedi sotto)
+    </string>
+
+    <string name="help_track_map_title">Come mostrare un tracciamento su una mappa?</string>
+    <string name="help_track_map_content">
+        Utilizzare la piccola icona della mappa.\n
+        a)
+        (aggiornamenti in tempo reale) Installare <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
+        Fornisce mappe online o offline tramite <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n
+        In realtà, OSMDashboard è un\'applicazione separata che può accedere (temporaneamente) solo ai dati del tracciamento(i) che verranno mostrati.
+
+        \n
+        b)
+        Tramite una \"normale\" app di mappe (ad es. <a href="http://osmand.net/">OsmAnd</a> e <a href="https://maps.me/">MAPS.ME</a>).
+        Queste applicazioni devono supportare il formato di file KMZ (solo posizioni e marche temporali).
+Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>application/vnd.google-earth.kmz</i>.
+    </string>
+
+    <string name="help_storage_pictures_title">Come fa OpenTracks a memorizzare le immagini che sono state scattate come marcatori?</string>
+    <string name="help_storage_pictures_content">Queste sono memorizzate nella memoria interna dell\'app (cioè accessibili solo all\'interno di OpenTracks).</string>
+
+    <string name="help_track_export_title">Come posso esportare/condividere i tracciamenti registrati?</string>
+    <string name="help_data_google_play_services_title">OpenTracks richiede/utilizza Google Play Services?</string>
+
+    <string name="help_recording_title">Come fa OpenTracks a registrare i dati?</string>
+    <string name="help_data_storage_title">In che modo OpenTracks memorizza i dati dei sensori?</string>
+    <string name="help_gps_troubleshooting_title">OpenTracks non registra i luoghi?</string>
+    <string name="help_support_title">Come posso supportare OpenTracks?</string>
+    <string name="open_track_using_dashboard">Apri utilizzando OpenTracks-Dashboard</string>
+    <string name="open_track_as_KMZ">Apri come KMZ</string>
+    <string name="open_track_as_GPX">Apri come GPX</string>
+    <string name="open_track_as_trackfileformat">Apri come %1$s</string>
+
     <!-- Activity Type -->
     <string name="activity_type_airplane">aereo</string>
     <string name="activity_type_atv">fuoristrada</string>
@@ -25,23 +73,23 @@ limitations under the License.
     <string name="activity_type_cross_country_skiing">sci di fondo</string>
     <string name="activity_type_cycling">bicicletta</string>
     <string name="activity_type_dirt_bike">moto da cross</string>
-    <string name="activity_type_donkey_back_riding">equitazione con asino</string>
-    <string name="activity_type_driving">guida</string>
-    <string name="activity_type_driving_bus">guida con autobus</string>
-    <string name="activity_type_driving_car">guida con automobile</string>
+    <string name="activity_type_donkey_back_riding">asino a cavallo</string>
+    <string name="activity_type_driving">guidare</string>
+    <string name="activity_type_driving_bus">guidare autobus</string>
+    <string name="activity_type_driving_car">guidare auto</string>
     <string name="activity_type_ferry">traghetto</string>
     <string name="activity_type_frisbee">frisbee</string>
     <string name="activity_type_gliding">aliante</string>
     <string name="activity_type_hang_gliding">deltaplano</string>
     <string name="activity_type_helicopter">elicottero</string>
     <string name="activity_type_hiking">escursionismo</string>
-    <string name="activity_type_horse_back_riding">equitazione con cavallo</string>
+    <string name="activity_type_horse_back_riding">cavalcare</string>
     <string name="activity_type_hot_air_balloon">mongolfiera</string>
     <string name="activity_type_ice_sailing">pattinaggio su ghiaccio</string>
     <string name="activity_type_inline_skating">roller blading</string>
     <string name="activity_type_kayaking">kayak</string>
     <string name="activity_type_kite_surfing">kite surf</string>
-    <string name="activity_type_land_sailing">carro a vela</string>
+    <string name="activity_type_land_sailing">veicoli a vela</string>
     <string name="activity_type_mixed_type">tipo misto</string>
     <string name="activity_type_motor_bike">motocicletta</string>
     <string name="activity_type_motor_boating">barche a motore</string>
@@ -52,7 +100,7 @@ limitations under the License.
     <string name="activity_type_para_gliding">parapendio</string>
     <string name="activity_type_rc_airplane">aereo radiocomandato</string>
     <string name="activity_type_rc_boat">barca radiocomandata</string>
-    <string name="activity_type_rc_helicopter">elicottero radiocomandato</string>
+    <string name="activity_type_rc_helicopter">Elicottero radiocomandato</string>
     <string name="activity_type_riding">equitazione</string>
     <string name="activity_type_road_biking">ciclismo su strada</string>
     <string name="activity_type_roller_skiing">ski roll</string>
@@ -78,7 +126,7 @@ limitations under the License.
     <string name="activity_type_ultimate_frisbee">ultimate frisbee</string>
     <string name="activity_type_unknown">sconosciuto</string>
     <string name="activity_type_wakeboarding">wakeboard</string>
-    <string name="activity_type_walking">camminata</string>
+    <string name="activity_type_walking">camminare</string>
     <string name="activity_type_water_skiing">sci d\'acqua</string>
     <string name="activity_type_wind_surfing">windsurf</string>
     <!-- Description -->
@@ -244,7 +292,7 @@ limitations under the License.
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avanzate</string>
     <!-- Settings Chart -->
-    <string name="settings_chart_by_distance">Per distanza</string>
+    <string name="settings_chart_by_distance">Pedistanza</string>
     <string name="settings_chart_by_time">Per durata</string>
     <string name="settings_chart_x_axis">Asse X</string>
     <string name="settings_recording">Registrazione</string>
@@ -414,7 +462,7 @@ limitations under the License.
     <string name="voice_total_distance_miles_zero">distanza totale 0 miglia</string>
     <string name="voice_total_distance_zero">Distanza totale OpenTracks uguale a zero.</string>
     <!-- Waypoint Type -->
-    <string name="waypoint_type_atm">bancomat</string>
+    <string name="waypoint_type_atm">Bancomat</string>
     <string name="waypoint_type_bank">banca</string>
     <string name="waypoint_type_bar">bar</string>
     <string name="waypoint_type_barbecue">barbecue</string>
@@ -460,7 +508,7 @@ limitations under the License.
     <string name="waypoint_type_theater">teatro</string>
     <string name="waypoint_type_toilet">toilette</string>
     <string name="waypoint_type_tourist_information">informazioni turistiche</string>
-    <string name="waypoint_type_tree">albero</string>
+    <string name="waypoint_type_tree">.</string>
     <string name="waypoint_type_tunnel">tunnel</string>
     <string name="waypoint_type_waterfall">cascata</string>
     <string name="waypoint_type_water_fountain">fontana ad acqua</string>
