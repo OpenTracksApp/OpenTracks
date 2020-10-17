@@ -216,6 +216,23 @@ limitations under the License.
     <string name="export_progress_message">Exporting to %1$s&#8230;</string>
     <string name="export_success">Exported %1$s to %2$s</string>
     <string name="export_title">Export to&#8230;</string>
+    <string name="export_track_already_exists_msg">The track %1$s already exists at the destination directory.</string>
+    <plurals name="export_all_end_with_errors">
+        <item quantity="one">Completed with one error</item>
+        <item quantity="other">Completed with %1$d errors</item>
+    </plurals>
+    <string name="export_all_end">Completed</string>
+    <string name="export_all_do_it_for_all">do it for all conflicts</string>
+    <string name="export_click_twice_cancel">Click back again to cancel</string>
+    <string name="export_show_errors">Show Errors</string>
+    <string name="export_track_errors">Tracks not exported</string>
+    <string name="export_progress_review">
+        Total exported tracks: %1$d\n
+        - New tracks exported: %2$d\n
+        - Tracks overwritten: %3$d\n
+        - Tracks skipped: %4$d\n
+        - Errors: %5$d
+    </string>
     <!-- External Storage -->
     <!-- Files -->
     <string name="files_few">%1$d files</string>
@@ -243,6 +260,9 @@ limitations under the License.
     <string name="generic_success_title">Success</string>
     <string name="generic_tracks">Tracks</string>
     <string name="generic_yes">Yes</string>
+    <string name="generic_overwrite">Overwrite</string>
+    <string name="generic_skip">Skip</string>
+    <string name="generic_separator_done_total">/</string>
     <!-- Gps -->
     <string name="gps_location_access">&#8216;Location access&#8217;</string>
     <string name="gps_disabled">GPS not enabled. Tap here to go to %1$s. Press the back button to return.</string>

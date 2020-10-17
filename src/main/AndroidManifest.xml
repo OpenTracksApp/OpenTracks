@@ -154,9 +154,7 @@ limitations under the License.
         <activity android:name=".io.file.importer.DirectoryChooserActivity$ExportDirectoryChooserActivity" />
         <activity android:name=".io.file.importer.DirectoryChooserActivity$DefaultTrackExportDirectoryChooserActivity" />
 
-        <activity
-            android:name=".io.file.exporter.ExportActivity"
-            android:theme="@style/ThemeCustomTransparentActivity" />
+        <activity android:name=".io.file.exporter.ExportActivity" />
 
         <activity android:name=".settings.SettingsActivity" />
 
@@ -196,5 +194,10 @@ limitations under the License.
             android:foregroundServiceType="location|connectedDevice"
             android:icon="@drawable/ic_logo_color_24dp"
             android:label="@string/recording_service" />
+
+        <service
+            android:name=".io.file.exporter.ExportService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 </manifest>

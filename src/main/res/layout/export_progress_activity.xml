@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/export_progress_done"
+                style="@style/TextMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="48dp"
+                app:layout_constraintEnd_toStartOf="@id/export_progress_slash"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="1" />
+
+            <TextView
+                android:id="@+id/export_progress_slash"
+                style="@style/TextMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/generic_separator_done_total"
+                app:layout_constraintBottom_toBottomOf="@id/export_progress_done"
+                app:layout_constraintEnd_toStartOf="@id/export_progress_total"
+                app:layout_constraintStart_toEndOf="@id/export_progress_done"
+                app:layout_constraintTop_toTopOf="@id/export_progress_done" />
+
+            <TextView
+                android:id="@+id/export_progress_total"
+                style="@style/TextMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintBottom_toBottomOf="@id/export_progress_slash"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/export_progress_slash"
+                app:layout_constraintTop_toTopOf="@id/export_progress_slash"
+                tools:text="10" />
+
+            <ProgressBar
+                android:id="@+id/export_progress_bar"
+                style="@style/ProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/export_progress_done"
+                tools:progress="25" />
+
+            <TextView
+                android:id="@+id/export_progress_summary"
+                style="@style/TextMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="24dp"
+                android:text="@string/export_progress_review"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/export_progress_bar" />
+
+            <ImageView
+                android:id="@+id/export_progress_alert_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintBottom_toBottomOf="@id/export_progress_alert_msg"
+                app:layout_constraintEnd_toStartOf="@id/export_progress_alert_msg"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/export_progress_alert_msg"
+                app:srcCompat="@drawable/ic_report_problem_24" />
+
+            <TextView
+                android:id="@+id/export_progress_alert_msg"
+                style="@style/TextMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toTopOf="@id/export_progress_toggle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/export_progress_alert_icon"
+                app:layout_constraintTop_toBottomOf="@id/export_progress_summary"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:text="The track already exists" />
+
+            <CheckBox
+                android:id="@+id/export_progress_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="24dp"
+                android:checked="false"
+                android:text="@string/export_all_do_it_for_all"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/export_progress_alert_msg" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <View style="@style/BottomButtonDivider" />
+
+    <LinearLayout style="@style/BottomButtonBar">
+
+        <Button
+            android:id="@+id/export_progress_left_button"
+            style="@style/BottomButton"
+            android:layout_gravity="center"
+            android:text="@string/generic_skip"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/export_progress_right_button"
+            style="@style/BottomButton"
+            android:layout_gravity="right"
+            android:text="@string/generic_overwrite"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+    </LinearLayout>
+
+</LinearLayout>
