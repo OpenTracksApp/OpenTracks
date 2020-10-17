@@ -1,6 +1,10 @@
 package de.dennisguse.opentracks.util;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.DocumentsContract;
 import android.util.Log;
 
 import androidx.documentfile.provider.DocumentFile;
@@ -8,6 +12,8 @@ import androidx.documentfile.provider.DocumentFile;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
@@ -26,23 +32,44 @@ public class ExportUtils {
         }
     }
 
+    public static List<String> getAllFiles(Context context, Uri directoryUri) {
+        List<String> fileNames = new ArrayList<>();
+        final ContentResolver resolver = context.getContentResolver();
+        final Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(directoryUri, DocumentsContract.getDocumentId(directoryUri));
+
+        try {
+            Cursor c = resolver.query(
+                    childrenUri,
+                    new String[] { DocumentsContract.Document.COLUMN_DISPLAY_NAME },
+                    null,null, null
+            );
+            while (c.moveToNext()) {
+                fileNames.add(c.getString(0));
+            }
+        } catch (Exception e) {
+            Log.w(TAG, "Failed query: " + e);
+        }
+
+        return fileNames;
+    }
+
     public static boolean exportTrack(Context context, TrackFileFormat trackFileFormat, DocumentFile directory, Track track) {
         TrackExporter trackExporter = trackFileFormat.newTrackExporter(context);
 
-        DocumentFile exportDocumentFile = ExportUtils.getExportDocumentFile(track.getId(), trackFileFormat.getExtension(), directory, trackFileFormat.getMimeType());
+        Uri exportDocumentFileUri = getExportDocumentFileUri(context, track.getId(), trackFileFormat, directory);
 
-        try (OutputStream outputStream = context.getContentResolver().openOutputStream(exportDocumentFile.getUri())) {
+        try (OutputStream outputStream = context.getContentResolver().openOutputStream(exportDocumentFileUri)) {
             if (trackExporter.writeTrack(track, outputStream)) {
                 return true;
             } else {
-                if (!exportDocumentFile.delete()) {
+                if (!DocumentFile.fromSingleUri(context, exportDocumentFileUri).delete()) {
                     Log.e(TAG, "Unable to delete exportDocumentFile");
                 }
                 Log.e(TAG, "Unable to export track");
                 return false;
             }
         } catch (FileNotFoundException e) {
-            Log.e(TAG, "Unable to open exportDocumentFile " + exportDocumentFile.getName(), e);
+            Log.e(TAG, "Unable to open exportDocumentFile " + exportDocumentFileUri, e);
             return false;
         } catch (IOException e) {
             Log.e(TAG, "Unable to close exportDocumentFile output stream", e);
@@ -50,16 +77,44 @@ public class ExportUtils {
         }
     }
 
-    public static DocumentFile getExportDocumentFile(Track.Id trackId, String trackFileFormatExtension, DocumentFile directory, String mimeType) {
-        String fileName = getExportFileNameByTrackId(trackId, trackFileFormatExtension);
-        DocumentFile file = directory.findFile(fileName);
-        if (file == null) {
-            file = directory.createFile(mimeType, fileName);
+    public static boolean isExportFileExists(Track.Id trackId, String trackFileFormatExtension, List<String> filesName) {
+        return filesName.contains(getExportFileNameByTrackId(trackId, trackFileFormatExtension));
+    }
+
+    private static Uri getExportDocumentFileUri(Context context, Track.Id trackId, TrackFileFormat trackFileFormat, DocumentFile directory) {
+        String exportFileName = getExportFileNameByTrackId(trackId, trackFileFormat.getExtension());
+        Uri exportDocumentFileUri = findFile(context, directory.getUri(), exportFileName);
+        if (exportDocumentFileUri == null) {
+            exportDocumentFileUri = directory.createFile(trackFileFormat.getMimeType(), exportFileName).getUri();
         }
-        return file;
+        return exportDocumentFileUri;
     }
 
     private static String getExportFileNameByTrackId(Track.Id trackId, String trackFileFormatExtension) {
         return trackId.getId() + "." + trackFileFormatExtension;
+    }
+
+    private static Uri findFile(Context context, Uri directoryUri, String exportFileName) {
+        final ContentResolver resolver = context.getContentResolver();
+        final Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(directoryUri, DocumentsContract.getDocumentId(directoryUri));
+
+        try {
+            Cursor c = resolver.query(
+                    childrenUri,
+                    new String[] { DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME },
+                    null,null, null
+            );
+            while (c.moveToNext()) {
+                final String documentId = c.getString(0);
+                final String documentName = c.getString(1);
+                if (documentName.equals(exportFileName)) {
+                    return DocumentsContract.buildDocumentUriUsingTree(directoryUri, documentId);
+                }
+            }
+        } catch (Exception e) {
+            Log.w(TAG, "Find file error: failed query: " + e);
+        }
+
+        return null;
     }
 }

@@ -224,4 +224,6 @@ limitations under the License.
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
     </style>
+
+    <style name="ProgressBar" parent="@style/Widget.AppCompat.ProgressBar.Horizontal" />
 </resources>
