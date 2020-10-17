@@ -59,6 +59,10 @@ public class ExportUtils {
         return file;
     }
 
+    public static boolean existsExportDocumentFile(Track.Id trackId, String trackFileFormatExtension, DocumentFile directory) {
+        return directory.findFile(getExportFileNameByTrackId(trackId, trackFileFormatExtension)) == null ? false : true;
+    }
+
     private static String getExportFileNameByTrackId(Track.Id trackId, String trackFileFormatExtension) {
         return trackId.getId() + "." + trackFileFormatExtension;
     }
