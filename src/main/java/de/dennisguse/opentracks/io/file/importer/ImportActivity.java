@@ -16,6 +16,7 @@
 
 package de.dennisguse.opentracks.io.file.importer;
 
+import android.content.ClipData;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -44,6 +45,8 @@ public class ImportActivity extends FragmentActivity implements ImportProgressDi
         if (savedInstanceState == null || !savedInstanceState.getBoolean(BUNDLE_ACTIVITY_RECREATED, false)) {
             if (getIntent().getData() != null) {
                 ImportProgressDialogFragment.showDialog(getSupportFragmentManager(), getIntent().getData(), false);
+            } else if (getIntent().getClipData().getItemCount() > 0) {
+                ImportProgressDialogFragment.showDialog(getSupportFragmentManager(), getIntent().getClipData().getItemAt(0).getUri(), false);
             } else {
                 // Started from DirectoryChooserActivity
                 ImportProgressDialogFragment.showDialog(getSupportFragmentManager(), getIntent().getParcelableExtra(EXTRA_DIRECTORY_URI_KEY), true);
