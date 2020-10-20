@@ -39,7 +39,9 @@ limitations under the License.
                     android:drawableStart="@drawable/ic_marker_orange_pushpin_with_shadow"
                     android:id="@+id/marker_edit_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapWords"
+                    android:selectAllOnFocus="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -53,7 +55,8 @@ limitations under the License.
                     style="@style/EditCategory"
                     android:layout_width="match_parent"
                     android:hint="@string/marker_edit_marker_type"
-                    android:imeOptions="actionNext" />
+                    android:imeOptions="actionNext"
+                    android:selectAllOnFocus="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -66,7 +69,9 @@ limitations under the License.
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/marker_edit_description"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences"
+                    android:selectAllOnFocus="true" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <RelativeLayout
