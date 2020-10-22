@@ -149,7 +149,7 @@ public class Track {
         @NonNull
         @Override
         public String toString() {
-            throw new RuntimeException("Not supported");
+            return String.valueOf(id);
         }
 
         @Override
