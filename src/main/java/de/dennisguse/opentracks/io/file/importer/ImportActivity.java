@@ -45,7 +45,7 @@ public class ImportActivity extends FragmentActivity implements ImportProgressDi
         if (savedInstanceState == null || !savedInstanceState.getBoolean(BUNDLE_ACTIVITY_RECREATED, false)) {
             if (getIntent().getData() != null) {
                 ImportProgressDialogFragment.showDialog(getSupportFragmentManager(), getIntent().getData(), false);
-            } else if (getIntent().getClipData().getItemCount() > 0) {
+            } else if (getIntent().getClipData() != null && getIntent().getClipData().getItemCount() > 0) {
                 ImportProgressDialogFragment.showDialog(getSupportFragmentManager(), getIntent().getClipData().getItemAt(0).getUri(), false);
             } else {
                 // Started from DirectoryChooserActivity
