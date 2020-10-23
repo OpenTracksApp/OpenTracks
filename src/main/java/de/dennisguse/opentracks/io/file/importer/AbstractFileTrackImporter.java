@@ -134,13 +134,18 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             saxParser.parse(inputStream, this);
             Log.d(TAG, "Total import time: " + (System.currentTimeMillis() - start) + "ms");
             if (trackIds.size() != 1) {
-                throw new MultiTracksImportException();
+                // TODO Multi track is not supported yet.
+                throw new ImportParserException("Multi track not supported");
             }
             return trackIds.get(0);
-        } catch (MultiTracksImportException | IOException | SAXException | SQLiteConstraintException | ParserConfigurationException e) {
+        } catch (IOException | SAXException | ParserConfigurationException e) {
             Log.e(TAG, "Unable to import file", e);
             cleanImport();
-            return null;
+            throw new ImportParserException(e);
+        } catch (SQLiteConstraintException e) {
+            Log.e(TAG, "Unable to import file", e);
+            cleanImport();
+            throw new ImportAlreadyExistsException(e);
         }
     }
 
@@ -549,10 +554,5 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
         // The number of buffered locations
         int numBufferedTrackPoints = 0;
-    }
-
-    @Deprecated
-    //TODO According to the reader AND writer, we support multiple tracks per file; we should implement it here also.
-    private static class MultiTracksImportException extends RuntimeException {
     }
 }

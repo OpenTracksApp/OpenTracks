@@ -16,8 +16,6 @@
 
 package de.dennisguse.opentracks.io.file.exporter;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,7 +32,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 
 import androidx.documentfile.provider.DocumentFile;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
@@ -45,6 +42,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.io.file.ErrorListDialog;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.FileUtils;
@@ -68,6 +66,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     private static final String BUNDLE_SKIPPED_COUNT = "track_export_skipped_count";
     private static final String BUNDLE_TOTAL_COUNT = "track_export_total_count";
     private static final String BUNDLE_DIRECTORY_FILES = "track_directory_files";
+    private static final String BUNDLE_TRACK_ERRORS = "track_errors";
 
     private static final int CONFLICT_NONE = 0;
     private static final int CONFLICT_OVERWRITE = 1;
@@ -98,6 +97,8 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     private CheckBox viewDoItForAllSwitch;
     private Button viewLeftButton;
     private Button viewRightButton;
+
+    private ArrayList<String> trackErrors = new ArrayList<>();
 
     private int autoConflict;
 
@@ -159,8 +160,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.export_progress_message, directoryDisplayName));
 
-        resultReceiver = new ExportServiceResultReceiver(new Handler());
-        resultReceiver.setReceiver(this);
+        resultReceiver = new ExportServiceResultReceiver(new Handler(), this);
 
         viewTotal = findViewById(R.id.export_progress_total);
         viewDone = findViewById(R.id.export_progress_done);
@@ -187,6 +187,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
             trackExportSkippedCount = savedInstanceState.getInt(BUNDLE_SKIPPED_COUNT);
             trackExportTotalCount = savedInstanceState.getInt(BUNDLE_TOTAL_COUNT);
             directoryFiles = savedInstanceState.getStringArrayList(BUNDLE_DIRECTORY_FILES);
+            trackErrors = savedInstanceState.getStringArrayList(BUNDLE_TRACK_ERRORS);
 
             setProgress();
             initExport(getTotalDone());
@@ -203,6 +204,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         outState.putInt(BUNDLE_SKIPPED_COUNT, trackExportSkippedCount);
         outState.putInt(BUNDLE_TOTAL_COUNT, trackExportTotalCount);
         outState.putStringArrayList(BUNDLE_DIRECTORY_FILES, (ArrayList<String>) directoryFiles);
+        outState.putStringArrayList(BUNDLE_TRACK_ERRORS, trackErrors);
     }
 
     @Override
@@ -220,7 +222,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         }
 
         this.doubleBackToCancel = true;
-        Toast.makeText(this, getString(R.string.export_click_twice_cancel), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.generic_click_twice_cancel), Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(() -> doubleBackToCancel=false, 2000);
     }
@@ -311,15 +313,15 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
 
         if (trackExportErrorCount > 0) {
             viewLeftButton.setVisibility(View.VISIBLE);
-            viewLeftButton.setText(getString(R.string.export_show_errors));
-            viewLeftButton.setOnClickListener((view) -> new ErrorListDialog().show(getSupportFragmentManager(), ErrorListDialog.TAG));
+            viewLeftButton.setText(getString(R.string.generic_show_errors));
+            viewLeftButton.setOnClickListener((view) -> ErrorListDialog.showDialog(getSupportFragmentManager(), getString(R.string.export_track_errors), trackErrors));
             viewAlertIcon.setImageDrawable(getDrawable(R.drawable.ic_report_problem_24));
-            String msg = getResources().getQuantityString(R.plurals.export_all_end_with_errors, trackExportErrorCount, trackExportErrorCount);
+            String msg = getResources().getQuantityString(R.plurals.generic_completed_with_errors, trackExportErrorCount, trackExportErrorCount);
             viewAlertMsg.setText(msg);
         } else {
             viewLeftButton.setVisibility(View.GONE);
             viewAlertIcon.setImageDrawable(getDrawable(R.drawable.ic_dialog_success_24dp));
-            viewAlertMsg.setText(getString(R.string.export_all_end));
+            viewAlertMsg.setText(getString(R.string.generic_completed));
         }
 
         viewRightButton.setOnClickListener((view) -> finish());
@@ -337,7 +339,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
             case ExportServiceResultReceiver.RESULT_CODE_ERROR:
                 trackExportErrorCount++;
                 Track track = contentProviderUtils.getTrack(trackId);
-                ErrorListDialog.trackErrors.add(track.getName());
+                trackErrors.add(track.getName());
                 break;
             case ExportServiceResultReceiver.RESULT_CODE_SUCCESS:
                 if (ExportUtils.isExportFileExists(trackId, trackFileFormat.getExtension(), directoryFiles)) {
@@ -411,24 +413,6 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
             if (viewDoItForAllSwitch.isChecked()) {
                 autoConflict = CONFLICT_SKIP;
             }
-        }
-    }
-
-    public static class ErrorListDialog extends DialogFragment {
-
-        public static final String TAG = ErrorListDialog.class.getSimpleName();
-
-        public static List<String> trackErrors = new ArrayList<>();
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final String[] tracks = trackErrors.stream().toArray(String[]::new);
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity())
-                    .setTitle(getString(R.string.export_track_errors))
-                    .setItems(tracks, null)
-                    .setPositiveButton(R.string.generic_ok, (dialog, which) -> dismiss());
-            AlertDialog dialog = alertDialogBuilder.create();
-            return dialog;
         }
     }
 }

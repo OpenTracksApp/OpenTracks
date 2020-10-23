@@ -217,14 +217,7 @@ limitations under the License.
     <string name="export_success">Exported %1$s to %2$s</string>
     <string name="export_title">Export to&#8230;</string>
     <string name="export_track_already_exists_msg">The track %1$s already exists at the destination directory.</string>
-    <plurals name="export_all_end_with_errors">
-        <item quantity="one">Completed with one error</item>
-        <item quantity="other">Completed with %1$d errors</item>
-    </plurals>
-    <string name="export_all_end">Completed</string>
     <string name="export_all_do_it_for_all">do it for all conflicts</string>
-    <string name="export_click_twice_cancel">Click back again to cancel</string>
-    <string name="export_show_errors">Show Errors</string>
     <string name="export_track_errors">Tracks not exported</string>
     <string name="export_progress_review">
         Total exported tracks: %1$d\n
@@ -263,6 +256,13 @@ limitations under the License.
     <string name="generic_overwrite">Overwrite</string>
     <string name="generic_skip">Skip</string>
     <string name="generic_separator_done_total">/</string>
+    <string name="generic_show_errors">Show Errors</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Completed with one error</item>
+        <item quantity="other">Completed with %1$d errors</item>
+    </plurals>
+    <string name="generic_completed">Completed</string>
+    <string name="generic_click_twice_cancel">Click back again to cancel</string>
     <!-- Gps -->
     <string name="gps_location_access">&#8216;Location access&#8217;</string>
     <string name="gps_disabled">GPS not enabled. Tap here to go to %1$s. Press the back button to return.</string>
@@ -285,6 +285,12 @@ limitations under the License.
     <string name="image_stop">Stop</string>
     <string name="image_track">Track</string>
     <!-- Import -->
+    <string name="import_unsupported_format">Unsupported file format</string>
+    <string name="import_parser_error">Parser error: %1$s</string>
+    <string name="import_unable_to_import_file">Unable to import file: %1$s</string>
+    <string name="import_error_info">%1$s: %2$s</string>
+    <string name="import_error_list_dialog_title">Files not imported</string>
+    <string name="import_file_imported">File %1$s imported</string>
     <string name="import_error">Imported %1$d of %2$s from %3$s</string>
     <string name="import_no_directory">%1$s does not exist</string>
     <string name="import_no_file">There were no files to import. Connect your device to your computer and place the files to import in %1$s.</string>
@@ -293,6 +299,12 @@ limitations under the License.
     <string name="import_selection_option">All %1$s</string>
     <string name="import_selection_title">Import from external storage</string>
     <string name="import_success">Imported %1$s from %2$s</string>
+    <string name="import_progress_review">
+        Total imported files: %1$d\n
+        - Files imported: %2$d\n
+        - Already exists: %3$d\n
+        - Errors: %4$d
+    </string>
     <!-- Marker -->
     <string name="marker_add_error">Unable to insert a marker. No GPS signal. Try again.</string>
     <string name="marker_add_success">A marker was inserted</string>

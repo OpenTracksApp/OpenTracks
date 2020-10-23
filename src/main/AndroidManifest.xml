@@ -68,9 +68,7 @@ limitations under the License.
 
         <activity android:name=".io.file.importer.DirectoryChooserActivity$ImportDirectoryChooserActivity" />
 
-        <activity
-            android:name=".io.file.importer.ImportActivity"
-            android:theme="@style/ThemeCustomTransparentActivity">
+        <activity android:name=".io.file.importer.ImportActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.SEND"/>
@@ -331,6 +329,11 @@ limitations under the License.
 
         <service
             android:name=".io.file.exporter.ExportService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service
+            android:name=".io.file.importer.ImportService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
