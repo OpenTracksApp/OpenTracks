@@ -32,27 +32,6 @@ public class ExportUtils {
         }
     }
 
-    public static List<String> getAllFiles(Context context, Uri directoryUri) {
-        List<String> fileNames = new ArrayList<>();
-        final ContentResolver resolver = context.getContentResolver();
-        final Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(directoryUri, DocumentsContract.getDocumentId(directoryUri));
-
-        try {
-            Cursor c = resolver.query(
-                    childrenUri,
-                    new String[] { DocumentsContract.Document.COLUMN_DISPLAY_NAME },
-                    null,null, null
-            );
-            while (c.moveToNext()) {
-                fileNames.add(c.getString(0));
-            }
-        } catch (Exception e) {
-            Log.w(TAG, "Failed query: " + e);
-        }
-
-        return fileNames;
-    }
-
     public static boolean exportTrack(Context context, TrackFileFormat trackFileFormat, DocumentFile directory, Track track) {
         TrackExporter trackExporter = trackFileFormat.newTrackExporter(context);
 
@@ -79,6 +58,27 @@ public class ExportUtils {
 
     public static boolean isExportFileExists(Track.Id trackId, String trackFileFormatExtension, List<String> filesName) {
         return filesName.contains(getExportFileNameByTrackId(trackId, trackFileFormatExtension));
+    }
+
+    public static List<String> getAllFiles(Context context, Uri directoryUri) {
+        List<String> fileNames = new ArrayList<>();
+        final ContentResolver resolver = context.getContentResolver();
+        final Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(directoryUri, DocumentsContract.getDocumentId(directoryUri));
+
+        try {
+            Cursor c = resolver.query(
+                    childrenUri,
+                    new String[] { DocumentsContract.Document.COLUMN_DISPLAY_NAME },
+                    null,null, null
+            );
+            while (c.moveToNext()) {
+                fileNames.add(c.getString(0));
+            }
+        } catch (Exception e) {
+            Log.w(TAG, "Failed query: " + e);
+        }
+
+        return fileNames;
     }
 
     private static Uri getExportDocumentFileUri(Context context, Track.Id trackId, TrackFileFormat trackFileFormat, DocumentFile directory) {

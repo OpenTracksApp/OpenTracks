@@ -74,7 +74,13 @@ public class KmzTrackImporter implements TrackImporter {
             return null;
         }
 
-        trackId = findAndParseKmlFile(inputStream);
+        try {
+            trackId = findAndParseKmlFile(inputStream);
+        } catch (Exception e) {
+            cleanImport(context, importTrackId);
+            throw e;
+        }
+
         if (trackId == null) {
             cleanImport(context, importTrackId);
             return null;
@@ -184,9 +190,15 @@ public class KmzTrackImporter implements TrackImporter {
                 zipInputStream.closeEntry();
             }
             return trackId;
+        } catch (ImportParserException e) {
+            Log.e(TAG, "Unable to import file", e);
+            throw e;
+        } catch (ImportAlreadyExistsException e) {
+            Log.e(TAG, "Unable to import file", e);
+            throw e;
         } catch (IOException e) {
             Log.e(TAG, "Unable to import file", e);
-            return null;
+            throw new ImportParserException(e);
         }
     }
 
@@ -242,11 +254,17 @@ public class KmzTrackImporter implements TrackImporter {
      * @param zipInputStream the zip input stream
      * @return the imported track id or -1L
      */
-    private Track.Id parseKml(ZipInputStream zipInputStream) throws IOException {
+    private Track.Id parseKml(ZipInputStream zipInputStream) {
         KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(context);
 
         try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(getKml(zipInputStream))) {
             return kmlFileTrackImporter.importFile(byteArrayInputStream);
+        } catch (ImportParserException e) {
+            throw e;
+        } catch (ImportAlreadyExistsException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new ImportParserException(e);
         }
     }
 
