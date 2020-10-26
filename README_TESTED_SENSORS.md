@@ -2,6 +2,7 @@
 
 ## HRS: Heartrate Service
 * Decathlon|Geonaute|Kalenji Dual HRM Belt
+* moofit heart rate monitor
 * Polar H7
 * Polar OH1
   Has updatable firmware that requires a user account at polar.com
