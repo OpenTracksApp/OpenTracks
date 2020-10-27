@@ -38,8 +38,6 @@ import java.util.List;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.BuildConfig;
-import de.dennisguse.opentracks.android.ContentResolverWrapper;
-import de.dennisguse.opentracks.android.IContentResolver;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
@@ -53,7 +51,6 @@ import de.dennisguse.opentracks.util.UUIDUtils;
 
 /**
  * {@link ContentProviderUtils} implementation.
- * Allows to use {@link ContentResolver} and {@link android.content.ContentProvider} interchangeably via {@link IContentResolver}.
  *
  * @author Leif Hendrik Wilden
  */
@@ -73,18 +70,15 @@ public class ContentProviderUtils {
     public static final int MAX_LOADED_MARKERS = 10000;
     private static final String ID_SEPARATOR = ",";
 
-    private final IContentResolver contentResolver;
+    private final ContentResolver contentResolver;
     private int defaultCursorBatchSize = 2000;
 
     public ContentProviderUtils(Context context) {
-        this(context.getContentResolver());
+        contentResolver = context.getContentResolver();
     }
 
+    @VisibleForTesting
     public ContentProviderUtils(ContentResolver contentResolver) {
-        this.contentResolver = new ContentResolverWrapper(contentResolver);
-    }
-
-    public ContentProviderUtils(IContentResolver contentResolver) {
         this.contentResolver = contentResolver;
     }
 
@@ -94,6 +88,7 @@ public class ContentProviderUtils {
      *
      * @param trackId the track id
      */
+    @Deprecated //TODO Figure out why we need this.
     public void clearTrack(Track.Id trackId) {
         deleteTrackPointsAndMarkers(trackId);
         Track track = new Track();
@@ -106,7 +101,7 @@ public class ContentProviderUtils {
      *
      * @param cursor the cursor pointing to the track
      */
-    public Track createTrack(Cursor cursor) {
+    public static Track createTrack(Cursor cursor) {
         int idIndex = cursor.getColumnIndexOrThrow(TracksColumns._ID);
         int uuidIndex = cursor.getColumnIndexOrThrow(TracksColumns.UUID);
         int nameIndex = cursor.getColumnIndexOrThrow(TracksColumns.NAME);

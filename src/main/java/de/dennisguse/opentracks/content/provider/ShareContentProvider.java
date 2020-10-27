@@ -8,6 +8,7 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
 import android.provider.OpenableColumns;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 
@@ -22,8 +23,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
-import de.dennisguse.opentracks.android.IContentResolver;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
@@ -41,7 +42,7 @@ import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
  * While handling a request {@link ShareContentProvider} could `grantPermissions()` to the calling app for {@link CustomContentProvider}'s URI.
  * However, while handling the request this would allow the calling app to actually contact {@link CustomContentProvider} directly and get access to stored data that should remain private.
  */
-public class ShareContentProvider extends CustomContentProvider implements IContentResolver {
+public class ShareContentProvider extends CustomContentProvider {
 
     private static final String[] COLUMNS = {OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE};
 
@@ -209,12 +210,16 @@ public class ShareContentProvider extends CustomContentProvider implements ICont
     @Nullable
     @Override
     public ParcelFileDescriptor openFile(@NonNull Uri uri, @NonNull String mode) throws FileNotFoundException {
-        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
-
         Set<Track.Id> trackIds = parseURI(uri);
         final ArrayList<Track> tracks = new ArrayList<>();
-        for (Track.Id trackId : trackIds) {
-            tracks.add(contentProviderUtils.getTrack(trackId));
+        String[] trackIdsString = trackIds.stream().map(Track.Id::toString).toArray(String[]::new);
+        String trackIdsPlaceholder = TextUtils.join(",", Stream.of(trackIdsString).map(it -> "?").toArray(String[]::new));
+
+        TextUtils.join(",", trackIds);
+        try (Cursor cursor = super.query(TracksColumns.CONTENT_URI, null, TracksColumns._ID + " IN (" + trackIdsPlaceholder + ")", trackIdsString, TracksColumns._ID)) {
+            while (cursor.moveToNext()) {
+                tracks.add(ContentProviderUtils.createTrack(cursor));
+            }
         }
 
         final TrackExporter trackExporter = getTrackFileFormat(uri).newTrackExporter(getContext());
