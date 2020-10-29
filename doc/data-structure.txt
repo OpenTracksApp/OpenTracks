@@ -8,7 +8,7 @@ class Track {
     -icon
 }
 Track o-- TrackPoint
-Track o-- Waypoint
+Track o-- Marker
 Track "1" - "1" TripStatistics
 
 class TripStatistics {
@@ -21,7 +21,12 @@ class TripStatistics {
     - totalElevationGain
 }
 
-class TrackPoint extends android.location.Location {
+note left of TripStatistics
+The time is based upon device time.
+end note
+
+
+class TrackPoint {
     - id
     - trackId
     - longitude
@@ -36,7 +41,32 @@ class TrackPoint extends android.location.Location {
     - sensor_power
 }
 
-class Waypoint {
+note right of TrackPoint
+TODO
+TrackPoints are mixing two concepts:
+1. a GPS measurement provided by the GPS hardware
+2. and also segment markers.
+   These are marked by PAUSE / RESUME TrackPoints.
+
+While exporting PAUSE/RESUME are not used to create these segments and these are partly recreated when imported.
+However, the timestamp of PAUSE/RESUME is not exported and can therefore not be restored.
+This prevents us from restoring the exact TripStatistics.
+It is also noteworthy that neither PAUSE/RESUME TrackPoints are used for computing the TrackStatistics.
+Only the timestamp to _create_ those is used.
+end note
+
+note left of TrackPoint
+TODO
+The time stored in TrackPoints is either:
+1. created via GPS: provided by the GPS hardware
+2. created by the user (pause/resume): device time.
+
+We know that the GPS time and device time are often not in sync.
+end note
+
+TrackPoint "1" - "1" android.location.Location
+
+class Marker {
     - id
     - trackId
     - name

@@ -4,7 +4,8 @@ LocationManager --> TrackRecordingService
 ElevationSumManager --> TrackRecordingService
 
 TrackRecordingService --> TrackRecordingServiceConnection
-TrackRecordingService --> Database
+TrackRecordingService --> CustomContentProvider
+CustomContentProvider --> Database
 
 Database --> CustomContentProvider
 CustomContentProvider --> TrackDataHub
