@@ -212,7 +212,7 @@ public class CustomContentProviderUtilsTest {
         Track.Id trackId = new Track.Id(System.currentTimeMillis());
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
-        Marker waypoint = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint = new Marker(trackId, contentProviderUtils.getLastValidTrackPoint(trackId));
         contentProviderUtils.insertMarker(waypoint);
 
         ContentResolver contentResolver = context.getContentResolver();
@@ -287,8 +287,7 @@ public class CustomContentProviderUtilsTest {
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId2, 10);
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId3, 10);
 
-        Marker waypoint = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId2));
-        waypoint.setTrackId(trackId1);
+        Marker waypoint = new Marker(trackId1, contentProviderUtils.getLastValidTrackPoint(trackId2));
         contentProviderUtils.insertMarker(waypoint);
 
         ContentResolver contentResolver = context.getContentResolver();
@@ -463,7 +462,7 @@ public class CustomContentProviderUtilsTest {
         track.first.setTrackStatistics(statistics);
         contentProviderUtils.insertTrack(track.first);
 
-        Marker waypoint = new Marker(track.second[0]);
+        Marker waypoint = new Marker(trackId, track.second[0]);
         waypoint.setDescription(TEST_DESC);
         contentProviderUtils.insertMarker(waypoint);
 
@@ -522,9 +521,8 @@ public class CustomContentProviderUtilsTest {
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
         // Insert at first.
-        Marker waypoint1 = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint1 = new Marker(trackId, contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint1.setDescription(TEST_DESC);
-        waypoint1.setTrackId(trackId);
         contentProviderUtils.insertMarker(waypoint1);
 
         // Check insert was done.
@@ -600,14 +598,12 @@ public class CustomContentProviderUtilsTest {
 //        TestDataUtil.insertTrackWithLocations(contentProviderUtils, track);
 
         // Insert at first.
-        Marker waypoint1 = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint1 = new Marker(trackId, contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint1.setDescription(MOCK_DESC);
-        waypoint1.setTrackId(trackId);
         Marker.Id waypoint1Id = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint1)));
 
-        Marker waypoint2 = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint2 = new Marker(trackId, contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint2.setDescription(MOCK_DESC);
-        waypoint2.setTrackId(trackId);
         Marker.Id waypoint2Id = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint2)));
 
         // Delete
@@ -626,14 +622,10 @@ public class CustomContentProviderUtilsTest {
         Track.Id trackId = new Track.Id(System.currentTimeMillis());
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
-        Marker waypoint1 = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
-        waypoint1.setTrackId(trackId);
-        Marker waypoint2 = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
-        waypoint2.setTrackId(trackId);
-        Marker waypoint3 = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
-        waypoint3.setTrackId(trackId);
-        Marker waypoint4 = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
-        waypoint4.setTrackId(trackId);
+        Marker waypoint1 = new Marker(trackId, contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint2 = new Marker(trackId, contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint3 = new Marker(trackId, contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint4 = new Marker(trackId, contentProviderUtils.getLastValidTrackPoint(trackId));
         contentProviderUtils.insertMarker(waypoint1);
         contentProviderUtils.insertMarker(waypoint2);
         contentProviderUtils.insertMarker(waypoint3);
@@ -651,9 +643,8 @@ public class CustomContentProviderUtilsTest {
         Track.Id trackId = new Track.Id(System.currentTimeMillis());
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
-        Marker waypoint = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint = new Marker(trackId, contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint.setDescription(TEST_DESC);
-        waypoint.setTrackId(trackId);
         Marker.Id waypointId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint)));
 
         assertEquals(TEST_DESC, contentProviderUtils.getMarker(waypointId).getDescription());
@@ -668,9 +659,8 @@ public class CustomContentProviderUtilsTest {
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
         // Insert at first.
-        Marker waypoint = new Marker(contentProviderUtils.getLastValidTrackPoint(trackId));
+        Marker waypoint = new Marker(trackId, contentProviderUtils.getLastValidTrackPoint(trackId));
         waypoint.setDescription(TEST_DESC);
-        waypoint.setTrackId(trackId);
         Marker.Id waypointId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint)));
 
         // Update
@@ -695,7 +685,6 @@ public class CustomContentProviderUtilsTest {
         TrackPoint trackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
         Marker waypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
         waypoint.setDescription(TEST_DESC);
-        waypoint.setTrackId(trackId);
         Marker.Id waypointId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint)));
 
         File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.getId());
@@ -731,7 +720,6 @@ public class CustomContentProviderUtilsTest {
         TrackPoint trackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
         Marker waypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
         waypoint.setDescription(TEST_DESC);
-        waypoint.setTrackId(trackId);
         Marker.Id waypointId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint)));
 
         File dir = new File(FileUtils.getPhotoDir(context), "" + trackId.getId());
@@ -766,10 +754,8 @@ public class CustomContentProviderUtilsTest {
         TrackPoint trackPoint = contentProviderUtils.getLastValidTrackPoint(trackId);
         Marker waypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
         waypoint.setDescription(TEST_DESC);
-        waypoint.setTrackId(trackId);
         Marker otherWaypoint = TestDataUtil.createWaypointWithPhoto(context, trackId, trackPoint.getLocation());
         otherWaypoint.setDescription(TEST_DESC);
-        otherWaypoint.setTrackId(trackId);
         Marker.Id waypointId = new Marker.Id(ContentUris.parseId(contentProviderUtils.insertMarker(waypoint)));
         contentProviderUtils.insertMarker(otherWaypoint);
 

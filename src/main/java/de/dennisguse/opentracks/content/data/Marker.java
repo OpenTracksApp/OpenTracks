@@ -40,20 +40,28 @@ public final class Marker {
     private String description = "";
     private String category = "";
     private String icon = "";
-    private Track.Id trackId;
+    private final Track.Id trackId;
+    //TODO It is the distance from the track starting point; rename to something more meaningful
     private double length = 0.0;
     private long duration = 0;
-    private Location location;
+    private final Location location;
     @Deprecated //TODO Make an URI instead of String
     private String photoUrl = "";
 
     @VisibleForTesting
-    public Marker(@NonNull TrackPoint trackPoint) {
-        this.location = trackPoint.getLocation();
+    public Marker(@NonNull Track.Id trackId, @NonNull TrackPoint trackPoint) {
+        this(trackId, trackPoint.getLocation());
     }
 
+    @Deprecated
+    //TODO Used by AbstractFileImporter to create an intermediate marker before saving a new one into the database.
     public Marker(@NonNull Location location) {
+        this(null, location);
+    }
+
+    public Marker(@NonNull Track.Id trackId, @NonNull Location location) {
         this.location = location;
+        this.trackId = trackId;
     }
 
     public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, double length, long duration, @NonNull Location location, String photoUrl) {
@@ -112,12 +120,9 @@ public final class Marker {
         this.icon = icon;
     }
 
-    public Track.Id getTrackId() {
+    public @NonNull
+    Track.Id getTrackId() {
         return trackId;
-    }
-
-    public void setTrackId(Track.Id trackId) {
-        this.trackId = trackId;
     }
 
     public double getLength() {

@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.VisibleForTesting;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -38,39 +37,21 @@ public class CustomSQLiteOpenHelperTest {
     private final Context context = ApplicationProvider.getApplicationContext();
 
     /**
-     * Get the SQL create statements for all tables (ordered by name).
+     * Get the SQL create statements for all SQLite elements of type (ordered by name).
      *
-     * @return Map(TableName, SQL)
+     * @param type index, table
+     * @return Map(name, SQL)
      */
-    @VisibleForTesting
-    public static Map<String, String> getTableSQL(SQLiteDatabase db) {
-        HashMap<String, String> tableSQL = new HashMap<>();
-        try (Cursor cursor = db.query("sqlite_master", new String[]{"name", "SQL"}, "name IN ('" + TracksColumns.TABLE_NAME + "', '" + TrackPointsColumns.TABLE_NAME + "', '" + MarkerColumns.TABLE_NAME + "')", null, null, null, "name")) {
+    public static Map<String, String> getSQL(SQLiteDatabase db, String type) {
+        HashMap<String, String> sqlMap = new HashMap<>();
+        try (Cursor cursor = db.query("sqlite_master", new String[]{"name", "SQL"}, "type=?", new String[]{type}, null, null, "name")) {
             if (cursor != null) {
                 while (cursor.moveToNext()) {
-                    tableSQL.put(cursor.getString(0), cursor.getString(1));
+                    sqlMap.put(cursor.getString(0), cursor.getString(1));
                 }
             }
         }
-        return tableSQL;
-    }
-
-    /**
-     * Get the SQL create statements for all indices (ordered by name).
-     *
-     * @return Map(tableName, SQL)
-     */
-    @VisibleForTesting
-    public static Map<String, String> getIndexSQL(SQLiteDatabase db) {
-        HashMap<String, String> indexSQL = new HashMap<>();
-        try (Cursor cursor = db.rawQuery("SELECT tbl_name, SQL FROM sqlite_master WHERE type = 'index'", null)) {
-            if (cursor != null) {
-                while (cursor.moveToNext()) {
-                    indexSQL.put(cursor.getString(0), cursor.getString(1));
-                }
-            }
-        }
-        return indexSQL;
+        return sqlMap;
     }
 
     /**
@@ -109,7 +90,7 @@ public class CustomSQLiteOpenHelperTest {
             assertTrue(hasSqlCreate(db, MarkerColumns.CREATE_TABLE));
             assertTrue(hasSqlCreate(db, MarkerColumns.CREATE_TABLE_INDEX));
         } catch (Exception e) {
-            fail();
+            fail("Database could not be created: " + e);
         }
     }
 
@@ -121,8 +102,8 @@ public class CustomSQLiteOpenHelperTest {
         Map<String, String> tableByUpgrade;
         Map<String, String> indicesByUpgrade;
         try (SQLiteDatabase dbUpgraded = new CustomSQLiteOpenHelper(context, DATABASE_NAME).getReadableDatabase()) {
-            tableByUpgrade = getTableSQL(dbUpgraded);
-            indicesByUpgrade = getIndexSQL(dbUpgraded);
+            tableByUpgrade = getSQL(dbUpgraded, "table");
+            indicesByUpgrade = getSQL(dbUpgraded, "index");
         }
         context.deleteDatabase(DATABASE_NAME);
 
@@ -130,12 +111,14 @@ public class CustomSQLiteOpenHelperTest {
         Map<String, String> tablesByCreate;
         Map<String, String> indicesByCreate;
         try (SQLiteDatabase dbCreated = new CustomSQLiteOpenHelper(context, DATABASE_NAME).getReadableDatabase()) {
-            tablesByCreate = getTableSQL(dbCreated);
-            indicesByCreate = getIndexSQL(dbCreated);
+            tablesByCreate = getSQL(dbCreated, "table");
+            indicesByCreate = getSQL(dbCreated, "index");
         }
 
+
         // then - verify table structure
-        assertEquals(3, tableByUpgrade.size());
+        int tableCount = 3 + 2; //Three with data tables + two SQLite
+        assertEquals(tableCount, tableByUpgrade.size());
         assertEquals(tableByUpgrade.size(), tablesByCreate.size());
 
         assertEquals(tablesByCreate.get(TracksColumns.TABLE_NAME), tableByUpgrade.get(TracksColumns.TABLE_NAME));
@@ -158,8 +141,8 @@ public class CustomSQLiteOpenHelperTest {
         Map<String, String> tablesByDowngrade;
         Map<String, String> indicesByDowngrade;
         try (SQLiteDatabase db = new CustomSQLiteOpenHelper(context, DATABASE_NAME, 23).getReadableDatabase()) {
-            tablesByDowngrade = getTableSQL(db);
-            indicesByDowngrade = getIndexSQL(db);
+            tablesByDowngrade = getSQL(db, "table");
+            indicesByDowngrade = getSQL(db, "index");
         }
 
         // then - verify table structure
