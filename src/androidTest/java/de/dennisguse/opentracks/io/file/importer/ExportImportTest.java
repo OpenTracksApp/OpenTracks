@@ -72,13 +72,12 @@ public class ExportImportTest {
         trackPoints.addAll(Arrays.asList(track.second));
 
         for (int i = 0; i < 3; i++) {
-            Marker marker = new Marker(track.second[i].getLocation());
+            Marker marker = new Marker(trackId, track.second[i].getLocation());
             marker.setName("the marker " + i);
             marker.setDescription("the marker description " + i);
             marker.setCategory("the marker category" + i);
             marker.setIcon("the marker icon" + i);
             marker.setPhotoUrl("the photo url" + i);
-            marker.setTrackId(trackId);
             contentProviderUtils.insertMarker(marker);
 
             markers.add(marker);
@@ -90,7 +89,9 @@ public class ExportImportTest {
     @After
     public void tearDown() {
         contentProviderUtils.deleteTrack(context, trackId);
-        contentProviderUtils.deleteTrack(context, importTrackId);
+        if (importTrackId != null) {
+            contentProviderUtils.deleteTrack(context, importTrackId);
+        }
     }
 
     @LargeTest

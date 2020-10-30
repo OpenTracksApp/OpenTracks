@@ -39,6 +39,8 @@ import de.dennisguse.opentracks.content.data.TracksColumns;
 
 /**
  * A {@link ContentProvider} that handles access to track points, tracks, and markers tables.
+ * <p>
+ * Data consistency is enforced using Foreign Key Constraints within the database incl. cascading deletes.
  *
  * @author Leif Hendrik Wilden
  */
@@ -82,6 +84,8 @@ public class CustomContentProvider extends ContentProvider {
         CustomSQLiteOpenHelper databaseHelper = new CustomSQLiteOpenHelper(context);
         try {
             db = databaseHelper.getWritableDatabase();
+            // Necessary to enable cascade deletion from Track to TrackPoints and Markers
+            db.setForeignKeyConstraintsEnabled(true);
         } catch (SQLiteException e) {
             Log.e(TAG, "Unable to open database for writing.", e);
         }

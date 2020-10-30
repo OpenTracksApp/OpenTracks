@@ -28,7 +28,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
  */
 public interface MarkerColumns extends BaseColumns {
 
-    String TABLE_NAME = "waypoints";
+    String TABLE_NAME = "markers";
     Uri CONTENT_URI = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/" + TABLE_NAME);
     Uri CONTENT_URI_BY_TRACKID = Uri.parse(ContentProviderUtils.CONTENT_BASE_URI + "/" + TABLE_NAME + "/trackid");
     String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.de.dennisguse.waypoint";
@@ -60,7 +60,7 @@ public interface MarkerColumns extends BaseColumns {
             + DESCRIPTION + " TEXT, "
             + CATEGORY + " TEXT, "
             + ICON + " TEXT, "
-            + TRACKID + " INTEGER, "
+            + TRACKID + " INTEGER NOT NULL, "
             + LENGTH + " FLOAT, "
             + DURATION + " INTEGER, "
             + LONGITUDE + " INTEGER, "
@@ -69,7 +69,8 @@ public interface MarkerColumns extends BaseColumns {
             + ALTITUDE + " FLOAT, "
             + ACCURACY + " FLOAT, "
             + BEARING + " FLOAT, "
-            + PHOTOURL + " TEXT"
+            + PHOTOURL + " TEXT, "
+            + "FOREIGN KEY (" + TRACKID + ") REFERENCES " + TracksColumns.TABLE_NAME + "(" + TracksColumns._ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
             + ")";
 
     String CREATE_TABLE_INDEX = "CREATE INDEX " + TABLE_NAME + "_" + TRACKID + "_index ON " + TABLE_NAME + "(" + TRACKID + ")";

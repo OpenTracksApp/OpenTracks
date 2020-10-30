@@ -40,7 +40,9 @@ public interface TrackPointsColumns extends BaseColumns {
 
     String LONGITUDE = "longitude";
     String LATITUDE = "latitude";
+    @Deprecated
     double PAUSE_LATITUDE = 100.0;
+    @Deprecated
     double RESUME_LATITUDE = 200.0;
 
     String TIME = "time";
@@ -55,7 +57,7 @@ public interface TrackPointsColumns extends BaseColumns {
 
     String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + TRACKID + " INTEGER, "
+            + TRACKID + " INTEGER NOT NULL, "
             + LONGITUDE + " INTEGER, "
             + LATITUDE + " INTEGER, "
             + TIME + " INTEGER, "
@@ -66,7 +68,9 @@ public interface TrackPointsColumns extends BaseColumns {
             + SENSOR_HEARTRATE + " FLOAT, "
             + SENSOR_CADENCE + " FLOAT, "
             + SENSOR_POWER + " FLOAT, "
-            + ELEVATION_GAIN + " FLOAT)";
+            + ELEVATION_GAIN + " FLOAT, "
+            + "FOREIGN KEY (" + TRACKID + ") REFERENCES " + TracksColumns.TABLE_NAME + "(" + TracksColumns._ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
+            + ")";
 
     String CREATE_TABLE_INDEX = "CREATE INDEX " + TABLE_NAME + "_" + TRACKID + "_index ON " + TABLE_NAME + "(" + TRACKID + ")";
 }

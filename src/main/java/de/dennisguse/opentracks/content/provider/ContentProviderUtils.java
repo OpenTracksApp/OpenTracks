@@ -179,17 +179,7 @@ public class ContentProviderUtils {
         FileUtils.deleteDirectoryRecurse(dir);
     }
 
-    /**
-     * Deletes a track.
-     *
-     * @param trackId the track id
-     */
-    public void deleteTrack(Context context, Track.Id trackId) {
-        if (trackId == null) {
-            return;
-        }
-        deleteTrackPointsAndMarkers(trackId);
-
+    public void deleteTrack(Context context, @NonNull Track.Id trackId) {
         // Delete track folder resources.
         FileUtils.deleteDirectoryRecurse(FileUtils.getPhotoDir(context, trackId));
 
@@ -363,7 +353,8 @@ public class ContentProviderUtils {
             location.setBearing(cursor.getFloat(bearingIndex));
         }
 
-        Marker marker = new Marker(location);
+        Track.Id trackId = new Track.Id(cursor.getLong(trackIdIndex));
+        Marker marker = new Marker(trackId, location);
 
         if (!cursor.isNull(idIndex)) {
             marker.setId(new Marker.Id(cursor.getLong(idIndex)));
@@ -379,9 +370,6 @@ public class ContentProviderUtils {
         }
         if (!cursor.isNull(iconIndex)) {
             marker.setIcon(cursor.getString(iconIndex));
-        }
-        if (!cursor.isNull(trackIdIndex)) {
-            marker.setTrackId(new Track.Id(cursor.getLong(trackIdIndex)));
         }
         if (!cursor.isNull(lengthIndex)) {
             marker.setLength(cursor.getFloat(lengthIndex));
@@ -561,9 +549,7 @@ public class ContentProviderUtils {
         values.put(MarkerColumns.DESCRIPTION, marker.getDescription());
         values.put(MarkerColumns.CATEGORY, marker.getCategory());
         values.put(MarkerColumns.ICON, marker.getIcon());
-        if (marker.getTrackId() != null) {
-            values.put(MarkerColumns.TRACKID, marker.getTrackId().getId());
-        }
+        values.put(MarkerColumns.TRACKID, marker.getTrackId().getId());
         values.put(MarkerColumns.LENGTH, marker.getLength());
         values.put(MarkerColumns.DURATION, marker.getDuration());
 

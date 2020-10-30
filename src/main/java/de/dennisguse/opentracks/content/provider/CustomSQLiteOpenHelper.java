@@ -25,7 +25,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final String TAG = CustomSQLiteOpenHelper.class.getSimpleName();
 
-    private static final int DATABASE_VERSION = 27;
+    private static final int DATABASE_VERSION = 28;
 
     @VisibleForTesting
     public static final String DATABASE_NAME = "database.db";
@@ -73,7 +73,9 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                 case 27:
                     upgradeFrom26to27(db);
                     break;
-
+                case 28:
+                    upgradeFrom27to28(db);
+                    break;
 
                 default:
                     throw new RuntimeException("Not implemented: upgrade to " + toVersion);
@@ -97,6 +99,9 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                     break;
                 case 26:
                     downgradeFrom27to26(db);
+                    break;
+                case 27:
+                    downgradeFrom28to27(db);
                     break;
 
                 default:
@@ -142,6 +147,9 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         db.endTransaction();
     }
 
+    /**
+     * Add indeces for foreign key trackId
+     */
     private void upgradeFrom24to25(SQLiteDatabase db) {
         db.beginTransaction();
 
@@ -162,6 +170,9 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         db.endTransaction();
     }
 
+    /**
+     * Add track UUID to prevent re-import of existing tracks
+     */
     private void upgradeFrom25to26(SQLiteDatabase db) {
         db.beginTransaction();
 
@@ -198,6 +209,9 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         db.endTransaction();
     }
 
+    /**
+     * Add elevation gain
+     */
     private void upgradeFrom26to27(SQLiteDatabase db) {
         db.beginTransaction();
 
@@ -216,6 +230,56 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE trackpoints_old");
 
         db.execSQL("CREATE INDEX trackpoints_trackid_index ON trackpoints(trackid)");
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    /**
+     * Add foreign key constraints on trackId
+     */
+    private void upgradeFrom27to28(SQLiteDatabase db) {
+        db.beginTransaction();
+
+        // TrackPoints
+        db.execSQL("ALTER TABLE trackpoints RENAME TO trackpoints_old");
+        db.execSQL("CREATE TABLE trackpoints (_id INTEGER PRIMARY KEY AUTOINCREMENT, trackid INTEGER NOT NULL, longitude INTEGER, latitude INTEGER, time INTEGER, elevation FLOAT, accuracy FLOAT, speed FLOAT, bearing FLOAT, sensor_heartrate FLOAT, sensor_cadence FLOAT, sensor_power FLOAT, elevation_gain FLOAT, FOREIGN KEY (trackid) REFERENCES tracks(_id) ON UPDATE CASCADE ON DELETE CASCADE)");
+        db.execSQL("INSERT INTO trackpoints SELECT _id, trackid, longitude, latitude, time, elevation, accuracy, speed, bearing, sensor_heartrate, sensor_cadence, sensor_power, elevation_gain FROM trackpoints_old");
+        db.execSQL("DROP TABLE trackpoints_old");
+
+        db.execSQL("CREATE INDEX trackpoints_trackid_index ON trackpoints(trackid)");
+
+        // Markers
+        db.execSQL("ALTER TABLE waypoints RENAME TO markers_old");
+        db.execSQL("CREATE TABLE markers (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT, category TEXT, icon TEXT, trackid INTEGER NOT NULL, length FLOAT, duration INTEGER, longitude INTEGER, latitude INTEGER, time INTEGER, elevation FLOAT, accuracy FLOAT, bearing FLOAT, photoUrl TEXT, FOREIGN KEY (trackid) REFERENCES tracks(_id) ON UPDATE CASCADE ON DELETE CASCADE)");
+
+        db.execSQL("INSERT INTO markers SELECT _id, name, description, category, icon, trackid, length, duration, longitude, latitude, time, elevation, accuracy, bearing, photoUrl FROM markers_old");
+        db.execSQL("DROP TABLE markers_old");
+
+        db.execSQL("CREATE INDEX markers_trackid_index ON markers(trackid)");
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    private void downgradeFrom28to27(SQLiteDatabase db) {
+        db.beginTransaction();
+
+        // TrackPoints
+        db.execSQL("ALTER TABLE trackpoints RENAME TO trackpoints_old");
+        db.execSQL("CREATE TABLE trackpoints (_id INTEGER PRIMARY KEY AUTOINCREMENT, trackid INTEGER NOT NULL, longitude INTEGER, latitude INTEGER, time INTEGER, elevation FLOAT, accuracy FLOAT, speed FLOAT, bearing FLOAT, sensor_heartrate FLOAT, sensor_cadence FLOAT, sensor_power FLOAT, elevation_gain FLOAT)");
+        db.execSQL("INSERT INTO trackpoints SELECT _id, trackid, longitude, latitude, time, elevation, accuracy, speed, bearing, sensor_heartrate, sensor_cadence, sensor_power, elevation_gain FROM trackpoints_old");
+        db.execSQL("DROP TABLE trackpoints_old");
+
+        db.execSQL("CREATE INDEX trackpoints_trackid_index ON trackpoints(trackid)");
+
+        // Markers
+        db.execSQL("CREATE TABLE waypoints (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT, category TEXT, icon TEXT, trackid INTEGER, length FLOAT, duration INTEGER, longitude INTEGER, latitude INTEGER, time INTEGER, elevation FLOAT, accuracy FLOAT, bearing FLOAT, photoUrl TEXT)");
+
+        db.execSQL("INSERT INTO waypoints SELECT _id, name, description, category, icon, trackid, length, duration, longitude, latitude, time, elevation, accuracy, bearing, photoUrl FROM markers");
+        db.execSQL("DROP TABLE markers");
+
+        db.execSQL("CREATE INDEX waypoints_trackid_index ON waypoints(trackid)");
 
         db.setTransactionSuccessful();
         db.endTransaction();

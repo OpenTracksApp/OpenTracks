@@ -109,26 +109,21 @@ public class SearchEngineTest {
         if (hoursAgo >= 0) {
             location.setTime(NOW - hoursAgo * 1000L * 60L * 60L);
         }
-        Marker waypoint = new Marker(location);
+        Marker waypoint = new Marker(trackId, location);
         waypoint.setName(title);
         waypoint.setDescription(description);
         waypoint.setCategory(category);
-        waypoint.setTrackId(trackId);
 
         Uri uri = providerUtils.insertMarker(waypoint);
         return new Marker.Id(ContentUris.parseId(uri));
     }
 
-    private Marker.Id insertWaypoint(String title, String description, String category) {
-        return insertWaypoint(title, description, category, 0.0, -1, null);
+    private Marker.Id insertWaypoint(String title, String description, String category, Track.Id trackId) {
+        return insertWaypoint(title, description, category, 0.0, -1, trackId);
     }
 
-    private Marker.Id insertWaypoint(String title, double distance) {
-        return insertWaypoint(title, "", "", distance, -1, null);
-    }
-
-    private Marker.Id insertWaypoint(String title, long hoursAgo) {
-        return insertWaypoint(title, "", "", 0.0, hoursAgo, null);
+    private Marker.Id insertWaypoint(String title, double distance, Track.Id trackId) {
+        return insertWaypoint(title, "", "", distance, -1, trackId);
     }
 
     private Marker.Id insertWaypoint(String title, long hoursAgo, Track.Id trackId) {
@@ -170,13 +165,14 @@ public class SearchEngineTest {
         // - one which will match in title and category
         // - one which will match in title and description
         // - one which will match in all fields
-        insertWaypoint("bb", "cc", "dd");
-        Marker.Id descriptionMatchId = insertWaypoint("bb", "aa", "cc");
-        Marker.Id categoryMatchId = insertWaypoint("bb", "cc", "aa");
-        Marker.Id titleMatchId = insertWaypoint("aa", "bb", "cc");
-        Marker.Id titleCategoryMatchId = insertWaypoint("aa", "bb", "ca");
-        Marker.Id titleDescriptionMatchId = insertWaypoint("aa", "ba", "cc");
-        Marker.Id allMatchId = insertWaypoint("aa", "ba", "ca");
+        Track.Id trackId = insertTrack("", "", "");
+        insertWaypoint("bb", "cc", "dd", trackId);
+        Marker.Id descriptionMatchId = insertWaypoint("bb", "aa", "cc", trackId);
+        Marker.Id categoryMatchId = insertWaypoint("bb", "cc", "aa", trackId);
+        Marker.Id titleMatchId = insertWaypoint("aa", "bb", "cc", trackId);
+        Marker.Id titleCategoryMatchId = insertWaypoint("aa", "bb", "ca", trackId);
+        Marker.Id titleDescriptionMatchId = insertWaypoint("aa", "ba", "cc", trackId);
+        Marker.Id allMatchId = insertWaypoint("aa", "ba", "ca", trackId);
 
         SearchQuery query = new SearchQuery("a", null, null, NOW);
         ArrayList<ScoredResult> results = new ArrayList<>(engine.search(query));
@@ -193,11 +189,11 @@ public class SearchEngineTest {
         // - one waypoint which will match by title
         // - one track which won't match
         // - one track which will match by title
-        Marker.Id descriptionWaypointId = insertWaypoint("bb", "aa", "cc");
-        insertWaypoint("bb", "cc", "dd");
-        Marker.Id titleWaypointId = insertWaypoint("aa", "bb", "cc");
-        insertTrack("bb", "cc", "dd");
         Track.Id trackId = insertTrack("aa", "bb", "cc");
+        Marker.Id descriptionWaypointId = insertWaypoint("bb", "aa", "cc", trackId);
+        insertWaypoint("bb", "cc", "dd", trackId);
+        Marker.Id titleWaypointId = insertWaypoint("aa", "bb", "cc", trackId);
+        insertTrack("bb", "cc", "dd");
 
         SearchQuery query = new SearchQuery("a", null, null, NOW);
         ArrayList<ScoredResult> results = new ArrayList<>(engine.search(query));
@@ -212,9 +208,10 @@ public class SearchEngineTest {
     @Test
     public void testSearchWaypointDistance() {
         // All results match text, but they're at difference distances from the user.
-        Marker.Id farFarAwayId = insertWaypoint("aa", 0.3);
-        Marker.Id nearId = insertWaypoint("ab", 0.1);
-        Marker.Id farId = insertWaypoint("ac", 0.2);
+        Track.Id trackId = insertTrack("", "", "");
+        Marker.Id farFarAwayId = insertWaypoint("aa", 0.3, trackId);
+        Marker.Id nearId = insertWaypoint("ab", 0.1, trackId);
+        Marker.Id farId = insertWaypoint("ac", 0.2, trackId);
 
         SearchQuery query = new SearchQuery("a", HERE, null, NOW);
         ArrayList<ScoredResult> results = new ArrayList<>(engine.search(query));
@@ -239,9 +236,10 @@ public class SearchEngineTest {
     @Test
     public void testSearchWaypointRecent() {
         // All results match text, but they're were recorded at different times.
-        Marker.Id oldestId = insertWaypoint("aa", 2);
-        Marker.Id recentId = insertWaypoint("ab", 0);
-        Marker.Id oldId = insertWaypoint("ac", 1);
+        Track.Id trackId = insertTrack("", "", "");
+        Marker.Id oldestId = insertWaypoint("aa", 2, trackId);
+        Marker.Id recentId = insertWaypoint("ab", 0, trackId);
+        Marker.Id oldId = insertWaypoint("ac", 1, trackId);
 
         SearchQuery query = new SearchQuery("a", null, null, NOW);
         ArrayList<ScoredResult> results = new ArrayList<>(engine.search(query));
@@ -266,10 +264,13 @@ public class SearchEngineTest {
     @Test
     public void testSearchCurrentTrackWaypoint() {
         // All results match text, but one of them is in the current track.
-        Marker.Id otherId = insertWaypoint("aa", 1, new Track.Id(456));
-        Marker.Id currentId = insertWaypoint("ab", 1, new Track.Id(123));
+        Track.Id trackId1 = insertTrack("", "", "");
+        Track.Id trackId2 = insertTrack("", "", "");
 
-        SearchQuery query = new SearchQuery("a", null, new Track.Id(123), NOW);
+        Marker.Id otherId = insertWaypoint("aa", 1, trackId2);
+        Marker.Id currentId = insertWaypoint("ab", 1, trackId1);
+
+        SearchQuery query = new SearchQuery("a", null, trackId1, NOW);
         ArrayList<ScoredResult> results = new ArrayList<>(engine.search(query));
 
         // Waypoint in current track should be promoted.
@@ -316,7 +317,7 @@ public class SearchEngineTest {
             ScoredResult result = results.get(i);
             assertNotNull(errMsg, result.marker);
             assertNull(errMsg, result.track);
-            assertEquals(errMsg, waypointIds[i], result.marker.getId());
+            assertEquals(errMsg, waypointIds[i].getId(), result.marker.getId().getId());
         }
     }
 }
