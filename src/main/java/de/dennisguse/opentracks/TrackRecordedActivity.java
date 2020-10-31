@@ -35,7 +35,6 @@ import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.fragments.ChartFragment;
-import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.IntervalsFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordedFragment;
@@ -44,8 +43,6 @@ import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
  * An activity to show the track detail, record a new track or resumes an existing one.
@@ -53,7 +50,7 @@ import de.dennisguse.opentracks.util.TrackUtils;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackRecordedActivity extends AbstractListActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackActivityDataHubInterface {
+public class TrackRecordedActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackActivityDataHubInterface {
 
     private static final String TAG = TrackRecordedActivity.class.getSimpleName();
 
@@ -222,17 +219,6 @@ public class TrackRecordedActivity extends AbstractListActivity implements Choos
             Log.e(TAG, "TrackDetailActivity needs EXTRA_TRACK_ID.");
             finish();
         }
-    }
-
-    public void chooseActivityType(String category) {
-        ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), category);
-    }
-
-    @Override
-    public void onChooseActivityTypeDone(String iconValue) {
-        String category = getString(TrackIconUtils.getIconActivityType(iconValue));
-        Track track = contentProviderUtils.getTrack(trackId);
-        TrackUtils.updateTrack(this, track, null, category, null, contentProviderUtils);
     }
 
     private class CustomFragmentPagerAdapter extends FragmentPagerAdapter {

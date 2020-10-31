@@ -154,8 +154,8 @@ public class TrackIconUtils {
      * @param context      the context
      * @param activityType the activity type
      */
-    public static @NonNull
-    String getIconValue(Context context, String activityType) {
+    @NonNull
+    public static String getIconValue(Context context, String activityType) {
         if (activityType == null || activityType.equals("")) {
             return UNKNOWN;
         }

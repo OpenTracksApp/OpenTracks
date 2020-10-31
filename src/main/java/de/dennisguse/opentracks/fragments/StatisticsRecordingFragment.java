@@ -35,7 +35,6 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.TrackPointUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
@@ -59,8 +58,6 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private TrackStatistics lastTrackStatistics;
 
     private String category = "";
-    @Deprecated //TODO This should be handled somewhere else; not in the UI.
-    private int recordingGpsAccuracy;
 
     public static Fragment newInstance() {
         return new StatisticsRecordingFragment();
@@ -76,16 +73,6 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
                             updateUI();
                         }
                     });
-                }
-            }
-            if (PreferencesUtils.isKey(getContext(), R.string.recording_track_id_key, key)) {
-                recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(getContext());
-                if (PreferencesUtils.getRecordingTrackId(getContext()).isValid()) {
-                    // A recording track id has been set -> Resumes track and starts timer.
-                    resumeTrackDataHub();
-                    trackRecordingServiceConnection.startConnection(getContext());
-
-                    handlerUpdateUI.post(updateUIeachSecond);
                 }
             }
         }
@@ -200,8 +187,6 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        recordingGpsAccuracy = Integer.parseInt(getResources().getString(R.string.recording_gps_accuracy_default));
 
         handlerUpdateUI = new Handler();
 
@@ -343,9 +328,8 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
                     TrackPoint trackPoint = lastTrackPoint; //NOTE: There seems to be a race condition; just fix the symptom for now.
                     if (trackPoint != null) {
                         boolean hasFix = !LocationUtils.isLocationOld(trackPoint.getLocation());
-                        boolean hasGoodFix = TrackPointUtils.fulfillsAccuracy(trackPoint, recordingGpsAccuracy);
 
-                        if (!hasFix || !hasGoodFix) {
+                        if (!hasFix) {
                             lastTrackPoint = null;
                         }
                     }
