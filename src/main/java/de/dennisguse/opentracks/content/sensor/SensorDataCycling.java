@@ -29,6 +29,12 @@ public final class SensorDataCycling {
         private final int crankRevolutionsTime; // UINT16; 1/1024s
         private float cadence_rpm = INVALID_VALUE_FLOAT;
 
+        public Cadence(String sensorAddress) {
+            super(sensorAddress);
+            this.crankRevolutionsCount = INVALID_VALUE_INT;
+            this.crankRevolutionsTime = INVALID_VALUE_INT;
+        }
+
         public Cadence(String sensorAddress, String sensorName, long crankRevolutionsCount, int crankRevolutionsTime) {
             super(sensorAddress, sensorName);
             this.crankRevolutionsCount = crankRevolutionsCount;
@@ -96,6 +102,12 @@ public final class SensorDataCycling {
         private final int wheelRevolutionsCount; // UINT16
         private final int wheelRevolutionsTime; // UINT16; 1/1024s
         private float speed_mps = INVALID_VALUE_FLOAT;
+
+        public Speed(String sensorAddress) {
+            super(sensorAddress);
+            this.wheelRevolutionsCount = INVALID_VALUE_INT;
+            this.wheelRevolutionsTime = INVALID_VALUE_INT;
+        }
 
         public Speed(String sensorAddress, String sensorName, int wheelRevolutionsCount, int wheelRevolutionsTime) {
             super(sensorAddress, sensorName);

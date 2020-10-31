@@ -55,6 +55,7 @@ public abstract class BluetoothConnectionManager {
             switch (newState) {
                 case BluetoothProfile.STATE_CONNECTING:
                     Log.d(TAG, "Connecting to sensor: " + gatt.getDevice());
+                    break;
                 case BluetoothProfile.STATE_CONNECTED:
                     Log.d(TAG, "Connected to sensor: " + gatt.getDevice());
 
@@ -62,9 +63,11 @@ public abstract class BluetoothConnectionManager {
                     break;
                 case BluetoothProfile.STATE_DISCONNECTING:
                     Log.d(TAG, "Disconnecting from sensor: " + gatt.getDevice());
+                    break;
 
                 case BluetoothProfile.STATE_DISCONNECTED:
                     Log.d(TAG, "Disconnected from sensor: " + gatt.getDevice());
+                    break;
             }
         }
 
@@ -114,8 +117,9 @@ public abstract class BluetoothConnectionManager {
 
         Log.d(TAG, "Connecting to: " + device);
 
-        bluetoothGatt = device.connectGatt(context, true, this.connectCallback);
-
+        bluetoothGatt = device.connectGatt(context, true, connectCallback);
+        SensorData sensorData = createPreConnectSensorData(bluetoothGatt.getDevice().getAddress());
+        observer.onChanged(sensorData);
     }
 
     synchronized void disconnect() {
@@ -135,15 +139,22 @@ public abstract class BluetoothConnectionManager {
         return address.equals(bluetoothGatt.getDevice().getAddress());
     }
 
+    protected abstract SensorData createPreConnectSensorData(String address);
+
     /**
      * @return null if data could not be parsed.
      */
-    protected abstract de.dennisguse.opentracks.content.sensor.SensorData parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic);
+    protected abstract SensorData parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic);
 
     public static class HeartRate extends BluetoothConnectionManager {
 
         HeartRate(@NonNull SensorDataObserver observer) {
             super(BluetoothUtils.HEART_RATE_SERVICE_UUID, BluetoothUtils.HEART_RATE_MEASUREMENT_CHAR_UUID, observer);
+        }
+
+        @Override
+        protected SensorData createPreConnectSensorData(String address) {
+            return new SensorDataHeartRate(address);
         }
 
         @Override
@@ -158,6 +169,11 @@ public abstract class BluetoothConnectionManager {
 
         CyclingCadence(SensorDataObserver observer) {
             super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPPED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
+        }
+
+        @Override
+        protected SensorData createPreConnectSensorData(String address) {
+            return new SensorDataCycling.Cadence(address);
         }
 
         @Override
@@ -184,6 +200,11 @@ public abstract class BluetoothConnectionManager {
 
         CyclingSpeed(SensorDataObserver observer) {
             super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPPED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
+        }
+
+        @Override
+        protected SensorData createPreConnectSensorData(String address) {
+            return new SensorDataCycling.Speed(address);
         }
 
         @Override

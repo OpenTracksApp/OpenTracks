@@ -6,6 +6,11 @@ public class SensorDataHeartRate extends SensorData {
 
     private final float heartRate_bpm;
 
+    public SensorDataHeartRate(String address) {
+        super(address);
+        heartRate_bpm = Float.NaN;
+    }
+
     public SensorDataHeartRate(String name, String address, float heartRate_bpm) {
         super(name, address);
         this.heartRate_bpm = heartRate_bpm;

@@ -430,7 +430,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         if (sensorDataSet != null && sensorDataSet.getHeartRate() != null) {
             SensorDataHeartRate data = sensorDataSet.getHeartRate();
 
-            sensorName = data.getSensorName();
+            sensorName = data.getSensorNameOrAddress();
             if (data.hasHeartRate_bpm() && data.isRecent()) {
                 sensorValue = StringUtils.formatDecimal(data.getHeartRate_bpm(), 0);
             }
@@ -452,7 +452,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         String sensorName = getContext().getString(R.string.value_unknown);
         if (sensorDataSet != null && sensorDataSet.getCyclingCadence() != null) {
             SensorDataCycling.Cadence data = sensorDataSet.getCyclingCadence();
-            sensorName = data.getSensorName();
+            sensorName = data.getSensorNameOrAddress();
 
             if (data.hasCadence_rpm() && data.isRecent()) {
                 sensorValue = StringUtils.formatDecimal(data.getCadence_rpm(), 0);
