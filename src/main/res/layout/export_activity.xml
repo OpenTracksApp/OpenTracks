@@ -100,7 +100,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="24dp"
-                app:layout_constraintBottom_toTopOf="@id/export_progress_toggle"
+                app:layout_constraintBottom_toTopOf="@id/export_progress_apply_to_all"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/export_progress_alert_icon"
                 app:layout_constraintTop_toBottomOf="@id/export_progress_summary"
@@ -108,7 +108,7 @@
                 tools:text="The track already exists" />
 
             <CheckBox
-                android:id="@+id/export_progress_toggle"
+                android:id="@+id/export_progress_apply_to_all"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"

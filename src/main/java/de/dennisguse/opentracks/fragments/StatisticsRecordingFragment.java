@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -105,15 +104,14 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
         handlerUpdateUI = new Handler();
 
-        Spinner activityTypeIcon = getView().findViewById(R.id.stats_activity_type_icon);
-        activityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(getActivity(), ""));
-        activityTypeIcon.setOnTouchListener((v, event) -> {
+        viewBinding.statsActivityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(getActivity(), ""));
+        viewBinding.statsActivityTypeIcon.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 ((TrackRecordingActivity) getActivity()).chooseActivityType(category);
             }
             return true;
         });
-        activityTypeIcon.setOnKeyListener((v, keyCode, event) -> {
+        viewBinding.statsActivityTypeIcon.setOnKeyListener((v, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
                 ((TrackRecordingActivity) getActivity()).chooseActivityType(category);
             }
@@ -271,30 +269,28 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private void updateSensorDataUI() {
         TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
 
-        SensorDataSet sensorDataSet = null;
-        Float elevationGain_m = null;
         if (trackRecordingService == null) {
             Log.d(TAG, "Cannot get the track recording service.");
         } else {
-            sensorDataSet = trackRecordingService.getSensorData();
-            elevationGain_m = trackRecordingService.getElevationGain_m();
+            SensorDataSet sensorDataSet = trackRecordingService.getSensorData();
+            if (sensorDataSet != null) {
+                setHeartRateSensorData(sensorDataSet);
+                setCadenceSensorData(sensorDataSet);
+                setSpeedSensorData(sensorDataSet, isSelectedTrackRecording());
+            }
+
+            setTotalElevationGain(trackRecordingService.getElevationGain_m());
         }
-
-        setHeartRateSensorData(sensorDataSet);
-        setCadenceSensorData(sensorDataSet);
-        setSpeedSensorData(sensorDataSet, isSelectedTrackRecording());
-
-        setTotalElevationGain(elevationGain_m);
     }
 
     private void setHeartRateSensorData(SensorDataSet sensorDataSet) {
-        int isVisible = sensorDataSet != null ? View.VISIBLE : View.GONE;
+        int isVisible = sensorDataSet.getHeartRate() != null ? View.VISIBLE : View.GONE;
         viewBinding.statsSensorHeartRateGroup.setVisibility(isVisible);
         setVisibilitySensorHorizontalLine();
 
         String sensorValue = getContext().getString(R.string.value_unknown);
         String sensorName = getContext().getString(R.string.value_unknown);
-        if (sensorDataSet != null && sensorDataSet.getHeartRate() != null) {
+        if (sensorDataSet.getHeartRate() != null) {
             SensorDataHeartRate data = sensorDataSet.getHeartRate();
 
             sensorName = data.getSensorNameOrAddress();
@@ -308,13 +304,13 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     }
 
     private void setCadenceSensorData(SensorDataSet sensorDataSet) {
-        int isVisible = sensorDataSet != null ? View.VISIBLE : View.GONE;
+        int isVisible = sensorDataSet.getCyclingCadence() != null ? View.VISIBLE : View.GONE;
         viewBinding.statsSensorCadenceGroup.setVisibility(isVisible);
         setVisibilitySensorHorizontalLine();
 
         String sensorValue = getContext().getString(R.string.value_unknown);
         String sensorName = getContext().getString(R.string.value_unknown);
-        if (sensorDataSet != null && sensorDataSet.getCyclingCadence() != null) {
+        if (sensorDataSet.getCyclingCadence() != null) {
             SensorDataCycling.Cadence data = sensorDataSet.getCyclingCadence();
             sensorName = data.getSensorNameOrAddress();
 
@@ -501,6 +497,6 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
         Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
         viewBinding.statsSpeedValue.setText(parts.first);
-        viewBinding.statsSpeedLabel.setText(parts.second);
+        viewBinding.statsSpeedUnit.setText(parts.second);
     }
 }

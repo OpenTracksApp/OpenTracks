@@ -34,7 +34,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -48,6 +47,7 @@ import androidx.loader.content.Loader;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.databinding.TrackListBinding;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
@@ -75,9 +75,10 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     private SharedPreferences sharedPreferences;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private TrackController trackController;
-    private ListView listView;
     private ResourceCursorAdapter resourceCursorAdapter;
     private GpsStatusValue gpsStatusValue;
+
+    private TrackListBinding viewBinding;
 
     private final LoaderCallbacks<Cursor> loaderCallbacks = new LoaderCallbacks<Cursor>() {
         @Override
@@ -227,7 +228,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
-        trackController = new TrackController(this, trackRecordingServiceConnection, true, recordListener, stopListener);
+        trackController = new TrackController(this, viewBinding.trackControllerContainer, trackRecordingServiceConnection, true, recordListener, stopListener);
 
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
@@ -237,9 +238,8 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             searchManager.setOnDismissListener(() -> trackController.show());
         }
 
-        listView = findViewById(R.id.track_list);
-        listView.setEmptyView(findViewById(R.id.track_list_empty_view));
-        listView.setOnItemClickListener((parent, view, position, trackId) -> {
+        viewBinding.trackList.setEmptyView(viewBinding.trackListEmptyView);
+        viewBinding.trackList.setOnItemClickListener((parent, view, position, trackId) -> {
             Intent newIntent;
             if (trackId == recordingTrackId.getId()) {
                 // Is recording -> open record activity.
@@ -282,9 +282,9 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                         startTime, true, category, description, null);
             }
         };
-        listView.setAdapter(resourceCursorAdapter);
+        viewBinding.trackList.setAdapter(resourceCursorAdapter);
 
-        ActivityUtils.configureListViewContextualMenu(listView, contextualActionModeCallback);
+        ActivityUtils.configureListViewContextualMenu(viewBinding.trackList, contextualActionModeCallback);
 
         LoaderManager.getInstance(this).initLoader(0, null, loaderCallbacks);
 
@@ -338,8 +338,9 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     }
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.track_list;
+    protected View getRootView() {
+        viewBinding = TrackListBinding.inflate(getLayoutInflater());
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -503,9 +504,9 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 deleteTracks(trackIds);
                 return true;
             case R.id.list_context_menu_select_all:
-                int size = listView.getCount();
+                int size = viewBinding.trackList.getCount();
                 for (int i = 0; i < size; i++) {
-                    listView.setItemChecked(i, true);
+                    viewBinding.trackList.setItemChecked(i, true);
                 }
                 return false;
         }

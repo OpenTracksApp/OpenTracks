@@ -25,6 +25,7 @@ import java.util.List;
 
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.databinding.TrackDeleteBinding;
 import de.dennisguse.opentracks.util.SystemUtils;
 
 /**
@@ -39,6 +40,8 @@ public class TrackDeleteActivity extends AbstractActivity {
     private List<Track.Id> trackIds;
 
     private Thread deleteThread;
+
+    private TrackDeleteBinding viewBinding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,12 +85,13 @@ public class TrackDeleteActivity extends AbstractActivity {
     }
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.track_delete;
+    protected View getRootView() {
+        viewBinding = TrackDeleteBinding.inflate(getLayoutInflater());
+        return viewBinding.getRoot();
     }
 
     public void onAsyncTaskCompleted() {
-        findViewById(R.id.progressbar).setVisibility(View.INVISIBLE);
+        viewBinding.progressbar.setVisibility(View.INVISIBLE);
         setResult(RESULT_OK);
         finish();
     }

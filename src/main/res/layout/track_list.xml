@@ -83,5 +83,7 @@ limitations under the License.
         </LinearLayout>
     </RelativeLayout>
 
-    <include layout="@layout/track_controller" />
+    <include
+        android:id="@+id/track_controller_container"
+        layout="@layout/track_controller" />
 </LinearLayout>

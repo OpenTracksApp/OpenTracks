@@ -20,10 +20,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,6 +29,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.databinding.ImportActivityBinding;
 import de.dennisguse.opentracks.io.file.ErrorListDialog;
 
 /**
@@ -50,14 +47,7 @@ public class ImportActivity extends FragmentActivity {
     private static final String BUNDLE_DOCUMENT_URI = "document_uri";
     private static final String BUNDLE_IS_DIRECTORY = "is_directory";
 
-    private TextView viewTotal;
-    private TextView viewDone;
-    private TextView viewSummary;
-    private ProgressBar viewProgressBar;
-    private ImageView viewAlertIcon;
-    private TextView viewAlertMsg;
-    private Button viewLeftButton;
-    private Button viewRightButton;
+    private ImportActivityBinding viewBinding;
 
     boolean doubleBackToCancel = false;
 
@@ -71,21 +61,12 @@ public class ImportActivity extends FragmentActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.import_progress_activity);
+        viewBinding = ImportActivityBinding.inflate(getLayoutInflater());
+        setContentView(viewBinding.getRoot());
 
         Toolbar toolbar = findViewById(R.id.toolbar);
 
-        viewTotal = findViewById(R.id.import_progress_total);
-        viewDone = findViewById(R.id.import_progress_done);
-        viewSummary = findViewById(R.id.import_progress_summary);
-        viewProgressBar = findViewById(R.id.import_progress_bar);
-        viewAlertIcon = findViewById(R.id.import_progress_alert_icon);
-        viewAlertMsg = findViewById(R.id.import_progress_alert_msg);
-        viewLeftButton = findViewById(R.id.import_progress_left_button);
-        viewRightButton = findViewById(R.id.import_progress_right_button);
-
         final DocumentFile documentFile;
-
         if (savedInstanceState == null) {
             if (getIntent().getData() != null) {
                 documentUri = getIntent().getData();
@@ -143,9 +124,9 @@ public class ImportActivity extends FragmentActivity {
     }
 
     private void initViews() {
-        viewDone.setText("0");
-        viewTotal.setText("0");
-        viewSummary.setText(getString(R.string.import_progress_review, 0, 0, 0, 0));
+        viewBinding.importProgressDone.setText("0");
+        viewBinding.importProgressTotal.setText("0");
+        viewBinding.importProgressSummary.setText(getString(R.string.import_progress_review, 0, 0, 0, 0));
     }
 
     private int getTotalDone() {
@@ -155,11 +136,11 @@ public class ImportActivity extends FragmentActivity {
     private void setProgress() {
         int done = getTotalDone();
 
-        viewDone.setText("" + done);
-        viewTotal.setText("" + summary.getTotalCount());
+        viewBinding.importProgressDone.setText("" + done);
+        viewBinding.importProgressTotal.setText("" + summary.getTotalCount());
 
-        viewProgressBar.setProgress((int) ((float) done / (float) summary.getTotalCount() * 100f));
-        viewSummary.setText(getString(R.string.import_progress_review, getTotalDone(), summary.getSuccessCount(), summary.getExistsCount(), summary.getErrorCount()));
+        viewBinding.importProgressBar.setProgress((int) ((float) done / (float) summary.getTotalCount() * 100f));
+        viewBinding.importProgressSummary.setText(getString(R.string.import_progress_review, getTotalDone(), summary.getSuccessCount(), summary.getExistsCount(), summary.getErrorCount()));
 
         if (done == summary.getTotalCount()) {
             onImportEnded();
@@ -167,27 +148,26 @@ public class ImportActivity extends FragmentActivity {
     }
 
     private void onImportEnded() {
-        viewAlertIcon.setVisibility(View.VISIBLE);
-        viewAlertMsg.setVisibility(View.VISIBLE);
-        viewRightButton.setVisibility(View.VISIBLE);
-        viewRightButton.setText(getString(R.string.generic_ok));
-
-        if (summary.getErrorCount() > 0) {
-            viewLeftButton.setVisibility(View.VISIBLE);
-            viewLeftButton.setText(getString(R.string.generic_show_errors));
-            viewLeftButton.setOnClickListener((view) -> ErrorListDialog.showDialog(getSupportFragmentManager(), getString(R.string.import_error_list_dialog_title), summary.getFileErrors()));
-            viewAlertIcon.setImageDrawable(getDrawable(R.drawable.ic_report_problem_24));
-            String msg = getResources().getQuantityString(R.plurals.generic_completed_with_errors, summary.getErrorCount(), summary.getErrorCount());
-            viewAlertMsg.setText(msg);
-        } else {
-            viewLeftButton.setVisibility(View.GONE);
-            viewAlertIcon.setImageDrawable(getDrawable(R.drawable.ic_dialog_success_24dp));
-            viewAlertMsg.setText(getString(R.string.generic_completed));
-        }
-
-        viewRightButton.setOnClickListener((view) -> {
+        viewBinding.importProgressRightButton.setVisibility(View.VISIBLE);
+        viewBinding.importProgressRightButton.setText(getString(R.string.generic_ok));
+        viewBinding.importProgressRightButton.setOnClickListener((view) -> {
             getViewModelStore().clear();
             finish();
         });
+
+        viewBinding.importProgressAlertMsg.setVisibility(View.VISIBLE);
+        viewBinding.importProgressAlertIcon.setVisibility(View.VISIBLE);
+        if (summary.getErrorCount() > 0) {
+            viewBinding.importProgressLeftButton.setVisibility(View.VISIBLE);
+            viewBinding.importProgressLeftButton.setText(getString(R.string.generic_show_errors));
+            viewBinding.importProgressLeftButton.setOnClickListener((view) -> ErrorListDialog.showDialog(getSupportFragmentManager(), getString(R.string.import_error_list_dialog_title), summary.getFileErrors()));
+            viewBinding.importProgressAlertIcon.setImageDrawable(getDrawable(R.drawable.ic_report_problem_24));
+            String msg = getResources().getQuantityString(R.plurals.generic_completed_with_errors, summary.getErrorCount(), summary.getErrorCount());
+            viewBinding.importProgressAlertMsg.setText(msg);
+        } else {
+            viewBinding.importProgressLeftButton.setVisibility(View.GONE);
+            viewBinding.importProgressAlertIcon.setImageDrawable(getDrawable(R.drawable.ic_dialog_success_24dp));
+            viewBinding.importProgressAlertMsg.setText(getString(R.string.generic_completed));
+        }
     }
 }

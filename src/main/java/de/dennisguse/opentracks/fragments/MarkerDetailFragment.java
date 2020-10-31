@@ -30,7 +30,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -230,24 +229,17 @@ public class MarkerDetailFragment extends Fragment {
             viewBinding.markerDetailMarkerPhoto.setImageResource(MarkerUtils.ICON_ID);
         }
 
-        setName(hasPhoto);
+        ListItemUtils.setTextView(getActivity(), viewBinding.markerDetailMarkerName, marker.getName(), hasPhoto);
 
-        TextView category = getView().findViewById(R.id.marker_detail_marker_category);
-        ListItemUtils.setTextView(getActivity(), category, StringUtils.getCategory(marker.getCategory()), hasPhoto);
 
-        TextView description = getView().findViewById(R.id.marker_detail_marker_description);
-        ListItemUtils.setTextView(getActivity(), description, marker.getDescription(), hasPhoto);
+        ListItemUtils.setTextView(getActivity(), viewBinding.markerDetailMarkerCategory, StringUtils.getCategory(marker.getCategory()), hasPhoto);
+
+        ListItemUtils.setTextView(getActivity(), viewBinding.markerDetailMarkerDescription, marker.getDescription(), hasPhoto);
 
         setLocation(hasPhoto);
     }
 
-    private void setName(boolean addShadow) {
-        TextView textView = getView().findViewById(R.id.marker_detail_marker_name);
-        ListItemUtils.setTextView(getActivity(), textView, marker.getName(), addShadow);
-    }
-
     private void setLocation(boolean addShadow) {
-        TextView textView = getView().findViewById(R.id.marker_detail_marker_location);
         Location location = marker.getLocation();
         String value;
         if (location == null) {
@@ -258,6 +250,6 @@ public class MarkerDetailFragment extends Fragment {
                     + getString(R.string.stats_longitude) + " "
                     + StringUtils.formatCoordinate(location.getLongitude()) + "]";
         }
-        ListItemUtils.setTextView(getActivity(), textView, value, addShadow);
+        ListItemUtils.setTextView(getActivity(), viewBinding.markerDetailMarkerLocation, value, addShadow);
     }
 }

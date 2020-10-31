@@ -17,5 +17,7 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <include layout="@layout/track_controller" />
+    <include
+        android:id="@+id/track_controller_container"
+        layout="@layout/track_controller" />
 </LinearLayout>

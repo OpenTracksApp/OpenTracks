@@ -56,6 +56,7 @@ public class ActivityTypePreference extends DialogPreference {
 
     @Override
     public int getDialogLayoutResource() {
+        // TODO PreferenceActivityTypeBinding
         return R.layout.preference_activity_type;
     }
 

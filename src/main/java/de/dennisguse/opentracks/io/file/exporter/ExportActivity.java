@@ -21,16 +21,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-
+import androidx.core.content.ContextCompat;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.FragmentActivity;
 
@@ -42,6 +37,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.databinding.ExportActivityBinding;
 import de.dennisguse.opentracks.io.file.ErrorListDialog;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.ExportUtils;
@@ -88,15 +84,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
 
     boolean doubleBackToCancel = false;
 
-    private TextView viewTotal;
-    private TextView viewDone;
-    private TextView viewSummary;
-    private ProgressBar viewProgressBar;
-    private ImageView viewAlertIcon;
-    private TextView viewAlertMsg;
-    private CheckBox viewDoItForAllSwitch;
-    private Button viewLeftButton;
-    private Button viewRightButton;
+    private ExportActivityBinding viewBinding;
 
     private ArrayList<String> trackErrors = new ArrayList<>();
 
@@ -105,10 +93,10 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     private ContentProviderUtils contentProviderUtils;
 
     // List of tracks to be exported.
-    private ArrayList<Track.Id> trackIds = new ArrayList<>();
+    private final ArrayList<Track.Id> trackIds = new ArrayList<>();
 
-    private LinkedBlockingQueue<PendingConflict> conflictsQueue = new LinkedBlockingQueue<>();
-    private Handler conflictsHandler = new Handler();
+    private final LinkedBlockingQueue<PendingConflict> conflictsQueue = new LinkedBlockingQueue<>();
+    private final Handler conflictsHandler = new Handler();
 
     private final Runnable conflictsRunnable = new Runnable() {
         @Override
@@ -123,7 +111,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
                     return;
                 }
 
-                viewLeftButton.setOnClickListener((view) -> {
+                viewBinding.exportProgressLeftButton.setOnClickListener((view) -> {
                     setConflictVisibility(View.GONE);
                     conflict.skip();
                     conflictsQueue.remove(conflict);
@@ -132,7 +120,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
                     }
                 });
 
-                viewRightButton.setOnClickListener((view) -> {
+                viewBinding.exportProgressRightButton.setOnClickListener((view) -> {
                     setConflictVisibility(View.GONE);
                     conflict.overwrite();
                     conflictsQueue.remove(conflict);
@@ -147,7 +135,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.export_progress_activity);
+        viewBinding = ExportActivityBinding.inflate(getLayoutInflater());
 
         directoryUri = getIntent().getParcelableExtra(EXTRA_DIRECTORY_URI_KEY);
         trackFileFormat = (TrackFileFormat) getIntent().getSerializableExtra(EXTRA_TRACKFILEFORMAT_KEY);
@@ -161,16 +149,6 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         toolbar.setTitle(getString(R.string.export_progress_message, directoryDisplayName));
 
         resultReceiver = new ExportServiceResultReceiver(new Handler(), this);
-
-        viewTotal = findViewById(R.id.export_progress_total);
-        viewDone = findViewById(R.id.export_progress_done);
-        viewSummary = findViewById(R.id.export_progress_summary);
-        viewProgressBar = findViewById(R.id.export_progress_bar);
-        viewAlertIcon = findViewById(R.id.export_progress_alert_icon);
-        viewAlertMsg = findViewById(R.id.export_progress_alert_msg);
-        viewDoItForAllSwitch = findViewById(R.id.export_progress_toggle);
-        viewLeftButton = findViewById(R.id.export_progress_left_button);
-        viewRightButton = findViewById(R.id.export_progress_right_button);
 
         if (savedInstanceState == null) {
             autoConflict = CONFLICT_NONE;
@@ -235,10 +213,10 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
             }
 
             trackExportTotalCount = cursor.getCount();
-            viewTotal.setText("" + trackExportTotalCount);
+            viewBinding.exportProgressTotal.setText("" + trackExportTotalCount);
             for (int i = from; i < trackExportTotalCount; i++) {
                 cursor.moveToPosition(i);
-                Track track = contentProviderUtils.createTrack(cursor);
+                Track track = ContentProviderUtils.createTrack(cursor);
                 trackIds.add(track.getId());
             }
 
@@ -274,11 +252,11 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     }
 
     private void setConflictVisibility(int visibility) {
-        viewAlertIcon.setVisibility(visibility);
-        viewAlertMsg.setVisibility(visibility);
-        viewDoItForAllSwitch.setVisibility(visibility);
-        viewLeftButton.setVisibility(visibility);
-        viewRightButton.setVisibility(visibility);
+        viewBinding.exportProgressAlertIcon.setVisibility(visibility);
+        viewBinding.exportProgressAlertMsg.setVisibility(visibility);
+        viewBinding.exportProgressApplyToAll.setVisibility(visibility);
+        viewBinding.exportProgressLeftButton.setVisibility(visibility);
+        viewBinding.exportProgressRightButton.setVisibility(visibility);
     }
 
     private int getTotalDone() {
@@ -288,11 +266,11 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     private void setProgress() {
         int done = getTotalDone();
 
-        viewDone.setText("" + done);
-        viewTotal.setText("" + trackExportTotalCount);
+        viewBinding.exportProgressDone.setText("" + done);
+        viewBinding.exportProgressTotal.setText("" + trackExportTotalCount);
 
-        viewProgressBar.setProgress((int) ((float) done / (float) trackExportTotalCount * 100f));
-        viewSummary.setText(getString(R.string.export_progress_review, getTotalDone(), trackExportSuccessCount, trackExportOverwrittenCount, trackExportSkippedCount, trackExportErrorCount));
+        viewBinding.exportProgressBar.setProgress((int) ((float) done / (float) trackExportTotalCount * 100f));
+        viewBinding.exportProgressSummary.setText(getString(R.string.export_progress_review, getTotalDone(), trackExportSuccessCount, trackExportOverwrittenCount, trackExportSkippedCount, trackExportErrorCount));
     }
 
     private void onExportCompleted(Track.Id trackId) {
@@ -306,25 +284,25 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     }
 
     private void onExportEnded() {
-        viewAlertIcon.setVisibility(View.VISIBLE);
-        viewAlertMsg.setVisibility(View.VISIBLE);
-        viewRightButton.setVisibility(View.VISIBLE);
-        viewRightButton.setText(getString(R.string.generic_ok));
+        viewBinding.exportProgressRightButton.setVisibility(View.VISIBLE);
+        viewBinding.exportProgressRightButton.setText(getString(R.string.generic_ok));
+        viewBinding.exportProgressRightButton.setOnClickListener((view) -> finish());
 
+        viewBinding.exportProgressAlertIcon.setVisibility(View.VISIBLE);
+        viewBinding.exportProgressAlertMsg.setVisibility(View.VISIBLE);
         if (trackExportErrorCount > 0) {
-            viewLeftButton.setVisibility(View.VISIBLE);
-            viewLeftButton.setText(getString(R.string.generic_show_errors));
-            viewLeftButton.setOnClickListener((view) -> ErrorListDialog.showDialog(getSupportFragmentManager(), getString(R.string.export_track_errors), trackErrors));
-            viewAlertIcon.setImageDrawable(getDrawable(R.drawable.ic_report_problem_24));
+            viewBinding.exportProgressLeftButton.setVisibility(View.VISIBLE);
+            viewBinding.exportProgressLeftButton.setText(getString(R.string.generic_show_errors));
+            viewBinding.exportProgressLeftButton.setOnClickListener((view) -> ErrorListDialog.showDialog(getSupportFragmentManager(), getString(R.string.export_track_errors), trackErrors));
+            viewBinding.exportProgressAlertIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_report_problem_24));
             String msg = getResources().getQuantityString(R.plurals.generic_completed_with_errors, trackExportErrorCount, trackExportErrorCount);
-            viewAlertMsg.setText(msg);
+            viewBinding.exportProgressAlertMsg.setText(msg);
         } else {
-            viewLeftButton.setVisibility(View.GONE);
-            viewAlertIcon.setImageDrawable(getDrawable(R.drawable.ic_dialog_success_24dp));
-            viewAlertMsg.setText(getString(R.string.generic_completed));
+            viewBinding.exportProgressLeftButton.setVisibility(View.GONE);
+            viewBinding.exportProgressAlertIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_dialog_success_24dp));
+            viewBinding.exportProgressAlertMsg.setText(getString(R.string.generic_completed));
         }
 
-        viewRightButton.setOnClickListener((view) -> finish());
     }
 
     @Override
@@ -368,7 +346,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
      * Handle conflicts (exporting file already exists).
      */
     private class PendingConflict {
-        private Track.Id trackId;
+        private final Track.Id trackId;
 
         public PendingConflict(Track.Id trackId) {
             this.trackId = trackId;
@@ -383,8 +361,8 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         public boolean resolve() {
             if (autoConflict == CONFLICT_NONE) {
                 Track track = contentProviderUtils.getTrack(trackId);
-                viewAlertIcon.setImageDrawable(getDrawable(R.drawable.ic_report_problem_24));
-                viewAlertMsg.setText(getString(R.string.export_track_already_exists_msg, track.getName()));
+                viewBinding.exportProgressAlertIcon.setImageDrawable(getDrawable(R.drawable.ic_report_problem_24));
+                viewBinding.exportProgressAlertMsg.setText(getString(R.string.export_track_already_exists_msg, track.getName()));
                 setConflictVisibility(View.VISIBLE);
                 return false;
             }
@@ -399,7 +377,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         public void overwrite() {
             export(trackId, CONFLICT_OVERWRITE);
 
-            if (viewDoItForAllSwitch.isChecked()) {
+            if (viewBinding.exportProgressApplyToAll.isChecked()) {
                 autoConflict = CONFLICT_OVERWRITE;
             }
         }
@@ -410,7 +388,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         public void skip() {
             export(trackId, CONFLICT_SKIP);
 
-            if (viewDoItForAllSwitch.isChecked()) {
+            if (viewBinding.exportProgressApplyToAll.isChecked()) {
                 autoConflict = CONFLICT_SKIP;
             }
         }

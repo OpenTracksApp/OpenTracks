@@ -183,8 +183,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     @Override
     public void onStop() {
         super.onStop();
-        ViewGroup layout = getView().findViewById(R.id.chart_view_layout);
-        layout.removeView(chartView);
+
+        viewBinding.chartViewLayout.removeView(chartView);
     }
 
     @Override

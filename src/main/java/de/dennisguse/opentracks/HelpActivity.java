@@ -1,9 +1,11 @@
 package de.dennisguse.opentracks;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import de.dennisguse.opentracks.databinding.HelpBinding;
 import de.dennisguse.opentracks.util.ViewUtils;
 
 public class HelpActivity extends AbstractActivity {
@@ -15,7 +17,7 @@ public class HelpActivity extends AbstractActivity {
     }
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.help;
+    protected View getRootView() {
+        return HelpBinding.inflate(getLayoutInflater()).getRoot();
     }
 }

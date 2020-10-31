@@ -19,6 +19,7 @@ package de.dennisguse.opentracks;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,6 +33,7 @@ import java.util.List;
 
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.databinding.MarkerDetailActivityBinding;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import de.dennisguse.opentracks.fragments.MarkerDetailFragment;
 
@@ -47,6 +49,8 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
     public static final String EXTRA_MARKER_ID = "marker_id";
 
     private static final String TAG = MarkerDetailActivity.class.getSimpleName();
+
+    private MarkerDetailActivityBinding viewBinding;
 
     private List<Marker.Id> markerIds;
 
@@ -82,10 +86,9 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
             }
         }
 
-        final ViewPager viewPager = findViewById(R.id.maker_detail_activity_view_pager);
         final MarkerDetailPagerAdapter markerAdapter = new MarkerDetailPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(markerAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewBinding.makerDetailActivityViewPager.setAdapter(markerAdapter);
+        viewBinding.makerDetailActivityViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -100,12 +103,13 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
             public void onPageScrollStateChanged(int state) {
             }
         });
-        viewPager.setCurrentItem(markerIndex == -1 ? 0 : markerIndex);
+        viewBinding.makerDetailActivityViewPager.setCurrentItem(markerIndex == -1 ? 0 : markerIndex);
     }
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.marker_detail_activity;
+    protected View getRootView() {
+        viewBinding = MarkerDetailActivityBinding.inflate(getLayoutInflater());
+        return viewBinding.getRoot();
     }
 
     @Override

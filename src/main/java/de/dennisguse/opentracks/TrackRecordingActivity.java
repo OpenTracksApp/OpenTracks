@@ -16,13 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
-import com.google.android.material.tabs.TabLayout;
 
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.databinding.TrackRecordingBinding;
 import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.IntervalsFragment;
@@ -57,8 +55,9 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     private SharedPreferences sharedPreferences;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private TrackDataHub trackDataHub;
-    private ViewPager pager;
     private TrackController trackController;
+
+    private TrackRecordingBinding viewBinding;
 
     // Initialized from Intent; if a new track recording is started, a new TrackId will be provided by TrackRecordingService
     private Track.Id trackId;
@@ -180,15 +179,13 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
         trackDataHub = new TrackDataHub(this);
 
-        pager = findViewById(R.id.track_detail_activity_view_pager);
-        pager.setAdapter(new CustomFragmentPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
-        TabLayout tabs = findViewById(R.id.track_detail_activity_tablayout);
-        tabs.setupWithViewPager(pager);
+        viewBinding.trackDetailActivityViewPager.setAdapter(new CustomFragmentPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
+        viewBinding.trackDetailActivityTablayout.setupWithViewPager(viewBinding.trackDetailActivityViewPager);
         if (savedInstanceState != null) {
-            pager.setCurrentItem(savedInstanceState.getInt(CURRENT_TAB_TAG_KEY));
+            viewBinding.trackDetailActivityViewPager.setCurrentItem(savedInstanceState.getInt(CURRENT_TAB_TAG_KEY));
         }
 
-        trackController = new TrackController(this, trackRecordingServiceConnection, false, recordListener, stopListener);
+        trackController = new TrackController(this, viewBinding.trackControllerContainer, trackRecordingServiceConnection, false, recordListener, stopListener);
     }
 
     @Override
@@ -266,7 +263,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(CURRENT_TAB_TAG_KEY, pager.getCurrentItem());
+        outState.putInt(CURRENT_TAB_TAG_KEY, viewBinding.trackDetailActivityViewPager.getCurrentItem());
         outState.putParcelable(EXTRA_TRACK_ID, trackId);
     }
 
@@ -285,8 +282,9 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     }
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.track_record;
+    protected View getRootView() {
+        viewBinding = TrackRecordingBinding.inflate(getLayoutInflater());
+        return viewBinding.getRoot();
     }
 
     @Override

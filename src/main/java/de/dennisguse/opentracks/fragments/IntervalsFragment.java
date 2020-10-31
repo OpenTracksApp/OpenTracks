@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,7 +42,6 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
 
     private String intervalUnit;
     private IntervalStatisticsAdapter adapter;
-    protected Spinner spinnerIntervals;
     private ArrayAdapter<IntervalStatisticsModel.IntervalOption> spinnerAdapter;
 
     private TrackDataHub trackDataHub;
@@ -78,13 +76,11 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
         PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
         intervalUnit = PreferencesUtils.isMetricUnits(getContext()) ? getContext().getString(R.string.unit_kilometer) : getContext().getString(R.string.unit_mile);
 
-        viewBinding.intervalList.setEmptyView(view.findViewById(R.id.interval_list_empty_view));
+        viewBinding.intervalList.setEmptyView(viewBinding.intervalListEmptyView);
 
         stackModeListView = IntervalStatisticsAdapter.StackMode.STACK_FROM_TOP;
 
         viewModel = new IntervalStatisticsModel();
-
-        spinnerIntervals = view.findViewById(R.id.spinner_intervals);
 
         spinnerAdapter = new ArrayAdapter<IntervalStatisticsModel.IntervalOption>(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {
             @NonNull
@@ -102,9 +98,9 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
                 return v;
             }
         };
-        spinnerIntervals.setAdapter(spinnerAdapter);
 
-        spinnerIntervals.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        viewBinding.spinnerIntervals.setAdapter(spinnerAdapter);
+        viewBinding.spinnerIntervals.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedInterval = IntervalStatisticsModel.IntervalOption.values()[i];
@@ -113,7 +109,6 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
     }
@@ -143,7 +138,6 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
         PreferencesUtils.unregister(getContext(), sharedPreferenceChangeListener);
 
         adapter = null;
-        spinnerIntervals = null;
         viewModel = null;
     }
 

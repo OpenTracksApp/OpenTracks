@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -35,14 +36,11 @@ public abstract class AbstractActivity extends AppCompatActivity {
         // Set volume control stream for text to speech
         setVolumeControlStream(TTSUtils.getTTSStream());
 
-        setContentView(getLayoutResId());
+        setContentView(getRootView());
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
-    /**
-     * Gets the layout resource id.
-     */
-    protected abstract int getLayoutResId();
+    protected abstract View getRootView();
 }

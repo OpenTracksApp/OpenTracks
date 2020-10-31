@@ -26,7 +26,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
@@ -38,6 +37,7 @@ import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.databinding.MarkerListBinding;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import de.dennisguse.opentracks.util.ActivityUtils;
@@ -81,8 +81,9 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     };
     private Track track;
     private ResourceCursorAdapter resourceCursorAdapter;
-    // UI elements
-    private ListView listView;
+
+    private MarkerListBinding viewBinding;
+
     // Callback when an item is selected in the contextual action mode
     private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
         @Override
@@ -120,9 +121,8 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
         track = trackId != null ? contentProviderUtils.getTrack(trackId) : null;
 
-        listView = findViewById(R.id.marker_list);
-        listView.setEmptyView(findViewById(R.id.marker_list_empty));
-        listView.setOnItemClickListener((parent, view, position, id) -> {
+        viewBinding.markerList.setEmptyView(viewBinding.markerListEmpty);
+        viewBinding.markerList.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = IntentUtils.newIntent(MarkerListActivity.this, MarkerDetailActivity.class)
                     .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, new Marker.Id(id));
             startActivity(intent);
@@ -151,8 +151,8 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
                 ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId, R.string.image_marker, name, null, null, 0, time, false, category, description, photoUrl);
             }
         };
-        listView.setAdapter(resourceCursorAdapter);
-        ActivityUtils.configureListViewContextualMenu(listView, contextualActionModeCallback);
+        viewBinding.markerList.setAdapter(resourceCursorAdapter);
+        ActivityUtils.configureListViewContextualMenu(viewBinding.markerList, contextualActionModeCallback);
 
         LoaderManager.getInstance(this).initLoader(0, null, new LoaderCallbacks<Cursor>() {
             @NonNull
@@ -193,8 +193,9 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     }
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.marker_list;
+    protected View getRootView() {
+        viewBinding = MarkerListBinding.inflate(getLayoutInflater());
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -254,14 +255,14 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
                 }
                 return true;
             case R.id.list_context_menu_delete:
-                if (markerIds.length > 1 && markerIds.length == listView.getCount()) {
+                if (markerIds.length > 1 && markerIds.length == viewBinding.markerList.getCount()) {
                     markerIds = null;
                 }
                 DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), markerIds);
                 return true;
             case R.id.list_context_menu_select_all:
-                for (int i = 0; i < listView.getCount(); i++) {
-                    listView.setItemChecked(i, true);
+                for (int i = 0; i < viewBinding.markerList.getCount(); i++) {
+                    viewBinding.markerList.setItemChecked(i, true);
                 }
                 return false;
             default:

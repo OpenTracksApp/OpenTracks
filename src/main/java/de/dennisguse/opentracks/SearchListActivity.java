@@ -27,7 +27,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 
@@ -44,6 +43,7 @@ import de.dennisguse.opentracks.content.SearchEngine.SearchQuery;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.databinding.SearchListBinding;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
@@ -100,6 +100,8 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
     private Track.Id recordingTrackId;
 
     private boolean recordingTrackPaused;
+
+    private SearchListBinding viewBinding;
 
     // Callback when an item is selected in the contextual action mode
     private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
@@ -198,10 +200,9 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
             }
         };
         // UI elements
-        ListView listView = findViewById(R.id.search_list);
-        listView.setAdapter(arrayAdapter);
-        listView.setEmptyView(findViewById(R.id.search_list_empty));
-        listView.setOnItemClickListener((parent, view, position, id) -> {
+        viewBinding.searchList.setEmptyView(viewBinding.searchListEmpty);
+        viewBinding.searchList.setAdapter(arrayAdapter);
+        viewBinding.searchList.setOnItemClickListener((parent, view, position, id) -> {
             Map<String, Object> item = arrayAdapter.getItem(position);
             Track.Id trackId = (Track.Id) item.get(TRACK_ID_FIELD);
             Marker.Id markerId = (Marker.Id) item.get(MARKER_ID_FIELD);
@@ -213,7 +214,7 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
             }
             startActivity(intent);
         });
-        ActivityUtils.configureListViewContextualMenu(listView, contextualActionModeCallback);
+        ActivityUtils.configureListViewContextualMenu(viewBinding.searchList, contextualActionModeCallback);
         handleIntent(getIntent());
     }
 
@@ -239,8 +240,9 @@ public class SearchListActivity extends AbstractListActivity implements DeleteMa
     }
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.search_list;
+    protected View getRootView() {
+        viewBinding = SearchListBinding.inflate(getLayoutInflater());
+        return viewBinding.getRoot();
     }
 
     @Override

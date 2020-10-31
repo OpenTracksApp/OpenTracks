@@ -1,37 +1,39 @@
 package de.dennisguse.opentracks;
 
 import android.os.Bundle;
-import android.widget.ListView;
+import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
 
 import de.dennisguse.opentracks.adapters.AggregatedStatisticsAdapter;
+import de.dennisguse.opentracks.databinding.AggregatedStatsBinding;
 import de.dennisguse.opentracks.viewmodels.AggregatedStatisticsModel;
 
 public class AggregatedStatisticsActivity extends AbstractActivity {
 
-    private ListView listView;
+    private AggregatedStatsBinding viewBinding;
+
     private AggregatedStatisticsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        listView = findViewById(R.id.aggregated_stats_list);
-        listView.setEmptyView(findViewById(R.id.aggregated_stats_empty_view));
+        viewBinding.aggregatedStatsList.setEmptyView(viewBinding.aggregatedStatsEmptyView);
 
         final AggregatedStatisticsModel viewModel = new ViewModelProvider(this).get(AggregatedStatisticsModel.class);
         viewModel.getAggregatedStats().observe(this, aggregatedStatistics -> {
             if (aggregatedStatistics != null) {
                 adapter = new AggregatedStatisticsAdapter(this, aggregatedStatistics);
-                listView.setAdapter(adapter);
+                viewBinding.aggregatedStatsList.setAdapter(adapter);
             }
             adapter.notifyDataSetChanged();
         });
     }
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.aggregated_stats;
+    protected View getRootView() {
+        viewBinding = AggregatedStatsBinding.inflate(getLayoutInflater());
+        return viewBinding.getRoot();
     }
 }

@@ -20,10 +20,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
@@ -213,10 +213,9 @@ public class ShareContentProvider extends CustomContentProvider {
         Set<Track.Id> trackIds = parseURI(uri);
         final ArrayList<Track> tracks = new ArrayList<>();
         String[] trackIdsString = trackIds.stream().map(Track.Id::toString).toArray(String[]::new);
-        String trackIdsPlaceholder = TextUtils.join(",", Stream.of(trackIdsString).map(it -> "?").toArray(String[]::new));
+        String whereClause = String.format(TracksColumns._ID + " IN (%s)", TextUtils.join(",", Collections.nCopies(trackIds.size(), "?")));
 
-        TextUtils.join(",", trackIds);
-        try (Cursor cursor = super.query(TracksColumns.CONTENT_URI, null, TracksColumns._ID + " IN (" + trackIdsPlaceholder + ")", trackIdsString, TracksColumns._ID)) {
+        try (Cursor cursor = super.query(TracksColumns.CONTENT_URI, null, whereClause, trackIdsString, TracksColumns._ID)) {
             while (cursor.moveToNext()) {
                 tracks.add(ContentProviderUtils.createTrack(cursor));
             }

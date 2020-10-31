@@ -21,19 +21,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
-import com.google.android.material.tabs.TabLayout;
 
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.databinding.TrackRecordedBinding;
 import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.IntervalsFragment;
@@ -62,7 +61,8 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
     // The following are set in onCreate.
     private ContentProviderUtils contentProviderUtils;
     private TrackDataHub trackDataHub;
-    private ViewPager pager;
+
+    private TrackRecordedBinding viewBinding;
 
     private Track.Id trackId;
 
@@ -75,12 +75,10 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
 
         trackDataHub = new TrackDataHub(this);
 
-        pager = findViewById(R.id.track_detail_activity_view_pager);
-        pager.setAdapter(new CustomFragmentPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
-        TabLayout tabs = findViewById(R.id.track_detail_activity_tablayout);
-        tabs.setupWithViewPager(pager);
+        viewBinding.trackDetailActivityViewPager.setAdapter(new CustomFragmentPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
+        viewBinding.trackDetailActivityTablayout.setupWithViewPager(viewBinding.trackDetailActivityViewPager);
         if (savedInstanceState != null) {
-            pager.setCurrentItem(savedInstanceState.getInt(CURRENT_TAB_TAG_KEY));
+            viewBinding.trackDetailActivityViewPager.setCurrentItem(savedInstanceState.getInt(CURRENT_TAB_TAG_KEY));
         }
     }
 
@@ -111,12 +109,13 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(CURRENT_TAB_TAG_KEY, pager.getCurrentItem());
+        outState.putInt(CURRENT_TAB_TAG_KEY, viewBinding.trackDetailActivityViewPager.getCurrentItem());
     }
 
     @Override
-    protected int getLayoutResId() {
-        return R.layout.track_detail;
+    protected View getRootView() {
+        viewBinding = TrackRecordedBinding.inflate(getLayoutInflater());
+        return viewBinding.getRoot();
     }
 
     @Override

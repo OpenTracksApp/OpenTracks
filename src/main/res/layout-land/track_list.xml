@@ -27,7 +27,9 @@ limitations under the License.
         android:baselineAligned="false"
         android:orientation="horizontal">
 
-        <include layout="@layout/track_controller" />
+        <include
+            android:id="@+id/track_controller_container"
+            layout="@layout/track_controller" />
 
         <ListView
             android:id="@+id/track_list"

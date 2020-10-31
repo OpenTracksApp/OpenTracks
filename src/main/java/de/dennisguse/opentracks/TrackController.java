@@ -26,11 +26,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
+import de.dennisguse.opentracks.databinding.TrackControllerBinding;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.util.ActivityUtils;
@@ -49,13 +49,10 @@ public class TrackController {
     private final Activity activity;
     private final TrackRecordingServiceConnection trackRecordingServiceConnection;
     private final Handler handlerUpdateTotalTime;
-    private final View containerView;
-    private final TextView statusTextView;
-    private final TextView totalTimeTextView;
-    private final ImageButton recordImageButton;
-    private final ImageButton stopImageButton;
     private final boolean alwaysShow;
     private ButtonDelay buttonDelay;
+
+    private final TrackControllerBinding viewBinding;
 
     private boolean isRecording;
     private boolean isPaused;
@@ -69,37 +66,32 @@ public class TrackController {
     private final Runnable updateTotalTimeRunnable = new Runnable() {
         public void run() {
             if (isResumed && isRecording && !isPaused) {
-                totalTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(System.currentTimeMillis() - totalTimeTimestamp + totalTime));
+                viewBinding.trackControllerTotalTime.setText(StringUtils.formatElapsedTimeWithHour(System.currentTimeMillis() - totalTimeTimestamp + totalTime));
                 handlerUpdateTotalTime.postDelayed(this, UnitConversions.ONE_SECOND_MS);
             }
         }
     };
 
     @SuppressLint("ClickableViewAccessibility")
-    TrackController(Activity activity, TrackRecordingServiceConnection trackRecordingServiceConnection, boolean alwaysShow, OnClickListener recordListener, OnClickListener stopListener) {
+    TrackController(Activity activity, TrackControllerBinding viewBinding, TrackRecordingServiceConnection trackRecordingServiceConnection, boolean alwaysShow, OnClickListener recordListener, OnClickListener stopListener) {
         this.activity = activity;
+        this.viewBinding = viewBinding;
         this.trackRecordingServiceConnection = trackRecordingServiceConnection;
         this.alwaysShow = alwaysShow;
         handlerUpdateTotalTime = new Handler();
-        containerView = activity.findViewById(R.id.track_controller_container);
-        statusTextView = activity.findViewById(R.id.track_controller_status);
-        totalTimeTextView = activity.findViewById(R.id.track_controller_total_time);
+        viewBinding.trackControllerRecord.setOnTouchListener((view, motionEvent) -> onRecordTouch(activity, recordListener, motionEvent));
 
-        recordImageButton = activity.findViewById(R.id.track_controller_record);
-        recordImageButton.setOnTouchListener((view, motionEvent) -> onRecordTouch(activity, recordListener, motionEvent));
-
-        stopImageButton = activity.findViewById(R.id.track_controller_stop);
-        stopImageButton.setOnTouchListener((view, motionEvent) -> onStopTouch(activity, stopListener, motionEvent));
+        viewBinding.trackControllerStop.setOnTouchListener((view, motionEvent) -> onStopTouch(activity, stopListener, motionEvent));
     }
 
     private boolean onRecordTouch(final Activity activity, final OnClickListener recordListener, final MotionEvent motionEvent) {
         if (isRecording && !isPaused) {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                buttonDelay = new ButtonDelay(activity, recordImageButton, R.drawable.ic_button_pause_anim, R.string.hold_to_pause, recordListener);
+                buttonDelay = new ButtonDelay(activity, viewBinding.trackControllerRecord, R.drawable.ic_button_pause_anim, R.string.hold_to_pause, recordListener);
                 new Thread(buttonDelay).start();
                 return true;
-            } else if (motionEvent.getAction() == MotionEvent.ACTION_UP ) {
-                recordImageButton.setImageResource(R.drawable.ic_button_pause);
+            } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                viewBinding.trackControllerRecord.setImageResource(R.drawable.ic_button_pause);
                 if (buttonDelay != null) {
                     buttonDelay.canceled = true;
                 }
@@ -115,11 +107,11 @@ public class TrackController {
     private boolean onStopTouch(final Activity activity, final OnClickListener stopListener, final MotionEvent motionEvent) {
         if (isRecording) {
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                buttonDelay = new ButtonDelay(activity, stopImageButton, R.drawable.ic_button_stop_anim, R.string.hold_to_stop, stopListener);
+                buttonDelay = new ButtonDelay(activity, viewBinding.trackControllerStop, R.drawable.ic_button_stop_anim, R.string.hold_to_stop, stopListener);
                 new Thread(buttonDelay).start();
                 return true;
-            } else if (motionEvent.getAction() == MotionEvent.ACTION_UP ) {
-                stopImageButton.setImageResource(R.drawable.ic_button_stop);
+            } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                viewBinding.trackControllerStop.setImageResource(R.drawable.ic_button_stop);
                 if (buttonDelay != null) {
                     buttonDelay.canceled = true;
                 }
@@ -151,7 +143,7 @@ public class TrackController {
 
         @Override
         public void run() {
-            activity.runOnUiThread(()->{
+            activity.runOnUiThread(() -> {
                 imageButton.setImageDrawable(drawable);
                 if (drawable instanceof AnimatedVectorDrawable) {
                     ((AnimatedVectorDrawable) drawable).start();
@@ -165,7 +157,7 @@ public class TrackController {
             } catch (InterruptedException ignored) {
             }
             if (!canceled) {
-                activity.runOnUiThread(()-> {
+                activity.runOnUiThread(() -> {
                     clickListener.onClick(null);
                     ActivityUtils.vibrate(activity, 1000);
                 });
@@ -180,30 +172,30 @@ public class TrackController {
         isRecording = recording;
         isPaused = paused;
         boolean visible = alwaysShow || isRecording;
-        containerView.setVisibility(visible ? View.VISIBLE : View.GONE);
+        viewBinding.trackControllerContainer.setVisibility(visible ? View.VISIBLE : View.GONE);
 
         if (!visible) {
             handlerUpdateTotalTime.removeCallbacks(updateTotalTimeRunnable);
             return;
         }
 
-        recordImageButton.setImageResource(isRecording && !isPaused ? R.drawable.ic_button_pause : R.drawable.button_record);
-        recordImageButton.setContentDescription(activity.getString(isRecording && !isPaused ? R.string.image_pause : R.string.image_record));
+        viewBinding.trackControllerRecord.setImageResource(isRecording && !isPaused ? R.drawable.ic_button_pause : R.drawable.button_record);
+        viewBinding.trackControllerRecord.setContentDescription(activity.getString(isRecording && !isPaused ? R.string.image_pause : R.string.image_record));
 
-        stopImageButton.setImageResource(isRecording ? R.drawable.ic_button_stop : R.drawable.ic_button_stop_disabled);
-        stopImageButton.setEnabled(isRecording);
+        viewBinding.trackControllerStop.setImageResource(isRecording ? R.drawable.ic_button_stop : R.drawable.ic_button_stop_disabled);
+        viewBinding.trackControllerStop.setEnabled(isRecording);
 
-        statusTextView.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
+        viewBinding.trackControllerStatus.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
         if (isRecording) {
-            statusTextView.setTextColor(activity.getResources().getColor(isPaused ? android.R.color.white : R.color.recording_text));
-            statusTextView.setText(isPaused ? R.string.generic_paused : R.string.generic_recording);
+            viewBinding.trackControllerStatus.setTextColor(activity.getResources().getColor(isPaused ? android.R.color.white : R.color.recording_text));
+            viewBinding.trackControllerStatus.setText(isPaused ? R.string.generic_paused : R.string.generic_recording);
         }
 
         handlerUpdateTotalTime.removeCallbacks(updateTotalTimeRunnable);
-        totalTimeTextView.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
+        viewBinding.trackControllerTotalTime.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
         if (isRecording) {
             totalTime = getTotalTime();
-            totalTimeTextView.setText(StringUtils.formatElapsedTimeWithHour(totalTime));
+            viewBinding.trackControllerTotalTime.setText(StringUtils.formatElapsedTimeWithHour(totalTime));
             if (!isPaused) {
                 totalTimeTimestamp = System.currentTimeMillis();
                 handlerUpdateTotalTime.postDelayed(updateTotalTimeRunnable, UnitConversions.ONE_SECOND_MS);
@@ -222,11 +214,11 @@ public class TrackController {
     }
 
     public void hide() {
-        containerView.setVisibility(View.GONE);
+        viewBinding.trackControllerContainer.setVisibility(View.GONE);
     }
 
     public void show() {
-        containerView.setVisibility(View.VISIBLE);
+        viewBinding.trackControllerContainer.setVisibility(View.VISIBLE);
     }
 
     /**
