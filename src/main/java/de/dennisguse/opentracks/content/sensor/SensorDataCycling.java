@@ -17,22 +17,19 @@ public final class SensorDataCycling {
 
     private static final String TAG = SensorDataCycling.class.getSimpleName();
 
-    private static final int INVALID_VALUE_INT = -1;
-    private static final float INVALID_VALUE_FLOAT = Float.NaN;
-
     private SensorDataCycling() {
     }
 
     public static class Cadence extends SensorData {
 
-        private final long crankRevolutionsCount; // UINT32
-        private final int crankRevolutionsTime; // UINT16; 1/1024s
-        private float cadence_rpm = INVALID_VALUE_FLOAT;
+        private final Long crankRevolutionsCount; // UINT32
+        private final Integer crankRevolutionsTime; // UINT16; 1/1024s
+        private Float cadence_rpm;
 
         public Cadence(String sensorAddress) {
             super(sensorAddress);
-            this.crankRevolutionsCount = INVALID_VALUE_INT;
-            this.crankRevolutionsTime = INVALID_VALUE_INT;
+            this.crankRevolutionsCount = null;
+            this.crankRevolutionsTime = null;
         }
 
         public Cadence(String sensorAddress, String sensorName, long crankRevolutionsCount, int crankRevolutionsTime) {
@@ -49,7 +46,7 @@ public final class SensorDataCycling {
         }
 
         public boolean hasData() {
-            return crankRevolutionsCount != INVALID_VALUE_INT && crankRevolutionsTime != INVALID_VALUE_INT;
+            return crankRevolutionsCount != null && crankRevolutionsTime != null;
         }
 
         public long getCrankRevolutionsCount() {
@@ -61,7 +58,7 @@ public final class SensorDataCycling {
         }
 
         public boolean hasCadence_rpm() {
-            return !Float.isNaN(cadence_rpm);
+            return cadence_rpm != null;
         }
 
         public float getCadence_rpm() {
@@ -73,7 +70,7 @@ public final class SensorDataCycling {
                 float timeDiff_ms = UintUtils.diff(crankRevolutionsTime, previous.crankRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * UnitConversions.S_TO_MS;
                 if (timeDiff_ms <= 0) {
                     Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
-                    cadence_rpm = INVALID_VALUE_FLOAT;
+                    cadence_rpm = null;
                 } else {
                     long crankDiff = UintUtils.diff(crankRevolutionsCount, previous.crankRevolutionsCount, UintUtils.UINT32_MAX);
                     float cadence_ms = crankDiff / timeDiff_ms;
@@ -99,14 +96,14 @@ public final class SensorDataCycling {
 
     public static class Speed extends SensorData {
 
-        private final int wheelRevolutionsCount; // UINT16
-        private final int wheelRevolutionsTime; // UINT16; 1/1024s
-        private float speed_mps = INVALID_VALUE_FLOAT;
+        private final Integer wheelRevolutionsCount; // UINT16
+        private final Integer wheelRevolutionsTime; // UINT16; 1/1024s
+        private Float speed_mps;
 
         public Speed(String sensorAddress) {
             super(sensorAddress);
-            this.wheelRevolutionsCount = INVALID_VALUE_INT;
-            this.wheelRevolutionsTime = INVALID_VALUE_INT;
+            this.wheelRevolutionsCount = null;
+            this.wheelRevolutionsTime = null;
         }
 
         public Speed(String sensorAddress, String sensorName, int wheelRevolutionsCount, int wheelRevolutionsTime) {
@@ -116,7 +113,7 @@ public final class SensorDataCycling {
         }
 
         public boolean hasData() {
-            return wheelRevolutionsCount != INVALID_VALUE_INT && wheelRevolutionsTime != INVALID_VALUE_INT;
+            return wheelRevolutionsCount != null && wheelRevolutionsTime != null;
         }
 
         public int getWheelRevolutionsCount() {
@@ -128,7 +125,7 @@ public final class SensorDataCycling {
         }
 
         public boolean hasSpeed_mps() {
-            return !Float.isNaN(speed_mps);
+            return speed_mps != null;
         }
 
         public float getSpeed_mps() {
@@ -140,7 +137,7 @@ public final class SensorDataCycling {
                 float timeDiff_ms = UintUtils.diff(wheelRevolutionsTime, previous.wheelRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * UnitConversions.S_TO_MS;
                 if (timeDiff_ms <= 0) {
                     Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
-                    speed_mps = INVALID_VALUE_FLOAT;
+                    speed_mps = null;
                 } else {
                     long wheelDiff = UintUtils.diff(wheelRevolutionsCount, previous.wheelRevolutionsCount, UintUtils.UINT16_MAX);
                     double timeDiff_s = timeDiff_ms * UnitConversions.MS_TO_S;
