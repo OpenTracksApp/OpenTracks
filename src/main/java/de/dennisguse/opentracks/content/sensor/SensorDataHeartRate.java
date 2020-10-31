@@ -4,11 +4,11 @@ import androidx.annotation.NonNull;
 
 public class SensorDataHeartRate extends SensorData {
 
-    private final float heartRate_bpm;
+    private final Float heartRate_bpm;
 
     public SensorDataHeartRate(String address) {
         super(address);
-        heartRate_bpm = Float.NaN;
+        heartRate_bpm = null;
     }
 
     public SensorDataHeartRate(String name, String address, float heartRate_bpm) {
@@ -17,10 +17,10 @@ public class SensorDataHeartRate extends SensorData {
     }
 
     public boolean hasHeartRate_bpm() {
-        return !Float.isNaN(heartRate_bpm);
+        return heartRate_bpm != null;
     }
 
-    public float getHeartRate_bpm() {
+    public Float getHeartRate_bpm() {
         return heartRate_bpm;
     }
 
