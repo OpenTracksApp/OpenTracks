@@ -689,7 +689,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     }
 
     SensorDataSet getSensorDataSet() {
-        if (remoteSensorManager == null || !remoteSensorManager.isEnabled()) {
+        if (remoteSensorManager == null) {
             return null;
         }
 
