@@ -30,8 +30,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,6 +40,7 @@ import de.dennisguse.opentracks.MarkerEditActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.databinding.MarkerDetailFragmentBinding;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.MarkerUtils;
@@ -64,10 +63,10 @@ public class MarkerDetailFragment extends Fragment {
 
     private ContentProviderUtils contentProviderUtils;
     private Handler handler;
-    private ImageView photoView;
-    private ImageView textGradient;
-    private LinearLayout markerInfo;
     private Marker marker;
+
+    private MarkerDetailFragmentBinding viewBinding;
+
     private final Runnable hideText = new Runnable() {
         @Override
         public void run() {
@@ -84,12 +83,12 @@ public class MarkerDetailFragment extends Fragment {
 
                 @Override
                 public void onAnimationEnd(Animation anim) {
-                    textGradient.setVisibility(View.GONE);
-                    markerInfo.setVisibility(View.GONE);
+                    viewBinding.markerDetailMarkerTextGradient.setVisibility(View.GONE);
+                    viewBinding.markerDetailMarkerInfo.setVisibility(View.GONE);
                 }
             });
-            textGradient.startAnimation(animation);
-            markerInfo.startAnimation(animation);
+            viewBinding.markerDetailMarkerTextGradient.startAnimation(animation);
+            viewBinding.markerDetailMarkerInfo.startAnimation(animation);
         }
     };
 
@@ -119,22 +118,18 @@ public class MarkerDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.marker_detail_fragment, container, false);
+        viewBinding = MarkerDetailFragmentBinding.inflate(inflater, container, false);
 
-        photoView = view.findViewById(R.id.marker_detail_marker_photo);
-        textGradient = view.findViewById(R.id.marker_detail_marker_text_gradient);
-        markerInfo = view.findViewById(R.id.marker_detail_marker_info);
-
-        photoView.setOnClickListener(v -> {
+        viewBinding.markerDetailMarkerPhoto.setOnClickListener(v -> {
             handler.removeCallbacks(hideText);
-            int visibility = markerInfo.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
-            textGradient.setVisibility(visibility);
-            markerInfo.setVisibility(visibility);
+            int visibility = viewBinding.markerDetailMarkerInfo.getVisibility() == View.GONE ? View.VISIBLE : View.GONE;
+            viewBinding.markerDetailMarkerTextGradient.setVisibility(visibility);
+            viewBinding.markerDetailMarkerInfo.setVisibility(visibility);
             if (visibility == View.VISIBLE) {
                 handler.postDelayed(hideText, HIDE_TEXT_DELAY);
             }
         });
-        return view;
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -151,6 +146,12 @@ public class MarkerDetailFragment extends Fragment {
     public void onPause() {
         super.onPause();
         handler.removeCallbacks(hideText);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewBinding = null;
     }
 
     @Override
@@ -223,10 +224,10 @@ public class MarkerDetailFragment extends Fragment {
         boolean hasPhoto = marker.hasPhoto();
         if (hasPhoto) {
             handler.removeCallbacks(hideText);
-            photoView.setImageURI(marker.getPhotoURI());
+            viewBinding.markerDetailMarkerPhoto.setImageURI(marker.getPhotoURI());
             handler.postDelayed(hideText, HIDE_TEXT_DELAY);
         } else {
-            photoView.setImageResource(MarkerUtils.ICON_ID);
+            viewBinding.markerDetailMarkerPhoto.setImageResource(MarkerUtils.ICON_ID);
         }
 
         setName(hasPhoto);

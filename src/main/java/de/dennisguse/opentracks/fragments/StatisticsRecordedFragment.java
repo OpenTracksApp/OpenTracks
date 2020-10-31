@@ -22,29 +22,28 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.Group;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.databinding.StatisticsRecordedBinding;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
- * A fragment to display track statistics to the user.
+ * A fragment to display track statistics to the user for a recorded {@link Track}.
  *
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
+//TODO During updateUI(): do not call PreferenceUtils (it is slow) rather use sharedPreferenceChangeListener.
 public class StatisticsRecordedFragment extends Fragment {
 
     private static final String TRACK_ID_KEY = "trackId";
@@ -53,6 +52,8 @@ public class StatisticsRecordedFragment extends Fragment {
     private String category = "";
     private Track.Id trackId;
     private ContentProviderUtils contentProviderUtils;
+
+    private StatisticsRecordedBinding viewBinding;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
@@ -68,28 +69,9 @@ public class StatisticsRecordedFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.statistics_recorded, container, false);
+        viewBinding = StatisticsRecordedBinding.inflate(inflater, container, false);
+        return viewBinding.getRoot();
     }
-
-    private TextView totalTimeValueView;
-    private TextView distanceValue;
-    private TextView distanceUnit;
-    private View activityLabel;
-    private ImageView activitySpinner;
-    private TextView movingTimeValue;
-    private TextView speedAvgLabel;
-    private TextView speedAvgValue;
-    private TextView speedAvgUnit;
-    private TextView speedMaxLabel;
-    private TextView speedMaxValue;
-    private TextView speedMaxUnit;
-    private TextView speedMovingLabel;
-    private TextView speedMovingValue;
-    private TextView speedMovingUnit;
-
-    private Group elevationGroup;
-    private TextView elevationTotalGainValue;
-    private TextView elevationTotalGainUnit;
 
     public static StatisticsRecordedFragment newInstance(Track.Id trackId) {
         Bundle bundle = new Bundle();
@@ -109,37 +91,6 @@ public class StatisticsRecordedFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        totalTimeValueView = view.findViewById(R.id.stats_total_time_value);
-
-        distanceValue = view.findViewById(R.id.stats_distance_value);
-        distanceUnit = view.findViewById(R.id.stats_distance_unit);
-
-        activityLabel = view.findViewById(R.id.stats_activity_type_label);
-        activitySpinner = view.findViewById(R.id.stats_activity_type_icon);
-
-        movingTimeValue = view.findViewById(R.id.stats_moving_time_value);
-
-        speedAvgLabel = view.findViewById(R.id.stats_average_speed_label);
-        speedAvgValue = view.findViewById(R.id.stats_average_speed_value);
-        speedAvgUnit = view.findViewById(R.id.stats_average_speed_unit);
-
-        speedMaxLabel = view.findViewById(R.id.stats_max_speed_label);
-        speedMaxValue = view.findViewById(R.id.stats_max_speed_value);
-        speedMaxUnit = view.findViewById(R.id.stats_max_speed_unit);
-
-        speedMovingLabel = view.findViewById(R.id.stats_moving_speed_label);
-        speedMovingValue = view.findViewById(R.id.stats_moving_speed_value);
-        speedMovingUnit = view.findViewById(R.id.stats_moving_speed_unit);
-
-        elevationGroup = view.findViewById(R.id.stats_elevation_group);
-        elevationTotalGainValue = view.findViewById(R.id.stats_elevation_gain_value);
-        elevationTotalGainUnit = view.findViewById(R.id.stats_elevation_gain_unit);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
@@ -150,34 +101,9 @@ public class StatisticsRecordedFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        viewBinding = null;
 
         PreferencesUtils.unregister(getContext(), sharedPreferenceChangeListener);
-
-        totalTimeValueView = null;
-
-        distanceValue = null;
-        distanceUnit = null;
-
-        activityLabel = null;
-        activitySpinner = null;
-
-        movingTimeValue = null;
-
-        speedAvgLabel = null;
-        speedAvgValue = null;
-        speedAvgUnit = null;
-
-        speedMaxLabel = null;
-        speedMaxValue = null;
-        speedMaxUnit = null;
-
-        speedMovingLabel = null;
-        speedMovingValue = null;
-        speedMovingUnit = null;
-
-        elevationGroup = null;
-        elevationTotalGainValue = null;
-        elevationTotalGainUnit = null;
     }
 
     public void loadStatistics() {
@@ -202,72 +128,66 @@ public class StatisticsRecordedFragment extends Fragment {
             double totalDistance = trackStatistics == null ? Double.NaN : trackStatistics.getTotalDistance();
             Pair<String, String> parts = StringUtils.getDistanceParts(getContext(), totalDistance, metricUnits);
 
-            distanceValue.setText(parts.first);
-            distanceUnit.setText(parts.second);
+            viewBinding.statsDistanceValue.setText(parts.first);
+            viewBinding.statsDistanceUnit.setText(parts.second);
         }
 
         // Set activity type
         {
             String trackIconValue = TrackIconUtils.getIconValue(getContext(), category);
-
-            activityLabel.setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
-
-            activitySpinner.setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
-            activitySpinner.setEnabled(false);
-            if (trackIconValue != null) {
-                activitySpinner.setImageDrawable(ContextCompat.getDrawable(getContext(), TrackIconUtils.getIconDrawable(trackIconValue)));
-            }
+            viewBinding.statsActivityTypeIcon.setEnabled(false);
+            viewBinding.statsActivityTypeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), TrackIconUtils.getIconDrawable(trackIconValue)));
         }
 
         // Set time and start datetime
         if (trackStatistics != null) {
-            movingTimeValue.setText(StringUtils.formatElapsedTime(trackStatistics.getMovingTime()));
-            totalTimeValueView.setText(StringUtils.formatElapsedTime(trackStatistics.getTotalTime()));
+            viewBinding.statsMovingTimeValue.setText(StringUtils.formatElapsedTime(trackStatistics.getMovingTime()));
+            viewBinding.statsTotalTimeValue.setText(StringUtils.formatElapsedTime(trackStatistics.getTotalTime()));
         }
 
         // Set average speed/pace
         {
             double speed = trackStatistics != null ? trackStatistics.getAverageSpeed() : Double.NaN;
-            speedAvgLabel.setText(reportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
+            viewBinding.statsAverageSpeedLabel.setText(reportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
 
             Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
-            speedAvgValue.setText(parts.first);
-            speedAvgUnit.setText(parts.second);
+            viewBinding.statsAverageSpeedValue.setText(parts.first);
+            viewBinding.statsAverageSpeedUnit.setText(parts.second);
         }
 
         // Set max speed/pace
         {
             double speed = trackStatistics == null ? Double.NaN : trackStatistics.getMaxSpeed();
 
-            speedMaxLabel.setText(reportSpeed ? R.string.stats_max_speed : R.string.stats_fastest_pace);
+            viewBinding.statsMaxSpeedLabel.setText(reportSpeed ? R.string.stats_max_speed : R.string.stats_fastest_pace);
 
             Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
-            speedMaxValue.setText(parts.first);
-            speedMaxUnit.setText(parts.second);
+            viewBinding.statsMaxSpeedValue.setText(parts.first);
+            viewBinding.statsMaxSpeedUnit.setText(parts.second);
         }
 
         // Set moving speed/pace
         {
             double speed = trackStatistics != null ? trackStatistics.getAverageMovingSpeed() : Double.NaN;
 
-            speedMovingLabel.setText(reportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
+            viewBinding.statsMovingSpeedLabel.setText(reportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
 
             Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
-            speedMovingValue.setText(parts.first);
-            speedMovingUnit.setText(parts.second);
+            viewBinding.statsMovingSpeedValue.setText(parts.first);
+            viewBinding.statsMovingSpeedUnit.setText(parts.second);
         }
 
         // Set elevation gain
         {
             // Make elevation visible?
             boolean showElevation = PreferencesUtils.isShowStatsElevation(getContext());
-            elevationGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+            viewBinding.statsElevationGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
 
             Float elevationGain_m = trackStatistics != null ? trackStatistics.getTotalElevationGain() : null;
 
             Pair<String, String> parts = StringUtils.formatElevation(getContext(), elevationGain_m, metricUnits);
-            elevationTotalGainValue.setText(parts.first);
-            elevationTotalGainUnit.setText(parts.second);
+            viewBinding.statsElevationGainValue.setText(parts.first);
+            viewBinding.statsElevationGainUnit.setText(parts.second);
         }
     }
 }

@@ -45,6 +45,10 @@ android {
 
     compileSdkVersion 30
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId "de.dennisguse.opentracks"
         versionCode 3661

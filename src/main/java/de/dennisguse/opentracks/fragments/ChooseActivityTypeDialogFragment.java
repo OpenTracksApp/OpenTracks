@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.databinding.ChooseActivityTypeBinding;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
@@ -39,6 +39,8 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
         return TrackIconUtils.getAllIconValues().indexOf(iconValue);
     }
 
+    private ChooseActivityTypeBinding viewBinding;
+
     private final String preselectedCategory;
 
     private ChooseActivityTypeCaller chooseActivityTypeCaller;
@@ -57,8 +59,7 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.choose_activity_type, container);
-        GridView gridView = view.findViewById(R.id.choose_activity_type_grid_view);
+        viewBinding = ChooseActivityTypeBinding.inflate(inflater, container, false);
 
         List<Integer> imageIds = new ArrayList<>();
         for (String iconValue : TrackIconUtils.getAllIconValues()) {
@@ -66,15 +67,14 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
         }
 
         final ChooseActivityTypeImageAdapter imageAdapter = new ChooseActivityTypeImageAdapter(imageIds);
-        gridView.setAdapter(imageAdapter);
-
         int position = getPosition(getContext(), preselectedCategory);
         if (position != -1) {
             imageAdapter.setSelected(position);
         }
 
-        gridView.setOnItemClickListener(this);
-        return view;
+        viewBinding.chooseActivityTypeGridView.setAdapter(imageAdapter);
+        viewBinding.chooseActivityTypeGridView.setOnItemClickListener(this);
+        return viewBinding.getRoot();
     }
 
     public void onAttach(@NonNull Context context) {
@@ -86,6 +86,11 @@ public class ChooseActivityTypeDialogFragment extends DialogFragment implements 
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewBinding = null;
+    }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {

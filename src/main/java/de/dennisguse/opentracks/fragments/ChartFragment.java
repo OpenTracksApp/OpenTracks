@@ -40,6 +40,7 @@ import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.databinding.ChartBinding;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.LocationUtils;
@@ -72,6 +73,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     // Stats gathered from the received data
     private TrackStatisticsUpdater trackStatisticsUpdater;
     private long startTime;
+
+    private ChartBinding viewBinding;
 
     //TODO Why is this needed?
     private int recordingDistanceInterval;
@@ -147,15 +150,16 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.chart, container, false);
+        viewBinding = ChartBinding.inflate(inflater, container, false);
+        return viewBinding.getRoot();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        ViewGroup layout = getView().findViewById(R.id.chart_view_layout);
+
         LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        layout.addView(chartView, layoutParams);
+        viewBinding.chartViewLayout.addView(chartView, layoutParams);
     }
 
     @Override
@@ -181,6 +185,12 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         super.onStop();
         ViewGroup layout = getView().findViewById(R.id.chart_view_layout);
         layout.removeView(chartView);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewBinding = null;
     }
 
     @Override

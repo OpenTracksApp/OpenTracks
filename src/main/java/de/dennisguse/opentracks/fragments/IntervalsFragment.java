@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,6 +24,7 @@ import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.databinding.IntervalListViewBinding;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
@@ -38,7 +38,6 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     private static final String TAG = IntervalsFragment.class.getSimpleName();
 
     private IntervalStatisticsModel viewModel;
-    private ListView intervalListView;
     protected IntervalStatisticsAdapter.StackMode stackModeListView;
     private IntervalStatisticsModel.IntervalOption selectedInterval;
 
@@ -47,10 +46,10 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     protected Spinner spinnerIntervals;
     private ArrayAdapter<IntervalStatisticsModel.IntervalOption> spinnerAdapter;
 
-    private TextView rateLabel;
-
     private TrackDataHub trackDataHub;
     private String category;
+
+    private IntervalListViewBinding viewBinding;
 
     protected final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
@@ -68,7 +67,8 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.interval_list_view, container, false);
+        viewBinding = IntervalListViewBinding.inflate(inflater, container, false);
+        return viewBinding.getRoot();
     }
 
     @Override
@@ -78,10 +78,7 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
         PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
         intervalUnit = PreferencesUtils.isMetricUnits(getContext()) ? getContext().getString(R.string.unit_kilometer) : getContext().getString(R.string.unit_mile);
 
-        rateLabel = view.findViewById(R.id.interval_rate);
-
-        intervalListView = view.findViewById(R.id.interval_list);
-        intervalListView.setEmptyView(view.findViewById(R.id.interval_list_empty_view));
+        viewBinding.intervalList.setEmptyView(view.findViewById(R.id.interval_list_empty_view));
 
         stackModeListView = IntervalStatisticsAdapter.StackMode.STACK_FROM_TOP;
 
@@ -134,12 +131,17 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewBinding = null;
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
 
         PreferencesUtils.unregister(getContext(), sharedPreferenceChangeListener);
 
-        intervalListView = null;
         adapter = null;
         spinnerIntervals = null;
         viewModel = null;
@@ -149,14 +151,14 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
      * Update intervals through {@link IntervalStatisticsModel} view model.
      */
     protected synchronized void loadIntervals() {
-        if (viewModel == null || intervalListView == null) {
+        if (viewModel == null) {
             return;
         }
 
-        boolean metricUnits = PreferencesUtils.isMetricUnits(getContext()) ? true : false;
+        boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
         IntervalStatistics intervalStatistics = viewModel.getIntervalStats(metricUnits, selectedInterval);
         adapter = new IntervalStatisticsAdapter(getContext(), intervalStatistics.getIntervalList(), category, stackModeListView);
-        intervalListView.setAdapter(adapter);
+        viewBinding.intervalList.setAdapter(adapter);
     }
 
     /**
@@ -184,10 +186,8 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
             category = track != null ? track.getCategory() : "";
 
             // Set rate label.
-            if (rateLabel != null) {
-                boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext(), category);
-                rateLabel.setText(reportSpeed ? R.string.stats_speed : R.string.stats_pace);
-            }
+            boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext(), category);
+            viewBinding.intervalRate.setText(reportSpeed ? R.string.stats_speed : R.string.stats_pace);
         }
     }
 
