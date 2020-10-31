@@ -118,7 +118,7 @@ public abstract class BluetoothConnectionManager {
         Log.d(TAG, "Connecting to: " + device);
 
         bluetoothGatt = device.connectGatt(context, true, connectCallback);
-        SensorData sensorData = createPreConnectSensorData(bluetoothGatt.getDevice().getAddress());
+        SensorData sensorData = createEmptySensorData(bluetoothGatt.getDevice().getAddress());
         observer.onChanged(sensorData);
     }
 
@@ -128,6 +128,8 @@ public abstract class BluetoothConnectionManager {
             return;
         }
         bluetoothGatt.close();
+        observer.onDisconnecting(createEmptySensorData(bluetoothGatt.getDevice().getAddress()));
+
         bluetoothGatt = null;
     }
 
@@ -139,7 +141,7 @@ public abstract class BluetoothConnectionManager {
         return address.equals(bluetoothGatt.getDevice().getAddress());
     }
 
-    protected abstract SensorData createPreConnectSensorData(String address);
+    protected abstract SensorData createEmptySensorData(String address);
 
     /**
      * @return null if data could not be parsed.
@@ -153,7 +155,7 @@ public abstract class BluetoothConnectionManager {
         }
 
         @Override
-        protected SensorData createPreConnectSensorData(String address) {
+        protected SensorData createEmptySensorData(String address) {
             return new SensorDataHeartRate(address);
         }
 
@@ -172,7 +174,7 @@ public abstract class BluetoothConnectionManager {
         }
 
         @Override
-        protected SensorData createPreConnectSensorData(String address) {
+        protected SensorData createEmptySensorData(String address) {
             return new SensorDataCycling.Cadence(address);
         }
 
@@ -203,7 +205,7 @@ public abstract class BluetoothConnectionManager {
         }
 
         @Override
-        protected SensorData createPreConnectSensorData(String address) {
+        protected SensorData createEmptySensorData(String address) {
             return new SensorDataCycling.Speed(address);
         }
 
@@ -221,5 +223,6 @@ public abstract class BluetoothConnectionManager {
 
         void onChanged(SensorData sensorData);
 
+        void onDisconnecting(SensorData sensorData);
     }
 }

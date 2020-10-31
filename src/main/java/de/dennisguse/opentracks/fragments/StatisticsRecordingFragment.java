@@ -418,10 +418,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     }
 
     private void setHeartRateSensorData(SensorDataSet sensorDataSet) {
-        int isVisible = View.VISIBLE;
-        if (PreferencesUtils.isBluetoothHeartRateSensorAddressNone(getContext())) {
-            isVisible = View.GONE;
-        }
+        int isVisible = sensorDataSet != null ? View.VISIBLE : View.GONE;
         heartRateGroup.setVisibility(isVisible);
         setVisibilitySensorHorizontalLine();
 
@@ -441,10 +438,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     }
 
     private void setCadenceSensorData(SensorDataSet sensorDataSet) {
-        int isVisible = View.VISIBLE;
-        if (PreferencesUtils.isBluetoothCyclingCadenceSensorAddressNone(getContext())) {
-            isVisible = View.GONE;
-        }
+        int isVisible = sensorDataSet != null ? View.VISIBLE : View.GONE;
         cadenceGroup.setVisibility(isVisible);
         setVisibilitySensorHorizontalLine();
 
@@ -522,13 +516,8 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
         // Set activity type
         {
-            activityLabel.setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
-
-            activitySpinner.setVisibility(trackIconValue != null ? View.VISIBLE : View.GONE);
             activitySpinner.setEnabled(isRecording);
-            if (trackIconValue != null) {
-                TrackIconUtils.setIconSpinner(activitySpinner, trackIconValue);
-            }
+            TrackIconUtils.setIconSpinner(activitySpinner, trackIconValue);
         }
 
         // Set time

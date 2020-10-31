@@ -121,6 +121,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
 
         if (PreferencesUtils.isBluetoothSensorAddressNone(context, address)) {
             Log.w(TAG, "No Bluetooth address.");
+            connectionManager.disconnect();
             return;
         }
 
@@ -167,5 +168,10 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         }
 
         sensorDataSet.set(sensorData);
+    }
+
+    @Override
+    public void onDisconnecting(SensorData sensorData) {
+        sensorDataSet.remove(sensorData);
     }
 }

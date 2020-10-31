@@ -245,27 +245,12 @@ public class PreferencesUtils {
         return getBluetoothSensorAddressNone(context).equals(currentValue);
     }
 
-
-    public static boolean isBluetoothHeartRateSensorAddressNone(Context context) {
-        return isBluetoothSensorAddressNone(context, getBluetoothHeartRateSensorAddress(context));
-    }
-
     public static String getBluetoothHeartRateSensorAddress(Context context) {
         return getString(context, R.string.settings_sensor_bluetooth_heart_rate_key, getBluetoothSensorAddressNone(context));
     }
 
-
-    public static boolean isBluetoothCyclingCadenceSensorAddressNone(Context context) {
-        return isBluetoothSensorAddressNone(context, getBluetoothCyclingCadenceSensorAddress(context));
-    }
-
     public static String getBluetoothCyclingCadenceSensorAddress(Context context) {
         return getString(context, R.string.settings_sensor_bluetooth_cycling_cadence_key, getBluetoothSensorAddressNone(context));
-    }
-
-
-    public static boolean isBluetoothCyclingSpeedSensorAddressNone(Context context) {
-        return isBluetoothSensorAddressNone(context, getBluetoothCyclingSpeedSensorAddress(context));
     }
 
     public static String getBluetoothCyclingSpeedSensorAddress(Context context) {

@@ -28,21 +28,11 @@ public final class SensorDataSet {
     }
 
     public void set(SensorData data) {
-        if (data instanceof SensorDataHeartRate) {
-            this.heartRate = (SensorDataHeartRate) data;
-            return;
-        }
+        set(data, data);
+    }
 
-        if (data instanceof SensorDataCycling.Cadence) {
-            this.cyclingCadence = (SensorDataCycling.Cadence) data;
-            return;
-        }
-        if (data instanceof SensorDataCycling.Speed) {
-            this.cyclingSpeed = (SensorDataCycling.Speed) data;
-            return;
-        }
-
-        throw new UnsupportedOperationException();
+    public void remove(SensorData type) {
+        set(type, null);
     }
 
     public void clear() {
@@ -71,5 +61,23 @@ public final class SensorDataSet {
         return (getHeartRate() != null ? "" + getHeartRate() : "")
                 + (getCyclingCadence() != null ? " " + getCyclingCadence() : "")
                 + (getCyclingSpeed() != null ? " " + getCyclingSpeed() : "");
+    }
+
+    private void set(SensorData type, SensorData data) {
+        if (type instanceof SensorDataHeartRate) {
+            this.heartRate = (SensorDataHeartRate) data;
+            return;
+        }
+
+        if (type instanceof SensorDataCycling.Cadence) {
+            this.cyclingCadence = (SensorDataCycling.Cadence) data;
+            return;
+        }
+        if (type instanceof SensorDataCycling.Speed) {
+            this.cyclingSpeed = (SensorDataCycling.Speed) data;
+            return;
+        }
+
+        throw new UnsupportedOperationException();
     }
 }
