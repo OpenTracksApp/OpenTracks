@@ -1,7 +1,6 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
 import android.util.Pair;
 
@@ -10,9 +9,7 @@ import androidx.test.filters.LargeTest;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
@@ -61,9 +58,6 @@ public class ExportImportTest {
 
     private Track.Id importTrackId;
     private final Track.Id trackId = new Track.Id(System.currentTimeMillis());
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -179,15 +173,13 @@ public class ExportImportTest {
     }
 
     @LargeTest
-    @Test
+    @Test(expected = ImportAlreadyExistsException.class)
     public void kml_with_trackdetail_and_sensordata_duplicate_trackUUID() {
         // given
         PreferencesUtils.setBoolean(context, R.string.import_prevent_reimport_key, true);
         Track track = contentProviderUtils.getTrack(trackId);
 
         TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.newTrackExporter(context);
-
-        exception.expect(ImportAlreadyExistsException.class);
 
         // when
         // 1. export
@@ -270,15 +262,13 @@ public class ExportImportTest {
     }
 
     @LargeTest
-    @Test
+    @Test(expected = ImportAlreadyExistsException.class)
     public void gpx_duplicate_trackUUID() {
         // given
         PreferencesUtils.setBoolean(context, R.string.import_prevent_reimport_key, true);
         Track track = contentProviderUtils.getTrack(trackId);
 
         TrackExporter trackExporter = TrackFileFormat.GPX.newTrackExporter(context);
-
-        exception.expect(ImportAlreadyExistsException.class);
 
         // when
         // 1. export
