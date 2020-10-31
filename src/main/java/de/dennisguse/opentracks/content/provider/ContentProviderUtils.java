@@ -33,6 +33,7 @@ import androidx.loader.content.Loader;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -177,6 +178,17 @@ public class ContentProviderUtils {
 
         File dir = FileUtils.getPhotoDir(context);
         FileUtils.deleteDirectoryRecurse(dir);
+    }
+
+    public void deleteTracks(Context context, @NonNull List<Track.Id> trackIds) {
+        // Delete track folder resources.
+        for (Track.Id trackId : trackIds) {
+            FileUtils.deleteDirectoryRecurse(FileUtils.getPhotoDir(context, trackId));
+        }
+
+        // Delete track last since it triggers a database vacuum call
+        String whereClause = String.format(TracksColumns._ID + " IN (%s)", TextUtils.join(",", Collections.nCopies(trackIds.size(), "?")));
+        contentResolver.delete(TracksColumns.CONTENT_URI, whereClause, trackIds.stream().map(id->Long.toString(id.getId())).toArray(String[]::new));
     }
 
     public void deleteTrack(Context context, @NonNull Track.Id trackId) {

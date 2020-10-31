@@ -55,13 +55,7 @@ public class TrackDeleteActivity extends AbstractActivity {
             ContentProviderUtils contentProviderUtils = new ContentProviderUtils(TrackDeleteActivity.this);
 
             PowerManager.WakeLock wakeLock = SystemUtils.acquireWakeLock(TrackDeleteActivity.this, null);
-
-            for (Track.Id id : trackIds) {
-                if (Thread.interrupted()) {
-                    break;
-                }
-                contentProviderUtils.deleteTrack(TrackDeleteActivity.this, id);
-            }
+            contentProviderUtils.deleteTracks(TrackDeleteActivity.this, trackIds);
 
             wakeLock = SystemUtils.releaseWakeLock(wakeLock);
             if (Thread.interrupted()) {

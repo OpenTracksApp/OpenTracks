@@ -519,9 +519,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      * Cleans up import.
      */
     private void cleanImport() {
-        for (Track.Id trackId : trackIds) {
-            contentProviderUtils.deleteTrack(context, trackId);
-        }
+        contentProviderUtils.deleteTracks(context, trackIds);
     }
 
     /**
