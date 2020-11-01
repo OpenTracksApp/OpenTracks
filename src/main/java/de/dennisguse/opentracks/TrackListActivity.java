@@ -42,11 +42,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.app.LoaderManager.LoaderCallbacks;
+import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.databinding.TrackListBinding;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
@@ -60,6 +60,7 @@ import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
+import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
  * An activity displaying a list of tracks.
@@ -71,7 +72,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     private static final String TAG = TrackListActivity.class.getSimpleName();
 
     // The following are set in onCreate
-    private ContentProviderUtils contentProviderUtils;
     private SharedPreferences sharedPreferences;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private TrackController trackController;
@@ -83,7 +83,11 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     private final LoaderCallbacks<Cursor> loaderCallbacks = new LoaderCallbacks<Cursor>() {
         @Override
         public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-            return ContentProviderUtils.getTracksCursorLoader(TrackListActivity.this);
+            String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.NAME,
+                    TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
+                    TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON, "markerCount"};
+
+            return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, null, null, TrackUtils.TRACK_SORT_ORDER);
         }
 
         @Override
@@ -224,7 +228,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
         recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
 
-        contentProviderUtils = new ContentProviderUtils(this);
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
@@ -256,14 +259,15 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
             @Override
             public void bindView(View view, Context context, Cursor cursor) {
-                int idIndex = cursor.getColumnIndex(TracksColumns._ID);
-                int iconIndex = cursor.getColumnIndex(TracksColumns.ICON);
-                int nameIndex = cursor.getColumnIndex(TracksColumns.NAME);
+                int idIndex = cursor.getColumnIndexOrThrow(TracksColumns._ID);
+                int iconIndex = cursor.getColumnIndexOrThrow(TracksColumns.ICON);
+                int nameIndex = cursor.getColumnIndexOrThrow(TracksColumns.NAME);
                 int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
                 int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
                 int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
-                int categoryIndex = cursor.getColumnIndex(TracksColumns.CATEGORY);
-                int descriptionIndex = cursor.getColumnIndex(TracksColumns.DESCRIPTION);
+                int categoryIndex = cursor.getColumnIndexOrThrow(TracksColumns.CATEGORY);
+                int descriptionIndex = cursor.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
+                int markerCountIndex = cursor.getColumnIndexOrThrow(TracksColumns.MARKER_COUNT);
 
                 Track.Id trackId = new Track.Id(cursor.getLong(idIndex));
                 boolean isRecording = trackId.equals(recordingTrackId);
@@ -272,7 +276,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 String name = cursor.getString(nameIndex);
                 String totalTime = StringUtils.formatElapsedTime(cursor.getLong(totalTimeIndex));
                 String totalDistance = StringUtils.formatDistance(TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
-                int markerCount = contentProviderUtils.getMarkerCount(trackId);
+                int markerCount = cursor.getInt(markerCountIndex);
                 long startTime = cursor.getLong(startTimeIndex);
                 String category = icon != null && !icon.equals("") ? null : cursor.getString(categoryIndex);
                 String description = cursor.getString(descriptionIndex);
