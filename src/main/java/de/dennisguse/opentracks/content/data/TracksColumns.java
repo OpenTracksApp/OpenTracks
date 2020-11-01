@@ -35,12 +35,13 @@ public interface TracksColumns extends BaseColumns {
     String DEFAULT_SORT_ORDER = _ID;
 
     // Columns
-    String UUID = "uuid";
+    String UUID = "uuid"; // identifier to make tracks globally unique (prevent re-import)
     String NAME = "name"; // track name
     String DESCRIPTION = "description"; // track description
     String CATEGORY = "category"; // track activity type
     String STARTTIME = "starttime"; // track start time
     String STOPTIME = "stoptime"; // track stop time
+    String MARKER_COUNT = "markerCount"; // the numbers of markers (virtual column)
     @Deprecated
     String NUMPOINTS = "numpoints"; // number of track points //TODO UNUSED
     String TOTALDISTANCE = "totaldistance"; // total distance
@@ -55,25 +56,25 @@ public interface TracksColumns extends BaseColumns {
     String ELEVATIONGAIN = "elevationgain"; // elevation gain
     String ICON = "icon"; // track activity type icon
 
-    String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" // table
-            + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " // id
-            + NAME + " TEXT, " // name
-            + DESCRIPTION + " TEXT, " // description
-            + CATEGORY + " TEXT, " // category
-            + STARTTIME + " INTEGER, " // start time
-            + STOPTIME + " INTEGER, " // stop time
-            + NUMPOINTS + " INTEGER, " // num points
-            + TOTALDISTANCE + " FLOAT, " // total distance
-            + TOTALTIME + " INTEGER, " // total time
-            + MOVINGTIME + " INTEGER, " // moving time
-            + AVGSPEED + " FLOAT, " // average speed
-            + AVGMOVINGSPEED + " FLOAT, " // average moving speed
-            + MAXSPEED + " FLOAT, " // max speed
-            + MINELEVATION + " FLOAT, " // min elevation
-            + MAXELEVATION + " FLOAT, " // max elevation
-            + ELEVATIONGAIN + " FLOAT, " // elevation gain
-            + ICON + " TEXT, " // icon
-            + UUID + " BLOB)"; // UUID
+    String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
+            + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + NAME + " TEXT, "
+            + DESCRIPTION + " TEXT, "
+            + CATEGORY + " TEXT, "
+            + STARTTIME + " INTEGER, "
+            + STOPTIME + " INTEGER, "
+            + NUMPOINTS + " INTEGER, "
+            + TOTALDISTANCE + " FLOAT, "
+            + TOTALTIME + " INTEGER, "
+            + MOVINGTIME + " INTEGER, "
+            + AVGSPEED + " FLOAT, "
+            + AVGMOVINGSPEED + " FLOAT, "
+            + MAXSPEED + " FLOAT, "
+            + MINELEVATION + " FLOAT, "
+            + MAXELEVATION + " FLOAT, "
+            + ELEVATIONGAIN + " FLOAT, "
+            + ICON + " TEXT, "
+            + UUID + " BLOB)";
 
     String CREATE_TABLE_INDEX = "CREATE UNIQUE INDEX " + TABLE_NAME + "_" + UUID + "_index ON " + TABLE_NAME + "(" + UUID + ")";
 

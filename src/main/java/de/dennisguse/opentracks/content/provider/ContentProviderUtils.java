@@ -47,7 +47,6 @@ import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
-import de.dennisguse.opentracks.util.TrackUtils;
 import de.dennisguse.opentracks.util.UUIDUtils;
 
 /**
@@ -218,14 +217,6 @@ public class ContentProviderUtils {
             }
         }
         return tracks;
-    }
-
-    public static Loader<Cursor> getTracksCursorLoader(Context context) {
-        String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.NAME,
-                TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
-                TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON};
-
-        return new CursorLoader(context, TracksColumns.CONTENT_URI, PROJECTION, null, null, TrackUtils.TRACK_SORT_ORDER);
     }
 
     @Deprecated
@@ -498,7 +489,7 @@ public class ContentProviderUtils {
         }
     }
 
-    @Deprecated //TODO Expose information via Cursor
+    @Deprecated //TODO TracksColumns.MARKER_COUNT while querying for tracks
     public int getMarkerCount(Track.Id trackId) {
         if (!trackId.isValid()) {
             return 0;

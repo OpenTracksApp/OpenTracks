@@ -33,6 +33,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
+import java.util.Arrays;
+
 import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
@@ -210,7 +212,11 @@ public class CustomContentProvider extends ContentProvider {
                 queryBuilder.appendWhere(TrackPointsColumns.TRACKID + " IN (" + TextUtils.join(SQL_LIST_DELIMITER, ContentProviderUtils.parseTrackIdsFromUri(url)) + ")");
                 break;
             case TRACKS:
-                queryBuilder.setTables(TracksColumns.TABLE_NAME);
+                if (projection != null && Arrays.asList(projection).contains(TracksColumns.MARKER_COUNT)) {
+                    queryBuilder.setTables(TracksColumns.TABLE_NAME + " LEFT OUTER JOIN (SELECT " + MarkerColumns.TRACKID + " AS markerTrackId, COUNT(*) AS " + TracksColumns.MARKER_COUNT + " FROM " + MarkerColumns.TABLE_NAME + " GROUP BY " + MarkerColumns.TRACKID + ") ON (" + TracksColumns.TABLE_NAME + "." + TracksColumns._ID + "= markerTrackId)");
+                } else {
+                    queryBuilder.setTables(TracksColumns.TABLE_NAME);
+                }
                 sortOrder = sort != null ? sort : TracksColumns.DEFAULT_SORT_ORDER;
                 break;
             case TRACKS_BY_ID:
@@ -291,11 +297,6 @@ public class CustomContentProvider extends ContentProvider {
         return count;
     }
 
-    /**
-     * Gets the {@link UrlType} for a url.
-     *
-     * @param url the url
-     */
     @NonNull
     private UrlType getUrlType(Uri url) {
         UrlType[] urlTypes = UrlType.values();
@@ -327,12 +328,6 @@ public class CustomContentProvider extends ContentProvider {
         }
     }
 
-    /**
-     * Inserts a track point.
-     *
-     * @param url    the content url
-     * @param values the content values
-     */
     private Uri insertTrackPoint(Uri url, ContentValues values) {
         boolean hasLatitude = values.containsKey(TrackPointsColumns.LATITUDE);
         boolean hasLongitude = values.containsKey(TrackPointsColumns.LONGITUDE);
@@ -347,12 +342,6 @@ public class CustomContentProvider extends ContentProvider {
         throw new SQLiteException("Failed to insert a track point " + url);
     }
 
-    /**
-     * Inserts a track.
-     *
-     * @param url           the content url
-     * @param contentValues the content values
-     */
     private Uri insertTrack(Uri url, ContentValues contentValues) {
         boolean hasStartTime = contentValues.containsKey(TracksColumns.STARTTIME);
         if (!hasStartTime) {
