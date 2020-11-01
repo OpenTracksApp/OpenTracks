@@ -136,6 +136,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewBinding = ExportActivityBinding.inflate(getLayoutInflater());
+        setContentView(viewBinding.getRoot());
 
         directoryUri = getIntent().getParcelableExtra(EXTRA_DIRECTORY_URI_KEY);
         trackFileFormat = (TrackFileFormat) getIntent().getSerializableExtra(EXTRA_TRACKFILEFORMAT_KEY);
@@ -145,8 +146,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         DocumentFile documentFile = DocumentFile.fromTreeUri(this, directoryUri);
         directoryDisplayName = FileUtils.getPath(documentFile);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(getString(R.string.export_progress_message, directoryDisplayName));
+        viewBinding.toolbar.toolbar.setTitle(getString(R.string.export_progress_message, directoryDisplayName));
 
         resultReceiver = new ExportServiceResultReceiver(new Handler(), this);
 
