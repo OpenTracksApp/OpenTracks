@@ -190,10 +190,7 @@ public class KmzTrackImporter implements TrackImporter {
                 zipInputStream.closeEntry();
             }
             return trackId;
-        } catch (ImportParserException e) {
-            Log.e(TAG, "Unable to import file", e);
-            throw e;
-        } catch (ImportAlreadyExistsException e) {
+        } catch (ImportParserException | ImportAlreadyExistsException e) {
             Log.e(TAG, "Unable to import file", e);
             throw e;
         } catch (IOException e) {
@@ -259,9 +256,7 @@ public class KmzTrackImporter implements TrackImporter {
 
         try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(getKml(zipInputStream))) {
             return kmlFileTrackImporter.importFile(byteArrayInputStream);
-        } catch (ImportParserException e) {
-            throw e;
-        } catch (ImportAlreadyExistsException e) {
+        } catch (ImportParserException | ImportAlreadyExistsException e) {
             throw e;
         } catch (Exception e) {
             throw new ImportParserException(e);

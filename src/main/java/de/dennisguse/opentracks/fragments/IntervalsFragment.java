@@ -209,7 +209,7 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     @Override
     public void onNewTrackPointsDone() {
         if (isResumed()) {
-            runOnUiThread(() -> loadIntervals());
+            runOnUiThread(this::loadIntervals);
         }
     }
 

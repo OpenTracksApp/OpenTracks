@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks.util;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
@@ -53,36 +52,4 @@ public class DialogUtils {
                 .setTitle(titleId).create();
     }
 
-    /**
-     * Creates a horizontal progress dialog.
-     *
-     * @param context          the context
-     * @param messageId        the progress message id
-     * @param onCancelListener the cancel listener
-     * @param formatArgs       the format arguments for the messageId
-     */
-    public static ProgressDialog createHorizontalProgressDialog(Context context, int messageId, DialogInterface.OnCancelListener onCancelListener, Object... formatArgs) {
-        return createProgressDialog(context, messageId, onCancelListener, formatArgs);
-    }
-
-    /**
-     * Creates a progress dialog.
-     *
-     * @param context          the context
-     * @param messageId        the progress message id
-     * @param onCancelListener the cancel listener
-     * @param formatArgs       the format arguments for the message id
-     */
-    private static ProgressDialog createProgressDialog(final Context context, int messageId, DialogInterface.OnCancelListener onCancelListener, Object... formatArgs) {
-        final ProgressDialog progressDialog = new ProgressDialog(context, R.style.ThemeCustomNotTransparentDialog);
-        progressDialog.setCancelable(true);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setIcon(R.drawable.ic_dialog_info_24dp);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setMessage(context.getString(messageId, formatArgs));
-        progressDialog.setOnCancelListener(onCancelListener);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setTitle(R.string.generic_progress_title);
-        return progressDialog;
-    }
 }

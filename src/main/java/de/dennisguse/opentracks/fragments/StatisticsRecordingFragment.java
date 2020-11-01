@@ -64,17 +64,14 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         return new StatisticsRecordingFragment();
     }
 
-    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-            if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
-                if (isResumed()) {
-                    getActivity().runOnUiThread(() -> {
-                        if (isResumed()) {
-                            updateUI();
-                        }
-                    });
-                }
+    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
+        if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
+            if (isResumed()) {
+                getActivity().runOnUiThread(() -> {
+                    if (isResumed()) {
+                        updateUI();
+                    }
+                });
             }
         }
     };

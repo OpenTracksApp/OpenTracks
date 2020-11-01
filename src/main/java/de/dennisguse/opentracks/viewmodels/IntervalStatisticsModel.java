@@ -15,7 +15,7 @@ import de.dennisguse.opentracks.util.UnitConversions;
 public class IntervalStatisticsModel {
 
     private IntervalStatistics intervalStats;
-    private List<TrackPoint> trackPoints = new ArrayList<>();
+    private final List<TrackPoint> trackPoints = new ArrayList<>();
 
     public IntervalStatistics getIntervalStats(boolean metricUnits, @Nullable IntervalOption interval) {
         synchronized (trackPoints) {
@@ -55,7 +55,7 @@ public class IntervalStatisticsModel {
         OPTION_20(20),
         OPTION_50(50);
 
-        private int value;
+        private final int value;
 
         IntervalOption(int value) {
             this.value = value;

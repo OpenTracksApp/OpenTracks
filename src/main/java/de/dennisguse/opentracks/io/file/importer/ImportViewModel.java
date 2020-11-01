@@ -21,10 +21,10 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
     private static final String TAG = ImportViewModel.class.getSimpleName();
 
     private MutableLiveData<Summary> importData;
-    private ImportServiceResultReceiver resultReceiver;
-    private Summary summary;
+    private final ImportServiceResultReceiver resultReceiver;
+    private final Summary summary;
     private boolean cancel = false;
-    private List<DocumentFile> filesToImport = new ArrayList<>();
+    private final List<DocumentFile> filesToImport = new ArrayList<>();
 
     public ImportViewModel(@NonNull Application application) {
         super(application);
@@ -47,9 +47,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
     private void loadData(DocumentFile documentFile) {
         List<DocumentFile> fileList = FileUtils.getFiles(documentFile);
         summary.totalCount = fileList.size();
-        for (DocumentFile df : fileList) {
-            filesToImport.add(df);
-        }
+        filesToImport.addAll(fileList);
         importNextFile();
     }
 
@@ -89,12 +87,12 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
         importNextFile();
     }
 
-    public class Summary {
+    public static class Summary {
         private int totalCount;
         private int successCount;
         private int existsCount;
         private int errorCount;
-        private ArrayList<String> fileErrors = new ArrayList<>();
+        private final ArrayList<String> fileErrors = new ArrayList<>();
 
         public int getTotalCount() {
             return totalCount;
