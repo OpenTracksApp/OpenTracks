@@ -43,6 +43,10 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 Uri directoryUri = resultData.getData();
 
+                int takeFlags = resultData.getFlags();
+                takeFlags &= (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                getContentResolver().takePersistableUriPermission(directoryUri, takeFlags);
+
                 startActivity(createNextActivityIntent(directoryUri));
             }
         }
@@ -74,7 +78,7 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
         @Override
         protected DocumentFile configureDirectoryChooserIntent(Intent intent) {
             super.configureDirectoryChooserIntent(intent);
-            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
 
             return PreferencesUtils.getDefaultExportDirectoryUri(this);
         }
