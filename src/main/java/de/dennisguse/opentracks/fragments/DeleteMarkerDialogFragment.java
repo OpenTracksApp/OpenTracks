@@ -82,7 +82,7 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
                     for (Marker.Id markerId : markerIds) {
                         contentProviderUtils.deleteMarker(getContext(), markerId);
                     }
-                    caller.onDeleteMarkerDone();
+                    caller.onMarkerDeleted();
                 }).start());
     }
 
@@ -96,6 +96,6 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
         /**
          * Called when delete marker is done.
          */
-        void onDeleteMarkerDone();
+        void onMarkerDeleted();
     }
 }

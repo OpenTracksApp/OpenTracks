@@ -246,16 +246,24 @@ limitations under the License.
 
         <activity
             android:name=".MarkerListActivity"
-            android:label="@string/menu_markers">
+            android:label="@string/menu_markers"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
             <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".SearchListActivity" />
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
 
         <activity
-            android:name=".SearchListActivity"
+            android:name=".TrackListActivity"
+            android:theme="@style/SplashTheme"
             android:launchMode="singleTop">
             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
             <meta-data
@@ -268,18 +276,6 @@ limitations under the License.
         <activity android:name=".TrackRecordingActivity" />
 
         <activity android:name=".TrackEditActivity" />
-
-        <activity
-            android:name=".TrackListActivity"
-            android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".SearchListActivity" />
-        </activity>
 
         <activity android:name=".AggregatedStatisticsActivity" />
 

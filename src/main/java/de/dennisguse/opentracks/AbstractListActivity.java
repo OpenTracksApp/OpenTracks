@@ -30,8 +30,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * An abstract class for the following common tasks across
- * {@link TrackListActivity}, {@link TrackRecordedActivity}, and
- * {@link SearchListActivity}:
+ * {@link TrackListActivity}, {@link TrackRecordedActivity}, and {@link TrackRecordedActivity}:
  * <p>
  * - share track <br>
  * - delete tracks <br>
@@ -48,7 +47,7 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == DELETE_REQUEST_CODE) {
-            onDeleted();
+            onTrackDeleted();
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
@@ -93,5 +92,5 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
     /**
      * Called after {@link TrackDeleteActivity} returns its result.
      */
-    abstract protected void onDeleted();
+    abstract protected void onTrackDeleted();
 }
