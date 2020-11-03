@@ -113,7 +113,7 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
     }
 
     @Override
-    public void onDeleteMarkerDone() {
+    public void onMarkerDeleted() {
         runOnUiThread(this::finish);
     }
 

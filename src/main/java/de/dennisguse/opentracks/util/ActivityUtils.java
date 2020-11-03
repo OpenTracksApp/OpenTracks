@@ -2,7 +2,6 @@ package de.dennisguse.opentracks.util;
 
 import android.app.Activity;
 import android.app.SearchManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.os.Build;
 import android.os.VibrationEffect;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 
 import de.dennisguse.opentracks.ContextualActionModeCallback;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.SearchListActivity;
 import de.dennisguse.opentracks.TrackController;
 
 import static android.content.Context.VIBRATOR_SERVICE;
@@ -93,8 +91,8 @@ public class ActivityUtils {
         final SearchView searchView = (SearchView) menuItem.getActionView();
         SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
         if (searchManager != null) {
-            //NOTE: for some reason activity.getComponentName() did not trigger the SearchListActivity
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(activity, SearchListActivity.class)));
+            //NOTE: Use searchManager.getSearchableInfo(new ComponentName(activity, SearchActivity.class)) if another activity should handle the search
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
         } else {
             Log.w(TAG, "Could not retrieve SearchManager.");
         }

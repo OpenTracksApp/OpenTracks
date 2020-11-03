@@ -41,7 +41,6 @@ import androidx.appcompat.widget.SearchView;
 import androidx.core.app.ActivityCompat;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import androidx.loader.app.LoaderManager;
-import androidx.loader.app.LoaderManager.LoaderCallbacks;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
@@ -60,7 +59,6 @@ import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
  * An activity displaying a list of tracks.
@@ -80,26 +78,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     private TrackListBinding viewBinding;
 
-    private final LoaderCallbacks<Cursor> loaderCallbacks = new LoaderCallbacks<Cursor>() {
-        @Override
-        public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-            String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.NAME,
-                    TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
-                    TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON, "markerCount"};
-
-            return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, null, null, TrackUtils.TRACK_SORT_ORDER);
-        }
-
-        @Override
-        public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
-            resourceCursorAdapter.swapCursor(cursor);
-        }
-
-        @Override
-        public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-            resourceCursorAdapter.swapCursor(null);
-        }
-    };
+    private final TrackLoaderCallBack loaderCallbacks = new TrackLoaderCallBack();
 
     // Preferences
     private boolean metricUnits = true;
@@ -117,8 +96,8 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         }
 
         @Override
-        public boolean onClick(int itemId, int[] positions, long[] ids) {
-            return handleContextItem(itemId, ids);
+        public boolean onClick(int itemId, int[] positions, long[] trackIds) {
+            return handleContextItem(itemId, trackIds);
         }
     };
 
@@ -142,7 +121,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             if (key != null) {
                 runOnUiThread(() -> {
                     TrackListActivity.this.invalidateOptionsMenu();
-                    LoaderManager.getInstance(TrackListActivity.this).restartLoader(0, null, loaderCallbacks);
+                    loaderCallbacks.restart();
                     boolean isRecording = PreferencesUtils.isRecording(recordingTrackId);
                     trackController.update(isRecording, recordingTrackPaused);
                 });
@@ -223,6 +202,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         setTheme(R.style.ThemeCustom);
 
         super.onCreate(savedInstanceState);
+        setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
         gpsStatusValue = GpsStatusValue.GPS_NONE;
 
@@ -233,7 +213,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
         trackController = new TrackController(this, viewBinding.trackControllerContainer, trackRecordingServiceConnection, true, recordListener, stopListener);
 
-        setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
         // Show trackController when search dialog is dismissed
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
@@ -287,10 +266,9 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             }
         };
         viewBinding.trackList.setAdapter(resourceCursorAdapter);
-
         ActivityUtils.configureListViewContextualMenu(viewBinding.trackList, contextualActionModeCallback);
 
-        LoaderManager.getInstance(this).initLoader(0, null, loaderCallbacks);
+        loadData(getIntent());
 
         requestGPSPermissions();
     }
@@ -305,6 +283,14 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+        // Update UI
+        trackController.onPause();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -312,14 +298,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         this.invalidateOptionsMenu();
         LoaderManager.getInstance(this).restartLoader(0, null, loaderCallbacks);
         trackController.onResume(PreferencesUtils.isRecording(recordingTrackId), recordingTrackPaused);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        // Update UI
-        trackController.onPause();
     }
 
     @Override
@@ -421,6 +399,36 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     }
 
     @Override
+    public void onBackPressed() {
+        if (loaderCallbacks.getSearchQuery() != null) {
+            loaderCallbacks.setSearch(null);
+            return;
+        }
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        loadData(intent);
+    }
+
+    private void loadData(Intent intent) {
+        String searchQuery = null;
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            searchQuery = intent.getStringExtra(SearchManager.QUERY);
+        }
+
+        loaderCallbacks.setSearch(searchQuery);
+    }
+
+    @Override
     public boolean onSearchRequested() {
         // Hide trackController when search dialog is shown
         trackController.hide();
@@ -433,7 +441,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     }
 
     @Override
-    protected void onDeleted() {
+    protected void onTrackDeleted() {
         // Do nothing
     }
 
@@ -515,5 +523,58 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 return false;
         }
         return false;
+    }
+
+    private class TrackLoaderCallBack implements LoaderManager.LoaderCallbacks<Cursor> {
+
+        private String searchQuery = null;
+
+        public String getSearchQuery() {
+            return searchQuery;
+        }
+
+        public void setSearch(String searchQuery) {
+            this.searchQuery = searchQuery;
+            restart();
+            if (searchQuery != null) {
+                setTitle(searchQuery);
+            } else {
+                setTitle(R.string.app_name);
+            }
+        }
+
+        public void restart() {
+            LoaderManager.getInstance(TrackListActivity.this).restartLoader(0, null, loaderCallbacks);
+        }
+
+        @NonNull
+        @Override
+        public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
+            final String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.NAME,
+                    TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
+                    TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON, TracksColumns.MARKER_COUNT};
+
+            final String sortOrder = TracksColumns.STARTTIME + " DESC";
+
+            if (searchQuery == null) {
+                return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, null, null, sortOrder);
+            } else {
+                final String SEARCH_QUERY = TracksColumns.NAME + " LIKE ? OR " +
+                        TracksColumns.DESCRIPTION + " LIKE ? OR " +
+                        TracksColumns.CATEGORY + " LIKE ?";
+                final String[] selectionArgs = new String[]{searchQuery, searchQuery, searchQuery};
+                return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, SEARCH_QUERY, selectionArgs, sortOrder);
+            }
+        }
+
+        @Override
+        public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
+            resourceCursorAdapter.swapCursor(cursor);
+        }
+
+        @Override
+        public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+            resourceCursorAdapter.swapCursor(null);
+        }
     }
 }

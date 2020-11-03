@@ -188,7 +188,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
     }
 
     @Override
-    protected void onDeleted() {
+    protected void onTrackDeleted() {
         runOnUiThread(this::finish);
     }
 

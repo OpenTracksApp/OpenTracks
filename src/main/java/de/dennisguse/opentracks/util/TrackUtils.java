@@ -19,7 +19,6 @@ package de.dennisguse.opentracks.util;
 import android.content.Context;
 
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
 /**
@@ -28,8 +27,6 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
  * @author Jimmy Shih
  */
 public class TrackUtils {
-
-    public static final String TRACK_SORT_ORDER = TracksColumns.STARTTIME + " DESC";
 
     private TrackUtils() {
     }

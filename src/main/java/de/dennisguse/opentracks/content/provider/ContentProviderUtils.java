@@ -28,8 +28,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -415,25 +413,12 @@ public class ContentProviderUtils {
         if (!markerId.isValid()) {
             return null;
         }
-        try (Cursor cursor = getMarkerCursor(null, MarkerColumns._ID + "=?",
-                new String[]{Long.toString(markerId.getId())}, MarkerColumns._ID, 1)) {
+        try (Cursor cursor = getMarkerCursor(null, MarkerColumns._ID + "=?", new String[]{Long.toString(markerId.getId())}, MarkerColumns._ID, 1)) {
             if (cursor != null && cursor.moveToFirst()) {
                 return createMarker(cursor);
             }
         }
         return null;
-    }
-
-    /**
-     * The caller owns the returned cursor and is responsible for closing it.
-     *
-     * @param selection     the selection. Can be null
-     * @param selectionArgs the selection arguments. Can be null
-     * @param sortOrder     the sort order. Can be null
-     * @param maxCount      the maximum number of markers to return. -1 for no limit
-     */
-    public Cursor getMarkerCursor(String selection, String[] selectionArgs, String sortOrder, int maxCount) {
-        return getMarkerCursor(null, selection, selectionArgs, sortOrder, maxCount);
     }
 
     /**
@@ -472,21 +457,6 @@ public class ContentProviderUtils {
             }
         }
         return markers;
-    }
-
-    public static Loader<Cursor> getMarkersLoader(Context context, @Nullable Track.Id trackId) {
-        final String[] PROJECTION = new String[]{MarkerColumns._ID,
-                MarkerColumns.NAME, MarkerColumns.DESCRIPTION, MarkerColumns.CATEGORY,
-                MarkerColumns.TIME, MarkerColumns.PHOTOURL,
-                MarkerColumns.LATITUDE, MarkerColumns.LONGITUDE};
-
-        if (trackId != null) {
-            return new CursorLoader(context, MarkerColumns.CONTENT_URI, PROJECTION,
-                    MarkerColumns.TRACKID + "=?",
-                    new String[]{String.valueOf(trackId.getId())}, null);
-        } else {
-            return new CursorLoader(context, MarkerColumns.CONTENT_URI, PROJECTION, null, null, null);
-        }
     }
 
     @Deprecated //TODO TracksColumns.MARKER_COUNT while querying for tracks

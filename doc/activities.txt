@@ -10,14 +10,10 @@ endlegend
 
 [*] --> TrackListActivity
 TrackListActivity --> TrackRecordingActivity : Start recording
-TrackListActivity --> SearchListActivity
+TrackListActivity --> TrackRecordedActivity : Show track
 TrackListActivity --> MarkerListActivity : Show all markers
 TrackListActivity --> AggregatedStatisticsActivity : Aggregated stats
-TrackListActivity --> TrackRecordedActivity : Show track
 TrackListActivity --> TrackDeleteActivity
-
-SearchListActivity --> MarkerDetailActivity : Search result
-SearchListActivity --> TrackRecordedActivity : Search result
 
 TrackRecordedActivity --> TrackDeleteActivity
 TrackRecordedActivity --> TrackEditActivity
@@ -46,11 +42,14 @@ MarkerDetailActivity --> CoordinateOnMapIntent : URI
 
 SettingsActivity --> AboutActivity
 SettingsActivity --> HelpActivity
+SettingsActivity --> ImportActivity
 SettingsActivity --> ExportActivity
-SettingsActivity --> DirectoryChooserActivity$ImportDirectoryChooserActivity
-SettingsActivity --> DirectoryChooserActivity$ExportDirectoryChooserActivity
-SettingsActivity --> DirectoryChooserActivity$DefaultTrackExportDirectoryChooserActivity
-DirectoryChooserActivity$ImportDirectoryChooserActivity --> ImportActivity
-DirectoryChooserActivity$ExportDirectoryChooserActivity --> ExportActivity
+SettingsActivity --> DirectoryChooserActivity.ImportDirectoryChooserActivity
+SettingsActivity --> DirectoryChooserActivity.ExportDirectoryChooserActivity
+SettingsActivity --> DirectoryChooserActivity.DefaultTrackExportDirectoryChooserActivity
+DirectoryChooserActivity.ImportDirectoryChooserActivity --> ImportActivity
+DirectoryChooserActivity.ExportDirectoryChooserActivity --> ExportActivity
+
+FileImportIntent --> ImportActivity
 
 @enduml

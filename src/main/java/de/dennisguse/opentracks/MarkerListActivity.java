@@ -16,6 +16,7 @@
 
 package de.dennisguse.opentracks;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,9 +29,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import androidx.loader.app.LoaderManager;
-import androidx.loader.app.LoaderManager.LoaderCallbacks;
+import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
 import de.dennisguse.opentracks.content.data.Marker;
@@ -67,7 +69,6 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
-            // Note that the key can be null
             if (PreferencesUtils.isKey(MarkerListActivity.this, R.string.recording_track_id_key, key)) {
                 recordingTrackId = PreferencesUtils.getRecordingTrackId(MarkerListActivity.this);
             }
@@ -83,6 +84,8 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     private ResourceCursorAdapter resourceCursorAdapter;
 
     private MarkerListBinding viewBinding;
+
+    private final MarkerLoaderCallback loaderCallbacks = new MarkerLoaderCallback();
 
     // Callback when an item is selected in the contextual action mode
     private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
@@ -135,8 +138,6 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
                 int categoryIndex = cursor.getColumnIndex(MarkerColumns.CATEGORY);
                 int descriptionIndex = cursor.getColumnIndex(MarkerColumns.DESCRIPTION);
                 int photoUrlIndex = cursor.getColumnIndex(MarkerColumns.PHOTOURL);
-                int latitudeIndex = cursor.getColumnIndex(MarkerColumns.LATITUDE);
-                int longitudeIndex = cursor.getColumnIndex(MarkerColumns.LONGITUDE);
 
                 int iconId = MarkerUtils.ICON_ID;
                 String name = cursor.getString(nameIndex);
@@ -144,9 +145,6 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
                 String category = cursor.getString(categoryIndex);
                 String description = cursor.getString(descriptionIndex);
                 String photoUrl = cursor.getString(photoUrlIndex);
-                //TODO also show latitude and longitude in list
-                double latitude = cursor.getDouble(latitudeIndex);
-                double longitude = cursor.getDouble(longitudeIndex);
 
                 ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId, R.string.image_marker, name, null, null, 0, time, false, category, description, photoUrl);
             }
@@ -154,23 +152,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         viewBinding.markerList.setAdapter(resourceCursorAdapter);
         ActivityUtils.configureListViewContextualMenu(viewBinding.markerList, contextualActionModeCallback);
 
-        LoaderManager.getInstance(this).initLoader(0, null, new LoaderCallbacks<Cursor>() {
-            @NonNull
-            @Override
-            public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-                return ContentProviderUtils.getMarkersLoader(MarkerListActivity.this, track != null ? track.getId() : null);
-            }
-
-            @Override
-            public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
-                resourceCursorAdapter.swapCursor(cursor);
-            }
-
-            @Override
-            public void onLoaderReset(@NonNull Loader<Cursor> loader) {
-                resourceCursorAdapter.swapCursor(null);
-            }
-        });
+        loadData(getIntent());
     }
 
     @Override
@@ -230,14 +212,14 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     /**
      * Handles a context item selection.
      *
-     * @param itemId       the menu item id
-     * @param longMarkerds the marker ids
+     * @param itemId        the menu item id
+     * @param longMarkerIds the marker ids
      * @return true if handled.
      */
-    private boolean handleContextItem(int itemId, long... longMarkerds) {
-        Marker.Id[] markerIds = new Marker.Id[longMarkerds.length];
-        for (int i = 0; i < longMarkerds.length; i++) {
-            markerIds[i] = new Marker.Id(longMarkerds[i]);
+    private boolean handleContextItem(int itemId, long... longMarkerIds) {
+        Marker.Id[] markerIds = new Marker.Id[longMarkerIds.length];
+        for (int i = 0; i < longMarkerIds.length; i++) {
+            markerIds[i] = new Marker.Id(longMarkerIds[i]);
         }
 
         Intent intent;
@@ -279,7 +261,92 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     }
 
     @Override
-    public void onDeleteMarkerDone() {
+    public void onBackPressed() {
+        if (loaderCallbacks.getSearchQuery() != null) {
+            loaderCallbacks.setSearch(null);
+            return;
+        }
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        loadData(intent);
+    }
+
+    private void loadData(Intent intent) {
+        String searchQuery = null;
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            searchQuery = intent.getStringExtra(SearchManager.QUERY);
+        }
+
+        loaderCallbacks.setSearch(searchQuery);
+    }
+
+    @Override
+    public void onMarkerDeleted() {
         // Do nothing
+    }
+
+    private class MarkerLoaderCallback implements LoaderManager.LoaderCallbacks<Cursor> {
+
+        private String searchQuery = null;
+
+        public String getSearchQuery() {
+            return searchQuery;
+        }
+
+        public void setSearch(String searchQuery) {
+            this.searchQuery = searchQuery;
+            restart();
+            if (searchQuery != null) {
+                setTitle(searchQuery);
+            } else {
+                setTitle(R.string.menu_markers);
+            }
+        }
+
+        public void restart() {
+            LoaderManager.getInstance(MarkerListActivity.this).restartLoader(0, null, loaderCallbacks);
+        }
+
+        @NonNull
+        @Override
+        public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
+            final String[] PROJECTION = new String[]{MarkerColumns._ID,
+                    MarkerColumns.NAME, MarkerColumns.DESCRIPTION, MarkerColumns.CATEGORY,
+                    MarkerColumns.TIME, MarkerColumns.PHOTOURL};
+
+            if (searchQuery == null) {
+                if (track != null) {
+                    return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, PROJECTION, MarkerColumns.TRACKID + "=?", new String[]{String.valueOf(track.getId().getId())}, null);
+                } else {
+                    return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, PROJECTION, null, null, null);
+                }
+            } else {
+                final String SEARCH_QUERY = MarkerColumns.NAME + " LIKE ? OR " +
+                        MarkerColumns.DESCRIPTION + " LIKE ? OR " +
+                        MarkerColumns.CATEGORY + " LIKE ?";
+                final String[] selectionArgs = new String[]{searchQuery, searchQuery, searchQuery};
+                return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, PROJECTION, SEARCH_QUERY, selectionArgs, MarkerColumns.DEFAULT_SORT_ORDER + " DESC");
+            }
+        }
+
+        @Override
+        public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor cursor) {
+            resourceCursorAdapter.swapCursor(cursor);
+        }
+
+        @Override
+        public void onLoaderReset(@NonNull Loader<Cursor> loader) {
+            resourceCursorAdapter.swapCursor(null);
+        }
     }
 }
