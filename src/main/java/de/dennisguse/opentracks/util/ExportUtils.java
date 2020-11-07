@@ -65,12 +65,7 @@ public class ExportUtils {
         final ContentResolver resolver = context.getContentResolver();
         final Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(directoryUri, DocumentsContract.getDocumentId(directoryUri));
 
-        try {
-            Cursor c = resolver.query(
-                    childrenUri,
-                    new String[] { DocumentsContract.Document.COLUMN_DISPLAY_NAME },
-                    null,null, null
-            );
+        try (Cursor c = resolver.query(childrenUri, new String[]{DocumentsContract.Document.COLUMN_DISPLAY_NAME}, null, null, null)) {
             while (c.moveToNext()) {
                 fileNames.add(c.getString(0));
             }
@@ -98,12 +93,8 @@ public class ExportUtils {
         final ContentResolver resolver = context.getContentResolver();
         final Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(directoryUri, DocumentsContract.getDocumentId(directoryUri));
 
-        try {
-            Cursor c = resolver.query(
-                    childrenUri,
-                    new String[] { DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME },
-                    null,null, null
-            );
+        try (Cursor c = resolver.query(childrenUri, new String[]{DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_DISPLAY_NAME}, null, null, null)) {
+
             while (c.moveToNext()) {
                 final String documentId = c.getString(0);
                 final String documentName = c.getString(1);
