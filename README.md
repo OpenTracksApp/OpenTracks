@@ -68,7 +68,7 @@ __Only required permissions:__
 An overview of Bluetooth LE sensors that are known to work with OpenTracks is in [README_TESTED_SENSORS.md](README_TESTED_SENSORS.md).
 
 _Please note:_
-_OpenTracks_ does not contain a _map_ (as this would required Internet access).
+_OpenTracks_ does not contain a _map_ (as this would require internet access).
 
 ## Custom Dashboards (incl. Map)
 As of v3.3.1 OpenTracks enables to use custom dashboards.
