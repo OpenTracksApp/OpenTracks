@@ -562,7 +562,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 final String SEARCH_QUERY = TracksColumns.NAME + " LIKE ? OR " +
                         TracksColumns.DESCRIPTION + " LIKE ? OR " +
                         TracksColumns.CATEGORY + " LIKE ?";
-                final String[] selectionArgs = new String[]{searchQuery, searchQuery, searchQuery};
+                final String[] selectionArgs = new String[]{"%" + searchQuery + "%", "%" + searchQuery + "%", "%" + searchQuery + "%"};
                 return new CursorLoader(TrackListActivity.this, TracksColumns.CONTENT_URI, PROJECTION, SEARCH_QUERY, selectionArgs, sortOrder);
             }
         }
