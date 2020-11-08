@@ -334,7 +334,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
                 final String SEARCH_QUERY = MarkerColumns.NAME + " LIKE ? OR " +
                         MarkerColumns.DESCRIPTION + " LIKE ? OR " +
                         MarkerColumns.CATEGORY + " LIKE ?";
-                final String[] selectionArgs = new String[]{searchQuery, searchQuery, searchQuery};
+                final String[] selectionArgs = new String[]{"%" + searchQuery + "%", "%" + searchQuery + "%", "%" + searchQuery + "%"};
                 return new CursorLoader(MarkerListActivity.this, MarkerColumns.CONTENT_URI, PROJECTION, SEARCH_QUERY, selectionArgs, MarkerColumns.DEFAULT_SORT_ORDER + " DESC");
             }
         }
