@@ -110,7 +110,7 @@ public class ImportActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        if (doubleBackToCancel || getTotalDone() == summary.getTotalCount()) {
+        if (doubleBackToCancel || (summary != null && getTotalDone() == summary.getTotalCount())) {
             super.onBackPressed();
             viewModel.cancel();
             getViewModelStore().clear();
@@ -130,7 +130,7 @@ public class ImportActivity extends FragmentActivity {
     }
 
     private int getTotalDone() {
-        return summary.getSuccessCount() + summary.getExistsCount() + summary.getErrorCount();
+        return summary != null ? summary.getSuccessCount() + summary.getExistsCount() + summary.getErrorCount() : 0;
     }
 
     private void setProgress() {
