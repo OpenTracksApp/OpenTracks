@@ -82,7 +82,7 @@ public final class SensorDataCycling {
         @NonNull
         @Override
         public String toString() {
-            return "cadence=" + getCadence_rpm() + " time=" + getCrankRevolutionsTime() + " count=" + getCrankRevolutionsCount();
+            return "cadence=" + cadence_rpm + " time=" + crankRevolutionsTime + " count=" + crankRevolutionsCount;
         }
 
         @Override
@@ -149,7 +149,7 @@ public final class SensorDataCycling {
         @NonNull
         @Override
         public String toString() {
-            return "speed=" + getSpeed_mps() + " time=" + getWheelRevolutionsTime() + " count=" + getWheelRevolutionsCount();
+            return "speed=" + speed_mps + " time=" + wheelRevolutionsTime + " count=" + wheelRevolutionsCount;
         }
 
         @Override
