@@ -18,10 +18,6 @@ package de.dennisguse.opentracks.util;
 
 import android.content.Context;
 import android.util.Pair;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 
@@ -205,35 +201,6 @@ public class TrackIconUtils {
             return WALK;
         }
         return UNKNOWN;
-    }
-
-    public static void setIconSpinner(Spinner spinner, String iconValue) {
-        ArrayAdapter<StringBuilder> adapter = (ArrayAdapter<StringBuilder>) spinner.getAdapter();
-        StringBuilder stringBuilder = adapter.getItem(0);
-        stringBuilder.delete(0, stringBuilder.length());
-        stringBuilder.append(iconValue);
-        adapter.notifyDataSetChanged();
-    }
-
-    public static ArrayAdapter<StringBuilder> getIconSpinnerAdapter(final Context context, String iconValue) {
-        return new ArrayAdapter<StringBuilder>(context, android.R.layout.simple_spinner_item, new StringBuilder[]{new StringBuilder(iconValue)}) {
-            @NonNull
-            @Override
-            public View getView(int position, View convertView, @NonNull android.view.ViewGroup parent) {
-                ImageView imageView;
-                if (convertView != null) {
-                    imageView = (ImageView) convertView;
-                } else {
-                    imageView = new ImageView(getContext());
-                }
-
-                imageView.setImageResource(TrackIconUtils.getIconDrawable(getItem(position) + ""));
-
-                int padding = ResourceUtils.dpToPx(getContext(), 1);
-                imageView.setPaddingRelative(padding, padding, padding, -padding);
-                return imageView;
-            }
-        };
     }
 
     /**

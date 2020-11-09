@@ -19,12 +19,10 @@ package de.dennisguse.opentracks.settings;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Spinner;
+import android.widget.ImageView;
 
 import androidx.preference.DialogPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
@@ -63,7 +61,7 @@ public class ActivityTypePreference extends DialogPreference {
     public static class ActivityPreferenceDialog extends PreferenceDialogFragmentCompat {
 
         private AutoCompleteTextView textView;
-        private Spinner spinner;
+        private ImageView iconView;
 
         static ActivityPreferenceDialog newInstance(String preferenceKey) {
             ActivityTypePreference.ActivityPreferenceDialog dialog = new ActivityTypePreference.ActivityPreferenceDialog();
@@ -87,30 +85,21 @@ public class ActivityTypePreference extends DialogPreference {
             textView.setAdapter(adapter);
             textView.setOnItemClickListener((parent, v, position, id) -> {
                 String iconValue = TrackIconUtils.getIconValue(context, (String) textView.getAdapter().getItem(position));
-                TrackIconUtils.setIconSpinner(spinner, iconValue);
+                updateIcon(iconValue);
             });
             textView.setOnFocusChangeListener((v, hasFocus) -> {
                 if (!hasFocus) {
                     String iconValue = TrackIconUtils.getIconValue(context, textView.getText().toString());
-                    TrackIconUtils.setIconSpinner(spinner, iconValue);
+                    updateIcon(iconValue);
                 }
             });
 
-            String iconValue = TrackIconUtils.getIconValue(context, category);
-            spinner = view.findViewById(R.id.activity_type_preference_spinner);
-            spinner.setAdapter(TrackIconUtils.getIconSpinnerAdapter(context, iconValue));
-            spinner.setOnTouchListener((v, event) -> {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    showIconSelectDialog();
-                }
-                return true;
+            iconView = view.findViewById(R.id.activity_type_preference_spinner);
+            iconView.setOnClickListener((it) -> {
+                showIconSelectDialog();
             });
-            spinner.setOnKeyListener((v, keyCode, event) -> {
-                if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-                    showIconSelectDialog();
-                }
-                return true;
-            });
+
+            updateIcon(TrackIconUtils.getIconValue(context, category));
         }
 
         private void showIconSelectDialog() {
@@ -129,15 +118,13 @@ public class ActivityTypePreference extends DialogPreference {
             }
         }
 
-        /**
-         * Updates the value of the dialog.
-         *
-         * @param iconValue the icon value
-         */
         public void updateUI(String iconValue) {
-            TrackIconUtils.setIconSpinner(spinner, iconValue);
             textView.setText(getActivity().getString(TrackIconUtils.getIconActivityType(iconValue)));
             textView.clearFocus();
+        }
+
+        private void updateIcon(String iconValue) {
+            iconView.setImageResource(TrackIconUtils.getIconDrawable(iconValue));
         }
     }
 }

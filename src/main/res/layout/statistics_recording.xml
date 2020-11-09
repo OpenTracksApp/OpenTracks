@@ -68,7 +68,7 @@
             app:layout_constraintRight_toLeftOf="@+id/guideline3"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Spinner
+        <ImageView
             android:id="@+id/stats_activity_type_icon"
             style="@style/StatsLargeValue"
             android:layout_width="wrap_content"

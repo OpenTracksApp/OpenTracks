@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -110,18 +108,9 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
         handlerUpdateUI = new Handler();
 
-        viewBinding.statsActivityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(getActivity(), ""));
-        viewBinding.statsActivityTypeIcon.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                ((TrackRecordingActivity) getActivity()).chooseActivityType(category);
-            }
-            return true;
-        });
-        viewBinding.statsActivityTypeIcon.setOnKeyListener((v, keyCode, event) -> {
-            if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-                ((TrackRecordingActivity) getActivity()).chooseActivityType(category);
-            }
-            return true;
+
+        viewBinding.statsActivityTypeIcon.setOnClickListener(v -> {
+            ((TrackRecordingActivity) getActivity()).chooseActivityType(category);
         });
 
         sensorsAdapter = new SensorsAdapter(getContext());
@@ -351,7 +340,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         // Set activity type
         {
             viewBinding.statsActivityTypeIcon.setEnabled(isRecording);
-            TrackIconUtils.setIconSpinner(viewBinding.statsActivityTypeIcon, trackIconValue);
+            viewBinding.statsActivityTypeIcon.setImageResource(TrackIconUtils.getIconDrawable(trackIconValue));
         }
 
         // Set time
