@@ -176,12 +176,16 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     @Override
     public void onTrackUpdated(Track track) {
         if (isResumed()) {
-            // Set category.
-            category = track != null ? track.getCategory() : "";
+            getActivity().runOnUiThread(() -> {
+                if (isResumed()) {
+                    // Set category.
+                    category = track != null ? track.getCategory() : "";
 
-            // Set rate label.
-            boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext(), category);
-            viewBinding.intervalRate.setText(reportSpeed ? R.string.stats_speed : R.string.stats_pace);
+                    // Set rate label.
+                    boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext(), category);
+                    viewBinding.intervalRate.setText(reportSpeed ? R.string.stats_speed : R.string.stats_pace);
+                }
+            });
         }
     }
 
