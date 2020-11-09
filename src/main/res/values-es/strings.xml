@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <string name="about_preference_title">Acerca de OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> es una aplicación de seguimiento deportivo que respeta completamente su privacidad.</string>
     <string name="about_url">Página web del proyecto: <a href="%1$s">%1$s</a></string>
@@ -30,7 +30,6 @@ limitations under the License.
 * crear marcadores (incluyendo imágenes) *
 * funciona completamente fuera de línea *
 * mostrar las pistas en un mapa (ver abajo)</string>
-
     <string name="help_track_map_title">¿Cómo mostrar una pista en un mapa?</string>
     <string name="help_track_map_content">
 Usa el icono del mapa pequeño.
@@ -44,29 +43,23 @@ b)
 A través de una aplicación de mapas normal (por ejemplo, <a href="http://osmand.net/">OsmAnd</a> y <a href="https://maps.me/">MAPS.ME</a>).
 Estas aplicaciones necesitan soportar el formato de archivo KMZ (sólo las ubicaciones y las marcas de tiempo).
 De hecho, una aplicación necesita soportar <i>ACTION_VIEW</i> con MIME <i>application/vnd.google-earth.kmz</i>.</string>
-
     <string name="help_storage_pictures_title">¿Cómo almacena OpenTracks las fotos que fueron tomadas como marcadores?</string>
     <string name="help_storage_pictures_content">Estos se almacenan en el almacenamiento interno de la aplicación (es decir, sólo accesible dentro de OpenTracks).</string>
-
     <string name="help_track_export_title">¿Cómo puedo exportar/compartir las pistas grabadas?</string>
     <string name="help_track_export_content">
 Las pistas pueden ser exportadas desde los ajustes como KMZ, KML o GPX.
 KMZ/KML todos los datos; GPX sólo las ubicaciones.
 Las pistas compartidas a través del <i> icono de compartir </i> se comparten como KMZ.</string>
-
     <string name="help_data_google_play_services_title">¿Requiere OpenTracks usar el servicio de Google Play?</string>
-
     <string name="help_recording_title">¿Cómo registra OpenTracks los datos?</string>
     <string name="help_recording_content">
 OpenTracks utiliza el sensor GPS del dispositivo para registrar la ubicación de forma continua.
 Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocidad, elevación), OpenTracks no puede hacer nada al respecto.</string>
-
     <string name="help_data_storage_title">¿Cómo almacena OpenTracks los datos de los sensores?</string>
     <string name="help_data_storage_content">
 Los datos de los sensores se almacenan por cada ubicación registrada.
 En términos de un sensor de frecuencia cardíaca, esto significa que sólo <i>uno</i> la medición de la frecuencia cardíaca se almacena por ubicación.
 Si está parado o en el interior, no se registrarán los datos del sensor (pero se mostrarán).</string>
-
     <string name="help_gps_troubleshooting_title">OpenTracks no está grabando las localizaciones?</string>
     <string name="help_gps_troubleshooting_content">
 Lo que puedes hacer...
@@ -76,7 +69,6 @@ c) comprueba si con <a href="https://f-droid.org/en/packages/com.android.gpstest
 d) desactivar el ahorro de energía.
 \n
 Si todo no ayuda, por favor informe de un error.</string>
-
     <string name="help_support_title">¿Cómo puedo apoyar OpenTracks?</string>
     <string name="help_support_content">
 Puedes...
@@ -87,7 +79,6 @@ d) ayudar en el desarrollo de software,\n
 e) comprar en <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n
 f) donar, y
 g) haz lo que creas que ayude a OpenTracks.</string>
-
     <!-- Activity Type -->
     <string name="activity_type_airplane">avión</string>
     <string name="activity_type_atv">vehículos todoterreno</string>
@@ -366,14 +357,12 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <string name="settings_sensor_bluetooth_sensor">Sensor Bluetooth</string>
     <string name="settings_sensor_connecting">Conectado a %1$s</string>
     <string name="settings_sensor_disconnected">Desconectado de %1$s</string>
-
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Latitud/Longitud</string>
     <string name="settings_stats_rate_title">Ritmo preferido</string>
-    <string name="settings_stats_units_imperial">Imperiales (millas, pies)</string>
-    <string name="settings_stats_units_metric">Métricas (km, m)</string>
+    <string name="settings_stats_units_imperial">Imperial (millas, pies)</string>
+    <string name="settings_stats_units_metric">Métrica (km, m)</string>
     <string name="settings_stats_units_title">Unidades preferidas</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file">Compartir el archivo de la ruta</string>
     <string name="share_track_share_file_body">Creo que esta ruta te podría interesar.\n\nPara ver esta ruta, usa Google Earth u otro software de mapas.\n\n%1$s</string>
@@ -564,5 +553,60 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <!-- Share image -->
     <string name="share_image_subject">Me gustaría compartir una imagen contigo</string>
     <string name="share_image_body">Creo que esta imagen te podría interesar.</string>
-
+    <string name="open_track_as_KMZ">Abrir como KMZ</string>
+    <string name="open_track_as_GPX">Abrir como GPX</string>
+    <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
+    <string name="activity_type_escooter">escúter</string>
+    <string name="export_all_do_it_for_all">aplicar en todos los conflictos</string>
+    <string name="export_track_errors">Pistas no exportadas</string>
+    <string name="generic_skip">Ignorar</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="generic_show_errors">Ver Errores</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Terminado con un error</item>
+        <item quantity="other">Terminado con %1$d errores</item>
+    </plurals>
+    <string name="generic_completed">Terminado</string>
+    <string name="import_error_list_dialog_title">Ficheros no importados</string>
+    <string name="import_file_imported">Fichero %1$s importado</string>
+    <string name="import_error_info">%1$s: %2$s</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Pantalla completa durante la grabación.</string>
+    <string name="settings_night_mode_option_system">Sistema</string>
+    <string name="settings_night_mode_option_day">Claro</string>
+    <string name="settings_night_mode_option_night">Oscuro</string>
+    <string name="settings_night_mode_title">Elegir un tema</string>
+    <string name="settings_sensor_wheel_circumference">Circunferencia de rueda (mm)</string>
+    <string name="stats_intervals">Intervalos</string>
+    <string name="stats_split_interval">Intervalo</string>
+    <string name="track_detail_intervals_tab">Intervalos</string>
+    <string name="aggregated_stats_empty_message">Graba tu primera pista para ver estadísticas agregadas</string>
+    <string name="voice_pace_lap">Tiempo de la vuelta %1$s</string>
+    <string name="hold_to_pause">Mantén pulsado para pausar la grabación</string>
+    <string name="instant_export_enabled_title">Exportación automática tras grabación</string>
+    <string name="settings_default_export_uri_title">Carpeta de pistas exportadas</string>
+    <string name="open_track_using_dashboard">Abrir con OpenTracks-Dashboard</string>
+    <string name="export_track_already_exists_msg">La pista %1$s ya existe en la carpeta de destino.</string>
+    <string name="export_progress_review">Total de pistas exportadas: %1$d
+\n - Nuevas pistas exportadas: %2$d
+\n - Pistas sobreescritas: %3$d
+\n - Pistas ignoradas: %4$d
+\n - Errores: %5$d</string>
+    <string name="generic_overwrite">Sobreescribe</string>
+    <string name="generic_click_twice_cancel">Clic otra vez para cancelar</string>
+    <string name="gps_disabled_msg">GPS desactivado</string>
+    <string name="gps_fixed_and_ready">GPS fijado y listo</string>
+    <string name="import_unsupported_format">Formato no soportado</string>
+    <string name="import_parser_error">Error al analizar: %1$s</string>
+    <string name="import_unable_to_import_file">No se ha podido importar el fichero: %1$s</string>
+    <string name="import_progress_review">Total de ficheros importados: %1$d
+\n - Ficheros importados: %2$d
+\n - Ya existen: %3$d
+\n - Errores: %4$d</string>
+    <string name="settings_default_trackfileformat">Formato para exportar/compartir</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">Pantalla completa</string>
+    <string name="interval_list_empty_message">No hay intervalos todavía</string>
+    <string name="voice_speed_lap">Velocidad de la vuelta %1$s</string>
+    <string name="hold_to_stop">Mantén pulsado para terminar la grabación</string>
+    <string name="toast_message_instant_track_was_exported">Última pista exportada</string>
+    <string name="instant_export_enabled_summary">Exportar pista después de terminar la grabación</string>
 </resources>
