@@ -18,8 +18,6 @@ package de.dennisguse.opentracks;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 
@@ -96,18 +94,9 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
             iconValue = track.getIcon();
         }
 
-        viewBinding.trackEditActivityTypeIcon.setAdapter(TrackIconUtils.getIconSpinnerAdapter(this, iconValue));
-        viewBinding.trackEditActivityTypeIcon.setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), viewBinding.trackEditActivityType.getText().toString());
-            }
-            return true;
-        });
-        viewBinding.trackEditActivityTypeIcon.setOnKeyListener((v, keyCode, event) -> {
-            if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-                ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), viewBinding.trackEditActivityType.getText().toString());
-            }
-            return true;
+        setActivityTypeIcon(iconValue);
+        viewBinding.trackEditActivityTypeIcon.setOnClickListener(v -> {
+            ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), viewBinding.trackEditActivityType.getText().toString());
         });
 
         viewBinding.trackEditDescription.setText(track.getDescription());
@@ -156,7 +145,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
 
     private void setActivityTypeIcon(String iconValue) {
         this.iconValue = iconValue;
-        TrackIconUtils.setIconSpinner(viewBinding.trackEditActivityTypeIcon, iconValue);
+        viewBinding.trackEditActivityTypeIcon.setImageResource(TrackIconUtils.getIconDrawable(iconValue));
     }
 
     @Override
