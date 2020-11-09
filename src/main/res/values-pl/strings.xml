@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">samolot</string>
     <string name="activity_type_atv">quady</string>
@@ -279,7 +279,6 @@ limitations under the License.
     <string name="settings_stats_units_imperial">Imperialne (mile, stopy)</string>
     <string name="settings_stats_units_metric">Metryczne (km, m)</string>
     <string name="settings_stats_units_title">Preferowane jednostki</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file">Udostępnij plik z trasą</string>
     <string name="share_track_share_file_body">Myślę, że ta trasa może Cię zainteresować.\n\nAby wyświetlić tę trasę, skorzystaj z Google Earth lub innego oprogramowania
@@ -465,4 +464,32 @@ limitations under the License.
     <string name="waypoint_type_waterfall">wodospad</string>
     <string name="waypoint_type_water_fountain">fontanna</string>
     <string name="waypoint_type_waypoint">punkt pośredni</string>
+    <string name="about_version_name">Nazwa wersji: %1$s</string>
+    <string name="about_version_code">Kod wersji: %1$d</string>
+    <string name="about_libraries">Biblioteki</string>
+    <string name="help_feature_title">OpenTracks posiada następujące funkcje:</string>
+    <string name="help_track_map_title">Jak pokazywać trasę na mapie\?</string>
+    <string name="open_track_using_dashboard">Otwórz używając OpenTracks-Dashboard</string>
+    <string name="open_track_as_KMZ">Otwórz jako KMZ</string>
+    <string name="open_track_as_GPX">Otwórz jako GPX</string>
+    <string name="open_track_as_trackfileformat">Otwórz jako %1$s</string>
+    <string name="about_description"><i>OpenTracks</i> to aplikacja do śledzenia aktywności sportowej która całkowicie respektuje Twoją prywatność.</string>
+    <string name="hold_to_stop">Przytrzymaj aby zakończyć nagrywanie</string>
+    <string name="instant_export_enabled_title">Automatyczny eksport po ćwiczeniu</string>
+    <string name="share_image_body">Myślę że możesz być zainteresowany tym obrazem.</string>
+    <string name="share_image_subject">Chcę udostępnić Ci obrazek</string>
+    <string name="toast_message_instant_track_was_exported">Ostatni ślad wyeksportowany</string>
+    <string name="about_url">Strona projektu <a href="%1$s">%1$s</a></string>
+    <string name="about_preference_title">O OpenTracks</string>
+    <string name="hold_to_pause">Przytrzymaj aby zatrzymać nagrywanie</string>
+    <string name="about_history">OpenTracks to fork <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (projekt przerwany w 2016).</string>
+    <string name="activity_type_escooter">hulajnoga elektryczna</string>
+    <string name="help_feature_content">* tworzy ślady GPS
+\n * wykorzystuje pulsometr (wyłącznie Bluetooth LE)
+\n * zapowiedzi głosowe (na podstawie czasu lub odległości)
+\n * tworzenie znaczników (włączając zdjęcia)
+\n * pracuje całkowicie bez dostępu do sieci
+\n * pokazuje ślady na mapie (zobacz poniżej)</string>
+    <string name="settings_default_export_uri_title">Katalog eksportu śladów</string>
+    <string name="instant_export_enabled_summary">Eksportuj ślad do pamięci po zakończeniu nagrywania</string>
 </resources>
