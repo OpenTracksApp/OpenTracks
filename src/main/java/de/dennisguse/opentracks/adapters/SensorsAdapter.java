@@ -118,6 +118,7 @@ public class SensorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             this.label.setText(context.getString(R.string.sensor_state_heart_rate));
             this.sensorValue.setText(sensorName);
             this.value.setText(sensorValue);
+            this.unit.setText(R.string.sensor_unit_beats_per_minute);
         }
 
         private void setCadenceSensorData(SensorDataCycling.Cadence data) {
@@ -134,6 +135,7 @@ public class SensorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             this.label.setText(context.getString(R.string.sensor_state_cadence));
             this.sensorValue.setText(sensorName);
             this.value.setText(sensorValue);
+            this.unit.setText(R.string.sensor_unit_rounds_per_minute);
         }
 
         private void setPowerSensorData(SensorDataCyclingPower data) {
@@ -150,6 +152,7 @@ public class SensorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             this.label.setText(context.getString(R.string.sensor_state_power));
             this.sensorValue.setText(sensorName);
             this.value.setText(sensorValue);
+            this.unit.setText(R.string.sensor_unit_power);
         }
     }
 }
