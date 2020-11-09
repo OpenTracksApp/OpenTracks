@@ -34,4 +34,4 @@ Requirement: `gem install fastlane`
 
 ## Translations (localization)
 
-Translations of the OpenTracks are handled in Transifex: [https://www.transifex.com/opentracks](https://www.transifex.com/opentracks/).
+Translations of the OpenTracks are handled in Weblate: [https://weblate.bubu1.eu/projects/OpenTracks/](https://weblate.bubu1.eu/projects/OpenTracks/).

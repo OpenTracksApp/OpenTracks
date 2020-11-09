@@ -20,8 +20,8 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
             </a>
         </td>
         <td align="center">
-            <a href="https://www.transifex.com/opentracks/opentracks/">
-                Transifex
+            <a href="https://weblate.bubu1.eu/engage/OpenTracks/">
+                <img src="https://weblate.bubu1.eu/widgets/OpenTracks/-/opentracks/svg-badge.svg" alt="Translation status" />
             </a>
         </td>
     </tr>
