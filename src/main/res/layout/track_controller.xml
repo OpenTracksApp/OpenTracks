@@ -13,13 +13,14 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:id="@+id/track_controller_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/track_controller_background"
+        android:background="@drawable/track_controller_background"
         android:paddingTop="8dp"
         android:paddingBottom="8dp">
 
@@ -29,32 +30,36 @@ limitations under the License.
             android:layout_height="wrap_content"
             android:layout_weight="10"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/image_record" />
+            android:contentDescription="@string/image_record"
+            android:src="@drawable/ic_button_record" />
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="6"
-            android:gravity="center"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:layout_weight="6">
 
             <TextView
                 android:id="@+id/track_controller_total_time"
                 style="@style/TextSmall"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:textColor="@android:color/white" />
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                tools:text="0:12:34" />
 
             <TextView
                 android:id="@+id/track_controller_status"
                 style="@style/TextMicro"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/track_controller_total_time"
                 android:layout_alignParentStart="true"
-                android:singleLine="true" />
+                android:gravity="center"
+                android:singleLine="true"
+                tools:text="@string/generic_recording" />
         </RelativeLayout>
 
         <ImageButton
@@ -64,7 +69,7 @@ limitations under the License.
             android:layout_weight="10"
             android:background="@android:color/transparent"
             android:contentDescription="@string/image_stop"
-            android:src="@drawable/ic_button_stop_disabled" />
+            android:src="@drawable/button_stop" />
 
     </LinearLayout>
 </merge>

@@ -24,9 +24,4 @@
         android:strokeWidth="4.82273865"
         android:strokeAlpha="1"
         android:strokeColor="#00000000" />
-    <path
-        android:name="fade_out_circle"
-        android:fillAlpha="0.0"
-        android:fillColor="#a31a1f"
-        android:pathData="M62.5,62.5m-0,-62a50,50 0,1 1,-0 123a50,50 0,1 1,-0 -123" />
 </vector>

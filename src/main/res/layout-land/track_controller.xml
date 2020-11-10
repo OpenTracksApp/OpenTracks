@@ -19,7 +19,7 @@ limitations under the License.
         android:id="@+id/track_controller_container"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/track_controller_background"
+        android:background="@color/track_controller_background_normal"
         android:orientation="vertical"
         android:paddingLeft="8dp"
         android:paddingRight="8dp">
@@ -30,7 +30,8 @@ limitations under the License.
             android:layout_height="0dp"
             android:layout_weight="10"
             android:background="@android:color/transparent"
-            android:contentDescription="@string/image_record" />
+            android:contentDescription="@string/image_record"
+            android:src="@drawable/ic_button_record" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -62,7 +63,7 @@ limitations under the License.
             android:layout_weight="10"
             android:background="@android:color/transparent"
             android:contentDescription="@string/image_stop"
-            android:src="@drawable/ic_button_stop_disabled" />
+            android:src="@drawable/button_stop" />
 
     </LinearLayout>
 </merge>

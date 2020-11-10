@@ -631,8 +631,8 @@ limitations under the License.
     <string name="share_image_subject">I would like to share an image with you</string>
     <string name="share_image_body">I think you might be interested in this image.</string>
 
-    <string name="hold_to_stop">Hold to stop recording</string>
-    <string name="hold_to_pause">Hold to pause recording</string>
+    <string name="hold_to_stop">Hold to stop</string>
+    <string name="hold_to_pause">Hold to pause</string>
     <string name="toast_message_instant_track_was_exported">Last track exported</string>
 
     <string name="instant_export_enabled_summary">Export track to storage after recording is finished</string>

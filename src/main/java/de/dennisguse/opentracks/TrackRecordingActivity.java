@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -42,7 +41,7 @@ import de.dennisguse.opentracks.util.TrackUtils;
  */
 //NOTE: This activity does NOT react to preference changes of R.string.recording_track_id_key.
 //This mode of communication should be removed anyhow.
-public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackActivityDataHubInterface {
+public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackActivityDataHubInterface, TrackController.Callback {
 
     public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -126,36 +125,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     private MenuItem insertMarkerMenuItem;
     private MenuItem markerListMenuItem;
 
-    private final OnClickListener recordListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if (recordingTrackPaused) {
-                // Paused -> Resume
-                updateMenuItems(false);
-                trackRecordingServiceConnection.resumeTrack();
-                trackController.update(true, false);
-            } else {
-                // Recording -> Paused
-                updateMenuItems(true);
-                trackRecordingServiceConnection.pauseTrack();
-                trackController.update(true, true);
-            }
-        }
-    };
-
-    private final OnClickListener stopListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            trackRecordingServiceConnection.stopRecording(TrackRecordingActivity.this, true);
-            Intent newIntent = IntentUtils.newIntent(TrackRecordingActivity.this, TrackRecordedActivity.class)
-                    .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
-            startActivity(newIntent);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            updateMenuItems(true);
-            finish();
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,7 +154,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             viewBinding.trackDetailActivityViewPager.setCurrentItem(savedInstanceState.getInt(CURRENT_TAB_TAG_KEY));
         }
 
-        trackController = new TrackController(this, viewBinding.trackControllerContainer, trackRecordingServiceConnection, false, recordListener, stopListener);
+        trackController = new TrackController(this, viewBinding.trackControllerContainer, trackRecordingServiceConnection, false, this);
     }
 
     @Override
@@ -361,6 +330,32 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         Track track = contentProviderUtils.getTrack(trackId);
         String category = getString(TrackIconUtils.getIconActivityType(iconValue));
         TrackUtils.updateTrack(this, track, null, category, null, contentProviderUtils);
+    }
+
+    @Override
+    public void recordStart() {
+        if (recordingTrackPaused) {
+            // Paused -> Resume
+            updateMenuItems(false);
+            trackRecordingServiceConnection.resumeTrack();
+            trackController.update(true, false);
+        } else {
+            // Recording -> Paused
+            updateMenuItems(true);
+            trackRecordingServiceConnection.pauseTrack();
+            trackController.update(true, true);
+        }
+    }
+
+    @Override
+    public void recordStop() {
+        trackRecordingServiceConnection.stopRecording(TrackRecordingActivity.this, true);
+        Intent newIntent = IntentUtils.newIntent(TrackRecordingActivity.this, TrackRecordedActivity.class)
+                .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
+        startActivity(newIntent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        updateMenuItems(true);
+        finish();
     }
 
     private class CustomFragmentPagerAdapter extends FragmentPagerAdapter {

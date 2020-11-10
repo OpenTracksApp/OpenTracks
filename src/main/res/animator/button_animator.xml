@@ -1,5 +1,0 @@
-<objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="@integer/buttonDelayMillis"
-    android:propertyName="fillAlpha"
-    android:valueFrom="1.0"
-    android:valueTo="0.0" />
