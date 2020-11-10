@@ -33,7 +33,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -65,7 +64,7 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
+public class TrackListActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackController.Callback {
 
     private static final String TAG = TrackListActivity.class.getSimpleName();
 
@@ -133,14 +132,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     private MenuItem searchMenuItem;
     private MenuItem startGpsMenuItem;
 
-    private final OnClickListener stopListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            updateMenuItems(false, false);
-            trackRecordingServiceConnection.stopRecording(TrackListActivity.this, true);
-        }
-    };
-
     // Callback when the trackRecordingServiceConnection binding changes.
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
@@ -175,27 +166,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         }
     };
 
-    private final OnClickListener recordListener = new OnClickListener() {
-        public void onClick(View v) {
-            if (!PreferencesUtils.isRecording(recordingTrackId)) {
-                // Not recording -> Recording
-                updateMenuItems(false, true);
-                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class);
-                startActivity(newIntent);
-            } else if (recordingTrackPaused) {
-                // Paused -> Resume
-                updateMenuItems(false, true);
-                trackRecordingServiceConnection.resumeTrack();
-                trackController.update(true, false);
-            } else {
-                // Recording -> Paused
-                updateMenuItems(false, true);
-                trackRecordingServiceConnection.pauseTrack();
-                trackController.update(true, true);
-            }
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Reset theme after splash
@@ -211,7 +181,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
-        trackController = new TrackController(this, viewBinding.trackControllerContainer, trackRecordingServiceConnection, true, recordListener, stopListener);
+        trackController = new TrackController(this, viewBinding.trackControllerContainer, trackRecordingServiceConnection, true, this);
 
 
         // Show trackController when search dialog is dismissed
@@ -576,5 +546,31 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         public void onLoaderReset(@NonNull Loader<Cursor> loader) {
             resourceCursorAdapter.swapCursor(null);
         }
+    }
+
+    @Override
+    public void recordStart() {
+        if (!PreferencesUtils.isRecording(recordingTrackId)) {
+            // Not recording -> Recording
+            updateMenuItems(false, true);
+            Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class);
+            startActivity(newIntent);
+        } else if (recordingTrackPaused) {
+            // Paused -> Resume
+            updateMenuItems(false, true);
+            trackRecordingServiceConnection.resumeTrack();
+            trackController.update(true, false);
+        } else {
+            // Recording -> Paused
+            updateMenuItems(false, true);
+            trackRecordingServiceConnection.pauseTrack();
+            trackController.update(true, true);
+        }
+    }
+
+    @Override
+    public void recordStop() {
+        updateMenuItems(false, false);
+        trackRecordingServiceConnection.stopRecording(TrackListActivity.this, true);
     }
 }
