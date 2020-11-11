@@ -294,6 +294,7 @@ limitations under the License.
     <string name="import_error_list_dialog_title">Files not imported</string>
     <string name="import_file_imported">File %1$s imported</string>
     <string name="import_error">Imported %1$d of %2$s from %3$s</string>
+    <string name="import_prevent_reimport">You have set prevent re-import track</string>
     <string name="import_no_directory">%1$s does not exist</string>
     <string name="import_no_file">There were no files to import. Connect your device to your computer and place the files to import in %1$s.</string>
     <string name="import_no_file_title">Import files</string>

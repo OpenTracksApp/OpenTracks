@@ -29,7 +29,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -60,9 +59,6 @@ import de.dennisguse.opentracks.util.UnitConversions;
 abstract class AbstractFileTrackImporter extends DefaultHandler implements TrackImporter {
 
     private static final String TAG = AbstractFileTrackImporter.class.getSimpleName();
-
-    // The maximum number of buffered locations for bulk-insertion
-    private static final int MAX_BUFFERED_LOCATIONS = 512;
 
     private final Context context;
     private final ContentProviderUtils contentProviderUtils;
@@ -127,10 +123,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
             saxParser.parse(inputStream, this);
             Log.d(TAG, "Total import time: " + (System.currentTimeMillis() - start) + "ms");
-            if (trackIds.size() != 1) {
-                // TODO Multi track is not supported yet.
-                throw new ImportParserException("Multi track not supported");
-            }
             return trackIds.get(0);
         } catch (IOException | SAXException | ParserConfigurationException e) {
             Log.e(TAG, "Unable to import file", e);
@@ -228,17 +220,12 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      */
     protected void onTrackStart() throws SAXException {
         trackData = new TrackData();
-        Uri uri = contentProviderUtils.insertTrack(trackData.track);
-        Track.Id trackId = new Track.Id(Long.parseLong(uri.getLastPathSegment()));
-        trackIds.add(trackId);
-        trackData.track.setId(trackId);
     }
 
     /**
      * On track end.
      */
     protected void onTrackEnd() {
-        flushLocations(trackData);
         if (name != null) {
             trackData.track.setName(name);
         }
@@ -268,17 +255,27 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         }
         trackData.track.setTrackStatistics(trackData.trackStatisticsUpdater.getTrackStatistics());
 
-        try {
-            contentProviderUtils.updateTrack(trackData.track);
-        } catch (SQLiteConstraintException e) {
+        Track track = contentProviderUtils.getTrack(trackData.track.getUuid());
+        if (track != null) {
             if (PreferencesUtils.getPreventReimportTracks(context)) {
-                throw e;
+                throw new ImportAlreadyExistsException(context.getString(R.string.import_prevent_reimport));
             }
 
             //TODO This is a workaround until we have proper UI.
             trackData.track.setUuid(UUID.randomUUID());
-            contentProviderUtils.updateTrack(trackData.track);
         }
+
+        if (trackIds.size() > 0) {
+            // TODO Multi track is not supported yet.
+            cleanImport();
+            throw new ImportParserException("Multi track not supported");
+        }
+        Uri uri = contentProviderUtils.insertTrack(trackData.track);
+        Track.Id trackId = new Track.Id(Long.parseLong(uri.getLastPathSegment()));
+        trackIds.add(trackId);
+        trackData.track.setId(trackId);
+
+        flushLocations(trackData);
     }
 
     /**
@@ -482,13 +479,9 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         }
         trackData.trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
 
-        trackData.bufferedTrackPoints[trackData.numBufferedTrackPoints] = trackPoint;
+        trackData.bufferedTrackPoints.add(trackPoint);
         trackData.numBufferedTrackPoints++;
         trackData.numberOfLocations++;
-
-        if (trackData.numBufferedTrackPoints >= MAX_BUFFERED_LOCATIONS) {
-            flushLocations(trackData);
-        }
     }
 
     /**
@@ -500,7 +493,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         if (data.numBufferedTrackPoints <= 0) {
             return;
         }
-        contentProviderUtils.bulkInsertTrackPoint(Arrays.copyOfRange(data.bufferedTrackPoints, 0, data.numBufferedTrackPoints), data.track.getId());
+        contentProviderUtils.bulkInsertTrackPoint(data.bufferedTrackPoints, data.track.getId());
         data.numBufferedTrackPoints = 0;
     }
 
@@ -537,7 +530,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         final long importTime = System.currentTimeMillis();
 
         // The buffered locations
-        final TrackPoint[] bufferedTrackPoints = new TrackPoint[MAX_BUFFERED_LOCATIONS];
+        final List<TrackPoint> bufferedTrackPoints = new ArrayList<>();
 
         // The number of buffered locations
         int numBufferedTrackPoints = 0;
