@@ -167,7 +167,7 @@ public class KmlTrackWriter implements TrackWriter {
     @Override
     public void writeMarker(Marker marker) {
         if (printWriter != null && exportTrackDetail) {
-            boolean existsPhoto = FileUtils.getPhotoFileIfExists(context, marker.getTrackId(), marker.getPhotoURI()) != null;
+            boolean existsPhoto = FileUtils.buildInternalPhotoFile(context, marker.getTrackId(), marker.getPhotoURI()) != null;
             if (marker.hasPhoto() && exportPhotos && existsPhoto) {
                 float heading = getHeading(marker.getTrackId(), marker.getLocation());
                 writePhotoOverlay(marker, heading);

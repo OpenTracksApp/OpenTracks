@@ -488,7 +488,7 @@ public class ContentProviderUtils {
     private void deleteMarkerPhoto(Context context, Marker marker) {
         if (marker != null && marker.hasPhoto()) {
             Uri uri = marker.getPhotoURI();
-            File file = FileUtils.getPhotoFileIfExists(context, marker.getTrackId(), uri);
+            File file = FileUtils.buildInternalPhotoFile(context, marker.getTrackId(), uri);
             if (file.exists()) {
                 File parent = file.getParentFile();
                 file.delete();
@@ -616,11 +616,20 @@ public class ContentProviderUtils {
      * @param trackId     the trackPoints id
      * @return the number of trackPoints inserted
      */
-    //TODO Only used for testing and file import; might be better to replace it.
+    //TODO Only used for testing; might be better to replace it.
     public int bulkInsertTrackPoint(TrackPoint[] trackPoints, Track.Id trackId) {
         ContentValues[] values = new ContentValues[trackPoints.length];
         for (int i = 0; i < values.length; i++) {
             values[i] = createContentValues(trackPoints[i], trackId);
+        }
+        return contentResolver.bulkInsert(TrackPointsColumns.CONTENT_URI_BY_ID, values);
+    }
+
+    //TODO Only used for file import; might be better to replace it.
+    public int bulkInsertTrackPoint(List<TrackPoint> trackPoints, Track.Id trackId) {
+        ContentValues[] values = new ContentValues[trackPoints.size()];
+        for (int i = 0; i < trackPoints.size(); i++) {
+            values[i] = createContentValues(trackPoints.get(i), trackId);
         }
         return contentResolver.bulkInsert(TrackPointsColumns.CONTENT_URI_BY_ID, values);
     }

@@ -271,6 +271,7 @@ public class KmzTrackImporter implements TrackImporter {
      * Reads an image file (zipInputStream) and save it in a file called fileName inside photo folder.
      *
      * @param zipInputStream the zip input stream
+     * @param trackId        the track's id which image belongs to.
      * @param fileName       the file name
      */
     private void readAndSaveImageFile(ZipInputStream zipInputStream, Track.Id trackId, String fileName) throws IOException {
