@@ -9,6 +9,7 @@ import de.dennisguse.opentracks.util.UintUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class SensorDataCyclingTest {
@@ -116,5 +117,33 @@ public class SensorDataCyclingTest {
 
         // then
         assertEquals(2, current.getSpeed_mps(), 0.01);
+    }
+
+    @Test
+    public void equals_speed_with_no_data() {
+        // given
+        SensorDataCycling.Speed previous = new SensorDataCycling.Speed("sensorAddress");
+        SensorDataCycling.Speed current = new SensorDataCycling.Speed("sensorAddress", "sensorName", 0, 2048);
+
+        // when
+        previous.toString();
+
+        // then
+        assertNotEquals(previous, current);
+        assertNotEquals(previous, previous);
+    }
+
+    @Test
+    public void equals_cadence_with_no_data() {
+        // given
+        SensorDataCycling.Cadence previous = new SensorDataCycling.Cadence("sensorAddress");
+        SensorDataCycling.Cadence current = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 0, 2048);
+
+        // when
+        previous.toString();
+
+        // then
+        assertNotEquals(previous, current);
+        assertNotEquals(previous, previous);
     }
 }

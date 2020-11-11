@@ -42,7 +42,7 @@ public final class SensorDataCycling {
          * Workaround for Wahoo CADENCE: provides speed instead of cadence
          */
         public Cadence(@NonNull SensorDataCycling.Speed speed) {
-            this(speed.getSensorAddress(), speed.getSensorName(), speed.getWheelRevolutionsCount(), speed.getWheelRevolutionsTime());
+            this(speed.getSensorAddress(), speed.getSensorName(), speed.wheelRevolutionsCount, speed.wheelRevolutionsTime);
         }
 
         public boolean hasData() {
@@ -90,7 +90,11 @@ public final class SensorDataCycling {
             if (!(obj instanceof Cadence)) return false;
 
             Cadence comp = (Cadence) obj;
-            return getCrankRevolutionsCount() == comp.getCrankRevolutionsCount() && getCrankRevolutionsTime() == comp.getCrankRevolutionsTime();
+            if (hasData() && comp.hasData() == hasData()) {
+                return getCrankRevolutionsCount() == comp.getCrankRevolutionsCount() && getCrankRevolutionsTime() == comp.getCrankRevolutionsTime();
+            } else {
+                return false;
+            }
         }
     }
 
@@ -157,7 +161,11 @@ public final class SensorDataCycling {
             if (!(obj instanceof Speed)) return false;
 
             Speed comp = (Speed) obj;
-            return getWheelRevolutionsCount() == comp.getWheelRevolutionsCount() && getWheelRevolutionsTime() == comp.getWheelRevolutionsTime();
+            if (hasData() && comp.hasData() == hasData()) {
+                return getWheelRevolutionsCount() == comp.getWheelRevolutionsCount() && getWheelRevolutionsTime() == comp.getWheelRevolutionsTime();
+            } else {
+                return false;
+            }
         }
     }
 
