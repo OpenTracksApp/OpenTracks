@@ -13,16 +13,22 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordingActivity;
+import de.dennisguse.opentracks.adapters.SensorsAdapter;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.content.sensor.SensorData;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
-import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.databinding.StatisticsRecordingBinding;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
@@ -59,6 +65,9 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private String category = "";
 
     private StatisticsRecordingBinding viewBinding;
+
+    private SensorsAdapter sensorsAdapter;
+    private RecyclerView sensorsRecyclerView;
 
     public static Fragment newInstance() {
         return new StatisticsRecordingFragment();
@@ -114,6 +123,11 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
             }
             return true;
         });
+
+        sensorsAdapter = new SensorsAdapter(getContext());
+        sensorsRecyclerView = viewBinding.statsSensorsRecyclerView;
+        sensorsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        sensorsRecyclerView.setAdapter(sensorsAdapter);
     }
 
     @Override
@@ -271,53 +285,21 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         } else {
             SensorDataSet sensorDataSet = trackRecordingService.getSensorData();
             if (sensorDataSet != null) {
-                setHeartRateSensorData(sensorDataSet);
-                setCadenceSensorData(sensorDataSet);
-                setSpeedSensorData(sensorDataSet, isSelectedTrackRecording());
+                List<Pair<Integer, SensorData>> sensorDataList = new ArrayList<>();
+                if (sensorDataSet.getHeartRate() != null) {
+                    sensorDataList.add(new Pair<>(SensorsAdapter.HEART_RATE_TYPE, sensorDataSet.getHeartRate()));
+                }
+                if (sensorDataSet.getCyclingCadence() != null) {
+                    sensorDataList.add(new Pair<>(SensorsAdapter.CADENCE_TYPE, sensorDataSet.getCyclingCadence()));
+                }
+                if(sensorDataSet.getCyclingPower() != null) {
+                    sensorDataList.add(new Pair<>(SensorsAdapter.POWER_TYPE, sensorDataSet.getCyclingPower()));
+                }
+                sensorsAdapter.swapData(sensorDataList);
+                setSpeedSensorData(sensorDataSet);
             }
-
             setTotalElevationGain(trackRecordingService.getElevationGain_m());
         }
-    }
-
-    private void setHeartRateSensorData(SensorDataSet sensorDataSet) {
-        int isVisible = sensorDataSet.getHeartRate() != null ? View.VISIBLE : View.GONE;
-        viewBinding.statsSensorHeartRateGroup.setVisibility(isVisible);
-        setVisibilitySensorHorizontalLine();
-
-        String sensorValue = getContext().getString(R.string.value_unknown);
-        String sensorName = getContext().getString(R.string.value_unknown);
-        if (sensorDataSet.getHeartRate() != null) {
-            SensorDataHeartRate data = sensorDataSet.getHeartRate();
-
-            sensorName = data.getSensorNameOrAddress();
-            if (data.hasHeartRate_bpm() && data.isRecent()) {
-                sensorValue = StringUtils.formatDecimal(data.getHeartRate_bpm(), 0);
-            }
-        }
-
-        viewBinding.statsSensorHeartRateSensorValue.setText(sensorName);
-        viewBinding.statsSensorHeartRateValue.setText(sensorValue);
-    }
-
-    private void setCadenceSensorData(SensorDataSet sensorDataSet) {
-        int isVisible = sensorDataSet.getCyclingCadence() != null ? View.VISIBLE : View.GONE;
-        viewBinding.statsSensorCadenceGroup.setVisibility(isVisible);
-        setVisibilitySensorHorizontalLine();
-
-        String sensorValue = getContext().getString(R.string.value_unknown);
-        String sensorName = getContext().getString(R.string.value_unknown);
-        if (sensorDataSet.getCyclingCadence() != null) {
-            SensorDataCycling.Cadence data = sensorDataSet.getCyclingCadence();
-            sensorName = data.getSensorNameOrAddress();
-
-            if (data.hasCadence_rpm() && data.isRecent()) {
-                sensorValue = StringUtils.formatDecimal(data.getCadence_rpm(), 0);
-            }
-        }
-
-        viewBinding.statsSensorCadenceSensorValue.setText(sensorName);
-        viewBinding.statsSensorCadenceValue.setText(sensorValue);
     }
 
     // Set elevation gain
@@ -340,23 +322,12 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         viewBinding.statsElevationGainUnit.setText(parts.second);
     }
 
-    /**
-     * If cadence and hear rate groups are invisible then sensor horizontal line hast to be invisible too.
-     */
-    private void setVisibilitySensorHorizontalLine() {
-        if (viewBinding.statsSensorCadenceGroup.getVisibility() != View.VISIBLE && viewBinding.statsSensorHeartRateGroup.getVisibility() != View.VISIBLE) {
-            viewBinding.statsSensorHorizontalLine.setVisibility(View.GONE);
-        }
-    }
+    private void setSpeedSensorData(SensorDataSet sensorDataSet) {
+        if (sensorDataSet != null && sensorDataSet.getCyclingSpeed() != null) {
+            SensorDataCycling.Speed data = sensorDataSet.getCyclingSpeed();
 
-    private void setSpeedSensorData(SensorDataSet sensorDataSet, boolean isRecording) {
-        if (isRecording) {
-            if (sensorDataSet != null && sensorDataSet.getCyclingSpeed() != null) {
-                SensorDataCycling.Speed data = sensorDataSet.getCyclingSpeed();
-
-                if (data.hasSpeed_mps() && data.isRecent()) {
-                    setSpeed(data.getSpeed_mps());
-                }
+            if (data.hasSpeed_mps() && data.isRecent()) {
+                setSpeed(data.getSpeed_mps());
             }
         }
     }

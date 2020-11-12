@@ -59,6 +59,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
     private final BluetoothConnectionManager.HeartRate heartRate = new BluetoothConnectionManager.HeartRate(this);
     private final BluetoothConnectionManager.CyclingCadence cyclingCadence = new BluetoothConnectionManager.CyclingCadence(this);
     private final BluetoothConnectionManager.CyclingSpeed cyclingSpeed = new BluetoothConnectionManager.CyclingSpeed(this);
+    private final BluetoothConnectionManager.CyclingPower cyclingPower = new BluetoothConnectionManager.CyclingPower(this);
 
     private final SensorDataSet sensorDataSet = new SensorDataSet();
 
@@ -82,6 +83,12 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
 
                 connect(cyclingSpeed, address);
             }
+
+            if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_cycling_power_key, key)) {
+                String address = PreferencesUtils.getBluetoothCyclingPowerSensorAddress(context);
+
+                connect(cyclingPower, address);
+            }
         }
     };
 
@@ -102,6 +109,8 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
     public synchronized void stop() {
         heartRate.disconnect();
         cyclingCadence.disconnect();
+        cyclingSpeed.disconnect();
+        cyclingPower.disconnect();
 
         sensorDataSet.clear();
 

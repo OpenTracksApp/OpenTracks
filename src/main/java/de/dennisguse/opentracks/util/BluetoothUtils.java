@@ -39,8 +39,11 @@ public class BluetoothUtils {
     public static final UUID HEART_RATE_SERVICE_UUID = new UUID(0x180D00001000L, 0x800000805f9b34fbL);
     public static final UUID HEART_RATE_MEASUREMENT_CHAR_UUID = new UUID(0x2A3700001000L, 0x800000805f9b34fbL);
 
+    public static final UUID CYCLING_POWER_UUID = new UUID(0x181800001000L, 0x800000805f9b34fbL);
+    public static final UUID CYCLING_POWER_MEASUREMENT_CHAR_UUID = new UUID(0x2A6300001000L, 0x800000805f9b34fbL);
+
     public static final UUID CYCLING_SPEED_CADENCE_SERVICE_UUID = new UUID(0x181600001000L, 0x800000805f9b34fbL);
-    public static final UUID CYCLING_SPPED_CADENCE_MEASUREMENT_CHAR_UUID = new UUID(0x2A5B00001000L, 0x800000805f9b34fbL);
+    public static final UUID CYCLING_SPEED_CADENCE_MEASUREMENT_CHAR_UUID = new UUID(0x2A5B00001000L, 0x800000805f9b34fbL);
 
     private static final String TAG = BluetoothUtils.class.getSimpleName();
 
@@ -62,7 +65,7 @@ public class BluetoothUtils {
     }
 
     public static Integer parseHeartRate(BluetoothGattCharacteristic characteristic) {
-        //DOCUMENTATION https://www.bluetooth.com/specifications/gatt/characteristics/
+        //DOCUMENTATION https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.heart_rate_measurement.xml
         byte[] raw = characteristic.getValue();
         if (raw.length == 0) {
             return null;
@@ -79,10 +82,21 @@ public class BluetoothUtils {
         return null;
     }
 
+    public static Integer parseCyclingPower(BluetoothGattCharacteristic characteristic) {
+        // DOCUMENTATION https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.cycling_power_measurement.xml
+        int valueLength = characteristic.getValue().length;
+        if (valueLength < 4) {
+            return null;
+        }
+
+        return characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_SINT16, 2);
+    }
+
     /**
      * Documentation: https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=261449
      */
     public static SensorDataCycling.CadenceAndSpeed parseCyclingCrankAndWheel(String address, String sensorName, @NonNull BluetoothGattCharacteristic characteristic) {
+        // DOCUMENTATION https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.csc_measurement.xml
         int valueLength = characteristic.getValue().length;
         if (valueLength == 0) {
             return null;

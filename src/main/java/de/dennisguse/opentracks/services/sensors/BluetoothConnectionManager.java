@@ -32,6 +32,7 @@ import java.util.UUID;
 
 import de.dennisguse.opentracks.content.sensor.SensorData;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
+import de.dennisguse.opentracks.content.sensor.SensorDataCyclingPower;
 import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
 import de.dennisguse.opentracks.util.BluetoothUtils;
 
@@ -88,8 +89,14 @@ public abstract class BluetoothConnectionManager {
 
             // Register for updates.
             BluetoothGattDescriptor descriptor = characteristic.getDescriptor(BluetoothUtils.CLIENT_CHARACTERISTIC_CONFIG_UUID);
+            if (descriptor == null) {
+                Log.e(TAG, "CLIENT_CHARACTERISTIC_CONFIG_UUID characteristic not available; cannot request notifications for changed data.");
+                return;
+            }
+
             descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
             gatt.writeDescriptor(descriptor);
+
         }
 
         @Override
@@ -170,7 +177,7 @@ public abstract class BluetoothConnectionManager {
     public static class CyclingCadence extends BluetoothConnectionManager {
 
         CyclingCadence(SensorDataObserver observer) {
-            super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPPED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
+            super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPEED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
         }
 
         @Override
@@ -201,7 +208,7 @@ public abstract class BluetoothConnectionManager {
     public static class CyclingSpeed extends BluetoothConnectionManager {
 
         CyclingSpeed(SensorDataObserver observer) {
-            super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPPED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
+            super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPEED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
         }
 
         @Override
@@ -216,6 +223,25 @@ public abstract class BluetoothConnectionManager {
                 return cadenceAndSpeed.getSpeed();
             }
             return null;
+        }
+    }
+
+    public static class CyclingPower extends BluetoothConnectionManager {
+
+        CyclingPower(@NonNull SensorDataObserver observer) {
+            super(BluetoothUtils.CYCLING_POWER_UUID, BluetoothUtils.CYCLING_POWER_MEASUREMENT_CHAR_UUID, observer);
+        }
+
+        @Override
+        protected SensorData createEmptySensorData(String address) {
+            return new SensorDataCyclingPower(address);
+        }
+
+        @Override
+        protected SensorDataCyclingPower parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
+            Integer cyclingPower = BluetoothUtils.parseCyclingPower(characteristic);
+
+            return cyclingPower != null ? new SensorDataCyclingPower(address, sensorName, cyclingPower) : null;
         }
     }
 

@@ -26,3 +26,13 @@ However, often only one value is provided.
 * Wahoo Cadence (Model: WFPODCAD2)
   This sensor reports cadence data as speed.
   A workaround is in place.
+
+## Cycling Power Measurement
+
+We only support _Instantaneous Power_.
+
+* QUARQ Red DZero Powermeter
+* Wahoo Kickr v4.0
+  WARNING: we only support physically movements with valid GPS coordinates.
+  Using a device indoors (no GPS available) will only show the current power values, but won't store anything.
+  Also the distance is not computed.

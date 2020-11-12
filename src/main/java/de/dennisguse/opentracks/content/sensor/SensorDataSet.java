@@ -12,6 +12,8 @@ public final class SensorDataSet {
 
     private SensorDataCycling.Speed cyclingSpeed;
 
+    private SensorDataCyclingPower cyclingPower;
+
     public SensorDataSet() {
     }
 
@@ -27,6 +29,10 @@ public final class SensorDataSet {
         return cyclingSpeed;
     }
 
+    public SensorDataCyclingPower getCyclingPower() {
+        return cyclingPower;
+    }
+
     public void set(SensorData data) {
         set(data, data);
     }
@@ -39,6 +45,7 @@ public final class SensorDataSet {
         this.heartRate = null;
         this.cyclingCadence = null;
         this.cyclingSpeed = null;
+        this.cyclingPower = null;
     }
 
     public void fillTrackPoint(TrackPoint trackPoint) {
@@ -53,6 +60,10 @@ public final class SensorDataSet {
         if (cyclingSpeed != null && cyclingSpeed.hasSpeed_mps()) {
             trackPoint.setSpeed(cyclingSpeed.getSpeed_mps());
         }
+
+        if (cyclingPower != null && cyclingPower.hasPower_w()) {
+            trackPoint.setPower(cyclingPower.getPower_w());
+        }
     }
 
     @NonNull
@@ -60,10 +71,11 @@ public final class SensorDataSet {
     public String toString() {
         return (getHeartRate() != null ? "" + getHeartRate() : "")
                 + (getCyclingCadence() != null ? " " + getCyclingCadence() : "")
-                + (getCyclingSpeed() != null ? " " + getCyclingSpeed() : "");
+                + (getCyclingSpeed() != null ? " " + getCyclingSpeed() : "")
+                + (getCyclingPower() != null ? " " + getCyclingPower() : "");
     }
 
-    private void set(SensorData type, SensorData data) {
+    private void set(@NonNull SensorData type, SensorData data) {
         if (type instanceof SensorDataHeartRate) {
             this.heartRate = (SensorDataHeartRate) data;
             return;
@@ -78,6 +90,11 @@ public final class SensorDataSet {
             return;
         }
 
-        throw new UnsupportedOperationException();
+        if (type instanceof SensorDataCyclingPower) {
+            this.cyclingPower = (SensorDataCyclingPower) data;
+            return;
+        }
+
+        throw new UnsupportedOperationException(type.getClass().getCanonicalName());
     }
 }
