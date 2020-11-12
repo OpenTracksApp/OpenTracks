@@ -6,5 +6,6 @@ Features:
 * Supports Bluetooth LE sensors:
   * heart rate
   * cycling: speed and cadence
+  * cycling: power meter
 * Export data: export tracks either as KML or GPX
 * No Internet access: Internet is not used

@@ -31,8 +31,12 @@ However, often only one value is provided.
 
 We only support _Instantaneous Power_.
 
+_WARNING_: we only support physically movements with valid GPS coordinates.
+Using a device indoors (no GPS available) will only show the current power values, but won't store anything.
+Also the distance is not computed.
+
+* Assioma Duo Powermeter
+* Elite drivo II
 * QUARQ Red DZero Powermeter
+* Tacx Satori Smart
 * Wahoo Kickr v4.0
-  WARNING: we only support physically movements with valid GPS coordinates.
-  Using a device indoors (no GPS available) will only show the current power values, but won't store anything.
-  Also the distance is not computed.

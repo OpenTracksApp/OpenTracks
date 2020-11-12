@@ -5,6 +5,6 @@ Funktionen & Features:
 * zeichnet Sport und andere Outdooraktivitäten auf
 * unterstützt das Markieren interessanter Orte, inkl. Foto-Funktion
 * zeichnet deine Herzfrequenz auf (Bluetooth LE)
-* nutze beim Radfahren deine Trittfrequenz- und Geschwindigkeitssensoren (Bluetooth LE)
+* nutze beim Radfahren deine Trittfrequenz- und Geschwindigkeitssensoren sowie Leistungsmesser (Bluetooth LE)
 * exportiert deine Daten als KML oder GPX
 * funktioniert ganz ohne Internet

@@ -53,6 +53,7 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
 * __Bluetooth LE sensors:__
   * heart rate
   * cycling: speed and cadence
+  * cycling: power meter
 * __Export data:__ export tracks either as KMZ (incl. photos), KML or GPX
 * __No Internet access:__ Internet is not used
 * __Voice announcements__
