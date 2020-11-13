@@ -37,6 +37,8 @@ import androidx.annotation.NonNull;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
@@ -70,7 +72,11 @@ public class MarkerEditActivity extends AbstractActivity {
     private MenuItem insertGalleryImgMenuItem;
 
     private Uri photoUri;
+    private Uri photoUriOriginal;
+    private List<Uri> photoUriDeleteList = new ArrayList<>();
     private boolean hasCamera;
+
+    private boolean isNewMarker;
 
     // UI elements
     private MarkerEditBinding viewBinding;
@@ -92,13 +98,41 @@ public class MarkerEditActivity extends AbstractActivity {
                 marker.setPhotoUrl(null);
             }
             viewBinding.markerEditPhoto.setImageBitmap(null);
+            photoUriDeleteList.add(photoUri);
+            photoUriOriginal = photoUriOriginal == null ? photoUri : photoUriOriginal;
             photoUri = null;
             hideAndShowOptions();
         });
 
-        viewBinding.markerEditCancel.setOnClickListener(v -> finish());
+        viewBinding.markerEditCancel.setOnClickListener(v -> {
+            Track.Id trackId = getTrackId();
+            if (isNewMarker && trackId != null) {
+                // new marker and user cancel -> delete all photos from track directory
+                for (Uri photoUriDelete : photoUriDeleteList) {
+                    File photoFile = FileUtils.getPhotoFileIfExists(this, trackId, photoUriDelete);
+                    FileUtils.deleteDirectoryRecurse(photoFile);
+                }
+                if (photoUri != null) {
+                    File photoFile = FileUtils.getPhotoFileIfExists(this, trackId, photoUri);
+                    FileUtils.deleteDirectoryRecurse(photoFile);
+                }
+            } else if (!isNewMarker && trackId != null) {
+                // no new marker, user cancel and photo was changed -> delete all photos but original one
+                for (Uri photoUri : photoUriDeleteList) {
+                    if (photoUriOriginal != photoUri) {
+                        File photoFile = FileUtils.getPhotoFileIfExists(this, trackId, photoUri);
+                        FileUtils.deleteDirectoryRecurse(photoFile);
+                    }
+                }
+                if (photoUri != null && photoUri != photoUriOriginal) {
+                    File photoFile = FileUtils.getPhotoFileIfExists(this, trackId, photoUri);
+                    FileUtils.deleteDirectoryRecurse(photoFile);
+                }
+            }
+            finish();
+        });
 
-        final boolean isNewMarker = markerId == null;
+        isNewMarker = markerId == null;
 
         setTitle(isNewMarker ? R.string.menu_insert_marker : R.string.menu_edit);
         viewBinding.markerEditDone.setText(isNewMarker ? R.string.generic_add : R.string.generic_save);
@@ -107,6 +141,13 @@ public class MarkerEditActivity extends AbstractActivity {
                 addMarker();
             } else {
                 saveMarker();
+            }
+            Track.Id trackId = getTrackId();
+            if (trackId == null) {
+                for (Uri photoUri : photoUriDeleteList) {
+                    File photoFile = FileUtils.getPhotoFileIfExists(this, trackId, photoUri);
+                    FileUtils.deleteDirectoryRecurse(photoFile);
+                }
             }
             finish();
         });

@@ -65,22 +65,16 @@ public class DeleteMarkerDialogFragment extends DialogFragment {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final Marker.Id[] markerIds = (Marker.Id[]) getArguments().getParcelableArray(KEY_MARKER_IDS);
+        final Context context = getContext();
 
         final FragmentActivity fragmentActivity = getActivity();
-        int titleId;
-        int messageId;
-        if (markerIds == null) {
-            titleId = R.string.generic_delete_all_confirm_title;
-            messageId = R.string.marker_delete_all_confirm_message;
-        } else {
-            titleId = markerIds.length > 1 ? R.string.generic_delete_selected_confirm_title : R.string.marker_delete_one_confirm_title;
-            messageId = markerIds.length > 1 ? R.string.marker_delete_multiple_confirm_message : R.string.marker_delete_one_confirm_message;
-        }
+        int titleId = markerIds.length > 1 ? R.string.generic_delete_selected_confirm_title : R.string.marker_delete_one_confirm_title;
+        int messageId = markerIds.length > 1 ? R.string.marker_delete_multiple_confirm_message : R.string.marker_delete_one_confirm_message;
         return DialogUtils.createConfirmationDialog(
                 fragmentActivity, titleId, getString(messageId), (dialog, which) -> new Thread(() -> {
                     ContentProviderUtils contentProviderUtils = new ContentProviderUtils(fragmentActivity);
                     for (Marker.Id markerId : markerIds) {
-                        contentProviderUtils.deleteMarker(getContext(), markerId);
+                        contentProviderUtils.deleteMarker(context, markerId);
                     }
                     caller.onMarkerDeleted();
                 }).start());

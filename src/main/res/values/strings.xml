@@ -285,6 +285,7 @@ limitations under the License.
     <string name="image_stop">Stop</string>
     <string name="image_track">Track</string>
     <!-- Import -->
+    <string name="import_thread_interrupted">Thread interrupted</string>
     <string name="import_unsupported_format">Unsupported file format</string>
     <string name="import_parser_error">Parser error: %1$s</string>
     <string name="import_unable_to_import_file">Unable to import file: %1$s</string>

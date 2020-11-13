@@ -68,7 +68,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     private final ContentProviderUtils contentProviderUtils;
     private final int recordingDistanceInterval;
 
-    private Track.Id importTrackId;
     private final List<Track.Id> trackIds = new ArrayList<>();
     private final List<Marker> markers = new ArrayList<>();
 
@@ -102,11 +101,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         this.context = context;
         this.contentProviderUtils = contentProviderUtils;
         this.recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(context);
-    }
-
-    AbstractFileTrackImporter(Context context, ContentProviderUtils contentProviderUtils, Track.Id importTrackId) {
-        this(context, contentProviderUtils);
-        this.importTrackId = importTrackId;
     }
 
     @Override
@@ -181,6 +175,10 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                         // No more markers
                         return;
                     }
+                    // If marker had photo it must be translated to internal photo url (depend on track id)
+                    if (marker.hasPhoto()) {
+                        marker.setPhotoUrl(getInternalPhotoUrl(marker.getPhotoUrl()));
+                    }
                 }
 
                 if (trackPoint == null) {
@@ -230,17 +228,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      */
     protected void onTrackStart() throws SAXException {
         trackData = new TrackData();
-        Track.Id trackId;
-        if (importTrackId == null) {
-            Uri uri = contentProviderUtils.insertTrack(trackData.track);
-            trackId = new Track.Id(Long.parseLong(uri.getLastPathSegment()));
-        } else {
-            if (trackIds.size() > 0) {
-                throw new SAXException(createErrorMessage("Cannot import more than one track to an existing track " + importTrackId.getId()));
-            }
-            trackId = importTrackId;
-            contentProviderUtils.clearTrack(trackId);
-        }
+        Uri uri = contentProviderUtils.insertTrack(trackData.track);
+        Track.Id trackId = new Track.Id(Long.parseLong(uri.getLastPathSegment()));
         trackIds.add(trackId);
         trackData.track.setId(trackId);
     }
@@ -401,7 +390,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      * @param externalPhotoUrl the file name
      */
     protected String getInternalPhotoUrl(String externalPhotoUrl) {
-        if (importTrackId == null) {
+        if (trackData.track.getId() == null) {
             Log.e(TAG, "Track id is invalid.");
             return null;
         }
@@ -412,7 +401,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         }
 
         String importFileName = KmzTrackImporter.importNameForFilename(externalPhotoUrl);
-        File file = FileUtils.getPhotoFileIfExists(context, importTrackId, Uri.parse(importFileName));
+        File file = FileUtils.buildInternalPhotoFile(context, trackData.track.getId(), Uri.parse(importFileName));
         if (file != null) {
             Uri photoUri = FileUtils.getUriForFile(context, file);
             return "" + photoUri;
