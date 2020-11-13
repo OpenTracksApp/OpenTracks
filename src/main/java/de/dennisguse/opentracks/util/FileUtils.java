@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
 
@@ -287,6 +288,30 @@ public class FileUtils {
         }
 
         return file;
+    }
+
+    /**
+     * Builds interval photo file object for fileNameUri Uri.
+     *
+     * @param context     the Context.
+     * @param trackId     the id of the Track.
+     * @param fileNameUri the file name uri.
+     * @return            file object or null.
+     */
+    public static File buildInternalPhotoFile(Context context, Track.Id trackId, @NonNull Uri fileNameUri) {
+        if (fileNameUri == null) {
+            Log.w(TAG, "URI object is null.");
+            return null;
+        }
+
+        String filename = fileNameUri.getLastPathSegment();
+        if (filename == null) {
+            Log.w(TAG, "External photo contains no filename.");
+            return null;
+        }
+
+        File dir = FileUtils.getPhotoDir(context, trackId);
+        return new File(dir, filename);
     }
 
     /**

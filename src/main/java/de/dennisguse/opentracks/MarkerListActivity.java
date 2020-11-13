@@ -237,9 +237,6 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
                 }
                 return true;
             case R.id.list_context_menu_delete:
-                if (markerIds.length > 1 && markerIds.length == viewBinding.markerList.getCount()) {
-                    markerIds = null;
-                }
                 DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), markerIds);
                 return true;
             case R.id.list_context_menu_select_all:

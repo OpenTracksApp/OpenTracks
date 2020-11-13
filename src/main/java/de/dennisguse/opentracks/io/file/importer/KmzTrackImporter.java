@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
@@ -53,7 +54,6 @@ public class KmzTrackImporter implements TrackImporter {
     private static final int BUFFER_SIZE = 4096;
 
     private final Context context;
-    private Track.Id importTrackId; //TODO needed?
     private final Uri uriKmzFile;
 
     /**
@@ -67,22 +67,10 @@ public class KmzTrackImporter implements TrackImporter {
 
     @Override
     public Track.Id importFile(InputStream inputStream) {
-        Track.Id trackId;
+        Track.Id trackId = findAndParseKmlFile(inputStream);
 
-        if (!copyKmzImages()) {
-            cleanImport(context, importTrackId);
-            return null;
-        }
-
-        try {
-            trackId = findAndParseKmlFile(inputStream);
-        } catch (Exception e) {
-            cleanImport(context, importTrackId);
-            throw e;
-        }
-
-        if (trackId == null) {
-            cleanImport(context, importTrackId);
+        if (!copyKmzImages(trackId)) {
+            cleanImport(context, trackId);
             return null;
         }
 
@@ -96,7 +84,7 @@ public class KmzTrackImporter implements TrackImporter {
      *
      * @return false if there are errors or true otherwise.
      */
-    private boolean copyKmzImages() {
+    private boolean copyKmzImages(Track.Id trackId) {
         try (InputStream inputStream = context.getContentResolver().openInputStream(uriKmzFile);
              ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
             ZipEntry zipEntry;
@@ -109,7 +97,7 @@ public class KmzTrackImporter implements TrackImporter {
 
                 String fileName = zipEntry.getName();
                 if (hasImageExtension(fileName)) {
-                    readAndSaveImageFile(zipInputStream, importNameForFilename(fileName));
+                    readAndSaveImageFile(zipInputStream, trackId, importNameForFilename(fileName));
                 }
 
                 zipInputStream.closeEntry();
@@ -175,7 +163,7 @@ public class KmzTrackImporter implements TrackImporter {
             while ((zipEntry = zipInputStream.getNextEntry()) != null) {
                 if (Thread.interrupted()) {
                     Log.d(TAG, "Thread interrupted");
-                    return null;
+                    throw new RuntimeException(context.getString(R.string.import_thread_interrupted));
                 }
 
                 String fileName = zipEntry.getName();
@@ -183,7 +171,7 @@ public class KmzTrackImporter implements TrackImporter {
                     trackId = parseKml(zipInputStream);
                     if (trackId == null) {
                         Log.d(TAG, "Unable to parse kml in kmz");
-                        return null;
+                        throw new RuntimeException(context.getString(R.string.import_unable_to_import_file, fileName));
                     }
                 }
 
@@ -285,12 +273,12 @@ public class KmzTrackImporter implements TrackImporter {
      * @param zipInputStream the zip input stream
      * @param fileName       the file name
      */
-    private void readAndSaveImageFile(ZipInputStream zipInputStream, String fileName) throws IOException {
-        if (importTrackId == null || fileName.equals("")) {
+    private void readAndSaveImageFile(ZipInputStream zipInputStream, Track.Id trackId, String fileName) throws IOException {
+        if (trackId == null || fileName.equals("")) {
             return;
         }
 
-        File dir = FileUtils.getPhotoDir(context, importTrackId);
+        File dir = FileUtils.getPhotoDir(context, trackId);
         File file = new File(dir, fileName);
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
