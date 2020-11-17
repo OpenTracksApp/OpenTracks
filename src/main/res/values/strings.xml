@@ -212,6 +212,7 @@ limitations under the License.
     <string name="export_with_photos">with photos</string>
     <string name="export_without_photos">without photos</string>
     <string name="export_error">Exported %1$d of %2$s to %3$s</string>
+    <string name="export_error_post_workout">Post-workout export failed, please check the export directory.</string>
     <string name="export_option">as %1$s to %2$s</string>
     <string name="export_progress_message">Exporting to %1$s&#8230;</string>
     <string name="export_success">Exported %1$s to %2$s</string>

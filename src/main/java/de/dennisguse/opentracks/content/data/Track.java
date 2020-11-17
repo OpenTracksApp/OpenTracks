@@ -118,6 +118,10 @@ public class Track {
             this.id = id;
         }
 
+        protected Id(Parcel in) {
+            id = in.readLong();
+        }
+
         //TOOD Limit visibility to TrackRecordingService / ContentProvider
         public long getId() {
             return id;
