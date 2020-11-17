@@ -1,0 +1,10 @@
+v3.13.0: OpenTracks
+
+Changes:
+- Sensor: support for powermeter (BLE)
+- Search by track and marker (in lists)
+- Combined search removed
+
+Bugfix:
+- Import crashed in UI
+- Images of markers were not imported
