@@ -108,7 +108,7 @@ limitations under the License.
     <string name="description_recorded_time">Tatt opp: %1$s</string>
     <string name="description_speed_ms">Hastighet (m/s)</string>
     <string name="description_sensor_cadence">Kadens (o/min)</string>
-    <string name="description_sensor_heart_rate">Puls (bpm)</string>
+    <string name="description_sensor_heart_rate">Puls (slag/min)</string>
     <string name="description_sensor_power">Styrke (W)</string>
     <string name="description_speed_imperial">Hastighet (eng. mil/t)</string>
     <string name="description_speed_metric">Hastighet (km/t)</string>
@@ -508,7 +508,7 @@ limitations under the License.
     <string name="interval_list_empty_message">Det er ingen intervaller ennå</string>
     <string name="voice_speed_lap">Rundehastighet %1$s</string>
     <string name="voice_pace_lap">Rundetid %1$s</string>
-    <string name="hold_to_stop">Hold nede for å stoppe opptaket</string>
+    <string name="hold_to_stop">Hold nede for å stoppe</string>
     <string name="toast_message_instant_track_was_exported">Siste spor eksportert</string>
     <string name="instant_export_enabled_summary">Eksporter spor etter at opptak er ferdig</string>
     <string name="instant_export_enabled_title">Automatisk eksport etter opptak</string>
@@ -534,6 +534,6 @@ limitations under the License.
     <string name="menu_insert_gallery_img">Sett inn galleribilde</string>
     <string name="permission_gps_failed">OpenTracks krever tillatelse til å bruke GPS.</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Vis statistikk under opptak uten å låse opp enheten.</string>
-    <string name="hold_to_pause">Hold nede for å sette opptaket i pausemodus</string>
+    <string name="hold_to_pause">Hold nede for å sette i pausemodus</string>
     <string name="share_image_subject">Jeg vil gjerne dele et bilde med deg</string>
 </resources>
