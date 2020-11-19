@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <string name="about_preference_title">A proposito di OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i>è un\'applicazione di tracciamento sportivo che rispetta completamente la tua privacy.</string>
     <string name="about_url">Pagina web del progetto: <a href="%1$s">%1$s</a></string>
@@ -31,7 +31,6 @@ limitations under the License.
         * funziona completamente offline\n
         * mostra i tracciamenti su una mappa (vedi sotto)
     </string>
-
     <string name="help_track_map_title">Come mostrare un tracciamento su una mappa?</string>
     <string name="help_track_map_content">
         Utilizzare la piccola icona della mappa.\n
@@ -46,13 +45,10 @@ limitations under the License.
         Queste applicazioni devono supportare il formato di file KMZ (solo posizioni e marche temporali).
 Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>application/vnd.google-earth.kmz</i>.
     </string>
-
     <string name="help_storage_pictures_title">Come fa OpenTracks a memorizzare le immagini che sono state scattate come marcatori?</string>
     <string name="help_storage_pictures_content">Queste sono memorizzate nella memoria interna dell\'app (cioè accessibili solo all\'interno di OpenTracks).</string>
-
     <string name="help_track_export_title">Come posso esportare/condividere i tracciamenti registrati?</string>
     <string name="help_data_google_play_services_title">OpenTracks richiede/utilizza Google Play Services?</string>
-
     <string name="help_recording_title">Come fa OpenTracks a registrare i dati?</string>
     <string name="help_data_storage_title">In che modo OpenTracks memorizza i dati dei sensori?</string>
     <string name="help_gps_troubleshooting_title">OpenTracks non registra i luoghi?</string>
@@ -61,7 +57,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="open_track_as_KMZ">Apri come KMZ</string>
     <string name="open_track_as_GPX">Apri come GPX</string>
     <string name="open_track_as_trackfileformat">Apri come %1$s</string>
-
     <!-- Activity Type -->
     <string name="activity_type_airplane">aereo</string>
     <string name="activity_type_atv">fuoristrada</string>
@@ -108,7 +103,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="activity_type_running">corsa</string>
     <string name="activity_type_sailing">vela</string>
     <string name="activity_type_seaplane">idrovolante</string>
-    <string name="activity_type_skate_boarding">skate boarding</string>
+    <string name="activity_type_skate_boarding">skateboarding</string>
     <string name="activity_type_skating">pattinaggio</string>
     <string name="activity_type_skiing">sci</string>
     <string name="activity_type_sky_jumping">sky jumping</string>
@@ -171,7 +166,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="export_error">Esportati %1$d di %2$s in %3$s</string>
     <string name="export_option">come %1$s su %2$s</string>
     <string name="export_progress_message">Esportazioni su %1$s…</string>
-    <string name="export_success">Esportati %1$s in %2$s.</string>
+    <string name="export_success">Esportati %1$s su %2$s</string>
     <string name="export_title">Esporta in…</string>
     <!-- External Storage -->
     <!-- Files -->
@@ -281,10 +276,10 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <!-- Sensor State -->
     <string name="sensor_state_battery">Livello batteria</string>
     <string name="sensor_state_cadence">Cadenza</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
+    <string name="sensor_state_cadence_value">%1$d giri al minuto</string>
     <string name="sensor_state_disconnected">Disconnesso</string>
     <string name="sensor_state_heart_rate">Battito cardiaco</string>
-    <string name="sensor_state_heart_rate_value">%1$d bpm</string>
+    <string name="sensor_state_heart_rate_value">%1$d battiti al minuto</string>
     <string name="sensor_state_power">Potenza</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Non disponibile durante la registrazione di un percorso</string>
@@ -304,8 +299,8 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_recording_location_frequency_summary">%1$s tra posizioni registrate</string>
     <string name="settings_recording_max_recording_distance_summary">Viene creato un nuovo segmento se la distanza tra due punti è maggiore di %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Distanza massima</string>
-    <string name="settings_recording_min_recording_distance_title">Interv. distanza tra registr.</string>
-    <string name="settings_recording_min_recording_interval_title">Interv. tempo tra registr.</string>
+    <string name="settings_recording_min_recording_distance_title">Intervallo distanza tra registrazioni</string>
+    <string name="settings_recording_min_recording_interval_title">Intervallo di tempo tra registrazioni</string>
     <string name="settings_recording_min_required_accuracy_summary">La posizione viene ignorata se la sua precisione è inferiore a %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Precisione GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Data (ISO 8601)</string>
@@ -327,12 +322,14 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_stats_units_imperial">Imperiale (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrico (km, m)</string>
     <string name="settings_stats_units_title">Unità di misura preferite</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file">Condividi file di percorso</string>
-    <string name="share_track_share_file_body">Credo che ti potrebbe interessare questo percorso.\n\nPer visualizzare questo percorso, usa Google Earth o un altro
-    software di mappatura.\n\n%1$s</string>
-    <string name="share_track_subject">Desidero condividere un percorso con te.</string>
+    <string name="share_track_share_file_body">Credo che ti potrebbe interessare questo percorso.
+\n
+\n%1$s
+\n
+\nPer visualizzarlo, usa Google Earth o un altro software di mappatura.</string>
+    <string name="share_track_subject">Desidero condividere un percorso con te</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Ritmo medio in movimento</string>
     <string name="stats_average_moving_speed">Velocità media in movimento</string>
@@ -512,5 +509,99 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="waypoint_type_tunnel">tunnel</string>
     <string name="waypoint_type_waterfall">cascata</string>
     <string name="waypoint_type_water_fountain">fontana ad acqua</string>
-    <string name="waypoint_type_waypoint">waypoint</string>
+    <string name="waypoint_type_waypoint">tappa</string>
+    <string name="settings_night_mode_title">Tema dell\' interfaccia grafica</string>
+    <string name="settings_error_initial_values_restored">Mi dispiace, ma si è verificato un errore. Tutte le impostazioni sono state riportate ai valori predefiniti.</string>
+    <string name="stats_intervals">Intervalli</string>
+    <string name="stats_split_interval">Intervallo di divisione</string>
+    <string name="aggregated_stats_empty_message">Registra il tuo primo percorso per vedere le statistiche aggregate</string>
+    <string name="voice_speed_lap">Velocità per giro di %1$s</string>
+    <string name="share_image_subject">Vorrei condividere un\'immagine con te</string>
+    <string name="toast_message_instant_track_was_exported">L\' ultimo percorso è stato esportato</string>
+    <string name="settings_default_export_uri_title">Cartella di esportazione dei percorsi</string>
+    <string name="help_track_export_content"> Le tracce possono essere esportate dalle Impostazioni con formato KMZ, KML o GPX. KMZ/KML contiene tutti i dati; GPX contiene solo le posizioni. Le tracce condivise tramite l\'icona <i>condividi</i> sono esportate come KMZ. </string>
+    <string name="help_recording_content">OpenTracks utilizza il sensore GPS del dispositivo per registrare continuativamente la posizione. Se il sensore GPS riporta dati imprecisi (ad es. posizione, velocità, altitudine), OpenTracks non può fare nulla.</string>
+    <string name="help_data_storage_content"> I dati del sensore vengono memorizzati per ogni posizione registrata. Riguardo al sensore della frequenza cardiaca, ciò significa che viene memorizzata solo <i>una</i> misurazione della frequenza cardiaca per cambiamento di posizione. Se si è fermi o si è al chiuso, non verranno registrati i dati del sensore (ma saranno mostrati). </string>
+    <string name="help_gps_troubleshooting_content"> Cosa puoi fare:
+\na) verificare se il GPS è abilitato,
+\nb) migliorare la ricezione GPS (ad esempio, andare all\'aperto),
+\nc) verificare la ricezione del segnale GPS con l\' applicazione<a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, e
+\nd) disabilitare il risparmio energetico.
+\n
+\nSe il problema non è stato risolto con questi accorgimenti, si prega di segnalare un bug del programma. </string>
+    <string name="help_support_content"> Puoi:
+\na) spargere la voce su OpenTracks
+\nb) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">proporre delle nuove funzioni</a>,
+\nc) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">Segnalare un bug</a>,
+\nd) Aiutare nello sviluppo del software,
+\ne) Comprare OpenTracks su<a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\nf) Fare una donazione, infine
+\ng) Fare tutto ciò che si pensa possa aiutare OpenTracks. </string>
+    <string name="activity_type_escooter">Scooter elettrico</string>
+    <string name="app_not_installed_show_on_map">Si prega di installare un\'applicazione che possa mostrare i dati delle mappe.</string>
+    <string name="export_with_photos">Con le foto</string>
+    <string name="export_without_photos">Senza foto</string>
+    <string name="export_track_already_exists_msg">Il percorso %1$s esiste già nella cartella di salvataggio.</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Completato con un errore</item>
+        <item quantity="other">Completato con %1$d errori</item>
+    </plurals>
+    <string name="generic_click_twice_cancel">Premi il tasto indietro di nuovo per annullare</string>
+    <string name="gps_fixed_and_ready">GPS pronto e corretto</string>
+    <string name="import_progress_review">File importati: %1$d, di cui
+\n - %2$d nuovi
+\n - %3$d già esistenti
+\n - %4$d errori</string>
+    <string name="menu_insert_gallery_img">Inserisci un immagine dalla galleria</string>
+    <string name="permission_gps_failed">OpenTracks richiede il permesso di utilizzare il GPS.</string>
+    <string name="settings_default_trackfileformat">Formato file nell\' esportazione/condivisione</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">Durante la registrazione del percorso, mostra le statistiche senza sbloccare il dispositivo.</string>
+    <string name="description_default_speed_or_pace">Per tipo di attività</string>
+    <string name="export_all_do_it_for_all">Esegui ciò per tutti i conflitti</string>
+    <string name="export_track_errors">Percorsi non esportati</string>
+    <string name="export_progress_review">Totale percorsi esportati: %1$d
+\n - Nuovi percorsi esportati: %2$d
+\n - Percorsi sovrascritti: %3$d
+\n - Percorsi saltati: %4$d
+\n - Errori avvenuti: %5$d</string>
+    <string name="generic_overwrite">Sovrascrivere</string>
+    <string name="generic_skip">Saltare</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="generic_show_errors">Mostra gli errori</string>
+    <string name="generic_completed">Completato</string>
+    <string name="gps_disabled_msg">GPS disattivato</string>
+    <string name="import_unsupported_format">Formato di file non supportato</string>
+    <string name="import_parser_error">Errore nel riconoscimento degli argomenti: %1$s</string>
+    <string name="menu_resume_track">Riprendi il percorso</string>
+    <string name="track_recording_notification_accuracy">Incertezza GPS: %1$s</string>
+    <string name="import_unable_to_import_file">Non riesco ad importare il file: %1$s</string>
+    <string name="import_error_info">%1$s: %2$s</string>
+    <string name="import_error_list_dialog_title">File non importati</string>
+    <string name="import_file_imported">File %1$s importato</string>
+    <string name="import_thread_interrupted">Thread interrotto</string>
+    <string name="marker_add_photo_canceled">Annullato, nessun marker foto aggiunto</string>
+    <string name="sensor_not_known">Il sensore %1$s è sconosciuto. Si prega di controllare le impostazioni.</string>
+    <string name="sensor_could_not_scan">Impossibile eseguire la scansione per i dispositivi Bluetooth (errore %1$i).</string>
+    <string name="bluetooth_disabled">Per favore, attiva il Bluetooth.</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Mostra le statistiche sulla schermata di blocco</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">Mantieni lo schermo acceso</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">Durante la registrazione, tenere acceso lo schermo.</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">Schermo intero</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Durante la registrazione, espandi a schermo intero.</string>
+    <string name="settings_night_mode_option_system">Sistema</string>
+    <string name="settings_night_mode_option_day">Chiaro</string>
+    <string name="settings_night_mode_option_night">Scuro</string>
+    <string name="settings_sensor_connecting">Connesso a %1$s</string>
+    <string name="settings_sensor_disconnected">Disconnesso da %1$s</string>
+    <string name="settings_sensor_wheel_circumference">Grandezza della ruota (mm)</string>
+    <string name="track_detail_intervals_tab">Intervalli</string>
+    <string name="track_detail_record_success">Sto registrando un nuovo percorso</string>
+    <string name="track_detail_resume_success">Riprendendo il percorso</string>
+    <string name="interval_list_empty_message">Non c\'è ancora nessun intervallo</string>
+    <string name="voice_pace_lap">Tempo sul giro di %1$s</string>
+    <string name="share_image_body">Penso che potresti essere interessat@ in questa immagine.</string>
+    <string name="hold_to_stop">Tieni premuto per fermare</string>
+    <string name="hold_to_pause">Tieni premuto per mettere in pausa</string>
+    <string name="instant_export_enabled_summary">È stata completata l\' esportazione del percorso finito nella memoria interna del tuo dispositivo</string>
+    <string name="instant_export_enabled_title">Esportazione istantanea post-allenamento</string>
 </resources>
