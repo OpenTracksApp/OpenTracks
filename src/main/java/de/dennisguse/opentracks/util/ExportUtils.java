@@ -31,7 +31,6 @@ public class ExportUtils {
             DocumentFile directory = PreferencesUtils.getDefaultExportDirectoryUri(context);
 
             ExportService.enqueue(context, resultReceiver, track.getId(), trackFileFormat, directory.getUri());
-            exportTrack(context, trackFileFormat, directory, track);
         }
     }
 
