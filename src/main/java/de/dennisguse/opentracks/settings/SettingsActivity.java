@@ -1,10 +1,12 @@
 package de.dennisguse.opentracks.settings;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.documentfile.provider.DocumentFile;
@@ -32,8 +34,10 @@ import de.dennisguse.opentracks.util.StringUtils;
 public class SettingsActivity extends AppCompatActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, ResetDialogPreference.ResetCallback {
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
+    public static final String EXTRAS_CHECK_EXPORT_DIRECTORY = "Check Export Directory";
 
     private PrefsFragment prefsFragment;
+    private boolean checkExportDirectory = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,27 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
         toolbar.setTitle(R.string.menu_settings);
         setSupportActionBar(toolbar);
 
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra(EXTRAS_CHECK_EXPORT_DIRECTORY)) {
+            checkExportDirectory = true;
+        }
         onReset();
+    }
+
+    @Override
+    protected void onResume() {
+        if (checkExportDirectory) {
+            checkExportDirectory = false;
+            new AlertDialog.Builder(this)
+                    .setIcon(R.drawable.ic_logo_24dp)
+                    .setTitle(R.string.app_name)
+                    .setMessage(R.string.export_error_post_workout)
+                    .setNeutralButton(R.string.generic_ok, null)
+                    .create()
+                    .show();
+        }
+
+        super.onResume();
     }
 
     @Override

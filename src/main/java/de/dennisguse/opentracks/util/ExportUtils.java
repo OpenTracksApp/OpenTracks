@@ -17,17 +17,20 @@ import java.util.List;
 
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.io.file.exporter.ExportService;
+import de.dennisguse.opentracks.io.file.exporter.ExportServiceResultReceiver;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 
 public class ExportUtils {
 
     private static final String TAG = ExportUtils.class.getSimpleName();
 
-    public static void postWorkoutExport(Context context, Track track) {
+    public static void postWorkoutExport(Context context, Track track, ExportServiceResultReceiver resultReceiver) {
         if (PreferencesUtils.shouldInstantExportAfterWorkout(context)) {
             TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(context);
             DocumentFile directory = PreferencesUtils.getDefaultExportDirectoryUri(context);
 
+            ExportService.enqueue(context, resultReceiver, track.getId(), trackFileFormat, directory.getUri());
             exportTrack(context, trackFileFormat, directory, track);
         }
     }
@@ -36,6 +39,10 @@ public class ExportUtils {
         TrackExporter trackExporter = trackFileFormat.newTrackExporter(context);
 
         Uri exportDocumentFileUri = getExportDocumentFileUri(context, track.getId(), trackFileFormat, directory);
+        if (exportDocumentFileUri == null) {
+            Log.e(TAG, "Couldn't create document file for export");
+            return false;
+        }
 
         try (OutputStream outputStream = context.getContentResolver().openOutputStream(exportDocumentFileUri)) {
             if (trackExporter.writeTrack(track, outputStream)) {
@@ -80,7 +87,10 @@ public class ExportUtils {
         String exportFileName = getExportFileNameByTrackId(trackId, trackFileFormat.getExtension());
         Uri exportDocumentFileUri = findFile(context, directory.getUri(), exportFileName);
         if (exportDocumentFileUri == null) {
-            exportDocumentFileUri = directory.createFile(trackFileFormat.getMimeType(), exportFileName).getUri();
+            final DocumentFile file = directory.createFile(trackFileFormat.getMimeType(), exportFileName);
+            if (file != null) {
+                exportDocumentFileUri = file.getUri();
+            }
         }
         return exportDocumentFileUri;
     }
