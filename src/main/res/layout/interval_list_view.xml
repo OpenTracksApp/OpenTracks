@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="8dp">
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal">
 
         <TextView
+            style="@style/TextMediumPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/stats_split_interval"
-            style="@style/TextMedium" />
+            android:text="@string/stats_split_interval" />
 
         <Spinner
             android:id="@+id/spinner_intervals"
@@ -28,40 +29,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="8dp">
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/interval_distance"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/TextMedium"
-            android:layout_margin="1dp"
-            android:textAlignment="center"
-            android:layout_gravity="center"
+            style="@style/IntervalLabel"
             android:text="@string/stats_distance" />
 
         <TextView
             android:id="@+id/interval_rate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/TextMedium"
-            android:layout_margin="1dp"
-            android:textAlignment="center"
-            android:layout_gravity="center"
-            tools:text="Speed"/>
+            style="@style/IntervalLabel"
+            tools:text="Speed" />
 
         <TextView
             android:id="@+id/interval_elevation"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/TextMedium"
-            android:layout_margin="1dp"
-            android:textAlignment="center"
-            android:layout_gravity="center"
+            style="@style/IntervalLabel"
             android:text="@string/stats_elevation" />
 
     </LinearLayout>
@@ -77,7 +61,7 @@
         android:id="@+id/interval_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"/>
+        android:layout_margin="8dp" />
 
     <TextView
         android:id="@+id/interval_list_empty_view"
