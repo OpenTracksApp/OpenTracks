@@ -48,7 +48,8 @@ public class ChartValueSeriesTest {
                 R.string.description_elevation_metric,
                 R.string.description_elevation_imperial,
                 R.color.chart_elevation_fill,
-                R.color.chart_elevation_border) {
+                R.color.chart_elevation_border,
+                1) {
             @Override
             double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.getElevation();
