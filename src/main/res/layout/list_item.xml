@@ -44,7 +44,8 @@ limitations under the License.
             android:layout_height="wrap_content"
             android:minHeight="?android:attr/listPreferredItemHeight"
             android:paddingTop="8dp"
-            android:paddingRight="12dp"
+            android:paddingStart="4dp"
+            android:paddingEnd="12dp"
             android:paddingBottom="12dp"
             android:shrinkColumns="1"
             android:stretchColumns="1">
@@ -56,8 +57,8 @@ limitations under the License.
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="8dp"
                     android:contentDescription="@string/image_track"
                     app:tint="?android:textColorPrimary" />
                 <!-- Table 1: Row 1: Column 2: (Table 2) -->
@@ -105,8 +106,8 @@ limitations under the License.
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="bottom"
-                                android:layout_marginLeft="2dp"
-                                android:layout_marginRight="2dp"
+                                android:layout_marginStart="2dp"
+                                android:layout_marginEnd="2dp"
                                 android:layout_marginBottom="1dp"
                                 android:contentDescription="@string/image_marker_count"
                                 android:scaleType="centerInside"

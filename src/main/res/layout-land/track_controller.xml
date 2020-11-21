@@ -21,8 +21,8 @@ limitations under the License.
         android:layout_height="match_parent"
         android:background="@drawable/track_controller_background"
         android:orientation="vertical"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp">
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
 
         <ImageButton
             android:id="@+id/track_controller_record"
