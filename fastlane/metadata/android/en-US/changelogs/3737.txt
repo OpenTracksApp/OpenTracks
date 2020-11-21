@@ -1,0 +1,5 @@
+v3.13.1: OpenTracks
+
+Bugfix:
+- Crash on record start: minify/shrink removed a drawable
+- Automatic export failed silently (mainly remote destinations)
