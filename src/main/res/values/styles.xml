@@ -117,7 +117,23 @@ limitations under the License.
         <item name="android:paddingTop">6dp</item>
     </style>
 
-    <style name="StatsLargeLabel" parent="@style/TextSmall">
+    <style name="LargeLabel" parent="@style/TextSmall">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="IntervalLabel" parent="@style/LargeLabel">
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_margin">1dp</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="StatsLargeLabel" parent="@style/LargeLabel">
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:singleLine">false</item>
