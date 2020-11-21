@@ -76,7 +76,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
     private ChartBinding viewBinding;
 
-    //TODO Why is this needed?
+    //TODO REMOVE: Used to restore the TrackStatistics via TrackStatisticsUpdater; for the diagrams we should consider not this setting and just use all data that is in the database
+    @Deprecated
     private int recordingDistanceInterval;
     private String category = "";
 

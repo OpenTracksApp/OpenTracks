@@ -109,9 +109,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         handlerUpdateUI = new Handler();
 
 
-        viewBinding.statsActivityTypeIcon.setOnClickListener(v -> {
-            ((TrackRecordingActivity) getActivity()).chooseActivityType(category);
-        });
+        viewBinding.statsActivityTypeIcon.setOnClickListener(v -> ((TrackRecordingActivity) getActivity()).chooseActivityType(category));
 
         sensorsAdapter = new SensorsAdapter(getContext());
         sensorsRecyclerView = viewBinding.statsSensorsRecyclerView;

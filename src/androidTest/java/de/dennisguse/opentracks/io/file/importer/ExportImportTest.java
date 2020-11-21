@@ -9,6 +9,7 @@ import androidx.test.filters.LargeTest;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -196,6 +197,7 @@ public class ExportImportTest {
         assertNull(importedTrack);
     }
 
+    @Ignore
     @LargeTest
     @Test
     public void kmz_only_track() {
@@ -203,6 +205,7 @@ public class ExportImportTest {
         Log.e(TAG, "Test not implemented.");
     }
 
+    @Ignore
     @LargeTest
     @Test
     public void kmz_with_trackdetail() {
@@ -210,6 +213,7 @@ public class ExportImportTest {
         Log.e(TAG, "Test not implemented.");
     }
 
+    @Ignore
     @LargeTest
     @Test
     public void kmz_with_trackdetail_and_sensordata() {
@@ -217,6 +221,7 @@ public class ExportImportTest {
         Log.e(TAG, "Test not implemented.");
     }
 
+    @Ignore
     @LargeTest
     @Test
     public void kmz_with_trackdetail_and_sensordata_and_pictures() {

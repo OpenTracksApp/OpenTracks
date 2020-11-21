@@ -95,9 +95,7 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
         }
 
         setActivityTypeIcon(iconValue);
-        viewBinding.trackEditActivityTypeIcon.setOnClickListener(v -> {
-            ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), viewBinding.trackEditActivityType.getText().toString());
-        });
+        viewBinding.trackEditActivityTypeIcon.setOnClickListener(v -> ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), viewBinding.trackEditActivityType.getText().toString()));
 
         viewBinding.trackEditDescription.setText(track.getDescription());
 
