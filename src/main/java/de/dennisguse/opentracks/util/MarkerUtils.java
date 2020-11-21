@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import de.dennisguse.opentracks.R;
 
@@ -15,6 +16,6 @@ public class MarkerUtils {
     }
 
     public static Drawable getDefaultPhoto(@NonNull Context context) {
-        return context.getResources().getDrawable(ICON_ID);
+        return ContextCompat.getDrawable(context, ICON_ID);
     }
 }

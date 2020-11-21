@@ -33,6 +33,7 @@ import android.view.View;
 import android.widget.Scroller;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GestureDetectorCompat;
 
 import java.text.NumberFormat;
@@ -114,7 +115,7 @@ public class ChartView extends View {
     private int effectiveWidth = 0;
     private int effectiveHeight = 0;
 
-    private boolean chartByDistance;
+    private final boolean chartByDistance;
     private boolean metricUnits = true;
     private boolean reportSpeed = true;
     private boolean showPointer = false;
@@ -330,7 +331,7 @@ public class ChartView extends View {
         markerPaint.setStyle(Style.STROKE);
         markerPaint.setAntiAlias(false);
 
-        pointer = context.getResources().getDrawable(R.drawable.ic_logo_color_24dp);
+        pointer = ContextCompat.getDrawable(context, R.drawable.ic_logo_color_24dp);
         pointer.setBounds(0, 0, pointer.getIntrinsicWidth(), pointer.getIntrinsicHeight());
 
         markerPin = MarkerUtils.getDefaultPhoto(context);

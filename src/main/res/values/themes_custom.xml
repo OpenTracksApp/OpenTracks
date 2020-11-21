@@ -25,16 +25,7 @@ limitations under the License.
         <item name="windowActionModeOverlay">true</item>
     </style>
 
-    <style name="ThemeCustomNotTransparentDialog" parent="ThemeCustom">
-        <!-- TODO Remove when moving to settings to fragments. -->
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:backgroundDimEnabled">true</item>
-    </style>
-
     <style name="TrackDeleteActivity" parent="ThemeCustom">
-        <!-- TODO Remove when moving to TrackDeleteActivity to fragments. -->
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsFloating">true</item>
