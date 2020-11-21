@@ -47,10 +47,10 @@ limitations under the License.
                 android:id="@+id/track_list_arrow_long"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:orientation="vertical"
-                android:paddingLeft="12dp"
-                android:paddingRight="16dp">
+                android:paddingStart="12dp"
+                android:paddingEnd="16dp">
 
                 <View
                     android:layout_width="match_parent"
@@ -73,7 +73,7 @@ limitations under the License.
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@id/track_list_arrow_long"
+                android:layout_toEndOf="@id/track_list_arrow_long"
                 android:orientation="vertical">
 
                 <View

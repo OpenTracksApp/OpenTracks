@@ -116,12 +116,12 @@ limitations under the License.
         <Button
             android:id="@+id/marker_edit_cancel"
             style="@style/BottomButton"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:text="@string/generic_cancel" />
 
         <Button
             android:id="@+id/marker_edit_done"
             style="@style/BottomButton"
-            android:layout_gravity="right" />
+            android:layout_gravity="end" />
     </LinearLayout>
 </LinearLayout>

@@ -36,8 +36,8 @@
             style="@style/StatsLargeLabel"
             android:text="@string/stats_distance"
             app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toRightOf="@+id/guideline"
-            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -45,8 +45,8 @@
             style="@style/StatsLargeValue"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintLeft_toRightOf="@+id/guideline"
-            app:layout_constraintRight_toLeftOf="@+id/stats_distance_unit"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/stats_distance_unit"
             app:layout_constraintTop_toBottomOf="@+id/stats_distance_label"
             tools:text="100" />
 
@@ -54,8 +54,8 @@
             android:id="@+id/stats_distance_unit"
             style="@style/StatsUnit"
             app:layout_constraintBottom_toBottomOf="@+id/stats_distance_value"
-            app:layout_constraintLeft_toRightOf="@+id/stats_distance_value"
-            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            app:layout_constraintStart_toEndOf="@+id/stats_distance_value"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             tools:text="km" />
 
         <!-- Activity Type -->
@@ -64,16 +64,16 @@
             style="@style/StatsLargeLabel"
             android:text="@string/track_edit_activity_type_hint"
             app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toRightOf="@+id/guideline2"
-            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/stats_activity_type_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@+id/guideline2"
-            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintBottom_toBottomOf="@+id/stats_distance_value"
             app:layout_constraintTop_toTopOf="@+id/stats_distance_value"
             app:tint="?android:attr/textColorPrimary"
@@ -85,15 +85,15 @@
             style="@style/StatsLargeLabel"
             android:text="@string/stats_total_time"
             app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toRightOf="@+id/guideline"
-            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/stats_distance_value" />
 
         <TextView
             android:id="@+id/stats_total_time_value"
             style="@style/StatsLargeValue"
-            app:layout_constraintLeft_toRightOf="@+id/guideline"
-            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@+id/stats_total_time_label"
             tools:text="00:00:00" />
 
@@ -103,8 +103,8 @@
             style="@style/StatsLargeLabel"
             android:text="@string/stats_moving_time"
             app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toRightOf="@+id/guideline2"
-            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toTopOf="@+id/stats_total_time_label"
             app:layout_constraintBottom_toBottomOf="@+id/stats_total_time_label" />
 
@@ -112,8 +112,8 @@
             android:id="@+id/stats_moving_time_value"
             style="@style/StatsLargeValue"
             android:value="@string/value_unknown"
-            app:layout_constraintLeft_toRightOf="@+id/guideline2"
-            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/stats_moving_time_label"
             tools:text="00:00:00" />
 
@@ -130,8 +130,8 @@
             android:id="@+id/stats_speed_horizontal_line"
             style="@style/StatsHorizontalLine"
             android:layout_marginBottom="8dp"
-            app:layout_constraintLeft_toRightOf="@+id/guideline"
-            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/stats_time_barrier" />
 
         <!-- Average speed/pace -->
@@ -139,8 +139,8 @@
             android:id="@+id/stats_average_speed_label"
             style="@style/StatsSmallLabel"
             app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toRightOf="@+id/guideline2"
-            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@id/stats_speed_horizontal_line"
             tools:text="Avg. Speed" />
 
@@ -149,8 +149,8 @@
             style="@style/StatsSmallValue"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintLeft_toRightOf="@+id/guideline2"
-            app:layout_constraintRight_toLeftOf="@+id/stats_average_speed_unit"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/stats_average_speed_unit"
             app:layout_constraintTop_toBottomOf="@+id/stats_average_speed_label"
             tools:text="30.00" />
 
@@ -158,8 +158,8 @@
             android:id="@+id/stats_average_speed_unit"
             style="@style/StatsUnit"
             app:layout_constraintBottom_toBottomOf="@+id/stats_average_speed_value"
-            app:layout_constraintLeft_toRightOf="@+id/stats_average_speed_value"
-            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/stats_average_speed_value"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             tools:text="km/h" />
 
         <!-- Speed max -->
@@ -167,8 +167,8 @@
             android:id="@+id/stats_max_speed_label"
             style="@style/StatsSmallLabel"
             app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toRightOf="@+id/guideline"
-            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@id/stats_average_speed_value"
             tools:text="Max. Speed" />
 
@@ -177,8 +177,8 @@
             style="@style/StatsSmallValue"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintLeft_toRightOf="@+id/guideline"
-            app:layout_constraintRight_toLeftOf="@+id/stats_max_speed_unit"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/stats_max_speed_unit"
             app:layout_constraintTop_toBottomOf="@+id/stats_max_speed_label"
             tools:text="30.00" />
 
@@ -186,8 +186,8 @@
             android:id="@+id/stats_max_speed_unit"
             style="@style/StatsUnit"
             app:layout_constraintBottom_toBottomOf="@+id/stats_max_speed_value"
-            app:layout_constraintLeft_toRightOf="@+id/stats_max_speed_value"
-            app:layout_constraintRight_toLeftOf="@+id/guideline2"
+            app:layout_constraintStart_toEndOf="@+id/stats_max_speed_value"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             tools:text="km/h" />
 
         <!-- Moving speed max -->
@@ -195,8 +195,8 @@
             android:id="@+id/stats_moving_speed_label"
             style="@style/StatsSmallLabel"
             app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toRightOf="@+id/guideline2"
-            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@id/stats_average_speed_value"
             tools:text="Max. Moving Speed" />
 
@@ -205,8 +205,8 @@
             style="@style/StatsSmallValue"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintLeft_toRightOf="@+id/guideline2"
-            app:layout_constraintRight_toLeftOf="@+id/stats_moving_speed_unit"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/stats_moving_speed_unit"
             app:layout_constraintTop_toBottomOf="@+id/stats_moving_speed_label"
             tools:text="30.00" />
 
@@ -214,8 +214,8 @@
             android:id="@+id/stats_moving_speed_unit"
             style="@style/StatsUnit"
             app:layout_constraintBottom_toBottomOf="@+id/stats_moving_speed_value"
-            app:layout_constraintLeft_toRightOf="@+id/stats_moving_speed_value"
-            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/stats_moving_speed_value"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             tools:text="km/h" />
 
         <!-- Barrier -->
@@ -231,8 +231,8 @@
             android:id="@+id/stats_elevation_horizontal_line"
             style="@style/StatsHorizontalLine"
             android:layout_marginBottom="8dp"
-            app:layout_constraintLeft_toRightOf="@+id/guideline"
-            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/stats_speed_barrier" />
 
         <!-- Elevation gain -->
@@ -247,8 +247,8 @@
             style="@style/StatsSmallLabel"
             android:text="@string/stats_gain"
             app:layout_constrainedWidth="true"
-            app:layout_constraintLeft_toRightOf="@+id/guideline2"
-            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@id/stats_elevation_horizontal_line" />
 
         <TextView
@@ -256,8 +256,8 @@
             style="@style/StatsSmallValue"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintLeft_toRightOf="@+id/guideline2"
-            app:layout_constraintRight_toLeftOf="@+id/stats_elevation_gain_unit"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/stats_elevation_gain_unit"
             app:layout_constraintTop_toBottomOf="@+id/stats_elevation_gain_label"
             tools:text="100" />
 
@@ -265,8 +265,8 @@
             android:id="@+id/stats_elevation_gain_unit"
             style="@style/StatsUnit"
             app:layout_constraintBottom_toBottomOf="@+id/stats_elevation_gain_value"
-            app:layout_constraintLeft_toRightOf="@+id/stats_elevation_gain_value"
-            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/stats_elevation_gain_value"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             tools:text="m" />
 
         <!-- Barrier -->
@@ -282,8 +282,8 @@
             android:id="@+id/stats_end_horizontal_line"
             style="@style/StatsHorizontalLine"
             android:layout_marginBottom="8dp"
-            app:layout_constraintLeft_toRightOf="@+id/guideline"
-            app:layout_constraintRight_toLeftOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/stats_elevation_barrier" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

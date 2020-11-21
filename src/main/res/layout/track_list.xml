@@ -73,7 +73,7 @@ limitations under the License.
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="22"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/track_list_empty_message" />
 
             <View

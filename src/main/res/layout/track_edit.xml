@@ -95,13 +95,13 @@ limitations under the License.
         <Button
             android:id="@+id/track_edit_cancel"
             style="@style/BottomButton"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:text="@string/generic_cancel" />
 
         <Button
             android:id="@+id/track_edit_save"
             style="@style/BottomButton"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:text="@string/generic_save" />
     </LinearLayout>
 </LinearLayout>
