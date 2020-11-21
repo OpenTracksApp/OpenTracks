@@ -193,6 +193,10 @@ public class ChartView extends View {
     public ChartView(Context context, final boolean chartByDistance) {
         super(context);
         this.chartByDistance = chartByDistance;
+        float fontScale = context.getResources().getDisplayMetrics().density
+                * context.getResources().getConfiguration().fontScale;
+
+
         seriesList.add(new ChartValueSeries(context,
                 Integer.MIN_VALUE,
                 Integer.MAX_VALUE,
@@ -200,7 +204,8 @@ public class ChartView extends View {
                 R.string.description_elevation_metric,
                 R.string.description_elevation_imperial,
                 R.color.chart_elevation_fill,
-                R.color.chart_elevation_border) {
+                R.color.chart_elevation_border,
+                fontScale) {
             @Override
             protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.getElevation();
@@ -219,7 +224,8 @@ public class ChartView extends View {
                 R.string.description_speed_metric,
                 R.string.description_speed_imperial,
                 R.color.chart_speed_fill,
-                R.color.chart_speed_border) {
+                R.color.chart_speed_border,
+                fontScale) {
             @Override
             protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.getSpeed();
@@ -239,7 +245,8 @@ public class ChartView extends View {
                 R.string.description_pace_metric,
                 R.string.description_pace_imperial,
                 R.color.chart_pace_fill,
-                R.color.chart_pace_border) {
+                R.color.chart_pace_border,
+                fontScale) {
             @Override
             protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.getPace();
@@ -259,7 +266,8 @@ public class ChartView extends View {
                 R.string.description_sensor_heart_rate,
                 R.string.description_sensor_heart_rate,
                 R.color.chart_heart_rate_fill,
-                R.color.chart_heart_rate_border) {
+                R.color.chart_heart_rate_border,
+                fontScale) {
             @Override
             protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.getHeartRate();
@@ -278,7 +286,8 @@ public class ChartView extends View {
                 R.string.description_sensor_cadence,
                 R.string.description_sensor_cadence,
                 R.color.chart_cadence_fill,
-                R.color.chart_cadence_border) {
+                R.color.chart_cadence_border,
+                fontScale) {
             @Override
             protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.getCadence();
@@ -296,7 +305,9 @@ public class ChartView extends View {
                 R.string.description_sensor_power,
                 R.string.description_sensor_power,
                 R.color.chart_power_fill,
-                R.color.chart_power_border) {
+                R.color.chart_power_border,
+                fontScale
+        ) {
             @Override
             protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.getPower();
@@ -310,13 +321,11 @@ public class ChartView extends View {
 
         backgroundColor = ThemeUtils.getBackgroundColor(context);
 
-        float scale = context.getResources().getDisplayMetrics().density;
-
         axisPaint = new Paint();
         axisPaint.setStyle(Style.FILL_AND_STROKE);
         axisPaint.setColor(ThemeUtils.getTextColorPrimary(context));
         axisPaint.setAntiAlias(true);
-        axisPaint.setTextSize(SMALL_TEXT_SIZE * scale);
+        axisPaint.setTextSize(SMALL_TEXT_SIZE * fontScale);
 
         xAxisMarkerPaint = new Paint(axisPaint);
         xAxisMarkerPaint.setTextAlign(Align.CENTER);
@@ -882,6 +891,7 @@ public class ChartView extends View {
 
     /**
      * Finds the index of the first data point containing data for a series.
+     *
      * @return -1 if no data point contains data for the series.
      */
     private int getFirstPopulatedChartDataIndex(ChartValueSeries chartValueSeries) {
