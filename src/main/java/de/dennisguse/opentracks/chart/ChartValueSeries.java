@@ -68,7 +68,7 @@ abstract class ChartValueSeries {
      * @param fillColor       the fill color
      * @param strokeColor     the stroke color
      */
-    ChartValueSeries(Context context, int absoluteMin, int absoluteMax, int[] intervalValues, int metricTitleId, int imperialTitleId, int fillColor, int strokeColor, float fontScale) {
+    ChartValueSeries(Context context, int absoluteMin, int absoluteMax, int[] intervalValues, int metricTitleId, int imperialTitleId, int fillColor, int strokeColor, int fontSizeSmall, int fontSizeMedium) {
         this.absoluteMin = absoluteMin;
         this.absoluteMax = absoluteMax;
         this.intervalValues = intervalValues;
@@ -87,12 +87,12 @@ abstract class ChartValueSeries {
 
         // Make copies of the stroke paint with the default thickness
         titlePaint = new Paint(strokePaint);
-        titlePaint.setTextSize(ChartView.MEDIUM_TEXT_SIZE * fontScale);
+        titlePaint.setTextSize(fontSizeMedium);
         titlePaint.setTextAlign(Align.CENTER);
         titlePaint.setStyle(Style.FILL_AND_STROKE);
 
         markerPaint = new Paint(strokePaint);
-        markerPaint.setTextSize(ChartView.SMALL_TEXT_SIZE * fontScale);
+        markerPaint.setTextSize(fontSizeSmall);
         markerPaint.setTextAlign(Align.RIGHT);
         markerPaint.setStyle(Style.FILL_AND_STROKE);
 

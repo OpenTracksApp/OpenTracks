@@ -59,9 +59,6 @@ import de.dennisguse.opentracks.util.UnitConversions;
  */
 public class ChartView extends View {
 
-    static final float MEDIUM_TEXT_SIZE = 18f;
-    static final float SMALL_TEXT_SIZE = 12f;
-
     static final int Y_AXIS_INTERVALS = 5;
 
     private static final int TARGET_X_AXIS_INTERVALS = 4;
@@ -193,9 +190,8 @@ public class ChartView extends View {
     public ChartView(Context context, final boolean chartByDistance) {
         super(context);
         this.chartByDistance = chartByDistance;
-        float fontScale = context.getResources().getDisplayMetrics().density
-                * context.getResources().getConfiguration().fontScale;
-
+        int fontSizeSmall = ThemeUtils.getFontSizeSmallInPx(context);
+        int fontSizeMedium = ThemeUtils.getFontSizeMediumInPx(context);
 
         seriesList.add(new ChartValueSeries(context,
                 Integer.MIN_VALUE,
@@ -205,7 +201,8 @@ public class ChartView extends View {
                 R.string.description_elevation_imperial,
                 R.color.chart_elevation_fill,
                 R.color.chart_elevation_border,
-                fontScale) {
+                fontSizeSmall,
+                fontSizeMedium) {
             @Override
             protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.getElevation();
@@ -225,7 +222,8 @@ public class ChartView extends View {
                 R.string.description_speed_imperial,
                 R.color.chart_speed_fill,
                 R.color.chart_speed_border,
-                fontScale) {
+                fontSizeSmall,
+                fontSizeMedium) {
             @Override
             protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.getSpeed();
@@ -246,7 +244,8 @@ public class ChartView extends View {
                 R.string.description_pace_imperial,
                 R.color.chart_pace_fill,
                 R.color.chart_pace_border,
-                fontScale) {
+                fontSizeSmall,
+                fontSizeMedium) {
             @Override
             protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.getPace();
@@ -267,7 +266,8 @@ public class ChartView extends View {
                 R.string.description_sensor_heart_rate,
                 R.color.chart_heart_rate_fill,
                 R.color.chart_heart_rate_border,
-                fontScale) {
+                fontSizeSmall,
+                fontSizeMedium) {
             @Override
             protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.getHeartRate();
@@ -287,7 +287,8 @@ public class ChartView extends View {
                 R.string.description_sensor_cadence,
                 R.color.chart_cadence_fill,
                 R.color.chart_cadence_border,
-                fontScale) {
+                fontSizeSmall,
+                fontSizeMedium) {
             @Override
             protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.getCadence();
@@ -306,8 +307,8 @@ public class ChartView extends View {
                 R.string.description_sensor_power,
                 R.color.chart_power_fill,
                 R.color.chart_power_border,
-                fontScale
-        ) {
+                fontSizeSmall,
+                fontSizeMedium) {
             @Override
             protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.getPower();
@@ -325,7 +326,7 @@ public class ChartView extends View {
         axisPaint.setStyle(Style.FILL_AND_STROKE);
         axisPaint.setColor(ThemeUtils.getTextColorPrimary(context));
         axisPaint.setAntiAlias(true);
-        axisPaint.setTextSize(SMALL_TEXT_SIZE * fontScale);
+        axisPaint.setTextSize(fontSizeSmall);
 
         xAxisMarkerPaint = new Paint(axisPaint);
         xAxisMarkerPaint.setTextAlign(Align.CENTER);
