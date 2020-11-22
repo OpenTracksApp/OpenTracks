@@ -19,7 +19,7 @@ limitations under the License.
         android:id="@+id/track_controller_container"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/track_controller_background_normal"
+        android:background="@drawable/track_controller_background"
         android:orientation="vertical"
         android:paddingLeft="8dp"
         android:paddingRight="8dp">
