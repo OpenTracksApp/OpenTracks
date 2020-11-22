@@ -48,6 +48,11 @@ public final class Marker {
     @Deprecated //TODO Make an URI instead of String
     private String photoUrl = "";
 
+    public Marker(@Nullable Track.Id trackId) {
+        this.trackId = trackId;
+        location = null;
+    }
+
     @VisibleForTesting
     public Marker(@NonNull Track.Id trackId, @NonNull TrackPoint trackPoint) {
         this(trackId, trackPoint.getLocation());
