@@ -561,4 +561,7 @@ limitations under the License.
     <string name="import_parser_error">Analysefeil: %1$s</string>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="settings_sensor_disconnected">Koblet fra %1$s</string>
+    <string name="help_storage_pictures_title">Hvordan lagrer OpenTracks bilder som er tatt som markører\?</string>
+    <string name="help_storage_pictures_content">Disse lagres i appens interne lagring (dvs. bare tilgjengelig i OpenTracks).</string>
+    <string name="generic_click_twice_cancel">Trykk tilbake-knappen igjen for å avbryte</string>
 </resources>
