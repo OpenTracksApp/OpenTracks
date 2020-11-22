@@ -276,7 +276,7 @@ limitations under the License.
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Bredde- og lengdegrad</string>
     <string name="settings_stats_rate_title">Foretrukket måling</string>
-    <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
+    <string name="settings_stats_units_imperial">Britisk (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrisk (km, m)</string>
     <string name="settings_stats_units_title">Foretrukne enheter</string>
     <!-- Share Track -->
@@ -536,4 +536,29 @@ limitations under the License.
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Vis statistikk under opptak uten å låse opp enheten.</string>
     <string name="hold_to_pause">Hold nede for å sette i pausemodus</string>
     <string name="share_image_subject">Jeg vil gjerne dele et bilde med deg</string>
+    <string name="import_thread_interrupted">Tråden avbrutt</string>
+    <string name="sensor_could_not_scan">Kunne ikke skanne etter Bluetooth-enheter (feil %1$i).</string>
+    <string name="settings_sensor_connecting">Koblet til %1$s</string>
+    <string name="help_data_google_play_services_title">Krever/bruker OpenTracks Google Play Service\?</string>
+    <string name="help_feature_title">OpenTracks har følgende funksjoner:</string>
+    <string name="help_feature_content">* opprette GPS-spor
+\n * bruke en pulssensor (kun Bluetooth LE)
+\n * talemeldinger (etter tid eller distanse)
+\n * opprette markører (inkl. bilder)
+\n * fungerer helt uten internettforbindelse
+\n * viser spor på et kart (se nedenfor)</string>
+    <string name="help_track_map_title">Hvordan vise et spor på et kart\?</string>
+    <string name="about_description"><i>OpenTracks</i> er en sportssporingsapp som fullt ut respekterer ditt personvern.</string>
+    <string name="about_url">Prosjektnettside: <a href="%1$s">%1$s</a></string>
+    <string name="about_version_name">Versjon: %1$s</string>
+    <string name="about_version_code">Versjonskode: %1$d</string>
+    <string name="about_history">OpenTracks er en forgrening av <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (avviklet i 2016).</string>
+    <string name="about_libraries">Biblioteker</string>
+    <string name="help_support_title">Hvordan kan jeg støtte OpenTracks\?</string>
+    <string name="activity_type_escooter">elsparkesykkel</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="gps_fixed_and_ready">GPS bestemt og klar</string>
+    <string name="import_parser_error">Analysefeil: %1$s</string>
+    <string name="import_error_info">%1$s: %2$s</string>
+    <string name="settings_sensor_disconnected">Koblet fra %1$s</string>
 </resources>
