@@ -564,4 +564,12 @@ limitations under the License.
     <string name="help_storage_pictures_title">Hvordan lagrer OpenTracks bilder som er tatt som markører\?</string>
     <string name="help_storage_pictures_content">Disse lagres i appens interne lagring (dvs. bare tilgjengelig i OpenTracks).</string>
     <string name="generic_click_twice_cancel">Trykk tilbake-knappen igjen for å avbryte</string>
+    <string name="help_track_map_content"> Bruk det lille kartikonet.
+\n a) (live-oppdateringer) Installer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. OSMDashboard sørger for nettbaserte og nettfrakoblede kart via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n Egentlig er OSMDashboard en egen app som bare har tilgang (midlertidig) på dataene til spor som skal vises.
+\n b) Via et vanlig kartprogram (f.eks. <a href="http://osmand.net/">OsmAnd</a> og <a href="https://maps.me/">MAPS.ME</a>). Disse appene må støtte KMZ-filformatet (bare posisjoner og tidsstempler). Faktisk trenger en app å støtte <i>ACTION_VIEW</i> med MIME <i>application/vnd.google-earth.kmz</i>. </string>
+    <string name="help_track_export_title">Hvordan eksportere/dele spor som er tatt opp\?</string>
+    <string name="help_track_export_content"> Spor kan eksporteres fra Innstillinger som KMZ, KML eller GPX. KMZ/KML alle data; GPX bare posisjoner. Spor som deles via <i>deleikonet</i> blir delt som KMZ. </string>
+    <string name="help_recording_title">Hvordan OpenTracks tar opp data\?</string>
+    <string name="help_recording_content">OpenTracks bruker enhetens GPS-sensor til å ta opp posisjonen kontinuerlig. Hvis GPS-en rapporterer unøyaktige data (f.eks. posisjon, hastighet, høyde), kan ikke OpenTracks gjøre noe med det.</string>
 </resources>
