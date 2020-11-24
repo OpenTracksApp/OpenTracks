@@ -126,11 +126,12 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             return trackIds.get(0);
         } catch (IOException | SAXException | ParserConfigurationException e) {
             Log.e(TAG, "Unable to import file", e);
-            cleanImport();
+            if (trackIds.size() > 0) {
+                cleanImport();
+            }
             throw new ImportParserException(e);
         } catch (SQLiteConstraintException e) {
             Log.e(TAG, "Unable to import file", e);
-            cleanImport();
             throw new ImportAlreadyExistsException(e);
         }
     }
