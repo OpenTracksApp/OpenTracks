@@ -38,12 +38,12 @@ limitations under the License.
         a)
         (live updates) Install <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
         It provides online or offline maps via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n
-        Actually, OSMDashboard is a separate app that only can access (temporarily) access the data of track(s) that are going to be shown.
+        Actually, OSMDashboard is a separate app that only can access (temporarily) the data of track(s) that are going to be shown.
 
         \n
         b)
         Via a "normal" map application (e.g., <a href="http://osmand.net/">OsmAnd</a> and <a href="https://maps.me/">MAPS.ME</a>).
-        Those app need to support the KMZ file format (only locations and timestamps).
+        These apps need to support the KMZ file format (only locations and timestamps).
         In fact, an app needs to support <i>ACTION_VIEW</i> with MIME <i>application/vnd.google-earth.kmz</i>.
     </string>
 
@@ -77,7 +77,7 @@ limitations under the License.
         What you can do:\n
         a) check if GPS is enabled,\n
         b) improve GPS reception (e.g., go outdoors),\n
-        c) check if with <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app, and\n
+        c) check with <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app, and\n
         d) disable power saving.\n
         \n
         If everything does not help please report a bug.
