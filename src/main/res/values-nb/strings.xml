@@ -572,4 +572,22 @@ limitations under the License.
     <string name="help_track_export_content"> Spor kan eksporteres fra Innstillinger som KMZ, KML eller GPX. KMZ/KML alle data; GPX bare posisjoner. Spor som deles via <i>deleikonet</i> blir delt som KMZ. </string>
     <string name="help_recording_title">Hvordan OpenTracks tar opp data\?</string>
     <string name="help_recording_content">OpenTracks bruker enhetens GPS-sensor til å ta opp posisjonen kontinuerlig. Hvis GPS-en rapporterer unøyaktige data (f.eks. posisjon, hastighet, høyde), kan ikke OpenTracks gjøre noe med det.</string>
+    <string name="help_data_storage_title">Hvordan lagrer OpenTracks sensordata\?</string>
+    <string name="help_data_storage_content"> Sensordata lagres per posisjon som er tatt opp. Når det gjelder en pulssensor betyr dette at bare <i>en</i> pulsmåling lagres per posisjon. Hvis du står stille eller er innendørs, blir ingen sensordata tatt opp (men de vil bli vist). </string>
+    <string name="help_gps_troubleshooting_title">OpenTracks tar ikke opp posisjoner\?</string>
+    <string name="help_gps_troubleshooting_content"> Hva du kan gjøre:
+\n a) sjekke om GPS er slått på,
+\n b) forbedre GPS-mottak (f.eks. gå utendørs),
+\n c) sjekke med appen <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, og
+\n d) slå av strømsparing.
+\n
+\n Hvis alt dette ikke hjelper, kan du rapportere en feil. </string>
+    <string name="help_support_content"> Du kan:
+\n a) spre informasjon om OpenTracks,
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">foreslå funksjoner</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">rapportere feil</a>,
+\n d) hjelpe med programvareutvikling,
+\n e) kjøpe i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\n f) donere, og
+\n g) gjøre hva du tror hjelper OpenTracks. </string>
 </resources>
