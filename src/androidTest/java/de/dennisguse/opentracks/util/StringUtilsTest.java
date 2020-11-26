@@ -226,4 +226,13 @@ public class StringUtilsTest {
         assertEquals("min/km", StringUtils.getSpeedParts(context, 0, true, false).second);
         assertEquals("min/mi", StringUtils.getSpeedParts(context, 0, false, false).second);
     }
+
+    @Test
+    public void testFormatSpeed() {
+        assertEquals("4:59 min/km", StringUtils.formatSpeed(context, 3.34, true, false));
+        assertEquals("8:02 min/mi", StringUtils.formatSpeed(context, 3.34, false, false));
+
+        assertEquals("12.02 km/h", StringUtils.formatSpeed(context, 3.34, true, true));
+        assertEquals("7.47 mph", StringUtils.formatSpeed(context, 3.34, false, true));
+    }
 }
