@@ -118,6 +118,34 @@ public class StringUtils {
         }
     }
 
+    public static String formatSpeed(Context context, double speed_mps, boolean metricUnits, boolean reportSpeed) {
+        if (Double.isNaN(speed_mps) || Double.isInfinite(speed_mps)) {
+            speed_mps = 0;
+        }
+
+        double speed = speed_mps * UnitConversions.M_TO_KM; //KM p sec
+        if (!metricUnits) {
+            speed *= UnitConversions.KM_TO_MI;
+        }
+
+        if (reportSpeed) {
+            if (metricUnits) {
+                return context.getString(R.string.value_float_kilometer_hour, speed * UnitConversions.S_TO_HR);
+            } else {
+                return context.getString(R.string.value_float_mile_hour, speed * UnitConversions.S_TO_HR);
+            }
+        } else {
+            int pace = speed == 0 ? 0 : (int) Math.round(1 / speed); //sec / [KM | MI]
+            int minutes = pace / 60;
+            int seconds = pace % 60;
+            if (metricUnits) {
+                return context.getString(R.string.value_pace_kilometer, minutes, seconds);
+            } else {
+                return context.getString(R.string.value_pace_mile, minutes, seconds);
+            }
+        }
+    }
+
     private static String formatDecimal(double value) {
         return StringUtils.formatDecimal(value, 2);
     }

@@ -508,8 +508,11 @@ limitations under the License.
     <string name="value_always">Always</string>
     <string name="value_float_feet">%1$.2f ft</string>
     <string name="value_float_kilometer">%1$.2f km</string>
+    <string name="value_float_kilometer_hour">%1$.2f km/h</string>
     <string name="value_float_meter">%1$.2f m</string>
     <string name="value_float_mile">%1$.2f mi</string>
+    <string name="value_float_mile_hour">%1$.2f mph</string>
+
     <string name="value_float_mile_poor_gps">%1$.1f mi (poor GPS)</string>
     <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (excellent GPS)</string>
@@ -525,6 +528,8 @@ limitations under the License.
     <string name="value_integer_minute">%1$d min</string>
     <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
+    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
+    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
     <string name="value_none">None</string>
     <string name="value_off">Off</string>
     <string name="value_smallest">Smallest</string>
