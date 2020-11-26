@@ -13,8 +13,10 @@ import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.data.Track;
@@ -148,8 +150,10 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
         trackDataHub = new TrackDataHub(this);
 
-        viewBinding.trackDetailActivityViewPager.setAdapter(new CustomFragmentPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT));
-        viewBinding.trackDetailActivityTablayout.setupWithViewPager(viewBinding.trackDetailActivityViewPager);
+        CustomFragmentPagerAdapter pagerAdapter = new CustomFragmentPagerAdapter(this);
+        viewBinding.trackDetailActivityViewPager.setAdapter(pagerAdapter);
+        new TabLayoutMediator(viewBinding.trackDetailActivityTablayout, viewBinding.trackDetailActivityViewPager,
+                (tab, position) -> tab.setText(pagerAdapter.getPageTitle(position))).attach();
         if (savedInstanceState != null) {
             viewBinding.trackDetailActivityViewPager.setCurrentItem(savedInstanceState.getInt(CURRENT_TAB_TAG_KEY));
         }
@@ -358,20 +362,15 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         finish();
     }
 
-    private class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
+    private class CustomFragmentPagerAdapter extends FragmentStateAdapter {
 
-        public CustomFragmentPagerAdapter(@NonNull FragmentManager fm, int behavior) {
-            super(fm, behavior);
-        }
-
-        @Override
-        public int getCount() {
-            return 4;
+        public CustomFragmentPagerAdapter(@NonNull FragmentActivity fa) {
+            super(fa);
         }
 
         @NonNull
         @Override
-        public Fragment getItem(int position) {
+        public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
                     return StatisticsRecordingFragment.newInstance();
@@ -387,6 +386,10 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         }
 
         @Override
+        public int getItemCount() {
+            return 4;
+        }
+
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
