@@ -177,6 +177,10 @@ public class KmzTrackImporter implements TrackImporter {
 
                 zipInputStream.closeEntry();
             }
+            if (trackId == null) {
+                Log.d(TAG, "Unable to find doc.kml in kmz");
+                throw new RuntimeException(context.getString(R.string.import_no_kml_file_found));
+            }
             return trackId;
         } catch (ImportParserException | ImportAlreadyExistsException e) {
             Log.e(TAG, "Unable to import file", e);

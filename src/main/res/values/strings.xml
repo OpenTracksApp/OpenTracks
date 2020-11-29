@@ -290,6 +290,7 @@ limitations under the License.
     <string name="import_unsupported_format">Unsupported file format</string>
     <string name="import_parser_error">Parser error: %1$s</string>
     <string name="import_unable_to_import_file">Unable to import file: %1$s</string>
+    <string name="import_no_kml_file_found">No doc.kml file found in KMZ</string>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="import_error_list_dialog_title">Files not imported</string>
     <string name="import_file_imported">File %1$s imported</string>
