@@ -19,7 +19,7 @@ limitations under the License.
     <string name="about_url">Web do proxecto: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Nome da versión: %1$s</string>
     <string name="about_version_code">Código da versión: %1$d</string>
-    <string name="about_history">OpenTracks é un fork de <a href="https://code.google.com/archive/p/mytracks/"><i>MyTracks de Google</i></a>(abandonado en 2016)</string>
+    <string name="about_history">OpenTracks é un fork de <a href="https://code.google.com/archive/p/mytracks/"><i>MyTracks de Google</i></a>(abandonado en 2016).</string>
     <string name="about_libraries">Bibliotecas</string>
     <!-- Help -->
     <string name="help_feature_title">OpenTracks ten as seguintes funcións:</string>
@@ -32,25 +32,16 @@ limitations under the License.
         * mostra as rutas nun mapa  (ver abaixo)
     </string>
     <string name="help_track_map_title">¿Como mostrar a ruta nun mapa?</string>
-    <string name="help_track_map_content">
-Usa a pequena icona do mapa.\n
-a)
-(actualizacións ao vivo) Instala <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
-Proporciona mapas con e sen conexión desde <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n
-En realidade, OSMDashboard é unha aplicación independiente que só pode acceder (temporalmente) aos datos das rutas que se van a mostrar.
-
+    <string name="help_track_map_content"> Usa a pequena icona do mapa.
 \n
-b)\n
-A través dunha app \"normal\" como <a href="http://osmand.net/">OsmAnd</a> ou <a href="https://maps.me/">MAPS.ME</a>.
-Estas apps deben soportar o formato de ficheiros KMZ (só localización e marcas de tempo).
-De feito, unha app precisa soportar <i>ACTION_VIEW</i> con MIME <i>application/vnd.google-earth.kmz</i>.</string>
+\n a) (actualizacións ao vivo) Instala <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Proporciona mapas con e sen conexión desde <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n En realidade, OSMDashboard é unha aplicación independiente que só pode acceder (temporalmente) aos datos das rutas que se van a mostrar.
+\n
+\n b) A través dunha app \"normal\" como <a href="http://osmand.net/">OsmAnd</a> ou <a href="https://maps.me/">MAPS.ME</a>. Estas apps deben soportar o formato de ficheiros KMZ (só localización e marcas de tempo). De feito, unha app precisa soportar <i>ACTION_VIEW</i> con MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_storage_pictures_title">¿De que xeito garda OpenTracks as fotos tomadas como marcadores?</string>
-    <string name="help_storage_pictures_content">Gárdanse no almacenaxe interno da app (só accesible desde OpenTracks)</string>
+    <string name="help_storage_pictures_content">Gárdanse no almacenaxe interno da app (só accesible desde OpenTracks).</string>
     <string name="help_track_export_title">¿De que xeito exporto/importo as rutas gravadas?</string>
-    <string name="help_track_export_content">
-As rutas pódense exportar desde os Axustes como KMZ, KML ou GPX.
-KMZ/KML inclúe todos os datos; GPX só localización.
-As ruts compartidas a través da <i>icona compartir</i> compártense como KMZ.</string>
+    <string name="help_track_export_content"> As rutas pódense exportar desde os Axustes como KMZ, KML ou GPX. KMZ/KML inclúe todos os datos; GPX só localización. As ruts compartidas a través da <i>icona compartir</i> compártense como KMZ. </string>
     <string name="help_data_google_play_services_title">¿OpenTracks precisa/utiliza Google Play Service?</string>
     <string name="help_recording_title">¿Como grava OpenTracks os datos?</string>
     <string name="help_recording_content">
@@ -62,24 +53,22 @@ Os datos dos sensores gárdanse asociados a localización.
 Respecto do ritmo cardíaco, significa que só se garda <i>unha medida</i> asociada a unha localización.
 Se te detés ou estás en interiores, non se gardarán datos do sensor (mais serán mostrados). </string>
     <string name="help_gps_troubleshooting_title">¿OpenTracks non grava as localizacións?</string>
-    <string name="help_gps_troubleshooting_content">
-Podes intentar:\n
-a) mira que o GPS esté activado,\n
-b) mellora a recepción GPS (ex. sae ao exterior),\n
-c) comprobaa coa app <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, e\n
-d) desactiva o aforro de enerxía.\n
+    <string name="help_gps_troubleshooting_content"> Podes intentar:
+\n a) mira que o GPS esté activado,
+\n b) mellora a recepción GPS (ex. sae ao exterior),
+\n c) comprobaa coa app <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, e
+\n d) desactiva o aforro de enerxía.
 \n
-Se isto non axuda, infórmanos do problema.</string>
+\n Se isto non axuda, infórmanos do problema. </string>
     <string name="help_support_title">¿Como podo axudar a OpenTracks?</string>
-    <string name="help_support_content">
-Podes:\n
-a) falar de OpenTracks coas túas amizades,\n
-b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propoñer novas funcións</a>,\n
-c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">informar de fallos</a>,\n
-d) axudar no desenvolvemento,\n
-e) mercar a app na <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n
-f) facer unha doazón, e\n
-g) calquera cousa que estimes axuda a OpenTracks.</string>
+    <string name="help_support_content"> Podes:
+\n a) falar de OpenTracks coas túas amizades,
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propoñer novas funcións</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">informar de fallos</a>,
+\n d) axudar no desenvolvemento,
+\n e) mercar a app na <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\n f) facer unha doazón, e
+\n g) calquera cousa que estimes axuda a OpenTracks. </string>
     <string name="open_track_using_dashboard">Abrir usando OpenTracks-Dashboard</string>
     <string name="open_track_as_KMZ">Abrir como KMZ</string>
     <string name="open_track_as_GPX">Abrir como GPX</string>
@@ -305,7 +294,7 @@ g) calquera cousa que estimes axuda a OpenTracks.</string>
     <string name="app_name">OpenTracks</string>
     <string name="recording_service">Servizo de gravación</string>
     <!-- Permission -->
-    <string name="permission_gps_failed">OpenTracks precisa permiso para usar o GPS</string>
+    <string name="permission_gps_failed">OpenTracks precisa permiso para usar o GPS.</string>
     <!-- Search -->
     <string name="search_global_description">Traxectos e marcadores</string>
     <string name="search_list_empty_message">Non hai traxectos ou marcadores que coincidan coa túa busca</string>
@@ -321,7 +310,7 @@ g) calquera cousa que estimes axuda a OpenTracks.</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_not_known">Sensor %1$s descoñecido. Comproba os axustes.</string>
     <string name="sensor_could_not_scan">Non se escanearon dispositivos Bluetooth (fallo %1$i).</string>
-    <string name="bluetooth_disabled">Activa o Bluetooth</string>
+    <string name="bluetooth_disabled">Activa o Bluetooth.</string>
     <string name="settings_not_while_recording">Non dispoñible durante a gravación dunha ruta</string>
     <string name="settings_show">Mostrar</string>
     <!-- Settings Advanced -->
@@ -354,7 +343,7 @@ g) calquera cousa que estimes axuda a OpenTracks.</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Data (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Data (local)</string>
     <string name="settings_recording_track_name_number_option">Número</string>
-    <string name="settings_recording_track_name_title">Nome de ruta predeterm.</string>
+    <string name="settings_recording_track_name_title">Nome da ruta por omisión</string>
     <!-- Settings Reset -->
     <string name="settings_reset">Restablecer</string>
     <string name="settings_reset_confirm_message">Toda a configuración volverá aos valores predeterminados.</string>
@@ -376,7 +365,9 @@ g) calquera cousa que estimes axuda a OpenTracks.</string>
     <string name="settings_stats_units_title">Unidades preferidas</string>
     <!-- Share Track -->
     <string name="share_track_share_file">Compartir ficheiro de traxecto</string>
-    <string name="share_track_share_file_body">Creo que che pode interesar este traxecto.\n\nPara velo, utiliza Google Earth ou outro programa de mapas.\n\n%1$s</string>
+    <string name="share_track_share_file_body">Creo que che pode interesar esta ruta.
+\n
+\n%1$s</string>
     <string name="share_track_subject">Gustaríame compartir un traxecto contigo</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Ritmo de desprazamento medio</string>
@@ -566,8 +557,8 @@ g) calquera cousa que estimes axuda a OpenTracks.</string>
     <!-- Share image -->
     <string name="share_image_subject">Quixera compartir unha imaxe contigo</string>
     <string name="share_image_body">Creo que che podería gustar esta imaxe.</string>
-    <string name="hold_to_stop">Mantén preso para deixar de gravar</string>
-    <string name="hold_to_pause">Mantén preso para pausar a gravación</string>
+    <string name="hold_to_stop">Mantén preso para deter</string>
+    <string name="hold_to_pause">Mantén preso para pausar</string>
     <string name="export_all_do_it_for_all">facelo para todos os conflitos</string>
     <string name="export_track_errors">Rutas non exportadas</string>
     <string name="generic_skip">Omitir</string>
@@ -610,4 +601,5 @@ g) calquera cousa que estimes axuda a OpenTracks.</string>
     <string name="voice_speed_lap">Velocidade da volta de %1$s</string>
     <string name="toast_message_instant_track_was_exported">Última ruta exportada</string>
     <string name="instant_export_enabled_summary">Rematou a exportación da ruta á almacenaxe tras a gravación</string>
+    <string name="import_thread_interrupted">Fío interrumpido</string>
 </resources>
