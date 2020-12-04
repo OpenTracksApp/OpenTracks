@@ -154,7 +154,7 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
                 activityPreferenceDialog = ActivityTypePreference.ActivityPreferenceDialog.newInstance(preference.getKey());
                 dialogFragment = activityPreferenceDialog;
             } else if (preference instanceof BluetoothLeHeartRatePreference) {
-                dialogFragment = BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(preference.getKey(), BluetoothUtils.HEART_RATE_SERVICE_UUID);
+                dialogFragment = BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(preference.getKey(), BluetoothUtils.HEART_RATE_SUPPORTING_DEVICES);
             } else if (preference instanceof BluetoothLeCyclingCadenceAndSpeedPreference) {
                 dialogFragment = BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(preference.getKey(), BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID);
             } else if (preference instanceof BluetoothLeCyclingPowerPreference) {

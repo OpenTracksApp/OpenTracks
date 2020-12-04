@@ -23,8 +23,10 @@ import androidx.preference.DialogPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.settings.BluetoothLeAdapter;
@@ -39,7 +41,7 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
 
     private static final String TAG = BluetoothLeSensorPreference.class.getSimpleName();
 
-    private static final String ARG_BLUETOOTH_UUID = "bluetoothUUID";
+    private static final String ARG_BLE_SERVICE_UUIDS = "bluetoothUUID";
 
     private static final int DEVICE_NONE_RESOURCEID = R.string.value_none;
 
@@ -109,8 +111,9 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
 
             @Override
             public void onBatchScanResults(List<ScanResult> results) {
-                for (ScanResult scanResult : results) {
-                    listAdapter.add(scanResult.getDevice());
+                for (ScanResult result : results) {
+                    Log.d(TAG, "Found device " + result.getDevice().getName() + " " + result);
+                    listAdapter.add(result.getDevice());
                 }
             }
 
@@ -124,10 +127,14 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
         };
 
         public static BluetoothLeSensorPreferenceDialog newInstance(String preferenceKey, UUID sensorUUID) {
+            return newInstance(preferenceKey, Collections.singletonList(sensorUUID));
+        }
+
+        public static BluetoothLeSensorPreferenceDialog newInstance(String preferenceKey, List<UUID> sensorUUIDs) {
             final BluetoothLeSensorPreferenceDialog fragment = new BluetoothLeSensorPreferenceDialog();
             final Bundle b = new Bundle(1);
             b.putString(ARG_KEY, preferenceKey);
-            b.putSerializable(ARG_BLUETOOTH_UUID, sensorUUID);
+            b.putParcelableArrayList(ARG_BLE_SERVICE_UUIDS, new ArrayList<>(sensorUUIDs.stream().map(ParcelUuid::new).collect(Collectors.toList())));
             fragment.setArguments(b);
             return fragment;
         }
@@ -136,8 +143,7 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
-            UUID sensorUUID = (UUID) getArguments().getSerializable(ARG_BLUETOOTH_UUID);
-            Log.i(TAG, "UUID: " + sensorUUID);
+            List<ParcelUuid> serviceUUIDs = getArguments().getParcelableArrayList(ARG_BLE_SERVICE_UUIDS);
 
             BluetoothAdapter bluetoothAdapter = BluetoothUtils.getAdapter(getContext());
             if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
@@ -148,7 +154,7 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
             }
 
             if (bluetoothAdapter.isDiscovering()) {
-                Log.i(TAG, "Cancelling ongoing B<aluetooth discovery.");
+                Log.i(TAG, "Cancelling ongoing Bluetooth discovery.");
                 bluetoothAdapter.cancelDiscovery();
             }
 
@@ -170,9 +176,7 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
                 selectedEntryIndex = 1;
             }
 
-            ScanFilter.Builder scanFilterBuilder = new ScanFilter.Builder().setServiceUuid(new ParcelUuid(sensorUUID));
-            List<ScanFilter> scanFilter = new ArrayList<>();
-            scanFilter.add(scanFilterBuilder.build());
+            List<ScanFilter> scanFilter = serviceUUIDs.stream().map(it -> new ScanFilter.Builder().setServiceUuid(it).build()).collect(Collectors.toList());
 
             ScanSettings.Builder scanSettingsBuilder = new ScanSettings.Builder();
             scanSettingsBuilder.setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY);
