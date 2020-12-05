@@ -53,7 +53,7 @@ public class KmzTrackExporter implements TrackExporter {
     private final FileTrackExporter fileTrackExporter;
 
     private final boolean exportPhotos;
-    private Context context;
+    private final Context context;
 
     /**
      * Constructor.

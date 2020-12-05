@@ -12,7 +12,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 
 public class HandlerServer {
 
-    private static String TAG = HandlerServer.class.getSimpleName();
+    private static final String TAG = HandlerServer.class.getSimpleName();
 
     private final LocationHandler locationHandler;
     private final HandlerServerInterface service;

@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -161,12 +162,12 @@ public class ImportActivity extends FragmentActivity {
             viewBinding.importProgressLeftButton.setVisibility(View.VISIBLE);
             viewBinding.importProgressLeftButton.setText(getString(R.string.generic_show_errors));
             viewBinding.importProgressLeftButton.setOnClickListener((view) -> ErrorListDialog.showDialog(getSupportFragmentManager(), getString(R.string.import_error_list_dialog_title), summary.getFileErrors()));
-            viewBinding.importProgressAlertIcon.setImageDrawable(getDrawable(R.drawable.ic_report_problem_24));
+            viewBinding.importProgressAlertIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_report_problem_24));
             String msg = getResources().getQuantityString(R.plurals.generic_completed_with_errors, summary.getErrorCount(), summary.getErrorCount());
             viewBinding.importProgressAlertMsg.setText(msg);
         } else {
             viewBinding.importProgressLeftButton.setVisibility(View.GONE);
-            viewBinding.importProgressAlertIcon.setImageDrawable(getDrawable(R.drawable.ic_dialog_success_24dp));
+            viewBinding.importProgressAlertIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_dialog_success_24dp));
             viewBinding.importProgressAlertMsg.setText(getString(R.string.generic_completed));
         }
     }

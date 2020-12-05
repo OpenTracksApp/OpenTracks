@@ -63,12 +63,12 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
 
     private boolean trackStarted = false;
     private String extendedDataType;
-    private ArrayList<TrackPoint> trackPoints = new ArrayList<>();
-    private ArrayList<Float> speedList = new ArrayList<>();
-    private ArrayList<Float> cadenceList = new ArrayList<>();
-    private ArrayList<Float> heartRateList = new ArrayList<>();
-    private ArrayList<Float> powerList = new ArrayList<>();
-    private ArrayList<Float> elevationGainList = new ArrayList<>();
+    private final ArrayList<TrackPoint> trackPoints = new ArrayList<>();
+    private final ArrayList<Float> speedList = new ArrayList<>();
+    private final ArrayList<Float> cadenceList = new ArrayList<>();
+    private final ArrayList<Float> heartRateList = new ArrayList<>();
+    private final ArrayList<Float> powerList = new ArrayList<>();
+    private final ArrayList<Float> elevationGainList = new ArrayList<>();
 
     public KmlFileTrackImporter(Context context) {
         this(context, new ContentProviderUtils(context));

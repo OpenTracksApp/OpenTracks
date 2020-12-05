@@ -8,7 +8,7 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 public class IntervalStatistics {
-    private List<Interval> intervalList = new ArrayList<>();
+    private final List<Interval> intervalList = new ArrayList<>();
     private float distanceInterval_m;
 
     /**

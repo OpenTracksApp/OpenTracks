@@ -360,7 +360,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         public boolean resolve() {
             if (autoConflict == CONFLICT_NONE) {
                 Track track = contentProviderUtils.getTrack(trackId);
-                viewBinding.exportProgressAlertIcon.setImageDrawable(getDrawable(R.drawable.ic_report_problem_24));
+                viewBinding.exportProgressAlertIcon.setImageDrawable(ContextCompat.getDrawable(ExportActivity.this, R.drawable.ic_report_problem_24));
                 viewBinding.exportProgressAlertMsg.setText(getString(R.string.export_track_already_exists_msg, track.getName()));
                 setConflictVisibility(View.VISIBLE);
                 return false;

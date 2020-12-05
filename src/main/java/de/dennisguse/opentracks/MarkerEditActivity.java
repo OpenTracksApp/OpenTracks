@@ -73,7 +73,7 @@ public class MarkerEditActivity extends AbstractActivity {
 
     private Uri photoUri;
     private Uri photoUriOriginal;
-    private List<Uri> photoUriDeleteList = new ArrayList<>();
+    private final List<Uri> photoUriDeleteList = new ArrayList<>();
     private boolean hasCamera;
 
     private boolean isNewMarker;

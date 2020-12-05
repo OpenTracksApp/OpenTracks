@@ -25,7 +25,7 @@ class GpsStatus {
 
     private GpsStatusValue gpsStatus = GpsStatusValue.GPS_NONE;
     private GpsStatusListener client;
-    private Context context;
+    private final Context context;
 
     // Last location. It can be null.
     private Location lastLocation = null;
@@ -51,7 +51,7 @@ class GpsStatus {
         }
     }
 
-    private Handler gpsStatusHandler;
+    private final Handler gpsStatusHandler;
     private GpsStatusRunner gpsStatusRunner = null;
 
     /**

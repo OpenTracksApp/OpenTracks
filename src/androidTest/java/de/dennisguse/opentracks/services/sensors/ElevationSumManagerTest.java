@@ -9,7 +9,7 @@ import org.junit.Test;
  */
 public class ElevationSumManagerTest {
 
-    private ElevationSumManager elevationSumManager = new ElevationSumManager();
+    private final ElevationSumManager elevationSumManager = new ElevationSumManager();
 
     private static void addSensorValue(ElevationSumManager elevationSumManager, float[] values) {
         for (float f : values) {

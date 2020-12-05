@@ -27,7 +27,7 @@ cp "$CHANGELOG_DIR/next_release.txt" "$CHANGELOG_FILE"
 sed -i "s/(versionName)/$VERSIONNAME/" "$CHANGELOG_FILE"
 
 echo -e "\nGit commit since last release\n------------"
-git log $(git describe --tags --abbrev=0)..HEAD --no-merges --oneline
+git log "$(git describe --tags --abbrev=0)..HEAD" --no-merges --oneline
 
 echo -e "\nPlease edit the changelog for the new release"
 gedit -w "$CHANGELOG_FILE"
