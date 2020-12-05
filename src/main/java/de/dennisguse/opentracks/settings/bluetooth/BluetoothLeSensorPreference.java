@@ -8,8 +8,6 @@ import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.Animatable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.text.TextUtils;
@@ -18,9 +16,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.preference.DialogPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -96,6 +94,8 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
 
     public static class BluetoothLeSensorPreferenceDialog extends PreferenceDialogFragmentCompat {
 
+        private AnimatedVectorDrawableCompat bluetoothIcon;
+
         private int selectedEntryIndex;
         private final BluetoothLeAdapter listAdapter = new BluetoothLeAdapter();
 
@@ -144,6 +144,11 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
             super.onCreate(savedInstanceState);
 
             List<ParcelUuid> serviceUUIDs = getArguments().getParcelableArrayList(ARG_BLE_SERVICE_UUIDS);
+
+            // Don't know why: need to load the drawable _twice_, so that animation is actually started.
+            bluetoothIcon = AnimatedVectorDrawableCompat.create(getContext(), R.drawable.ic_bluetooth_searching_animated_24dp);
+            bluetoothIcon = AnimatedVectorDrawableCompat.create(getContext(), R.drawable.ic_bluetooth_searching_animated_24dp);
+            bluetoothIcon.start();
 
             BluetoothAdapter bluetoothAdapter = BluetoothUtils.getAdapter(getContext());
             if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
@@ -197,9 +202,7 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
                         dialog.dismiss();
                     });
 
-            Drawable icon = ContextCompat.getDrawable(getContext(), R.drawable.ic_bluetooth_searching_animated_24dp);
-            ((Animatable) icon).start();
-            builder.setIcon(icon);
+            builder.setIcon(bluetoothIcon);
 
             builder.setPositiveButton(null, null);
         }
@@ -217,6 +220,13 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
                     preference.setValue(value);
                 }
             }
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            bluetoothIcon = null;
+            scanner = null;
         }
     }
 }
