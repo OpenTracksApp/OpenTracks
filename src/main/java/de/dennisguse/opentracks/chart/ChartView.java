@@ -118,14 +118,6 @@ public class ChartView extends View {
     private boolean reportSpeed = true;
     private boolean showPointer = false;
 
-    // To handle disallow intercept touch event in parent.
-    private static final int SCROLL_X_NONE = 0;
-    private static final int SCROLL_X_LEFT = 1;
-    private static final int SCROLL_X_RIGHT = 2;
-    private boolean isOnLeftEdge = true;
-    private boolean isOnRightEdge = true;
-    private int scrollXDirection = SCROLL_X_NONE;
-
     private final GestureDetectorCompat detectorScrollFlingTab = new GestureDetectorCompat(getContext(), new GestureDetector.SimpleOnGestureListener() {
 
         @Override
@@ -138,14 +130,6 @@ public class ChartView extends View {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            if (distanceX < 0) {
-                scrollXDirection = SCROLL_X_LEFT;
-            } else if (distanceX > 0) {
-                scrollXDirection = SCROLL_X_RIGHT;
-            } else {
-                scrollXDirection = SCROLL_X_NONE;
-            }
-
             if (Math.abs(distanceX) > 0) {
                 int availableToScroll = effectiveWidth * (zoomLevel - 1) - getScrollX();
                 if (availableToScroll > 0) {
@@ -451,9 +435,6 @@ public class ChartView extends View {
             chartPoints.clear();
             xExtremityMonitor.reset();
             zoomLevel = 1;
-            isOnLeftEdge = true;
-            isOnRightEdge = true;
-            scrollXDirection = SCROLL_X_NONE;
             updateDimensions();
         }
     }
@@ -541,17 +522,11 @@ public class ChartView extends View {
         int scrollX = getScrollX() + deltaX;
         if (scrollX <= 0) {
             scrollX = 0;
-            isOnLeftEdge = true;
-        } else {
-            isOnLeftEdge = false;
         }
 
         int maxWidth = effectiveWidth * (zoomLevel - 1);
         if (scrollX >= maxWidth) {
             scrollX = maxWidth;
-            isOnRightEdge = true;
-        } else {
-            isOnRightEdge = false;
         }
 
         scrollTo(scrollX, 0);
@@ -579,13 +554,8 @@ public class ChartView extends View {
         boolean isZoom = detectorZoom.onTouchEvent(event);
         boolean isScrollTab = detectorScrollFlingTab.onTouchEvent(event);
 
-        if (event.getPointerCount() == 1 && ((isOnLeftEdge && scrollXDirection == SCROLL_X_LEFT) || (isOnRightEdge && scrollXDirection == SCROLL_X_RIGHT))) {
-            // Focus on view's parent.
-            requestDisallowInterceptTouchEventInParent(false);
-        } else {
-            // Focus on ChartView.
-            requestDisallowInterceptTouchEventInParent(true);
-        }
+        // ChartView handles zoom gestures (more than one pointer) and all gestures when zoomed itself
+        requestDisallowInterceptTouchEventInParent(event.getPointerCount() != 1 || zoomLevel != MIN_ZOOM_LEVEL);
 
         return isZoom || isScrollTab;
     }
