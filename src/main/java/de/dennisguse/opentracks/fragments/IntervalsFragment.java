@@ -40,7 +40,7 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     protected IntervalStatisticsAdapter.StackMode stackModeListView;
     private IntervalStatisticsModel.IntervalOption selectedInterval;
 
-    private String intervalUnit;
+    private boolean metricUnits;
     private IntervalStatisticsAdapter adapter;
     private ArrayAdapter<IntervalStatisticsModel.IntervalOption> spinnerAdapter;
 
@@ -51,7 +51,7 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
 
     protected final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
-            intervalUnit = PreferencesUtils.isMetricUnits(getContext()) ? getContext().getString(R.string.unit_kilometer) : getContext().getString(R.string.unit_mile);
+            metricUnits = PreferencesUtils.isMetricUnits(getContext());
             if (adapter != null) {
                 adapter.notifyDataSetChanged();
                 spinnerAdapter.notifyDataSetChanged();
@@ -74,7 +74,7 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
         super.onViewCreated(view, savedInstanceState);
 
         PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
-        intervalUnit = PreferencesUtils.isMetricUnits(getContext()) ? getContext().getString(R.string.unit_kilometer) : getContext().getString(R.string.unit_mile);
+        metricUnits = PreferencesUtils.isMetricUnits(getContext());
 
         viewBinding.intervalList.setEmptyView(viewBinding.intervalListEmptyView);
 
@@ -87,15 +87,17 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 TextView v = (TextView) super.getView(position, convertView, parent);
-                v.setText(v.getText() + " " + intervalUnit);
+                if (metricUnits) {
+                    v.setText(getContext().getString(R.string.value_integer_kilometer, Integer.parseInt(v.getText().toString())));
+                } else {
+                    v.setText(getContext().getString(R.string.value_integer_mile, Integer.parseInt(v.getText().toString())));
+                }
                 return v;
             }
 
             @Override
             public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                TextView v = (TextView) super.getDropDownView(position, convertView, parent);
-                v.setText(v.getText() + " " + intervalUnit);
-                return v;
+                return getView(position, convertView, parent);
             }
         };
 
@@ -149,7 +151,6 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
             return;
         }
 
-        boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
         IntervalStatistics intervalStatistics = viewModel.getIntervalStats(metricUnits, selectedInterval);
         adapter = new IntervalStatisticsAdapter(getContext(), intervalStatistics.getIntervalList(), category, stackModeListView);
         viewBinding.intervalList.setAdapter(adapter);
