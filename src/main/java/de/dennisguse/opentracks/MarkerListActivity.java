@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks;
 
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -30,11 +29,12 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
-import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
+import de.dennisguse.opentracks.adapters.MarkerResourceCursorAdapter;
+import de.dennisguse.opentracks.adapters.ScrollVisibleViews;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
@@ -44,8 +44,6 @@ import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.util.ListItemUtils;
-import de.dennisguse.opentracks.util.MarkerUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
@@ -81,7 +79,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         }
     };
     private Track track;
-    private ResourceCursorAdapter resourceCursorAdapter;
+    private MarkerResourceCursorAdapter resourceCursorAdapter;
 
     private MarkerListBinding viewBinding;
 
@@ -123,33 +121,17 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
         viewBinding.markerList.setEmptyView(viewBinding.markerListEmpty);
         viewBinding.markerList.setOnItemClickListener((parent, view, position, id) -> {
+            resourceCursorAdapter.markerInvalid(id);
             Intent intent = IntentUtils.newIntent(MarkerListActivity.this, MarkerDetailActivity.class)
                     .putExtra(MarkerDetailActivity.EXTRA_MARKER_ID, new Marker.Id(id));
             startActivity(intent);
         });
-        resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {
-            @Override
-            public void bindView(View view, Context context, Cursor cursor) {
-                int nameIndex = cursor.getColumnIndex(MarkerColumns.NAME);
-                int timeIndex = cursor.getColumnIndexOrThrow(MarkerColumns.TIME);
-                int categoryIndex = cursor.getColumnIndex(MarkerColumns.CATEGORY);
-                int descriptionIndex = cursor.getColumnIndex(MarkerColumns.DESCRIPTION);
-                int photoUrlIndex = cursor.getColumnIndex(MarkerColumns.PHOTOURL);
 
-                int iconId = MarkerUtils.ICON_ID;
-                String name = cursor.getString(nameIndex);
-                long time = cursor.getLong(timeIndex);
-                String category = cursor.getString(categoryIndex);
-                String description = cursor.getString(descriptionIndex);
-                String photoUrl = cursor.getString(photoUrlIndex);
-
-                ListItemUtils.setListItem(MarkerListActivity.this, view, false, true, iconId, R.string.image_marker, name, null, null, 0, time, false, category, description, photoUrl);
-            }
-        };
+        resourceCursorAdapter = new MarkerResourceCursorAdapter(this, R.layout.list_item);
+        ScrollVisibleViews scrollVisibleViews = new ScrollVisibleViews(resourceCursorAdapter);
+        viewBinding.markerList.setOnScrollListener(scrollVisibleViews);
         viewBinding.markerList.setAdapter(resourceCursorAdapter);
         ActivityUtils.configureListViewContextualMenu(viewBinding.markerList, contextualActionModeCallback);
-
-        loadData(getIntent());
     }
 
     @Override
@@ -163,12 +145,23 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     protected void onResume() {
         super.onResume();
         this.invalidateOptionsMenu();
+        loadData(getIntent());
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        resourceCursorAdapter.clear();
+        viewBinding = null;
+        resourceCursorAdapter = null;
+        contentProviderUtils = null;
+        sharedPreferences = null;
     }
 
     @Override
@@ -237,6 +230,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
         if (itemId == R.id.list_context_menu_edit) {
             if (markerIds.length == 1) {
+                resourceCursorAdapter.markerInvalid(markerIds[0].getId());
                 Intent intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
                         .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerIds[0]);
                 startActivity(intent);

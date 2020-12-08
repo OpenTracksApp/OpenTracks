@@ -36,6 +36,8 @@ limitations under the License.
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:alpha=".6"
+            android:visibility="gone"
+            tools:visibility="visible"
             android:contentDescription="@string/image_photo_marker"
             android:src="@drawable/text_gradient" />
         <!-- Table 1 -->

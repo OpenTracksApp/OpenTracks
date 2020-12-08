@@ -16,10 +16,9 @@
 
 package de.dennisguse.opentracks.util;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.format.DateUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -37,15 +36,13 @@ import de.dennisguse.opentracks.R;
  */
 public class ListItemUtils {
 
-    private static final int LIST_PREFERRED_ITEM_HEIGHT_DEFAULT = 128;
-
     private ListItemUtils() {
     }
 
     /**
      * Sets a list item.
      *
-     * @param activity                 the activity
+     * @param context                  the context
      * @param view                     the list item view
      * @param isRecording              true if recording
      * @param isPaused                 true if paused
@@ -59,23 +56,9 @@ public class ListItemUtils {
      * @param useRelativeTime          true to display relative time if appropriate
      * @param category                 the category value
      * @param description              the description value
-     * @param photoUrl                 the photo url
+     * @param hasPhoto                 true if this list item has photo
      */
-    public static void setListItem(Activity activity, View view, boolean isRecording, boolean isPaused, int iconId, int iconContentDescriptionId, String name, String totalTime, String totalDistance, int markerCount, long startTime, boolean useRelativeTime, String category, String description, String photoUrl) {
-        // Set photo
-        ImageView photo = view.findViewById(R.id.list_item_photo);
-        ImageView textGradient = view.findViewById(R.id.list_item_text_gradient);
-        boolean hasPhoto = photoUrl != null && !photoUrl.equals("");
-
-        photo.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
-        textGradient.setVisibility(hasPhoto ? View.VISIBLE : View.GONE);
-
-        if (hasPhoto) {
-            photo.getLayoutParams().height = getPhotoHeight(activity);
-            photo.setImageResource(android.R.color.transparent);
-            photo.setImageURI(Uri.parse(photoUrl));
-        }
-
+    public static void setListItem(Context context, View view, boolean isRecording, boolean isPaused, int iconId, int iconContentDescriptionId, String name, String totalTime, String totalDistance, int markerCount, long startTime, boolean useRelativeTime, String category, String description, boolean hasPhoto) {
         // Set icon
         if (isRecording) {
             iconId = isPaused ? R.drawable.ic_track_paused : R.drawable.ic_track_recording;
@@ -84,27 +67,27 @@ public class ListItemUtils {
 
         ImageView iconImageView = view.findViewById(R.id.list_item_icon);
         iconImageView.setImageResource(iconId);
-        iconImageView.setContentDescription(activity.getString(iconContentDescriptionId));
+        iconImageView.setContentDescription(context.getString(iconContentDescriptionId));
 
         // Set name
         TextView nameTextView = view.findViewById(R.id.list_item_name);
-        setTextView(activity, nameTextView, name, hasPhoto);
+        setTextView(context, nameTextView, name, hasPhoto);
 
         // Set totalTime/totalDistance
         TextView timeDistanceTextView = view.findViewById(R.id.list_item_time_distance);
         String timeDistanceText;
         if (isRecording) {
-            timeDistanceTextView.setTextColor(activity.getResources().getColor(isPaused ? android.R.color.white : R.color.recording_text));
-            timeDistanceText = activity.getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
+            timeDistanceTextView.setTextColor(context.getResources().getColor(isPaused ? android.R.color.white : R.color.recording_text));
+            timeDistanceText = context.getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
         } else {
             // Match list_item_time_distance in list_item.xml
-            timeDistanceTextView.setTextAppearance(activity, R.style.TextSmall);
+            timeDistanceTextView.setTextAppearance(context, R.style.TextSmall);
             timeDistanceText = getTimeDistance(totalTime, totalDistance);
             if (markerCount > 0) {
                 timeDistanceText += "  \u2027";
             }
         }
-        setTextView(activity, timeDistanceTextView, timeDistanceText, hasPhoto);
+        setTextView(context, timeDistanceTextView, timeDistanceText, hasPhoto);
 
         // Set markerCount
         ImageView markerCountIcon = view.findViewById(R.id.list_item_marker_count_icon);
@@ -119,15 +102,15 @@ public class ListItemUtils {
             layoutParams.width = lineHeight;
             layoutParams.height = lineHeight;
         }
-        setTextView(activity, markerCountTextView, markerCountValue, hasPhoto);
+        setTextView(context, markerCountTextView, markerCountValue, hasPhoto);
 
         // Set date/time
-        String[] dateTime = getDateTime(isRecording, activity, startTime, useRelativeTime);
+        String[] dateTime = getDateTime(isRecording, context, startTime, useRelativeTime);
         TextView dateTextView = view.findViewById(R.id.list_item_date);
-        setTextView(activity, dateTextView, dateTime[0], hasPhoto);
+        setTextView(context, dateTextView, dateTime[0], hasPhoto);
 
         TextView timeTextView = view.findViewById(R.id.list_item_time);
-        setTextView(activity, timeTextView, dateTime[1], hasPhoto);
+        setTextView(context, timeTextView, dateTime[1], hasPhoto);
 
         // Set category and description
         TextView categoryDescriptionTextView = view.findViewById(R.id.list_item_category_description);
@@ -135,20 +118,55 @@ public class ListItemUtils {
 
         // Place categoryDescription in either ownerTimeDistanceTextView or categoryDescriptionTextView
         if (timeDistanceTextView.getVisibility() == View.GONE && markerCountIcon.getVisibility() == View.GONE) {
-            setTextView(activity, categoryDescriptionTextView, null, hasPhoto);
+            setTextView(context, categoryDescriptionTextView, null, hasPhoto);
             // Match list_item_category_description in list_item.xml
             timeDistanceTextView.setSingleLine(false);
             timeDistanceTextView.setMaxLines(2);
-            setTextView(activity, timeDistanceTextView, categoryDescription, hasPhoto);
+            setTextView(context, timeDistanceTextView, categoryDescription, hasPhoto);
         } else {
             // Match list_item_time_distance in list_item.xml
             timeDistanceTextView.setSingleLine(true);
-            setTextView(activity, categoryDescriptionTextView, categoryDescription, hasPhoto);
+            setTextView(context, categoryDescriptionTextView, categoryDescription, hasPhoto);
         }
 
         // Adjust iconImageView layout gravity
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iconImageView.getLayoutParams();
         params.gravity = timeDistanceTextView.getVisibility() == View.GONE && markerCountIcon.getVisibility() == View.GONE ? Gravity.TOP : Gravity.CENTER_VERTICAL;
+    }
+
+    private static Bitmap decodeSampledBitmapFromResource(String photoUrl, int reqWidth, int reqHeight) {
+        // First decode with inJustDecodeBounds=true to check dimensions
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(photoUrl, options);
+
+        // Calculate inSampleSize
+        options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight);
+
+        // Decode bitmap with inSampleSize set
+        options.inJustDecodeBounds = false;
+        return BitmapFactory.decodeFile(photoUrl, options);
+    }
+
+    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight
+                    && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
 
     /**
@@ -219,18 +237,5 @@ public class ListItemUtils {
         } else {
             textView.setShadowLayer(0, 0, 0, 0);
         }
-    }
-
-    /**
-     * Gets the photo height.
-     *
-     * @param context the context
-     */
-    private static int getPhotoHeight(Context context) {
-        int[] attrs = new int[]{android.R.attr.listPreferredItemHeight};
-        TypedArray typeArray = context.obtainStyledAttributes(attrs);
-        int height = typeArray.getDimensionPixelSize(0, LIST_PREFERRED_ITEM_HEIGHT_DEFAULT);
-        typeArray.recycle();
-        return 2 * height;
     }
 }
