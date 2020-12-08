@@ -233,7 +233,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
                 ListItemUtils.setListItem(TrackListActivity.this, view, isRecording, recordingTrackPaused,
                         iconId, R.string.image_track, name, totalTime, totalDistance, markerCount,
-                        startTime, true, category, description, null);
+                        startTime, true, category, description, false);
             }
         };
         viewBinding.trackList.setAdapter(resourceCursorAdapter);
