@@ -1,0 +1,10 @@
+v3.14.0: OpenTracks
+
+Changes:
+- Properly support for right-to-left
+- Import: faster cleanup after import failure
+- Text in charts scales according to Android settings
+- Heart rate: support for Huami devices (requires Gadgetbridge)
+
+Developer:
+- Import is now handled in-memory
