@@ -278,34 +278,41 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()) {
-            case R.id.track_detail_insert_marker:
-                intent = IntentUtils
-                        .newIntent(this, MarkerEditActivity.class)
-                        .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
-                startActivity(intent);
-                return true;
-            case R.id.track_detail_menu_show_on_map:
-                IntentDashboardUtils.startDashboard(this, true, trackId);
-                return true;
-            case R.id.track_detail_markers:
-                intent = IntentUtils.newIntent(this, MarkerListActivity.class)
-                        .putExtra(MarkerListActivity.EXTRA_TRACK_ID, trackId);
-                startActivity(intent);
-                return true;
-            case R.id.track_detail_edit:
-                intent = IntentUtils.newIntent(this, TrackEditActivity.class)
-                        .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
-                startActivity(intent);
-                return true;
-            case R.id.track_detail_settings:
-                intent = IntentUtils.newIntent(this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.track_detail_insert_marker) {
+            Intent intent = IntentUtils
+                    .newIntent(this, MarkerEditActivity.class)
+                    .putExtra(MarkerEditActivity.EXTRA_TRACK_ID, trackId);
+            startActivity(intent);
+            return true;
         }
+
+        if (item.getItemId() == R.id.track_detail_menu_show_on_map) {
+            IntentDashboardUtils.startDashboard(this, true, trackId);
+            return true;
+        }
+
+        if (item.getItemId() == R.id.track_detail_markers) {
+            Intent intent = IntentUtils.newIntent(this, MarkerListActivity.class)
+                    .putExtra(MarkerListActivity.EXTRA_TRACK_ID, trackId);
+            startActivity(intent);
+            return true;
+
+        }
+
+        if (item.getItemId() == R.id.track_detail_edit) {
+            Intent intent = IntentUtils.newIntent(this, TrackEditActivity.class)
+                    .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
+            startActivity(intent);
+            return true;
+        }
+
+        if (item.getItemId() == R.id.track_detail_settings) {
+            Intent intent = IntentUtils.newIntent(this, SettingsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     /**

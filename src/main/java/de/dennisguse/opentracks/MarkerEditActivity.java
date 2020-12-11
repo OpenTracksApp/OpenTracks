@@ -227,16 +227,17 @@ public class MarkerEditActivity extends AbstractActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.marker_edit_insert_photo:
-                createMarkerWithPicture();
-                return true;
-            case R.id.marker_edit_insert_gallery_img:
-                createMarkerWithGalleryImage();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.marker_edit_insert_photo) {
+            createMarkerWithPicture();
+            return true;
         }
+
+        if (item.getItemId() == R.id.marker_edit_insert_gallery_img) {
+            createMarkerWithGalleryImage();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -252,7 +253,7 @@ public class MarkerEditActivity extends AbstractActivity {
             if (resultCode == RESULT_CANCELED) {
                 Toast.makeText(this, R.string.marker_add_photo_canceled, Toast.LENGTH_LONG).show();
                 return;
-            } else if (resultCode == RESULT_OK)  {
+            } else if (resultCode == RESULT_OK) {
                 Uri srcUri = data.getData();
                 try (ParcelFileDescriptor parcelFd = getContentResolver().openFileDescriptor(srcUri, "r")) {
                     FileDescriptor srcFd = parcelFd.getFileDescriptor();
@@ -261,7 +262,7 @@ public class MarkerEditActivity extends AbstractActivity {
 
                     photoUri = FileUtils.getUriForFile(this, dstFile);
                     setMarkerImageView(photoUri);
-                } catch(Exception e) {
+                } catch (Exception e) {
                     Log.e(TAG, e.getMessage());
                     Toast.makeText(this, R.string.marker_add_canceled, Toast.LENGTH_LONG).show();
                     return;
@@ -273,7 +274,7 @@ public class MarkerEditActivity extends AbstractActivity {
 
     /**
      * Checks and hide/shows all buttons/options about marker photo options.
-     *
+     * <p>
      * If a photo is set then one's options are shown, otherwise another ones are shown.
      */
     private void hideAndShowOptions() {

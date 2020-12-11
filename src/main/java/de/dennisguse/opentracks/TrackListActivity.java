@@ -320,43 +320,45 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()) {
-            case R.id.track_list_start_gps:
-                LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-                if (locationManager != null && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                    intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                    startActivity(intent);
+        if (item.getItemId() == R.id.track_list_start_gps) {
+            LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+            if (locationManager != null && !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            } else {
+                // Invoke trackRecordingService
+                if (!isGpsStarted()) {
+                    trackRecordingServiceConnection.startAndBind(this);
+                    bindChangedCallback.run();
                 } else {
-                    // Invoke trackRecordingService
-                    if (!isGpsStarted()) {
-                        trackRecordingServiceConnection.startAndBind(this);
-                        bindChangedCallback.run();
-                    } else {
-                        TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
-                        if (trackRecordingService != null) {
-                            trackRecordingService.stopGps();
-                        }
-                        trackRecordingServiceConnection.unbindAndStop(this);
+                    TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+                    if (trackRecordingService != null) {
+                        trackRecordingService.stopGps();
                     }
-
-                    // Update menu after starting or stopping gps
-                    this.invalidateOptionsMenu();
+                    trackRecordingServiceConnection.unbindAndStop(this);
                 }
-                return true;
-            case R.id.track_list_aggregated_stats:
-                intent = IntentUtils.newIntent(this, AggregatedStatisticsActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.track_list_markers:
-                intent = IntentUtils.newIntent(this, MarkerListActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.track_list_settings:
-                intent = IntentUtils.newIntent(this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
+
+                // Update menu after starting or stopping gps
+                this.invalidateOptionsMenu();
+            }
+
+            return true;
         }
+
+        if (item.getItemId() == R.id.track_list_aggregated_stats) {
+            startActivity(IntentUtils.newIntent(this, AggregatedStatisticsActivity.class));
+            return true;
+        }
+
+        if (item.getItemId() == R.id.track_list_markers) {
+            startActivity(IntentUtils.newIntent(this, MarkerListActivity.class));
+            return true;
+        }
+
+        if (item.getItemId() == R.id.track_list_settings) {
+            startActivity(IntentUtils.newIntent(this, SettingsActivity.class));
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
