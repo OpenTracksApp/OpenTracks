@@ -184,29 +184,34 @@ public class MarkerDetailFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         Marker.Id markerId = getArguments().getParcelable(KEY_MARKER_ID); //TODO Should only happen in onCreate?
         FragmentActivity fragmentActivity = getActivity();
-        Intent intent;
-        switch (item.getItemId()) {
-            case R.id.marker_detail_show_on_map:
-                IntentUtils.showCoordinateOnMap(getContext(), marker);
-                return true;
-            case R.id.marker_detail_edit:
-                intent = IntentUtils.newIntent(fragmentActivity, MarkerEditActivity.class)
-                        .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
-                startActivity(intent);
-                return true;
-            case R.id.marker_detail_share:
-                if (marker.hasPhoto()) {
-                    intent = IntentUtils.newShareImageIntent(getContext(), marker.getPhotoURI());
-                    intent = Intent.createChooser(intent, null);
-                    startActivity(intent);
-                }
-                return true;
-            case R.id.marker_detail_delete:
-                DeleteMarkerDialogFragment.showDialog(getChildFragmentManager(), markerId);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+
+        if (item.getItemId() == R.id.marker_detail_show_on_map) {
+            IntentUtils.showCoordinateOnMap(getContext(), marker);
+            return true;
         }
+
+        if (item.getItemId() == R.id.marker_detail_edit) {
+            Intent intent = IntentUtils.newIntent(fragmentActivity, MarkerEditActivity.class)
+                    .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerId);
+            startActivity(intent);
+            return true;
+        }
+
+        if (item.getItemId() == R.id.marker_detail_share) {
+            if (marker.hasPhoto()) {
+                Intent intent = IntentUtils.newShareImageIntent(getContext(), marker.getPhotoURI());
+                intent = Intent.createChooser(intent, null);
+                startActivity(intent);
+            }
+            return true;
+        }
+
+        if (item.getItemId() == R.id.marker_detail_delete) {
+            DeleteMarkerDialogFragment.showDialog(getChildFragmentManager(), markerId);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateMarker(boolean refresh) {

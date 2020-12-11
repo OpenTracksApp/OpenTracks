@@ -22,7 +22,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewParent;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -147,43 +146,51 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()) {
-            case R.id.track_detail_share:
-                intent = IntentUtils.newShareFileIntent(this, trackId);
-                intent = Intent.createChooser(intent, null);
-                startActivity(intent);
-                return true;
-            case R.id.track_detail_menu_show_on_map:
-                IntentDashboardUtils.startDashboard(this, false, trackId);
-                return true;
-            case R.id.track_detail_markers:
-                intent = IntentUtils.newIntent(this, MarkerListActivity.class)
-                        .putExtra(MarkerListActivity.EXTRA_TRACK_ID, trackId);
-                startActivity(intent);
-                return true;
-            case R.id.track_detail_edit:
-                intent = IntentUtils.newIntent(this, TrackEditActivity.class)
-                        .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
-                startActivity(intent);
-                return true;
-            case R.id.track_detail_delete:
-                deleteTracks(trackId);
-                return true;
-            case R.id.track_detail_resume_track:
-                Intent newIntent = IntentUtils.newIntent(TrackRecordedActivity.this, TrackRecordingActivity.class)
-                        .putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, trackId);
-                startActivity(newIntent);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                finish();
-                return true;
-            case R.id.track_detail_settings:
-                intent = IntentUtils.newIntent(this, SettingsActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.track_detail_share) {
+            Intent intent = Intent.createChooser(IntentUtils.newShareFileIntent(this, trackId), null);
+            startActivity(intent);
+            return true;
         }
+
+        if (item.getItemId() == R.id.track_detail_menu_show_on_map) {
+            IntentDashboardUtils.startDashboard(this, false, trackId);
+            return true;
+        }
+
+        if (item.getItemId() == R.id.track_detail_markers) {
+            Intent intent = IntentUtils.newIntent(this, MarkerListActivity.class)
+                    .putExtra(MarkerListActivity.EXTRA_TRACK_ID, trackId);
+            startActivity(intent);
+            return true;
+        }
+
+        if (item.getItemId() == R.id.track_detail_edit) {
+            Intent intent = IntentUtils.newIntent(this, TrackEditActivity.class)
+                    .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackId);
+            startActivity(intent);
+            return true;
+        }
+
+        if (item.getItemId() == R.id.track_detail_delete) {
+            deleteTracks(trackId);
+            return true;
+        }
+
+        if (item.getItemId() == R.id.track_detail_resume_track) {
+            Intent newIntent = IntentUtils.newIntent(TrackRecordedActivity.this, TrackRecordingActivity.class)
+                    .putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, trackId);
+            startActivity(newIntent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            finish();
+            return true;
+        }
+
+        if (item.getItemId() == R.id.track_detail_settings) {
+            startActivity(IntentUtils.newIntent(this, SettingsActivity.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
