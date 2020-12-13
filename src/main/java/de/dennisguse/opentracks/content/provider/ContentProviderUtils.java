@@ -203,7 +203,6 @@ public class ContentProviderUtils {
         contentResolver.delete(MarkerColumns.CONTENT_URI, MarkerColumns.TRACKID + "=?", selectionArgs);
     }
 
-    @VisibleForTesting
     public List<Track> getTracks() {
         ArrayList<Track> tracks = new ArrayList<>();
         try (Cursor cursor = getTrackCursor(null, null, TracksColumns._ID)) {
@@ -215,19 +214,6 @@ public class ContentProviderUtils {
             }
         }
         return tracks;
-    }
-
-    @Deprecated
-    //TODO Do not use; rather get the proper TrackId (e.g., resume a track might give you some weird effects).
-    @VisibleForTesting
-    public Track getLastTrack() {
-        try (Cursor cursor = getTrackCursor(null, null, TracksColumns.STARTTIME + " DESC")) {
-            // Using the same order as shown in the track list
-            if (cursor != null && cursor.moveToNext()) {
-                return createTrack(cursor);
-            }
-        }
-        return null;
     }
 
     /**

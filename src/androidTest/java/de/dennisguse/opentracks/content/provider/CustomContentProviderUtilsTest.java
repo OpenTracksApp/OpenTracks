@@ -198,7 +198,7 @@ public class CustomContentProviderUtilsTest {
         when(cursorMock.isNull(columnIndex)).thenReturn(false);
         when(cursorMock.getString(columnIndex)).thenReturn(name);
 
-        Track track = contentProviderUtils.createTrack(cursorMock);
+        Track track = ContentProviderUtils.createTrack(cursorMock);
         assertEquals(trackId, track.getId());
         assertEquals(name, track.getName());
     }
@@ -378,16 +378,6 @@ public class CustomContentProviderUtilsTest {
         // then
         assertEquals(initialTrackNumber + 1, allTracks.size());
         assertEquals(trackId, allTracks.get(allTracks.size() - 1).getId());
-    }
-
-    /**
-     * Tests the method {@link ContentProviderUtils#getLastTrack()}
-     */
-    @Test
-    public void testGetLastTrack() {
-        Track.Id trackId = new Track.Id(System.currentTimeMillis());
-        contentProviderUtils.insertTrack(TestDataUtil.createTrack(trackId));
-        assertEquals(trackId, contentProviderUtils.getLastTrack().getId());
     }
 
     /**

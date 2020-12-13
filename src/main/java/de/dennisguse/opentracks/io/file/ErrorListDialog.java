@@ -54,14 +54,14 @@ public class ErrorListDialog extends DialogFragment {
         outState.putStringArrayList(EXTRA_ERROR_LIST, errorList);
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final String[] tracks = errorList.stream().toArray(String[]::new);
+        final String[] tracks = errorList.toArray(new String[0]);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity())
                 .setTitle(title)
                 .setItems(tracks, null)
                 .setPositiveButton(R.string.generic_ok, (dialog, which) -> dismiss());
-        AlertDialog dialog = alertDialogBuilder.create();
-        return dialog;
+        return alertDialogBuilder.create();
     }
 }
