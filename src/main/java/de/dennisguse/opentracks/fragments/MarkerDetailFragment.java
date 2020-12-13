@@ -62,6 +62,8 @@ public class MarkerDetailFragment extends Fragment {
 
     private ContentProviderUtils contentProviderUtils;
     private Handler handler;
+
+    private Marker.Id markerId;
     private Marker marker;
 
     private MarkerDetailFragmentBinding viewBinding;
@@ -104,7 +106,7 @@ public class MarkerDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Marker.Id markerId = getArguments().getParcelable(KEY_MARKER_ID);
+        markerId = getArguments().getParcelable(KEY_MARKER_ID);
         if (markerId == null) {
             Log.d(TAG, "invalid marker id");
             getParentFragmentManager().popBackStack();
@@ -154,6 +156,13 @@ public class MarkerDetailFragment extends Fragment {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        markerId = null;
+        marker = null;
+    }
+
+    @Override
     public void setMenuVisibility(boolean menuVisible) {
         super.setMenuVisibility(menuVisible);
         // View pager caches the neighboring fragments in the resumed state.
@@ -182,7 +191,6 @@ public class MarkerDetailFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Marker.Id markerId = getArguments().getParcelable(KEY_MARKER_ID); //TODO Should only happen in onCreate?
         FragmentActivity fragmentActivity = getActivity();
 
         if (item.getItemId() == R.id.marker_detail_show_on_map) {
@@ -216,7 +224,7 @@ public class MarkerDetailFragment extends Fragment {
 
     private void updateMarker(boolean refresh) {
         if (refresh || marker == null) {
-            marker = contentProviderUtils.getMarker(getArguments().getParcelable(KEY_MARKER_ID)); //TODO Should only happen in onCreate?
+            marker = contentProviderUtils.getMarker(markerId);
             if (marker == null) {
                 Log.d(TAG, "marker is null");
                 getParentFragmentManager().popBackStack();
