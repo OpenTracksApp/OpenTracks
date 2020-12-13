@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.List;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -57,8 +59,7 @@ public class AggregatedStatisticsTest {
         Track track = createTrack(context, totalDistance, totalTime, biking);
 
         // when
-        AggregatedStatistics aggregatedStatistics = new AggregatedStatistics();
-        aggregatedStatistics.aggregate(track);
+        AggregatedStatistics aggregatedStatistics = new AggregatedStatistics(List.of(track));
 
         // then
         assertEquals(1, aggregatedStatistics.getCount());
@@ -80,8 +81,7 @@ public class AggregatedStatisticsTest {
         Track track = createTrack(context, totalDistance, totalTime, mountainBiking);
 
         // when
-        AggregatedStatistics aggregatedStatistics = new AggregatedStatistics();
-        aggregatedStatistics.aggregate(track);
+        AggregatedStatistics aggregatedStatistics = new AggregatedStatistics(List.of(track));
 
         // then
         assertNotNull(aggregatedStatistics.get(mountainBiking));
@@ -97,8 +97,7 @@ public class AggregatedStatisticsTest {
         Track track = createTrack(context, totalDistance, totalTime, trailRunning);
 
         // when
-        AggregatedStatistics aggregatedStatistics = new AggregatedStatistics();
-        aggregatedStatistics.aggregate(track);
+        AggregatedStatistics aggregatedStatistics = new AggregatedStatistics(List.of(track));
 
         // then
         assertNotNull(aggregatedStatistics.get(trailRunning));
@@ -111,15 +110,10 @@ public class AggregatedStatisticsTest {
         long totalDistance = 10000;
         long totalTime = 2400000;
         String biking = context.getString(R.string.activity_type_biking);
-        Track[] tracks = new Track[2];
-        for (int i = 0; i < 2; i++) {
-            tracks[i] = createTrack(context, totalDistance, totalTime, biking);
-        }
+        List<Track> tracks = List.of(createTrack(context, totalDistance, totalTime, biking), createTrack(context, totalDistance, totalTime, biking));
 
         // when
-        AggregatedStatistics aggregatedStatistics = new AggregatedStatistics();
-        aggregatedStatistics.aggregate(tracks[0]); // biking activity 1.
-        aggregatedStatistics.aggregate(tracks[1]); // biking activity 2.
+        AggregatedStatistics aggregatedStatistics = new AggregatedStatistics(tracks);
 
         // then
         assertEquals(1, aggregatedStatistics.getCount());
@@ -141,17 +135,14 @@ public class AggregatedStatisticsTest {
         String running = context.getString(R.string.activity_type_running);
         String walking = context.getString(R.string.activity_type_walking);
         long totalTime = 2400000;
-        Track[] tracks = new Track[]{
+        List<Track> tracks = List.of(
                 createTrack(context, totalDistance, totalTime, biking),
                 createTrack(context, totalDistance, totalTime, running),
                 createTrack(context, totalDistance, totalTime, walking)
-        };
+        );
 
         // when
-        AggregatedStatistics aggregatedStatistics = new AggregatedStatistics();
-        aggregatedStatistics.aggregate(tracks[0]); // biking activity 1.
-        aggregatedStatistics.aggregate(tracks[1]); // biking activity 2.
-        aggregatedStatistics.aggregate(tracks[2]); // biking activity 3.
+        AggregatedStatistics aggregatedStatistics = new AggregatedStatistics(tracks);
 
         // then
         assertEquals(3, aggregatedStatistics.getCount());
@@ -191,7 +182,7 @@ public class AggregatedStatisticsTest {
         String running = context.getString(R.string.activity_type_running);
         String walking = context.getString(R.string.activity_type_walking);
         String driving = context.getString(R.string.activity_type_driving);
-        Track[] tracks = new Track[]{
+        List<Track> tracks = List.of(
                 createTrack(context, totalDistance, totalTime, biking),
                 createTrack(context, totalDistance, totalTime, running),
                 createTrack(context, totalDistance, totalTime, walking),
@@ -201,16 +192,12 @@ public class AggregatedStatisticsTest {
                 createTrack(context, totalDistance, totalTime, biking),
                 createTrack(context, totalDistance, totalTime, biking),
                 createTrack(context, totalDistance, totalTime, biking),
-                createTrack(context, totalDistance, totalTime, driving),
-        };
+                createTrack(context, totalDistance, totalTime, driving)
+        );
 
 
         // when
-        AggregatedStatistics aggregatedStatistics = new AggregatedStatistics();
-        for (Track track : tracks) {
-            aggregatedStatistics.aggregate(track);
-
-        }
+        AggregatedStatistics aggregatedStatistics = new AggregatedStatistics(tracks);
 
         // then
         // 4 sports.
@@ -254,6 +241,13 @@ public class AggregatedStatisticsTest {
             TrackStatistics statistics2 = aggregatedStatistics.get(driving).getTrackStatistics();
             assertEquals(totalDistance, statistics2.getTotalDistance(), 0);
             assertEquals(totalTime, statistics2.getMovingTime());
+        }
+
+        // Check order
+
+        {
+            assertEquals(biking, aggregatedStatistics.getItem(0).getCategory());
+            assertEquals(driving, aggregatedStatistics.getItem(3).getCategory());
         }
     }
 }

@@ -33,8 +33,7 @@ public class AggregatedStatisticsModel extends AndroidViewModel {
             ContentProviderUtils contentProviderUtils = new ContentProviderUtils(getApplication().getApplicationContext());
             List<Track> tracks = contentProviderUtils.getTracks();
 
-            AggregatedStatistics aggregatedStatistics = new AggregatedStatistics();
-            aggregatedStatistics.aggregate(tracks);
+            AggregatedStatistics aggregatedStatistics = new AggregatedStatistics(tracks);
 
             aggregatedStats.postValue(aggregatedStatistics);
         }).start();

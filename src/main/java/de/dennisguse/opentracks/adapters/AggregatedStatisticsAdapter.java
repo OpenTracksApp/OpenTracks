@@ -62,17 +62,17 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
     }
 
     private boolean isSpeedSport(int position) {
-        String category = aggregatedStatistics.getSportName(position);
+        String category = aggregatedStatistics.getCategory(position);
         return TrackIconUtils.isSpeedIcon(context, category);
     }
 
     private int getIcon(int position) {
-        String iconValue = TrackIconUtils.getIconValue(context, aggregatedStatistics.getSportName(position));
+        String iconValue = TrackIconUtils.getIconValue(context, aggregatedStatistics.getCategory(position));
         return TrackIconUtils.getIconDrawable(iconValue);
     }
 
     private String getName(int position) {
-        return aggregatedStatistics.getSportName(position);
+        return aggregatedStatistics.getCategory(position);
     }
 
     private class ViewHolder {
