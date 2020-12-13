@@ -87,19 +87,19 @@ public class TestDataUtil {
     }
 
     /**
-     * Creates a Waypoint with a photo.
+     * Creates a Marker with a photo.
      *
      * @param context  The context.
      * @param trackId  The track id.
      * @param location The location.
-     * @return the Waypoint created.
+     * @return the Marker created.
      */
-    public static Marker createWaypointWithPhoto(Context context, Track.Id trackId, Location location) throws IOException {
+    public static Marker createMarkerWithPhoto(Context context, Track.Id trackId, Location location) throws IOException {
         File dstFile = new File(FileUtils.getImageUrl(context, trackId));
         dstFile.createNewFile();
         Uri photoUri = FileUtils.getUriForFile(context, dstFile);
         String photoUrl = photoUri.toString();
 
-        return new Marker("Waypoint name", "Waypoint description", "Waypoint category", "", trackId, 0.0, 0, location, photoUrl);
+        return new Marker("Marker name", "Marker description", "Marker category", "", trackId, 0.0, 0, location, photoUrl);
     }
 }

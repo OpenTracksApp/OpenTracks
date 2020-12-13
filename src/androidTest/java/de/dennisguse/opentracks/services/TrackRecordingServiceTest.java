@@ -138,7 +138,7 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
-    public void testRecording_noTracks() throws Exception {
+    public void testRecording_noTracks() throws TimeoutException {
         // given
         List<Track> tracks = contentProviderUtils.getTracks();
         assertTrue(tracks.isEmpty());
@@ -156,7 +156,7 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
-    public void testRecording_oldTracks() throws Exception {
+    public void testRecording_oldTracks() throws TimeoutException {
         // given
         createDummyTrack(trackId, -1L, false);
 
@@ -170,7 +170,7 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
-    public void testRecording_serviceRestart_whileRecording() throws Exception {
+    public void testRecording_serviceRestart_whileRecording() throws TimeoutException {
         // given
         createDummyTrack(trackId, -1L, true);
 
@@ -183,7 +183,7 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
-    public void testRecording_pauseAndResume() throws Exception {
+    public void testRecording_pauseAndResume() throws TimeoutException, InterruptedException {
         // given
         createDummyTrack(trackId, -1L, true);
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
@@ -212,7 +212,7 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
-    public void testRecording_resumeStoppedTrack() throws Exception {
+    public void testRecording_resumeStoppedTrack() throws TimeoutException, InterruptedException {
         // given
         createDummyTrack(trackId, -1L, true);
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
@@ -238,7 +238,7 @@ public class TrackRecordingServiceTest {
     @Ignore("Sometimes fails on CI.")
     @MediumTest
     @Test
-    public void testRecording_orphanedRecordingTrack() throws Exception {
+    public void testRecording_orphanedRecordingTrack() throws TimeoutException {
         // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
 
@@ -254,7 +254,7 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
-    public void testStartNewTrack_alreadyRecording() throws Exception {
+    public void testStartNewTrack_alreadyRecording() throws TimeoutException {
         // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         service.startNewTrack();
@@ -274,7 +274,7 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
-    public void testEndCurrentTrack_noRecording() throws Exception {
+    public void testEndCurrentTrack_noRecording() throws TimeoutException {
         // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         assertFalse(service.isRecording());
@@ -290,21 +290,21 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
-    public void testInsertWaypointMarker_noRecordingTrack() throws Exception {
+    public void testInsertWaypointMarker_noRecordingTrack() throws TimeoutException {
         // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         assertFalse(service.isRecording());
 
         // when
-        Marker.Id waypointId = service.insertMarker(null, null, null, null);
+        Marker.Id markerId = service.insertMarker(null, null, null, null);
 
         // then
-        assertNull(waypointId);
+        assertNull(markerId);
     }
 
     @MediumTest
     @Test
-    public void testInsertWaypointMarker_validWaypoint() throws Exception {
+    public void testInsertWaypointMarker_validWaypoint() throws TimeoutException, InterruptedException {
         // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         service.startNewTrack();
@@ -313,11 +313,11 @@ public class TrackRecordingServiceTest {
         Track.Id trackId = service.getRecordingTrackId();
 
         // when
-        Marker.Id waypointId = service.insertMarker(null, null, null, null);
+        Marker.Id markerId = service.insertMarker(null, null, null, null);
 
         // then
-        assertNotEquals(-1L, waypointId);
-        Marker wpt = contentProviderUtils.getMarker(waypointId);
+        assertNotEquals(-1L, markerId);
+        Marker wpt = contentProviderUtils.getMarker(markerId);
         assertEquals(context.getString(R.string.marker_icon_url), wpt.getIcon());
         assertEquals(context.getString(R.string.marker_name_format, 1), wpt.getName());
         assertEquals(trackId, wpt.getTrackId());
