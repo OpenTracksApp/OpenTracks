@@ -21,7 +21,6 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
 
     private final StackMode stackMode;
     private final boolean metricUnits;
-    private float sumDistance_m;
     private final String category;
 
     public IntervalStatisticsAdapter(Context context, List<IntervalStatistics.Interval> intervalList, String category, StackMode stackMode) {
@@ -52,6 +51,7 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
             viewHolder = (ViewHolder) intervalView.getTag();
         }
 
+        float sumDistance_m;
         if (actualPosition + 1 == getCount() && actualPosition > 0) {
             sumDistance_m = actualPosition * getItem(actualPosition - 1).getDistance_m() + interval.getDistance_m();
         } else {
