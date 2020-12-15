@@ -60,14 +60,14 @@
     <ListView
         android:id="@+id/interval_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="8dp" />
 
     <TextView
         android:id="@+id/interval_list_empty_view"
         style="@style/TextMedium"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/interval_list_empty_message" />
 
