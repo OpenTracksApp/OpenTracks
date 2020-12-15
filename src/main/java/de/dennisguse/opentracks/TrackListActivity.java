@@ -469,31 +469,37 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             trackIds[i] = new Track.Id(longTrackIds[i]);
         }
 
-        Intent intent;
-        switch (itemId) {
-            case R.id.list_context_menu_show_on_map:
-                IntentDashboardUtils.startDashboard(this, false, trackIds);
-                return true;
-            case R.id.list_context_menu_share:
-                intent = IntentUtils.newShareFileIntent(this, trackIds);
-                intent = Intent.createChooser(intent, null);
-                startActivity(intent);
-                return true;
-            case R.id.list_context_menu_edit:
-                intent = IntentUtils.newIntent(this, TrackEditActivity.class)
-                        .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackIds[0]);
-                startActivity(intent);
-                return true;
-            case R.id.list_context_menu_delete:
-                deleteTracks(trackIds);
-                return true;
-            case R.id.list_context_menu_select_all:
-                int size = viewBinding.trackList.getCount();
-                for (int i = 0; i < size; i++) {
-                    viewBinding.trackList.setItemChecked(i, true);
-                }
-                return false;
+        if (itemId == R.id.list_context_menu_show_on_map) {
+            IntentDashboardUtils.startDashboard(this, false, trackIds);
+            return true;
         }
+
+        if (itemId == R.id.list_context_menu_share) {
+            Intent intent = IntentUtils.newShareFileIntent(this, trackIds);
+            intent = Intent.createChooser(intent, null);
+            startActivity(intent);
+            return true;
+        }
+
+
+        if (itemId == R.id.list_context_menu_edit) {
+            Intent intent = IntentUtils.newIntent(this, TrackEditActivity.class)
+                    .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackIds[0]);
+            startActivity(intent);
+            return true;
+        }
+
+        if (itemId == R.id.list_context_menu_delete) {
+            deleteTracks(trackIds);
+            return true;
+        }
+        if (itemId == R.id.list_context_menu_select_all) {
+            for (int i = 0; i < viewBinding.trackList.getCount(); i++) {
+                viewBinding.trackList.setItemChecked(i, true);
+            }
+            return false;
+        }
+
         return false;
     }
 

@@ -222,31 +222,35 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
             markerIds[i] = new Marker.Id(longMarkerIds[i]);
         }
 
-        Intent intent;
-        switch (itemId) {
-            case R.id.list_context_menu_show_on_map:
-                if (markerIds.length == 1) {
-                    IntentUtils.showCoordinateOnMap(this, contentProviderUtils.getMarker(markerIds[0]));
-                }
-                return true;
-            case R.id.list_context_menu_edit:
-                if (markerIds.length == 1) {
-                    intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
-                            .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerIds[0]);
-                    startActivity(intent);
-                }
-                return true;
-            case R.id.list_context_menu_delete:
-                DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), markerIds);
-                return true;
-            case R.id.list_context_menu_select_all:
-                for (int i = 0; i < viewBinding.markerList.getCount(); i++) {
-                    viewBinding.markerList.setItemChecked(i, true);
-                }
-                return false;
-            default:
-                return false;
+        if (itemId == R.id.list_context_menu_show_on_map) {
+            if (markerIds.length == 1) {
+                IntentUtils.showCoordinateOnMap(this, contentProviderUtils.getMarker(markerIds[0]));
+            }
+            return true;
         }
+
+        if (itemId == R.id.list_context_menu_edit) {
+            if (markerIds.length == 1) {
+                Intent intent = IntentUtils.newIntent(this, MarkerEditActivity.class)
+                        .putExtra(MarkerEditActivity.EXTRA_MARKER_ID, markerIds[0]);
+                startActivity(intent);
+            }
+            return true;
+        }
+
+        if (itemId == R.id.list_context_menu_delete) {
+            DeleteMarkerDialogFragment.showDialog(getSupportFragmentManager(), markerIds);
+            return true;
+        }
+
+        if (itemId == R.id.list_context_menu_select_all) {
+            for (int i = 0; i < viewBinding.markerList.getCount(); i++) {
+                viewBinding.markerList.setItemChecked(i, true);
+            }
+            return false;
+        }
+
+        return false;
     }
 
     @Override
