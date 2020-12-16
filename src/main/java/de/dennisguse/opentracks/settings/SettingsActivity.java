@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.DialogFragment;
@@ -18,6 +18,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import java.util.Locale;
 
+import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
@@ -31,7 +32,7 @@ import de.dennisguse.opentracks.util.HackUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
-public class SettingsActivity extends AppCompatActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, ResetDialogPreference.ResetCallback {
+public class SettingsActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, ResetDialogPreference.ResetCallback {
 
     private static final String TAG = SettingsActivity.class.getSimpleName();
     public static final String EXTRAS_CHECK_EXPORT_DIRECTORY = "Check Export Directory";
@@ -43,17 +44,22 @@ public class SettingsActivity extends AppCompatActivity implements ChooseActivit
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.settings);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.menu_settings);
-        setSupportActionBar(toolbar);
-
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(EXTRAS_CHECK_EXPORT_DIRECTORY)) {
             checkExportDirectory = true;
         }
         onReset();
+    }
+
+    @Override
+    protected View getRootView() {
+        return getLayoutInflater().inflate(R.layout.settings, null);
+    }
+
+    @Override
+    protected void setupActionBarBack(Toolbar toolbar) {
+        super.setupActionBarBack(toolbar);
+        toolbar.setTitle(R.string.menu_settings);
     }
 
     @Override
