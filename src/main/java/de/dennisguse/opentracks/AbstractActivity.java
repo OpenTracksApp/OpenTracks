@@ -19,6 +19,7 @@ package de.dennisguse.opentracks;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -39,8 +40,22 @@ public abstract class AbstractActivity extends AppCompatActivity {
         setContentView(getRootView());
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setupActionBarBack(toolbar);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     protected abstract View getRootView();
+
+    protected void setupActionBarBack(@Nullable Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        if (toolbar != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+    }
 }

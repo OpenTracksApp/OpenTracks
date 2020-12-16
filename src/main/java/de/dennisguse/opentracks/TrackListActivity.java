@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import androidx.loader.app.LoaderManager;
@@ -241,6 +242,12 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         loadData(getIntent());
 
         requestGPSPermissions();
+    }
+
+    @Override
+    protected void setupActionBarBack(Toolbar toolbar) {
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_logo_color_24dp);
     }
 
     @Override
