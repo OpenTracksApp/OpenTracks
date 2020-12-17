@@ -26,7 +26,6 @@ import java.util.Objects;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.stats.TrackStatistics;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * A track.
@@ -125,11 +124,6 @@ public class Track {
         //TOOD Limit visibility to TrackRecordingService / ContentProvider
         public long getId() {
             return id;
-        }
-
-        @Deprecated //TODO Use a Track.Id of null instead
-        public boolean isValid() {
-            return id != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
         }
 
         @Override

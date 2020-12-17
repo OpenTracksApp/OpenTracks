@@ -328,7 +328,7 @@ public class TrackRecordingServiceTest {
     }
 
     private void addTrack(Track track, boolean isRecording) {
-        assertTrue(track.getId().isValid());
+        assertNotNull(track.getId());
         contentProviderUtils.insertTrack(track);
         assertEquals(track.getId(), contentProviderUtils.getTrack(track.getId()).getId());
         PreferencesUtils.setLong(context, R.string.recording_track_id_key, isRecording ? track.getId().getId() : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);

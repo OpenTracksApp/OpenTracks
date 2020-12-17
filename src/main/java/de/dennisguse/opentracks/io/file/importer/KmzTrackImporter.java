@@ -153,7 +153,6 @@ public class KmzTrackImporter implements TrackImporter {
      * TODO: May load multiple tracks, but only returns the last Track.Id.
      *
      * @param inputStream kmz input stream.
-     * @return null if error or the id of the track otherwise.
      */
     private Track.Id findAndParseKmlFile(InputStream inputStream) {
         try (ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
@@ -198,29 +197,27 @@ public class KmzTrackImporter implements TrackImporter {
      * @param trackId the id of the Track.
      */
     private void deleteOrphanImages(Context context, Track.Id trackId) {
-        if (!trackId.isValid()) {
-            // 1.- Gets all photo names in the markers of the track identified by id.
-            ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
-            List<Marker> markers = contentProviderUtils.getMarkers(trackId);
-            List<String> photosName = new ArrayList<>();
-            for (Marker marker : markers) {
-                if (marker.hasPhoto()) {
-                    String photoUrl = Uri.decode(marker.getPhotoUrl());
-                    photosName.add(photoUrl.substring(photoUrl.lastIndexOf(File.separatorChar) + 1));
+        // 1.- Gets all photo names in the markers of the track identified by id.
+        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
+        List<Marker> markers = contentProviderUtils.getMarkers(trackId);
+        List<String> photosName = new ArrayList<>();
+        for (Marker marker : markers) {
+            if (marker.hasPhoto()) {
+                String photoUrl = Uri.decode(marker.getPhotoUrl());
+                photosName.add(photoUrl.substring(photoUrl.lastIndexOf(File.separatorChar) + 1));
+            }
+        }
+
+        // 2.- Deletes all orphan photos from external storage.
+        File dir = FileUtils.getPhotoDir(context, trackId);
+        if (dir.exists() && dir.isDirectory()) {
+            for (File file : dir.listFiles()) {
+                if (!photosName.contains(file.getName())) {
+                    file.delete();
                 }
             }
-
-            // 2.- Deletes all orphan photos from external storage.
-            File dir = FileUtils.getPhotoDir(context, trackId);
-            if (dir.exists() && dir.isDirectory()) {
-                for (File file : dir.listFiles()) {
-                    if (!photosName.contains(file.getName())) {
-                        file.delete();
-                    }
-                }
-                if (dir.listFiles().length == 0) {
-                    dir.delete();
-                }
+            if (dir.listFiles().length == 0) {
+                dir.delete();
             }
         }
     }
