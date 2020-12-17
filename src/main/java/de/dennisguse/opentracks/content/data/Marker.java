@@ -27,8 +27,6 @@ import androidx.annotation.VisibleForTesting;
 
 import java.util.Objects;
 
-import de.dennisguse.opentracks.util.PreferencesUtils;
-
 /**
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
@@ -178,11 +176,6 @@ public final class Marker {
         //TOOD Limit visibility to TrackRecordingService / ContentProvider
         public long getId() {
             return id;
-        }
-
-        @Deprecated //TODO Use a Id of null instead
-        public boolean isValid() {
-            return id != PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
         }
 
         @Override
