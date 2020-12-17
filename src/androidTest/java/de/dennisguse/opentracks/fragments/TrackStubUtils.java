@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks;
+package de.dennisguse.opentracks.fragments;
 
 import android.location.Location;
 
