@@ -28,7 +28,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.dennisguse.opentracks.TrackStubUtils;
 import de.dennisguse.opentracks.chart.ChartPoint;
 import de.dennisguse.opentracks.chart.ChartView;
 import de.dennisguse.opentracks.content.data.TrackPoint;
