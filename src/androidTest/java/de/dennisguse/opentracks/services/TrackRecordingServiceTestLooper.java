@@ -203,7 +203,7 @@ public class TrackRecordingServiceTestLooper {
 
         // Start a track.
         Track.Id trackId = service.startNewTrack();
-        assertTrue(trackId.isValid());
+        assertNotNull(trackId);
         assertTrue(service.isRecording());
         Track track = contentProviderUtils.getTrack(trackId);
         assertNotNull(track);

@@ -23,7 +23,6 @@ import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -224,7 +223,7 @@ public class ContentProviderUtils {
      * @param trackId the track id.
      */
     public Track getTrack(Track.Id trackId) {
-        if (trackId == null || !trackId.isValid()) {
+        if (trackId == null) {
             return null;
         }
         try (Cursor cursor = getTrackCursor(TracksColumns._ID + "=?", new String[]{Long.toString(trackId.getId())}, null)) {
@@ -286,7 +285,7 @@ public class ContentProviderUtils {
         TrackStatistics trackStatistics = track.getTrackStatistics();
 
         // Value < 0 indicates no id is available
-        if (track.getId() != null && track.getId().isValid()) {
+        if (track.getId() != null) {
             values.put(TracksColumns._ID, track.getId().getId());
         }
         values.put(TracksColumns.UUID, UUIDUtils.toBytes(track.getUuid()));
@@ -385,10 +384,7 @@ public class ContentProviderUtils {
     /**
      * @return -1 if not able to get the next marker number.
      */
-    public int getNextMarkerNumber(Track.Id trackId) {
-        if (!trackId.isValid()) {
-            return -1;
-        }
+    public int getNextMarkerNumber(@NonNull Track.Id trackId) {
         String[] projection = {MarkerColumns._ID};
         String selection = MarkerColumns.TRACKID + "=?";
         String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
@@ -416,11 +412,7 @@ public class ContentProviderUtils {
      * @param minMarkerId the minimum marker id. null to ignore
      * @param maxCount    the maximum number of markers to return. -1 for no limit
      */
-    public Cursor getMarkerCursor(Track.Id trackId, @Nullable Marker.Id minMarkerId, int maxCount) {
-        if (!trackId.isValid()) {
-            return null;
-        }
-
+    public Cursor getMarkerCursor(@NonNull Track.Id trackId, @Nullable Marker.Id minMarkerId, int maxCount) {
         String selection;
         String[] selectionArgs;
         if (minMarkerId != null) {
@@ -449,10 +441,6 @@ public class ContentProviderUtils {
 
     @Deprecated //TODO TracksColumns.MARKER_COUNT while querying for tracks
     public int getMarkerCount(Track.Id trackId) {
-        if (!trackId.isValid()) {
-            return 0;
-        }
-
         String[] projection = new String[]{"count(*) AS count"};
         String selection = MarkerColumns.TRACKID + "=?";
         String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
@@ -633,9 +621,6 @@ public class ContentProviderUtils {
      */
     @Deprecated
     public Track.Id getFirstTrackPointId(Track.Id trackId) {
-        if (!trackId.isValid()) {
-            return null;
-        }
         String selection = TrackPointsColumns._ID + "=(SELECT MIN(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=?)";
         String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
         try (Cursor cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection, selectionArgs, TrackPointsColumns._ID)) {
@@ -653,11 +638,7 @@ public class ContentProviderUtils {
      * @param trackId the track id
      */
     @Deprecated
-    public long getLastTrackPointId(Track.Id trackId) {
-        if (trackId == null || !trackId.isValid()) {
-            Log.w(TAG, "Fix callers who do this.");
-            return -1L;
-        }
+    public long getLastTrackPointId(@NonNull Track.Id trackId) {
         String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") from " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=?)";
         String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
         try (Cursor cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection, selectionArgs, TrackPointsColumns._ID)) {
@@ -676,9 +657,6 @@ public class ContentProviderUtils {
      * @return trackPoint id if the location is in the track. -1L otherwise.
      */
     public long getTrackPointId(Track.Id trackId, Location location) {
-        if (!trackId.isValid()) {
-            return -1L;
-        }
         String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns.TIME + "=?)";
         String[] selectionArgs = new String[]{Long.toString(trackId.getId()), Long.toString(location.getTime())};
         try (Cursor cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection, selectionArgs, TrackPointsColumns._ID)) {
@@ -707,10 +685,6 @@ public class ContentProviderUtils {
      * @param descending        true to sort the result in descending order (latest location first)
      */
     public Cursor getTrackPointCursor(Track.Id trackId, long startTrackPointId, int maxLocations, boolean descending) {
-        if (!trackId.isValid()) {
-            return null;
-        }
-
         String selection;
         String[] selectionArgs;
         if (startTrackPointId >= 0) {
@@ -740,9 +714,6 @@ public class ContentProviderUtils {
      */
     @Deprecated
     public TrackPoint getLastValidTrackPoint(Track.Id trackId) {
-        if (!trackId.isValid()) {
-            return null;
-        }
         String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns.LATITUDE + "<=" + MAX_LATITUDE + ")";
         String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
         return findTrackPointBy(selection, selectionArgs);
