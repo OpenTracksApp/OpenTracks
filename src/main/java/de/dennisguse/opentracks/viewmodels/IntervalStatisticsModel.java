@@ -14,7 +14,6 @@ import de.dennisguse.opentracks.util.UnitConversions;
  */
 public class IntervalStatisticsModel {
 
-    private IntervalStatistics intervalStats;
     private final List<TrackPoint> trackPoints = new ArrayList<>();
 
     public IntervalStatistics getIntervalStats(boolean metricUnits, @Nullable IntervalOption interval) {
@@ -23,10 +22,8 @@ public class IntervalStatisticsModel {
                 interval = IntervalOption.OPTION_1;
             }
 
-            intervalStats = new IntervalStatistics();
             float distanceInterval = metricUnits ? (float) (interval.getValue() * UnitConversions.KM_TO_M) : (float) (interval.getValue() * UnitConversions.MI_TO_M);
-            intervalStats.build(trackPoints, distanceInterval);
-            return intervalStats;
+            return new IntervalStatistics(trackPoints, distanceInterval);
         }
     }
 

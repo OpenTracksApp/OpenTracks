@@ -23,7 +23,6 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
-import android.widget.ImageButton;
 
 import de.dennisguse.opentracks.databinding.TrackControllerBinding;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
@@ -103,7 +102,7 @@ public class TrackController implements View.OnTouchListener {
         if (buttonDelay != null && event.getAction() == MotionEvent.ACTION_UP) {
             handlerUpdateTotalTime.removeCallbacks(buttonDelay);
             buttonDelay = null;
-            ((ImageButton) view).setPressed(false);
+            view.setPressed(false);
 
             transition.resetTransition();
 
@@ -113,7 +112,7 @@ public class TrackController implements View.OnTouchListener {
         }
 
         //Trigger button pressed animation
-        ((ImageButton) view).setPressed(true);
+        view.setPressed(true);
 
         //To pause a recording
         if (viewBinding.trackControllerRecord.equals(view)

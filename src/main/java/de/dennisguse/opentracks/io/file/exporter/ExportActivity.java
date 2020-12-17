@@ -72,7 +72,6 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
 
     private ExportServiceResultReceiver resultReceiver;
 
-    private String directoryDisplayName;
     private List<String> directoryFiles;
 
     private int trackExportSuccessCount;
@@ -143,7 +142,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         contentProviderUtils = new ContentProviderUtils(this);
 
         DocumentFile documentFile = DocumentFile.fromTreeUri(this, directoryUri);
-        directoryDisplayName = FileUtils.getPath(documentFile);
+        String directoryDisplayName = FileUtils.getPath(documentFile);
 
         viewBinding.toolbar.toolbar.setTitle(getString(R.string.export_progress_message, directoryDisplayName));
 

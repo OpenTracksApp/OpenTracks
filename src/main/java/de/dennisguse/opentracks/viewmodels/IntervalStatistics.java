@@ -9,25 +9,25 @@ import de.dennisguse.opentracks.util.UnitConversions;
 
 public class IntervalStatistics {
     private final List<Interval> intervalList = new ArrayList<>();
-    private float distanceInterval_m;
+    private final float distanceInterval_m;
 
     /**
-     * @param trackPointList     the list of TrackPoint.
+     * @param trackPoints        the list of TrackPoint.
      * @param distanceInterval_m the meters of every interval.
      */
-    public void build(List<TrackPoint> trackPointList, float distanceInterval_m) {
+    public IntervalStatistics(List<TrackPoint> trackPoints, float distanceInterval_m) {
         intervalList.clear();
         this.distanceInterval_m = distanceInterval_m;
 
-        if (trackPointList == null || trackPointList.size() == 0) {
+        if (trackPoints == null || trackPoints.size() == 0) {
             return;
         }
 
         Interval interval = new Interval();
-        interval.gain_m += trackPointList.get(0).hasElevationGain() ? trackPointList.get(0).getElevationGain() : 0;
-        for (int i = 1; i < trackPointList.size(); i++) {
-            TrackPoint prevTrackPoint = trackPointList.get(i - 1);
-            TrackPoint trackPoint = trackPointList.get(i);
+        interval.gain_m += trackPoints.get(0).hasElevationGain() ? trackPoints.get(0).getElevationGain() : 0;
+        for (int i = 1; i < trackPoints.size(); i++) {
+            TrackPoint prevTrackPoint = trackPoints.get(i - 1);
+            TrackPoint trackPoint = trackPoints.get(i);
 
             if (LocationUtils.isValidLocation(trackPoint.getLocation()) && LocationUtils.isValidLocation(prevTrackPoint.getLocation())) {
                 interval.distance_m += prevTrackPoint.distanceTo(trackPoint);
@@ -51,6 +51,7 @@ public class IntervalStatistics {
         }
     }
 
+
     public List<Interval> getIntervalList() {
         return intervalList;
     }
@@ -62,10 +63,6 @@ public class IntervalStatistics {
      * @return the interval object or null if any interval is completed.
      */
     public Interval getLastInterval() {
-        if (intervalList == null) {
-            return null;
-        }
-
         if (intervalList.size() == 1 && intervalList.get(0).getDistance_m() < distanceInterval_m) {
             return null;
         }

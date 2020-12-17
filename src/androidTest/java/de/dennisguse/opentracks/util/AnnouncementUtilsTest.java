@@ -50,9 +50,8 @@ public class AnnouncementUtilsTest {
         stats.setMaxSpeed(100);
         stats.setTotalElevationGain(6000);
 
-        IntervalStatistics intervalStatistics = new IntervalStatistics();
         List<TrackPoint> trackPoints = Arrays.asList(TestDataUtil.createTrack(new Track.Id(System.currentTimeMillis()), 10).second);
-        intervalStatistics.build(trackPoints, 1000);
+        IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, 1000);
         IntervalStatistics.Interval lastInterval = intervalStatistics.getIntervalList().get(intervalStatistics.getIntervalList().size() - 1);
 
         int speedId = R.plurals.voiceSpeedKilometersPerHour;

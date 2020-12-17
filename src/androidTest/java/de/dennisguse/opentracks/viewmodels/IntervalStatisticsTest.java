@@ -47,10 +47,9 @@ public class IntervalStatisticsTest {
 		List<TrackPoint> trackPoints = buildTrackPoints(50);
 		TrackStatistics trackStatistics = buildTrackStatistics(trackPoints);
 		float distanceInterval = 1000f;
-		IntervalStatistics intervalStatistics = new IntervalStatistics();
 
 		// when and then
-		whenAndThen(trackPoints, trackStatistics, distanceInterval, intervalStatistics);
+		whenAndThen(trackPoints, trackStatistics, distanceInterval);
 	}
 
 	/**
@@ -64,10 +63,9 @@ public class IntervalStatisticsTest {
 		List<TrackPoint> trackPoints = buildTrackPoints(200);
 		TrackStatistics trackStatistics = buildTrackStatistics(trackPoints);
 		float distanceInterval = 1000f;
-		IntervalStatistics intervalStatistics = new IntervalStatistics();
 
 		// when and then
-		whenAndThen(trackPoints, trackStatistics, distanceInterval, intervalStatistics);
+		whenAndThen(trackPoints, trackStatistics, distanceInterval);
 	}
 
 	/**
@@ -81,10 +79,9 @@ public class IntervalStatisticsTest {
 		List<TrackPoint> trackPoints = buildTrackPoints(200);
 		TrackStatistics trackStatistics = buildTrackStatistics(trackPoints);
 		float distanceInterval = 3000f;
-		IntervalStatistics intervalStatistics = new IntervalStatistics();
 
 		// when and then
-		whenAndThen(trackPoints, trackStatistics, distanceInterval, intervalStatistics);
+		whenAndThen(trackPoints, trackStatistics, distanceInterval);
 	}
 
 	/**
@@ -98,10 +95,9 @@ public class IntervalStatisticsTest {
 		List<TrackPoint> trackPoints = buildTrackPoints(1000);
 		TrackStatistics trackStatistics = buildTrackStatistics(trackPoints);
 		float distanceInterval = 3000f;
-		IntervalStatistics intervalStatistics = new IntervalStatistics();
 
 		// when and then
-		whenAndThen(trackPoints, trackStatistics, distanceInterval, intervalStatistics);
+		whenAndThen(trackPoints, trackStatistics, distanceInterval);
 	}
 
 	/**
@@ -115,14 +111,13 @@ public class IntervalStatisticsTest {
 		List<TrackPoint> trackPoints = buildTrackPoints(10000);
 		TrackStatistics trackStatistics = buildTrackStatistics(trackPoints);
 		float distanceInterval = 1000f;
-		IntervalStatistics intervalStatistics = new IntervalStatistics();
 
 		// when and then
-		whenAndThen(trackPoints, trackStatistics, distanceInterval, intervalStatistics);
+		whenAndThen(trackPoints, trackStatistics, distanceInterval);
 	}
 
-	private void whenAndThen(List<TrackPoint> trackPoints, TrackStatistics trackStatistics, float distanceInterval, IntervalStatistics intervalStatistics) {
-		intervalStatistics.build(trackPoints, distanceInterval);
+	private void whenAndThen(List<TrackPoint> trackPoints, TrackStatistics trackStatistics, float distanceInterval) {
+		IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, distanceInterval);
 		List<IntervalStatistics.Interval> intervalList = intervalStatistics.getIntervalList();
 		double totalDistance = 0d;
 		long totalTime = 0L;

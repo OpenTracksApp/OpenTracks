@@ -79,6 +79,12 @@ public class TrackDeleteActivity extends AbstractActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        viewBinding = null;
+    }
+
+    @Override
     protected View getRootView() {
         viewBinding = TrackDeleteBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();

@@ -50,10 +50,6 @@ public class AggregatedStatistics {
         return dataMap.get(category);
     }
 
-    public String getCategory(int position) {
-        return dataList.get(position).getCategory();
-    }
-
     public AggregatedStatistic getItem(int position) {
         return dataList.get(position);
     }

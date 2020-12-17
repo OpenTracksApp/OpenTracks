@@ -65,7 +65,6 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private StatisticsRecordingBinding viewBinding;
 
     private SensorsAdapter sensorsAdapter;
-    private RecyclerView sensorsRecyclerView;
 
     public static Fragment newInstance() {
         return new StatisticsRecordingFragment();
@@ -112,7 +111,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         viewBinding.statsActivityTypeIcon.setOnClickListener(v -> ((TrackRecordingActivity) getActivity()).chooseActivityType(category));
 
         sensorsAdapter = new SensorsAdapter(getContext());
-        sensorsRecyclerView = viewBinding.statsSensorsRecyclerView;
+        RecyclerView sensorsRecyclerView = viewBinding.statsSensorsRecyclerView;
         sensorsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         sensorsRecyclerView.setAdapter(sensorsAdapter);
     }
