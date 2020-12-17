@@ -400,10 +400,7 @@ public class ContentProviderUtils {
         return -1;
     }
 
-    public Marker getMarker(Marker.Id markerId) {
-        if (!markerId.isValid()) {
-            return null;
-        }
+    public Marker getMarker(@NonNull Marker.Id markerId) {
         try (Cursor cursor = getMarkerCursor(null, MarkerColumns._ID + "=?", new String[]{Long.toString(markerId.getId())}, MarkerColumns._ID, 1)) {
             if (cursor != null && cursor.moveToFirst()) {
                 return createMarker(cursor);
@@ -426,7 +423,7 @@ public class ContentProviderUtils {
 
         String selection;
         String[] selectionArgs;
-        if (minMarkerId != null && minMarkerId.isValid()) {
+        if (minMarkerId != null) {
             selection = MarkerColumns.TRACKID + "=? AND " + MarkerColumns._ID + ">=?";
             selectionArgs = new String[]{Long.toString(trackId.getId()), Long.toString(minMarkerId.getId())};
         } else {
@@ -506,7 +503,7 @@ public class ContentProviderUtils {
     ContentValues createContentValues(@NonNull Marker marker) {
         ContentValues values = new ContentValues();
 
-        if (marker.getId() != null && marker.getId().isValid()) {
+        if (marker.getId() != null) {
             values.put(MarkerColumns._ID, marker.getId().getId());
         }
         values.put(MarkerColumns.NAME, marker.getName());
