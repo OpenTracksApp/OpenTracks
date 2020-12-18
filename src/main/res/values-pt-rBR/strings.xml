@@ -129,7 +129,7 @@
     <string name="generic_recording">Gravando…</string>
     <string name="generic_save">Salvar</string>
     <string name="generic_success_title">Sucesso</string>
-    <string name="generic_tracks">Rotas</string>
+    <string name="generic_tracks">Trilhas</string>
     <string name="generic_yes">Sim</string>
     <string name="gps_location_access">\"Acesso ao local\"</string>
     <string name="gps_disabled">GPS inativo. Toque aqui para ir para %1$s. Pressione o botão \"Voltar\" para retornar.</string>
@@ -414,4 +414,130 @@
     <string name="waypoint_type_waterfall">Cascata</string>
     <string name="waypoint_type_water_fountain">fonte de água</string>
     <string name="waypoint_type_waypoint">ponto de referência</string>
+    <string name="import_thread_interrupted">Tópico interrompido</string>
+    <string name="import_parser_error">Erro do analisador: %1$s</string>
+    <string name="import_error_info">%1$s: %2$s</string>
+    <string name="import_error_list_dialog_title">Arquivos não importados</string>
+    <string name="import_file_imported">Arquivo %1$s importado</string>
+    <string name="menu_resume_track">Retomar trilha</string>
+    <string name="permission_gps_failed">OpenTracks requer permissão para usar GPS.</string>
+    <string name="sensor_not_known">O sensor %1$s é desconhecido. Verifique as configurações.</string>
+    <string name="sensor_could_not_scan">Não foi possível procurar dispositivos Bluetooth (erro %1$i).</string>
+    <string name="bluetooth_disabled">Ative o Bluetooth.</string>
+    <string name="settings_default_trackfileformat">Exportar/compartilhar formato de arquivo</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">Mantenha a tela ligada</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">Durante a gravação, mantenha a tela ligada.</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">Tela cheia</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Durante a gravação, apresente em tela cheia.</string>
+    <string name="settings_night_mode_option_system">Sistema</string>
+    <string name="settings_night_mode_option_day">Dia</string>
+    <string name="settings_sensor_disconnected">Desconectado de %1$s</string>
+    <string name="track_detail_intervals_tab">intervalos</string>
+    <string name="track_detail_record_success">Agora gravando uma nova trilha</string>
+    <string name="track_detail_resume_success">Agora retomando a trilha</string>
+    <string name="interval_list_empty_message">Não há nenhum intervalo ainda</string>
+    <string name="voice_speed_lap">Velocidade da volta de %1$s</string>
+    <string name="share_image_body">Eu acho que você pode estar interessado nesta imagem.</string>
+    <string name="hold_to_stop">Segure para parar</string>
+    <string name="hold_to_pause">Segure para fazer uma pausa</string>
+    <string name="toast_message_instant_track_was_exported">Última trilha exportada</string>
+    <string name="instant_export_enabled_title">Exportação instantânea pós-treino</string>
+    <string name="settings_default_export_uri_title">Diretório de exportação de trilhas</string>
+    <string name="stats_intervals">Intervalos</string>
+    <string name="stats_split_interval">Intervalo de divisão</string>
+    <string name="track_recording_notification_accuracy">Precisão da localização: %1$s</string>
+    <string name="about_preference_title">Sobre OpenTracks</string>
+    <string name="about_description"><i>OpenTracks</i> é um aplicativo de rastreamento de esportes que respeita totalmente a sua privacidade.</string>
+    <string name="help_feature_content">* criar trilhas de GPS
+\n* use um sensor de frequência cardíaca (apenas Bluetooth LE)
+\n* anúncios de voz (por tempo ou distância)
+\n* criar marcadores (incluindo imagens)
+\n* funciona completamente offline
+\n* mostrar trilhas em um mapa (veja abaixo)</string>
+    <string name="help_track_map_content"> Use o pequeno ícone do mapa.
+\n a) (atualizações ao vivo) Instale <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Ele fornece mapas online ou offline via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n Na verdade, OSMDashboard é um aplicativo separado que só pode acessar (temporariamente) os dados da(s) track(s) que serão mostradas.
+\n b) Por meio de um aplicativo de mapa normal (por exemplo, <a href="http://osmand.net/">OsmAn </a> e <a href="https://maps.me/">MAPS.ME</a>). Esses aplicativos precisam ser compatíveis com o formato de arquivo KMZ (apenas locais e marcações de data/hora). Na verdade, um aplicativo precisa ser compatível com<i>ACTION_VIEW</i> com MIME<i> application/vnd.google-earth.kmz</i>. </string>
+    <string name="help_data_storage_content"> Os dados do sensor são armazenados por local registrado. Em termos de sensor de frequência cardíaca, isso significa que apenas <i>uma</i> medição de frequência cardíaca é armazenada por local. Se você estiver parado ou dentro de casa, nenhum dado do sensor será registrado (mas será mostrado). </string>
+    <string name="help_support_content"> Você pode:
+\n a) espalhe a palavra sobre OpenTracks,
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propor recursos</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">relatar bugs</a>,
+\n d) ajudar no desenvolvimento de software,
+\n e) comprar na <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\n f) doar, e
+\n g) faça tudo o que você acha que ajuda a OpenTracks. </string>
+    <string name="activity_type_escooter">escooter</string>
+    <string name="app_not_installed_show_on_map">Instale um aplicativo que suporte a apresentação de dados de mapas.</string>
+    <string name="export_progress_review">Total de trilhas exportadas: %1$d
+\n - Novas trilhas exportadas: %2$d
+\n - Trilhas substituídas: %3$d
+\n - Trilhas ignoradas: %4$d
+\n - Erros: %5$d</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Concluído com um erro</item>
+        <item quantity="other">Concluído com %1$d erros</item>
+    </plurals>
+    <string name="import_unsupported_format">Formato de arquivo não suportado</string>
+    <string name="import_unable_to_import_file">Não foi possível importar o arquivo: %1$s</string>
+    <string name="import_progress_review">Total de arquivos importados: %1$d
+\n - Arquivos importados: %2$d
+\n - Já existe: %3$d
+\n - Erros: %4$d</string>
+    <string name="marker_add_photo_canceled">Cancelado, nenhum marcador de foto adicionado</string>
+    <string name="menu_insert_gallery_img">Inserir imagem da galeria</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Mostrar estatísticas na tela de bloqueio</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">Durante a gravação, mostre estatísticas sem desbloquear o dispositivo.</string>
+    <string name="settings_night_mode_title">Tema UI</string>
+    <string name="settings_night_mode_option_night">Noite</string>
+    <string name="settings_error_initial_values_restored">Desculpe, mas ocorreu um erro. Todas as configurações foram revertidas para os valores padrão.</string>
+    <string name="about_url">Página do projeto: <a href="%1$s">%1$s</a></string>
+    <string name="about_version_name">Nome da versão: %1$s</string>
+    <string name="about_version_code">Código da versão: %1$d</string>
+    <string name="about_history">OpenTracks é um fork do <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (descontinuado em 2016).</string>
+    <string name="about_libraries">Bibliotecas</string>
+    <string name="help_feature_title">OpenTracks tem os seguintes recursos:</string>
+    <string name="help_track_map_title">Como mostrar uma trilha em um mapa\?</string>
+    <string name="help_storage_pictures_title">Como o OpenTracks armazena fotos tiradas como marcadores\?</string>
+    <string name="help_storage_pictures_content">Eles são armazenados no armazenamento interno do aplicativo (ou seja, acessíveis apenas no OpenTracks).</string>
+    <string name="help_track_export_content"> As trilhas podem ser exportadas das configurações como KMZ, KML ou GPX. KMZ/KML todos os dados; Localizações apenas GPX. As trilhas compartilhadas por meio do <i>ícone de compartilhamento</i> são compartilhadas como KMZ. </string>
+    <string name="help_data_google_play_services_title">O OpenTracks requer/usa o Google Play Services\?</string>
+    <string name="help_recording_title">Como o OpenTracks registra dados\?</string>
+    <string name="help_recording_content">OpenTracks usa o sensor GPS do dispositivo para registrar a localização continuamente. Se o dispositivo GPS relatar dados imprecisos (por exemplo, localização, velocidade, elevação), o OpenTracks não pode fazer nada a respeito.</string>
+    <string name="help_data_storage_title">Como o OpenTracks armazena dados do sensor\?</string>
+    <string name="help_gps_troubleshooting_title">OpenTracks não está gravando locais\?</string>
+    <string name="help_gps_troubleshooting_content"> O que você pode fazer:
+\n a) verifique se o GPS está habilitado,
+\n b) melhorar a recepção de GPS (por exemplo, ir ao ar livre),
+\n c) verifique o aplicativo <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> e
+\n d) desative a economia de bateria.
+\n
+\n Se tudo não ajudar, por favor relate um bug. </string>
+    <string name="help_support_title">Como posso oferecer suporte a OpenTracks\?</string>
+    <string name="open_track_using_dashboard">Abrir usando OpenTracks-Dashboard</string>
+    <string name="open_track_as_KMZ">Abrir como KMZ</string>
+    <string name="open_track_as_GPX">Abrir como GPX</string>
+    <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
+    <string name="help_track_export_title">Como posso exportar/compartilhar trilhas gravadas\?</string>
+    <string name="description_speed_ms">Velocidade (m/s)</string>
+    <string name="description_default_speed_or_pace">Por tipo de atividade</string>
+    <string name="export_with_photos">com fotos</string>
+    <string name="export_without_photos">sem fotos</string>
+    <string name="export_track_already_exists_msg">A trilha %1$s já existe no diretório de destino.</string>
+    <string name="export_all_do_it_for_all">faça isso para todos os conflitos</string>
+    <string name="export_track_errors">Trilhas não exportadas</string>
+    <string name="generic_overwrite">Sobrescrever</string>
+    <string name="generic_skip">Pular</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="generic_show_errors">Mostrar erros</string>
+    <string name="generic_completed">Concluído</string>
+    <string name="generic_click_twice_cancel">Clique novamente para cancelar</string>
+    <string name="gps_disabled_msg">GPS desativado</string>
+    <string name="gps_fixed_and_ready">GPS corrigido e pronto</string>
+    <string name="settings_sensor_connecting">Conectado a %1$s</string>
+    <string name="settings_sensor_wheel_circumference">Tamanho da roda (mm)</string>
+    <string name="aggregated_stats_empty_message">Registre sua primeira trilha para ver as estatísticas agregadas</string>
+    <string name="voice_pace_lap">Tempo da volta de %1$s</string>
+    <string name="share_image_subject">Eu gostaria de compartilhar uma imagem com você</string>
+    <string name="instant_export_enabled_summary">Exportar trilha para armazenamento depois que a gravação for concluída</string>
 </resources>
