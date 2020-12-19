@@ -207,7 +207,7 @@ public class MarkerDetailFragment extends Fragment {
 
         if (item.getItemId() == R.id.marker_detail_share) {
             if (marker.hasPhoto()) {
-                Intent intent = IntentUtils.newShareImageIntent(getContext(), marker.getPhotoURI());
+                Intent intent = IntentUtils.newShareFileIntent(getContext(), marker.getId());
                 intent = Intent.createChooser(intent, null);
                 startActivity(intent);
             }
