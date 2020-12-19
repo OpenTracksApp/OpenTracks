@@ -23,6 +23,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Pair;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
 
 import java.io.File;
@@ -80,7 +81,6 @@ public class IntentUtils {
             trackDescription = track == null ? "" : new DescriptionGenerator(context).generateTrackDescription(track, false);
         }
 
-        String action = trackIds.length == 1 ? Intent.ACTION_SEND : Intent.ACTION_SEND_MULTIPLE;
         String mime = "";
 
         ArrayList<Uri> uris = new ArrayList<>();
@@ -95,9 +95,8 @@ public class IntentUtils {
             uris.add(uriAndMime.first);
             mime = uriAndMime.second;
         }
-        return new Intent(action)
+        return new Intent(Intent.ACTION_SEND_MULTIPLE)
                 .setType(mime)
-                .setAction(Intent.ACTION_SEND_MULTIPLE)
                 .putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_track_subject))
@@ -105,13 +104,41 @@ public class IntentUtils {
     }
 
     /**
-     * Creates an intent to share an image with an app.
+     * Creates an intent to share a track file with an app.
      *
-     * @param context the context.
-     * @param uri     uri with the image to share.
+     * @param context   the context
+     * @param markerIds the marker ids
+     * @return an Intent or null (if nothing can be shared).
      */
-    public static Intent newShareImageIntent(Context context, Uri uri) {
-        String mime = context.getContentResolver().getType(uri);
+    @Nullable
+    public static Intent newShareFileIntent(Context context, Marker.Id... markerIds) {
+        if (markerIds.length == 0) {
+            throw new RuntimeException("Need to share at least one marker.");
+        }
+
+        String mime = null;
+
+        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
+        ArrayList<Uri> uris = new ArrayList<>();
+        for (Marker.Id markerId : markerIds) {
+            Marker marker = contentProviderUtils.getMarker(markerId);
+            if (marker == null) {
+                Log.e(TAG, "MarkerId " + markerId.getId() + " could not be resolved.");
+                continue;
+            }
+            if (marker.getPhotoURI() == null) {
+                Log.e(TAG, "MarkerId " + markerId.getId() + " has no picture.");
+                continue;
+            }
+
+            mime = context.getContentResolver().getType(marker.getPhotoURI());
+
+            uris.add(marker.getPhotoURI());
+        }
+
+        if (uris.size() == 0) {
+            return null;
+        }
 
         /*
          * Because the #166 bug, when you import KMZ tracks then it creates file:/// from markers with photo.
@@ -119,11 +146,10 @@ public class IntentUtils {
          * In .setType, to avoid side effects because the #166 bug described above it checks if mime is null.
          * If it is then it hardcode "images/*".
          */
-        return new Intent(Intent.ACTION_SEND)
+        return new Intent(Intent.ACTION_SEND_MULTIPLE)
                 .setType(mime != null ? mime : "image/*")
-                .setAction(Intent.ACTION_SEND)
+                .putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                .putExtra(Intent.EXTRA_STREAM, uri)
                 .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_image_subject))
                 .putExtra(Intent.EXTRA_TEXT, context.getString(R.string.share_image_body));
     }

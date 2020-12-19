@@ -93,14 +93,11 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
             boolean isSingleSelection = ids.length == 1;
 
-            menu.findItem(R.id.list_context_menu_share).setVisible(false);
             menu.findItem(R.id.list_context_menu_show_on_map).setVisible(isSingleSelection);
             menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
             menu.findItem(R.id.list_context_menu_delete).setVisible(true);
-            /*
-             * Set select all to the same visibility as delete since delete is the
-             * only action that can be applied to multiple markers.
-             */
+
+            // Set select all to the same visibility as delete since delete is the only action that can be applied to multiple markers.
             menu.findItem(R.id.list_context_menu_select_all).setVisible(showSelectAll);
         }
 
@@ -225,6 +222,15 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         if (itemId == R.id.list_context_menu_show_on_map) {
             if (markerIds.length == 1) {
                 IntentUtils.showCoordinateOnMap(this, contentProviderUtils.getMarker(markerIds[0]));
+            }
+            return true;
+        }
+
+        if (itemId == R.id.list_context_menu_share) {
+            Intent intent = IntentUtils.newShareFileIntent(this, markerIds);
+            if (intent != null) {
+                intent = Intent.createChooser(intent, null);
+                startActivity(intent);
             }
             return true;
         }
