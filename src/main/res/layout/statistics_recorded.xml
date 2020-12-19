@@ -76,8 +76,7 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintBottom_toBottomOf="@+id/stats_distance_value"
             app:layout_constraintTop_toTopOf="@+id/stats_distance_value"
-            app:tint="?android:attr/textColorPrimary"
-            app:tintMode="src_atop" />
+            app:tint="?android:textColorPrimary" />
 
         <!-- Total time -->
         <TextView

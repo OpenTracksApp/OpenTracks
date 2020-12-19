@@ -135,7 +135,6 @@ public class StatisticsRecordedFragment extends Fragment {
         // Set activity type
         {
             String trackIconValue = TrackIconUtils.getIconValue(getContext(), category);
-            viewBinding.statsActivityTypeIcon.setEnabled(false);
             viewBinding.statsActivityTypeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), TrackIconUtils.getIconDrawable(trackIconValue)));
         }
 
