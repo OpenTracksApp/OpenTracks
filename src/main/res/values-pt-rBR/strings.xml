@@ -475,7 +475,7 @@
 \n - Trilhas ignoradas: %4$d
 \n - Erros: %5$d</string>
     <plurals name="generic_completed_with_errors">
-        <item quantity="one">Concluído com um erro</item>
+        <item quantity="one">Concluído com %1$d erro</item>
         <item quantity="other">Concluído com %1$d erros</item>
     </plurals>
     <string name="import_unsupported_format">Formato de arquivo não suportado</string>
