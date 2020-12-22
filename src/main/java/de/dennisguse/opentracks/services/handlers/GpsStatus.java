@@ -1,10 +1,12 @@
 package de.dennisguse.opentracks.services.handlers;
 
 import android.content.Context;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Handler;
 
+import androidx.annotation.Nullable;
+
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
@@ -27,10 +29,12 @@ class GpsStatus {
     private GpsStatusListener client;
     private final Context context;
 
-    // Last location. It can be null.
-    private Location lastLocation = null;
+    @Nullable
+    private TrackPoint lastTrackPoint = null;
+
+    @Nullable
     // The last valid (not null) location. Null value means that there have not been any location yet.
-    private Location lastValidLocation = null;
+    private TrackPoint lastValidTrackPoint = null;
 
     // Flag to prevent GpsStatus checks two or more locations at the same time.
     private boolean checking = false;
@@ -97,28 +101,28 @@ class GpsStatus {
     }
 
     /**
-     * This method must be called from the client every time a new location is received.
-     * Receive new location and calculate the new status if needed.
+     * This method must be called from the client every time a new trackPoint is received.
+     * Receive new trackPoint and calculate the new status if needed.
      * It look for GPS changes in lastLocation if it's not null. If it's null then look for in lastValidLocation if any.
      */
-    public void onLocationChanged(final Location location) {
+    public void onLocationChanged(final TrackPoint trackPoint) {
         if (checking) {
             return;
         }
 
         checking = true;
-        if (lastLocation != null) {
+        if (lastTrackPoint != null) {
             checkStatusFromLastLocation();
-        } else if (lastValidLocation != null) {
+        } else if (lastValidTrackPoint != null) {
             checkStatusFromLastValidLocation();
         }
 
-        if (location != null) {
-            // Update location's time to the current time millis when location has been received.
-            location.setTime(System.currentTimeMillis());
-            lastValidLocation = location;
+        if (trackPoint != null) {
+            // Update trackPoint's time to the current time millis when trackPoint has been received.
+            trackPoint.setTime(System.currentTimeMillis());
+            lastValidTrackPoint = trackPoint;
         }
-        lastLocation = location;
+        lastTrackPoint = trackPoint;
         checking = false;
     }
 
@@ -129,19 +133,19 @@ class GpsStatus {
      * Also, it'll run the runnable if signal is bad or stop it if the signal is lost.
      */
     private void checkStatusFromLastLocation() {
-        if (System.currentTimeMillis() - lastLocation.getTime() > signalLostThreshold && gpsStatus != GpsStatusValue.GPS_SIGNAL_LOST) {
+        if (System.currentTimeMillis() - lastTrackPoint.getTime() > signalLostThreshold && gpsStatus != GpsStatusValue.GPS_SIGNAL_LOST) {
             // Too much time without receiving signal -> signal lost.
             GpsStatusValue oldStatus = gpsStatus;
             gpsStatus = GpsStatusValue.GPS_SIGNAL_LOST;
             sendStatus(oldStatus, gpsStatus);
             stopStatusRunner();
-        } else if (lastLocation.getAccuracy() > signalBadThreshold && gpsStatus != GpsStatusValue.GPS_SIGNAL_BAD) {
+        } else if (lastTrackPoint.getAccuracy() > signalBadThreshold && gpsStatus != GpsStatusValue.GPS_SIGNAL_BAD) {
             // Too little accuracy -> bad signal.
             GpsStatusValue oldStatus = gpsStatus;
             gpsStatus = GpsStatusValue.GPS_SIGNAL_BAD;
             sendStatus(oldStatus, gpsStatus);
             startStatusRunner();
-        } else if (lastLocation.getAccuracy() <= signalBadThreshold && gpsStatus != GpsStatusValue.GPS_SIGNAL_FIX) {
+        } else if (lastTrackPoint.getAccuracy() <= signalBadThreshold && gpsStatus != GpsStatusValue.GPS_SIGNAL_FIX) {
             // Gps okay.
             GpsStatusValue oldStatus = gpsStatus;
             gpsStatus = GpsStatusValue.GPS_SIGNAL_FIX;
@@ -156,13 +160,13 @@ class GpsStatus {
      * If there is any change then it does the change.
      */
     private void checkStatusFromLastValidLocation() {
-        if (System.currentTimeMillis() - lastValidLocation.getTime() > signalLostThreshold) {
+        if (System.currentTimeMillis() - lastValidTrackPoint.getTime() > signalLostThreshold) {
             // Too much time without locations -> lost signal? (wait signalLostThreshold from last valid location).
             GpsStatusValue oldStatus = gpsStatus;
             gpsStatus = GpsStatusValue.GPS_SIGNAL_LOST;
             sendStatus(oldStatus, gpsStatus);
             stopStatusRunner();
-            lastValidLocation = null;
+            lastValidTrackPoint = null;
         }
     }
 
@@ -192,8 +196,8 @@ class GpsStatus {
             GpsStatusValue oldStatus = gpsStatus;
             gpsStatus = GpsStatusValue.GPS_DISABLED;
             sendStatus(oldStatus, gpsStatus);
-            lastLocation = null;
-            lastValidLocation = null;
+            lastTrackPoint = null;
+            lastValidTrackPoint = null;
             stopStatusRunner();
         }
     }

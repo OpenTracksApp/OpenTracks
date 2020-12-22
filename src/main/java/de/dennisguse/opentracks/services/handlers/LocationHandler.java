@@ -90,18 +90,20 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
      */
     @Override
     public void onLocationChanged(@NonNull Location location) {
+        TrackPoint trackPoint = new TrackPoint(location);
+        boolean isAccurate = TrackPointUtils.fulfillsAccuracy(trackPoint, recordingGpsAccuracy);
+        boolean isValid = LocationUtils.isValidLocation(location);
+
         if (gpsStatus != null) {
-            gpsStatus.onLocationChanged(location);
+            gpsStatus.onLocationChanged(trackPoint);
         }
 
-        if (!LocationUtils.isValidLocation(location)) {
+        if (!isValid) {
             Log.w(TAG, "Ignore newTrackPoint. location is invalid.");
             return;
         }
 
-        TrackPoint trackPoint = new TrackPoint(location);
-
-        if (!TrackPointUtils.fulfillsAccuracy(trackPoint, recordingGpsAccuracy)) {
+        if (!isAccurate) {
             Log.d(TAG, "Ignore newTrackPoint. Poor accuracy.");
             return;
         }

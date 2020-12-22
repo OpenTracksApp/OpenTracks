@@ -190,9 +190,15 @@ public class ChartFragmentTest {
      */
     @Test
     public void testCreatePendingPoint_time() {
+        // given
         chartFragment.setChartByDistance(false);
         TrackPoint trackPoint1 = TrackStubUtils.createDefaultTrackPoint();
+        trackPoint1.setTime(TrackStubUtils.INITIAL_TIME); //Keep old TrackPoint behavior of having time=0 for this test
+
+        // when
         ChartPoint point = chartFragment.createPendingPoint(trackPoint1);
+
+        // then
         assertEquals(0.0, point.getTimeOrDistance(), 0.01);
         long timeSpan = 222;
         TrackPoint trackPoint2 = TrackStubUtils.createDefaultTrackPoint();
