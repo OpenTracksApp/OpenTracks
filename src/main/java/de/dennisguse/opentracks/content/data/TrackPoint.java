@@ -27,7 +27,8 @@ import java.util.Objects;
 /**
  * This class extends the standard Android location with extra information.
  * <p>
- * NOTE: default location will be latitude=0.0 and longitude=0.0 (this is not meaningful).
+ * NOTE: default location will be latitude=0.0 and longitude=0.0.
+ * For {@link TrackPoint}s with `type == null` this is not meaningful.
  * <p>
  * NOTE: For Locations provided by the GPS.
  * We are replacing the GPS-provided time using the system time.
@@ -99,6 +100,7 @@ public class TrackPoint {
     public TrackPoint(@NonNull Location location) {
         this.type = Type.TRACKPOINT;
         this.location = location;
+        setTime(System.currentTimeMillis());
     }
 
     public TrackPoint(@NonNull Type type, @NonNull Location location) {

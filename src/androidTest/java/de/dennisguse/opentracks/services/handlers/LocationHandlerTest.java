@@ -3,10 +3,12 @@ package de.dennisguse.opentracks.services.handlers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.os.Looper;
 
 import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -31,6 +33,12 @@ public class LocationHandlerTest {
 
     @InjectMocks
     private LocationHandler locationHandler;
+
+    @BeforeClass
+    public static void preSetUp() {
+        // Prepare looper for Android's message queue
+        if (Looper.myLooper() == null) Looper.prepare();
+    }
 
     @Before
     public void setUp() {
@@ -80,7 +88,6 @@ public class LocationHandlerTest {
         int prefAccuracy = PreferencesUtils.getRecordingGPSAccuracy(context);
 
         // when
-        // poor latitude
         locationHandler.onLocationChanged(createLocation(45f, 35f, prefAccuracy + 1, 5, System.currentTimeMillis()));
 
         // then

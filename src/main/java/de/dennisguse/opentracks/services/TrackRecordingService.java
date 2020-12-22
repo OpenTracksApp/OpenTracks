@@ -554,8 +554,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         notificationManager.updateTrackPoint(this, trackPoint, recordingGpsAccuracy);
 
-        TrackPointUtils.fixTime(trackPoint);
-
         //TODO Figure out how to avoid loading the lastValidTrackPoint from the database
         TrackPoint lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(track.getId());
 
