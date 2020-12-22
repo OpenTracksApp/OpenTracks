@@ -83,14 +83,14 @@ limitations under the License.
     <string name="activity_type_wind_surfing">vindsurfing</string>
     <!-- Description -->
     <string name="description_activity_type">Aktivitetstype: %1$s</string>
-    <string name="description_average_moving_pace_in_minute">Gjennomsnittlig forflytningstempo: %1$s min/km (%2$s min/eng. mil)</string>
+    <string name="description_average_moving_pace_in_minute">Gjennomsnittlig forflytningstempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_moving_speed">Gjennomsnittlig forflytningshastighet: %1$.2f km/t (%2$.1f mi/h)</string>
-    <string name="description_average_pace_in_minute">Gjennomsnittstempo: %1$s min/km (%2$s min/eng. mil)</string>
+    <string name="description_average_pace_in_minute">Gjennomsnittstempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Gjennomsnittshastighet: %1$.2f km/t (%2$.1f mi/h)</string>
     <string name="description_elevation_gain">Total stigning: %1$d m (%2$d ft)</string>
     <string name="description_elevation_imperial">Høyde (ft)</string>
     <string name="description_elevation_metric">Høyde (m)</string>
-    <string name="description_fastest_pace_in_minute">Raskeste tempo: %1$s min/km (%2$s min/eng. mil)</string>
+    <string name="description_fastest_pace_in_minute">Raskeste tempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_location_accuracy">Nøyaktighet (m)</string>
     <string name="description_location_altitude">Høyde (m)</string>
     <string name="description_location_bearing">Kurs (grader)</string>
@@ -103,14 +103,14 @@ limitations under the License.
     <string name="description_min_elevation">Minimumsstigning: %1$d m (%2$d ft)</string>
     <string name="description_min_grade">Minimumsgrad: %1$d %%</string>
     <string name="description_moving_time">Forflytningstid: %1$s</string>
-    <string name="description_pace_imperial">Tempo (min/eng. mil)</string>
+    <string name="description_pace_imperial">Tempo (min/mi)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
     <string name="description_recorded_time">Tatt opp: %1$s</string>
     <string name="description_speed_ms">Hastighet (m/s)</string>
     <string name="description_sensor_cadence">Kadens (o/min)</string>
     <string name="description_sensor_heart_rate">Puls (slag/min)</string>
     <string name="description_sensor_power">Styrke (W)</string>
-    <string name="description_speed_imperial">Hastighet (eng. mil/t)</string>
+    <string name="description_speed_imperial">Hastighet (mi/hr)</string>
     <string name="description_speed_metric">Hastighet (km/t)</string>
     <string name="description_time">Tid</string>
     <string name="description_total_distance">Total distanse: %1$.2f km (%2$.1f mi)</string>
@@ -233,10 +233,10 @@ limitations under the License.
     <!-- Sensor State -->
     <string name="sensor_state_battery">Batterinivå</string>
     <string name="sensor_state_cadence">Kadens</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
+    <string name="sensor_state_cadence_value">%1$d o/min</string>
     <string name="sensor_state_disconnected">Frakoblet</string>
     <string name="sensor_state_heart_rate">Puls</string>
-    <string name="sensor_state_heart_rate_value">%1$d bpm</string>
+    <string name="sensor_state_heart_rate_value">%1$d slag/min</string>
     <string name="sensor_state_power">Strøm</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Ikke tilgjengelig mens du tar opp et spor</string>
@@ -335,10 +335,10 @@ limitations under the License.
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/t</string>
     <string name="unit_meter">m</string>
-    <string name="unit_mile">eng. mil</string>
-    <string name="unit_mile_per_hour">eng. mil/t</string>
+    <string name="unit_mile">mi</string>
+    <string name="unit_mile_per_hour">mi/h</string>
     <string name="unit_minute_per_kilometer">min/km</string>
-    <string name="unit_minute_per_mile">min/eng. mil</string>
+    <string name="unit_minute_per_mile">min/mi</string>
     <!-- Value -->
     <string name="value_adapt_accuracy">Tilpass for nøyaktighet</string>
     <string name="value_adapt_battery_life">Tilpass for batterilevetid</string>
@@ -346,8 +346,8 @@ limitations under the License.
     <string name="value_float_feet">%1$.2f fot</string>
     <string name="value_float_kilometer">%1$.2f km</string>
     <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f eng. mil</string>
-    <string name="value_float_mile_poor_gps">%1$.1f eng. mil (dårlig GPS)</string>
+    <string name="value_float_mile">%1$.2f mi</string>
+    <string name="value_float_mile_poor_gps">%1$.1f mi (dårlig GPS)</string>
     <string name="value_integer_feet">%1$d fot</string>
     <string name="value_integer_feet_excellent_gps">%1$d fot (utmerket GPS)</string>
     <string name="value_integer_feet_recommended">%1$d fot (anbefales)</string>
@@ -357,8 +357,8 @@ limitations under the License.
     <string name="value_integer_meter_excellent_gps">%1$d m (utmerket GPS)</string>
     <string name="value_integer_meter_poor_gps">%1$d m (dårlig GPS)</string>
     <string name="value_integer_meter_recommended">%1$d m (anbefales)</string>
-    <string name="value_integer_mile">%1$d eng. mil</string>
-    <string name="value_integer_mile_hour">%1$d eng. mil/t</string>
+    <string name="value_integer_mile">%1$d mi</string>
+    <string name="value_integer_mile_hour">%1$d mi/h</string>
     <string name="value_integer_minute">%1$d min</string>
     <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
@@ -565,7 +565,7 @@ limitations under the License.
     <string name="help_storage_pictures_content">Disse lagres i appens interne lagring (dvs. bare tilgjengelig i OpenTracks).</string>
     <string name="generic_click_twice_cancel">Trykk tilbake-knappen igjen for å avbryte</string>
     <string name="help_track_map_content"> Bruk det lille kartikonet.
-\n a) (live-oppdateringer) Installer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. OSMDashboard sørger for nettbaserte og nettfrakoblede kart via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n a) (live-oppdateringer) Installer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. OSMDashboard sørger for nettbaserte eller nettfrakoblede kart via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n Egentlig er OSMDashboard en egen app som bare har tilgang (midlertidig) på dataene til spor som skal vises.
 \n b) Via et vanlig kartprogram (f.eks. <a href="http://osmand.net/">OsmAnd</a> og <a href="https://maps.me/">MAPS.ME</a>). Disse appene må støtte KMZ-filformatet (bare posisjoner og tidsstempler). Faktisk trenger en app å støtte <i>ACTION_VIEW</i> med MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_track_export_title">Hvordan eksportere/dele spor som er tatt opp\?</string>
@@ -590,4 +590,8 @@ limitations under the License.
 \n e) kjøpe i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) donere, og
 \n g) gjøre hva du tror hjelper OpenTracks. </string>
+    <string name="value_float_kilometer_hour">%1$.2f km/t</string>
+    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
+    <string name="value_float_mile_hour">%1$.2f mph</string>
+    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
 </resources>
