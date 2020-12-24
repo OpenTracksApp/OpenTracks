@@ -43,7 +43,7 @@ public class PressureSensorUtilsTest {
 
         // then
         assertEquals(0f, elevationGain_m, 0.01);
-        assertEquals(-15.0f, elevationLoss_m, 0.01);
+        assertEquals(15.0f, elevationLoss_m, 0.01);
         assertEquals(1016.80f, lastUsedPressureValue_hPa, 0.01); //Expect exponential smoothing
     }
 }

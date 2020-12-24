@@ -20,6 +20,7 @@ class CachedTrackPointsIndexes {
     final int sensorCadenceIndex;
     final int sensorPowerIndex;
     final int elevationGainIndex;
+    final int elevationLossIndex;
 
     CachedTrackPointsIndexes(Cursor cursor) {
         idIndex = cursor.getColumnIndex(TrackPointsColumns._ID);
@@ -34,5 +35,6 @@ class CachedTrackPointsIndexes {
         sensorCadenceIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR_CADENCE);
         sensorPowerIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR_POWER);
         elevationGainIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.ELEVATION_GAIN);
+        elevationLossIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.ELEVATION_LOSS);
     }
 }

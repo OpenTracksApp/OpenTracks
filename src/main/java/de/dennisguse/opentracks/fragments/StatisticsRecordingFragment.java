@@ -261,7 +261,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
     /**
      * Tries to fetch most recent {@link SensorDataSet} from {@link de.dennisguse.opentracks.services.TrackRecordingService}.
-     * Also sets elevation gain.
+     * Also sets elevation gain and loss.
      */
     private void updateSensorDataUI() {
         TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
@@ -284,13 +284,14 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
                 sensorsAdapter.swapData(sensorDataList);
                 setSpeedSensorData(sensorDataSet);
             }
+            //TODO Check if we can distribute the total elevation gain and loss via trackStatistics instead of doing some computation in the UI layer.
             setTotalElevationGain(trackRecordingService.getElevationGain_m());
+            setTotalElevationLoss(trackRecordingService.getElevationLoss_m());
         }
     }
 
     // Set elevation gain
     private void setTotalElevationGain(Float elevationGain_m) {
-        //TODO Check if we can distribute the total elevation gain via trackStatistics instead of doing some computation in the UI layer.
         boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
 
         Float totalElevationGain = elevationGain_m;
@@ -306,6 +307,25 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         Pair<String, String> parts = StringUtils.formatElevation(getContext(), totalElevationGain, metricUnits);
         viewBinding.statsElevationGainValue.setText(parts.first);
         viewBinding.statsElevationGainUnit.setText(parts.second);
+    }
+
+    // Set elevation loss
+    private void setTotalElevationLoss(Float elevationLoss_m) {
+        boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
+
+        Float totalElevationLoss = elevationLoss_m;
+
+        if (lastTrackStatistics != null && lastTrackStatistics.hasTotalElevationLoss()) {
+            if (elevationLoss_m == null) {
+                totalElevationLoss = lastTrackStatistics.getTotalElevationLoss();
+            } else {
+                totalElevationLoss += lastTrackStatistics.getTotalElevationLoss();
+            }
+        }
+
+        Pair<String, String> parts = StringUtils.formatElevation(getContext(), totalElevationLoss, metricUnits);
+        viewBinding.statsElevationLossValue.setText(parts.first);
+        viewBinding.statsElevationLossUnit.setText(parts.second);
     }
 
     private void setSpeedSensorData(SensorDataSet sensorDataSet) {
@@ -378,7 +398,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
             viewBinding.statsMovingSpeedUnit.setText(parts.second);
         }
 
-        // Set elevation (gain)
+        // Set elevation gain and loss
         {
             // Make elevation visible?
             boolean showElevation = PreferencesUtils.isShowStatsElevation(getContext());

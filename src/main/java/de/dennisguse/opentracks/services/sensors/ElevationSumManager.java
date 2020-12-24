@@ -112,6 +112,6 @@ public class ElevationSumManager implements SensorEventListener {
 
         lastSeenSensorValue_hPa = value_hPa;
 
-        Log.v(TAG, "elevation gain: " + elevationGain_m);
+        Log.v(TAG, "elevation gain: " + elevationGain_m + ", elevation loss: " + elevationLoss_m);
     }
 }

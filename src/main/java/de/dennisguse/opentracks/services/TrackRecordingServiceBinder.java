@@ -104,6 +104,11 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
         return trackRecordingService.getElevationGain_m();
     }
 
+    @Override
+    public Float getElevationLoss_m() {
+        return trackRecordingService.getElevationLoss_m();
+    }
+
     @VisibleForTesting
     @Override
     public void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager) {

@@ -114,6 +114,7 @@ public class ContentProviderUtils {
         int minElevationIndex = cursor.getColumnIndexOrThrow(TracksColumns.MINELEVATION);
         int maxElevationIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAXELEVATION);
         int elevationGainIndex = cursor.getColumnIndexOrThrow(TracksColumns.ELEVATIONGAIN);
+        int elevationLossIndex = cursor.getColumnIndexOrThrow(TracksColumns.ELEVATIONLOSS);
         int iconIndex = cursor.getColumnIndexOrThrow(TracksColumns.ICON);
 
         Track track = new Track();
@@ -159,6 +160,9 @@ public class ContentProviderUtils {
         }
         if (!cursor.isNull(elevationGainIndex)) {
             trackStatistics.setTotalElevationGain(cursor.getFloat(elevationGainIndex));
+        }
+        if (!cursor.isNull(elevationLossIndex)) {
+            trackStatistics.setTotalElevationLoss(cursor.getFloat(elevationLossIndex));
         }
         if (!cursor.isNull(iconIndex)) {
             track.setIcon(cursor.getString(iconIndex));
@@ -300,6 +304,7 @@ public class ContentProviderUtils {
         values.put(TracksColumns.MINELEVATION, trackStatistics.getMinElevation());
         values.put(TracksColumns.MAXELEVATION, trackStatistics.getMaxElevation());
         values.put(TracksColumns.ELEVATIONGAIN, trackStatistics.getTotalElevationGain());
+        values.put(TracksColumns.ELEVATIONLOSS, trackStatistics.getTotalElevationLoss());
         values.put(TracksColumns.ICON, track.getIcon());
 
         return values;
@@ -591,6 +596,9 @@ public class ContentProviderUtils {
         if (!cursor.isNull(indexes.elevationGainIndex)) {
             trackPoint.setElevationGain(cursor.getFloat(indexes.elevationGainIndex));
         }
+        if (!cursor.isNull(indexes.elevationLossIndex)) {
+            trackPoint.setElevationLoss(cursor.getFloat(indexes.elevationLossIndex));
+        }
 
         return trackPoint;
     }
@@ -792,6 +800,9 @@ public class ContentProviderUtils {
 
         if (trackPoint.hasElevationGain()) {
             values.put(TrackPointsColumns.ELEVATION_GAIN, trackPoint.getElevationGain());
+        }
+        if (trackPoint.hasElevationLoss()) {
+            values.put(TrackPointsColumns.ELEVATION_LOSS, trackPoint.getElevationLoss());
         }
 
         return values;

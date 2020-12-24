@@ -665,6 +665,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         try {
             if (elevationSumManager != null) {
                 trackPoint.setElevationGain(elevationSumManager.getElevationGain_m());
+                trackPoint.setElevationLoss(elevationSumManager.getElevationLoss_m());
                 elevationSumManager.reset();
             }
             contentProviderUtils.insertTrackPoint(trackPoint, track.getId());
@@ -679,7 +680,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         }
         voiceExecutor.update();
     }
-
 
     /**
      * Updates the recording track time.
@@ -716,6 +716,17 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         }
 
         return elevationSumManager.getElevationGain_m();
+    }
+
+    /**
+     * Returns the relative elevation loss (since last trackpoint).
+     */
+    Float getElevationLoss_m() {
+        if (elevationSumManager == null || !elevationSumManager.isConnected()) {
+            return null;
+        }
+
+        return elevationSumManager.getElevationLoss_m();
     }
 
     private void showNotification(boolean isGpsStarted) {

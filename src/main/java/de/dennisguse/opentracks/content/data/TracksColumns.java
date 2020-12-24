@@ -54,6 +54,7 @@ public interface TracksColumns extends BaseColumns {
     String MINELEVATION = "minelevation"; // minimum elevation
     String MAXELEVATION = "maxelevation"; // maximum elevation
     String ELEVATIONGAIN = "elevationgain"; // elevation gain
+    String ELEVATIONLOSS = "elevationloss"; // elevation loss
     String ICON = "icon"; // track activity type icon
 
     String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
@@ -74,7 +75,8 @@ public interface TracksColumns extends BaseColumns {
             + MAXELEVATION + " FLOAT, "
             + ELEVATIONGAIN + " FLOAT, "
             + ICON + " TEXT, "
-            + UUID + " BLOB)";
+            + UUID + " BLOB, "
+            + ELEVATIONLOSS + " FLOAT)";
 
     String CREATE_TABLE_INDEX = "CREATE UNIQUE INDEX " + TABLE_NAME + "_" + UUID + "_index ON " + TABLE_NAME + "(" + UUID + ")";
 

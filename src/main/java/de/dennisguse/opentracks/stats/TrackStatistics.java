@@ -45,6 +45,8 @@ public class TrackStatistics {
     private double maxSpeed_mps;
     // The total elevation gained (meters).
     private Float totalElevationGain_m = null;
+    // The total elevation lost (meters).
+    private Float totalElevationLoss_m = null;
 
     public TrackStatistics() {
     }
@@ -63,6 +65,7 @@ public class TrackStatistics {
         maxSpeed_mps = other.maxSpeed_mps;
         elevationExtremities.set(other.elevationExtremities.getMin(), other.elevationExtremities.getMax());
         totalElevationGain_m = other.totalElevationGain_m;
+        totalElevationLoss_m = other.totalElevationLoss_m;
     }
 
     /**
@@ -89,6 +92,15 @@ public class TrackStatistics {
         } else {
             if (other.totalElevationGain_m != null) {
                 totalElevationGain_m += other.totalElevationGain_m;
+            }
+        }
+        if (totalElevationLoss_m == null) {
+            if (other.totalElevationLoss_m != null) {
+                totalElevationLoss_m = other.totalElevationLoss_m;
+            }
+        } else {
+            if (other.totalElevationLoss_m != null) {
+                totalElevationLoss_m += other.totalElevationLoss_m;
             }
         }
     }
@@ -257,6 +269,26 @@ public class TrackStatistics {
         totalElevationGain_m += gain_m;
     }
 
+    public boolean hasTotalElevationLoss() {
+        return totalElevationLoss_m != null;
+    }
+
+    public @Nullable
+    Float getTotalElevationLoss() {
+        return totalElevationLoss_m;
+    }
+
+    public void setTotalElevationLoss(float totalElevationLoss_m) {
+        this.totalElevationLoss_m = totalElevationLoss_m;
+    }
+
+    public void addTotalElevationLoss(float loss_m) {
+        if (totalElevationLoss_m == null) {
+            totalElevationLoss_m = 0f;
+        }
+        totalElevationLoss_m += loss_m;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -264,6 +296,7 @@ public class TrackStatistics {
                 + "; Total Distance: " + getTotalDistance() + "; Total Time: " + getTotalTime()
                 + "; Moving Time: " + getMovingTime() + "; Max Speed: " + getMaxSpeed()
                 + "; Min Elevation: " + getMinElevation() + "; Max Elevation: " + getMaxElevation()
-                + "; Elevation Gain: " + getTotalElevationGain() + "}";
+                + "; Elevation Gain: " + getTotalElevationGain()
+                + "; Elevation Loss: " + getTotalElevationLoss() + "}";
     }
 }

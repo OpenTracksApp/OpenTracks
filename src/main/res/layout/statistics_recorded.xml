@@ -234,20 +234,20 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/stats_speed_barrier" />
 
-        <!-- Elevation gain -->
+        <!-- Elevation gain and loss -->
         <androidx.constraintlayout.widget.Group
             android:id="@+id/stats_elevation_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="stats_elevation_horizontal_line,stats_elevation_gain_label,stats_elevation_gain_value,stats_elevation_gain_unit" />
+            app:constraint_referenced_ids="stats_elevation_horizontal_line,stats_elevation_gain_label,stats_elevation_gain_value,stats_elevation_gain_unit,stats_elevation_loss_label,stats_elevation_loss_value,stats_elevation_loss_unit" />
 
         <TextView
             android:id="@+id/stats_elevation_gain_label"
             style="@style/StatsSmallLabel"
             android:text="@string/stats_gain"
             app:layout_constrainedWidth="true"
-            app:layout_constraintStart_toEndOf="@+id/guideline2"
-            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintTop_toBottomOf="@id/stats_elevation_horizontal_line" />
 
         <TextView
@@ -255,7 +255,7 @@
             style="@style/StatsSmallValue"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
             app:layout_constraintEnd_toStartOf="@+id/stats_elevation_gain_unit"
             app:layout_constraintTop_toBottomOf="@+id/stats_elevation_gain_label"
             tools:text="100" />
@@ -265,6 +265,33 @@
             style="@style/StatsUnit"
             app:layout_constraintBottom_toBottomOf="@+id/stats_elevation_gain_value"
             app:layout_constraintStart_toEndOf="@+id/stats_elevation_gain_value"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            tools:text="m" />
+
+        <TextView
+            android:id="@+id/stats_elevation_loss_label"
+            style="@style/StatsSmallLabel"
+            android:text="@string/stats_loss"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toBottomOf="@id/stats_elevation_horizontal_line" />
+
+        <TextView
+            android:id="@+id/stats_elevation_loss_value"
+            style="@style/StatsSmallValue"
+            android:value="@string/value_unknown"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/stats_elevation_loss_unit"
+            app:layout_constraintTop_toBottomOf="@+id/stats_elevation_loss_label"
+            tools:text="100" />
+
+        <TextView
+            android:id="@+id/stats_elevation_loss_unit"
+            style="@style/StatsUnit"
+            app:layout_constraintBottom_toBottomOf="@+id/stats_elevation_loss_value"
+            app:layout_constraintStart_toEndOf="@+id/stats_elevation_loss_value"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             tools:text="m" />
 
@@ -274,7 +301,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="stats_elevation_gain_value" />
+            app:constraint_referenced_ids="stats_elevation_gain_value,stats_elevation_loss_value" />
 
         <!-- Horizontal line -->
         <View

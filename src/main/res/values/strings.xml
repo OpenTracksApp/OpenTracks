@@ -176,6 +176,7 @@ limitations under the License.
     <string name="description_average_pace_in_minute">Average pace: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Average speed: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_elevation_gain">Elevation gain: %1$d m (%2$d ft)</string>
+    <string name="description_elevation_loss">Elevation loss: %1$d m (%2$d ft)</string>
     <string name="description_elevation_imperial">Elevation (ft)</string>
     <string name="description_elevation_metric">Elevation (m)</string>
     <string name="description_fastest_pace_in_minute">Fastest pace: %1$s min/km (%2$s min/mi)</string>
@@ -447,6 +448,7 @@ limitations under the License.
     <string name="stats_elevation">Elevation</string>
     <string name="stats_fastest_pace">Fastest pace</string>
     <string name="stats_gain">Gain</string>
+    <string name="stats_loss">Loss</string>
     <string name="stats_grade">Grade</string>
     <string name="stats_latitude">Latitude</string>
     <string name="stats_longitude">Longitude</string>
