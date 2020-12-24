@@ -69,6 +69,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     private final ArrayList<Float> heartRateList = new ArrayList<>();
     private final ArrayList<Float> powerList = new ArrayList<>();
     private final ArrayList<Float> elevationGainList = new ArrayList<>();
+    private final ArrayList<Float> elevationLossList = new ArrayList<>();
 
     public KmlFileTrackImporter(Context context) {
         this(context, new ContentProviderUtils(context));
@@ -217,6 +218,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         cadenceList.clear();
         powerList.clear();
         elevationGainList.clear();
+        elevationLossList.clear();
     }
 
     /**
@@ -241,6 +243,9 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
             }
             if (i < elevationGainList.size()) {
                 trackPoint.setElevationGain(elevationGainList.get(i));
+            }
+            if (i < elevationLossList.size()) {
+                trackPoint.setElevationLoss(elevationLossList.get(i));
             }
 
             insertTrackPoint(trackPoint);
@@ -310,6 +315,9 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
                 break;
             case KmlTrackWriter.EXTENDED_DATA_TYPE_ELEVATION_GAIN:
                 elevationGainList.add(value);
+                break;
+            case KmlTrackWriter.EXTENDED_DATA_TYPE_ELEVATION_LOSS:
+                elevationLossList.add(value);
                 break;
             default:
                 Log.w(TAG, "Data from extended data " + extendedDataType + " is not (yet) supported.");

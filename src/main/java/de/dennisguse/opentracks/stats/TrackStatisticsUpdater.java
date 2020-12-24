@@ -145,6 +145,12 @@ public class TrackStatisticsUpdater {
             Log.d(TAG, "elevation gain: " + trackPoint.getElevationGain());
         }
 
+        //Get elevation loss
+        if (trackPoint.hasElevationLoss()) {
+            currentSegment.addTotalElevationLoss(trackPoint.getElevationLoss());
+            Log.d(TAG, "elevation loss: " + trackPoint.getElevationLoss());
+        }
+
         if (lastTrackPoint == null || lastMovingTrackPoint == null) {
             lastTrackPoint = trackPoint;
             lastMovingTrackPoint = trackPoint;

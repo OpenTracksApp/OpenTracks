@@ -4,28 +4,48 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
     android:orientation="horizontal">
 
     <TextView
         android:id="@+id/interval_item_distance"
-        style="@style/TextMedium"
+        style="@style/TextMediumPrimary"
         android:layout_width="0dp"
         android:layout_weight="1"
+        android:layout_gravity="center_vertical"
         tools:text="1 km" />
 
     <TextView
         android:id="@+id/interval_item_rate"
-        style="@style/TextMedium"
+        style="@style/TextMediumPrimary"
         android:layout_width="0dp"
         android:layout_weight="1"
+        android:layout_gravity="center_vertical"
         tools:text="15 km/h" />
 
-    <TextView
-        android:id="@+id/interval_item_gain"
-        style="@style/TextMedium"
+    <LinearLayout
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        app:drawableStartCompat="@drawable/ic_arrow_drop_up_24"
-        tools:text="100 m" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/interval_item_gain"
+            style="@style/TextSmall"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            app:drawableStartCompat="@drawable/ic_arrow_drop_up_24"
+            tools:text="100 m" />
+
+        <TextView
+            android:id="@+id/interval_item_loss"
+            style="@style/TextSmall"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            app:drawableStartCompat="@drawable/ic_arrow_drop_down_24"
+            tools:text="100 m" />
+
+    </LinearLayout>
 
 </LinearLayout>

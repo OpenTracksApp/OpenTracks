@@ -33,6 +33,7 @@ public class TrackPoint {
     private Float cyclingCadence_rpm = null;
     private Float power = null;
     private Float elevationGain = null;
+    private Float elevationLoss = null;
 
     public TrackPoint() {
         this.location = new Location("");
@@ -50,6 +51,7 @@ public class TrackPoint {
         this.power = trackPoint.getPower();
 
         this.elevationGain = trackPoint.getElevationGain();
+        this.elevationLoss = trackPoint.getElevationLoss();
     }
 
     public TrackPoint(double latitude, double longitude, Double altitude, long time) {
@@ -105,6 +107,18 @@ public class TrackPoint {
 
     public void setElevationGain(Float elevationGain) {
         this.elevationGain = elevationGain;
+    }
+
+    public boolean hasElevationLoss() {
+        return elevationLoss != null;
+    }
+
+    public float getElevationLoss() {
+        return elevationLoss;
+    }
+
+    public void setElevationLoss(Float elevationLoss) {
+        this.elevationLoss = elevationLoss;
     }
 
     public double getLatitude() {

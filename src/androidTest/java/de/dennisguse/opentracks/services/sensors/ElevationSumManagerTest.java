@@ -32,7 +32,7 @@ public class ElevationSumManagerTest {
 
         // then
         Assert.assertEquals(0f, elevationSumManager.getElevationGain_m(), 0.01);
-        Assert.assertEquals(-48.0, elevationSumManager.getElevationLoss_m(), 0.01);
+        Assert.assertEquals(48.0, elevationSumManager.getElevationLoss_m(), 0.01);
     }
 
     @Test

@@ -46,7 +46,7 @@
         <TextView
             android:id="@+id/interval_elevation"
             style="@style/IntervalLabel"
-            android:text="@string/stats_gain" />
+            android:text="@string/stats_elevation" />
 
     </LinearLayout>
 

@@ -64,6 +64,7 @@ public class DescriptionGeneratorTest {
         stats.setMaxElevation(550);
         stats.setMinElevation(-500);
         stats.setTotalElevationGain(6000);
+        stats.setTotalElevationLoss(6000);
         stats.setStartTime_ms(START_TIME);
         track.setTrackStatistics(stats);
         track.setCategory("hiking");
@@ -84,6 +85,7 @@ public class DescriptionGeneratorTest {
                 + "Max elevation: 550 m (1804 ft)<br>"
                 + "Min elevation: -500 m (-1640 ft)<br>"
                 + "Elevation gain: 6000 m (19685 ft)<br>"
+                + "Elevation loss: 6000 m (19685 ft)<br>"
                 + "Recorded: " + StringUtils.formatDateTime(context, START_TIME) + "<br>";
 
         assertEquals(expected, descriptionGenerator.generateTrackDescription(track, true));
@@ -100,6 +102,7 @@ public class DescriptionGeneratorTest {
         stats.setMaxElevation(Double.POSITIVE_INFINITY);
         stats.setMinElevation(Double.NEGATIVE_INFINITY);
         stats.setTotalElevationGain(6000);
+        stats.setTotalElevationLoss(6000);
         stats.setStartTime_ms(START_TIME);
         track.setTrackStatistics(stats);
         track.setCategory("hiking");
@@ -118,6 +121,7 @@ public class DescriptionGeneratorTest {
                         + "Average moving pace: 0:15 min/km (0:24 min/mi)<br>"
                         + "Fastest pace: 0:10 min/km (0:16 min/mi)<br>"
                         + "Elevation gain: 6000 m (19685 ft)<br>"
+                        + "Elevation loss: 6000 m (19685 ft)<br>"
                         + "Recorded: " + StringUtils.formatDateTime(context, START_TIME) + "<br>";
 
         assertEquals(expected, descriptionGenerator.generateTrackDescription(track, true));

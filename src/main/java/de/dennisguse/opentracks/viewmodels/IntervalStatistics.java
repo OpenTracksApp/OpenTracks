@@ -25,6 +25,7 @@ public class IntervalStatistics {
 
         Interval interval = new Interval();
         interval.gain_m += trackPoints.get(0).hasElevationGain() ? trackPoints.get(0).getElevationGain() : 0;
+        interval.loss_m += trackPoints.get(0).hasElevationLoss() ? trackPoints.get(0).getElevationLoss() : 0;
         for (int i = 1; i < trackPoints.size(); i++) {
             TrackPoint prevTrackPoint = trackPoints.get(i - 1);
             TrackPoint trackPoint = trackPoints.get(i);
@@ -33,6 +34,7 @@ public class IntervalStatistics {
                 interval.distance_m += prevTrackPoint.distanceTo(trackPoint);
                 interval.time_ms += trackPoint.getTime() - prevTrackPoint.getTime();
                 interval.gain_m += trackPoint.hasElevationGain() ? trackPoint.getElevationGain() : 0;
+                interval.loss_m += trackPoint.hasElevationLoss() ? trackPoint.getElevationLoss() : 0;
 
                 if (interval.distance_m >= distanceInterval_m) {
                     float adjustFactor = distanceInterval_m / interval.distance_m;
@@ -80,6 +82,7 @@ public class IntervalStatistics {
         private float distance_m = 0f;
         private float time_ms = 0f;
         private float gain_m = 0f;
+        private float loss_m = 0f;
 
         public Interval() {}
 
@@ -87,12 +90,14 @@ public class IntervalStatistics {
             this.distance_m = distance_m;
             this.time_ms = time_ms;
             this.gain_m = 0f;
+            this.loss_m = 0f;
         }
 
         public Interval(Interval i) {
             distance_m = i.distance_m;
             time_ms = i.time_ms;
             gain_m = i.gain_m;
+            loss_m = i.loss_m;
         }
 
         public float getDistance_m() {
@@ -116,6 +121,10 @@ public class IntervalStatistics {
 
         public float getGain_m() {
             return gain_m;
+        }
+
+        public float getLoss_m() {
+            return loss_m;
         }
     }
 }

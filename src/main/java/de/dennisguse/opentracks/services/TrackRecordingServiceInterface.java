@@ -78,6 +78,13 @@ public interface TrackRecordingServiceInterface {
      */
     Float getElevationGain_m();
 
+    /**
+     * Gets the current elevation loss.
+     *
+     * @return elevation loss in m or null.
+     */
+    Float getElevationLoss_m();
+
     @VisibleForTesting
     void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager);
 

@@ -36,7 +36,7 @@ public class PressureSensorUtils {
         }
 
         public float getElevationLoss_m() {
-            return elevationChange_m < 0 ? elevationChange_m : 0;
+            return elevationChange_m < 0 ? -1 * elevationChange_m : 0;
         }
     }
 
@@ -65,7 +65,7 @@ public class PressureSensorUtils {
 
         // Limit elevation change by ELEVATION_CHANGE_DIFF and computes pressure value accordingly.
         ElevationChange elevationChange = new ElevationChange(currentSensorValue_hPa, elevationChange_m);
-        if (elevationChange.getElevationGain_m() > 0) {
+        if (elevationChange.getElevationChange_m() > 0) {
             return new ElevationChange(getBarometricPressure(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, lastSensorValue_m + ELEVATION_CHANGE_DIFF_M), ELEVATION_CHANGE_DIFF_M);
         } else {
             return new ElevationChange(getBarometricPressure(SensorManager.PRESSURE_STANDARD_ATMOSPHERE, lastSensorValue_m - ELEVATION_CHANGE_DIFF_M), -1 * ELEVATION_CHANGE_DIFF_M);

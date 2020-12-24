@@ -176,17 +176,24 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsMovingSpeedUnit.setText(parts.second);
         }
 
-        // Set elevation gain
+        // Set elevation gain and loss
         {
             // Make elevation visible?
             boolean showElevation = PreferencesUtils.isShowStatsElevation(getContext());
             viewBinding.statsElevationGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
 
             Float elevationGain_m = trackStatistics != null ? trackStatistics.getTotalElevationGain() : null;
+            Float elevationLoss_m = trackStatistics != null ? trackStatistics.getTotalElevationLoss() : null;
 
-            Pair<String, String> parts = StringUtils.formatElevation(getContext(), elevationGain_m, metricUnits);
+            Pair<String, String> parts;
+
+            parts = StringUtils.formatElevation(getContext(), elevationGain_m, metricUnits);
             viewBinding.statsElevationGainValue.setText(parts.first);
             viewBinding.statsElevationGainUnit.setText(parts.second);
+
+            parts = StringUtils.formatElevation(getContext(), elevationLoss_m, metricUnits);
+            viewBinding.statsElevationLossValue.setText(parts.first);
+            viewBinding.statsElevationLossUnit.setText(parts.second);
         }
     }
 }

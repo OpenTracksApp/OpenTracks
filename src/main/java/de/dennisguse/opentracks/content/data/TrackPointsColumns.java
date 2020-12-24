@@ -54,6 +54,7 @@ public interface TrackPointsColumns extends BaseColumns {
     String SENSOR_CADENCE = "sensor_cadence";
     String SENSOR_POWER = "sensor_power";
     String ELEVATION_GAIN = "elevation_gain";
+    String ELEVATION_LOSS = "elevation_loss";
 
     String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -69,6 +70,7 @@ public interface TrackPointsColumns extends BaseColumns {
             + SENSOR_CADENCE + " FLOAT, "
             + SENSOR_POWER + " FLOAT, "
             + ELEVATION_GAIN + " FLOAT, "
+            + ELEVATION_LOSS + " FLOAT, "
             + "FOREIGN KEY (" + TRACKID + ") REFERENCES " + TracksColumns.TABLE_NAME + "(" + TracksColumns._ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
             + ")";
 

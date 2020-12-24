@@ -45,6 +45,7 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
             viewHolder.distance = intervalView.findViewById(R.id.interval_item_distance);
             viewHolder.rate = intervalView.findViewById(R.id.interval_item_rate);
             viewHolder.gain = intervalView.findViewById(R.id.interval_item_gain);
+            viewHolder.loss = intervalView.findViewById(R.id.interval_item_loss);
 
             intervalView.setTag(viewHolder);
         } else {
@@ -66,6 +67,7 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
         }
 
         viewHolder.gain.setText(StringUtils.formatDistance(getContext(), interval.getGain_m(), metricUnits));
+        viewHolder.loss.setText(StringUtils.formatDistance(getContext(), interval.getLoss_m(), metricUnits));
 
         return intervalView;
     }
@@ -82,5 +84,6 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
         private TextView distance;
         private TextView rate;
         private TextView gain;
+        private TextView loss;
     }
 }
