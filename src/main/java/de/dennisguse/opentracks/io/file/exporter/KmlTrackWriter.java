@@ -16,7 +16,6 @@
 package de.dennisguse.opentracks.io.file.exporter;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.location.Location;
 
 import java.io.OutputStream;
@@ -403,15 +402,12 @@ public class KmlTrackWriter implements TrackWriter {
         if (trackPointId == -1L) {
             return location.getBearing();
         }
-        TrackPoint viewLocation;
-        try (Cursor cursor = contentProviderUtils.getTrackPointCursor(trackId, trackPointId, 10, true)) {
-            if (cursor == null || cursor.getCount() == 0) {
-                return location.getBearing();
-            }
-            cursor.moveToPosition(cursor.getCount() - 1);
-            viewLocation = contentProviderUtils.createTrackPoint(cursor);
+        TrackPoint viewLocation = contentProviderUtils.getLastValidTrackPoint(trackId);
+        if (viewLocation != null) {
+            return viewLocation.bearingTo(location);
         }
-        return viewLocation.bearingTo(location);
+
+        return location.getBearing();
     }
 
     private String getCoordinates(Location location, String separator) {
