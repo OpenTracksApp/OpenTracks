@@ -8,7 +8,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Arrays;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
@@ -50,7 +49,7 @@ public class AnnouncementUtilsTest {
         stats.setMaxSpeed(100);
         stats.setTotalElevationGain(6000);
 
-        List<TrackPoint> trackPoints = Arrays.asList(TestDataUtil.createTrack(new Track.Id(System.currentTimeMillis()), 10).second);
+        List<TrackPoint> trackPoints = TestDataUtil.createTrack(new Track.Id(System.currentTimeMillis()), 10).second;
         IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, 1000);
         IntervalStatistics.Interval lastInterval = intervalStatistics.getIntervalList().get(intervalStatistics.getIntervalList().size() - 1);
 

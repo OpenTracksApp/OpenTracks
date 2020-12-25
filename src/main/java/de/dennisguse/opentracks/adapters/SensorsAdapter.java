@@ -76,10 +76,10 @@ public class SensorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
-        TextView label;
-        TextView sensorValue;
-        TextView value;
-        TextView unit;
+        final TextView label;
+        final TextView sensorValue;
+        final TextView value;
+        final TextView unit;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

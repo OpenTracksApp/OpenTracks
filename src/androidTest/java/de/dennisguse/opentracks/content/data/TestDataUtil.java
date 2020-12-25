@@ -7,6 +7,8 @@ import android.util.Pair;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.util.FileUtils;
@@ -36,19 +38,19 @@ public class TestDataUtil {
      * @param trackId   the trackId of the track
      * @param numPoints the trackPoints number in the track
      */
-    public static Pair<Track, TrackPoint[]> createTrack(Track.Id trackId, int numPoints) {
+    public static Pair<Track, List<TrackPoint>> createTrack(Track.Id trackId, int numPoints) {
         Track track = createTrack(trackId);
 
-        TrackPoint[] trackPoints = new TrackPoint[numPoints];
+        List<TrackPoint> trackPoints = new ArrayList<>(numPoints);
         for (int i = 0; i < numPoints; i++) {
-            trackPoints[i] = createTrackPoint(i);
+            trackPoints.add(createTrackPoint(i));
         }
 
         return new Pair<>(track, trackPoints);
     }
 
     public static Track createTrackAndInsert(ContentProviderUtils contentProviderUtils, Track.Id trackId, int numPoints) {
-        Pair<Track, TrackPoint[]> pair = createTrack(trackId, numPoints);
+        Pair<Track, List<TrackPoint>> pair = createTrack(trackId, numPoints);
 
         insertTrackWithLocations(contentProviderUtils, pair.first, pair.second);
 
@@ -83,7 +85,7 @@ public class TestDataUtil {
      * @param track       track to be inserted
      * @param trackPoints trackPoints to be inserted
      */
-    public static void insertTrackWithLocations(ContentProviderUtils contentProviderUtils, Track track, TrackPoint[] trackPoints) {
+    public static void insertTrackWithLocations(ContentProviderUtils contentProviderUtils, Track track, List<TrackPoint> trackPoints) {
         contentProviderUtils.insertTrack(track);
         contentProviderUtils.bulkInsertTrackPoint(trackPoints, track.getId());
     }

@@ -1,12 +1,9 @@
 package de.dennisguse.opentracks.viewmodels;
 
-import android.util.Pair;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.util.Arrays;
 import java.util.List;
 
 import de.dennisguse.opentracks.content.data.TestDataUtil;
@@ -24,8 +21,7 @@ public class IntervalStatisticsTest {
 	private static final String TAG = IntervalStatisticsTest.class.getSimpleName();
 
 	private List<TrackPoint> buildTrackPoints(int numberOfTrackPoints) {
-		Pair<Track, TrackPoint[]> pair = TestDataUtil.createTrack(new Track.Id(System.currentTimeMillis()), numberOfTrackPoints);
-		return Arrays.asList(pair.second);
+		return TestDataUtil.createTrack(new Track.Id(System.currentTimeMillis()), numberOfTrackPoints).second;
 	}
 
 	private TrackStatistics buildTrackStatistics(List<TrackPoint> trackPoints) {

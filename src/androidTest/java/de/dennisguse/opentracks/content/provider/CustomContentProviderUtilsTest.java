@@ -34,7 +34,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -64,6 +63,7 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class CustomContentProviderUtilsTest {
+
     private static final String NAME_PREFIX = "test name";
     private static final String MOCK_DESC = "Mock Next Marker Desc!";
     private static final String TEST_DESC = "Test Desc!";
@@ -131,14 +131,14 @@ public class CustomContentProviderUtilsTest {
         track = contentProviderUtils.getTrack(id);
         assertNotNull(track);
 
-        TrackPoint[] trackPoints = new TrackPoint[numPoints];
+        List<TrackPoint> trackPoints = new ArrayList<>(numPoints);
         for (int i = 0; i < numPoints; ++i) {
             Location loc = new Location("test");
             loc.setLatitude(37.0 + (double) i / 10000.0);
             loc.setLongitude(57.0 - (double) i / 10000.0);
             loc.setAccuracy((float) i / 100.0f);
             loc.setAltitude(i * 2.5);
-            trackPoints[i] = new TrackPoint(loc);
+            trackPoints.add(new TrackPoint(loc));
         }
         contentProviderUtils.bulkInsertTrackPoint(trackPoints, id);
 
@@ -420,7 +420,7 @@ public class CustomContentProviderUtilsTest {
     @Test
     public void testCreateContentValues_marker() {
         Track.Id trackId = new Track.Id(System.currentTimeMillis());
-        Pair<Track, TrackPoint[]> track = TestDataUtil.createTrack(trackId, 10);
+        Pair<Track, List<TrackPoint>> track = TestDataUtil.createTrack(trackId, 10);
 
         // Bottom
         long startTime = 1000L;
@@ -439,7 +439,7 @@ public class CustomContentProviderUtilsTest {
         track.first.setTrackStatistics(statistics);
         contentProviderUtils.insertTrack(track.first);
 
-        Marker marker = new Marker(trackId, track.second[0]);
+        Marker marker = new Marker(trackId, track.second.get(0));
         marker.setDescription(TEST_DESC);
         contentProviderUtils.insertMarker(marker);
 
@@ -754,19 +754,19 @@ public class CustomContentProviderUtilsTest {
     }
 
     /**
-     * Tests the method {@link ContentProviderUtils#bulkInsertTrackPoint(TrackPoint[], Track.Id)}.
+     * Tests the method {@link ContentProviderUtils#bulkInsertTrackPoint(List, Track.Id)}.
      */
     @Test
     public void testBulkInsertTrackPoint() {
         // given
         Track.Id trackId = new Track.Id(System.currentTimeMillis());
-        Pair<Track, TrackPoint[]> track = TestDataUtil.createTrack(trackId, 10);
+        Pair<Track, List<TrackPoint>> track = TestDataUtil.createTrack(trackId, 10);
         TestDataUtil.insertTrackWithLocations(contentProviderUtils, track.first, track.second);
 
         // when / then
         contentProviderUtils.bulkInsertTrackPoint(track.second, trackId);
         assertEquals(20, contentProviderUtils.getTrackPointCursor(trackId, -1L, 1000).getCount());
-        contentProviderUtils.bulkInsertTrackPoint(Arrays.copyOfRange(track.second, 0, 8), trackId);
+        contentProviderUtils.bulkInsertTrackPoint(track.second.subList(0, 8), trackId);
         assertEquals(28, contentProviderUtils.getTrackPointCursor(trackId, -1L, 1000).getCount());
     }
 
@@ -866,12 +866,12 @@ public class CustomContentProviderUtilsTest {
     public void testGetTrackPointCursor_asc() {
         // given
         Track.Id trackId = new Track.Id(System.currentTimeMillis());
-        Pair<Track, TrackPoint[]> track = TestDataUtil.createTrack(trackId, 10);
+        Pair<Track, List<TrackPoint>> track = TestDataUtil.createTrack(trackId, 10);
         contentProviderUtils.insertTrack(track.first);
 
-        long[] trackpointIds = new long[track.second.length];
+        long[] trackpointIds = new long[track.second.size()];
         for (int i = 0; i < trackpointIds.length; i++) {
-            trackpointIds[i] = ContentUris.parseId(contentProviderUtils.insertTrackPoint(track.second[i], track.first.getId()));
+            trackpointIds[i] = ContentUris.parseId(contentProviderUtils.insertTrackPoint(track.second.get(i), track.first.getId()));
         }
 
         // when
@@ -885,12 +885,12 @@ public class CustomContentProviderUtilsTest {
     public void testGetTrackPointLocationIterator_asc() {
         // given
         Track.Id trackId = new Track.Id(System.currentTimeMillis());
-        Pair<Track, TrackPoint[]> track = TestDataUtil.createTrack(trackId, 10);
+        Pair<Track, List<TrackPoint>> track = TestDataUtil.createTrack(trackId, 10);
         contentProviderUtils.insertTrack(track.first);
 
-        long[] trackpointIds = new long[track.second.length];
+        long[] trackpointIds = new long[track.second.size()];
         for (int i = 0; i < trackpointIds.length; i++) {
-            trackpointIds[i] = ContentUris.parseId(contentProviderUtils.insertTrackPoint(track.second[i], track.first.getId()));
+            trackpointIds[i] = ContentUris.parseId(contentProviderUtils.insertTrackPoint(track.second.get(i), track.first.getId()));
         }
 
         long startTrackPointId = trackpointIds[0];

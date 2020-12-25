@@ -18,7 +18,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
@@ -62,7 +61,7 @@ public class ExportImportTest {
 
     @Before
     public void setUp() {
-        Pair<Track, TrackPoint[]> track = TestDataUtil.createTrack(trackId, 10);
+        Pair<Track, List<TrackPoint>> track = TestDataUtil.createTrack(trackId, 10);
         track.first.setIcon(TRACK_ICON);
         track.first.setCategory(TRACK_CATEGORY);
         track.first.setDescription(TRACK_DESCRIPTION);
@@ -70,10 +69,10 @@ public class ExportImportTest {
         contentProviderUtils.bulkInsertTrackPoint(track.second, track.first.getId());
 
         trackPoints.clear();
-        trackPoints.addAll(Arrays.asList(track.second));
+        trackPoints.addAll(track.second);
 
         for (int i = 0; i < 3; i++) {
-            Marker marker = new Marker(trackId, track.second[i].getLocation());
+            Marker marker = new Marker(trackId, track.second.get(i).getLocation());
             marker.setName("the marker " + i);
             marker.setDescription("the marker description " + i);
             marker.setCategory("the marker category" + i);
