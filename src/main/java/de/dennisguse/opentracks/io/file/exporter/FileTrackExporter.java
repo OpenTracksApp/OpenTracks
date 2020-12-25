@@ -126,7 +126,7 @@ public class FileTrackExporter implements TrackExporter {
         boolean isLastLocationValid = false;
         TrackPoint lastTrackPoint = null;
 
-        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L, false)) {
+        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L)) {
 
             while (trackPointIterator.hasNext()) {
                 if (Thread.interrupted()) {

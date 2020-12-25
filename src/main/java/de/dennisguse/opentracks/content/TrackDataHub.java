@@ -364,7 +364,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         int samplingFrequency = -1;
         boolean includeNextPoint = false;
 
-        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, localLastSeenTrackPointIdId + 1, false)) {
+        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, localLastSeenTrackPointIdId + 1)) {
 
             while (trackPointIterator.hasNext()) {
                 TrackPoint trackPoint = trackPointIterator.next();

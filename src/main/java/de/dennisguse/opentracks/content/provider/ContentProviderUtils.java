@@ -680,27 +680,22 @@ public class ContentProviderUtils {
      * Creates a location cursor. The caller owns the returned cursor and is responsible for closing it.
      *
      * @param trackId           the track id
-     * @param startTrackPointId the starting trackPoint id. -1L to ignore
-     * @param maxLocations      maximum number of locations to return. -1 for no limit
-     * @param descending        true to sort the result in descending order (latest location first)
+     * @param startTrackPointId the starting trackPoint id. `null` to ignore
+     * @param maxLocations      maximum number of locations to return. `null` for no limit
      */
-    public Cursor getTrackPointCursor(Track.Id trackId, long startTrackPointId, int maxLocations, boolean descending) {
+    public Cursor getTrackPointCursor(Track.Id trackId, Long startTrackPointId, Integer maxLocations) {
         String selection;
         String[] selectionArgs;
-        if (startTrackPointId >= 0) {
-            String comparison = descending ? "<=" : ">=";
-            selection = TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns._ID + comparison + "?";
+        if (startTrackPointId != null) {
+            selection = TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns._ID + ">=?";
             selectionArgs = new String[]{Long.toString(trackId.getId()), Long.toString(startTrackPointId)};
         } else {
             selection = TrackPointsColumns.TRACKID + "=?";
             selectionArgs = new String[]{Long.toString(trackId.getId())};
         }
 
-        String sortOrder = TrackPointsColumns._ID;
-        if (descending) {
-            sortOrder += " DESC";
-        }
-        if (maxLocations >= 0) {
+        String sortOrder = TrackPointsColumns.DEFAULT_SORT_ORDER;
+        if (maxLocations != null) {
             sortOrder += " LIMIT " + maxLocations;
         }
         return getTrackPointCursor(null, selection, selectionArgs, sortOrder);
@@ -784,11 +779,10 @@ public class ContentProviderUtils {
      * When done with iteration, {@link TrackPointIterator#close()} must be called.
      *
      * @param trackId           the track id
-     * @param startTrackPointId the starting trackPoint id. -1L to ignore
-     * @param descending        true to sort the result in descending order (latest location first)
+     * @param startTrackPointId the starting trackPoint id. `null` to ignore
      */
-    public TrackPointIterator getTrackPointLocationIterator(final Track.Id trackId, final long startTrackPointId, final boolean descending) {
-        return new TrackPointIterator(this, trackId, startTrackPointId, descending);
+    public TrackPointIterator getTrackPointLocationIterator(final Track.Id trackId, final Long startTrackPointId) {
+        return new TrackPointIterator(this, trackId, startTrackPointId);
     }
 
     private TrackPoint findTrackPointBy(String selection, String[] selectionArgs) {
@@ -816,7 +810,7 @@ public class ContentProviderUtils {
     public List<TrackPoint> getTrackPoints(Track.Id trackId) {
         List<TrackPoint> trackPoints = null;
 
-        try (Cursor trackPointCursor = getTrackPointCursor(trackId, -1L, -1, false)) {
+        try (Cursor trackPointCursor = getTrackPointCursor(trackId, -1L, -1)) {
             if (trackPointCursor != null) {
                 trackPointCursor.moveToFirst();
                 trackPoints = new ArrayList<>(trackPointCursor.getCount());

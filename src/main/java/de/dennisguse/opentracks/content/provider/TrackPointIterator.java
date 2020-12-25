@@ -18,16 +18,14 @@ public class TrackPointIterator implements Iterator<TrackPoint>, AutoCloseable {
 
     private final ContentProviderUtils contentProviderUtils;
     private final Track.Id trackId;
-    private final boolean descending;
     private final CachedTrackPointsIndexes indexes;
     private long lastTrackPointId = -1L;
     private Cursor cursor;
 
 
-    public TrackPointIterator(ContentProviderUtils contentProviderUtils, Track.Id trackId, long startTrackPointId, boolean descending) {
+    public TrackPointIterator(ContentProviderUtils contentProviderUtils, Track.Id trackId, Long startTrackPointId) {
         this.contentProviderUtils = contentProviderUtils;
         this.trackId = trackId;
-        this.descending = descending;
 
         cursor = getCursor(startTrackPointId);
         indexes = cursor != null ? new CachedTrackPointsIndexes(cursor)
@@ -40,14 +38,14 @@ public class TrackPointIterator implements Iterator<TrackPoint>, AutoCloseable {
      * @param trackPointId the starting track point id
      */
     private Cursor getCursor(long trackPointId) {
-        return contentProviderUtils.getTrackPointCursor(trackId, trackPointId, contentProviderUtils.getDefaultCursorBatchSize(), descending);
+        return contentProviderUtils.getTrackPointCursor(trackId, trackPointId, contentProviderUtils.getDefaultCursorBatchSize());
     }
 
     /**
      * Advances the cursor to the next batch. Returns true if successful.
      */
     private boolean advanceCursorToNextBatch() {
-        long trackPointId = lastTrackPointId == -1L ? -1L : lastTrackPointId + (descending ? -1 : 1);
+        long trackPointId = lastTrackPointId == -1L ? -1L : lastTrackPointId + 1;
         Log.d(TAG, "Advancing track point id: " + trackPointId);
         cursor.close();
         cursor = getCursor(trackPointId);
