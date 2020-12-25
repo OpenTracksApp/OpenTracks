@@ -160,7 +160,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         // TODO Should not be necessary anymore?
         TrackStatisticsUpdater markerTrackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics().getStartTime_ms());
 
-        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L)) {
+        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null)) {
 
             while (true) {
                 if (marker == null) {

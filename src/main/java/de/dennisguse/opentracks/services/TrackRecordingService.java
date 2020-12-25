@@ -352,7 +352,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics().getStartTime_ms());
 
-        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), -1L)) {
+        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null)) {
             trackStatisticsUpdater.addTrackPoint(trackPointIterator, recordingDistanceInterval);
         } catch (RuntimeException e) {
             Log.e(TAG, "RuntimeException", e);

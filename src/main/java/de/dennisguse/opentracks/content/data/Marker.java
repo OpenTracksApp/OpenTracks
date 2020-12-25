@@ -82,8 +82,8 @@ public final class Marker {
     /**
      * May be null if the it was not loaded from the database.
      */
-    public @Nullable
-    Id getId() {
+    @Nullable
+    public Id getId() {
         return id;
     }
 
@@ -123,8 +123,8 @@ public final class Marker {
         this.icon = icon;
     }
 
-    public @NonNull
-    Track.Id getTrackId() {
+    @NonNull
+    public Track.Id getTrackId() {
         return trackId;
     }
 
@@ -144,8 +144,8 @@ public final class Marker {
         this.duration = duration;
     }
 
-    public @NonNull
-    Location getLocation() {
+    @NonNull
+    public Location getLocation() {
         return location;
     }
 
