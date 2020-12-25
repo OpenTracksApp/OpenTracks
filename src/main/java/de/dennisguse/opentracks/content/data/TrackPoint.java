@@ -80,7 +80,8 @@ public class TrackPoint {
         }
     }
 
-    private final Type type;
+    @NonNull
+    private Type type;
 
     private Float heartRate_bpm = null;
     private Float cyclingCadence_rpm = null;
@@ -92,7 +93,7 @@ public class TrackPoint {
         this(Type.TRACKPOINT, new Location(""));
     }
 
-    public TrackPoint(Type type) {
+    public TrackPoint(@NonNull Type type) {
         this.type = type;
         this.location = new Location("");
     }
@@ -106,18 +107,6 @@ public class TrackPoint {
     public TrackPoint(@NonNull Type type, @NonNull Location location) {
         this.type = type;
         this.location = location;
-    }
-
-    public TrackPoint(@NonNull TrackPoint trackPoint) {
-        this.type = trackPoint.getType();
-        this.location = trackPoint.getLocation();
-
-        this.heartRate_bpm = trackPoint.getHeartRate_bpm();
-        this.cyclingCadence_rpm = trackPoint.getCyclingCadence_rpm();
-        this.power = trackPoint.getPower();
-
-        this.elevationGain = trackPoint.getElevationGain();
-        this.elevationLoss = trackPoint.getElevationLoss();
     }
 
     public TrackPoint(double latitude, double longitude, Double altitude, long time) {
@@ -170,6 +159,10 @@ public class TrackPoint {
     @NonNull
     public Type getType() {
         return type;
+    }
+
+    public void setType(@NonNull Type type) {
+        this.type = type;
     }
 
     public boolean isSegmentStart() {
