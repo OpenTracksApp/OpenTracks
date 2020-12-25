@@ -569,8 +569,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         double distanceToLastTrackLocation = trackPoint.distanceTo(lastValidTrackPoint);
         if (distanceToLastTrackLocation > maxRecordingDistance) {
             insertTrackPointIfNewer(track, lastTrackPoint);
-            insertTrackPoint(track, TrackPoint.createSegmentEndWithTime(trackPoint));
 
+            trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
             insertTrackPoint(track, trackPoint);
 
             isIdle = false;

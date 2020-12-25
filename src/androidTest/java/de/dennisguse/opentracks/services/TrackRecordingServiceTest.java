@@ -182,6 +182,40 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
+    public void testRecording_start() throws TimeoutException, InterruptedException {
+        // given
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+
+        // when
+        Track.Id trackId = service.startNewTrack();
+
+        // then
+        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+
+        assertEquals(1, trackPoints.size());
+        assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(0).getType());
+    }
+
+    @MediumTest
+    @Test
+    public void testRecording_stop() throws TimeoutException, InterruptedException {
+        // given
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        Track.Id trackId = service.startNewTrack();
+
+        // when
+        service.endCurrentTrack();
+
+        // then
+        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+
+        assertEquals(2, trackPoints.size());
+        assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(0).getType());
+        assertEquals(TrackPoint.Type.SEGMENT_END_MANUAL, trackPoints.get(1).getType());
+    }
+
+    @MediumTest
+    @Test
     public void testRecording_pauseAndResume() throws TimeoutException, InterruptedException {
         // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
