@@ -83,8 +83,8 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
 
     // Track points sampling state
     private int numLoadedPoints;
-    private long firstSeenTrackPointId;
-    private long lastSeenTrackPointId;
+    private TrackPoint.Id firstSeenTrackPointId;
+    private TrackPoint.Id lastSeenTrackPointId;
 
     // Registered listeners
     private ContentObserver tracksTableObserver;
@@ -351,36 +351,42 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         }
 
         int localNumLoadedTrackPoints = updateSamplingState ? numLoadedPoints : 0;
-        long localFirstSeenTrackPointId = updateSamplingState ? firstSeenTrackPointId : -1L;
-        long localLastSeenTrackPointIdId = updateSamplingState ? lastSeenTrackPointId : -1L;
-        long maxPointId = updateSamplingState ? -1L : lastSeenTrackPointId;
+        TrackPoint.Id localFirstSeenTrackPointId = updateSamplingState ? firstSeenTrackPointId : null;
+        TrackPoint.Id localLastSeenTrackPointIdId = updateSamplingState ? lastSeenTrackPointId : null;
+        TrackPoint.Id maxPointId = updateSamplingState ? null : lastSeenTrackPointId;
 
         if (selectedTrackId == null) {
             Log.w(TAG, "This should not happen, but it does"); //TODO
             return;
         }
 
-        long lastTrackPointId = contentProviderUtils.getLastTrackPointId(selectedTrackId);
+        TrackPoint.Id lastTrackPointId = contentProviderUtils.getLastTrackPointId(selectedTrackId);
         int samplingFrequency = -1;
         boolean includeNextPoint = false;
 
-        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, localLastSeenTrackPointIdId + 1)) {
+
+        TrackPoint.Id next;
+        if (localLastSeenTrackPointIdId != null) {
+            next = new TrackPoint.Id(localLastSeenTrackPointIdId.getId() + 1); //TODO startTrackPointId + 1 is an assumption assumption; should be derived from the DB.
+        }
+
+        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, null)) {
 
             while (trackPointIterator.hasNext()) {
                 TrackPoint trackPoint = trackPointIterator.next();
-                long trackPointId = trackPointIterator.getTrackPointId();
+                TrackPoint.Id trackPointId = trackPoint.getId();
 
                 // Stop if past the last wanted point
-                if (maxPointId != -1L && trackPointId > maxPointId) {
+                if (maxPointId != null && trackPointId.getId() > maxPointId.getId()) {
                     break;
                 }
 
-                if (localFirstSeenTrackPointId == -1) {
+                if (localFirstSeenTrackPointId == null) {
                     localFirstSeenTrackPointId = trackPointId;
                 }
 
                 if (samplingFrequency == -1) {
-                    long numTotalPoints = Math.max(0L, lastTrackPointId - localFirstSeenTrackPointId);
+                    long numTotalPoints = Math.max(0L, lastTrackPointId.getId() - localFirstSeenTrackPointId.getId()); //TODO That is an assumption; should be derived from the DB.
                     samplingFrequency = 1 + (int) (numTotalPoints / targetNumPoints);
                 }
 
@@ -421,8 +427,8 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
      */
     private void resetSamplingState() {
         numLoadedPoints = 0;
-        firstSeenTrackPointId = -1L;
-        lastSeenTrackPointId = -1L;
+        firstSeenTrackPointId = null;
+        lastSeenTrackPointId = null;
     }
 
     /**

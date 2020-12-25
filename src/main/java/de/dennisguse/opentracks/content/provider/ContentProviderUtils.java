@@ -545,6 +545,9 @@ public class ContentProviderUtils {
      */
     static TrackPoint fillTrackPoint(Cursor cursor, CachedTrackPointsIndexes indexes) {
         TrackPoint trackPoint = new TrackPoint();
+        if (!cursor.isNull(indexes.longitudeIndex)) {
+            trackPoint.setId(new TrackPoint.Id(cursor.getInt(indexes.idIndex)));
+        }
 
         if (!cursor.isNull(indexes.longitudeIndex)) {
             trackPoint.setLongitude(((double) cursor.getInt(indexes.longitudeIndex)) / 1E6);
@@ -622,15 +625,15 @@ public class ContentProviderUtils {
      * @param trackId the track id
      */
     @Deprecated
-    public long getLastTrackPointId(@NonNull Track.Id trackId) {
+    public TrackPoint.Id getLastTrackPointId(@NonNull Track.Id trackId) {
         String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") from " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=?)";
         String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
         try (Cursor cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection, selectionArgs, TrackPointsColumns._ID)) {
             if (cursor != null && cursor.moveToFirst()) {
-                return cursor.getLong(cursor.getColumnIndexOrThrow(TrackPointsColumns._ID));
+                return new TrackPoint.Id(cursor.getLong(cursor.getColumnIndexOrThrow(TrackPointsColumns._ID)));
             }
         }
-        return -1L;
+        return null;
     }
 
     /**
@@ -640,15 +643,15 @@ public class ContentProviderUtils {
      * @param location the location
      * @return trackPoint id if the location is in the track. -1L otherwise.
      */
-    public long getTrackPointId(Track.Id trackId, Location location) {
+    public TrackPoint.Id getTrackPointId(Track.Id trackId, Location location) {
         String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns.TIME + "=?)";
         String[] selectionArgs = new String[]{Long.toString(trackId.getId()), Long.toString(location.getTime())};
         try (Cursor cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection, selectionArgs, TrackPointsColumns._ID)) {
             if (cursor != null && cursor.moveToFirst()) {
-                return cursor.getLong(cursor.getColumnIndexOrThrow(TrackPointsColumns._ID));
+                return new TrackPoint.Id(cursor.getLong(cursor.getColumnIndexOrThrow(TrackPointsColumns._ID)));
             }
         }
-        return -1L;
+        return null;
     }
 
     /**
@@ -667,12 +670,12 @@ public class ContentProviderUtils {
      * @param startTrackPointId the starting trackPoint id. `null` to ignore
      * @param maxLocations      maximum number of locations to return. `null` for no limit
      */
-    public Cursor getTrackPointCursor(Track.Id trackId, Long startTrackPointId, Integer maxLocations) {
+    public Cursor getTrackPointCursor(Track.Id trackId, TrackPoint.Id startTrackPointId, Integer maxLocations) {
         String selection;
         String[] selectionArgs;
         if (startTrackPointId != null) {
             selection = TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns._ID + ">=?";
-            selectionArgs = new String[]{Long.toString(trackId.getId()), Long.toString(startTrackPointId)};
+            selectionArgs = new String[]{Long.toString(trackId.getId()), Long.toString(startTrackPointId.getId())};
         } else {
             selection = TrackPointsColumns.TRACKID + "=?";
             selectionArgs = new String[]{Long.toString(trackId.getId())};
@@ -765,7 +768,7 @@ public class ContentProviderUtils {
      * @param trackId           the track id
      * @param startTrackPointId the starting trackPoint id. `null` to ignore
      */
-    public TrackPointIterator getTrackPointLocationIterator(final Track.Id trackId, final Long startTrackPointId) {
+    public TrackPointIterator getTrackPointLocationIterator(final Track.Id trackId, final TrackPoint.Id startTrackPointId) {
         return new TrackPointIterator(this, trackId, startTrackPointId);
     }
 
@@ -794,7 +797,7 @@ public class ContentProviderUtils {
     public List<TrackPoint> getTrackPoints(Track.Id trackId) {
         List<TrackPoint> trackPoints = null;
 
-        try (Cursor trackPointCursor = getTrackPointCursor(trackId, -1L, -1)) {
+        try (Cursor trackPointCursor = getTrackPointCursor(trackId, null, null)) {
             if (trackPointCursor != null) {
                 trackPointCursor.moveToFirst();
                 trackPoints = new ArrayList<>(trackPointCursor.getCount());

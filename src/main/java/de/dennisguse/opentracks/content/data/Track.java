@@ -52,8 +52,8 @@ public class Track {
     /**
      * May be null if the track was not loaded from the database.
      */
-    public @Nullable
-    Id getId() {
+    @Nullable
+    public Id getId() {
         return id;
     }
 
