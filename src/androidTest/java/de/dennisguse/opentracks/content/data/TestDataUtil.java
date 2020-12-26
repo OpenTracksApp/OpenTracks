@@ -17,6 +17,7 @@ public class TestDataUtil {
     public static final double INITIAL_LONGITUDE = -57.0;
     public static final double ALTITUDE_INTERVAL = 2.5;
     public static final float ELEVATION_GAIN = 3;
+    public static final float ELEVATION_LOSS = 3;
 
     /**
      * Create a track without any trackPoints.
@@ -72,6 +73,7 @@ public class TestDataUtil {
         trackPoint.setCyclingCadence_rpm(300f + i);
         trackPoint.setPower(400f + i);
         trackPoint.setElevationGain(ELEVATION_GAIN);
+        trackPoint.setElevationLoss(ELEVATION_LOSS);
         return trackPoint;
     }
 

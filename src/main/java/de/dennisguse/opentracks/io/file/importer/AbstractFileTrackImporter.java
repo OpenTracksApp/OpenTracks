@@ -86,6 +86,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     protected String markerType;
     protected String photoUrl;
     protected String uuid;
+    protected String gain;
+    protected String loss;
 
     // The current track data
     private TrackData trackData;
@@ -464,6 +466,21 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                 trackPoint.setCyclingCadence_rpm(Float.parseFloat(cadence));
             } catch (Exception e) {
                 throw new SAXException(createErrorMessage(String.format(Locale.US, "Unable to parse cadence: %s", cadence)), e);
+            }
+        }
+
+        if (gain != null) {
+            try {
+                trackPoint.setElevationGain(Float.parseFloat(gain));
+            } catch (Exception e) {
+                throw new SAXException(createErrorMessage(String.format(Locale.US, "Unable to parse elevation gain: %s", gain)), e);
+            }
+        }
+        if (loss != null) {
+            try {
+                trackPoint.setElevationLoss(Float.parseFloat(loss));
+            } catch (Exception e) {
+                throw new SAXException(createErrorMessage(String.format(Locale.US, "Unable to parse elevation loss: %s", loss)), e);
             }
         }
 
