@@ -54,6 +54,9 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
     private static final String TAG_EXTENSION_HEARTRATE = "gpxtpx:hr";
     private static final String TAG_EXTENSION_CADENCE = "gpxtpx:cad";
 
+    private static final String TAG_EXTENSION_GAIN = "opentracks:gain";
+    private static final String TAG_EXTENSION_LOSS = "opentracks:loss";
+
     /**
      * Constructor.
      *
@@ -151,6 +154,16 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
                     uuid = content.trim();
                 }
                 break;
+            case TAG_EXTENSION_GAIN:
+                if (content != null) {
+                    gain = content.trim();
+                }
+                break;
+            case TAG_EXTENSION_LOSS:
+                if (content != null) {
+                    loss = content.trim();
+                }
+                break;
         }
 
         // Reset element content
@@ -176,6 +189,8 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
         altitude = null;
         time = null;
         speed = null;
+        gain = null;
+        loss = null;
     }
 
     /**

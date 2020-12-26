@@ -197,9 +197,8 @@ public class GpxTrackWriter implements TrackWriter {
 
             printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(trackPoint.getTime()) + "</time>");
 
-            if (trackPoint.hasSpeed() || trackPoint.hasHeartRate() || trackPoint.hasCyclingCadence()) {
+            if (trackPoint.hasSpeed() || trackPoint.hasHeartRate() || trackPoint.hasCyclingCadence() || trackPoint.hasElevationGain() || trackPoint.hasElevationLoss()) {
                 printWriter.println("<extensions><gpxtpx:TrackPointExtension>");
-
 
                 if (trackPoint.hasSpeed()) {
                     printWriter.println("<gpxtpx:speed>" + SPEED_FORMAT.format(trackPoint.getSpeed()) + "</gpxtpx:speed>");
@@ -211,6 +210,14 @@ public class GpxTrackWriter implements TrackWriter {
 
                 if (trackPoint.hasCyclingCadence()) {
                     printWriter.println("<gpxtpx:cad>" + HEARTRATE_FORMAT.format(trackPoint.getCyclingCadence_rpm()) + "</gpxtpx:cad>");
+                }
+
+                if (trackPoint.hasElevationGain()) {
+                    printWriter.println("<opentracks:gain>" + ELEVATION_FORMAT.format(trackPoint.getElevationGain()) + "</opentracks:gain>");
+                }
+
+                if (trackPoint.hasElevationLoss()) {
+                    printWriter.println("<opentracks:loss>" + ELEVATION_FORMAT.format(trackPoint.getElevationLoss()) + "</opentracks:loss>");
                 }
 
                 printWriter.println("</gpxtpx:TrackPointExtension></extensions>");
