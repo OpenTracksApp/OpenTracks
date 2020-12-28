@@ -191,7 +191,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
                     }
 
                     TrackPoint trackPoint = lastTrackPoint; //NOTE: There seems to be a race condition; just fix the symptom for now.
-                    if (trackPoint != null && trackPoint.getType().hasLocation()) {
+                    if (trackPoint != null && trackPoint.hasLocation()) {
                         boolean hasFix = !LocationUtils.isTrackPointOld(trackPoint);
 
                         if (!hasFix) {

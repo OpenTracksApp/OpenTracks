@@ -31,7 +31,7 @@ public class IntervalStatistics {
             TrackPoint prevTrackPoint = trackPoints.get(i - 1);
             TrackPoint trackPoint = trackPoints.get(i);
 
-            if (trackPoint.getType().hasLocation() && prevTrackPoint.getType().hasLocation()) {
+            if (trackPoint.hasLocation() && prevTrackPoint.hasLocation()) {
                 interval.distance_m += prevTrackPoint.distanceTo(trackPoint);
                 interval.time_ms += trackPoint.getTime() - prevTrackPoint.getTime();
                 interval.gain_m += trackPoint.hasElevationGain() ? trackPoint.getElevationGain() : 0;

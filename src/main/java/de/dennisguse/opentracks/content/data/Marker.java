@@ -44,6 +44,8 @@ public final class Marker {
     //TODO It is the distance from the track starting point; rename to something more meaningful
     private double length = 0.0;
     private long duration = 0;
+
+    @Deprecated //TODO Replace by storing latitude/longitude directly.
     private final Location location;
     @Deprecated //TODO Make an URI instead of String
     private String photoUrl = "";

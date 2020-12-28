@@ -16,7 +16,6 @@
 package de.dennisguse.opentracks.content.data;
 
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Parcel;
 
 import androidx.annotation.NonNull;
@@ -40,21 +39,25 @@ import java.util.Objects;
  *
  * @author Sandor Dornbush
  */
-//TODO Merge constructors by use case; we have too many.
 public class TrackPoint {
 
     private TrackPoint.Id id;
 
-    private final Location location;
+    private long time_ms;
+    private Double latitude;
+    private Double longitude;
+    private Float accuracy;
+    private Double altitude_m;
+    private Float speed_mps;
+    private Float bearing;
 
-    //TODO Private
     public enum Type {
-        SEGMENT_START_MANUAL(-2), //Start of a segment due to user interaction (start, resume); no useful coordinates
+        SEGMENT_START_MANUAL(-2), //Start of a segment due to user interaction (start, resume)
 
         SEGMENT_START_AUTOMATIC(-1), //Start of a segment due to too much distance from previous TrackPoint
-        TRACKPOINT(0), //Normal trackpoint got from GPS
+        TRACKPOINT(0), //Just GPS data.
 
-        SEGMENT_END_MANUAL(1); //End of a segment; no useful coordinates
+        SEGMENT_END_MANUAL(1); //End of a segment
 
         public final int type_db;
 
@@ -64,7 +67,7 @@ public class TrackPoint {
 
         @Override
         public String toString() {
-            return "" + type_db;
+            return name() + "(" + type_db + ")";
         }
 
         public static Type getById(int id) {
@@ -73,10 +76,6 @@ public class TrackPoint {
             }
 
             throw new RuntimeException("unknown id: " + id);
-        }
-
-        public boolean hasLocation() {
-            return this == SEGMENT_START_AUTOMATIC || this == TRACKPOINT;
         }
     }
 
@@ -89,35 +88,33 @@ public class TrackPoint {
     private Float elevationGain = null;
     private Float elevationLoss = null;
 
-    public TrackPoint() {
-        this(Type.TRACKPOINT, new Location(""));
-    }
-
     public TrackPoint(@NonNull Type type) {
         this.type = type;
-        this.location = new Location("");
     }
 
     public TrackPoint(@NonNull Location location) {
-        this.type = Type.TRACKPOINT;
-        this.location = location;
+        this(Type.TRACKPOINT);
+
+        this.latitude = location.getLatitude();
+        this.longitude = location.getLongitude();
+        this.altitude_m = location.getAltitude();
+        this.speed_mps = location.getSpeed();
+        this.accuracy = location.getAccuracy();
+
         setTime(System.currentTimeMillis());
     }
 
-    public TrackPoint(@NonNull Type type, @NonNull Location location) {
-        this.type = type;
-        this.location = location;
+    public TrackPoint(@NonNull Type type, long time_ms) {
+        this(type);
+        this.time_ms = time_ms;
     }
 
     public TrackPoint(double latitude, double longitude, Double altitude, long time) {
-        this.type = Type.TRACKPOINT;
-        location = new Location(LocationManager.GPS_PROVIDER);
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        if (altitude != null) {
-            location.setAltitude(altitude);
-        }
-        location.setTime(time);
+        this(Type.TRACKPOINT);
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.altitude_m = altitude;
+        this.time_ms = time;
     }
 
     @Deprecated //See #316
@@ -126,9 +123,7 @@ public class TrackPoint {
     }
 
     public static TrackPoint createSegmentStartManualWithTime(long time) {
-        Location resume = new Location(LocationManager.GPS_PROVIDER);
-        resume.setTime(time);
-        return new TrackPoint(Type.SEGMENT_START_MANUAL, resume);
+        return new TrackPoint(Type.SEGMENT_START_MANUAL, time);
     }
 
     @Deprecated //See #316
@@ -137,9 +132,7 @@ public class TrackPoint {
     }
 
     public static TrackPoint createSegmentStartAutomaticWithTime(long time) {
-        Location resume = new Location(LocationManager.GPS_PROVIDER);
-        resume.setTime(time);
-        return new TrackPoint(Type.SEGMENT_START_AUTOMATIC, resume);
+        return new TrackPoint(Type.SEGMENT_START_AUTOMATIC, time);
     }
 
     public static TrackPoint createSegmentEnd() {
@@ -151,9 +144,7 @@ public class TrackPoint {
     }
 
     public static TrackPoint createSegmentEndWithTime(long time) {
-        Location pause = new Location(LocationManager.GPS_PROVIDER);
-        pause.setTime(time);
-        return new TrackPoint(Type.SEGMENT_END_MANUAL, pause);
+        return new TrackPoint(Type.SEGMENT_END_MANUAL, time);
     }
 
     @NonNull
@@ -185,8 +176,28 @@ public class TrackPoint {
         this.id = id;
     }
 
+    public boolean hasLocation() {
+        return latitude != null || longitude != null;
+    }
+
     @Nullable
     public Location getLocation() {
+        Location location = new Location("");
+        location.setTime(time_ms);
+        if (hasLocation()) {
+            location.setLatitude(latitude);
+            location.setLongitude(longitude);
+        }
+        if (hasBearing()) {
+            location.setBearing(bearing);
+        }
+        if (hasAccuracy()) {
+            location.setAccuracy(accuracy);
+        }
+        if (hasAltitude()) {
+            location.setAltitude(altitude_m);
+        }
+
         return location;
     }
 
@@ -194,7 +205,7 @@ public class TrackPoint {
         return elevationGain != null;
     }
 
-    public float getElevationGain() {
+    public Float getElevationGain() {
         return elevationGain;
     }
 
@@ -215,87 +226,87 @@ public class TrackPoint {
     }
 
     public double getLatitude() {
-        return location.getLatitude();
+        return latitude;
     }
 
     public void setLatitude(double latitude) {
-        location.setLatitude(latitude);
+        this.latitude = latitude;
     }
 
     public double getLongitude() {
-        return location.getLongitude();
+        return longitude;
     }
 
     public void setLongitude(double longitude) {
-        location.setLongitude(longitude);
+        this.longitude = longitude;
     }
 
     public long getTime() {
-        return location.getTime();
+        return time_ms;
     }
 
     public void setTime(long time) {
-        location.setTime(time);
+        this.time_ms = time;
     }
 
     public boolean hasAltitude() {
-        return location.hasAltitude();
+        return altitude_m != null;
     }
 
     public double getAltitude() {
-        return location.getAltitude();
+        return altitude_m;
     }
 
     public void setAltitude(double altitude) {
-        location.setAltitude(altitude);
+        this.altitude_m = altitude;
     }
 
     public boolean hasSpeed() {
-        return location.hasSpeed();
+        return speed_mps != null;
     }
 
     public float getSpeed() {
-        return location.getSpeed();
+        return speed_mps;
     }
 
-    public void setSpeed(float speed) {
-        location.setSpeed(speed);
+    public void setSpeed(Float speed) {
+        this.speed_mps = speed;
     }
 
     public boolean hasBearing() {
-        return location.hasBearing();
+        return bearing != null;
     }
 
     public float getBearing() {
-        return location.getBearing();
+        return bearing;
     }
 
-    public void setBearing(float bearing) {
-        location.setBearing(bearing);
+    public void setBearing(Float bearing) {
+        this.bearing = bearing;
     }
 
     public boolean hasAccuracy() {
-        return location.hasAccuracy();
+        return accuracy != null;
     }
 
     public float getAccuracy() {
-        return location.getAccuracy();
+        return accuracy;
     }
 
     public void setAccuracy(float horizontalAccuracy) {
-        location.setAccuracy(horizontalAccuracy);
+        this.accuracy = horizontalAccuracy;
     }
 
     public float distanceTo(@NonNull TrackPoint dest) {
-        return location.distanceTo(dest.getLocation());
+        return getLocation().distanceTo(dest.getLocation());
     }
 
     public float bearingTo(@NonNull TrackPoint dest) {
-        return location.bearingTo(dest.getLocation());
+        return getLocation().bearingTo(dest.getLocation());
     }
 
     public float bearingTo(@NonNull Location dest) {
-        return location.bearingTo(dest);
+        return getLocation().bearingTo(dest);
     }
 
     // Sensor data
@@ -342,7 +353,16 @@ public class TrackPoint {
     @NonNull
     @Override
     public String toString() {
-        return "time=" + getTime() + " (type=" + getType() + "): lat=" + getLatitude() + " lng=" + getLongitude() + " acc=" + getAccuracy();
+        String result = "time=" + getTime() + " (type=" + getType() + ")";
+        if (!hasLocation()) {
+            return result;
+        }
+        result += ": lat=" + getLatitude() + " lng=" + getLongitude();
+        if (!hasAccuracy()) {
+            return result;
+        }
+
+        return result + " acc=" + getAccuracy();
     }
 
     public static class Id {
