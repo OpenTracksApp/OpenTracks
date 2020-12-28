@@ -159,6 +159,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
                 if (content != null) {
                     time = content.trim();
                 }
+
                 break;
             case TAG_STYLE_URL:
                 if (content != null) {
@@ -221,10 +222,8 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         elevationLossList.clear();
     }
 
-    /**
-     * On track segment end.
-     */
-    private void onTrackSegmentEnd() {
+    protected void onTrackSegmentEnd() {
+        super.onTrackSegmentEnd();
         // Close a track segment by inserting the segment locations
         for (int i = 0; i < trackPoints.size(); i++) {
             TrackPoint trackPoint = trackPoints.get(i);
@@ -256,24 +255,32 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
      * On track point end. gx:coord end tag.
      */
     private void onTrackPointEnd() throws SAXException {
-        // Add location to locationList
+        // Add trackPoint to trackPoints
         if (content == null) {
             return;
         }
         String[] parts = content.trim().split(" ");
-        if (parts.length != 2 && parts.length != 3) {
-            return;
+        if (parts.length == 2 || parts.length == 3) {
+            longitude = parts[0];
+            latitude = parts[1];
+            altitude = parts.length == 3 ? parts[2] : null;
         }
-        longitude = parts[0];
-        latitude = parts[1];
-        altitude = parts.length == 3 ? parts[2] : null;
 
-        TrackPoint location = getTrackPoint();
-        if (location == null) {
-            return;
+        // Similar to GPX
+        boolean isFirstTrackPointInSegment = isFirstTrackPointInSegment();
+        TrackPoint trackPoint = getTrackPoint();
+        if (isFirstTrackPointInSegment) {
+            TrackPoint.Type type = !trackPoint.hasLocation() ? TrackPoint.Type.SEGMENT_START_MANUAL : TrackPoint.Type.SEGMENT_START_AUTOMATIC;
+
+            trackPoint.setType(type);
         }
-        trackPoints.add(location);
+        trackPoints.add(trackPoint);
+
+        // Reset variables for next trackpoint (which might not have such data).
         time = null;
+        longitude = null;
+        latitude = null;
+        altitude = null;
     }
 
     /**
@@ -287,18 +294,16 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
      * On extended data value end. gx:value end tag.
      */
     private void onExtendedDataValueEnd() throws SAXException {
-        if (content == null) {
-            return;
-        }
-        content = content.trim();
-        if (content.equals("")) {
-            return;
-        }
-        float value;
-        try {
-            value = Float.parseFloat(content);
-        } catch (NumberFormatException e) {
-            throw new SAXException(createErrorMessage("Unable to parse gx:value:" + content), e);
+        Float value = null;
+        if (content != null) {
+            content = content.trim();
+            if (!content.equals("")) {
+                try {
+                    value = Float.parseFloat(content);
+                } catch (NumberFormatException e) {
+                    throw new SAXException(createErrorMessage("Unable to parse gx:value:" + content), e);
+                }
+            }
         }
         switch (extendedDataType) {
             case KmlTrackWriter.EXTENDED_DATA_TYPE_SPEED:

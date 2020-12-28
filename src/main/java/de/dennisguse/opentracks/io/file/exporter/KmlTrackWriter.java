@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.DescriptionGenerator;
@@ -239,6 +240,8 @@ public class KmlTrackWriter implements TrackWriter {
             powerList.clear();
             cadenceList.clear();
             heartRateList.clear();
+            elevationGainList.clear();
+            elevationLossList.clear();
         }
     }
 
@@ -247,23 +250,23 @@ public class KmlTrackWriter implements TrackWriter {
         if (printWriter != null) {
             printWriter.println("<ExtendedData>");
             printWriter.println("<SchemaData schemaUrl=\"#" + SCHEMA_ID + "\">");
-            if (speedList.size() > 0) {
+            if (speedList.stream().anyMatch(Objects::nonNull)) {
                 writeSimpleArrayData(speedList, EXTENDED_DATA_TYPE_SPEED);
             }
             if (exportSensorData) {
-                if (powerList.size() > 0) {
+                if (powerList.stream().anyMatch(Objects::nonNull)) {
                     writeSimpleArrayData(powerList, EXTENDED_DATA_TYPE_POWER);
                 }
-                if (cadenceList.size() > 0) {
+                if (cadenceList.stream().anyMatch(Objects::nonNull)) {
                     writeSimpleArrayData(cadenceList, EXTENDED_DATA_TYPE_CADENCE);
                 }
-                if (heartRateList.size() > 0) {
+                if (heartRateList.stream().anyMatch(Objects::nonNull)) {
                     writeSimpleArrayData(heartRateList, EXTENDED_DATA_TYPE_HEART_RATE);
                 }
-                if (elevationGainList.size() > 0) {
+                if (elevationGainList.stream().anyMatch(Objects::nonNull)) {
                     writeSimpleArrayData(elevationGainList, EXTENDED_DATA_TYPE_ELEVATION_GAIN);
                 }
-                if (elevationLossList.size() > 0) {
+                if (elevationLossList.stream().anyMatch(Objects::nonNull)) {
                     writeSimpleArrayData(elevationLossList, EXTENDED_DATA_TYPE_ELEVATION_LOSS);
                 }
             }
@@ -280,28 +283,20 @@ public class KmlTrackWriter implements TrackWriter {
                 printWriter.println("<when>" + getTime(trackPoint.getLocation()) + "</when>");
             }
 
-            printWriter.println("<gx:coord>" + getCoordinates(trackPoint.getLocation(), " ") + "</gx:coord>");
-
-            if (trackPoint.hasSpeed()) {
-                speedList.add(trackPoint.getSpeed());
+            if (trackPoint.hasLocation()) {
+                printWriter.println("<gx:coord>" + (trackPoint.hasLocation() ? getCoordinates(trackPoint.getLocation(), " ") : "") + "</gx:coord>");
+            } else {
+                printWriter.println("<gx:coord/>");
             }
+            speedList.add(trackPoint.hasSpeed() ? trackPoint.getSpeed() : null);
 
             if (exportSensorData) {
-                if (trackPoint.hasHeartRate()) {
-                    heartRateList.add(trackPoint.getHeartRate_bpm());
-                }
-                if (trackPoint.hasCyclingCadence()) {
-                    cadenceList.add(trackPoint.getCyclingCadence_rpm());
-                }
-                if (trackPoint.hasPower()) {
-                    powerList.add(trackPoint.getPower());
-                }
-                if (trackPoint.hasElevationGain()) {
-                    elevationGainList.add(trackPoint.getElevationGain());
-                }
-                if (trackPoint.hasElevationLoss()) {
-                    elevationLossList.add(trackPoint.getElevationLoss());
-                }
+                heartRateList.add(trackPoint.hasHeartRate() ? trackPoint.getHeartRate_bpm() : null);
+                cadenceList.add(trackPoint.hasCyclingCadence() ? trackPoint.getCyclingCadence_rpm() : null);
+                powerList.add(trackPoint.hasPower() ? trackPoint.getPower() : null);
+
+                elevationGainList.add(trackPoint.hasElevationGain() ? trackPoint.getElevationGain() : null);
+                elevationLossList.add(trackPoint.hasElevationLoss() ? trackPoint.getElevationLoss() : null);
             }
         }
     }
@@ -315,7 +310,12 @@ public class KmlTrackWriter implements TrackWriter {
     private void writeSimpleArrayData(List<Float> list, String name) {
         printWriter.println("<gx:SimpleArrayData name=\"" + name + "\">");
         for (int i = 0; i < list.size(); i++) {
-            printWriter.println("<gx:value>" + list.get(i) + "</gx:value>");
+            Float value = list.get(i);
+            if (value == null) {
+                printWriter.println("<gx:value />");
+            } else {
+                printWriter.println("<gx:value>" + list.get(i) + "</gx:value>");
+            }
         }
         printWriter.println("</gx:SimpleArrayData>");
     }

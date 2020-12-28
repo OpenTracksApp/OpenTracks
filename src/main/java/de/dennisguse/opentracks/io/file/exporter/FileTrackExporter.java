@@ -45,8 +45,8 @@ public class FileTrackExporter implements TrackExporter {
     /**
      * Constructor.
      *
-     * @param contentProviderUtils  the content provider utils
-     * @param trackWriter           the track writer
+     * @param contentProviderUtils the content provider utils
+     * @param trackWriter          the track writer
      */
     public FileTrackExporter(ContentProviderUtils contentProviderUtils, TrackWriter trackWriter) {
         this.contentProviderUtils = contentProviderUtils;
@@ -70,6 +70,7 @@ public class FileTrackExporter implements TrackExporter {
             if (hasMultipleTracks) {
                 trackWriter.writeMultiTrackBegin();
             }
+            //TODO Why use startTime of first track for the others?
             long startTime = tracks[0].getTrackStatistics().getStartTime_ms();
             for (Track track : tracks) {
                 long offset = track.getTrackStatistics().getStartTime_ms() - startTime;
@@ -122,50 +123,40 @@ public class FileTrackExporter implements TrackExporter {
     private void writeLocations(Track track, long offset) throws InterruptedException {
         boolean wroteTrack = false;
         boolean wroteSegment = false;
-        boolean isLastLocationValid = false;
-        TrackPoint lastTrackPoint = null;
 
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null)) {
-
             while (trackPointIterator.hasNext()) {
-                if (Thread.interrupted()) {
-                    throw new InterruptedException();
-                }
-                TrackPoint trackPoint = trackPointIterator.next();
+                if (Thread.interrupted()) throw new InterruptedException();
 
+                TrackPoint trackPoint = trackPointIterator.next();
                 setLocationTime(trackPoint, offset);
 
-                boolean isLocationValid = trackPoint.getType().hasLocation();
-                boolean isSegmentValid = isLocationValid && isLastLocationValid;
-                if (!wroteTrack && isSegmentValid) {
-                    // Found the first two consecutive locations that are valid
-                    trackWriter.writeBeginTrack(track, lastTrackPoint);
+                if (!wroteTrack) {
+                    trackWriter.writeBeginTrack(track, trackPoint);
                     wroteTrack = true;
                 }
 
-                if (isSegmentValid) {
-                    if (!wroteSegment) {
-                        // Start a segment
-                        trackWriter.writeOpenSegment();
-                        wroteSegment = true;
-
-                        // Write the previous trackPoint, which we had previously skipped
-                        trackWriter.writeTrackPoint(lastTrackPoint);
-                    }
-
-                    // Write the current trackPoint
+                boolean newSegment = TrackPoint.Type.SEGMENT_START_AUTOMATIC.equals(trackPoint.getType()) || TrackPoint.Type.SEGMENT_START_MANUAL.equals(trackPoint.getType());
+                if (newSegment) {
+                    if (wroteSegment) trackWriter.writeCloseSegment();
+                    trackWriter.writeOpenSegment();
                     trackWriter.writeTrackPoint(trackPoint);
-                } else {
-                    if (wroteSegment) {
-                        trackWriter.writeCloseSegment();
-                        wroteSegment = false;
-                    }
+                    wroteSegment = true;
+                    continue;
                 }
-                lastTrackPoint = trackPoint;
-                isLastLocationValid = isLocationValid;
+                if (TrackPoint.Type.SEGMENT_END_MANUAL.equals(trackPoint.getType())) {
+                    if (!wroteSegment) trackWriter.writeOpenSegment();
+                    trackWriter.writeTrackPoint(trackPoint);
+                    trackWriter.writeCloseSegment();
+                    wroteSegment = false;
+                    continue;
+                }
+
+                trackWriter.writeTrackPoint(trackPoint);
             }
 
             if (wroteSegment) {
+                // Should not be necessary as tracks should end with SEGMENT_END_MANUAL.
                 //Close the last segment
                 trackWriter.writeCloseSegment();
             }
@@ -188,6 +179,7 @@ public class FileTrackExporter implements TrackExporter {
      * @param trackPoint the trackPoint
      * @param offset     the time offset
      */
+    //TODO Why?
     private void setLocationTime(TrackPoint trackPoint, long offset) {
         if (trackPoint != null) {
             trackPoint.setTime(trackPoint.getTime() - offset);

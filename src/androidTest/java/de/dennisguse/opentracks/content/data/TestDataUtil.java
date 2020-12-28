@@ -38,6 +38,7 @@ public class TestDataUtil {
      * @param trackId   the trackId of the track
      * @param numPoints the trackPoints number in the track
      */
+    @Deprecated //TODO Should start with SEGMENT_START_MANUAL and end with SEGMENT_END_MANUAL.
     public static Pair<Track, List<TrackPoint>> createTrack(Track.Id trackId, int numPoints) {
         Track track = createTrack(trackId);
 
@@ -48,6 +49,51 @@ public class TestDataUtil {
 
         return new Pair<>(track, trackPoints);
     }
+
+
+    public static TrackData createTestingTrack(Track.Id trackId) {
+        Track track = createTrack(trackId);
+
+        int i = 0;
+        List<TrackPoint> trackPoints = List.of(
+                TrackPoint.createSegmentStartManualWithTime(i++ + 1),
+                createTrackPoint(i++),
+                createTrackPoint(i++),
+                createTrackPoint(i++),
+                createTrackPoint(i++, TrackPoint.Type.SEGMENT_START_AUTOMATIC),
+                createTrackPoint(i++),
+                createTrackPoint(i++),
+                createTrackPoint(i++),
+                TrackPoint.createSegmentEndWithTime(i++ + 1),
+
+                TrackPoint.createSegmentStartManualWithTime(i++),
+                createTrackPoint(i++),
+                createTrackPoint(i++),
+                createTrackPoint(i++),
+                TrackPoint.createSegmentEndWithTime(i++ + 1)
+        );
+
+        List<Marker> markers = List.of(
+                new Marker("Marker 1", "Marker description 1", "Marker category 3", "", trackId, 0.0, 0, trackPoints.get(1).getLocation(), null),
+                new Marker("Marker 2", "Marker description 2", "Marker category 3", "", trackId, 0.0, 0, trackPoints.get(4).getLocation(), null),
+                new Marker("Marker 3", "Marker description 3", "Marker category 3", "", trackId, 0.0, 0, trackPoints.get(5).getLocation(), null)
+        );
+
+        return new TrackData(track, trackPoints, markers);
+    }
+
+    public static class TrackData {
+        public final Track track;
+        public final List<TrackPoint> trackPoints;
+        public final List<Marker> markers;
+
+        public TrackData(Track track, List<TrackPoint> trackPoints, List<Marker> markers) {
+            this.track = track;
+            this.trackPoints = trackPoints;
+            this.markers = markers;
+        }
+    }
+
 
     public static Track createTrackAndInsert(ContentProviderUtils contentProviderUtils, Track.Id trackId, int numPoints) {
         Pair<Track, List<TrackPoint>> pair = createTrack(trackId, numPoints);
@@ -63,7 +109,7 @@ public class TestDataUtil {
      * @param i the index for the TrackPoint.
      */
     public static TrackPoint createTrackPoint(int i) {
-        TrackPoint trackPoint = new TrackPoint();
+        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT);
         trackPoint.setLatitude(INITIAL_LATITUDE + (double) i / 10000.0);
         trackPoint.setLongitude(INITIAL_LONGITUDE - (double) i / 10000.0);
         trackPoint.setAccuracy((float) i / 100.0f);
@@ -76,6 +122,12 @@ public class TestDataUtil {
         trackPoint.setPower(400f + i);
         trackPoint.setElevationGain(ELEVATION_GAIN);
         trackPoint.setElevationLoss(ELEVATION_LOSS);
+        return trackPoint;
+    }
+
+    public static TrackPoint createTrackPoint(int i, TrackPoint.Type type) {
+        TrackPoint trackPoint = createTrackPoint(i);
+        trackPoint.setType(type);
         return trackPoint;
     }
 

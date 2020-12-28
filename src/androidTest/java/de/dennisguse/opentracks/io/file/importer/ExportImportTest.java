@@ -1,15 +1,21 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
+import android.content.Intent;
+import android.location.Location;
+import android.os.Looper;
 import android.util.Log;
-import android.util.Pair;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.filters.LargeTest;
+import androidx.test.rule.GrantPermissionRule;
+import androidx.test.rule.ServiceTestRule;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -19,15 +25,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Marker;
-import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
+import de.dennisguse.opentracks.services.TrackRecordingService;
+import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
@@ -45,6 +54,20 @@ public class ExportImportTest {
 
     private static final String TAG = ExportImportTest.class.getSimpleName();
 
+    @Rule
+    public final ServiceTestRule mServiceRule = ServiceTestRule.withTimeout(5, TimeUnit.SECONDS);
+
+    @Rule
+    public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
+
+    @BeforeClass
+    public static void preSetUp() {
+        // Prepare looper for Android's message queue
+        if (Looper.myLooper() == null) Looper.prepare();
+    }
+
+    private TrackRecordingServiceInterface service;
+
     private final Context context = ApplicationProvider.getApplicationContext();
 
     private final ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
@@ -53,37 +76,44 @@ public class ExportImportTest {
     private static final String TRACK_CATEGORY = "the category";
     private static final String TRACK_DESCRIPTION = "the description";
 
-    private final List<Marker> markers = new ArrayList<>();
-    private final List<TrackPoint> trackPoints = new ArrayList<>();
+    private Track track;
+    private List<Marker> markers = new ArrayList<>();
+    private List<TrackPoint> trackPoints = new ArrayList<>();
 
+    private Track.Id trackId;
     private Track.Id importTrackId;
-    private final Track.Id trackId = new Track.Id(System.currentTimeMillis());
 
     @Before
-    public void setUp() {
-        Pair<Track, List<TrackPoint>> track = TestDataUtil.createTrack(trackId, 10);
-        track.first.setIcon(TRACK_ICON);
-        track.first.setCategory(TRACK_CATEGORY);
-        track.first.setDescription(TRACK_DESCRIPTION);
-        contentProviderUtils.insertTrack(track.first);
-        contentProviderUtils.bulkInsertTrackPoint(track.second, track.first.getId());
+    public void setUp() throws TimeoutException, InterruptedException {
+        service = ((TrackRecordingServiceInterface) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)));
 
-        trackPoints.clear();
-        trackPoints.addAll(track.second);
+        trackId = service.startNewTrack();
 
-        for (int i = 0; i < 3; i++) {
-            Marker marker = new Marker(trackId, track.second.get(i).getLocation());
-            marker.setName("the marker " + i);
-            marker.setDescription("the marker description " + i);
-            marker.setCategory("the marker category" + i);
-            marker.setIcon("the marker icon" + i);
-            marker.setPhotoUrl("the photo url" + i);
-            contentProviderUtils.insertMarker(marker);
+        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14, 10, 15, 10, 0, 66, 3, 50), 0);
+        service.insertMarker("Marker 1", "Marker 1 category", "Marker 1 desc", null);
+        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.001, 10, 15, 10, 0, 66, 3, 50), 0);
+        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.002, 10, 15, 10, 0, 66, 3, 50), 0);
+        service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
+        Thread.sleep(10);
+        service.pauseCurrentTrack();
 
-            markers.add(marker);
-        }
+        service.resumeCurrentTrack();
+        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.003, 10, 15, 10, 0, 66, 3, 50), 0);
+        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 16, 10, 15, 10, 0, 66, 3, 50), 0);
+        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 16.001, 10, 15, 10, 0, 66, 3, 50), 0);
+        service.endCurrentTrack();
 
-        assertEquals(markers.size(), contentProviderUtils.getMarkerCount(trackId));
+        track = contentProviderUtils.getTrack(trackId);
+        track.setIcon(TRACK_ICON);
+        track.setCategory(TRACK_CATEGORY);
+        track.setDescription(TRACK_DESCRIPTION);
+        contentProviderUtils.updateTrack(track);
+
+        track = contentProviderUtils.getTrack(trackId);
+        trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        markers = contentProviderUtils.getMarkers(trackId);
+        assertEquals(10, trackPoints.size());
+        assertEquals(2, markers.size());
     }
 
     @After
@@ -94,6 +124,7 @@ public class ExportImportTest {
         }
     }
 
+    @Ignore("Not implemented")
     @LargeTest
     @Test
     public void kml_only_track() {
@@ -130,11 +161,14 @@ public class ExportImportTest {
         assertEquals(track.getIcon(), importedTrack.getIcon());
         assertEquals(track.getUuid(), importedTrack.getUuid());
 
-        // 2. markers
-        assertMarkers();
-
-        // 3. trackpoints
+        // 2. trackpoints
         assertTrackpoints(false, false, false, false, false);
+
+        // 3. trackstatistics
+        assertTrackStatistics();
+
+        // 4. markers
+        assertMarkers();
     }
 
     @LargeTest
@@ -165,11 +199,14 @@ public class ExportImportTest {
         assertEquals(track.getName(), importedTrack.getName());
         assertEquals(track.getIcon(), importedTrack.getIcon());
 
-        // 2. markers
-        assertMarkers();
-
-        // 3. trackpoints
+        // 2. trackpoints
         assertTrackpoints(true, true, true, true, true);
+
+        // 2. trackstatistics
+        assertTrackStatistics();
+
+        // 4. markers
+        assertMarkers();
     }
 
     @LargeTest
@@ -258,11 +295,14 @@ public class ExportImportTest {
         //TODO exporting and importing a track icon is not yet supported by GpxTrackWriter.
         //assertEquals(track.getIcon(), trackImported.getIcon());
 
-        // 2. markers
-        assertMarkers();
-
-        // 3. trackpoints
+        // 2. trackpoints
         assertTrackpoints(false, true, true, true, true);
+
+        // 3. trackstatistics
+        assertTrackStatistics();
+
+        // 4. markers
+        assertMarkers();
     }
 
     @LargeTest
@@ -318,14 +358,31 @@ public class ExportImportTest {
             TrackPoint importedTrackPoint = importedTrackPoints.get(i);
 
             assertEquals(trackPoint.getTime(), importedTrackPoint.getTime(), 0.01);
+            TrackPoint.Type type = trackPoint.getType();
+            assertEquals("" + i, trackPoint.getType(), importedTrackPoint.getType());
 
             // TODO Not exported for GPX/KML
             //   assertEquals(trackPoint.getAccuracy(), importedTrackPoint.getAccuracy(), 0.01);
 
-            assertEquals(trackPoint.getLatitude(), importedTrackPoint.getLatitude(), 0.001);
-            assertEquals(trackPoint.getLongitude(), importedTrackPoint.getLongitude(), 0.001);
-            assertEquals(trackPoint.getAltitude(), importedTrackPoint.getAltitude(), 0.001);
-            assertEquals(trackPoint.getSpeed(), importedTrackPoint.getSpeed(), 0.001);
+            assertEquals(trackPoint.hasLocation(), importedTrackPoint.hasLocation());
+            if (trackPoint.hasLocation()) {
+                assertEquals(trackPoint.getLatitude(), importedTrackPoint.getLatitude(), 0.001);
+                assertEquals(trackPoint.getLongitude(), importedTrackPoint.getLongitude(), 0.001);
+            }
+            assertEquals(trackPoint.hasSpeed(), importedTrackPoint.hasSpeed());
+            if (trackPoint.hasSpeed()) {
+                assertEquals(trackPoint.getSpeed(), importedTrackPoint.getSpeed(), 0.001);
+            }
+            assertEquals(trackPoint.hasAltitude(), importedTrackPoint.hasAltitude());
+            if (trackPoint.hasAltitude()) {
+                assertEquals(trackPoint.getAltitude(), importedTrackPoint.getAltitude(), 0.001);
+            }
+
+            if (type.equals(TrackPoint.Type.SEGMENT_START_MANUAL) || type.equals(TrackPoint.Type.SEGMENT_END_MANUAL)) {
+                //TODO REMOVE
+                continue;
+            }
+
             if (verifyHeartrate) {
                 assertEquals(trackPoint.getHeartRate_bpm(), importedTrackPoint.getHeartRate_bpm(), 0.01);
             }
@@ -342,5 +399,51 @@ public class ExportImportTest {
                 assertEquals(trackPoint.getElevationLoss(), importedTrackPoint.getElevationLoss(), 0.01);
             }
         }
+    }
+
+    private void assertTrackStatistics() {
+        Track importedTrack = contentProviderUtils.getTrack(importTrackId);
+
+        assertNotNull(importedTrack.getTrackStatistics());
+
+        TrackStatistics trackStatistics = track.getTrackStatistics();
+        TrackStatistics importedTrackStatistics = importedTrack.getTrackStatistics();
+
+        // Time
+        assertEquals(trackStatistics.getStartTime_ms(), trackStatistics.getStartTime_ms(), 0.01);
+        assertEquals(trackStatistics.getStopTime_ms(), trackStatistics.getStopTime_ms());
+        assertEquals(trackStatistics.getTotalTime(), trackStatistics.getTotalTime());
+        assertEquals(trackStatistics.getMovingTime(), trackStatistics.getMovingTime());
+
+        // Distance
+        assertEquals(trackStatistics.getTotalDistance(), trackStatistics.getTotalDistance(), 0.01);
+
+        // Speed
+        assertEquals(trackStatistics.getMaxSpeed(), trackStatistics.getMaxSpeed(), 0.01);
+        assertEquals(trackStatistics.getAverageSpeed(), trackStatistics.getAverageSpeed(), 0.01);
+        assertEquals(trackStatistics.getAverageMovingSpeed(), trackStatistics.getAverageMovingSpeed(), 0.01);
+
+        // Elevation
+        assertEquals(trackStatistics.getMinElevation(), trackStatistics.getMinElevation(), 0.01);
+        assertEquals(trackStatistics.getMaxElevation(), trackStatistics.getMaxElevation(), 0.01);
+        assertEquals(trackStatistics.getTotalElevationGain(), trackStatistics.getTotalElevationGain(), 0.01);
+        assertEquals(trackStatistics.getTotalElevationLoss(), trackStatistics.getTotalElevationLoss(), 0.01);
+    }
+
+    private static TrackPoint createTrackPoint(long time, double latitude, double longitude, float accuracy, long speed, long altitude, float elevationGain, float heartRate, float cyclingCadence, float power) {
+        Location location = new Location("gps");
+        location.setTime(time);
+        location.setLongitude(longitude);
+        location.setLatitude(latitude);
+        location.setAccuracy(accuracy);
+        location.setAltitude(altitude);
+        location.setSpeed(speed);
+
+        TrackPoint tp = new TrackPoint(location);
+        tp.setHeartRate_bpm(heartRate);
+        tp.setCyclingCadence_rpm(cyclingCadence);
+        tp.setPower(power);
+        tp.setElevationGain(elevationGain);
+        return tp;
     }
 }

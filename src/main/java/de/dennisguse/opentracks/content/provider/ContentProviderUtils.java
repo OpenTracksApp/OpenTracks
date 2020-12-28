@@ -543,9 +543,7 @@ public class ContentProviderUtils {
      */
     static TrackPoint fillTrackPoint(Cursor cursor, CachedTrackPointsIndexes indexes) {
         TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.getById(cursor.getInt(indexes.typeIndex)));
-        if (!cursor.isNull(indexes.longitudeIndex)) {
-            trackPoint.setId(new TrackPoint.Id(cursor.getInt(indexes.idIndex)));
-        }
+        trackPoint.setId(new TrackPoint.Id(cursor.getInt(indexes.idIndex)));
 
         if (!cursor.isNull(indexes.longitudeIndex)) {
             trackPoint.setLongitude(((double) cursor.getInt(indexes.longitudeIndex)) / 1E6);
@@ -694,7 +692,7 @@ public class ContentProviderUtils {
      */
     @Deprecated
     public TrackPoint getLastValidTrackPoint(Track.Id trackId) {
-        String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns.TYPE + " IN (" + TrackPoint.Type.SEGMENT_START_AUTOMATIC + "," + TrackPoint.Type.TRACKPOINT + "))";
+        String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns.TYPE + " IN (" + TrackPoint.Type.SEGMENT_START_AUTOMATIC.type_db + "," + TrackPoint.Type.TRACKPOINT.type_db + "))";
         String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
         return findTrackPointBy(selection, selectionArgs);
     }
@@ -719,12 +717,12 @@ public class ContentProviderUtils {
     private ContentValues createContentValues(TrackPoint trackPoint, Track.Id trackId) {
         ContentValues values = new ContentValues();
         values.put(TrackPointsColumns.TRACKID, trackId.getId());
-        if (trackPoint.getType() != null) {
-            values.put(TrackPointsColumns.TYPE, trackPoint.getType().type_db);
-        }
-        values.put(TrackPointsColumns.LONGITUDE, (int) (trackPoint.getLongitude() * 1E6));
-        values.put(TrackPointsColumns.LATITUDE, (int) (trackPoint.getLatitude() * 1E6));
+        values.put(TrackPointsColumns.TYPE, trackPoint.getType().type_db);
 
+        if (trackPoint.hasLocation()) {
+            values.put(TrackPointsColumns.LONGITUDE, (int) (trackPoint.getLongitude() * 1E6));
+            values.put(TrackPointsColumns.LATITUDE, (int) (trackPoint.getLatitude() * 1E6));
+        }
         values.put(TrackPointsColumns.TIME, trackPoint.getTime());
         if (trackPoint.hasAltitude()) {
             values.put(TrackPointsColumns.ALTITUDE, trackPoint.getAltitude());

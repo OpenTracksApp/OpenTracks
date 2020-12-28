@@ -270,7 +270,7 @@ public class CustomContentProviderUtilsTest {
         Track.Id trackId2 = new Track.Id(random + 1);
         Track.Id trackId3 = new Track.Id(random + 2);
 
-        TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId1, 0);
+        TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId1, 10);
 
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId2, 10);
         TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId3, 10);
@@ -282,7 +282,7 @@ public class CustomContentProviderUtilsTest {
         Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
         assertEquals(3, tracksCursor.getCount());
         Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        assertEquals(20, tracksPointsCursor.getCount());
+        assertEquals(30, tracksPointsCursor.getCount());
         Cursor markerCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
         assertEquals(1, markerCursor.getCount());
         // Delete one track.

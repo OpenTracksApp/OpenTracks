@@ -101,6 +101,9 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
             case TAG_TRACK:
                 onTrackEnd();
                 break;
+            case TAG_TRACK_SEGMENT:
+                onTrackSegmentEnd();
+                break;
             case TAG_TRACK_POINT:
                 onTrackPointEnd();
                 break;
@@ -193,13 +196,13 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
         loss = null;
     }
 
-    /**
-     * On track point end.
-     */
     private void onTrackPointEnd() throws SAXException {
+        boolean isFirstTrackPointInSegment = isFirstTrackPointInSegment();
         TrackPoint trackPoint = getTrackPoint();
-        if (trackPoint == null) {
-            return;
+        if (isFirstTrackPointInSegment) {
+            TrackPoint.Type type = !trackPoint.hasLocation() ? TrackPoint.Type.SEGMENT_START_MANUAL : TrackPoint.Type.SEGMENT_START_AUTOMATIC;
+
+            trackPoint.setType(type);
         }
         insertTrackPoint(trackPoint);
     }

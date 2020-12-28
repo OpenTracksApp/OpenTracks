@@ -12,6 +12,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 /**
  * A lightweight wrapper around the original {@link Cursor} with a method to clean up.
  */
+//TODO Remove batching; that should be handled by the database/contentprovider (i.e., already in place as we use a cursor)!
 public class TrackPointIterator implements Iterator<TrackPoint>, AutoCloseable {
 
     private static final String TAG = TrackPointIterator.class.getSimpleName();
@@ -21,7 +22,6 @@ public class TrackPointIterator implements Iterator<TrackPoint>, AutoCloseable {
     private final CachedTrackPointsIndexes indexes;
     private TrackPoint.Id lastTrackPointId = null;
     private Cursor cursor;
-
 
     public TrackPointIterator(ContentProviderUtils contentProviderUtils, Track.Id trackId, TrackPoint.Id startTrackPointId) {
         this.contentProviderUtils = contentProviderUtils;
