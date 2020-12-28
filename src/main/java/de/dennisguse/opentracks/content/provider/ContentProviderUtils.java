@@ -78,20 +78,6 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Clears a track: removes markers and trackPoints.
-     * Only keeps the track id.
-     *
-     * @param trackId the track id
-     */
-    @Deprecated //TODO Figure out why we need this.
-    public void clearTrack(Track.Id trackId) {
-        deleteTrackPointsAndMarkers(trackId);
-        Track track = new Track();
-        track.setId(trackId);
-        updateTrack(track);
-    }
-
-    /**
      * Creates a {@link Track} from a cursor.
      *
      * @param cursor the cursor pointing to the track
@@ -197,13 +183,7 @@ public class ContentProviderUtils {
         contentResolver.delete(TracksColumns.CONTENT_URI, TracksColumns._ID + "=?", new String[]{Long.toString(trackId.getId())});
     }
 
-    private void deleteTrackPointsAndMarkers(@NonNull Track.Id trackId) {
-        String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
-
-        contentResolver.delete(TrackPointsColumns.CONTENT_URI_BY_ID, TrackPointsColumns.TRACKID + "=?", selectionArgs);
-        contentResolver.delete(MarkerColumns.CONTENT_URI, MarkerColumns.TRACKID + "=?", selectionArgs);
-    }
-
+    //TODO Only use for tests; also move to tests.
     public List<Track> getTracks() {
         ArrayList<Track> tracks = new ArrayList<>();
         try (Cursor cursor = getTrackCursor(null, null, TracksColumns._ID)) {
@@ -437,7 +417,8 @@ public class ContentProviderUtils {
         return markers;
     }
 
-    @Deprecated //TODO TracksColumns.MARKER_COUNT while querying for tracks
+    //TODO Move to testing package
+    @Deprecated
     public int getMarkerCount(Track.Id trackId) {
         String[] projection = new String[]{"count(*) AS count"};
         String selection = MarkerColumns.TRACKID + "=?";
