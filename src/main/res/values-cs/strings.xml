@@ -51,7 +51,7 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
 \n b) zkuste zlepšit příjem GPS (např. vyjít ven),
 \n c) zkontrolujte, zda používáte aplikaci <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest </a> a
 \n d) deaktivujte úsporu energie.
-\n 
+\n
 \n Pokud nic nepomůže, nahlašte jako chybu. </string>
     <string name="help_support_title">Jak mohu podpořit OpenTracks\?</string>
     <string name="help_support_content"> Můžete:
