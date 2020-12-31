@@ -171,7 +171,7 @@ public class KmzTrackImporter implements TrackImporter {
                     trackId = parseKml(zipInputStream);
                     if (trackId == null) {
                         Log.d(TAG, "Unable to parse kml in kmz");
-                        throw new RuntimeException(context.getString(R.string.import_unable_to_import_file, fileName));
+                        throw new ImportParserException(context.getString(R.string.import_unable_to_import_file, fileName));
                     }
                 }
 
@@ -179,7 +179,7 @@ public class KmzTrackImporter implements TrackImporter {
             }
             if (trackId == null) {
                 Log.d(TAG, "Unable to find doc.kml in kmz");
-                throw new RuntimeException(context.getString(R.string.import_no_kml_file_found));
+                throw new ImportParserException(context.getString(R.string.import_no_kml_file_found));
             }
             return trackId;
         } catch (ImportParserException | ImportAlreadyExistsException e) {
