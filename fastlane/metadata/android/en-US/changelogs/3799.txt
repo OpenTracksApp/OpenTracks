@@ -1,0 +1,14 @@
+v3.14.1: OpenTracks
+
+Changes:
+- Added elevation loss (via barometer)
+- Updated translations (cz, gl, it, nb, pl, pt, sp)
+- Markers can be shared from list
+- Actionbar icon (top left) to go back
+- 
+Bugfix:
+- Potential crash on import
+
+Developer:
+- Implemented basic EspressoUI test
+- Reference resourceIds via if rather than switch/case
