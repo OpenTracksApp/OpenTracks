@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:opentracks="http://opentracksapp.com/xmlschemas/v1">
+  <Document>
+    <open>1</open>
+    <visibility>1</visibility>
+    <name><![CDATA[2020-11-28 18:06]]></name>
+    <atom:generator><![CDATA[OpenTracks (Debug)]]></atom:generator>
+    <Style id="track">
+      <LineStyle>
+        <color>7f0000ff</color>
+        <width>4</width>
+      </LineStyle>
+      <IconStyle>
+        <scale>1.3</scale>
+        <Icon>
+          <href>http://earth.google.com/images/kml-icons/track-directional/track-0.png</href>
+        </Icon>
+      </IconStyle>
+    </Style>
+    <Style id="start">
+      <IconStyle>
+        <scale>1.3</scale>
+        <Icon>
+          <href>http://maps.google.com/mapfiles/kml/paddle/grn-circle.png</href>
+        </Icon>
+        <hotSpot x="32" y="1" xunits="pixels" yunits="pixels" />
+      </IconStyle>
+    </Style>
+    <Style id="end">
+      <IconStyle>
+        <scale>1.3</scale>
+        <Icon>
+          <href>http://maps.google.com/mapfiles/kml/paddle/red-circle.png</href>
+        </Icon>
+        <hotSpot x="32" y="1" xunits="pixels" yunits="pixels" />
+      </IconStyle>
+    </Style>
+    <Style id="waypoint">
+      <IconStyle>
+        <scale>1.3</scale>
+        <Icon>
+          <href>http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png</href>
+        </Icon>
+        <hotSpot x="20" y="2" xunits="pixels" yunits="pixels" />
+      </IconStyle>
+    </Style>
+    <Schema id="schema">
+      <gx:SimpleArrayField name="speed" type="float">
+        <displayName><![CDATA[Speed (m/s)]]></displayName>
+      </gx:SimpleArrayField>
+      <gx:SimpleArrayField name="power" type="float">
+        <displayName><![CDATA[Power (W)]]></displayName>
+      </gx:SimpleArrayField>
+      <gx:SimpleArrayField name="cadence" type="float">
+        <displayName><![CDATA[Cadence (rpm)]]></displayName>
+      </gx:SimpleArrayField>
+      <gx:SimpleArrayField name="heart_rate" type="float">
+        <displayName><![CDATA[Heart rate (bpm)]]></displayName>
+      </gx:SimpleArrayField>
+    </Schema>
+    <Folder>
+      <name><![CDATA[Sun, 28 Nov 2020 18:06 Markers]]></name>
+      <open>1</open>
+      <Placemark>
+        <name><![CDATA[Split 0]]></name>
+        <description><![CDATA[Total distance: 0.00 km (0.0 mi)
+Total time: 00:00
+Moving time: 00:00
+Average speed: 0.00 km/h (0.0 mi/h)
+Average moving speed: 0.00 km/h (0.0 mi/h)
+Max speed: 0.00 km/h (0.0 mi/h)
+Average pace: 0:00 min/km (0:00 min/mi)
+Average moving pace: 0:00 min/km (0:00 min/mi)
+Fastest pace: 0:00 min/km (0:00 min/mi)
+Max elevation: -9223372036854775808 m (-9223372036854775808 ft)
+Min elevation: 9223372036854775807 m (9223372036854775807 ft)
+Elevation gain: 0 m (0 ft)
+Max grade: 0 %
+Min grade: 0 %
+Recorded: 6/23 11:29]]></description>
+        <TimeStamp>
+          <when>1970-01-01T00:00:00Z</when>
+        </TimeStamp>
+        <styleUrl>#waypoint</styleUrl>
+        <Point>
+          <coordinates>180.0,100.0</coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Placemark>
+      <name><![CDATA[2020-11-28 18:06 (Start)]]></name>
+      <description />
+      <TimeStamp>
+        <when>2020-11-28T17:06:22.401Z</when>
+      </TimeStamp>
+      <styleUrl>#start</styleUrl>
+      <Point>
+        <coordinates>1.234156,12.340097,469.286376953125</coordinates>
+      </Point>
+    </Placemark>
+    <Placemark>
+      <name><![CDATA[2020-11-28 18:06]]></name>
+      <description><![CDATA[Test Track]]></description>
+      <icon><![CDATA[UNKNOWN]]></icon>
+      <opentracks:trackid>2f170875-55d7-445d-b2b8-22a573c81dbc</opentracks:trackid>
+      <styleUrl>#track</styleUrl>
+      <ExtendedData>
+        <Data name="type">
+          <value><![CDATA[unknown]]></value>
+        </Data>
+      </ExtendedData>
+      <gx:MultiTrack>
+        <altitudeMode>absolute</altitudeMode>
+        <gx:interpolate>1</gx:interpolate>
+        <gx:Track>
+          <when>2020-11-28T17:06:22.401Z</when>
+          <gx:coord>1.234156 12.340097 469.286376953125</gx:coord>
+          <when>2020-11-28T17:06:25.448Z</when>
+          <gx:coord>1.23415 12.340036 439.1626281738281</gx:coord>
+          <when>2020-11-28T17:06:47.888Z</when>
+          <gx:coord>1.23405 12.340057 421.8070983886719</gx:coord>
+          <ExtendedData>
+            <SchemaData schemaUrl="#schema">
+              <gx:SimpleArrayData name="speed">
+                <gx:value>0.5391469</gx:value>
+                <gx:value>0.15777911</gx:value>
+                <gx:value>0.0</gx:value>
+              </gx:SimpleArrayData>
+              <gx:SimpleArrayData name="elevation_gain">
+                <gx:value>0.0</gx:value>
+                <gx:value>0.0</gx:value>
+                <gx:value>0.0</gx:value>
+              </gx:SimpleArrayData>
+            </SchemaData>
+          </ExtendedData>
+        </gx:Track>
+        <gx:Track>
+          <when>2020-11-28T17:06:55.861Z</when>
+          <gx:coord>1.23405 12.340057 419.93902587890625</gx:coord>
+          <when>2020-11-28T17:06:56.905Z</when>
+          <gx:coord>1.23405 12.340057 419.9036560058594</gx:coord>
+          <when>2020-11-28T17:07:20.870Z</when>
+          <gx:coord>1.234046 12.340082 417.99432373046875</gx:coord>
+          <ExtendedData>
+            <SchemaData schemaUrl="#schema">
+              <gx:SimpleArrayData name="speed">
+                <gx:value>0.0</gx:value>
+                <gx:value>0.0</gx:value>
+                <gx:value>0.0</gx:value>
+              </gx:SimpleArrayData>
+              <gx:SimpleArrayData name="elevation_gain">
+                <gx:value>0.0</gx:value>
+                <gx:value>0.0</gx:value>
+                <gx:value>0.0</gx:value>
+                <gx:value>0.0</gx:value>
+                <gx:value>0.0</gx:value>
+                <gx:value>0.0</gx:value>
+              </gx:SimpleArrayData>
+            </SchemaData>
+          </ExtendedData>
+        </gx:Track>
+      </gx:MultiTrack>
+    </Placemark>
+    <Placemark>
+      <name><![CDATA[2020-11-28 18:06 (End)]]></name>
+      <description><![CDATA[OpenTracks (Debug)
+
+Name: 2020-11-28 18:06
+Activity type: unknown
+Description: -
+Total distance: 0.01 km (0.0 mi)
+Total time: 01:04
+Moving time: 00:00
+Average speed: 0.49 km/h (0.3 mi/h)
+Average moving speed: 0.00 km/h (0.0 mi/h)
+Max speed: 0.00 km/h (0.0 mi/h)
+Average pace: 122:30 min/km (197:08 min/mi)
+Average moving pace: 0:00 min/km (0:00 min/mi)
+Fastest pace: 0:00 min/km (0:00 min/mi)
+Max elevation: 469 m (1540 ft)
+Min elevation: 419 m (1376 ft)
+Elevation gain: 0 m (0 ft)
+Recorded: 11/28 18:06]]></description>
+      <TimeStamp>
+        <when>2020-11-28T17:07:20.870Z</when>
+      </TimeStamp>
+      <styleUrl>#end</styleUrl>
+      <Point>
+        <coordinates>1.234046,12.340082,417.99432373046875</coordinates>
+      </Point>
+    </Placemark>
+  </Document>
+</kml>

@@ -279,7 +279,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     }
 
     private void onExportCompleted(Track.Id trackId) {
-        trackIds.remove(trackId);
+            trackIds.remove(trackId);
         setProgress();
         if (trackIds.isEmpty()) {
             onExportEnded();

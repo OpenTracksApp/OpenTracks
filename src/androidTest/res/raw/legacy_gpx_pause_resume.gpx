@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:gpxtpx="http://www.garmin.com/xmlschemes/TrackPointExtension/v2" xmlns:opentracks="http://opentracksapp.com/xmlschemas/v1" xmlns:topografix="http://www.topografix.com/GPX/Private/TopoGrafix/0/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.1" creator="OpenTracks (Debug)" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.topografix.com/GPX/Private/TopoGrafix/0/1 http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v2 https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd">
+  <metadata>
+    <name><![CDATA[2021-01-07 22:51]]></name>
+    <desc><![CDATA[the description]]></desc>
+  </metadata>
+  <wpt lat="3" lon="14">
+    <ele>10</ele>
+    <time>2021-01-07T21:51:59.179Z</time>
+    <name><![CDATA[Marker 1]]></name>
+    <desc><![CDATA[Marker 1 desc]]></desc>
+    <type><![CDATA[Marker 1 category]]></type>
+  </wpt>
+  <wpt lat="3" lon="14.002">
+    <ele>10</ele>
+    <time>2021-01-07T21:52:01.010Z</time>
+    <name><![CDATA[Marker 2]]></name>
+    <desc><![CDATA[Marker 2 desc]]></desc>
+    <type><![CDATA[Marker 2 category]]></type>
+  </wpt>
+  <trk>
+    <name><![CDATA[2021-01-07 22:51]]></name>
+    <desc><![CDATA[the description]]></desc>
+    <type><![CDATA[the category]]></type>
+    <extensions>
+      <topografix:color>c0c0c0</topografix:color>
+      <opentracks:trackid>7002101e-4198-4613-8c24-544e01ca3981</opentracks:trackid>
+    </extensions>
+    <trkseg>
+      <trkpt lat="3" lon="14">
+        <ele>10</ele>
+        <time>2021-01-07T21:51:59.179Z</time>
+      </trkpt>
+      <trkpt lat="3" lon="14.001">
+        <ele>10</ele>
+        <time>2021-01-07T21:52:00.653Z</time>
+      </trkpt>
+      <trkpt lat="3" lon="14.002">
+        <ele>10</ele>
+        <time>2021-01-07T21:52:01.010Z</time>
+      </trkpt>
+      <trkpt lat="100" lon="0">
+        <time>2021-01-07T21:52:02.658Z</time>
+      </trkpt>
+
+      <trkpt lat="200" lon="0">
+        <time>2021-01-07T21:52:03.873Z</time>
+      </trkpt>
+      <trkpt lat="3" lon="14.003">
+        <ele>10</ele>
+        <time>2021-01-07T21:52:04.103Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

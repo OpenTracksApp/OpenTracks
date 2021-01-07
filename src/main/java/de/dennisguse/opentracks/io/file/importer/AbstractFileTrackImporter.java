@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -284,7 +285,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         //If not the first segment, add a pause separator if there is at least one TrackPoint in the last segment.
         if (trackData.numberOfSegments > 1
                 && trackData.lastLocationInCurrentSegment != null
-                && (trackData.lastLocationInCurrentSegment.getType().equals(TrackPoint.Type.SEGMENT_START_MANUAL) || trackData.lastLocationInCurrentSegment.getType().equals(TrackPoint.Type.SEGMENT_START_AUTOMATIC))
+                && (trackData.lastLocationInCurrentSegment.getType().equals(TrackPoint.Type.SEGMENT_START_MANUAL))
         ) {
             insertTrackPoint(TrackPoint.createSegmentEndWithTime(trackData.lastLocationInCurrentSegment.getTime()));
         }
@@ -336,6 +337,23 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     protected TrackPoint getTrackPoint() throws SAXException {
         TrackPoint trackPoint = createTrackPoint();
 
+        if (trackPoint.hasLocation()) {
+            long time = trackPoint.getTime();
+            Date d = new Date(time);
+            if (trackPoint.getLatitude() == 100) {
+                //TODO Remove by 31st December 2021.
+                trackPoint = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL);
+                trackPoint.setTime(time);
+            } else if (trackPoint.getLatitude() == 200) {
+                //TODO Remove by 31st December 2021.
+                trackPoint = new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL);
+                trackPoint.setTime(time);
+
+            } else if (!LocationUtils.isValidLocation(trackPoint.getLocation())) {
+                throw new SAXException(createErrorMessage("Invalid location detected: " + trackPoint));
+            }
+        }
+
         // Calculate derived attributes from the previous point
         if (trackData.lastLocationInCurrentSegment != null && trackData.lastLocationInCurrentSegment.getTime() != 0) {
             if (!trackPoint.hasSpeed()) {
@@ -366,10 +384,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                     trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
                 }
             }
-        }
-
-        if (trackPoint.hasLocation() && !LocationUtils.isValidLocation(trackPoint.getLocation())) {
-            throw new SAXException(createErrorMessage("Invalid location detected: " + trackPoint));
         }
 
         trackData.lastLocationInCurrentSegment = trackPoint;
@@ -525,7 +539,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      *
      * @author Jimmy Shih
      */
-    // TODO Why private inner class?
+// TODO Why private inner class?
     private static class TrackData {
         // The current track
         final Track track = new Track();
