@@ -25,13 +25,6 @@ public class AggregatedStatisticsTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
 
-    /**
-     * Create a TrackStatistics object.
-     *
-     * @param totalDistance distance in meters.
-     * @param totalTime     total time in milliseconds. //TODO Duration
-     * @return TrackStatistics object.
-     */
     private static Track createTrack(Context context, long totalDistance, long totalTime, String category) {
         TrackStatistics statistics = new TrackStatistics();
         statistics.setStartTime(Instant.ofEpochMilli(1000L));  // Resulting start time

@@ -390,7 +390,7 @@ public class TrackRecordingServiceTest {
      * Inserts a location and waits for 200ms.
      */
     private static void newTrackPoint(TrackRecordingServiceInterface trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) throws InterruptedException {
-        Location location = new Location("gps");
+        Location location = new Location("");
         location.setLongitude(longitude);
         location.setLatitude(latitude);
         location.setAccuracy(accuracy);
@@ -400,7 +400,5 @@ public class TrackRecordingServiceTest {
         TrackPoint trackPoint = new TrackPoint(location);
         int prefAccuracy = PreferencesUtils.getRecordingGPSAccuracy(ApplicationProvider.getApplicationContext());
         trackRecordingService.newTrackPoint(trackPoint, prefAccuracy);
-        //TODO Needed?
-        Thread.sleep(200);
     }
 }

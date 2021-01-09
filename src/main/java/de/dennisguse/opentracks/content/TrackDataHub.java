@@ -142,7 +142,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
 
         PreferencesUtils.register(context, this);
         onSharedPreferenceChanged(null, null);
-        runInHandlerThread(() -> {
+        handler.post(() -> {
             if (started) {
                 loadDataForAll();
             }
@@ -173,7 +173,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
     }
 
     public void loadTrack(final @NonNull Track.Id trackId) {
-        runInHandlerThread(() -> {
+        handler.post(() -> {
             if (trackId.equals(selectedTrackId)) {
                 Log.i(TAG, "Not reloading track " + trackId.getId());
                 return;
@@ -189,7 +189,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
      * @param trackDataListener the track data listener
      */
     public void registerTrackDataListener(final TrackDataListener trackDataListener, final boolean tracksTable, final boolean markersTable, final boolean trackPointsTable_SampleIn, final boolean trackPointsTable_SampleOut) {
-        runInHandlerThread(() -> {
+        handler.post(() -> {
             trackDataManager.registerTrackDataListener(trackDataListener, tracksTable, markersTable, trackPointsTable_SampleIn, trackPointsTable_SampleOut);
             if (started) {
                 loadDataForListener(trackDataListener);
@@ -203,7 +203,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
      * @param trackDataListener the track data listener
      */
     public void unregisterTrackDataListener(final TrackDataListener trackDataListener) {
-        runInHandlerThread(() -> trackDataManager.unregisterTrackDataListener(trackDataListener));
+        handler.post(() -> trackDataManager.unregisterTrackDataListener(trackDataListener));
     }
 
     /**
@@ -222,7 +222,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, final String key) {
-        runInHandlerThread(() -> {
+        handler.post(() -> {
             if (PreferencesUtils.isKey(context, R.string.recording_track_id_key, key)) {
                 recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
             }
@@ -420,21 +420,5 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         numLoadedPoints = 0;
         firstSeenTrackPointId = null;
         lastSeenTrackPointId = null;
-    }
-
-    /**
-     * Run in the handler thread.
-     *
-     * @param runnable the runnable
-     */
-    @Deprecated //TODO: Why actually catch this problem: I guess it would be better to fail hard.
-    @VisibleForTesting
-    private void runInHandlerThread(Runnable runnable) {
-        if (handler == null) {
-            // Use a Throwable to ensure the stack trace is logged.
-            Log.d(TAG, "handler is null.", new Throwable());
-            return;
-        }
-        handler.post(runnable);
     }
 }
