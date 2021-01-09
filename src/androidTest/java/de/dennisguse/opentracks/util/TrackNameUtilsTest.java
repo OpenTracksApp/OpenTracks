@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
@@ -42,7 +42,7 @@ import static org.junit.Assert.assertEquals;
 public class TrackNameUtilsTest {
 
     private static final Track.Id TRACK_ID = new Track.Id(1L);
-    private static final long START_TIME = 1288213406000L;
+    private static final Instant START_TIME = Instant.ofEpochMilli(1288213406000L);
 
     private static final Context CONTEXT = ApplicationProvider.getApplicationContext();
 
@@ -62,7 +62,7 @@ public class TrackNameUtilsTest {
     public void testTrackName_date_iso_8601() {
         PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_iso_8601_value));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(TrackNameUtils.ISO_8601_FORMAT, Locale.US);
-        assertEquals(simpleDateFormat.format(new Date(START_TIME)), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
+        assertEquals(simpleDateFormat.format(START_TIME.toEpochMilli()), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
     }
 
     /**

@@ -20,6 +20,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.time.Duration;
+
 import de.dennisguse.opentracks.services.handlers.AdaptiveLocationListenerPolicy;
 
 import static org.junit.Assert.assertEquals;
@@ -32,13 +34,13 @@ import static org.junit.Assert.assertEquals;
 @RunWith(JUnit4.class)
 public class AdaptiveLocationListenerPolicyTest {
 
-    private static final long MIN = 1000;
-    private static final long MAX = 3000;
+    private static final Duration MIN = Duration.ofMillis(1000);
+    private static final Duration MAX = Duration.ofMillis(3000);
     private static final int MIN_DISTANCE = 10;
-    private static final long NEW_IDLE_TIME_BIG = 10000;
-    private static final long NEW_IDLE_TIME_NORMAL = 5000;
-    private static final long NEW_IDLE_TIME_SMALL = 2000;
-    private static final long NEW_IDLE_TIME_LESS_THAN_MIN = 500;
+    private static final Duration NEW_IDLE_TIME_BIG = Duration.ofMillis(10000);
+    private static final Duration NEW_IDLE_TIME_NORMAL = Duration.ofMillis(5000);
+    private static final Duration NEW_IDLE_TIME_SMALL = Duration.ofMillis(2000);
+    private static final Duration NEW_IDLE_TIME_LESS_THAN_MIN = Duration.ofMillis(500);
     private AdaptiveLocationListenerPolicy adaptiveLocationListenerPolicy;
 
     @Before
@@ -62,7 +64,7 @@ public class AdaptiveLocationListenerPolicyTest {
 
         adaptiveLocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_NORMAL);
         // First get the half of NEW_IDLE_TIME_NORMAL, and then round it to the nearest second.
-        assertEquals((NEW_IDLE_TIME_NORMAL / 2 / 1000) * 1000, adaptiveLocationListenerPolicy.getDesiredPollingInterval());
+        assertEquals(NEW_IDLE_TIME_NORMAL.dividedBy(2).getSeconds(), adaptiveLocationListenerPolicy.getDesiredPollingInterval().getSeconds());
 
         adaptiveLocationListenerPolicy.updateIdleTime(NEW_IDLE_TIME_SMALL);
         assertEquals(MIN, adaptiveLocationListenerPolicy.getDesiredPollingInterval());

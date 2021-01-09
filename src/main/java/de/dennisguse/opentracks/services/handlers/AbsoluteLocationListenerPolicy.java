@@ -16,6 +16,8 @@
 
 package de.dennisguse.opentracks.services.handlers;
 
+import java.time.Duration;
+
 /**
  * This is a simple location listener policy that will always dictate the same polling interval.
  *
@@ -23,19 +25,19 @@ package de.dennisguse.opentracks.services.handlers;
  */
 public class AbsoluteLocationListenerPolicy implements LocationListenerPolicy {
 
-    private final long interval;
+    private final Duration interval;
 
     /**
      * Constructor.
      *
      * @param interval the interval to request for gps signal
      */
-    public AbsoluteLocationListenerPolicy(long interval) {
+    public AbsoluteLocationListenerPolicy(Duration interval) {
         this.interval = interval;
     }
 
     @Override
-    public long getDesiredPollingInterval() {
+    public Duration getDesiredPollingInterval() {
         return interval;
     }
 
@@ -45,7 +47,7 @@ public class AbsoluteLocationListenerPolicy implements LocationListenerPolicy {
     }
 
     @Override
-    public void updateIdleTime(long idleTime) {
+    public void updateIdleTime(Duration idleTime) {
         // Ignore
     }
 }

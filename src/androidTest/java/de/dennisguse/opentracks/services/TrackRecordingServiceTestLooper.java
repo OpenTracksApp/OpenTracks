@@ -19,6 +19,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -239,7 +240,7 @@ public class TrackRecordingServiceTestLooper {
         assertEquals(trackId, track.getId());
         TrackStatistics trackStatistics = track.getTrackStatistics();
         assertNotNull(trackStatistics);
-        assertTrue(trackStatistics.getStartTime_ms() > 0);
-        assertTrue(trackStatistics.getStopTime_ms() >= trackStatistics.getStartTime_ms());
+        assertTrue(trackStatistics.getStartTime().isAfter(Instant.ofEpochMilli(0)));
+        assertTrue(trackStatistics.getStopTime().isAfter(trackStatistics.getStartTime()));
     }
 }

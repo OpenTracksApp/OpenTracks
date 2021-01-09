@@ -16,6 +16,8 @@
 
 package de.dennisguse.opentracks.services.handlers;
 
+import java.time.Duration;
+
 /**
  * A {@link LocationListenerPolicy} that will change based on how long the user has been stationary.
  * This policy will dictate a policy based on a min, max and idle time.
@@ -25,35 +27,41 @@ package de.dennisguse.opentracks.services.handlers;
  */
 public class AdaptiveLocationListenerPolicy implements LocationListenerPolicy {
 
-    private final long minInterval_ms;
-    private final long maxInterval_ms;
+    private final Duration minInterval;
+    private final Duration maxInterval;
     private final int minDistance_m;
 
     // The time the user has been idle at the current location, in milliseconds.
-    private long idleTime;
+    private Duration idleTime;
 
     /**
      * Creates a policy that will be bounded by the given minInterval_ms and maxInterval_ms.
      *
-     * @param minInterval_ms the smallest interval this policy will dictate
-     * @param maxInterval_ms the largest interval this policy will dictate
+     * @param minInterval   the smallest interval this policy will dictate
+     * @param maxInterval   the largest interval this policy will dictate
      * @param minDistance_m the minimum distance
      */
-    public AdaptiveLocationListenerPolicy(long minInterval_ms, long maxInterval_ms, int minDistance_m) {
-        this.minInterval_ms = minInterval_ms;
-        this.maxInterval_ms = maxInterval_ms;
+    public AdaptiveLocationListenerPolicy(Duration minInterval, Duration maxInterval, int minDistance_m) {
+        this.minInterval = minInterval;
+        this.maxInterval = maxInterval;
         this.minDistance_m = minDistance_m;
     }
 
     /*
-     * Returns an interval half of the idle time, but bounded by minInterval_ms and maxInterval_ms.
+     * Returns an interval half of the idle time, but bounded by minInterval and maxInterval.
      */
-    @Override
-    public long getDesiredPollingInterval() {
-        long desiredInterval_ms = idleTime / 2;
+    public Duration getDesiredPollingInterval() {
+        Duration desiredInterval = idleTime.dividedBy(2);
+
         // Round to second to avoid setting the interval too often
-        desiredInterval_ms = (desiredInterval_ms / 1000) * 1000;
-        return Math.max(Math.min(maxInterval_ms, desiredInterval_ms), minInterval_ms);
+        desiredInterval = Duration.ofSeconds(desiredInterval.getSeconds());
+
+        if (minInterval.compareTo(desiredInterval) > 0) {
+            return minInterval;
+        } else if (maxInterval.compareTo(desiredInterval) < 0) {
+            return maxInterval;
+        }
+        return desiredInterval;
     }
 
     @Override
@@ -62,7 +70,7 @@ public class AdaptiveLocationListenerPolicy implements LocationListenerPolicy {
     }
 
     @Override
-    public void updateIdleTime(long newIdleTime) {
+    public void updateIdleTime(Duration newIdleTime) {
         idleTime = newIdleTime;
     }
 }

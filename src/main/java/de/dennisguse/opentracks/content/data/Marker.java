@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -43,7 +44,7 @@ public final class Marker {
     private final Track.Id trackId;
     //TODO It is the distance from the track starting point; rename to something more meaningful
     private double length = 0.0;
-    private long duration = 0;
+    private long duration = 0; //TODO Duration
 
     @Deprecated //TODO Replace by storing latitude/longitude directly.
     private final Location location;
@@ -93,6 +94,10 @@ public final class Marker {
 
     public void setId(Id id) {
         this.id = id;
+    }
+
+    public Instant getTime() {
+        return Instant.ofEpochMilli(location.getTime());
     }
 
     public String getName() {

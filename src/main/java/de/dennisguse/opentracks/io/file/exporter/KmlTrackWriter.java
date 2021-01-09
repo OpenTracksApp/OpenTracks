@@ -20,6 +20,7 @@ import android.location.Location;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -385,9 +386,9 @@ public class KmlTrackWriter implements TrackWriter {
      */
     private String getTime(Location location) {
         if (exportTrackDetail) {
-            return StringUtils.formatDateTimeIso8601(location.getTime());
+            return StringUtils.formatDateTimeIso8601(Instant.ofEpochMilli(location.getTime()));
         } else {
-            return StringUtils.formatDateTimeIso8601(location.getTime() - startTrackPoint.getTime());
+            return StringUtils.formatDateTimeIso8601(Instant.ofEpochMilli(location.getTime() - startTrackPoint.getTime().toEpochMilli()));
         }
     }
 

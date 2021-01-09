@@ -357,7 +357,7 @@ public class ExportImportTest {
             TrackPoint trackPoint = trackPoints.get(i);
             TrackPoint importedTrackPoint = importedTrackPoints.get(i);
 
-            assertEquals(trackPoint.getTime(), importedTrackPoint.getTime(), 0.01);
+            assertEquals(trackPoint.getTime(), importedTrackPoint.getTime());
             TrackPoint.Type type = trackPoint.getType();
             assertEquals("" + i, trackPoint.getType(), importedTrackPoint.getType());
 
@@ -410,8 +410,8 @@ public class ExportImportTest {
         TrackStatistics importedTrackStatistics = importedTrack.getTrackStatistics();
 
         // Time
-        assertEquals(trackStatistics.getStartTime_ms(), trackStatistics.getStartTime_ms(), 0.01);
-        assertEquals(trackStatistics.getStopTime_ms(), trackStatistics.getStopTime_ms());
+        assertEquals(trackStatistics.getStartTime(), trackStatistics.getStartTime());
+        assertEquals(trackStatistics.getStopTime(), trackStatistics.getStopTime());
         assertEquals(trackStatistics.getTotalTime(), trackStatistics.getTotalTime());
         assertEquals(trackStatistics.getMovingTime(), trackStatistics.getMovingTime());
 

@@ -10,12 +10,13 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import java.time.Duration;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.TrackPointUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
 
 class LocationHandler implements HandlerServer.Handler, LocationListener, GpsStatus.GpsStatusListener {
 
@@ -25,7 +26,7 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
     private final HandlerServer handlerServer;
     private GpsStatus gpsStatus;
     private LocationListenerPolicy locationListenerPolicy;
-    private long currentRecordingInterval;
+    private Duration currentRecordingInterval;
     private int recordingGpsAccuracy;
     private TrackPoint lastValidTrackPoint;
 
@@ -35,7 +36,7 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
 
     @Override
     public void onStart(Context context) {
-        gpsStatus = new GpsStatus(context, this, PreferencesUtils.getMinRecordingInterval(context));
+        gpsStatus = new GpsStatus(context, this, Duration.ofSeconds(PreferencesUtils.getMinRecordingInterval(context)));
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         registerLocationListener();
     }
@@ -56,12 +57,12 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
             int minRecordingInterval = PreferencesUtils.getMinRecordingInterval(context);
             if (minRecordingInterval == PreferencesUtils.getMinRecordingIntervalAdaptBatteryLife(context)) {
                 // Choose battery life over moving time accuracy.
-                locationListenerPolicy = new AdaptiveLocationListenerPolicy(30 * UnitConversions.ONE_SECOND_MS, 5 * UnitConversions.ONE_MINUTE_MS, 5);
+                locationListenerPolicy = new AdaptiveLocationListenerPolicy(Duration.ofSeconds(30), Duration.ofSeconds(5), 5);
             } else if (minRecordingInterval == PreferencesUtils.getMinRecordingIntervalAdaptAccuracy(context)) {
                 // Get all the updates.
-                locationListenerPolicy = new AdaptiveLocationListenerPolicy(UnitConversions.ONE_SECOND_MS, 30 * UnitConversions.ONE_SECOND_MS, 0);
+                locationListenerPolicy = new AdaptiveLocationListenerPolicy(Duration.ofSeconds(1), Duration.ofSeconds(30), 0);
             } else {
-                locationListenerPolicy = new AbsoluteLocationListenerPolicy(minRecordingInterval * UnitConversions.ONE_SECOND_MS);
+                locationListenerPolicy = new AbsoluteLocationListenerPolicy(Duration.ofSeconds(minRecordingInterval));
             }
 
             if (locationManager != null) {
@@ -108,9 +109,9 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
             return;
         }
 
-        long idleTime = 0L;
-        if (TrackPointUtils.after(trackPoint, lastValidTrackPoint)) {
-            idleTime = trackPoint.getTime() - lastValidTrackPoint.getTime();
+        Duration idleTime = Duration.ofSeconds(0);
+        if (lastValidTrackPoint != null && trackPoint.getTime().isAfter(lastValidTrackPoint.getTime())) {
+            idleTime = Duration.between(lastValidTrackPoint.getTime(), trackPoint.getTime());
         }
 
         locationListenerPolicy.updateIdleTime(idleTime);
@@ -146,9 +147,9 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
             return;
         }
         try {
-            long interval = locationListenerPolicy.getDesiredPollingInterval();
+            Duration interval = locationListenerPolicy.getDesiredPollingInterval();
             currentRecordingInterval = interval;
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, interval, locationListenerPolicy.getMinDistance_m(), this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, interval.toMillis(), locationListenerPolicy.getMinDistance_m(), this);
         } catch (SecurityException e) {
             Log.e(TAG, "Could not register location listener; permissions not granted.", e);
         }

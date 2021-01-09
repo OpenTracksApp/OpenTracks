@@ -33,6 +33,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -423,14 +425,12 @@ public class CustomContentProviderUtilsTest {
         Track.Id trackId = new Track.Id(System.currentTimeMillis());
         Pair<Track, List<TrackPoint>> track = TestDataUtil.createTrack(trackId, 10);
 
-        // Bottom
-        long startTime = 1000L;
         // AverageSpeed
         TrackStatistics statistics = new TrackStatistics();
-        statistics.setStartTime_ms(startTime);
-        statistics.setStopTime_ms(2500L);
-        statistics.setTotalTime(1500L);
-        statistics.setMovingTime(700L);
+        statistics.setStartTime(Instant.ofEpochMilli(1000));
+        statistics.setStopTime(Instant.ofEpochMilli(2500));
+        statistics.setTotalTime(Duration.ofMillis(1500));
+        statistics.setMovingTime(Duration.ofMillis(700));
         statistics.setTotalDistance(750.0);
         statistics.setTotalElevationGain(50.0f);
         statistics.setMaxSpeed(60.0);
@@ -809,7 +809,7 @@ public class CustomContentProviderUtilsTest {
         // then
         assertEquals(longitude, trackPoint.getLongitude(), 0.01);
         assertEquals(latitude, trackPoint.getLatitude(), 0.01);
-        assertEquals(time, trackPoint.getTime(), 0.01);
+        assertEquals(time, trackPoint.getTime().toEpochMilli());
         assertEquals(speed, trackPoint.getSpeed(), 0.01);
         assertFalse(trackPoint.hasHeartRate());
     }
