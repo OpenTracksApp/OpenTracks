@@ -221,13 +221,10 @@ limitations under the License.
     <string name="export_track_already_exists_msg">The track %1$s already exists at the destination directory.</string>
     <string name="export_all_do_it_for_all">do it for all conflicts</string>
     <string name="export_track_errors">Tracks not exported</string>
-    <string name="export_progress_review">
-        Total exported tracks: %1$d\n
-        - New tracks exported: %2$d\n
-        - Tracks overwritten: %3$d\n
-        - Tracks skipped: %4$d\n
-        - Errors: %5$d
-    </string>
+    <string name="export_progress_summary_new_msg">New tracks exported</string>
+    <string name="export_progress_summary_overwrite_msg">Tracks overwritten</string>
+    <string name="export_progress_summary_skip_msg">Tracks skipped</string>
+    <string name="export_progress_summary_errors_msg">Errors</string>
     <!-- External Storage -->
     <!-- Files -->
     <string name="files_few">%1$d files</string>
@@ -304,12 +301,9 @@ limitations under the License.
     <string name="import_selection_option">All %1$s</string>
     <string name="import_selection_title">Import from external storage</string>
     <string name="import_success">Imported %1$s from %2$s</string>
-    <string name="import_progress_review">
-        Total imported files: %1$d\n
-        - Files imported: %2$d\n
-        - Already exists: %3$d\n
-        - Errors: %4$d
-    </string>
+    <string name="import_progress_summary_ok_msg">Files imported</string>
+    <string name="import_progress_summary_exists_msg">Already exists</string>
+    <string name="import_progress_summary_errors_msg">Errors</string>
     <!-- Marker -->
     <string name="marker_add_error">Unable to insert a marker. No GPS signal. Try again.</string>
     <string name="marker_add_success">A marker was inserted</string>
