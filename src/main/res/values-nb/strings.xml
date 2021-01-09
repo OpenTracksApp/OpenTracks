@@ -587,4 +587,5 @@ limitations under the License.
     <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
     <string name="description_elevation_loss">Total nedstigning: %1$d m (%2$d ft)</string>
     <string name="stats_loss">Total nedstigning</string>
+    <string name="import_prevent_reimport">Du har stilt inn å forhindre at spor importeres om igjen</string>
 </resources>
