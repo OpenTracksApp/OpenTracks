@@ -25,6 +25,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -40,7 +43,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(AndroidJUnit4.class)
 public class DescriptionGeneratorTest {
 
-    private static final long START_TIME = 1288721514000L;
+    private static final Instant START_TIME = Instant.ofEpochMilli(1288721514000L);
     private DescriptionGenerator descriptionGenerator;
 
     private final Context context = ApplicationProvider.getApplicationContext();
@@ -58,14 +61,14 @@ public class DescriptionGeneratorTest {
         Track track = new Track();
         TrackStatistics stats = new TrackStatistics();
         stats.setTotalDistance(20000);
-        stats.setTotalTime(600000);
-        stats.setMovingTime(300000);
+        stats.setTotalTime(Duration.ofMillis(600000));
+        stats.setMovingTime(Duration.ofMillis(300000));
         stats.setMaxSpeed(100);
         stats.setMaxElevation(550);
         stats.setMinElevation(-500);
         stats.setTotalElevationGain(6000f);
         stats.setTotalElevationLoss(6000);
-        stats.setStartTime_ms(START_TIME);
+        stats.setStartTime(START_TIME);
         track.setTrackStatistics(stats);
         track.setCategory("hiking");
         String expected = //"Created by"
@@ -96,14 +99,14 @@ public class DescriptionGeneratorTest {
         Track track = new Track();
         TrackStatistics stats = new TrackStatistics();
         stats.setTotalDistance(20000);
-        stats.setTotalTime(600000);
-        stats.setMovingTime(300000);
+        stats.setTotalTime(Duration.ofMillis(600000));
+        stats.setMovingTime(Duration.ofMillis(300000));
         stats.setMaxSpeed(100);
         stats.setMaxElevation(Double.POSITIVE_INFINITY);
         stats.setMinElevation(Double.NEGATIVE_INFINITY);
         stats.setTotalElevationGain(6000f);
         stats.setTotalElevationLoss(6000);
-        stats.setStartTime_ms(START_TIME);
+        stats.setStartTime(START_TIME);
         track.setTrackStatistics(stats);
         track.setCategory("hiking");
         String expected = //"Created by"
@@ -139,12 +142,12 @@ public class DescriptionGeneratorTest {
     }
 
     /**
-     * Tests {@link DescriptionGenerator#writeTime(long, StringBuilder, int, String)}.
+     * Tests {@link DescriptionGenerator#writeTime(Duration, StringBuilder, int, String)}.
      */
     @Test
     public void testWriteTime() {
         StringBuilder builder = new StringBuilder();
-        descriptionGenerator.writeTime(1000, builder, R.string.description_total_time, "<br>");
+        descriptionGenerator.writeTime(Duration.ofMillis(1000), builder, R.string.description_total_time, "<br>");
         assertEquals("Total time: 00:01<br>", builder.toString());
     }
 

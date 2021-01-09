@@ -21,6 +21,7 @@ import android.location.Location;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
+import java.time.Instant;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.content.data.Marker;
@@ -137,7 +138,7 @@ public class GpxTrackWriter implements TrackWriter {
             if (location.hasAltitude()) {
                 printWriter.println("<ele>" + ELEVATION_FORMAT.format(location.getAltitude()) + "</ele>");
             }
-            printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(location.getTime()) + "</time>");
+            printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(Instant.ofEpochMilli(location.getTime())) + "</time>");
             printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
             printWriter.println("<desc>" + StringUtils.formatCData(marker.getDescription()) + "</desc>");
             printWriter.println("<type>" + StringUtils.formatCData(marker.getCategory()) + "</type>");

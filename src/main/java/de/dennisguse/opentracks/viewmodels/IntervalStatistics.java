@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.viewmodels;
 
 import androidx.annotation.NonNull;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class IntervalStatistics {
 
             if (trackPoint.hasLocation() && prevTrackPoint.hasLocation()) {
                 interval.distance_m += prevTrackPoint.distanceTo(trackPoint);
-                interval.time_ms += trackPoint.getTime() - prevTrackPoint.getTime();
+                interval.time = interval.time.plus(Duration.between(prevTrackPoint.getTime(), trackPoint.getTime()));
                 interval.gain_m += trackPoint.hasElevationGain() ? trackPoint.getElevationGain() : 0;
                 interval.loss_m += trackPoint.hasElevationLoss() ? trackPoint.getElevationLoss() : 0;
 
@@ -44,7 +45,7 @@ public class IntervalStatistics {
 
                     intervalList.add(adjustedInterval);
 
-                    interval = new Interval(interval.distance_m - adjustedInterval.distance_m, interval.time_ms - adjustedInterval.time_ms);
+                    interval = new Interval(interval.distance_m - adjustedInterval.distance_m, interval.time.minus(adjustedInterval.time));
                 }
             }
         }
@@ -81,22 +82,21 @@ public class IntervalStatistics {
 
     public static class Interval {
         private float distance_m = 0f;
-        private float time_ms = 0f;
+        private Duration time = Duration.ofSeconds(0);
         private float gain_m = 0f;
         private float loss_m = 0f;
 
-        public Interval() {}
+        public Interval() {
+        }
 
-        public Interval(float distance_m, float time_ms) {
+        public Interval(float distance_m, Duration time) {
             this.distance_m = distance_m;
-            this.time_ms = time_ms;
-            this.gain_m = 0f;
-            this.loss_m = 0f;
+            this.time = time;
         }
 
         public Interval(Interval i) {
             distance_m = i.distance_m;
-            time_ms = i.time_ms;
+            time = i.time;
             gain_m = i.gain_m;
             loss_m = i.loss_m;
         }
@@ -107,7 +107,7 @@ public class IntervalStatistics {
 
         public void adjust(float adjustFactor) {
             distance_m *= adjustFactor;
-            time_ms *= adjustFactor;
+            time = Duration.ofMillis((long) (time.toMillis() * adjustFactor));
         }
 
         /**
@@ -117,7 +117,7 @@ public class IntervalStatistics {
             if (distance_m == 0f) {
                 return 0f;
             }
-            return distance_m / (float) (time_ms * UnitConversions.MS_TO_S);
+            return (distance_m / (time.toMillis() * (float) UnitConversions.MS_TO_S));
         }
 
         public float getGain_m() {

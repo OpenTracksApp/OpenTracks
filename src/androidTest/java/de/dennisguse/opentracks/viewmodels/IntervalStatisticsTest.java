@@ -116,17 +116,17 @@ public class IntervalStatisticsTest {
 		IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, distanceInterval);
 		List<IntervalStatistics.Interval> intervalList = intervalStatistics.getIntervalList();
 		double totalDistance = 0d;
-		long totalTime = 0L;
+		float totalTime = 0L;
 		float totalGain = 0f;
 		for (IntervalStatistics.Interval i : intervalList) {
 			totalDistance += i.getDistance_m();
-			totalTime += ((i.getDistance_m() / i.getSpeed_ms()) * UnitConversions.S_TO_MS);
+			totalTime += i.getDistance_m() / i.getSpeed_ms();
 			totalGain += i.getGain_m();
 		}
 
 		// then
 		assertEquals(trackStatistics.getTotalDistance(), totalDistance, 0.01);
-		assertEquals(trackStatistics.getTotalTime() * UnitConversions.MS_TO_S, totalTime * UnitConversions.MS_TO_S, 0.1);
+		assertEquals(trackStatistics.getTotalTime().toMillis(), totalTime * UnitConversions.S_TO_MS, 1);
 		assertEquals(intervalList.size(), (int) Math.ceil(trackStatistics.getTotalDistance() / distanceInterval));
 		assertEquals(totalGain, trackPoints.size() * TestDataUtil.ELEVATION_GAIN, 0.1);
 		for (int i = 0; i < intervalList.size() - 1; i++) {

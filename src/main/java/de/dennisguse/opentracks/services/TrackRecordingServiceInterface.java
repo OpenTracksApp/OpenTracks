@@ -17,6 +17,8 @@ package de.dennisguse.opentracks.services;
 
 import androidx.annotation.VisibleForTesting;
 
+import java.time.Duration;
+
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -59,8 +61,7 @@ public interface TrackRecordingServiceInterface {
     /**
      * Gets the total time for the current recording track. Returns 0 if not recording.
      */
-    //TODO milliseconds?
-    long getTotalTime();
+    Duration getTotalTime();
 
     Marker.Id insertMarker(String name, String category, String description, String photoUrl);
 

@@ -57,7 +57,7 @@ public class TrackStubUtils {
         location.setAltitude(altitude);
         location.setAccuracy(INITIAL_ACCURACY);
         location.setSpeed(INITIAL_SPEED);
-        location.setTime(INITIAL_TIME);
+        location.setTime(INITIAL_TIME); //TODO This is nowadays ignored as the constructor will replace the time.
         location.setBearing(INITIAL_BEARING);
 
         return new TrackPoint(location);

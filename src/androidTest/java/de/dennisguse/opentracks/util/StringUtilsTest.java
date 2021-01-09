@@ -24,6 +24,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.time.Duration;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
@@ -40,55 +41,32 @@ public class StringUtilsTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
 
-
     /**
-     * Tests {@link StringUtils#formatDateTimeIso8601(long)}.
-     */
-    @Test
-    public void testFormatDateTimeIso8601() {
-        assertEquals("1970-01-01T00:00:12.345Z", StringUtils.formatDateTimeIso8601(12345));
-    }
-
-    /**
-     * Tests {@link StringUtils#formatElapsedTime(long)}.
+     * Tests {@link StringUtils#formatElapsedTime(Duration)}.
      */
     @Test
     public void testformatElapsedTime() {
-        // 1 second
-        assertEquals("00:01", StringUtils.formatElapsedTime(1000));
-        // 10 seconds
-        assertEquals("00:10", StringUtils.formatElapsedTime(10000));
-        // 1 minute
-        assertEquals("01:00", StringUtils.formatElapsedTime(60000));
-        // 10 minutes
-        assertEquals("10:00", StringUtils.formatElapsedTime(600000));
-        // 1 hour
-        assertEquals("1:00:00", StringUtils.formatElapsedTime(3600000));
-        // 10 hours
-        assertEquals("10:00:00", StringUtils.formatElapsedTime(36000000));
-        // 100 hours
-        assertEquals("100:00:00", StringUtils.formatElapsedTime(360000000));
+        assertEquals("00:01", StringUtils.formatElapsedTime(Duration.ofMillis(1000)));
+        assertEquals("00:10", StringUtils.formatElapsedTime(Duration.ofMillis(10000)));
+        assertEquals("01:00", StringUtils.formatElapsedTime(Duration.ofMillis(60000)));
+        assertEquals("10:00", StringUtils.formatElapsedTime(Duration.ofMillis(600000)));
+        assertEquals("1:00:00", StringUtils.formatElapsedTime(Duration.ofMillis(3600000)));
+        assertEquals("10:00:00", StringUtils.formatElapsedTime(Duration.ofMillis(36000000)));
+        assertEquals("100:00:00", StringUtils.formatElapsedTime(Duration.ofMillis(360000000)));
     }
 
     /**
-     * Tests {@link StringUtils#formatElapsedTimeWithHour(long)}.
+     * Tests {@link StringUtils#formatElapsedTimeWithHour(Duration)}.
      */
     @Test
     public void testformatElapsedTimeWithHour() {
-        // 1 second
-        assertEquals("0:00:01", StringUtils.formatElapsedTimeWithHour(1000));
-        // 10 seconds
-        assertEquals("0:00:10", StringUtils.formatElapsedTimeWithHour(10000));
-        // 1 minute
-        assertEquals("0:01:00", StringUtils.formatElapsedTimeWithHour(60000));
-        // 10 minutes
-        assertEquals("0:10:00", StringUtils.formatElapsedTimeWithHour(600000));
-        // 1 hour
-        assertEquals("1:00:00", StringUtils.formatElapsedTimeWithHour(3600000));
-        // 10 hours
-        assertEquals("10:00:00", StringUtils.formatElapsedTimeWithHour(36000000));
-        // 100 hours
-        assertEquals("100:00:00", StringUtils.formatElapsedTimeWithHour(360000000));
+        assertEquals("0:00:01", StringUtils.formatElapsedTimeWithHour(Duration.ofMillis(1000)));
+        assertEquals("0:00:10", StringUtils.formatElapsedTimeWithHour(Duration.ofMillis(10000)));
+        assertEquals("0:01:00", StringUtils.formatElapsedTimeWithHour(Duration.ofMillis(60000)));
+        assertEquals("0:10:00", StringUtils.formatElapsedTimeWithHour(Duration.ofMillis(600000)));
+        assertEquals("1:00:00", StringUtils.formatElapsedTimeWithHour(Duration.ofMillis(3600000)));
+        assertEquals("10:00:00", StringUtils.formatElapsedTimeWithHour(Duration.ofMillis(36000000)));
+        assertEquals("100:00:00", StringUtils.formatElapsedTimeWithHour(Duration.ofMillis(360000000)));
     }
 
     /**
@@ -170,29 +148,7 @@ public class StringUtilsTest {
 
         // This comparision tends to be flaky (difference of 1ms)
         // Assert.assertEquals(calendar.getTimeInMillis(), StringUtils.parseTime(xmlDateTime));
-        assertTrue(calendar.getTimeInMillis() + " vs. " + StringUtils.parseTime(xmlDateTime), Math.abs(calendar.getTimeInMillis() - StringUtils.parseTime(xmlDateTime)) <= 1);
-    }
-
-    /**
-     * Tests {@link StringUtils#getTimeParts(long)} with a positive number.
-     */
-    @Test
-    public void testGetTimeParts_positive() {
-        int[] parts = StringUtils.getTimeParts(61000);
-        assertEquals(1, parts[0]);
-        assertEquals(1, parts[1]);
-        assertEquals(0, parts[2]);
-    }
-
-    /**
-     * Tests {@link StringUtils#getTimeParts(long)} with a negative number.
-     */
-    @Test
-    public void testGetTimeParts_negative() {
-        int[] parts = StringUtils.getTimeParts(-61000);
-        assertEquals(-1, parts[0]);
-        assertEquals(-1, parts[1]);
-        assertEquals(0, parts[2]);
+        assertTrue(calendar.getTimeInMillis() + " vs. " + StringUtils.parseTime(xmlDateTime), Math.abs(calendar.getTimeInMillis() - StringUtils.parseTime(xmlDateTime).toEpochMilli()) <= 1);
     }
 
     @Test

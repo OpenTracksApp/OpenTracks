@@ -28,6 +28,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import de.dennisguse.opentracks.chart.ChartPoint;
 import de.dennisguse.opentracks.chart.ChartView;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -61,7 +64,7 @@ public class ChartFragmentTest {
     @Before
     public void setUp() {
         boolean chartByDistance = false;
-        chartFragment = (ChartFragment) ChartFragment.newInstance(chartByDistance);
+        chartFragment = ChartFragment.newInstance(chartByDistance);
         chartFragment.setChartView(new ChartView(ApplicationProvider.getApplicationContext(), chartByDistance));
     }
 
@@ -193,18 +196,18 @@ public class ChartFragmentTest {
         // given
         chartFragment.setChartByDistance(false);
         TrackPoint trackPoint1 = TrackStubUtils.createDefaultTrackPoint();
-        trackPoint1.setTime(TrackStubUtils.INITIAL_TIME); //Keep old TrackPoint behavior of having time=0 for this test
+        trackPoint1.setTime(Instant.ofEpochMilli(TrackStubUtils.INITIAL_TIME)); //Keep old TrackPoint behavior of having time=0 for this test
 
         // when
         ChartPoint point = chartFragment.createPendingPoint(trackPoint1);
 
         // then
         assertEquals(0.0, point.getTimeOrDistance(), 0.01);
-        long timeSpan = 222;
+        Duration timeSpan = Duration.ofMillis(222);
         TrackPoint trackPoint2 = TrackStubUtils.createDefaultTrackPoint();
-        trackPoint2.setTime(trackPoint1.getTime() + timeSpan);
+        trackPoint2.setTime(Instant.ofEpochMilli(TrackStubUtils.INITIAL_TIME).plus(timeSpan));
         point = chartFragment.createPendingPoint(trackPoint2);
-        assertEquals((double) timeSpan, point.getTimeOrDistance(), 0.01);
+        assertEquals(timeSpan, Duration.ofMillis((long) point.getTimeOrDistance()));
     }
 
     /**
@@ -255,7 +258,7 @@ public class ChartFragmentTest {
         /*
          * Add a time span here to make sure the second point is valid, the value 222 here is doesn't matter.
          */
-        trackPoint2.setTime(trackPoint1.getTime() + 222);
+        trackPoint2.setTime(trackPoint1.getTime().plusMillis(222));
         trackPoint2.setSpeed(130f);
         point = chartFragment.createPendingPoint(trackPoint2);
         assertEquals(130.0 * UnitConversions.MPS_TO_KMH, point.getSpeed(), 0.01);
@@ -280,7 +283,7 @@ public class ChartFragmentTest {
          * Add a time span here to make sure the second point and the speed is valid.
          * Speed is valid if: speedDifference > Constants.MAX_ACCELERATION * timeDifference speedDifference = 102 -100 timeDifference = 222
          */
-        trackPoint2.setTime(trackPoint2.getTime() + 222);
+        trackPoint2.setTime(trackPoint2.getTime().plusMillis(222));
         trackPoint2.setSpeed(102f);
         point = chartFragment.createPendingPoint(trackPoint2);
         assertEquals(102.0 * UnitConversions.MPS_TO_KMH * UnitConversions.KM_TO_MI, point.getSpeed(), 0.01);
@@ -305,7 +308,7 @@ public class ChartFragmentTest {
          * Add a time span here to make sure the second point and the speed is valid.
          * Speed is valid if: speedDifference > Constants.MAX_ACCELERATION * timeDifference speedDifference = 102 -100 timeDifference = 222
          */
-        trackPoint2.setTime(trackPoint2.getTime() + 222);
+        trackPoint2.setTime(trackPoint2.getTime().plusMillis(222));
         trackPoint2.setSpeed(102f);
         point = chartFragment.createPendingPoint(trackPoint2);
         assertEquals(HOURS_PER_UNIT / (102.0 * UnitConversions.MPS_TO_KMH), point.getPace(), 0.01);

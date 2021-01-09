@@ -21,6 +21,9 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.util.TrackPointUtils;
@@ -88,9 +91,9 @@ public class TrackStatisticsUpdater {
         trackInitialized = true;
     }
 
-    public void updateTime(long time_ms) {
-        currentSegment.setStopTime_ms(time_ms);
-        currentSegment.setTotalTime(time_ms - currentSegment.getStartTime_ms());
+    public void updateTime(Instant time) {
+        currentSegment.setStopTime(time);
+        currentSegment.setTotalTime(Duration.between(currentSegment.getStartTime(), time));
     }
 
     public TrackStatistics getTrackStatistics() {
@@ -108,11 +111,11 @@ public class TrackStatisticsUpdater {
      */
     public void addTrackPoint(TrackPoint trackPoint, int minRecordingDistance) {
         if (!trackInitialized) {
-            trackStatistics.setStartTime_ms(trackPoint.getTime());
+            trackStatistics.setStartTime(trackPoint.getTime());
             trackInitialized = true;
         }
         if (!segmentInitialized) {
-            currentSegment.setStartTime_ms(trackPoint.getTime());
+            currentSegment.setStartTime(trackPoint.getTime());
             segmentInitialized = true;
         }
 
@@ -162,8 +165,8 @@ public class TrackStatisticsUpdater {
             lastTrackPoint = trackPoint;
             return;
         }
-        long movingTime = trackPoint.getTime() - lastTrackPoint.getTime();
-        if (movingTime < 0) {
+        Duration movingTime = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
+        if (movingTime.isNegative()) {
             lastTrackPoint = trackPoint;
             return;
         }
@@ -252,9 +255,9 @@ public class TrackStatisticsUpdater {
         }
 
         // See if the speed seems physically likely. Ignore any speeds that imply acceleration greater than 2g.
-        long timeDifference = trackPoint.getTime() - lastTrackPoint.getTime();
+        Duration timeDifference = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
         double speedDifference = Math.abs(lastTrackPoint.getSpeed() - trackPoint.getSpeed());
-        if (speedDifference > MAX_ACCELERATION * timeDifference) {
+        if (speedDifference > MAX_ACCELERATION * timeDifference.toMillis()) {
             return false;
         }
 
@@ -262,7 +265,7 @@ public class TrackStatisticsUpdater {
         if (speedBuffer_ms.isFull()) {
             double average = speedBuffer_ms.getAverage();
             double diff = Math.abs(average - trackPoint.getSpeed());
-            return (trackPoint.getSpeed() < average * 10) && (diff < MAX_ACCELERATION * timeDifference);
+            return (trackPoint.getSpeed() < average * 10) && (diff < MAX_ACCELERATION * timeDifference.toMillis());
         }
 
         return true;

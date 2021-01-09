@@ -16,6 +16,7 @@
 
 package de.dennisguse.opentracks.services.tasks;
 
+import java.time.Duration;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,15 +43,9 @@ class TimerTaskExecutor {
     }
 
     /**
-     * Schedules the periodic task in milliseconds.
-     *
-     * @param interval_ms the interval_ms
+     * Schedules the periodic task.
      */
-    void scheduleTask(long interval_ms) {
-        if (interval_ms <= 0) {
-            return;
-        }
-
+    void scheduleTask(Duration interval) {
         if (!trackRecordingService.isRecording() || trackRecordingService.isPaused()) {
             return;
         }
@@ -69,8 +64,10 @@ class TimerTaskExecutor {
             }
         };
         timer = new Timer(TimerTaskExecutor.class.getSimpleName());
-        long next = System.currentTimeMillis() + interval_ms - (trackStatistics.getTotalTime() % interval_ms);
-        timer.scheduleAtFixedRate(timerTask, new Date(next), interval_ms);
+
+        //TODO Simplify: far too complicated for it's purpose
+        long next = System.currentTimeMillis() + interval.toMillis() - (trackStatistics.getTotalTime().toMillis() % interval.toMillis());
+        timer.scheduleAtFixedRate(timerTask, new Date(next), interval.toMillis());
     }
 
     void shutdown() {

@@ -8,6 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.time.Duration;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
@@ -28,8 +29,8 @@ public class AnnouncementUtilsTest {
     public void getAnnouncement() {
         TrackStatistics stats = new TrackStatistics();
         stats.setTotalDistance(20000);
-        stats.setTotalTime(600000);
-        stats.setMovingTime(300000);
+        stats.setTotalTime(Duration.ofMillis(600000));
+        stats.setMovingTime(Duration.ofMillis(300000));
         stats.setMaxSpeed(100);
         stats.setTotalElevationGain(6000f);
 
@@ -44,8 +45,8 @@ public class AnnouncementUtilsTest {
     public void getAnnouncement_withInterval() {
         TrackStatistics stats = new TrackStatistics();
         stats.setTotalDistance(20000);
-        stats.setTotalTime(600000);
-        stats.setMovingTime(300000);
+        stats.setTotalTime(Duration.ofMillis(600000));
+        stats.setMovingTime(Duration.ofMillis(300000));
         stats.setMaxSpeed(100);
         stats.setTotalElevationGain(6000f);
 

@@ -17,6 +17,9 @@ package de.dennisguse.opentracks.util;
 
 import android.location.Location;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import de.dennisguse.opentracks.content.data.TrackPoint;
 
 /**
@@ -28,8 +31,7 @@ public class LocationUtils {
 
     private static final String TAG = LocationUtils.class.getSimpleName();
 
-    // 1 minute in milliseconds
-    private static final long MAX_LOCATION_AGE_MS = (long) (UnitConversions.MIN_TO_S * UnitConversions.S_TO_MS);
+    private static final Duration MAX_LOCATION_AGE = Duration.ofMinutes(1);
 
     private LocationUtils() {
     }
@@ -48,6 +50,8 @@ public class LocationUtils {
     }
 
     public static boolean isTrackPointOld(TrackPoint trackPoint) {
-        return System.currentTimeMillis() - trackPoint.getTime() > MAX_LOCATION_AGE_MS;
+        return Duration.between(trackPoint.getTime(), Instant.now())
+                .minus(MAX_LOCATION_AGE)
+                .isNegative();
     }
 }

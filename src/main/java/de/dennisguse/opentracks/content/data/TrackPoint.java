@@ -21,6 +21,7 @@ import android.os.Parcel;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -43,7 +44,7 @@ public class TrackPoint {
 
     private TrackPoint.Id id;
 
-    private long time_ms;
+    private Instant time;
     private Double latitude;
     private Double longitude;
     private Float accuracy;
@@ -101,49 +102,49 @@ public class TrackPoint {
         this.speed_mps = location.getSpeed();
         this.accuracy = location.getAccuracy();
 
-        setTime(System.currentTimeMillis());
+        setTime(Instant.now());
     }
 
-    public TrackPoint(@NonNull Type type, long time_ms) {
+    public TrackPoint(@NonNull Type type, Instant time) {
         this(type);
-        this.time_ms = time_ms;
+        this.time = time;
     }
 
-    public TrackPoint(double latitude, double longitude, Double altitude, long time) {
+    public TrackPoint(double latitude, double longitude, Double altitude, Instant time) {
         this(Type.TRACKPOINT);
         this.latitude = latitude;
         this.longitude = longitude;
         this.altitude_m = altitude;
-        this.time_ms = time;
+        this.time = time;
     }
 
     @Deprecated //See #316
     public static TrackPoint createSegmentStartManual() {
-        return createSegmentStartManualWithTime(System.currentTimeMillis());
+        return createSegmentStartManualWithTime(Instant.now());
     }
 
-    public static TrackPoint createSegmentStartManualWithTime(long time) {
+    public static TrackPoint createSegmentStartManualWithTime(Instant time) {
         return new TrackPoint(Type.SEGMENT_START_MANUAL, time);
     }
 
     @Deprecated //See #316
     public static TrackPoint createSegmentStartAutomatic() {
-        return createSegmentStartAutomaticWithTime(System.currentTimeMillis());
+        return createSegmentStartAutomaticWithTime(Instant.now());
     }
 
-    public static TrackPoint createSegmentStartAutomaticWithTime(long time) {
+    public static TrackPoint createSegmentStartAutomaticWithTime(Instant time) {
         return new TrackPoint(Type.SEGMENT_START_AUTOMATIC, time);
     }
 
     public static TrackPoint createSegmentEnd() {
-        return createSegmentEndWithTime(System.currentTimeMillis());
+        return createSegmentEndWithTime(Instant.now());
     }
 
     public static TrackPoint createSegmentEndWithTime(@NonNull TrackPoint trackPoint) {
         return createSegmentEndWithTime(trackPoint.getTime());
     }
 
-    public static TrackPoint createSegmentEndWithTime(long time) {
+    public static TrackPoint createSegmentEndWithTime(Instant time) {
         return new TrackPoint(Type.SEGMENT_END_MANUAL, time);
     }
 
@@ -183,7 +184,7 @@ public class TrackPoint {
     @Nullable
     public Location getLocation() {
         Location location = new Location("");
-        location.setTime(time_ms);
+        location.setTime(time.toEpochMilli());
         if (hasLocation()) {
             location.setLatitude(latitude);
             location.setLongitude(longitude);
@@ -241,12 +242,12 @@ public class TrackPoint {
         this.longitude = longitude;
     }
 
-    public long getTime() {
-        return time_ms;
+    public Instant getTime() {
+        return time;
     }
 
-    public void setTime(long time) {
-        this.time_ms = time;
+    public void setTime(Instant time) {
+        this.time = time;
     }
 
     public boolean hasAltitude() {

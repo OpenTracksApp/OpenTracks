@@ -24,6 +24,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
 
+import java.time.Duration;
+
 import de.dennisguse.opentracks.databinding.TrackControllerBinding;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
@@ -53,8 +55,7 @@ public class TrackController implements View.OnTouchListener {
 
     private boolean isRecording;
     private boolean isPaused;
-    private long totalTime = 0;
-    private long totalTimeTimestamp = 0;
+    private Duration totalTime;
     private boolean isResumed = false;
 
     private final Callback callback;
@@ -63,7 +64,7 @@ public class TrackController implements View.OnTouchListener {
     private final Runnable updateTotalTimeRunnable = new Runnable() {
         public void run() {
             if (isResumed && isRecording && !isPaused) {
-                viewBinding.trackControllerTotalTime.setText(StringUtils.formatElapsedTimeWithHour(System.currentTimeMillis() - totalTimeTimestamp + totalTime));
+                viewBinding.trackControllerTotalTime.setText(StringUtils.formatElapsedTimeWithHour(totalTime));
                 handlerUpdateTotalTime.postDelayed(this, UnitConversions.ONE_SECOND_MS);
             }
         }
@@ -191,9 +192,10 @@ public class TrackController implements View.OnTouchListener {
         viewBinding.trackControllerTotalTime.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
         if (isRecording) {
             totalTime = getTotalTime();
-            viewBinding.trackControllerTotalTime.setText(StringUtils.formatElapsedTimeWithHour(totalTime));
+            if (totalTime != null) {
+                viewBinding.trackControllerTotalTime.setText(StringUtils.formatElapsedTimeWithHour(totalTime));
+            }
             if (!isPaused) {
-                totalTimeTimestamp = System.currentTimeMillis();
                 handlerUpdateTotalTime.postDelayed(updateTotalTimeRunnable, UnitConversions.ONE_SECOND_MS);
             }
         }
@@ -220,9 +222,9 @@ public class TrackController implements View.OnTouchListener {
     /**
      * Gets the total time for the current recording track.
      */
-    private long getTotalTime() {
+    private Duration getTotalTime() {
         TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
-        return trackRecordingService != null ? trackRecordingService.getTotalTime() : 0L;
+        return trackRecordingService != null ? trackRecordingService.getTotalTime() : null;
     }
 
     private void showStatusSetDefaultText() {

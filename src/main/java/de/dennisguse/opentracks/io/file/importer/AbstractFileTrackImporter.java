@@ -28,8 +28,9 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -50,7 +51,6 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * Abstract class for file track importers.
@@ -185,9 +185,9 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                     trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
                 }
 
-                if (marker.getLocation().getTime() > trackPoint.getTime()) {
+                if ((marker.getTime()).isAfter(trackPoint.getTime())) {
                     trackPoint = null;
-                } else if (marker.getLocation().getTime() < trackPoint.getTime()) {
+                } else if (marker.getTime().isBefore(trackPoint.getTime())) {
                     Log.w(TAG, "Ignoring marker: current trackPoint was after marker.");
                     marker = null;
                 } else {
@@ -203,7 +203,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                         String markerDescription = marker.getDescription();
                         String icon = context.getString(R.string.marker_icon_url);
                         double length = trackStatisticsUpdater.getTrackStatistics().getTotalDistance();
-                        long duration = trackStatisticsUpdater.getTrackStatistics().getTotalTime();
+                        long duration = trackStatisticsUpdater.getTrackStatistics().getTotalTime().toMillis();
 
                         // Insert marker
                         Marker newMarker = new Marker(marker.getName(), markerDescription, marker.getCategory(), icon, track.getId(), length, duration, trackPoint.getLocation(), marker.getPhotoUrl());
@@ -338,8 +338,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         TrackPoint trackPoint = createTrackPoint();
 
         if (trackPoint.hasLocation()) {
-            long time = trackPoint.getTime();
-            Date d = new Date(time);
+            Instant time = trackPoint.getTime();
             if (trackPoint.getLatitude() == 100) {
                 //TODO Remove by 31st December 2021.
                 trackPoint = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL);
@@ -355,12 +354,12 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         }
 
         // Calculate derived attributes from the previous point
-        if (trackData.lastLocationInCurrentSegment != null && trackData.lastLocationInCurrentSegment.getTime() != 0) {
+        if (trackData.lastLocationInCurrentSegment != null && trackData.lastLocationInCurrentSegment.getTime() == null) {
             if (!trackPoint.hasSpeed()) {
-                long timeDifference = trackPoint.getTime() - trackData.lastLocationInCurrentSegment.getTime();
+                Duration timeDifference = Duration.between(trackData.lastLocationInCurrentSegment.getTime(), trackPoint.getTime());
 
                 // Check for negative time change
-                if (timeDifference <= 0) {
+                if (timeDifference.isNegative()) {
                     Log.w(TAG, "Time difference not positive.");
                 } else {
 
@@ -368,9 +367,8 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                      * We don't have a speed and bearing in GPX, make something up from the last two points.
                      * GPS points tend to have some inherent imprecision, speed and bearing will likely be off, so the statistics for things like max speed will also be off.
                      */
-                    double duration = timeDifference * UnitConversions.MS_TO_S;
                     if (trackPoint.hasLocation() && trackData.lastLocationInCurrentSegment.hasLocation()) {
-                        double speed = trackData.lastLocationInCurrentSegment.distanceTo(trackPoint) / duration;
+                        float speed = trackData.lastLocationInCurrentSegment.distanceTo(trackPoint) / timeDifference.toMillis();
                         trackPoint.setSpeed((float) speed);
                     }
                 }

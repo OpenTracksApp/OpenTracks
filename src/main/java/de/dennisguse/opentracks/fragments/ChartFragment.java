@@ -56,7 +56,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
     private static final String KEY_CHART_VIEW_BY_DISTANCE_KEY = "chartViewByDistance";
 
-    public static Fragment newInstance(boolean chartByDistance) {
+    public static ChartFragment newInstance(boolean chartByDistance) {
         Bundle bundle = new Bundle();
         bundle.putBoolean(KEY_CHART_VIEW_BY_DISTANCE_KEY, chartByDistance);
 

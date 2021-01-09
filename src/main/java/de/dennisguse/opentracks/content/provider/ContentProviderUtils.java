@@ -29,6 +29,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import java.io.File;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -118,19 +120,19 @@ public class ContentProviderUtils {
             track.setCategory(cursor.getString(categoryIndex));
         }
         if (!cursor.isNull(startTimeIndex)) {
-            trackStatistics.setStartTime_ms(cursor.getLong(startTimeIndex));
+            trackStatistics.setStartTime(Instant.ofEpochMilli(cursor.getLong(startTimeIndex)));
         }
         if (!cursor.isNull(stopTimeIndex)) {
-            trackStatistics.setStopTime_ms(cursor.getLong(stopTimeIndex));
+            trackStatistics.setStopTime(Instant.ofEpochMilli(cursor.getLong(stopTimeIndex)));
         }
         if (!cursor.isNull(totalDistanceIndex)) {
             trackStatistics.setTotalDistance(cursor.getFloat(totalDistanceIndex));
         }
         if (!cursor.isNull(totalTimeIndex)) {
-            trackStatistics.setTotalTime(cursor.getLong(totalTimeIndex));
+            trackStatistics.setTotalTime(Duration.ofMillis(cursor.getLong(totalTimeIndex)));
         }
         if (!cursor.isNull(movingTimeIndex)) {
-            trackStatistics.setMovingTime(cursor.getLong(movingTimeIndex));
+            trackStatistics.setMovingTime(Duration.ofMillis(cursor.getLong(movingTimeIndex)));
         }
         if (!cursor.isNull(maxSpeedIndex)) {
             trackStatistics.setMaxSpeed(cursor.getFloat(maxSpeedIndex));
@@ -270,11 +272,11 @@ public class ContentProviderUtils {
         values.put(TracksColumns.NAME, track.getName());
         values.put(TracksColumns.DESCRIPTION, track.getDescription());
         values.put(TracksColumns.CATEGORY, track.getCategory());
-        values.put(TracksColumns.STARTTIME, trackStatistics.getStartTime_ms());
-        values.put(TracksColumns.STOPTIME, trackStatistics.getStopTime_ms());
+        values.put(TracksColumns.STARTTIME, trackStatistics.getStartTime().toEpochMilli());
+        values.put(TracksColumns.STOPTIME, trackStatistics.getStopTime().toEpochMilli());
         values.put(TracksColumns.TOTALDISTANCE, trackStatistics.getTotalDistance());
-        values.put(TracksColumns.TOTALTIME, trackStatistics.getTotalTime());
-        values.put(TracksColumns.MOVINGTIME, trackStatistics.getMovingTime());
+        values.put(TracksColumns.TOTALTIME, trackStatistics.getTotalTime().toMillis());
+        values.put(TracksColumns.MOVINGTIME, trackStatistics.getMovingTime().toMillis());
         values.put(TracksColumns.AVGSPEED, trackStatistics.getAverageSpeed());
         values.put(TracksColumns.AVGMOVINGSPEED, trackStatistics.getAverageMovingSpeed());
         values.put(TracksColumns.MAXSPEED, trackStatistics.getMaxSpeed());
@@ -533,7 +535,7 @@ public class ContentProviderUtils {
             trackPoint.setLatitude(((double) cursor.getInt(indexes.latitudeIndex)) / 1E6);
         }
         if (!cursor.isNull(indexes.timeIndex)) {
-            trackPoint.setTime(cursor.getLong(indexes.timeIndex));
+            trackPoint.setTime(Instant.ofEpochMilli(cursor.getLong(indexes.timeIndex)));
         }
         if (!cursor.isNull(indexes.altitudeIndex)) {
             trackPoint.setAltitude(cursor.getFloat(indexes.altitudeIndex));
@@ -704,7 +706,7 @@ public class ContentProviderUtils {
             values.put(TrackPointsColumns.LONGITUDE, (int) (trackPoint.getLongitude() * 1E6));
             values.put(TrackPointsColumns.LATITUDE, (int) (trackPoint.getLatitude() * 1E6));
         }
-        values.put(TrackPointsColumns.TIME, trackPoint.getTime());
+        values.put(TrackPointsColumns.TIME, trackPoint.getTime().toEpochMilli());
         if (trackPoint.hasAltitude()) {
             values.put(TrackPointsColumns.ALTITUDE, trackPoint.getAltitude());
         }

@@ -22,8 +22,11 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
+
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -50,41 +53,32 @@ public class StringUtils {
     }
 
     /**
-     * Formats the date and time_ms based on user's phone date/time_ms preferences.
-     *
-     * @param context the context
-     * @param time_ms the time_ms in milliseconds
+     * Formats the date and time based on user's phone date/time preferences.
      */
-    public static String formatDateTime(Context context, long time_ms) {
-        return DateUtils.formatDateTime(context, time_ms, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE)
-                + " " + DateUtils.formatDateTime(context, time_ms, DateUtils.FORMAT_SHOW_TIME);
+    public static String formatDateTime(Context context, Instant time) {
+        return DateUtils.formatDateTime(context, time.toEpochMilli(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE)
+                + " " + DateUtils.formatDateTime(context, time.toEpochMilli(), DateUtils.FORMAT_SHOW_TIME);
     }
 
     /**
-     * Formats the time using the ISO 8601 date time_ms format with fractional seconds in UTC time zone.
-     *
-     * @param time_ms the time in milliseconds
+     * Formats the time using the ISO 8601 date time format with fractional seconds in UTC time zone.
      */
-    public static String formatDateTimeIso8601(long time_ms) {
-        return Instant.ofEpochMilli(time_ms).toString();
+    public static String formatDateTimeIso8601(@NonNull Instant time) {
+        return time.toString();
     }
 
     /**
      * Formats the elapsed timed in the form "MM:SS" or "H:MM:SS".
-     *
-     * @param time_ms the time in milliseconds
      */
-    public static String formatElapsedTime(long time_ms) {
-        return DateUtils.formatElapsedTime((long) (time_ms * UnitConversions.MS_TO_S));
+    public static String formatElapsedTime(@NonNull Duration time) {
+        return DateUtils.formatElapsedTime(time.getSeconds());
     }
 
     /**
      * Formats the elapsed time in the form "H:MM:SS".
-     *
-     * @param time_ms the time in milliseconds
      */
-    public static String formatElapsedTimeWithHour(long time_ms) {
-        String value = formatElapsedTime(time_ms);
+    public static String formatElapsedTimeWithHour(@NonNull Duration time) {
+        String value = formatElapsedTime(time);
         return TextUtils.split(value, ":").length == 2 ? "0:" + value : value;
     }
 
@@ -289,43 +283,18 @@ public class StringUtils {
      *
      * @param xmlDateTime the XML date time string
      */
-    public static long parseTime(String xmlDateTime) {
+    public static Instant parseTime(String xmlDateTime) {
         try {
             TemporalAccessor t = DateTimeFormatter.ISO_DATE_TIME.parseBest(xmlDateTime, ZonedDateTime::from, LocalDateTime::from);
             if (t instanceof LocalDateTime) {
                 Log.w(TAG, "Date does not contain timezone information: using UTC.");
                 t = ((LocalDateTime) t).atZone(ZoneOffset.UTC);
             }
-            return Instant.from(t).toEpochMilli();
+            return Instant.from(t);
         } catch (Exception e) {
             Log.e(TAG, "Invalid XML dateTime value");
             throw e;
         }
-    }
-
-    /**
-     * Gets the time as an array of three integers.
-     * Index 0 contains the number of seconds, index 1 contains the number of minutes, and index 2 contains the number of hours.
-     *
-     * @param time the time in milliseconds
-     * @return an array of 3 elements.
-     */
-    public static int[] getTimeParts(long time) {
-        if (time < 0) {
-            int[] parts = getTimeParts(time * -1);
-            parts[0] *= -1;
-            parts[1] *= -1;
-            parts[2] *= -1;
-            return parts;
-        }
-        int[] parts = new int[3];
-
-        long seconds = (long) (time * UnitConversions.MS_TO_S);
-        parts[0] = (int) (seconds % 60);
-        int minutes = (int) (seconds / 60);
-        parts[1] = minutes % 60;
-        parts[2] = minutes / 60;
-        return parts;
     }
 
     /**

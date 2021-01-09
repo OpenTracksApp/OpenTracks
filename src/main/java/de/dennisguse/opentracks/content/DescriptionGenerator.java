@@ -21,6 +21,8 @@ import android.util.Pair;
 
 import androidx.annotation.VisibleForTesting;
 
+import java.time.Duration;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -146,7 +148,7 @@ public class DescriptionGenerator {
         }
 
         // Recorded time
-        builder.append(context.getString(R.string.description_recorded_time, StringUtils.formatDateTime(context, stats.getStartTime_ms())));
+        builder.append(context.getString(R.string.description_recorded_time, StringUtils.formatDateTime(context, stats.getStartTime())));
         builder.append(lineBreak);
 
         return builder.toString();
@@ -177,7 +179,7 @@ public class DescriptionGenerator {
      * @param lineBreak line break string
      */
     @VisibleForTesting
-    void writeTime(long time, StringBuilder builder, int resId, String lineBreak) {
+    void writeTime(Duration time, StringBuilder builder, int resId, String lineBreak) {
         builder.append(context.getString(resId, StringUtils.formatElapsedTime(time)));
         builder.append(lineBreak);
     }

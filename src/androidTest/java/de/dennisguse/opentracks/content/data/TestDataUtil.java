@@ -7,6 +7,7 @@ import android.util.Pair;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class TestDataUtil {
 
         int i = 0;
         List<TrackPoint> trackPoints = List.of(
-                TrackPoint.createSegmentStartManualWithTime(i++ + 1),
+                TrackPoint.createSegmentStartManualWithTime(Instant.ofEpochMilli(i++ + 1)),
                 createTrackPoint(i++),
                 createTrackPoint(i++),
                 createTrackPoint(i++),
@@ -64,13 +65,13 @@ public class TestDataUtil {
                 createTrackPoint(i++),
                 createTrackPoint(i++),
                 createTrackPoint(i++),
-                TrackPoint.createSegmentEndWithTime(i++ + 1),
+                TrackPoint.createSegmentEndWithTime(Instant.ofEpochSecond(i++ + 1)),
 
-                TrackPoint.createSegmentStartManualWithTime(i++),
+                TrackPoint.createSegmentStartManualWithTime(Instant.ofEpochSecond(i++)),
                 createTrackPoint(i++),
                 createTrackPoint(i++),
                 createTrackPoint(i++),
-                TrackPoint.createSegmentEndWithTime(i++ + 1)
+                TrackPoint.createSegmentEndWithTime(Instant.ofEpochSecond(i++ + 1))
         );
 
         List<Marker> markers = List.of(
@@ -114,7 +115,7 @@ public class TestDataUtil {
         trackPoint.setLongitude(INITIAL_LONGITUDE - (double) i / 10000.0);
         trackPoint.setAccuracy((float) i / 100.0f);
         trackPoint.setAltitude(i * ALTITUDE_INTERVAL);
-        trackPoint.setTime(i + 1);
+        trackPoint.setTime(Instant.ofEpochSecond(i + 1));
         trackPoint.setSpeed(5f + (i / 10f));
 
         trackPoint.setHeartRate_bpm(100f + i);

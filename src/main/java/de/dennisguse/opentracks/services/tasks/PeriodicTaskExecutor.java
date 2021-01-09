@@ -17,6 +17,8 @@ package de.dennisguse.opentracks.services.tasks;
 
 import android.util.Log;
 
+import java.time.Duration;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -92,7 +94,7 @@ public class PeriodicTaskExecutor {
             if (timerTaskExecutor == null) {
                 timerTaskExecutor = new TimerTaskExecutor(periodicTask, trackRecordingService);
             }
-            timerTaskExecutor.scheduleTask(taskFrequency * UnitConversions.ONE_MINUTE_MS);
+            timerTaskExecutor.scheduleTask(Duration.ofSeconds(taskFrequency));
         } else {
             // For distance periodic task
             calculateNextTaskDistance();

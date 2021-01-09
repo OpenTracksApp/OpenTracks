@@ -35,6 +35,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.TaskStackBuilder;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -228,12 +230,12 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     }
 
     //TODO Throw exception, when not recording.
-    public long getTotalTime() {
+    public Duration getTotalTime() {
         if (trackStatisticsUpdater == null) {
-            return 0;
+            return Duration.ofSeconds(0);
         }
         if (!isPaused()) {
-            trackStatisticsUpdater.updateTime(System.currentTimeMillis());
+            trackStatisticsUpdater.updateTime(Instant.now());
         }
         return trackStatisticsUpdater.getTrackStatistics().getTotalTime();
     }
@@ -264,7 +266,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         TrackStatistics stats = trackStatisticsUpdater.getTrackStatistics();
         double length = stats.getTotalDistance();
-        long duration = stats.getTotalTime();
+        long duration = stats.getTotalTime().toMillis();
 
         // Insert marker
         Marker marker = new Marker(name, description, category, icon, recordingTrackId, length, duration, trackPoint.getLocation(), photoUrl);
@@ -325,7 +327,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         }
 
         // Sync the real time setting the stop time with current time.
-        track.getTrackStatistics().setStopTime_ms(System.currentTimeMillis());
+        track.getTrackStatistics().setStopTime(Instant.now());
         trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics());
 
         insertTrackPoint(track, TrackPoint.createSegmentStartManual());
@@ -637,7 +639,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      */
     private void insertTrackPointIfNewer(@NonNull Track track, @NonNull TrackPoint trackPoint) {
         TrackPoint lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(track.getId());
-        if (TrackPointUtils.equalTime(trackPoint, lastValidTrackPoint)) {
+        if (lastValidTrackPoint != null && trackPoint.getTime().equals(lastValidTrackPoint.getTime())) {
             // Do not insert if inserted already
             Log.w(TAG, "Ignore insertTrackPoint. trackPoint time same as last valid track point time.");
             return;
@@ -678,7 +680,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      * @param track the track
      */
     private void updateTrackTotalTime(Track track) {
-        trackStatisticsUpdater.updateTime(System.currentTimeMillis());
+        trackStatisticsUpdater.updateTime(Instant.now());
         track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
         contentProviderUtils.updateTrack(track);
     }

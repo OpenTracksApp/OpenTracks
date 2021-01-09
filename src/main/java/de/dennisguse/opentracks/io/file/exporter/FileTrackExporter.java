@@ -22,6 +22,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.io.OutputStream;
+import java.time.Duration;
+import java.time.Instant;
 
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
@@ -71,9 +73,9 @@ public class FileTrackExporter implements TrackExporter {
                 trackWriter.writeMultiTrackBegin();
             }
             //TODO Why use startTime of first track for the others?
-            long startTime = tracks[0].getTrackStatistics().getStartTime_ms();
+            Instant startTime = tracks[0].getTrackStatistics().getStartTime();
             for (Track track : tracks) {
-                long offset = track.getTrackStatistics().getStartTime_ms() - startTime;
+                Duration offset = Duration.between(track.getTrackStatistics().getStartTime(), startTime);
                 writeLocations(track, offset);
             }
             if (hasMultipleTracks) {
@@ -120,7 +122,7 @@ public class FileTrackExporter implements TrackExporter {
     /**
      * Writes the locations.
      */
-    private void writeLocations(Track track, long offset) throws InterruptedException {
+    private void writeLocations(Track track, Duration offset) throws InterruptedException {
         boolean wroteTrack = false;
         boolean wroteSegment = false;
 
@@ -180,9 +182,9 @@ public class FileTrackExporter implements TrackExporter {
      * @param offset     the time offset
      */
     //TODO Why?
-    private void setLocationTime(TrackPoint trackPoint, long offset) {
+    private void setLocationTime(TrackPoint trackPoint, Duration offset) {
         if (trackPoint != null) {
-            trackPoint.setTime(trackPoint.getTime() - offset);
+            trackPoint.setTime(trackPoint.getTime().minus(offset));
         }
     }
 }

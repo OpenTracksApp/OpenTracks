@@ -21,6 +21,7 @@ import android.content.Context;
 import androidx.annotation.VisibleForTesting;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
@@ -40,20 +41,13 @@ public class TrackNameUtils {
     private TrackNameUtils() {
     }
 
-    /**
-     * Gets the track name.
-     *
-     * @param context   the context
-     * @param trackId   the track id
-     * @param startTime the track start time
-     */
-    public static String getTrackName(Context context, Track.Id trackId, long startTime) {
+    public static String getTrackName(Context context, Track.Id trackId, Instant startTime) {
         String trackName = PreferencesUtils.getString(context, R.string.track_name_key, context.getString(R.string.track_name_default));
 
         if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_local_value))) {
             return StringUtils.formatDateTime(context, startTime);
         } else if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_iso_8601_value))) {
-            return new SimpleDateFormat(ISO_8601_FORMAT, Locale.US).format(startTime);
+            return new SimpleDateFormat(ISO_8601_FORMAT, Locale.US).format(startTime.toEpochMilli());
         } else {
             return context.getString(R.string.track_name_format, trackId.getId());
         }

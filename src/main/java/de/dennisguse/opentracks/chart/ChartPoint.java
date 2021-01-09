@@ -35,7 +35,7 @@ public class ChartPoint {
             }
             timeOrDistance = distance;
         } else {
-            timeOrDistance = trackStatistics.getTotalTime();
+            timeOrDistance = trackStatistics.getTotalTime().toMillis();
         }
 
         elevation = trackStatisticsUpdater.getSmoothedElevation();

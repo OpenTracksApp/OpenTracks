@@ -16,6 +16,8 @@
 
 package de.dennisguse.opentracks.services.handlers;
 
+import java.time.Duration;
+
 /**
  * This is an interface for classes that will manage the location listener policy.
  *
@@ -28,7 +30,7 @@ interface LocationListenerPolicy {
      *
      * @return the polling interval
      */
-    long getDesiredPollingInterval();
+    Duration getDesiredPollingInterval();
 
     /**
      * Returns the minimum distance between updates.
@@ -40,5 +42,5 @@ interface LocationListenerPolicy {
      *
      * @param idleTime the time that the user has been idle at his current location
      */
-    void updateIdleTime(long idleTime);
+    void updateIdleTime(Duration idleTime);
 }

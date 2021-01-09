@@ -2,6 +2,8 @@ package de.dennisguse.opentracks.services;
 
 import androidx.annotation.VisibleForTesting;
 
+import java.time.Duration;
+
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -85,7 +87,7 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
     }
 
     @Override
-    public long getTotalTime() {
+    public Duration getTotalTime() {
         return trackRecordingService.getTotalTime();
     }
 

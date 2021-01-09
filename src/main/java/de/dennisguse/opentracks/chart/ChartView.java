@@ -38,6 +38,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.GestureDetectorCompat;
 
 import java.text.NumberFormat;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -740,7 +741,7 @@ public class ChartView extends View {
      * @param spacing      the spacing between x axis and marker
      */
     private void drawXAxisMarker(Canvas canvas, double value, NumberFormat numberFormat, int spacing) {
-        String marker = chartByDistance ? numberFormat.format(value) : StringUtils.formatElapsedTime((long) value);
+        String marker = chartByDistance ? numberFormat.format(value) : StringUtils.formatElapsedTime((Duration.ofMillis((long) value)));
         Rect rect = getRect(xAxisMarkerPaint, marker);
         canvas.drawText(marker, getX(value), topBorder + effectiveHeight + spacing + rect.height(), xAxisMarkerPaint);
     }
