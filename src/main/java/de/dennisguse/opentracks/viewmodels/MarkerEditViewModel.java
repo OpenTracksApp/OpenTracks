@@ -15,6 +15,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.time.Instant;
 import java.util.NoSuchElementException;
 
 import de.dennisguse.opentracks.R;
@@ -57,7 +58,7 @@ public class MarkerEditViewModel extends AndroidViewModel {
         isNewMarker = markerId == null;
         if (isNewMarker) {
             int nextMarkerNumber = trackId == null ? 0 : new ContentProviderUtils(getApplication()).getNextMarkerNumber(trackId);
-            marker = new Marker(trackId);
+            marker = new Marker(trackId, (Instant) null);
             marker.setName(getApplication().getString(R.string.marker_name_format, nextMarkerNumber));
         } else {
             marker = new ContentProviderUtils(getApplication()).getMarker(markerId);

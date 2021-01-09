@@ -16,12 +16,9 @@
 
 package de.dennisguse.opentracks.io.file.exporter;
 
-import android.location.Location;
-
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
-import java.time.Instant;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.content.data.Marker;
@@ -133,12 +130,11 @@ public class GpxTrackWriter implements TrackWriter {
     @Override
     public void writeMarker(Marker marker) {
         if (printWriter != null) {
-            Location location = marker.getLocation();
-            printWriter.println("<wpt " + formatLocation(location) + ">");
-            if (location.hasAltitude()) {
-                printWriter.println("<ele>" + ELEVATION_FORMAT.format(location.getAltitude()) + "</ele>");
+            printWriter.println("<wpt " + formatLocation(marker.getLatitude(), marker.getLongitude()) + ">");
+            if (marker.hasAltitude()) {
+                printWriter.println("<ele>" + ELEVATION_FORMAT.format(marker.getAltitude()) + "</ele>");
             }
-            printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(Instant.ofEpochMilli(location.getTime())) + "</time>");
+            printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(marker.getTime()) + "</time>");
             printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
             printWriter.println("<desc>" + StringUtils.formatCData(marker.getDescription()) + "</desc>");
             printWriter.println("<type>" + StringUtils.formatCData(marker.getCategory()) + "</type>");
@@ -191,7 +187,7 @@ public class GpxTrackWriter implements TrackWriter {
     @Override
     public void writeTrackPoint(TrackPoint trackPoint) {
         if (printWriter != null) {
-            String coordinates = trackPoint.hasLocation() ? " " + formatLocation(trackPoint.getLocation()) : "";
+            String coordinates = trackPoint.hasLocation() ? " " + formatLocation(trackPoint.getLatitude(), trackPoint.getLongitude()) : "";
             printWriter.println("<trkpt " + coordinates + ">");
 
             if (trackPoint.hasAltitude()) {
@@ -230,12 +226,7 @@ public class GpxTrackWriter implements TrackWriter {
         }
     }
 
-    /**
-     * Formats a location with latitude and longitude coordinates.
-     *
-     * @param location the location
-     */
-    private String formatLocation(Location location) {
-        return "lat=\"" + COORDINATE_FORMAT.format(location.getLatitude()) + "\" lon=\"" + COORDINATE_FORMAT.format(location.getLongitude()) + "\"";
+    private String formatLocation(double latitude, double longitude) {
+        return "lat=\"" + COORDINATE_FORMAT.format(latitude) + "\" lon=\"" + COORDINATE_FORMAT.format(longitude) + "\"";
     }
 }

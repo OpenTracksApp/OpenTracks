@@ -269,7 +269,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         long duration = stats.getTotalTime().toMillis();
 
         // Insert marker
-        Marker marker = new Marker(name, description, category, icon, recordingTrackId, length, duration, trackPoint.getLocation(), photoUrl);
+        Marker marker = new Marker(name, description, category, icon, recordingTrackId, length, duration, trackPoint, photoUrl);
         Uri uri = contentProviderUtils.insertMarker(marker);
         return new Marker.Id(ContentUris.parseId(uri));
     }

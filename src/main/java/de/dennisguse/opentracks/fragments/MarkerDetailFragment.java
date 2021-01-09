@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks.fragments;
 
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -253,16 +252,11 @@ public class MarkerDetailFragment extends Fragment {
     }
 
     private void setLocation(boolean addShadow) {
-        Location location = marker.getLocation();
-        String value;
-        if (location == null) {
-            value = null;
-        } else {
-            value = "[" + getString(R.string.stats_latitude) + " "
-                    + StringUtils.formatCoordinate(location.getLatitude()) + ", "
-                    + getString(R.string.stats_longitude) + " "
-                    + StringUtils.formatCoordinate(location.getLongitude()) + "]";
-        }
+        String value = "[" + getString(R.string.stats_latitude) + " "
+                + StringUtils.formatCoordinate(marker.getLatitude()) + ", "
+                + getString(R.string.stats_longitude) + " "
+                + StringUtils.formatCoordinate(marker.getLongitude()) + "]";
+
         ListItemUtils.setTextView(getActivity(), viewBinding.markerDetailMarkerLocation, value, addShadow);
     }
 }

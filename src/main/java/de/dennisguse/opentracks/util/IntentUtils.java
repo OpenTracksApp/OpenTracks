@@ -155,7 +155,7 @@ public class IntentUtils {
     }
 
     public static void showCoordinateOnMap(Context context, Marker marker) {
-        showCoordinateOnMap(context, marker.getLocation().getLatitude(), marker.getLocation().getLongitude(), marker.getName());
+        showCoordinateOnMap(context, marker.getLatitude(), marker.getLongitude(), marker.getName());
     }
 
     /**
@@ -166,7 +166,7 @@ public class IntentUtils {
      * @param longitude the longitude
      * @param label     the label
      */
-    public static void showCoordinateOnMap(Context context, double latitude, double longitude, String label) {
+    private static void showCoordinateOnMap(Context context, double latitude, double longitude, String label) {
         //SEE https://developer.android.com/guide/components/intents-common.html#Maps
         String uri = "geo:0,0?q=" + latitude + "," + longitude;
         if (label != null && label.length() > 0) {
