@@ -309,26 +309,22 @@ public class ContentProviderUtils {
         int bearingIndex = cursor.getColumnIndexOrThrow(MarkerColumns.BEARING);
         int photoUrlIndex = cursor.getColumnIndexOrThrow(MarkerColumns.PHOTOURL);
 
-        Location location = new Location("");
+        Track.Id trackId = new Track.Id(cursor.getLong(trackIdIndex));
+        Marker marker = new Marker(trackId, Instant.ofEpochMilli(cursor.getLong(timeIndex)));
+
         if (!cursor.isNull(longitudeIndex) && !cursor.isNull(latitudeIndex)) {
-            location.setLongitude(((double) cursor.getInt(longitudeIndex)) / 1E6);
-            location.setLatitude(((double) cursor.getInt(latitudeIndex)) / 1E6);
-        }
-        if (!cursor.isNull(timeIndex)) {
-            location.setTime(cursor.getLong(timeIndex));
+            marker.setLongitude(((double) cursor.getInt(longitudeIndex)) / 1E6);
+            marker.setLatitude(((double) cursor.getInt(latitudeIndex)) / 1E6);
         }
         if (!cursor.isNull(altitudeIndex)) {
-            location.setAltitude(cursor.getFloat(altitudeIndex));
+            marker.setAltitude(cursor.getFloat(altitudeIndex));
         }
         if (!cursor.isNull(accuracyIndex)) {
-            location.setAccuracy(cursor.getFloat(accuracyIndex));
+            marker.setAccuracy(cursor.getFloat(accuracyIndex));
         }
         if (!cursor.isNull(bearingIndex)) {
-            location.setBearing(cursor.getFloat(bearingIndex));
+            marker.setBearing(cursor.getFloat(bearingIndex));
         }
-
-        Track.Id trackId = new Track.Id(cursor.getLong(trackIdIndex));
-        Marker marker = new Marker(trackId, location);
 
         if (!cursor.isNull(idIndex)) {
             marker.setId(new Marker.Id(cursor.getLong(idIndex)));
@@ -486,18 +482,17 @@ public class ContentProviderUtils {
         values.put(MarkerColumns.LENGTH, marker.getLength());
         values.put(MarkerColumns.DURATION, marker.getDuration());
 
-        Location location = marker.getLocation();
-        values.put(MarkerColumns.LONGITUDE, (int) (location.getLongitude() * 1E6));
-        values.put(MarkerColumns.LATITUDE, (int) (location.getLatitude() * 1E6));
-        values.put(MarkerColumns.TIME, location.getTime());
-        if (location.hasAltitude()) {
-            values.put(MarkerColumns.ALTITUDE, location.getAltitude());
+        values.put(MarkerColumns.LONGITUDE, (int) (marker.getLongitude() * 1E6));
+        values.put(MarkerColumns.LATITUDE, (int) (marker.getLatitude() * 1E6));
+        values.put(MarkerColumns.TIME, marker.getTime().toEpochMilli());
+        if (marker.hasAltitude()) {
+            values.put(MarkerColumns.ALTITUDE, marker.getAltitude());
         }
-        if (location.hasAccuracy()) {
-            values.put(MarkerColumns.ACCURACY, location.getAccuracy());
+        if (marker.hasAccuracy()) {
+            values.put(MarkerColumns.ACCURACY, marker.getAccuracy());
         }
-        if (location.hasBearing()) {
-            values.put(MarkerColumns.BEARING, location.getBearing());
+        if (marker.hasBearing()) {
+            values.put(MarkerColumns.BEARING, marker.getBearing());
         }
 
         values.put(MarkerColumns.PHOTOURL, marker.getPhotoUrl());

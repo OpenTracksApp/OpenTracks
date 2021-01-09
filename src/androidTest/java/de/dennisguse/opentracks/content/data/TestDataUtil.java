@@ -1,7 +1,6 @@
 package de.dennisguse.opentracks.content.data;
 
 import android.content.Context;
-import android.location.Location;
 import android.net.Uri;
 import android.util.Pair;
 
@@ -75,9 +74,9 @@ public class TestDataUtil {
         );
 
         List<Marker> markers = List.of(
-                new Marker("Marker 1", "Marker description 1", "Marker category 3", "", trackId, 0.0, 0, trackPoints.get(1).getLocation(), null),
-                new Marker("Marker 2", "Marker description 2", "Marker category 3", "", trackId, 0.0, 0, trackPoints.get(4).getLocation(), null),
-                new Marker("Marker 3", "Marker description 3", "Marker category 3", "", trackId, 0.0, 0, trackPoints.get(5).getLocation(), null)
+                new Marker("Marker 1", "Marker description 1", "Marker category 3", "", trackId, 0.0, 0, trackPoints.get(1), null),
+                new Marker("Marker 2", "Marker description 2", "Marker category 3", "", trackId, 0.0, 0, trackPoints.get(4), null),
+                new Marker("Marker 3", "Marker description 3", "Marker category 3", "", trackId, 0.0, 0, trackPoints.get(5), null)
         );
 
         return new TrackData(track, trackPoints, markers);
@@ -143,20 +142,12 @@ public class TestDataUtil {
         contentProviderUtils.bulkInsertTrackPoint(trackPoints, track.getId());
     }
 
-    /**
-     * Creates a Marker with a photo.
-     *
-     * @param context  The context.
-     * @param trackId  The track id.
-     * @param location The location.
-     * @return the Marker created.
-     */
-    public static Marker createMarkerWithPhoto(Context context, Track.Id trackId, Location location) throws IOException {
+    public static Marker createMarkerWithPhoto(Context context, Track.Id trackId, TrackPoint trackPoint) throws IOException {
         File dstFile = new File(FileUtils.getImageUrl(context, trackId));
         dstFile.createNewFile();
         Uri photoUri = FileUtils.getUriForFile(context, dstFile);
         String photoUrl = photoUri.toString();
 
-        return new Marker("Marker name", "Marker description", "Marker category", "", trackId, 0.0, 0, location, photoUrl);
+        return new Marker("Marker name", "Marker description", "Marker category", "", trackId, 0.0, 0, trackPoint, photoUrl);
     }
 }

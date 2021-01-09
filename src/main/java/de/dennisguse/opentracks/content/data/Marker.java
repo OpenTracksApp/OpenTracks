@@ -23,7 +23,6 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.VisibleForTesting;
 
 import java.time.Instant;
 import java.util.Objects;
@@ -42,45 +41,49 @@ public final class Marker {
     private String category = "";
     private String icon = "";
     private final Track.Id trackId;
+
+    private final Instant time;
+    private Double latitude;
+    private Double longitude;
+    private Float accuracy;
+    private Double altitude_m;
+    private Float bearing;
+
     //TODO It is the distance from the track starting point; rename to something more meaningful
     private double length = 0.0;
     private long duration = 0; //TODO Duration
 
-    @Deprecated //TODO Replace by storing latitude/longitude directly.
-    private final Location location;
     @Deprecated //TODO Make an URI instead of String
     private String photoUrl = "";
 
-    public Marker(@Nullable Track.Id trackId) {
+    public Marker(@Nullable Track.Id trackId, Instant time) {
         this.trackId = trackId;
-        location = null;
+        this.time = time;
     }
 
-    @VisibleForTesting
-    public Marker(@NonNull Track.Id trackId, @NonNull TrackPoint trackPoint) {
-        this(trackId, trackPoint.getLocation());
-    }
-
-    @Deprecated
-    //TODO Used by AbstractFileImporter to create an intermediate marker before saving a new one into the database.
-    public Marker(@NonNull Location location) {
-        this(null, location);
-    }
-
-    public Marker(@NonNull Track.Id trackId, @NonNull Location location) {
-        this.location = location;
+    public Marker(@Nullable Track.Id trackId, @NonNull TrackPoint trackPoint) {
         this.trackId = trackId;
+
+        this.time = trackPoint.getTime();
+
+        if (!trackPoint.hasLocation())
+            throw new RuntimeException("Marker requires a trackpoint with a location.");
+
+        this.latitude = trackPoint.getLatitude();
+        this.longitude = trackPoint.getLongitude();
+        if (trackPoint.hasAccuracy()) this.accuracy = trackPoint.getAccuracy();
+        if (trackPoint.hasAltitude()) this.altitude_m = trackPoint.getAltitude();
+        if (trackPoint.hasBearing()) this.bearing = trackPoint.getBearing();
     }
 
-    public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, double length, long duration, @NonNull Location location, String photoUrl) {
+    public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, double length, long duration, @NonNull TrackPoint trackPoint, String photoUrl) {
+        this(trackId, trackPoint);
         this.name = name;
         this.description = description;
         this.category = category;
         this.icon = icon;
-        this.trackId = trackId;
         this.length = length;
         this.duration = duration;
-        this.location = location;
         this.photoUrl = photoUrl;
     }
 
@@ -97,7 +100,7 @@ public final class Marker {
     }
 
     public Instant getTime() {
-        return Instant.ofEpochMilli(location.getTime());
+        return time;
     }
 
     public String getName() {
@@ -137,6 +140,83 @@ public final class Marker {
         return trackId;
     }
 
+    public boolean hasLocation() {
+        return latitude != null || longitude != null;
+    }
+
+    @Nullable
+    public Location getLocation() {
+        Location location = new Location("");
+        location.setTime(time.toEpochMilli());
+        if (hasLocation()) {
+            location.setLatitude(latitude);
+            location.setLongitude(longitude);
+        }
+        if (hasBearing()) {
+            location.setBearing(bearing);
+        }
+        if (hasAccuracy()) {
+            location.setAccuracy(accuracy);
+        }
+        if (hasAltitude()) {
+            location.setAltitude(altitude_m);
+        }
+
+        return location;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public boolean hasAccuracy() {
+        return accuracy != null;
+    }
+
+    public Float getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(Float accuracy) {
+        this.accuracy = accuracy;
+    }
+
+    public boolean hasAltitude() {
+        return altitude_m != null;
+    }
+
+    public Double getAltitude() {
+        return altitude_m;
+    }
+
+    public void setAltitude(double altitude_m) {
+        this.altitude_m = altitude_m;
+    }
+
+    public boolean hasBearing() {
+        return bearing != null;
+    }
+
+    public Float getBearing() {
+        return bearing;
+    }
+
+    public void setBearing(float bearing) {
+        this.bearing = bearing;
+    }
+
     public double getLength() {
         return length;
     }
@@ -151,11 +231,6 @@ public final class Marker {
 
     public void setDuration(long duration) {
         this.duration = duration;
-    }
-
-    @NonNull
-    public Location getLocation() {
-        return location;
     }
 
     public String getPhotoUrl() {

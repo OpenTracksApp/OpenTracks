@@ -199,14 +199,14 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                     }
 
                     // Valid trackPoint
-                    if (trackPoint.getLatitude() == marker.getLocation().getLatitude() && trackPoint.getLongitude() == marker.getLocation().getLongitude()) {
+                    if (trackPoint.getLatitude() == marker.getLatitude() && trackPoint.getLongitude() == marker.getLongitude()) {
                         String markerDescription = marker.getDescription();
                         String icon = context.getString(R.string.marker_icon_url);
                         double length = trackStatisticsUpdater.getTrackStatistics().getTotalDistance();
                         long duration = trackStatisticsUpdater.getTrackStatistics().getTotalTime().toMillis();
 
                         // Insert marker
-                        Marker newMarker = new Marker(marker.getName(), markerDescription, marker.getCategory(), icon, track.getId(), length, duration, trackPoint.getLocation(), marker.getPhotoUrl());
+                        Marker newMarker = new Marker(marker.getName(), markerDescription, marker.getCategory(), icon, track.getId(), length, duration, trackPoint, marker.getPhotoUrl());
                         contentProviderUtils.insertMarker(newMarker);
                     }
 
@@ -316,7 +316,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             Log.w(TAG, "Marker with invalid coordinates ignored: " + trackPoint.getLocation());
             return;
         }
-        Marker marker = new Marker(trackPoint.getLocation());
+        Marker marker = new Marker(null, trackPoint);
 
         if (name != null) {
             marker.setName(name);
