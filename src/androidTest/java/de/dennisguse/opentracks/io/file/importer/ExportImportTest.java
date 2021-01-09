@@ -47,7 +47,6 @@ import static org.junit.Assert.assertNull;
 /**
  * Export a track to {@link TrackFileFormat} and verify that the import is identical.
  * <p>
- * TODO: test ignores {@link TrackStatistics} for now.
  */
 @RunWith(JUnit4.class)
 public class ExportImportTest {
@@ -431,7 +430,7 @@ public class ExportImportTest {
     }
 
     private static TrackPoint createTrackPoint(long time, double latitude, double longitude, float accuracy, long speed, long altitude, float elevationGain, float heartRate, float cyclingCadence, float power) {
-        Location location = new Location("gps");
+        Location location = new Location("");
         location.setTime(time);
         location.setLongitude(longitude);
         location.setLatitude(latitude);
