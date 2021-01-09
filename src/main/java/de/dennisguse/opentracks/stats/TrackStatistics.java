@@ -112,7 +112,8 @@ public class TrackStatistics {
     }
 
     public void reset() {
-        setStartTime(Instant.ofEpochMilli(0)); //TODO should probably initialized with null
+        startTime = null;
+        stopTime = null;
 
         setTotalDistance(0);
         setTotalTime(Duration.ofSeconds(0));

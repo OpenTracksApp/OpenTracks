@@ -264,7 +264,6 @@ public class ContentProviderUtils {
         ContentValues values = new ContentValues();
         TrackStatistics trackStatistics = track.getTrackStatistics();
 
-        // Value < 0 indicates no id is available
         if (track.getId() != null) {
             values.put(TracksColumns._ID, track.getId().getId());
         }
@@ -272,8 +271,12 @@ public class ContentProviderUtils {
         values.put(TracksColumns.NAME, track.getName());
         values.put(TracksColumns.DESCRIPTION, track.getDescription());
         values.put(TracksColumns.CATEGORY, track.getCategory());
-        values.put(TracksColumns.STARTTIME, trackStatistics.getStartTime().toEpochMilli());
-        values.put(TracksColumns.STOPTIME, trackStatistics.getStopTime().toEpochMilli());
+        if (trackStatistics.getStartTime() != null) {
+            values.put(TracksColumns.STARTTIME, trackStatistics.getStartTime().toEpochMilli());
+        }
+        if (trackStatistics.getStopTime() != null) {
+            values.put(TracksColumns.STOPTIME, trackStatistics.getStopTime().toEpochMilli());
+        }
         values.put(TracksColumns.TOTALDISTANCE, trackStatistics.getTotalDistance());
         values.put(TracksColumns.TOTALTIME, trackStatistics.getTotalTime().toMillis());
         values.put(TracksColumns.MOVINGTIME, trackStatistics.getMovingTime().toMillis());
