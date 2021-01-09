@@ -140,10 +140,6 @@ public class TrackPoint {
         return createSegmentEndWithTime(Instant.now());
     }
 
-    public static TrackPoint createSegmentEndWithTime(@NonNull TrackPoint trackPoint) {
-        return createSegmentEndWithTime(trackPoint.getTime());
-    }
-
     public static TrackPoint createSegmentEndWithTime(Instant time) {
         return new TrackPoint(Type.SEGMENT_END_MANUAL, time);
     }

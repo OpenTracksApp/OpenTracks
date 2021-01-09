@@ -182,7 +182,7 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
-    public void testRecording_start() throws TimeoutException, InterruptedException {
+    public void testRecording_start() throws TimeoutException {
         // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
 
@@ -198,7 +198,7 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
-    public void testRecording_stop() throws TimeoutException, InterruptedException {
+    public void testRecording_stop() throws TimeoutException {
         // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         Track.Id trackId = service.startNewTrack();
@@ -216,7 +216,7 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
-    public void testRecording_pauseAndResume() throws TimeoutException, InterruptedException {
+    public void testRecording_pauseAndResume() throws TimeoutException {
         // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
         Track.Id trackId = service.startNewTrack();
