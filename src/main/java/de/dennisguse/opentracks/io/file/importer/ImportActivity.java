@@ -127,7 +127,9 @@ public class ImportActivity extends FragmentActivity {
     private void initViews() {
         viewBinding.importProgressDone.setText("0");
         viewBinding.importProgressTotal.setText("0");
-        viewBinding.importProgressSummary.setText(getString(R.string.import_progress_review, 0, 0, 0, 0));
+        viewBinding.importProgressSummaryOk.setText("0");
+        viewBinding.importProgressSummaryExists.setText("0");
+        viewBinding.importProgressSummaryErrors.setText("0");
     }
 
     private int getTotalDone() {
@@ -141,7 +143,12 @@ public class ImportActivity extends FragmentActivity {
         viewBinding.importProgressTotal.setText("" + summary.getTotalCount());
 
         viewBinding.importProgressBar.setProgress((int) ((float) done / (float) summary.getTotalCount() * 100f));
-        viewBinding.importProgressSummary.setText(getString(R.string.import_progress_review, getTotalDone(), summary.getSuccessCount(), summary.getExistsCount(), summary.getErrorCount()));
+        viewBinding.importProgressSummaryOk.setText(String.valueOf(summary.getSuccessCount()));
+        viewBinding.importProgressSummaryExists.setText(String.valueOf(summary.getExistsCount()));
+        viewBinding.importProgressSummaryErrors.setText(String.valueOf(summary.getErrorCount()));
+        viewBinding.importProgressSummaryOkGroup.setVisibility(summary.getSuccessCount() > 0 ? View.VISIBLE : View.GONE);
+        viewBinding.importProgressSummaryExistsGroup.setVisibility(summary.getExistsCount() > 0 ? View.VISIBLE : View.GONE);
+        viewBinding.importProgressSummaryErrorsGroup.setVisibility(summary.getErrorCount() > 0 ? View.VISIBLE : View.GONE);
 
         if (done == summary.getTotalCount()) {
             onImportEnded();

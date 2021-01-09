@@ -21,9 +21,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_vertical_half"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.7" />
+
             <TextView
                 android:id="@+id/export_progress_done"
-                style="@style/TextMedium"
+                style="@style/TextMediumPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -36,7 +43,7 @@
 
             <TextView
                 android:id="@+id/export_progress_slash"
-                style="@style/TextMedium"
+                style="@style/TextMediumPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/generic_separator_done_total"
@@ -47,7 +54,7 @@
 
             <TextView
                 android:id="@+id/export_progress_total"
-                style="@style/TextMedium"
+                style="@style/TextMediumPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
@@ -70,16 +77,139 @@
                 app:layout_constraintTop_toBottomOf="@id/export_progress_done"
                 tools:progress="25" />
 
+            <!-- Start Summary -->
+            <!-- Tracks exported (new tracks) -->
             <TextView
-                android:id="@+id/export_progress_summary"
-                style="@style/TextMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="24dp"
-                android:text="@string/export_progress_review"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:id="@+id/export_progress_summary_new_msg"
+                style="@style/TextImportExportSummaryStart"
+                android:text="@string/export_progress_summary_new_msg"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_half"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/export_progress_bar" />
+
+            <TextView
+                android:id="@+id/export_progress_summary_new"
+                style="@style/TextImportExportSummaryEnd"
+                app:layout_constraintBottom_toBottomOf="@id/export_progress_summary_new_msg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline_vertical_half"
+                app:layout_constraintTop_toTopOf="@id/export_progress_summary_new_msg"
+                tools:text="10" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/export_progress_summary_new_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="export_progress_summary_new_msg,export_progress_summary_new" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/export_progress_summary_new_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:constraint_referenced_ids="export_progress_summary_new_msg,export_progress_summary_new" />
+
+            <!-- Tracks overwritten -->
+            <TextView
+                android:id="@+id/export_progress_summary_overwrite_msg"
+                style="@style/TextImportExportSummaryStart"
+                android:text="@string/export_progress_summary_overwrite_msg"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_half"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/export_progress_summary_new_barrier" />
+
+            <TextView
+                android:id="@+id/export_progress_summary_overwrite"
+                style="@style/TextImportExportSummaryEnd"
+                app:layout_constraintBottom_toBottomOf="@id/export_progress_summary_overwrite_msg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline_vertical_half"
+                app:layout_constraintTop_toTopOf="@id/export_progress_summary_overwrite_msg"
+                tools:text="10" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/export_progress_summary_overwrite_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="export_progress_summary_overwrite_msg,export_progress_summary_overwrite" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/export_progress_summary_overwrite_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:constraint_referenced_ids="export_progress_summary_overwrite_msg,export_progress_summary_overwrite" />
+
+            <!-- Tracks skipped -->
+            <TextView
+                android:id="@+id/export_progress_summary_skip_msg"
+                style="@style/TextImportExportSummaryStart"
+                android:text="@string/export_progress_summary_skip_msg"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_half"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/export_progress_summary_overwrite_barrier" />
+
+            <TextView
+                android:id="@+id/export_progress_summary_skip"
+                style="@style/TextImportExportSummaryEnd"
+                app:layout_constraintBottom_toBottomOf="@id/export_progress_summary_skip_msg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline_vertical_half"
+                app:layout_constraintTop_toTopOf="@id/export_progress_summary_skip_msg"
+                tools:text="10" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/export_progress_summary_skip_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="export_progress_summary_skip_msg,export_progress_summary_skip" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/export_progress_summary_skip_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:constraint_referenced_ids="export_progress_summary_skip_msg,export_progress_summary_skip" />
+
+            <!-- Tracks errors -->
+            <TextView
+                android:id="@+id/export_progress_summary_errors_msg"
+                style="@style/TextImportExportSummaryStart"
+                android:text="@string/export_progress_summary_errors_msg"
+                app:layout_constraintEnd_toEndOf="@id/guideline_vertical_half"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/export_progress_summary_skip_barrier" />
+
+            <TextView
+                android:id="@+id/export_progress_summary_errors"
+                style="@style/TextImportExportSummaryEnd"
+                app:layout_constraintBottom_toBottomOf="@id/export_progress_summary_errors_msg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline_vertical_half"
+                app:layout_constraintTop_toTopOf="@id/export_progress_summary_errors_msg"
+                tools:text="10" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/export_progress_summary_errors_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="export_progress_summary_errors_msg,export_progress_summary_errors" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/export_progress_summary_errors_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:constraint_referenced_ids="export_progress_summary_errors_msg,export_progress_summary_errors" />
+            <!-- End Summary -->
 
             <ImageView
                 android:id="@+id/export_progress_alert_icon"
@@ -96,16 +226,16 @@
 
             <TextView
                 android:id="@+id/export_progress_alert_msg"
-                style="@style/TextMedium"
+                style="@style/TextMediumPrimary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="48dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="24dp"
                 app:layout_constraintBottom_toTopOf="@id/export_progress_apply_to_all"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/export_progress_alert_icon"
-                app:layout_constraintTop_toBottomOf="@id/export_progress_summary"
+                app:layout_constraintTop_toBottomOf="@id/export_progress_summary_errors_barrier"
                 app:layout_constraintVertical_chainStyle="packed"
                 tools:text="The track already exists" />
 

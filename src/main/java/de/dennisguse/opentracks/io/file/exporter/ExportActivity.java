@@ -268,7 +268,14 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         viewBinding.exportProgressTotal.setText("" + trackExportTotalCount);
 
         viewBinding.exportProgressBar.setProgress((int) ((float) done / (float) trackExportTotalCount * 100f));
-        viewBinding.exportProgressSummary.setText(getString(R.string.export_progress_review, getTotalDone(), trackExportSuccessCount, trackExportOverwrittenCount, trackExportSkippedCount, trackExportErrorCount));
+        viewBinding.exportProgressSummaryNew.setText(String.valueOf(trackExportSuccessCount));
+        viewBinding.exportProgressSummaryOverwrite.setText(String.valueOf(trackExportOverwrittenCount));
+        viewBinding.exportProgressSummarySkip.setText(String.valueOf(trackExportSkippedCount));
+        viewBinding.exportProgressSummaryErrors.setText(String.valueOf(trackExportErrorCount));
+        viewBinding.exportProgressSummaryNewGroup.setVisibility(trackExportSuccessCount > 0 ? View.VISIBLE : View.GONE);
+        viewBinding.exportProgressSummaryOverwriteGroup.setVisibility(trackExportOverwrittenCount > 0 ? View.VISIBLE : View.GONE);
+        viewBinding.exportProgressSummarySkipGroup.setVisibility(trackExportSkippedCount > 0 ? View.VISIBLE : View.GONE);
+        viewBinding.exportProgressSummaryErrorsGroup.setVisibility(trackExportErrorCount > 0 ? View.VISIBLE : View.GONE);
     }
 
     private void onExportCompleted(Track.Id trackId) {
