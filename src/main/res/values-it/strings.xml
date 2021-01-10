@@ -548,10 +548,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     </plurals>
     <string name="generic_click_twice_cancel">Premi il tasto indietro di nuovo per annullare</string>
     <string name="gps_fixed_and_ready">GPS pronto e corretto</string>
-    <string name="import_progress_review">File importati: %1$d, di cui
-\n - %2$d nuovi
-\n - %3$d già esistenti
-\n - %4$d errori</string>
     <string name="menu_insert_gallery_img">Inserisci un immagine dalla galleria</string>
     <string name="permission_gps_failed">OpenTracks richiede il permesso di utilizzare il GPS.</string>
     <string name="settings_default_trackfileformat">Formato file nell\' esportazione/condivisione</string>
@@ -559,11 +555,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="description_default_speed_or_pace">Per tipo di attività</string>
     <string name="export_all_do_it_for_all">Esegui ciò per tutti i conflitti</string>
     <string name="export_track_errors">Percorsi non esportati</string>
-    <string name="export_progress_review">Totale percorsi esportati: %1$d
-\n - Nuovi percorsi esportati: %2$d
-\n - Percorsi sovrascritti: %3$d
-\n - Percorsi saltati: %4$d
-\n - Errori avvenuti: %5$d</string>
     <string name="generic_overwrite">Sovrascrivere</string>
     <string name="generic_skip">Saltare</string>
     <string name="generic_separator_done_total">/</string>

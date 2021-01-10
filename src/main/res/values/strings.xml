@@ -245,6 +245,7 @@ limitations under the License.
     <string name="generic_name_line">Name: %1$s</string>
     <string name="generic_no">No</string>
     <string name="generic_ok">OK</string>
+    <string name="generic_open_track">Open Track</string>
     <string name="generic_paused">Paused</string>
     <string name="generic_progress_title">Please wait&#8230;</string>
     <string name="generic_recording">Recording&#8230;</string>

@@ -586,11 +586,6 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <string name="settings_default_export_uri_title">Carpeta de pistas exportadas</string>
     <string name="open_track_using_dashboard">Abrir con OpenTracks-Dashboard</string>
     <string name="export_track_already_exists_msg">La pista %1$s ya existe en la carpeta de destino.</string>
-    <string name="export_progress_review">Total de pistas exportadas: %1$d
-\n - Nuevas pistas exportadas: %2$d
-\n - Pistas sobreescritas: %3$d
-\n - Pistas ignoradas: %4$d
-\n - Errores: %5$d</string>
     <string name="generic_overwrite">Sobreescribe</string>
     <string name="generic_click_twice_cancel">Clic otra vez para cancelar</string>
     <string name="gps_disabled_msg">GPS desactivado</string>
@@ -598,10 +593,6 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <string name="import_unsupported_format">Formato no soportado</string>
     <string name="import_parser_error">Error al analizar: %1$s</string>
     <string name="import_unable_to_import_file">No se ha podido importar el fichero: %1$s</string>
-    <string name="import_progress_review">Total de ficheros importados: %1$d
-\n - Ficheros importados: %2$d
-\n - Ya existen: %3$d
-\n - Errores: %4$d</string>
     <string name="settings_default_trackfileformat">Formato para exportar/compartir</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Pantalla completa</string>
     <string name="interval_list_empty_message">No hay intervalos todavía</string>
