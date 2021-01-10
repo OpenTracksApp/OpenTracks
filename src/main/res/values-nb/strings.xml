@@ -288,8 +288,8 @@ limitations under the License.
     <!-- Stats -->
     <string name="stats_average_moving_pace">Gjennomsnittlig forflytningstempo</string>
     <string name="stats_average_moving_speed">Gjennomsnittlig forflytningshastighet</string>
-    <string name="stats_average_pace">Gjennomsnittstempo</string>
-    <string name="stats_average_speed">Gjennomsnittshastighet</string>
+    <string name="stats_average_pace">Gjennomsnittlig tempo</string>
+    <string name="stats_average_speed">Gjennomsnittlig hastighet</string>
     <string name="stats_elevation">Høyde</string>
     <string name="stats_fastest_pace">Raskeste tempo</string>
     <string name="stats_gain">Total stigning</string>
@@ -588,4 +588,5 @@ limitations under the License.
     <string name="description_elevation_loss">Total nedstigning: %1$d m (%2$d ft)</string>
     <string name="stats_loss">Total nedstigning</string>
     <string name="import_prevent_reimport">Du har stilt inn å forhindre at spor importeres om igjen</string>
+    <string name="settings_prevent_reimport_tracks_title">Forhindre at spor importeres om igjen</string>
 </resources>
