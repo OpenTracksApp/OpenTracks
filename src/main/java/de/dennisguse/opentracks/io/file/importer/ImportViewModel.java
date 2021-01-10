@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.util.FileUtils;
 
 public class ImportViewModel extends AndroidViewModel implements ImportServiceResultReceiver.Receiver {
@@ -65,6 +66,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
             throw new RuntimeException(TAG + ": onReceiveResult resultData NULL");
         }
 
+        Track.Id trackId = resultData.getParcelable(ImportServiceResultReceiver.RESULT_EXTRA_TRACK_ID);
         String fileName = resultData.getString(ImportServiceResultReceiver.RESULT_EXTRA_FILENAME);
         String message = resultData.getString(ImportServiceResultReceiver.RESULT_EXTRA_MESSAGE);
 
@@ -74,6 +76,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
                 summary.fileErrors.add(getApplication().getString(R.string.import_error_info, fileName, message));
                 break;
             case ImportServiceResultReceiver.RESULT_CODE_IMPORTED:
+                summary.importedTrackIds.add(trackId);
                 summary.successCount++;
                 break;
             case ImportServiceResultReceiver.RESULT_CODE_ALREADY_EXISTS:
@@ -92,6 +95,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
         private int successCount;
         private int existsCount;
         private int errorCount;
+        private ArrayList<Track.Id> importedTrackIds = new ArrayList<>();
         private final ArrayList<String> fileErrors = new ArrayList<>();
 
         public int getTotalCount() {
@@ -108,6 +112,10 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
 
         public int getErrorCount() {
             return errorCount;
+        }
+
+        public ArrayList<Track.Id> getImportedTrackIds() {
+            return importedTrackIds;
         }
 
         public ArrayList<String> getFileErrors() {

@@ -547,10 +547,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="gps_disabled_msg">GPS vypnuto</string>
     <string name="gps_fixed_and_ready">GPS zaměřeno a připraveno</string>
     <string name="import_no_kml_file_found">Soubor doc.kml nenalezen v KMZ</string>
-    <string name="import_progress_review">Celkem importovaných souborů: %1$d
-\n - Importovaných souborů: %2$d
-\n - Již existuje: %3$d
-\n - Chyb: %4$d</string>
     <string name="settings_default_trackfileformat">Formát souboru pro export/sdílení</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Na celou obrazovku</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Při nahrávání využívat celou obrazovku.</string>
@@ -583,11 +579,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="export_error_post_workout">Export po ukončení aktivity selhal, zkontrolujte prosím adresář pro export.</string>
     <string name="stats_loss">Ztráta</string>
     <string name="export_track_already_exists_msg">Trasa %1$s již existuje v cílovém adresáři.</string>
-    <string name="export_progress_review">Celkem exportovaných tras: %1$d
-\n - Nových exportovaných tras: %2$d
-\n - Přepsaných tras: %3$d
-\n - Přeskočených tras: %4$d
-\n - Chyb: %5$d</string>
     <string name="generic_overwrite">Přepsat</string>
     <string name="generic_show_errors">Zobrazit chyby</string>
     <string name="generic_click_twice_cancel">Opakovaně kliknout zpět pro ukončení</string>

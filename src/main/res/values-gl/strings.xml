@@ -580,20 +580,11 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="instant_export_enabled_title">Exportación instantánea tras o adestramento</string>
     <string name="settings_default_export_uri_title">Directorio onde exportar as rutas</string>
     <string name="export_track_already_exists_msg">A ruta %1$s xa existe no directorio de destino.</string>
-    <string name="export_progress_review">Total de rutas exportadas: %1$d
-\n- Novas pistas: %2$d
-\n- Pistas sobrescritas: %3$d
-\n- Pistas omitidas: %4$d
-\n- Erros: %5$d</string>
     <string name="generic_overwrite">Sobrescribir</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Completado cun erro</item>
         <item quantity="other">Completado con %1$d erros</item>
     </plurals>
-    <string name="import_progress_review">Total de ficheiros importados: %1$d
-\n- Ficheiros importados: %2$d
-\n- Xa existentes: %3$d
-\n- Erros: %4$d</string>
     <string name="settings_night_mode_title">Decorado IU</string>
     <string name="settings_night_mode_option_system">Sistema</string>
     <string name="stats_intervals">Intervalos</string>

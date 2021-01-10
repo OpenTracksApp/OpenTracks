@@ -521,16 +521,7 @@ limitations under the License.
     <string name="app_not_installed_show_on_map">Installer en app som støtter presentasjon av kartdata.</string>
     <string name="export_with_photos">med bilder</string>
     <string name="export_track_already_exists_msg">Sporet %1$s finnes allerede i målmappen.</string>
-    <string name="export_progress_review">Totalt eksporterte spor: %1$d
-\n - Nye spor eksportert: %2$d
-\n - Spor overskrevet: %3$d
-\n - Spor hoppet over: %4$d
-\n - Feil: %5$d</string>
     <string name="import_unsupported_format">Filformatet støttes ikke</string>
-    <string name="import_progress_review">Totalt importerte filer: %1$d
-\n - Filer importert: %2$d
-\n - Finnes allerede: %3$d
-\n - Feil: %4$d</string>
     <string name="menu_insert_gallery_img">Sett inn galleribilde</string>
     <string name="permission_gps_failed">OpenTracks krever tillatelse til å bruke GPS.</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Vis statistikk under opptak uten å låse opp enheten.</string>
