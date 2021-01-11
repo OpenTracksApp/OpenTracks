@@ -124,7 +124,7 @@ limitations under the License.
     <string name="export_option">som %1$s til %2$s</string>
     <string name="export_progress_message">Eksporterer til %1$s…</string>
     <string name="export_success">%1$s ble eksportert til %2$s</string>
-    <string name="export_title">Eksporter til …</string>
+    <string name="export_title">Eksporter til…</string>
     <!-- External Storage -->
     <!-- Files -->
     <string name="files_few">%1$d filer</string>
@@ -589,4 +589,14 @@ limitations under the License.
     <string name="stats_loss">Total nedstigning</string>
     <string name="import_prevent_reimport">Du har stilt inn å forhindre at spor importeres om igjen</string>
     <string name="settings_prevent_reimport_tracks_title">Forhindre at spor importeres om igjen</string>
+    <string name="export_error_post_workout">Eksport etter opptak feilet, sjekk eksportmappen.</string>
+    <string name="export_progress_summary_new_msg">Nye spor eksportert</string>
+    <string name="import_progress_summary_ok_msg">Filer importert</string>
+    <string name="import_no_kml_file_found">Ingen doc.kml-fil funnet i KMZ</string>
+    <string name="export_progress_summary_overwrite_msg">Spor overskrevet</string>
+    <string name="export_progress_summary_skip_msg">Spor hoppet over</string>
+    <string name="export_progress_summary_errors_msg">Feil</string>
+    <string name="generic_open_track">Åpne spor</string>
+    <string name="import_progress_summary_exists_msg">Finnes allerede</string>
+    <string name="import_progress_summary_errors_msg">Feil</string>
 </resources>
