@@ -9,9 +9,9 @@ class Track {
 }
 Track o-- TrackPoint
 Track o-- Marker
-Track "1" - "1" TripStatistics
+Track "1" - "1" TrackStatistics
 
-class TripStatistics {
+class TrackStatistics {
     - startTime
     - stopTime
     - totalDistance
@@ -21,13 +21,15 @@ class TripStatistics {
     - totalElevationGain
 }
 
-note left of TripStatistics
-The time is based upon device time.
-end note
+class TrackStatisticsUpdater {
+}
 
+TrackStatisticsUpdater ..> TrackStatistics : creates/updates
+TrackStatisticsUpdater ..> TrackPoint : uses
 
 class TrackPoint {
-    - id
+    - id (database id, order)
+    - type
     - trackId
     - longitude
     - latitude
@@ -41,30 +43,6 @@ class TrackPoint {
     - sensor_power
 }
 
-note right of TrackPoint
-TODO
-TrackPoints are mixing two concepts:
-1. a GPS measurement provided by the GPS hardware
-2. and also segment markers.
-   These are marked by PAUSE / RESUME TrackPoints.
-
-While exporting PAUSE/RESUME are not used to create these segments and these are partly recreated when imported.
-However, the timestamp of PAUSE/RESUME is not exported and can therefore not be restored.
-This prevents us from restoring the exact TripStatistics.
-It is also noteworthy that neither PAUSE/RESUME TrackPoints are used for computing the TrackStatistics.
-Only the timestamp to _create_ those is used.
-end note
-
-note left of TrackPoint
-TODO
-The time stored in TrackPoints is either:
-1. created via GPS: provided by the GPS hardware
-2. created by the user (pause/resume): device time.
-
-We know that the GPS time and device time are often not in sync.
-end note
-
-TrackPoint "1" - "1" android.location.Location
 
 class Marker {
     - id
@@ -75,8 +53,28 @@ class Marker {
     - icon
     - length
     - duration
-    - location
-    - tripStatistics
+    - longitude
+    - latitude
     - photoUrl
 }
+
+note left of TrackPoint
+As of OpenTracks version 3.15.0, all times are using device time.
+Before that TrackPoint.time contained GPS time (determined by GPS hardware).
+However, start/pause/stop events (also stored as TrackPoints) used device time.
+end note
+
+note right of Track
+A track is an ordered collection of one or more segments (i.e., continuous parts of distance covered).
+Segments may be started by a user (i.e., start a track recording, continue a paused track, or resume a track) as well as stopped by the user (i.e., pausing or stopping a recording).
+Also segments may started automatically while recording (i.e., distance to previous location was to large).
+Note that this finishes the previous segment.
+
+Segment data is stored as TrackPoints (Type.SEGMENT_START_MANUAL, Type.SEGMENT_START_AUTOMATIC, or Type.SEGMENT_END_MANUAL).
+Trackpoints with Type.SEGMENT_START_AUTOMATIC also mark the end of the previous segment.
+All TrackPoints of Type.TRACKPOINT belong to the segment started by the prior TrackPoint with Type.SEGMENT_START_(MANUAL|AUTOMATIC).
+Trackpoints of Type.SEGMENT_START_MANUAL or Type.SEGMENT_END_MANUAL do not contain location data or sensor data.
+
+Tracks recorded prior to OpenTracks version 3.15.0, do neither begin with a Type.SEGMENT_START_MANUAL nor end with a Type.SEGMENT_END_MANUAL.
+end note
 @enduml
