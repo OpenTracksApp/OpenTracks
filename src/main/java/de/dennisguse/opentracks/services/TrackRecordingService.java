@@ -234,10 +234,13 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         if (trackStatisticsUpdater == null) {
             return Duration.ofSeconds(0);
         }
-        if (!isPaused()) {
-            trackStatisticsUpdater.updateTime(Instant.now());
+        if (isPaused()) {
+            return trackStatisticsUpdater.getTrackStatistics().getTotalTime();
         }
-        return trackStatisticsUpdater.getTrackStatistics().getTotalTime();
+
+        TrackStatistics statistics = trackStatisticsUpdater.getTrackStatistics();
+        return Duration.between(statistics.getStopTime(), Instant.now())
+                .plus(statistics.getTotalTime());
     }
 
     public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
@@ -420,24 +423,24 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         }
 
         // Need to remember the recordingTrackId before setting it to -1L
+        boolean wasPause = isPaused();
         Track.Id trackId = recordingTrackId;
-        boolean wasPaused = recordingTrackPaused;
 
         updateRecordingState(null, true);
 
-        // Update database
-        Track track = contentProviderUtils.getTrack(trackId);
-        if (track != null) {
-            if (lastTrackPoint != null) {
-                insertTrackPointIfNewer(track, lastTrackPoint);
+        if (!wasPause) {
+            // Update database
+            Track track = contentProviderUtils.getTrack(trackId);
+            if (track != null) {
+                if (lastTrackPoint != null) {
+                    insertTrackPointIfNewer(track, lastTrackPoint);
+                }
+
+                insertTrackPoint(track, TrackPoint.createSegmentEnd());
             }
-
-            insertTrackPoint(track, TrackPoint.createSegmentEnd());
-
-            // Update the recording track time
-            updateTrackTotalTime(track);
         }
 
+        Track track = contentProviderUtils.getTrack(trackId);
         ExportUtils.postWorkoutExport(this, track, new ExportServiceResultReceiver(new Handler(), this));
 
         endRecording(true);
@@ -663,7 +666,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             }
             contentProviderUtils.insertTrackPoint(trackPoint, track.getId());
             trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
-            updateTrackTotalTime(track);
+
+            track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
+            contentProviderUtils.updateTrack(track);
         } catch (SQLiteException e) {
             /*
              * Insert failed, most likely because of SqlLite error code 5 (SQLite_BUSY).
@@ -672,17 +677,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             Log.w(TAG, "SQLiteException", e);
         }
         voiceExecutor.update();
-    }
-
-    /**
-     * Updates the recording track time.
-     *
-     * @param track the track
-     */
-    private void updateTrackTotalTime(Track track) {
-        trackStatisticsUpdater.updateTime(Instant.now());
-        track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
-        contentProviderUtils.updateTrack(track);
     }
 
     SensorDataSet getSensorDataSet() {

@@ -22,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
-import java.time.Instant;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
@@ -91,11 +90,6 @@ public class TrackStatisticsUpdater {
         trackInitialized = true;
     }
 
-    public void updateTime(Instant time) {
-        currentSegment.setStopTime(time);
-        currentSegment.setTotalTime(Duration.between(currentSegment.getStartTime(), time));
-    }
-
     public TrackStatistics getTrackStatistics() {
         // Take a snapshot - we don't want anyone messing with our trackStatistics
         TrackStatistics stats = new TrackStatistics(trackStatistics);
@@ -120,7 +114,9 @@ public class TrackStatisticsUpdater {
         }
 
         // Always update time
-        updateTime(trackPoint.getTime());
+        currentSegment.setStopTime(trackPoint.getTime());
+        currentSegment.setTotalTime(Duration.between(currentSegment.getStartTime(), trackPoint.getTime()));
+
         if (trackPoint.isSegmentStart() || trackPoint.isSegmentEnd()) {
             if (trackPoint.isSegmentEnd()) {
                 if (lastTrackPoint != null && lastMovingTrackPoint != null && lastTrackPoint != lastMovingTrackPoint) {
@@ -240,9 +236,6 @@ public class TrackStatisticsUpdater {
         return newAverage - oldAverage;
     }
 
-    /**
-     * Returns true if the speed is valid.
-     */
     private boolean isValidSpeed(@NonNull TrackPoint trackPoint, @NonNull TrackPoint lastTrackPoint) {
         // There are a lot of noisy speed readings. Do the cheapest checks first, most expensive last.
         if (trackPoint.getSpeed() == 0) {

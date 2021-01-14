@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -409,26 +408,15 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     }
 
     private void updateTotalTime() {
-        Duration totalTime;
+        Duration totalTime = lastTrackStatistics.getTotalTime();
         if (isSelectedTrackRecording()) {
-            totalTime = calculateTotalTime();
-        } else {
-            totalTime = lastTrackStatistics.getTotalTime();
+            TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+            if (trackRecordingService != null) {
+                totalTime = trackRecordingService.getTotalTime();
+            }
         }
-        viewBinding.statsTotalTimeValue.setText(StringUtils.formatElapsedTime(totalTime));
-    }
 
-    /**
-     * Return time from service.
-     * If service isn't bound then use lastTrackStatistics for calculate it.
-     */
-    private Duration calculateTotalTime() {
-        TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
-        if (trackRecordingService != null) {
-            return trackRecordingService.getTotalTime();
-        } else {
-            return Duration.between(lastTrackStatistics.getStopTime().plus(lastTrackStatistics.getTotalTime()), Instant.now());
-        }
+        viewBinding.statsTotalTimeValue.setText(StringUtils.formatElapsedTime(totalTime));
     }
 
     private void setLocationValues() {

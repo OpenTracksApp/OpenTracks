@@ -268,6 +268,30 @@ public class TrackRecordingServiceTest {
         assertEquals(TrackPoint.Type.TRACKPOINT, trackPoints.get(3).getType());
     }
 
+    @MediumTest
+    @Test
+    public void testRecording_stopPausedTrack() throws TimeoutException {
+        // given
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        Track.Id trackId = service.startNewTrack();
+        assertTrue(service.isRecording());
+        service.pauseCurrentTrack();
+
+        assertEquals(2, contentProviderUtils.getTrackPoints(trackId).size());
+
+        // when
+        service.endCurrentTrack();
+
+        // then
+        assertFalse(service.isRecording());
+        assertNull(service.getRecordingTrackId());
+
+        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        assertEquals(2, trackPoints.size());
+        assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(0).getType());
+        assertEquals(TrackPoint.Type.SEGMENT_END_MANUAL, trackPoints.get(1).getType());
+    }
+
     @Ignore("Sometimes fails on CI.")
     @MediumTest
     @Test
