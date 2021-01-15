@@ -79,6 +79,9 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                 case 29:
                     upgradeFrom28to29(db);
                     break;
+                case 30:
+                    upgradeFrom29to30(db);
+                    break;
 
                 default:
                     throw new RuntimeException("Not implemented: upgrade to " + toVersion);
@@ -108,6 +111,9 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                     break;
                 case 28:
                     downgradeFrom29to28(db);
+                    break;
+                case 29:
+                    downgradeFrom30to29(db);
                     break;
 
                 default:
@@ -320,6 +326,64 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         // TrackPoints
         db.execSQL("DROP INDEX trackpoints_trackid_index");
 
+        db.execSQL("ALTER TABLE trackpoints RENAME TO trackpoints_old");
+        db.execSQL("CREATE TABLE trackpoints (_id INTEGER PRIMARY KEY AUTOINCREMENT, trackid INTEGER NOT NULL, longitude INTEGER, latitude INTEGER, time INTEGER, elevation FLOAT, accuracy FLOAT, speed FLOAT, bearing FLOAT, sensor_heartrate FLOAT, sensor_cadence FLOAT, sensor_power FLOAT, elevation_gain FLOAT, FOREIGN KEY (trackid) REFERENCES tracks(_id) ON UPDATE CASCADE ON DELETE CASCADE)");
+        db.execSQL("INSERT INTO trackpoints SELECT _id, trackid, longitude, latitude, time, elevation, accuracy, speed, bearing, sensor_heartrate, sensor_cadence, sensor_power, elevation_gain FROM trackpoints_old");
+        db.execSQL("DROP TABLE trackpoints_old");
+
+        db.execSQL("CREATE INDEX trackpoints_trackid_index ON trackpoints(trackid)");
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    /**
+     * Move TrackPoint type (segment start vs. segment end) into separate column.
+     */
+    private void upgradeFrom29to30(SQLiteDatabase db) {
+        db.beginTransaction();
+
+        // TrackPoints
+        db.execSQL("ALTER TABLE trackpoints ADD COLUMN type TEXT CHECK(type IN (-2, -1, 0, 1))");
+        db.execSQL("UPDATE trackpoints SET type = -2, latitude = NULL, longitude = NULL WHERE latitude = 200 * 1E6");
+        db.execSQL("UPDATE trackpoints SET type = 1, latitude = NULL, longitude = NULL WHERE latitude = 100 * 1E6");
+        db.execSQL("UPDATE trackpoints SET type = 0 WHERE type IS NULL");
+
+        // PAUSE markers without RESUME were inserted automatically as segment markers if the distance between subsequent trackpoints was too great.
+        // Only stored data is time (local device time); not meaningful as trackpoints were stored with GPS time.
+        // 1. Mark there successors as SEGMENT_START_AUTOMATIC
+        db.execSQL(
+                "UPDATE trackpoints " +
+                        "SET type = -1 " +
+                        "WHERE type = 0 AND 1 = " +
+                        "(SELECT type FROM trackpoints AS T1 " +
+                        "WHERE trackpoints._id > t1._id " +
+                        "AND trackpoints.trackid = t1.trackid " +
+                        "ORDER BY t1._id DESC " +
+                        "LIMIT 1)");
+        // 2. Delete old PAUSE trackpoint
+        db.execSQL(
+                "DELETE FROM trackpoints" +
+                        " WHERE type = 1 AND -1 = " +
+                        "(SELECT type FROM trackpoints AS T1 " +
+                        "WHERE trackpoints._id < t1._id " +
+                        "AND trackpoints.trackid = t1.trackid " +
+                        "ORDER BY t1._id ASC " +
+                        "LIMIT 1)");
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    private void downgradeFrom30to29(SQLiteDatabase db) {
+        db.beginTransaction();
+
+        // TrackPoints
+        //TODO That does not restore deleted trackpoints
+        db.execSQL("UPDATE trackpoints SET latitude = 200 * 1E6, longitude = NULL WHERE type = -2");
+        db.execSQL("UPDATE trackpoints SET latitude = 100 * 1E6, longitude = NULL WHERE type = 1");
+
+        // TrackPoints; identical to upgradeFrom27to28()
         db.execSQL("ALTER TABLE trackpoints RENAME TO trackpoints_old");
         db.execSQL("CREATE TABLE trackpoints (_id INTEGER PRIMARY KEY AUTOINCREMENT, trackid INTEGER NOT NULL, longitude INTEGER, latitude INTEGER, time INTEGER, elevation FLOAT, accuracy FLOAT, speed FLOAT, bearing FLOAT, sensor_heartrate FLOAT, sensor_cadence FLOAT, sensor_power FLOAT, elevation_gain FLOAT, FOREIGN KEY (trackid) REFERENCES tracks(_id) ON UPDATE CASCADE ON DELETE CASCADE)");
         db.execSQL("INSERT INTO trackpoints SELECT _id, trackid, longitude, latitude, time, elevation, accuracy, speed, bearing, sensor_heartrate, sensor_cadence, sensor_power, elevation_gain FROM trackpoints_old");

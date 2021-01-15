@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -14,7 +15,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.dennisguse.opentracks.content.data.MarkerColumns;
@@ -162,6 +165,101 @@ public class CustomSQLiteOpenHelperTest {
             fail("unique constraint not enforced");
         } catch (SQLiteConstraintException e) {
             assertTrue(e.getMessage().contains("UNIQUE constraint failed: tracks.uuid"));
+        }
+    }
+
+    @Test
+    public void upgrade_data_to_30() {
+        // given: a track in version 29
+        createVersion23();
+        try (SQLiteDatabase db29 = new CustomSQLiteOpenHelper(context, DATABASE_NAME, 29).getWritableDatabase()) {
+            db29.beginTransaction();
+            db29.execSQL("INSERT INTO tracks (_id) VALUES (1)");
+
+            // Record -> stop
+            db29.execSQL("INSERT INTO tracks (_id) VALUES (2)");
+            db29.execSQL("INSERT INTO trackpoints (trackId, longitude, latitude) VALUES (2, 2.1, 2.1)");
+            db29.execSQL("INSERT INTO trackpoints (trackId, longitude, latitude) VALUES (2, 2.2, 2.2)");
+            db29.execSQL("INSERT INTO trackpoints (trackId, longitude, latitude) VALUES (2, 2.3, 2.3)");
+
+            // Record -> pause -> stop
+            db29.execSQL("INSERT INTO tracks (_id) VALUES (3)");
+            db29.execSQL("INSERT INTO trackpoints (trackId, longitude, latitude) VALUES (3, 3.1, 3.1)");
+            db29.execSQL("INSERT INTO trackpoints (trackId, longitude, latitude) VALUES (3, 3.2, 3.2)");
+            db29.execSQL("INSERT INTO trackpoints (trackId, longitude, latitude) VALUES (3, 0.0, 100)"); //manual PAUSE
+
+            // Record -> segment marker (distance to previous) -> pause -> resume -> stop
+            db29.execSQL("INSERT INTO tracks (_id) VALUES (4)");
+            db29.execSQL("INSERT INTO trackpoints (trackId, longitude, latitude) VALUES (4, 4.1, 4.1)");
+            db29.execSQL("INSERT INTO trackpoints (trackId, longitude, latitude) VALUES (4, 4.2, 4.2)");
+            db29.execSQL("INSERT INTO trackpoints (trackId, longitude, latitude) VALUES (4, 0.0, 100 * 1E6)"); //SegmentEndMarker; will be deleted
+            db29.execSQL("INSERT INTO trackpoints (trackId, longitude, latitude) VALUES (4, 4.3, 4.3)");
+            db29.execSQL("INSERT INTO trackpoints (trackId, longitude, latitude) VALUES (4, 4.4, 4.4)");
+            db29.execSQL("INSERT INTO trackpoints (trackId, longitude, latitude) VALUES (4, 0.0, 100 * 1E6)"); //manual PAUSE
+            db29.execSQL("INSERT INTO trackpoints (trackId, longitude, latitude) VALUES (4, 0.0, 200 * 1E6)"); //manual RESUME
+            db29.execSQL("INSERT INTO trackpoints (trackId, longitude, latitude) VALUES (4, 4.5, 4.5)");
+            db29.execSQL("INSERT INTO trackpoints (trackId, longitude, latitude) VALUES (4, 4.6, 4.6)");
+
+            db29.setTransactionSuccessful();
+            db29.endTransaction();
+        }
+
+        // when / then
+        try (SQLiteDatabase db30 = new CustomSQLiteOpenHelper(context, DATABASE_NAME, 30).getWritableDatabase()) {
+            {
+                // Track 1
+                SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+                queryBuilder.setTables("trackpoints");
+                queryBuilder.appendWhere("trackid = 1");
+                try (Cursor cursor = queryBuilder.query(db30, null, null, null, null, null, "_id")) {
+                    assertEquals(0, cursor.getCount());
+                }
+            }
+
+            {
+                // Track 2
+                SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+                queryBuilder.setTables("trackpoints");
+                queryBuilder.appendWhere("trackid = 2");
+                try (Cursor cursor = queryBuilder.query(db30, null, null, null, null, null, "_id")) {
+                    assertEquals(3, cursor.getCount());
+                }
+            }
+
+            {
+                // Track 3
+                SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+                queryBuilder.setTables("trackpoints");
+                queryBuilder.appendWhere("trackid = 3");
+                try (Cursor cursor = queryBuilder.query(db30, null, null, null, null, null, "_id")) {
+                    assertEquals(3, cursor.getCount());
+                }
+            }
+
+            {
+                // Track 4
+                SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+                queryBuilder.setTables("trackpoints");
+                queryBuilder.appendWhere("trackid = 4");
+                try (Cursor cursor = queryBuilder.query(db30, null, null, null, null, null, "_id")) {
+                    assertEquals(8, cursor.getCount());
+
+                    List<Integer> types = new ArrayList<>();
+                    List<Double> latitude = new ArrayList<>();
+                    cursor.moveToFirst();
+                    do {
+                        types.add(cursor.getInt(cursor.getColumnIndexOrThrow("type")));
+                        if (!cursor.isNull(cursor.getColumnIndexOrThrow("latitude"))) {
+                            latitude.add(cursor.getDouble(cursor.getColumnIndexOrThrow("latitude")));
+                        } else {
+                            latitude.add(-1.0);
+                        }
+                    } while (cursor.moveToNext());
+
+                    assertEquals(List.of(0, 0, -1, 0, 1, -2, 0, 0), types);
+                    assertEquals(List.of(4.1, 4.2, 4.3, 4.4, -1.0, -1.0, 4.5, 4.6), latitude);
+                }
+            }
         }
     }
 
