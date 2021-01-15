@@ -25,12 +25,12 @@ public class IntervalStatisticsTest {
 	}
 
 	private TrackStatistics buildTrackStatistics(List<TrackPoint> trackPoints) {
-		TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater(trackPoints.get(0).getTime());
-		for (TrackPoint tp : trackPoints) {
-			trackStatisticsUpdater.addTrackPoint(tp, 0);
-		}
-		return trackStatisticsUpdater.getTrackStatistics();
-	}
+        TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater();
+        for (TrackPoint tp : trackPoints) {
+            trackStatisticsUpdater.addTrackPoint(tp, 0);
+        }
+        return trackStatisticsUpdater.getTrackStatistics();
+    }
 
 	/**
 	 * Tests that build method compute the distance correctly comparing the result with TrackStatisticsUpdater result.

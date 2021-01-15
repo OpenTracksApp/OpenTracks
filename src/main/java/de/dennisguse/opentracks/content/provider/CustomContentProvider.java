@@ -329,10 +329,8 @@ public class CustomContentProvider extends ContentProvider {
     }
 
     private Uri insertTrackPoint(Uri url, ContentValues values) {
-        boolean hasLatitude = values.containsKey(TrackPointsColumns.LATITUDE);
-        boolean hasLongitude = values.containsKey(TrackPointsColumns.LONGITUDE);
         boolean hasTime = values.containsKey(TrackPointsColumns.TIME);
-        if (!hasLatitude || !hasLongitude || !hasTime) {
+        if (!hasTime) {
             throw new IllegalArgumentException("Latitude, longitude, and time values are required.");
         }
         long rowId = db.insert(TrackPointsColumns.TABLE_NAME, TrackPointsColumns._ID, values);

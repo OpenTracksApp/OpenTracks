@@ -95,6 +95,7 @@ public interface TrackRecordingServiceInterface {
      * @param trackPoint           the track point object to be inserted.
      * @param recordingGpsAccuracy recording GPS accuracy.
      */
+    @Deprecated //REMOVE
     @VisibleForTesting
     void newTrackPoint(TrackPoint trackPoint, int recordingGpsAccuracy);
 

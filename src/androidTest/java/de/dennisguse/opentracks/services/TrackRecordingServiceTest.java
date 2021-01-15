@@ -47,7 +47,6 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -158,7 +157,7 @@ public class TrackRecordingServiceTest {
     @Test
     public void testRecording_oldTracks() throws TimeoutException {
         // given
-        createDummyTrack(trackId, -1L, false);
+        createDummyTrack(trackId, false);
 
         // when
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
@@ -172,7 +171,7 @@ public class TrackRecordingServiceTest {
     @Test
     public void testRecording_serviceRestart_whileRecording() throws TimeoutException {
         // given
-        createDummyTrack(trackId, -1L, true);
+        createDummyTrack(trackId, true);
 
         //when
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
@@ -185,9 +184,8 @@ public class TrackRecordingServiceTest {
     @Test
     public void testRecording_pauseAndResume() throws TimeoutException, InterruptedException {
         // given
-        createDummyTrack(trackId, -1L, true);
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
-        newTrackPoint(service);
+        Track.Id trackId = service.startNewTrack();
 
         // when
         service.pauseCurrentTrack();
@@ -197,29 +195,28 @@ public class TrackRecordingServiceTest {
 
         //when
         service.resumeTrack(trackId);
-        newTrackPoint(service);
 
         // then
         assertTrue(service.isRecording());
         assertEquals(trackId, service.getRecordingTrackId());
 
         List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
-        assertEquals(5, trackPoints.size());
-        assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(1).getLatitude(), 0.01);
-        assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(2).getLatitude(), 0.01);
-        assertEquals(TrackPointsColumns.RESUME_LATITUDE, trackPoints.get(3).getLatitude(), 0.01);
+        assertEquals(3, trackPoints.size());
+        assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(0).getType());
+        assertEquals(TrackPoint.Type.SEGMENT_END_MANUAL, trackPoints.get(1).getType());
+        assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(2).getType());
     }
 
     @MediumTest
     @Test
     public void testRecording_resumeStoppedTrack() throws TimeoutException, InterruptedException {
         // given
-        createDummyTrack(trackId, -1L, true);
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
-        newTrackPoint(service);
+        Track.Id trackId = service.startNewTrack();
+        assertTrue(service.isRecording());
         service.endCurrentTrack();
 
-        assertEquals(1, contentProviderUtils.getTrackPoints(trackId).size());
+        assertEquals(2, contentProviderUtils.getTrackPoints(trackId).size());
 
         // when
         service.resumeTrack(trackId);
@@ -231,8 +228,10 @@ public class TrackRecordingServiceTest {
 
         List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
         assertEquals(4, trackPoints.size());
-        assertEquals(TrackPointsColumns.PAUSE_LATITUDE, trackPoints.get(1).getLatitude(), 0.01);
-        assertEquals(TrackPointsColumns.RESUME_LATITUDE, trackPoints.get(2).getLatitude(), 0.01);
+        assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(0).getType());
+        assertEquals(TrackPoint.Type.SEGMENT_END_MANUAL, trackPoints.get(1).getType());
+        assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(2).getType());
+        assertEquals(TrackPoint.Type.TRACKPOINT, trackPoints.get(3).getType());
     }
 
     @Ignore("Sometimes fails on CI.")
@@ -336,12 +335,11 @@ public class TrackRecordingServiceTest {
     }
 
     // NOTE: Do not use to create a track that is currently recording.
-    private void createDummyTrack(Track.Id id, long stopTime, boolean isRecording) {
+    private void createDummyTrack(Track.Id id, boolean isRecording) {
         Track dummyTrack = new Track();
         dummyTrack.setId(id);
         dummyTrack.setName("Dummy Track");
         TrackStatistics trackStatistics = new TrackStatistics();
-        trackStatistics.setStopTime_ms(stopTime);
         dummyTrack.setTrackStatistics(trackStatistics);
         addTrack(dummyTrack, isRecording);
     }
@@ -368,7 +366,6 @@ public class TrackRecordingServiceTest {
         TrackPoint trackPoint = new TrackPoint(location);
         int prefAccuracy = PreferencesUtils.getRecordingGPSAccuracy(ApplicationProvider.getApplicationContext());
         trackRecordingService.newTrackPoint(trackPoint, prefAccuracy);
-
         //TODO Needed?
         Thread.sleep(200);
     }

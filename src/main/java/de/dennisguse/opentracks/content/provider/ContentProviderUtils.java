@@ -63,8 +63,6 @@ public class ContentProviderUtils {
     // The base URI for the app's content provider.
     public static final String CONTENT_BASE_URI = "content://" + AUTHORITY_PACKAGE;
 
-    // Maximum number of markers that will be loaded at one time.
-    public static final int MAX_LOADED_MARKERS = 10000;
     private static final String ID_SEPARATOR = ",";
 
     private final ContentResolver contentResolver;
@@ -544,7 +542,7 @@ public class ContentProviderUtils {
      * @param indexes the cached trackPoints indexes
      */
     static TrackPoint fillTrackPoint(Cursor cursor, CachedTrackPointsIndexes indexes) {
-        TrackPoint trackPoint = new TrackPoint();
+        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.getById(cursor.getInt(indexes.typeIndex)));
         if (!cursor.isNull(indexes.longitudeIndex)) {
             trackPoint.setId(new TrackPoint.Id(cursor.getInt(indexes.idIndex)));
         }
@@ -696,7 +694,7 @@ public class ContentProviderUtils {
      */
     @Deprecated
     public TrackPoint getLastValidTrackPoint(Track.Id trackId) {
-        String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns.LATITUDE + "<=" + MAX_LATITUDE + ")";
+        String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns.TYPE + " IN (" + TrackPoint.Type.SEGMENT_START_AUTOMATIC + "," + TrackPoint.Type.TRACKPOINT + "))";
         String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
         return findTrackPointBy(selection, selectionArgs);
     }
@@ -715,12 +713,15 @@ public class ContentProviderUtils {
     /**
      * Creates the {@link ContentValues} for a {@link TrackPoint}.
      *
-     * @param trackPoint the trackPointstats_pace_km#87
+     * @param trackPoint the trackPoint
      * @param trackId    the track id
      */
     private ContentValues createContentValues(TrackPoint trackPoint, Track.Id trackId) {
         ContentValues values = new ContentValues();
         values.put(TrackPointsColumns.TRACKID, trackId.getId());
+        if (trackPoint.getType() != null) {
+            values.put(TrackPointsColumns.TYPE, trackPoint.getType().type_db);
+        }
         values.put(TrackPointsColumns.LONGITUDE, (int) (trackPoint.getLongitude() * 1E6));
         values.put(TrackPointsColumns.LATITUDE, (int) (trackPoint.getLatitude() * 1E6));
 

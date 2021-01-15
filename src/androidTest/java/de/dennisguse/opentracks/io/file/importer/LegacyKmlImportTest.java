@@ -65,7 +65,7 @@ public class LegacyKmlImportTest {
 
         // 3. trackpoints
         List<TrackPoint> importedTrackPoints = contentProviderUtils.getTrackPoints(importTrackId);
-        assertEquals(8, importedTrackPoints.size()); // 6 trackpoints + pause and resume
+        assertEquals(8, importedTrackPoints.size()); // 6 trackpoints + segmentEnd and segmentStart
 
         // first 3 trackpoints
         assertTrackpoint(importedTrackPoints.get(0), "2020-11-28T17:06:22.401Z", 1.234156, 12.340097, 469.286376953125);
@@ -73,9 +73,12 @@ public class LegacyKmlImportTest {
         assertTrackpoint(importedTrackPoints.get(2), "2020-11-28T17:06:47.888Z", 1.23405, 12.340057, 421.8070983886719);
 
         // created pause trackpoint with time of previous valid trackpoint
-        assertTrackpoint(importedTrackPoints.get(3), "2020-11-28T17:06:47.888Z", 0.0, 100, 0.0);
+        assertTrackpoint(importedTrackPoints.get(3), "2020-11-28T17:06:47.888Z", 0.0, 0.0, 0.0);
+        assertEquals(1, importedTrackPoints.get(3).getType().type_db);
+
         // created resume trackpoint with time of next valid trackpoint
-        assertTrackpoint(importedTrackPoints.get(4), "2020-11-28T17:06:55.861Z", 0.0, 200, 0.0);
+        assertTrackpoint(importedTrackPoints.get(4), "2020-11-28T17:06:55.861Z", 0.0, 0.0, 0.0);
+        assertEquals(-2, importedTrackPoints.get(4).getType().type_db);
 
         // last 3 trackpoints
         assertTrackpoint(importedTrackPoints.get(5), "2020-11-28T17:06:55.861Z", 1.23405, 12.340057, 419.93902587890625);

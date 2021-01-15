@@ -26,6 +26,16 @@ import java.util.Objects;
 
 /**
  * This class extends the standard Android location with extra information.
+ * <p>
+ * NOTE: default location will be latitude=0.0 and longitude=0.0 (this is not meaningful).
+ * <p>
+ * NOTE: For Locations provided by the GPS.
+ * We are replacing the GPS-provided time using the system time.
+ * Then we have the same timestamps for the user-driven events (aka start, pause, resume) and restore {@link de.dennisguse.opentracks.stats.TrackStatistics}.
+ * Drawbacks:
+ * * GPS-provided timestamp might be more precise (but also have GPS week rollover)
+ * * System clock might be changed (and thus non-monotonic)
+ * TODO: if these might be problems, we need to store both timestamps.
  *
  * @author Sandor Dornbush
  */
@@ -36,6 +46,41 @@ public class TrackPoint {
 
     private final Location location;
 
+    //TODO Private
+    public enum Type {
+        SEGMENT_START_MANUAL(-2), //Start of a segment due to user interaction (start, resume); no useful coordinates
+
+        SEGMENT_START_AUTOMATIC(-1), //Start of a segment due to too much distance from previous TrackPoint
+        TRACKPOINT(0), //Normal trackpoint got from GPS
+
+        SEGMENT_END_MANUAL(1); //End of a segment; no useful coordinates
+
+        public final int type_db;
+
+        Type(int type_db) {
+            this.type_db = type_db;
+        }
+
+        @Override
+        public String toString() {
+            return "" + type_db;
+        }
+
+        public static Type getById(int id) {
+            for (Type e : values()) {
+                if (e.type_db == id) return e;
+            }
+
+            throw new RuntimeException("unknown id: " + id);
+        }
+
+        public boolean hasLocation() {
+            return this == SEGMENT_START_AUTOMATIC || this == TRACKPOINT;
+        }
+    }
+
+    private final Type type;
+
     private Float heartRate_bpm = null;
     private Float cyclingCadence_rpm = null;
     private Float power = null;
@@ -43,14 +88,26 @@ public class TrackPoint {
     private Float elevationLoss = null;
 
     public TrackPoint() {
+        this(Type.TRACKPOINT, new Location(""));
+    }
+
+    public TrackPoint(Type type) {
+        this.type = type;
         this.location = new Location("");
     }
 
     public TrackPoint(@NonNull Location location) {
+        this.type = Type.TRACKPOINT;
+        this.location = location;
+    }
+
+    public TrackPoint(@NonNull Type type, @NonNull Location location) {
+        this.type = type;
         this.location = location;
     }
 
     public TrackPoint(@NonNull TrackPoint trackPoint) {
+        this.type = trackPoint.getType();
         this.location = trackPoint.getLocation();
 
         this.heartRate_bpm = trackPoint.getHeartRate_bpm();
@@ -62,6 +119,7 @@ public class TrackPoint {
     }
 
     public TrackPoint(double latitude, double longitude, Double altitude, long time) {
+        this.type = Type.TRACKPOINT;
         location = new Location(LocationManager.GPS_PROVIDER);
         location.setLatitude(latitude);
         location.setLongitude(longitude);
@@ -72,31 +130,52 @@ public class TrackPoint {
     }
 
     @Deprecated //See #316
-    public static TrackPoint createPause() {
-        return createPauseWithTime(System.currentTimeMillis());
+    public static TrackPoint createSegmentStartManual() {
+        return createSegmentStartManualWithTime(System.currentTimeMillis());
     }
 
-    @Deprecated //See #316
-    public static TrackPoint createPauseWithTime(long time) {
-        Location pause = new Location(LocationManager.GPS_PROVIDER);
-        pause.setLongitude(0);
-        pause.setLatitude(TrackPointsColumns.PAUSE_LATITUDE);
-        pause.setTime(time);
-        return new TrackPoint(pause);
-    }
-
-    @Deprecated //See #316
-    public static TrackPoint createResume() {
-        return createResumeWithTime(System.currentTimeMillis());
-    }
-
-    @Deprecated //See #316
-    public static TrackPoint createResumeWithTime(long time) {
+    public static TrackPoint createSegmentStartManualWithTime(long time) {
         Location resume = new Location(LocationManager.GPS_PROVIDER);
-        resume.setLongitude(0);
-        resume.setLatitude(TrackPointsColumns.RESUME_LATITUDE);
         resume.setTime(time);
-        return new TrackPoint(resume);
+        return new TrackPoint(Type.SEGMENT_START_MANUAL, resume);
+    }
+
+    @Deprecated //See #316
+    public static TrackPoint createSegmentStartAutomatic() {
+        return createSegmentStartAutomaticWithTime(System.currentTimeMillis());
+    }
+
+    public static TrackPoint createSegmentStartAutomaticWithTime(long time) {
+        Location resume = new Location(LocationManager.GPS_PROVIDER);
+        resume.setTime(time);
+        return new TrackPoint(Type.SEGMENT_START_AUTOMATIC, resume);
+    }
+
+    public static TrackPoint createSegmentEnd() {
+        return createSegmentEndWithTime(System.currentTimeMillis());
+    }
+
+    public static TrackPoint createSegmentEndWithTime(@NonNull TrackPoint trackPoint) {
+        return createSegmentEndWithTime(trackPoint.getTime());
+    }
+
+    public static TrackPoint createSegmentEndWithTime(long time) {
+        Location pause = new Location(LocationManager.GPS_PROVIDER);
+        pause.setTime(time);
+        return new TrackPoint(Type.SEGMENT_END_MANUAL, pause);
+    }
+
+    @NonNull
+    public Type getType() {
+        return type;
+    }
+
+    public boolean isSegmentStart() {
+        return type == Type.SEGMENT_START_AUTOMATIC || type == Type.SEGMENT_START_MANUAL;
+    }
+
+    public boolean isSegmentEnd() {
+        return type == Type.SEGMENT_END_MANUAL;
     }
 
     /**
@@ -268,7 +347,7 @@ public class TrackPoint {
     @NonNull
     @Override
     public String toString() {
-        return "time=" + getTime() + ": lat=" + getLatitude() + " lng=" + getLongitude() + " acc=" + getAccuracy();
+        return "time=" + getTime() + " (type=" + getType() + "): lat=" + getLatitude() + " lng=" + getLongitude() + " acc=" + getAccuracy();
     }
 
     public static class Id {

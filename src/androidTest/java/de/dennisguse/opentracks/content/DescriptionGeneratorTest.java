@@ -63,7 +63,7 @@ public class DescriptionGeneratorTest {
         stats.setMaxSpeed(100);
         stats.setMaxElevation(550);
         stats.setMinElevation(-500);
-        stats.setTotalElevationGain(6000);
+        stats.setTotalElevationGain(6000f);
         stats.setTotalElevationLoss(6000);
         stats.setStartTime_ms(START_TIME);
         track.setTrackStatistics(stats);
@@ -101,7 +101,7 @@ public class DescriptionGeneratorTest {
         stats.setMaxSpeed(100);
         stats.setMaxElevation(Double.POSITIVE_INFINITY);
         stats.setMinElevation(Double.NEGATIVE_INFINITY);
-        stats.setTotalElevationGain(6000);
+        stats.setTotalElevationGain(6000f);
         stats.setTotalElevationLoss(6000);
         stats.setStartTime_ms(START_TIME);
         track.setTrackStatistics(stats);

@@ -9,6 +9,7 @@ import de.dennisguse.opentracks.content.data.TrackPointsColumns;
  */
 class CachedTrackPointsIndexes {
     final int idIndex;
+    final int typeIndex;
     final int longitudeIndex;
     final int latitudeIndex;
     final int timeIndex;
@@ -24,6 +25,7 @@ class CachedTrackPointsIndexes {
 
     CachedTrackPointsIndexes(Cursor cursor) {
         idIndex = cursor.getColumnIndex(TrackPointsColumns._ID);
+        typeIndex = cursor.getColumnIndex(TrackPointsColumns.TYPE);
         longitudeIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.LONGITUDE);
         latitudeIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE);
         timeIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.TIME);

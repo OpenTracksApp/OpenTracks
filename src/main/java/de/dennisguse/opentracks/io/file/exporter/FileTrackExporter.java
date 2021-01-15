@@ -28,7 +28,6 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
-import de.dennisguse.opentracks.util.LocationUtils;
 
 /**
  * Track Writer for writing tracks to an {@link OutputStream}.
@@ -95,7 +94,7 @@ public class FileTrackExporter implements TrackExporter {
          *  I am leaving the number of markers very high which should not be a problem, because we don't try to load them into objects all at the same time.
          */
         boolean hasMarkers = false;
-        try (Cursor cursor = contentProviderUtils.getMarkerCursor(track.getId(), null, ContentProviderUtils.MAX_LOADED_MARKERS)) {
+        try (Cursor cursor = contentProviderUtils.getMarkerCursor(track.getId(), null, -1)) {
             if (cursor != null && cursor.moveToFirst()) {
                 for (int i = 0; i < cursor.getCount(); i++) {
                     if (Thread.interrupted()) {
@@ -136,7 +135,7 @@ public class FileTrackExporter implements TrackExporter {
 
                 setLocationTime(trackPoint, offset);
 
-                boolean isLocationValid = LocationUtils.isValidLocation(trackPoint.getLocation());
+                boolean isLocationValid = trackPoint.getType().hasLocation();
                 boolean isSegmentValid = isLocationValid && isLastLocationValid;
                 if (!wroteTrack && isSegmentValid) {
                     // Found the first two consecutive locations that are valid
