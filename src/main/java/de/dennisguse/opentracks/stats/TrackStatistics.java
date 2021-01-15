@@ -26,15 +26,16 @@ import androidx.annotation.Nullable;
  * @author Rodrigo Damazio
  */
 //TODO Use null instead of Double.isInfinite
+//TODO Check that data ranges are valid (not less than zero etc.)
 public class TrackStatistics {
 
     // The min and max elevation (meters) seen on this track.
     private final ExtremityMonitor elevationExtremities = new ExtremityMonitor();
 
-    // The track start time. This is the system time, might not match the GPs time.
-    private long startTime_ms = -1L;
-    // The track stop time. This is the system time, might not match the GPS time.
-    private long stopTime_ms = -1L;
+    // The track start time.
+    private long startTime_ms;
+    // The track stop time.
+    private long stopTime_ms;
 
     private double totalDistance_m;
     // Updated when new points are received, may be stale.
@@ -44,11 +45,13 @@ public class TrackStatistics {
     // The maximum speed (meters/second) that we believe is valid.
     private double maxSpeed_mps;
     // The total elevation gained (meters).
-    private Float totalElevationGain_m = null;
+    @Nullable
+    private Float totalElevationGain_m;
     // The total elevation lost (meters).
     private Float totalElevationLoss_m = null;
 
     public TrackStatistics() {
+        reset();
     }
 
     /**
@@ -105,6 +108,21 @@ public class TrackStatistics {
         }
     }
 
+    public void reset() {
+        setStartTime_ms(0);
+
+        setTotalDistance(0);
+        setTotalTime(0);
+        setMovingTime(0);
+        setMaxSpeed(0);
+        setTotalElevationGain(null);
+    }
+
+    public void reset(long startTime_ms) {
+        reset();
+        setStartTime_ms(startTime_ms);
+    }
+
     /**
      * Gets the track start time. The number of milliseconds since epoch.
      */
@@ -112,8 +130,12 @@ public class TrackStatistics {
         return startTime_ms;
     }
 
+    /**
+     * Should only be called on start.
+     */
     public void setStartTime_ms(long startTime_ms) {
         this.startTime_ms = startTime_ms;
+        setStopTime_ms(startTime_ms);
     }
 
     public long getStopTime_ms() {
@@ -121,6 +143,9 @@ public class TrackStatistics {
     }
 
     public void setStopTime_ms(long stopTime_ms) {
+        if (stopTime_ms < startTime_ms) {
+            throw new RuntimeException("stopTime cannot be less than startTime: " + startTime_ms + " " + stopTime_ms);
+        }
         this.stopTime_ms = stopTime_ms;
     }
 
@@ -258,7 +283,7 @@ public class TrackStatistics {
         return totalElevationGain_m;
     }
 
-    public void setTotalElevationGain(float totalElevationGain_m) {
+    public void setTotalElevationGain(Float totalElevationGain_m) {
         this.totalElevationGain_m = totalElevationGain_m;
     }
 

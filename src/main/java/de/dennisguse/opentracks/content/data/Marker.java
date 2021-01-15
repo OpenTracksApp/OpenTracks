@@ -28,6 +28,8 @@ import androidx.annotation.VisibleForTesting;
 import java.util.Objects;
 
 /**
+ * NOTE: A marker is indirectly (via it's location) assigned to one {@link TrackPoint} with trackPoint.hasLocation() == true.
+ *
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */

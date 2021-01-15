@@ -40,13 +40,12 @@ import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
-import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * Track data hub.
  * Receives data from {@link de.dennisguse.opentracks.content.provider.CustomContentProvider} and distributes it to {@link TrackDataListener} after some processing.
- *
+ * <p>
  * {@link TrackPoint}s are filtered/downsampled with a dynamic sampling frequency.
  *
  * @author Rodrigo Damazio
@@ -314,9 +313,6 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     Marker marker = contentProviderUtils.createMarker(cursor);
-                    if (!LocationUtils.isValidLocation(marker.getLocation())) {
-                        continue;
-                    }
                     for (TrackDataListener trackDataListener : trackDataListeners) {
                         trackDataListener.onNewMarker(marker);
                     }
@@ -362,7 +358,6 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
 
         TrackPoint.Id lastTrackPointId = contentProviderUtils.getLastTrackPointId(selectedTrackId);
         int samplingFrequency = -1;
-        boolean includeNextPoint = false;
 
 
         TrackPoint.Id next;
@@ -390,19 +385,15 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
                     samplingFrequency = 1 + (int) (numTotalPoints / targetNumPoints);
                 }
 
-                if (!LocationUtils.isValidLocation(trackPoint.getLocation())) { //This can be split markers (not anymore supported feature)
-                    includeNextPoint = true;
+
+                // Also include the last point if the selected track is not recording.
+                if ((localNumLoadedTrackPoints % samplingFrequency == 0) || (trackPointId == lastTrackPointId && !isSelectedTrackRecording())) {
+                    for (TrackDataListener trackDataListener : sampledInListeners) {
+                        trackDataListener.onSampledInTrackPoint(trackPoint);
+                    }
                 } else {
-                    // Also include the last point if the selected track is not recording.
-                    if (includeNextPoint || (localNumLoadedTrackPoints % samplingFrequency == 0) || (trackPointId == lastTrackPointId && !isSelectedTrackRecording())) {
-                        includeNextPoint = false;
-                        for (TrackDataListener trackDataListener : sampledInListeners) {
-                            trackDataListener.onSampledInTrackPoint(trackPoint);
-                        }
-                    } else {
-                        for (TrackDataListener trackDataListener : sampledOutListeners) {
-                            trackDataListener.onSampledOutTrackPoint(trackPoint);
-                        }
+                    for (TrackDataListener trackDataListener : sampledOutListeners) {
+                        trackDataListener.onSampledOutTrackPoint(trackPoint);
                     }
                 }
 

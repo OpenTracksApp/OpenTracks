@@ -60,7 +60,6 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
@@ -283,8 +282,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             Log.d(TAG, "Ignore startNewTrack. Already recording.");
             return null;
         }
-        long now = System.currentTimeMillis();
-        trackStatisticsUpdater = new TrackStatisticsUpdater(now);
 
         // Insert a track
         Track track = new Track();
@@ -296,7 +293,13 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         // Update database
         track.setId(trackId);
-        track.setName(TrackNameUtils.getTrackName(this, trackId, now));
+
+        TrackPoint segmentStartTrackPoint = TrackPoint.createSegmentStartManual();
+        trackStatisticsUpdater = new TrackStatisticsUpdater();
+        insertTrackPoint(track, segmentStartTrackPoint);
+
+        //TODO Pass TrackPoint
+        track.setName(TrackNameUtils.getTrackName(this, trackId, segmentStartTrackPoint.getTime()));
 
         String category = PreferencesUtils.getDefaultActivity(this);
         track.setCategory(category);
@@ -325,8 +328,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         track.getTrackStatistics().setStopTime_ms(System.currentTimeMillis());
         trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics());
 
-        insertTrackPoint(track, TrackPoint.createPause());
-        insertTrackPoint(track, TrackPoint.createResume());
+        insertTrackPoint(track, TrackPoint.createSegmentStartManual());
 
         // Update shared preferences.
         updateRecordingState(trackId, false);
@@ -350,7 +352,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         Log.d(TAG, "Restarting track: " + track.getId());
 
-        trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics().getStartTime_ms());
+        trackStatisticsUpdater = new TrackStatisticsUpdater();
 
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null)) {
             trackStatisticsUpdater.addTrackPoint(trackPointIterator, recordingDistanceInterval);
@@ -371,7 +373,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         // Update database
         Track track = contentProviderUtils.getTrack(recordingTrackId);
         if (track != null) {
-            insertTrackPoint(track, TrackPoint.createResume());
+            insertTrackPoint(track, TrackPoint.createSegmentStartManual());
         }
 
         startRecording();
@@ -424,15 +426,14 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         // Update database
         Track track = contentProviderUtils.getTrack(trackId);
         if (track != null) {
-            // If not wasPaused, add the last location
-            if (!wasPaused) {
-                if (lastTrackPoint != null) {
-                    insertTrackPointIfNewer(track, lastTrackPoint);
-                }
-
-                // Update the recording track time
-                updateTrackTotalTime(track);
+            if (lastTrackPoint != null) {
+                insertTrackPointIfNewer(track, lastTrackPoint);
             }
+
+            insertTrackPoint(track, TrackPoint.createSegmentEnd());
+
+            // Update the recording track time
+            updateTrackTotalTime(track);
         }
 
         ExportUtils.postWorkoutExport(this, track, new ExportServiceResultReceiver(new Handler(), this));
@@ -454,7 +455,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             if (lastTrackPoint != null) {
                 insertTrackPointIfNewer(track, lastTrackPoint);
             }
-            insertTrackPoint(track, TrackPoint.createPause());
+            insertTrackPoint(track, TrackPoint.createSegmentEnd());
         }
 
         endRecording(false);
@@ -567,18 +568,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        if (lastValidTrackPoint == null || !LocationUtils.isValidLocation(lastValidTrackPoint.getLocation())) {
-            // For some reason the previous first trackPoint was not stored, but currentSegmentHasLocation set true.
-            // Should not happen. The current segment should have a location. Just insert the current location.
-            insertTrackPoint(track, trackPoint);
-            lastTrackPoint = trackPoint;
-            return;
-        }
-
         double distanceToLastTrackLocation = trackPoint.distanceTo(lastValidTrackPoint);
         if (distanceToLastTrackLocation > maxRecordingDistance) {
             insertTrackPointIfNewer(track, lastTrackPoint);
-            insertTrackPoint(track, TrackPoint.createPause());
+            insertTrackPoint(track, TrackPoint.createSegmentEndWithTime(trackPoint));
 
             insertTrackPoint(track, trackPoint);
 

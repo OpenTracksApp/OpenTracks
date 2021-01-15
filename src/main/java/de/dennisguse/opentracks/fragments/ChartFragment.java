@@ -43,7 +43,6 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.databinding.ChartBinding;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
-import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
@@ -71,8 +70,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     private TrackDataHub trackDataHub;
 
     // Stats gathered from the received data
-    private TrackStatisticsUpdater trackStatisticsUpdater;
-    private long startTime;
+    private TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater();
 
     private ChartBinding viewBinding;
 
@@ -198,7 +196,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     public void onTrackUpdated(Track track) {
         if (isResumed()) {
             if (track == null || track.getTrackStatistics() == null) {
-                startTime = -1L;
                 category = "";
                 return;
             }
@@ -209,14 +206,13 @@ public class ChartFragment extends Fragment implements TrackDataListener {
                 chartView.setReportSpeed(reportSpeed);
                 chartView.applyReportSpeed();
             }
-            startTime = track.getTrackStatistics().getStartTime_ms();
         }
     }
 
     @Override
     public void clearTrackPoints() {
         if (isResumed()) {
-            trackStatisticsUpdater = startTime != -1L ? new TrackStatisticsUpdater(startTime) : null;
+            trackStatisticsUpdater = new TrackStatisticsUpdater();
             pendingPoints.clear();
             chartView.reset();
             runOnUiThread(() -> {
@@ -261,7 +257,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
     @Override
     public void onNewMarker(Marker marker) {
-        if (isResumed() && marker != null && LocationUtils.isValidLocation(marker.getLocation())) {
+        if (isResumed() && marker != null) {
             chartView.addMarker(marker);
         }
     }
@@ -325,11 +321,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     ChartPoint createPendingPoint(@NonNull TrackPoint trackPoint) {
         trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
         return new ChartPoint(trackStatisticsUpdater, trackPoint, chartByDistance, chartView.getMetricUnits());
-    }
-
-    @VisibleForTesting
-    void setTrackStatisticsUpdater(long time) {
-        trackStatisticsUpdater = new TrackStatisticsUpdater(time);
     }
 
     @VisibleForTesting

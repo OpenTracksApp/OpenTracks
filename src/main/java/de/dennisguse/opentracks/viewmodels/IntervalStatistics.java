@@ -1,10 +1,11 @@
 package de.dennisguse.opentracks.viewmodels;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 public class IntervalStatistics {
@@ -15,11 +16,11 @@ public class IntervalStatistics {
      * @param trackPoints        the list of TrackPoint.
      * @param distanceInterval_m the meters of every interval.
      */
-    public IntervalStatistics(List<TrackPoint> trackPoints, float distanceInterval_m) {
+    public IntervalStatistics(@NonNull List<TrackPoint> trackPoints, float distanceInterval_m) {
         intervalList.clear();
         this.distanceInterval_m = distanceInterval_m;
 
-        if (trackPoints == null || trackPoints.size() == 0) {
+        if (trackPoints.size() == 0) {
             return;
         }
 
@@ -30,7 +31,7 @@ public class IntervalStatistics {
             TrackPoint prevTrackPoint = trackPoints.get(i - 1);
             TrackPoint trackPoint = trackPoints.get(i);
 
-            if (LocationUtils.isValidLocation(trackPoint.getLocation()) && LocationUtils.isValidLocation(prevTrackPoint.getLocation())) {
+            if (trackPoint.getType().hasLocation() && prevTrackPoint.getType().hasLocation()) {
                 interval.distance_m += prevTrackPoint.distanceTo(trackPoint);
                 interval.time_ms += trackPoint.getTime() - prevTrackPoint.getTime();
                 interval.gain_m += trackPoint.hasElevationGain() ? trackPoint.getElevationGain() : 0;
