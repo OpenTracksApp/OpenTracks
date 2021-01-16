@@ -102,10 +102,11 @@
             style="@style/StatsLargeLabel"
             android:text="@string/stats_moving_time"
             app:layout_constrainedWidth="true"
-            app:layout_constraintStart_toEndOf="@+id/guideline2"
+            app:layout_constraintBottom_toBottomOf="@+id/stats_total_time_label"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
+            app:layout_constraintStart_toEndOf="@+id/guideline2"
             app:layout_constraintTop_toTopOf="@+id/stats_total_time_label"
-            app:layout_constraintBottom_toBottomOf="@+id/stats_total_time_label" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/stats_moving_time_value"
