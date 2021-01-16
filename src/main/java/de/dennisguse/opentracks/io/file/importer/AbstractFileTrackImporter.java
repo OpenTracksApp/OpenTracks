@@ -251,10 +251,13 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         if (icon != null) {
             trackData.track.setIcon(icon);
         }
-        if (trackData.trackStatisticsUpdater == null) {
-            trackData.trackStatisticsUpdater = new TrackStatisticsUpdater();
+
+        TrackStatisticsUpdater statistics = new TrackStatisticsUpdater();
+        //TODO I guess, we should not filter by recordingDistanceInterval on import; the data is already recorded, so we should not change it.
+        for (TrackPoint trackPoint : trackData.bufferedTrackPoints) {
+            statistics.addTrackPoint(trackPoint, recordingDistanceInterval);
         }
-        trackData.track.setTrackStatistics(trackData.trackStatisticsUpdater.getTrackStatistics());
+        trackData.track.setTrackStatistics(statistics.getTrackStatistics());
 
         Track track = contentProviderUtils.getTrack(trackData.track.getUuid());
         if (track != null) {
@@ -502,12 +505,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
      * @param trackPoint the trackPoint
      */
     protected void insertTrackPoint(TrackPoint trackPoint) {
-        if (trackData.trackStatisticsUpdater == null) {
-            trackData.trackStatisticsUpdater = new TrackStatisticsUpdater();
-        }
-        //TODO I guess, we should not filter by recordingDistanceInterval on import; the data is already recorded, so we should not change it.
-        trackData.trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
-
         trackData.bufferedTrackPoints.add(trackPoint);
     }
 
@@ -547,9 +544,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
         // The last location in the current segment; Null if the current segment doesn't have a last location
         TrackPoint lastLocationInCurrentSegment;
-
-        // The TrackStatisticsUpdater for the current track
-        TrackStatisticsUpdater trackStatisticsUpdater;
 
         // The buffered locations
         final List<TrackPoint> bufferedTrackPoints = new ArrayList<>();
