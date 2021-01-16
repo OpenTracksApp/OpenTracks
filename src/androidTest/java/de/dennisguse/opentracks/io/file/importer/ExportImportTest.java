@@ -41,8 +41,10 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Export a track to {@link TrackFileFormat} and verify that the import is identical.
@@ -93,7 +95,6 @@ public class ExportImportTest {
         service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.001, 10, 15, 10, 0, 66, 3, 50), 0);
         service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.002, 10, 15, 10, 0, 66, 3, 50), 0);
         service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
-        Thread.sleep(10);
         service.pauseCurrentTrack();
 
         service.resumeCurrentTrack();
@@ -164,7 +165,7 @@ public class ExportImportTest {
         assertTrackpoints(false, false, false, false, false);
 
         // 3. trackstatistics
-        assertTrackStatistics();
+        assertTrackStatistics(false);
 
         // 4. markers
         assertMarkers();
@@ -202,7 +203,7 @@ public class ExportImportTest {
         assertTrackpoints(true, true, true, true, true);
 
         // 2. trackstatistics
-        assertTrackStatistics();
+        assertTrackStatistics(true);
 
         // 4. markers
         assertMarkers();
@@ -298,7 +299,7 @@ public class ExportImportTest {
         assertTrackpoints(false, true, true, true, true);
 
         // 3. trackstatistics
-        assertTrackStatistics();
+        assertTrackStatistics(true);
 
         // 4. markers
         assertMarkers();
@@ -358,7 +359,8 @@ public class ExportImportTest {
 
             assertEquals(trackPoint.getTime(), importedTrackPoint.getTime());
             TrackPoint.Type type = trackPoint.getType();
-            assertEquals("" + i, trackPoint.getType(), importedTrackPoint.getType());
+            Log.e(TAG, "" + importedTrackPoint.getType().equals(type));
+            assertEquals("" + i, type, importedTrackPoint.getType());
 
             // TODO Not exported for GPX/KML
             //   assertEquals(trackPoint.getAccuracy(), importedTrackPoint.getAccuracy(), 0.01);
@@ -400,7 +402,7 @@ public class ExportImportTest {
         }
     }
 
-    private void assertTrackStatistics() {
+    private void assertTrackStatistics(boolean verifyElevationGainAndLoss) {
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
 
         assertNotNull(importedTrack.getTrackStatistics());
@@ -409,24 +411,31 @@ public class ExportImportTest {
         TrackStatistics importedTrackStatistics = importedTrack.getTrackStatistics();
 
         // Time
-        assertEquals(trackStatistics.getStartTime(), trackStatistics.getStartTime());
-        assertEquals(trackStatistics.getStopTime(), trackStatistics.getStopTime());
-        assertEquals(trackStatistics.getTotalTime(), trackStatistics.getTotalTime());
-        assertEquals(trackStatistics.getMovingTime(), trackStatistics.getMovingTime());
+        assertTrue(trackStatistics.getStartTime().isBefore(trackStatistics.getStopTime())); //Just to be sure.
+        assertEquals(trackStatistics.getStartTime(), importedTrackStatistics.getStartTime());
+        assertEquals(trackStatistics.getStopTime(), importedTrackStatistics.getStopTime());
+
+        assertEquals(trackStatistics.getTotalTime(), importedTrackStatistics.getTotalTime());
+        assertEquals(trackStatistics.getMovingTime(), importedTrackStatistics.getMovingTime());
 
         // Distance
-        assertEquals(trackStatistics.getTotalDistance(), trackStatistics.getTotalDistance(), 0.01);
+        assertEquals(trackStatistics.getTotalDistance(), importedTrackStatistics.getTotalDistance(), 0.01);
 
         // Speed
-        assertEquals(trackStatistics.getMaxSpeed(), trackStatistics.getMaxSpeed(), 0.01);
-        assertEquals(trackStatistics.getAverageSpeed(), trackStatistics.getAverageSpeed(), 0.01);
-        assertEquals(trackStatistics.getAverageMovingSpeed(), trackStatistics.getAverageMovingSpeed(), 0.01);
+        assertEquals(trackStatistics.getMaxSpeed(), importedTrackStatistics.getMaxSpeed(), 0.01);
+        assertEquals(trackStatistics.getAverageSpeed(), importedTrackStatistics.getAverageSpeed(), 0.01);
+        assertEquals(trackStatistics.getAverageMovingSpeed(), importedTrackStatistics.getAverageMovingSpeed(), 0.01);
 
         // Elevation
-        assertEquals(trackStatistics.getMinElevation(), trackStatistics.getMinElevation(), 0.01);
-        assertEquals(trackStatistics.getMaxElevation(), trackStatistics.getMaxElevation(), 0.01);
-        assertEquals(trackStatistics.getTotalElevationGain(), trackStatistics.getTotalElevationGain(), 0.01);
-        assertEquals(trackStatistics.getTotalElevationLoss(), trackStatistics.getTotalElevationLoss(), 0.01);
+        assertEquals(trackStatistics.getMinElevation(), importedTrackStatistics.getMinElevation(), 0.01);
+        assertEquals(trackStatistics.getMaxElevation(), importedTrackStatistics.getMaxElevation(), 0.01);
+        if (verifyElevationGainAndLoss) {
+            assertEquals(trackStatistics.getTotalElevationGain(), importedTrackStatistics.getTotalElevationGain(), 0.01);
+            assertEquals(trackStatistics.getTotalElevationLoss(), importedTrackStatistics.getTotalElevationLoss(), 0.01);
+        } else {
+            assertFalse(importedTrackStatistics.hasTotalElevationGain());
+            assertFalse(importedTrackStatistics.hasTotalElevationLoss());
+        }
     }
 
     private static TrackPoint createTrackPoint(long time, double latitude, double longitude, float accuracy, long speed, long altitude, float elevationGain, float heartRate, float cyclingCadence, float power) {
