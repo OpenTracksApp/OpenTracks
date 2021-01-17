@@ -97,6 +97,10 @@ public class TrackStatisticsUpdater {
         return stats;
     }
 
+    public boolean isTrackInitialized() {
+        return trackInitialized;
+    }
+
     /**
      * Adds a trackPoint.
      *

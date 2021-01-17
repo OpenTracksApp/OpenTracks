@@ -257,6 +257,9 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         for (TrackPoint trackPoint : trackData.bufferedTrackPoints) {
             statistics.addTrackPoint(trackPoint, recordingDistanceInterval);
         }
+        if (!statistics.isTrackInitialized()) {
+            throw new ImportParserException("Track did not contain any locations.");
+        }
         trackData.track.setTrackStatistics(statistics.getTrackStatistics());
 
         Track track = contentProviderUtils.getTrack(trackData.track.getUuid());

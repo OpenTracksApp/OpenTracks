@@ -29,7 +29,7 @@ public class TrackStatisticsUpdaterTest {
         assertEquals(2.5, statistics.getMinElevation(), 0.01);
         assertEquals(27.5, statistics.getMaxElevation(), 0.01);
         assertEquals(18.0, statistics.getTotalElevationGain(), 0.01);
-        assertEquals(72.0, statistics.getTotalElevationLoss(), 0.01);
+        assertEquals(18.0, statistics.getTotalElevationLoss(), 0.01);
 
         assertEquals(14.226, statistics.getMaxSpeed(), 0.01);
         assertEquals(14.226, statistics.getAverageMovingSpeed(), 0.01);
