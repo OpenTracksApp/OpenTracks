@@ -84,6 +84,21 @@ public class LegacyImportTest {
     }
 
     /**
+     * At least one valid location is required.
+     * Before v3.15.0, Tracks without TrackPoints could be created; such tracks cannot be imported as we cannot restore the TrackStatistics (especially startTime and stopTime).
+     */
+    @LargeTest
+    @Test(expected = ImportParserException.class)
+    public void kml_without_locations() {
+        // given
+        KmlFileTrackImporter trackImporter = new KmlFileTrackImporter(context);
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.legacy_kml_empty);
+
+        // when
+        importTrackId = trackImporter.importFile(inputStream);
+    }
+
+    /**
      * Check that data that contains pause (lat=100, lng=0) and resume (lat=200, lng=0) locations are restored to a segment break.
      */
     @LargeTest
