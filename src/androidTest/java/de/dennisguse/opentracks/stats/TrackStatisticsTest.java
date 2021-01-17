@@ -24,6 +24,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Tests for {@link TrackStatistics}.
@@ -42,7 +43,31 @@ public class TrackStatisticsTest {
     }
 
     @Test
+    public void testMerge_no_data() {
+        // given
+        TrackStatistics statistics2 = new TrackStatistics();
+
+        // when
+        statistics.merge(statistics2);
+
+        // then
+        assertNull(statistics.getStartTime());
+        assertNull(statistics.getStopTime());
+        assertEquals(Duration.ofSeconds(0), statistics.getMovingTime());
+        assertEquals(Duration.ofSeconds(0), statistics.getTotalTime());
+
+        assertNull(statistics.getTotalElevationGain());
+        assertNull(statistics.getTotalElevationLoss());
+        assertEquals(Double.NEGATIVE_INFINITY, statistics.getMaxElevation(), 0.0);
+        assertEquals(Double.POSITIVE_INFINITY, statistics.getMinElevation(), 0.0);
+        assertEquals(0.0, statistics.getMaxSpeed(), 0.0);
+        assertEquals(0.0, statistics.getAverageSpeed(), 0.0);
+        assertEquals(0.0, statistics.getAverageMovingSpeed(), 0.0);
+    }
+
+    @Test
     public void testMerge() {
+        // given
         TrackStatistics statistics2 = new TrackStatistics();
         statistics.setStartTime(Instant.ofEpochMilli(1000));  // Resulting start time
         statistics.setStopTime(Instant.ofEpochMilli(2500));
@@ -63,8 +88,10 @@ public class TrackStatisticsTest {
         statistics2.setMaxElevation(3575.0);  // Resulting max elevation
         statistics2.setMinElevation(2800.0);
 
+        // when
         statistics.merge(statistics2);
 
+        // then
         assertEquals(Instant.ofEpochMilli(1000), statistics.getStartTime());
         assertEquals(Instant.ofEpochMilli(4000), statistics.getStopTime());
         assertEquals(Duration.ofMillis(2500), statistics.getTotalTime());
