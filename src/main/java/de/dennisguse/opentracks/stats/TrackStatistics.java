@@ -48,8 +48,7 @@ public class TrackStatistics {
     // The maximum speed (meters/second) that we believe is valid.
     private double maxSpeed_mps;
     // The total elevation gained (meters).
-    @Nullable
-    private Float totalElevationGain_m;
+    private Float totalElevationGain_m = null;
     // The total elevation lost (meters).
     private Float totalElevationLoss_m = null;
 
@@ -81,8 +80,17 @@ public class TrackStatistics {
      * @param other another statistics data object
      */
     public void merge(TrackStatistics other) {
-        startTime = startTime.isBefore(other.startTime) ? startTime : other.startTime;
-        stopTime = stopTime.isAfter(other.stopTime) ? stopTime : other.stopTime;
+        if (startTime == null) {
+            startTime = other.startTime;
+        } else {
+            startTime = startTime.isBefore(other.startTime) ? startTime : other.startTime;
+        }
+        if (stopTime == null) {
+            stopTime = other.stopTime;
+        } else {
+            stopTime = stopTime.isAfter(other.stopTime) ? stopTime : other.stopTime;
+        }
+
         totalDistance_m += other.totalDistance_m;
         totalTime = totalTime.plus(other.totalTime);
         movingTime = movingTime.plus(other.movingTime);
@@ -120,6 +128,7 @@ public class TrackStatistics {
         setMovingTime(Duration.ofSeconds(0));
         setMaxSpeed(0);
         setTotalElevationGain(null);
+        setTotalElevationLoss(null);
     }
 
     public void reset(Instant startTime) {
@@ -279,8 +288,8 @@ public class TrackStatistics {
         return totalElevationGain_m != null;
     }
 
-    public @Nullable
-    Float getTotalElevationGain() {
+    @Nullable
+    public Float getTotalElevationGain() {
         return totalElevationGain_m;
     }
 
@@ -299,12 +308,12 @@ public class TrackStatistics {
         return totalElevationLoss_m != null;
     }
 
-    public @Nullable
-    Float getTotalElevationLoss() {
+    @Nullable
+    public Float getTotalElevationLoss() {
         return totalElevationLoss_m;
     }
 
-    public void setTotalElevationLoss(float totalElevationLoss_m) {
+    public void setTotalElevationLoss(Float totalElevationLoss_m) {
         this.totalElevationLoss_m = totalElevationLoss_m;
     }
 

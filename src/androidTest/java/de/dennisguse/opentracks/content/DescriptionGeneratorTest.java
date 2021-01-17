@@ -67,7 +67,7 @@ public class DescriptionGeneratorTest {
         stats.setMaxElevation(550);
         stats.setMinElevation(-500);
         stats.setTotalElevationGain(6000f);
-        stats.setTotalElevationLoss(6000);
+        stats.setTotalElevationLoss(6000f);
         stats.setStartTime(START_TIME);
         track.setTrackStatistics(stats);
         track.setCategory("hiking");
@@ -105,7 +105,7 @@ public class DescriptionGeneratorTest {
         stats.setMaxElevation(Double.POSITIVE_INFINITY);
         stats.setMinElevation(Double.NEGATIVE_INFINITY);
         stats.setTotalElevationGain(6000f);
-        stats.setTotalElevationLoss(6000);
+        stats.setTotalElevationLoss(6000f);
         stats.setStartTime(START_TIME);
         track.setTrackStatistics(stats);
         track.setCategory("hiking");
