@@ -126,9 +126,10 @@ public class TrackStatisticsUpdater {
                 if (lastTrackPoint != null && lastMovingTrackPoint != null && lastTrackPoint != lastMovingTrackPoint) {
                     currentSegment.addTotalDistance(lastMovingTrackPoint.distanceTo(lastTrackPoint));
                 }
-                trackStatistics.merge(currentSegment);
             }
+            trackStatistics.merge(currentSegment);
             currentSegment.reset(trackPoint.getTime());
+
             lastTrackPoint = null;
             lastMovingTrackPoint = null;
             elevationBuffer_m.reset();
