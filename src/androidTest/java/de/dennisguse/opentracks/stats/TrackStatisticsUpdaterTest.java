@@ -22,17 +22,17 @@ public class TrackStatisticsUpdaterTest {
 
         // then
         TrackStatistics statistics = updater.getTrackStatistics();
-        assertEquals(56.90, statistics.getTotalDistance(), 0.01);
-        assertEquals(Duration.ofSeconds(9), statistics.getTotalTime());
-        assertEquals(Duration.ofSeconds(4), statistics.getMovingTime());
+        assertEquals(85.35, statistics.getTotalDistance(), 0.01);
+        assertEquals(Duration.ofMillis(13999), statistics.getTotalTime());
+        assertEquals(Duration.ofSeconds(6), statistics.getMovingTime());
 
         assertEquals(2.5, statistics.getMinElevation(), 0.01);
         assertEquals(27.5, statistics.getMaxElevation(), 0.01);
-        assertEquals(18.0, statistics.getTotalElevationGain(), 0.01);
-        assertEquals(18.0, statistics.getTotalElevationLoss(), 0.01);
+        assertEquals(27, statistics.getTotalElevationGain(), 0.01);
+        assertEquals(27.0, statistics.getTotalElevationLoss(), 0.01);
 
         assertEquals(14.226, statistics.getMaxSpeed(), 0.01);
         assertEquals(14.226, statistics.getAverageMovingSpeed(), 0.01);
-        assertEquals(6.322, statistics.getAverageSpeed(), 0.01);
+        assertEquals(6.566, statistics.getAverageSpeed(), 0.01);
     }
 }
