@@ -84,18 +84,16 @@ However, this is rather slow and does not provide updates while recording.
 
 ## Screenshots
 <div>
-    <img width="18%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_1.png">
-    <img width="18%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_2.png">
-    <img width="18%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_3.png">
-    <img width="18%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_4.png">
-    <img width="18%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_5.png">
+    <img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot1.png">
+    <img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot2.png">
+    <img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot3.png">
+    <img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot4.png">
 </div>
 <div>
-	<img width="18%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_6.png">
-    <img width="18%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_7.png">
-	<img width="18%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_8.png">
-	<img width="18%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_9.png">
-	<img width="18%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot_10.png">
+	<img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot5.png">
+    <img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot6.png">
+	<img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot7.png">
+	<img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot8.png">
 </div>
 
 ## Project history
