@@ -360,12 +360,12 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         int samplingFrequency = -1;
 
 
-        TrackPoint.Id next;
+        TrackPoint.Id next = null;
         if (localLastSeenTrackPointIdId != null) {
             next = new TrackPoint.Id(localLastSeenTrackPointIdId.getId() + 1); //TODO startTrackPointId + 1 is an assumption assumption; should be derived from the DB.
         }
 
-        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, null)) {
+        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, next)) {
 
             while (trackPointIterator.hasNext()) {
                 TrackPoint trackPoint = trackPointIterator.next();
