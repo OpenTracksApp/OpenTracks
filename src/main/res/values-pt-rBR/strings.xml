@@ -160,7 +160,7 @@
     <string name="import_success">Importação: %1$s de %2$s</string>
     <string name="marker_add_error">Não foi possível inserir um marcador. Não há sinal de GPS. Tente novamente.</string>
     <string name="marker_add_success">Um marcador foi inserido</string>
-    <string name="marker_add_canceled">Cancelado. Nenhum marcador foi adicionado.</string>
+    <string name="marker_add_canceled">Cancelado. Nenhum marcador foi adicionado</string>
     <string name="marker_delete_all_confirm_message">Todos os marcadores desta rota serão excluídos permanentemente do dispositivo</string>
     <string name="marker_delete_one_confirm_message">O marcador será excluído permanentemente do dispositivo</string>
     <string name="marker_delete_one_confirm_title">Excluir marcador?</string>
@@ -222,8 +222,8 @@
     <string name="settings_recording_location_frequency_summary">%1$s entre os locais gravados</string>
     <string name="settings_recording_max_recording_distance_summary">Um novo segmento será criado se a distância entre os dois locais for maior que %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Distância máxima</string>
-    <string name="settings_recording_min_recording_distance_title">Interv. distância grav.</string>
-    <string name="settings_recording_min_recording_interval_title">Interv. tempo de grav.</string>
+    <string name="settings_recording_min_recording_distance_title">Intervalo de distância de gravação</string>
+    <string name="settings_recording_min_recording_interval_title">Intervalo de tempo de gravação</string>
     <string name="settings_recording_min_required_accuracy_summary">O local será ignorado se a precisão for menor que %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Precisão do GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Data (ISO 8601)</string>
@@ -243,8 +243,9 @@
     <string name="settings_stats_units_metric">Métrica (km, m)</string>
     <string name="settings_stats_units_title">Unidades preferenciais</string>
     <string name="share_track_share_file">Compartilhar arquivo da trilha</string>
-    <string name="share_track_share_file_body">Achei que você pudesse se interessar por essa trilha.\n\nPara visualizá-la, use o Google Earth ou outro
-    software de mapas.\n\n%1$s</string>
+    <string name="share_track_share_file_body">Achei que você pudesse se interessar por essa trilha.
+\n
+\n%1$s</string>
     <string name="share_track_subject">Eu gostaria de compartilhar uma trilha com você</string>
     <string name="stats_average_moving_pace">Ritmo médio de movimentação</string>
     <string name="stats_average_moving_speed">Velocidade média de movimentação</string>
@@ -257,7 +258,7 @@
     <string name="stats_latitude">Latitude</string>
     <string name="stats_longitude">Longitude</string>
     <string name="stats_max">Máx.</string>
-    <string name="stats_max_speed">Velocidade máx.</string>
+    <string name="stats_max_speed">Velocidade máxima</string>
     <string name="stats_min">Mín.</string>
     <string name="stats_moving_time">Tempo decorrido</string>
     <string name="stats_pace">Ritmo</string>
@@ -456,7 +457,7 @@
 \n* mostrar trilhas em um mapa (veja abaixo)</string>
     <string name="help_track_map_content"> Use o pequeno ícone do mapa.
 \n a) (atualizações ao vivo) Instale <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Ele fornece mapas online ou offline via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
-\n Na verdade, OSMDashboard é um aplicativo separado que só pode acessar (temporariamente) os dados da(s) track(s) que serão mostradas.
+\n Na verdade, OSMDashboard é um aplicativo separado que só pode acessar (temporariamente) os dados da(s) trilha(s) que serão mostradas.
 \n b) Por meio de um aplicativo de mapa normal (por exemplo, <a href="http://osmand.net/">OsmAn </a> e <a href="https://maps.me/">MAPS.ME</a>). Esses aplicativos precisam ser compatíveis com o formato de arquivo KMZ (apenas locais e marcações de data/hora). Na verdade, um aplicativo precisa ser compatível com<i>ACTION_VIEW</i> com MIME<i> application/vnd.google-earth.kmz</i>. </string>
     <string name="help_data_storage_content"> Os dados do sensor são armazenados por local registrado. Em termos de sensor de frequência cardíaca, isso significa que apenas <i>uma</i> medição de frequência cardíaca é armazenada por local. Se você estiver parado ou dentro de casa, nenhum dado do sensor será registrado (mas será mostrado). </string>
     <string name="help_support_content"> Você pode:
@@ -531,4 +532,22 @@
     <string name="voice_pace_lap">Tempo da volta de %1$s</string>
     <string name="share_image_subject">Eu gostaria de compartilhar uma imagem com você</string>
     <string name="instant_export_enabled_summary">Exportar trilha para armazenamento depois que a gravação for concluída</string>
+    <string name="value_float_mile_hour">%1$.2f mph</string>
+    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
+    <string name="import_prevent_reimport">Você definiu evitar reimportar a trilha</string>
+    <string name="stats_loss">Perda</string>
+    <string name="export_error_post_workout">A exportação pós-treino falhou, verifique o diretório de exportação.</string>
+    <string name="value_float_kilometer_hour">%1$.2f km/h</string>
+    <string name="description_elevation_loss">Perda de elevação: %1$d m (%2$d ft)</string>
+    <string name="export_progress_summary_new_msg">Novas trilhas exportadas</string>
+    <string name="import_no_kml_file_found">Nenhum arquivo doc.kml encontrado no KMZ</string>
+    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
+    <string name="settings_prevent_reimport_tracks_title">Impedir a reimportação de trilhas</string>
+    <string name="export_progress_summary_overwrite_msg">Trilhas sobrescritas</string>
+    <string name="export_progress_summary_skip_msg">Trilhas puladas</string>
+    <string name="export_progress_summary_errors_msg">Erros</string>
+    <string name="generic_open_track">Open Track</string>
+    <string name="import_progress_summary_ok_msg">Arquivos importados</string>
+    <string name="import_progress_summary_exists_msg">Já existe</string>
+    <string name="import_progress_summary_errors_msg">Erros</string>
 </resources>
