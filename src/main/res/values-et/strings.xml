@@ -301,7 +301,6 @@ g) tehke kõike, mis teie arvates OpenTracks aitab.</string>
     <string name="menu_voice_frequency">Häälteadete sagedus</string>
     <string name="menu_resume_track">Jätka pala</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Salvestamisteenus</string>
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks vajab GPS-i kasutamiseks luba.</string>

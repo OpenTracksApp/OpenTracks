@@ -222,7 +222,6 @@ limitations under the License.
     <string name="menu_view_photo">फ़ोटो देखें</string>
     <string name="menu_voice_frequency">ध्वनि आवृत्ति</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">रिकॉर्डिंग सेवा</string>
     <!-- Search -->
     <string name="search_global_description">ट्रैक और मार्कर</string>

@@ -223,7 +223,6 @@ limitations under the License.
     <string name="menu_view_photo">Prikaži fotografijo</string>
     <string name="menu_voice_frequency">Pogostost glas. obv.</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Storitev snemanja</string>
     <!-- Search -->
     <string name="search_global_description">Poti in oznake</string>

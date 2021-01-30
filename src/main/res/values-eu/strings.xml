@@ -299,7 +299,6 @@ g) Egin uste duzu OpenTracks-ek laguntzen duela.</string>
     <string name="menu_voice_frequency">Ahotsaren frekuentzia</string>
     <string name="menu_resume_track">Jarraitu pista</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Grabaketa-zerbitzua</string>
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks GPSa erabiltzeko baimena behar du.</string>

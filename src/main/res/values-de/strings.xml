@@ -308,7 +308,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="menu_voice_frequency">Ansagehäufigkeit</string>
     <string name="menu_resume_track">Track fortsetzen</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Dienst für Aufzeichnung</string>
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks benötigt eine Berechtigung zur Nutzung von GPS.</string>

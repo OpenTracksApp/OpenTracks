@@ -303,7 +303,6 @@ g) faire tout ce qui vous semble utile à OpenTracks.</string>
     <string name="menu_voice_frequency">Fréquence vocale</string>
     <string name="menu_resume_track">Reprendre la piste</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Service enregistrement</string>
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks nécessite une autorisation pour utiliser le GPS.</string>

@@ -224,7 +224,6 @@ limitations under the License.
     <string name="menu_view_photo">写真を表示</string>
     <string name="menu_voice_frequency">音声アナウンスの頻度</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">記録サービス</string>
     <!-- Search -->
     <string name="search_global_description">トラックとマーカー</string>

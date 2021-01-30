@@ -193,7 +193,6 @@
     <string name="menu_stop_gps">Arrêter le GPS</string>
     <string name="menu_view_photo">Afficher la photo</string>
     <string name="menu_voice_frequency">Fréquence vocale</string>
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Service enregistrement</string>
     <string name="search_global_description">Parcours et repères</string>
     <string name="search_list_empty_message">Aucun parcours ni repère ne correspond à votre recherche.</string>

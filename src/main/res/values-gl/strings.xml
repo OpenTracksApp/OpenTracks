@@ -292,7 +292,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="menu_voice_frequency">Frecuencia da voz</string>
     <string name="menu_resume_track">Retomar gravación</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Servizo de gravación</string>
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks precisa permiso para usar o GPS.</string>

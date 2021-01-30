@@ -193,7 +193,6 @@
     <string name="menu_stop_gps">עצור GPS</string>
     <string name="menu_view_photo">הצג תמונה</string>
     <string name="menu_voice_frequency">תדירות הודעות קוליות</string>
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">שירות הקלטה</string>
     <string name="search_global_description">מסלולים וסמנים</string>
     <string name="search_list_empty_message">לא נמצאו מסלולים או סמנים שתואמים לחיפוש שלך</string>

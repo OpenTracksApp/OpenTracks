@@ -267,7 +267,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="menu_view_photo">Visualizza foto</string>
     <string name="menu_voice_frequency">Frequenza voce</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Servizio di registrazione</string>
     <!-- Search -->
     <string name="search_global_description">Percorsi e indicatori</string>

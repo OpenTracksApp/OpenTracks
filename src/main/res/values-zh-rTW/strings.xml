@@ -194,7 +194,6 @@
     <string name="menu_stop_gps">關閉 GPS</string>
     <string name="menu_view_photo">查看相片</string>
     <string name="menu_voice_frequency">語音播報頻率</string>
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">記錄服務</string>
     <string name="search_global_description">足跡和標記</string>
     <string name="search_list_empty_message">沒有符合搜尋條件的足跡或標記</string>

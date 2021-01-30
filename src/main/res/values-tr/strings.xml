@@ -223,7 +223,6 @@ limitations under the License.
     <string name="menu_view_photo">Fotoğraf görüntüle</string>
     <string name="menu_voice_frequency">Ses sıklığı</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Kayıt hizmeti</string>
     <!-- Search -->
     <string name="search_global_description">Parkurlar ve işaretçiler</string>

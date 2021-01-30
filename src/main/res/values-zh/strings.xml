@@ -224,7 +224,6 @@ limitations under the License.
     <string name="menu_view_photo">查看照片</string>
     <string name="menu_voice_frequency">语音提示频率</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">记录服务</string>
     <!-- Search -->
     <string name="search_global_description">路线和标记</string>

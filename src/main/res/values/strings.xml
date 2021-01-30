@@ -350,7 +350,6 @@ limitations under the License.
     <string name="menu_voice_frequency">Voice frequency</string>
     <string name="menu_resume_track">Resume track</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Recording service</string>
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks requires permission to use GPS.</string>

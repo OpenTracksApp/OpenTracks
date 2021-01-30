@@ -303,7 +303,6 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="menu_voice_frequency">Frequentie voor gesproken berichten</string>
     <string name="menu_resume_track">Hervat spoor</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Opnameservice</string>
     <!-- Permission -->
     <string name="permission_gps_failed">Voor OpenTracks is toestemming nodig om GPS te gebruiken.</string>

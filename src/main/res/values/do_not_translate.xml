@@ -15,6 +15,7 @@ limitations under the License.
 -->
 <resources>
     <string name="app_web_url" translatable="false">https://github.com/OpenTracksApp/OpenTracks</string>
+    <string name="app_name" translatable="false">OpenTracks</string>
 
     <!-- List here all used libraries (will be shown in the about activity -->
     <string name="third_party_libraries" translatable="false">

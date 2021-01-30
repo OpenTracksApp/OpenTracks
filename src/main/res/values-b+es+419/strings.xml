@@ -194,7 +194,6 @@
     <string name="menu_view_photo">Ver foto</string>
     <string name="menu_voice_frequency">Frecuencia de voz</string>
     <string name="menu_resume_track">Reanudar ruta</string>
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Servicio de grabación</string>
     <string name="search_global_description">Recorridos y marcadores</string>
     <string name="search_list_empty_message">No hay rutas ni marcadores que coincidan con tu búsqueda.</string>

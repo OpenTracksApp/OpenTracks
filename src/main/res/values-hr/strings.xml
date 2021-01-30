@@ -223,7 +223,6 @@ limitations under the License.
     <string name="menu_view_photo">Prikaz fotografije</string>
     <string name="menu_voice_frequency">Učest. glas. objava</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Usluga snimanja</string>
     <!-- Search -->
     <string name="search_global_description">Staze i oznake</string>

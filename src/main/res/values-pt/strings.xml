@@ -224,7 +224,6 @@ limitations under the License.
     <string name="menu_view_photo">Ver foto</string>
     <string name="menu_voice_frequency">Frequência da voz</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Serviço de gravação</string>
     <!-- Search -->
     <string name="search_global_description">Trilhas e marcadores</string>

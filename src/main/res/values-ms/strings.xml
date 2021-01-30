@@ -223,7 +223,6 @@ limitations under the License.
     <string name="menu_view_photo">Lihat foto</string>
     <string name="menu_voice_frequency">Kekerapan suara</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Khidmat rakaman</string>
     <!-- Search -->
     <string name="search_global_description">Laluan dan penanda</string>

@@ -277,7 +277,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="menu_voice_frequency">Frekvence oznámení</string>
     <string name="menu_resume_track">Obnovit skladbu</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Služba pro záznam</string>
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks vyžaduje povolení k používání GPS.</string>

@@ -311,7 +311,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="menu_voice_frequency">Ilmoitustiheys</string>
     <string name="menu_resume_track">Jatka reittiä</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Tallennuspalvelu</string>
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks tarvitsee luvan käyttää satelliittipaikannusta.</string>

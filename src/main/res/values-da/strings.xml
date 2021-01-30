@@ -305,7 +305,6 @@ g) gør hvad du synes hjælper OpenTracks.</string>
     <string name="menu_voice_frequency">Stemmefrekvens</string>
     <string name="menu_resume_track">Genoptag sporet</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Registreringstjeneste</string>
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks kræver tilladelse til at bruge GPS.</string>

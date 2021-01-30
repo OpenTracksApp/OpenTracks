@@ -223,7 +223,6 @@ limitations under the License.
     <string name="menu_view_photo">Показв. на снимката</string>
     <string name="menu_voice_frequency">Честота на гласа</string>
     <!-- OpenTracks -->
-    <string name="app_name">OpenTracks</string>
     <string name="recording_service">Услуга за запис</string>
     <!-- Search -->
     <string name="search_global_description">Маршрути и маркери</string>
