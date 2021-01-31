@@ -24,7 +24,7 @@ public class SensorDataCyclingTest {
         current.compute(previous);
 
         // then
-        assertEquals(60, current.getCadence_rpm(), 0.01);
+        assertEquals(60, current.getValue(), 0.01);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class SensorDataCyclingTest {
         current.compute(previous);
 
         // then
-        assertEquals(33.53, current.getCadence_rpm(), 0.01);
+        assertEquals(33.53, current.getValue(), 0.01);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class SensorDataCyclingTest {
         current.compute(previous);
 
         // then
-        assertEquals(0, current.getCadence_rpm(), 0.01);
+        assertEquals(0, current.getValue(), 0.01);
     }
 
 
@@ -64,7 +64,7 @@ public class SensorDataCyclingTest {
         current.compute(previous);
 
         // then
-        assertFalse(current.hasCadence_rpm());
+        assertFalse(current.hasValue());
     }
 
     @Test
@@ -77,7 +77,7 @@ public class SensorDataCyclingTest {
         current.compute(previous);
 
         // then
-        assertEquals(60, current.getCadence_rpm(), 0.01);
+        assertEquals(60, current.getValue(), 0.01);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class SensorDataCyclingTest {
         current.compute(previous);
 
         // then
-        assertEquals(60, current.getCadence_rpm(), 0.01);
+        assertEquals(60, current.getValue(), 0.01);
     }
 
     @Test
@@ -103,7 +103,7 @@ public class SensorDataCyclingTest {
         current.compute(previous, 2150);
 
         // then
-        assertEquals(1.20, current.getSpeed_mps(), 0.01);
+        assertEquals(1.20, current.getValue(), 0.01);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class SensorDataCyclingTest {
         current.compute(previous, 2000);
 
         // then
-        assertEquals(2, current.getSpeed_mps(), 0.01);
+        assertEquals(2, current.getValue(), 0.01);
     }
 
     @Test

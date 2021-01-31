@@ -313,5 +313,14 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/stats_elevation_barrier" />
 
+        <!-- Sensors data -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/stats_sensors_recycler_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@id/guideline3"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/stats_end_horizontal_line" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

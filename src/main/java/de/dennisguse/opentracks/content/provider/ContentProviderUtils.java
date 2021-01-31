@@ -44,6 +44,7 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
+import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.UUIDUtils;
@@ -834,5 +835,33 @@ public class ContentProviderUtils {
 
     public static String[] parseTrackIdsFromUri(Uri url) {
         return TextUtils.split(url.getLastPathSegment(), ID_SEPARATOR);
+    }
+
+    public SensorStatistics getSensorStats(Track.Id trackId) {
+        if (trackId == null) {
+            return null;
+        }
+        String[] projection = {
+                "MAX(" + TrackPointsColumns.SENSOR_HEARTRATE + ") max_hr",
+                "AVG(" + TrackPointsColumns.SENSOR_HEARTRATE + ") avg_hr",
+                "MAX(" + TrackPointsColumns.SENSOR_CADENCE + ") max_cadence",
+                "AVG(" + TrackPointsColumns.SENSOR_CADENCE + ") avg_cadence",
+                "AVG(" + TrackPointsColumns.SENSOR_POWER + ") avg_power"
+        };
+        String selection = TrackPointsColumns.TRACKID + "=?";
+        String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
+        SensorStatistics sensorStatistics = null;
+        try (Cursor cursor = getTrackPointCursor(projection, selection, selectionArgs, null)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                sensorStatistics = new SensorStatistics(
+                        !cursor.isNull(cursor.getColumnIndexOrThrow("max_hr")) ? cursor.getFloat(cursor.getColumnIndexOrThrow("max_hr")) : null,
+                        !cursor.isNull(cursor.getColumnIndexOrThrow("avg_hr")) ? cursor.getFloat(cursor.getColumnIndexOrThrow("avg_hr")) : null,
+                        !cursor.isNull(cursor.getColumnIndexOrThrow("max_cadence")) ? cursor.getFloat(cursor.getColumnIndexOrThrow("max_cadence")) : null,
+                        !cursor.isNull(cursor.getColumnIndexOrThrow("avg_cadence")) ? cursor.getFloat(cursor.getColumnIndexOrThrow("avg_cadence")) : null,
+                        !cursor.isNull(cursor.getColumnIndexOrThrow("avg_power")) ? cursor.getFloat(cursor.getColumnIndexOrThrow("avg_power")) : null
+                );
+            }
+        }
+        return sensorStatistics;
     }
 }

@@ -50,19 +50,19 @@ public final class SensorDataSet {
 
     public void fillTrackPoint(TrackPoint trackPoint) {
         if (heartRate != null) {
-            trackPoint.setHeartRate_bpm(heartRate.getHeartRate_bpm());
+            trackPoint.setHeartRate_bpm(heartRate.getValue());
         }
 
-        if (cyclingCadence != null && cyclingCadence.hasCadence_rpm()) {
-            trackPoint.setCyclingCadence_rpm(cyclingCadence.getCadence_rpm());
+        if (cyclingCadence != null && cyclingCadence.hasValue()) {
+            trackPoint.setCyclingCadence_rpm(cyclingCadence.getValue());
         }
 
-        if (cyclingSpeed != null && cyclingSpeed.hasSpeed_mps()) {
-            trackPoint.setSpeed(cyclingSpeed.getSpeed_mps());
+        if (cyclingSpeed != null && cyclingSpeed.hasValue()) {
+            trackPoint.setSpeed(cyclingSpeed.getValue());
         }
 
-        if (cyclingPower != null && cyclingPower.hasPower_w()) {
-            trackPoint.setPower(cyclingPower.getPower_w());
+        if (cyclingPower != null && cyclingPower.hasValue()) {
+            trackPoint.setPower(cyclingPower.getValue());
         }
     }
 
