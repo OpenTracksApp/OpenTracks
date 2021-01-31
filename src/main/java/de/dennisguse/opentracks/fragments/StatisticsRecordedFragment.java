@@ -27,15 +27,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.adapters.SensorsAdapter;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.databinding.StatisticsRecordedBinding;
+import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
+import de.dennisguse.opentracks.viewmodels.SensorDataModel;
 
 /**
  * A fragment to display track statistics to the user for a recorded {@link Track}.
@@ -49,6 +57,8 @@ public class StatisticsRecordedFragment extends Fragment {
     private static final String TRACK_ID_KEY = "trackId";
 
     private TrackStatistics trackStatistics;
+    private SensorStatistics sensorStatistics;
+    private SensorsAdapter sensorsAdapter;
     private String category = "";
     private Track.Id trackId;
     private ContentProviderUtils contentProviderUtils;
@@ -67,12 +77,6 @@ public class StatisticsRecordedFragment extends Fragment {
         }
     };
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        viewBinding = StatisticsRecordedBinding.inflate(inflater, container, false);
-        return viewBinding.getRoot();
-    }
-
     public static StatisticsRecordedFragment newInstance(Track.Id trackId) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(TRACK_ID_KEY, trackId);
@@ -80,6 +84,22 @@ public class StatisticsRecordedFragment extends Fragment {
         StatisticsRecordedFragment fragment = new StatisticsRecordedFragment();
         fragment.setArguments(bundle);
         return fragment;
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        viewBinding = StatisticsRecordedBinding.inflate(inflater, container, false);
+        return viewBinding.getRoot();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        sensorsAdapter = new SensorsAdapter(getContext());
+        RecyclerView sensorsRecyclerView = viewBinding.statsSensorsRecyclerView;
+        sensorsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        sensorsRecyclerView.setAdapter(sensorsAdapter);
     }
 
     @Override
@@ -112,8 +132,10 @@ public class StatisticsRecordedFragment extends Fragment {
                 if (isResumed()) {
                     Track track = contentProviderUtils.getTrack(trackId);
                     trackStatistics = track != null ? track.getTrackStatistics() : null;
+                    sensorStatistics = contentProviderUtils.getSensorStats(trackId);
                     category = track != null ? track.getCategory() : "";
                     updateUI();
+                    updateSensorUI();
                 }
             });
         }
@@ -194,6 +216,28 @@ public class StatisticsRecordedFragment extends Fragment {
             parts = StringUtils.formatElevation(getContext(), elevationLoss_m, metricUnits);
             viewBinding.statsElevationLossValue.setText(parts.first);
             viewBinding.statsElevationLossUnit.setText(parts.second);
+        }
+    }
+
+    private void updateSensorUI() {
+        if (sensorStatistics == null) {
+            return;
+        }
+
+        List<SensorDataModel> sensorDataList = new ArrayList<>();
+        if (sensorStatistics.hasHeartRate()) {
+            sensorDataList.add(new SensorDataModel(R.string.sensor_state_heart_rate_max, R.string.sensor_unit_beats_per_minute, sensorStatistics.getMaxHeartRate()));
+            sensorDataList.add(new SensorDataModel(R.string.sensor_state_heart_rate_avg, R.string.sensor_unit_beats_per_minute, sensorStatistics.getAvgHeartRate()));
+        }
+        if (sensorStatistics.hasCadence()) {
+            sensorDataList.add(new SensorDataModel(R.string.sensor_state_cadence_max, R.string.sensor_unit_rounds_per_minute, sensorStatistics.getMaxCadence()));
+            sensorDataList.add(new SensorDataModel(R.string.sensor_state_cadence_avg, R.string.sensor_unit_rounds_per_minute, sensorStatistics.getAvgCadence()));
+        }
+        if (sensorStatistics.hasPower()) {
+            sensorDataList.add(new SensorDataModel(R.string.sensor_state_power_avg, R.string.sensor_unit_power, sensorStatistics.getAvgPower()));
+        }
+        if (sensorDataList.size() > 0) {
+            sensorsAdapter.swapData(sensorDataList);
         }
     }
 }

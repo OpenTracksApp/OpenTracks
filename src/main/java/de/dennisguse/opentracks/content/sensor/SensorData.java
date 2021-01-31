@@ -8,7 +8,9 @@ import java.time.Instant;
 
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 
-public class SensorData {
+public class SensorData<T> {
+
+    protected T value;
 
     private final String sensorAddress;
     private final String sensorName;
@@ -44,6 +46,17 @@ public class SensorData {
         return sensorName != null ? sensorName : sensorAddress;
     }
 
+    public boolean hasValue() {
+        return value != null;
+    }
+
+    public T getValue() {
+        return value;
+    }
+
+    /**
+     * Is the data recent considering the current time.
+     */
     public boolean isRecent() {
         return Instant.now().isBefore(timestamp_ms.plus(BluetoothRemoteSensorManager.MAX_SENSOR_DATE_SET_AGE_MS));
     }

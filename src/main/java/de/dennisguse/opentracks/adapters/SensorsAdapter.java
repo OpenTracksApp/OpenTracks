@@ -1,7 +1,6 @@
 package de.dennisguse.opentracks.adapters;
 
 import android.content.Context;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,19 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.sensor.SensorData;
-import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
-import de.dennisguse.opentracks.content.sensor.SensorDataCyclingPower;
-import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
-import de.dennisguse.opentracks.util.StringUtils;
+import de.dennisguse.opentracks.viewmodels.SensorDataModel;
 
 public class SensorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public static final int HEART_RATE_TYPE = 0;
-    public static final int CADENCE_TYPE = 1;
-    public static final int POWER_TYPE = 2;
-
-    private List<Pair<Integer, SensorData>> sensorDataList;
+    private List<SensorDataModel> sensorDataList;
     private final Context context;
 
     public SensorsAdapter(Context context) {
@@ -42,9 +33,8 @@ public class SensorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         SensorsAdapter.ViewHolder viewHolder = (SensorsAdapter.ViewHolder) holder;
-        int type = sensorDataList.get(position).first;
-        SensorData sensorData = sensorDataList.get(position).second;
-        viewHolder.setData(sensorData, type);
+        SensorDataModel sensorDataModel = sensorDataList.get(position);
+        viewHolder.setData(sensorDataModel);
     }
 
     @Override
@@ -56,12 +46,7 @@ public class SensorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return sensorDataList.get(position).first;
-    }
-
-    public List<Pair<Integer, SensorData>> swapData(List<Pair<Integer, SensorData>> data) {
+    public List<SensorDataModel> swapData(List<SensorDataModel> data) {
         if (sensorDataList == data) {
             return null;
         }
@@ -89,70 +74,18 @@ public class SensorsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             unit = itemView.findViewById(R.id.stats_sensor_unit);
         }
 
-        public void setData(SensorData sensorData, int type) {
-            switch (type) {
-                case HEART_RATE_TYPE:
-                    setHeartRateSensorData((SensorDataHeartRate) sensorData);
-                    break;
-                case CADENCE_TYPE:
-                    setCadenceSensorData((SensorDataCycling.Cadence) sensorData);
-                    break;
-                case POWER_TYPE:
-                    setPowerSensorData((SensorDataCyclingPower) sensorData);
-                    break;
-                default:
-                    throw new RuntimeException("Unknown sensor type");
-            }
-        }
+        public void setData(SensorDataModel sensorDataModel) {
+            String sensorName = sensorDataModel.getSensorName();
+            String sensorValue = sensorDataModel.hasValue() ? sensorDataModel.getSensorValue() : context.getString(R.string.value_unknown);
 
-        private void setHeartRateSensorData(SensorDataHeartRate data) {
-            String sensorValue = context.getString(R.string.value_unknown);
-            String sensorName = context.getString(R.string.value_unknown);
-            if (data != null) {
-                sensorName = data.getSensorNameOrAddress();
-                if (data.hasHeartRate_bpm() && data.isRecent()) {
-                    sensorValue = StringUtils.formatDecimal(data.getHeartRate_bpm(), 0);
-                }
+            this.label.setText(context.getString(sensorDataModel.getLabelId()));
+            if (sensorName == null) {
+                this.sensorValue.setVisibility(View.GONE);
+            } else {
+                this.sensorValue.setText(sensorName);
             }
-
-            this.label.setText(context.getString(R.string.sensor_state_heart_rate));
-            this.sensorValue.setText(sensorName);
             this.value.setText(sensorValue);
-            this.unit.setText(R.string.sensor_unit_beats_per_minute);
-        }
-
-        private void setCadenceSensorData(SensorDataCycling.Cadence data) {
-            String sensorValue = context.getString(R.string.value_unknown);
-            String sensorName = context.getString(R.string.value_unknown);
-            if (data != null) {
-                sensorName = data.getSensorNameOrAddress();
-
-                if (data.hasCadence_rpm() && data.isRecent()) {
-                    sensorValue = StringUtils.formatDecimal(data.getCadence_rpm(), 0);
-                }
-            }
-
-            this.label.setText(context.getString(R.string.sensor_state_cadence));
-            this.sensorValue.setText(sensorName);
-            this.value.setText(sensorValue);
-            this.unit.setText(R.string.sensor_unit_rounds_per_minute);
-        }
-
-        private void setPowerSensorData(SensorDataCyclingPower data) {
-            String sensorValue = context.getString(R.string.value_unknown);
-            String sensorName = context.getString(R.string.value_unknown);
-            if (data != null) {
-                sensorName = data.getSensorNameOrAddress();
-
-                if (data.hasPower_w() && data.isRecent()) {
-                    sensorValue = StringUtils.formatDecimal(data.getPower_w(), 0);
-                }
-            }
-
-            this.label.setText(context.getString(R.string.sensor_state_power));
-            this.sensorValue.setText(sensorName);
-            this.value.setText(sensorValue);
-            this.unit.setText(R.string.sensor_unit_power);
+            this.unit.setText(context.getString(sensorDataModel.getUnitId()));
         }
     }
 }

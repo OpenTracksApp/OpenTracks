@@ -360,11 +360,16 @@ limitations under the License.
     <!-- Sensor State -->
     <string name="sensor_state_battery">Battery level</string>
     <string name="sensor_state_cadence">Cadence</string>
+    <string name="sensor_state_cadence_avg">Avg Cadence</string>
+    <string name="sensor_state_cadence_max">Max Cadence</string>
     <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_disconnected">Disconnected</string>
     <string name="sensor_state_heart_rate">Heart rate</string>
+    <string name="sensor_state_heart_rate_avg">Avg Heart rate</string>
+    <string name="sensor_state_heart_rate_max">Max Heart rate</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Power</string>
+    <string name="sensor_state_power_avg">Avg Power</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_not_known">Sensor %1$s is unknown. Please check the settings.</string>
     <string name="sensor_could_not_scan">Could not scan for Bluetooth devices (error %1$i).</string>

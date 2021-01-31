@@ -38,6 +38,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
+import de.dennisguse.opentracks.viewmodels.SensorDataModel;
 
 /**
  * A fragment to display track statistics to the user for a currently recording {@link Track}.
@@ -272,15 +273,15 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         } else {
             SensorDataSet sensorDataSet = trackRecordingService.getSensorData();
             if (sensorDataSet != null) {
-                List<Pair<Integer, SensorData>> sensorDataList = new ArrayList<>();
+                List<SensorDataModel> sensorDataList = new ArrayList<>();
                 if (sensorDataSet.getHeartRate() != null) {
-                    sensorDataList.add(new Pair<>(SensorsAdapter.HEART_RATE_TYPE, sensorDataSet.getHeartRate()));
+                    sensorDataList.add(new SensorDataModel(sensorDataSet.getHeartRate()));
                 }
                 if (sensorDataSet.getCyclingCadence() != null) {
-                    sensorDataList.add(new Pair<>(SensorsAdapter.CADENCE_TYPE, sensorDataSet.getCyclingCadence()));
+                    sensorDataList.add(new SensorDataModel(sensorDataSet.getCyclingCadence()));
                 }
                 if(sensorDataSet.getCyclingPower() != null) {
-                    sensorDataList.add(new Pair<>(SensorsAdapter.POWER_TYPE, sensorDataSet.getCyclingPower()));
+                    sensorDataList.add(new SensorDataModel(sensorDataSet.getCyclingPower()));
                 }
                 sensorsAdapter.swapData(sensorDataList);
                 setSpeedSensorData(sensorDataSet);
@@ -333,8 +334,8 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         if (sensorDataSet != null && sensorDataSet.getCyclingSpeed() != null) {
             SensorDataCycling.Speed data = sensorDataSet.getCyclingSpeed();
 
-            if (data.hasSpeed_mps() && data.isRecent()) {
-                setSpeed(data.getSpeed_mps());
+            if (data.hasValue() && data.isRecent()) {
+                setSpeed(data.getValue());
             }
         }
     }
