@@ -556,6 +556,9 @@ public class ContentProviderUtils {
         if (!cursor.isNull(indexes.sensorCadenceIndex)) {
             trackPoint.setCyclingCadence_rpm(cursor.getFloat(indexes.sensorCadenceIndex));
         }
+        if (!cursor.isNull(indexes.sensorDistanceIndex)) {
+            trackPoint.setSensorDistance(cursor.getFloat(indexes.sensorDistanceIndex));
+        }
         if (!cursor.isNull(indexes.sensorPowerIndex)) {
             trackPoint.setPower(cursor.getFloat(indexes.sensorPowerIndex));
         }
@@ -725,6 +728,9 @@ public class ContentProviderUtils {
         }
         if (trackPoint.hasCyclingCadence()) {
             values.put(TrackPointsColumns.SENSOR_CADENCE, trackPoint.getCyclingCadence_rpm());
+        }
+        if (trackPoint.hasSensorDistance()) {
+            values.put(TrackPointsColumns.SENSOR_DISTANCE, trackPoint.getSensorDistance());
         }
         if (trackPoint.hasPower()) {
             values.put(TrackPointsColumns.SENSOR_POWER, trackPoint.getPower());

@@ -90,6 +90,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     protected String uuid;
     protected String gain;
     protected String loss;
+    protected String distance;
 
     // The current track data
     private TrackData trackData;
@@ -136,9 +137,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         }
     }
 
-    /**
-     * On file end.
-     */
     protected void onFileEnd() {
         // Add markers to the last imported track
         int size = trackIds.size();
@@ -371,7 +369,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                      * GPS points tend to have some inherent imprecision, speed and bearing will likely be off, so the statistics for things like max speed will also be off.
                      */
                     if (trackPoint.hasLocation() && trackData.lastLocationInCurrentSegment.hasLocation()) {
-                        float speed = trackData.lastLocationInCurrentSegment.distanceTo(trackPoint) / timeDifference.toMillis();
+                        float speed = trackData.lastLocationInCurrentSegment.distanceToPrevious(trackPoint) / timeDifference.toMillis();
                         trackPoint.setSpeed(speed);
                     }
                 }
@@ -380,7 +378,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                 trackPoint.setBearing(trackData.lastLocationInCurrentSegment.bearingTo(trackPoint));
 
                 long maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(context);
-                double distanceToLastTrackLocation = trackPoint.distanceTo(trackData.lastLocationInCurrentSegment);
+                double distanceToLastTrackLocation = trackPoint.distanceToPrevious(trackData.lastLocationInCurrentSegment);
                 if (distanceToLastTrackLocation > maxRecordingDistance) {
                     trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
                 }
@@ -490,6 +488,13 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                 trackPoint.setElevationLoss(Float.parseFloat(loss));
             } catch (Exception e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse elevation loss: %s", loss)), e);
+            }
+        }
+        if (distance != null) {
+            try {
+                trackPoint.setSensorDistance(Float.parseFloat(distance));
+            } catch (Exception e) {
+                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse distance: %s", distance)), e);
             }
         }
 

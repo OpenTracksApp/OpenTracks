@@ -53,13 +53,15 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
 
     private final BluetoothAdapter bluetoothAdapter;
     private final Context context;
-    private final SharedPreferences sharedPreferences;
 
     private boolean started = false;
 
+    private final SharedPreferences sharedPreferences;
+    private int preferenceWheelCircumference;
+
     private final BluetoothConnectionManager.HeartRate heartRate = new BluetoothConnectionManager.HeartRate(this);
     private final BluetoothConnectionManager.CyclingCadence cyclingCadence = new BluetoothConnectionManager.CyclingCadence(this);
-    private final BluetoothConnectionManager.CyclingSpeed cyclingSpeed = new BluetoothConnectionManager.CyclingSpeed(this);
+    private final BluetoothConnectionManager.CyclingDistanceSpeed cyclingSpeed = new BluetoothConnectionManager.CyclingDistanceSpeed(this);
     private final BluetoothConnectionManager.CyclingPower cyclingPower = new BluetoothConnectionManager.CyclingPower(this);
 
     private final SensorDataSet sensorDataSet = new SensorDataSet();
@@ -70,25 +72,30 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
             if (!started) return;
 
             if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_heart_rate_key, key)) {
-                String address = PreferencesUtils.getBluetoothHeartRateSensorAddress(context);
+                String address = PreferencesUtils.getBluetoothHeartRateSensorAddress(sharedPreferences, context);
                 connect(heartRate, address);
             }
 
             if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_cycling_cadence_key, key)) {
-                String address = PreferencesUtils.getBluetoothCyclingCadenceSensorAddress(context);
+                String address = PreferencesUtils.getBluetoothCyclingCadenceSensorAddress(sharedPreferences, context);
                 connect(cyclingCadence, address);
             }
 
             if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_cycling_cadence_key, key)) {
-                String address = PreferencesUtils.getBluetoothCyclingSpeedSensorAddress(context);
+                String address = PreferencesUtils.getBluetoothCyclingSpeedSensorAddress(sharedPreferences, context);
 
                 connect(cyclingSpeed, address);
             }
 
             if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_cycling_power_key, key)) {
-                String address = PreferencesUtils.getBluetoothCyclingPowerSensorAddress(context);
+                String address = PreferencesUtils.getBluetoothCyclingPowerSensorAddress(sharedPreferences, context);
 
                 connect(cyclingPower, address);
+            }
+
+            if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_cycling_power_key, key)) {
+                preferenceWheelCircumference = PreferencesUtils.getWheelCircumference(sharedPreferences, context);
+
             }
         }
     };
@@ -104,7 +111,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
         //Trigger connection startup
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
     }
 
     public synchronized void stop() {
@@ -155,11 +162,15 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         return sensorDataSet;
     }
 
+    public void reset() {
+        sensorDataSet.reset();
+    }
+
     @Override
-    public synchronized void onChanged(SensorData sensorData) {
+    public synchronized void onChanged(SensorData<?> sensorData) {
         if (sensorData instanceof SensorDataCycling.Cadence) {
             SensorDataCycling.Cadence previous = sensorDataSet.getCyclingCadence();
-            Log.d(TAG, "previous " + previous + "; current" + sensorData);
+            Log.d(TAG, "Previous: " + previous + "; current: " + sensorData);
 
             if (sensorData.equals(previous)) {
                 Log.d(TAG, "onChanged: cadence data repeated.");
@@ -167,21 +178,22 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
             }
             ((SensorDataCycling.Cadence) sensorData).compute(previous);
         }
-        if (sensorData instanceof SensorDataCycling.Speed) {
-            SensorDataCycling.Speed previous = sensorDataSet.getCyclingSpeed();
-            Log.d(TAG, "previous " + previous + "; current" + sensorData);
+        if (sensorData instanceof SensorDataCycling.DistanceSpeed) {
+            SensorDataCycling.DistanceSpeed previous = sensorDataSet.getCyclingDistanceSpeed();
+            Log.d(TAG, "Previous: " + previous + "; Current" + sensorData);
             if (sensorData.equals(previous)) {
                 Log.d(TAG, "onChanged: speed data repeated.");
                 return;
             }
-            ((SensorDataCycling.Speed) sensorData).compute(previous, PreferencesUtils.getWheelCircumference(context));
+
+            ((SensorDataCycling.DistanceSpeed) sensorData).compute(previous, preferenceWheelCircumference);
         }
 
         sensorDataSet.set(sensorData);
     }
 
     @Override
-    public void onDisconnecting(SensorData sensorData) {
+    public void onDisconnecting(SensorData<?> sensorData) {
         sensorDataSet.remove(sensorData);
     }
 }

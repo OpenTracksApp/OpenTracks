@@ -101,11 +101,11 @@ public abstract class BluetoothConnectionManager {
 
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic) {
-            String sensorName = gatt.getDevice().getName();
-            Log.d(TAG, "Received data from " + sensorName);
+            Log.d(TAG, "Received data from " + gatt.getDevice().getAddress());
 
-            SensorData sensorData = parsePayload(sensorName, gatt.getDevice().getAddress(), characteristic);
+            SensorData<?> sensorData = parsePayload(gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
             if (sensorData != null) {
+                Log.d(TAG, "Decoded data from " + gatt.getDevice().getAddress() + ": " + sensorData);
                 observer.onChanged(sensorData);
             }
         }
@@ -125,7 +125,7 @@ public abstract class BluetoothConnectionManager {
         Log.d(TAG, "Connecting to: " + device);
 
         bluetoothGatt = device.connectGatt(context, true, connectCallback);
-        SensorData sensorData = createEmptySensorData(bluetoothGatt.getDevice().getAddress());
+        SensorData<?> sensorData = createEmptySensorData(bluetoothGatt.getDevice().getAddress());
         observer.onChanged(sensorData);
     }
 
@@ -148,12 +148,12 @@ public abstract class BluetoothConnectionManager {
         return address.equals(bluetoothGatt.getDevice().getAddress());
     }
 
-    protected abstract SensorData createEmptySensorData(String address);
+    protected abstract SensorData<?> createEmptySensorData(String address);
 
     /**
      * @return null if data could not be parsed.
      */
-    protected abstract SensorData parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic);
+    protected abstract SensorData<?> parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic);
 
     public static class HeartRate extends BluetoothConnectionManager {
 
@@ -162,7 +162,7 @@ public abstract class BluetoothConnectionManager {
         }
 
         @Override
-        protected SensorData createEmptySensorData(String address) {
+        protected SensorDataHeartRate createEmptySensorData(String address) {
             return new SensorDataHeartRate(address);
         }
 
@@ -181,7 +181,7 @@ public abstract class BluetoothConnectionManager {
         }
 
         @Override
-        protected SensorData createEmptySensorData(String address) {
+        protected SensorDataCycling.Cadence createEmptySensorData(String address) {
             return new SensorDataCycling.Cadence(address);
         }
 
@@ -197,30 +197,30 @@ public abstract class BluetoothConnectionManager {
             }
 
             //Workaround for Wahoo CADENCE: this sensor reports speed (instead of cadence)
-            if (cadenceAndSpeed.getSpeed() != null) {
-                return new SensorDataCycling.Cadence(cadenceAndSpeed.getSpeed());
+            if (cadenceAndSpeed.getDistanceSpeed() != null) {
+                return new SensorDataCycling.Cadence(cadenceAndSpeed.getDistanceSpeed());
             }
 
             return null;
         }
     }
 
-    public static class CyclingSpeed extends BluetoothConnectionManager {
+    public static class CyclingDistanceSpeed extends BluetoothConnectionManager {
 
-        CyclingSpeed(SensorDataObserver observer) {
+        CyclingDistanceSpeed(SensorDataObserver observer) {
             super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPEED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
         }
 
         @Override
-        protected SensorData createEmptySensorData(String address) {
-            return new SensorDataCycling.Speed(address);
+        protected SensorDataCycling.DistanceSpeed createEmptySensorData(String address) {
+            return new SensorDataCycling.DistanceSpeed(address);
         }
 
         @Override
-        protected SensorDataCycling.Speed parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
+        protected SensorDataCycling.DistanceSpeed parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
             SensorDataCycling.CadenceAndSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);
             if (cadenceAndSpeed != null) {
-                return cadenceAndSpeed.getSpeed();
+                return cadenceAndSpeed.getDistanceSpeed();
             }
             return null;
         }
@@ -233,7 +233,7 @@ public abstract class BluetoothConnectionManager {
         }
 
         @Override
-        protected SensorData createEmptySensorData(String address) {
+        protected SensorDataCyclingPower createEmptySensorData(String address) {
             return new SensorDataCyclingPower(address);
         }
 
@@ -247,8 +247,8 @@ public abstract class BluetoothConnectionManager {
 
     interface SensorDataObserver {
 
-        void onChanged(SensorData sensorData);
+        void onChanged(SensorData<?> sensorData);
 
-        void onDisconnecting(SensorData sensorData);
+        void onDisconnecting(SensorData<?> sensorData);
     }
 }

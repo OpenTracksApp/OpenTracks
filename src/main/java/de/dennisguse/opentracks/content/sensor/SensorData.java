@@ -55,10 +55,22 @@ public abstract class SensorData<T> {
     }
 
     /**
+     * Reset long term aggregated values (more than derived from previous SensorData). e.g. overall distance.
+     */
+    public void reset() {
+    }
+
+    /**
      * Is the data recent considering the current time.
      */
     public boolean isRecent() {
         return Instant.now()
                 .isBefore(time.plus(BluetoothRemoteSensorManager.MAX_SENSOR_DATE_SET_AGE_MS));
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "sensorAddress='" + sensorAddress;
     }
 }

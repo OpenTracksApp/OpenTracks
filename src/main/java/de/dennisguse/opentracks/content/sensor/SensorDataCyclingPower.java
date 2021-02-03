@@ -16,6 +16,6 @@ public class SensorDataCyclingPower extends SensorData<Float> {
     @NonNull
     @Override
     public String toString() {
-        return "power=" + value;
+        return super.toString() + " power=" + value;
     }
 }

@@ -60,6 +60,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
 
     private static final String TAG_EXTENSION_GAIN = "opentracks:gain";
     private static final String TAG_EXTENSION_LOSS = "opentracks:loss";
+    private static final String TAG_EXTENSION_DISTANCE = "opentracks:distance";
 
     /**
      * Constructor.
@@ -169,6 +170,11 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
             case TAG_EXTENSION_LOSS:
                 if (content != null) {
                     loss = content.trim();
+                }
+                break;
+            case TAG_EXTENSION_DISTANCE:
+                if (content != null) {
+                    distance = content.trim();
                 }
                 break;
         }

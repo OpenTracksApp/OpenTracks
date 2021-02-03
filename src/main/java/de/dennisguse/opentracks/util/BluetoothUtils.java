@@ -126,12 +126,12 @@ public class BluetoothUtils {
             cadence = new SensorDataCycling.Cadence(address, sensorName, crankCount, crankTime);
         }
 
-        SensorDataCycling.Speed speed = null;
+        SensorDataCycling.DistanceSpeed speed = null;
         if (hasWheel && valueLength - index >= 4) {
             int wheelCount = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index);
             index += 2;
             int wheelTime = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index); // 1/1024s
-            speed = new SensorDataCycling.Speed(address, sensorName, wheelCount, wheelTime);
+            speed = new SensorDataCycling.DistanceSpeed(address, sensorName, wheelCount, wheelTime);
         }
 
         return new SensorDataCycling.CadenceAndSpeed(address, sensorName, cadence, speed);

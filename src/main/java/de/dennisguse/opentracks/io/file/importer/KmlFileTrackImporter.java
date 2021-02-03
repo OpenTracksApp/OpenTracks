@@ -65,6 +65,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     private String extendedDataType;
     private final ArrayList<TrackPoint> trackPoints = new ArrayList<>();
     private final ArrayList<Float> speedList = new ArrayList<>();
+    private final ArrayList<Float> distanceList = new ArrayList<>();
     private final ArrayList<Float> cadenceList = new ArrayList<>();
     private final ArrayList<Float> heartRateList = new ArrayList<>();
     private final ArrayList<Float> powerList = new ArrayList<>();
@@ -215,6 +216,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         super.onTrackSegmentStart();
         trackPoints.clear();
         speedList.clear();
+        distanceList.clear();
         heartRateList.clear();
         cadenceList.clear();
         powerList.clear();
@@ -230,6 +232,9 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
 
             if (i < speedList.size()) {
                 trackPoint.setSpeed(speedList.get(i));
+            }
+            if (i < distanceList.size()) {
+                trackPoint.setSensorDistance(distanceList.get(i));
             }
             if (i < heartRateList.size()) {
                 trackPoint.setHeartRate_bpm(heartRateList.get(i));
@@ -308,6 +313,9 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         switch (extendedDataType) {
             case KMLTrackExporter.EXTENDED_DATA_TYPE_SPEED:
                 speedList.add(value);
+                break;
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_DISTANCE:
+                distanceList.add(value);
                 break;
             case KMLTrackExporter.EXTENDED_DATA_TYPE_POWER:
                 powerList.add(value);

@@ -60,6 +60,7 @@ public class KMLTrackExporter implements TrackExporter {
     private static final String SCHEMA_ID = "schema";
 
     public static final String EXTENDED_DATA_TYPE_SPEED = "speed";
+    public static final String EXTENDED_DATA_TYPE_DISTANCE = "distance";
     public static final String EXTENDED_DATA_TYPE_CADENCE = "cadence";
     public static final String EXTENDED_DATA_TYPE_HEART_RATE = "heart_rate";
     public static final String EXTENDED_DATA_TYPE_POWER = "power";
@@ -80,6 +81,7 @@ public class KMLTrackExporter implements TrackExporter {
 
     private PrintWriter printWriter;
     private final List<Float> speedList = new ArrayList<>();
+    private final List<Float> distanceList = new ArrayList<>();
     private final List<Float> powerList = new ArrayList<>();
     private final List<Float> cadenceList = new ArrayList<>();
     private final List<Float> heartRateList = new ArrayList<>();
@@ -355,6 +357,7 @@ public class KMLTrackExporter implements TrackExporter {
         if (printWriter != null) {
             printWriter.println("<gx:Track>");
             speedList.clear();
+            distanceList.clear();
             powerList.clear();
             cadenceList.clear();
             heartRateList.clear();
@@ -372,6 +375,9 @@ public class KMLTrackExporter implements TrackExporter {
                 writeSimpleArrayData(speedList, EXTENDED_DATA_TYPE_SPEED);
             }
             if (exportSensorData) {
+                if (distanceList.stream().anyMatch(Objects::nonNull)) {
+                    writeSimpleArrayData(distanceList, EXTENDED_DATA_TYPE_DISTANCE);
+                }
                 if (powerList.stream().anyMatch(Objects::nonNull)) {
                     writeSimpleArrayData(powerList, EXTENDED_DATA_TYPE_POWER);
                 }
@@ -409,6 +415,7 @@ public class KMLTrackExporter implements TrackExporter {
             speedList.add(trackPoint.hasSpeed() ? trackPoint.getSpeed() : null);
 
             if (exportSensorData) {
+                distanceList.add(trackPoint.hasSensorDistance() ? trackPoint.getSensorDistance() : null);
                 heartRateList.add(trackPoint.hasHeartRate() ? trackPoint.getHeartRate_bpm() : null);
                 cadenceList.add(trackPoint.hasCyclingCadence() ? trackPoint.getCyclingCadence_rpm() : null);
                 powerList.add(trackPoint.hasPower() ? trackPoint.getPower() : null);

@@ -16,6 +16,6 @@ public class SensorDataHeartRate extends SensorData<Float> {
     @NonNull
     @Override
     public String toString() {
-        return "heart=" + value;
+        return super.toString() + " heart=" + value;
     }
 }

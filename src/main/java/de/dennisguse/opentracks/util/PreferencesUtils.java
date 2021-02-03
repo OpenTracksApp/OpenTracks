@@ -42,6 +42,7 @@ public class PreferencesUtils {
     private PreferencesUtils() {
     }
 
+    @Deprecated //Should only be used to get a sharedPreference for more than one interaction!
     public static SharedPreferences getSharedPreferences(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
@@ -128,16 +129,12 @@ public class PreferencesUtils {
         editor.apply();
     }
 
-    /**
-     * Gets an integer preference value.
-     *
-     * @param context      the context
-     * @param keyId        the key id
-     * @param defaultValue the default value
-     */
+    @Deprecated
     private static int getInt(Context context, int keyId, int defaultValue) {
-        SharedPreferences sharedPreferences = getSharedPreferences(context);
+        return getInt(context, getSharedPreferences(context), keyId, defaultValue);
+    }
 
+    private static int getInt(Context context, SharedPreferences sharedPreferences, int keyId, int defaultValue) {
         try {
             return sharedPreferences.getInt(getKey(context, keyId), defaultValue);
         } catch (ClassCastException e) {
@@ -259,31 +256,26 @@ public class PreferencesUtils {
         return getBluetoothSensorAddressNone(context).equals(currentValue);
     }
 
-    public static String getBluetoothHeartRateSensorAddress(Context context) {
-        return getString(context, R.string.settings_sensor_bluetooth_heart_rate_key, getBluetoothSensorAddressNone(context));
+    public static String getBluetoothHeartRateSensorAddress(SharedPreferences sharedPreferences, Context context) {
+        return getString(context, sharedPreferences, R.string.settings_sensor_bluetooth_heart_rate_key, getBluetoothSensorAddressNone(context));
     }
 
-    public static String getBluetoothCyclingCadenceSensorAddress(Context context) {
-        return getString(context, R.string.settings_sensor_bluetooth_cycling_cadence_key, getBluetoothSensorAddressNone(context));
+    public static String getBluetoothCyclingCadenceSensorAddress(SharedPreferences sharedPreferences, Context context) {
+        return getString(context, sharedPreferences, R.string.settings_sensor_bluetooth_cycling_cadence_key, getBluetoothSensorAddressNone(context));
     }
 
-    public static String getBluetoothCyclingSpeedSensorAddress(Context context) {
-        return getString(context, R.string.settings_sensor_bluetooth_cycling_speed_key, getBluetoothSensorAddressNone(context));
+    public static String getBluetoothCyclingSpeedSensorAddress(SharedPreferences sharedPreferences, Context context) {
+        return getString(context, sharedPreferences, R.string.settings_sensor_bluetooth_cycling_speed_key, getBluetoothSensorAddressNone(context));
     }
 
-    public static int getWheelCircumference(Context context) {
+    public static int getWheelCircumference(SharedPreferences sharedPreferences, Context context) {
         final int DEFAULT = Integer.parseInt(context.getResources().getString(R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_default));
-        return getInt(context, R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key, DEFAULT);
+        return getInt(context, sharedPreferences, R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key, DEFAULT);
     }
 
-    public static boolean isBluetoothCyclingPowerSensorAddressNone(Context context) {
-        return isBluetoothSensorAddressNone(context, getBluetoothCyclingPowerSensorAddress(context));
+    public static String getBluetoothCyclingPowerSensorAddress(SharedPreferences sharedPreferences, Context context) {
+        return getString(context, sharedPreferences, R.string.settings_sensor_bluetooth_cycling_power_key, getBluetoothSensorAddressNone(context));
     }
-
-    public static String getBluetoothCyclingPowerSensorAddress(Context context) {
-        return getString(context, R.string.settings_sensor_bluetooth_cycling_power_key, getBluetoothSensorAddressNone(context));
-    }
-
 
     public static boolean shouldShowStatsOnLockscreen(Context context) {
         final boolean STATS_SHOW_ON_LOCKSCREEN_DEFAULT = context.getResources().getBoolean(R.bool.stats_show_on_lockscreen_while_recording_default);

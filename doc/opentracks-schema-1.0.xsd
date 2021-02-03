@@ -1,8 +1,32 @@
 <?xml version="1.0"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
     targetNamespace="http://opentracksapp.com/xmlschemas/v1">
 
-    <xs:element name="trackuuid"
-        type="xs:string" />
+    <xsd:element name="trackuuid"
+        type="xsd:string">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                A unique track identifier stored as UUID.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
 
-</xs:schema>
+    <xsd:element name="loss"
+        type="xsd:float">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                The lost elevation in meters from the previous to the current TrackPoint.
+                Only used in GPX.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="gain"
+        type="xsd:string">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                The gained elevation in meters from the previous to the current TrackPoint.
+                Only used in GPX.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+</xsd:schema>

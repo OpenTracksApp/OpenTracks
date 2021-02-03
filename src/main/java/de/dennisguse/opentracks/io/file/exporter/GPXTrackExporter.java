@@ -49,6 +49,7 @@ public class GPXTrackExporter implements TrackExporter {
     private static final NumberFormat ELEVATION_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat COORDINATE_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat SPEED_FORMAT = NumberFormat.getInstance(Locale.US);
+    private static final NumberFormat DISTANCE_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat HEARTRATE_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat CADENCE_FORMAT = NumberFormat.getInstance(Locale.US);
 
@@ -307,6 +308,10 @@ public class GPXTrackExporter implements TrackExporter {
 
                 if (trackPoint.hasElevationLoss()) {
                     printWriter.println("<opentracks:loss>" + ELEVATION_FORMAT.format(trackPoint.getElevationLoss()) + "</opentracks:loss>");
+                }
+
+                if (trackPoint.hasSensorDistance()) {
+                    printWriter.println("<opentracks:distance>" + DISTANCE_FORMAT.format(trackPoint.getElevationLoss()) + "</opentracks:distance>");
                 }
 
                 printWriter.println("</gpxtpx:TrackPointExtension></extensions>");
