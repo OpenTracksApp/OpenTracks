@@ -103,10 +103,15 @@ public class TrackStatisticsUpdater {
     /**
      * Adds a trackPoint.
      *
-     * @param trackPoint           the trackPoint
-     * @param minRecordingDistance the min recording distance
+     * @param trackPoint     the trackPoint
+     * @param minGPSDistance the min recording distance
      */
-    public void addTrackPoint(TrackPoint trackPoint, int minRecordingDistance) {
+    public void addTrackPoint(TrackPoint trackPoint, int minGPSDistance) {
+        internalAddTrackPoint(trackPoint, minGPSDistance);
+        Log.d(TAG, this.toString());
+    }
+
+    private void internalAddTrackPoint(TrackPoint trackPoint, int minGPSDistance) {
         if (!trackInitialized) {
             trackStatistics.setStartTime(trackPoint.getTime());
             trackInitialized = true;
@@ -120,19 +125,26 @@ public class TrackStatisticsUpdater {
         currentSegment.setStopTime(trackPoint.getTime());
         currentSegment.setTotalTime(Duration.between(currentSegment.getStartTime(), trackPoint.getTime()));
 
-        if (trackPoint.isSegmentStart() || trackPoint.isSegmentEnd()) {
-            if (trackPoint.isSegmentEnd()) {
-                if (lastTrackPoint != null && lastMovingTrackPoint != null && lastTrackPoint != lastMovingTrackPoint) {
-                    currentSegment.addTotalDistance(lastMovingTrackPoint.distanceTo(lastTrackPoint));
-                }
-            }
-            trackStatistics.merge(currentSegment);
-            currentSegment.reset(trackPoint.getTime());
+        if (trackPoint.isSegmentStart()) {
+            reset(trackPoint);
+            return;
+        }
 
-            lastTrackPoint = null;
-            lastMovingTrackPoint = null;
-            elevationBuffer_m.reset();
-            speedBuffer_ms.reset();
+        // Process sensor data
+        if (trackPoint.hasElevationGain()) {
+            currentSegment.addTotalElevationGain(trackPoint.getElevationGain());
+        }
+
+        if (trackPoint.hasElevationLoss()) {
+            currentSegment.addTotalElevationLoss(trackPoint.getElevationLoss());
+        }
+
+        if (trackPoint.hasSensorDistance()) {
+            currentSegment.addTotalDistance(trackPoint.getSensorDistance());
+        }
+
+        if (trackPoint.isSegmentEnd()) {
+            reset(trackPoint);
             return;
         }
 
@@ -141,38 +153,29 @@ public class TrackStatisticsUpdater {
             updateAbsoluteElevation(trackPoint.getAltitude());
         }
 
-        //Get elevation gain
-        if (trackPoint.hasElevationGain()) {
-            currentSegment.addTotalElevationGain(trackPoint.getElevationGain());
-            Log.d(TAG, "elevation gain: " + trackPoint.getElevationGain());
-        }
-
-        //Get elevation loss
-        if (trackPoint.hasElevationLoss()) {
-            currentSegment.addTotalElevationLoss(trackPoint.getElevationLoss());
-            Log.d(TAG, "elevation loss: " + trackPoint.getElevationLoss());
-        }
-
         if (lastTrackPoint == null || lastMovingTrackPoint == null) {
             lastTrackPoint = trackPoint;
             lastMovingTrackPoint = trackPoint;
             return;
         }
 
-        double movingDistance = lastMovingTrackPoint.distanceTo(trackPoint);
-        if (movingDistance < minRecordingDistance && !trackPoint.isMoving()) {
-            speedBuffer_ms.reset();
-            lastTrackPoint = trackPoint;
-            return;
+        if (!trackPoint.hasSensorDistance()) {
+            // GPS-based distance/speed
+            float movingDistance = lastMovingTrackPoint.distanceToPrevious(trackPoint);
+            if (movingDistance < minGPSDistance && !trackPoint.isMoving()) {
+                speedBuffer_ms.reset();
+                lastTrackPoint = trackPoint;
+                return;
+            }
+            // Update total distance
+            currentSegment.addTotalDistance(movingDistance);
         }
+
         Duration movingTime = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
         if (movingTime.isNegative()) {
             lastTrackPoint = trackPoint;
             return;
         }
-
-        // Update total distance
-        currentSegment.addTotalDistance(movingDistance);
 
         // Update moving time
         currentSegment.addMovingTime(movingTime);
@@ -184,6 +187,16 @@ public class TrackStatisticsUpdater {
 
         lastTrackPoint = trackPoint;
         lastMovingTrackPoint = trackPoint;
+    }
+
+    private void reset(TrackPoint trackPoint) {
+        trackStatistics.merge(currentSegment);
+        currentSegment.reset(trackPoint.getTime());
+
+        lastTrackPoint = null;
+        lastMovingTrackPoint = null;
+        elevationBuffer_m.reset();
+        speedBuffer_ms.reset();
     }
 
     public void addTrackPoint(TrackPointIterator iterator, int minRecordingDistance) {
@@ -224,20 +237,14 @@ public class TrackStatisticsUpdater {
 
     /**
      * Updates an elevation reading.
-     *
-     * @param elevation the elevation
-     * @return the difference
      */
-    @VisibleForTesting
-    private double updateAbsoluteElevation(double elevation) {
+    private void updateAbsoluteElevation(double elevation) {
         // Update elevation using the smoothed average
         double oldAverage = elevationBuffer_m.getAverage();
         elevationBuffer_m.setNext(elevation);
         double newAverage = elevationBuffer_m.getAverage();
 
         currentSegment.updateElevationExtremities(newAverage);
-
-        return newAverage - oldAverage;
     }
 
     private boolean isValidSpeed(@NonNull TrackPoint trackPoint, @NonNull TrackPoint lastTrackPoint) {
@@ -266,5 +273,12 @@ public class TrackStatisticsUpdater {
         }
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "TrackStatisticsUpdater{" +
+                "trackStatistics=" + trackStatistics +
+                '}';
     }
 }

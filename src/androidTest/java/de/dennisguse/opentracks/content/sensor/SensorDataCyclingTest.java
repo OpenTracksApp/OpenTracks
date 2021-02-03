@@ -96,34 +96,36 @@ public class SensorDataCyclingTest {
     @Test
     public void compute_speed() {
         // given
-        SensorDataCycling.Speed previous = new SensorDataCycling.Speed("sensorAddress", "sensorName", 1, 6184);
-        SensorDataCycling.Speed current = new SensorDataCycling.Speed("sensorAddress", "sensorName", 2, 8016);
+        SensorDataCycling.DistanceSpeed previous = new SensorDataCycling.DistanceSpeed("sensorAddress", "sensorName", 1, 6184);
+        SensorDataCycling.DistanceSpeed current = new SensorDataCycling.DistanceSpeed("sensorAddress", "sensorName", 2, 8016);
 
         // when
         current.compute(previous, 2150);
 
         // then
-        assertEquals(1.20, current.getValue(), 0.01);
+        assertEquals(1.20, current.getValue().distance_m, 2150);
+        assertEquals(1.20, current.getValue().speed_mps, 0.01);
     }
 
     @Test
     public void compute_speed_rollOverCount() {
         // given
-        SensorDataCycling.Speed previous = new SensorDataCycling.Speed("sensorAddress", "sensorName", UintUtils.UINT16_MAX - 1, 1024);
-        SensorDataCycling.Speed current = new SensorDataCycling.Speed("sensorAddress", "sensorName", 0, 2048);
+        SensorDataCycling.DistanceSpeed previous = new SensorDataCycling.DistanceSpeed("sensorAddress", "sensorName", UintUtils.UINT16_MAX - 1, 1024);
+        SensorDataCycling.DistanceSpeed current = new SensorDataCycling.DistanceSpeed("sensorAddress", "sensorName", 0, 2048);
 
         // when
         current.compute(previous, 2000);
 
         // then
-        assertEquals(2, current.getValue(), 0.01);
+        assertEquals(1.20, current.getValue().distance_m, 2000);
+        assertEquals(2, current.getValue().speed_mps, 0.01);
     }
 
     @Test
     public void equals_speed_with_no_data() {
         // given
-        SensorDataCycling.Speed previous = new SensorDataCycling.Speed("sensorAddress");
-        SensorDataCycling.Speed current = new SensorDataCycling.Speed("sensorAddress", "sensorName", 0, 2048);
+        SensorDataCycling.DistanceSpeed previous = new SensorDataCycling.DistanceSpeed("sensorAddress");
+        SensorDataCycling.DistanceSpeed current = new SensorDataCycling.DistanceSpeed("sensorAddress", "sensorName", 0, 2048);
 
         // when
         previous.toString();

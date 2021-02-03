@@ -50,6 +50,7 @@ public interface TrackPointsColumns extends BaseColumns {
     String BEARING = "bearing";
     String SENSOR_HEARTRATE = "sensor_heartrate";
     String SENSOR_CADENCE = "sensor_cadence";
+    String SENSOR_DISTANCE = "sensor_distance"; //DISTANCE from previous TrackPoint
     String SENSOR_POWER = "sensor_power";
     String ELEVATION_GAIN = "elevation_gain";
     String ELEVATION_LOSS = "elevation_loss";
@@ -77,6 +78,7 @@ public interface TrackPointsColumns extends BaseColumns {
             + ELEVATION_GAIN + " FLOAT, "
             + ELEVATION_LOSS + " FLOAT, "
             + TYPE + " TEXT CHECK(type IN (-2, -1, 0, 1)), "
+            + SENSOR_DISTANCE + " FLOAT, "
             + "FOREIGN KEY (" + TRACKID + ") REFERENCES " + TracksColumns.TABLE_NAME + "(" + TracksColumns._ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
             + ")";
 
