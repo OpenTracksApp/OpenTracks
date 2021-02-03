@@ -47,7 +47,7 @@ public class BluetoothUtilsTest {
 
         // then
         assertEquals(200, sensor.getCadence().getCrankRevolutionsCount());
-        assertNull(sensor.getSpeed());
+        assertNull(sensor.getDistanceSpeed());
     }
 
     @Test
@@ -60,7 +60,7 @@ public class BluetoothUtilsTest {
 
         // then
         assertNull(sensor.getCadence());
-        assertEquals(225, sensor.getSpeed().getWheelRevolutionsCount());
+        assertEquals(225, sensor.getDistanceSpeed().getWheelRevolutionsCount());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class BluetoothUtilsTest {
 
         // then
         assertEquals(200, sensor.getCadence().getCrankRevolutionsCount());
-        assertEquals(225, sensor.getSpeed().getWheelRevolutionsCount());
+        assertEquals(225, sensor.getDistanceSpeed().getWheelRevolutionsCount());
     }
 
     @Test

@@ -571,7 +571,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        double distanceToLastTrackLocation = trackPoint.distanceTo(lastValidTrackPoint);
+        double distanceToLastTrackLocation = trackPoint.distanceToPrevious(lastValidTrackPoint);
         if (distanceToLastTrackLocation > maxRecordingDistance) {
             insertTrackPointIfNewer(track, lastTrackPoint);
 
@@ -663,6 +663,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
                 trackPoint.setElevationGain(elevationSumManager.getElevationGain_m());
                 trackPoint.setElevationLoss(elevationSumManager.getElevationLoss_m());
                 elevationSumManager.reset();
+            }
+            if (remoteSensorManager != null) {
+                fillWithSensorDataSet(trackPoint);
+                remoteSensorManager.reset();
             }
             contentProviderUtils.insertTrackPoint(trackPoint, track.getId());
             trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);

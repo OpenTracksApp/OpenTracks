@@ -57,6 +57,7 @@ public class TrackPoint {
     private Double altitude_m;
     private Float speed_mps;
     private Float bearing;
+    private Float sensorDistance_m;
 
     public enum Type {
         SEGMENT_START_MANUAL(-2), //Start of a segment due to user interaction (start, resume)
@@ -224,7 +225,7 @@ public class TrackPoint {
         return elevationGain != null;
     }
 
-    public Float getElevationGain() {
+    public float getElevationGain() {
         return elevationGain;
     }
 
@@ -310,8 +311,12 @@ public class TrackPoint {
         this.accuracy = horizontalAccuracy;
     }
 
-    public float distanceTo(@NonNull TrackPoint dest) {
-        return getLocation().distanceTo(dest.getLocation());
+    public float distanceToPrevious(@NonNull TrackPoint previous) {
+        if (hasSensorDistance()) {
+            return getSensorDistance();
+        }
+
+        return getLocation().distanceTo(previous.getLocation());
     }
 
     public boolean fulfillsAccuracy(int poorAccuracy) {
@@ -327,6 +332,18 @@ public class TrackPoint {
     }
 
     // Sensor data
+    public boolean hasSensorDistance() {
+        return sensorDistance_m != null;
+    }
+
+    public Float getSensorDistance() {
+        return sensorDistance_m;
+    }
+
+    public void setSensorDistance(Float distance_m) {
+        this.sensorDistance_m = distance_m;
+    }
+
     public boolean hasSensorData() {
         return hasHeartRate() || hasCyclingCadence() || hasPower();
     }
@@ -347,7 +364,7 @@ public class TrackPoint {
         return cyclingCadence_rpm != null;
     }
 
-    public Float getCyclingCadence_rpm() {
+    public float getCyclingCadence_rpm() {
         return cyclingCadence_rpm;
     }
 
@@ -359,7 +376,7 @@ public class TrackPoint {
         return power != null;
     }
 
-    public Float getPower() {
+    public float getPower() {
         return power;
     }
 

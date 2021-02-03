@@ -42,6 +42,7 @@ public class PreferencesUtils {
     private PreferencesUtils() {
     }
 
+    @Deprecated //Should only be used to get a sharedPreference for more than one interaction!
     public static SharedPreferences getSharedPreferences(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
@@ -101,7 +102,6 @@ public class PreferencesUtils {
         editor.putBoolean(getKey(context, keyId), value);
         editor.apply();
     }
-
 
     private static int getInt(SharedPreferences sharedPreferences, Context context, int keyId, int defaultValue) {
         try {
@@ -205,7 +205,6 @@ public class PreferencesUtils {
     public static String getBluetoothCyclingPowerSensorAddress(SharedPreferences sharedPreferences, Context context) {
         return getString(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_power_key, getBluetoothSensorAddressNone(context));
     }
-
 
     public static boolean shouldShowStatsOnLockscreen(SharedPreferences sharedPreferences, Context context) {
         final boolean STATS_SHOW_ON_LOCKSCREEN_DEFAULT = context.getResources().getBoolean(R.bool.stats_show_on_lockscreen_while_recording_default);

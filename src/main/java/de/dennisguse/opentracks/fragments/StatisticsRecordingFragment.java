@@ -62,6 +62,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private TrackRecordingServiceConnection trackRecordingServiceConnection = new TrackRecordingServiceConnection();
     private TrackPoint lastTrackPoint;
 
+    //TODO Should not be nullable
     private TrackStatistics lastTrackStatistics;
 
     private String category = "";
@@ -366,29 +367,26 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     }
 
     private void setSpeedSensorData(SensorDataSet sensorDataSet) {
-        if (sensorDataSet != null && sensorDataSet.getCyclingSpeed() != null) {
-            SensorDataCycling.Speed data = sensorDataSet.getCyclingSpeed();
+        if (sensorDataSet != null && sensorDataSet.getCyclingDistanceSpeed() != null) {
+            SensorDataCycling.DistanceSpeed data = sensorDataSet.getCyclingDistanceSpeed();
 
             if (data.hasValue() && data.isRecent()) {
-                setSpeed(data.getValue());
+                setTotalDistance(data.getValue().distance_overall_m);
+                setSpeed(data.getValue().speed_mps);
+            }
+            if (data.hasValue() && data.isRecent()) {
+                setSpeed(data.getValue().speed_mps);
             }
         }
     }
 
     private void updateStats() {
-        String trackIconValue = TrackIconUtils.getIconValue(getContext(), category);
 
-        // Set total distance
-        {
-            double totalDistance = lastTrackStatistics == null ? Double.NaN : lastTrackStatistics.getTotalDistance();
-            Pair<String, String> parts = StringUtils.getDistanceParts(getContext(), totalDistance, preferenceMetricUnits);
-
-            viewBinding.statsDistanceValue.setText(parts.first);
-            viewBinding.statsDistanceUnit.setText(parts.second);
-        }
+        setTotalDistance(0);
 
         // Set activity type
         {
+            String trackIconValue = TrackIconUtils.getIconValue(getContext(), category);
             viewBinding.statsActivityTypeIcon.setEnabled(isSelectedTrackRecording());
             viewBinding.statsActivityTypeIcon.setImageResource(TrackIconUtils.getIconDrawable(trackIconValue));
         }
@@ -477,6 +475,14 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
             viewBinding.statsLatitudeValue.setText(latitudeText);
             viewBinding.statsLongitudeValue.setText(longitudeText);
         }
+    }
+
+    private void setTotalDistance(double sensorDistanceSinceLastTrackpoint) {
+        double totalDistance = lastTrackStatistics != null ? (lastTrackStatistics.getTotalDistance() + sensorDistanceSinceLastTrackpoint) : Double.NaN;
+        Pair<String, String> parts = StringUtils.getDistanceParts(getContext(), totalDistance, preferenceMetricUnits);
+
+        viewBinding.statsDistanceValue.setText(parts.first);
+        viewBinding.statsDistanceUnit.setText(parts.second);
     }
 
     private void setSpeed(double speed) {
