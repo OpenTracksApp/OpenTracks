@@ -22,13 +22,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import java.time.Duration;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.sensor.SensorData;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.util.BluetoothUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * Bluetooth LE sensor manager: manages connections to Bluetooth LE sensors.
@@ -48,7 +49,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
 
     private static final String TAG = BluetoothRemoteSensorManager.class.getSimpleName();
 
-    public static final long MAX_SENSOR_DATE_SET_AGE_MS = 5 * UnitConversions.S_TO_MS;
+    public static final Duration MAX_SENSOR_DATE_SET_AGE_MS = Duration.ofSeconds(5);
 
     private final BluetoothAdapter bluetoothAdapter;
     private final Context context;
