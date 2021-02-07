@@ -36,7 +36,7 @@ import java.util.Objects;
  * Drawbacks:
  * * GPS-provided timestamp might be more precise (but also have GPS week rollover)
  * * System clock might be changed (and thus non-monotonic)
- * TODO: if these might be problems, we need to store both timestamps.
+ * TODO: if these might be a problem, we need to store both timestamps.
  *
  * @author Sandor Dornbush
  */
@@ -177,7 +177,7 @@ public class TrackPoint {
         return latitude != null || longitude != null;
     }
 
-    @Nullable
+    @NonNull
     public Location getLocation() {
         Location location = new Location("");
         location.setTime(time.toEpochMilli());

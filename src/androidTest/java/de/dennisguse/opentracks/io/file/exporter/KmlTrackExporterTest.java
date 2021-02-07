@@ -17,7 +17,7 @@ import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnit4.class)
-public class KmlTrackWriterTest {
+public class KmlTrackExporterTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
 
@@ -38,7 +38,7 @@ public class KmlTrackWriterTest {
         TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(0));
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        KmlTrackWriter kmlTrackWriter = (KmlTrackWriter) TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.newTrackWriter(context);
+        KMLTrackExporter kmlTrackWriter = (KMLTrackExporter) TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context);
         kmlTrackWriter.prepare(outputStream);
 
         kmlTrackWriter.writeTrackPoint(trackPoint);

@@ -36,7 +36,6 @@ import java.util.Locale;
 import java.util.UUID;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import de.dennisguse.opentracks.R;
@@ -121,11 +120,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     @Override
     public Track.Id importFile(InputStream inputStream) {
         try {
-            SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-            long start = System.currentTimeMillis();
-
-            saxParser.parse(inputStream, this);
-            Log.d(TAG, "Total import time: " + (System.currentTimeMillis() - start) + "ms");
+            SAXParserFactory.newInstance().newSAXParser().parse(inputStream, this);
             return trackIds.get(0);
         } catch (IOException | SAXException | ParserConfigurationException e) {
             Log.e(TAG, "Unable to import file", e);
@@ -375,7 +370,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                      */
                     if (trackPoint.hasLocation() && trackData.lastLocationInCurrentSegment.hasLocation()) {
                         float speed = trackData.lastLocationInCurrentSegment.distanceTo(trackPoint) / timeDifference.toMillis();
-                        trackPoint.setSpeed((float) speed);
+                        trackPoint.setSpeed(speed);
                     }
                 }
             }

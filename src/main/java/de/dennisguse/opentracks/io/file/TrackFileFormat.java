@@ -6,12 +6,10 @@ import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.io.file.exporter.FileTrackExporter;
-import de.dennisguse.opentracks.io.file.exporter.GpxTrackWriter;
-import de.dennisguse.opentracks.io.file.exporter.KmlTrackWriter;
+import de.dennisguse.opentracks.io.file.exporter.GPXTrackExporter;
+import de.dennisguse.opentracks.io.file.exporter.KMLTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
-import de.dennisguse.opentracks.io.file.exporter.TrackWriter;
 
 /**
  * Definition of all possible track formats.
@@ -20,8 +18,8 @@ public enum TrackFileFormat {
 
     KML_ONLY_TRACK {
         @Override
-        public TrackWriter newTrackWriter(Context context) {
-            return new KmlTrackWriter(context, false, false, false);
+        public TrackExporter createTrackExporter(Context context) {
+            return new KMLTrackExporter(context, false, false, false);
         }
 
         @Override
@@ -35,8 +33,8 @@ public enum TrackFileFormat {
     },
     KML_WITH_TRACKDETAIL {
         @Override
-        public TrackWriter newTrackWriter(Context context) {
-            return new KmlTrackWriter(context, true, false, false);
+        public TrackExporter createTrackExporter(Context context) {
+            return new KMLTrackExporter(context, true, false, false);
         }
 
         @Override
@@ -50,8 +48,8 @@ public enum TrackFileFormat {
     },
     KML_WITH_TRACKDETAIL_AND_SENSORDATA {
         @Override
-        public TrackWriter newTrackWriter(Context context) {
-            return new KmlTrackWriter(context, true, true, false);
+        public TrackExporter createTrackExporter(Context context) {
+            return new KMLTrackExporter(context, true, true, false);
         }
 
         @Override
@@ -64,16 +62,12 @@ public enum TrackFileFormat {
         }
     },
     KMZ_ONLY_TRACK {
-
         private static final boolean exportPhotos = false;
 
         @Override
-        public TrackWriter newTrackWriter(Context context) {
-            return new KmlTrackWriter(context, false, false, exportPhotos);
-        }
-
-        public TrackExporter newTrackExporter(Context context) {
-            return newKmzTrackExporter(context, this.newTrackWriter(context), exportPhotos);
+        public TrackExporter createTrackExporter(Context context) {
+            KMLTrackExporter exporter = new KMLTrackExporter(context, false, false, exportPhotos);
+            return new KmzTrackExporter(context, new ContentProviderUtils(context), exporter, exportPhotos);
         }
 
         @Override
@@ -95,12 +89,9 @@ public enum TrackFileFormat {
         private static final boolean exportPhotos = false;
 
         @Override
-        public TrackWriter newTrackWriter(Context context) {
-            return new KmlTrackWriter(context, true, false, exportPhotos);
-        }
-
-        public TrackExporter newTrackExporter(Context context) {
-            return newKmzTrackExporter(context, this.newTrackWriter(context), exportPhotos);
+        public TrackExporter createTrackExporter(Context context) {
+            KMLTrackExporter exporter = new KMLTrackExporter(context, true, false, exportPhotos);
+            return new KmzTrackExporter(context, new ContentProviderUtils(context), exporter, exportPhotos);
         }
 
         @Override
@@ -123,17 +114,14 @@ public enum TrackFileFormat {
         private static final boolean exportPhotos = false;
 
         @Override
-        public TrackWriter newTrackWriter(Context context) {
-            return new KmlTrackWriter(context, true, true, exportPhotos);
+        public TrackExporter createTrackExporter(Context context) {
+            KMLTrackExporter exporter = new KMLTrackExporter(context, true, true, exportPhotos);
+            return new KmzTrackExporter(context, new ContentProviderUtils(context), exporter, exportPhotos);
         }
 
         @Override
         public String getMimeType() {
             return MIME_KMZ;
-        }
-
-        public TrackExporter newTrackExporter(Context context) {
-            return newKmzTrackExporter(context, this.newTrackWriter(context), exportPhotos);
         }
 
         public String getExtension() {
@@ -152,17 +140,14 @@ public enum TrackFileFormat {
         private static final boolean exportPhotos = true;
 
         @Override
-        public TrackWriter newTrackWriter(Context context) {
-            return new KmlTrackWriter(context, true, true, exportPhotos);
+        public TrackExporter createTrackExporter(Context context) {
+            KMLTrackExporter exporter = new KMLTrackExporter(context, true, true, exportPhotos);
+            return new KmzTrackExporter(context, new ContentProviderUtils(context), exporter, exportPhotos);
         }
 
         @Override
         public String getMimeType() {
             return MIME_KMZ;
-        }
-
-        public TrackExporter newTrackExporter(Context context) {
-            return newKmzTrackExporter(context, newTrackWriter(context), exportPhotos);
         }
 
         public String getExtension() {
@@ -177,8 +162,8 @@ public enum TrackFileFormat {
     },
     GPX {
         @Override
-        public TrackWriter newTrackWriter(Context context) {
-            return new GpxTrackWriter(context.getString(R.string.app_name));
+        public TrackExporter createTrackExporter(Context context) {
+            return new GPXTrackExporter(new ContentProviderUtils(context), context.getString(R.string.app_name));
         }
 
         @Override
@@ -195,31 +180,17 @@ public enum TrackFileFormat {
 
     private static final String MIME_KML = "application/vnd.google-earth.kml+xml";
 
-    private static TrackExporter newKmzTrackExporter(Context context, TrackWriter trackWriter, boolean exportPhotos) {
-        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
-
-        FileTrackExporter fileTrackExporter = new FileTrackExporter(contentProviderUtils, trackWriter);
-
-        return new KmzTrackExporter(context, contentProviderUtils, fileTrackExporter, exportPhotos);
-    }
-
     /**
      * Returns the mime type for each format.
      */
     public abstract String getMimeType();
-
-    public TrackExporter newTrackExporter(Context context) {
-        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
-        TrackWriter trackWriter = newTrackWriter(context);
-        return new FileTrackExporter(contentProviderUtils, trackWriter);
-    }
 
     /**
      * Creates a new track writer for the format.
      *
      * @param context the context
      */
-    public abstract TrackWriter newTrackWriter(Context context);
+    public abstract TrackExporter createTrackExporter(Context context);
 
     /**
      * Returns the file extension for each format.
@@ -234,7 +205,7 @@ public enum TrackFileFormat {
     }
 
     /**
-     * Returns the name of for each format.
+     * Returns the name for each format.
      */
     public String getName() {
         return this.name().toLowerCase(Locale.US);

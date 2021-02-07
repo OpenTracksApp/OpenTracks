@@ -35,7 +35,7 @@ public class ExportUtils {
     }
 
     public static boolean exportTrack(Context context, TrackFileFormat trackFileFormat, DocumentFile directory, Track track) {
-        TrackExporter trackExporter = trackFileFormat.newTrackExporter(context);
+        TrackExporter trackExporter = trackFileFormat.createTrackExporter(context);
 
         Uri exportDocumentFileUri = getExportDocumentFileUri(context, track.getId(), trackFileFormat, directory);
         if (exportDocumentFileUri == null) {

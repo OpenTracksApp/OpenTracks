@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.io.file.exporter.KmlTrackWriter;
+import de.dennisguse.opentracks.io.file.exporter.KMLTrackExporter;
 
 /**
  * Imports a KML file.
@@ -39,7 +39,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
 
     private static final String TAG = KmlFileTrackImporter.class.getSimpleName();
 
-    private static final String MARKER_STYLE = "#" + KmlTrackWriter.MARKER_STYLE;
+    private static final String MARKER_STYLE = "#" + KMLTrackExporter.MARKER_STYLE;
 
     private static final String TAG_COORDINATES = "coordinates";
     private static final String TAG_DESCRIPTION = "description";
@@ -306,22 +306,22 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
             }
         }
         switch (extendedDataType) {
-            case KmlTrackWriter.EXTENDED_DATA_TYPE_SPEED:
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_SPEED:
                 speedList.add(value);
                 break;
-            case KmlTrackWriter.EXTENDED_DATA_TYPE_POWER:
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_POWER:
                 powerList.add(value);
                 break;
-            case KmlTrackWriter.EXTENDED_DATA_TYPE_HEART_RATE:
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_HEART_RATE:
                 heartRateList.add(value);
                 break;
-            case KmlTrackWriter.EXTENDED_DATA_TYPE_CADENCE:
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_CADENCE:
                 cadenceList.add(value);
                 break;
-            case KmlTrackWriter.EXTENDED_DATA_TYPE_ELEVATION_GAIN:
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_ELEVATION_GAIN:
                 elevationGainList.add(value);
                 break;
-            case KmlTrackWriter.EXTENDED_DATA_TYPE_ELEVATION_LOSS:
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_ELEVATION_LOSS:
                 elevationLossList.add(value);
                 break;
             default:
