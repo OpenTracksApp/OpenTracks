@@ -24,8 +24,6 @@ import androidx.annotation.NonNull;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
-import java.time.Duration;
-import java.time.Instant;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.content.data.Marker;
@@ -93,9 +91,7 @@ public class GPXTrackExporter implements TrackExporter {
 
             writeMarkers(track);
 
-            Instant startTime = track.getTrackStatistics().getStartTime();
-            Duration offset = Duration.between(track.getTrackStatistics().getStartTime(), startTime);
-            writeLocations(track, offset);
+            writeLocations(track);
 
             writeFooter();
             close();
@@ -112,7 +108,7 @@ public class GPXTrackExporter implements TrackExporter {
         throw new UnsupportedOperationException();
     }
 
-    private void writeLocations(Track track, Duration offset) throws InterruptedException {
+    private void writeLocations(Track track) throws InterruptedException {
         boolean wroteTrack = false;
         boolean wroteSegment = false;
 
@@ -121,7 +117,6 @@ public class GPXTrackExporter implements TrackExporter {
                 if (Thread.interrupted()) throw new InterruptedException();
 
                 TrackPoint trackPoint = trackPointIterator.next();
-                setLocationTime(trackPoint, offset);
 
                 if (!wroteTrack) {
                     writeBeginTrack(track, trackPoint);
@@ -165,7 +160,6 @@ public class GPXTrackExporter implements TrackExporter {
 
             if (wroteTrack) {
                 TrackPoint lastValidTrackPoint = contentProviderUtils.getLastValidTrackPoint(track.getId());
-                setLocationTime(lastValidTrackPoint, offset);
                 writeEndTrack(track, lastValidTrackPoint);
             } else {
                 // Write an empty track
@@ -320,18 +314,5 @@ public class GPXTrackExporter implements TrackExporter {
 
     private String formatLocation(double latitude, double longitude) {
         return "lat=\"" + COORDINATE_FORMAT.format(latitude) + "\" lon=\"" + COORDINATE_FORMAT.format(longitude) + "\"";
-    }
-
-    /**
-     * Sets a trackPoint time.
-     *
-     * @param trackPoint the trackPoint
-     * @param offset     the time offset
-     */
-    //TODO Why?
-    private void setLocationTime(TrackPoint trackPoint, Duration offset) {
-        if (trackPoint != null) {
-            trackPoint.setTime(trackPoint.getTime().minus(offset));
-        }
     }
 }
