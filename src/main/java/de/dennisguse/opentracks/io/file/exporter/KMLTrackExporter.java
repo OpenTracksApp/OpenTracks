@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 Google Inc.
+ * Copyright 2011 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -13,13 +13,20 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package de.dennisguse.opentracks.io.file.exporter;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.location.Location;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,15 +38,20 @@ import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
- * Write track as KML to a file.
+ * Convert {@link Track} incl. {@link Marker} and {@link TrackPoint} to KML.
  *
+ * @author Sandor Dornbush
+ * @author Rodrigo Damazio
  * @author Leif Hendrik Wilden
  */
-public class KmlTrackWriter implements TrackWriter {
+public class KMLTrackExporter implements TrackExporter {
+
+    private static final String TAG = KMLTrackExporter.class.getSimpleName();
 
     public static final String MARKER_STYLE = "waypoint";
     private static final String START_STYLE = "start";
@@ -76,13 +88,7 @@ public class KmlTrackWriter implements TrackWriter {
 
     private TrackPoint startTrackPoint;
 
-    /**
-     * @param context           the context
-     * @param exportTrackDetail should detailed information about the track be exported (e.g., title, description, markers, timing)?
-     * @param exportSensorData  should {@link TrackPoint}'s sensor data be exported?
-     * @param exportPhotos      should pictures be exported (if true: exports to KMZ)?
-     */
-    public KmlTrackWriter(Context context, boolean exportTrackDetail, boolean exportSensorData, boolean exportPhotos) {
+    public KMLTrackExporter(Context context, boolean exportTrackDetail, boolean exportSensorData, boolean exportPhotos) {
         this.context = context;
         this.exportTrackDetail = exportTrackDetail;
         this.exportSensorData = exportSensorData;
@@ -91,21 +97,137 @@ public class KmlTrackWriter implements TrackWriter {
         this.contentProviderUtils = new ContentProviderUtils(context);
     }
 
-    @Override
-    public void prepare(OutputStream outputStream) {
+    public boolean writeTrack(Track track, @NonNull OutputStream outputStream) {
+        return writeTrack(new Track[]{track}, outputStream);
+    }
+
+    public boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream) {
+        try {
+            prepare(outputStream);
+            writeHeader(tracks);
+            for (Track track : tracks) {
+                writeMarkers(track);
+            }
+            boolean hasMultipleTracks = tracks.length > 1;
+            if (hasMultipleTracks) {
+                writeMultiTrackBegin();
+            }
+            //TODO Why use startTime of first track for the others?
+            Instant startTime = tracks[0].getTrackStatistics().getStartTime();
+            for (Track track : tracks) {
+                Duration offset = Duration.between(track.getTrackStatistics().getStartTime(), startTime);
+                writeLocations(track, offset);
+            }
+            if (hasMultipleTracks) {
+                writeMultiTrackEnd();
+            }
+            writeFooter();
+            close();
+
+            return true;
+        } catch (InterruptedException e) {
+            Log.e(TAG, "Thread interrupted", e);
+            return false;
+        }
+    }
+
+    private void writeMarkers(Track track) throws InterruptedException {
+        boolean hasMarkers = false;
+        try (Cursor cursor = contentProviderUtils.getMarkerCursor(track.getId(), null, -1)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                for (int i = 0; i < cursor.getCount(); i++) {
+                    if (Thread.interrupted()) {
+                        throw new InterruptedException();
+                    }
+                    if (!hasMarkers) {
+                        writeBeginMarkers(track);
+                        hasMarkers = true;
+                    }
+                    Marker marker = contentProviderUtils.createMarker(cursor);
+                    writeMarker(marker);
+
+                    cursor.moveToNext();
+                }
+            }
+        }
+        if (hasMarkers) {
+            writeEndMarkers();
+        }
+    }
+
+    private void writeLocations(Track track, Duration offset) throws InterruptedException {
+        boolean wroteTrack = false;
+        boolean wroteSegment = false;
+
+        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null)) {
+            while (trackPointIterator.hasNext()) {
+                if (Thread.interrupted()) throw new InterruptedException();
+
+                TrackPoint trackPoint = trackPointIterator.next();
+                setLocationTime(trackPoint, offset);
+
+                if (!wroteTrack) {
+                    writeBeginTrack(track, trackPoint);
+                    wroteTrack = true;
+                }
+
+                switch (trackPoint.getType()) {
+                    case SEGMENT_START_MANUAL:
+                    case SEGMENT_START_AUTOMATIC:
+                        if (wroteSegment) writeCloseSegment();
+                        writeOpenSegment();
+                        writeTrackPoint(trackPoint);
+                        wroteSegment = true;
+                        break;
+                    case SEGMENT_END_MANUAL:
+                        if (!wroteSegment) writeOpenSegment();
+                        writeTrackPoint(trackPoint);
+                        writeCloseSegment();
+                        wroteSegment = false;
+                        break;
+                    case TRACKPOINT:
+                        if (!wroteSegment) {
+                            // Might happen for older data (pre v3.15.0)
+                            writeOpenSegment();
+                            wroteSegment = true;
+                        }
+                        writeTrackPoint(trackPoint);
+                        break;
+                }
+            }
+
+            if (wroteSegment) {
+                // Should not be necessary as tracks should end with SEGMENT_END_MANUAL.
+                // Anyhow, make sure that the last segment is closed.
+                writeCloseSegment();
+            }
+
+            if (wroteTrack) {
+                TrackPoint lastValidTrackPoint = contentProviderUtils.getLastValidTrackPoint(track.getId());
+                setLocationTime(lastValidTrackPoint, offset);
+                writeEndTrack(track, lastValidTrackPoint);
+            } else {
+                // Write an empty track
+                writeBeginTrack(track, null);
+                writeEndTrack(track, null);
+            }
+        }
+    }
+
+    @VisibleForTesting
+    void prepare(OutputStream outputStream) {
         this.printWriter = new PrintWriter(outputStream);
     }
 
-    @Override
-    public void close() {
+    @VisibleForTesting
+    void close() {
         if (printWriter != null) {
             printWriter.flush();
             printWriter = null;
         }
     }
 
-    @Override
-    public void writeHeader(Track[] tracks) {
+    private void writeHeader(Track[] tracks) {
         if (printWriter != null) {
             printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             printWriter.println("<kml xmlns=\"http://www.opengis.net/kml/2.2\"");
@@ -141,16 +263,14 @@ public class KmlTrackWriter implements TrackWriter {
         }
     }
 
-    @Override
-    public void writeFooter() {
+    private void writeFooter() {
         if (printWriter != null) {
             printWriter.println("</Document>");
             printWriter.println("</kml>");
         }
     }
 
-    @Override
-    public void writeBeginMarkers(Track track) {
+    private void writeBeginMarkers(Track track) {
         if (printWriter != null) {
             printWriter.println("<Folder>");
             if (exportTrackDetail) {
@@ -160,15 +280,7 @@ public class KmlTrackWriter implements TrackWriter {
         }
     }
 
-    @Override
-    public void writeEndMarkers() {
-        if (printWriter != null) {
-            printWriter.println("</Folder>");
-        }
-    }
-
-    @Override
-    public void writeMarker(Marker marker) {
+    private void writeMarker(Marker marker) {
         if (printWriter != null && exportTrackDetail) {
             boolean existsPhoto = FileUtils.buildInternalPhotoFile(context, marker.getTrackId(), marker.getPhotoURI()) != null;
             if (marker.hasPhoto() && exportPhotos && existsPhoto) {
@@ -180,7 +292,13 @@ public class KmlTrackWriter implements TrackWriter {
         }
     }
 
-    public void writeMultiTrackBegin() {
+    private void writeEndMarkers() {
+        if (printWriter != null) {
+            printWriter.println("</Folder>");
+        }
+    }
+
+    private void writeMultiTrackBegin() {
         if (printWriter != null) {
             printWriter.println("<Folder id=tour>");
             printWriter.println("<name>" + context.getString(R.string.generic_tracks) + "</name>");
@@ -188,14 +306,13 @@ public class KmlTrackWriter implements TrackWriter {
         }
     }
 
-    public void writeMultiTrackEnd() {
+    private void writeMultiTrackEnd() {
         if (printWriter != null) {
             printWriter.println("</Folder>");
         }
     }
 
-    @Override
-    public void writeBeginTrack(Track track, TrackPoint startTrackPoint) {
+    private void writeBeginTrack(Track track, TrackPoint startTrackPoint) {
         this.startTrackPoint = startTrackPoint;
         if (printWriter != null) {
             String name = context.getString(R.string.marker_label_start, track.getName());
@@ -218,8 +335,8 @@ public class KmlTrackWriter implements TrackWriter {
         }
     }
 
-    @Override
-    public void writeEndTrack(Track track, TrackPoint endTrackPoint) {
+
+    private void writeEndTrack(Track track, TrackPoint endTrackPoint) {
         if (printWriter != null) {
             printWriter.println("</gx:MultiTrack>");
             printWriter.println("</Placemark>");
@@ -233,8 +350,8 @@ public class KmlTrackWriter implements TrackWriter {
         }
     }
 
-    @Override
-    public void writeOpenSegment() {
+    @VisibleForTesting
+    void writeOpenSegment() {
         if (printWriter != null) {
             printWriter.println("<gx:Track>");
             speedList.clear();
@@ -246,8 +363,8 @@ public class KmlTrackWriter implements TrackWriter {
         }
     }
 
-    @Override
-    public void writeCloseSegment() {
+    @VisibleForTesting
+    void writeCloseSegment() {
         if (printWriter != null) {
             printWriter.println("<ExtendedData>");
             printWriter.println("<SchemaData schemaUrl=\"#" + SCHEMA_ID + "\">");
@@ -277,8 +394,8 @@ public class KmlTrackWriter implements TrackWriter {
         }
     }
 
-    @Override
-    public void writeTrackPoint(TrackPoint trackPoint) {
+    @VisibleForTesting
+    void writeTrackPoint(TrackPoint trackPoint) {
         if (printWriter != null) {
             if (exportTrackDetail) {
                 printWriter.println("<when>" + getTime(trackPoint.getLocation()) + "</when>");
@@ -351,14 +468,14 @@ public class KmlTrackWriter implements TrackWriter {
             printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
             printWriter.println("<description>" + StringUtils.formatCData(marker.getDescription()) + "</description>");
             printWriter.print("<Camera>");
-            printWriter.print("<longitude>" + marker.getLocation().getLongitude() + "</longitude>");
-            printWriter.print("<latitude>" + marker.getLocation().getLatitude() + "</latitude>");
+            printWriter.print("<longitude>" + marker.getLongitude() + "</longitude>");
+            printWriter.print("<latitude>" + marker.getLatitude() + "</latitude>");
             printWriter.print("<altitude>20</altitude>");
             printWriter.print("<heading>" + heading + "</heading>");
             printWriter.print("<tilt>90</tilt>");
             printWriter.println("</Camera>");
             printWriter.println("<TimeStamp><when>" + getTime(marker.getLocation()) + "</when></TimeStamp>");
-            printWriter.println("<styleUrl>#" + KmlTrackWriter.MARKER_STYLE + "</styleUrl>");
+            printWriter.println("<styleUrl>#" + MARKER_STYLE + "</styleUrl>");
             writeCategory(marker.getCategory());
 
             if (exportPhotos) {
@@ -473,5 +590,18 @@ public class KmlTrackWriter implements TrackWriter {
         printWriter.println("<gx:SimpleArrayField name=\"" + name + "\" type=\"float\">");
         printWriter.println("<displayName>" + StringUtils.formatCData(extendedDataType) + "</displayName>");
         printWriter.println("</gx:SimpleArrayField>");
+    }
+
+    /**
+     * Sets a trackPoint time.
+     *
+     * @param trackPoint the trackPoint
+     * @param offset     the time offset
+     */
+    //TODO Why?
+    private void setLocationTime(TrackPoint trackPoint, Duration offset) {
+        if (trackPoint != null) {
+            trackPoint.setTime(trackPoint.getTime().minus(offset));
+        }
     }
 }

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Marker;
@@ -67,8 +68,6 @@ public class ExportImportTest {
         if (Looper.myLooper() == null) Looper.prepare();
     }
 
-    private TrackRecordingServiceInterface service;
-
     private final Context context = ApplicationProvider.getApplicationContext();
 
     private final ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
@@ -85,8 +84,8 @@ public class ExportImportTest {
     private Track.Id importTrackId;
 
     @Before
-    public void setUp() throws TimeoutException, InterruptedException {
-        service = ((TrackRecordingServiceInterface) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)));
+    public void setUp() throws TimeoutException {
+        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)));
 
         trackId = service.startNewTrack();
 
@@ -138,7 +137,7 @@ public class ExportImportTest {
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL.newTrackExporter(context);
+        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL.createTrackExporter(context);
 
         // when
         // 1. export
@@ -162,10 +161,10 @@ public class ExportImportTest {
         assertEquals(track.getUuid(), importedTrack.getUuid());
 
         // 2. trackpoints
-        assertTrackpoints(false, false, false, false, false);
+        assertTrackpoints(trackPoints, false, false, false, false, false);
 
         // 3. trackstatistics
-        assertTrackStatistics(false);
+        assertTrackStatistics(false, false);
 
         // 4. markers
         assertMarkers();
@@ -177,7 +176,7 @@ public class ExportImportTest {
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.newTrackExporter(context);
+        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context);
 
         // when
         // 1. export
@@ -200,10 +199,10 @@ public class ExportImportTest {
         assertEquals(track.getIcon(), importedTrack.getIcon());
 
         // 2. trackpoints
-        assertTrackpoints(true, true, true, true, true);
+        assertTrackpoints(trackPoints, true, true, true, true, true);
 
         // 2. trackstatistics
-        assertTrackStatistics(true);
+        assertTrackStatistics(false, true);
 
         // 4. markers
         assertMarkers();
@@ -216,7 +215,7 @@ public class ExportImportTest {
         PreferencesUtils.setBoolean(context, R.string.import_prevent_reimport_key, true);
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.newTrackExporter(context);
+        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context);
 
         // when
         // 1. export
@@ -271,7 +270,7 @@ public class ExportImportTest {
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackExporter trackExporter = TrackFileFormat.GPX.newTrackExporter(context);
+        TrackExporter trackExporter = TrackFileFormat.GPX.createTrackExporter(context);
 
         // when
         // 1. export
@@ -296,10 +295,16 @@ public class ExportImportTest {
         //assertEquals(track.getIcon(), trackImported.getIcon());
 
         // 2. trackpoints
-        assertTrackpoints(false, true, true, true, true);
+        // The GPX exporter does not support exporting TrackPoints without lat/lng.
+        // Therefore, the track segmentation is changes.
+        List<TrackPoint> trackPointsWithCoordinates = trackPoints.stream().filter(it -> TrackPoint.Type.SEGMENT_START_AUTOMATIC.equals(it.getType()) || TrackPoint.Type.TRACKPOINT.equals(it.getType())).collect(Collectors.toList());
+        trackPointsWithCoordinates.get(0).setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
+        trackPointsWithCoordinates.get(3).setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
+
+        assertTrackpoints(trackPointsWithCoordinates, false, true, true, true, true);
 
         // 3. trackstatistics
-        assertTrackStatistics(true);
+        assertTrackStatistics(true, true);
 
         // 4. markers
         assertMarkers();
@@ -312,7 +317,7 @@ public class ExportImportTest {
         PreferencesUtils.setBoolean(context, R.string.import_prevent_reimport_key, true);
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackExporter trackExporter = TrackFileFormat.GPX.newTrackExporter(context);
+        TrackExporter trackExporter = TrackFileFormat.GPX.createTrackExporter(context);
 
         // when
         // 1. export
@@ -349,8 +354,9 @@ public class ExportImportTest {
         }
     }
 
-    private void assertTrackpoints(boolean verifyPower, boolean verifyHeartrate, boolean verifyCadence, boolean verifyElevationGain, boolean verifyElevationLoss) {
+    private void assertTrackpoints(List<TrackPoint> trackPoints, boolean verifyPower, boolean verifyHeartrate, boolean verifyCadence, boolean verifyElevationGain, boolean verifyElevationLoss) {
         List<TrackPoint> importedTrackPoints = contentProviderUtils.getTrackPoints(importTrackId);
+
         assertEquals(trackPoints.size(), importedTrackPoints.size());
 
         for (int i = 0; i < trackPoints.size(); i++) {
@@ -402,7 +408,7 @@ public class ExportImportTest {
         }
     }
 
-    private void assertTrackStatistics(boolean verifyElevationGainAndLoss) {
+    private void assertTrackStatistics(boolean isGpx, boolean verifyElevationGainAndLoss) {
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
 
         assertNotNull(importedTrack.getTrackStatistics());
@@ -412,19 +418,21 @@ public class ExportImportTest {
 
         // Time
         assertTrue(trackStatistics.getStartTime().isBefore(trackStatistics.getStopTime())); //Just to be sure.
-        assertEquals(trackStatistics.getStartTime(), importedTrackStatistics.getStartTime());
-        assertEquals(trackStatistics.getStopTime(), importedTrackStatistics.getStopTime());
+        if (!isGpx) {
+            assertEquals(trackStatistics.getStartTime(), importedTrackStatistics.getStartTime());
+            assertEquals(trackStatistics.getStopTime(), importedTrackStatistics.getStopTime());
 
-        assertEquals(trackStatistics.getTotalTime(), importedTrackStatistics.getTotalTime());
-        assertEquals(trackStatistics.getMovingTime(), importedTrackStatistics.getMovingTime());
+            assertEquals(trackStatistics.getTotalTime(), importedTrackStatistics.getTotalTime());
+            assertEquals(trackStatistics.getMovingTime(), importedTrackStatistics.getMovingTime());
 
-        // Distance
-        assertEquals(trackStatistics.getTotalDistance(), importedTrackStatistics.getTotalDistance(), 0.01);
+            // Distance
+            assertEquals(trackStatistics.getTotalDistance(), importedTrackStatistics.getTotalDistance(), 0.01);
 
-        // Speed
-        assertEquals(trackStatistics.getMaxSpeed(), importedTrackStatistics.getMaxSpeed(), 0.01);
-        assertEquals(trackStatistics.getAverageSpeed(), importedTrackStatistics.getAverageSpeed(), 0.01);
-        assertEquals(trackStatistics.getAverageMovingSpeed(), importedTrackStatistics.getAverageMovingSpeed(), 0.01);
+            // Speed
+            assertEquals(trackStatistics.getMaxSpeed(), importedTrackStatistics.getMaxSpeed(), 0.01);
+            assertEquals(trackStatistics.getAverageSpeed(), importedTrackStatistics.getAverageSpeed(), 0.01);
+            assertEquals(trackStatistics.getAverageMovingSpeed(), importedTrackStatistics.getAverageMovingSpeed(), 0.01);
+        }
 
         // Elevation
         assertEquals(trackStatistics.getMinElevation(), importedTrackStatistics.getMinElevation(), 0.01);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 Google Inc.
+ * Copyright 2011 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -16,6 +16,11 @@
 
 package de.dennisguse.opentracks.io.file.exporter;
 
+import android.database.Cursor;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
@@ -24,15 +29,21 @@ import java.util.Locale;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
- * Write track as GPX to a file.
+ * Convert {@link Track} incl. {@link Marker} and {@link TrackPoint} to KML.
+ * NOTE:
+ * * does not export {@link TrackPoint} without a latitude/longitude (not supported by GPX 1.1).
  *
  * @author Sandor Dornbush
+ * @author Rodrigo Damazio
  */
-//TODO Export markers
-public class GpxTrackWriter implements TrackWriter {
+public class GPXTrackExporter implements TrackExporter {
+
+    private static final String TAG = GPXTrackExporter.class.getSimpleName();
 
     private static final NumberFormat ELEVATION_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat COORDINATE_FORMAT = NumberFormat.getInstance(Locale.US);
@@ -62,19 +73,106 @@ public class GpxTrackWriter implements TrackWriter {
         CADENCE_FORMAT.setGroupingUsed(false);
     }
 
+    private final ContentProviderUtils contentProviderUtils;
+
     private final String creator;
     private PrintWriter printWriter;
 
-    public GpxTrackWriter(String creator) {
+    public GPXTrackExporter(ContentProviderUtils contentProviderUtils, String creator) {
+        this.contentProviderUtils = contentProviderUtils;
         this.creator = creator;
     }
 
     @Override
+    public boolean writeTrack(Track track, @NonNull OutputStream outputStream) {
+        try {
+            prepare(outputStream);
+            writeHeader(track);
+
+            writeMarkers(track);
+
+            writeLocations(track);
+
+            writeFooter();
+            close();
+
+            return true;
+        } catch (InterruptedException e) {
+            Log.e(TAG, "Thread interrupted", e);
+            return false;
+        }
+    }
+
+    @Override
+    public boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream) {
+        throw new UnsupportedOperationException();
+    }
+
+    private void writeLocations(Track track) throws InterruptedException {
+        boolean wroteTrack = false;
+        boolean wroteSegment = false;
+
+        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null)) {
+            while (trackPointIterator.hasNext()) {
+                if (Thread.interrupted()) throw new InterruptedException();
+
+                TrackPoint trackPoint = trackPointIterator.next();
+
+                if (!wroteTrack) {
+                    writeBeginTrack(track, trackPoint);
+                    wroteTrack = true;
+                }
+
+                switch (trackPoint.getType()) {
+                    case SEGMENT_START_MANUAL:
+                        if (wroteSegment) writeCloseSegment();
+                        writeOpenSegment();
+                        wroteSegment = true;
+                        Log.i(TAG, "Exporting " + TrackPoint.Type.SEGMENT_START_MANUAL.name() + " is not supported.");
+                        break;
+                    case SEGMENT_END_MANUAL:
+                        writeCloseSegment();
+                        wroteSegment = false;
+                        Log.i(TAG, "Exporting " + TrackPoint.Type.SEGMENT_END_MANUAL.name() + " is not supported.");
+                        break;
+                    case SEGMENT_START_AUTOMATIC:
+                        if (wroteSegment) writeCloseSegment();
+                        writeOpenSegment();
+                        wroteSegment = true;
+                        writeTrackPoint(trackPoint);
+                        break;
+                    case TRACKPOINT:
+                        if (!wroteSegment) {
+                            // Might happen for older data (pre v3.15.0)
+                            writeOpenSegment();
+                            wroteSegment = true;
+                        }
+                        writeTrackPoint(trackPoint);
+                        break;
+                }
+            }
+
+            if (wroteSegment) {
+                // Should not be necessary as tracks should end with SEGMENT_END_MANUAL.
+                // Anyhow, make sure that the last segment is closed.
+                writeCloseSegment();
+            }
+
+            if (wroteTrack) {
+                TrackPoint lastValidTrackPoint = contentProviderUtils.getLastValidTrackPoint(track.getId());
+                writeEndTrack(track, lastValidTrackPoint);
+            } else {
+                // Write an empty track
+                writeBeginTrack(track, null);
+                writeEndTrack(track, null);
+            }
+        }
+    }
+
     public void prepare(OutputStream outputStream) {
         this.printWriter = new PrintWriter(outputStream);
     }
 
-    @Override
     public void close() {
         if (printWriter != null) {
             printWriter.flush();
@@ -82,8 +180,8 @@ public class GpxTrackWriter implements TrackWriter {
         }
     }
 
-    @Override
-    public void writeHeader(Track[] tracks) {
+
+    public void writeHeader(Track track) {
         if (printWriter != null) {
             printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             printWriter.println("<gpx");
@@ -103,31 +201,34 @@ public class GpxTrackWriter implements TrackWriter {
 
             printWriter.println("<metadata>");
 
-            Track track = tracks[0];
             printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
             printWriter.println("<desc>" + StringUtils.formatCData(track.getDescription()) + "</desc>");
             printWriter.println("</metadata>");
         }
     }
 
-    @Override
     public void writeFooter() {
         if (printWriter != null) {
             printWriter.println("</gpx>");
         }
     }
 
-    @Override
-    public void writeBeginMarkers(Track track) {
-        // Do nothing
+    private void writeMarkers(Track track) throws InterruptedException {
+        try (Cursor cursor = contentProviderUtils.getMarkerCursor(track.getId(), null, -1)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                for (int i = 0; i < cursor.getCount(); i++) {
+                    if (Thread.interrupted()) {
+                        throw new InterruptedException();
+                    }
+                    Marker marker = contentProviderUtils.createMarker(cursor);
+                    writeMarker(marker);
+
+                    cursor.moveToNext();
+                }
+            }
+        }
     }
 
-    @Override
-    public void writeEndMarkers() {
-        // Do nothing
-    }
-
-    @Override
     public void writeMarker(Marker marker) {
         if (printWriter != null) {
             printWriter.println("<wpt " + formatLocation(marker.getLatitude(), marker.getLongitude()) + ">");
@@ -142,17 +243,6 @@ public class GpxTrackWriter implements TrackWriter {
         }
     }
 
-    @Override
-    public void writeMultiTrackBegin() {
-        // Do nothing
-    }
-
-    @Override
-    public void writeMultiTrackEnd() {
-        // Do nothing
-    }
-
-    @Override
     public void writeBeginTrack(Track track, TrackPoint startTrackPoint) {
         if (printWriter != null) {
             printWriter.println("<trk>");
@@ -167,28 +257,24 @@ public class GpxTrackWriter implements TrackWriter {
         }
     }
 
-    @Override
     public void writeEndTrack(Track track, TrackPoint endTrackPoint) {
         if (printWriter != null) {
             printWriter.println("</trk>");
         }
     }
 
-    @Override
     public void writeOpenSegment() {
         printWriter.println("<trkseg>");
     }
 
-    @Override
     public void writeCloseSegment() {
         printWriter.println("</trkseg>");
     }
 
-    @Override
     public void writeTrackPoint(TrackPoint trackPoint) {
         if (printWriter != null) {
-            String coordinates = trackPoint.hasLocation() ? " " + formatLocation(trackPoint.getLatitude(), trackPoint.getLongitude()) : "";
-            printWriter.println("<trkpt " + coordinates + ">");
+
+            printWriter.println("<trkpt " + formatLocation(trackPoint.getLatitude(), trackPoint.getLongitude()) + ">");
 
             if (trackPoint.hasAltitude()) {
                 printWriter.println("<ele>" + ELEVATION_FORMAT.format(trackPoint.getAltitude()) + "</ele>");
@@ -208,7 +294,7 @@ public class GpxTrackWriter implements TrackWriter {
                 }
 
                 if (trackPoint.hasCyclingCadence()) {
-                    printWriter.println("<gpxtpx:cad>" + HEARTRATE_FORMAT.format(trackPoint.getCyclingCadence_rpm()) + "</gpxtpx:cad>");
+                    printWriter.println("<gpxtpx:cad>" + CADENCE_FORMAT.format(trackPoint.getCyclingCadence_rpm()) + "</gpxtpx:cad>");
                 }
 
                 if (trackPoint.hasElevationGain()) {

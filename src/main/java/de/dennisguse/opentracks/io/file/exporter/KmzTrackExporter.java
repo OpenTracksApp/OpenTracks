@@ -50,19 +50,12 @@ public class KmzTrackExporter implements TrackExporter {
     private static final int BUFFER_SIZE = 4096;
 
     private final ContentProviderUtils contentProviderUtils;
-    private final FileTrackExporter fileTrackExporter;
+    private final KMLTrackExporter fileTrackExporter;
 
     private final boolean exportPhotos;
     private final Context context;
 
-    /**
-     * Constructor.
-     *
-     * @param context the context
-     * @param contentProviderUtils the content provider utils
-     * @param trackExporter        the file track exporter
-     */
-    public KmzTrackExporter(Context context, ContentProviderUtils contentProviderUtils, FileTrackExporter trackExporter, boolean exportPhotos) {
+    public KmzTrackExporter(Context context, ContentProviderUtils contentProviderUtils, KMLTrackExporter trackExporter, boolean exportPhotos) {
         this.context = context;
         this.contentProviderUtils = contentProviderUtils;
         this.fileTrackExporter = trackExporter;
