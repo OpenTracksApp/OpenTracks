@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <string name="about_preference_title">Om OpenTracks</string>
     <string name="about_description"><i> OpenTracks </i> er en sportssporingsapplikation, der fuldt ud respekterer dit privatliv.</string>
     <string name="about_url">Projektwebside: <a href="%1$s">%1$s</a></string>
@@ -30,40 +30,28 @@ limitations under the License.
 * Opret markører (inkl. billeder) \n
 * fungerer helt offline \n
 * vis spor på et kort (se nedenfor)</string>
-
     <string name="help_track_map_title">Hvordan viser man et spor på et kort?</string>
-    <string name="help_track_map_content">
-Brug det lille kortikon. \n
-a)
-(liveopdateringer) Installer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
-Det giver online eller offline kort via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n
-Faktisk er OSMDashboard en separat app, der kun kan få adgang til (midlertidigt) adgang til dataene fra spor (e), der skal vises.\n
-b) Via et normalt kortprogram (f.eks. <a href="http://osmand.net/">OsmAnd</a> og <a href="https://maps.me/">MAPS.ME</a>).
-Disse app skal understøtte KMZ-filformatet (kun placeringer og tidsstempler).
-Faktisk skal en app understøtte <i>ACTION_VIEW</i> med MIME <i>application/vnd.google-earth.kmz</i>.</string>
-
+    <string name="help_track_map_content">" Brug det lille kortikon.
+\n  a) (live opdateringer) Installer &lt;a href=\"https://github.com/OpenTracksApp/OSMDashboard\"&gt; OSMDashboard &lt;/a&gt;. Det giver online eller offline kort via &lt;a href=\"https://www.openstreetmap.org\"&gt; OpenStreetMap &lt;/a&gt;.
+\n  Faktisk er OSMDashboard en separat app, der kun kan få adgang (midlertidigt) til dataene for spor, der skal vises.
+\n  b) Via en normal kortapplikation (f.eks. &lt;a href=\"http://osmand.net/\"&gt; OsmAnd &lt;/a&gt; og &lt;a href=\"https://maps.me/\"&gt; MAPS.ME &lt; / a&gt;). Disse apps skal understøtte KMZ-filformatet (kun placeringer og tidsstempler). Faktisk skal en app understøtte &lt;i&gt; ACTION_VIEW &lt;/i&gt; med MIME &lt;i&gt; -applikation / vnd.google-earth.kmz &lt;/i&gt;. "</string>
     <string name="help_storage_pictures_title">Hvordan gemmer OpenTracks billeder, der blev taget som markører?</string>
     <string name="help_storage_pictures_content">Disse gemmes i appens interne lager (dvs. kun tilgængelig inden for OpenTracks).</string>
-
     <string name="help_track_export_title">Hvordan kan jeg eksportere / dele indspillede numre?</string>
     <string name="help_track_export_content">
 Spor kan eksporteres fra indstillingerne som KMZ, KML eller GPX.
 KMZ / KML alle data; GPX kun placeringer.
 Spor, der deles via <i>delingsikonet</i> deles som KMZ.</string>
-
     <string name="help_data_google_play_services_title">Kræver/bruger OpenTracks Google Play Service?</string>
-
     <string name="help_recording_title">Hvordan registrerer OpenTracks data?</string>
     <string name="help_recording_content">
 OpenTracks bruger enhedens GPS-sensor til at registrere placeringen kontinuerligt.
 Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, højde), kan OpenTracks ikke gøre noget ved det.</string>
-
     <string name="help_data_storage_title">Hvordan gemmer OpenTracks sensordata?</string>
     <string name="help_data_storage_content">
 Sensordata gemmes pr. Optaget placering.
 Med hensyn til en pulssensor betyder det, at der kun er <i> en </i> måling af hjertefrekvensen lagret pr. Placering.
 Hvis du står stille eller er indendørs, registreres ingen sensordata (men de vil blive vist).</string>
-
     <string name="help_gps_troubleshooting_title">OpenTracks optager ikke placeringer?</string>
     <string name="help_gps_troubleshooting_content">
 Hvad du kan gøre:\n
@@ -73,7 +61,6 @@ c) Kontroller, om du har appen <a href="https://f-droid.org/en/packages/com.andr
 d) deaktiver strømbesparelse. \n
 \n
 Hvis alt ikke hjælper, skal du rapportere en fejl.</string>
-
     <string name="help_support_title">Hvordan kan jeg støtte OpenTracks?</string>
     <string name="help_support_content">
 Du kan: \n
@@ -84,7 +71,6 @@ d) hjælp til softwareudvikling, \n
 e) køb i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore"> Google Play Store </a>, \n
 f) donere, og \n
 g) gør hvad du synes hjælper OpenTracks.</string>
-
     <string name="open_track_using_dashboard">Åben med OpenTracks-Dashboard</string>
     <string name="open_track_as_KMZ">Åben som KMZ</string>
     <string name="open_track_as_GPX">Åben som GPX</string>
@@ -366,14 +352,12 @@ g) gør hvad du synes hjælper OpenTracks.</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth-sensor</string>
     <string name="settings_sensor_connecting">Tilsluttet %1$s</string>
     <string name="settings_sensor_disconnected">Frakoblet %1$s</string>
-
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Breddegrad/længdegrad</string>
     <string name="settings_stats_rate_title">Foretrukkenfartenhed</string>
     <string name="settings_stats_units_imperial">Britisk (mil, ft)</string>
     <string name="settings_stats_units_metric">Metrisk (km, m)</string>
     <string name="settings_stats_units_title">Foretrukne enheder</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file">Del rutefil</string>
     <string name="share_track_share_file_body">Du kunne måske være interesseret i denne rute.\n\nDu kan bruge Google Earth eller anden
@@ -565,5 +549,4 @@ g) gør hvad du synes hjælper OpenTracks.</string>
     <!-- Share image -->
     <string name="share_image_subject">Jeg vil gerne dele et billede med dig</string>
     <string name="share_image_body">Jeg tror, du måske er interesseret i dette billede.</string>
-
 </resources>
