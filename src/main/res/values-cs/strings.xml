@@ -111,7 +111,7 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="activity_type_skate_boarding">skateboarding</string>
     <string name="activity_type_skating">bruslení</string>
     <string name="activity_type_skiing">lyžování</string>
-    <string name="activity_type_sky_jumping">sky jumping</string>
+    <string name="activity_type_sky_jumping">skákání na obloze</string>
     <string name="activity_type_sled">sáně</string>
     <string name="activity_type_snow_boarding">snowboarding</string>
     <string name="activity_type_snow_shoeing">lyžování na sněžnicích</string>
@@ -594,4 +594,13 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
         <item quantity="few">Ukončeno s %1$d chybami</item>
         <item quantity="other">Ukončeno s %1$d chybami</item>
     </plurals>
+    <string name="import_progress_summary_errors_msg">Chyba</string>
+    <string name="settings_prevent_reimport_tracks_title">Zabraňte opětovnému importu Stop</string>
+    <string name="export_progress_summary_errors_msg">Chyba</string>
+    <string name="export_progress_summary_skip_msg">Stopy přeskočeny</string>
+    <string name="export_progress_summary_overwrite_msg">Skladby přepsány</string>
+    <string name="export_progress_summary_new_msg">Vyvezeny nové tratě</string>
+    <string name="import_progress_summary_exists_msg">Existovat</string>
+    <string name="import_progress_summary_ok_msg">Importované soubory</string>
+    <string name="generic_open_track">Otevřená Trať</string>
 </resources>
