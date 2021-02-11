@@ -323,11 +323,9 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_stats_units_title">Unità di misura preferite</string>
     <!-- Share Track -->
     <string name="share_track_share_file">Condividi file di percorso</string>
-    <string name="share_track_share_file_body">Credo che ti potrebbe interessare questo percorso.
+    <string name="share_track_share_file_body">Penso che potrebbe essere interessato a questa pista.
 \n
-\n%1$s
-\n
-\nPer visualizzarlo, usa Google Earth o un altro software di mappatura.</string>
+\n%1$s</string>
     <string name="share_track_subject">Desidero condividere un percorso con te</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Ritmo medio in movimento</string>
@@ -593,4 +591,16 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="hold_to_pause">Tieni premuto per mettere in pausa</string>
     <string name="instant_export_enabled_summary">È stata completata l\' esportazione del percorso finito nella memoria interna del tuo dispositivo</string>
     <string name="instant_export_enabled_title">Esportazione istantanea post-allenamento</string>
+    <string name="generic_open_track">Apri traccia</string>
+    <string name="import_prevent_reimport">È stato impostato impedisci reimportazione traccia</string>
+    <string name="export_error_post_workout">Esportazione post-allenamento non riuscita, controllare la directory di esportazione.</string>
+    <string name="settings_prevent_reimport_tracks_title">Impedire la reimportazione delle tracce</string>
+    <string name="export_progress_summary_errors_msg">Errore</string>
+    <string name="export_progress_summary_skip_msg">Tracce saltate</string>
+    <string name="export_progress_summary_overwrite_msg">Tracce sovrascritte</string>
+    <string name="export_progress_summary_new_msg">Nuove tracce esportate</string>
+    <string name="import_no_kml_file_found">Nessun dottore.file kml trovato in KMZ</string>
+    <string name="import_progress_summary_ok_msg">File importati</string>
+    <string name="import_progress_summary_exists_msg">Esiste già</string>
+    <string name="import_progress_summary_errors_msg">Errore</string>
 </resources>
