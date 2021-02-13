@@ -82,29 +82,8 @@ public class AnnouncementUtils {
         return result + minutesText + " " + secondsText;
     }
 
-    /**
-     * Gets the plural count to be used by getQuantityString.
-     * getQuantityString only supports integer quantities, not a double quantity like "2.2".
-     * <p>
-     * As a temporary workaround, we convert a double quantity to an integer quantity.
-     * If the double quantity is exactly 0, 1, or 2, then we can return these integer quantities.
-     * Otherwise, we cast the double quantity to an integer quantity.
-     * However, we need to make sure that if the casted value is 0, 1, or 2, we don't return those, instead, return the next biggest integer 3.
-     *
-     * @param d the double value
-     */
-    private static int getQuantityCount(double d) {
-        if (d == 0) {
-            return 0;
-        } else if (d == 1) {
-            return 1;
-        } else if (d == 2) {
-            return 2;
-        } else {
-            //TODO This seems weird; why not use Math.round(d) or Math.ceil()?
-            int count = (int) d;
-            return Math.max(count, 3);
-        }
+    static int getQuantityCount(double d) {
+        return (int) d;
     }
 }
 
