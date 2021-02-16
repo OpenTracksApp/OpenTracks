@@ -597,4 +597,9 @@ limitations under the License.
     <string name="generic_open_track">Åpne spor</string>
     <string name="import_progress_summary_exists_msg">Finnes allerede</string>
     <string name="import_progress_summary_errors_msg">Feil</string>
+    <string name="sensor_state_cadence_avg">Gjennomsnittlig kadens</string>
+    <string name="sensor_state_cadence_max">Maks kadens</string>
+    <string name="sensor_state_heart_rate_avg">Gjennomsnittlig puls</string>
+    <string name="sensor_state_heart_rate_max">Maks puls</string>
+    <string name="sensor_state_power_avg">Gjennomsnittlig effekt</string>
 </resources>
