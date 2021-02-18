@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">坐飞机</string>
     <string name="activity_type_atv">全地形越野</string>
@@ -118,7 +118,7 @@ limitations under the License.
     <string name="description_track_point">点</string>
     <string name="description_track_segment">路段</string>
     <!-- Export -->
-    <string name="export_all_option">全部以 %1$s 格式导</string>
+    <string name="export_all_option">以 %1$s 格式导出全部</string>
     <string name="export_all_title">导出到外部存储设备</string>
     <string name="export_error">已将%1$d条路线（共%2$s条）导出到%3$s</string>
     <string name="export_option">以 %1$s 格式导出到 %2$s</string>
@@ -278,11 +278,11 @@ limitations under the License.
     <string name="settings_stats_units_imperial">英制（英里、英尺）</string>
     <string name="settings_stats_units_metric">公制（公里、米）</string>
     <string name="settings_stats_units_title">首选单位</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file">分享路线文件</string>
-    <string name="share_track_share_file_body">您可能会对此路线感兴趣。\n\n要查看此路线，请使用 Google 地图或其他
-    地图软件。\n\n%1$s</string>
+    <string name="share_track_share_file_body">我想您可能会对此路线感兴趣。
+\n
+\n%1$s</string>
     <string name="share_track_subject">我要与您分享路线</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">平均移动步速</string>
@@ -464,4 +464,18 @@ limitations under the License.
     <string name="waypoint_type_waterfall">瀑布</string>
     <string name="waypoint_type_water_fountain">喷泉</string>
     <string name="waypoint_type_waypoint">路标</string>
+    <string name="about_url">项目主页：<a href="%1$s">%1$s</a></string>
+    <string name="about_history">OpenTracks 是 <a href="https://code.google.com/archive/p/mytracks/"><i>Google MyTracks</i></a>（终止于 2016 年）的一个分支版本。</string>
+    <string name="open_track_as_KMZ">作为 KMZ 文件打开</string>
+    <string name="open_track_as_trackfileformat">作为 %1$s 文件打开</string>
+    <string name="about_preference_title">关于 OpenTracks</string>
+    <string name="about_version_name">版本名称：%1$s</string>
+    <string name="about_version_code">版本号：%1$d</string>
+    <string name="about_libraries">库</string>
+    <string name="help_feature_title">OpenTracks 支持以下特性：</string>
+    <string name="open_track_as_GPX">作为 GPX 文件打开</string>
+    <string name="activity_type_escooter">电动车</string>
+    <string name="app_not_installed_show_on_map">请先安装一个支持展示地图数据的应用。</string>
+    <string name="description_elevation_loss">海拔降低：%1$d 米（%2$d 英尺）</string>
+    <string name="description_default_speed_or_pace">按活动类型</string>
 </resources>
