@@ -36,6 +36,7 @@ import androidx.annotation.VisibleForTesting;
 import java.util.Arrays;
 
 import de.dennisguse.opentracks.content.data.MarkerColumns;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 
@@ -56,6 +57,38 @@ public class CustomContentProvider extends ContentProvider {
 
     private SQLiteDatabase db;
 
+    /**
+     * The string representing the query that compute sensor stats from trackpoints table.
+     * It computes the average for heart rate, cadence, and power (duration-based average) and the maximum for heart rate and cadence.
+     * Finally, it ignores manual pause (SEGMENT_START_MANUAL).
+     */
+    private final String SENSOR_STATS_QUERY =
+            "WITH time_select as " +
+                "(SELECT t1." + TrackPointsColumns.TIME + " * (t1." + TrackPointsColumns.TYPE + " NOT IN (" + TrackPoint.Type.SEGMENT_START_MANUAL.type_db + ")) time_value " +
+                "FROM " + TrackPointsColumns.TABLE_NAME + " t1 " +
+                "WHERE t1." + TrackPointsColumns._ID + " > t." + TrackPointsColumns._ID + " AND t1." + TrackPointsColumns.TRACKID + " = ? ORDER BY _id LIMIT 1) " +
+
+            "SELECT " +
+                "SUM(t." + TrackPointsColumns.SENSOR_HEARTRATE + " * (COALESCE(MAX(t." + TrackPointsColumns.TIME + ", (SELECT time_value FROM time_select)), t." + TrackPointsColumns.TIME + ") - t." + TrackPointsColumns.TIME + ")) " +
+                "/ " +
+                "SUM(COALESCE(MAX(t." + TrackPointsColumns.TIME + ", (SELECT time_value FROM time_select)), t." + TrackPointsColumns.TIME + ") - t." + TrackPointsColumns.TIME + ") " + TrackPointsColumns.ALIAS_AVG_HR + ", " +
+
+                "MAX(t." + TrackPointsColumns.SENSOR_HEARTRATE + ") " + TrackPointsColumns.ALIAS_MAX_HR + ", " +
+
+                "SUM(t." + TrackPointsColumns.SENSOR_CADENCE + " * (COALESCE(MAX(t." + TrackPointsColumns.TIME + ", (SELECT time_value FROM time_select)), t." + TrackPointsColumns.TIME + ") - t." + TrackPointsColumns.TIME + ")) " +
+                "/ " +
+                "SUM(COALESCE(MAX(t." + TrackPointsColumns.TIME + ", (SELECT time_value FROM time_select)), t." + TrackPointsColumns.TIME + ") - t." + TrackPointsColumns.TIME + ") " + TrackPointsColumns.ALIAS_AVG_CADENCE + ", " +
+
+                "MAX(t." + TrackPointsColumns.SENSOR_CADENCE + ") " + TrackPointsColumns.ALIAS_MAX_CADENCE + ", " +
+
+                "SUM(t." + TrackPointsColumns.SENSOR_POWER + " * (COALESCE(MAX(t." + TrackPointsColumns.TIME + ", (SELECT time_value FROM time_select)), t." + TrackPointsColumns.TIME + ") - t." + TrackPointsColumns.TIME + ")) " +
+                "/ " +
+                "SUM(COALESCE(MAX(t." + TrackPointsColumns.TIME + ", (SELECT time_value FROM time_select)), t." + TrackPointsColumns.TIME + ") - t." + TrackPointsColumns.TIME + ") " + TrackPointsColumns.ALIAS_AVG_POWER + " " +
+
+            "FROM " + TrackPointsColumns.TABLE_NAME + " t " +
+            "WHERE t." + TrackPointsColumns.TRACKID + " = ? " +
+            "AND t." + TrackPointsColumns.TYPE + " NOT IN (" + TrackPoint.Type.SEGMENT_START_MANUAL.type_db + ")";
+
     public CustomContentProvider() {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.CONTENT_URI_BY_ID.getPath(), UrlType.TRACKPOINTS.ordinal());
@@ -63,6 +96,7 @@ public class CustomContentProvider extends ContentProvider {
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TrackPointsColumns.CONTENT_URI_BY_TRACKID.getPath() + "/*", UrlType.TRACKPOINTS_BY_TRACKID.ordinal());
 
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.CONTENT_URI.getPath(), UrlType.TRACKS.ordinal());
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.CONTENT_URI_SENSOR_STATS.getPath() + "/#", UrlType.TRACKS_SENSOR_STATS.ordinal());
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.CONTENT_URI.getPath() + "/*", UrlType.TRACKS_BY_ID.ordinal());
 
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, MarkerColumns.CONTENT_URI.getPath(), UrlType.MARKERS.ordinal());
@@ -223,6 +257,10 @@ public class CustomContentProvider extends ContentProvider {
                 queryBuilder.setTables(TracksColumns.TABLE_NAME);
                 queryBuilder.appendWhere(TracksColumns._ID + " IN (" + TextUtils.join(SQL_LIST_DELIMITER, ContentProviderUtils.parseTrackIdsFromUri(url)) + ")");
                 break;
+            case TRACKS_SENSOR_STATS:
+                long trackId = ContentUris.parseId(url);
+                Cursor cursor = db.rawQuery(SENSOR_STATS_QUERY, new String[]{String.valueOf(trackId), String.valueOf(trackId)});
+                return cursor;
             case MARKERS:
                 queryBuilder.setTables(MarkerColumns.TABLE_NAME);
                 sortOrder = sort != null ? sort : MarkerColumns.DEFAULT_SORT_ORDER;
@@ -363,6 +401,7 @@ public class CustomContentProvider extends ContentProvider {
         TRACKPOINTS_BY_TRACKID,
         TRACKS,
         TRACKS_BY_ID,
+        TRACKS_SENSOR_STATS,
         MARKERS,
         MARKERS_BY_ID,
         MARKERS_BY_TRACKID
