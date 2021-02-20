@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks.content.provider;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -837,31 +838,19 @@ public class ContentProviderUtils {
         return TextUtils.split(url.getLastPathSegment(), ID_SEPARATOR);
     }
 
-    public SensorStatistics getSensorStats(Track.Id trackId) {
-        if (trackId == null) {
-            return null;
-        }
-        String[] projection = {
-                "MAX(" + TrackPointsColumns.SENSOR_HEARTRATE + ") max_hr",
-                "AVG(" + TrackPointsColumns.SENSOR_HEARTRATE + ") avg_hr",
-                "MAX(" + TrackPointsColumns.SENSOR_CADENCE + ") max_cadence",
-                "AVG(" + TrackPointsColumns.SENSOR_CADENCE + ") avg_cadence",
-                "AVG(" + TrackPointsColumns.SENSOR_POWER + ") avg_power"
-        };
-        String selection = TrackPointsColumns.TRACKID + "=?";
-        String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
+    public SensorStatistics getSensorStats(@NonNull Track.Id trackId) {
         SensorStatistics sensorStatistics = null;
-        try (Cursor cursor = getTrackPointCursor(projection, selection, selectionArgs, null)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                sensorStatistics = new SensorStatistics(
-                        !cursor.isNull(cursor.getColumnIndexOrThrow("max_hr")) ? cursor.getFloat(cursor.getColumnIndexOrThrow("max_hr")) : null,
-                        !cursor.isNull(cursor.getColumnIndexOrThrow("avg_hr")) ? cursor.getFloat(cursor.getColumnIndexOrThrow("avg_hr")) : null,
-                        !cursor.isNull(cursor.getColumnIndexOrThrow("max_cadence")) ? cursor.getFloat(cursor.getColumnIndexOrThrow("max_cadence")) : null,
-                        !cursor.isNull(cursor.getColumnIndexOrThrow("avg_cadence")) ? cursor.getFloat(cursor.getColumnIndexOrThrow("avg_cadence")) : null,
-                        !cursor.isNull(cursor.getColumnIndexOrThrow("avg_power")) ? cursor.getFloat(cursor.getColumnIndexOrThrow("avg_power")) : null
-                );
-            }
+        Cursor cursor = contentResolver.query(ContentUris.withAppendedId(TracksColumns.CONTENT_URI_SENSOR_STATS, trackId.getId()), null, null, null, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            sensorStatistics = new SensorStatistics(
+                    !cursor.isNull(cursor.getColumnIndexOrThrow("max_hr")) ? cursor.getFloat(cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_MAX_HR)) : null,
+                    !cursor.isNull(cursor.getColumnIndexOrThrow("avg_hr")) ? cursor.getFloat(cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_AVG_HR)) : null,
+                    !cursor.isNull(cursor.getColumnIndexOrThrow("max_cadence")) ? cursor.getFloat(cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_MAX_CADENCE)) : null,
+                    !cursor.isNull(cursor.getColumnIndexOrThrow("avg_cadence")) ? cursor.getFloat(cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_AVG_CADENCE)) : null,
+                    !cursor.isNull(cursor.getColumnIndexOrThrow("avg_power")) ? cursor.getFloat(cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_AVG_POWER)) : null
+            );
         }
+
         return sensorStatistics;
     }
 }

@@ -35,18 +35,22 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
+import de.dennisguse.opentracks.content.data.TestSensorDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
+import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.UUIDUtils;
@@ -926,5 +930,338 @@ public class CustomContentProviderUtilsTest {
         assertEquals("", ContentProviderUtils.formatIdListForUri());
         assertEquals("12", ContentProviderUtils.formatIdListForUri(new Track.Id(12)));
         assertEquals("42,43,44", ContentProviderUtils.formatIdListForUri(new Track.Id(42), new Track.Id(43), new Track.Id(44)));
+    }
+
+    @Test
+    public void testGetSensorStats_noSensorData() {
+        // given
+        List<TrackPoint> trackPointList = new ArrayList<>();
+        TrackPoint trackPoint = TestDataUtil.createTrackPoint(1);
+        trackPoint.setType(TrackPoint.Type.TRACKPOINT);
+        trackPoint.setPower(null);
+        trackPoint.setCyclingCadence_rpm(null);
+        trackPoint.setHeartRate_bpm(null);
+        trackPointList.add(trackPoint);
+        Track.Id trackId = new Track.Id(System.currentTimeMillis());
+        Track track = TestDataUtil.createTrack(trackId);
+        TestDataUtil.insertTrackWithLocations(contentProviderUtils, track, trackPointList);
+
+        // when
+        SensorStatistics sensorStatistics = contentProviderUtils.getSensorStats(trackId);
+
+        // then
+        assertFalse(sensorStatistics.hasHeartRate());
+        assertFalse(sensorStatistics.hasCadence());
+        assertFalse(sensorStatistics.hasPower());
+    }
+
+    @Test
+    public void testGetSensorStats_needAtLeastTwoTrackPointsFalse() {
+        // given
+        /*
+         * time elapsed    hr      cadence     power       track type
+         * 0               140     90           300           0
+         */
+        Instant start = Instant.now();
+        TestSensorDataUtil sensorDataUtil = new TestSensorDataUtil();
+        sensorDataUtil.add(start, 140f, 90f, 300f, TrackPoint.Type.TRACKPOINT);
+
+        Track.Id trackId = new Track.Id(start.toEpochMilli());
+        Track track = TestDataUtil.createTrack(trackId);
+        TestDataUtil.insertTrackWithLocations(contentProviderUtils, track, sensorDataUtil.getTrackPointList());
+
+        // when
+        SensorStatistics sensorStatistics = contentProviderUtils.getSensorStats(trackId);
+
+        // then
+        assertFalse(sensorStatistics.hasHeartRate());
+        assertFalse(sensorStatistics.hasCadence());
+        assertFalse(sensorStatistics.hasPower());
+    }
+
+    @Test
+    public void testGetSensorStats_needAtLeastTwoTrackPointsTrue() {
+        // given
+        /*
+         * time elapsed    hr      cadence     power       track type
+         * 0               140     90          300         -1
+         * 1               140     90          300         1
+         */
+        Instant start = Instant.now();
+        TestSensorDataUtil sensorDataUtil = new TestSensorDataUtil();
+        sensorDataUtil.add(start, 140f, 90f, 300f, TrackPoint.Type.SEGMENT_START_AUTOMATIC);
+        sensorDataUtil.add(start.plus(1, ChronoUnit.SECONDS), 140f, 90f, 300f, TrackPoint.Type.SEGMENT_END_MANUAL);
+
+        Track.Id trackId = new Track.Id(start.toEpochMilli());
+        Track track = TestDataUtil.createTrack(trackId);
+        TestDataUtil.insertTrackWithLocations(contentProviderUtils, track, sensorDataUtil.getTrackPointList());
+
+        // when
+        SensorStatistics sensorStatistics = contentProviderUtils.getSensorStats(trackId);
+        TestSensorDataUtil.SensorDataStats stats = sensorDataUtil.computeStats();
+
+        // then
+        assertTrue(sensorStatistics.hasHeartRate());
+        assertEquals(sensorStatistics.getAvgHeartRate(), stats.avgHr, 0f);
+        assertEquals(sensorStatistics.getMaxHeartRate(), stats.maxHr, 0f);
+        assertTrue(sensorStatistics.hasCadence());
+        assertEquals(sensorStatistics.getAvgCadence(), stats.avgCadence, 0f);
+        assertEquals(sensorStatistics.getMaxCadence(), stats.maxCadence, 0f);
+        assertTrue(sensorStatistics.hasPower());
+        assertEquals(sensorStatistics.getAvgPower(), stats.avgPower, 0f);
+    }
+
+    @Test
+    public void testGetSensorStats_onlyHr() {
+        // given
+        /*
+         * time elapsed    hr      cadence     power       track type
+         * 0               140     NULL        NULL        -1
+         * 1               140     NULL        NULL        1
+         */
+        Instant start = Instant.now();
+        TestSensorDataUtil sensorDataUtil = new TestSensorDataUtil();
+        sensorDataUtil.add(start, 140f, null, null, TrackPoint.Type.SEGMENT_START_AUTOMATIC);
+        sensorDataUtil.add(start.plus(1, ChronoUnit.SECONDS), 140f, null, null, TrackPoint.Type.SEGMENT_END_MANUAL);
+
+        Track.Id trackId = new Track.Id(start.toEpochMilli());
+        Track track = TestDataUtil.createTrack(trackId);
+        TestDataUtil.insertTrackWithLocations(contentProviderUtils, track, sensorDataUtil.getTrackPointList());
+
+        // when
+        SensorStatistics sensorStatistics = contentProviderUtils.getSensorStats(trackId);
+        TestSensorDataUtil.SensorDataStats stats = sensorDataUtil.computeStats();
+
+        // then
+        assertTrue(sensorStatistics.hasHeartRate());
+        assertEquals(sensorStatistics.getAvgHeartRate(), stats.avgHr, 0f);
+        assertEquals(sensorStatistics.getMaxHeartRate(), stats.maxHr, 0f);
+        assertFalse(sensorStatistics.hasCadence());
+        assertFalse(sensorStatistics.hasPower());
+    }
+
+    @Test
+    public void testGetSensorStats_onlyCadence() {
+        // given
+        /*
+         * time elapsed    hr      cadence     power       track type
+         * 0               NULL    90          NULL        -1
+         * 1               NULL    90          NULL        1
+         */
+        Instant start = Instant.now();
+        TestSensorDataUtil sensorDataUtil = new TestSensorDataUtil();
+        sensorDataUtil.add(start, null, 90f, null, TrackPoint.Type.SEGMENT_START_AUTOMATIC);
+        sensorDataUtil.add(start.plus(1, ChronoUnit.SECONDS), null, 90f, null, TrackPoint.Type.SEGMENT_END_MANUAL);
+
+        Track.Id trackId = new Track.Id(start.toEpochMilli());
+        Track track = TestDataUtil.createTrack(trackId);
+        TestDataUtil.insertTrackWithLocations(contentProviderUtils, track, sensorDataUtil.getTrackPointList());
+
+        // when
+        SensorStatistics sensorStatistics = contentProviderUtils.getSensorStats(trackId);
+        TestSensorDataUtil.SensorDataStats stats = sensorDataUtil.computeStats();
+
+        // then
+        assertFalse(sensorStatistics.hasHeartRate());
+        assertTrue(sensorStatistics.hasCadence());
+        assertEquals(sensorStatistics.getAvgCadence(), stats.avgCadence, 0f);
+        assertEquals(sensorStatistics.getMaxCadence(), stats.maxCadence, 0f);
+        assertFalse(sensorStatistics.hasPower());
+    }
+
+    @Test
+    public void testGetSensorStats_onlyPower() {
+        // given
+        /*
+         * time elapsed    hr      cadence     power       track type
+         * 0               NULL    NULL        300         -1
+         * 1               NULL    NULL        300         1
+         */
+        Instant start = Instant.now();
+        TestSensorDataUtil sensorDataUtil = new TestSensorDataUtil();
+        sensorDataUtil.add(start, null, null, 300f, TrackPoint.Type.SEGMENT_START_AUTOMATIC);
+        sensorDataUtil.add(start.plus(1, ChronoUnit.SECONDS), null, null, 300f, TrackPoint.Type.SEGMENT_END_MANUAL);
+
+        Track.Id trackId = new Track.Id(start.toEpochMilli());
+        Track track = TestDataUtil.createTrack(trackId);
+        TestDataUtil.insertTrackWithLocations(contentProviderUtils, track, sensorDataUtil.getTrackPointList());
+
+        // when
+        SensorStatistics sensorStatistics = contentProviderUtils.getSensorStats(trackId);
+        TestSensorDataUtil.SensorDataStats stats = sensorDataUtil.computeStats();
+
+        // then
+        assertFalse(sensorStatistics.hasHeartRate());
+        assertFalse(sensorStatistics.hasCadence());
+        assertTrue(sensorStatistics.hasPower());
+        assertEquals(sensorStatistics.getAvgPower(), stats.avgPower, 0f);
+    }
+
+    @Test
+    public void testGetSensorStats() {
+        // given
+        /*
+         * time elapsed    hr      cadence     power       track type
+         * 0               140     75          250         -1
+         * 2               148     80          300         0
+         * 1               150     82          325         0
+         * 7               160     90          275         0
+         * 4               155     85          280         0
+         * 1               155     84          295         1
+         */
+        Instant start = Instant.now();
+        TestSensorDataUtil sensorDataUtil = new TestSensorDataUtil();
+        sensorDataUtil.add(start, 140f, 75f, 250f, TrackPoint.Type.SEGMENT_START_AUTOMATIC);
+        sensorDataUtil.add(start.plus(2, ChronoUnit.SECONDS), 148f, 80f, 300f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(3, ChronoUnit.SECONDS), 150f, 82f, 325f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(10, ChronoUnit.SECONDS), 160f, 90f, 275f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(14, ChronoUnit.SECONDS), 155f, 85f, 280f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(15, ChronoUnit.SECONDS), 155f, 84f, 295f, TrackPoint.Type.SEGMENT_END_MANUAL);
+
+        Track.Id trackId = new Track.Id(start.toEpochMilli());
+        Track track = TestDataUtil.createTrack(trackId);
+        TestDataUtil.insertTrackWithLocations(contentProviderUtils, track, sensorDataUtil.getTrackPointList());
+
+        // when
+        SensorStatistics sensorStatistics = contentProviderUtils.getSensorStats(trackId);
+        TestSensorDataUtil.SensorDataStats stats = sensorDataUtil.computeStats();
+
+        // then
+        assertEquals(sensorStatistics.getAvgHeartRate(), stats.avgHr, 0f);
+        assertEquals(sensorStatistics.getMaxHeartRate(), stats.maxHr, 0f);
+        assertEquals(sensorStatistics.getAvgCadence(), stats.avgCadence, 0f);
+        assertEquals(sensorStatistics.getMaxCadence(), stats.maxCadence, 0f);
+        assertEquals(sensorStatistics.getAvgPower(), stats.avgPower, 0f);
+    }
+
+    @Test
+    public void testGetSensorStats_withManualResume() {
+        // given
+        /*
+         * time elapsed    hr      cadence     power       track type
+         * 0               140     75          250         -1
+         * 2               148     80          300         0
+         * 1               150     82          325         0
+         * 3               174     88          400         0
+         * 20              127     54          175         -2
+         * 3               160     90          275         0
+         * 7               155     85          280         0
+         * 3               150     90          267         0
+         * 3               170     90          240         0
+         * 2               155     84          295         1
+         */
+        Instant start = Instant.now();
+        TestSensorDataUtil sensorDataUtil = new TestSensorDataUtil();
+        sensorDataUtil.add(start, 140f, 75f, 250f, TrackPoint.Type.SEGMENT_START_AUTOMATIC);
+        sensorDataUtil.add(start.plus(2, ChronoUnit.SECONDS), 148f, 80f, 300f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(3, ChronoUnit.SECONDS), 150f, 82f, 325f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(6, ChronoUnit.SECONDS), 174f, 88f, 400f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(26, ChronoUnit.SECONDS), 127f, 54f, 175f, TrackPoint.Type.SEGMENT_START_MANUAL);
+        sensorDataUtil.add(start.plus(29, ChronoUnit.SECONDS), 160f, 90f, 275f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(36, ChronoUnit.SECONDS), 155f, 85f, 280f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(39, ChronoUnit.SECONDS), 150f, 90f, 267f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(42, ChronoUnit.SECONDS), 170f, 90f, 240f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(44, ChronoUnit.SECONDS), 155f, 84f, 295f, TrackPoint.Type.SEGMENT_END_MANUAL);
+
+        Track.Id trackId = new Track.Id(start.toEpochMilli());
+        Track track = TestDataUtil.createTrack(trackId);
+        TestDataUtil.insertTrackWithLocations(contentProviderUtils, track, sensorDataUtil.getTrackPointList());
+
+        // when
+        SensorStatistics sensorStatistics = contentProviderUtils.getSensorStats(trackId);
+        TestSensorDataUtil.SensorDataStats stats = sensorDataUtil.computeStats();
+
+        // then
+        assertEquals(sensorStatistics.getAvgHeartRate(), stats.avgHr, 0f);
+        assertEquals(sensorStatistics.getMaxHeartRate(), stats.maxHr, 0f);
+        assertEquals(sensorStatistics.getAvgCadence(), stats.avgCadence, 0f);
+        assertEquals(sensorStatistics.getMaxCadence(), stats.maxCadence, 0f);
+        assertEquals(sensorStatistics.getAvgPower(), stats.avgPower, 0f);
+    }
+
+    @Test
+    public void testGetSensorStats_withStartAutomatic() {
+        // given
+        /*
+         * time elapsed    hr      cadence     power       track type
+         * 0               140     75          250         -1
+         * 2               148     80          300         0
+         * 1               150     82          325         0
+         * 3               174     88          400         0
+         * 20              127     54          175         -1
+         * 3               160     90          275         0
+         * 7               155     85          280         0
+         * 3               150     90          267         0
+         * 3               170     90          240         0
+         * 2               155     84          295         1
+         */
+        Instant start = Instant.now();
+        TestSensorDataUtil sensorDataUtil = new TestSensorDataUtil();
+        sensorDataUtil.add(start, 140f, 75f, 250f, TrackPoint.Type.SEGMENT_START_AUTOMATIC);
+        sensorDataUtil.add(start.plus(2, ChronoUnit.SECONDS), 148f, 80f, 300f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(3, ChronoUnit.SECONDS), 150f, 82f, 325f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(6, ChronoUnit.SECONDS), 174f, 88f, 400f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(26, ChronoUnit.SECONDS), 127f, 54f, 175f, TrackPoint.Type.SEGMENT_START_AUTOMATIC);
+        sensorDataUtil.add(start.plus(29, ChronoUnit.SECONDS), 160f, 90f, 275f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(36, ChronoUnit.SECONDS), 155f, 85f, 280f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(39, ChronoUnit.SECONDS), 150f, 90f, 267f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(42, ChronoUnit.SECONDS), 170f, 90f, 240f, TrackPoint.Type.TRACKPOINT);
+        sensorDataUtil.add(start.plus(44, ChronoUnit.SECONDS), 155f, 84f, 295f, TrackPoint.Type.SEGMENT_END_MANUAL);
+
+        Track.Id trackId = new Track.Id(start.toEpochMilli());
+        Track track = TestDataUtil.createTrack(trackId);
+        TestDataUtil.insertTrackWithLocations(contentProviderUtils, track, sensorDataUtil.getTrackPointList());
+
+        // when
+        SensorStatistics sensorStatistics = contentProviderUtils.getSensorStats(trackId);
+        TestSensorDataUtil.SensorDataStats stats = sensorDataUtil.computeStats();
+
+        // then
+        assertEquals(sensorStatistics.getAvgHeartRate(), stats.avgHr, 0f);
+        assertEquals(sensorStatistics.getMaxHeartRate(), stats.maxHr, 0f);
+        assertEquals(sensorStatistics.getAvgCadence(), stats.avgCadence, 0f);
+        assertEquals(sensorStatistics.getMaxCadence(), stats.maxCadence, 0f);
+        assertEquals(sensorStatistics.getAvgPower(), stats.avgPower, 0f);
+    }
+
+    private void testGetSensorStats_randomData(int totalPoints, boolean withStartSegments) {
+        // given
+        Instant start = Instant.now();
+        TestSensorDataUtil sensorDataUtil = new TestSensorDataUtil();
+        Random random = new Random();
+        for (int i = 0; i < totalPoints; i++) {
+            int randomNum = withStartSegments ? random.nextInt(50) - 2 : 0;
+            TrackPoint.Type type = randomNum >= 0 ? TrackPoint.Type.TRACKPOINT : TrackPoint.Type.getById(randomNum);
+            float randomHr = random.nextFloat() * (200f - 90f) + 90f;
+            float randomCadence = random.nextFloat() * (110f - 40f) + 40f;
+            float randomPower = random.nextFloat() * (500f - 100f) + 100f;
+            sensorDataUtil.add(start.plus(i, ChronoUnit.SECONDS), randomHr, randomCadence, randomPower, type);
+        }
+        sensorDataUtil.add(start.plus(totalPoints, ChronoUnit.SECONDS), 155f, 84f, 295f, TrackPoint.Type.SEGMENT_END_MANUAL);
+
+        Track.Id trackId = new Track.Id(start.toEpochMilli());
+        Track track = TestDataUtil.createTrack(trackId);
+        TestDataUtil.insertTrackWithLocations(contentProviderUtils, track, sensorDataUtil.getTrackPointList());
+
+        // when
+        SensorStatistics sensorStatistics = contentProviderUtils.getSensorStats(trackId);
+        TestSensorDataUtil.SensorDataStats stats = sensorDataUtil.computeStats();
+
+        // then
+        assertEquals(sensorStatistics.getAvgHeartRate(), stats.avgHr, 0.01f);
+        assertEquals(sensorStatistics.getMaxHeartRate(), stats.maxHr, 0.01f);
+        assertEquals(sensorStatistics.getAvgCadence(), stats.avgCadence, 0.01f);
+        assertEquals(sensorStatistics.getMaxCadence(), stats.maxCadence, 0.01f);
+        assertEquals(sensorStatistics.getAvgPower(), stats.avgPower, 0.01f);
+    }
+
+    @Test
+    public void testGetSensorStats_veryLongActivity12h() {
+    testGetSensorStats_randomData(43200, false);
+    }
+
+    @Test
+    public void testGetSensorStats_withSeveralRandomStartSegments() {
+        testGetSensorStats_randomData(5000, true);
     }
 }

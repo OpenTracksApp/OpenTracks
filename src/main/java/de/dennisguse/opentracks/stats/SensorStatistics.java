@@ -16,7 +16,7 @@ public class SensorStatistics {
     }
 
     public boolean hasHeartRate() {
-        return maxHr != null;
+        return avgHr != null && maxHr != null;
     }
 
     public float getMaxHeartRate() {
@@ -28,7 +28,7 @@ public class SensorStatistics {
     }
 
     public boolean hasCadence() {
-        return maxCadence != null;
+        return avgCadence != null && maxCadence != null;
     }
 
     public float getMaxCadence() {

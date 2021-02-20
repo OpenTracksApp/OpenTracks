@@ -54,6 +54,13 @@ public interface TrackPointsColumns extends BaseColumns {
     String ELEVATION_GAIN = "elevation_gain";
     String ELEVATION_LOSS = "elevation_loss";
 
+    // Alias for sensor statistics
+    String ALIAS_AVG_HR = "avg_hr";
+    String ALIAS_MAX_HR = "max_hr";
+    String ALIAS_AVG_CADENCE = "avg_cadence";
+    String ALIAS_MAX_CADENCE = "max_cadence";
+    String ALIAS_AVG_POWER = "avg_power";
+
     String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
             + _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + TRACKID + " INTEGER NOT NULL, "
