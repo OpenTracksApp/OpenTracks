@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">Авиаспорт</string>
     <string name="activity_type_atv">Езда на внедорожниках</string>
@@ -276,7 +276,6 @@ limitations under the License.
     <string name="settings_stats_units_imperial">Британская (мили, футы)</string>
     <string name="settings_stats_units_metric">Метрическая (км, м)</string>
     <string name="settings_stats_units_title">Система измерений</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file">Опубликовать трек</string>
     <string name="share_track_share_file_body">Я думаю этот маршрут покажется вам интересным.\n\nИспользуйте Google Планета Земля или другое картографическое ПО для просмотра трека.\n\n%1$s</string>
@@ -461,4 +460,30 @@ limitations under the License.
     <string name="waypoint_type_waterfall">Водопад</string>
     <string name="waypoint_type_water_fountain">Фонтан</string>
     <string name="waypoint_type_waypoint">путевая точка</string>
+    <string name="help_track_map_content"> Используйте значок маленькой карты.
+\na) (живые обновления) Установите <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Он предоставляет карты в режиме онлайн или оффлайн с помощью <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\nНа самом деле, OSMDashboard - это отдельное приложение, которое может получить доступ (временно) только к данным треков, которые будут показаны.
+\nb) Через обычное картографическое приложение (например, <a href="http://osmand.net/">OsmAnd</a> и <a href="https://maps.me/">MAPS.ME</a>). Эти приложения должны поддерживать формат файлов KMZ (только местоположения и метки времени). Фактически, приложение должно поддерживать <i>ACTION_VIEW</i> с MIME <i>application/vnd.google-earth.kmz</i>. </string>
+    <string name="help_storage_pictures_title">Как OpenTracks хранит изображения, сделанные в качестве маркеров\?</string>
+    <string name="about_preference_title">О OpenTracks</string>
+    <string name="about_description"><i>OpenTracks</i> - это приложение для отслеживания спортивных событий, которое полностью уважает вашу конфиденциальность.</string>
+    <string name="about_url">Веб-страница проекта: <a href="%1$s">%1$s</a></string>
+    <string name="about_version_name">Название версии: %1$s</string>
+    <string name="about_version_code">Код версии: %1$d</string>
+    <string name="about_history">OpenTracks - это форк <a href="https://code.google.com/archive/p/mytracks/"><i>Google MyTracks</i></a> (разработка прекращена в 2016 г.).</string>
+    <string name="about_libraries">Библиотеки</string>
+    <string name="help_feature_title">OpenTracks имеет следующие возможности:</string>
+    <string name="help_feature_content">* создание GPS-треков
+\n* использование датчика частоты пульса (только Bluetooth LE)
+\n* голосовые объявления (по времени или расстоянию)
+\n* создание маркеров (в т.ч. картинки)
+\n* работа полностью офлайн
+\n* показ треков на карте (см. ниже)</string>
+    <string name="help_track_map_title">Как показать трек на карте\?</string>
+    <string name="help_storage_pictures_content">Они хранятся во внутренней памяти приложения (т. е. доступны только в OpenTracks).</string>
+    <string name="help_track_export_title">Как я могу экспортировать/поделиться записанными треками\?</string>
+    <string name="help_data_google_play_services_title">Требуется/используется ли OpenTracks сервисы Google Play\?</string>
+    <string name="help_recording_title">Как OpenTracks записывает данные\?</string>
+    <string name="help_track_export_content"> Трек может быть экспортирован из \"Настроек\" в виде KMZ, KML или GPX. KMZ/KML все данные; GPX только местоположения. Поделиться треком можно через значок <i>поделиться</i> предоставляется как KMZ. </string>
+    <string name="help_recording_content">OpenTracks использует датчик GPS устройства для непрерывной записи местоположения. Если устройство GPS сообщает неточные данные (например, местоположение, скорость, высоту), OpenTracks ничего не может с этим поделать.</string>
 </resources>
