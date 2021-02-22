@@ -526,7 +526,6 @@
     <string name="gps_disabled_msg">GPS desativado</string>
     <string name="gps_fixed_and_ready">GPS corrigido e pronto</string>
     <string name="settings_sensor_connecting">Conectado a %1$s</string>
-    <string name="settings_sensor_wheel_circumference">Tamanho da roda (mm)</string>
     <string name="aggregated_stats_empty_message">Registre sua primeira trilha para ver as estatísticas agregadas</string>
     <string name="voice_pace_lap">Tempo da volta de %1$s</string>
     <string name="share_image_subject">Eu gostaria de compartilhar uma imagem com você</string>

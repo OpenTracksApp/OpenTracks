@@ -583,7 +583,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_night_mode_option_night">Scuro</string>
     <string name="settings_sensor_connecting">Connesso a %1$s</string>
     <string name="settings_sensor_disconnected">Disconnesso da %1$s</string>
-    <string name="settings_sensor_wheel_circumference">Grandezza della ruota (mm)</string>
     <string name="track_detail_intervals_tab">Intervalli</string>
     <string name="track_detail_record_success">Sto registrando un nuovo percorso</string>
     <string name="track_detail_resume_success">Riprendendo il percorso</string>

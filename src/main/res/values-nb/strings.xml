@@ -495,7 +495,6 @@ limitations under the License.
     <string name="settings_night_mode_option_system">System</string>
     <string name="settings_night_mode_option_day">Dag</string>
     <string name="settings_night_mode_option_night">Natt</string>
-    <string name="settings_sensor_wheel_circumference">Hjulstørrelse (mm)</string>
     <string name="settings_error_initial_values_restored">Beklager, men det oppstod en feil. Alle innstillinger er tilbakestilt til standardverdiene.</string>
     <string name="stats_intervals">Intervaller</string>
     <string name="track_recording_notification_accuracy">Posisjonsnøyaktighet: %1$s</string>
