@@ -602,4 +602,5 @@ limitations under the License.
     <string name="sensor_state_heart_rate_avg">Gjennomsnittlig puls</string>
     <string name="sensor_state_heart_rate_max">Maks puls</string>
     <string name="sensor_state_power_avg">Gjennomsnittlig effekt</string>
+    <string name="settings_sensor_wheel_circumference">Hjulomkrets (mm)</string>
 </resources>
