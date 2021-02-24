@@ -60,7 +60,7 @@
     <string name="activity_type_trail_hiking">caminhada em trilha</string>
     <string name="activity_type_trail_running">corrida em trilha</string>
     <string name="activity_type_train">treino</string>
-    <string name="activity_type_ultimate_frisbee">ultimate frisbee</string>
+    <string name="activity_type_ultimate_frisbee">frisbee definitivo</string>
     <string name="activity_type_unknown">desconhecida</string>
     <string name="activity_type_wakeboarding">esqui aquático</string>
     <string name="activity_type_walking">caminhada</string>
@@ -233,7 +233,7 @@
     <string name="settings_reset_confirm_message">Todas as configurações serão revertidas para os valores padrão.</string>
     <string name="settings_reset_confirm_title">Redefinir agora?</string>
     <string name="settings_reset_done">Todas as configurações foram revertidas para os valores padrão</string>
-    <string name="settings_sensor">Sensor</string>
+    <string name="settings_sensor">Sensores</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Sensor Bluetooth</string>
     <string name="settings_stats_coordinate">Latitude/longitude</string>
@@ -548,4 +548,10 @@
     <string name="import_progress_summary_ok_msg">Arquivos importados</string>
     <string name="import_progress_summary_exists_msg">Já existe</string>
     <string name="import_progress_summary_errors_msg">Erros</string>
+    <string name="sensor_state_heart_rate_max">Freqüência cardíaca máxima</string>
+    <string name="sensor_state_power_avg">Energia Avg</string>
+    <string name="sensor_state_heart_rate_avg">Ritmo cardíaco Avg</string>
+    <string name="sensor_state_cadence_max">Ritmo cardíaco médio</string>
+    <string name="sensor_state_cadence_avg">Avg Cadência</string>
+    <string name="settings_sensor_wheel_circumference">Circunferência da roda (mm)</string>
 </resources>
