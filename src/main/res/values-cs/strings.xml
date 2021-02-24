@@ -603,4 +603,9 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="import_progress_summary_exists_msg">Existovat</string>
     <string name="import_progress_summary_ok_msg">Importované soubory</string>
     <string name="generic_open_track">Otevřená Trať</string>
+    <string name="sensor_state_power_avg">Výkon Avg</string>
+    <string name="sensor_state_heart_rate_max">Maximální srdeční frekvence</string>
+    <string name="sensor_state_heart_rate_avg">Avg srdeční frekvence</string>
+    <string name="sensor_state_cadence_max">Max kadence</string>
+    <string name="sensor_state_cadence_avg">Avg kadence</string>
 </resources>
