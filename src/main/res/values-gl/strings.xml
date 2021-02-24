@@ -356,7 +356,7 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_sensor_bluetooth_sensor">Sensor de Bluetooth</string>
     <string name="settings_sensor_connecting">Conectado a %1$s</string>
     <string name="settings_sensor_disconnected">Desconectado de %1$s</string>
-    <string name="settings_sensor_wheel_circumference">Tamaño da roda (mm)</string>
+    <string name="settings_sensor_wheel_circumference">Circunferencia da roda (mm)</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Latitude/lonxitude</string>
     <string name="settings_stats_rate_title">Indicador preferido</string>
@@ -611,4 +611,9 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="import_progress_summary_ok_msg">Ficheiros importados</string>
     <string name="import_progress_summary_exists_msg">Xa existe</string>
     <string name="import_progress_summary_errors_msg">Erros</string>
+    <string name="sensor_state_cadence_avg">Cadencia media</string>
+    <string name="sensor_state_cadence_max">Cadencia máx.</string>
+    <string name="sensor_state_heart_rate_avg">Pulso medio</string>
+    <string name="sensor_state_heart_rate_max">Pulso máximo</string>
+    <string name="sensor_state_power_avg">Potencia media</string>
 </resources>
