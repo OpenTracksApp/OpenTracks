@@ -33,7 +33,8 @@ public class MarkerResourceCursorAdapter extends ResourceCursorAdapter implement
 
     private final Activity activity;
 
-    private ExecutorListViewService executorService = new ExecutorListViewService<Long>(LIST_PREFERRED_ITEM_HEIGHT_DEFAULT);
+    //TODO Should be Marker.Id
+    private final ExecutorListViewService executorService = new ExecutorListViewService<Long>(LIST_PREFERRED_ITEM_HEIGHT_DEFAULT);
 
     private boolean scroll = false;
 
@@ -111,8 +112,8 @@ public class MarkerResourceCursorAdapter extends ResourceCursorAdapter implement
             return;
         }
 
-        long id = cursor.getLong(cursor.getColumnIndex(MarkerColumns._ID));
-        String photoUrl = cursor.getString(cursor.getColumnIndex(MarkerColumns.PHOTOURL));
+        long id = cursor.getLong(cursor.getColumnIndexOrThrow(MarkerColumns._ID));
+        String photoUrl = cursor.getString(cursor.getColumnIndexOrThrow(MarkerColumns.PHOTOURL));
 
         boolean hasPhoto = photoUrl != null && !photoUrl.equals("");
         if (hasPhoto) {
