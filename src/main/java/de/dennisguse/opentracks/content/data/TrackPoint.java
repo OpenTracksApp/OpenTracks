@@ -21,6 +21,7 @@ import android.os.Parcel;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -41,6 +42,8 @@ import java.util.Objects;
  * @author Sandor Dornbush
  */
 public class TrackPoint {
+
+    private static final Duration MAX_LOCATION_AGE = Duration.ofMinutes(1);
 
     private TrackPoint.Id id;
 
@@ -245,6 +248,12 @@ public class TrackPoint {
     public void setTime(Instant time) {
         this.time = time;
     }
+
+    public boolean isRecent() {
+        return Instant.now()
+                .isBefore(time.plus(MAX_LOCATION_AGE));
+    }
+
 
     public boolean hasAltitude() {
         return altitude_m != null;

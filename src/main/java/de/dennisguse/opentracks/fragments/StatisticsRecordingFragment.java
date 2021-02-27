@@ -32,7 +32,6 @@ import de.dennisguse.opentracks.databinding.StatisticsRecordingBinding;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.stats.TrackStatistics;
-import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
@@ -193,9 +192,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
                     TrackPoint trackPoint = lastTrackPoint; //NOTE: There seems to be a race condition; just fix the symptom for now.
                     if (trackPoint != null && trackPoint.hasLocation()) {
-                        boolean hasFix = !LocationUtils.isTrackPointOld(trackPoint);
-
-                        if (!hasFix) {
+                        if (!trackPoint.isRecent()) {
                             lastTrackPoint = null;
                         }
                     }

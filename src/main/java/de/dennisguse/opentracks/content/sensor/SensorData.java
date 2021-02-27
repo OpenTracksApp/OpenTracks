@@ -15,7 +15,7 @@ public class SensorData<T> {
     private final String sensorAddress;
     private final String sensorName;
 
-    private final Instant timestamp_ms;
+    private final Instant time;
 
     SensorData(String sensorAddress) {
         this(sensorAddress, null);
@@ -26,10 +26,10 @@ public class SensorData<T> {
     }
 
     @VisibleForTesting
-    SensorData(String sensorAddress, String sensorName, Instant timestamp_ms) {
+    SensorData(String sensorAddress, String sensorName, Instant time) {
         this.sensorAddress = sensorAddress;
         this.sensorName = sensorName;
-        this.timestamp_ms = timestamp_ms;
+        this.time = time;
     }
 
     @NonNull
@@ -58,6 +58,7 @@ public class SensorData<T> {
      * Is the data recent considering the current time.
      */
     public boolean isRecent() {
-        return Instant.now().isBefore(timestamp_ms.plus(BluetoothRemoteSensorManager.MAX_SENSOR_DATE_SET_AGE_MS));
+        return Instant.now()
+                .isBefore(time.plus(BluetoothRemoteSensorManager.MAX_SENSOR_DATE_SET_AGE_MS));
     }
 }

@@ -17,11 +17,6 @@ package de.dennisguse.opentracks.util;
 
 import android.location.Location;
 
-import java.time.Duration;
-import java.time.Instant;
-
-import de.dennisguse.opentracks.content.data.TrackPoint;
-
 /**
  * Utility class for decimating tracks at a given level of precision.
  *
@@ -30,8 +25,6 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 public class LocationUtils {
 
     private static final String TAG = LocationUtils.class.getSimpleName();
-
-    private static final Duration MAX_LOCATION_AGE = Duration.ofMinutes(1);
 
     private LocationUtils() {
     }
@@ -46,12 +39,5 @@ public class LocationUtils {
         return location != null
                 && Math.abs(location.getLatitude()) <= 90
                 && Math.abs(location.getLongitude()) <= 180;
-    }
-
-    public static boolean isTrackPointOld(TrackPoint trackPoint) {
-        Instant now = Instant.now();
-        return !(Duration.between(trackPoint.getTime(), now)
-                .minus(MAX_LOCATION_AGE)
-                .isNegative());
     }
 }
