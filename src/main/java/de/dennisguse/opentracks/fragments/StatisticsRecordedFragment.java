@@ -51,10 +51,18 @@ import de.dennisguse.opentracks.viewmodels.SensorDataModel;
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
-//TODO During updateUI(): do not call PreferenceUtils (it is slow) rather use sharedPreferenceChangeListener.
 public class StatisticsRecordedFragment extends Fragment {
 
     private static final String TRACK_ID_KEY = "trackId";
+
+    public static StatisticsRecordedFragment newInstance(Track.Id trackId) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(TRACK_ID_KEY, trackId);
+
+        StatisticsRecordedFragment fragment = new StatisticsRecordedFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     private TrackStatistics trackStatistics;
     private SensorStatistics sensorStatistics;
@@ -65,26 +73,31 @@ public class StatisticsRecordedFragment extends Fragment {
 
     private StatisticsRecordedBinding viewBinding;
 
-    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
-        if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
-            if (isResumed()) {
-                getActivity().runOnUiThread(() -> {
-                    if (isResumed()) {
-                        updateUI();
-                    }
-                });
-            }
+    private boolean preferenceMetricUnits;
+    private boolean preferenceReportSpeed;
+
+    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
+        boolean updateUInecessary = false;
+
+        if (key == null || PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key)) {
+            updateUInecessary = true;
+            preferenceMetricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getContext());
+        }
+
+        if (key == null || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
+            updateUInecessary = true;
+            preferenceReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), category);
+        }
+
+        if (key != null && updateUInecessary && isResumed()) {
+            getActivity().runOnUiThread(() -> {
+                if (isResumed()) {
+                    updateUI();
+                }
+            });
         }
     };
 
-    public static StatisticsRecordedFragment newInstance(Track.Id trackId) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(TRACK_ID_KEY, trackId);
-
-        StatisticsRecordedFragment fragment = new StatisticsRecordedFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -113,7 +126,8 @@ public class StatisticsRecordedFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
+        SharedPreferences sharedPreferences = PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
         loadStatistics();
     }
@@ -142,13 +156,10 @@ public class StatisticsRecordedFragment extends Fragment {
     }
 
     private void updateUI() {
-        boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
-        boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext(), category);
-
         // Set total distance
         {
             double totalDistance = trackStatistics == null ? Double.NaN : trackStatistics.getTotalDistance();
-            Pair<String, String> parts = StringUtils.getDistanceParts(getContext(), totalDistance, metricUnits);
+            Pair<String, String> parts = StringUtils.getDistanceParts(getContext(), totalDistance, preferenceMetricUnits);
 
             viewBinding.statsDistanceValue.setText(parts.first);
             viewBinding.statsDistanceUnit.setText(parts.second);
@@ -169,9 +180,9 @@ public class StatisticsRecordedFragment extends Fragment {
         // Set average speed/pace
         {
             double speed = trackStatistics != null ? trackStatistics.getAverageSpeed() : Double.NaN;
-            viewBinding.statsAverageSpeedLabel.setText(reportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
+            viewBinding.statsAverageSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
 
-            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
+            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, preferenceMetricUnits, preferenceReportSpeed);
             viewBinding.statsAverageSpeedValue.setText(parts.first);
             viewBinding.statsAverageSpeedUnit.setText(parts.second);
         }
@@ -180,9 +191,9 @@ public class StatisticsRecordedFragment extends Fragment {
         {
             double speed = trackStatistics == null ? Double.NaN : trackStatistics.getMaxSpeed();
 
-            viewBinding.statsMaxSpeedLabel.setText(reportSpeed ? R.string.stats_max_speed : R.string.stats_fastest_pace);
+            viewBinding.statsMaxSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_max_speed : R.string.stats_fastest_pace);
 
-            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
+            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, preferenceMetricUnits, preferenceReportSpeed);
             viewBinding.statsMaxSpeedValue.setText(parts.first);
             viewBinding.statsMaxSpeedUnit.setText(parts.second);
         }
@@ -191,9 +202,9 @@ public class StatisticsRecordedFragment extends Fragment {
         {
             double speed = trackStatistics != null ? trackStatistics.getAverageMovingSpeed() : Double.NaN;
 
-            viewBinding.statsMovingSpeedLabel.setText(reportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
+            viewBinding.statsMovingSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
 
-            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, metricUnits, reportSpeed);
+            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, preferenceMetricUnits, preferenceReportSpeed);
             viewBinding.statsMovingSpeedValue.setText(parts.first);
             viewBinding.statsMovingSpeedUnit.setText(parts.second);
         }
@@ -209,11 +220,11 @@ public class StatisticsRecordedFragment extends Fragment {
 
             Pair<String, String> parts;
 
-            parts = StringUtils.formatElevation(getContext(), elevationGain_m, metricUnits);
+            parts = StringUtils.formatElevation(getContext(), elevationGain_m, preferenceMetricUnits);
             viewBinding.statsElevationGainValue.setText(parts.first);
             viewBinding.statsElevationGainUnit.setText(parts.second);
 
-            parts = StringUtils.formatElevation(getContext(), elevationLoss_m, metricUnits);
+            parts = StringUtils.formatElevation(getContext(), elevationLoss_m, preferenceMetricUnits);
             viewBinding.statsElevationLossValue.setText(parts.first);
             viewBinding.statsElevationLossUnit.setText(parts.second);
         }

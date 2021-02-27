@@ -46,8 +46,10 @@ public class PreferencesUtils {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public static void register(Context context, SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener) {
-        getSharedPreferences(context).registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    public static SharedPreferences register(Context context, SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener) {
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        return sharedPreferences;
     }
 
     public static void unregister(Context context, SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener) {
@@ -103,6 +105,10 @@ public class PreferencesUtils {
      */
     private static boolean getBoolean(Context context, int keyId, boolean defaultValue) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
+        return sharedPreferences.getBoolean(getKey(context, keyId), defaultValue);
+    }
+
+    private static boolean getBoolean(Context context, SharedPreferences sharedPreferences, int keyId, boolean defaultValue) {
         return sharedPreferences.getBoolean(getKey(context, keyId), defaultValue);
     }
 
@@ -179,15 +185,13 @@ public class PreferencesUtils {
         editor.apply();
     }
 
-    /**
-     * Gets a string preference value.
-     *
-     * @param context      the context
-     * @param keyId        the key id
-     * @param defaultValue default value
-     */
+    @Deprecated
     public static String getString(Context context, int keyId, String defaultValue) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
+        return sharedPreferences.getString(getKey(context, keyId), defaultValue);
+    }
+
+    public static String getString(Context context, SharedPreferences sharedPreferences, int keyId, String defaultValue) {
         return sharedPreferences.getString(getKey(context, keyId), defaultValue);
     }
 
@@ -206,15 +210,25 @@ public class PreferencesUtils {
         editor.apply();
     }
 
+    @Deprecated
     public static boolean isMetricUnits(Context context) {
-        final String STATS_UNIT = context.getString(R.string.stats_units_default);
-        return STATS_UNIT.equals(getString(context, R.string.stats_units_key, STATS_UNIT));
+        return isMetricUnits(getSharedPreferences(context), context);
     }
 
+    public static boolean isMetricUnits(SharedPreferences sharedPreferences, Context context) {
+        final String STATS_UNIT = context.getString(R.string.stats_units_default);
+        return STATS_UNIT.equals(getString(context, sharedPreferences, R.string.stats_units_key, STATS_UNIT));
+    }
+
+    @Deprecated
     public static boolean isReportSpeed(Context context, String category) {
+        return isReportSpeed(getSharedPreferences(context), context, category);
+    }
+
+    public static boolean isReportSpeed(SharedPreferences sharedPreferences, Context context, String category) {
         final String STATS_RATE_DEFAULT = context.getString(R.string.stats_rate_default);
-        String currentStatsRate = getString(context, R.string.stats_rate_key, STATS_RATE_DEFAULT);
-        if (currentStatsRate.equals(getString(context, R.string.stats_rate_speed_or_pace_default, STATS_RATE_DEFAULT))) {
+        String currentStatsRate = getString(context, sharedPreferences, R.string.stats_rate_key, STATS_RATE_DEFAULT);
+        if (currentStatsRate.equals(getString(context, sharedPreferences, R.string.stats_rate_speed_or_pace_default, STATS_RATE_DEFAULT))) {
             return TrackIconUtils.isSpeedIcon(context, category);
         }
 
@@ -286,12 +300,17 @@ public class PreferencesUtils {
         return getBoolean(context, R.string.stats_fullscreen_while_recording_key, DEFAULT);
     }
 
+    @Deprecated
     public static boolean isShowStatsElevation(Context context) {
-        final boolean STATS_SHOW_ELEVATION = context.getResources().getBoolean(R.bool.stats_show_elevation_default);
-        return getBoolean(context, R.string.stats_show_grade_elevation_key, STATS_SHOW_ELEVATION);
+        return isShowStatsElevation(getSharedPreferences(context), context);
     }
 
-    public static boolean isStatsShowCoordinate(Context context) {
+    public static boolean isShowStatsElevation(SharedPreferences sharedPreferences, Context context) {
+        final boolean STATS_SHOW_ELEVATION = context.getResources().getBoolean(R.bool.stats_show_elevation_default);
+        return getBoolean(context, sharedPreferences, R.string.stats_show_grade_elevation_key, STATS_SHOW_ELEVATION);
+    }
+
+    public static boolean isStatsShowCoordinate(SharedPreferences sharedPreferences, Context context) {
         final boolean STATS_SHOW_COORDINATE = context.getResources().getBoolean(R.bool.stats_show_coordinate_default);
         return getBoolean(context, R.string.stats_show_coordinate_key, STATS_SHOW_COORDINATE);
     }
