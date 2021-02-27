@@ -26,7 +26,6 @@ import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.sensor.SensorData;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.databinding.StatisticsRecordingBinding;
@@ -444,12 +443,13 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
         viewBinding.statsCoordinateGroup.setVisibility(showCoordinate ? View.VISIBLE : View.GONE);
         if (showCoordinate) {
-            double latitude = lastTrackPoint != null ? lastTrackPoint.getLatitude() : Double.NaN;
-            String latitudeText = Double.isNaN(latitude) || Double.isInfinite(latitude) ? getContext().getString(R.string.value_unknown) : StringUtils.formatCoordinate(latitude);
+            String latitudeText = getContext().getString(R.string.value_unknown);
+            String longitudeText = getContext().getString(R.string.value_unknown);
+            if (lastTrackPoint != null && lastTrackPoint.hasLocation()) {
+                latitudeText = StringUtils.formatCoordinate(lastTrackPoint.getLatitude());
+                longitudeText = StringUtils.formatCoordinate(lastTrackPoint.getLatitude());
+            }
             viewBinding.statsLatitudeValue.setText(latitudeText);
-
-            double longitude = lastTrackPoint != null ? lastTrackPoint.getLongitude() : Double.NaN;
-            String longitudeText = Double.isNaN(longitude) || Double.isInfinite(longitude) ? getContext().getString(R.string.value_unknown) : StringUtils.formatCoordinate(longitude);
             viewBinding.statsLongitudeValue.setText(longitudeText);
         }
     }

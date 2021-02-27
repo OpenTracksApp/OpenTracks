@@ -38,7 +38,6 @@ public class LocationUtils {
 
     /**
      * Checks if a given location is a valid (i.e. physically possible) location on Earth.
-     * Neither will locations with lat=0 and lng=0 as these are most likely "bad" measurements which often cause trouble.
      *
      * @param location the location to test
      * @return true if the location is a valid location.
@@ -50,8 +49,9 @@ public class LocationUtils {
     }
 
     public static boolean isTrackPointOld(TrackPoint trackPoint) {
-        return Duration.between(trackPoint.getTime(), Instant.now())
+        Instant now = Instant.now();
+        return !(Duration.between(trackPoint.getTime(), now)
                 .minus(MAX_LOCATION_AGE)
-                .isNegative();
+                .isNegative());
     }
 }

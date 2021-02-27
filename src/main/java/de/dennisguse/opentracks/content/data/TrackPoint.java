@@ -174,7 +174,23 @@ public class TrackPoint {
     }
 
     public boolean hasLocation() {
-        return latitude != null || longitude != null;
+        return latitude != null && longitude != null;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
     }
 
     @NonNull
@@ -220,22 +236,6 @@ public class TrackPoint {
 
     public void setElevationLoss(Float elevationLoss) {
         this.elevationLoss = elevationLoss;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
     }
 
     public Instant getTime() {
