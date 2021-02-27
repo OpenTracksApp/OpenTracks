@@ -240,7 +240,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     @Override
-    public void onNewTrackPointsDone() {
+    public void onNewTrackPointsDone(TrackPoint unused) {
         if (isResumed()) {
             chartView.addChartPoints(pendingPoints);
             pendingPoints.clear();

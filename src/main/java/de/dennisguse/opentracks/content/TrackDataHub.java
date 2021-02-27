@@ -365,10 +365,11 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
             next = new TrackPoint.Id(localLastSeenTrackPointIdId.getId() + 1); //TODO startTrackPointId + 1 is an assumption assumption; should be derived from the DB.
         }
 
+        TrackPoint trackPoint = null;
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, next)) {
 
             while (trackPointIterator.hasNext()) {
-                TrackPoint trackPoint = trackPointIterator.next();
+                trackPoint = trackPointIterator.next();
                 TrackPoint.Id trackPointId = trackPoint.getId();
 
                 // Stop if past the last wanted point
@@ -398,8 +399,11 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
                 }
 
                 localNumLoadedTrackPoints++;
-                localLastSeenTrackPointIdId = trackPointId;
             }
+        }
+
+        if (trackPoint != null) {
+            localLastSeenTrackPointIdId = trackPoint.getId();
         }
 
         if (updateSamplingState) {
@@ -409,7 +413,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         }
 
         for (TrackDataListener listener : sampledInListeners) {
-            listener.onNewTrackPointsDone();
+            listener.onNewTrackPointsDone(trackPoint);
         }
     }
 
