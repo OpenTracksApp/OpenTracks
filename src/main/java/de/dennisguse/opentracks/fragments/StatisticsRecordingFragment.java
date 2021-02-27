@@ -173,28 +173,27 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
     @Override
     public void onSampledInTrackPoint(TrackPoint trackPoint) {
-        lastTrackPoint = trackPoint;
+        // We don't care.
     }
 
     @Override
     public void onSampledOutTrackPoint(TrackPoint trackPoint) {
-        lastTrackPoint = trackPoint;
+        // We don't care.
     }
 
     @Override
-    public void onNewTrackPointsDone() {
+    public void onNewTrackPointsDone(TrackPoint newLastTrackPoint) {
         if (isResumed()) {
             getActivity().runOnUiThread(() -> {
                 if (isResumed()) {
+                    this.lastTrackPoint = newLastTrackPoint;
+
                     if (!isSelectedTrackRecording() || isSelectedTrackPaused()) {
-                        lastTrackPoint = null;
+                        this.lastTrackPoint = null;
                     }
 
-                    TrackPoint trackPoint = lastTrackPoint; //NOTE: There seems to be a race condition; just fix the symptom for now.
-                    if (trackPoint != null && trackPoint.hasLocation()) {
-                        if (!trackPoint.isRecent()) {
-                            lastTrackPoint = null;
-                        }
+                    if (this.lastTrackPoint != null && this.lastTrackPoint.hasLocation() && !this.lastTrackPoint.isRecent()) {
+                        this.lastTrackPoint = null;
                     }
                     setLocationValues();
                 }
@@ -276,7 +275,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
                 if (sensorDataSet.getCyclingCadence() != null) {
                     sensorDataList.add(new SensorDataModel(sensorDataSet.getCyclingCadence()));
                 }
-                if(sensorDataSet.getCyclingPower() != null) {
+                if (sensorDataSet.getCyclingPower() != null) {
                     sensorDataList.add(new SensorDataModel(sensorDataSet.getCyclingPower()));
                 }
                 sensorsAdapter.swapData(sensorDataList);
