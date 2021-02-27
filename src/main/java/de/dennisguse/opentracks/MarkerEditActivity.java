@@ -84,11 +84,9 @@ public class MarkerEditActivity extends AbstractActivity {
         // Setup UI elements
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.marker_types, android.R.layout.simple_dropdown_item_1line);
         viewBinding.markerEditMarkerType.setAdapter(adapter);
-        viewBinding.markerEditPhotoDelete.setOnClickListener(v -> {
-            viewModel.onPhotoDelete(viewBinding.markerEditName.getText().toString(),
-                    viewBinding.markerEditMarkerType.getText().toString(),
-                    viewBinding.markerEditDescription.getText().toString());
-        });
+        viewBinding.markerEditPhotoDelete.setOnClickListener(v -> viewModel.onPhotoDelete(viewBinding.markerEditName.getText().toString(),
+                viewBinding.markerEditMarkerType.getText().toString(),
+                viewBinding.markerEditDescription.getText().toString()));
 
         viewBinding.markerEditCancel.setOnClickListener(v -> {
             viewModel.onCancel();

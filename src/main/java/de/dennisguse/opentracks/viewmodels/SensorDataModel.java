@@ -9,7 +9,7 @@ import de.dennisguse.opentracks.util.StringUtils;
 
 public class SensorDataModel {
     private int labelId;
-    private String sensorValue;
+    private final String sensorValue;
     private String sensorName;
     private int unitId;
 

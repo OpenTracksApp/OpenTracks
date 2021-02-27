@@ -45,6 +45,9 @@ public class TrackPoint {
 
     private static final Duration MAX_LOCATION_AGE = Duration.ofMinutes(1);
 
+    // Anything faster than that (in meters per second) will be considered moving.
+    private static final double MAX_NO_MOVEMENT_SPEED = 0.224;
+
     private TrackPoint.Id id;
 
     private Instant time;
@@ -279,6 +282,10 @@ public class TrackPoint {
         this.speed_mps = speed;
     }
 
+    public boolean isMoving() {
+        return hasSpeed() && getSpeed() >= MAX_NO_MOVEMENT_SPEED;
+    }
+
     public boolean hasBearing() {
         return bearing != null;
     }
@@ -305,6 +312,10 @@ public class TrackPoint {
 
     public float distanceTo(@NonNull TrackPoint dest) {
         return getLocation().distanceTo(dest.getLocation());
+    }
+
+    public boolean fulfillsAccuracy(int poorAccuracy) {
+        return hasAccuracy() && accuracy < poorAccuracy;
     }
 
     public float bearingTo(@NonNull TrackPoint dest) {

@@ -12,7 +12,7 @@ public class ScrollVisibleViews implements AbsListView.OnScrollListener {
     private int from = -1;
     private int to = -1;
 
-    private VisibleViewsListener visibleViewsListener;
+    private final VisibleViewsListener visibleViewsListener;
 
     public ScrollVisibleViews(@NonNull VisibleViewsListener visibleViewsListener) {
         this.visibleViewsListener = visibleViewsListener;

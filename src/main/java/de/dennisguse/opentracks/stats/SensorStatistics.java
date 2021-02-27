@@ -1,11 +1,11 @@
 package de.dennisguse.opentracks.stats;
 
 public class SensorStatistics {
-    private Float maxHr;
-    private Float avgHr;
-    private Float maxCadence;
-    private Float avgCadence;
-    private Float avgPower;
+    private final Float maxHr;
+    private final Float avgHr;
+    private final Float maxCadence;
+    private final Float avgCadence;
+    private final Float avgPower;
 
     public SensorStatistics(Float maxHr, Float avgHr, Float maxCadence, Float avgCadence, Float avgPower) {
         this.maxHr = maxHr;
