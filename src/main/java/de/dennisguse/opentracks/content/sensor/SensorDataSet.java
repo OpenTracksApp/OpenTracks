@@ -33,11 +33,11 @@ public final class SensorDataSet {
         return cyclingPower;
     }
 
-    public void set(SensorData data) {
+    public void set(SensorData<?> data) {
         set(data, data);
     }
 
-    public void remove(SensorData type) {
+    public void remove(SensorData<?> type) {
         set(type, null);
     }
 
@@ -75,7 +75,7 @@ public final class SensorDataSet {
                 + (getCyclingPower() != null ? " " + getCyclingPower() : "");
     }
 
-    private void set(@NonNull SensorData type, SensorData data) {
+    private void set(@NonNull SensorData<?> type, SensorData<?> data) {
         if (type instanceof SensorDataHeartRate) {
             this.heartRate = (SensorDataHeartRate) data;
             return;

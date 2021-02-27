@@ -8,7 +8,7 @@ import java.time.Instant;
 
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 
-public class SensorData<T> {
+public abstract class SensorData<T> {
 
     protected T value;
 

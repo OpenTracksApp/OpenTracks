@@ -14,8 +14,8 @@ import java.util.concurrent.Future;
  */
 class ExecutorListViewService<T> {
 
-    private List<T> enqueueObjects = new ArrayList<>();
-    private ExecutorService executorService;
+    private final List<T> enqueueObjects = new ArrayList<>();
+    private final ExecutorService executorService;
 
     public ExecutorListViewService(int numThreads) {
         executorService = Executors.newFixedThreadPool(numThreads);
@@ -23,7 +23,6 @@ class ExecutorListViewService<T> {
 
     public void shutdown() {
         enqueueObjects.clear();
-        enqueueObjects = null;
         executorService.shutdown();
     }
 

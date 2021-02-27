@@ -95,7 +95,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
         private int successCount;
         private int existsCount;
         private int errorCount;
-        private ArrayList<Track.Id> importedTrackIds = new ArrayList<>();
+        private final ArrayList<Track.Id> importedTrackIds = new ArrayList<>();
         private final ArrayList<String> fileErrors = new ArrayList<>();
 
         public int getTotalCount() {

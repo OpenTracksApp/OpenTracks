@@ -16,7 +16,6 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.util.TrackPointUtils;
 
 class LocationHandler implements HandlerServer.Handler, LocationListener, GpsStatus.GpsStatusListener {
 
@@ -92,7 +91,7 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
     @Override
     public void onLocationChanged(@NonNull Location location) {
         TrackPoint trackPoint = new TrackPoint(location);
-        boolean isAccurate = TrackPointUtils.fulfillsAccuracy(trackPoint, recordingGpsAccuracy);
+        boolean isAccurate = trackPoint.fulfillsAccuracy(recordingGpsAccuracy);
         boolean isValid = LocationUtils.isValidLocation(location);
 
         if (gpsStatus != null) {

@@ -66,7 +66,6 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackNameUtils;
-import de.dennisguse.opentracks.util.TrackPointUtils;
 
 /**
  * A background service that registers a location listener and records track points.
@@ -594,7 +593,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        if (!isIdle && !TrackPointUtils.isMoving(trackPoint)) {
+        if (!isIdle && !trackPoint.isMoving()) {
             insertTrackPointIfNewer(track, lastTrackPoint);
 
             insertTrackPoint(track, trackPoint);
@@ -605,7 +604,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        if (isIdle && TrackPointUtils.isMoving(trackPoint)) {
+        if (isIdle && trackPoint.isMoving()) {
             insertTrackPointIfNewer(track, lastTrackPoint);
 
             insertTrackPoint(track, trackPoint);

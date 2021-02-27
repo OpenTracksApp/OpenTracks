@@ -25,7 +25,6 @@ import java.time.Duration;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
-import de.dennisguse.opentracks.util.TrackPointUtils;
 
 /**
  * Updater for {@link TrackStatistics}.
@@ -161,7 +160,7 @@ public class TrackStatisticsUpdater {
         }
 
         double movingDistance = lastMovingTrackPoint.distanceTo(trackPoint);
-        if (movingDistance < minRecordingDistance && !TrackPointUtils.isMoving(trackPoint)) {
+        if (movingDistance < minRecordingDistance && !trackPoint.isMoving()) {
             speedBuffer_ms.reset();
             lastTrackPoint = trackPoint;
             return;
@@ -211,7 +210,7 @@ public class TrackStatisticsUpdater {
      */
     @VisibleForTesting
     private void updateSpeed(@NonNull TrackPoint trackPoint, @NonNull TrackPoint lastTrackPoint) {
-        if (!TrackPointUtils.isMoving(trackPoint)) {
+        if (!trackPoint.isMoving()) {
             speedBuffer_ms.reset();
         } else if (isValidSpeed(trackPoint, lastTrackPoint)) {
             speedBuffer_ms.setNext(trackPoint.getSpeed());
