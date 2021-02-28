@@ -54,7 +54,7 @@ public class LegacyImportTest {
 
         // when
         // 1. import
-        importTrackId = trackImporter.importFile(inputStream);
+        importTrackId = trackImporter.importFile(inputStream).get(0);
 
         // then
         // 1. track
@@ -95,7 +95,7 @@ public class LegacyImportTest {
         InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.legacy_kml_empty);
 
         // when
-        importTrackId = trackImporter.importFile(inputStream);
+        importTrackId = trackImporter.importFile(inputStream).get(0);
     }
 
     /**
@@ -110,7 +110,7 @@ public class LegacyImportTest {
 
         // when
         // 1. import
-        importTrackId = trackImporter.importFile(inputStream);
+        importTrackId = trackImporter.importFile(inputStream).get(0);
 
         // then
         // 1. track

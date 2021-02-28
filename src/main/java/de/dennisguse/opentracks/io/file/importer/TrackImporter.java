@@ -15,7 +15,10 @@
  */
 package de.dennisguse.opentracks.io.file.importer;
 
+import androidx.annotation.NonNull;
+
 import java.io.InputStream;
+import java.util.List;
 
 import de.dennisguse.opentracks.content.data.Track;
 
@@ -30,8 +33,7 @@ public interface TrackImporter {
      * Import a file.
      *
      * @param inputStream the file's input stream
-     * @return the imported track id or null.
      */
-    //TODO Figure out how can make the import an atomic operation (incl. database transaction rollback).
-    Track.Id importFile(InputStream inputStream);
+    @NonNull
+    List<Track.Id> importFile(InputStream inputStream) throws ImportParserException;
 }
