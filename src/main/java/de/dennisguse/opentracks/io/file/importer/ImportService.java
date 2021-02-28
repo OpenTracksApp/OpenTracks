@@ -14,6 +14,7 @@ import androidx.documentfile.provider.DocumentFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
@@ -62,11 +63,12 @@ public class ImportService extends JobIntentService {
         }
 
         try (InputStream inputStream = getContentResolver().openInputStream(file.getUri())) {
-            Track.Id trackId = trackImporter.importFile(inputStream);
-            if (trackId != null) {
-                sendResult(ImportServiceResultReceiver.RESULT_CODE_IMPORTED, trackId, file, getString(R.string.import_file_imported, file.getName()));
+            ArrayList<Track.Id> trackIds = new ArrayList<>(trackImporter.importFile(inputStream));
+
+            if (!trackIds.isEmpty()) {
+                sendResult(ImportServiceResultReceiver.RESULT_CODE_IMPORTED, trackIds, file, getString(R.string.import_file_imported, file.getName()));
             } else {
-                sendResult(ImportServiceResultReceiver.RESULT_CODE_ERROR, trackId, file, getString(R.string.import_unable_to_import_file, file.getName()));
+                sendResult(ImportServiceResultReceiver.RESULT_CODE_ERROR, trackIds, file, getString(R.string.import_unable_to_import_file, file.getName()));
             }
         } catch (IOException e) {
             Log.d(TAG, "Unable to import file", e);
@@ -80,9 +82,9 @@ public class ImportService extends JobIntentService {
         }
     }
 
-    private void sendResult(int resultCode, Track.Id trackId, DocumentFile file, String message) {
+    private void sendResult(int resultCode, ArrayList<Track.Id> trackId, DocumentFile file, String message) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(ImportServiceResultReceiver.RESULT_EXTRA_TRACK_ID, trackId);
+        bundle.putParcelableArrayList(ImportServiceResultReceiver.RESULT_EXTRA_TRACK_ID, trackId);
         bundle.putString(ImportServiceResultReceiver.RESULT_EXTRA_FILENAME, file.getName());
         bundle.putString(ImportServiceResultReceiver.RESULT_EXTRA_MESSAGE, message);
         resultReceiver.send(resultCode, bundle);

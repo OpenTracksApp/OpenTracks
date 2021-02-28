@@ -120,10 +120,11 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     }
 
     @Override
-    public Track.Id importFile(InputStream inputStream) {
+    @NonNull
+    public List<Track.Id> importFile(InputStream inputStream) {
         try {
             SAXParserFactory.newInstance().newSAXParser().parse(inputStream, this);
-            return trackIds.get(0);
+            return trackIds;
         } catch (IOException | SAXException | ParserConfigurationException | ParsingException e) {
             Log.e(TAG, "Unable to import file", e);
             if (trackIds.size() > 0) {

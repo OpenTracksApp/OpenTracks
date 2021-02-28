@@ -20,6 +20,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -66,17 +68,23 @@ public class KmzTrackImporter implements TrackImporter {
     }
 
     @Override
-    public Track.Id importFile(InputStream inputStream) {
-        Track.Id trackId = findAndParseKmlFile(inputStream);
+    public @NonNull
+    List<Track.Id> importFile(InputStream inputStream) {
+        List<Track.Id> trackIds = findAndParseKmlFile(inputStream);
 
-        if (!copyKmzImages(trackId)) {
-            cleanImport(context, trackId);
-            return null;
+        ArrayList<Track.Id> trackIdsWithImages = new ArrayList<>();
+
+        for (Track.Id trackId : trackIds) {
+            if (copyKmzImages(trackId)) {
+                trackIdsWithImages.add(trackId);
+                deleteOrphanImages(context, trackId);
+            } else {
+                cleanImport(context, trackId);
+                return new ArrayList<>();
+            }
         }
 
-        deleteOrphanImages(context, trackId);
-
-        return trackId;
+        return trackIdsWithImages;
     }
 
     /**
@@ -150,14 +158,13 @@ public class KmzTrackImporter implements TrackImporter {
 
     /**
      * Finds KmzTrackExporter.KMZ_KML_FILE file inside kmz file (inputStream) and it parses it.
-     * TODO: May load multiple tracks, but only returns the last Track.Id.
      *
      * @param inputStream kmz input stream.
      */
-    private Track.Id findAndParseKmlFile(InputStream inputStream) {
+    private List<Track.Id> findAndParseKmlFile(InputStream inputStream) {
         try (ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
             ZipEntry zipEntry;
-            Track.Id trackId = null;
+            ArrayList<Track.Id> trackIds = new ArrayList<>();
 
             while ((zipEntry = zipInputStream.getNextEntry()) != null) {
                 if (Thread.interrupted()) {
@@ -167,20 +174,21 @@ public class KmzTrackImporter implements TrackImporter {
 
                 String fileName = zipEntry.getName();
                 if (KmzTrackExporter.KMZ_KML_FILE.equals(fileName)) {
-                    trackId = parseKml(zipInputStream);
-                    if (trackId == null) {
+                    List<Track.Id> trackId = parseKml(zipInputStream);
+                    if (trackId.isEmpty()) {
                         Log.d(TAG, "Unable to parse kml in kmz");
                         throw new ImportParserException(context.getString(R.string.import_unable_to_import_file, fileName));
                     }
+                    trackIds.addAll(trackId);
                 }
 
                 zipInputStream.closeEntry();
             }
-            if (trackId == null) {
+            if (trackIds.isEmpty()) {
                 Log.d(TAG, "Unable to find doc.kml in kmz");
                 throw new ImportParserException(context.getString(R.string.import_no_kml_file_found));
             }
-            return trackId;
+            return trackIds;
         } catch (ImportParserException | ImportAlreadyExistsException e) {
             Log.e(TAG, "Unable to import file", e);
             throw e;
@@ -234,13 +242,7 @@ public class KmzTrackImporter implements TrackImporter {
         }
     }
 
-    /**
-     * Parses kml
-     *
-     * @param zipInputStream the zip input stream
-     * @return the imported track id or -1L
-     */
-    private Track.Id parseKml(ZipInputStream zipInputStream) {
+    private List<Track.Id> parseKml(ZipInputStream zipInputStream) {
         KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(context);
 
         try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(getKml(zipInputStream))) {

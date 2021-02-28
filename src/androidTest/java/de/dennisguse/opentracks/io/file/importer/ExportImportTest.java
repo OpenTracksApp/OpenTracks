@@ -148,7 +148,7 @@ public class ExportImportTest {
         // 2. import
         InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
         AbstractFileTrackImporter trackImporter = new KmlFileTrackImporter(context);
-        importTrackId = trackImporter.importFile(inputStream);
+        importTrackId = trackImporter.importFile(inputStream).get(0);
 
         // then
         // 1. track
@@ -187,7 +187,7 @@ public class ExportImportTest {
         // 2. import
         InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
         AbstractFileTrackImporter trackImporter = new KmlFileTrackImporter(context);
-        importTrackId = trackImporter.importFile(inputStream);
+        importTrackId = trackImporter.importFile(inputStream).get(0);
 
         // then
         // 1. track
@@ -225,7 +225,7 @@ public class ExportImportTest {
         // 2. import
         InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
         AbstractFileTrackImporter trackImporter = new KmlFileTrackImporter(context);
-        importTrackId = trackImporter.importFile(inputStream);
+        importTrackId = trackImporter.importFile(inputStream).get(0);
 
         // then
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
@@ -281,7 +281,7 @@ public class ExportImportTest {
         // 2. import
         InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
         AbstractFileTrackImporter trackImporter = new GpxFileTrackImporter(context, contentProviderUtils);
-        importTrackId = trackImporter.importFile(inputStream);
+        importTrackId = trackImporter.importFile(inputStream).get(0);
 
         // then
         // 1. track
@@ -327,7 +327,7 @@ public class ExportImportTest {
         // 2. import
         InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
         AbstractFileTrackImporter trackImporter = new GpxFileTrackImporter(context, contentProviderUtils);
-        importTrackId = trackImporter.importFile(inputStream);
+        importTrackId = trackImporter.importFile(inputStream).get(0);
 
         // then
         // 1. track
