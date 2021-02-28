@@ -2,17 +2,7 @@
 interface TrackExporter {
 }
 class KmzTrackExporter implements TrackExporter
-KmzTrackExporter o-- FileTrackExporter
-class FileTrackExporter implements TrackExporter {
-/' One track only '/
-}
-FileTrackExporter o-- TrackWriter
-
-interface TrackWriter {
-}
-class GpxTrackWriter implements TrackWriter
-class KmlTrackWriter implements TrackWriter
-
+class KmlTrackExporter implements TrackExporter
 
 interface TrackImporter {
 }
