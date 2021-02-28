@@ -34,9 +34,10 @@ import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
- * Convert {@link Track} incl. {@link Marker} and {@link TrackPoint} to KML.
+ * Convert {@link Track} incl. {@link Marker} and {@link TrackPoint} to GPX.
  * NOTE:
  * * does not export {@link TrackPoint} without a latitude/longitude (not supported by GPX 1.1).
+ * * cannot export multiple {@link Track}s - all {@link TrackPoint}s are exported as if they would belong to the first track.
  *
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
@@ -85,13 +86,21 @@ public class GPXTrackExporter implements TrackExporter {
 
     @Override
     public boolean writeTrack(Track track, @NonNull OutputStream outputStream) {
+        return writeTrack(new Track[]{track}, outputStream);
+    }
+
+    @Override
+    public boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream) {
+        Track mainTrack = tracks[0];
         try {
             prepare(outputStream);
-            writeHeader(track);
+            writeHeader(mainTrack);
 
-            writeMarkers(track);
+            writeMarkers(mainTrack);
 
-            writeLocations(track);
+            for (Track track : tracks) {
+                writeLocations(track);
+            }
 
             writeFooter();
             close();
@@ -101,11 +110,6 @@ public class GPXTrackExporter implements TrackExporter {
             Log.e(TAG, "Thread interrupted", e);
             return false;
         }
-    }
-
-    @Override
-    public boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream) {
-        throw new UnsupportedOperationException();
     }
 
     private void writeLocations(Track track) throws InterruptedException {
