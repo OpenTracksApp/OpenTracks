@@ -64,6 +64,7 @@ public class StatisticsRecordedFragment extends Fragment {
         return fragment;
     }
 
+
     private TrackStatistics trackStatistics;
     private SensorStatistics sensorStatistics;
     private SensorsAdapter sensorsAdapter;
@@ -73,18 +74,19 @@ public class StatisticsRecordedFragment extends Fragment {
 
     private StatisticsRecordedBinding viewBinding;
 
+    private SharedPreferences sharedPreferences;
     private boolean preferenceMetricUnits;
     private boolean preferenceReportSpeed;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         boolean updateUInecessary = false;
 
-        if (key == null || PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key)) {
+        if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key)) {
             updateUInecessary = true;
             preferenceMetricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getContext());
         }
 
-        if (key == null || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
+        if (PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
             updateUInecessary = true;
             preferenceReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), category);
         }
@@ -98,35 +100,34 @@ public class StatisticsRecordedFragment extends Fragment {
         }
     };
 
-
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        viewBinding = StatisticsRecordedBinding.inflate(inflater, container, false);
-        return viewBinding.getRoot();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        sensorsAdapter = new SensorsAdapter(getContext());
-        RecyclerView sensorsRecyclerView = viewBinding.statsSensorsRecyclerView;
-        sensorsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        sensorsRecyclerView.setAdapter(sensorsAdapter);
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         trackId = getArguments().getParcelable(TRACK_ID_KEY);
         contentProviderUtils = new ContentProviderUtils(getContext());
+
+        sharedPreferences = PreferencesUtils.getSharedPreferences(getContext());
+
+        sensorsAdapter = new SensorsAdapter(getContext());
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        viewBinding = StatisticsRecordedBinding.inflate(inflater, container, false);
+
+        RecyclerView sensorsRecyclerView = viewBinding.statsSensorsRecyclerView;
+        sensorsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        sensorsRecyclerView.setAdapter(sensorsAdapter);
+
+        return viewBinding.getRoot();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        SharedPreferences sharedPreferences = PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
         loadStatistics();
@@ -137,7 +138,13 @@ public class StatisticsRecordedFragment extends Fragment {
         super.onDestroyView();
         viewBinding = null;
 
-        PreferencesUtils.unregister(getContext(), sharedPreferenceChangeListener);
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        sharedPreferences = null;
     }
 
     public void loadStatistics() {
@@ -147,7 +154,13 @@ public class StatisticsRecordedFragment extends Fragment {
                     Track track = contentProviderUtils.getTrack(trackId);
                     trackStatistics = track != null ? track.getTrackStatistics() : null;
                     sensorStatistics = contentProviderUtils.getSensorStats(trackId);
-                    category = track != null ? track.getCategory() : "";
+
+                    String newCategory = track != null ? track.getCategory() : "";
+                    if (!category.equals(newCategory)) {
+                        category = newCategory;
+                        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, getString(R.string.stats_rate_key));
+                    }
+
                     updateUI();
                     updateSensorUI();
                 }
