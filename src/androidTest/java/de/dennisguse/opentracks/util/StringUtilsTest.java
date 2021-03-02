@@ -94,18 +94,12 @@ public class StringUtilsTest {
         assertEquals("<![CDATA[hello]]]]><![CDATA[>there]]>", StringUtils.formatCData("hello]]>there"));
     }
 
-    /**
-     * Tests {@link StringUtils#parseTime(String)} with fractional seconds.
-     */
     @Test
     public void testGetTime_fractional() {
         assertGetTime("2010-05-04T03:02:01.352Z", 2010, 5, 4, 3, 2, 1, 352);
         assertGetTime("2010-05-04T03:02:01.3529Z", 2010, 5, 4, 3, 2, 1, 352);
     }
 
-    /**
-     * Tests {@link StringUtils#parseTime(String)} with time zone.
-     */
     @Test
     public void testGetTime_timezone() {
         assertGetTime("2010-05-04T03:02:01", 2010, 5, 4, 3, 2, 1, 0);
@@ -118,9 +112,6 @@ public class StringUtilsTest {
         assertGetTime("2010-05-04T03:02:01-05:00", 2010, 5, 4, 8, 2, 1, 0);
     }
 
-    /**
-     * Tests {@link StringUtils#parseTime(String)} with fractional seconds and time zone.
-     */
     @Test
     public void testGetTime_fractionalAndTimezone() {
         assertGetTime("2010-05-04T03:02:01.352Z", 2010, 5, 4, 3, 2, 1, 352);
