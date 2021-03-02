@@ -57,33 +57,33 @@ public class ImportService extends JobIntentService {
             trackImporter = new KmzTrackImporter(this, file.getUri());
         } else {
             Log.d(TAG, "Unsupported file format.");
-            sendResult(ImportServiceResultReceiver.RESULT_CODE_ERROR, null, file.getName(), getString(R.string.import_unsupported_format));
+            sendResult(ImportServiceResultReceiver.RESULT_CODE_ERROR, null, file, getString(R.string.import_unsupported_format));
             return;
         }
 
         try (InputStream inputStream = getContentResolver().openInputStream(file.getUri())) {
             Track.Id trackId = trackImporter.importFile(inputStream);
             if (trackId != null) {
-                sendResult(ImportServiceResultReceiver.RESULT_CODE_IMPORTED, trackId, file.getName(), getString(R.string.import_file_imported, file.getName()));
+                sendResult(ImportServiceResultReceiver.RESULT_CODE_IMPORTED, trackId, file, getString(R.string.import_file_imported, file.getName()));
             } else {
-                sendResult(ImportServiceResultReceiver.RESULT_CODE_ERROR, trackId, file.getName(), getString(R.string.import_unable_to_import_file, file.getName()));
+                sendResult(ImportServiceResultReceiver.RESULT_CODE_ERROR, trackId, file, getString(R.string.import_unable_to_import_file, file.getName()));
             }
         } catch (IOException e) {
             Log.d(TAG, "Unable to import file", e);
-            sendResult(ImportServiceResultReceiver.RESULT_CODE_ERROR, null, file.getName(), getString(R.string.import_unable_to_import_file, e.getMessage()));
+            sendResult(ImportServiceResultReceiver.RESULT_CODE_ERROR, null, file, getString(R.string.import_unable_to_import_file, e.getMessage()));
         } catch (ImportParserException e) {
             Log.d(TAG, "Parser error: " + e.getMessage(), e);
-            sendResult(ImportServiceResultReceiver.RESULT_CODE_ERROR, null, file.getName(), getString(R.string.import_parser_error, e.getMessage()));
+            sendResult(ImportServiceResultReceiver.RESULT_CODE_ERROR, null, file, getString(R.string.import_parser_error, e.getMessage()));
         } catch (ImportAlreadyExistsException e) {
             Log.d(TAG, "Track already exists: " + e.getMessage(), e);
-            sendResult(ImportServiceResultReceiver.RESULT_CODE_ALREADY_EXISTS, null, file.getName(), e.getMessage());
+            sendResult(ImportServiceResultReceiver.RESULT_CODE_ALREADY_EXISTS, null, file, e.getMessage());
         }
     }
 
-    private void sendResult(int resultCode, Track.Id trackId, String fileName, String message) {
+    private void sendResult(int resultCode, Track.Id trackId, DocumentFile file, String message) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(ImportServiceResultReceiver.RESULT_EXTRA_TRACK_ID, trackId);
-        bundle.putString(ImportServiceResultReceiver.RESULT_EXTRA_FILENAME, fileName);
+        bundle.putString(ImportServiceResultReceiver.RESULT_EXTRA_FILENAME, file.getName());
         bundle.putString(ImportServiceResultReceiver.RESULT_EXTRA_MESSAGE, message);
         resultReceiver.send(resultCode, bundle);
     }
