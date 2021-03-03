@@ -29,6 +29,7 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
     private Duration currentRecordingInterval;
     private int recordingGpsAccuracy;
     private TrackPoint lastValidTrackPoint;
+    private Context context;
 
     public LocationHandler(HandlerServer handlerServer) {
         this.handlerServer = handlerServer;
@@ -36,6 +37,7 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
 
     @Override
     public void onStart(Context context) {
+        this.context = context;
         gpsStatus = new GpsStatus(context, this, Duration.ofSeconds(PreferencesUtils.getMinRecordingInterval(context)));
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         registerLocationListener();
@@ -69,6 +71,11 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
                 registerLocationListener();
             }
         }
+
+        if (PreferencesUtils.isKey(context, R.string.stats_use_network_provider_key, key)) {
+            registerLocationListener();
+        }
+
         if (PreferencesUtils.isKey(context, R.string.recording_gps_accuracy_key, key)) {
             recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(context);
         }
@@ -149,7 +156,10 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
         try {
             Duration interval = locationListenerPolicy.getDesiredPollingInterval();
             currentRecordingInterval = interval;
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, interval.toMillis(), locationListenerPolicy.getMinDistance_m(), this);
+            String provider = PreferencesUtils.shouldUseNetworkProvider(this.context) ?
+                    LocationManager.NETWORK_PROVIDER : LocationManager.GPS_PROVIDER;
+            Log.d(TAG, "Used location update provider: " + provider);
+            locationManager.requestLocationUpdates(provider, interval.toMillis(), locationListenerPolicy.getMinDistance_m(), this);
         } catch (SecurityException e) {
             Log.e(TAG, "Could not register location listener; permissions not granted.", e);
         }

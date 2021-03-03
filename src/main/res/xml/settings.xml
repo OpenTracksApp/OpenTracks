@@ -120,6 +120,11 @@ limitations under the License.
             android:key="@string/recording_gps_accuracy_key"
             android:title="@string/settings_recording_min_required_accuracy_title"
             app:useSimpleSummaryProvider="true" />
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/stats_use_network_provider_default"
+            android:key="@string/stats_use_network_provider_key"
+            android:summary="@string/settings_recording_use_network_provider_summary"
+            android:title="@string/settings_recording_use_network_provider_title" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_sensor_bluetooth">

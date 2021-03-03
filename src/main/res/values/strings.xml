@@ -390,6 +390,8 @@ limitations under the License.
     <string name="settings_recording_keep_screen_on_while_recording_summary">While recording, keep the screen on.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Fullscreen</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">While recording, present in fullscreen.</string>
+    <string name="settings_recording_use_network_provider_title">Network provider.</string>
+    <string name="settings_recording_use_network_provider_summary">Use inaccurate network provider instead of gps.</string>
     <string name="settings_recording">Recording</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Always resume a recording after reboot</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Never resume a recording after reboot</string>
