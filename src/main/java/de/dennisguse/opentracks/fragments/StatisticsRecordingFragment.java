@@ -447,7 +447,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
             String longitudeText = getContext().getString(R.string.value_unknown);
             if (lastTrackPoint != null && lastTrackPoint.hasLocation()) {
                 latitudeText = StringUtils.formatCoordinate(lastTrackPoint.getLatitude());
-                longitudeText = StringUtils.formatCoordinate(lastTrackPoint.getLatitude());
+                longitudeText = StringUtils.formatCoordinate(lastTrackPoint.getLongitude());
             }
             viewBinding.statsLatitudeValue.setText(latitudeText);
             viewBinding.statsLongitudeValue.setText(longitudeText);
