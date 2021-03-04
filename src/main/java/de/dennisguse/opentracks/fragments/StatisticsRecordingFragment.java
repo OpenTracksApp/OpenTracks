@@ -443,15 +443,16 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
     private void setLocationValues() {
         // Set speed/pace
-        double speed = lastTrackPoint != null && lastTrackPoint.hasSpeed() ? lastTrackPoint.getSpeed() : Double.NaN;
-        setSpeed(speed);
+        if (lastTrackPoint != null && lastTrackPoint.hasSpeed()) {
+            setSpeed(lastTrackPoint.getSpeed());
+        }
 
         // Set elevation
         viewBinding.statsElevationGroup.setVisibility(preferenceShowElevation ? View.VISIBLE : View.GONE);
 
-        if (preferenceShowElevation) {
+        if (preferenceShowElevation && lastTrackPoint != null && lastTrackPoint.hasAltitude()) {
             // Current elevation
-            Float altitude = lastTrackPoint != null && lastTrackPoint.hasAltitude() ? (float) lastTrackPoint.getAltitude() : null;
+            Float altitude = (float) lastTrackPoint.getAltitude();
             Pair<String, String> parts = StringUtils.formatElevation(getContext(), altitude, preferenceMetricUnits);
             viewBinding.statsElevationCurrentValue.setText(parts.first);
             viewBinding.statsElevationCurrentUnit.setText(parts.second);
