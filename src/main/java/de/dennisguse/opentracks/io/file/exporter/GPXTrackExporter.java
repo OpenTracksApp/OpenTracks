@@ -123,7 +123,7 @@ public class GPXTrackExporter implements TrackExporter {
                 TrackPoint trackPoint = trackPointIterator.next();
 
                 if (!wroteTrack) {
-                    writeBeginTrack(track, trackPoint);
+                    writeBeginTrack(track);
                     wroteTrack = true;
                 }
 
@@ -162,14 +162,12 @@ public class GPXTrackExporter implements TrackExporter {
                 writeCloseSegment();
             }
 
-            if (wroteTrack) {
-                TrackPoint lastValidTrackPoint = contentProviderUtils.getLastValidTrackPoint(track.getId());
-                writeEndTrack(track, lastValidTrackPoint);
-            } else {
+            if (!wroteTrack) {
                 // Write an empty track
-                writeBeginTrack(track, null);
-                writeEndTrack(track, null);
+                writeBeginTrack(track);
             }
+
+            writeEndTrack();
         }
     }
 
@@ -247,7 +245,7 @@ public class GPXTrackExporter implements TrackExporter {
         }
     }
 
-    public void writeBeginTrack(Track track, TrackPoint startTrackPoint) {
+    public void writeBeginTrack(Track track) {
         if (printWriter != null) {
             printWriter.println("<trk>");
             printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
@@ -261,7 +259,7 @@ public class GPXTrackExporter implements TrackExporter {
         }
     }
 
-    public void writeEndTrack(Track track, TrackPoint endTrackPoint) {
+    public void writeEndTrack() {
         if (printWriter != null) {
             printWriter.println("</trk>");
         }

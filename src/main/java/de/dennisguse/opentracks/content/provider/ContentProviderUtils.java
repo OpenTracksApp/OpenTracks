@@ -580,24 +580,6 @@ public class ContentProviderUtils {
     }
 
     /**
-     * Gets the first location id for a track.
-     * Returns null if it doesn't exist.
-     *
-     * @param trackId the track id
-     */
-    @Deprecated
-    public Track.Id getFirstTrackPointId(Track.Id trackId) {
-        String selection = TrackPointsColumns._ID + "=(SELECT MIN(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=?)";
-        String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
-        try (Cursor cursor = getTrackPointCursor(new String[]{TrackPointsColumns._ID}, selection, selectionArgs, TrackPointsColumns._ID)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                return new Track.Id(cursor.getLong(cursor.getColumnIndexOrThrow(TrackPointsColumns._ID)));
-            }
-        }
-        return null;
-    }
-
-    /**
      * Gets the last location id for a track.
      * Returns -1L if it doesn't exist.
      *
