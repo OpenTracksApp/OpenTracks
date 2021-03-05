@@ -208,17 +208,17 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     }
 
     @Override
-    public void onSampledInTrackPoint(TrackPoint trackPoint) {
+    public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint) {
         // We don't care.
     }
 
     @Override
-    public void onSampledOutTrackPoint(TrackPoint trackPoint) {
+    public void onSampledOutTrackPoint(@NonNull TrackPoint trackPoint) {
         // We don't care.
     }
 
     @Override
-    public void onNewTrackPointsDone(TrackPoint newLastTrackPoint) {
+    public void onNewTrackPointsDone(@NonNull TrackPoint newLastTrackPoint) {
         if (isResumed()) {
             getActivity().runOnUiThread(() -> {
                 if (isResumed()) {

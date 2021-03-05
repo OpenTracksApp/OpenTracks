@@ -198,21 +198,21 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     }
 
     @Override
-    public void onSampledInTrackPoint(TrackPoint trackPoint) {
+    public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint) {
         if (isResumed()) {
             viewModel.add(trackPoint);
         }
     }
 
     @Override
-    public void onSampledOutTrackPoint(TrackPoint trackPoint) {
+    public void onSampledOutTrackPoint(@NonNull TrackPoint trackPoint) {
         if (isResumed()) {
             viewModel.add(trackPoint);
         }
     }
 
     @Override
-    public void onNewTrackPointsDone(TrackPoint unused) {
+    public void onNewTrackPointsDone(@NonNull TrackPoint unused) {
         if (isResumed()) {
             runOnUiThread(this::loadIntervals);
         }

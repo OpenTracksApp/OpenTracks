@@ -412,8 +412,10 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
             lastSeenTrackPointId = localLastSeenTrackPointIdId;
         }
 
-        for (TrackDataListener listener : sampledInListeners) {
-            listener.onNewTrackPointsDone(trackPoint);
+        if (trackPoint != null) {
+            for (TrackDataListener listener : sampledInListeners) {
+                listener.onNewTrackPointsDone(trackPoint);
+            }
         }
     }
 

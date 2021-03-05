@@ -16,7 +16,7 @@
 
 package de.dennisguse.opentracks.content;
 
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
@@ -47,20 +47,20 @@ public interface TrackDataListener {
      *
      * @param trackPoint the trackPoint
      */
-    void onSampledInTrackPoint(TrackPoint trackPoint);
+    void onSampledInTrackPoint(@NonNull TrackPoint trackPoint);
 
     /**
      * Called when a sampled out track point is read.
      *
      * @param trackPoint the trackPoint
      */
-    void onSampledOutTrackPoint(TrackPoint trackPoint);
+    void onSampledOutTrackPoint(@NonNull TrackPoint trackPoint);
 
     /**
      * Called when finish sending new track points.
      * This gets called after every batch of calls to {@link #onSampledInTrackPoint(TrackPoint)} and {@link #onSampledOutTrackPoint(TrackPoint)}.
      */
-    void onNewTrackPointsDone(@Nullable TrackPoint lastTrackPoint);
+    void onNewTrackPointsDone(@NonNull TrackPoint lastTrackPoint);
 
     /**
      * Called to clear previously sent markers.
