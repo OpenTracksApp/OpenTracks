@@ -224,14 +224,14 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     @Override
-    public void onSampledInTrackPoint(TrackPoint trackPoint) {
+    public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint) {
         if (isResumed()) {
             pendingPoints.add(createPendingPoint(trackPoint));
         }
     }
 
     @Override
-    public void onSampledOutTrackPoint(TrackPoint trackPoint) {
+    public void onSampledOutTrackPoint(@NonNull TrackPoint trackPoint) {
         if (isResumed()) {
             if (trackStatisticsUpdater != null) {
                 trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
@@ -240,7 +240,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     @Override
-    public void onNewTrackPointsDone(TrackPoint unused) {
+    public void onNewTrackPointsDone(@NonNull TrackPoint unused) {
         if (isResumed()) {
             chartView.addChartPoints(pendingPoints);
             pendingPoints.clear();
