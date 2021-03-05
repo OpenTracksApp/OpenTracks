@@ -111,6 +111,12 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         public void run() {
             if (isResumed() && isSelectedTrackRecording()) {
                 if (!isSelectedTrackPaused() && lastTrackStatistics != null) {
+                    synchronized (this) {
+                        if (lastTrackPoint != null && lastTrackPoint.hasLocation() && !lastTrackPoint.isRecent()) {
+                            lastTrackPoint = null;
+                            setLocationValues();
+                        }
+                    }
                     updateTotalTime();
                     updateSensorDataUI();
                 }
@@ -222,16 +228,18 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         if (isResumed()) {
             getActivity().runOnUiThread(() -> {
                 if (isResumed()) {
-                    this.lastTrackPoint = newLastTrackPoint;
+                    synchronized (this) {
+                        this.lastTrackPoint = newLastTrackPoint;
 
-                    if (!isSelectedTrackRecording() || isSelectedTrackPaused()) {
-                        this.lastTrackPoint = null;
-                    }
+                        if (!isSelectedTrackRecording() || isSelectedTrackPaused()) {
+                            this.lastTrackPoint = null;
+                        }
 
-                    if (this.lastTrackPoint != null && this.lastTrackPoint.hasLocation() && !this.lastTrackPoint.isRecent()) {
-                        this.lastTrackPoint = null;
+                        if (this.lastTrackPoint != null && this.lastTrackPoint.hasLocation() && !this.lastTrackPoint.isRecent()) {
+                            this.lastTrackPoint = null;
+                        }
+                        setLocationValues();
                     }
-                    setLocationValues();
                 }
             });
         }
