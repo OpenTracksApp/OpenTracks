@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <string name="about_preference_title">Über OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> ist eine Sport-Tracking-Anwendung, die Ihre Privatsphäre vollständig respektiert.</string>
     <string name="about_url">Projekt-Website: <a href="%1$s">%1$s</a></string>
@@ -30,7 +30,6 @@ limitations under the License.
 * Markierungen erstellen (inkl. Bilder)\n
 * arbeitet vollständig offline\n
 * Tracks auf einer Karte anzeigen (siehe unten)</string>
-
     <string name="help_track_map_title">Wie wird ein Track auf einer Karte angezeigt?</string>
     <string name="help_track_map_content">
 Verwende das kleine Kartensymbol.\n
@@ -44,29 +43,23 @@ b)
 Über eine normale Kartenanwendung (z.B. <a href="http://osmand.net/">OsmAnd</a> und <a href="https://maps.me/">MAPS.ME</a>).
 Diese Anwendungen müssen das KMZ-Dateiformat unterstützen (nur Orte und Zeitstempel).
 In der Tat muss eine App <i>ACTION_VIEW</i> mit MIME <i>application/vnd.google-earth.kmz</i> unterstützen.</string>
-
     <string name="help_storage_pictures_title">Wie speichert OpenTracks Bilder, die als Markierungen aufgenommen wurden?</string>
     <string name="help_storage_pictures_content">Diese werden App-intern gespeichert (d.h. nur innerhalb von OpenTracks zugänglich).</string>
-
     <string name="help_track_export_title">Wie kann ich aufgezeichnete Tracks exportieren/teilen?</string>
     <string name="help_track_export_content">
 Tracks können aus den Einstellungen als KMZ, KML oder GPX exportiert werden.
 KMZ/KML alle Daten; GPX nur Standorte.
 Tracks, die über das Symbol <i>Teilen Icon</i> freigegeben werden, werden als KMZ freigegeben.</string>
-
     <string name="help_data_google_play_services_title">Benötigt/benutzt OpenTracks den Google Play Service?</string>
-
     <string name="help_recording_title">Wie zeichnet OpenTracks Daten auf?</string>
     <string name="help_recording_content">
 OpenTracks verwendet den GPS-Sensor des Geräts, um den Standort kontinuierlich aufzuzeichnen.
 Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), kann OpenTracks nichts dagegen unternehmen.</string>
-
     <string name="help_data_storage_title">Wie speichert OpenTracks Sensordaten?</string>
     <string name="help_data_storage_content">
 Sensordaten werden pro aufgezeichneter Stelle gespeichert.
 Bezogen auf einen Herzfrequenzsensor bedeutet dies, dass nur <i>eine</i>Herzfrequenzmessung pro Ort gespeichert wird.
 Wenn Du still stehst oder du dich in geschlossenen Räumen aufhälst, werden keine Sensordaten aufgezeichnet (aber angezeigt).</string>
-
     <string name="help_gps_troubleshooting_title">OpenTracks zeichnet keine Standorte auf?</string>
     <string name="help_gps_troubleshooting_content">
 Was Du tun kannst:\n
@@ -76,7 +69,6 @@ c) prüfen, ob mit <a href="https://f-droid.org/en/packages/com.android.gpstest.
 d) Energiesparen deaktivieren.\n
 \n
 Wenn alles nicht hilft, melde bitte einen Fehler.</string>
-
     <string name="help_support_title">Wie kann ich OpenTracks unterstützen?</string>
     <string name="help_support_content">
 Du kannst:\n
@@ -87,12 +79,10 @@ d) Hilfe bei der Software-Entwicklung,\n
 e) kaufen in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n
 f) spenden, und\n
 g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
-
     <string name="open_track_using_dashboard">Öffne mithilfe des OpenTracks-Dashboard</string>
     <string name="open_track_as_KMZ">Als KMZ öffnen</string>
     <string name="open_track_as_GPX">Als GPX öffnen</string>
     <string name="open_track_as_trackfileformat">Als %1$s öffnen</string>
-
     <!-- Activity Type -->
     <string name="activity_type_airplane">Flugzeug</string>
     <string name="activity_type_atv">Quad</string>
@@ -370,21 +360,20 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth-Sensor</string>
     <string name="settings_sensor_connecting">Verbunden mit %1$s</string>
     <string name="settings_sensor_disconnected">Verbindung getrennt von %1$s</string>
-
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Breiten-/Längengrad</string>
     <string name="settings_stats_rate_title">Bevorzugtes Maß</string>
     <string name="settings_stats_units_imperial">Englisch (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrisch (km, m)</string>
     <string name="settings_stats_units_title">Bevorzugte Einheiten</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file">Track-Datei teilen</string>
     <string name="share_track_share_file_body">Dieser Track könnte dich interessieren.\n\nDu kannst ihn dir mit Google Earth oder einer anderen Kartierungssoftware ansehen.\n\n%1$s</string>
     <string name="share_track_subject">Ich möchte einen Track mit dir teilen</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Durchschnitt\n(Bewegung)</string>
-    <string name="stats_average_moving_speed">Durchschnitt\n(Bewegung)</string>
+    <string name="stats_average_moving_speed">Durchschnittsgeshwindigkeit
+\n(Bewegung)</string>
     <string name="stats_average_pace">Durchschnitt</string>
     <string name="stats_average_speed">Durchschnitt</string>
     <string name="stats_elevation">Höhe</string>
@@ -394,7 +383,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="stats_latitude">Breitengrad</string>
     <string name="stats_longitude">Längengrad</string>
     <string name="stats_max">Max.</string>
-    <string name="stats_max_speed">Max.</string>
+    <string name="stats_max_speed">Max. Geschwindigkeit</string>
     <string name="stats_min">Min.</string>
     <string name="stats_moving_time">Bewegungszeit</string>
     <string name="stats_pace">Tempo</string>
@@ -570,5 +559,10 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <!-- Share image -->
     <string name="share_image_subject">Ich möchte gerne ein Bild mit Dir teilen</string>
     <string name="share_image_body">Ich denke, dieses Bild könnte Dich interessieren.</string>
-
+    <string name="settings_night_mode_title">UI Thema</string>
+    <string name="settings_night_mode_option_system">System</string>
+    <string name="settings_night_mode_option_day">Tag</string>
+    <string name="settings_night_mode_option_night">Nacht</string>
+    <string name="settings_sensor_wheel_circumference">Radumfang (mm)</string>
+    <string name="stats_loss">Abstieg</string>
 </resources>
