@@ -45,6 +45,7 @@ import java.util.concurrent.TimeoutException;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
@@ -191,7 +192,7 @@ public class TrackRecordingServiceTest {
         Track.Id trackId = service.startNewTrack();
 
         // then
-        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
 
         assertEquals(1, trackPoints.size());
         assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(0).getType());
@@ -208,7 +209,7 @@ public class TrackRecordingServiceTest {
         service.endCurrentTrack();
 
         // then
-        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
 
         assertEquals(2, trackPoints.size());
         assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(0).getType());
@@ -226,7 +227,7 @@ public class TrackRecordingServiceTest {
         service.pauseCurrentTrack();
 
         // then
-        assertEquals(2, contentProviderUtils.getTrackPoints(trackId).size());
+        assertEquals(2, contentProviderUtils.getTrackPointCursor(trackId, null).getCount());
 
         //when
         service.resumeTrack(trackId);
@@ -235,7 +236,7 @@ public class TrackRecordingServiceTest {
         assertTrue(service.isRecording());
         assertEquals(trackId, service.getRecordingTrackId());
 
-        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         assertEquals(3, trackPoints.size());
         assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(0).getType());
         assertEquals(TrackPoint.Type.SEGMENT_END_MANUAL, trackPoints.get(1).getType());
@@ -251,7 +252,7 @@ public class TrackRecordingServiceTest {
         assertTrue(service.isRecording());
         service.endCurrentTrack();
 
-        assertEquals(2, contentProviderUtils.getTrackPoints(trackId).size());
+        assertEquals(2, contentProviderUtils.getTrackPointCursor(trackId, null).getCount());
 
         // when
         service.resumeTrack(trackId);
@@ -261,7 +262,7 @@ public class TrackRecordingServiceTest {
         assertTrue(service.isRecording());
         assertEquals(trackId, service.getRecordingTrackId());
 
-        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         assertEquals(4, trackPoints.size());
         assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(0).getType());
         assertEquals(TrackPoint.Type.SEGMENT_END_MANUAL, trackPoints.get(1).getType());
@@ -278,7 +279,7 @@ public class TrackRecordingServiceTest {
         assertTrue(service.isRecording());
         service.pauseCurrentTrack();
 
-        assertEquals(2, contentProviderUtils.getTrackPoints(trackId).size());
+        assertEquals(2, contentProviderUtils.getTrackPointCursor(trackId, null).getCount());
 
         // when
         service.endCurrentTrack();
@@ -287,7 +288,7 @@ public class TrackRecordingServiceTest {
         assertFalse(service.isRecording());
         assertNull(service.getRecordingTrackId());
 
-        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         assertEquals(2, trackPoints.size());
         assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(0).getType());
         assertEquals(TrackPoint.Type.SEGMENT_END_MANUAL, trackPoints.get(1).getType());

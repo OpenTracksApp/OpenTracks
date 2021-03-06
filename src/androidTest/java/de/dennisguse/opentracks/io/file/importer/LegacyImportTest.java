@@ -14,6 +14,7 @@ import org.junit.runners.JUnit4;
 import java.io.InputStream;
 import java.util.List;
 
+import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
@@ -69,7 +70,7 @@ public class LegacyImportTest {
         assertEquals(0, contentProviderUtils.getMarkerCount(importTrackId));
 
         // 3. trackpoints
-        List<TrackPoint> importedTrackPoints = contentProviderUtils.getTrackPoints(importTrackId);
+        List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
         assertEquals(6, importedTrackPoints.size());
 
         // first 3 trackpoints
@@ -122,7 +123,7 @@ public class LegacyImportTest {
         assertEquals("UNKNOWN", importedTrack.getIcon());
 
         // 3. trackpoints
-        List<TrackPoint> importedTrackPoints = contentProviderUtils.getTrackPoints(importTrackId);
+        List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
         assertEquals(6, importedTrackPoints.size());
 
         // first segment
