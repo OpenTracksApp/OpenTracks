@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
@@ -111,7 +112,7 @@ public class ExportImportTest {
         contentProviderUtils.updateTrack(track);
 
         track = contentProviderUtils.getTrack(trackId);
-        trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         markers = contentProviderUtils.getMarkers(trackId);
         assertEquals(10, trackPoints.size());
         assertEquals(2, markers.size());
@@ -325,8 +326,7 @@ public class ExportImportTest {
     }
 
     private void assertTrackpoints(List<TrackPoint> trackPoints, boolean verifyPower, boolean verifyHeartrate, boolean verifyCadence, boolean verifyElevationGain, boolean verifyElevationLoss, boolean verifyDistance) {
-        List<TrackPoint> importedTrackPoints = contentProviderUtils.getTrackPoints(importTrackId);
-
+        List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
         assertEquals(trackPoints.size(), importedTrackPoints.size());
 
         for (int i = 0; i < trackPoints.size(); i++) {

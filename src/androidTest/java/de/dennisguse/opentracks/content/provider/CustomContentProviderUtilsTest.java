@@ -822,7 +822,7 @@ public class CustomContentProviderUtilsTest {
         Track track = TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
         contentProviderUtils.insertTrackPoint(TestDataUtil.createTrackPoint(22), trackId);
-        assertEquals(11, contentProviderUtils.getTrackPoints(trackId).size());
+        assertEquals(11, contentProviderUtils.getTrackPointCursor(trackId, null).getCount());
     }
 
     @Test
@@ -840,7 +840,7 @@ public class CustomContentProviderUtilsTest {
         contentProviderUtils.insertTrackPoint(trackPoint, trackId);
 
         // then
-        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         assertTrue(trackPoints.get(10).hasHeartRate());
         assertEquals(trackPoint.getHeartRate_bpm(), trackPoints.get(10).getHeartRate_bpm(), 0.01);
         assertEquals(trackPoint.getCyclingCadence_rpm(), trackPoints.get(10).getCyclingCadence_rpm(), 0.01);

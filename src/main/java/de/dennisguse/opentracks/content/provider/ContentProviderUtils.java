@@ -758,23 +758,6 @@ public class ContentProviderUtils {
         return contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, projection, selection, selectionArgs, sortOrder);
     }
 
-    @Deprecated //Use TrackPointIterator instead
-    @VisibleForTesting
-    public List<TrackPoint> getTrackPoints(Track.Id trackId) {
-        List<TrackPoint> trackPoints;
-
-        try (Cursor trackPointCursor = getTrackPointCursor(trackId, null)) {
-            trackPointCursor.moveToFirst();
-            trackPoints = new ArrayList<>(trackPointCursor.getCount());
-            for (int i = 0; i < trackPointCursor.getCount(); i++) {
-                trackPoints.add(createTrackPoint(trackPointCursor));
-                trackPointCursor.moveToNext();
-            }
-        }
-
-        return trackPoints;
-    }
-
     public static String formatIdListForUri(Track.Id... trackIds) {
         long[] ids = new long[trackIds.length];
         for (int i = 0; i < trackIds.length; i++) {
