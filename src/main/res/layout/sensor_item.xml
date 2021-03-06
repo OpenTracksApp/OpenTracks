@@ -25,8 +25,9 @@
         android:id="@+id/stats_sensor_value"
         style="@style/StatsLargeValue"
         android:value="@string/value_unknown"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/stats_sensor_unit"
         app:layout_constraintTop_toBottomOf="@id/stats_sensor_sensor_value"
         tools:text="90" />
 
@@ -34,8 +35,8 @@
         android:id="@+id/stats_sensor_unit"
         style="@style/StatsUnit"
         tools:text="@string/sensor_unit_beats_per_minute"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/stats_sensor_value"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/stats_sensor_value" />
+        app:layout_constraintBottom_toBottomOf="@id/stats_sensor_value" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

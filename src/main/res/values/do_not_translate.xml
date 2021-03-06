@@ -25,9 +25,9 @@ limitations under the License.
 
     <string name="marker_icon_url" translatable="false">http://maps.google.com/mapfiles/ms/micons/blue-pushpin.png</string>
 
-    <string name="sensor_unit_beats_per_minute" translatable="false">BPM</string>
-    <string name="sensor_unit_rounds_per_minute" translatable="false">RPM</string>
-    <string name="sensor_unit_power" translatable="false">W</string>
+    <string name="sensor_unit_beats_per_minute" translatable="false">bpm</string>
+    <string name="sensor_unit_rounds_per_minute" translatable="false">rpm</string>
+    <string name="sensor_unit_power" translatable="false">w</string>
 
     <string name="value_unknown" translatable="false">-</string>
 
