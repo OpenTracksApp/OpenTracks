@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.util.FileUtils;
 
 public class TestDataUtil {
@@ -149,5 +150,14 @@ public class TestDataUtil {
         String photoUrl = photoUri.toString();
 
         return new Marker("Marker name", "Marker description", "Marker category", "", trackId, 0.0, 0, trackPoint, photoUrl);
+    }
+
+    public static List<TrackPoint> getTrackPoints(ContentProviderUtils contentProviderUtils, Track.Id trackId) {
+        TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, null);
+        ArrayList<TrackPoint> trackPoints = new ArrayList<>();
+        while (trackPointIterator.hasNext()) {
+            trackPoints.add(trackPointIterator.next());
+        }
+        return trackPoints;
     }
 }

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
@@ -104,7 +105,7 @@ public class TrackRecordingServiceTestLocation {
         // then
         assertFalse(service.isRecording());
 
-        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         assertEquals(8, trackPoints.size());
         assertTrackPoints(List.of(
                 new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
@@ -138,7 +139,7 @@ public class TrackRecordingServiceTestLocation {
         // then
         assertFalse(service.isRecording());
 
-        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         assertEquals(4, trackPoints.size());
         assertTrackPoints(List.of(
                 new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
@@ -185,7 +186,7 @@ public class TrackRecordingServiceTestLocation {
         // then
         assertFalse(service.isRecording());
 
-        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         assertTrackPoints(List.of(
                 new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
                 new Pair<>(TrackPoint.Type.TRACKPOINT, 1),
@@ -214,7 +215,7 @@ public class TrackRecordingServiceTestLocation {
         // then
         assertFalse(service.isRecording());
 
-        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         assertEquals(6, trackPoints.size());
         assertTrackPoints(List.of(
                 new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
@@ -260,7 +261,7 @@ public class TrackRecordingServiceTestLocation {
         // then
         assertFalse(service.isRecording());
 
-        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         assertEquals(8, trackPoints.size());
         assertTrackPoints(List.of(
                 new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
@@ -292,7 +293,7 @@ public class TrackRecordingServiceTestLocation {
         // then
         assertFalse(service.isRecording());
 
-        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
+        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         assertEquals(7, trackPoints.size());
         assertTrackPoints(List.of(
                 new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
