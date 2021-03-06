@@ -19,6 +19,9 @@ However, often only one value is provided.
 ### Speed
 
 * Garmin Speed Sensor 2
+  This sensor reports speed data as cadence.
+  A workaround is in place.
+
 * Wahoo Speed (Model: WFRPMSPD)
 
 ### Cadence
