@@ -70,7 +70,6 @@ public class ContentProviderUtils {
     private static final String ID_SEPARATOR = ",";
 
     private final ContentResolver contentResolver;
-    private int defaultCursorBatchSize = 2000;
 
     public ContentProviderUtils(Context context) {
         contentResolver = context.getContentResolver();
@@ -176,7 +175,7 @@ public class ContentProviderUtils {
 
         // Delete track last since it triggers a database vacuum call
         String whereClause = String.format(TracksColumns._ID + " IN (%s)", TextUtils.join(",", Collections.nCopies(trackIds.size(), "?")));
-        contentResolver.delete(TracksColumns.CONTENT_URI, whereClause, trackIds.stream().map(id->Long.toString(id.getId())).toArray(String[]::new));
+        contentResolver.delete(TracksColumns.CONTENT_URI, whereClause, trackIds.stream().map(id -> Long.toString(id.getId())).toArray(String[]::new));
     }
 
     public void deleteTrack(Context context, @NonNull Track.Id trackId) {
@@ -632,9 +631,9 @@ public class ContentProviderUtils {
      *
      * @param trackId           the track id
      * @param startTrackPointId the starting trackPoint id. `null` to ignore
-     * @param maxLocations      maximum number of locations to return. `null` for no limit
      */
-    public Cursor getTrackPointCursor(Track.Id trackId, TrackPoint.Id startTrackPointId, Integer maxLocations) {
+    @NonNull
+    public Cursor getTrackPointCursor(@NonNull Track.Id trackId, TrackPoint.Id startTrackPointId) {
         String selection;
         String[] selectionArgs;
         if (startTrackPointId != null) {
@@ -645,11 +644,7 @@ public class ContentProviderUtils {
             selectionArgs = new String[]{Long.toString(trackId.getId())};
         }
 
-        String sortOrder = TrackPointsColumns.DEFAULT_SORT_ORDER;
-        if (maxLocations != null) {
-            sortOrder += " LIMIT " + maxLocations;
-        }
-        return getTrackPointCursor(null, selection, selectionArgs, sortOrder);
+        return getTrackPointCursor(null, selection, selectionArgs, TrackPointsColumns.DEFAULT_SORT_ORDER);
     }
 
     /**
@@ -763,38 +758,22 @@ public class ContentProviderUtils {
         return contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, projection, selection, selectionArgs, sortOrder);
     }
 
+    @Deprecated //Use TrackPointIterator instead
     @VisibleForTesting
     public List<TrackPoint> getTrackPoints(Track.Id trackId) {
-        List<TrackPoint> trackPoints = null;
+        List<TrackPoint> trackPoints;
 
-        try (Cursor trackPointCursor = getTrackPointCursor(trackId, null, null)) {
-            if (trackPointCursor != null) {
-                trackPointCursor.moveToFirst();
-                trackPoints = new ArrayList<>(trackPointCursor.getCount());
-                for (int i = 0; i < trackPointCursor.getCount(); i++) {
-                    trackPoints.add(createTrackPoint(trackPointCursor));
-                    trackPointCursor.moveToNext();
-                }
+        try (Cursor trackPointCursor = getTrackPointCursor(trackId, null)) {
+            trackPointCursor.moveToFirst();
+            trackPoints = new ArrayList<>(trackPointCursor.getCount());
+            for (int i = 0; i < trackPointCursor.getCount(); i++) {
+                trackPoints.add(createTrackPoint(trackPointCursor));
+                trackPointCursor.moveToNext();
             }
         }
 
         return trackPoints;
     }
-
-    int getDefaultCursorBatchSize() {
-        return defaultCursorBatchSize;
-    }
-
-    /**
-     * Sets the default cursor batch size. For testing purpose.
-     *
-     * @param defaultCursorBatchSize the default cursor batch size
-     */
-    @VisibleForTesting
-    void setDefaultCursorBatchSize(int defaultCursorBatchSize) {
-        this.defaultCursorBatchSize = defaultCursorBatchSize;
-    }
-
 
     public static String formatIdListForUri(Track.Id... trackIds) {
         long[] ids = new long[trackIds.length];
