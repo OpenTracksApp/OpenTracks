@@ -172,6 +172,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         Track track = contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(sharedPreferences, context));
         String category = track != null ? track.getCategory() : "";
 
+        //TODO Querying all TrackPoints all the time is inefficient; use TrackDataHub
         List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(track.getId());
         boolean isMetricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
         boolean isReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, context, category);
