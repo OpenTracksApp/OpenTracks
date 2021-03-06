@@ -94,29 +94,22 @@ public class CustomContentProviderUtilsTest {
 
     @Test
     public void testLocationIterator_noPoints() {
-        testIterator(new Track.Id(1), 0, 1);
+        testIterator(new Track.Id(1), 0);
     }
 
     @Test
-    public void testLocationIterator_noBatchAscending() {
-        testIterator(new Track.Id(1), 50, 100);
-        testIterator(new Track.Id(2), 50, 50);
-    }
-
-    @Test
-    public void testLocationIterator_batchAscending() {
-        testIterator(new Track.Id(1), 50, 11);
-        testIterator(new Track.Id(2), 50, 25);
+    public void testLocationIterator_noAscending() {
+        testIterator(new Track.Id(1), 50);
+        testIterator(new Track.Id(2), 50);
     }
 
     @Test
     public void testLocationIterator_largeTrack() {
-        testIterator(new Track.Id(1), 20000, 2000);
+        testIterator(new Track.Id(1), 20000);
     }
 
-    private void testIterator(Track.Id trackId, int numPoints, int batchSize) {
-        long lastPointId = initializeTrack(trackId, numPoints);
-        contentProviderUtils.setDefaultCursorBatchSize(batchSize);
+    private void testIterator(Track.Id trackId, int numPoints) {
+        TrackPoint.Id lastPointId = initializeTrack(trackId, numPoints);
         List<TrackPoint> locations = new ArrayList<>(numPoints);
         try (TrackPointIterator it = contentProviderUtils.getTrackPointLocationIterator(trackId, null)) {
             while (it.hasNext()) {
@@ -124,13 +117,13 @@ public class CustomContentProviderUtilsTest {
                 assertNotNull(trackPoint);
                 locations.add(trackPoint);
                 // Make sure the IDs are returned in the right order.
-                assertEquals(lastPointId - numPoints + locations.size(), trackPoint.getId().getId());
+                assertEquals(lastPointId.getId() - numPoints + locations.size(), trackPoint.getId().getId());
             }
             assertEquals(numPoints, locations.size());
         }
     }
 
-    private long initializeTrack(Track.Id id, int numPoints) {
+    private TrackPoint.Id initializeTrack(Track.Id id, int numPoints) {
         Track track = new Track();
         track.setId(id);
         track.setName("Test: " + id.getId());
@@ -150,17 +143,17 @@ public class CustomContentProviderUtilsTest {
         contentProviderUtils.bulkInsertTrackPoint(trackPoints, id);
 
         // Load all inserted trackPoints.
-        long lastPointId = -1;
+        TrackPoint.Id lastPointId = null;
         int counter = 0;
         try (TrackPointIterator it = contentProviderUtils.getTrackPointLocationIterator(id, null)) {
             while (it.hasNext()) {
                 TrackPoint trackPoint = it.next();
-                lastPointId = trackPoint.getId().getId();
+                lastPointId = trackPoint.getId();
                 counter++;
             }
         }
 
-        assertTrue(numPoints == 0 || lastPointId > 0);
+        assertTrue(numPoints == 0 || lastPointId.getId() > 0);
         assertEquals(numPoints, counter);
 
         return lastPointId;
@@ -770,9 +763,9 @@ public class CustomContentProviderUtilsTest {
 
         // when / then
         contentProviderUtils.bulkInsertTrackPoint(track.second, trackId);
-        assertEquals(20, contentProviderUtils.getTrackPointCursor(trackId, null, 1000).getCount());
+        assertEquals(20, contentProviderUtils.getTrackPointCursor(trackId, null).getCount());
         contentProviderUtils.bulkInsertTrackPoint(track.second.subList(0, 8), trackId);
-        assertEquals(28, contentProviderUtils.getTrackPointCursor(trackId, null, 1000).getCount());
+        assertEquals(28, contentProviderUtils.getTrackPointCursor(trackId, null).getCount());
     }
 
     /**
@@ -879,7 +872,7 @@ public class CustomContentProviderUtilsTest {
                 .map(TrackPoint.Id::new).collect(Collectors.toList());
 
         // when
-        Cursor cursor = contentProviderUtils.getTrackPointCursor(trackId, trackpointIds.get(8), 5);
+        Cursor cursor = contentProviderUtils.getTrackPointCursor(trackId, trackpointIds.get(8));
 
         // then
         assertEquals(2, cursor.getCount());
