@@ -220,7 +220,13 @@ public abstract class BluetoothConnectionManager {
         protected SensorDataCycling.DistanceSpeed parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
             SensorDataCycling.CadenceAndSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);
             if (cadenceAndSpeed != null) {
-                return cadenceAndSpeed.getDistanceSpeed();
+                // Workaround for Garmin Speed Sensor 2: provides cadence instead of speed
+                SensorDataCycling.DistanceSpeed result = cadenceAndSpeed.getDistanceSpeed();
+                if (result == null && cadenceAndSpeed.getCadence() != null) {
+                    result = new SensorDataCycling.DistanceSpeed(cadenceAndSpeed.getSensorAddress(), cadenceAndSpeed.getSensorName(), (int) cadenceAndSpeed.getCadence().getCrankRevolutionsCount(), cadenceAndSpeed.getCadence().getCrankRevolutionsTime());
+                }
+
+                return result;
             }
             return null;
         }
