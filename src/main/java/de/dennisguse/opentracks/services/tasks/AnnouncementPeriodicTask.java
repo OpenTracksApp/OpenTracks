@@ -22,12 +22,13 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.AnnouncementUtils;
@@ -167,8 +168,13 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         Track track = contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context));
         String category = track != null ? track.getCategory() : "";
 
-        //TODO Querying all TrackPoints all the time is inefficient; use TrackDataHub
-        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(track.getId());
+        //TODO Querying all TrackPoints all the time is inefficient; use TrackDataHub or something else.
+        TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null);
+        ArrayList<TrackPoint> trackPoints = new ArrayList<>();
+        while (trackPointIterator.hasNext()) {
+            trackPoints.add(trackPointIterator.next());
+        }
+
         IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, (float) (PreferencesUtils.isMetricUnits(context) ? 1d * UnitConversions.KM_TO_M : 1d * UnitConversions.MI_TO_M));
         IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
 
