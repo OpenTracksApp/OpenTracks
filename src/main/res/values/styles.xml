@@ -209,6 +209,38 @@ limitations under the License.
         <item name="android:singleLine">true</item>
     </style>
 
+    <style name="TextLargeStats" parent="TextAppearance.AppCompat.Large">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">4dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <style name="TextMediumStats" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">4dp</item>
+        <item name="android:color">@android:color/secondary_text_light</item>
+    </style>
+
+    <style name="TextSmallStats" parent="TextAppearance.AppCompat.Small">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">4dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:textAlignment">viewEnd</item>
+        <item name="android:color">@android:color/secondary_text_light</item>
+    </style>
+
+    <style name="IconStats">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="tint">?android:textColorPrimary</item>
+    </style>
+
     <style name="TextMicro" parent="@style/TextSmall">
         <item name="android:textSize">12sp</item>
         <item name="android:layout_height">wrap_content</item>

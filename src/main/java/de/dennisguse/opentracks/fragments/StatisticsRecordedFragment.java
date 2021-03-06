@@ -161,10 +161,22 @@ public class StatisticsRecordedFragment extends Fragment {
                         sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, getString(R.string.stats_rate_key));
                     }
 
+                    loadTrackDescription(track);
                     updateUI();
                     updateSensorUI();
                 }
             });
+        }
+    }
+
+    private void loadTrackDescription(Track track) {
+        if (track == null) {
+            return;
+        }
+        viewBinding.statsNameValue.setText(track.getName());
+        viewBinding.statsDescriptionValue.setText(track.getDescription());
+        if (track.getTrackStatistics() != null) {
+            viewBinding.statsStartDatetimeValue.setText(StringUtils.formatDateTime(getContext(), track.getTrackStatistics().getStartTime()));
         }
     }
 
