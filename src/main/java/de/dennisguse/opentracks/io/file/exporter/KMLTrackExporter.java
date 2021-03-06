@@ -33,7 +33,6 @@ import java.util.List;
 import java.util.Objects;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.DescriptionGenerator;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -54,8 +53,6 @@ public class KMLTrackExporter implements TrackExporter {
     private static final String TAG = KMLTrackExporter.class.getSimpleName();
 
     public static final String MARKER_STYLE = "waypoint";
-    private static final String START_STYLE = "start";
-    private static final String END_STYLE = "end";
     private static final String TRACK_STYLE = "track";
     private static final String SCHEMA_ID = "schema";
 
@@ -67,15 +64,12 @@ public class KMLTrackExporter implements TrackExporter {
     public static final String EXTENDED_DATA_TYPE_ELEVATION_LOSS = "elevation_loss";
 
     private static final String MARKER_ICON = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png";
-    private static final String START_ICON = "http://maps.google.com/mapfiles/kml/paddle/grn-circle.png";
-    private static final String END_ICON = "http://maps.google.com/mapfiles/kml/paddle/red-circle.png";
     private static final String TRACK_ICON = "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
 
     private final Context context;
     private final boolean exportPhotos;
     private final boolean exportTrackDetail;
     private final boolean exportSensorData;
-    private final DescriptionGenerator descriptionGenerator;
     private final ContentProviderUtils contentProviderUtils;
 
     private PrintWriter printWriter;
@@ -86,6 +80,7 @@ public class KMLTrackExporter implements TrackExporter {
     private final List<Float> elevationGainList = new ArrayList<>();
     private final List<Float> elevationLossList = new ArrayList<>();
 
+    @Deprecated // Figure out a better way to do this! (if needed)
     private TrackPoint startTrackPoint;
 
     public KMLTrackExporter(Context context, boolean exportTrackDetail, boolean exportSensorData, boolean exportPhotos) {
@@ -93,7 +88,6 @@ public class KMLTrackExporter implements TrackExporter {
         this.exportTrackDetail = exportTrackDetail;
         this.exportSensorData = exportSensorData;
         this.exportPhotos = exportPhotos;
-        this.descriptionGenerator = new DescriptionGenerator(context);
         this.contentProviderUtils = new ContentProviderUtils(context);
     }
 
@@ -165,9 +159,12 @@ public class KMLTrackExporter implements TrackExporter {
 
                 TrackPoint trackPoint = trackPointIterator.next();
                 setLocationTime(trackPoint, offset);
+                if (startTrackPoint == null) {
+                    startTrackPoint = trackPoint;
+                }
 
                 if (!wroteTrack) {
-                    writeBeginTrack(track, trackPoint);
+                    writeBeginTrack(track);
                     wroteTrack = true;
                 }
 
@@ -202,15 +199,14 @@ public class KMLTrackExporter implements TrackExporter {
                 writeCloseSegment();
             }
 
-            if (wroteTrack) {
-                TrackPoint lastValidTrackPoint = contentProviderUtils.getLastValidTrackPoint(track.getId());
-                setLocationTime(lastValidTrackPoint, offset);
-                writeEndTrack(track, lastValidTrackPoint);
-            } else {
+            if (!wroteTrack) {
                 // Write an empty track
-                writeBeginTrack(track, null);
-                writeEndTrack(track, null);
+                writeBeginTrack(track);
             }
+
+            writeEndTrack();
+
+            startTrackPoint = null;
         }
     }
 
@@ -247,8 +243,6 @@ public class KMLTrackExporter implements TrackExporter {
             }
 
             writeTrackStyle();
-            writePlacemarkerStyle(START_STYLE, START_ICON, 32, 1);
-            writePlacemarkerStyle(END_STYLE, END_ICON, 32, 1);
             writePlacemarkerStyle(MARKER_STYLE, MARKER_ICON, 20, 2);
             printWriter.println("<Schema id=\"" + SCHEMA_ID + "\">");
 
@@ -312,12 +306,8 @@ public class KMLTrackExporter implements TrackExporter {
         }
     }
 
-    private void writeBeginTrack(Track track, TrackPoint startTrackPoint) {
-        this.startTrackPoint = startTrackPoint;
+    private void writeBeginTrack(Track track) {
         if (printWriter != null) {
-            String name = context.getString(R.string.marker_label_start, track.getName());
-            Location location = startTrackPoint != null ? startTrackPoint.getLocation() : null;
-            writePlacemark(name, "", "", START_STYLE, location);
             printWriter.println("<Placemark>");
 
             if (exportTrackDetail) {
@@ -336,17 +326,10 @@ public class KMLTrackExporter implements TrackExporter {
     }
 
 
-    private void writeEndTrack(Track track, TrackPoint endTrackPoint) {
+    private void writeEndTrack() {
         if (printWriter != null) {
             printWriter.println("</gx:MultiTrack>");
             printWriter.println("</Placemark>");
-
-            if (exportTrackDetail) {
-                String name = context.getString(R.string.marker_label_end, track.getName());
-                String description = descriptionGenerator.generateTrackDescription(track, false);
-                Location location = endTrackPoint != null ? endTrackPoint.getLocation() : null;
-                writePlacemark(name, "", description, END_STYLE, location);
-            }
         }
     }
 
