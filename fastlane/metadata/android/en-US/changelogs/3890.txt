@@ -1,0 +1,8 @@
+v3.15.3: OpenTracks
+
+Changes:
+- Computation avg/max: heart rate, cadence, and power
+
+Bugfix:
+- KML/KMZ do not export #start/#end placemarks anymore
+- While recording: Speed/location was sometimes falsly shown as 0.
