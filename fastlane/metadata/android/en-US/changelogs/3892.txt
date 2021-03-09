@@ -1,0 +1,4 @@
+v3.15.4: OpenTracks
+
+Bugfix:
+- Voice annoucements interval should be in minutes (introduced in v3.15.0)
