@@ -94,7 +94,7 @@ public class PeriodicTaskExecutor {
             if (timerTaskExecutor == null) {
                 timerTaskExecutor = new TimerTaskExecutor(periodicTask, trackRecordingService);
             }
-            timerTaskExecutor.scheduleTask(Duration.ofSeconds(taskFrequency));
+            timerTaskExecutor.scheduleTask(Duration.ofMinutes(taskFrequency));
         } else {
             // For distance periodic task
             calculateNextTaskDistance();
