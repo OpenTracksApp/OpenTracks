@@ -568,7 +568,7 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="instant_export_enabled_summary">Vie raita varastoon tallennuksen jälkeen on valmis</string>
     <string name="voice_speed_lap">Kierrosnopeus %1$s</string>
     <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
-    <string name="settings_sensor_wheel_circumference">Pyörän koko (mm)</string>
+    <string name="settings_sensor_wheel_circumference">Pyörän ympärysmitta (mm)</string>
     <string name="stats_intervals">Välein</string>
     <string name="import_thread_interrupted">Lanka keskeytetty</string>
     <string name="import_unsupported_format">Tukematon tiedostomuoto</string>
@@ -582,4 +582,30 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="import_progress_summary_ok_msg">Tuodut tiedostot</string>
     <string name="import_progress_summary_exists_msg">Jo olemassa</string>
     <string name="import_progress_summary_errors_msg">Virhe</string>
+    <string name="generic_click_twice_cancel">Peruuta uudelleen napsauttamalla</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">Kokoruutu</string>
+    <string name="interval_list_empty_message">Ei ole mitään intervallia vielä</string>
+    <string name="export_error_post_workout">Treenin jälkeinen vienti epäonnistui, tarkista vientihakemisto.</string>
+    <string name="export_progress_summary_overwrite_msg">Kappaleet ylikirjoitettu</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Täydennetty yhdellä virheellä</item>
+        <item quantity="other">Täydennetty %1$d virheillä</item>
+    </plurals>
+    <string name="export_track_already_exists_msg">Kappale %1$s on jo olemassa kohdehakemistossa.</string>
+    <string name="export_all_do_it_for_all">tee se kaikkien konfliktien vuoksi</string>
+    <string name="export_track_errors">Kappaleita ei viety</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Tallennuksen aikana, läsnä koko näytön.</string>
+    <string name="settings_night_mode_title">UI-teema</string>
+    <string name="settings_night_mode_option_system">Järjestelmä</string>
+    <string name="settings_night_mode_option_day">Päivä</string>
+    <string name="settings_night_mode_option_night">Yö</string>
+    <string name="export_progress_summary_new_msg">Uusia kappaleita viety</string>
+    <string name="export_progress_summary_skip_msg">Kappaleet ohitettu</string>
+    <string name="export_progress_summary_errors_msg">Virhe</string>
+    <string name="generic_overwrite">Korvata</string>
+    <string name="generic_skip">Ohittaa</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="generic_show_errors">Näytä Virheet</string>
+    <string name="gps_disabled_msg">GPS pois käytöstä</string>
+    <string name="generic_completed">Täydellinen</string>
 </resources>
