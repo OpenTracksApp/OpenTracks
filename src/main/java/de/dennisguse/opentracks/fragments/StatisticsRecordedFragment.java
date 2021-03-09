@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.TrackRecordedActivity;
 import de.dennisguse.opentracks.adapters.SensorsAdapter;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
@@ -63,7 +64,6 @@ public class StatisticsRecordedFragment extends Fragment {
         fragment.setArguments(bundle);
         return fragment;
     }
-
 
     private TrackStatistics trackStatistics;
     private SensorStatistics sensorStatistics;
@@ -164,6 +164,8 @@ public class StatisticsRecordedFragment extends Fragment {
                     loadTrackDescription(track);
                     updateUI();
                     updateSensorUI();
+
+                    ((TrackRecordedActivity) getActivity()).startPostponedEnterTransitionWith(viewBinding.statsActivityTypeIcon, viewBinding.statsNameValue);
                 }
             });
         }

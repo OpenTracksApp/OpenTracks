@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks;
 
 import android.Manifest;
+import android.app.ActivityOptions;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -195,17 +197,20 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
         viewBinding.trackList.setEmptyView(viewBinding.trackListEmptyView);
         viewBinding.trackList.setOnItemClickListener((parent, view, position, trackId) -> {
-            Intent newIntent;
             if (trackId == recordingTrackId.getId()) {
                 // Is recording -> open record activity.
-                newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class)
+                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class)
                         .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, new Track.Id(trackId));
+                startActivity(newIntent);
             } else {
                 // Not recording -> open detail activity.
-                newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordedActivity.class)
+                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordedActivity.class)
                         .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, new Track.Id(trackId));
+                ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(
+                        this,
+                        new Pair<>(view.findViewById(R.id.list_item_icon), TrackRecordedActivity.VIEW_TRACK_ICON));
+                startActivity(newIntent, activityOptions.toBundle());
             }
-            startActivity(newIntent);
         });
 
         resourceCursorAdapter = new ResourceCursorAdapter(this, R.layout.list_item, null, 0) {

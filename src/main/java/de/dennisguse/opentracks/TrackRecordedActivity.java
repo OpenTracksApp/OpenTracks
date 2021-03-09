@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -55,6 +56,8 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
 
     private static final String TAG = TrackRecordedActivity.class.getSimpleName();
 
+    public static final String VIEW_TRACK_ICON = "track_icon";
+
     public static final String EXTRA_TRACK_ID = "track_id";
     public static final String EXTRA_MARKER_ID = "marker_id";
 
@@ -84,6 +87,8 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
         if (savedInstanceState != null) {
             viewBinding.trackDetailActivityViewPager.setCurrentItem(savedInstanceState.getInt(CURRENT_TAB_TAG_KEY));
         }
+
+        postponeEnterTransition();
     }
 
     @Override
@@ -274,5 +279,10 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
                     throw new RuntimeException("There isn't Fragment associated with the position: " + position);
             }
         }
+    }
+
+    public void startPostponedEnterTransitionWith(View viewIcon, View viewName) {
+        ViewCompat.setTransitionName(viewIcon, TrackRecordedActivity.VIEW_TRACK_ICON);
+        startPostponedEnterTransition();
     }
 }
