@@ -19,8 +19,11 @@ However, often only one value is provided.
 ### Speed
 
 * Garmin Speed Sensor 2
-  This sensor reports speed data as cadence.
-  A workaround is in place.
+  * Has updatable firmware that requires an account for garmin.com
+  * This sensor reports speed data as cadence.
+    A workaround is in place.
+  * This sensor sometimes counts backwards (unknown software version).
+    A workaround is in place.
 
 * Wahoo Speed (Model: WFRPMSPD)
 
