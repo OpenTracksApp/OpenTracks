@@ -608,4 +608,8 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="generic_show_errors">Näytä Virheet</string>
     <string name="gps_disabled_msg">GPS pois käytöstä</string>
     <string name="generic_completed">Täydellinen</string>
+    <string name="sensor_state_power_avg">Avg Teho</string>
+    <string name="description_elevation_loss">Korkeussijaintitappio: %1$d m (%2$d ft)</string>
+    <string name="sensor_state_heart_rate_max">Maksimisyke</string>
+    <string name="sensor_state_heart_rate_avg">Avg syke</string>
 </resources>
