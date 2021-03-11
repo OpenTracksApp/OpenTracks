@@ -38,20 +38,14 @@ limitations under the License.
     <string name="help_storage_pictures_title">Miten OpenTracks tallentaa merkkeihin liittyen otetut kuvat?</string>
     <string name="help_storage_pictures_content">Ne säilytetään sovelluksen sisäisessä tallennustilassa (eli ne näkyvät vain OpenTracksin sisällä).</string>
     <string name="help_track_export_title">Miten vien tai jaan tallennettuja reittejä?</string>
-    <string name="help_track_export_content">
-        Jäljet voi viedä asetuksista KMZ, KML tai GPX -muodossa.
-        KMZ/KML sisältävät kaiken; GPX vain sijainnit.
-        <i>Jakokuvakkeella</i> jaetut jäljet jaetaan KMZ-muodossa.</string>
+    <string name="help_track_export_content"> Jäljet voi viedä asetuksista KMZ, KML tai GPX -muodossa. KMZ/KML sisältävät kaiken; GPX vain sijainnit. <i>Jakokuvakkeella</i> jaetut jäljet jaetaan KMZ-muodossa. </string>
     <string name="help_data_google_play_services_title">Käyttääkö tai vaatiiko OpenTracks Google Play -palveluita?</string>
     <string name="help_recording_title">Miten OpenTracks tallentaa tietoja?</string>
     <string name="help_recording_content">
         OpenTracks käyttää laitteen GPS:ää paikkatietojen jatkuvaan tallentamiseen.
         Jos GPS raportoi epätarkkoja tietoja (sijainti, nopeus, korkeus) OpenTracks ei voi tehdä sille mitään.</string>
     <string name="help_data_storage_title">Miten OpenTracks tallentaa anturidatan?</string>
-    <string name="help_data_storage_content">
-        Anturidata tallennetaan jokaiselle paikkapisteelle.
-        Esimerkiksi sykemittarista tallennetaan vain <i>yksi</i> sykemittaus tallennettua paikkaa kohden.
-        Jos olet paikallaan tai sisätiloissa, mitään anturidataa ei tallenneta (mutta se näytetään).</string>
+    <string name="help_data_storage_content"> Anturidata tallennetaan jokaiselle paikkapisteelle. Esimerkiksi sykemittarista tallennetaan vain <i>yksi</i> sykemittaus tallennettua paikkaa kohden. Jos olet paikallaan tai sisätiloissa, mitään anturidataa ei tallenneta (mutta se näytetään). </string>
     <string name="help_gps_troubleshooting_title">Miksi OpenTracks ei tallenna sijaintia?</string>
     <string name="help_gps_troubleshooting_content"> Mitä voit tehdä:
 \na) tarkista, onko GPS käytössä,
@@ -61,15 +55,13 @@ limitations under the License.
 \n
 \nJos kaikki ei auta, ilmoita virheestä. </string>
     <string name="help_support_title">Miten voin tukea OpenTracksin kehitystä?</string>
-    <string name="help_support_content">
-        Voit:\n
-        a) levittää sanaa OpenTracksista,\n
-        b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">ehdottaa ominaisuuksia</a>,\n
-        c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">ilmoittaa ohjelmistovirheistä</a>,\n
-        d) auttaa ohjelmiston kehittämisessä,\n
-        e) ostaa sovelluksen <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play -kaupasta</a>,\n
-        f) lahjoittaa ja
-        g) tehdä mikä mielestäsi edistäisi OpenTracksia.</string>
+    <string name="help_support_content"> Voit:
+\n a) levittää sanaa OpenTracksista,
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">ehdottaa ominaisuuksia</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">ilmoittaa ohjelmistovirheistä</a>,
+\n d) auttaa ohjelmiston kehittämisessä,
+\n e) ostaa sovelluksen <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play -kaupasta</a>,
+\n f) lahjoittaa ja g) tehdä mikä mielestäsi edistäisi OpenTracksia. </string>
     <string name="open_track_using_dashboard">Avaa OpenTracks-Dashboardilla</string>
     <string name="open_track_as_KMZ">Avaa KMZ-muodossa</string>
     <string name="open_track_as_GPX">Avaa GPX-muodossa</string>
@@ -90,7 +82,7 @@ limitations under the License.
     <string name="activity_type_driving_bus">bussilla ajo</string>
     <string name="activity_type_driving_car">autolla ajo</string>
     <string name="activity_type_ferry">lautta</string>
-    <string name="activity_type_frisbee">frisbee</string>
+    <string name="activity_type_frisbee">liitokiekko</string>
     <string name="activity_type_gliding">liitely</string>
     <string name="activity_type_hang_gliding">riippuliito</string>
     <string name="activity_type_helicopter">helikopteri</string>
@@ -612,4 +604,11 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="description_elevation_loss">Korkeussijaintitappio: %1$d m (%2$d ft)</string>
     <string name="sensor_state_heart_rate_max">Maksimisyke</string>
     <string name="sensor_state_heart_rate_avg">Avg syke</string>
+    <string name="value_float_kilometer_hour">%1$.2f k/t</string>
+    <string name="value_pace_mile">%1$d:%2$02d min/mailia</string>
+    <string name="activity_type_escooter">eskootteri</string>
+    <string name="sensor_state_cadence_avg">Keskim.Poljinnopeus</string>
+    <string name="sensor_state_cadence_max">Suurin Poljinnopeus</string>
+    <string name="value_float_mile_hour">%1$.2f mt</string>
+    <string name="generic_open_track">Avaa Raita</string>
 </resources>
