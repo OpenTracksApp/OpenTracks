@@ -46,10 +46,7 @@ In der Tat muss eine App <i>ACTION_VIEW</i> mit MIME <i>application/vnd.google-e
     <string name="help_storage_pictures_title">Wie speichert OpenTracks Bilder, die als Markierungen aufgenommen wurden?</string>
     <string name="help_storage_pictures_content">Diese werden App-intern gespeichert (d.h. nur innerhalb von OpenTracks zugänglich).</string>
     <string name="help_track_export_title">Wie kann ich aufgezeichnete Tracks exportieren/teilen?</string>
-    <string name="help_track_export_content">
-Tracks können aus den Einstellungen als KMZ, KML oder GPX exportiert werden.
-KMZ/KML alle Daten; GPX nur Standorte.
-Tracks, die über das Symbol <i>Teilen Icon</i> freigegeben werden, werden als KMZ freigegeben.</string>
+    <string name="help_track_export_content"> Tracks können aus den Einstellungen als KMZ, KML oder GPX exportiert werden. KMZ/KML alle Daten; GPX nur Standorte. Tracks, die über das Symbol <i>Teilen Icon</i> freigegeben werden, werden als KMZ freigegeben. </string>
     <string name="help_data_google_play_services_title">Benötigt/benutzt OpenTracks den Google Play Service?</string>
     <string name="help_recording_title">Wie zeichnet OpenTracks Daten auf?</string>
     <string name="help_recording_content">
@@ -565,4 +562,10 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="settings_night_mode_option_night">Nacht</string>
     <string name="settings_sensor_wheel_circumference">Radumfang (mm)</string>
     <string name="stats_loss">Abstieg</string>
+    <string name="hold_to_stop">Halten zum Anhalten</string>
+    <string name="import_progress_summary_errors_msg">Fehler</string>
+    <string name="import_progress_summary_exists_msg">Schon vorhanden</string>
+    <string name="export_track_errors">Tracks werden nicht exportiert</string>
+    <string name="settings_default_export_uri_title">Track Export Verzeichnis</string>
+    <string name="import_progress_summary_ok_msg">Dateien importiert</string>
 </resources>
