@@ -66,7 +66,7 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
     public void onConfirmDeleteDone(Track.Id... trackIds) {
         boolean stopRecording = false;
 
-        Track.Id recordingTrackId = PreferencesUtils.getRecordingTrackId(this);
+        Track.Id recordingTrackId = PreferencesUtils.getRecordingTrackId(PreferencesUtils.getSharedPreferences(this), this);
         for (Track.Id trackId : trackIds) {
             if (trackId.equals(recordingTrackId)) {
                 stopRecording = true;

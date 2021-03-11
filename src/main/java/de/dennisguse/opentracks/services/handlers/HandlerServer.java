@@ -9,6 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 public class HandlerServer {
 
@@ -32,8 +33,9 @@ public class HandlerServer {
     public void start(Context context) {
         serviceExecutor = Executors.newSingleThreadExecutor();
 
+        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         locationHandler.onStart(context);
-        locationHandler.onSharedPreferenceChanged(context, null, null);
+        locationHandler.onSharedPreferenceChanged(context, sharedPreferences, null);
     }
 
     public void stop(Context context) {

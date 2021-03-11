@@ -53,6 +53,7 @@ public class TrackRecordingServiceTestLooper {
     public final ServiceTestRule mServiceRule = ServiceTestRule.withTimeout(5, TimeUnit.SECONDS);
 
     private final Context context = ApplicationProvider.getApplicationContext();
+    private final SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
 
     private ContentProviderUtils contentProviderUtils;
 
@@ -99,28 +100,28 @@ public class TrackRecordingServiceTestLooper {
     @MediumTest
     @Test
     public void testWithProperties_minRequiredAccuracy() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.recording_gps_accuracy_key, 500);
+        PreferencesUtils.setInt(sharedPreferences, context, R.string.recording_gps_accuracy_key, 500);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_voiceFrequencyDefault() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.voice_frequency_key, Integer.parseInt(context.getResources().getString(R.string.voice_frequency_default)));
+        PreferencesUtils.setInt(sharedPreferences, context, R.string.voice_frequency_key, Integer.parseInt(context.getResources().getString(R.string.voice_frequency_default)));
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_voiceFrequencyByDistance() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.voice_frequency_key, -1);
+        PreferencesUtils.setInt(sharedPreferences, context, R.string.voice_frequency_key, -1);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_voiceFrequencyByTime() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.voice_frequency_key, 1);
+        PreferencesUtils.setInt(sharedPreferences, context, R.string.voice_frequency_key, 1);
         fullRecordingSession();
     }
 
@@ -128,14 +129,14 @@ public class TrackRecordingServiceTestLooper {
     @MediumTest
     @Test
     public void testWithProperties_maxRecordingDistanceDefault() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.max_recording_distance_key, Integer.parseInt(context.getResources().getString(R.string.max_recording_distance_default)));
+        PreferencesUtils.setInt(sharedPreferences, context, R.string.max_recording_distance_key, Integer.parseInt(context.getResources().getString(R.string.max_recording_distance_default)));
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_maxRecordingDistance() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.max_recording_distance_key, 50);
+        PreferencesUtils.setInt(sharedPreferences, context, R.string.max_recording_distance_key, 50);
         fullRecordingSession();
     }
 
@@ -143,42 +144,42 @@ public class TrackRecordingServiceTestLooper {
     @Test
     public void testWithProperties_minRecordingDistanceDefault() throws TimeoutException {
         int minRecordingIntervalDefault = Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default));
-        PreferencesUtils.setInt(context, R.string.recording_distance_interval_key, minRecordingIntervalDefault);
+        PreferencesUtils.setInt(sharedPreferences, context, R.string.recording_distance_interval_key, minRecordingIntervalDefault);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_minRecordingDistance() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.recording_distance_interval_key, 2);
+        PreferencesUtils.setInt(sharedPreferences, context, R.string.recording_distance_interval_key, 2);
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_metricUnitsDefault() throws TimeoutException {
-        PreferencesUtils.setString(context, R.string.stats_units_key, context.getString(R.string.stats_units_default));
+        PreferencesUtils.setString(sharedPreferences, context, R.string.stats_units_key, context.getString(R.string.stats_units_default));
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_metricUnitsDisabled() throws TimeoutException {
-        PreferencesUtils.setString(context, R.string.stats_units_key, context.getString(R.string.stats_units_imperial));
+        PreferencesUtils.setString(sharedPreferences, context, R.string.stats_units_key, context.getString(R.string.stats_units_imperial));
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_minRecordingIntervalDefault() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.min_recording_interval_key, Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default)));
+        PreferencesUtils.setInt(sharedPreferences, context, R.string.min_recording_interval_key, Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default)));
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_minRecordingInterval() throws TimeoutException {
-        PreferencesUtils.setInt(context, R.string.min_recording_interval_key, 2);
+        PreferencesUtils.setInt(sharedPreferences, context, R.string.min_recording_interval_key, 2);
         fullRecordingSession();
     }
 
@@ -186,7 +187,7 @@ public class TrackRecordingServiceTestLooper {
     @Test
     public void testWithProperties_minRequiredAccuracyDefault() throws TimeoutException {
         int recordingGPSAccuracyDefault = Integer.parseInt(context.getResources().getString(R.string.recording_gps_accuracy_default));
-        PreferencesUtils.setInt(context, R.string.recording_gps_accuracy_key, recordingGPSAccuracyDefault);
+        PreferencesUtils.setInt(sharedPreferences, context, R.string.recording_gps_accuracy_key, recordingGPSAccuracyDefault);
         fullRecordingSession();
     }
 
@@ -209,7 +210,7 @@ public class TrackRecordingServiceTestLooper {
         Track track = contentProviderUtils.getTrack(trackId);
         assertNotNull(track);
         assertEquals(trackId, track.getId());
-        assertEquals(trackId, PreferencesUtils.getRecordingTrackId(context));
+        assertEquals(trackId, PreferencesUtils.getRecordingTrackId(sharedPreferences, context));
         assertEquals(trackId, service.getRecordingTrackId());
 
         // Insert a few points, markers and statistics.
@@ -223,7 +224,7 @@ public class TrackRecordingServiceTestLooper {
             location.setTime(startTime + i * 10000);
             location.setBearing(3.0f);
             TrackPoint trackPoint = new TrackPoint(location);
-            int prefAccuracy = PreferencesUtils.getRecordingGPSAccuracy(context);
+            int prefAccuracy = PreferencesUtils.getRecordingGPSAccuracy(sharedPreferences, context);
             service.newTrackPoint(trackPoint, prefAccuracy);
 
             if (i % 7 == 0) {

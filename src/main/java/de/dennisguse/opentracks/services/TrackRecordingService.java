@@ -82,39 +82,39 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private PeriodicTaskExecutor voiceExecutor;
     private TrackRecordingServiceNotificationManager notificationManager;
 
+    private SharedPreferences sharedPreferences;
     private Track.Id recordingTrackId;
     private boolean recordingTrackPaused;
     private int recordingDistanceInterval;
     private int maxRecordingDistance;
-
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
-        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             Context context = TrackRecordingService.this;
             if (PreferencesUtils.isKey(TrackRecordingService.this, R.string.recording_track_id_key, key)) {
                 // Only through the TrackRecordingService can one stop a recording and set the recordingTrackId to -1L.
-                if (PreferencesUtils.isRecording(TrackRecordingService.this)) {
-                    recordingTrackId = PreferencesUtils.getRecordingTrackId(TrackRecordingService.this);
+                if (PreferencesUtils.isRecording(sharedPreferences, TrackRecordingService.this)) {
+                    recordingTrackId = PreferencesUtils.getRecordingTrackId(sharedPreferences, TrackRecordingService.this);
                 }
             }
             if (PreferencesUtils.isKey(context, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(context);
+                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(sharedPreferences, context);
             }
             if (PreferencesUtils.isKey(context, R.string.stats_units_key, key)) {
-                boolean metricUnits = PreferencesUtils.isMetricUnits(context);
+                boolean metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
                 voiceExecutor.setMetricUnits(metricUnits);
             }
             if (PreferencesUtils.isKey(context, R.string.voice_frequency_key, key)) {
-                voiceExecutor.setTaskFrequency(PreferencesUtils.getVoiceFrequency(context));
+                voiceExecutor.setTaskFrequency(PreferencesUtils.getVoiceFrequency(sharedPreferences, context));
             }
             if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
-                recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(context);
+                recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
             }
             if (PreferencesUtils.isKey(context, R.string.max_recording_distance_key, key)) {
-                maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(context);
+                maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(sharedPreferences, context);
             }
 
-            handlerServer.onSharedPreferenceChanged(context, preferences, key);
+            handlerServer.onSharedPreferenceChanged(context, sharedPreferences, key);
         }
     };
 
@@ -147,8 +147,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         // onSharedPreferenceChanged might not set recordingTrackId.
         recordingTrackId = null;
 
-        PreferencesUtils.register(this, sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
+        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
         restartTrackAfterServiceRestart();
     }
@@ -189,8 +190,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         // Reverse order from onCreate
         showNotification(false); //TODO Why?
 
-        PreferencesUtils.unregister(this, sharedPreferenceChangeListener);
-
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        sharedPreferences = null;
 
         try {
             voiceExecutor.shutdown();
@@ -305,7 +306,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         //TODO Pass TrackPoint
         track.setName(TrackNameUtils.getTrackName(this, trackId, segmentStartTrackPoint.getTime()));
 
-        String category = PreferencesUtils.getDefaultActivity(this);
+        String category = PreferencesUtils.getDefaultActivity(sharedPreferences, this);
         track.setCategory(category);
         track.setIcon(TrackIconUtils.getIconValue(this, category));
         track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
@@ -536,9 +537,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private void updateRecordingState(Track.Id trackId, boolean paused) {
         recordingTrackId = trackId;
         long currentTrackId = trackId != null ? trackId.getId() : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-        PreferencesUtils.setLong(this, R.string.recording_track_id_key, currentTrackId);
+        PreferencesUtils.setLong(sharedPreferences, this, R.string.recording_track_id_key, currentTrackId);
         recordingTrackPaused = paused;
-        PreferencesUtils.setBoolean(this, R.string.recording_track_paused_key, recordingTrackPaused);
+        PreferencesUtils.setBoolean(sharedPreferences, this, R.string.recording_track_paused_key, recordingTrackPaused);
     }
 
     @Override

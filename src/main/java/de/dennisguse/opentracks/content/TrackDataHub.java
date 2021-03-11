@@ -71,6 +71,8 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
     private final ContentProviderUtils contentProviderUtils;
     private final int targetNumPoints;
 
+    private SharedPreferences sharedPreferences;
+
     private boolean started;
     private HandlerThread handlerThread;
     private Handler handler;
@@ -140,8 +142,10 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         contentResolver.registerContentObserver(TrackPointsColumns.CONTENT_URI_BY_ID, false, trackPointsTableObserver);
 
 
-        PreferencesUtils.register(context, this);
-        onSharedPreferenceChanged(null, null);
+        sharedPreferences = PreferencesUtils.getSharedPreferences(context);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        onSharedPreferenceChanged(sharedPreferences, null);
+
         handler.post(() -> {
             if (started) {
                 loadDataForAll();
@@ -155,7 +159,8 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
             return;
         }
 
-        PreferencesUtils.unregister(context, this);
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+        sharedPreferences = null;
 
         started = false;
 
@@ -224,10 +229,10 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, final String key) {
         handler.post(() -> {
             if (PreferencesUtils.isKey(context, R.string.recording_track_id_key, key)) {
-                recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
+                recordingTrackId = PreferencesUtils.getRecordingTrackId(sharedPreferences, context);
             }
             if (PreferencesUtils.isKey(context, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(context);
+                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(sharedPreferences, context);
             }
         });
     }

@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import java.time.Duration;
 import java.util.List;
 
-import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -27,8 +26,6 @@ public class AnnouncementUtilsTest {
 
     @Test
     public void getAnnouncement_metric() {
-        PreferencesUtils.setString(context, R.string.stats_units_key, context.getString(R.string.stats_units_metric));
-
         TrackStatistics stats = new TrackStatistics();
         stats.setTotalDistance(20000);
         stats.setTotalTime(Duration.ofMillis(600000));
@@ -37,7 +34,7 @@ public class AnnouncementUtilsTest {
         stats.setTotalElevationGain(6000f);
 
         // when
-        String announcement = AnnouncementUtils.getAnnouncement(context, stats, "airplane", null);
+        String announcement = AnnouncementUtils.getAnnouncement(context, stats, true, true, null);
 
         // then
         assertEquals("OpenTracks total distance 20.00 kilometers in 5 minutes 0 seconds at 240.0 kilometers per hour", announcement);
@@ -45,8 +42,6 @@ public class AnnouncementUtilsTest {
 
     @Test
     public void getAnnouncement_withInterval_metric() {
-        PreferencesUtils.setString(context, R.string.stats_units_key, context.getString(R.string.stats_units_metric));
-
         TrackStatistics stats = new TrackStatistics();
         stats.setTotalDistance(20000);
         stats.setTotalTime(Duration.ofMillis(600000));
@@ -61,7 +56,7 @@ public class AnnouncementUtilsTest {
         String expected = "OpenTracks total distance 20.00 kilometers in 5 minutes 0 seconds at 240.0 kilometers per hour Lap speed of 51.2 kilometers per hour";
 
         // when
-        String announcement = AnnouncementUtils.getAnnouncement(context, stats, "airplane", lastInterval);
+        String announcement = AnnouncementUtils.getAnnouncement(context, stats, true, true, lastInterval);
 
         // then
         assertEquals(expected, announcement);

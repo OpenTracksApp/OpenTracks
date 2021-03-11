@@ -134,11 +134,12 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
             }
         }
 
+        //TODO Check preference handling.
         private void setCommonValues(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
             String category = aggregatedStatistic.getCategory();
 
-            reportSpeed = PreferencesUtils.isReportSpeed(context, category);
-            metricsUnits = PreferencesUtils.isMetricUnits(context);
+            reportSpeed = PreferencesUtils.isReportSpeed(PreferencesUtils.getSharedPreferences(context), context, category);
+            metricsUnits = PreferencesUtils.isMetricUnits(PreferencesUtils.getSharedPreferences(context), context);
 
             sportIcon.setImageResource(getIcon(aggregatedStatistic));
             typeLabel.setText(category);

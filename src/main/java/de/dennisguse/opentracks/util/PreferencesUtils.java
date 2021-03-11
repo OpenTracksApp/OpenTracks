@@ -46,33 +46,27 @@ public class PreferencesUtils {
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    public static SharedPreferences register(Context context, SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener) {
-        SharedPreferences sharedPreferences = getSharedPreferences(context);
-        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        return sharedPreferences;
-    }
-
-    public static void unregister(Context context, SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener) {
-        getSharedPreferences(context).unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    }
-
     @Deprecated
     //NOTE: is at the moment still used to determine if a track is currently recorded; better ask the service directly.
     //NOTE: This was also used to recover from a service restart, but this data should not be exposed to the whole application.
     public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
 
     @Deprecated //Use the TrackRecordingService
-    public static Track.Id getRecordingTrackId(Context context) {
-        SharedPreferences sharedPreferences = getSharedPreferences(context);
+    public static Track.Id getRecordingTrackId(Context context, SharedPreferences sharedPreferences) {
         return new Track.Id(sharedPreferences.getLong(getKey(context, R.string.recording_track_id_key), RECORDING_TRACK_ID_DEFAULT));
     }
 
-    public static String getDefaultActivity(Context context) {
-        return getString(context, R.string.default_activity_key, context.getString(R.string.default_activity_default));
+    @Deprecated //Use the TrackRecordingService
+    public static Track.Id getRecordingTrackId(SharedPreferences sharedPreferences, Context context) {
+        return getRecordingTrackId(context, sharedPreferences);
     }
 
-    public static void setDefaultActivity(Context context, String newDefaultActivity) {
-        setString(context, R.string.default_activity_key, newDefaultActivity);
+    public static String getDefaultActivity(SharedPreferences sharedPreferences, Context context) {
+        return getString(sharedPreferences, context, R.string.default_activity_key, context.getString(R.string.default_activity_default));
+    }
+
+    public static void setDefaultActivity(SharedPreferences sharedPreferences, Context context, String newDefaultActivity) {
+        setString(sharedPreferences, context, R.string.default_activity_key, newDefaultActivity);
     }
 
     /**
@@ -96,48 +90,20 @@ public class PreferencesUtils {
         return key == null || key.equals(getKey(context, keyId));
     }
 
-    /**
-     * Gets a boolean preference value.
-     *
-     * @param context      the context
-     * @param keyId        the key id
-     * @param defaultValue the default value
-     */
-    private static boolean getBoolean(Context context, int keyId, boolean defaultValue) {
-        SharedPreferences sharedPreferences = getSharedPreferences(context);
+    private static boolean getBoolean(SharedPreferences sharedPreferences, Context context, int keyId, boolean defaultValue) {
         return sharedPreferences.getBoolean(getKey(context, keyId), defaultValue);
     }
 
-    private static boolean getBoolean(Context context, SharedPreferences sharedPreferences, int keyId, boolean defaultValue) {
-        return sharedPreferences.getBoolean(getKey(context, keyId), defaultValue);
-    }
-
-    /**
-     * Sets a boolean preference value.
-     *
-     * @param context the context
-     * @param keyId   the key id
-     * @param value   the value
-     */
     //TODO Don't use; this function is only to be used TrackRecordingService and will be removed.
     @VisibleForTesting
-    public static void setBoolean(Context context, int keyId, boolean value) {
-        SharedPreferences sharedPreferences = getSharedPreferences(context);
+    public static void setBoolean(SharedPreferences sharedPreferences, Context context, int keyId, boolean value) {
         Editor editor = sharedPreferences.edit();
         editor.putBoolean(getKey(context, keyId), value);
         editor.apply();
     }
 
-    /**
-     * Gets an integer preference value.
-     *
-     * @param context      the context
-     * @param keyId        the key id
-     * @param defaultValue the default value
-     */
-    private static int getInt(Context context, int keyId, int defaultValue) {
-        SharedPreferences sharedPreferences = getSharedPreferences(context);
 
+    private static int getInt(SharedPreferences sharedPreferences, Context context, int keyId, int defaultValue) {
         try {
             return sharedPreferences.getInt(getKey(context, keyId), defaultValue);
         } catch (ClassCastException e) {
@@ -153,82 +119,42 @@ public class PreferencesUtils {
         }
     }
 
-    /**
-     * Sets an integer preference value.
-     *
-     * @param context the context
-     * @param keyId   the key id
-     * @param value   the value
-     */
     @VisibleForTesting
-    public static void setInt(Context context, int keyId, int value) {
-        SharedPreferences sharedPreferences = getSharedPreferences(context);
+    public static void setInt(SharedPreferences sharedPreferences, Context context, int keyId, int value) {
         Editor editor = sharedPreferences.edit();
         editor.putInt(getKey(context, keyId), value);
         editor.apply();
     }
 
-    /**
-     * Sets a long preference value.
-     *
-     * @param context the context
-     * @param keyId   the key id
-     * @param value   the value
-     */
     //TODO Don't use; this function is only to be used TrackRecordingService and will be removed.
     @Deprecated
     @VisibleForTesting
-    public static void setLong(Context context, int keyId, long value) {
-        SharedPreferences sharedPreferences = getSharedPreferences(context);
+    public static void setLong(SharedPreferences sharedPreferences, Context context, int keyId, long value) {
         Editor editor = sharedPreferences.edit();
         editor.putLong(getKey(context, keyId), value);
         editor.apply();
     }
 
-    @Deprecated
-    public static String getString(Context context, int keyId, String defaultValue) {
-        SharedPreferences sharedPreferences = getSharedPreferences(context);
+    public static String getString(SharedPreferences sharedPreferences, Context context, int keyId, String defaultValue) {
         return sharedPreferences.getString(getKey(context, keyId), defaultValue);
     }
 
-    public static String getString(Context context, SharedPreferences sharedPreferences, int keyId, String defaultValue) {
-        return sharedPreferences.getString(getKey(context, keyId), defaultValue);
-    }
-
-    /**
-     * Sets a string preference value.
-     *
-     * @param context the context
-     * @param keyId   the key id
-     * @param value   the value
-     */
     @VisibleForTesting
-    public static void setString(Context context, int keyId, String value) {
-        SharedPreferences sharedPreferences = getSharedPreferences(context);
+    public static void setString(SharedPreferences sharedPreferences, Context context, int keyId, String value) {
         Editor editor = sharedPreferences.edit();
         editor.putString(getKey(context, keyId), value);
         editor.apply();
     }
 
-    @Deprecated
-    public static boolean isMetricUnits(Context context) {
-        return isMetricUnits(getSharedPreferences(context), context);
-    }
-
     public static boolean isMetricUnits(SharedPreferences sharedPreferences, Context context) {
         final String STATS_UNIT = context.getString(R.string.stats_units_default);
-        return STATS_UNIT.equals(getString(context, sharedPreferences, R.string.stats_units_key, STATS_UNIT));
-    }
-
-    @Deprecated
-    public static boolean isReportSpeed(Context context, String category) {
-        return isReportSpeed(getSharedPreferences(context), context, category);
+        return STATS_UNIT.equals(getString(sharedPreferences, context, R.string.stats_units_key, STATS_UNIT));
     }
 
     public static boolean isReportSpeed(SharedPreferences sharedPreferences, Context context, String category) {
         final String STATS_RATE_DEFAULT = context.getString(R.string.stats_rate_default);
-        String currentStatsRate = getString(context, sharedPreferences, R.string.stats_rate_key, STATS_RATE_DEFAULT);
-        if (currentStatsRate.equals(getString(context, sharedPreferences, R.string.stats_rate_speed_or_pace_default, STATS_RATE_DEFAULT))) {
+        String currentStatsRate = getString(sharedPreferences, context, R.string.stats_rate_key, STATS_RATE_DEFAULT);
+        if (currentStatsRate.equals(getString(sharedPreferences, context, R.string.stats_rate_speed_or_pace_default, STATS_RATE_DEFAULT))) {
             return TrackIconUtils.isSpeedIcon(context, category);
         }
 
@@ -236,8 +162,8 @@ public class PreferencesUtils {
     }
 
     @Deprecated //Use TrackRecordingService
-    public static boolean isRecordingTrackPaused(Context context) {
-        return getBoolean(context, R.string.recording_track_paused_key, isRecordingTrackPausedDefault(context));
+    public static boolean isRecordingTrackPaused(SharedPreferences sharedPreferences, Context context) {
+        return getBoolean(sharedPreferences, context, R.string.recording_track_paused_key, isRecordingTrackPausedDefault(context));
     }
 
     @Deprecated //Use TrackRecordingService
@@ -246,9 +172,9 @@ public class PreferencesUtils {
     }
 
     @Deprecated //Use TrackRecordingService
-    public static void defaultRecordingTrackPaused(Context context) {
+    public static void defaultRecordingTrackPaused(SharedPreferences sharedPreferences, Context context) {
         final boolean RECORDING_TRACK_PAUSED = context.getResources().getBoolean(R.bool.recording_track_paused_default);
-        setBoolean(context, R.string.recording_track_paused_key, RECORDING_TRACK_PAUSED);
+        setBoolean(sharedPreferences, context, R.string.recording_track_paused_key, RECORDING_TRACK_PAUSED);
     }
 
     private static String getBluetoothSensorAddressNone(Context context) {
@@ -259,83 +185,75 @@ public class PreferencesUtils {
         return getBluetoothSensorAddressNone(context).equals(currentValue);
     }
 
-    public static String getBluetoothHeartRateSensorAddress(Context context) {
-        return getString(context, R.string.settings_sensor_bluetooth_heart_rate_key, getBluetoothSensorAddressNone(context));
+    public static String getBluetoothHeartRateSensorAddress(SharedPreferences sharedPreferences, Context context) {
+        return getString(sharedPreferences, context, R.string.settings_sensor_bluetooth_heart_rate_key, getBluetoothSensorAddressNone(context));
     }
 
-    public static String getBluetoothCyclingCadenceSensorAddress(Context context) {
-        return getString(context, R.string.settings_sensor_bluetooth_cycling_cadence_key, getBluetoothSensorAddressNone(context));
+    public static String getBluetoothCyclingCadenceSensorAddress(SharedPreferences sharedPreferences, Context context) {
+        return getString(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_cadence_key, getBluetoothSensorAddressNone(context));
     }
 
-    public static String getBluetoothCyclingSpeedSensorAddress(Context context) {
-        return getString(context, R.string.settings_sensor_bluetooth_cycling_speed_key, getBluetoothSensorAddressNone(context));
+    public static String getBluetoothCyclingSpeedSensorAddress(SharedPreferences sharedPreferences, Context context) {
+        return getString(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_speed_key, getBluetoothSensorAddressNone(context));
     }
 
-    public static int getWheelCircumference(Context context) {
+    public static int getWheelCircumference(SharedPreferences sharedPreferences, Context context) {
         final int DEFAULT = Integer.parseInt(context.getResources().getString(R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_default));
-        return getInt(context, R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key, DEFAULT);
+        return getInt(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key, DEFAULT);
     }
 
-    public static boolean isBluetoothCyclingPowerSensorAddressNone(Context context) {
-        return isBluetoothSensorAddressNone(context, getBluetoothCyclingPowerSensorAddress(context));
-    }
-
-    public static String getBluetoothCyclingPowerSensorAddress(Context context) {
-        return getString(context, R.string.settings_sensor_bluetooth_cycling_power_key, getBluetoothSensorAddressNone(context));
+    public static String getBluetoothCyclingPowerSensorAddress(SharedPreferences sharedPreferences, Context context) {
+        return getString(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_power_key, getBluetoothSensorAddressNone(context));
     }
 
 
-    public static boolean shouldShowStatsOnLockscreen(Context context) {
+    public static boolean shouldShowStatsOnLockscreen(SharedPreferences sharedPreferences, Context context) {
         final boolean STATS_SHOW_ON_LOCKSCREEN_DEFAULT = context.getResources().getBoolean(R.bool.stats_show_on_lockscreen_while_recording_default);
-        return getBoolean(context, R.string.stats_show_on_lockscreen_while_recording_key, STATS_SHOW_ON_LOCKSCREEN_DEFAULT);
+        return getBoolean(sharedPreferences, context, R.string.stats_show_on_lockscreen_while_recording_key, STATS_SHOW_ON_LOCKSCREEN_DEFAULT);
     }
 
-    public static boolean shouldKeepScreenOn(Context context) {
+    public static boolean shouldKeepScreenOn(SharedPreferences sharedPreferences, Context context) {
         final boolean DEFAULT = context.getResources().getBoolean(R.bool.stats_keep_screen_on_while_recording_default);
-        return getBoolean(context, R.string.stats_keep_screen_on_while_recording_key, DEFAULT);
+        return getBoolean(sharedPreferences, context, R.string.stats_keep_screen_on_while_recording_key, DEFAULT);
     }
 
-    public static boolean shouldUseFullscreen(Context context) {
+    public static boolean shouldUseFullscreen(SharedPreferences sharedPreferences, Context context) {
         final boolean DEFAULT = context.getResources().getBoolean(R.bool.stats_fullscreen_while_recording_default);
-        return getBoolean(context, R.string.stats_fullscreen_while_recording_key, DEFAULT);
-    }
-
-    @Deprecated
-    public static boolean isShowStatsElevation(Context context) {
-        return isShowStatsElevation(getSharedPreferences(context), context);
+        return getBoolean(sharedPreferences, context, R.string.stats_fullscreen_while_recording_key, DEFAULT);
     }
 
     public static boolean isShowStatsElevation(SharedPreferences sharedPreferences, Context context) {
         final boolean STATS_SHOW_ELEVATION = context.getResources().getBoolean(R.bool.stats_show_elevation_default);
-        return getBoolean(context, sharedPreferences, R.string.stats_show_grade_elevation_key, STATS_SHOW_ELEVATION);
+        return getBoolean(sharedPreferences, context, R.string.stats_show_grade_elevation_key, STATS_SHOW_ELEVATION);
     }
 
     public static boolean isStatsShowCoordinate(SharedPreferences sharedPreferences, Context context) {
         final boolean STATS_SHOW_COORDINATE = context.getResources().getBoolean(R.bool.stats_show_coordinate_default);
-        return getBoolean(context, R.string.stats_show_coordinate_key, STATS_SHOW_COORDINATE);
+        return getBoolean(sharedPreferences, context, R.string.stats_show_coordinate_key, STATS_SHOW_COORDINATE);
     }
 
-    public static int getVoiceFrequency(Context context) {
+    public static int getVoiceFrequency(SharedPreferences sharedPreferences, Context context) {
         final int VOICE_FREQUENCY_DEFAULT = Integer.parseInt(context.getResources().getString(R.string.voice_frequency_default));
-        return getInt(context, R.string.voice_frequency_key, VOICE_FREQUENCY_DEFAULT);
+        return getInt(sharedPreferences, context, R.string.voice_frequency_key, VOICE_FREQUENCY_DEFAULT);
     }
 
-    public static int getRecordingDistanceInterval(Context context) {
-        return getInt(context, R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefault(context));
+    public static int getRecordingDistanceInterval(SharedPreferences sharedPreferences, Context context) {
+        return getInt(sharedPreferences, context, R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefault(context));
     }
 
     public static int getRecordingDistanceIntervalDefault(Context context) {
         return Integer.parseInt(context.getResources().getString(R.string.recording_distance_interval_default));
     }
 
-    public static int getMaxRecordingDistance(Context context) {
+    public static int getMaxRecordingDistance(SharedPreferences sharedPreferences, Context context) {
         final int MAX_RECORDING_DISTANCE = Integer.parseInt(context.getResources().getString(R.string.max_recording_distance_default));
-        return getInt(context, R.string.max_recording_distance_key, MAX_RECORDING_DISTANCE);
+        return getInt(sharedPreferences, context, R.string.max_recording_distance_key, MAX_RECORDING_DISTANCE);
     }
 
-    public static int getMinRecordingInterval(Context context) {
+    //TODO Duration
+    public static int getMinRecordingInterval(SharedPreferences sharedPreferences, Context context) {
         final int MIN_RECORDING_INTERVAL = Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default));
-        return getInt(context, R.string.min_recording_interval_key, MIN_RECORDING_INTERVAL);
+        return getInt(sharedPreferences, context, R.string.min_recording_interval_key, MIN_RECORDING_INTERVAL);
     }
 
     public static int getMinRecordingIntervalAdaptAccuracy(Context context) {
@@ -350,19 +268,19 @@ public class PreferencesUtils {
         return Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default));
     }
 
-    public static int getRecordingGPSAccuracy(Context context) {
+    public static int getRecordingGPSAccuracy(SharedPreferences sharedPreferences, Context context) {
         final int RECORDING_GPS_ACCURACY = Integer.parseInt(context.getResources().getString(R.string.recording_gps_accuracy_default));
-        return getInt(context, R.string.recording_gps_accuracy_key, RECORDING_GPS_ACCURACY);
+        return getInt(sharedPreferences, context, R.string.recording_gps_accuracy_key, RECORDING_GPS_ACCURACY);
     }
 
-    public static boolean shouldInstantExportAfterWorkout(Context context) {
+    public static boolean shouldInstantExportAfterWorkout(SharedPreferences sharedPreferences, Context context) {
         final boolean INSTANT_POST_WORKOUT_EXPORT_DEFAULT = context.getResources().getBoolean(R.bool.post_workout_export_enabled_default);
-        return getBoolean(context, R.string.post_workout_export_enabled_key, INSTANT_POST_WORKOUT_EXPORT_DEFAULT);
+        return getBoolean(sharedPreferences, context, R.string.post_workout_export_enabled_key, INSTANT_POST_WORKOUT_EXPORT_DEFAULT);
     }
 
-    public static TrackFileFormat getExportTrackFileFormat(Context context) {
-        final String TRACKFILEFORMAT_NAME_DEFAULT = getString(context, R.string.export_trackfileformat_default, null);
-        String trackFileFormatName = getString(context, R.string.export_trackfileformat_key, TRACKFILEFORMAT_NAME_DEFAULT);
+    public static TrackFileFormat getExportTrackFileFormat(SharedPreferences sharedPreferences, Context context) {
+        final String TRACKFILEFORMAT_NAME_DEFAULT = getString(sharedPreferences, context, R.string.export_trackfileformat_default, null);
+        String trackFileFormatName = getString(sharedPreferences, context, R.string.export_trackfileformat_key, TRACKFILEFORMAT_NAME_DEFAULT);
         try {
             return TrackFileFormat.valueOf(trackFileFormatName);
         } catch (Exception e) {
@@ -370,24 +288,24 @@ public class PreferencesUtils {
         }
     }
 
-    public static boolean getPreventReimportTracks(Context context) {
-        final boolean defaultValue = getBoolean(context, R.bool.import_prevent_reimport_default, false);
-        return getBoolean(context, R.string.import_prevent_reimport_key, defaultValue);
+    public static boolean getPreventReimportTracks(SharedPreferences sharedPreferences, Context context) {
+        final boolean defaultValue = getBoolean(sharedPreferences, context, R.bool.import_prevent_reimport_default, false);
+        return getBoolean(sharedPreferences, context, R.string.import_prevent_reimport_key, defaultValue);
     }
 
     /**
      * @return {@link androidx.appcompat.app.AppCompatDelegate}.MODE_*
      */
-    public static int getDefaultNightMode(Context context) {
+    public static int getDefaultNightMode(SharedPreferences sharedPreferences, Context context) {
         final String defaultValue = getKey(context, R.string.night_mode_default);
-        final String value = getString(context, R.string.night_mode_key, defaultValue);
+        final String value = getString(sharedPreferences, context, R.string.night_mode_key, defaultValue);
 
         return Integer.parseInt(value);
     }
 
     @Deprecated //Use TrackRecordingService
-    public static boolean isRecording(Context context) {
-        return isRecording(getRecordingTrackId(context));
+    public static boolean isRecording(SharedPreferences sharedPreferences, Context context) {
+        return isRecording(getRecordingTrackId(context, sharedPreferences));
     }
 
     @Deprecated
@@ -399,16 +317,19 @@ public class PreferencesUtils {
         return recordingTrackId.getId() != RECORDING_TRACK_ID_DEFAULT;
     }
 
-    public static void resetPreferences(Context context, boolean readAgain) {
+    public static SharedPreferences resetPreferences(Context context, boolean readAgain) {
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
         if (readAgain) {
             // We want to really clear settings now.
-            getSharedPreferences(context).edit().clear().commit();
+            sharedPreferences.edit().clear().commit();
         }
         PreferenceManager.setDefaultValues(context, R.xml.settings, readAgain);
+
+        return sharedPreferences;
     }
 
-    public static DocumentFile getDefaultExportDirectoryUri(Context context) {
-        String singleExportDirectorySettingsKey = getString(context, R.string.settings_default_export_directory_key, null);
+    public static DocumentFile getDefaultExportDirectoryUri(SharedPreferences sharedPreferences, Context context) {
+        String singleExportDirectorySettingsKey = getString(sharedPreferences, context, R.string.settings_default_export_directory_key, null);
         if (singleExportDirectorySettingsKey == null) {
             return null;
         }
@@ -420,12 +341,12 @@ public class PreferencesUtils {
         return null;
     }
 
-    public static void setDefaultExportDirectoryUri(Context context, Uri directoryUri) {
+    public static void setDefaultExportDirectoryUri(SharedPreferences sharedPreferences, Context context, Uri directoryUri) {
         String value = directoryUri != null ? directoryUri.toString() : null;
-        setString(context, R.string.settings_default_export_directory_key, value);
+        setString(sharedPreferences, context, R.string.settings_default_export_directory_key, value);
     }
 
-    public static boolean isDefaultExportDirectoryUri(Context context) {
-        return getDefaultExportDirectoryUri(context) != null;
+    public static boolean isDefaultExportDirectoryUri(SharedPreferences sharedPreferences, Context context) {
+        return getDefaultExportDirectoryUri(sharedPreferences, context) != null;
     }
 }

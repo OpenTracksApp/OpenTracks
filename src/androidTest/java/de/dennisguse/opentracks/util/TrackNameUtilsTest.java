@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks.util;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -46,12 +47,14 @@ public class TrackNameUtilsTest {
 
     private static final Context CONTEXT = ApplicationProvider.getApplicationContext();
 
+    private static final SharedPreferences SHARED_PREFERENCES = PreferencesUtils.getSharedPreferences(CONTEXT);
+
     /**
      * Tests when the track_name_key is settings_recording_track_name_date_local_value.
      */
     @Test
     public void testTrackName_date_local() {
-        PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_local_value));
+        PreferencesUtils.setString(SHARED_PREFERENCES, CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_local_value));
         assertEquals(StringUtils.formatDateTime(CONTEXT, START_TIME), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
     }
 
@@ -60,7 +63,7 @@ public class TrackNameUtilsTest {
      */
     @Test
     public void testTrackName_date_iso_8601() {
-        PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_iso_8601_value));
+        PreferencesUtils.setString(SHARED_PREFERENCES, CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_iso_8601_value));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(TrackNameUtils.ISO_8601_FORMAT, Locale.US);
         assertEquals(simpleDateFormat.format(START_TIME.toEpochMilli()), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
     }
@@ -70,7 +73,7 @@ public class TrackNameUtilsTest {
      */
     @Test
     public void testTrackName_number() {
-        PreferencesUtils.setString(CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_number_value));
+        PreferencesUtils.setString(SHARED_PREFERENCES, CONTEXT, R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_number_value));
         assertEquals("Track " + TRACK_ID.getId(), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
     }
 }

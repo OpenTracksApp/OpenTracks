@@ -84,6 +84,7 @@ public class TrackRecordingServiceTest {
 
 
     private final Context context = ApplicationProvider.getApplicationContext();
+    private final SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
     private ContentProviderUtils contentProviderUtils;
 
     private final Track.Id trackId = new Track.Id(Math.abs(new Random().nextLong()));
@@ -302,7 +303,7 @@ public class TrackRecordingServiceTest {
         // when
         // Just set recording track to a bogus value.
         // Make sure that the service will not start recording and will clear the bogus track.
-        PreferencesUtils.setLong(context, R.string.recording_track_id_key, 123L);
+        PreferencesUtils.setLong(sharedPreferences, context, R.string.recording_track_id_key, 123L);
 
         // then
         assertFalse(service.isRecording());
@@ -325,7 +326,7 @@ public class TrackRecordingServiceTest {
         // then
         assertNull(newTrackId);
 
-        assertEquals(trackId, PreferencesUtils.getRecordingTrackId(context));
+        assertEquals(trackId, PreferencesUtils.getRecordingTrackId(sharedPreferences, context));
         assertEquals(trackId, service.getRecordingTrackId());
     }
 
@@ -341,7 +342,7 @@ public class TrackRecordingServiceTest {
         service.endCurrentTrack();
 
         // then
-        assertFalse(PreferencesUtils.isRecording(context));
+        assertFalse(PreferencesUtils.isRecording(sharedPreferences, context));
         assertNull(service.getRecordingTrackId());
     }
 
@@ -388,8 +389,8 @@ public class TrackRecordingServiceTest {
         assertNotNull(track.getId());
         contentProviderUtils.insertTrack(track);
         assertEquals(track.getId(), contentProviderUtils.getTrack(track.getId()).getId());
-        PreferencesUtils.setLong(context, R.string.recording_track_id_key, isRecording ? track.getId().getId() : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
-        PreferencesUtils.setBoolean(context, R.string.recording_track_paused_key, !isRecording);
+        PreferencesUtils.setLong(sharedPreferences, context, R.string.recording_track_id_key, isRecording ? track.getId().getId() : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+        PreferencesUtils.setBoolean(sharedPreferences, context, R.string.recording_track_paused_key, !isRecording);
     }
 
     // NOTE: Do not use to create a track that is currently recording.
@@ -422,7 +423,6 @@ public class TrackRecordingServiceTest {
         location.setTime(time);
         location.setBearing(3.0f);
         TrackPoint trackPoint = new TrackPoint(location);
-        int prefAccuracy = PreferencesUtils.getRecordingGPSAccuracy(ApplicationProvider.getApplicationContext());
-        trackRecordingService.newTrackPoint(trackPoint, prefAccuracy);
+        trackRecordingService.newTrackPoint(trackPoint, 50);
     }
 }

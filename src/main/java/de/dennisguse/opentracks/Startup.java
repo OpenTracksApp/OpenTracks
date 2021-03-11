@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -27,18 +28,18 @@ public class Startup extends Application {
         Log.i(TAG, BuildConfig.APPLICATION_ID + "; BuildType: " + BuildConfig.BUILD_TYPE + "; VersionName: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_NAME_FULL + " VersionCode: " + BuildConfig.VERSION_CODE);
 
         //Set default values of preferences on first start.
-        PreferencesUtils.resetPreferences(this, false);
-        if (PreferencesUtils.getString(this, R.string.stats_units_key, "").equals("")) {
+        SharedPreferences sharedPreferences = PreferencesUtils.resetPreferences(this, false);
+        if (PreferencesUtils.getString(sharedPreferences, this, R.string.stats_units_key, "").equals("")) {
             String statsUnits = getString(Locale.US.equals(Locale.getDefault()) ? R.string.stats_units_imperial : R.string.stats_units_metric);
-            PreferencesUtils.setString(this, R.string.stats_units_key, statsUnits);
+            PreferencesUtils.setString(sharedPreferences, this, R.string.stats_units_key, statsUnits);
         }
 
-        ActivityUtils.applyNightMode(this);
+        ActivityUtils.applyNightMode(sharedPreferences, this);
 
         //TODO Workaround to reset recordingTrackId on app startup as the TrackRecordingService (likely) crashed.
-        if (PreferencesUtils.isRecording(this)) {
+        if (PreferencesUtils.isRecording(sharedPreferences, this)) {
             Log.e(TAG, "Reset recordingTrackId; likely the TrackRecordingService crashed.");
-            PreferencesUtils.setLong(this, R.string.recording_track_id_key, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
+            PreferencesUtils.setLong(sharedPreferences, this, R.string.recording_track_id_key, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
         }
 
         //In debug builds: show thread and VM warnings.

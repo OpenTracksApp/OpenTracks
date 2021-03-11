@@ -91,7 +91,9 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
 
     public static class PrefsFragment extends PreferenceFragmentCompat {
 
-        private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
+        private SharedPreferences sharedPreferences;
+
+        private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
             if (PreferencesUtils.isKey(getActivity(), R.string.recording_track_id_key, key)) {
                 getActivity().runOnUiThread(this::updateReset);
             }
@@ -99,7 +101,7 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
                 getActivity().runOnUiThread(this::updateUnits);
             }
             if (PreferencesUtils.isKey(getActivity(), R.string.night_mode_key, key)) {
-                getActivity().runOnUiThread(() -> ActivityUtils.applyNightMode(getContext()));
+                getActivity().runOnUiThread(() -> ActivityUtils.applyNightMode(sharedPreferences, getContext()));
             }
         };
 
@@ -108,6 +110,8 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            sharedPreferences = PreferencesUtils.getSharedPreferences(getContext());
+
             try {
                 setPreferencesFromResource(R.xml.settings, rootKey);
             } catch (ClassCastException e) {
@@ -123,7 +127,7 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
 
             Preference instantExportDirectoryPreference = findPreference(getString(R.string.settings_default_export_directory_key));
             instantExportDirectoryPreference.setSummaryProvider(preference -> {
-                DocumentFile directory = PreferencesUtils.getDefaultExportDirectoryUri(getContext());
+                DocumentFile directory = PreferencesUtils.getDefaultExportDirectoryUri(sharedPreferences, getContext());
                 //Use same value for not set as Androidx ListPreference and EditTextPreference
                 return directory != null ? directory.getName() : getString(R.string.not_set);
             });
@@ -132,7 +136,10 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         @Override
         public void onResume() {
             super.onResume();
-            PreferencesUtils.getSharedPreferences(getActivity()).registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+
+            sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+            sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
+
             updateUnits();
             updateReset();
             updateBluetooth();
@@ -142,13 +149,13 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
 
         private void updatePostWorkoutExport() {
             Preference instantExportEnabledPreference = findPreference(getString(R.string.post_workout_export_enabled_key));
-            instantExportEnabledPreference.setEnabled(PreferencesUtils.isDefaultExportDirectoryUri(getContext()));
+            instantExportEnabledPreference.setEnabled(PreferencesUtils.isDefaultExportDirectoryUri(sharedPreferences, getContext()));
         }
 
         @Override
         public void onPause() {
             super.onPause();
-            PreferencesUtils.getSharedPreferences(getActivity()).unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+            sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         }
 
         @Override
@@ -176,6 +183,12 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
             super.onDisplayPreferenceDialog(preference);
         }
 
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            sharedPreferences = null;
+        }
+
         public void setDefaultActivity(String iconValue) {
             if (activityPreferenceDialog != null) {
                 activityPreferenceDialog.updateUI(iconValue);
@@ -183,7 +196,7 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         }
 
         private void updateReset() {
-            final boolean isRecording = PreferencesUtils.isRecording(getActivity());
+            final boolean isRecording = PreferencesUtils.isRecording(sharedPreferences, getActivity());
             Preference resetPreference = findPreference(getString(R.string.settings_reset_key));
             resetPreference.setSummary(isRecording ? getString(R.string.settings_not_while_recording) : "");
             resetPreference.setEnabled(!isRecording);
@@ -196,7 +209,7 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         }
 
         private void updateUnits() {
-            boolean metricUnits = PreferencesUtils.isMetricUnits(getActivity());
+            boolean metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getActivity());
 
             ListPreference voiceFrequency = findPreference(getString(R.string.voice_frequency_key));
             voiceFrequency.setEntries(StringUtils.getFrequencyOptions(getActivity(), metricUnits));

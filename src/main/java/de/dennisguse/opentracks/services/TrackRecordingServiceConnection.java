@@ -20,6 +20,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.IBinder.DeathRecipient;
 import android.os.RemoteException;
@@ -209,9 +210,10 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
             try {
                 if (showEditor) {
                     // Need to remember the recordingTrackId before calling endCurrentTrack() as endCurrentTrack() sets the value to -1L.
-                    Track.Id recordingTrackId = PreferencesUtils.getRecordingTrackId(context);
+                    SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
+                    Track.Id recordingTrackId = PreferencesUtils.getRecordingTrackId(sharedPreferences, context);
                     trackRecordingService.endCurrentTrack();
-                    if (PreferencesUtils.isRecording(context)) {
+                    if (PreferencesUtils.isRecording(sharedPreferences, context)) {
                         Intent intent = IntentUtils.newIntent(context, TrackEditActivity.class)
                                 .putExtra(TrackEditActivity.EXTRA_TRACK_ID, recordingTrackId)
                                 .putExtra(TrackEditActivity.EXTRA_NEW_TRACK, true);
