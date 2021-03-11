@@ -259,8 +259,7 @@ public class CustomContentProvider extends ContentProvider {
                 break;
             case TRACKS_SENSOR_STATS:
                 long trackId = ContentUris.parseId(url);
-                Cursor cursor = db.rawQuery(SENSOR_STATS_QUERY, new String[]{String.valueOf(trackId), String.valueOf(trackId)});
-                return cursor;
+                return db.rawQuery(SENSOR_STATS_QUERY, new String[]{String.valueOf(trackId), String.valueOf(trackId)});
             case MARKERS:
                 queryBuilder.setTables(MarkerColumns.TABLE_NAME);
                 sortOrder = sort != null ? sort : MarkerColumns.DEFAULT_SORT_ORDER;

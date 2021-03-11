@@ -34,7 +34,7 @@ public class MarkerResourceCursorAdapter extends ResourceCursorAdapter implement
     private final Activity activity;
 
     //TODO Should be Marker.Id
-    private final ExecutorListViewService executorService = new ExecutorListViewService<Long>(LIST_PREFERRED_ITEM_HEIGHT_DEFAULT);
+    private final ExecutorListViewService<Long> executorService = new ExecutorListViewService<Long>(LIST_PREFERRED_ITEM_HEIGHT_DEFAULT);
 
     private boolean scroll = false;
 

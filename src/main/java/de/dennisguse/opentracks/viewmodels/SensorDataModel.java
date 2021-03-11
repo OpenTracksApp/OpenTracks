@@ -19,9 +19,9 @@ public class SensorDataModel {
         this.sensorValue = StringUtils.formatDecimal(sensorValue, 0);
     }
 
-    public SensorDataModel(SensorData sensorData) {
+    public SensorDataModel(SensorData<Float> sensorData) {
         this.sensorName = sensorData.getSensorNameOrAddress();
-        this.sensorValue = sensorData.hasValue() && sensorData.isRecent() ? StringUtils.formatDecimal((float) sensorData.getValue(), 0) : null;
+        this.sensorValue = sensorData.hasValue() && sensorData.isRecent() ? StringUtils.formatDecimal(sensorData.getValue(), 0) : null;
         if (sensorData instanceof SensorDataHeartRate) {
             this.labelId = R.string.sensor_state_heart_rate;
             this.unitId = R.string.sensor_unit_beats_per_minute;

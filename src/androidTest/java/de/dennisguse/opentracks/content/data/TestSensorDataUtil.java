@@ -7,8 +7,8 @@ import java.util.List;
 
 public class TestSensorDataUtil {
 
-    private List<TrackPoint> trackPointList = new ArrayList<>();
-    private List<SensorData> sensorDataList = new ArrayList<>();
+    private final List<TrackPoint> trackPointList = new ArrayList<>();
+    private final List<SensorData> sensorDataList = new ArrayList<>();
 
     public void add(Instant time, Float hr, Float cadence, Float power, TrackPoint.Type type) {
         sensorDataList.add(new TestSensorDataUtil.SensorData(time, hr, cadence, power, type));
@@ -33,7 +33,7 @@ public class TestSensorDataUtil {
     }
 
     public SensorDataStats computeStats() {
-        if (sensorDataList == null || sensorDataList.size() <= 1) {
+        if (sensorDataList.size() <= 1) {
             return null;
         }
 
@@ -49,9 +49,9 @@ public class TestSensorDataUtil {
             if (dataPrev.type != TrackPoint.Type.SEGMENT_START_MANUAL) {
                 timeElapsed = dataCurrent.type != TrackPoint.Type.SEGMENT_START_MANUAL ? dataCurrent.time.getEpochSecond() - dataPrev.time.getEpochSecond() : 0;
                 stats.avgHr += (dataPrev.hr * timeElapsed);
-                stats.maxHr = dataPrev.hr > stats.maxHr ? dataPrev.hr : stats.maxHr;
+                stats.maxHr = Math.max(dataPrev.hr, stats.maxHr);
                 stats.avgCadence += (dataPrev.cadence * timeElapsed);
-                stats.maxCadence = dataPrev.cadence > stats.maxCadence ? dataPrev.cadence : stats.maxCadence;
+                stats.maxCadence = Math.max(dataPrev.cadence, stats.maxCadence);
                 stats.avgPower += (dataPrev.power * timeElapsed);
 
                 movingTime += timeElapsed;
@@ -67,11 +67,11 @@ public class TestSensorDataUtil {
     }
 
     private static class SensorData {
-        Instant time;
-        float hr;
-        float cadence;
-        float power;
-        TrackPoint.Type type;
+        final Instant time;
+        final float hr;
+        final float cadence;
+        final float power;
+        final TrackPoint.Type type;
 
         public SensorData(Instant time, Float hr, Float cadence, Float power, TrackPoint.Type type) {
             this.time = time;
