@@ -206,7 +206,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         super.onStart();
 
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
         trackRecordingServiceConnection.startConnection(this);
         trackDataHub.start();

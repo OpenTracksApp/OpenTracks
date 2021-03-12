@@ -3,6 +3,7 @@ package de.dennisguse.opentracks.services.handlers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import java.util.concurrent.ExecutorService;
@@ -47,7 +48,7 @@ public class HandlerServer {
         serviceExecutor = null;
     }
 
-    public void onSharedPreferenceChanged(Context context, SharedPreferences preferences, String key) {
+    public void onSharedPreferenceChanged(@NonNull Context context, @NonNull SharedPreferences preferences, String key) {
         locationHandler.onSharedPreferenceChanged(context, preferences, key);
     }
 
@@ -72,8 +73,10 @@ public class HandlerServer {
     }
 
     public interface Handler {
-        void onStart(Context context);
-        void onStop(Context context);
-        void onSharedPreferenceChanged(Context context, SharedPreferences preferences, String key);
+        void onStart(@NonNull Context context);
+
+        void onStop(@NonNull Context context);
+
+        void onSharedPreferenceChanged(@NonNull Context context, @NonNull SharedPreferences preferences, String key);
     }
 }

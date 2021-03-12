@@ -138,7 +138,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     protected void onStart() {
         super.onStart();
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
     }
 
     @Override

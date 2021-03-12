@@ -34,14 +34,14 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
     }
 
     @Override
-    public void onStart(Context context) {
+    public void onStart(@NonNull Context context) {
         gpsStatus = new GpsStatus(context, this);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         registerLocationListener();
     }
 
     @Override
-    public void onStop(Context context) {
+    public void onStop(@NonNull Context context) {
         unregisterLocationListener();
         locationManager = null;
         if (gpsStatus != null) {
@@ -51,7 +51,7 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
     }
 
     @Override
-    public void onSharedPreferenceChanged(Context context, SharedPreferences sharedPreferences, String key) {
+    public void onSharedPreferenceChanged(@NonNull Context context, @NonNull SharedPreferences sharedPreferences, String key) {
         if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
             int minRecordingInterval = PreferencesUtils.getMinRecordingInterval(sharedPreferences, context);
             if (minRecordingInterval == PreferencesUtils.getMinRecordingIntervalAdaptBatteryLife(context)) {
