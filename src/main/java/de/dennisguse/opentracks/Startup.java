@@ -44,14 +44,7 @@ public class Startup extends Application {
         //In debug builds: show thread and VM warnings.
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Enabling strict mode");
-            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .build());
-            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                    .detectAll()
-                    .penaltyLog()
-                    .build());
+            StrictMode.enableDefaults();
         }
     }
 }
