@@ -479,6 +479,14 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             }
         }
 
+        if (power != null) {
+            try {
+                trackPoint.setPower(Float.parseFloat(power));
+            } catch (Exception e) {
+                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse power: %s", power)), e);
+            }
+        }
+
         if (gain != null) {
             try {
                 trackPoint.setElevationGain(Float.parseFloat(gain));

@@ -28,7 +28,9 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 
 /**
  * Imports a GPX file.
- * Uses https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd
+ * Uses:
+ * * https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd
+ * * https://www8.garmin.com/xmlschemas/PowerExtensionv1.xsd
  * <p>
  * {@link de.dennisguse.opentracks.io.file.exporter.GPXTrackExporter} does not export information if a segment was started automatic or manually.
  * Therefore, all segments starts are marked as SEGMENT_START_AUTOMATIC.
@@ -57,6 +59,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
     private static final String TAG_EXTENSION_SPEED = "gpxtpx:speed";
     private static final String TAG_EXTENSION_HEARTRATE = "gpxtpx:hr";
     private static final String TAG_EXTENSION_CADENCE = "gpxtpx:cad";
+    private static final String TAG_EXTENSION_POWER = "pwr:PowerInWatts";
 
     private static final String TAG_EXTENSION_GAIN = "opentracks:gain";
     private static final String TAG_EXTENSION_LOSS = "opentracks:loss";
@@ -156,6 +159,11 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
                     cadence = content.trim();
                 }
                 break;
+            case TAG_EXTENSION_POWER:
+                if (content != null) {
+                    power = content.trim();
+                }
+                break;
             case TAG_ID:
                 if (content != null) {
                     uuid = content.trim();
@@ -196,11 +204,12 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
         altitude = null;
         time = null;
         speed = null;
+        power = null;
         gain = null;
         loss = null;
     }
 
-    private void onTrackPointEnd() throws SAXException {
+    private void onTrackPointEnd() {
         boolean isFirstTrackPointInSegment = isFirstTrackPointInSegment();
         TrackPoint trackPoint = getTrackPoint();
         if (isFirstTrackPointInSegment) {
@@ -221,7 +230,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
         markerType = null;
     }
 
-    private void onMarkerEnd() throws SAXException {
+    private void onMarkerEnd() {
         addMarker();
     }
 }
