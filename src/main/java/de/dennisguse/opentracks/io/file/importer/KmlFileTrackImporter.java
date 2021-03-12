@@ -35,6 +35,7 @@ import de.dennisguse.opentracks.io.file.exporter.KMLTrackExporter;
  *
  * @author Jimmy Shih
  */
+//TODO Do not use AbstractFileTrackImporter as TrackPoint sensor generation is done differently here.
 public class KmlFileTrackImporter extends AbstractFileTrackImporter {
 
     private static final String TAG = KmlFileTrackImporter.class.getSimpleName();

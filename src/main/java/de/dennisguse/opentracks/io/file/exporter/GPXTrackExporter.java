@@ -51,6 +51,7 @@ public class GPXTrackExporter implements TrackExporter {
     private static final NumberFormat SPEED_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat HEARTRATE_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat CADENCE_FORMAT = NumberFormat.getInstance(Locale.US);
+    private static final NumberFormat POWER_FORMAT = NumberFormat.getInstance(Locale.US);
 
     static {
         /*
@@ -72,6 +73,9 @@ public class GPXTrackExporter implements TrackExporter {
 
         CADENCE_FORMAT.setMaximumFractionDigits(0);
         CADENCE_FORMAT.setGroupingUsed(false);
+
+        POWER_FORMAT.setMaximumFractionDigits(0);
+        POWER_FORMAT.setGroupingUsed(false);
     }
 
     private final ContentProviderUtils contentProviderUtils;
@@ -196,10 +200,12 @@ public class GPXTrackExporter implements TrackExporter {
             printWriter.println("xmlns:atom=\"http://www.w3.org/2005/Atom\"");
             printWriter.println("xmlns:opentracks=\"http://opentracksapp.com/xmlschemas/v1\"");
             printWriter.println("xmlns:gpxtpx=\"http://www.garmin.com/xmlschemes/TrackPointExtension/v2\"");
+            printWriter.println("xmlns:pwr=\"http://www.garmin.com/xmlschemas/PowerExtension/v1\"");
             printWriter.println("xsi:schemaLocation=" +
                     "\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
                     + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1 http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd"
                     + " http://www.garmin.com/xmlschemas/TrackPointExtension/v2 https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd"
+                    + " http://www.garmin.com/xmlschemas/PowerExtension/v1 https://www8.garmin.com/xmlschemas/PowerExtensionv1.xsd"
                     + " http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd\">");
         }
     }
@@ -292,6 +298,10 @@ public class GPXTrackExporter implements TrackExporter {
 
                 if (trackPoint.hasCyclingCadence()) {
                     printWriter.println("<gpxtpx:cad>" + CADENCE_FORMAT.format(trackPoint.getCyclingCadence_rpm()) + "</gpxtpx:cad>");
+                }
+
+                if (trackPoint.hasPower()) {
+                    printWriter.println("<pwr:PowerInWatts>" + POWER_FORMAT.format(trackPoint.getPower()) + "</pwr:PowerInWatts>");
                 }
 
                 if (trackPoint.hasElevationGain()) {

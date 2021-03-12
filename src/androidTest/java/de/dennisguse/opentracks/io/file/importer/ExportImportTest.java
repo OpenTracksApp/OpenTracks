@@ -301,7 +301,7 @@ public class ExportImportTest {
         trackPointsWithCoordinates.get(0).setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
         trackPointsWithCoordinates.get(3).setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
 
-        assertTrackpoints(trackPointsWithCoordinates, false, true, true, true, true);
+        assertTrackpoints(trackPointsWithCoordinates, true, true, true, true, true);
 
         // 3. trackstatistics
         assertTrackStatistics(true, true);
@@ -391,13 +391,13 @@ public class ExportImportTest {
             }
 
             if (verifyHeartrate) {
-                assertEquals(trackPoint.getHeartRate_bpm(), importedTrackPoint.getHeartRate_bpm(), 0.01);
+                assertEquals("" + trackPoint, trackPoint.getHeartRate_bpm(), importedTrackPoint.getHeartRate_bpm(), 0.01);
             }
             if (verifyCadence) {
-                assertEquals(trackPoint.getCyclingCadence_rpm(), importedTrackPoint.getCyclingCadence_rpm(), 0.01);
+                assertEquals("" + trackPoint, trackPoint.getCyclingCadence_rpm(), importedTrackPoint.getCyclingCadence_rpm(), 0.01);
             }
             if (verifyPower) {
-                assertEquals(trackPoint.getPower(), importedTrackPoint.getPower(), 0.01);
+                assertEquals("" + trackPoint, trackPoint.getPower(), importedTrackPoint.getPower(), 0.01);
             }
             if (verifyElevationGain) {
                 assertEquals(trackPoint.getElevationGain(), importedTrackPoint.getElevationGain(), 0.01);
