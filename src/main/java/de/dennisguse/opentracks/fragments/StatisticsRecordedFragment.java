@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.TrackRecordedActivity;
 import de.dennisguse.opentracks.adapters.SensorsAdapter;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
@@ -63,7 +64,6 @@ public class StatisticsRecordedFragment extends Fragment {
         fragment.setArguments(bundle);
         return fragment;
     }
-
 
     private TrackStatistics trackStatistics;
     private SensorStatistics sensorStatistics;
@@ -152,26 +152,35 @@ public class StatisticsRecordedFragment extends Fragment {
             getActivity().runOnUiThread(() -> {
                 if (isResumed()) {
                     Track track = contentProviderUtils.getTrack(trackId);
-                    trackStatistics = track != null ? track.getTrackStatistics() : null;
+                    trackStatistics = track.getTrackStatistics();
                     sensorStatistics = contentProviderUtils.getSensorStats(trackId);
 
-                    String newCategory = track != null ? track.getCategory() : "";
+                    String newCategory = track.getCategory();
                     if (!category.equals(newCategory)) {
                         category = newCategory;
                         sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, getString(R.string.stats_rate_key));
                     }
 
+                    loadTrackDescription(track);
                     updateUI();
                     updateSensorUI();
+
+                    ((TrackRecordedActivity) getActivity()).startPostponedEnterTransitionWith(viewBinding.statsActivityTypeIcon, viewBinding.statsNameValue);
                 }
             });
         }
     }
 
+    private void loadTrackDescription(@NonNull Track track) {
+        viewBinding.statsNameValue.setText(track.getName());
+        viewBinding.statsDescriptionValue.setText(track.getDescription());
+        viewBinding.statsStartDatetimeValue.setText(StringUtils.formatDateTime(getContext(), trackStatistics.getStartTime()));
+    }
+
     private void updateUI() {
         // Set total distance
         {
-            double totalDistance = trackStatistics == null ? Double.NaN : trackStatistics.getTotalDistance();
+            double totalDistance = trackStatistics.getTotalDistance();
             Pair<String, String> parts = StringUtils.getDistanceParts(getContext(), totalDistance, preferenceMetricUnits);
 
             viewBinding.statsDistanceValue.setText(parts.first);
@@ -185,14 +194,14 @@ public class StatisticsRecordedFragment extends Fragment {
         }
 
         // Set time and start datetime
-        if (trackStatistics != null) {
+        {
             viewBinding.statsMovingTimeValue.setText(StringUtils.formatElapsedTime(trackStatistics.getMovingTime()));
             viewBinding.statsTotalTimeValue.setText(StringUtils.formatElapsedTime(trackStatistics.getTotalTime()));
         }
 
         // Set average speed/pace
         {
-            double speed = trackStatistics != null ? trackStatistics.getAverageSpeed() : Double.NaN;
+            double speed = trackStatistics.getAverageSpeed();
             viewBinding.statsAverageSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
 
             Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, preferenceMetricUnits, preferenceReportSpeed);
@@ -202,7 +211,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
         // Set max speed/pace
         {
-            double speed = trackStatistics == null ? Double.NaN : trackStatistics.getMaxSpeed();
+            double speed = trackStatistics.getMaxSpeed();
 
             viewBinding.statsMaxSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_max_speed : R.string.stats_fastest_pace);
 
@@ -213,7 +222,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
         // Set moving speed/pace
         {
-            double speed = trackStatistics != null ? trackStatistics.getAverageMovingSpeed() : Double.NaN;
+            double speed = trackStatistics.getAverageMovingSpeed();
 
             viewBinding.statsMovingSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
 
@@ -228,8 +237,8 @@ public class StatisticsRecordedFragment extends Fragment {
             boolean showElevation = PreferencesUtils.isShowStatsElevation(getContext());
             viewBinding.statsElevationGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
 
-            Float elevationGain_m = trackStatistics != null ? trackStatistics.getTotalElevationGain() : null;
-            Float elevationLoss_m = trackStatistics != null ? trackStatistics.getTotalElevationLoss() : null;
+            Float elevationGain_m = trackStatistics.getTotalElevationGain();
+            Float elevationLoss_m = trackStatistics.getTotalElevationLoss();
 
             Pair<String, String> parts;
 
