@@ -73,7 +73,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="activity_type_driving_bus">guidare autobus</string>
     <string name="activity_type_driving_car">guidare auto</string>
     <string name="activity_type_ferry">traghetto</string>
-    <string name="activity_type_frisbee">frisbee</string>
+    <string name="activity_type_frisbee">di frisbee</string>
     <string name="activity_type_gliding">aliante</string>
     <string name="activity_type_hang_gliding">deltaplano</string>
     <string name="activity_type_helicopter">elicottero</string>
@@ -106,7 +106,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="activity_type_skate_boarding">skateboarding</string>
     <string name="activity_type_skating">pattinaggio</string>
     <string name="activity_type_skiing">sci</string>
-    <string name="activity_type_sky_jumping">sky jumping</string>
+    <string name="activity_type_sky_jumping">salto nel cielo</string>
     <string name="activity_type_sled">slitta</string>
     <string name="activity_type_snow_boarding">snowboard</string>
     <string name="activity_type_snow_shoeing">racchette da neve</string>
@@ -118,7 +118,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="activity_type_trail_hiking">escursionismo su sentiero</string>
     <string name="activity_type_trail_running">corsa campestre</string>
     <string name="activity_type_train">treno</string>
-    <string name="activity_type_ultimate_frisbee">ultimate frisbee</string>
+    <string name="activity_type_ultimate_frisbee">frisbee finale</string>
     <string name="activity_type_unknown">sconosciuto</string>
     <string name="activity_type_wakeboarding">wakeboard</string>
     <string name="activity_type_walking">camminare</string>
@@ -459,7 +459,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="waypoint_type_atm">Bancomat</string>
     <string name="waypoint_type_bank">banca</string>
     <string name="waypoint_type_bar">bar</string>
-    <string name="waypoint_type_barbecue">barbecue</string>
+    <string name="waypoint_type_barbecue">grigliata</string>
     <string name="waypoint_type_building">edificio</string>
     <string name="waypoint_type_bus_stop">fermata dell\'autobus</string>
     <string name="waypoint_type_cafe">caffè</string>
@@ -503,7 +503,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="waypoint_type_toilet">toilette</string>
     <string name="waypoint_type_tourist_information">informazioni turistiche</string>
     <string name="waypoint_type_tree">.</string>
-    <string name="waypoint_type_tunnel">tunnel</string>
+    <string name="waypoint_type_tunnel">galleria</string>
     <string name="waypoint_type_waterfall">cascata</string>
     <string name="waypoint_type_water_fountain">fontana ad acqua</string>
     <string name="waypoint_type_waypoint">tappa</string>
@@ -519,7 +519,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="help_track_export_content"> Le tracce possono essere esportate dalle Impostazioni con formato KMZ, KML o GPX. KMZ/KML contiene tutti i dati; GPX contiene solo le posizioni. Le tracce condivise tramite l\'icona <i>condividi</i> sono esportate come KMZ. </string>
     <string name="help_recording_content">OpenTracks utilizza il sensore GPS del dispositivo per registrare continuativamente la posizione. Se il sensore GPS riporta dati imprecisi (ad es. posizione, velocità, altitudine), OpenTracks non può fare nulla.</string>
     <string name="help_data_storage_content"> I dati del sensore vengono memorizzati per ogni posizione registrata. Riguardo al sensore della frequenza cardiaca, ciò significa che viene memorizzata solo <i>una</i> misurazione della frequenza cardiaca per cambiamento di posizione. Se si è fermi o si è al chiuso, non verranno registrati i dati del sensore (ma saranno mostrati). </string>
-    <string name="help_gps_troubleshooting_content"> Cosa puoi fare:
+    <string name="help_gps_troubleshooting_content"> Cosa puoi fare: 
 \na) verificare se il GPS è abilitato,
 \nb) migliorare la ricezione GPS (ad esempio, andare all\'aperto),
 \nc) verificare la ricezione del segnale GPS con l\' applicazione<a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, e
@@ -603,4 +603,16 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="import_progress_summary_ok_msg">File importati</string>
     <string name="import_progress_summary_exists_msg">Esiste già</string>
     <string name="import_progress_summary_errors_msg">Errore</string>
+    <string name="sensor_state_power_avg">Potenza media</string>
+    <string name="sensor_state_heart_rate_max">Frequenza cardiaca max</string>
+    <string name="value_pace_kilometer">%1$d:%2$02d min/cm</string>
+    <string name="value_float_kilometer_hour">%1$.2f cp/s</string>
+    <string name="stats_loss">Perdita</string>
+    <string name="settings_sensor_wheel_circumference">Circonferenza della ruota (mm)</string>
+    <string name="description_elevation_loss">Perdita di quota: %1$d m (%2$d ft)</string>
+    <string name="sensor_state_heart_rate_avg">Tasso cardiaco medio</string>
+    <string name="sensor_state_cadence_max">Cadenza max</string>
+    <string name="sensor_state_cadence_avg">Cadenza media</string>
+    <string name="value_float_mile_hour">%1$.2f mpo</string>
+    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
 </resources>
