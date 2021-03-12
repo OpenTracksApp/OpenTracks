@@ -23,62 +23,45 @@ limitations under the License.
     <string name="about_libraries">Bibliotecas</string>
     <!-- Help -->
     <string name="help_feature_title">OpenTracks tiene las siguientes características:</string>
-    <string name="help_feature_content">
-* crear un seguimiento GPS *
-* usa un sensor de ritmo cardíaco (sólo Bluetooth LE) *
-* anuncios de voz (por tiempo o distancia)*
-* crear marcadores (incluyendo imágenes) *
-* funciona completamente fuera de línea *
-* mostrar las pistas en un mapa (ver abajo)</string>
+    <string name="help_feature_content">* crear pistas de GPS
+\n* utilizar un sensor de frecuencia cardíaca (solo Bluetooth LE)
+\n* Anuncios de voz (por tiempo o distancia)
+\n* crear marcadores (incluidas imágenes)
+\n* funciona completamente sin conexión
+\n* mostrar pistas en un mapa (ver más abajo)</string>
     <string name="help_track_map_title">¿Cómo mostrar una pista en un mapa?</string>
-    <string name="help_track_map_content">
-Usa el icono del mapa pequeño.
-a)
-(actualizaciones en vivo) Instalar <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
-Proporciona mapas en línea o fuera de línea a través de <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n
-En realidad, OSMDashboard es una aplicación independiente que sólo puede acceder (temporalmente) a los datos de las pist(as) que se van a mostrar.
-
-\n
-b)
-A través de una aplicación de mapas normal (por ejemplo, <a href="http://osmand.net/">OsmAnd</a> y <a href="https://maps.me/">MAPS.ME</a>).
-Estas aplicaciones necesitan soportar el formato de archivo KMZ (sólo las ubicaciones y las marcas de tiempo).
-De hecho, una aplicación necesita soportar <i>ACTION_VIEW</i> con MIME <i>application/vnd.google-earth.kmz</i>.</string>
+    <string name="help_track_map_content"> Usa el icono del mapa pequeño. 
+\na) (actualizaciones en vivo) Instalar <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Proporciona mapas en línea o fuera de línea a través de <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n En realidad, OSMDashboard es una aplicación independiente que sólo puede acceder (temporalmente) a los datos de las pist(as) que se van a mostrar.
+\n b) A través de una aplicación de mapas normal (por ejemplo, <a href="http://osmand.net/">OsmAnd</a> y <a href="https://maps.me/">MAPS.ME</a>). Estas aplicaciones necesitan soportar el formato de archivo KMZ (sólo las ubicaciones y las marcas de tiempo). De hecho, una aplicación necesita soportar <i>ACTION_VIEW</i> con MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_storage_pictures_title">¿Cómo almacena OpenTracks las fotos que fueron tomadas como marcadores?</string>
     <string name="help_storage_pictures_content">Estos se almacenan en el almacenamiento interno de la aplicación (es decir, sólo accesible dentro de OpenTracks).</string>
     <string name="help_track_export_title">¿Cómo puedo exportar/compartir las pistas grabadas?</string>
-    <string name="help_track_export_content">
-Las pistas pueden ser exportadas desde los ajustes como KMZ, KML o GPX.
-KMZ/KML todos los datos; GPX sólo las ubicaciones.
-Las pistas compartidas a través del <i> icono de compartir </i> se comparten como KMZ.</string>
+    <string name="help_track_export_content"> Las pistas pueden ser exportadas desde los ajustes como KMZ, KML o GPX. KMZ/KML todos los datos; GPX sólo las ubicaciones. Las pistas compartidas a través del <i> icono de compartir </i> se comparten como KMZ. </string>
     <string name="help_data_google_play_services_title">¿Requiere OpenTracks usar el servicio de Google Play?</string>
     <string name="help_recording_title">¿Cómo registra OpenTracks los datos?</string>
     <string name="help_recording_content">
 OpenTracks utiliza el sensor GPS del dispositivo para registrar la ubicación de forma continua.
 Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocidad, elevación), OpenTracks no puede hacer nada al respecto.</string>
     <string name="help_data_storage_title">¿Cómo almacena OpenTracks los datos de los sensores?</string>
-    <string name="help_data_storage_content">
-Los datos de los sensores se almacenan por cada ubicación registrada.
-En términos de un sensor de frecuencia cardíaca, esto significa que sólo <i>uno</i> la medición de la frecuencia cardíaca se almacena por ubicación.
-Si está parado o en el interior, no se registrarán los datos del sensor (pero se mostrarán).</string>
+    <string name="help_data_storage_content"> Los datos de los sensores se almacenan por cada ubicación registrada. En términos de un sensor de frecuencia cardíaca, esto significa que sólo <i>uno</i> la medición de la frecuencia cardíaca se almacena por ubicación. Si está parado o en el interior, no se registrarán los datos del sensor (pero se mostrarán). </string>
     <string name="help_gps_troubleshooting_title">OpenTracks no está grabando las localizaciones?</string>
-    <string name="help_gps_troubleshooting_content">
-Lo que puedes hacer...
-a) Comprobar si el GPS está activado.
-b) mejorar la recepción del GPS (por ejemplo, ir al exterior),\n
-c) comprueba si con <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app, y\n
-d) desactivar el ahorro de energía.
+    <string name="help_gps_troubleshooting_content"> Lo que puedes hacer:
+\na) compruebe si el GPS está habilitado,
+\nb) mejorar la recepción del GPS (por ejemplo, salir al aire libre),
+\nc) verifique con la aplicación <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/"> GPSTest </a>, y
+\nd) desactivar el ahorro de energía.
 \n
-Si todo no ayuda, por favor informe de un error.</string>
+\nSi todo no ayuda, informe un error. </string>
     <string name="help_support_title">¿Cómo puedo apoyar OpenTracks?</string>
-    <string name="help_support_content">
-Puedes...
-a) difundir la palabra sobre OpenTracks,...
-b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">proponer características</a>,\n
-c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">report bugs</a>,\n
-d) ayudar en el desarrollo de software,\n
-e) comprar en <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n
-f) donar, y
-g) haz lo que creas que ayude a OpenTracks.</string>
+    <string name="help_support_content"> Usted puede:
+\n a) difundir la existencia de OpenTracks,
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">proponer características</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">reportar errores</a>,
+\n d) ayudar en el desarrollo del software,
+\n e) comprar en <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\n f) donar, y
+\n g) hacer lo que creas que ayuda a OpenTracks. </string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">avión</string>
     <string name="activity_type_atv">vehículos todoterreno</string>
@@ -94,8 +77,8 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <string name="activity_type_driving">conducir</string>
     <string name="activity_type_driving_bus">ruta en autobús</string>
     <string name="activity_type_driving_car">ruta en automóvil</string>
-    <string name="activity_type_ferry">ferry</string>
-    <string name="activity_type_frisbee">frisbee</string>
+    <string name="activity_type_ferry">balsa</string>
+    <string name="activity_type_frisbee">Friso</string>
     <string name="activity_type_gliding">vuelo sin motor</string>
     <string name="activity_type_hang_gliding">vuelo en ala delta</string>
     <string name="activity_type_helicopter">helicóptero</string>
@@ -301,14 +284,14 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <!-- Search -->
     <string name="search_global_description">Recorridos y marcadores</string>
     <string name="search_list_empty_message">No hay rutas ni marcadores que coincidan con tu búsqueda</string>
-    <string name="search_list_marker_track_location">En la ruta \"%1$s\"</string>
+    <string name="search_list_marker_track_location">En la ruta \"%1$s\".</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Nivel de batería</string>
     <string name="sensor_state_cadence">Cadencia</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
+    <string name="sensor_state_cadence_value">%1$d rym</string>
     <string name="sensor_state_disconnected">Desconectado</string>
     <string name="sensor_state_heart_rate">Frecuencia cardíaca</string>
-    <string name="sensor_state_heart_rate_value">%1$d bpm</string>
+    <string name="sensor_state_heart_rate_value">%1$d ppm</string>
     <string name="sensor_state_power">Potencia</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_not_known">Sensor %1$s es desconocido. Por favor, compruebe la configuración.</string>
@@ -330,15 +313,15 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <string name="settings_recording">Grabación</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Reanudar siempre una grabación después de reiniciar</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">No reanudar nunca una grabación después de reiniciar</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Esta opción permite reanudar una grabación después de reiniciar si la última ubicación grabada se encuentra dentro de los últimos %1$s.</string>
+    <string name="settings_recording_auto_resume_track_timeout_summary">Esta opción permite reanudar una grabación después de reiniciar si la última ubicación grabada se encuentra dentro de los últimos %1$s</string>
     <string name="settings_recording_auto_resume_track_timeout_title">Reanudación automática</string>
     <string name="settings_recording_default_activity_title">Actividad predeterminada</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre ubicaciones grabadas</string>
-    <string name="settings_recording_max_recording_distance_summary">Esta opción permite crear un nuevo segmento si la distancia entre dos ubicaciones es superior a %1$s.</string>
+    <string name="settings_recording_max_recording_distance_summary">Esta opción permite crear un nuevo segmento si la distancia entre dos ubicaciones es superior a %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Distancia máxima</string>
     <string name="settings_recording_min_recording_distance_title">Intervalo de distancia</string>
     <string name="settings_recording_min_recording_interval_title">Intervalo de tiempo</string>
-    <string name="settings_recording_min_required_accuracy_summary">Esta opción permite ignorar la ubicación si su precisión es inferior a %1$s.</string>
+    <string name="settings_recording_min_required_accuracy_summary">Esta opción permite ignorar la ubicación si su precisión es inferior a %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Exactitud del GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Fecha (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Fecha (local)</string>
@@ -351,7 +334,7 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <string name="settings_reset_done">Se han restablecido los valores predeterminados de todas las opciones de configuración</string>
     <string name="settings_error_initial_values_restored">Lo siento, pero ha habido un error. Todos los ajustes se han vuelto a los valores predeterminados.</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Sensor</string>
+    <string name="settings_sensor">Objetivo</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Sensor Bluetooth</string>
     <string name="settings_sensor_connecting">Conectado a %1$s</string>
@@ -364,7 +347,9 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <string name="settings_stats_units_title">Unidades preferidas</string>
     <!-- Share Track -->
     <string name="share_track_share_file">Compartir el archivo de la ruta</string>
-    <string name="share_track_share_file_body">Creo que esta ruta te podría interesar.\n\nPara ver esta ruta, usa Google Earth u otro software de mapas.\n\n%1$s</string>
+    <string name="share_track_share_file_body">Creo que esta ruta te podría interesar.
+\n
+\n%1$s</string>
     <string name="share_track_subject">Me gustaría compartir una ruta contigo</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Ritmo de movimiento medio</string>
@@ -512,7 +497,7 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <string name="waypoint_type_convenience_store">tienda de barrio</string>
     <string name="waypoint_type_drinking_water">agua potable</string>
     <string name="waypoint_type_falling_rocks">desprendimiento de rocas</string>
-    <string name="waypoint_type_ferry">ferry</string>
+    <string name="waypoint_type_ferry">barco</string>
     <string name="waypoint_type_fire_place">chimenea</string>
     <string name="waypoint_type_fire_station">parque de bomberos</string>
     <string name="waypoint_type_fishing">enclave pesquero</string>
@@ -574,13 +559,13 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <string name="settings_night_mode_option_day">Claro</string>
     <string name="settings_night_mode_option_night">Oscuro</string>
     <string name="settings_night_mode_title">Elegir un tema</string>
-    <string name="settings_sensor_wheel_circumference">Circunferencia de rueda (mm)</string>
+    <string name="settings_sensor_wheel_circumference">Perímetro de la rueda (mm)</string>
     <string name="stats_intervals">Intervalos</string>
     <string name="stats_split_interval">Intervalo</string>
     <string name="track_detail_intervals_tab">Intervalos</string>
     <string name="aggregated_stats_empty_message">Graba tu primera pista para ver estadísticas agregadas</string>
     <string name="voice_pace_lap">Tiempo de la vuelta %1$s</string>
-    <string name="hold_to_pause">Mantén pulsado para pausar la grabación</string>
+    <string name="hold_to_pause">Mantener en pausa</string>
     <string name="instant_export_enabled_title">Exportación automática tras grabación</string>
     <string name="settings_default_export_uri_title">Carpeta de pistas exportadas</string>
     <string name="open_track_using_dashboard">Abrir con OpenTracks-Dashboard</string>
@@ -596,7 +581,31 @@ g) haz lo que creas que ayude a OpenTracks.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Pantalla completa</string>
     <string name="interval_list_empty_message">No hay intervalos todavía</string>
     <string name="voice_speed_lap">Velocidad de la vuelta %1$s</string>
-    <string name="hold_to_stop">Mantén pulsado para terminar la grabación</string>
+    <string name="hold_to_stop">Mantener para parar</string>
     <string name="toast_message_instant_track_was_exported">Última pista exportada</string>
     <string name="instant_export_enabled_summary">Exportar pista después de terminar la grabación</string>
+    <string name="stats_loss">Pérdida</string>
+    <string name="settings_prevent_reimport_tracks_title">Impedir la reimportación de pistas</string>
+    <string name="sensor_state_power_avg">Potencia media</string>
+    <string name="sensor_state_heart_rate_max">Frecuencia cardíaca máxima</string>
+    <string name="sensor_state_heart_rate_avg">Ritmo cardíaco medio</string>
+    <string name="export_error_post_workout">La exportación de post-entrenamiento ha fallado, por favor compruebe el directorio de exportación.</string>
+    <string name="export_progress_summary_new_msg">Nuevas pistas exportadas</string>
+    <string name="import_thread_interrupted">Hilo interrumpido</string>
+    <string name="import_progress_summary_errors_msg">Errores</string>
+    <string name="import_progress_summary_ok_msg">Archivos importados</string>
+    <string name="description_elevation_loss">Pérdida de altura: %1$d m (%2$d pies)</string>
+    <string name="value_float_mile_hour">%1$.2f mph</string>
+    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
+    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
+    <string name="sensor_state_cadence_max">Cadencia máxima</string>
+    <string name="sensor_state_cadence_avg">Cadencia media</string>
+    <string name="value_float_kilometer_hour">%1$.2f kp/h</string>
+    <string name="export_progress_summary_overwrite_msg">Pistas sobrescritas</string>
+    <string name="export_progress_summary_skip_msg">Pistas omitidas</string>
+    <string name="export_progress_summary_errors_msg">Errores</string>
+    <string name="generic_open_track">Pista abierta</string>
+    <string name="import_progress_summary_exists_msg">Ya existen</string>
+    <string name="import_no_kml_file_found">No se ha encontrado ningún archivo doc.kml en KMZ</string>
+    <string name="import_prevent_reimport">Ha establecido impedir la reimportación de la pista</string>
 </resources>
