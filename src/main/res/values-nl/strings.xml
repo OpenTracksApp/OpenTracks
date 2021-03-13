@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <string name="about_preference_title">Over OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> is een sporttrackingapplicatie die uw privacy volledig respecteert.</string>
     <string name="about_url">Project webpagina: <a href="%1$s">%1$s</a></string>
@@ -23,71 +23,45 @@ limitations under the License.
     <string name="about_libraries">Bibliotheken</string>
     <!-- Help -->
     <string name="help_feature_title">OpenTracks heeft de volgende kenmerken:</string>
-    <string name="help_feature_content">
-* creëer GPS tracks
-* gebruik een hartslagsensor (alleen Bluetooth LE)...
-* spraakaankondigingen (op tijd of afstand)...
-* creëer markers (incl. fotos)
-* werkt volledig offline
-* toon tracks op een kaart (zie hieronder)</string>
-
+    <string name="help_feature_content">* GPS tracks maken
+\n * een hartslagsensor gebruiken (alleen Bluetooth LE)
+\n * spraakaankondigingen (op tijd of afstand)
+\n * markers maken (incl. foto\'s)
+\n * werkt volledig offline
+\n * toon tracks op een kaart (zie hieronder)</string>
     <string name="help_track_map_title">Hoe toon je een spoor op een kaart?</string>
-    <string name="help_track_map_content">
-Gebruik het kleine kaarticoontje.
-a)
-(live updates) Installeer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
-Het biedt online of offline kaarten via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n
-Eigenlijk is OSMDashboard een aparte app die alleen (tijdelijk) toegang heeft tot de gegevens van track(s) die getoond gaan worden.
-
-\n
-b)
-Via een normale kaarttoepassing (bijv. <a href="http://osmand.net/">OsmAnd</a> en <a href="https://maps.me/">MAPS.ME</a>).
-Deze app moet het KMZ-bestandsformaat ondersteunen (alleen locaties en tijdstempels).
-In feite moet een app <i>ACTION_VIEW</i> ondersteunen met MIME <i>application/vnd.google-earth.kmz</i>.</string>
-
+    <string name="help_track_map_content"> Gebruik het kleine kaartpictogram.
+\n a) (live updates) Installeer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Het biedt online of offline kaarten via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n Eigenlijk is OSMDashboard een aparte app die alleen (tijdelijk) toegang heeft tot de gegevens van de track(s) die getoond gaan worden.
+\n b) Via een normale kaartapplicatie (bijv. <a href="http://osmand.net/">OsmAnd</a> en <a href="https://maps.me/">MAPS.ME</a>). Deze apps moeten het KMZ-bestandsformaat ondersteunen (alleen locaties en tijdstempels). In feite moet een app <i>ACTION_VIEW</i> ondersteunen met MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_storage_pictures_title">Hoe slaat OpenTracks fotos op die als markers zijn genomen?</string>
     <string name="help_storage_pictures_content">Deze worden opgeslagen in de interne opslag van de app (d.w.z. alleen toegankelijk binnen OpenTracks).</string>
-
     <string name="help_track_export_title">Hoe kan ik opgenomen tracks exporteren/delen?</string>
-    <string name="help_track_export_content">
-Tracks kunnen worden geëxporteerd vanuit de instellingen als KMZ, KML of GPX.
-KMZ/KML alle gegevens; GPX alleen locaties.
-Tracks die worden gedeeld via het <i>share-icoontje</i> worden gedeeld als KMZ.</string>
-
+    <string name="help_track_export_content"> Tracks kunnen worden geëxporteerd vanuit de instellingen als KMZ, KML of GPX. KMZ/KML alle gegevens; GPX alleen locaties. Tracks die worden gedeeld via het <i>share-icoontje</i> worden gedeeld als KMZ </string>
     <string name="help_data_google_play_services_title">Heeft OpenTracks Google Play Service nodig/gebruikt?</string>
-
     <string name="help_recording_title">Hoe legt OpenTracks gegevens vast?</string>
     <string name="help_recording_content">
 OpenTracks gebruikt de GPS-sensor van het apparaat om de locatie continu te registreren.
 Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid, hoogte), kan OpenTracks daar niets aan doen.</string>
-
     <string name="help_data_storage_title">Hoe slaat OpenTracks sensorgegevens op?</string>
-    <string name="help_data_storage_content">
- De sensorgegevens worden per opgenomen locatie opgeslagen.
-In termen van een hartslagsensor betekent dit dat slechts <i>een</i> hartslagmeting per locatie wordt opgeslagen.
-Als u stilstaat of binnenshuis bent, worden er geen sensorgegevens geregistreerd (maar wel getoond).</string>
-
+    <string name="help_data_storage_content"> De sensorgegevens worden per opgenomen locatie opgeslagen. In termen van een hartslagsensor betekent dit dat slechts <i>een</i> hartslagmeting per locatie wordt opgeslagen. Als u stilstaat of binnenshuis bent, worden er geen sensorgegevens geregistreerd (maar wel getoond) </string>
     <string name="help_gps_troubleshooting_title">OpenTracks neemt geen locaties op?</string>
-    <string name="help_gps_troubleshooting_content">
-Wat kun je doen?
-a) controleer of de GPS is ingeschakeld.
-b) het verbeteren van de GPS-ontvangst (bijv. naar buiten gaan),\n
-c) controleer of met <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app, en
-d) schakel stroombesparing uit.
+    <string name="help_gps_troubleshooting_content"> Wat u kunt doen:
+\n a) Controleer of GPS is ingeschakeld,
+\n b) verbeter de GPS-ontvangst (ga bijvoorbeeld naar buiten),
+\n c) controleren met <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app, en
+\n d) schakel energiebesparing uit.
 \n
-Als alles niet helpt, meldt u dan alstublieft een bug.</string>
-
+\n Als alles niet helpt, meld dan een bug. </string>
     <string name="help_support_title">Hoe kan ik OpenTracks ondersteunen?</string>
-    <string name="help_support_content">
-Je kunt...
-a) het woord verspreiden over OpenTracks, en...
-b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">voorstellen van functies</a>,\n
-c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">melding van bugs</a>,\n
-d) hulp bij de ontwikkeling van software.
-e) koop in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n
-f) doneert u, en
-g) doe wat je denkt dat OpenTracks helpt.</string>
-
+    <string name="help_support_content"> U kunt:
+\n a) het woord verspreiden over OpenTracks,
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">functies voorstellen</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">bugs melden</a>,
+\n d) helpen bij de ontwikkeling van software,
+\n e) kopen in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\n f) doneren, en
+\n g) doe wat u denkt dat OpenTracks helpt. </string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">vliegtuig</string>
     <string name="activity_type_atv">quad</string>
@@ -104,7 +78,7 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="activity_type_driving_bus">bus besturen</string>
     <string name="activity_type_driving_car">autorijden</string>
     <string name="activity_type_ferry">veerboot</string>
-    <string name="activity_type_frisbee">frisbee</string>
+    <string name="activity_type_frisbee">Frisbee</string>
     <string name="activity_type_gliding">zweefvliegen</string>
     <string name="activity_type_hang_gliding">deltavliegen</string>
     <string name="activity_type_helicopter">helikopter</string>
@@ -149,7 +123,7 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="activity_type_trail_hiking">trektocht (pad)</string>
     <string name="activity_type_trail_running">trailrunning</string>
     <string name="activity_type_train">trein</string>
-    <string name="activity_type_ultimate_frisbee">ultimate frisbee</string>
+    <string name="activity_type_ultimate_frisbee">ultieme frisbee</string>
     <string name="activity_type_unknown">onbekend</string>
     <string name="activity_type_wakeboarding">wakeboarden</string>
     <string name="activity_type_walking">wandelen</string>
@@ -185,14 +159,14 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="description_sensor_cadence">Cadans (tpm)</string>
     <string name="description_sensor_heart_rate">Hartslag (spm)</string>
     <string name="description_sensor_power">Vermogen (W)</string>
-    <string name="description_default_speed_or_pace">By activity type</string>
+    <string name="description_default_speed_or_pace">Op type activiteit</string>
     <string name="description_speed_imperial">Snelheid (mi/u)</string>
     <string name="description_speed_metric">Snelheid (km/u)</string>
     <string name="description_time">Tijd</string>
     <string name="description_total_distance">Totale afstand: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Totale tijd: %1$s</string>
     <string name="description_track_point">Punt</string>
-    <string name="description_track_segment">Segment</string>
+    <string name="description_track_segment">segment</string>
     <!-- Export -->
     <string name="export_all_option">Alles als %1$s</string>
     <string name="export_all_title">Exporteren naar externe opslag</string>
@@ -331,7 +305,7 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="settings_chart_by_time">Op tijd</string>
     <string name="settings_chart_x_axis">X-as</string>
     <!-- Settings Recording -->
-    <string name="settings_recording_show_on_lockscreen_while_recording_title">Toon de statistieken op het slotscherm.</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Toon de statistieken op het slotscherm</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Toon tijdens de opname de statistieken zonder het apparaat te ontgrendelen.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Houd het scherm aan</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Houd tijdens de opname het scherm aan.</string>
@@ -359,22 +333,22 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="settings_reset_done">Voor alle instellingen zijn de standaardwaarden teruggezet</string>
     <string name="settings_error_initial_values_restored">Sorry, maar er is een fout gemaakt. Alle instellingen zijn teruggezet naar de standaardwaarden.</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Sensor</string>
+    <string name="settings_sensor">sensor</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth-sensor</string>
     <string name="settings_sensor_connecting">Verbonden met %1$s</string>
     <string name="settings_sensor_disconnected">Ontkoppeld van %1$s</string>
-
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Breedte-/lengtegraad</string>
     <string name="settings_stats_rate_title">Voorkeursverhouding</string>
     <string name="settings_stats_units_imperial">Engels (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrisch (km, m)</string>
     <string name="settings_stats_units_title">Voorkeurseenheden</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file">Routebestand delen</string>
-    <string name="share_track_share_file_body">Ik denk dat u misschien wel geïnteresseerd bent in deze route.\n\nAls u deze route wilt weergeven, kunt u Google Earth of andere kaartsoftware gebruiken.\n\n%1$s</string>
+    <string name="share_track_share_file_body">Ik denk dat u misschien wel geïnteresseerd bent in deze route.
+\n
+\n%1$s</string>
     <string name="share_track_subject">Ik wil graag een route met u delen</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Gem. verplaatsingstempo</string>
@@ -473,7 +447,7 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="voice_minutes_other">%1$d minuten</string>
     <string name="voice_minutes_two">2 minuten</string>
     <string name="voice_minutes_zero">0 minuten</string>
-    <string name="voice_pace_per_kilometer">%1$s per kilometer</string>
+    <string name="voice_pace_per_kilometer">%1$s te kilometer</string>
     <string name="voice_pace_per_mile">%1$s per mijl</string>
     <string name="voice_seconds_few">%1$d seconden</string>
     <string name="voice_seconds_many">%1$d seconden</string>
@@ -511,7 +485,7 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="waypoint_type_atm">Pinautomaat</string>
     <string name="waypoint_type_bank">bank</string>
     <string name="waypoint_type_bar">bar</string>
-    <string name="waypoint_type_barbecue">barbecue</string>
+    <string name="waypoint_type_barbecue">barbecueën</string>
     <string name="waypoint_type_building">gebouw</string>
     <string name="waypoint_type_bus_stop">bushalte</string>
     <string name="waypoint_type_cafe">café</string>
@@ -551,16 +525,86 @@ g) doe wat je denkt dat OpenTracks helpt.</string>
     <string name="waypoint_type_store">winkel</string>
     <string name="waypoint_type_swimming_pool">zwembad</string>
     <string name="waypoint_type_telephone">telefoon</string>
-    <string name="waypoint_type_theater">theater</string>
-    <string name="waypoint_type_toilet">toilet</string>
+    <string name="waypoint_type_theater">schouwburg</string>
+    <string name="waypoint_type_toilet">restroom</string>
     <string name="waypoint_type_tourist_information">toeristische informatie</string>
     <string name="waypoint_type_tree">boom</string>
-    <string name="waypoint_type_tunnel">tunnel</string>
+    <string name="waypoint_type_tunnel">schacht</string>
     <string name="waypoint_type_waterfall">waterval</string>
     <string name="waypoint_type_water_fountain">waterfontein</string>
     <string name="waypoint_type_waypoint">routepunt</string>
     <!-- Share image -->
     <string name="share_image_subject">Ik wil graag een beeld met u delen</string>
     <string name="share_image_body">Ik denk dat je misschien geïnteresseerd bent in dit beeld.</string>
-
+    <string name="export_track_already_exists_msg">De track %1$s bestaat al in de doelmap.</string>
+    <string name="export_track_errors">Tracks niet geëxporteerd</string>
+    <string name="description_elevation_loss">Hoogteverlies: %1$d m (%2$d ft)</string>
+    <string name="export_error_post_workout">Post-workout export mislukt, controleer de export map.</string>
+    <string name="open_track_using_dashboard">Openen met behulp van OpenTracks-Dashboard</string>
+    <string name="open_track_as_KMZ">Openen als KMZ</string>
+    <string name="open_track_as_GPX">Openen als GPX</string>
+    <string name="open_track_as_trackfileformat">Openen als %1$s</string>
+    <string name="activity_type_escooter">scooter</string>
+    <string name="export_all_do_it_for_all">doe het voor alle conflicten</string>
+    <string name="export_progress_summary_new_msg">Nieuwe sporen geëxporteerd</string>
+    <string name="generic_click_twice_cancel">Klik nogmaals terug om te annuleren</string>
+    <string name="settings_default_export_uri_title">Spoor export map</string>
+    <string name="import_thread_interrupted">Draad onderbroken</string>
+    <string name="import_no_kml_file_found">Geen doc.kml bestand gevonden in KMZ</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">Volledig scherm</string>
+    <string name="gps_fixed_and_ready">GPS vast en klaar</string>
+    <string name="value_float_kilometer_hour">%1$.2f km/h</string>
+    <string name="aggregated_stats_empty_message">Neem uw eerste track op om geaggregeerde statistieken te zien</string>
+    <string name="track_detail_intervals_tab">Intervallen</string>
+    <string name="settings_sensor_wheel_circumference">Wielomtrek (mm)</string>
+    <string name="settings_prevent_reimport_tracks_title">Voorkom herinvoer van tracks</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Voltooid met één fout</item>
+        <item quantity="other">Afgerond met %1$d fouten</item>
+    </plurals>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Tijdens opname, aanwezig in volledig scherm.</string>
+    <string name="settings_default_trackfileformat">Bestandsformaat exporteren/delen</string>
+    <string name="sensor_state_power_avg">Gem. Vermogen</string>
+    <string name="sensor_state_heart_rate_max">Max. Hartslag</string>
+    <string name="sensor_state_heart_rate_avg">Gem. Hartslag</string>
+    <string name="sensor_state_cadence_avg">Avg cadans</string>
+    <string name="sensor_state_cadence_max">Max. cadans</string>
+    <string name="settings_night_mode_option_night">Nacht</string>
+    <string name="settings_night_mode_option_day">Dag</string>
+    <string name="settings_night_mode_option_system">Systeem</string>
+    <string name="settings_night_mode_title">UI Thema</string>
+    <string name="stats_loss">Verlies</string>
+    <string name="value_float_mile_hour">%1$.2f mph</string>
+    <string name="interval_list_empty_message">Er zijn nog geen intervallen</string>
+    <string name="stats_split_interval">Gesplitst interval</string>
+    <string name="stats_intervals">Intervallen</string>
+    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
+    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
+    <string name="voice_pace_lap">Rondetijd van %1$s</string>
+    <string name="voice_speed_lap">Ronde snelheid van %1$s</string>
+    <string name="instant_export_enabled_title">Directe export na de training</string>
+    <string name="instant_export_enabled_summary">Exporteer track naar opslag nadat opname is voltooid</string>
+    <string name="toast_message_instant_track_was_exported">Laatste geëxporteerde track</string>
+    <string name="hold_to_pause">Vasthouden om te pauzeren</string>
+    <string name="export_progress_summary_skip_msg">Tracks overgeslagen</string>
+    <string name="export_progress_summary_overwrite_msg">Tracks overschreven</string>
+    <string name="export_progress_summary_errors_msg">Fouten</string>
+    <string name="generic_open_track">Open spoor</string>
+    <string name="generic_overwrite">Overschrijven</string>
+    <string name="generic_skip">Sla over.</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="generic_show_errors">Fouten tonen</string>
+    <string name="generic_completed">Voltooid</string>
+    <string name="import_unsupported_format">Niet-ondersteund bestandsformaat</string>
+    <string name="import_error_list_dialog_title">Bestanden niet geïmporteerd</string>
+    <string name="import_prevent_reimport">Jij hebt ingesteld voorkom her-import spoor</string>
+    <string name="import_progress_summary_ok_msg">Ingevoerde bestanden</string>
+    <string name="import_progress_summary_exists_msg">Bestaat reeds</string>
+    <string name="import_progress_summary_errors_msg">Fouten</string>
+    <string name="gps_disabled_msg">GPS uitgeschakeld</string>
+    <string name="import_parser_error">Parser fout: %1$s</string>
+    <string name="import_unable_to_import_file">Kan bestand niet importeren: %1$s</string>
+    <string name="import_error_info">%1$s: %2$s</string>
+    <string name="import_file_imported">Bestand %1$s geimporteerd</string>
+    <string name="hold_to_stop">Hou vast om te stoppen</string>
 </resources>
