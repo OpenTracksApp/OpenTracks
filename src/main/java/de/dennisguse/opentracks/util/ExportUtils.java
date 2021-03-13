@@ -32,7 +32,7 @@ public class ExportUtils {
             TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(context);
             DocumentFile directory = PreferencesUtils.getDefaultExportDirectoryUri(context);
 
-            ExportService.enqueue(context, resultReceiver, track.getUuid(), trackFileFormat, directory.getUri());
+            ExportService.enqueue(context, resultReceiver, track.getId(), trackFileFormat, directory.getUri());
         }
     }
 
@@ -87,7 +87,7 @@ public class ExportUtils {
     }
 
     private static Uri getExportDocumentFileUri(Context context, Track track, TrackFileFormat trackFileFormat, DocumentFile directory) {
-        String exportFileName = getExportFileNameForTrack(track, trackFileFormat.getExtension());
+        String exportFileName = getExportFileNameByTrackId(track, trackFileFormat.getExtension());
         Uri exportDocumentFileUri = findFile(context, directory.getUri(), exportFileName);
         if (exportDocumentFileUri == null) {
             final DocumentFile file = directory.createFile(trackFileFormat.getMimeType(), exportFileName);
@@ -98,7 +98,7 @@ public class ExportUtils {
         return exportDocumentFileUri;
     }
 
-    private static String getExportFileNameForTrack(Track track, String trackFileFormatExtension) {
+    private static String getExportFileNameByTrackId(Track track, String trackFileFormatExtension) {
         return track.getUuid().toString().substring(0, 8) + "_" + track.getName() + "." + trackFileFormatExtension;
     }
 

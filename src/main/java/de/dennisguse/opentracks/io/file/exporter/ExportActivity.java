@@ -20,6 +20,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -92,7 +93,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     private ContentProviderUtils contentProviderUtils;
 
     // List of tracks to be exported.
-    private final ArrayList<UUID> uuids = new ArrayList<>();
+    private final ArrayList<Track> tracks = new ArrayList<>();
 
     private final LinkedBlockingQueue<PendingConflict> conflictsQueue = new LinkedBlockingQueue<>();
     private final Handler conflictsHandler = new Handler();
@@ -188,7 +189,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     protected void onDestroy() {
         super.onDestroy();
         conflictsQueue.clear();
-        uuids.clear();
+        tracks.clear();
     }
 
     @Override
@@ -216,11 +217,11 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
             for (int i = from; i < trackExportTotalCount; i++) {
                 cursor.moveToPosition(i);
                 Track track = ContentProviderUtils.createTrack(cursor);
-                uuids.add(track.getUuid());
+                tracks.add(track);
             }
 
-            if (!uuids.isEmpty()) {
-                export(uuids.get(0));
+            if (!tracks.isEmpty()) {
+                export(tracks.get(0));
             } else {
                 onExportEnded();
             }
@@ -230,24 +231,24 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     /**
      * Enqueue track identified by UUID to be exported if not exported already or there is a conflict resolution.
      *
-     * @param uuid            the track's UUID.
+     * @param track              Track object.
      * @param conflictResolution conflict resolution to be applied if needed.
      */
-    private void export(UUID uuid, int conflictResolution) {
-        boolean fileExists = ExportUtils.isExportFileExists(uuid, trackFileFormat.getExtension(), directoryFiles);
+    private void export(Track track, int conflictResolution) {
+        boolean fileExists = ExportUtils.isExportFileExists(track.getUuid(), trackFileFormat.getExtension(), directoryFiles);
 
         if (fileExists && conflictResolution == CONFLICT_NONE) {
-            conflict(uuid);
+            conflict(track);
         } else if (fileExists && conflictResolution == CONFLICT_SKIP) {
             trackExportSkippedCount++;
-            onExportCompleted(uuid);
+            onExportCompleted(track);
         } else {
-            ExportService.enqueue(this, resultReceiver, uuid, trackFileFormat, directoryUri);
+            ExportService.enqueue(this, resultReceiver, track.getId(), trackFileFormat, directoryUri);
         }
     }
 
-    private void export(UUID uuid) {
-        export(uuid, autoConflict);
+    private void export(Track track) {
+        export(track, autoConflict);
     }
 
     private void setConflictVisibility(int visibility) {
@@ -279,14 +280,17 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         viewBinding.exportProgressSummaryErrorsGroup.setVisibility(trackExportErrorCount > 0 ? View.VISIBLE : View.GONE);
     }
 
-    private void onExportCompleted(UUID uuid) {
-        uuids.remove(uuid);
+    private void onExportCompleted(Track track) {
+        Log.e("probando", "A eliminar... size: " + tracks.size());
+        tracks.remove(track);
+        Log.e("probando", "Después de eliminar... size: " + tracks.size());
+
         setProgress();
-        if (uuids.isEmpty()) {
+        if (tracks.isEmpty()) {
             onExportEnded();
             return;
         }
-        export(uuids.get(0));
+        export(tracks.get(0));
     }
 
     private void onExportEnded() {
@@ -336,11 +340,11 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
                 throw new RuntimeException(TAG + ": export service result code invalid: " + resultCode);
         }
 
-        onExportCompleted(track.getUuid());
+        onExportCompleted(track);
     }
 
-    private void conflict(UUID uuid) {
-        PendingConflict newConflict = new PendingConflict(uuid);
+    private void conflict(Track track) {
+        PendingConflict newConflict = new PendingConflict(track);
         conflictsQueue.add(newConflict);
 
         if (conflictsQueue.size() == 1) {
@@ -352,10 +356,10 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
      * Handle conflicts (exporting file already exists).
      */
     private class PendingConflict {
-        private final UUID uuid;
+        private final Track track;
 
-        public PendingConflict(UUID uuid) {
-            this.uuid = uuid;
+        public PendingConflict(Track track) {
+            this.track = track;
         }
 
         /**
@@ -366,14 +370,13 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
          */
         public boolean resolve() {
             if (autoConflict == CONFLICT_NONE) {
-                Track track = contentProviderUtils.getTrack(uuid);
                 viewBinding.exportProgressAlertIcon.setImageDrawable(ContextCompat.getDrawable(ExportActivity.this, R.drawable.ic_report_problem_24));
                 viewBinding.exportProgressAlertMsg.setText(getString(R.string.export_track_already_exists_msg, track.getName()));
                 setConflictVisibility(View.VISIBLE);
                 return false;
             }
 
-            export(uuid);
+            export(track);
             return true;
         }
 
@@ -381,7 +384,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
          * Overwrite the export file and set the autoConflict if user set the "do it for all" switch button.
          */
         public void overwrite() {
-            export(uuid, CONFLICT_OVERWRITE);
+            export(track, CONFLICT_OVERWRITE);
 
             if (viewBinding.exportProgressApplyToAll.isChecked()) {
                 autoConflict = CONFLICT_OVERWRITE;
@@ -392,7 +395,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
          * Skip the export file and set the autoConflict if user set the "do it for all" switch button.
          */
         public void skip() {
-            export(uuid, CONFLICT_SKIP);
+            export(track, CONFLICT_SKIP);
 
             if (viewBinding.exportProgressApplyToAll.isChecked()) {
                 autoConflict = CONFLICT_SKIP;
