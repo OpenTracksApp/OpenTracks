@@ -11,7 +11,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
@@ -33,20 +35,20 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
         summary = new Summary();
     }
 
-    public LiveData<Summary> getImportData(DocumentFile documentFile) {
+    LiveData<Summary> getImportData(List<DocumentFile> documentFiles) {
         if (importData == null) {
             importData = new MutableLiveData<>();
-            loadData(documentFile);
+            loadData(documentFiles);
         }
         return importData;
     }
 
-    public void cancel() {
+    void cancel() {
         cancel = true;
     }
 
-    private void loadData(DocumentFile documentFile) {
-        List<DocumentFile> fileList = FileUtils.getFiles(documentFile);
+    private void loadData(List<DocumentFile> documentFiles) {
+        List<DocumentFile> fileList = documentFiles.stream().map(FileUtils::getFiles).flatMap(Collection::stream).collect(Collectors.toList());
         summary.totalCount = fileList.size();
         filesToImport.addAll(fileList);
         importNextFile();
@@ -90,7 +92,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
         importNextFile();
     }
 
-    public static class Summary {
+    static class Summary {
         private int totalCount;
         private int successCount;
         private int existsCount;
