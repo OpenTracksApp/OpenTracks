@@ -16,6 +16,7 @@
 
 package de.dennisguse.opentracks.io.file.importer;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,6 +30,10 @@ import androidx.core.content.ContextCompat;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordedActivity;
@@ -47,17 +52,15 @@ public class ImportActivity extends FragmentActivity {
 
     public static final String EXTRA_DIRECTORY_URI_KEY = "directory_uri";
 
-    private static final String BUNDLE_TOOLBAR_TITLE = "toolbar_title";
-    private static final String BUNDLE_DOCUMENT_URI = "document_uri";
+    private static final String BUNDLE_DOCUMENT_URIS = "document_uris";
     private static final String BUNDLE_IS_DIRECTORY = "is_directory";
 
     private ImportActivityBinding viewBinding;
 
     boolean doubleBackToCancel = false;
 
-    private Uri documentUri;
+    private ArrayList<Uri> documentUris = new ArrayList<>();
     private boolean isDirectory;
-    private String toolbarTitle;
 
     private ImportViewModel viewModel;
     private ImportViewModel.Summary summary;
@@ -70,35 +73,46 @@ public class ImportActivity extends FragmentActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
 
-        final DocumentFile documentFile;
+        final Intent intent = getIntent();
+        final ClipData intentClipData = intent.getClipData();
+
         if (savedInstanceState == null) {
-            if (getIntent().getData() != null) {
-                documentUri = getIntent().getData();
-                isDirectory = false;
-            } else if (getIntent().getClipData() != null && getIntent().getClipData().getItemCount() > 0) {
-                documentUri = getIntent().getClipData().getItemAt(0).getUri();
+            if (intent.getData() != null) {
+                documentUris.add(intent.getData());
                 isDirectory = false;
             } else {
-                // Started from DirectoryChooserActivity
-                documentUri = getIntent().getParcelableExtra(EXTRA_DIRECTORY_URI_KEY);
-                isDirectory = true;
+                if (intentClipData != null && intentClipData.getItemCount() > 0) {
+                    for (int i = 0; i < intentClipData.getItemCount(); i++) {
+                        documentUris.add(intentClipData.getItemAt(i).getUri());
+                    }
+                    isDirectory = false;
+                } else {
+                    // Started from DirectoryChooserActivity
+                    documentUris.add(intent.getParcelableExtra(EXTRA_DIRECTORY_URI_KEY));
+                    isDirectory = true;
+                }
             }
 
-            documentFile = isDirectory ? DocumentFile.fromTreeUri(this, documentUri) : DocumentFile.fromSingleUri(this, documentUri);
-            toolbarTitle = getString(R.string.import_progress_message, documentFile.getName());
         } else {
-            documentUri = savedInstanceState.getParcelable(BUNDLE_DOCUMENT_URI);
-            toolbarTitle = savedInstanceState.getString(BUNDLE_TOOLBAR_TITLE);
+            documentUris = savedInstanceState.getParcelable(BUNDLE_DOCUMENT_URIS);
             isDirectory = savedInstanceState.getBoolean(BUNDLE_IS_DIRECTORY);
-
-            documentFile = isDirectory ? DocumentFile.fromTreeUri(this, documentUri) : DocumentFile.fromSingleUri(this, documentUri);
         }
 
-        toolbar.setTitle(toolbarTitle);
+        final List<DocumentFile> documentFiles;
+        if (isDirectory) {
+            documentFiles = new ArrayList<>();
+            documentFiles.add(DocumentFile.fromTreeUri(this, documentUris.get(0)));
+        } else {
+            documentFiles = documentUris.stream().map(it -> DocumentFile.fromSingleUri(this, it)).collect(Collectors.toList());
+        }
+
+        //Works for a directory, but we might have received multiple files via SEND_MULTIPLE.
+        toolbar.setTitle(getString(R.string.import_progress_message, documentFiles.get(0).getName()));
+
         initViews();
 
         viewModel = new ViewModelProvider(this).get(ImportViewModel.class);
-        viewModel.getImportData(documentFile).observe(this, data -> {
+        viewModel.getImportData(documentFiles).observe(this, data -> {
             summary = data;
             setProgress();
         });
@@ -107,9 +121,8 @@ public class ImportActivity extends FragmentActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelable(BUNDLE_DOCUMENT_URI, documentUri);
+        outState.putParcelableArrayList(BUNDLE_DOCUMENT_URIS, documentUris);
         outState.putBoolean(BUNDLE_IS_DIRECTORY, isDirectory);
-        outState.putString(BUNDLE_TOOLBAR_TITLE, toolbarTitle);
     }
 
     @Override
