@@ -84,7 +84,7 @@ public class ImportService extends JobIntentService {
 
     private void sendResult(int resultCode, ArrayList<Track.Id> trackId, DocumentFile file, String message) {
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(ImportServiceResultReceiver.RESULT_EXTRA_TRACK_ID, trackId);
+        bundle.putParcelableArrayList(ImportServiceResultReceiver.RESULT_EXTRA_LIST_TRACK_ID, trackId);
         bundle.putString(ImportServiceResultReceiver.RESULT_EXTRA_FILENAME, file.getName());
         bundle.putString(ImportServiceResultReceiver.RESULT_EXTRA_MESSAGE, message);
         resultReceiver.send(resultCode, bundle);

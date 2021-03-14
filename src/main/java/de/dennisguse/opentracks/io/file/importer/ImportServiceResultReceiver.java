@@ -16,7 +16,7 @@ public class ImportServiceResultReceiver extends ResultReceiver {
     public static final int RESULT_CODE_IMPORTED = 1;
     public static final int RESULT_CODE_ALREADY_EXISTS = 2;
 
-    public static final String RESULT_EXTRA_TRACK_ID = "result_track_id";
+    public static final String RESULT_EXTRA_LIST_TRACK_ID = "result_track_id";
     public static final String RESULT_EXTRA_FILENAME = "result_extra_filename";
     public static final String RESULT_EXTRA_MESSAGE = "result_extra_message";
 

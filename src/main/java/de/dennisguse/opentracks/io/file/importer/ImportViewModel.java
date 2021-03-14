@@ -68,7 +68,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
             throw new RuntimeException(TAG + ": onReceiveResult resultData NULL");
         }
 
-        Track.Id trackId = resultData.getParcelable(ImportServiceResultReceiver.RESULT_EXTRA_TRACK_ID);
+        ArrayList<Track.Id> trackIds = resultData.getParcelableArrayList(ImportServiceResultReceiver.RESULT_EXTRA_LIST_TRACK_ID);
         String fileName = resultData.getString(ImportServiceResultReceiver.RESULT_EXTRA_FILENAME);
         String message = resultData.getString(ImportServiceResultReceiver.RESULT_EXTRA_MESSAGE);
 
@@ -78,7 +78,7 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
                 summary.fileErrors.add(getApplication().getString(R.string.import_error_info, fileName, message));
                 break;
             case ImportServiceResultReceiver.RESULT_CODE_IMPORTED:
-                summary.importedTrackIds.add(trackId);
+                summary.importedTrackIds.addAll(trackIds);
                 summary.successCount++;
                 break;
             case ImportServiceResultReceiver.RESULT_CODE_ALREADY_EXISTS:
