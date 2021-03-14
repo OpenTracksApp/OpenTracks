@@ -109,6 +109,19 @@ public class Track {
         this.trackStatistics = trackStatistics;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Track track = (Track) o;
+        return id.equals(track.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     public static class Id implements Parcelable {
 
         private final long id;

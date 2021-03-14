@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.regex.Pattern;
 
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
@@ -37,7 +39,7 @@ public class ExportUtils {
     public static boolean exportTrack(Context context, TrackFileFormat trackFileFormat, DocumentFile directory, Track track) {
         TrackExporter trackExporter = trackFileFormat.createTrackExporter(context);
 
-        Uri exportDocumentFileUri = getExportDocumentFileUri(context, track.getId(), trackFileFormat, directory);
+        Uri exportDocumentFileUri = getExportDocumentFileUri(context, track, trackFileFormat, directory);
         if (exportDocumentFileUri == null) {
             Log.e(TAG, "Couldn't create document file for export");
             return false;
@@ -62,8 +64,10 @@ public class ExportUtils {
         }
     }
 
-    public static boolean isExportFileExists(Track.Id trackId, String trackFileFormatExtension, List<String> filesName) {
-        return filesName.contains(getExportFileNameByTrackId(trackId, trackFileFormatExtension));
+    public static boolean isExportFileExists(UUID uuuid, String trackFileFormatExtension, List<String> filesName) {
+        String word = uuuid.toString().substring(0, 8) + ".*\\." + trackFileFormatExtension;
+        Pattern pattern = Pattern.compile(word);
+        return filesName.stream().anyMatch(w -> pattern.matcher(w).matches());
     }
 
     public static List<String> getAllFiles(Context context, Uri directoryUri) {
@@ -82,8 +86,8 @@ public class ExportUtils {
         return fileNames;
     }
 
-    private static Uri getExportDocumentFileUri(Context context, Track.Id trackId, TrackFileFormat trackFileFormat, DocumentFile directory) {
-        String exportFileName = getExportFileNameByTrackId(trackId, trackFileFormat.getExtension());
+    private static Uri getExportDocumentFileUri(Context context, Track track, TrackFileFormat trackFileFormat, DocumentFile directory) {
+        String exportFileName = getExportFileNameForTrack(track, trackFileFormat.getExtension());
         Uri exportDocumentFileUri = findFile(context, directory.getUri(), exportFileName);
         if (exportDocumentFileUri == null) {
             final DocumentFile file = directory.createFile(trackFileFormat.getMimeType(), exportFileName);
@@ -94,8 +98,8 @@ public class ExportUtils {
         return exportDocumentFileUri;
     }
 
-    private static String getExportFileNameByTrackId(Track.Id trackId, String trackFileFormatExtension) {
-        return trackId.getId() + "." + trackFileFormatExtension;
+    private static String getExportFileNameForTrack(Track track, String trackFileFormatExtension) {
+        return track.getUuid().toString().substring(0, 8) + "_" + track.getName() + "." + trackFileFormatExtension;
     }
 
     private static Uri findFile(Context context, Uri directoryUri, String exportFileName) {
