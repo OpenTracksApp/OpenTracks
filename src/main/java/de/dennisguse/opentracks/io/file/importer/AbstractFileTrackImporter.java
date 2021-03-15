@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
 import android.util.Log;
@@ -97,10 +98,13 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
     // The SAX locator to get the current line information
     private Locator locator;
 
+    private final SharedPreferences sharedPreferences;
+
     AbstractFileTrackImporter(Context context, ContentProviderUtils contentProviderUtils) {
         this.context = context;
         this.contentProviderUtils = contentProviderUtils;
-        this.recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(context);
+        sharedPreferences = PreferencesUtils.getSharedPreferences(context);
+        this.recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
     }
 
     @Override
@@ -262,7 +266,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
         Track track = contentProviderUtils.getTrack(trackData.track.getUuid());
         if (track != null) {
-            if (PreferencesUtils.getPreventReimportTracks(context)) {
+            if (PreferencesUtils.getPreventReimportTracks(sharedPreferences, context)) {
                 throw new ImportAlreadyExistsException(context.getString(R.string.import_prevent_reimport));
             }
 
@@ -380,7 +384,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             if (trackPoint.hasLocation() && trackData.lastLocationInCurrentSegment.hasLocation()) {
                 trackPoint.setBearing(trackData.lastLocationInCurrentSegment.bearingTo(trackPoint));
 
-                long maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(context);
+                long maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(sharedPreferences, context); //TODO Should only be read once!
                 double distanceToLastTrackLocation = trackPoint.distanceTo(trackData.lastLocationInCurrentSegment);
                 if (distanceToLastTrackLocation > maxRecordingDistance) {
                     trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);

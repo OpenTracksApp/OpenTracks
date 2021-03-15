@@ -34,14 +34,14 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
     }
 
     @Override
-    public void onStart(Context context) {
-        gpsStatus = new GpsStatus(context, this, Duration.ofSeconds(PreferencesUtils.getMinRecordingInterval(context)));
+    public void onStart(@NonNull Context context) {
+        gpsStatus = new GpsStatus(context, this);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         registerLocationListener();
     }
 
     @Override
-    public void onStop(Context context) {
+    public void onStop(@NonNull Context context) {
         unregisterLocationListener();
         locationManager = null;
         if (gpsStatus != null) {
@@ -51,9 +51,9 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
     }
 
     @Override
-    public void onSharedPreferenceChanged(Context context, SharedPreferences preferences, String key) {
+    public void onSharedPreferenceChanged(@NonNull Context context, @NonNull SharedPreferences sharedPreferences, String key) {
         if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
-            int minRecordingInterval = PreferencesUtils.getMinRecordingInterval(context);
+            int minRecordingInterval = PreferencesUtils.getMinRecordingInterval(sharedPreferences, context);
             if (minRecordingInterval == PreferencesUtils.getMinRecordingIntervalAdaptBatteryLife(context)) {
                 // Choose battery life over moving time accuracy.
                 locationListenerPolicy = new AdaptiveLocationListenerPolicy(Duration.ofSeconds(30), Duration.ofSeconds(5), 5);
@@ -69,16 +69,16 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
             }
         }
         if (PreferencesUtils.isKey(context, R.string.recording_gps_accuracy_key, key)) {
-            recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(context);
+            recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(sharedPreferences, context);
         }
         if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
             if (gpsStatus != null) {
-                gpsStatus.onMinRecordingIntervalChanged(PreferencesUtils.getMinRecordingInterval(context));
+                gpsStatus.onMinRecordingIntervalChanged(PreferencesUtils.getMinRecordingInterval(sharedPreferences, context));
             }
         }
         if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
             if (gpsStatus != null) {
-                gpsStatus.onRecordingDistanceChanged(PreferencesUtils.getRecordingDistanceInterval(context));
+                gpsStatus.onRecordingDistanceChanged(PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context));
             }
         }
     }

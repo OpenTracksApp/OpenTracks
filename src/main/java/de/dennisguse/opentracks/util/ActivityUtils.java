@@ -3,6 +3,7 @@ package de.dennisguse.opentracks.util;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -150,7 +151,7 @@ public class ActivityUtils {
         toast.show();
     }
 
-    public static void applyNightMode(Context context) {
-        AppCompatDelegate.setDefaultNightMode(PreferencesUtils.getDefaultNightMode(context));
+    public static void applyNightMode(SharedPreferences sharedPreferences, Context context) {
+        AppCompatDelegate.setDefaultNightMode(PreferencesUtils.getDefaultNightMode(sharedPreferences, context));
     }
 }

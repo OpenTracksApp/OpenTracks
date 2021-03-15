@@ -109,18 +109,18 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
-        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (PreferencesUtils.isKey(TrackListActivity.this, R.string.stats_units_key, key)) {
-                metricUnits = PreferencesUtils.isMetricUnits(TrackListActivity.this);
+                metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, TrackListActivity.this);
             }
             if (PreferencesUtils.isKey(TrackListActivity.this, R.string.recording_track_id_key, key)) {
-                recordingTrackId = PreferencesUtils.getRecordingTrackId(TrackListActivity.this);
+                recordingTrackId = PreferencesUtils.getRecordingTrackId(sharedPreferences, TrackListActivity.this);
                 if (key != null && PreferencesUtils.isRecording(recordingTrackId)) {
                     trackRecordingServiceConnection.startAndBind(TrackListActivity.this);
                 }
             }
             if (PreferencesUtils.isKey(TrackListActivity.this, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(TrackListActivity.this);
+                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(sharedPreferences, TrackListActivity.this);
             }
             if (key != null) {
                 runOnUiThread(() -> {
@@ -262,7 +262,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         super.onStart();
 
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
         trackRecordingServiceConnection.startConnection(this);
     }
 

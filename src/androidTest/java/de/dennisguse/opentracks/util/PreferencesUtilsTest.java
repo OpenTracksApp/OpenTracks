@@ -22,12 +22,14 @@ public class PreferencesUtilsTest {
     @Test
     public void ExportTrackFileFormat_ok() {
         // given
-        SharedPreferences.Editor editor = PreferencesUtils.getSharedPreferences(context).edit();
+        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
         editor.putString(context.getString(R.string.export_trackfileformat_key), TrackFileFormat.KMZ_WITH_TRACKDETAIL.name());
         editor.commit();
 
         // when
-        TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(context);
+        TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(sharedPreferences, context);
 
         // then
         assertEquals(TrackFileFormat.KMZ_WITH_TRACKDETAIL, trackFileFormat);
@@ -36,12 +38,13 @@ public class PreferencesUtilsTest {
     @Test
     public void ExportTrackFileFormat_invalid() {
         // given
-        SharedPreferences.Editor editor = PreferencesUtils.getSharedPreferences(context).edit();
+        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(context.getString(R.string.export_trackfileformat_key), "invalid");
         editor.commit();
 
         // when
-        TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(context);
+        TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(sharedPreferences, context);
 
         // then
         assertEquals(TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA, trackFileFormat);
@@ -50,12 +53,13 @@ public class PreferencesUtilsTest {
     @Test
     public void ExportTrackFileFormat_noValue() {
         // given
-        SharedPreferences.Editor editor = PreferencesUtils.getSharedPreferences(context).edit();
+        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.commit();
 
         // when
-        TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(context);
+        TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(sharedPreferences, context);
 
         // then
         assertEquals(TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA, trackFileFormat);

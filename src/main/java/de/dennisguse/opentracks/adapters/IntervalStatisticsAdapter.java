@@ -25,11 +25,12 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
 
     public IntervalStatisticsAdapter(Context context, List<IntervalStatistics.Interval> intervalList, String category, StackMode stackMode) {
         super(context, R.layout.interval_stats_list_item, intervalList);
-        metricUnits = PreferencesUtils.isMetricUnits(context);
+        metricUnits = PreferencesUtils.isMetricUnits(PreferencesUtils.getSharedPreferences(context), context);
         this.category = category;
         this.stackMode = stackMode;
     }
 
+    //TODO Check preference handling! Should not be accessed in getView()
     @NonNull
     @Override
     public View getView(int position, @Nullable View intervalView, @NonNull ViewGroup parent) {
@@ -60,7 +61,7 @@ public class IntervalStatisticsAdapter extends ArrayAdapter<IntervalStatistics.I
         }
         viewHolder.distance.setText(StringUtils.formatDistance(getContext(), sumDistance_m, metricUnits));
 
-        if (PreferencesUtils.isReportSpeed(getContext(), category)) {
+        if (PreferencesUtils.isReportSpeed(PreferencesUtils.getSharedPreferences(getContext()), getContext(), category)) {
             viewHolder.rate.setText(StringUtils.formatSpeed(getContext(), interval.getSpeed_ms(), metricUnits, true));
         } else {
             viewHolder.rate.setText(StringUtils.formatSpeed(getContext(), interval.getSpeed_ms(), metricUnits, false));

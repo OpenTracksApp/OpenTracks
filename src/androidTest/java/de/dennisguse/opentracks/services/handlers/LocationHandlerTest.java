@@ -27,6 +27,7 @@ import static org.mockito.Mockito.verify;
 public class LocationHandlerTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
+    private final SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
 
     @Mock
     private HandlerServer handlerServer;
@@ -43,11 +44,10 @@ public class LocationHandlerTest {
     @Before
     public void setUp() {
         // Let's use default values.
-        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         sharedPreferences.edit().clear().commit();
 
-        locationHandler.onSharedPreferenceChanged(context, PreferencesUtils.getSharedPreferences(context), context.getString(R.string.recording_gps_accuracy_key));
-        locationHandler.onSharedPreferenceChanged(context, PreferencesUtils.getSharedPreferences(context), context.getString(R.string.min_recording_interval_key));
+        locationHandler.onSharedPreferenceChanged(context, sharedPreferences, context.getString(R.string.recording_gps_accuracy_key));
+        locationHandler.onSharedPreferenceChanged(context, sharedPreferences, context.getString(R.string.min_recording_interval_key));
         locationHandler.onStart(context);
     }
 
@@ -85,7 +85,7 @@ public class LocationHandlerTest {
     @Test
     public void testOnLocationChanged_poorAccuracy() {
         // given
-        int prefAccuracy = PreferencesUtils.getRecordingGPSAccuracy(context);
+        int prefAccuracy = PreferencesUtils.getRecordingGPSAccuracy(sharedPreferences, context);
 
         // when
         locationHandler.onLocationChanged(createLocation(45f, 35f, prefAccuracy + 1, 5, System.currentTimeMillis()));

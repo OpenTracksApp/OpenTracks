@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks.services.tasks;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
@@ -102,6 +103,8 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         }
     };
 
+    private SharedPreferences sharedPreferences;
+
     private TextToSpeech tts;
     // Response from TTS after its initialization
     private int ttsInitStatus = TextToSpeech.ERROR;
@@ -112,6 +115,8 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         this.context = context;
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         contentProviderUtils = new ContentProviderUtils(context);
+
+        sharedPreferences = PreferencesUtils.getSharedPreferences(context);
     }
 
     @Override
@@ -164,14 +169,17 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
             return;
         }
 
-        Track track = contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(context));
+        Track track = contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(sharedPreferences, context));
         String category = track != null ? track.getCategory() : "";
 
         List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(track.getId());
-        IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, (float) (PreferencesUtils.isMetricUnits(context) ? 1d * UnitConversions.KM_TO_M : 1d * UnitConversions.MI_TO_M));
+        boolean isMetricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
+        boolean isReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, context, category);
+
+        IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, (float) (isMetricUnits ? 1d * UnitConversions.KM_TO_M : 1d * UnitConversions.MI_TO_M));
         IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
 
-        String announcement = AnnouncementUtils.getAnnouncement(context, trackStatistics, category, lastInterval);
+        String announcement = AnnouncementUtils.getAnnouncement(context, trackStatistics, isMetricUnits, isReportSpeed, lastInterval);
         speakAnnouncement(announcement);
     }
 
@@ -181,6 +189,8 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
             tts.shutdown();
             tts = null;
         }
+
+        sharedPreferences = null;
     }
 
     private void onTtsReady() {

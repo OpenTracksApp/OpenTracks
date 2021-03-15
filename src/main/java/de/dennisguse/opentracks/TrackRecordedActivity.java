@@ -143,7 +143,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.track_detail_markers).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        menu.findItem(R.id.track_detail_resume_track).setVisible(!PreferencesUtils.isRecording(this));
+        menu.findItem(R.id.track_detail_resume_track).setVisible(!PreferencesUtils.isRecording(PreferencesUtils.getSharedPreferences(this), this));
         Track track = contentProviderUtils.getTrack(trackId);
         setTitle(track != null ? track.getName() : "");
         return super.onPrepareOptionsMenu(menu);

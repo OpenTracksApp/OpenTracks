@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.services.handlers;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import org.junit.After;
 import org.junit.Before;
@@ -25,6 +26,9 @@ public class HandlerServerTest {
     @Mock
     private LocationHandler locationHandler;
 
+    @Mock
+    private SharedPreferences sharedPreferences;
+
     private HandlerServer subject;
 
     @Before
@@ -41,10 +45,10 @@ public class HandlerServerTest {
     @Test
     public void onSharedPreferenceChanged() {
         // when
-        subject.onSharedPreferenceChanged(null, null, null);
+        subject.onSharedPreferenceChanged(context, sharedPreferences, null);
 
         // then
-        verify(locationHandler).onSharedPreferenceChanged(null, null, null);
+        verify(locationHandler).onSharedPreferenceChanged(context, sharedPreferences, null);
     }
 
     @Test

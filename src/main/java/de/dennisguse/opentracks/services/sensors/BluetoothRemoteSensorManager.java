@@ -66,27 +66,27 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
-        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (!started) return;
 
             if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_heart_rate_key, key)) {
-                String address = PreferencesUtils.getBluetoothHeartRateSensorAddress(context);
+                String address = PreferencesUtils.getBluetoothHeartRateSensorAddress(sharedPreferences, context);
                 connect(heartRate, address);
             }
 
             if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_cycling_cadence_key, key)) {
-                String address = PreferencesUtils.getBluetoothCyclingCadenceSensorAddress(context);
+                String address = PreferencesUtils.getBluetoothCyclingCadenceSensorAddress(sharedPreferences, context);
                 connect(cyclingCadence, address);
             }
 
             if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_cycling_cadence_key, key)) {
-                String address = PreferencesUtils.getBluetoothCyclingSpeedSensorAddress(context);
+                String address = PreferencesUtils.getBluetoothCyclingSpeedSensorAddress(sharedPreferences, context);
 
                 connect(cyclingSpeed, address);
             }
 
             if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_cycling_power_key, key)) {
-                String address = PreferencesUtils.getBluetoothCyclingPowerSensorAddress(context);
+                String address = PreferencesUtils.getBluetoothCyclingPowerSensorAddress(sharedPreferences, context);
 
                 connect(cyclingPower, address);
             }
@@ -104,7 +104,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
         //Trigger connection startup
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
     }
 
     public synchronized void stop() {
@@ -174,7 +174,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
                 Log.d(TAG, "onChanged: speed data repeated.");
                 return;
             }
-            ((SensorDataCycling.Speed) sensorData).compute(previous, PreferencesUtils.getWheelCircumference(context));
+            ((SensorDataCycling.Speed) sensorData).compute(previous, PreferencesUtils.getWheelCircumference(sharedPreferences, context));
         }
 
         sensorDataSet.set(sensorData);

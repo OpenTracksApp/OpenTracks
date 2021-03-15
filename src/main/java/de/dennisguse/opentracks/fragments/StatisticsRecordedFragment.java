@@ -234,7 +234,7 @@ public class StatisticsRecordedFragment extends Fragment {
         // Set elevation gain and loss
         {
             // Make elevation visible?
-            boolean showElevation = PreferencesUtils.isShowStatsElevation(getContext());
+            boolean showElevation = PreferencesUtils.isShowStatsElevation(sharedPreferences, getContext());
             viewBinding.statsElevationGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
 
             Float elevationGain_m = trackStatistics.getTotalElevationGain();

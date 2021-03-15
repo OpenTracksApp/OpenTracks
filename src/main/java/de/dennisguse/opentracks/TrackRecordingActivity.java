@@ -97,9 +97,9 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
-        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(TrackRecordingActivity.this);
+                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(sharedPreferences, TrackRecordingActivity.this);
                 setLockscreenPolicy();
                 setScreenOnPolicy();
             }
@@ -170,7 +170,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     }
 
     private void setLockscreenPolicy() {
-        boolean showOnLockScreen = PreferencesUtils.shouldShowStatsOnLockscreen(TrackRecordingActivity.this);
+        boolean showOnLockScreen = PreferencesUtils.shouldShowStatsOnLockscreen(sharedPreferences, TrackRecordingActivity.this);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(showOnLockScreen);
@@ -182,7 +182,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     }
 
     private void setScreenOnPolicy() {
-        boolean keepScreenOn = PreferencesUtils.shouldKeepScreenOn(TrackRecordingActivity.this);
+        boolean keepScreenOn = PreferencesUtils.shouldKeepScreenOn(sharedPreferences, TrackRecordingActivity.this);
 
         if (keepScreenOn) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -192,7 +192,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     }
 
     private void setFullscreenPolicy() {
-        boolean keepScreenOn = PreferencesUtils.shouldUseFullscreen(TrackRecordingActivity.this);
+        boolean keepScreenOn = PreferencesUtils.shouldUseFullscreen(sharedPreferences, TrackRecordingActivity.this);
 
         if (keepScreenOn) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -206,7 +206,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         super.onStart();
 
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
         trackRecordingServiceConnection.startConnection(this);
         trackDataHub.start();

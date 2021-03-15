@@ -65,31 +65,28 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         return chartFragment;
     }
 
-    private final List<ChartPoint> pendingPoints = new ArrayList<>();
+    private SharedPreferences sharedPreferences;
+    private int recordingDistanceInterval;
 
     private TrackDataHub trackDataHub;
 
     // Stats gathered from the received data
     private TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater();
-
-    private ChartBinding viewBinding;
-
-    //TODO REMOVE: Used to restore the TrackStatistics via TrackStatisticsUpdater; for the diagrams we should consider not this setting and just use all data that is in the database
-    @Deprecated
-    private int recordingDistanceInterval;
+    private final List<ChartPoint> pendingPoints = new ArrayList<>();
     private String category = "";
 
     // Modes of operation
     private boolean chartByDistance;
 
+    private ChartBinding viewBinding;
     // UI elements
     private ChartView chartView;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
-        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key)) {
-                boolean metricUnits = PreferencesUtils.isMetricUnits(getContext());
+                boolean metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getContext());
                 if (metricUnits != chartView.getMetricUnits()) {
                     chartView.setMetricUnits(metricUnits);
                     runOnUiThread(() -> {
@@ -100,7 +97,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
                 }
             }
             if (PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
-                boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext(), category);
+                boolean reportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), category);
                 if (reportSpeed != chartView.getReportSpeed()) {
                     chartView.setReportSpeed(reportSpeed);
                     chartView.applyReportSpeed();
@@ -114,7 +111,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
             }
 
             if (PreferencesUtils.isKey(getContext(), R.string.recording_distance_interval_key, key)) {
-                recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(getContext());
+                recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, getContext());
             }
         }
     };
@@ -165,8 +162,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     public void onResume() {
         super.onResume();
         resumeTrackDataHub();
-        PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
+        sharedPreferences = PreferencesUtils.getSharedPreferences(getContext());
+        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
         checkChartSettings();
         getActivity().runOnUiThread(updateChart);
@@ -176,7 +174,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     public void onPause() {
         super.onPause();
         pauseTrackDataHub();
-        PreferencesUtils.unregister(getContext(), sharedPreferenceChangeListener);
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
     @Override
@@ -193,6 +191,12 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        sharedPreferences = null;
+    }
+
+    @Override
     public void onTrackUpdated(Track track) {
         if (isResumed()) {
             if (track == null || track.getTrackStatistics() == null) {
@@ -201,7 +205,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
             }
 
             category = track.getCategory();
-            boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext(), category);
+            boolean reportSpeed = PreferencesUtils.isReportSpeed(PreferencesUtils.getSharedPreferences(getContext()), getContext(), category);
             if (reportSpeed != chartView.getReportSpeed()) {
                 chartView.setReportSpeed(reportSpeed);
                 chartView.applyReportSpeed();

@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.services.handlers;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Handler;
 
@@ -15,6 +16,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 /**
  * This class handle GPS status according to received locations and some thresholds.
  */
+//TODO should handle sharedpreference changes
 class GpsStatus {
 
     private static final String TAG = GpsStatus.class.getSimpleName();
@@ -60,16 +62,16 @@ class GpsStatus {
     private final Handler gpsStatusHandler;
     private GpsStatusRunner gpsStatusRunner = null;
 
-    /**
-     * @param context              The context object.
-     * @param client               The client.
-     * @param minRecordingInterval Value of min recording interval preference.
-     */
-    public GpsStatus(Context context, GpsStatusListener client, Duration minRecordingInterval) {
+    public GpsStatus(Context context, GpsStatusListener client) {
         this.client = client;
         this.context = context;
-        signalBadThreshold = PreferencesUtils.getRecordingDistanceInterval(context);
+
+        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
+        signalBadThreshold = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
+
+        Duration minRecordingInterval = Duration.ofSeconds(PreferencesUtils.getMinRecordingInterval(sharedPreferences, context));
         signalLostThreshold = !minRecordingInterval.isNegative() ? SIGNAL_LOST_THRESHOLD.plus(minRecordingInterval) : SIGNAL_LOST_THRESHOLD;
+
         gpsStatusHandler = new Handler();
     }
 

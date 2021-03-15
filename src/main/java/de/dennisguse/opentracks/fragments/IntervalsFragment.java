@@ -44,14 +44,16 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     private IntervalStatisticsAdapter adapter;
     private ArrayAdapter<IntervalStatisticsModel.IntervalOption> spinnerAdapter;
 
+    private SharedPreferences sharedPreferences;
+
     private TrackDataHub trackDataHub;
     private String category;
 
     private IntervalListViewBinding viewBinding;
 
-    protected final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (preferences, key) -> {
+    protected final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
-            metricUnits = PreferencesUtils.isMetricUnits(getContext());
+            metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getContext());
             if (adapter != null) {
                 adapter.notifyDataSetChanged();
                 spinnerAdapter.notifyDataSetChanged();
@@ -73,8 +75,9 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        PreferencesUtils.register(getContext(), sharedPreferenceChangeListener);
-        metricUnits = PreferencesUtils.isMetricUnits(getContext());
+        sharedPreferences = PreferencesUtils.getSharedPreferences(getContext());
+        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
         viewBinding.intervalList.setEmptyView(viewBinding.intervalListEmptyView);
 
@@ -125,6 +128,8 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     public void onPause() {
         super.onPause();
         pauseTrackDataHub();
+
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
     @Override
@@ -137,7 +142,7 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     public void onDestroy() {
         super.onDestroy();
 
-        PreferencesUtils.unregister(getContext(), sharedPreferenceChangeListener);
+        sharedPreferences = null;
 
         adapter = null;
         viewModel = null;
@@ -183,7 +188,7 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
                     category = track != null ? track.getCategory() : "";
 
                     // Set rate label.
-                    boolean reportSpeed = PreferencesUtils.isReportSpeed(getContext(), category);
+                    boolean reportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), category); //TODO Handle sharedPreferenceChangeListener
                     viewBinding.intervalRate.setText(reportSpeed ? R.string.stats_speed : R.string.stats_pace);
                 }
             });

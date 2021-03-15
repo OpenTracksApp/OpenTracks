@@ -66,7 +66,7 @@ class TrackRecordingServiceNotificationManager {
     void updateTrackPoint(Context context, TrackPoint trackPoint, int recordingGpsAccuracy) {
         String formattedAccuracy = context.getString(R.string.value_none);
         if (trackPoint.hasAccuracy()) {
-            formattedAccuracy = StringUtils.formatDistance(context, trackPoint.getAccuracy(), PreferencesUtils.isMetricUnits(context));
+            formattedAccuracy = StringUtils.formatDistance(context, trackPoint.getAccuracy(), PreferencesUtils.isMetricUnits(PreferencesUtils.getSharedPreferences(context), context));
 
             boolean currentLocationWasAccurate = trackPoint.getAccuracy() < recordingGpsAccuracy;
             boolean shouldAlert = !currentLocationWasAccurate && previousLocationWasAccurate;

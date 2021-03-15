@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.util;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.DocumentsContract;
@@ -28,9 +29,10 @@ public class ExportUtils {
     private static final String TAG = ExportUtils.class.getSimpleName();
 
     public static void postWorkoutExport(Context context, Track track, ExportServiceResultReceiver resultReceiver) {
-        if (PreferencesUtils.shouldInstantExportAfterWorkout(context)) {
-            TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(context);
-            DocumentFile directory = PreferencesUtils.getDefaultExportDirectoryUri(context);
+        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
+        if (PreferencesUtils.shouldInstantExportAfterWorkout(sharedPreferences, context)) {
+            TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(sharedPreferences, context);
+            DocumentFile directory = PreferencesUtils.getDefaultExportDirectoryUri(sharedPreferences, context);
 
             ExportService.enqueue(context, resultReceiver, track.getId(), trackFileFormat, directory.getUri());
         }

@@ -3,12 +3,14 @@ package de.dennisguse.opentracks.services.handlers;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 public class HandlerServer {
 
@@ -32,8 +34,9 @@ public class HandlerServer {
     public void start(Context context) {
         serviceExecutor = Executors.newSingleThreadExecutor();
 
+        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         locationHandler.onStart(context);
-        locationHandler.onSharedPreferenceChanged(context, null, null);
+        locationHandler.onSharedPreferenceChanged(context, sharedPreferences, null);
     }
 
     public void stop(Context context) {
@@ -45,7 +48,7 @@ public class HandlerServer {
         serviceExecutor = null;
     }
 
-    public void onSharedPreferenceChanged(Context context, SharedPreferences preferences, String key) {
+    public void onSharedPreferenceChanged(@NonNull Context context, @NonNull SharedPreferences preferences, String key) {
         locationHandler.onSharedPreferenceChanged(context, preferences, key);
     }
 
@@ -70,8 +73,10 @@ public class HandlerServer {
     }
 
     public interface Handler {
-        void onStart(Context context);
-        void onStop(Context context);
-        void onSharedPreferenceChanged(Context context, SharedPreferences preferences, String key);
+        void onStart(@NonNull Context context);
+
+        void onStop(@NonNull Context context);
+
+        void onSharedPreferenceChanged(@NonNull Context context, @NonNull SharedPreferences preferences, String key);
     }
 }

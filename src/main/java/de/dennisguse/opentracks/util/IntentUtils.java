@@ -91,7 +91,7 @@ public class IntentUtils {
                 continue;
             }
 
-            Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackId, track.getName(), PreferencesUtils.getExportTrackFileFormat(context));
+            Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackId, track.getName(), PreferencesUtils.getExportTrackFileFormat(PreferencesUtils.getSharedPreferences(context), context));
             uris.add(uriAndMime.first);
             mime = uriAndMime.second;
         }

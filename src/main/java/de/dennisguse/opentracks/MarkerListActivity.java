@@ -66,12 +66,12 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
-        public void onSharedPreferenceChanged(SharedPreferences preferences, String key) {
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (PreferencesUtils.isKey(MarkerListActivity.this, R.string.recording_track_id_key, key)) {
-                recordingTrackId = PreferencesUtils.getRecordingTrackId(MarkerListActivity.this);
+                recordingTrackId = PreferencesUtils.getRecordingTrackId(sharedPreferences, MarkerListActivity.this);
             }
             if (PreferencesUtils.isKey(MarkerListActivity.this, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(MarkerListActivity.this);
+                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(sharedPreferences, MarkerListActivity.this);
             }
             if (key != null) {
                 runOnUiThread(MarkerListActivity.this::invalidateOptionsMenu);
@@ -138,7 +138,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     protected void onStart() {
         super.onStart();
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
     }
 
     @Override
