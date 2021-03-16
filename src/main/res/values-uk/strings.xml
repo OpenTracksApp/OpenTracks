@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">літак</string>
     <string name="activity_type_atv">Мотовсюдиходи</string>
@@ -82,7 +82,7 @@ limitations under the License.
     <string name="activity_type_water_skiing">водні лижі</string>
     <string name="activity_type_wind_surfing">віндсерфінг</string>
     <!-- Description -->
-    <string name="description_activity_type">Вид активного відпочинку: %1$s</string>
+    <string name="description_activity_type">Тип тренування: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Середній темп: %1$s хв/км (%2$s хв/мл)</string>
     <string name="description_average_moving_speed">Середня швидкість: %1$.2f км/год (%2$.1f мл/год)</string>
     <string name="description_average_pace_in_minute">Середній темп: %1$s хв/км (%2$s хв/мл)</string>
@@ -156,7 +156,7 @@ limitations under the License.
     <string name="gps_location_access">\"Доступ до місцезнаходження\"</string>
     <string name="gps_disabled">GPS вимкнено. Натисніть тут, щоб перейти до меню %1$s. Щоб повернутися, натисніть кнопку \"Назад\".</string>
     <string name="gps_disabled_my_location">Неможливо визначити поточне місцезнаходження. Запустіть кілька джерел визначення місцезнаходження в меню %1$s і переконайтеся, що видно небо. Після цього повторіть спробу.</string>
-    <string name="gps_not_found">На пристрої відсутній GPS-приймач.</string>
+    <string name="gps_not_found">На пристрої відсутній GPS-приймач</string>
     <string name="gps_starting">Запуск GPS…</string>
     <string name="gps_wait_for_better_signal">Очікується кращий GPS-сигнал…</string>
     <string name="gps_wait_for_signal">Очікується GPS-сигнал…</string>
@@ -170,9 +170,9 @@ limitations under the License.
     <string name="image_photo_marker">Фотомаркер</string>
     <string name="image_record">Записати</string>
     <string name="image_stop">Зупинити</string>
-    <string name="image_track">Шлях</string>
+    <string name="image_track">Трек</string>
     <!-- Import -->
-    <string name="import_error">Імпортовано файли з каталогу %3$s: %1$d з %2$s</string>
+    <string name="import_error">Імпортовано %1$d - %2$s з %3$s</string>
     <string name="import_no_directory">Каталог %1$s не існує</string>
     <string name="import_no_file">Немає файлів для імпорту. Підключіть пристрій до комп’ютера та скопіюйте файли
     в папку %1$s.</string>
@@ -237,13 +237,13 @@ limitations under the License.
     <string name="sensor_state_heart_rate_value">%1$d уд/хв</string>
     <string name="sensor_state_power">Потужність</string>
     <string name="sensor_state_power_value">%1$d В</string>
-    <string name="settings_not_while_recording">Недоступно під час записування шляху.</string>
+    <string name="settings_not_while_recording">Недоступно під час записування шляху</string>
     <string name="settings_show">Показати</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Розширені</string>
     <!-- Settings Chart -->
-    <string name="settings_chart_by_distance">За відстанню</string>
-    <string name="settings_chart_by_time">За часом</string>
+    <string name="settings_chart_by_distance">Дистанція</string>
+    <string name="settings_chart_by_time">Час</string>
     <string name="settings_chart_x_axis">Вісь X</string>
     <string name="settings_recording">Записування</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Завжди продовжувати запис після перезавантаження</string>
@@ -277,11 +277,10 @@ limitations under the License.
     <string name="settings_stats_units_imperial">Британська (милі, фути)</string>
     <string name="settings_stats_units_metric">Метрична (км, м)</string>
     <string name="settings_stats_units_title">Одиниці вимірювання</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file">Надати доступ до файлу шляху</string>
     <string name="share_track_share_file_body">Цей шлях може вас зацікавити.\n\nЩоб переглянути його, скористайтеся програмою Google Планета Земля або іншою програмою для відображення карт.\n\n%1$s</string>
-    <string name="share_track_subject">Я хочу поділитися з вами інформацією про шлях.</string>
+    <string name="share_track_subject">Я хочу поділитися з вами інформацією про шлях</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Середній темп руху</string>
     <string name="stats_average_moving_speed">Середня швидкість руху</string>
@@ -314,8 +313,8 @@ limitations under the License.
     <string name="track_detail_chart_tab">Діаграма</string>
     <string name="track_detail_stats_tab">Статистика</string>
     <!-- Track Edit -->
-    <string name="track_edit_activity_type">Вид активного відпочинку (наприклад, піший туризм)</string>
-    <string name="track_edit_activity_type_hint">Вид активного відпочинку</string>
+    <string name="track_edit_activity_type">Тип активного відпочинку (наприклад, піший туризм)</string>
+    <string name="track_edit_activity_type_hint">Тип треку</string>
     <string name="track_edit_new_track_title">Новий шлях</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Запишіть свою наступну пригоду тут</string>
@@ -345,17 +344,17 @@ limitations under the License.
     <string name="value_float_meter">%1$.2f м</string>
     <string name="value_float_mile">Миль: %1$.2f</string>
     <string name="value_float_mile_poor_gps">Миль: %1$.1f (слабкий сигнал GPS)</string>
-    <string name="value_integer_feet">%1$d фут.</string>
+    <string name="value_integer_feet">%1$d фут</string>
     <string name="value_integer_feet_excellent_gps">%1$d фут. (відмінний сигнал GPS)</string>
     <string name="value_integer_feet_recommended">%1$d фут. (рекомендовано)</string>
     <string name="value_integer_kilometer">%1$d км</string>
-    <string name="value_integer_kilometer_hour">%1$d км/год.</string>
+    <string name="value_integer_kilometer_hour">%1$d км/год</string>
     <string name="value_integer_meter">%1$d м</string>
     <string name="value_integer_meter_excellent_gps">%1$d м (відмінний сигнал GPS)</string>
     <string name="value_integer_meter_poor_gps">%1$d м (слабкий сигнал GPS)</string>
     <string name="value_integer_meter_recommended">%1$d м (рекомендовано)</string>
     <string name="value_integer_mile">Миль: %1$d</string>
-    <string name="value_integer_mile_hour">%1$d миль/год.</string>
+    <string name="value_integer_mile_hour">%1$d миль/год</string>
     <string name="value_integer_minute">%1$d хв.</string>
     <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d сек.</string>
@@ -385,7 +384,7 @@ limitations under the License.
     <string name="voice_seconds_two">2 секунди</string>
     <string name="voice_seconds_zero">0 секунд</string>
     <string name="voice_speed_kilometers_per_hour_few">%1$.1f кілометри на годину</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f км./год.</string>
+    <string name="voice_speed_kilometers_per_hour_many">%1$.1f км/год</string>
     <string name="voice_speed_kilometers_per_hour_one">1 кілометр на годину</string>
     <string name="voice_speed_kilometers_per_hour_other">%1$.1f кілометра на годину</string>
     <string name="voice_speed_kilometers_per_hour_two">2 кілометри на годину</string>
@@ -462,4 +461,145 @@ limitations under the License.
     <string name="waypoint_type_waterfall">водоспад</string>
     <string name="waypoint_type_water_fountain">фонтан</string>
     <string name="waypoint_type_waypoint">точка маршруту</string>
+    <string name="sensor_state_heart_rate_avg">Сер. ритм серця</string>
+    <string name="sensor_state_heart_rate_max">Макс. ритм серця</string>
+    <string name="sensor_state_power_avg">Сер. потужність</string>
+    <string name="settings_night_mode_option_day">День</string>
+    <string name="settings_night_mode_option_night">Ніч</string>
+    <string name="settings_error_initial_values_restored">Вибачте, але сталася помилка. Всі налаштування було скинуто до стандартних значень.</string>
+    <string name="settings_sensor_connecting">Під\'єднано до %1$s</string>
+    <string name="settings_sensor_disconnected">Відключено від %1$s</string>
+    <string name="stats_split_interval">Розділити на</string>
+    <string name="track_recording_notification_accuracy">Точність місцеположення: %1$s</string>
+    <string name="track_detail_intervals_tab">Інтервали</string>
+    <string name="value_pace_mile">%1$d:%2$02d хв/милі</string>
+    <string name="voice_speed_lap">Швидкість кола %1$s</string>
+    <string name="voice_pace_lap">Час кола %1$s</string>
+    <string name="track_detail_record_success">Зараз записується новий трек</string>
+    <string name="track_detail_resume_success">Відновлюємо запис треку</string>
+    <string name="interval_list_empty_message">Ще немає інтервалу</string>
+    <string name="value_float_kilometer_hour">%1$.2f км/г</string>
+    <string name="value_float_mile_hour">%1$.2f миль/г</string>
+    <string name="share_image_body">Думаю, вам може бути цікаво це зображення.</string>
+    <string name="hold_to_pause">Затисніть</string>
+    <string name="instant_export_enabled_summary">Експорт треку в сховище після завершення запису</string>
+    <string name="instant_export_enabled_title">Миттєвий експорт після тренування</string>
+    <string name="help_gps_troubleshooting_content"> Що ви можете зробити:
+\na) перевірте, чи ввімкнено GPS,
+\nb) покращити прийом GPS (наприклад, вийти на вулицю),
+\nc) перевірити за допомогою додатку <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> та
+\nd) вимкнути енергозбереження.
+\n
+\nЯкщо це не допомогло - будь ласка, повідомте про помилку. </string>
+    <string name="about_preference_title">Про Open Tracks</string>
+    <string name="about_url">Сторінка проекта: <a href="%1$s">%1$s</a></string>
+    <string name="about_version_name">Версія: %1$s</string>
+    <string name="about_version_code">Код версії: %1$d</string>
+    <string name="about_libraries">Бібліотеки</string>
+    <string name="help_feature_title">OpenTracks має такі особливості:</string>
+    <string name="help_storage_pictures_title">Як OpenTracks зберігає зображення зроблені за допомогою маркувань\?</string>
+    <string name="help_storage_pictures_content">Вони зберігаються у внутрішній пам\'яті додатку (тобто, доступні тільки для OpenTracks).</string>
+    <string name="help_data_google_play_services_title">Чи потребує OpenTracks використання Google Play Service\?</string>
+    <string name="help_track_map_title">Як показати трек на мапі\?</string>
+    <string name="help_data_storage_title">Як OpenTracks зберігає дані датчиків\?</string>
+    <string name="help_recording_title">Як OpenTracks записує дані\?</string>
+    <string name="help_track_export_title">Як я можу експортувати або обмінятися записаним треком\?</string>
+    <string name="settings_night_mode_title">Тема додатка</string>
+    <string name="help_gps_troubleshooting_title">OpenTracks не записує моє місцеположення\?</string>
+    <string name="help_support_title">Як я можу підтримати OpenTracks\?</string>
+    <string name="open_track_using_dashboard">Відкрити за допомогою OpenTracks-Dashboard</string>
+    <string name="open_track_as_KMZ">Відкрити як KMZ</string>
+    <string name="open_track_as_GPX">Відкрити як GPX</string>
+    <string name="open_track_as_trackfileformat">Відкрити яка %1$s</string>
+    <string name="activity_type_escooter">електро-байк</string>
+    <string name="settings_sensor_wheel_circumference">Окружність колеса (мм)</string>
+    <string name="description_elevation_loss">Втрата висоти: %1$d м (%2$d фут.)</string>
+    <string name="export_progress_summary_new_msg">Нові треки експортовано</string>
+    <string name="export_progress_summary_overwrite_msg">Треки перезаписано</string>
+    <string name="export_progress_summary_skip_msg">Треки пропущено</string>
+    <string name="export_progress_summary_errors_msg">Помилки</string>
+    <string name="generic_open_track">Відкрити Трек</string>
+    <string name="import_file_imported">Файл %1$s імпортовано</string>
+    <string name="import_prevent_reimport">Ви встановили заборону на повторне імпортування треку</string>
+    <string name="import_progress_summary_ok_msg">Файли імпортовано</string>
+    <string name="import_progress_summary_exists_msg">Вже існує</string>
+    <string name="import_progress_summary_errors_msg">Помилки</string>
+    <string name="export_with_photos">з фото</string>
+    <string name="export_without_photos">без</string>
+    <string name="export_track_already_exists_msg">Трек %1$s вже існує в цільовій директорії.</string>
+    <string name="export_all_do_it_for_all">робити це для усіх конфліктів</string>
+    <string name="export_track_errors">Треки не експортовано</string>
+    <string name="generic_overwrite">Перезаписати</string>
+    <string name="generic_skip">Пропустити</string>
+    <string name="generic_show_errors">Показати помилки</string>
+    <string name="generic_completed">Завершено</string>
+    <string name="generic_click_twice_cancel">Натисніть ще раз щоб відмінити</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="gps_disabled_msg">GPS вимкнено</string>
+    <string name="import_thread_interrupted">Поток перервано</string>
+    <string name="import_unsupported_format">Формат файлу не підтримується</string>
+    <string name="import_parser_error">Помилка парсера: %1$s</string>
+    <string name="import_no_kml_file_found">Файл doc.kml не знайдено в KMZ</string>
+    <string name="import_error_list_dialog_title">Файли не імпортовано</string>
+    <string name="import_error_info">%1$s:%2$s</string>
+    <string name="marker_add_photo_canceled">Скасовано, фото-макркування не додано</string>
+    <string name="menu_insert_gallery_img">Додати зображення з галереї</string>
+    <string name="menu_resume_track">Відновити трек</string>
+    <string name="permission_gps_failed">OpenTracks вимагає дозволу на використання GPS.</string>
+    <string name="settings_night_mode_option_system">Системна</string>
+    <string name="about_description"><i>Open Tracks</i> це спортивний GPS трекер який поважає вашу приватність.</string>
+    <string name="about_history">Open Tracks це відгалуження додатку <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (закритого в 2016р).</string>
+    <string name="help_feature_content">* запис GPS-шляху
+\n* використання датчика ритму серця (тільки Bluetooth LE)
+\n* голосовий путівник (за часом або дистацією)
+\n* створення маркувань (включаючи фотознімки)
+\n* повноцінний автономний режим
+\n* відображення щляхів на мапі (див. нижче)</string>
+    <string name="help_track_export_content"> Треки можна експортувати з налаштувань як KMZ, KML або GPX, KMZ/KML всі дані або тільки розташування GPX. Доріжки, опубліковані за допомогою <i>значка поширення</i>, експортуються як KMZ. </string>
+    <string name="help_recording_content">OpenTracks використовує датчик GPS пристрою для безперервного запису місця розташування. Якщо пристрій GPS повідомляє неточні дані (наприклад, місце розташування, швидкість, висоту), OpenTracks нічого не може з цим вдіяти.</string>
+    <string name="help_data_storage_content"> Дані датчика зиписуються в кожному зареєстрованому місці. Що стосується датчика частоти пульсу, це означає, що для кожного місця розташування зберігається тільки <i>одне</i> вимірювання частоти пульсу. Якщо ви зупинилися або перебуваєте в приміщенні, дані датчика не будуть записані (але будуть відображатися). </string>
+    <string name="help_support_content"> Ви можете:
+\nа) поширювати інформацію про OpenTracks,
+\nb) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">пропонувати функції</a>,
+\nc) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">повідомляти про помилки</a>,
+\nd) допомогnb в розробці програмного забезпечення,
+\ne) купувати в <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\nf) зробити фінаносовий внесок, та
+\ng) робити все, що, на вашу думку, допомагає OpenTracks. </string>
+    <string name="app_not_installed_show_on_map">Будь ласка, встановіть додаток який підтримує відображення картографічних даних.</string>
+    <string name="description_default_speed_or_pace">За активністю</string>
+    <string name="export_error_post_workout">Не вдалося виконати експорт після тренування, перевірте каталог експорту.</string>
+    <string name="aggregated_stats_empty_message">Запишіть свій перший трек, щоб побачити загальну статистику</string>
+    <string name="gps_fixed_and_ready">GPS готовий до роботи</string>
+    <string name="sensor_state_cadence_avg">Сер. каданс</string>
+    <string name="import_unable_to_import_file">Неможливо імпортувати файл: %1$s</string>
+    <string name="sensor_state_cadence_max">Макс. каданс</string>
+    <string name="sensor_could_not_scan">Не вдалося знайти Bluetooth пристрій (помилка %1$i).</string>
+    <string name="bluetooth_disabled">Увімкніть Bluetooth.</string>
+    <string name="settings_default_trackfileformat">Формат файла експорту/обміну</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">Під час запису показувати статистику без розблокування пристрою.</string>
+    <string name="stats_loss">Втрачено</string>
+    <string name="stats_intervals">Інтервали</string>
+    <string name="value_pace_kilometer">%1$d:%2$02d хв/км</string>
+    <string name="share_image_subject">Я хотів би поділитися з вами зображенням</string>
+    <string name="toast_message_instant_track_was_exported">Останній трек експортовано</string>
+    <string name="settings_default_export_uri_title">Каталог експорту треків</string>
+    <string name="help_track_map_content"> Натисніть іконку мапи.
+\na) (оновлення в реальному часі) Встановіть додаток <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Він дозволить подивитися мапу онлайн й оффлайн завдяки <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\nНасправді, OSMDashboard є окремим додатком який може отримати тимчасовий доступ до даних треку які будуть відобрежені на мапі.
+\nb) Через цвичайний картографічний додаток (на приклад, <a href="http://osmand.net/">OsmAnd</a> та <a href="https://maps.me/">MAPS.ME</a>). Ці додатки повинні підтримувати формати файлів треку KMZ (тільки місцеположення та мітки часу). Фактично, додаток повинен підтримувати функцію <i>ACTION_VIEW</i> із MIME <i>application/vnd.google-earth.kmz</i>. </string>
+    <string name="settings_prevent_reimport_tracks_title">Заборонити повторний імпорт треків</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Завершено з однією помилкою</item>
+        <item quantity="few">Завершено з %1$d помилками</item>
+        <item quantity="many">Завершено з %1$d помилками</item>
+        <item quantity="other">Завершено з %1$d помилками</item>
+    </plurals>
+    <string name="sensor_not_known">Датчик %1$s не роспізнано. Перевірте налаштування.</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Показувати статистику на заблокованому єкрані</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">Під час запису тримати екран включеним.</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">Єкран завжди включено</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">Повний екран</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Під час запису бути в повноекранному режимі.</string>
+    <string name="hold_to_stop">Затисніть щоб зупинити</string>
 </resources>
