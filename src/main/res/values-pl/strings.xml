@@ -30,7 +30,7 @@ limitations under the License.
     <string name="activity_type_driving_bus">prowadzenie autobusu</string>
     <string name="activity_type_driving_car">prowadzenie samochodu</string>
     <string name="activity_type_ferry">prom</string>
-    <string name="activity_type_frisbee">frisbee</string>
+    <string name="activity_type_frisbee">fisbee</string>
     <string name="activity_type_gliding">szybownictwo</string>
     <string name="activity_type_hang_gliding">lotniarstwo</string>
     <string name="activity_type_helicopter">helikopter</string>
@@ -75,9 +75,9 @@ limitations under the License.
     <string name="activity_type_trail_hiking">turystyka piesza po szlakach</string>
     <string name="activity_type_trail_running">bieganie przełajowe</string>
     <string name="activity_type_train">pociąg</string>
-    <string name="activity_type_ultimate_frisbee">ultimate frisbee</string>
+    <string name="activity_type_ultimate_frisbee">wyczynowe frisbee</string>
     <string name="activity_type_unknown">nieznany</string>
-    <string name="activity_type_wakeboarding">wakeboarding</string>
+    <string name="activity_type_wakeboarding">wakeboardzie</string>
     <string name="activity_type_walking">spacer</string>
     <string name="activity_type_water_skiing">narciarstwo wodne</string>
     <string name="activity_type_wind_surfing">windsurfing</string>
@@ -116,7 +116,7 @@ limitations under the License.
     <string name="description_total_distance">Całkowity dystans: %1$.2f km (mil: %2$.1f)</string>
     <string name="description_total_time">Łączny czas: %1$s</string>
     <string name="description_track_point">Punkt</string>
-    <string name="description_track_segment">Segment</string>
+    <string name="description_track_segment">Segmenty</string>
     <!-- Export -->
     <string name="export_all_option">Wszystko jako pliki %1$s</string>
     <string name="export_all_title">Eksport do pamięci zewnętrznej</string>
@@ -273,16 +273,17 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Czujnik Bluetooth</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Szerokość/długość geo.</string>
+    <string name="settings_stats_coordinate">Długości i szerokości geograficznej</string>
     <string name="settings_stats_rate_title">Preferowana wartość</string>
     <string name="settings_stats_units_imperial">Imperialne (mile, stopy)</string>
     <string name="settings_stats_units_metric">Metryczne (km, m)</string>
     <string name="settings_stats_units_title">Preferowane jednostki</string>
     <!-- Share Track -->
     <string name="share_track_share_file">Udostępnij plik z trasą</string>
-    <string name="share_track_share_file_body">Myślę, że ta trasa może Cię zainteresować.\n\nAby wyświetlić tę trasę, skorzystaj z Google Earth lub innego oprogramowania
-    do obsługi map.\n\n%1$s</string>
-    <string name="share_track_subject">Chcę udostępnić Ci trasę.</string>
+    <string name="share_track_share_file_body">Myślę, że ta trasa może Cię zainteresować.
+\n
+\n%1$s</string>
+    <string name="share_track_subject">Chciałbym udostępnić Ci utwór</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Średnie tempo ruchu</string>
     <string name="stats_average_moving_speed">Średnia prędkość ruchu</string>
@@ -410,7 +411,7 @@ limitations under the License.
     <string name="voice_total_distance_miles_other">całkowita odległość: %1$.2f mi</string>
     <string name="voice_total_distance_miles_two">całkowita odległość: 2 mile</string>
     <string name="voice_total_distance_miles_zero">całkowita odległość: 0 mil</string>
-    <string name="voice_total_distance_zero">Zerowa odległość w Moich trasach</string>
+    <string name="voice_total_distance_zero">Całkowity dystans OpenTracks zero.</string>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankomat</string>
     <string name="waypoint_type_bank">bank</string>
@@ -473,14 +474,14 @@ limitations under the License.
     <string name="open_track_as_GPX">Otwórz jako GPX</string>
     <string name="open_track_as_trackfileformat">Otwórz jako %1$s</string>
     <string name="about_description"><i>OpenTracks</i> to aplikacja do śledzenia aktywności sportowej która całkowicie respektuje Twoją prywatność.</string>
-    <string name="hold_to_stop">Przytrzymaj aby zakończyć nagrywanie</string>
+    <string name="hold_to_stop">Przytrzymaj, aby zatrzymać</string>
     <string name="instant_export_enabled_title">Automatyczny eksport po ćwiczeniu</string>
     <string name="share_image_body">Myślę że możesz być zainteresowany tym obrazem.</string>
     <string name="share_image_subject">Chcę udostępnić Ci obrazek</string>
     <string name="toast_message_instant_track_was_exported">Ostatni ślad wyeksportowany</string>
     <string name="about_url">Strona projektu <a href="%1$s">%1$s</a></string>
     <string name="about_preference_title">O OpenTracks</string>
-    <string name="hold_to_pause">Przytrzymaj aby zatrzymać nagrywanie</string>
+    <string name="hold_to_pause">Przytrzymaj, aby wstrzymać</string>
     <string name="about_history">OpenTracks to fork <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (projekt przerwany w 2016).</string>
     <string name="activity_type_escooter">hulajnoga elektryczna</string>
     <string name="help_feature_content">* tworzy ślady GPS
@@ -491,4 +492,55 @@ limitations under the License.
 \n * pokazuje ślady na mapie (zobacz poniżej)</string>
     <string name="settings_default_export_uri_title">Katalog eksportu śladów</string>
     <string name="instant_export_enabled_summary">Eksportuj ślad do pamięci po zakończeniu nagrywania</string>
+    <string name="description_elevation_loss">Strata wysokości: %1$d m (%2$d ft)</string>
+    <string name="export_without_photos">bez zdjęć</string>
+    <string name="export_with_photos">wraz z fotografiami</string>
+    <string name="description_default_speed_or_pace">Według rodzaju działalności</string>
+    <string name="export_track_errors">Utwory nie eksportowane</string>
+    <string name="gps_disabled_msg">GPS wyłączony</string>
+    <string name="gps_fixed_and_ready">GPS stały i gotowy</string>
+    <string name="help_gps_troubleshooting_content"> Co możesz zrobić:
+\n a) sprawdzić, czy GPS jest włączony,
+\n b) poprawić odbiór GPS (np. wyjść na zewnątrz),
+\n c) sprawdzić za pomocą aplikacji <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, oraz
+\n d) wyłączyć oszczędzanie energii.
+\n
+\n Jeśli wszystko nie pomoże, zgłoś błąd. </string>
+    <string name="help_storage_pictures_title">Jak OpenTracks przechowuje zdjęcia, które zostały zrobione jako markery\?</string>
+    <string name="help_storage_pictures_content">Są one przechowywane w pamięci wewnętrznej aplikacji (tzn. są dostępne tylko w OpenTracks).</string>
+    <string name="help_track_export_title">Jak mogę eksportować/udostępniać nagrane ścieżki\?</string>
+    <string name="help_track_export_content"> Ślady można wyeksportować z ustawień jako KMZ, KML lub GPX. KMZ/KML wszystkie dane; GPX tylko lokalizacje. Ścieżki udostępniane za pomocą ikony <i>share</i> są udostępniane jako KMZ. </string>
+    <string name="help_support_title">Jak mogę wesprzeć OpenTracks\?</string>
+    <string name="help_gps_troubleshooting_title">OpenTracks nie zapisuje lokalizacji\?</string>
+    <string name="help_data_storage_content"> Dane czujnika są przechowywane dla każdej zarejestrowanej lokalizacji. W przypadku czujnika tętna oznacza to, że dla każdej lokalizacji zapisywany jest tylko <i>jeden</i> pomiar tętna. Jeśli stoisz nieruchomo lub znajdujesz się w pomieszczeniu, dane czujnika nie zostaną zarejestrowane (ale będą wyświetlane). </string>
+    <string name="app_not_installed_show_on_map">Proszę zainstalować aplikację, która obsługuje prezentację danych mapy.</string>
+    <string name="help_track_map_content"> Użyj małej ikony mapy.
+\n a) (aktualizacje na żywo) Zainstaluj <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Zapewnia on mapy online lub offline przez <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n Właściwie OSMDashboard jest oddzielną aplikacją, która tylko może uzyskać dostęp (tymczasowo) do danych ścieżki (ścieżek), które mają być wyświetlane.
+\n b) Przez zwykłą aplikację mapową (np. <a href="http://osmand.net/">OsmAnd</a> i <a href="https://maps.me/">MAPS.ME</a>). Aplikacje te muszą obsługiwać format plików KMZ (tylko lokalizacje i znaczniki czasu). W rzeczywistości, aplikacja musi obsługiwać <i>ACTION_VIEW</i> z MIME <i>application/vnd.google-earth.kmz</i>. </string>
+    <string name="export_track_already_exists_msg">Ścieżka %1$s już istnieje w katalogu docelowym.</string>
+    <string name="export_error_post_workout">Eksport po treningu nie powiódł się, proszę sprawdzić katalog eksportu.</string>
+    <string name="help_support_content"> Możesz:
+\n a) rozpowszechniać informacje o OpenTracks,
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">proponować funkcje</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">zgłaszać błędy</a>,
+\n d) pomagać w rozwoju oprogramowania,
+\n e) kupować w <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\n f) przekazać darowiznę, oraz
+\n g) rób wszystko co uważasz za pomocne dla OpenTracks. </string>
+    <string name="export_progress_summary_overwrite_msg">Utwory nadpisane</string>
+    <string name="generic_separator_done_total">/</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Zakończone z jednym błędzie</item>
+        <item quantity="few">Ukończone z kilkoma błędzie</item>
+        <item quantity="many">Zakończono z błędami %1$d</item>
+        <item quantity="other">Zakończono z błędami %1$d</item>
+    </plurals>
+    <string name="export_progress_summary_new_msg">Wyeksportowane nowe utwory</string>
+    <string name="export_progress_summary_skip_msg">Utwory pominięte</string>
+    <string name="export_progress_summary_errors_msg">Błędy</string>
+    <string name="generic_overwrite">Zastąp</string>
+    <string name="generic_show_errors">Pokaż Błędy</string>
+    <string name="generic_completed">Zakończone</string>
+    <string name="generic_click_twice_cancel">Kliknij ponownie, aby anulować</string>
 </resources>
