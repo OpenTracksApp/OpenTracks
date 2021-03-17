@@ -16,9 +16,9 @@ limitations under the License.
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/track_list_search"
-        android:title="@string/menu_search"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:id="@+id/track_list_aggregated_stats"
+        android:icon="@drawable/ic_statistics_24dp"
+        android:title="@string/menu_aggregated_statistics"
         app:showAsAction="ifRoom" />
     <!-- Icon and title is overwritten by TrackListActivity -->
     <!-- Hide icon as workaround for https://github.com/OpenTracksApp/OpenTracks/issues/200 -->
@@ -29,9 +29,9 @@ limitations under the License.
         android:visible="false"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/track_list_aggregated_stats"
-        android:icon="@drawable/ic_statistics_24dp"
-        android:title="@string/menu_aggregated_statistics"
+        android:id="@+id/track_list_search"
+        android:title="@string/menu_search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/track_list_markers"
