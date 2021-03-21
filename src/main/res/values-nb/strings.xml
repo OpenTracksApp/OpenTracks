@@ -603,4 +603,7 @@ limitations under the License.
     <string name="sensor_state_heart_rate_max">Maks puls</string>
     <string name="sensor_state_power_avg">Gjennomsnittlig effekt</string>
     <string name="settings_sensor_wheel_circumference">Hjulomkrets (mm)</string>
+    <string name="track_distance_notification">Distanse: %1$s</string>
+    <string name="track_speed_notification">Hastighet: %1$s</string>
+    <string name="track_pace_notification">Tempo: %1$s</string>
 </resources>
