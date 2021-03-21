@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -25,7 +26,10 @@ public class TrackRecordingServiceNotificationManagerTest {
     private final Context context = ApplicationProvider.getApplicationContext();
 
     @Mock
-    private TrackPoint locationMock;
+    private TrackPoint trackPointMock;
+
+    @Mock
+    private TrackStatistics trackStatisticsMock;
 
     @Mock
     private NotificationCompat.Builder notificationCompatBuilder;
@@ -35,18 +39,20 @@ public class TrackRecordingServiceNotificationManagerTest {
 
     @Test
     public void updateLocation_triggersAlertOnlyOnFirstInaccurateLocation() {
-        when(locationMock.hasAccuracy()).thenReturn(true);
-        when(locationMock.getAccuracy()).thenReturn(999f);
+        when(trackPointMock.hasAccuracy()).thenReturn(true);
+        when(trackPointMock.getAccuracy()).thenReturn(999f);
+        when(trackStatisticsMock.getTotalDistance()).thenReturn(0d);
         when(notificationCompatBuilder.setContentText(anyString())).thenReturn(notificationCompatBuilder);
         when(notificationCompatBuilder.setOnlyAlertOnce(anyBoolean())).thenReturn(notificationCompatBuilder);
 
         TrackRecordingServiceNotificationManager subject = new TrackRecordingServiceNotificationManager(notificationManager, notificationCompatBuilder);
+        subject.setMetricUnits(true);
 
         // when
-        subject.updateTrackPoint(context, locationMock, 100);
-        subject.updateTrackPoint(context, locationMock, 100);
-        subject.updateTrackPoint(context, locationMock, 1000);
-        subject.updateTrackPoint(context, locationMock, 100);
+        subject.updateTrackPoint(context, trackStatisticsMock, trackPointMock, 100);
+        subject.updateTrackPoint(context, trackStatisticsMock, trackPointMock, 100);
+        subject.updateTrackPoint(context, trackStatisticsMock, trackPointMock, 1000);
+        subject.updateTrackPoint(context, trackStatisticsMock, trackPointMock, 100);
 
         // then
         verify(notificationCompatBuilder, times(6)).setOnlyAlertOnce(true);
