@@ -602,4 +602,7 @@ limitations under the License.
     <string name="settings_recording_fullscreen_on_while_recording_title">Повний екран</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Під час запису бути в повноекранному режимі.</string>
     <string name="hold_to_stop">Затисніть щоб зупинити</string>
+    <string name="track_distance_notification">Відстань: %1$s</string>
+    <string name="track_speed_notification">Швидкість: %1$s</string>
+    <string name="track_pace_notification">Темп: %1$s</string>
 </resources>
