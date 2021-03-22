@@ -58,14 +58,13 @@ Sensordaten werden pro aufgezeichneter Stelle gespeichert.
 Bezogen auf einen Herzfrequenzsensor bedeutet dies, dass nur <i>eine</i>Herzfrequenzmessung pro Ort gespeichert wird.
 Wenn Du still stehst oder du dich in geschlossenen Räumen aufhälst, werden keine Sensordaten aufgezeichnet (aber angezeigt).</string>
     <string name="help_gps_troubleshooting_title">OpenTracks zeichnet keine Standorte auf?</string>
-    <string name="help_gps_troubleshooting_content">
-Was Du tun kannst:\n
-a) prüfen, ob GPS aktiviert ist,\n
-b) den GPS-Empfang verbessern (z.B. ins Freie gehen),\n
-c) prüfen, ob mit <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app, und\n
-d) Energiesparen deaktivieren.\n
+    <string name="help_gps_troubleshooting_content"> Was Du tun kannst:
+\n a) prüfen, ob GPS aktiviert ist,
+\n b) den GPS-Empfang verbessern (z.B. ins Freie gehen),
+\n c) mit der <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>-App das GPS testen, und
+\n d) Energiesparen deaktivieren.
 \n
-Wenn alles nicht hilft, melde bitte einen Fehler.</string>
+\n Wenn das alles nicht hilft, melde bitte einen Fehler. </string>
     <string name="help_support_title">Wie kann ich OpenTracks unterstützen?</string>
     <string name="help_support_content">
 Du kannst:\n
@@ -568,4 +567,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="export_track_errors">Tracks werden nicht exportiert</string>
     <string name="settings_default_export_uri_title">Track Export Verzeichnis</string>
     <string name="import_progress_summary_ok_msg">Dateien importiert</string>
+    <string name="export_all_do_it_for_all">für alle Konflikte anwenden</string>
+    <string name="export_progress_summary_new_msg">Neue Tracks exportiert</string>
 </resources>
