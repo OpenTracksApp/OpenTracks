@@ -608,4 +608,7 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="import_file_imported">File %1$s inportatutako</string>
     <string name="import_error_list_dialog_title">Fitxategiak ez inportatutako</string>
     <string name="gps_fixed_and_ready">GPS konpondu eta prest</string>
+    <string name="track_distance_notification">Distantzia: %1$s</string>
+    <string name="track_speed_notification">Abiadura: %1$s</string>
+    <string name="track_pace_notification">Erritmoa: %1$s</string>
 </resources>
