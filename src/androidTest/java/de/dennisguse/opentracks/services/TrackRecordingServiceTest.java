@@ -38,6 +38,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.TemporalUnit;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -151,31 +154,30 @@ public class TrackRecordingServiceTest {
         // then
         // Test if we start in no-recording mode by default.
         assertFalse(service.isRecording());
-        assertNull(service.getRecordingTrackId());
     }
 
     @MediumTest
     @Test
     public void testRecording_oldTracks() throws TimeoutException {
         // given
-        createDummyTrack(trackId, false);
+        createDummyTrack(trackId);
 
         // when
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
 
         // then
         assertFalse(service.isRecording());
-        assertNull(service.getRecordingTrackId());
     }
 
     @MediumTest
     @Test
     public void testRecording_serviceRestart_whileRecording() throws TimeoutException {
         // given
-        createDummyTrack(trackId, true);
+        createDummyTrack(trackId);
 
         //when
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        service.resumeTrack(trackId);
 
         // then
         assertTrue(service.isRecording());
@@ -233,7 +235,6 @@ public class TrackRecordingServiceTest {
 
         // then
         assertTrue(service.isRecording());
-        assertEquals(trackId, service.getRecordingTrackId());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         assertEquals(3, trackPoints.size());
@@ -259,7 +260,6 @@ public class TrackRecordingServiceTest {
 
         // then
         assertTrue(service.isRecording());
-        assertEquals(trackId, service.getRecordingTrackId());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         assertEquals(4, trackPoints.size());
@@ -285,7 +285,6 @@ public class TrackRecordingServiceTest {
 
         // then
         assertFalse(service.isRecording());
-        assertNull(service.getRecordingTrackId());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         assertEquals(2, trackPoints.size());
@@ -293,41 +292,20 @@ public class TrackRecordingServiceTest {
         assertEquals(TrackPoint.Type.SEGMENT_END_MANUAL, trackPoints.get(1).getType());
     }
 
-    @Ignore("Sometimes fails on CI.")
-    @MediumTest
-    @Test
-    public void testRecording_orphanedRecordingTrack() throws TimeoutException {
-        // given
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
-
-        // when
-        // Just set recording track to a bogus value.
-        // Make sure that the service will not start recording and will clear the bogus track.
-        PreferencesUtils.setLong(sharedPreferences, context, R.string.recording_track_id_key, 123L);
-
-        // then
-        assertFalse(service.isRecording());
-        assertNull(service.getRecordingTrackId());
-    }
-
     @MediumTest
     @Test
     public void testStartNewTrack_alreadyRecording() throws TimeoutException {
         // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
-        service.startNewTrack();
+        Track.Id trackId = service.startNewTrack();
         assertTrue(service.isRecording());
-
-        Track.Id trackId = service.getRecordingTrackId();
 
         // when
         Track.Id newTrackId = service.startNewTrack();
 
         // then
+        assertNotNull(trackId);
         assertNull(newTrackId);
-
-        assertEquals(trackId, PreferencesUtils.getRecordingTrackId(sharedPreferences, context));
-        assertEquals(trackId, service.getRecordingTrackId());
     }
 
     @MediumTest
@@ -342,8 +320,7 @@ public class TrackRecordingServiceTest {
         service.endCurrentTrack();
 
         // then
-        assertFalse(PreferencesUtils.isRecording(sharedPreferences, context));
-        assertNull(service.getRecordingTrackId());
+        assertFalse(service.isRecording());
     }
 
     @MediumTest
@@ -365,10 +342,9 @@ public class TrackRecordingServiceTest {
     public void testInsertWaypointMarker_validWaypoint() throws TimeoutException, InterruptedException {
         // given
         TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
-        service.startNewTrack();
+        Track.Id trackId = service.startNewTrack();
         assertTrue(service.isRecording());
         newTrackPoint(service);
-        Track.Id trackId = service.getRecordingTrackId();
 
         // when
         Marker.Id markerId = service.insertMarker(null, null, null, null);
@@ -385,22 +361,23 @@ public class TrackRecordingServiceTest {
         service.endCurrentTrack();
     }
 
-    private void addTrack(Track track, boolean isRecording) {
+    private void addTrack(Track track) {
         assertNotNull(track.getId());
         contentProviderUtils.insertTrack(track);
         assertEquals(track.getId(), contentProviderUtils.getTrack(track.getId()).getId());
-        PreferencesUtils.setLong(sharedPreferences, context, R.string.recording_track_id_key, isRecording ? track.getId().getId() : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
-        PreferencesUtils.setBoolean(sharedPreferences, context, R.string.recording_track_paused_key, !isRecording);
     }
 
     // NOTE: Do not use to create a track that is currently recording.
-    private void createDummyTrack(Track.Id id, boolean isRecording) {
+    private void createDummyTrack(Track.Id id) {
         Track dummyTrack = new Track();
         dummyTrack.setId(id);
         dummyTrack.setName("Dummy Track");
         TrackStatistics trackStatistics = new TrackStatistics();
+        Instant now = Instant.now();
+        trackStatistics.setStartTime(now.minusSeconds(5L));
+        trackStatistics.setStopTime(now.minusSeconds(1L));
         dummyTrack.setTrackStatistics(trackStatistics);
-        addTrack(dummyTrack, isRecording);
+        addTrack(dummyTrack);
     }
 
     private static void newTrackPoint(TrackRecordingServiceInterface trackRecordingService) throws InterruptedException {

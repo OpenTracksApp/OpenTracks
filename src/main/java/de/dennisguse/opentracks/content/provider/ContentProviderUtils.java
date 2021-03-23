@@ -362,9 +362,9 @@ public class ContentProviderUtils {
     }
 
     /**
-     * @return -1 if not able to get the next marker number.
+     * @return null if not able to get the next marker number.
      */
-    public int getNextMarkerNumber(@NonNull Track.Id trackId) {
+    public Integer getNextMarkerNumber(@NonNull Track.Id trackId) {
         String[] projection = {MarkerColumns._ID};
         String selection = MarkerColumns.TRACKID + "=?";
         String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
@@ -373,7 +373,7 @@ public class ContentProviderUtils {
                 return cursor.getCount();
             }
         }
-        return -1;
+        return null;
     }
 
     public Marker getMarker(@NonNull Marker.Id markerId) {

@@ -27,7 +27,6 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.preference.PreferenceManager;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
 /**
@@ -45,21 +44,6 @@ public class PreferencesUtils {
     @Deprecated //Should only be used to get a sharedPreference for more than one interaction!
     public static SharedPreferences getSharedPreferences(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context);
-    }
-
-    @Deprecated
-    //NOTE: is at the moment still used to determine if a track is currently recorded; better ask the service directly.
-    //NOTE: This was also used to recover from a service restart, but this data should not be exposed to the whole application.
-    public static final long RECORDING_TRACK_ID_DEFAULT = -1L;
-
-    @Deprecated //Use the TrackRecordingService
-    public static Track.Id getRecordingTrackId(Context context, SharedPreferences sharedPreferences) {
-        return new Track.Id(sharedPreferences.getLong(getKey(context, R.string.recording_track_id_key), RECORDING_TRACK_ID_DEFAULT));
-    }
-
-    @Deprecated //Use the TrackRecordingService
-    public static Track.Id getRecordingTrackId(SharedPreferences sharedPreferences, Context context) {
-        return getRecordingTrackId(context, sharedPreferences);
     }
 
     public static String getDefaultActivity(SharedPreferences sharedPreferences, Context context) {
@@ -95,14 +79,6 @@ public class PreferencesUtils {
         return sharedPreferences.getBoolean(getKey(context, keyId), defaultValue);
     }
 
-    //TODO Don't use; this function is only to be used TrackRecordingService and will be removed.
-    @VisibleForTesting
-    public static void setBoolean(SharedPreferences sharedPreferences, Context context, int keyId, boolean value) {
-        Editor editor = sharedPreferences.edit();
-        editor.putBoolean(getKey(context, keyId), value);
-        editor.apply();
-    }
-
     private static int getInt(SharedPreferences sharedPreferences, Context context, int keyId, int defaultValue) {
         try {
             return sharedPreferences.getInt(getKey(context, keyId), defaultValue);
@@ -117,22 +93,6 @@ public class PreferencesUtils {
         } catch (NumberFormatException e) {
             return defaultValue;
         }
-    }
-
-    @VisibleForTesting
-    public static void setInt(SharedPreferences sharedPreferences, Context context, int keyId, int value) {
-        Editor editor = sharedPreferences.edit();
-        editor.putInt(getKey(context, keyId), value);
-        editor.apply();
-    }
-
-    //TODO Don't use; this function is only to be used TrackRecordingService and will be removed.
-    @Deprecated
-    @VisibleForTesting
-    public static void setLong(SharedPreferences sharedPreferences, Context context, int keyId, long value) {
-        Editor editor = sharedPreferences.edit();
-        editor.putLong(getKey(context, keyId), value);
-        editor.apply();
     }
 
     public static String getString(SharedPreferences sharedPreferences, Context context, int keyId, String defaultValue) {
@@ -159,22 +119,6 @@ public class PreferencesUtils {
         }
 
         return currentStatsRate.equals(context.getString(R.string.stats_rate_speed));
-    }
-
-    @Deprecated //Use TrackRecordingService
-    public static boolean isRecordingTrackPaused(SharedPreferences sharedPreferences, Context context) {
-        return getBoolean(sharedPreferences, context, R.string.recording_track_paused_key, isRecordingTrackPausedDefault(context));
-    }
-
-    @Deprecated //Use TrackRecordingService
-    public static boolean isRecordingTrackPausedDefault(Context context) {
-        return context.getResources().getBoolean(R.bool.recording_track_paused_default);
-    }
-
-    @Deprecated //Use TrackRecordingService
-    public static void defaultRecordingTrackPaused(SharedPreferences sharedPreferences, Context context) {
-        final boolean RECORDING_TRACK_PAUSED = context.getResources().getBoolean(R.bool.recording_track_paused_default);
-        setBoolean(sharedPreferences, context, R.string.recording_track_paused_key, RECORDING_TRACK_PAUSED);
     }
 
     private static String getBluetoothSensorAddressNone(Context context) {
@@ -300,20 +244,6 @@ public class PreferencesUtils {
         final String value = getString(sharedPreferences, context, R.string.night_mode_key, defaultValue);
 
         return Integer.parseInt(value);
-    }
-
-    @Deprecated //Use TrackRecordingService
-    public static boolean isRecording(SharedPreferences sharedPreferences, Context context) {
-        return isRecording(getRecordingTrackId(context, sharedPreferences));
-    }
-
-    @Deprecated
-    //TODO Method is very misleading: it only checks if the provided trackId not the default value (i.e., not recording).
-    public static boolean isRecording(Track.Id recordingTrackId) {
-        if (recordingTrackId == null) {
-            return false;
-        }
-        return recordingTrackId.getId() != RECORDING_TRACK_ID_DEFAULT;
     }
 
     public static SharedPreferences resetPreferences(Context context, boolean readAgain) {

@@ -31,6 +31,9 @@
     <string name="post_workout_export_enabled_key" translatable="false">instantExportEnabled</string>
     <bool name="post_workout_export_enabled_default" translatable="false">false</bool>
 
+    <string name="settings_import" translatable="false">settingsImport</string>
+    <string name="settings_export" translatable="false">settingsExport</string>
+
     <string name="default_activity_key" translatable="false">defaultActivity</string>
     <string name="default_activity_default" translatable="false">@string/activity_type_unknown</string>
     <string-array name="activity_types">

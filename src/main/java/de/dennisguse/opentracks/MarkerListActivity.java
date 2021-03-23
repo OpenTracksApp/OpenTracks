@@ -18,8 +18,6 @@ package de.dennisguse.opentracks;
 
 import android.app.SearchManager;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -42,16 +40,18 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.databinding.MarkerListBinding;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
+import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
+import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * Activity to show a list of markers in a track.
  *
  * @author Leif Hendrik Wilden
  */
-public class MarkerListActivity extends AbstractActivity implements DeleteMarkerCaller {
+public class MarkerListActivity extends AbstractActivity implements DeleteMarkerCaller, TrackRecordingServiceStatus.Listener {
 
     public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -59,31 +59,26 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
     private ContentProviderUtils contentProviderUtils;
 
-    private SharedPreferences sharedPreferences;
-
     private Track.Id recordingTrackId;
     private boolean recordingTrackPaused;
-
-    private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (PreferencesUtils.isKey(MarkerListActivity.this, R.string.recording_track_id_key, key)) {
-                recordingTrackId = PreferencesUtils.getRecordingTrackId(sharedPreferences, MarkerListActivity.this);
-            }
-            if (PreferencesUtils.isKey(MarkerListActivity.this, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(sharedPreferences, MarkerListActivity.this);
-            }
-            if (key != null) {
-                runOnUiThread(MarkerListActivity.this::invalidateOptionsMenu);
-            }
-        }
-    };
     private Track track;
     private MarkerResourceCursorAdapter resourceCursorAdapter;
 
     private MarkerListBinding viewBinding;
 
     private final MarkerLoaderCallback loaderCallbacks = new MarkerLoaderCallback();
+
+    private TrackRecordingServiceConnection trackRecordingServiceConnection;
+
+    private final Runnable bindCallback = new Runnable() {
+        @Override
+        public void run() {
+            TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
+            if (service != null) {
+                service.addListener(MarkerListActivity.this);
+            }
+        }
+    };
 
     // Callback when an item is selected in the contextual action mode
     private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
@@ -112,10 +107,8 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         super.onCreate(savedInstanceState);
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
         Track.Id trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
-        recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
 
         contentProviderUtils = new ContentProviderUtils(this);
-        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         track = trackId != null ? contentProviderUtils.getTrack(trackId) : null;
 
@@ -132,18 +125,20 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         viewBinding.markerList.setOnScrollListener(scrollVisibleViews);
         viewBinding.markerList.setAdapter(resourceCursorAdapter);
         ActivityUtils.configureListViewContextualMenu(viewBinding.markerList, contextualActionModeCallback);
+
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindCallback);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
+        trackRecordingServiceConnection.startConnection(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        trackRecordingServiceConnection.bind(this);
         this.invalidateOptionsMenu();
         loadData(getIntent());
     }
@@ -151,7 +146,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     @Override
     protected void onStop() {
         super.onStop();
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        trackRecordingServiceConnection.unbind(this);
     }
 
     @Override
@@ -161,7 +156,6 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         viewBinding = null;
         resourceCursorAdapter = null;
         contentProviderUtils = null;
-        sharedPreferences = null;
     }
 
     @Override
@@ -349,5 +343,15 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         public void onLoaderReset(@NonNull Loader<Cursor> loader) {
             resourceCursorAdapter.swapCursor(null);
         }
+    }
+
+    @Override
+    public void onTrackRecordingPaused(boolean isPaused) {
+        recordingTrackPaused = isPaused;
+    }
+
+    @Override
+    public void onTrackRecordingId(Track.Id trackId) {
+        recordingTrackId = trackId;
     }
 }

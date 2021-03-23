@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Looper;
 import android.util.Log;
 
+import androidx.preference.PreferenceManager;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.GrantPermissionRule;
@@ -215,7 +216,9 @@ public class ExportImportTest {
     @Test(expected = ImportAlreadyExistsException.class)
     public void kml_with_trackdetail_and_sensordata_duplicate_trackUUID() {
         // given
-        PreferencesUtils.setBoolean(sharedPreferences, context, R.string.import_prevent_reimport_key, true);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean(context.getString(R.string.import_prevent_reimport_key), true);
+        editor.commit();
         Track track = contentProviderUtils.getTrack(trackId);
 
         TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context);
@@ -285,7 +288,9 @@ public class ExportImportTest {
     @Test(expected = ImportAlreadyExistsException.class)
     public void gpx_duplicate_trackUUID() {
         // given
-        PreferencesUtils.setBoolean(sharedPreferences, context, R.string.import_prevent_reimport_key, true);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean(context.getString(R.string.import_prevent_reimport_key), true);
+        editor.commit();
         Track track = contentProviderUtils.getTrack(trackId);
 
         TrackExporter trackExporter = TrackFileFormat.GPX.createTrackExporter(context);

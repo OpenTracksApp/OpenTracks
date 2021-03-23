@@ -606,7 +606,7 @@ public class CustomContentProviderUtilsTest {
         contentProviderUtils.insertMarker(marker3);
         contentProviderUtils.insertMarker(marker4);
 
-        assertEquals(4, contentProviderUtils.getNextMarkerNumber(trackId));
+        assertEquals(Integer.valueOf(4), contentProviderUtils.getNextMarkerNumber(trackId));
     }
 
     /**

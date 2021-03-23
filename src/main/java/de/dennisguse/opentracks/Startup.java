@@ -24,10 +24,10 @@ public class Startup extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //Include version information into stack traces.
+        // Include version information into stack traces.
         Log.i(TAG, BuildConfig.APPLICATION_ID + "; BuildType: " + BuildConfig.BUILD_TYPE + "; VersionName: " + BuildConfig.VERSION_NAME + "/" + BuildConfig.VERSION_NAME_FULL + " VersionCode: " + BuildConfig.VERSION_CODE);
 
-        //Set default values of preferences on first start.
+        // Set default values of preferences on first start.
         SharedPreferences sharedPreferences = PreferencesUtils.resetPreferences(this, false);
         if (PreferencesUtils.getString(sharedPreferences, this, R.string.stats_units_key, "").equals("")) {
             String statsUnits = getString(Locale.US.equals(Locale.getDefault()) ? R.string.stats_units_imperial : R.string.stats_units_metric);
@@ -36,13 +36,7 @@ public class Startup extends Application {
 
         ActivityUtils.applyNightMode(sharedPreferences, this);
 
-        //TODO Workaround to reset recordingTrackId on app startup as the TrackRecordingService (likely) crashed.
-        if (PreferencesUtils.isRecording(sharedPreferences, this)) {
-            Log.e(TAG, "Reset recordingTrackId; likely the TrackRecordingService crashed.");
-            PreferencesUtils.setLong(sharedPreferences, this, R.string.recording_track_id_key, PreferencesUtils.RECORDING_TRACK_ID_DEFAULT);
-        }
-
-        //In debug builds: show thread and VM warnings.
+        // In debug builds: show thread and VM warnings.
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "Enabling strict mode");
             StrictMode.enableDefaults();

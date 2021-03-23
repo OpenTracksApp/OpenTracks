@@ -15,6 +15,7 @@
  */
 package de.dennisguse.opentracks.services;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
@@ -44,7 +45,12 @@ public interface TrackRecordingServiceInterface {
 
     void resumeTrack(Track.Id trackId);
 
-    void endCurrentTrack();
+    /**
+     * End current track.
+     *
+     * @return the Track.Id of the track that is ended.
+     */
+    Track.Id endCurrentTrack();
 
     boolean isRecording();
 
@@ -52,11 +58,6 @@ public interface TrackRecordingServiceInterface {
      * Returns true if the current recording track is paused. Returns true if not recording.
      */
     boolean isPaused();
-
-    /**
-     * Gets the current recording track ID. Returns null if not recording.
-     */
-    Track.Id getRecordingTrackId();
 
     /**
      * Gets the total time for the current recording track. Returns 0 if not recording.
@@ -100,7 +101,7 @@ public interface TrackRecordingServiceInterface {
     @VisibleForTesting
     void newTrackPoint(TrackPoint trackPoint, int recordingGpsAccuracy);
 
-    void addListener(TrackRecordingServiceCallback listener);
+    void addListener(@NonNull TrackRecordingServiceStatus.Listener listener);
 
     GpsStatusValue getGpsStatus();
 }

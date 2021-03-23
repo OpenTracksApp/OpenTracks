@@ -1,5 +1,6 @@
 package de.dennisguse.opentracks.services;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
@@ -28,7 +29,7 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
     }
 
     @Override
-    public void addListener(TrackRecordingServiceCallback listener) {
+    public void addListener(@NonNull TrackRecordingServiceStatus.Listener listener) {
         trackRecordingService.addListener(listener);
     }
 
@@ -67,8 +68,8 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
     }
 
     @Override
-    public void endCurrentTrack() {
-        trackRecordingService.endCurrentTrack();
+    public Track.Id endCurrentTrack() {
+        return trackRecordingService.endCurrentTrack();
     }
 
     @Override
@@ -79,11 +80,6 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
     @Override
     public boolean isPaused() {
         return trackRecordingService.isPaused();
-    }
-
-    @Override
-    public Track.Id getRecordingTrackId() {
-        return trackRecordingService.getRecordingTrackId();
     }
 
     @Override
