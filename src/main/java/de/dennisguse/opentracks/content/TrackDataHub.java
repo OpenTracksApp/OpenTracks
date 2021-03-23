@@ -18,7 +18,6 @@ package de.dennisguse.opentracks.content;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.os.Handler;
@@ -31,7 +30,6 @@ import androidx.annotation.VisibleForTesting;
 import java.util.Collections;
 import java.util.Set;
 
-import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
@@ -40,7 +38,9 @@ import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
-import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
+import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 
 /**
  * Track data hub.
@@ -50,7 +50,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  *
  * @author Rodrigo Damazio
  */
-public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class TrackDataHub implements TrackRecordingServiceStatus.Listener {
 
     /**
      * Target number of track points displayed by the diagrams (recommended).
@@ -71,11 +71,11 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
     private final ContentProviderUtils contentProviderUtils;
     private final int targetNumPoints;
 
-    private SharedPreferences sharedPreferences;
-
     private boolean started;
     private HandlerThread handlerThread;
     private Handler handler;
+
+    private TrackRecordingServiceConnection trackRecordingServiceConnection;
 
     // Preference values
     private Track.Id selectedTrackId;
@@ -91,6 +91,13 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
     private ContentObserver tracksTableObserver;
     private ContentObserver markersTableObserver;
     private ContentObserver trackPointsTableObserver;
+
+    private final Runnable bindCallback = () -> {
+        TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
+        if (service != null) {
+            service.addListener(TrackDataHub.this);
+        }
+    };
 
     public TrackDataHub(Context context) {
         this(context, new TrackDataManager(), new ContentProviderUtils(context), TARGET_DISPLAYED_TRACKPOINTS);
@@ -141,10 +148,8 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         };
         contentResolver.registerContentObserver(TrackPointsColumns.CONTENT_URI_BY_ID, false, trackPointsTableObserver);
 
-
-        sharedPreferences = PreferencesUtils.getSharedPreferences(context);
-        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
-        onSharedPreferenceChanged(sharedPreferences, null);
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindCallback);
+        trackRecordingServiceConnection.bind(context);
 
         handler.post(() -> {
             if (started) {
@@ -159,9 +164,6 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
             return;
         }
 
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
-        sharedPreferences = null;
-
         started = false;
 
         //Unregister listeners
@@ -175,6 +177,8 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
             handlerThread = null;
         }
         handler = null;
+
+        trackRecordingServiceConnection.unbind(context);
     }
 
     public void loadTrack(final @NonNull Track.Id trackId) {
@@ -215,7 +219,7 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
      * Returns true if the selected track is recording.
      */
     public boolean isSelectedTrackRecording() {
-        return selectedTrackId != null && selectedTrackId.equals(recordingTrackId) && PreferencesUtils.isRecording(recordingTrackId);
+        return selectedTrackId != null && selectedTrackId.equals(recordingTrackId);
     }
 
     /**
@@ -223,18 +227,6 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
      */
     public boolean isSelectedTrackPaused() {
         return selectedTrackId != null && selectedTrackId.equals(recordingTrackId) && recordingTrackPaused;
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, final String key) {
-        handler.post(() -> {
-            if (PreferencesUtils.isKey(context, R.string.recording_track_id_key, key)) {
-                recordingTrackId = PreferencesUtils.getRecordingTrackId(sharedPreferences, context);
-            }
-            if (PreferencesUtils.isKey(context, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(sharedPreferences, context);
-            }
-        });
     }
 
     /**
@@ -431,5 +423,15 @@ public class TrackDataHub implements SharedPreferences.OnSharedPreferenceChangeL
         numLoadedPoints = 0;
         firstSeenTrackPointId = null;
         lastSeenTrackPointId = null;
+    }
+
+    @Override
+    public void onTrackRecordingPaused(boolean isPaused) {
+        recordingTrackPaused = isPaused;
+    }
+
+    @Override
+    public void onTrackRecordingId(Track.Id trackId) {
+        recordingTrackId = trackId;
     }
 }

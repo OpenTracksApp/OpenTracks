@@ -20,8 +20,12 @@ import java.util.Locale;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
+import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingCadenceAndSpeedPreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingPowerPreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeHeartRatePreference;
@@ -89,19 +93,29 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, prefsFragment).commit();
     }
 
-    public static class PrefsFragment extends PreferenceFragmentCompat {
+    public static class PrefsFragment extends PreferenceFragmentCompat implements TrackRecordingServiceStatus.Listener {
 
         private SharedPreferences sharedPreferences;
 
         private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
-            if (PreferencesUtils.isKey(getActivity(), R.string.recording_track_id_key, key)) {
-                getActivity().runOnUiThread(this::updateReset);
-            }
             if (PreferencesUtils.isKey(getActivity(), R.string.stats_units_key, key)) {
                 getActivity().runOnUiThread(this::updateUnits);
             }
             if (PreferencesUtils.isKey(getActivity(), R.string.night_mode_key, key)) {
                 getActivity().runOnUiThread(() -> ActivityUtils.applyNightMode(sharedPreferences, getContext()));
+            }
+        };
+
+        private TrackRecordingServiceConnection trackRecordingServiceConnection;
+        private boolean isRecording;
+
+        private final Runnable bindServiceCallback = new Runnable() {
+            @Override
+            public void run() {
+                TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
+                if (service != null) {
+                    service.addListener(PrefsFragment.this);
+                }
             }
         };
 
@@ -111,6 +125,8 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             sharedPreferences = PreferencesUtils.getSharedPreferences(getContext());
+
+            trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindServiceCallback);
 
             try {
                 setPreferencesFromResource(R.xml.settings, rootKey);
@@ -137,13 +153,14 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         public void onResume() {
             super.onResume();
 
+            trackRecordingServiceConnection.bind(getContext());
+
             sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
             sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
             updateUnits();
-            updateReset();
+            updatePrefsDependOnRecording();
             updateBluetooth();
-
             updatePostWorkoutExport();
         }
 
@@ -186,6 +203,7 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         @Override
         public void onDestroy() {
             super.onDestroy();
+            trackRecordingServiceConnection.unbind(getContext());
             sharedPreferences = null;
         }
 
@@ -195,11 +213,18 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
             }
         }
 
-        private void updateReset() {
-            final boolean isRecording = PreferencesUtils.isRecording(sharedPreferences, getActivity());
+        private void updatePrefsDependOnRecording() {
             Preference resetPreference = findPreference(getString(R.string.settings_reset_key));
+            Preference importPreference = findPreference(getString(R.string.settings_import));
+            Preference exportPreference = findPreference(getString(R.string.settings_export));
+
             resetPreference.setSummary(isRecording ? getString(R.string.settings_not_while_recording) : "");
+            importPreference.setSummary(isRecording ? getString(R.string.settings_not_while_recording) : "");
+            exportPreference.setSummary(isRecording ? getString(R.string.settings_not_while_recording) : "");
+
             resetPreference.setEnabled(!isRecording);
+            importPreference.setEnabled(!isRecording);
+            exportPreference.setEnabled(!isRecording);
         }
 
         private void updateBluetooth() {
@@ -265,6 +290,14 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
                 }
                 return false;
             });
+        }
+
+        @Override
+        public void onTrackRecordingId(Track.Id trackId) {
+            if (trackId != null && !isRecording && isAdded()) {
+                isRecording = true;
+                updatePrefsDependOnRecording();
+            }
         }
     }
 

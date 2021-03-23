@@ -52,6 +52,7 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.databinding.TrackListBinding;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
+import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
@@ -69,7 +70,7 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackController.Callback {
+public class TrackListActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackController.Callback, TrackRecordingServiceStatus.Listener {
 
     private static final String TAG = TrackListActivity.class.getSimpleName();
 
@@ -86,7 +87,8 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     // Preferences
     private boolean metricUnits = true;
-    private Track.Id recordingTrackId = null;
+
+    private boolean recordingTrackPaused = true;
 
     // Callback when an item is selected in the contextual action mode
     private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
@@ -105,29 +107,17 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         }
     };
 
-    private boolean recordingTrackPaused;
-
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (PreferencesUtils.isKey(TrackListActivity.this, R.string.stats_units_key, key)) {
                 metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, TrackListActivity.this);
             }
-            if (PreferencesUtils.isKey(TrackListActivity.this, R.string.recording_track_id_key, key)) {
-                recordingTrackId = PreferencesUtils.getRecordingTrackId(sharedPreferences, TrackListActivity.this);
-                if (key != null && PreferencesUtils.isRecording(recordingTrackId)) {
-                    trackRecordingServiceConnection.startAndBind(TrackListActivity.this);
-                }
-            }
-            if (PreferencesUtils.isKey(TrackListActivity.this, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(sharedPreferences, TrackListActivity.this);
-            }
             if (key != null) {
                 runOnUiThread(() -> {
                     TrackListActivity.this.invalidateOptionsMenu();
                     loaderCallbacks.restart();
-                    boolean isRecording = PreferencesUtils.isRecording(recordingTrackId);
-                    trackController.update(isRecording, recordingTrackPaused);
+                    trackController.update(isRecording(), recordingTrackPaused);
                 });
             }
         }
@@ -141,10 +131,8 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
         public void run() {
-            boolean isRecording = PreferencesUtils.isRecording(recordingTrackId);
-
             // After binding changes (e.g., becomes available), update the total time in trackController.
-            runOnUiThread(() -> trackController.update(isRecording, recordingTrackPaused));
+            runOnUiThread(() -> trackController.update(isRecording(), recordingTrackPaused));
 
             TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
             if (service == null) {
@@ -155,11 +143,8 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
             // Get GPS status and listen GPS status changes.
             gpsStatusValue = service.getGpsStatus();
-            updateGpsMenuItem(true, isRecording);
-            service.addListener(newStatus -> {
-                gpsStatusValue = newStatus;
-                updateGpsMenuItem(true, isRecording);
-            });
+            updateGpsMenuItem(true, isRecording());
+            service.addListener(TrackListActivity.this);
 
             if (isGpsStarted()) {
                 return;
@@ -167,7 +152,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
             service.startGps();
             gpsStatusValue = GpsStatusValue.GPS_ENABLED;
-            updateGpsMenuItem(true, isRecording);
+            updateGpsMenuItem(true, isRecording());
         }
     };
 
@@ -180,8 +165,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
         gpsStatusValue = GpsStatusValue.GPS_NONE;
-
-        recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
 
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
@@ -197,7 +180,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
         viewBinding.trackList.setEmptyView(viewBinding.trackListEmptyView);
         viewBinding.trackList.setOnItemClickListener((parent, view, position, trackId) -> {
-            if (trackId == recordingTrackId.getId()) {
+            if (isRecording() && trackId == recordingTrackId.getId()) {
                 // Is recording -> open record activity.
                 Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class)
                         .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, new Track.Id(trackId));
@@ -281,7 +264,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         // Update UI
         this.invalidateOptionsMenu();
         LoaderManager.getInstance(this).restartLoader(0, null, loaderCallbacks);
-        trackController.onResume(PreferencesUtils.isRecording(recordingTrackId), recordingTrackPaused);
+        trackController.onResume(isRecording(), recordingTrackPaused);
     }
 
     @Override
@@ -322,9 +305,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        boolean isGpsStarted = isGpsStarted();
-        boolean isRecording = PreferencesUtils.isRecording(recordingTrackId);
-        updateMenuItems(isGpsStarted, isRecording);
+        updateMenuItems(isGpsStarted(), isRecording());
 
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setQuery("", false);
@@ -572,7 +553,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     @Override
     public void recordStart() {
-        if (!PreferencesUtils.isRecording(recordingTrackId)) {
+        if (recordingTrackId == null) {
             // Not recording -> Recording
             updateMenuItems(false, true);
             Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class);
@@ -582,17 +563,45 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             updateMenuItems(false, true);
             trackRecordingServiceConnection.resumeTrack();
             trackController.update(true, false);
-        } else {
-            // Recording -> Paused
-            updateMenuItems(false, true);
-            trackRecordingServiceConnection.pauseTrack();
-            trackController.update(true, true);
         }
+    }
+
+    @Override
+    public void recordPause() {
+        updateMenuItems(false, true);
+        trackRecordingServiceConnection.pauseTrack();
+        trackController.update(true, true);
     }
 
     @Override
     public void recordStop() {
         updateMenuItems(false, false);
-        trackRecordingServiceConnection.stopRecording(TrackListActivity.this, true);
+        trackRecordingServiceConnection.stopRecording(TrackListActivity.this);
+    }
+
+    private boolean isRecording() {
+        return recordingTrackId != null;
+    }
+
+    @Override
+    public void onGpsStatus(GpsStatusValue newStatus) {
+        gpsStatusValue = newStatus;
+        updateGpsMenuItem(true, isRecording());
+    }
+
+    @Override
+    public void onTrackRecordingPaused(boolean isPaused) {
+        if (recordingTrackPaused != isPaused) {
+            trackController.update(isRecording(), isPaused);
+        }
+        recordingTrackPaused = isPaused;
+    }
+
+    @Override
+    public void onTrackRecordingId(Track.Id trackId) {
+        if (!isRecording() && trackId != null) {
+            trackController.update(true, recordingTrackPaused);
+        }
+        recordingTrackId = trackId;
     }
 }

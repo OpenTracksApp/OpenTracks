@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Looper;
 
+import androidx.preference.PreferenceManager;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.MediumTest;
@@ -35,7 +36,6 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -99,28 +99,36 @@ public class TrackRecordingServiceTestLooper {
     @MediumTest
     @Test
     public void testWithProperties_minRequiredAccuracy() throws TimeoutException {
-        PreferencesUtils.setInt(sharedPreferences, context, R.string.recording_gps_accuracy_key, 500);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putInt(context.getString(R.string.recording_gps_accuracy_key), 500);
+        editor.commit();
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_voiceFrequencyDefault() throws TimeoutException {
-        PreferencesUtils.setInt(sharedPreferences, context, R.string.voice_frequency_key, Integer.parseInt(context.getResources().getString(R.string.voice_frequency_default)));
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putInt(context.getString(R.string.voice_frequency_key), Integer.parseInt(context.getResources().getString(R.string.voice_frequency_default)));
+        editor.commit();
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_voiceFrequencyByDistance() throws TimeoutException {
-        PreferencesUtils.setInt(sharedPreferences, context, R.string.voice_frequency_key, -1);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putInt(context.getString(R.string.voice_frequency_key), -1);
+        editor.commit();
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_voiceFrequencyByTime() throws TimeoutException {
-        PreferencesUtils.setInt(sharedPreferences, context, R.string.voice_frequency_key, 1);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putInt(context.getString(R.string.voice_frequency_key), 1);
+        editor.commit();
         fullRecordingSession();
     }
 
@@ -128,29 +136,36 @@ public class TrackRecordingServiceTestLooper {
     @MediumTest
     @Test
     public void testWithProperties_maxRecordingDistanceDefault() throws TimeoutException {
-        PreferencesUtils.setInt(sharedPreferences, context, R.string.max_recording_distance_key, Integer.parseInt(context.getResources().getString(R.string.max_recording_distance_default)));
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putInt(context.getString(R.string.max_recording_distance_key), Integer.parseInt(context.getResources().getString(R.string.max_recording_distance_default)));
+        editor.commit();
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_maxRecordingDistance() throws TimeoutException {
-        PreferencesUtils.setInt(sharedPreferences, context, R.string.max_recording_distance_key, 50);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putInt(context.getString(R.string.max_recording_distance_key), 50);
+        editor.commit();
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_minRecordingDistanceDefault() throws TimeoutException {
-        int minRecordingIntervalDefault = Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default));
-        PreferencesUtils.setInt(sharedPreferences, context, R.string.recording_distance_interval_key, minRecordingIntervalDefault);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putInt(context.getString(R.string.recording_distance_interval_key), Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default)));
+        editor.commit();
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_minRecordingDistance() throws TimeoutException {
-        PreferencesUtils.setInt(sharedPreferences, context, R.string.recording_distance_interval_key, 2);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putInt(context.getString(R.string.recording_distance_interval_key), 2);
+        editor.commit();
         fullRecordingSession();
     }
 
@@ -171,22 +186,27 @@ public class TrackRecordingServiceTestLooper {
     @MediumTest
     @Test
     public void testWithProperties_minRecordingIntervalDefault() throws TimeoutException {
-        PreferencesUtils.setInt(sharedPreferences, context, R.string.min_recording_interval_key, Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default)));
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putInt(context.getString(R.string.min_recording_interval_key), Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default)));
+        editor.commit();
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_minRecordingInterval() throws TimeoutException {
-        PreferencesUtils.setInt(sharedPreferences, context, R.string.min_recording_interval_key, 2);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putInt(context.getString(R.string.min_recording_interval_key), 2);
+        editor.commit();
         fullRecordingSession();
     }
 
     @MediumTest
     @Test
     public void testWithProperties_minRequiredAccuracyDefault() throws TimeoutException {
-        int recordingGPSAccuracyDefault = Integer.parseInt(context.getResources().getString(R.string.recording_gps_accuracy_default));
-        PreferencesUtils.setInt(sharedPreferences, context, R.string.recording_gps_accuracy_key, recordingGPSAccuracyDefault);
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putInt(context.getString(R.string.recording_gps_accuracy_key), Integer.parseInt(context.getResources().getString(R.string.recording_gps_accuracy_default)));
+        editor.commit();
         fullRecordingSession();
     }
 
@@ -209,8 +229,6 @@ public class TrackRecordingServiceTestLooper {
         Track track = contentProviderUtils.getTrack(trackId);
         assertNotNull(track);
         assertEquals(trackId, track.getId());
-        assertEquals(trackId, PreferencesUtils.getRecordingTrackId(sharedPreferences, context));
-        assertEquals(trackId, service.getRecordingTrackId());
 
         // Insert a few points, markers and statistics.
         long startTime = System.currentTimeMillis();
@@ -234,7 +252,6 @@ public class TrackRecordingServiceTestLooper {
         // Stop the track. Validate if it has correct data.
         service.endCurrentTrack();
         assertFalse(service.isRecording());
-        assertNull(service.getRecordingTrackId());
         track = contentProviderUtils.getTrack(trackId);
         assertNotNull(track);
         assertEquals(trackId, track.getId());

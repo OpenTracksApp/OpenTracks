@@ -129,7 +129,7 @@ public class TrackController implements View.OnTouchListener {
             buttonDelay = () -> {
                 view.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_CLICKED);
                 view.performClick();
-                callback.recordStart(); //TODO Should be recordPause();
+                callback.recordPause();
 
                 transition.resetTransition();
 
@@ -239,7 +239,7 @@ public class TrackController implements View.OnTouchListener {
 
     public interface Callback {
         void recordStart();
-
+        void recordPause();
         void recordStop();
     }
 }

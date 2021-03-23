@@ -40,11 +40,12 @@ import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.IntervalsFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordedFragment;
+import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * An activity to show the track detail, record a new track or resumes an existing one.
@@ -52,7 +53,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-public class TrackRecordedActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackActivityDataHubInterface {
+public class TrackRecordedActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackActivityDataHubInterface, TrackRecordingServiceStatus.Listener {
 
     private static final String TAG = TrackRecordedActivity.class.getSimpleName();
 
@@ -71,6 +72,18 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
 
     private Track.Id trackId;
 
+    private TrackRecordingServiceConnection trackRecordingServiceConnection;
+
+    private final Runnable bindCallback = new Runnable() {
+        @Override
+        public void run() {
+            TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
+            if (service != null) {
+                service.addListener(TrackRecordedActivity.this);
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +100,8 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
         if (savedInstanceState != null) {
             viewBinding.trackDetailActivityViewPager.setCurrentItem(savedInstanceState.getInt(CURRENT_TAB_TAG_KEY));
         }
+
+        trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindCallback);
 
         postponeEnterTransition();
     }
@@ -107,11 +122,14 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
         if (trackId != null) {
             trackDataHub.loadTrack(trackId);
         }
+
+        trackRecordingServiceConnection.bind(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        trackRecordingServiceConnection.unbind(this);
         trackDataHub.stop();
     }
 
@@ -143,7 +161,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.track_detail_markers).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        menu.findItem(R.id.track_detail_resume_track).setVisible(!PreferencesUtils.isRecording(PreferencesUtils.getSharedPreferences(this), this));
+        menu.findItem(R.id.track_detail_resume_track).setVisible(recordingTrackId == null);
         Track track = contentProviderUtils.getTrack(trackId);
         setTitle(track != null ? track.getName() : "");
         return super.onPrepareOptionsMenu(menu);
@@ -284,5 +302,10 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
     public void startPostponedEnterTransitionWith(View viewIcon, View viewName) {
         ViewCompat.setTransitionName(viewIcon, TrackRecordedActivity.VIEW_TRACK_ICON);
         startPostponedEnterTransition();
+    }
+
+    @Override
+    public void onTrackRecordingId(Track.Id trackId) {
+        recordingTrackId = trackId;
     }
 }

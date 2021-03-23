@@ -26,7 +26,6 @@ import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * An abstract class for the following common tasks across
@@ -43,6 +42,8 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
 
     protected static final int GPS_REQUEST_CODE = 6;
     private static final int DELETE_REQUEST_CODE = 3;
+
+    protected Track.Id recordingTrackId;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -66,7 +67,6 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
     public void onConfirmDeleteDone(Track.Id... trackIds) {
         boolean stopRecording = false;
 
-        Track.Id recordingTrackId = PreferencesUtils.getRecordingTrackId(PreferencesUtils.getSharedPreferences(this), this);
         for (Track.Id trackId : trackIds) {
             if (trackId.equals(recordingTrackId)) {
                 stopRecording = true;
@@ -75,7 +75,7 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
         }
 
         if (stopRecording) {
-            getTrackRecordingServiceConnection().stopRecording(this, false);
+            getTrackRecordingServiceConnection().stopRecording(this);
         }
         Intent intent = IntentUtils.newIntent(this, TrackDeleteActivity.class);
         intent.putParcelableArrayListExtra(TrackDeleteActivity.EXTRA_TRACK_IDS, new ArrayList<>(Arrays.asList(trackIds)));

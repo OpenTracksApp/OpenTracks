@@ -40,7 +40,6 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;
 import de.dennisguse.opentracks.util.FileUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * Imports a KMZ file.
@@ -79,7 +78,6 @@ public class KmzTrackImporter implements TrackImporter {
                 trackIdsWithImages.add(trackId);
                 deleteOrphanImages(context, trackId);
             } else {
-                cleanImport(context, trackId);
                 return new ArrayList<>();
             }
         }
@@ -227,18 +225,6 @@ public class KmzTrackImporter implements TrackImporter {
             if (dir.listFiles().length == 0) {
                 dir.delete();
             }
-        }
-    }
-
-    /**
-     * Cleans up import.
-     *
-     * @param trackId the trackId
-     */
-    private void cleanImport(Context context, Track.Id trackId) {
-        if (PreferencesUtils.isRecording(trackId)) {
-            ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
-            contentProviderUtils.deleteTrack(context, trackId);
         }
     }
 

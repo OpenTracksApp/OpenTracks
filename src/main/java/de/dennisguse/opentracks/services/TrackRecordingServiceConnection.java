@@ -20,7 +20,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.IBinder.DeathRecipient;
 import android.os.RemoteException;
@@ -31,11 +30,7 @@ import androidx.annotation.NonNull;
 
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.TrackEditActivity;
 import de.dennisguse.opentracks.content.data.Marker;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * Wrapper for the track recording service.
@@ -62,6 +57,13 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
      */
     public TrackRecordingServiceConnection(@NonNull Runnable callback) {
         this.callback = callback;
+    }
+
+    public void bind(@NonNull Context context) {
+        if (trackRecordingService != null) {
+            return;
+        }
+        context.bindService(new Intent(context, TrackRecordingService.class), this, 0);
     }
 
     /**
@@ -202,30 +204,12 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         return null;
     }
 
-    public void stopRecording(@NonNull Context context, boolean showEditor) {
+    public void stopRecording(@NonNull Context context) {
         TrackRecordingServiceInterface trackRecordingService = getServiceIfBound();
         if (trackRecordingService == null) {
             Log.e(TAG, "TrackRecordingService not connected.");
         } else {
-            try {
-                if (showEditor) {
-                    // Need to remember the recordingTrackId before calling endCurrentTrack() as endCurrentTrack() sets the value to -1L.
-                    SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
-                    Track.Id recordingTrackId = PreferencesUtils.getRecordingTrackId(sharedPreferences, context);
-                    trackRecordingService.endCurrentTrack();
-                    if (PreferencesUtils.isRecording(sharedPreferences, context)) {
-                        Intent intent = IntentUtils.newIntent(context, TrackEditActivity.class)
-                                .putExtra(TrackEditActivity.EXTRA_TRACK_ID, recordingTrackId)
-                                .putExtra(TrackEditActivity.EXTRA_NEW_TRACK, true);
-                        context.startActivity(intent);
-                    }
-                } else {
-                    trackRecordingService.endCurrentTrack();
-                }
-            } catch (Exception e) {
-                //TODO What exception are we catching here? Should be removed...
-                Log.e(TAG, "Unable to stop recording.", e);
-            }
+            trackRecordingService.endCurrentTrack();
         }
         unbindAndStop(context);
     }

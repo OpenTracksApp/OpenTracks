@@ -37,8 +37,6 @@ import androidx.core.app.TaskStackBuilder;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
@@ -48,7 +46,6 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
-import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.exporter.ExportServiceResultReceiver;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
@@ -83,23 +80,13 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private TrackRecordingServiceNotificationManager notificationManager;
 
     private SharedPreferences sharedPreferences;
-    private Track.Id recordingTrackId;
-    private boolean recordingTrackPaused;
+
     private int recordingDistanceInterval;
     private int maxRecordingDistance;
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             Context context = TrackRecordingService.this;
-            if (PreferencesUtils.isKey(TrackRecordingService.this, R.string.recording_track_id_key, key)) {
-                // Only through the TrackRecordingService can one stop a recording and set the recordingTrackId to -1L.
-                if (PreferencesUtils.isRecording(sharedPreferences, TrackRecordingService.this)) {
-                    recordingTrackId = PreferencesUtils.getRecordingTrackId(sharedPreferences, TrackRecordingService.this);
-                }
-            }
-            if (PreferencesUtils.isKey(context, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(sharedPreferences, context);
-            }
             if (PreferencesUtils.isKey(context, R.string.stats_units_key, key)) {
                 boolean metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
                 voiceExecutor.setMetricUnits(metricUnits);
@@ -132,7 +119,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     private HandlerServer handlerServer;
 
-    private List<TrackRecordingServiceCallback> listeners = new ArrayList<>();
+    private final TrackRecordingServiceStatus serviceStatus = new TrackRecordingServiceStatus();
 
     @Override
     public void onCreate() {
@@ -145,14 +132,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         notificationManager = new TrackRecordingServiceNotificationManager(this);
 
-        // onSharedPreferenceChanged might not set recordingTrackId.
-        recordingTrackId = null;
-
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
-
-        restartTrackAfterServiceRestart();
     }
 
     @Override
@@ -167,13 +149,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     @Override
     public void onDestroy() {
-        if (listeners != null) {
-            for (TrackRecordingServiceCallback listener : listeners) {
-                listener.onGpsStatusChange(GpsStatusValue.GPS_NONE);
-            }
-            listeners.clear();
-            listeners = null;
-        }
+        serviceStatus.onStop();
 
         handlerServer.stop(this);
         handlerServer = null;
@@ -212,15 +188,11 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     }
 
     public boolean isRecording() {
-        return PreferencesUtils.isRecording(recordingTrackId);
+        return serviceStatus.isRecording();
     }
 
     public boolean isPaused() {
-        return recordingTrackPaused;
-    }
-
-    public Track.Id getRecordingTrackId() {
-        return recordingTrackId;
+        return serviceStatus.getRecordingTrackPaused();
     }
 
     public TrackStatistics getTrackStatistics() {
@@ -250,14 +222,14 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         }
 
         if (name == null) {
-            int nextMarkerNumber = contentProviderUtils.getNextMarkerNumber(recordingTrackId);
-            if (nextMarkerNumber == -1) {
+            Integer nextMarkerNumber = contentProviderUtils.getNextMarkerNumber(serviceStatus.getRecordingTrackId());
+            if (nextMarkerNumber == null) {
                 nextMarkerNumber = 1;
             }
             name = getString(R.string.marker_name_format, nextMarkerNumber + 1);
         }
 
-        TrackPoint trackPoint = getLastValidTrackPointInCurrentSegment(recordingTrackId);
+        TrackPoint trackPoint = getLastValidTrackPointInCurrentSegment(serviceStatus.getRecordingTrackId());
         if (trackPoint == null) {
             Log.i(TAG, "Could not create a marker as trackPoint is unknown.");
             return null;
@@ -273,7 +245,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         long duration = stats.getTotalTime().toMillis();
 
         // Insert marker
-        Marker marker = new Marker(name, description, category, icon, recordingTrackId, length, duration, trackPoint, photoUrl);
+        Marker marker = new Marker(name, description, category, icon, serviceStatus.getRecordingTrackId(), length, duration, trackPoint, photoUrl);
         Uri uri = contentProviderUtils.insertMarker(marker);
         return new Marker.Id(ContentUris.parseId(uri));
     }
@@ -294,8 +266,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         Uri uri = contentProviderUtils.insertTrack(track);
         Track.Id trackId = new Track.Id(ContentUris.parseId(uri));
 
-        // Update shared preferences
-        updateRecordingState(trackId, false);
+        // Set recording status
+        serviceStatus.onChange(trackId, false);
 
         // Update database
         track.setId(trackId);
@@ -336,35 +308,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         insertTrackPoint(track, TrackPoint.createSegmentStartManual());
 
-        // Update shared preferences.
-        updateRecordingState(trackId, false);
+        // Set recording status
+        serviceStatus.onChange(trackId, false);
 
-        startRecording();
-    }
-
-    /**
-     * Try to restart the previous recording track in case the service has been restarted by the system, which can sometimes happen.
-     */
-    private void restartTrackAfterServiceRestart() {
-        Track track = contentProviderUtils.getTrack(recordingTrackId);
-        if (track == null) {
-            if (isRecording()) {
-                Log.w(TAG, "track is null, but recordingTrackId not -1L. " + recordingTrackId.getId());
-                updateRecordingState(null, true);
-            }
-            showNotification(false);
-            return;
-        }
-
-        Log.d(TAG, "Restarting track: " + track.getId());
-
-        trackStatisticsUpdater = new TrackStatisticsUpdater();
-
-        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null)) {
-            trackStatisticsUpdater.addTrackPoint(trackPointIterator, recordingDistanceInterval);
-        } catch (RuntimeException e) {
-            Log.e(TAG, "RuntimeException", e);
-        }
         startRecording();
     }
 
@@ -374,10 +320,11 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        updateRecordingState(recordingTrackId, false);
+        // Set recording status
+        serviceStatus.onChange(false);
 
         // Update database
-        Track track = contentProviderUtils.getTrack(recordingTrackId);
+        Track track = contentProviderUtils.getTrack(serviceStatus.getRecordingTrackId());
         if (track != null) {
             insertTrackPoint(track, TrackPoint.createSegmentStartManual());
         }
@@ -417,17 +364,18 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         showNotification(true);
     }
 
-    void endCurrentTrack() {
+    Track.Id endCurrentTrack() {
         if (!isRecording()) {
             Log.d(TAG, "Ignore endCurrentTrack. Not recording.");
-            return;
+            return null;
         }
 
-        // Need to remember the recordingTrackId before setting it to -1L
+        // Need to remember the recordingTrackId before setting it to null
         boolean wasPause = isPaused();
-        Track.Id trackId = recordingTrackId;
+        Track.Id trackId = serviceStatus.getRecordingTrackId();
 
-        updateRecordingState(null, true);
+        // Set recording status
+        serviceStatus.onChange(null, true);
 
         if (!wasPause) {
             // Update database
@@ -445,6 +393,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         ExportUtils.postWorkoutExport(this, track, new ExportServiceResultReceiver(new Handler(), this));
 
         endRecording(true);
+
+        return trackId;
     }
 
     void pauseCurrentTrack() {
@@ -453,10 +403,11 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        updateRecordingState(recordingTrackId, true);
+        // Set recording status
+        serviceStatus.onChange(true);
 
         // Update database
-        Track track = contentProviderUtils.getTrack(recordingTrackId);
+        Track track = contentProviderUtils.getTrack(serviceStatus.getRecordingTrackId());
         if (track != null) {
             if (lastTrackPoint != null) {
                 insertTrackPointIfNewer(track, lastTrackPoint);
@@ -528,21 +479,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         return lastTrackPoint != null;
     }
 
-    /**
-     * Updates the recording states.
-     * This will inform subscribed {@link OnSharedPreferenceChangeListener}.
-     *
-     * @param trackId the recording track id
-     * @param paused  true if the recording is paused
-     */
-    private void updateRecordingState(Track.Id trackId, boolean paused) {
-        recordingTrackId = trackId;
-        long currentTrackId = trackId != null ? trackId.getId() : PreferencesUtils.RECORDING_TRACK_ID_DEFAULT;
-        PreferencesUtils.setLong(sharedPreferences, this, R.string.recording_track_id_key, currentTrackId);
-        recordingTrackPaused = paused;
-        PreferencesUtils.setBoolean(sharedPreferences, this, R.string.recording_track_paused_key, recordingTrackPaused);
-    }
-
     @Override
     public void newTrackPoint(TrackPoint trackPoint, int recordingGpsAccuracy) {
         if (!isRecording() || isPaused()) {
@@ -550,7 +486,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        Track track = contentProviderUtils.getTrack(recordingTrackId);
+        Track track = contentProviderUtils.getTrack(serviceStatus.getRecordingTrackId());
         if (track == null) {
             Log.w(TAG, "Ignore newTrackPoint. No track.");
             return;
@@ -623,16 +559,12 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     @Override
     public void newGpsStatus(GpsStatusValue gpsStatusValue) {
-        if (listeners != null) {
-            notificationManager.updateContent(getString(gpsStatusValue.message));
-            for (TrackRecordingServiceCallback listener : listeners) {
-                listener.onGpsStatusChange(gpsStatusValue);
-            }
-        }
+        notificationManager.updateContent(getString(gpsStatusValue.message));
+        serviceStatus.onChange(gpsStatusValue);
     }
 
-    public void addListener(TrackRecordingServiceCallback listener) {
-        listeners.add(listener);
+    public void addListener(@NonNull TrackRecordingServiceStatus.Listener listener) {
+        serviceStatus.addListener(listener);
     }
 
     /**
@@ -724,7 +656,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private void showNotification(boolean isGpsStarted) {
         if (isRecording()) {
             Intent intent = IntentUtils.newIntent(this, TrackRecordingActivity.class)
-                    .putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, recordingTrackId);
+                    .putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, serviceStatus.getRecordingTrackId());
             PendingIntent pendingIntent = TaskStackBuilder.create(this)
                     .addParentStack(TrackRecordingActivity.class)
                     .addNextIntent(intent)

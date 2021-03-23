@@ -26,6 +26,7 @@ import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.IntervalsFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordingFragment;
+import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.settings.SettingsActivity;
@@ -43,7 +44,7 @@ import de.dennisguse.opentracks.util.TrackUtils;
  */
 //NOTE: This activity does NOT react to preference changes of R.string.recording_track_id_key.
 //This mode of communication should be removed anyhow.
-public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackActivityDataHubInterface, TrackController.Callback {
+public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackActivityDataHubInterface, TrackController.Callback, TrackRecordingServiceStatus.Listener {
 
     public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -62,8 +63,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
     // Initialized from Intent; if a new track recording is started, a new TrackId will be provided by TrackRecordingService
     private Track.Id trackId;
-
-    // Preferences
     private boolean recordingTrackPaused;
 
     private final Runnable bindChangedCallback = new Runnable() {
@@ -78,7 +77,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 return;
             }
             if (!service.isRecording()) {
-                // Starts or resumes a track.
                 if (trackId == null) {
                     // trackId isn't initialized -> leads a new recording.
                     trackId = service.startNewTrack();
@@ -92,31 +90,23 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 trackController.update(true, false);
                 trackController.onResume(true, recordingTrackPaused);
             }
+            service.addListener(TrackRecordingActivity.this);
         }
     };
 
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.recording_track_paused_key, key)) {
-                recordingTrackPaused = PreferencesUtils.isRecordingTrackPaused(sharedPreferences, TrackRecordingActivity.this);
-                setLockscreenPolicy();
-                setScreenOnPolicy();
-            }
-
             if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.stats_show_on_lockscreen_while_recording_key, key)) {
                 setLockscreenPolicy();
             }
-
             if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.stats_keep_screen_on_while_recording_key, key)) {
                 setScreenOnPolicy();
             }
             if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.stats_fullscreen_while_recording_key, key)) {
                 setFullscreenPolicy();
             }
-
             if (key == null) return;
-
             runOnUiThread(() -> {
                 TrackRecordingActivity.this.invalidateOptionsMenu();
                 trackController.update(true, recordingTrackPaused);
@@ -144,8 +134,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 finish();
             }
         }
-
-        recordingTrackPaused = PreferencesUtils.isRecordingTrackPausedDefault(this);
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
         trackDataHub = new TrackDataHub(this);
@@ -345,22 +333,21 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
     @Override
     public void recordStart() {
-        if (recordingTrackPaused) {
-            // Paused -> Resume
-            updateMenuItems(false);
-            trackRecordingServiceConnection.resumeTrack();
-            trackController.update(true, false);
-        } else {
-            // Recording -> Paused
-            updateMenuItems(true);
-            trackRecordingServiceConnection.pauseTrack();
-            trackController.update(true, true);
-        }
+        updateMenuItems(false);
+        trackRecordingServiceConnection.resumeTrack();
+        trackController.update(true, false);
+    }
+
+    @Override
+    public void recordPause() {
+        updateMenuItems(true);
+        trackRecordingServiceConnection.pauseTrack();
+        trackController.update(true, true);
     }
 
     @Override
     public void recordStop() {
-        trackRecordingServiceConnection.stopRecording(TrackRecordingActivity.this, true);
+        trackRecordingServiceConnection.stopRecording(TrackRecordingActivity.this);
         Intent newIntent = IntentUtils.newIntent(TrackRecordingActivity.this, TrackRecordedActivity.class)
                 .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
         startActivity(newIntent);
@@ -410,6 +397,24 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 default:
                     throw new RuntimeException("There isn't Fragment associated with the position: " + position);
             }
+        }
+    }
+
+    @Override
+    public void onTrackRecordingPaused(boolean isPaused) {
+        if (recordingTrackPaused != isPaused) {
+            trackController.update(true, isPaused);
+        }
+        recordingTrackPaused = isPaused;
+        setLockscreenPolicy();
+        setScreenOnPolicy();
+    }
+
+    @Override
+    public void onTrackRecordingId(Track.Id newTrackId) {
+        if (newTrackId != null && !newTrackId.equals(trackId)) {
+            trackId = newTrackId;
+            trackController.update(true, recordingTrackPaused);
         }
     }
 }

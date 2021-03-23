@@ -31,6 +31,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.services.TrackRecordingService;
+import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.AnnouncementUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -56,6 +57,8 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     private final AudioManager audioManager;
 
     private final ContentProviderUtils contentProviderUtils;
+
+    private Track.Id recordingTrackId;
 
     private final AudioManager.OnAudioFocusChangeListener audioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
@@ -139,6 +142,12 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
             Log.e(TAG, "TrackRecordingService is null.");
             return;
         }
+        trackRecordingService.addListener(new TrackRecordingServiceStatus.Listener() {
+            @Override
+            public void onTrackRecordingId(Track.Id trackId) {
+                recordingTrackId = trackId;
+            }
+        });
         announce(trackRecordingService.getTrackStatistics());
     }
 
@@ -171,7 +180,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
             return;
         }
 
-        Track track = contentProviderUtils.getTrack(PreferencesUtils.getRecordingTrackId(sharedPreferences, context));
+        Track track = contentProviderUtils.getTrack(recordingTrackId);
         String category = track != null ? track.getCategory() : "";
 
         //TODO Querying all TrackPoints all the time is inefficient; use TrackDataHub or something else.
