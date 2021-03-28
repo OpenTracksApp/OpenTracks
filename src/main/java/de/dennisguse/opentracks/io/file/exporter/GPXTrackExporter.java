@@ -200,7 +200,7 @@ public class GPXTrackExporter implements TrackExporter {
             printWriter.println("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
             printWriter.println("xmlns:atom=\"http://www.w3.org/2005/Atom\"");
             printWriter.println("xmlns:opentracks=\"http://opentracksapp.com/xmlschemas/v1\"");
-            printWriter.println("xmlns:gpxtpx=\"http://www.garmin.com/xmlschemes/TrackPointExtension/v2\"");
+            printWriter.println("xmlns:gpxtpx=\"http://www.garmin.com/xmlschemas/TrackPointExtension/v2\"");
             printWriter.println("xmlns:pwr=\"http://www.garmin.com/xmlschemas/PowerExtension/v1\"");
             printWriter.println("xsi:schemaLocation=" +
                     "\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
