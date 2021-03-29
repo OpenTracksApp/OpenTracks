@@ -31,18 +31,10 @@ limitations under the License.
 * arbeitet vollständig offline\n
 * Tracks auf einer Karte anzeigen (siehe unten)</string>
     <string name="help_track_map_title">Wie wird ein Track auf einer Karte angezeigt?</string>
-    <string name="help_track_map_content">
-Verwende das kleine Kartensymbol.\n
-a)
-(Live-Aktualisierungen) Installiere <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>.
-OSMDashboard stellt Online- oder Offline-Karten über <a href="https://www.openstreetmap.org">OpenStreetMap</a>.\n zur Verfügung.
-Eigentlich ist OSMDashboard eine separate App, die nur (vorübergehend) auf die Daten der anzuzeigenden Strecke(n) zugreifen kann.
-
-\n
-b)
-Über eine normale Kartenanwendung (z.B. <a href="http://osmand.net/">OsmAnd</a> und <a href="https://maps.me/">MAPS.ME</a>).
-Diese Anwendungen müssen das KMZ-Dateiformat unterstützen (nur Orte und Zeitstempel).
-In der Tat muss eine App <i>ACTION_VIEW</i> mit MIME <i>application/vnd.google-earth.kmz</i> unterstützen.</string>
+    <string name="help_track_map_content"> Verwende das kleine Kartensymbol.
+\n a) (Live-Aktualisierungen) Installiere <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. OSMDashboard stellt Online- oder Offline-Karten über <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n zur Verfügung. Eigentlich ist OSMDashboard eine separate App, die nur (vorübergehend) auf die Daten der anzuzeigenden Strecke(n) zugreifen kann.
+\n b) Über eine normale Kartenanwendung (z.B. <a href="http://osmand.net/">OsmAnd</a> und <a href="https://maps.me/">MAPS.ME</a>). Diese Anwendungen müssen das KMZ-Dateiformat unterstützen (nur Orte und Zeitstempel). In der Tat muss eine App <i>ACTION_VIEW</i> mit MIME <i>application/vnd.google-earth.kmz</i> unterstützen. </string>
     <string name="help_storage_pictures_title">Wie speichert OpenTracks Bilder, die als Markierungen aufgenommen wurden?</string>
     <string name="help_storage_pictures_content">Diese werden App-intern gespeichert (d.h. nur innerhalb von OpenTracks zugänglich).</string>
     <string name="help_track_export_title">Wie kann ich aufgezeichnete Tracks exportieren/teilen?</string>
@@ -219,7 +211,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="generic_recording">Aufzeichnung…</string>
     <string name="generic_save">Speichern</string>
     <string name="generic_success_title">Erfolgreich</string>
-    <string name="generic_tracks">Tracks</string>
+    <string name="generic_tracks">Strecken</string>
     <string name="generic_yes">Ja</string>
     <!-- Gps -->
     <string name="gps_location_access">\"Standortzugriff\"</string>
@@ -564,9 +556,37 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="hold_to_stop">Halten zum Anhalten</string>
     <string name="import_progress_summary_errors_msg">Fehler</string>
     <string name="import_progress_summary_exists_msg">Schon vorhanden</string>
-    <string name="export_track_errors">Tracks werden nicht exportiert</string>
+    <string name="export_track_errors">Aufzeichnungen wurden nicht exportiert</string>
     <string name="settings_default_export_uri_title">Track Export Verzeichnis</string>
     <string name="import_progress_summary_ok_msg">Dateien importiert</string>
-    <string name="export_all_do_it_for_all">für alle Konflikte anwenden</string>
+    <string name="export_all_do_it_for_all">Für aale Konflikte übernehmen</string>
     <string name="export_progress_summary_new_msg">Neue Tracks exportiert</string>
+    <string name="activity_type_escooter">E-Scooter</string>
+    <string name="import_unsupported_format">Nicht unterstütztes Dateiformat</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Abgeschlossen mit einem fehler</item>
+        <item quantity="other">Abgeschlossen mit %1$d Fehlern</item>
+    </plurals>
+    <string name="import_error_info">%1$s: %2$s</string>
+    <string name="import_file_imported">Datei %1$s wurde importiert</string>
+    <string name="hold_to_pause">Halten für Pause</string>
+    <string name="description_elevation_loss">Höhenverlust: %1$d m (%2$d ft)</string>
+    <string name="export_error_post_workout">Der Datenexport im Anschluss an die Übung ist fehlgeschlagen. Bitte prüfe den Exportordner.</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">Vollbild</string>
+    <string name="stats_intervals">Intervalle</string>
+    <string name="track_detail_intervals_tab">Intervalle</string>
+    <string name="generic_overwrite">Überschreiben</string>
+    <string name="generic_skip">Überspringen</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="generic_show_errors">Zeige Fehler</string>
+    <string name="generic_completed">Abgeschlossen</string>
+    <string name="gps_disabled_msg">GPS deaktiviert</string>
+    <string name="export_progress_summary_overwrite_msg">Streckenaufzeichnung überschrieben</string>
+    <string name="export_progress_summary_skip_msg">Strecke übersprungen</string>
+    <string name="export_progress_summary_errors_msg">Fehler</string>
+    <string name="generic_click_twice_cancel">Klicke nochmal zurück um abzubrechen.</string>
+    <string name="import_error_list_dialog_title">Dateien wurden nicht importiert</string>
+    <string name="voice_speed_lap">Rundengeschwindigkeit %1$s</string>
+    <string name="voice_pace_lap">Rundenzeit %1$s</string>
+    <string name="toast_message_instant_track_was_exported">Letzte Aufzeichnung exportiert</string>
 </resources>
