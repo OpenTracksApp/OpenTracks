@@ -611,4 +611,7 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="sensor_state_cadence_max">Suurin Poljinnopeus</string>
     <string name="value_float_mile_hour">%1$.2f mt</string>
     <string name="generic_open_track">Avaa Raita</string>
+    <string name="track_distance_notification">Etäisyys: %1$s</string>
+    <string name="track_pace_notification">Vauhti: %1$s</string>
+    <string name="track_speed_notification">Nopeus: %1$s</string>
 </resources>
