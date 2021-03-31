@@ -17,6 +17,8 @@ limitations under the License.
     <string name="app_web_url" translatable="false">https://github.com/OpenTracksApp/OpenTracks</string>
     <string name="app_name" translatable="false">OpenTracks</string>
 
+    <string name="egm2008" translatable="false">EGM2008</string>
+
     <string name="third_party_data" translatable="false">
         <a href="https://earth-info.nga.mil/">National Geospatial-Intelligence Agency (NGA)\'s EGM2008 model</a> 5\' minute resolution.
         Data provided by <a href="https://geographiclib.sourceforge.io/html/geoid.html">GeographicLib</a>.
