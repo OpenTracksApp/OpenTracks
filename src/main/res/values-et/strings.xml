@@ -607,4 +607,7 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="generic_separator_done_total">/</string>
     <string name="generic_skip">Jäta</string>
     <string name="import_progress_summary_errors_msg">Viga</string>
+    <string name="track_distance_notification">Kaugus: %1$s</string>
+    <string name="track_speed_notification">Kiirus: %1$s</string>
+    <string name="track_pace_notification">Tempo: %1$s</string>
 </resources>
