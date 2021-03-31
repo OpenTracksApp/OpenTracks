@@ -31,10 +31,10 @@ limitations under the License.
 * fungerer helt offline \n
 * vis spor på et kort (se nedenfor)</string>
     <string name="help_track_map_title">Hvordan viser man et spor på et kort?</string>
-    <string name="help_track_map_content">" Brug det lille kortikon.
-\n  a) (live opdateringer) Installer &lt;a href=\"https://github.com/OpenTracksApp/OSMDashboard\"&gt; OSMDashboard&lt;/a&gt;. Det giver online eller offline kort via &lt;a href=\"https://www.openstreetmap.org\"&gt;OpenStreetMap&lt;/a&gt;.
-\n  Faktisk er OSMDashboard en separat app, der kun kan få adgang (midlertidigt) til dataene for spor, der skal vises.
-\n  b) Via en normal kortapplikation (f.e., &lt;a href=\"http://osmand.net/\"&gt;OsmAnd&lt;/a&gt; og &lt;a href=\"https://maps.me/\"&gt;MAPS.ME&lt; / a&gt;). Disse apps skal understøtte KMZ fil formatet (kun placeringer og tidsstempler). Faktisk, skal en app understøtte &lt;i&gt;ACTION_VIEW&lt;/i&gt; med MIME &lt;i&gt;applikation/vnd.google-earth.kmz &lt;/i&gt;. "</string>
+    <string name="help_track_map_content"> Brug det lille kortikon.
+\n a) (liveopdateringer) Installer <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Det giver online eller offline kort via <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n Faktisk er OSMDashboard en separat app, der kun kan få adgang (midlertidigt) til dataene for de(t) spor, der skal vises.
+\n b) Via et normalt kortprogram (f.eks. <a href="http://osmand.net/">OsmAnd</a> og <a href="https://maps.me/">MAPS.ME</a>). Disse programmer skal understøtte KMZ-filformatet (kun lokaliteter og tidsstempler). Faktisk skal en app understøtte <i>ACTION_VIEW</i> med MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_storage_pictures_title">Hvordan gemmer OpenTracks billeder, der blev taget som markører?</string>
     <string name="help_storage_pictures_content">Disse gemmes i appens interne lager (dvs. kun tilgængelig inden for OpenTracks).</string>
     <string name="help_track_export_title">Hvordan kan jeg eksportere / dele indspillede numre?</string>
@@ -82,7 +82,7 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="activity_type_driving_bus">buskørsel</string>
     <string name="activity_type_driving_car">bilkørsel</string>
     <string name="activity_type_ferry">færge</string>
-    <string name="activity_type_frisbee">frisbee</string>
+    <string name="activity_type_frisbee">friske</string>
     <string name="activity_type_gliding">svæveflyvning</string>
     <string name="activity_type_hang_gliding">drageflyvning</string>
     <string name="activity_type_helicopter">helikopter</string>
@@ -535,7 +535,7 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="waypoint_type_toilet">toilette</string>
     <string name="waypoint_type_tourist_information">turistinformation</string>
     <string name="waypoint_type_tree">træ</string>
-    <string name="waypoint_type_tunnel">tunnel</string>
+    <string name="waypoint_type_tunnel">kanal</string>
     <string name="waypoint_type_waterfall">vandfald</string>
     <string name="waypoint_type_water_fountain">springvand</string>
     <string name="waypoint_type_waypoint">vejpunkt</string>
@@ -610,4 +610,7 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="generic_show_errors">Vis fejl</string>
     <string name="generic_overwrite">Overskriv</string>
+    <string name="track_pace_notification">Fart: %1$s</string>
+    <string name="track_distance_notification">Afstand: %1$s</string>
+    <string name="track_speed_notification">Hastighed: %1$s</string>
 </resources>
