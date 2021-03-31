@@ -592,7 +592,7 @@ limitations under the License.
 \nb) Через цвичайний картографічний додаток (на приклад, <a href="http://osmand.net/">OsmAnd</a> та <a href="https://maps.me/">MAPS.ME</a>). Ці додатки повинні підтримувати формати файлів треку KMZ (тільки місцеположення та мітки часу). Фактично, додаток повинен підтримувати функцію <i>ACTION_VIEW</i> із MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="settings_prevent_reimport_tracks_title">Заборонити повторний імпорт треків</string>
     <plurals name="generic_completed_with_errors">
-        <item quantity="one">Завершено з однією помилкою</item>
+        <item quantity="one">Завершено з %1$d однією помилкою</item>
         <item quantity="few">Заповнено з деякими помилками</item>
         <item quantity="many">Завершено з %1$d помилками</item>
         <item quantity="other">Завершено з %1$d помилками</item>
