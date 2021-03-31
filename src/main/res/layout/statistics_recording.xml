@@ -282,6 +282,17 @@
             app:layout_constraintTop_toBottomOf="@id/stats_altitude_horizontal_line" />
 
         <TextView
+            android:id="@+id/stats_elevation_current_label_egm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="@string/egm2008"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/guideline2"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/stats_altitude_current_value" />
+
+        <TextView
             android:id="@+id/stats_altitude_current_value"
             style="@style/StatsSmallValue"
             android:value="@string/value_unknown"
