@@ -615,4 +615,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="sensor_state_cadence_avg">Cadenza media</string>
     <string name="value_float_mile_hour">%1$.2f mpo</string>
     <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
+    <string name="track_distance_notification">Distanza: %1$s</string>
+    <string name="track_speed_notification">Velocità: %1$s</string>
+    <string name="track_pace_notification">Ritmo: %1$s</string>
 </resources>
