@@ -172,6 +172,8 @@ limitations under the License.
     <string name="gps_starting">Uruchamiam GPS</string>
     <string name="gps_wait_for_better_signal">Czekam na lepszy sygnał GPS</string>
     <string name="gps_wait_for_signal">Czekam na sygnał GPS</string>
+    <string name="gps_disabled_msg">GPS niedostępny</string>
+    <string name="gps_fixed_and_ready">Pozycja GPS ustalona</string>
     <!-- Image -->
     <string name="image_application">Aplikacja</string>
     <string name="image_arrow">Strzałka</string>
