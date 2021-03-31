@@ -608,4 +608,7 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="sensor_state_heart_rate_avg">Avg srdeční frekvence</string>
     <string name="sensor_state_cadence_max">Max kadence</string>
     <string name="sensor_state_cadence_avg">Avg kadence</string>
+    <string name="track_distance_notification">Vzdálenost: %1$s</string>
+    <string name="track_speed_notification">Rychlost: %1$s</string>
+    <string name="track_pace_notification">Rychlost: %1$s</string>
 </resources>
