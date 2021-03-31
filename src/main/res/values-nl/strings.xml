@@ -607,4 +607,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="import_file_imported">Bestand %1$s geimporteerd</string>
     <string name="hold_to_stop">Hou vast om te stoppen</string>
+    <string name="track_speed_notification">Snelheid: %1$s</string>
+    <string name="track_distance_notification">Afstand: %1$s</string>
+    <string name="track_pace_notification">Tempo: %1$s</string>
 </resources>
