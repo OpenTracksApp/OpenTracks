@@ -424,7 +424,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth_sensor">Bluetooth sensor</string>
     <string name="settings_sensor_connecting">Connected to %1$s</string>
     <string name="settings_sensor_disconnected">Disconnected from %1$s</string>
-
     <string name="settings_sensor_wheel_circumference">Wheel circumference (mm)</string>
 
     <!-- Settings Stats -->
