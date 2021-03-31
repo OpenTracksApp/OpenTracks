@@ -104,7 +104,6 @@ public class TrackRecordingServiceTest {
         contentProviderUtils = new ContentProviderUtils(context);
 
         // Let's use default values.
-        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         sharedPreferences.edit().clear().commit();
 
         // Ensure that the database is empty before every test

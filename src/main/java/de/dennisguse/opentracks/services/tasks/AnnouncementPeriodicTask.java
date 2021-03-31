@@ -117,12 +117,13 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         contentProviderUtils = new ContentProviderUtils(context);
 
-        sharedPreferences = PreferencesUtils.getSharedPreferences(context);
     }
 
     @Override
     public void start() {
         Log.d(TAG, "Start");
+
+        sharedPreferences = PreferencesUtils.getSharedPreferences(context);
 
         if (tts == null) {
             tts = new TextToSpeech(context, status -> {
