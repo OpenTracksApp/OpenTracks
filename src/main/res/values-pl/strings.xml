@@ -128,9 +128,9 @@ limitations under the License.
     <string name="export_progress_message">Eksportuję do %1$s…</string>
     <string name="export_success">Wyeksportowano %1$s do folderu %2$s</string>
     <string name="export_title">Wyeksportuj do…</string>
-    <string name="export_track_already_exists_msg">Ścieżka %1$s już istnieje w docelowym katalogu.</string>
-    <string name="export_all_do_it_for_all">zrób to dal wszystkich konfliktów</string>
-    <string name="export_track_errors">Ścieżka nie została wyeksportowana z powodu błędów</string>
+    <string name="export_track_already_exists_msg">Ścieżka %1$s już istnieje w katalogu docelowym.</string>
+    <string name="export_all_do_it_for_all">zrób to dla wszystkich konfliktów</string>
+    <string name="export_track_errors">Trasa nie została wyeksportowana z powodu błędów</string>
     <string name="export_progress_summary_new_msg">Nowe ściezki wyeksportowane</string>
     <string name="export_progress_summary_overwrite_msg">Ścieżki nadpisane</string>
     <string name="export_progress_summary_skip_msg">Ścieżki pominięte</string>
@@ -535,12 +535,7 @@ limitations under the License.
     <string name="settings_default_export_uri_title">Katalog eksportu śladów</string>
     <string name="instant_export_enabled_summary">Eksportuj ślad do pamięci po zakończeniu nagrywania</string>
     <string name="description_elevation_loss">Strata wysokości: %1$d m (%2$d ft)</string>
-    <string name="export_without_photos">bez zdjęć</string>
-    <string name="export_with_photos">wraz z fotografiami</string>
     <string name="description_default_speed_or_pace">Według rodzaju działalności</string>
-    <string name="export_track_errors">Utwory nie eksportowane</string>
-    <string name="gps_disabled_msg">GPS wyłączony</string>
-    <string name="gps_fixed_and_ready">GPS stały i gotowy</string>
     <string name="help_gps_troubleshooting_content"> Co możesz zrobić:
 \n a) sprawdzić, czy GPS jest włączony,
 \n b) poprawić odbiór GPS (np. wyjść na zewnątrz),
@@ -560,8 +555,6 @@ limitations under the License.
 \n a) (aktualizacje na żywo) Zainstaluj <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Zapewnia on mapy online lub offline przez <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n Właściwie OSMDashboard jest oddzielną aplikacją, która tylko może uzyskać dostęp (tymczasowo) do danych ścieżki (ścieżek), które mają być wyświetlane.
 \n b) Przez zwykłą aplikację mapową (np. <a href="http://osmand.net/">OsmAnd</a> i <a href="https://maps.me/">MAPS.ME</a>). Aplikacje te muszą obsługiwać format plików KMZ (tylko lokalizacje i znaczniki czasu). W rzeczywistości, aplikacja musi obsługiwać <i>ACTION_VIEW</i> z MIME <i>application/vnd.google-earth.kmz</i>. </string>
-    <string name="export_track_already_exists_msg">Ścieżka %1$s już istnieje w katalogu docelowym.</string>
-    <string name="export_error_post_workout">Eksport po treningu nie powiódł się, proszę sprawdzić katalog eksportu.</string>
     <string name="help_support_content"> Możesz:
 \n a) rozpowszechniać informacje o OpenTracks,
 \n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">proponować funkcje</a>,
@@ -570,7 +563,6 @@ limitations under the License.
 \n e) kupować w <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) przekazać darowiznę, oraz
 \n g) rób wszystko co uważasz za pomocne dla OpenTracks. </string>
-    <string name="export_progress_summary_overwrite_msg">Utwory nadpisane</string>
     <string name="generic_separator_done_total">/</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Zakończone z jednym błędzie</item>
@@ -578,9 +570,6 @@ limitations under the License.
         <item quantity="many">Zakończono z błędami %1$d</item>
         <item quantity="other">Zakończono z błędami %1$d</item>
     </plurals>
-    <string name="export_progress_summary_new_msg">Wyeksportowane nowe utwory</string>
-    <string name="export_progress_summary_skip_msg">Utwory pominięte</string>
-    <string name="export_progress_summary_errors_msg">Błędy</string>
     <string name="generic_overwrite">Zastąp</string>
     <string name="generic_show_errors">Pokaż Błędy</string>
     <string name="generic_completed">Zakończone</string>
