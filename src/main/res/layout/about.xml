@@ -16,31 +16,28 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="239dp"
-                android:contentDescription="@string/app_name"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_logo_color_24dp" />
-
-            <TextView
-                style="@style/TextLarge"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/app_name"
-                android:textSize="24sp" />
+                android:orientation="horizontal"
+                android:layout_margin="8dp">
 
-            <View style="@style/StatsHorizontalLine" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_logo_color_24dp" />
 
-            <TextView
-                android:id="@+id/about_text_description"
-                style="@style/TextMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="12dp" />
+                <TextView
+                    android:id="@+id/about_text_description"
+                    style="@style/TextMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:padding="12dp" />
+            </LinearLayout>
 
             <View style="@style/StatsHorizontalLine" />
 
@@ -74,9 +71,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="6dp"
                 android:linksClickable="true"
+                android:padding="6dp"
                 android:text="@string/about_history" />
+
+            <View style="@style/StatsHorizontalLine" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="@string/about_third_party_data" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="@string/third_party_data" />
 
             <View style="@style/StatsHorizontalLine" />
 

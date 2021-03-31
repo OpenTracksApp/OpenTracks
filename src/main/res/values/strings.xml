@@ -20,6 +20,7 @@ limitations under the License.
     <string name="about_version_name">Version name: %1$s</string>
     <string name="about_version_code">Version code: %1$d</string>
     <string name="about_history">OpenTracks is a fork of <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (discontinued in 2016).</string>
+    <string name="about_third_party_data">Third-party data</string>
     <string name="about_libraries">Libraries</string>
     <!-- Help -->
     <string name="help_feature_title">OpenTracks has the following features:</string>
