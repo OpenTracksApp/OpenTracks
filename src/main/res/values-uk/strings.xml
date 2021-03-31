@@ -157,9 +157,9 @@ limitations under the License.
     <string name="gps_disabled">GPS вимкнено. Натисніть тут, щоб перейти до меню %1$s. Щоб повернутися, натисніть кнопку \"Назад\".</string>
     <string name="gps_disabled_my_location">Неможливо визначити поточне місцезнаходження. Запустіть кілька джерел визначення місцезнаходження в меню %1$s і переконайтеся, що видно небо. Після цього повторіть спробу.</string>
     <string name="gps_not_found">На пристрої відсутній GPS-приймач</string>
-    <string name="gps_starting">Запуск GPS…</string>
-    <string name="gps_wait_for_better_signal">Очікується кращий GPS-сигнал…</string>
-    <string name="gps_wait_for_signal">Очікується GPS-сигнал…</string>
+    <string name="gps_starting">Запуск GPS</string>
+    <string name="gps_wait_for_better_signal">Очікується кращий GPS-сигналу</string>
+    <string name="gps_wait_for_signal">Очікується GPS-сигнал</string>
     <!-- Image -->
     <string name="image_application">Програма</string>
     <string name="image_arrow">Стрілка</string>
@@ -279,7 +279,9 @@ limitations under the License.
     <string name="settings_stats_units_title">Одиниці вимірювання</string>
     <!-- Share Track -->
     <string name="share_track_share_file">Надати доступ до файлу шляху</string>
-    <string name="share_track_share_file_body">Цей шлях може вас зацікавити.\n\nЩоб переглянути його, скористайтеся програмою Google Планета Земля або іншою програмою для відображення карт.\n\n%1$s</string>
+    <string name="share_track_share_file_body">Цей шлях може вас зацікавити.
+\n
+\n%1$s</string>
     <string name="share_track_subject">Я хочу поділитися з вами інформацією про шлях</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Середній темп руху</string>
@@ -355,9 +357,9 @@ limitations under the License.
     <string name="value_integer_meter_recommended">%1$d м (рекомендовано)</string>
     <string name="value_integer_mile">Миль: %1$d</string>
     <string name="value_integer_mile_hour">%1$d миль/год</string>
-    <string name="value_integer_minute">%1$d хв.</string>
+    <string name="value_integer_minute">%1$d хв</string>
     <string name="value_integer_percent">%1$d %%</string>
-    <string name="value_integer_second">%1$d сек.</string>
+    <string name="value_integer_second">%1$d сек</string>
     <string name="value_none">Немає</string>
     <string name="value_off">Вимк.</string>
     <string name="value_smallest">Найменше</string>
@@ -366,13 +368,13 @@ limitations under the License.
     <string name="voice_hours_few">%1$d години</string>
     <string name="voice_hours_many">%1$d годин</string>
     <string name="voice_hours_one">1 година</string>
-    <string name="voice_hours_other">%1$d год.</string>
+    <string name="voice_hours_other">%1$d год</string>
     <string name="voice_hours_two">2 години</string>
     <string name="voice_hours_zero">0 годин</string>
     <string name="voice_minutes_few">%1$d хвилини</string>
     <string name="voice_minutes_many">%1$d хвилин</string>
     <string name="voice_minutes_one">1 хвилина</string>
-    <string name="voice_minutes_other">%1$d хв.</string>
+    <string name="voice_minutes_other">%1$d хв</string>
     <string name="voice_minutes_two">2 хвилини</string>
     <string name="voice_minutes_zero">0 хвилин</string>
     <string name="voice_pace_per_kilometer">%1$s на кілометр</string>
@@ -591,7 +593,7 @@ limitations under the License.
     <string name="settings_prevent_reimport_tracks_title">Заборонити повторний імпорт треків</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Завершено з однією помилкою</item>
-        <item quantity="few">Завершено з %1$d помилками</item>
+        <item quantity="few">Заповнено з деякими помилками</item>
         <item quantity="many">Завершено з %1$d помилками</item>
         <item quantity="other">Завершено з %1$d помилками</item>
     </plurals>
