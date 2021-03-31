@@ -32,13 +32,10 @@ limitations under the License.
         * mostra as rutas nun mapa  (ver abaixo)
     </string>
     <string name="help_track_map_title">¿Como mostrar a ruta nun mapa?</string>
-    <string name="help_track_map_content"> Usa a pequena icona do mapa.
-\n
-\n a) (actualizacións ao vivo) Instala <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Proporciona mapas con e sen conexión desde <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
-\n
-\n En realidade, OSMDashboard é unha aplicación independiente que só pode acceder (temporalmente) aos datos das rutas que se van a mostrar.
-\n
-\n b) A través dunha app \"normal\" como <a href="http://osmand.net/">OsmAnd</a> ou <a href="https://maps.me/">MAPS.ME</a>. Estas apps deben soportar o formato de ficheiros KMZ (só localización e marcas de tempo). De feito, unha app precisa soportar <i>ACTION_VIEW</i> con MIME <i>application/vnd.google-earth.kmz</i>. </string>
+    <string name="help_track_map_content"> Usa a icona do mapa pequeno.
+\n a) (actualizacións en directo) Instala <a href="https://github.com/OpenTracksApp/OSMDashboard"> OSMDashboard </a>. Ofrece mapas en liña ou fóra de liña a través de <a href="https://www.openstreetmap.org"> OpenStreetMap </a>.
+\n \u0020En realidade, OSMDashboard é unha aplicación independente que só pode acceder (temporalmente) aos datos das pistas que se amosarán.
+\n b) A través dunha aplicación de mapa normal (por exemplo, <a href="http://osmand.net/">OsmAnd</a> e <a href="https://maps.me/">MAPS.ME</a>). Estas aplicacións precisan admitir o formato de ficheiro KMZ (só localizacións e marcas de tempo). De feito, unha aplicación ten que admitir <i> ACTION_VIEW </i> con MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_storage_pictures_title">¿De que xeito garda OpenTracks as fotos tomadas como marcadores?</string>
     <string name="help_storage_pictures_content">Gárdanse no almacenaxe interno da app (só accesible desde OpenTracks).</string>
     <string name="help_track_export_title">¿De que xeito exporto/importo as rutas gravadas?</string>
@@ -138,7 +135,7 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="activity_type_train">tren</string>
     <string name="activity_type_ultimate_frisbee">ultimate frisbee</string>
     <string name="activity_type_unknown">descoñecida</string>
-    <string name="activity_type_wakeboarding">wakeboarding</string>
+    <string name="activity_type_wakeboarding">wakeboard</string>
     <string name="activity_type_walking">camiñar</string>
     <string name="activity_type_water_skiing">esquí acuático</string>
     <string name="activity_type_wind_surfing">windsurf</string>
@@ -616,4 +613,7 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="sensor_state_heart_rate_avg">Pulso medio</string>
     <string name="sensor_state_heart_rate_max">Pulso máximo</string>
     <string name="sensor_state_power_avg">Potencia media</string>
+    <string name="track_distance_notification">Distancia: %1$s</string>
+    <string name="track_pace_notification">Ritmo: %1$s</string>
+    <string name="track_speed_notification">Velocidade: %1$s</string>
 </resources>
