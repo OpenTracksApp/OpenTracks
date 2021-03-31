@@ -608,4 +608,7 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="import_progress_summary_exists_msg">Ya existen</string>
     <string name="import_no_kml_file_found">No se ha encontrado ningún archivo doc.kml en KMZ</string>
     <string name="import_prevent_reimport">Ha establecido impedir la reimportación de la pista</string>
+    <string name="track_distance_notification">Distancia: %1$s</string>
+    <string name="track_speed_notification">Velocidad: %1$s</string>
+    <string name="track_pace_notification">Ritmo: %1$s</string>
 </resources>
