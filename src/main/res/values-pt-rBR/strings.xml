@@ -15,7 +15,7 @@
     <string name="activity_type_driving_bus">ônibus</string>
     <string name="activity_type_driving_car">carro</string>
     <string name="activity_type_ferry">balsa</string>
-    <string name="activity_type_frisbee">frisbee</string>
+    <string name="activity_type_frisbee">freisbee</string>
     <string name="activity_type_gliding">asa-delta</string>
     <string name="activity_type_hang_gliding">voo livre</string>
     <string name="activity_type_helicopter">helicóptero</string>
@@ -467,7 +467,7 @@
 \n e) comprar na <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) doar, e
 \n g) faça tudo o que você acha que ajuda a OpenTracks. </string>
-    <string name="activity_type_escooter">escooter</string>
+    <string name="activity_type_escooter">escolta</string>
     <string name="app_not_installed_show_on_map">Instale um aplicativo que suporte a apresentação de dados de mapas.</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Concluído com %1$d erro</item>
@@ -544,7 +544,7 @@
     <string name="export_progress_summary_overwrite_msg">Trilhas sobrescritas</string>
     <string name="export_progress_summary_skip_msg">Trilhas puladas</string>
     <string name="export_progress_summary_errors_msg">Erros</string>
-    <string name="generic_open_track">Open Track</string>
+    <string name="generic_open_track">Trilho aberto</string>
     <string name="import_progress_summary_ok_msg">Arquivos importados</string>
     <string name="import_progress_summary_exists_msg">Já existe</string>
     <string name="import_progress_summary_errors_msg">Erros</string>
@@ -554,4 +554,7 @@
     <string name="sensor_state_cadence_max">Ritmo cardíaco médio</string>
     <string name="sensor_state_cadence_avg">Avg Cadência</string>
     <string name="settings_sensor_wheel_circumference">Circunferência da roda (mm)</string>
+    <string name="track_distance_notification">Distância: %1$s</string>
+    <string name="track_speed_notification">Velocidade: %1$s</string>
+    <string name="track_pace_notification">Parcela: %1$s</string>
 </resources>
