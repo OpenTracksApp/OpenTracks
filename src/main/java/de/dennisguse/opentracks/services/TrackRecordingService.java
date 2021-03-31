@@ -103,6 +103,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             if (PreferencesUtils.isKey(context, R.string.stats_units_key, key)) {
                 boolean metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
                 voiceExecutor.setMetricUnits(metricUnits);
+                notificationManager.setMetricUnits(metricUnits);
             }
             if (PreferencesUtils.isKey(context, R.string.voice_frequency_key, key)) {
                 voiceExecutor.setTaskFrequency(PreferencesUtils.getVoiceFrequency(sharedPreferences, context));
@@ -557,7 +558,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         fillWithSensorDataSet(trackPoint);
 
-        notificationManager.updateTrackPoint(this, trackPoint, recordingGpsAccuracy);
+        notificationManager.updateTrackPoint(this, track.getTrackStatistics(), trackPoint, recordingGpsAccuracy);
 
         //TODO Figure out how to avoid loading the lastValidTrackPoint from the database
         TrackPoint lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(track.getId());

@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -138,8 +139,9 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         private void setCommonValues(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
             String category = aggregatedStatistic.getCategory();
 
-            reportSpeed = PreferencesUtils.isReportSpeed(PreferencesUtils.getSharedPreferences(context), context, category);
-            metricsUnits = PreferencesUtils.isMetricUnits(PreferencesUtils.getSharedPreferences(context), context);
+            SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
+            reportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, context, category);
+            metricsUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
 
             sportIcon.setImageResource(getIcon(aggregatedStatistic));
             typeLabel.setText(category);

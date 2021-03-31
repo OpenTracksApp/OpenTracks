@@ -12,7 +12,7 @@ import androidx.core.app.NotificationCompat;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
@@ -29,6 +29,8 @@ class TrackRecordingServiceNotificationManager {
     private final NotificationManager notificationManager;
 
     private boolean previousLocationWasAccurate = true;
+
+    private Boolean metricUnits = null;
 
     TrackRecordingServiceNotificationManager(Context context) {
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -59,14 +61,14 @@ class TrackRecordingServiceNotificationManager {
     }
 
     void updateContent(String content) {
-        notificationBuilder.setContentText(content);
+        notificationBuilder.setSubText(content);
         updateNotification();
     }
 
-    void updateTrackPoint(Context context, TrackPoint trackPoint, int recordingGpsAccuracy) {
+    void updateTrackPoint(Context context, TrackStatistics trackStatistics, TrackPoint trackPoint, int recordingGpsAccuracy) {
         String formattedAccuracy = context.getString(R.string.value_none);
         if (trackPoint.hasAccuracy()) {
-            formattedAccuracy = StringUtils.formatDistance(context, trackPoint.getAccuracy(), PreferencesUtils.isMetricUnits(PreferencesUtils.getSharedPreferences(context), context));
+            formattedAccuracy = StringUtils.formatDistance(context, trackPoint.getAccuracy(), metricUnits);
 
             boolean currentLocationWasAccurate = trackPoint.getAccuracy() < recordingGpsAccuracy;
             boolean shouldAlert = !currentLocationWasAccurate && previousLocationWasAccurate;
@@ -74,7 +76,9 @@ class TrackRecordingServiceNotificationManager {
             previousLocationWasAccurate = currentLocationWasAccurate;
         }
 
-        notificationBuilder.setContentText(context.getString(R.string.track_recording_notification_accuracy, formattedAccuracy));
+        notificationBuilder.setContentTitle(context.getString(R.string.track_distance_notification, StringUtils.formatDistance(context, trackStatistics.getTotalDistance(), metricUnits)));
+        notificationBuilder.setContentText(context.getString(R.string.track_speed_notification, StringUtils.formatSpeed(context, trackPoint.getSpeed(), metricUnits, true)));
+        notificationBuilder.setSubText(context.getString(R.string.track_recording_notification_accuracy, formattedAccuracy));
         updateNotification();
 
         notificationBuilder.setOnlyAlertOnce(true);
@@ -91,6 +95,10 @@ class TrackRecordingServiceNotificationManager {
 
     Notification getNotification() {
         return notificationBuilder.build();
+    }
+
+    void setMetricUnits(boolean metricUnits) {
+        this.metricUnits = metricUnits;
     }
 
     private void updateNotification() {

@@ -78,7 +78,6 @@ public class TrackRecordingServiceTestLooper {
         contentProviderUtils = new ContentProviderUtils(context);
 
         // Let's use default values.
-        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         sharedPreferences.edit().clear().apply();
 
         // Ensure that the database is empty before every test

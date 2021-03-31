@@ -63,8 +63,8 @@ public class AnnouncementUtils {
     private static String getAnnounceTime(Context context, Duration duration) {
         String result = "";
 
-        int hours = (int) (duration.getSeconds() / (60 * 60));
-        int minutes = (int) (duration.getSeconds() / 60);
+        int hours = (int) (duration.toHours());
+        int minutes = (int) (duration.toMinutes() % 60);
         int seconds = (int) (duration.getSeconds() % 60);
 
         if (hours != 0) {

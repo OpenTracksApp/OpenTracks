@@ -28,8 +28,8 @@ public class AnnouncementUtilsTest {
     public void getAnnouncement_metric() {
         TrackStatistics stats = new TrackStatistics();
         stats.setTotalDistance(20000);
-        stats.setTotalTime(Duration.ofMillis(600000));
-        stats.setMovingTime(Duration.ofMillis(300000));
+        stats.setTotalTime(Duration.ofHours(2).plusMinutes(5).plusSeconds(10));
+        stats.setMovingTime(Duration.ofHours(1).plusMinutes(5).plusSeconds(10));
         stats.setMaxSpeed(100);
         stats.setTotalElevationGain(6000f);
 
@@ -37,15 +37,15 @@ public class AnnouncementUtilsTest {
         String announcement = AnnouncementUtils.getAnnouncement(context, stats, true, true, null);
 
         // then
-        assertEquals("OpenTracks total distance 20.00 kilometers in 5 minutes 0 seconds at 240.0 kilometers per hour", announcement);
+        assertEquals("OpenTracks total distance 20.00 kilometers in 1 hour 5 minutes 10 seconds at 18.4 kilometers per hour", announcement);
     }
 
     @Test
     public void getAnnouncement_withInterval_metric() {
         TrackStatistics stats = new TrackStatistics();
         stats.setTotalDistance(20000);
-        stats.setTotalTime(Duration.ofMillis(600000));
-        stats.setMovingTime(Duration.ofMillis(300000));
+        stats.setTotalTime(Duration.ofHours(2).plusMinutes(5).plusSeconds(10));
+        stats.setMovingTime(Duration.ofHours(1).plusMinutes(5).plusSeconds(10));
         stats.setMaxSpeed(100);
         stats.setTotalElevationGain(6000f);
 
@@ -53,12 +53,10 @@ public class AnnouncementUtilsTest {
         IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, 1000);
         IntervalStatistics.Interval lastInterval = intervalStatistics.getIntervalList().get(intervalStatistics.getIntervalList().size() - 1);
 
-        String expected = "OpenTracks total distance 20.00 kilometers in 5 minutes 0 seconds at 240.0 kilometers per hour Lap speed of 51.2 kilometers per hour";
-
         // when
         String announcement = AnnouncementUtils.getAnnouncement(context, stats, true, true, lastInterval);
 
         // then
-        assertEquals(expected, announcement);
+        assertEquals("OpenTracks total distance 20.00 kilometers in 1 hour 5 minutes 10 seconds at 18.4 kilometers per hour Lap speed of 51.2 kilometers per hour", announcement);
     }
 }
