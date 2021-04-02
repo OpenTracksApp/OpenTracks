@@ -540,8 +540,6 @@ limitations under the License.
     <string name="instant_export_enabled_summary">Eksportuj ślad do pamięci po zakończeniu nagrywania</string>
     <string name="description_elevation_loss">Strata wysokości: %1$d m (%2$d ft)</string>
     <string name="description_default_speed_or_pace">Według rodzaju działalności</string>
-    <string name="gps_disabled_msg">GPS wyłączony</string>
-    <string name="gps_fixed_and_ready">GPS stały i gotowy</string>
     <string name="help_gps_troubleshooting_content"> Co możesz zrobić:
 \n a) sprawdzić, czy GPS jest włączony,
 \n b) poprawić odbiór GPS (np. wyjść na zewnątrz),
