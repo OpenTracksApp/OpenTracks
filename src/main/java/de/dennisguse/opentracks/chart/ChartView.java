@@ -41,6 +41,7 @@ import java.text.NumberFormat;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import de.dennisguse.opentracks.MarkerDetailActivity;
 import de.dennisguse.opentracks.R;
@@ -893,35 +894,23 @@ public class ChartView extends View {
 
     private void closePaths() {
         for (ChartValueSeries chartValueSeries : seriesList) {
-            int first = getFirstPopulatedChartDataIndex(chartValueSeries);
+            Optional<ChartPoint> firstValid = chartPoints.stream().filter(chartValueSeries::isChartPointValid)
+                    .findFirst();
+            Optional<ChartPoint> lastValid = chartPoints.stream().filter(chartValueSeries::isChartPointValid)
+                    .reduce((first, second) -> second);
 
-            if (first != -1) {
-                int xCorner = getX(chartPoints.get(first).getTimeOrDistance());
-                int yCorner = topBorder + effectiveHeight;
+            if (firstValid.isPresent()) {
                 Path path = chartValueSeries.getPath();
-                // Bottom right corner
-                path.lineTo(getX(chartPoints.get(chartPoints.size() - 1).getTimeOrDistance()), yCorner);
-                // Bottom left corner
-                path.lineTo(xCorner, yCorner);
-                // Top right corner
-                double value = chartValueSeries.extractDataFromChartPoint(chartPoints.get(first));
-                path.lineTo(xCorner, getY(chartValueSeries, value));
-            }
-        }
-    }
 
-    /**
-     * Finds the index of the first data point containing data for a series.
-     *
-     * @return -1 if no data point contains data for the series.
-     */
-    private int getFirstPopulatedChartDataIndex(ChartValueSeries chartValueSeries) {
-        for (int i = 0; i < chartPoints.size(); i++) {
-            if (chartValueSeries.isChartPointValid(chartPoints.get(i))) {
-                return i;
+                int yCorner = topBorder + effectiveHeight;
+
+                path.lineTo(getX(lastValid.get().getTimeOrDistance()), yCorner);
+                path.lineTo(getX(firstValid.get().getTimeOrDistance()), yCorner);
+
+                double value = chartValueSeries.extractDataFromChartPoint(firstValid.get());
+                path.lineTo(getX(firstValid.get().getTimeOrDistance()), getY(chartValueSeries, value));
             }
         }
-        return -1;
     }
 
     /**
