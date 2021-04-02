@@ -16,8 +16,8 @@ limitations under the License.
 <resources>
     <color name="chart_cadence_border">#FFF128F3</color> <!-- pink -->
     <color name="chart_cadence_fill">#40F128F3</color> <!-- transparent pink -->
-    <color name="chart_elevation_border">#FF339933</color> <!-- green -->
-    <color name="chart_elevation_fill">#40B3CFB3</color> <!-- transparent green -->
+    <color name="chart_altitude_border">#FF339933</color> <!-- green -->
+    <color name="chart_altitude_fill">#40B3CFB3</color> <!-- transparent green -->
     <color name="chart_heart_rate_border">#FFCC3300</color> <!-- red -->
     <color name="chart_heart_rate_fill">#40E88A70</color> <!-- transparent red -->
     <color name="chart_pace_border">#FF0066FF</color> <!-- blue -->

@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Просечна брзина кретања: %1$.2f км/ч (%2$.1f ми/ч)</string>
     <string name="description_average_pace_in_minute">Просечни темпо: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Просечна брзина: %1$.2f км/ч (%2$.1f ми/ч)</string>
-    <string name="description_elevation_gain">Повећање надморске висине: %1$d м (%2$d ст)</string>
-    <string name="description_elevation_imperial">Надморска висина (ст)</string>
-    <string name="description_elevation_metric">Надморска висина (м)</string>
+    <string name="description_altitude_gain">Повећање надморске висине: %1$d м (%2$d ст)</string>
+    <string name="description_altitude_imperial">Надморска висина (ст)</string>
+    <string name="description_altitude_metric">Надморска висина (м)</string>
     <string name="description_fastest_pace_in_minute">Најбржи темпо: %1$s min/km (%2$s min/mi)</string>
     <string name="description_location_accuracy">Прецизност (м)</string>
     <string name="description_location_altitude">Надморска висина (м)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">Географска ширина (степени)</string>
     <string name="description_location_longitude">Географска дужина (степени)</string>
     <string name="description_location_speed">Брзина (м/с)</string>
-    <string name="description_max_elevation">Максимална надморска висина: %1$d м (%2$d ст)</string>
+    <string name="description_max_altitude">Максимална надморска висина: %1$d м (%2$d ст)</string>
     <string name="description_max_grade">Максимална кота: %1$d %%</string>
     <string name="description_max_speed">Максимална брзина: %1$.2f км/ч (%2$.1f ми/ч)</string>
-    <string name="description_min_elevation">Минимална надморска висина: %1$d м (%2$d ст)</string>
+    <string name="description_min_altitude">Минимална надморска висина: %1$d м (%2$d ст)</string>
     <string name="description_min_grade">Минимална кота: %1$d %%</string>
     <string name="description_moving_time">Време кретања: %1$s</string>
     <string name="description_pace_imperial">Темпо (min/mi)</string>
@@ -286,7 +286,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">Прос. брзина кретања</string>
     <string name="stats_average_pace">Прос. темпо</string>
     <string name="stats_average_speed">Прос. брзина</string>
-    <string name="stats_elevation">Узвишење</string>
+    <string name="stats_altitude">Узвишење</string>
     <string name="stats_fastest_pace">Најбржи темпо</string>
     <string name="stats_gain">Повећање</string>
     <string name="stats_grade">Нагиб</string>

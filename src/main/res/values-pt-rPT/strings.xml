@@ -71,9 +71,9 @@
     <string name="description_average_moving_speed">Velocidade média de deslocação: %1$.2f km/h ( %2$.1f mi / h)</string>
     <string name="description_average_pace_in_minute">Ritmo médio: %1$s min/km ( %2$s min/mi)</string>
     <string name="description_average_speed">Velocidade média: %1$.2f km/h ( %2$.1f mi/h)</string>
-    <string name="description_elevation_gain">Diferença de altitude: %1$d m ( %2$d ft)</string>
-    <string name="description_elevation_imperial">Elevação (pés)</string>
-    <string name="description_elevation_metric">Elevação (m)</string>
+    <string name="description_altitude_gain">Diferença de altitude: %1$d m ( %2$d ft)</string>
+    <string name="description_altitude_imperial">Elevação (pés)</string>
+    <string name="description_altitude_metric">Elevação (m)</string>
     <string name="description_fastest_pace_in_minute">Ritmo mais rápido: %1$s min/km (%2$s min/mi)</string>
     <string name="description_location_accuracy">Precisão (m)</string>
     <string name="description_location_altitude">Altitude (m)</string>
@@ -81,10 +81,10 @@
     <string name="description_location_latitude">Latitude (graus)</string>
     <string name="description_location_longitude">Longitude (graus)</string>
     <string name="description_location_speed">Velocidade (m/s)</string>
-    <string name="description_max_elevation">Altitude máxima: %1$d m ( %2$d ft)</string>
+    <string name="description_max_altitude">Altitude máxima: %1$d m ( %2$d ft)</string>
     <string name="description_max_grade">Inclinação máxima: %1$d %%</string>
     <string name="description_max_speed">Velocidade máxima: %1$.2f km/h ( %2$.1f mi/h)</string>
-    <string name="description_min_elevation">Altitude mínima: %1$d m ( %2$d ft)</string>
+    <string name="description_min_altitude">Altitude mínima: %1$d m ( %2$d ft)</string>
     <string name="description_min_grade">Inclinação mínima: %1$d %%</string>
     <string name="description_moving_time">Tempo de deslocação: %1$s</string>
     <string name="description_pace_imperial">Ritmo (min/mi)</string>
@@ -246,7 +246,7 @@
     <string name="stats_average_moving_speed">Velocidade média de deslocação</string>
     <string name="stats_average_pace">Ritmo médio</string>
     <string name="stats_average_speed">Velocidade média</string>
-    <string name="stats_elevation">Elevação</string>
+    <string name="stats_altitude">Elevação</string>
     <string name="stats_fastest_pace">Ritmo mais rápido</string>
     <string name="stats_gain">Ganho</string>
     <string name="stats_grade">Grau</string>

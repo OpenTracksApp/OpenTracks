@@ -136,9 +136,9 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="description_average_moving_speed">Gemiddelde verplaatsingssnelheid: %1$.2f km/u (%2$.1f mi/u)</string>
     <string name="description_average_pace_in_minute">Gemiddeld tempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Gemiddelde snelheid: %1$.2f km/u (%2$.1f mi/u)</string>
-    <string name="description_elevation_gain">Hoogteverschil: %1$d m (%2$d ft)</string>
-    <string name="description_elevation_imperial">Hoogte (ft)</string>
-    <string name="description_elevation_metric">Hoogte (m)</string>
+    <string name="description_altitude_gain">Hoogteverschil: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_imperial">Hoogte (ft)</string>
+    <string name="description_altitude_metric">Hoogte (m)</string>
     <string name="description_fastest_pace_in_minute">Snelste tempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_location_accuracy">Nauwkeurigheid (m)</string>
     <string name="description_location_altitude">Hoogte (m)</string>
@@ -146,10 +146,10 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="description_location_latitude">Breedtegraad (gr)</string>
     <string name="description_location_longitude">Lengtegraad (gr)</string>
     <string name="description_location_speed">Snelheid (m/s)</string>
-    <string name="description_max_elevation">Max. hoogte: %1$d m (%2$d ft)</string>
+    <string name="description_max_altitude">Max. hoogte: %1$d m (%2$d ft)</string>
     <string name="description_max_grade">Max. helling: %1$d %%</string>
     <string name="description_max_speed">Max. snelheid: %1$.2f km/u (%2$.1f mi/u)</string>
-    <string name="description_min_elevation">Min. hoogte: %1$d m (%2$d ft)</string>
+    <string name="description_min_altitude">Min. hoogte: %1$d m (%2$d ft)</string>
     <string name="description_min_grade">Min. helling: %1$d %%</string>
     <string name="description_moving_time">Verplaatsingstijd: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/mi)</string>
@@ -355,7 +355,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="stats_average_moving_speed">Gem. verplaatsingssnelheid</string>
     <string name="stats_average_pace">Gem. tempo</string>
     <string name="stats_average_speed">Gem. snelheid</string>
-    <string name="stats_elevation">Hoogte</string>
+    <string name="stats_altitude">Hoogte</string>
     <string name="stats_fastest_pace">Snelste tempo</string>
     <string name="stats_gain">Stijging</string>
     <string name="stats_grade">Helling</string>
@@ -538,7 +538,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="share_image_body">Ik denk dat je misschien geïnteresseerd bent in dit beeld.</string>
     <string name="export_track_already_exists_msg">De track %1$s bestaat al in de doelmap.</string>
     <string name="export_track_errors">Tracks niet geëxporteerd</string>
-    <string name="description_elevation_loss">Hoogteverlies: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_loss">Hoogteverlies: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Post-workout export mislukt, controleer de export map.</string>
     <string name="open_track_using_dashboard">Openen met behulp van OpenTracks-Dashboard</string>
     <string name="open_track_as_KMZ">Openen als KMZ</string>

@@ -52,10 +52,10 @@ public interface TracksColumns extends BaseColumns {
     String AVGSPEED = "avgspeed"; // average speed
     String AVGMOVINGSPEED = "avgmovingspeed"; // average moving speed
     String MAXSPEED = "maxspeed"; // maximum speed
-    String MINELEVATION = "minelevation"; // minimum elevation
-    String MAXELEVATION = "maxelevation"; // maximum elevation
-    String ELEVATIONGAIN = "elevationgain"; // elevation gain
-    String ELEVATIONLOSS = "elevationloss"; // elevation loss
+    String MIN_ALTITUDE = "minelevation"; // minimum altitude //TODO RENAME column
+    String MAX_ALTITUDE = "maxelevation"; // maximum altitude //TODO RENAME column
+    String ALTITUDE_GAIN = "elevationgain"; // altitude gain //TODO RENAME column
+    String ALTITUDE_LOSS = "elevationloss"; // altitude loss //TODO RENAME column
     String ICON = "icon"; // track activity type icon
 
     String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " ("
@@ -72,12 +72,12 @@ public interface TracksColumns extends BaseColumns {
             + AVGSPEED + " FLOAT, "
             + AVGMOVINGSPEED + " FLOAT, "
             + MAXSPEED + " FLOAT, "
-            + MINELEVATION + " FLOAT, "
-            + MAXELEVATION + " FLOAT, "
-            + ELEVATIONGAIN + " FLOAT, "
+            + MIN_ALTITUDE + " FLOAT, "
+            + MAX_ALTITUDE + " FLOAT, "
+            + ALTITUDE_GAIN + " FLOAT, "
             + ICON + " TEXT, "
             + UUID + " BLOB, "
-            + ELEVATIONLOSS + " FLOAT)";
+            + ALTITUDE_LOSS + " FLOAT)";
 
     String CREATE_TABLE_INDEX = "CREATE UNIQUE INDEX " + TABLE_NAME + "_" + UUID + "_index ON " + TABLE_NAME + "(" + UUID + ")";
 

@@ -48,7 +48,7 @@ public interface MarkerColumns extends BaseColumns {
     String LONGITUDE = "longitude"; // longitude
     String LATITUDE = "latitude"; // latitude
     String TIME = "time"; // time
-    String ALTITUDE = "elevation"; // altitude
+    String ALTITUDE = "elevation"; // altitude //TODO RENAME column
     String ACCURACY = "accuracy"; // accuracy
     String BEARING = "bearing"; // bearing
 

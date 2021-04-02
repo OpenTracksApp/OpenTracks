@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Purata kelajuan pergerakan: %1$.2f km/j (%2$.1f bt/j)</string>
     <string name="description_average_pace_in_minute">Purata langkah: %1$s min/km (%2$s min/bt)</string>
     <string name="description_average_speed">Purata kelajuan: %1$.2f km/j (%2$.1f bt/j)</string>
-    <string name="description_elevation_gain">Peningkatan ketinggian: %1$d m (%2$d kaki)</string>
-    <string name="description_elevation_imperial">Ketinggian (kaki)</string>
-    <string name="description_elevation_metric">Ketinggian (m)</string>
+    <string name="description_altitude_gain">Peningkatan ketinggian: %1$d m (%2$d kaki)</string>
+    <string name="description_altitude_imperial">Ketinggian (kaki)</string>
+    <string name="description_altitude_metric">Ketinggian (m)</string>
     <string name="description_fastest_pace_in_minute">Langkah paling laju: %1$s min/km (%2$s min/bt)</string>
     <string name="description_location_accuracy">Ketepatan (m)</string>
     <string name="description_location_altitude">Altitud (m)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">Latitud (darjah)</string>
     <string name="description_location_longitude">Longitud (darjah)</string>
     <string name="description_location_speed">Kelajuan (m/s)</string>
-    <string name="description_max_elevation">Ketinggian maksimum: %1$d m (%2$d kaki)</string>
+    <string name="description_max_altitude">Ketinggian maksimum: %1$d m (%2$d kaki)</string>
     <string name="description_max_grade">Gred maksimum: %1$d %%</string>
     <string name="description_max_speed">Kelajuan maksimum: %1$.2f km/j (%2$.1f bt/j)</string>
-    <string name="description_min_elevation">Ketinggian min: %1$d m (%2$d kaki)</string>
+    <string name="description_min_altitude">Ketinggian min: %1$d m (%2$d kaki)</string>
     <string name="description_min_grade">Gred min: %1$d %%</string>
     <string name="description_moving_time">Masa pergerakan: %1$s</string>
     <string name="description_pace_imperial">Langkah (min/bt)</string>
@@ -288,7 +288,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">Kelajuan bergerak purata</string>
     <string name="stats_average_pace">Langkah purata</string>
     <string name="stats_average_speed">Kelajuan purata</string>
-    <string name="stats_elevation">Ketinggian</string>
+    <string name="stats_altitude">Ketinggian</string>
     <string name="stats_fastest_pace">Langkah paling cepat</string>
     <string name="stats_gain">Pertambahan</string>
     <string name="stats_grade">Cerun</string>

@@ -161,9 +161,9 @@ g) faire tout ce qui vous semble utile à OpenTracks.</string>
     <string name="description_average_moving_speed">Vitesse moyenne de déplacement : %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_average_pace_in_minute">Vitesse moyenne : %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Vitesse moyenne : %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_elevation_gain">Dénivelé : %1$d m (%2$d pi)</string>
-    <string name="description_elevation_imperial">Altitude (pi)</string>
-    <string name="description_elevation_metric">Altitude (m)</string>
+    <string name="description_altitude_gain">Dénivelé : %1$d m (%2$d pi)</string>
+    <string name="description_altitude_imperial">Altitude (pi)</string>
+    <string name="description_altitude_metric">Altitude (m)</string>
     <string name="description_fastest_pace_in_minute">Vitesse maximale : %1$s min/km (%2$s min/mi)</string>
     <string name="description_location_accuracy">Précision (m)</string>
     <string name="description_location_altitude">Altitude (m)</string>
@@ -171,10 +171,10 @@ g) faire tout ce qui vous semble utile à OpenTracks.</string>
     <string name="description_location_latitude">Latitude (degrés)</string>
     <string name="description_location_longitude">Longitude (degrés)</string>
     <string name="description_location_speed">Vitesse (m/s)</string>
-    <string name="description_max_elevation">Élévation max. : %1$d m (%2$d pi)</string>
+    <string name="description_max_altitude">Élévation max. : %1$d m (%2$d pi)</string>
     <string name="description_max_grade">Inclinaison max. : %1$d %%</string>
     <string name="description_max_speed">Vitesse max. : %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_min_elevation">Élévation min. : %1$d m (%2$d pi)</string>
+    <string name="description_min_altitude">Élévation min. : %1$d m (%2$d pi)</string>
     <string name="description_min_grade">Inclinaison min. : %1$d %%</string>
     <string name="description_moving_time">Durée du déplacement : %1$s</string>
     <string name="description_pace_imperial">Vitesse (min/mi)</string>
@@ -381,7 +381,7 @@ g) faire tout ce qui vous semble utile à OpenTracks.</string>
     <string name="stats_average_moving_speed">Vitesse moyenne de déplacement</string>
     <string name="stats_average_pace">Allure moyenne</string>
     <string name="stats_average_speed">Vitesse moyenne</string>
-    <string name="stats_elevation">Altitude</string>
+    <string name="stats_altitude">Altitude</string>
     <string name="stats_fastest_pace">Allure la plus rapide</string>
     <string name="stats_gain">Gain</string>
     <string name="stats_grade">Inclinaison</string>

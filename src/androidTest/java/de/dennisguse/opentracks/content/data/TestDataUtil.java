@@ -19,8 +19,8 @@ public class TestDataUtil {
     public static final double INITIAL_LATITUDE = 37.0;
     public static final double INITIAL_LONGITUDE = -57.0;
     public static final double ALTITUDE_INTERVAL = 2.5;
-    public static final float ELEVATION_GAIN = 3;
-    public static final float ELEVATION_LOSS = 3;
+    public static final float ALTITUDE_GAIN = 3;
+    public static final float ALTITUDE_LOSS = 3;
 
     /**
      * Create a track without any trackPoints.
@@ -121,8 +121,8 @@ public class TestDataUtil {
         trackPoint.setHeartRate_bpm(100f + i);
         trackPoint.setCyclingCadence_rpm(300f + i);
         trackPoint.setPower(400f + i);
-        trackPoint.setElevationGain(ELEVATION_GAIN);
-        trackPoint.setElevationLoss(ELEVATION_LOSS);
+        trackPoint.setAltitudeGain(ALTITUDE_GAIN);
+        trackPoint.setAltitudeLoss(ALTITUDE_LOSS);
         return trackPoint;
     }
 

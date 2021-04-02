@@ -231,24 +231,24 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsMovingSpeedUnit.setText(parts.second);
         }
 
-        // Set elevation gain and loss
+        // Set altitude gain and loss
         {
-            // Make elevation visible?
-            boolean showElevation = PreferencesUtils.isShowStatsElevation(sharedPreferences, getContext());
-            viewBinding.statsElevationGroup.setVisibility(showElevation ? View.VISIBLE : View.GONE);
+            // Make altitude visible?
+            boolean show = PreferencesUtils.isShowStatsAltitude(sharedPreferences, getContext());
+            viewBinding.statsAltitudeGroup.setVisibility(show ? View.VISIBLE : View.GONE);
 
-            Float elevationGain_m = trackStatistics.getTotalElevationGain();
-            Float elevationLoss_m = trackStatistics.getTotalElevationLoss();
+            Float altitudeGain_m = trackStatistics.getTotalAltitudeGain();
+            Float altitudeLoss_m = trackStatistics.getTotalAltitudeLoss();
 
             Pair<String, String> parts;
 
-            parts = StringUtils.formatElevation(getContext(), elevationGain_m, preferenceMetricUnits);
-            viewBinding.statsElevationGainValue.setText(parts.first);
-            viewBinding.statsElevationGainUnit.setText(parts.second);
+            parts = StringUtils.formatAltitude(getContext(), altitudeGain_m, preferenceMetricUnits);
+            viewBinding.statsAltitudeGainValue.setText(parts.first);
+            viewBinding.statsAltitudeGainUnit.setText(parts.second);
 
-            parts = StringUtils.formatElevation(getContext(), elevationLoss_m, preferenceMetricUnits);
-            viewBinding.statsElevationLossValue.setText(parts.first);
-            viewBinding.statsElevationLossUnit.setText(parts.second);
+            parts = StringUtils.formatAltitude(getContext(), altitudeLoss_m, preferenceMetricUnits);
+            viewBinding.statsAltitudeLossValue.setText(parts.first);
+            viewBinding.statsAltitudeLossUnit.setText(parts.second);
         }
     }
 

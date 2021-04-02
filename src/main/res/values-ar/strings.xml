@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">متوسط سرعة التحرك: %1$.2f كم/ساعة (%2$.1f ميل/ساعة)</string>
     <string name="description_average_pace_in_minute">متوسط السرعة:‏ %1$s‏ دقيقة/كم‏ (%2$s‏ دقيقة/ميل)‏</string>
     <string name="description_average_speed">سرعة متوسطة: %1$.2f كم/ساعة (%2$.1f ميل/ساعة)</string>
-    <string name="description_elevation_gain">الزيادة في الارتفاع: %1$d م (%2$d قدم)</string>
-    <string name="description_elevation_imperial">الارتفاع (قدم)</string>
-    <string name="description_elevation_metric">الارتفاع (م)</string>
+    <string name="description_altitude_gain">الزيادة في الارتفاع: %1$d م (%2$d قدم)</string>
+    <string name="description_altitude_imperial">الارتفاع (قدم)</string>
+    <string name="description_altitude_metric">الارتفاع (م)</string>
     <string name="description_fastest_pace_in_minute">أسرع سرعة:‏ %1$s‏ دقيقة/كم‏ (%2$s‏ دقيقة/ميل)‏</string>
     <string name="description_location_accuracy">الدقة (م)</string>
     <string name="description_location_altitude">الارتفاع (م)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">خط العرض (درجة)</string>
     <string name="description_location_longitude">خط الطول (درجة)</string>
     <string name="description_location_speed">السرعة (متر/ثانية)</string>
-    <string name="description_max_elevation">أقصى ارتفاع: %1$d م (%2$d قدم)</string>
+    <string name="description_max_altitude">أقصى ارتفاع: %1$d م (%2$d قدم)</string>
     <string name="description_max_grade">أقصى درجة: %1$d %%</string>
     <string name="description_max_speed">أقصى سرعة: %1$.2f كم/ساعة ( %2$.1f ميل/ساعة)</string>
-    <string name="description_min_elevation">أدنى ارتفاع: %1$d م ( %2$d قدم)</string>
+    <string name="description_min_altitude">أدنى ارتفاع: %1$d م ( %2$d قدم)</string>
     <string name="description_min_grade">أدنى درجة: %1$d %%</string>
     <string name="description_moving_time">وقت النقل: %1$s</string>
     <string name="description_pace_imperial">السرعة (دقيقة/ميل)</string>
@@ -286,7 +286,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">متوسط سرعة التحرك</string>
     <string name="stats_average_pace">متوسط ​​الإيقاع</string>
     <string name="stats_average_speed">متوسط السرعة</string>
-    <string name="stats_elevation">الارتفاع</string>
+    <string name="stats_altitude">الارتفاع</string>
     <string name="stats_fastest_pace">أسرع إيقاع</string>
     <string name="stats_gain">الاكتساب</string>
     <string name="stats_grade">الدرجة</string>

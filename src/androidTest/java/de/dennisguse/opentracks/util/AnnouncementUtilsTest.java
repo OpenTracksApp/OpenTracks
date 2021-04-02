@@ -31,7 +31,7 @@ public class AnnouncementUtilsTest {
         stats.setTotalTime(Duration.ofHours(2).plusMinutes(5).plusSeconds(10));
         stats.setMovingTime(Duration.ofHours(1).plusMinutes(5).plusSeconds(10));
         stats.setMaxSpeed(100);
-        stats.setTotalElevationGain(6000f);
+        stats.setTotalAltitudeGain(6000f);
 
         // when
         String announcement = AnnouncementUtils.getAnnouncement(context, stats, true, true, null);
@@ -47,7 +47,7 @@ public class AnnouncementUtilsTest {
         stats.setTotalTime(Duration.ofHours(2).plusMinutes(5).plusSeconds(10));
         stats.setMovingTime(Duration.ofHours(1).plusMinutes(5).plusSeconds(10));
         stats.setMaxSpeed(100);
-        stats.setTotalElevationGain(6000f);
+        stats.setTotalAltitudeGain(6000f);
 
         List<TrackPoint> trackPoints = TestDataUtil.createTrack(new Track.Id(System.currentTimeMillis()), 10).second;
         IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, 1000);

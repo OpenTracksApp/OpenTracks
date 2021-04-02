@@ -42,7 +42,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
 
     private static final String TAG_DESCRIPTION = "desc";
     private static final String TAG_COMMENT = "cmt";
-    private static final String TAG_ELEVATION = "ele";
+    private static final String TAG_ALTITUDE = "ele";
     private static final String TAG_GPX = "gpx";
     private static final String TAG_NAME = "name";
     private static final String TAG_TIME = "time";
@@ -135,7 +135,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
                     time = content.trim();
                 }
                 break;
-            case TAG_ELEVATION:
+            case TAG_ALTITUDE:
                 if (content != null) {
                     altitude = content.trim();
                 }

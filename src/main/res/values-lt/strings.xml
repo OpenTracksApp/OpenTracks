@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Vidutinis judėjimo greitis: %1$.2f km/val. (%2$.1f myl./val.)</string>
     <string name="description_average_pace_in_minute">Vidutinis tempas: %1$s min./km (%2$s min./myl.)</string>
     <string name="description_average_speed">Vidutinis greitis: %1$.2f km/val. (%2$.1f km/val.)</string>
-    <string name="description_elevation_gain">Aukščio virš jūros lygio padidėjimas: %1$d m (%2$d pėd.)</string>
-    <string name="description_elevation_imperial">Aukštis (pėd.)</string>
-    <string name="description_elevation_metric">Aukštis (m)</string>
+    <string name="description_altitude_gain">Aukščio virš jūros lygio padidėjimas: %1$d m (%2$d pėd.)</string>
+    <string name="description_altitude_imperial">Aukštis (pėd.)</string>
+    <string name="description_altitude_metric">Aukštis (m)</string>
     <string name="description_fastest_pace_in_minute">Greičiausias tempas: %1$s min./km (%2$s min./myl.)</string>
     <string name="description_location_accuracy">Tikslumas (m)</string>
     <string name="description_location_altitude">Aukštis virš jūros lygio (m)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">Platuma (laipsniai)</string>
     <string name="description_location_longitude">Ilguma (laipsniai)</string>
     <string name="description_location_speed">Greitis (m/s)</string>
-    <string name="description_max_elevation">Maks. aukštis: %1$d m (%2$d pėd.)</string>
+    <string name="description_max_altitude">Maks. aukštis: %1$d m (%2$d pėd.)</string>
     <string name="description_max_grade">Maks. nuolydis: %1$d %%</string>
     <string name="description_max_speed">Maks. greitis: %1$.2f km/val. (%2$.1f myl./val.)</string>
-    <string name="description_min_elevation">Min. aukštis: %1$d m (%2$d pėd.)</string>
+    <string name="description_min_altitude">Min. aukštis: %1$d m (%2$d pėd.)</string>
     <string name="description_min_grade">Min. nuolydis: %1$d %%</string>
     <string name="description_moving_time">Judėjimo trukmė: %1$s</string>
     <string name="description_pace_imperial">Tempas (min./myl.)</string>
@@ -289,7 +289,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">Vid. judėjimo greitis</string>
     <string name="stats_average_pace">Vid. tempas</string>
     <string name="stats_average_speed">Vid. greitis</string>
-    <string name="stats_elevation">Pakilimas</string>
+    <string name="stats_altitude">Pakilimas</string>
     <string name="stats_fastest_pace">Greičiausias tempas</string>
     <string name="stats_gain">Pelnas</string>
     <string name="stats_grade">Laipsnis</string>

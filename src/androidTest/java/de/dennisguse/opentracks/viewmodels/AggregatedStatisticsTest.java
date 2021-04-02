@@ -32,10 +32,10 @@ public class AggregatedStatisticsTest {
         statistics.setTotalTime(Duration.ofMillis(totalTime));
         statistics.setMovingTime(Duration.ofMillis(totalTime));
         statistics.setTotalDistance(totalDistance);
-        statistics.setTotalElevationGain(50.0f);
+        statistics.setTotalAltitudeGain(50.0f);
         statistics.setMaxSpeed(50.0);  // Resulting max speed
-        statistics.setMaxElevation(1250.0);
-        statistics.setMinElevation(1200.0);  // Resulting min elevation
+        statistics.setMaxAltitude(1250.0);
+        statistics.setMinAltitude(1200.0);  // Resulting min altitude
 
         Track track = new Track();
         track.setIcon(TrackIconUtils.getIconValue(context, category));

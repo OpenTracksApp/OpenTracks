@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">평균 이동 속도: 시속 %1$.2fkm(시속 %2$.1f마일)</string>
     <string name="description_average_pace_in_minute">평균 속도: %1$s분/km(%2$s분/마일)</string>
     <string name="description_average_speed">평균 속도: 시속 %1$.2fkm(시속 %2$.1f마일)</string>
-    <string name="description_elevation_gain">고도: %1$dm(%2$d피트)</string>
-    <string name="description_elevation_imperial">고도(피트)</string>
-    <string name="description_elevation_metric">고도(m)</string>
+    <string name="description_altitude_gain">고도: %1$dm(%2$d피트)</string>
+    <string name="description_altitude_imperial">고도(피트)</string>
+    <string name="description_altitude_metric">고도(m)</string>
     <string name="description_fastest_pace_in_minute">최고 속도: %1$s 분/km (%2$s 분/마일)</string>
     <string name="description_location_accuracy">정확도(m)</string>
     <string name="description_location_altitude">고도(m)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">위도(도)</string>
     <string name="description_location_longitude">경도(도)</string>
     <string name="description_location_speed">속도(m/s)</string>
-    <string name="description_max_elevation">최고 고도: %1$dm(%2$d피트)</string>
+    <string name="description_max_altitude">최고 고도: %1$dm(%2$d피트)</string>
     <string name="description_max_grade">최대 등급: %1$d %%</string>
     <string name="description_max_speed">최대 속도: 시속 %1$.2fkm(시속 %2$.1f마일)</string>
-    <string name="description_min_elevation">최저 고도: %1$dm(%2$d피트)</string>
+    <string name="description_min_altitude">최저 고도: %1$dm(%2$d피트)</string>
     <string name="description_min_grade">최소 등급: %1$d %%</string>
     <string name="description_moving_time">이동 시간: %1$s</string>
     <string name="description_pace_imperial">속도(분/마일)</string>
@@ -287,7 +287,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">평균 이동 속도</string>
     <string name="stats_average_pace">평균 페이스</string>
     <string name="stats_average_speed">평균 속도</string>
-    <string name="stats_elevation">고도</string>
+    <string name="stats_altitude">고도</string>
     <string name="stats_fastest_pace">최고 속도</string>
     <string name="stats_gain">등락</string>
     <string name="stats_grade">등급</string>

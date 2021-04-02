@@ -26,8 +26,8 @@ public class IntervalStatistics {
         }
 
         Interval interval = new Interval();
-        interval.gain_m += trackPoints.get(0).hasElevationGain() ? trackPoints.get(0).getElevationGain() : 0;
-        interval.loss_m += trackPoints.get(0).hasElevationLoss() ? trackPoints.get(0).getElevationLoss() : 0;
+        interval.gain_m += trackPoints.get(0).hasAltitudeGain() ? trackPoints.get(0).getAltitudeGain() : 0;
+        interval.loss_m += trackPoints.get(0).hasAltitudeLoss() ? trackPoints.get(0).getAltitudeLoss() : 0;
         for (int i = 1; i < trackPoints.size(); i++) {
             TrackPoint prevTrackPoint = trackPoints.get(i - 1);
             TrackPoint trackPoint = trackPoints.get(i);
@@ -35,8 +35,8 @@ public class IntervalStatistics {
             if (trackPoint.hasLocation() && prevTrackPoint.hasLocation()) {
                 interval.distance_m += prevTrackPoint.distanceToPrevious(trackPoint);
                 interval.time = interval.time.plus(Duration.between(prevTrackPoint.getTime(), trackPoint.getTime()));
-                interval.gain_m += trackPoint.hasElevationGain() ? trackPoint.getElevationGain() : 0;
-                interval.loss_m += trackPoint.hasElevationLoss() ? trackPoint.getElevationLoss() : 0;
+                interval.gain_m += trackPoint.hasAltitudeGain() ? trackPoint.getAltitudeGain() : 0;
+                interval.loss_m += trackPoint.hasAltitudeLoss() ? trackPoint.getAltitudeLoss() : 0;
 
                 if (interval.distance_m >= distanceInterval_m) {
                     float adjustFactor = distanceInterval_m / interval.distance_m;

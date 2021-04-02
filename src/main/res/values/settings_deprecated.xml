@@ -43,8 +43,8 @@
         true
     </bool>
 
-    <string name="chart_show_elevation_key" translatable="false" tools:keep="@string/chart_show_elevation_key">chartShowElevation</string>
-    <bool name="chart_show_elevation_default" translatable="false" tools:keep="@bool/chart_show_elevation_default">
+    <string name="chart_show_altitude_key" translatable="false" tools:keep="@string/chart_show_elevation_key">chartShowElevation</string>
+    <bool name="chart_show_altitude_default" translatable="false" tools:keep="@bool/chart_show_elevation_default">
         true
     </bool>
 

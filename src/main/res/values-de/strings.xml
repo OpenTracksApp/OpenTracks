@@ -145,9 +145,9 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="description_average_moving_speed">Durchschnittliche Geschwindigkeit in Bewegung: %1$.2f km/h (%2$.1f Meile/h)</string>
     <string name="description_average_pace_in_minute">Durchschnittliches Tempo: %1$s min/km (%2$s min/Meile)</string>
     <string name="description_average_speed">Durchschnittliche Geschwindigkeit: %1$.2f km/h (%2$.1f Meile/h)</string>
-    <string name="description_elevation_gain">Höhenunterschied: %1$d m (%2$d Fuß)</string>
-    <string name="description_elevation_imperial">Höhe (ft)</string>
-    <string name="description_elevation_metric">Höhe (m)</string>
+    <string name="description_altitude_gain">Höhenunterschied: %1$d m (%2$d Fuß)</string>
+    <string name="description_altitude_imperial">Höhe (ft)</string>
+    <string name="description_altitude_metric">Höhe (m)</string>
     <string name="description_fastest_pace_in_minute">Schnellstes Tempo: %1$s min/km (%2$s min/Meile)</string>
     <string name="description_location_accuracy">Genauigkeit (m)</string>
     <string name="description_location_altitude">Höhe (m)</string>
@@ -155,10 +155,10 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="description_location_latitude">Breitengrad (°)</string>
     <string name="description_location_longitude">Längengrad (°)</string>
     <string name="description_location_speed">Geschwindigkeit (m/s)</string>
-    <string name="description_max_elevation">Maximale Höhe: %1$d m (%2$d Fuß)</string>
+    <string name="description_max_altitude">Maximale Höhe: %1$d m (%2$d Fuß)</string>
     <string name="description_max_grade">Maximales Gefälle: %1$d %%</string>
     <string name="description_max_speed">Maximale Geschwindigkeit: %1$.2f km/h (%2$.1f Meile/h)</string>
-    <string name="description_min_elevation">Minimale Höhe: %1$d m (%2$d Fuß)</string>
+    <string name="description_min_altitude">Minimale Höhe: %1$d m (%2$d Fuß)</string>
     <string name="description_min_grade">Minimales Gefälle: %1$d %%</string>
     <string name="description_moving_time">Zeit in Bewegung: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/Meile)</string>
@@ -364,7 +364,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
 \n(Bewegung)</string>
     <string name="stats_average_pace">Durchschnitt</string>
     <string name="stats_average_speed">Durchschnitt</string>
-    <string name="stats_elevation">Höhe</string>
+    <string name="stats_altitude">Höhe</string>
     <string name="stats_fastest_pace">Schnellstes Tempo</string>
     <string name="stats_gain">Anstieg</string>
     <string name="stats_grade">Gefälle</string>
@@ -570,7 +570,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="import_file_imported">Datei %1$s wurde importiert</string>
     <string name="hold_to_pause">Halten für Pause</string>
-    <string name="description_elevation_loss">Höhenverlust: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_loss">Höhenverlust: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Der Datenexport im Anschluss an die Übung ist fehlgeschlagen. Bitte prüfe den Exportordner.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Vollbild</string>
     <string name="stats_intervals">Intervalle</string>

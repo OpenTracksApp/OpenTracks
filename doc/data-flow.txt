@@ -1,5 +1,5 @@
 @startuml
-SensorManager --> ElevationSumManager
+SensorManager --> AltitudeSumManager
 LocationManager --> TrackRecordingService
 ElevationSumManager --> TrackRecordingService
 
@@ -14,6 +14,6 @@ TrackDataHub --> StatisticsRecordingFragment : TrackPoints, TrackStatistics, Way
 TrackDataHub --> StatisticsRecordedFragment : TrackPoints, TrackStatistics, Waypoints (push)
 TrackDataHub --> ChartFragment --> ChartView
 
-TrackRecordingServiceConnection --> StatisticsRecordingFragment : Sensor data (heartrate, cadence, elevation gain; pull 1s)
+TrackRecordingServiceConnection --> StatisticsRecordingFragment : Sensor data (heartrate, cadence, altitude gain; pull 1s)
 TrackRecordingServiceConnection --> TrackController : Start time (pull, onStart)
 @enduml

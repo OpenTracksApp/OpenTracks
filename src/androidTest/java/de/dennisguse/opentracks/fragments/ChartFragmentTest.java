@@ -211,18 +211,18 @@ public class ChartFragmentTest {
     }
 
     /**
-     * Tests the logic to get the value of elevation in {@link ChartFragment#createPendingPoint(TrackPoint)} by one and two points.
+     * Tests the logic to get the value of altitude in {@link ChartFragment#createPendingPoint(TrackPoint)} by one and two points.
      */
     @Test
-    public void testCreatePendingPoint_elevation() {
+    public void testCreatePendingPoint_altitude() {
         TrackPoint trackPoint1 = TrackStubUtils.createDefaultTrackPoint();
 
         /*
-         * At first, clear old points of elevation, so give true to the second parameter.
+         * At first, clear old points of altitude, so give true to the second parameter.
          * Then only one value INITIAL_ALTITUDE in buffer.
          */
         ChartPoint point = chartFragment.createPendingPoint(trackPoint1);
-        assertEquals(TrackStubUtils.INITIAL_ALTITUDE, point.getElevation(), 0.01);
+        assertEquals(TrackStubUtils.INITIAL_ALTITUDE, point.getAltitude(), 0.01);
 
         /*
          * Send another value to buffer, now there are two values, INITIAL_ALTITUDE and INITIAL_ALTITUDE * 2.
@@ -230,7 +230,7 @@ public class ChartFragmentTest {
         TrackPoint trackPoint2 = TrackStubUtils.createDefaultTrackPoint();
         trackPoint2.setAltitude(TrackStubUtils.INITIAL_ALTITUDE * 2);
         point = chartFragment.createPendingPoint(trackPoint2);
-        assertEquals((TrackStubUtils.INITIAL_ALTITUDE + TrackStubUtils.INITIAL_ALTITUDE * 2) / 2.0, point.getElevation(), 0.01);
+        assertEquals((TrackStubUtils.INITIAL_ALTITUDE + TrackStubUtils.INITIAL_ALTITUDE * 2) / 2.0, point.getAltitude(), 0.01);
     }
 
     /**

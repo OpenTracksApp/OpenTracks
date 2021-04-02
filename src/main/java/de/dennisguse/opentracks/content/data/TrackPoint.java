@@ -93,8 +93,8 @@ public class TrackPoint {
     private Float heartRate_bpm = null;
     private Float cyclingCadence_rpm = null;
     private Float power = null;
-    private Float elevationGain = null;
-    private Float elevationLoss = null;
+    private Float altitudeGain_m = null;
+    private Float altitudeLoss_m = null;
 
     public TrackPoint(@NonNull Type type) {
         this.type = type;
@@ -221,28 +221,28 @@ public class TrackPoint {
         return location;
     }
 
-    public boolean hasElevationGain() {
-        return elevationGain != null;
+    public boolean hasAltitudeGain() {
+        return altitudeGain_m != null;
     }
 
-    public float getElevationGain() {
-        return elevationGain;
+    public float getAltitudeGain() {
+        return altitudeGain_m;
     }
 
-    public void setElevationGain(Float elevationGain) {
-        this.elevationGain = elevationGain;
+    public void setAltitudeGain(Float altitudeGain_m) {
+        this.altitudeGain_m = altitudeGain_m;
     }
 
-    public boolean hasElevationLoss() {
-        return elevationLoss != null;
+    public boolean hasAltitudeLoss() {
+        return altitudeLoss_m != null;
     }
 
-    public float getElevationLoss() {
-        return elevationLoss;
+    public float getAltitudeLoss() {
+        return altitudeLoss_m;
     }
 
-    public void setElevationLoss(Float elevationLoss) {
-        this.elevationLoss = elevationLoss;
+    public void setAltitudeLoss(Float altitudeLoss_m) {
+        this.altitudeLoss_m = altitudeLoss_m;
     }
 
     public Instant getTime() {

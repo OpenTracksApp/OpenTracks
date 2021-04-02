@@ -71,9 +71,9 @@
     <string name="description_average_moving_speed">Velocidade média de deslocamento: %1$.2f km/h (%2$.1f milhas/h)</string>
     <string name="description_average_pace_in_minute">Ritmo médio: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Velocidade média: %1$.2f km/h (%2$.1f milhas/h)</string>
-    <string name="description_elevation_gain">Ganho de elevação: %1$d m (%2$d pés)</string>
-    <string name="description_elevation_imperial">Elevação (pés)</string>
-    <string name="description_elevation_metric">Elevação (m)</string>
+    <string name="description_altitude_gain">Ganho de elevação: %1$d m (%2$d pés)</string>
+    <string name="description_altitude_imperial">Elevação (pés)</string>
+    <string name="description_altitude_metric">Elevação (m)</string>
     <string name="description_fastest_pace_in_minute">Ritmo mais rápido: %1$s min/km (%2$s min/mi)</string>
     <string name="description_location_accuracy">Precisão (m)</string>
     <string name="description_location_altitude">Altitude (m)</string>
@@ -81,10 +81,10 @@
     <string name="description_location_latitude">Latitude (graus)</string>
     <string name="description_location_longitude">Longitude (graus)</string>
     <string name="description_location_speed">Velocidade (m/s)</string>
-    <string name="description_max_elevation">Elevação máx.: %1$d m (%2$d pés)</string>
+    <string name="description_max_altitude">Elevação máx.: %1$d m (%2$d pés)</string>
     <string name="description_max_grade">Grau máx.: %1$d %%</string>
     <string name="description_max_speed">Velocidade máx.: %1$.2f km/h (%2$.1f milhas/h)</string>
-    <string name="description_min_elevation">Elevação mín.: %1$d m (%2$d pés)</string>
+    <string name="description_min_altitude">Elevação mín.: %1$d m (%2$d pés)</string>
     <string name="description_min_grade">Grau mín.: %1$d %%</string>
     <string name="description_moving_time">Tempo de deslocamento: %1$s</string>
     <string name="description_pace_imperial">Ritmo (min/mi)</string>
@@ -250,7 +250,7 @@
     <string name="stats_average_moving_speed">Velocidade média de movimentação</string>
     <string name="stats_average_pace">Ritmo médio</string>
     <string name="stats_average_speed">Velocidade média</string>
-    <string name="stats_elevation">Elevação</string>
+    <string name="stats_altitude">Elevação</string>
     <string name="stats_fastest_pace">Ritmo mais rápido</string>
     <string name="stats_gain">Ganho</string>
     <string name="stats_grade">Inclinação</string>
@@ -536,7 +536,7 @@
     <string name="stats_loss">Perda</string>
     <string name="export_error_post_workout">A exportação pós-treino falhou, verifique o diretório de exportação.</string>
     <string name="value_float_kilometer_hour">%1$.2f km/h</string>
-    <string name="description_elevation_loss">Perda de elevação: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_loss">Perda de elevação: %1$d m (%2$d ft)</string>
     <string name="export_progress_summary_new_msg">Novas trilhas exportadas</string>
     <string name="import_no_kml_file_found">Nenhum arquivo doc.kml encontrado no KMZ</string>
     <string name="value_pace_mile">%1$d:%2$02d min/mi</string>

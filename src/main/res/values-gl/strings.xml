@@ -146,9 +146,9 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="description_average_moving_speed">Velocidade de desprazamento media: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_average_pace_in_minute">Ritmo medio: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Velocidade media: %1$.2f km/h (%2$.1f min/mi)</string>
-    <string name="description_elevation_gain">Desnivel: %1$d m (%2$d pés)</string>
-    <string name="description_elevation_imperial">Elevación (pés)</string>
-    <string name="description_elevation_metric">Elevación (m)</string>
+    <string name="description_altitude_gain">Desnivel: %1$d m (%2$d pés)</string>
+    <string name="description_altitude_imperial">Elevación (pés)</string>
+    <string name="description_altitude_metric">Elevación (m)</string>
     <string name="description_fastest_pace_in_minute">Ritmo máis rápido: %1$s min/km (%2$s min/mi)</string>
     <string name="description_location_accuracy">Precisión (m)</string>
     <string name="description_location_altitude">Altitude (m)</string>
@@ -156,10 +156,10 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="description_location_latitude">Latitude (graos)</string>
     <string name="description_location_longitude">Lonxitude (graos)</string>
     <string name="description_location_speed">Velocidade (m/s)</string>
-    <string name="description_max_elevation">Elevación máxima: %1$d m (%2$d pés)</string>
+    <string name="description_max_altitude">Elevación máxima: %1$d m (%2$d pés)</string>
     <string name="description_max_grade">Grao máximo: %1$d %%</string>
     <string name="description_max_speed">Velocidade máxima: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_min_elevation">Elevación mínima: %1$d m (%2$d pés)</string>
+    <string name="description_min_altitude">Elevación mínima: %1$d m (%2$d pés)</string>
     <string name="description_min_grade">Grao mínimo: %1$d %%</string>
     <string name="description_moving_time">Tempo de desprazamento: %1$s</string>
     <string name="description_pace_imperial">Ritmo (min/mi)</string>
@@ -371,7 +371,7 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="stats_average_moving_speed">Velocidade de desprazamento media</string>
     <string name="stats_average_pace">Ritmo medio</string>
     <string name="stats_average_speed">Velocidade media</string>
-    <string name="stats_elevation">Elevación</string>
+    <string name="stats_altitude">Elevación</string>
     <string name="stats_fastest_pace">Ritmo máis rápido</string>
     <string name="stats_gain">Desnivel</string>
     <string name="stats_grade">Pendente</string>
@@ -595,7 +595,7 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="stats_loss">Perda</string>
     <string name="value_float_kilometer_hour">%1$.2f km/h</string>
     <string name="value_float_mile_hour">%1$.2f mph</string>
-    <string name="description_elevation_loss">Perda de altitude: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_loss">Perda de altitude: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Fallou a exportación, comproba o directorio de exportación.</string>
     <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
     <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>

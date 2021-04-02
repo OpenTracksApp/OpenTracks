@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Μέση ταχύτητα κίνησης: %1$.2f χλμ/ώρα (%2$.1f μίλια/ώρα)</string>
     <string name="description_average_pace_in_minute">Μέσος ρυθμός: %1$s λεπτά/χλμ (%2$s λεπτά/μίλι)</string>
     <string name="description_average_speed">Μέση ταχύτητα: %1$.2f χλμ/ώρα (%2$.1f μίλια/ώρα)</string>
-    <string name="description_elevation_gain">Υψομετρικό κέρδος: %1$d μέτρα (%2$d πόδια)</string>
-    <string name="description_elevation_imperial">Υψόμετρο (πόδια)</string>
-    <string name="description_elevation_metric">Υψόμετρο (μέτρα)</string>
+    <string name="description_altitude_gain">Υψομετρικό κέρδος: %1$d μέτρα (%2$d πόδια)</string>
+    <string name="description_altitude_imperial">Υψόμετρο (πόδια)</string>
+    <string name="description_altitude_metric">Υψόμετρο (μέτρα)</string>
     <string name="description_fastest_pace_in_minute">Ταχύτερος ρυθμός: %1$s λεπτά/χλμ (%2$s λεπτά/μίλι)</string>
     <string name="description_location_accuracy">Ακρίβεια (μέτρα)</string>
     <string name="description_location_altitude">Υψόμετρο (μέτρα)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">Γεωγραφικό πλάτος (μοίρες)</string>
     <string name="description_location_longitude">Γεωγραφικό μήκος (μοίρες)</string>
     <string name="description_location_speed">Ταχύτητα (μέτρα/δευτ)</string>
-    <string name="description_max_elevation">Μέγιστη ανύψωση: %1$d μέτρα (%2$d πόδια)</string>
+    <string name="description_max_altitude">Μέγιστη ανύψωση: %1$d μέτρα (%2$d πόδια)</string>
     <string name="description_max_grade">Μέγ. βαθμός: %1$d %%</string>
     <string name="description_max_speed">Μέγιστη ταχύτητα: %1$.2f χλμ/ώρα (%2$.1f μίλια/ώρα)</string>
-    <string name="description_min_elevation">Ελάχιστη ανύψωση: %1$d μέτρα (%2$d πόδια)</string>
+    <string name="description_min_altitude">Ελάχιστη ανύψωση: %1$d μέτρα (%2$d πόδια)</string>
     <string name="description_min_grade">Ελάχ. βαθμός: %1$d %%</string>
     <string name="description_moving_time">Χρόνος μεταφοράς: %1$s</string>
     <string name="description_pace_imperial">Ρυθμός (λεπτά/μίλι)</string>
@@ -287,7 +287,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">Μέση ταχύτητα κίνησης</string>
     <string name="stats_average_pace">Μέσος ρυθμός</string>
     <string name="stats_average_speed">Μέση ταχύτητα</string>
-    <string name="stats_elevation">Υψόμετρο</string>
+    <string name="stats_altitude">Υψόμετρο</string>
     <string name="stats_fastest_pace">Ταχύτερος ρυθμός</string>
     <string name="stats_gain">Αύξηση</string>
     <string name="stats_grade">Κλίση</string>

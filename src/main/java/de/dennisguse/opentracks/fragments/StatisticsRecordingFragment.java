@@ -73,7 +73,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private SharedPreferences sharedPreferences;
     private boolean preferenceMetricUnits;
     private boolean preferenceReportSpeed;
-    private boolean preferenceShowElevation;
+    private boolean preferenceShowAltitude;
     private boolean preferenceShowCoordinate;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
@@ -89,9 +89,9 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
             preferenceReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), category);
         }
 
-        if (PreferencesUtils.isKey(getContext(), R.string.stats_show_grade_elevation_key, key)) {
+        if (PreferencesUtils.isKey(getContext(), R.string.stats_show_grade_altitude_key, key)) {
             updateUInecessary = true;
-            preferenceShowElevation = PreferencesUtils.isShowStatsElevation(sharedPreferences, getContext());
+            preferenceShowAltitude = PreferencesUtils.isShowStatsAltitude(sharedPreferences, getContext());
         }
 
         if (PreferencesUtils.isKey(getContext(), R.string.stats_show_coordinate_key, key)) {
@@ -303,7 +303,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
     /**
      * Tries to fetch most recent {@link SensorDataSet} from {@link de.dennisguse.opentracks.services.TrackRecordingService}.
-     * Also sets elevation gain and loss.
+     * Also sets altitude gain and loss.
      */
     private void updateSensorDataUI() {
         TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
@@ -326,44 +326,44 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
                 sensorsAdapter.swapData(sensorDataList);
                 setSpeedSensorData(sensorDataSet);
             }
-            //TODO Check if we can distribute the total elevation gain and loss via trackStatistics instead of doing some computation in the UI layer.
-            setTotalElevationGain(trackRecordingService.getElevationGain_m());
-            setTotalElevationLoss(trackRecordingService.getElevationLoss_m());
+            //TODO Check if we can get the total altitude gain and loss via trackStatistics instead of doing some computation in the UI layer.
+            setTotalAltitudeGain(trackRecordingService.getAltitudeGain_m());
+            setTotalAltitudeLoss(trackRecordingService.getAltitudeLoss_m());
         }
     }
 
-    // Set elevation gain
-    private void setTotalElevationGain(Float elevationGain_m) {
-        Float totalElevationGain = elevationGain_m;
+    // Set altitude gain
+    private void setTotalAltitudeGain(Float altitudeGain_m) {
+        Float totalAltitudeGain = altitudeGain_m;
 
-        if (lastTrackStatistics != null && lastTrackStatistics.hasTotalElevationGain()) {
-            if (elevationGain_m == null) {
-                totalElevationGain = lastTrackStatistics.getTotalElevationGain();
+        if (lastTrackStatistics != null && lastTrackStatistics.hasTotalAltitudeGain()) {
+            if (altitudeGain_m == null) {
+                totalAltitudeGain = lastTrackStatistics.getTotalAltitudeGain();
             } else {
-                totalElevationGain += lastTrackStatistics.getTotalElevationGain();
+                totalAltitudeGain += lastTrackStatistics.getTotalAltitudeGain();
             }
         }
 
-        Pair<String, String> parts = StringUtils.formatElevation(getContext(), totalElevationGain, preferenceMetricUnits);
-        viewBinding.statsElevationGainValue.setText(parts.first);
-        viewBinding.statsElevationGainUnit.setText(parts.second);
+        Pair<String, String> parts = StringUtils.formatAltitude(getContext(), totalAltitudeGain, preferenceMetricUnits);
+        viewBinding.statsAltitudeGainValue.setText(parts.first);
+        viewBinding.statsAltitudeGainUnit.setText(parts.second);
     }
 
-    // Set elevation loss
-    private void setTotalElevationLoss(Float elevationLoss_m) {
-        Float totalElevationLoss = elevationLoss_m;
+    // Set altitude loss
+    private void setTotalAltitudeLoss(Float altitudeLoss_m) {
+        Float totalAltitudeLoss = altitudeLoss_m;
 
-        if (lastTrackStatistics != null && lastTrackStatistics.hasTotalElevationLoss()) {
-            if (elevationLoss_m == null) {
-                totalElevationLoss = lastTrackStatistics.getTotalElevationLoss();
+        if (lastTrackStatistics != null && lastTrackStatistics.hasTotalAltitudeLoss()) {
+            if (altitudeLoss_m == null) {
+                totalAltitudeLoss = lastTrackStatistics.getTotalAltitudeLoss();
             } else {
-                totalElevationLoss += lastTrackStatistics.getTotalElevationLoss();
+                totalAltitudeLoss += lastTrackStatistics.getTotalAltitudeLoss();
             }
         }
 
-        Pair<String, String> parts = StringUtils.formatElevation(getContext(), totalElevationLoss, preferenceMetricUnits);
-        viewBinding.statsElevationLossValue.setText(parts.first);
-        viewBinding.statsElevationLossUnit.setText(parts.second);
+        Pair<String, String> parts = StringUtils.formatAltitude(getContext(), totalAltitudeLoss, preferenceMetricUnits);
+        viewBinding.statsAltitudeLossValue.setText(parts.first);
+        viewBinding.statsAltitudeLossUnit.setText(parts.second);
     }
 
     private void setSpeedSensorData(SensorDataSet sensorDataSet) {
@@ -429,9 +429,9 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
             viewBinding.statsMovingSpeedUnit.setText(parts.second);
         }
 
-        // Set elevation gain and loss
+        // Set altitude gain and loss
         {
-            viewBinding.statsElevationGroup.setVisibility(preferenceShowElevation ? View.VISIBLE : View.GONE);
+            viewBinding.statsAltitudeGroup.setVisibility(preferenceShowAltitude ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -452,15 +452,15 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         double speed = lastTrackPoint != null && lastTrackPoint.hasSpeed() ? lastTrackPoint.getSpeed() : Double.NaN;
         setSpeed(speed);
 
-        // Set elevation
-        viewBinding.statsElevationGroup.setVisibility(preferenceShowElevation ? View.VISIBLE : View.GONE);
+        // Set altitude
+        viewBinding.statsAltitudeGroup.setVisibility(preferenceShowAltitude ? View.VISIBLE : View.GONE);
 
-        if (preferenceShowElevation) {
-            // Current elevation
+        if (preferenceShowAltitude) {
+            // Current altitude
             Float altitude = lastTrackPoint != null && lastTrackPoint.hasAltitude() ? (float) lastTrackPoint.getAltitude() : null;
-            Pair<String, String> parts = StringUtils.formatElevation(getContext(), altitude, preferenceMetricUnits);
-            viewBinding.statsElevationCurrentValue.setText(parts.first);
-            viewBinding.statsElevationCurrentUnit.setText(parts.second);
+            Pair<String, String> parts = StringUtils.formatAltitude(getContext(), altitude, preferenceMetricUnits);
+            viewBinding.statsAltitudeCurrentValue.setText(parts.first);
+            viewBinding.statsAltitudeCurrentUnit.setText(parts.second);
         }
 
         // Set coordinate

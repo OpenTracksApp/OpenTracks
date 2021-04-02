@@ -320,21 +320,16 @@ public class StringUtils {
     }
 
     /**
-     * Sets an elevation_m value.
-     *
-     * @param context     the context
-     * @param elevation_m the elevation_m
-     * @param metricUnits true if metric units
-     * @return the formatted elevation_m (or null) and it's unit as {@link Pair}
+     * @return the formatted altitude_m (or null) and it's unit as {@link Pair}
      */
-    public static Pair<String, String> formatElevation(Context context, Float elevation_m, boolean metricUnits) {
+    public static Pair<String, String> formatAltitude(Context context, Float altitude_m, boolean metricUnits) {
         String value = context.getString(R.string.value_unknown);
         String unit = context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet);
-        if (elevation_m != null) {
+        if (altitude_m != null) {
             if (!metricUnits) {
-                elevation_m *= (float) UnitConversions.M_TO_FT;
+                altitude_m *= (float) UnitConversions.M_TO_FT;
             }
-            value = StringUtils.formatDecimal(elevation_m, 0);
+            value = StringUtils.formatDecimal(altitude_m, 0);
         }
         return new Pair<>(value, unit);
     }

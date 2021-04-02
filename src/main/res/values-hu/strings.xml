@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Átlagos haladási sebesség: %1$.2f km/óra (%2$.1f mérföld/óra)</string>
     <string name="description_average_pace_in_minute">Átlagos tempó: %1$s perc/km (%2$s perc/mérföld)</string>
     <string name="description_average_speed">Átlagsebesség: %1$.2f km/óra (%2$.1f mérföld/óra)</string>
-    <string name="description_elevation_gain">Szintkülönbség: %1$d m (%2$d láb)</string>
-    <string name="description_elevation_imperial">Tengerszint feletti magasság (láb)</string>
-    <string name="description_elevation_metric">Tengerszint feletti magasság (m)</string>
+    <string name="description_altitude_gain">Szintkülönbség: %1$d m (%2$d láb)</string>
+    <string name="description_altitude_imperial">Tengerszint feletti magasság (láb)</string>
+    <string name="description_altitude_metric">Tengerszint feletti magasság (m)</string>
     <string name="description_fastest_pace_in_minute">Leggyorsabb tempó: %1$s perc/km (%2$s perc/mérföld)</string>
     <string name="description_location_accuracy">Pontosság (m)</string>
     <string name="description_location_altitude">Tengerszint feletti magasság (m)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">Földrajzi szélesség (fok)</string>
     <string name="description_location_longitude">Földrajzi hosszúság (fok)</string>
     <string name="description_location_speed">Sebesség (m/s)</string>
-    <string name="description_max_elevation">Max. magasság: %1$d m (%2$d láb)</string>
+    <string name="description_max_altitude">Max. magasság: %1$d m (%2$d láb)</string>
     <string name="description_max_grade">Max. lejtés: %1$d %%</string>
     <string name="description_max_speed">Max. sebesség: %1$.2f km/óra (%2$.1f mérföld/óra)</string>
-    <string name="description_min_elevation">Min. magasság: %1$d m (%2$d láb)</string>
+    <string name="description_min_altitude">Min. magasság: %1$d m (%2$d láb)</string>
     <string name="description_min_grade">Min. lejtés: %1$d %%</string>
     <string name="description_moving_time">Haladási idő: %1$s</string>
     <string name="description_pace_imperial">Tempó (perc/mérföld)</string>
@@ -287,7 +287,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">Mozgás átlagos sebessége</string>
     <string name="stats_average_pace">Átlagos iram</string>
     <string name="stats_average_speed">Átlagsebesség</string>
-    <string name="stats_elevation">Magasság</string>
+    <string name="stats_altitude">Magasság</string>
     <string name="stats_fastest_pace">Leggyorsabb ütem</string>
     <string name="stats_gain">Növekedés</string>
     <string name="stats_grade">Lejtés</string>

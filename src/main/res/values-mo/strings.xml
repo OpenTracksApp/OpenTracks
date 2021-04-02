@@ -71,9 +71,9 @@
     <string name="description_average_moving_speed">Viteză medie de deplasare: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_average_pace_in_minute">Ritmul mediu: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Viteză medie: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_elevation_gain">Creştere în altitudine: %1$d m (%2$d ft)</string>
-    <string name="description_elevation_imperial">Altitudine (ft)</string>
-    <string name="description_elevation_metric">Altitudine (m)</string>
+    <string name="description_altitude_gain">Creştere în altitudine: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_imperial">Altitudine (ft)</string>
+    <string name="description_altitude_metric">Altitudine (m)</string>
     <string name="description_fastest_pace_in_minute">Ritmul cel mai rapid: %1$s min/km (%2$s min/mi)</string>
     <string name="description_location_accuracy">Exactitate (m)</string>
     <string name="description_location_altitude">Altitudine (m)</string>
@@ -81,10 +81,10 @@
     <string name="description_location_latitude">Latitudine (grade)</string>
     <string name="description_location_longitude">Longitudine (grade)</string>
     <string name="description_location_speed">Viteză (m/s)</string>
-    <string name="description_max_elevation">Altitudine maximă: %1$d m (%2$d ft)</string>
+    <string name="description_max_altitude">Altitudine maximă: %1$d m (%2$d ft)</string>
     <string name="description_max_grade">Înclinaţie maximă: %1$d %%</string>
     <string name="description_max_speed">Viteză maximă: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_min_elevation">Altitudine minimă: %1$d m (%2$d ft)</string>
+    <string name="description_min_altitude">Altitudine minimă: %1$d m (%2$d ft)</string>
     <string name="description_min_grade">Înclinaţie minimă: %1$d %%</string>
     <string name="description_moving_time">Timp de mişcare: %1$s</string>
     <string name="description_pace_imperial">Ritmul (min/mi)</string>
@@ -247,7 +247,7 @@
     <string name="stats_average_moving_speed">Viteza medie de mișcare</string>
     <string name="stats_average_pace">Ritmul mediu</string>
     <string name="stats_average_speed">Viteza medie</string>
-    <string name="stats_elevation">Altitudinea</string>
+    <string name="stats_altitude">Altitudinea</string>
     <string name="stats_fastest_pace">Cel mai rapid ritm</string>
     <string name="stats_gain">Creștere</string>
     <string name="stats_grade">Înclinare</string>

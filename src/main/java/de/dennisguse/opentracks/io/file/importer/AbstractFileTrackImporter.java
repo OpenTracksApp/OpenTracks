@@ -491,16 +491,16 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
         if (gain != null) {
             try {
-                trackPoint.setElevationGain(Float.parseFloat(gain));
+                trackPoint.setAltitudeGain(Float.parseFloat(gain));
             } catch (Exception e) {
-                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse elevation gain: %s", gain)), e);
+                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse altitude gain: %s", gain)), e);
             }
         }
         if (loss != null) {
             try {
-                trackPoint.setElevationLoss(Float.parseFloat(loss));
+                trackPoint.setAltitudeLoss(Float.parseFloat(loss));
             } catch (Exception e) {
-                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse elevation loss: %s", loss)), e);
+                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse altitude loss: %s", loss)), e);
             }
         }
         if (distance != null) {

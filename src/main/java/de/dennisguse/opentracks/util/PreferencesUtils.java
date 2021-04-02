@@ -165,9 +165,9 @@ public class PreferencesUtils {
         return getBoolean(sharedPreferences, context, R.string.stats_fullscreen_while_recording_key, DEFAULT);
     }
 
-    public static boolean isShowStatsElevation(SharedPreferences sharedPreferences, Context context) {
-        final boolean STATS_SHOW_ELEVATION = context.getResources().getBoolean(R.bool.stats_show_elevation_default);
-        return getBoolean(sharedPreferences, context, R.string.stats_show_grade_elevation_key, STATS_SHOW_ELEVATION);
+    public static boolean isShowStatsAltitude(SharedPreferences sharedPreferences, Context context) {
+        final boolean STATS_SHOW_ALTITUDE = context.getResources().getBoolean(R.bool.stats_show_altitude_default);
+        return getBoolean(sharedPreferences, context, R.string.stats_show_grade_altitude_key, STATS_SHOW_ALTITUDE);
     }
 
     public static boolean isStatsShowCoordinate(SharedPreferences sharedPreferences, Context context) {

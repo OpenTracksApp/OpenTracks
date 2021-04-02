@@ -56,10 +56,10 @@ public class TrackStatisticsTest {
         assertEquals(Duration.ofSeconds(0), statistics.getMovingTime());
         assertEquals(Duration.ofSeconds(0), statistics.getTotalTime());
 
-        assertNull(statistics.getTotalElevationGain());
-        assertNull(statistics.getTotalElevationLoss());
-        assertEquals(Double.NEGATIVE_INFINITY, statistics.getMaxElevation(), 0.0);
-        assertEquals(Double.POSITIVE_INFINITY, statistics.getMinElevation(), 0.0);
+        assertNull(statistics.getTotalAltitudeGain());
+        assertNull(statistics.getTotalAltitudeLoss());
+        assertEquals(Double.NEGATIVE_INFINITY, statistics.getMaxAltitude(), 0.0);
+        assertEquals(Double.POSITIVE_INFINITY, statistics.getMinAltitude(), 0.0);
         assertEquals(0.0, statistics.getMaxSpeed(), 0.0);
         assertEquals(0.0, statistics.getAverageSpeed(), 0.0);
         assertEquals(0.0, statistics.getAverageMovingSpeed(), 0.0);
@@ -79,14 +79,14 @@ public class TrackStatisticsTest {
         statistics2.setMovingTime(Duration.ofMillis(600));  // Result: 700+600
         statistics.setTotalDistance(750.0);
         statistics2.setTotalDistance(350.0);  // Result: 750+350
-        statistics.setTotalElevationGain(50.0f);
-        statistics2.setTotalElevationGain(850.0f);  // Result: 850+50
+        statistics.setTotalAltitudeGain(50.0f);
+        statistics2.setTotalAltitudeGain(850.0f);  // Result: 850+50
         statistics.setMaxSpeed(60.0);  // Resulting max speed
         statistics2.setMaxSpeed(30.0);
-        statistics.setMaxElevation(1250.0);
-        statistics.setMinElevation(1200.0);  // Resulting min elevation
-        statistics2.setMaxElevation(3575.0);  // Resulting max elevation
-        statistics2.setMinElevation(2800.0);
+        statistics.setMaxAltitude(1250.0);
+        statistics.setMinAltitude(1200.0);  // Resulting min altitude
+        statistics2.setMaxAltitude(3575.0);  // Resulting max altitude
+        statistics2.setMinAltitude(2800.0);
 
         // when
         statistics.merge(statistics2);
@@ -97,10 +97,10 @@ public class TrackStatisticsTest {
         assertEquals(Duration.ofMillis(2500), statistics.getTotalTime());
         assertEquals(Duration.ofMillis(1300), statistics.getMovingTime());
         assertEquals(1100.0, statistics.getTotalDistance(), 0.001);
-        assertEquals(900.0, statistics.getTotalElevationGain(), 0.001);
+        assertEquals(900.0, statistics.getTotalAltitudeGain(), 0.001);
         assertEquals(statistics.getTotalDistance() / statistics.getMovingTime().getSeconds(), statistics.getMaxSpeed(), 0.001);
-        assertEquals(1200.0, statistics.getMinElevation(), 0.001);
-        assertEquals(3575.0, statistics.getMaxElevation(), 0.001);
+        assertEquals(1200.0, statistics.getMinAltitude(), 0.001);
+        assertEquals(3575.0, statistics.getMaxAltitude(), 0.001);
     }
 
     @Test

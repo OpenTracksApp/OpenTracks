@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">平均移动速度：%1$.2f 公里/小时（%2$.1f 英里/小时）</string>
     <string name="description_average_pace_in_minute">平均步速：%1$s分钟/公里（%2$s分钟/英里）</string>
     <string name="description_average_speed">平均时速：%1$.2f 公里/小时（%2$.1f 英里/小时）</string>
-    <string name="description_elevation_gain">海拔升高：%1$d 米（%2$d 英尺）</string>
-    <string name="description_elevation_imperial">海拔（英尺）</string>
-    <string name="description_elevation_metric">海拔（米）</string>
+    <string name="description_altitude_gain">海拔升高：%1$d 米（%2$d 英尺）</string>
+    <string name="description_altitude_imperial">海拔（英尺）</string>
+    <string name="description_altitude_metric">海拔（米）</string>
     <string name="description_fastest_pace_in_minute">最快步速：%1$s分钟/公里（%2$s分钟/英里）</string>
     <string name="description_location_accuracy">精度（米）</string>
     <string name="description_location_altitude">海拔高度（米）</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">纬度（度）</string>
     <string name="description_location_longitude">经度（度）</string>
     <string name="description_location_speed">速度（米/秒）</string>
-    <string name="description_max_elevation">最高海拔：%1$d 米（%2$d 英尺）</string>
+    <string name="description_max_altitude">最高海拔：%1$d 米（%2$d 英尺）</string>
     <string name="description_max_grade">最大坡度：%1$d %%</string>
     <string name="description_max_speed">最高限速：%1$.2f 公里/小时（%2$.1f 英里/小时）</string>
-    <string name="description_min_elevation">最低海拔：%1$d 米（%2$d 英尺）</string>
+    <string name="description_min_altitude">最低海拔：%1$d 米（%2$d 英尺）</string>
     <string name="description_min_grade">最小坡度：%1$d %%</string>
     <string name="description_moving_time">移动时间：%1$s</string>
     <string name="description_pace_imperial">步速（分钟/英里）</string>
@@ -289,7 +289,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">平均移动速度</string>
     <string name="stats_average_pace">平均步速</string>
     <string name="stats_average_speed">平均速度</string>
-    <string name="stats_elevation">海拔</string>
+    <string name="stats_altitude">海拔</string>
     <string name="stats_fastest_pace">最快步速</string>
     <string name="stats_gain">爬高</string>
     <string name="stats_grade">坡度</string>
@@ -476,6 +476,6 @@ limitations under the License.
     <string name="open_track_as_GPX">作为 GPX 文件打开</string>
     <string name="activity_type_escooter">电动车</string>
     <string name="app_not_installed_show_on_map">请先安装一个支持展示地图数据的应用。</string>
-    <string name="description_elevation_loss">海拔降低：%1$d 米（%2$d 英尺）</string>
+    <string name="description_altitude_loss">海拔降低：%1$d 米（%2$d 英尺）</string>
     <string name="description_default_speed_or_pace">按活动类型</string>
 </resources>

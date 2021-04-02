@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Priemerná rýchlosť pohybu: %1$.2f km/h (%2$.1f míľ/h)</string>
     <string name="description_average_pace_in_minute">Priemerné tempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Priemerná rýchlosť: %1$.2f km/h (%2$.1f míľ/h)</string>
-    <string name="description_elevation_gain">Prevýšenie: %1$d m (%2$d stôp)</string>
-    <string name="description_elevation_imperial">Nadmorská výška (ft)</string>
-    <string name="description_elevation_metric">Nadmorská výška (m)</string>
+    <string name="description_altitude_gain">Prevýšenie: %1$d m (%2$d stôp)</string>
+    <string name="description_altitude_imperial">Nadmorská výška (ft)</string>
+    <string name="description_altitude_metric">Nadmorská výška (m)</string>
     <string name="description_fastest_pace_in_minute">Najrýchlejšie tempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_location_accuracy">Presnosť (m)</string>
     <string name="description_location_altitude">Nadmorská výška (m)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">Zemepisná šírka (°)</string>
     <string name="description_location_longitude">Zemepisná dĺžka (°)</string>
     <string name="description_location_speed">Rýchlosť (m/s)</string>
-    <string name="description_max_elevation">Max. prevýšenie: %1$d m (%2$d stôp)</string>
+    <string name="description_max_altitude">Max. prevýšenie: %1$d m (%2$d stôp)</string>
     <string name="description_max_grade">Max. sklon: %1$d %%</string>
     <string name="description_max_speed">Max. rýchlosť: %1$.2f km/h (%2$.1f míľ/h)</string>
-    <string name="description_min_elevation">Min. prevýšenie: %1$d m (%2$d stôp)</string>
+    <string name="description_min_altitude">Min. prevýšenie: %1$d m (%2$d stôp)</string>
     <string name="description_min_grade">Min. sklon: %1$d %%</string>
     <string name="description_moving_time">Čas presunu: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/mi)</string>
@@ -286,7 +286,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">Priem. rýchlosť pohybu</string>
     <string name="stats_average_pace">Priem. tempo</string>
     <string name="stats_average_speed">Priem. rýchlosť</string>
-    <string name="stats_elevation">Nadmorská výška</string>
+    <string name="stats_altitude">Nadmorská výška</string>
     <string name="stats_fastest_pace">Najrýchlejšie tempo</string>
     <string name="stats_gain">Zisk</string>
     <string name="stats_grade">Stúpanie</string>

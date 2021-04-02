@@ -140,9 +140,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Keskimääräinen liikkumisnopeus: %1$.2f km/h (%2$.1f mailia/h)</string>
     <string name="description_average_pace_in_minute">Keskimääräinen vauhti: %1$s min/km (%2$s min/maili)</string>
     <string name="description_average_speed">Keskinopeus: %1$.2f km/h (%2$.1f mailia/h)</string>
-    <string name="description_elevation_gain">Saavutettu korkeus: %1$d m (%2$d jalkaa)</string>
-    <string name="description_elevation_imperial">Korkeus (jalkaa)</string>
-    <string name="description_elevation_metric">Korkeus (m)</string>
+    <string name="description_altitude_gain">Saavutettu korkeus: %1$d m (%2$d jalkaa)</string>
+    <string name="description_altitude_imperial">Korkeus (jalkaa)</string>
+    <string name="description_altitude_metric">Korkeus (m)</string>
     <string name="description_fastest_pace_in_minute">Nopein vauhti: %1$s min/km (%2$s min/maili)</string>
     <string name="description_location_accuracy">Tarkkuus (m)</string>
     <string name="description_location_altitude">Korkeus (m)</string>
@@ -150,10 +150,10 @@ limitations under the License.
     <string name="description_location_latitude">Leveysaste (astetta)</string>
     <string name="description_location_longitude">Pituusaste (astetta)</string>
     <string name="description_location_speed">Nopeus (m/s)</string>
-    <string name="description_max_elevation">Enimmäiskorkeus: %1$d m (%2$d jalkaa)</string>
+    <string name="description_max_altitude">Enimmäiskorkeus: %1$d m (%2$d jalkaa)</string>
     <string name="description_max_grade">Enimmäiskorkeustaso: %1$d %%</string>
     <string name="description_max_speed">Enimmäisnopeus: %1$.2f km/h (%2$.1f mailia/h)</string>
-    <string name="description_min_elevation">Vähimmäiskorkeus: %1$d m (%2$d jalkaa)</string>
+    <string name="description_min_altitude">Vähimmäiskorkeus: %1$d m (%2$d jalkaa)</string>
     <string name="description_min_grade">Vähimmäiskorkeustaso: %1$d %%</string>
     <string name="description_moving_time">Liikkumisaika: %1$s</string>
     <string name="description_pace_imperial">Vauhti (min/mi)</string>
@@ -363,7 +363,7 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="stats_average_moving_speed">Keskim. liikkumisnopeus</string>
     <string name="stats_average_pace">Keskim. vauhti</string>
     <string name="stats_average_speed">Keskinopeus</string>
-    <string name="stats_elevation">Korkeus</string>
+    <string name="stats_altitude">Korkeus</string>
     <string name="stats_fastest_pace">Nopein vauhti</string>
     <string name="stats_gain">Kaltevuus</string>
     <string name="stats_grade">Korkeustaso</string>
@@ -601,7 +601,7 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="gps_disabled_msg">GPS pois käytöstä</string>
     <string name="generic_completed">Täydellinen</string>
     <string name="sensor_state_power_avg">Avg Teho</string>
-    <string name="description_elevation_loss">Korkeussijaintitappio: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_loss">Korkeussijaintitappio: %1$d m (%2$d ft)</string>
     <string name="sensor_state_heart_rate_max">Maksimisyke</string>
     <string name="sensor_state_heart_rate_avg">Avg syke</string>
     <string name="value_float_kilometer_hour">%1$.2f k/t</string>

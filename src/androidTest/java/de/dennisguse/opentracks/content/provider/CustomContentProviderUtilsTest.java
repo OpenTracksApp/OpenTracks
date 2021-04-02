@@ -429,10 +429,10 @@ public class CustomContentProviderUtilsTest {
         statistics.setTotalTime(Duration.ofMillis(1500));
         statistics.setMovingTime(Duration.ofMillis(700));
         statistics.setTotalDistance(750.0);
-        statistics.setTotalElevationGain(50.0f);
+        statistics.setTotalAltitudeGain(50.0f);
         statistics.setMaxSpeed(60.0);
-        statistics.setMaxElevation(1250.0);
-        statistics.setMinElevation(1200.0);
+        statistics.setMaxAltitude(1250.0);
+        statistics.setMinAltitude(1200.0);
 
         track.first.setTrackStatistics(statistics);
         contentProviderUtils.insertTrack(track.first);
@@ -564,10 +564,10 @@ public class CustomContentProviderUtilsTest {
 //        statistics.setTotalTime(1500L);
 //        statistics.setMovingTime(700L);
 //        statistics.setTotalDistance(750.0);
-//        statistics.setTotalElevationGain(50.0);
+//        statistics.setTotalAltitudeGain(50.0);
 //        statistics.setMaxSpeed(60.0);
-//        statistics.setMaxElevation(1250.0);
-//        statistics.setMinElevation(1200.0);
+//        statistics.setMaxAltitude(1250.0);
+//        statistics.setMinAltitude(1200.0);
 //
 //        track.setTrackStatistics(statistics);
 //        TestDataUtil.insertTrackWithLocations(contentProviderUtils, track);

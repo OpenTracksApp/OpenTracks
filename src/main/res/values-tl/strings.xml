@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Average na bilis ng paglipat: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_average_pace_in_minute">Average na bilis: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Average na bilis: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_elevation_gain">Nakamit na Elevation: %1$d m (%2$d piye)</string>
-    <string name="description_elevation_imperial">Elevation (ft)</string>
-    <string name="description_elevation_metric">Elevation (m)</string>
+    <string name="description_altitude_gain">Nakamit na Elevation: %1$d m (%2$d piye)</string>
+    <string name="description_altitude_imperial">Elevation (ft)</string>
+    <string name="description_altitude_metric">Elevation (m)</string>
     <string name="description_fastest_pace_in_minute">Pinakamabilis na bilis: %1$s (na) min/km (%2$s (na) min/mi)</string>
     <string name="description_location_accuracy">Katumpakan (m)</string>
     <string name="description_location_altitude">Altitude (m)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">Latitude (deg)</string>
     <string name="description_location_longitude">Longitude (deg)</string>
     <string name="description_location_speed">Bilis (m/s)</string>
-    <string name="description_max_elevation">Max elevation: %1$d m (%2$d piye)</string>
+    <string name="description_max_altitude">Max elevation: %1$d m (%2$d piye)</string>
     <string name="description_max_grade">Max na grado: %1$d %%</string>
     <string name="description_max_speed">Max na bilis: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_min_elevation">Min na elevation: %1$d m (%2$d piye)</string>
+    <string name="description_min_altitude">Min na elevation: %1$d m (%2$d piye)</string>
     <string name="description_min_grade">Min na grado: %1$d %%</string>
     <string name="description_moving_time">Oras ng paglipat: %1$s</string>
     <string name="description_pace_imperial">Bilis (min/mi)</string>
@@ -286,7 +286,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">Avg na nakatakdang bilis ng pagkilos</string>
     <string name="stats_average_pace">Avg na nakatakdang bilis</string>
     <string name="stats_average_speed">Avg na bilis</string>
-    <string name="stats_elevation">Elevation</string>
+    <string name="stats_altitude">Elevation</string>
     <string name="stats_fastest_pace">Pinakamabilis na tulin</string>
     <string name="stats_gain">Gain</string>
     <string name="stats_grade">Grade</string>

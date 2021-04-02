@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">चलने की औसत गति: %1$.2f किमी/घं ( %2$.1f मील/घं)</string>
     <string name="description_average_pace_in_minute">औसत गति: %1$s मिनट/किमी ( %2$s मिनट/मील)</string>
     <string name="description_average_speed">औसत गति: %1$.2f किमी/घं (%2$.1f मील/घं)</string>
-    <string name="description_elevation_gain">हासिल की गई ऊंचाई: %1$d मी (%2$d फु)</string>
-    <string name="description_elevation_imperial">ऊंचाई (फुट)</string>
-    <string name="description_elevation_metric">ऊंचाई (मी)</string>
+    <string name="description_altitude_gain">हासिल की गई ऊंचाई: %1$d मी (%2$d फु)</string>
+    <string name="description_altitude_imperial">ऊंचाई (फुट)</string>
+    <string name="description_altitude_metric">ऊंचाई (मी)</string>
     <string name="description_fastest_pace_in_minute">सबसे तेज़ गति: %1$s मिनट/किमी ( %2$s मिनट/मील)</string>
     <string name="description_location_accuracy">सटीकता (मी)</string>
     <string name="description_location_altitude">ऊंचाई (मी)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">अक्षांश (डिग्री)</string>
     <string name="description_location_longitude">देशांतर (डिग्री)</string>
     <string name="description_location_speed">गति (मी/से)</string>
-    <string name="description_max_elevation">अधिकतम ऊंचाई: %1$d मी (%2$d फु)</string>
+    <string name="description_max_altitude">अधिकतम ऊंचाई: %1$d मी (%2$d फु)</string>
     <string name="description_max_grade">अधिकतम ग्रेड: %1$d %%</string>
     <string name="description_max_speed">अधिकतम गति: %1$.2f किमी/घं (%2$.1f मील/घं)</string>
-    <string name="description_min_elevation">न्यूनतम ऊंचाई: %1$d मी (%2$d फु)</string>
+    <string name="description_min_altitude">न्यूनतम ऊंचाई: %1$d मी (%2$d फु)</string>
     <string name="description_min_grade">न्यूनतम ग्रेड: %1$d %%</string>
     <string name="description_moving_time">चलायमान समय: %1$s</string>
     <string name="description_pace_imperial">गति (मिनट/मील)</string>
@@ -286,7 +286,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">चलने की औसत गति</string>
     <string name="stats_average_pace">औसत प्रगति</string>
     <string name="stats_average_speed">औसत गति</string>
-    <string name="stats_elevation">ऊंचाई</string>
+    <string name="stats_altitude">ऊंचाई</string>
     <string name="stats_fastest_pace">सबसे तेज चाल</string>
     <string name="stats_gain">वृद्धि</string>
     <string name="stats_grade">ढलान</string>

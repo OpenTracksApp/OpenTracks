@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Prosječna brzina kretanja: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_average_pace_in_minute">Prosječan tempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Prosječna brzina: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_elevation_gain">Povećanje nadmorske visine: %1$d m (%2$d ft)</string>
-    <string name="description_elevation_imperial">Nadmorska visina (stope)</string>
-    <string name="description_elevation_metric">Nadmorska visina (m)</string>
+    <string name="description_altitude_gain">Povećanje nadmorske visine: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_imperial">Nadmorska visina (stope)</string>
+    <string name="description_altitude_metric">Nadmorska visina (m)</string>
     <string name="description_fastest_pace_in_minute">Najbrži tempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_location_accuracy">Točnost (m)</string>
     <string name="description_location_altitude">Nadmorska visina (m)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">Geografska širina (stupnjeva)</string>
     <string name="description_location_longitude">Geografska dužina (stupnjeva)</string>
     <string name="description_location_speed">Brzina (m/s)</string>
-    <string name="description_max_elevation">Najveće povećanje visine: %1$d m (%2$d ft)</string>
+    <string name="description_max_altitude">Najveće povećanje visine: %1$d m (%2$d ft)</string>
     <string name="description_max_grade">Najviši stupanj: %1$d %%</string>
     <string name="description_max_speed">Najveća brzina: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_min_elevation">Najmanje povećanje visine: %1$d m (%2$d ft)</string>
+    <string name="description_min_altitude">Najmanje povećanje visine: %1$d m (%2$d ft)</string>
     <string name="description_min_grade">Najniži stupanj: %1$d %%</string>
     <string name="description_moving_time">Vrijeme kretanja: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/mi)</string>
@@ -287,7 +287,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">Prosj. brzina kretanja</string>
     <string name="stats_average_pace">Prosj. tempo</string>
     <string name="stats_average_speed">Prosj. brzina</string>
-    <string name="stats_elevation">Nadmorska visina</string>
+    <string name="stats_altitude">Nadmorska visina</string>
     <string name="stats_fastest_pace">Najbrži tempo</string>
     <string name="stats_gain">Porast</string>
     <string name="stats_grade">Nagib</string>

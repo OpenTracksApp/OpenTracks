@@ -71,9 +71,9 @@
     <string name="description_average_moving_speed">מהירות ממוצעת של תנועה: %1$.2f קמ\"ש (%2$.1f מייל/שעה)</string>
     <string name="description_average_pace_in_minute">קצב ממוצע: %1$s דקות/ק\"מ (%2$s דקות/מייל)</string>
     <string name="description_average_speed">מהירות ממוצעת: %1$.2f קמ\"ש (%2$.1f מייל/שעה)</string>
-    <string name="description_elevation_gain">גובה מצטבר: %1$d מ\' (%2$d רגל)</string>
-    <string name="description_elevation_imperial">גובה (רגל)</string>
-    <string name="description_elevation_metric">גובה (מ\')</string>
+    <string name="description_altitude_gain">גובה מצטבר: %1$d מ\' (%2$d רגל)</string>
+    <string name="description_altitude_imperial">גובה (רגל)</string>
+    <string name="description_altitude_metric">גובה (מ\')</string>
     <string name="description_fastest_pace_in_minute">הקצב המהיר ביותר: %1$s דקות/ק\"מ (%2$s דקות/מייל)</string>
     <string name="description_location_accuracy">דיוק (מ\')</string>
     <string name="description_location_altitude">גובה (מ\')</string>
@@ -81,10 +81,10 @@
     <string name="description_location_latitude">קו רוחב (מעלות)</string>
     <string name="description_location_longitude">קו אורך (מעלות)</string>
     <string name="description_location_speed">מהירות (מטר/שניה)</string>
-    <string name="description_max_elevation">גובה מקסימלי: %1$d מ\' (%2$d רגל)</string>
+    <string name="description_max_altitude">גובה מקסימלי: %1$d מ\' (%2$d רגל)</string>
     <string name="description_max_grade">שיפוע מקסימלי: %1$d %%</string>
     <string name="description_max_speed">מהירות מקסימלית: %1$.2f קמ\"ש (%2$.1f מייל/שעה)</string>
-    <string name="description_min_elevation">גובה מינימלי: %1$d מ\' (%2$d רגל)</string>
+    <string name="description_min_altitude">גובה מינימלי: %1$d מ\' (%2$d רגל)</string>
     <string name="description_min_grade">שיפוע מינימלי: %1$d %%</string>
     <string name="description_moving_time">זמן תנועה: %1$s</string>
     <string name="description_pace_imperial">קצב (דקות/מייל)</string>
@@ -247,7 +247,7 @@
     <string name="stats_average_moving_speed">מהירות תנועה ממוצעת</string>
     <string name="stats_average_pace">קצב ממוצע</string>
     <string name="stats_average_speed">מהירות ממוצעת</string>
-    <string name="stats_elevation">גובה</string>
+    <string name="stats_altitude">גובה</string>
     <string name="stats_fastest_pace">הקצב המהיר ביותר</string>
     <string name="stats_gain">תוספת</string>
     <string name="stats_grade">שיפוע</string>

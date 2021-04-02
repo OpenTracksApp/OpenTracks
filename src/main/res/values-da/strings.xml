@@ -140,9 +140,9 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="description_average_moving_speed">Gennemsnitlig bevægelseshastighed: %1$.2f km/t (%2$.1f mil/t)</string>
     <string name="description_average_pace_in_minute">Gennemsnitstempo: %1$s min./km (%2$s min./mil)</string>
     <string name="description_average_speed">Gennemsnitlig hastighed: %1$.2f km/t (%2$.1f mil/t)</string>
-    <string name="description_elevation_gain">Stigning: %1$d m (%2$d fod)</string>
-    <string name="description_elevation_imperial">Højde (ft)</string>
-    <string name="description_elevation_metric">Højde (m)</string>
+    <string name="description_altitude_gain">Stigning: %1$d m (%2$d fod)</string>
+    <string name="description_altitude_imperial">Højde (ft)</string>
+    <string name="description_altitude_metric">Højde (m)</string>
     <string name="description_fastest_pace_in_minute">Højeste tempo: %1$s min./km (%2$s min./mil)</string>
     <string name="description_location_accuracy">Nøjagtighed (m)</string>
     <string name="description_location_altitude">Højde (m)</string>
@@ -150,10 +150,10 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="description_location_latitude">Breddegrad (grader)</string>
     <string name="description_location_longitude">Længdegrad (grader)</string>
     <string name="description_location_speed">Hastighed (m/s)</string>
-    <string name="description_max_elevation">Maks. højde: %1$d m (%2$d fod)</string>
+    <string name="description_max_altitude">Maks. højde: %1$d m (%2$d fod)</string>
     <string name="description_max_grade">Maks. hældning: %1$d %%</string>
     <string name="description_max_speed">Maks. hastighed: %1$.2f km/t (%2$.1f mil/t)</string>
-    <string name="description_min_elevation">Min. højde: %1$d m (%2$d fod)</string>
+    <string name="description_min_altitude">Min. højde: %1$d m (%2$d fod)</string>
     <string name="description_min_grade">Min. hældning: %1$d %%</string>
     <string name="description_moving_time">Bevægelseshastighed: %1$s</string>
     <string name="description_pace_imperial">Tempo (min./mil)</string>
@@ -361,7 +361,7 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="stats_average_moving_speed">Gns. bevægelseshastighed</string>
     <string name="stats_average_pace">Gns. tempo</string>
     <string name="stats_average_speed">Gns. hastighed</string>
-    <string name="stats_elevation">Højde</string>
+    <string name="stats_altitude">Højde</string>
     <string name="stats_fastest_pace">Hurtigste tempo</string>
     <string name="stats_gain">Stigning</string>
     <string name="stats_grade">Hældning</string>
@@ -557,7 +557,7 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="toast_message_instant_track_was_exported">Sidste spor eksporteret</string>
     <string name="generic_separator_done_total">/</string>
     <string name="generic_skip">Springe</string>
-    <string name="description_elevation_loss">Højdetab: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_loss">Højdetab: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Eksport efter træning mislykkedes. Kontroller eksportmappen.</string>
     <string name="export_track_already_exists_msg">Sporet %1$s findes allerede i destinationsmappen.</string>
     <string name="export_all_do_it_for_all">gør det for alle konflikter</string>

@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Средняя скорость при движении: %1$.2f км/ч (%2$.1f мил/ч)</string>
     <string name="description_average_pace_in_minute">Средний темп: %1$s мин/км (%2$s мин/мил)</string>
     <string name="description_average_speed">Средняя скорость: %1$.2f км/ч (%2$.1f мил/ч)</string>
-    <string name="description_elevation_gain">Набор высоты: %1$d м (%2$d фт)</string>
-    <string name="description_elevation_imperial">Высота (футы)</string>
-    <string name="description_elevation_metric">Высота (м)</string>
+    <string name="description_altitude_gain">Набор высоты: %1$d м (%2$d фт)</string>
+    <string name="description_altitude_imperial">Высота (футы)</string>
+    <string name="description_altitude_metric">Высота (м)</string>
     <string name="description_fastest_pace_in_minute">Максимальный темп: %1$s мин/км (%2$s мин/мил)</string>
     <string name="description_location_accuracy">Точность (м)</string>
     <string name="description_location_altitude">Высота (м)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">Широта (°)</string>
     <string name="description_location_longitude">Долгота (°)</string>
     <string name="description_location_speed">Скорость (м/с)</string>
-    <string name="description_max_elevation">Макс. высота: %1$d м (%2$d фт)</string>
+    <string name="description_max_altitude">Макс. высота: %1$d м (%2$d фт)</string>
     <string name="description_max_grade">Макс. угол наклона: %1$d%%</string>
     <string name="description_max_speed">Макс. скорость: %1$.2f км/ч (%2$.1f мил/ч)</string>
-    <string name="description_min_elevation">Мин. высота: %1$d м (%2$d фт)</string>
+    <string name="description_min_altitude">Мин. высота: %1$d м (%2$d фт)</string>
     <string name="description_min_grade">Мин. угол наклона: %1$d%%</string>
     <string name="description_moving_time">Время движения: %1$s</string>
     <string name="description_pace_imperial">Темп (мин/мил)</string>
@@ -285,7 +285,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">Средняя скорость движения</string>
     <string name="stats_average_pace">Средний шаг</string>
     <string name="stats_average_speed">Средняя скорость</string>
-    <string name="stats_elevation">Высота</string>
+    <string name="stats_altitude">Высота</string>
     <string name="stats_fastest_pace">Макс. темп</string>
     <string name="stats_gain">Рост</string>
     <string name="stats_grade">Наклон</string>

@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">平均移動速度： %1$.2fkm/時（%2$.1fマイル/時）</string>
     <string name="description_average_pace_in_minute">平均ペース: %1$s分/km（%2$s分/マイル）</string>
     <string name="description_average_speed">平均速度： %1$.2fkm/時（%2$.1fマイル/時）</string>
-    <string name="description_elevation_gain">標高の上昇： %1$dm（%2$dフィート）</string>
-    <string name="description_elevation_imperial">標高（フィート）</string>
-    <string name="description_elevation_metric">標高（m）</string>
+    <string name="description_altitude_gain">標高の上昇： %1$dm（%2$dフィート）</string>
+    <string name="description_altitude_imperial">標高（フィート）</string>
+    <string name="description_altitude_metric">標高（m）</string>
     <string name="description_fastest_pace_in_minute">最速ペース: %1$s分/km（%2$s分/マイル）</string>
     <string name="description_location_accuracy">精度（m）</string>
     <string name="description_location_altitude">標高（m）</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">緯度（度）</string>
     <string name="description_location_longitude">経度（度）</string>
     <string name="description_location_speed">速度（m/秒）</string>
-    <string name="description_max_elevation">最大標高： %1$dm（%2$dフィート）</string>
+    <string name="description_max_altitude">最大標高： %1$dm（%2$dフィート）</string>
     <string name="description_max_grade">最大傾斜： %1$d %%</string>
     <string name="description_max_speed">最高速度： %1$.2fkm/時（%2$.1fマイル/時）</string>
-    <string name="description_min_elevation">最小標高： %1$dm（%2$dフィート）</string>
+    <string name="description_min_altitude">最小標高： %1$dm（%2$dフィート）</string>
     <string name="description_min_grade">最小傾斜： %1$d %%</string>
     <string name="description_moving_time">移動時間： %1$s</string>
     <string name="description_pace_imperial">ペース（分/マイル）</string>
@@ -288,7 +288,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">平均移動速度</string>
     <string name="stats_average_pace">平均ペース</string>
     <string name="stats_average_speed">平均速度</string>
-    <string name="stats_elevation">標高</string>
+    <string name="stats_altitude">標高</string>
     <string name="stats_fastest_pace">最速ペース</string>
     <string name="stats_gain">増加</string>
     <string name="stats_grade">傾斜</string>

@@ -261,81 +261,81 @@
 
         <!-- Horizontal line -->
         <View
-            android:id="@+id/stats_elevation_horizontal_line"
+            android:id="@+id/stats_altitude_horizontal_line"
             style="@style/StatsHorizontalLine"
             android:layout_marginBottom="8dp"
             app:layout_constraintStart_toEndOf="@id/guideline"
             app:layout_constraintEnd_toStartOf="@id/guideline3"
             app:layout_constraintTop_toBottomOf="@id/stats_speed_barrier" />
 
-        <!-- Elevation gain and loss -->
+        <!-- Altitude gain and loss -->
         <androidx.constraintlayout.widget.Group
-            android:id="@+id/stats_elevation_group"
+            android:id="@+id/stats_altitude_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="stats_elevation_horizontal_line,stats_elevation_gain_label,stats_elevation_gain_value,stats_elevation_gain_unit,stats_elevation_loss_label,stats_elevation_loss_value,stats_elevation_loss_unit" />
+            app:constraint_referenced_ids="stats_altitude_horizontal_line,stats_altitude_gain_label,@+id/stats_altitude_gain_value,@+id/stats_altitude_gain_unit,stats_altitude_loss_label,@+id/stats_altitude_loss_value,@+id/stats_altitude_loss_unit" />
 
         <TextView
-            android:id="@+id/stats_elevation_gain_label"
+            android:id="@+id/stats_altitude_gain_label"
             style="@style/StatsLargeLabel"
             android:text="@string/stats_gain"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toEndOf="@id/guideline"
             app:layout_constraintEnd_toStartOf="@id/guideline2"
-            app:layout_constraintTop_toBottomOf="@id/stats_elevation_horizontal_line" />
+            app:layout_constraintTop_toBottomOf="@id/stats_altitude_horizontal_line" />
 
         <TextView
-            android:id="@+id/stats_elevation_gain_value"
+            android:id="@+id/stats_altitude_gain_value"
             style="@style/StatsLargeValue"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintEnd_toStartOf="@id/stats_elevation_gain_unit"
-            app:layout_constraintTop_toBottomOf="@id/stats_elevation_gain_label"
+            app:layout_constraintEnd_toStartOf="@id/stats_altitude_gain_unit"
+            app:layout_constraintTop_toBottomOf="@id/stats_altitude_gain_label"
             tools:text="100" />
 
         <TextView
-            android:id="@+id/stats_elevation_gain_unit"
+            android:id="@+id/stats_altitude_gain_unit"
             style="@style/StatsUnit"
-            app:layout_constraintBottom_toBottomOf="@id/stats_elevation_gain_value"
-            app:layout_constraintStart_toEndOf="@id/stats_elevation_gain_value"
+            app:layout_constraintBottom_toBottomOf="@id/stats_altitude_gain_value"
+            app:layout_constraintStart_toEndOf="@id/stats_altitude_gain_value"
             app:layout_constraintEnd_toStartOf="@id/guideline2"
             tools:text="m" />
 
         <TextView
-            android:id="@+id/stats_elevation_loss_label"
+            android:id="@+id/stats_altitude_loss_label"
             style="@style/StatsLargeLabel"
             android:text="@string/stats_loss"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toEndOf="@id/guideline2"
             app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintTop_toBottomOf="@id/stats_elevation_horizontal_line" />
+            app:layout_constraintTop_toBottomOf="@id/stats_altitude_horizontal_line" />
 
         <TextView
-            android:id="@+id/stats_elevation_loss_value"
+            android:id="@+id/stats_altitude_loss_value"
             style="@style/StatsLargeValue"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintEnd_toStartOf="@id/stats_elevation_loss_unit"
-            app:layout_constraintTop_toBottomOf="@id/stats_elevation_loss_label"
+            app:layout_constraintEnd_toStartOf="@id/stats_altitude_loss_unit"
+            app:layout_constraintTop_toBottomOf="@id/stats_altitude_loss_label"
             tools:text="100" />
 
         <TextView
-            android:id="@+id/stats_elevation_loss_unit"
+            android:id="@+id/stats_altitude_loss_unit"
             style="@style/StatsUnit"
-            app:layout_constraintBottom_toBottomOf="@id/stats_elevation_loss_value"
-            app:layout_constraintStart_toEndOf="@id/stats_elevation_loss_value"
+            app:layout_constraintBottom_toBottomOf="@id/stats_altitude_loss_value"
+            app:layout_constraintStart_toEndOf="@id/stats_altitude_loss_value"
             app:layout_constraintEnd_toStartOf="@id/guideline3"
             tools:text="m" />
 
         <!-- Barrier -->
         <androidx.constraintlayout.widget.Barrier
-            android:id="@+id/stats_elevation_barrier"
+            android:id="@+id/stats_altitude_barrier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="stats_elevation_gain_value,stats_elevation_loss_value" />
+            app:constraint_referenced_ids="stats_altitude_gain_value,stats_altitude_loss_value" />
 
         <!-- Horizontal line -->
         <View
@@ -344,7 +344,7 @@
             android:layout_marginBottom="8dp"
             app:layout_constraintStart_toEndOf="@id/guideline"
             app:layout_constraintEnd_toStartOf="@id/guideline3"
-            app:layout_constraintTop_toBottomOf="@id/stats_elevation_barrier" />
+            app:layout_constraintTop_toBottomOf="@id/stats_altitude_barrier" />
 
         <!-- Sensors data -->
         <androidx.recyclerview.widget.RecyclerView
