@@ -128,7 +128,7 @@ limitations under the License.
     <string name="export_progress_message">Eksportuję do %1$s…</string>
     <string name="export_success">Wyeksportowano %1$s do folderu %2$s</string>
     <string name="export_title">Wyeksportuj do…</string>
-    <string name="export_track_already_exists_msg">Ścieżka %1$s już istnieje w katalogu docelowym.</string>
+    <string name="export_track_already_exists_msg">Trasa %1$s już istnieje w katalogu docelowym.</string>
     <string name="export_all_do_it_for_all">zrób to dla wszystkich konfliktów</string>
     <string name="export_track_errors">Trasa nie została wyeksportowana z powodu błędów</string>
     <string name="export_progress_summary_new_msg">Nowe ściezki wyeksportowane</string>
