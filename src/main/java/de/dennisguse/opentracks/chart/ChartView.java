@@ -200,15 +200,15 @@ public class ChartView extends View {
                 Integer.MIN_VALUE,
                 Integer.MAX_VALUE,
                 new int[]{5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000},
-                R.string.description_elevation_metric,
-                R.string.description_elevation_imperial,
-                R.color.chart_elevation_fill,
-                R.color.chart_elevation_border,
+                R.string.description_altitude_metric,
+                R.string.description_altitude_imperial,
+                R.color.chart_altitude_fill,
+                R.color.chart_altitude_border,
                 fontSizeSmall,
                 fontSizeMedium) {
             @Override
             protected double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
-                return chartPoint.getElevation();
+                return chartPoint.getAltitude();
             }
 
             @Override

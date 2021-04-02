@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Средна скорост на движение: %1$.2f км/ч (%2$.1f мили/ч)</string>
     <string name="description_average_pace_in_minute">Средно темпо: %1$s мин/км (%2$s мин/мил)</string>
     <string name="description_average_speed">Средна скорост: %1$.2f км/ч (%2$.1f мили/ч)</string>
-    <string name="description_elevation_gain">Денивелация: %1$d м (%2$d фута)</string>
-    <string name="description_elevation_imperial">Надморска височина (фт)</string>
-    <string name="description_elevation_metric">Надморска височина (м)</string>
+    <string name="description_altitude_gain">Денивелация: %1$d м (%2$d фута)</string>
+    <string name="description_altitude_imperial">Надморска височина (фт)</string>
+    <string name="description_altitude_metric">Надморска височина (м)</string>
     <string name="description_fastest_pace_in_minute">Най-бързо темпо: %1$s мин/км (%2$s мин/мил)</string>
     <string name="description_location_accuracy">Точност (м)</string>
     <string name="description_location_altitude">Надморска височина (м)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">Географска ширина (градуси)</string>
     <string name="description_location_longitude">Географска дължина (градуси)</string>
     <string name="description_location_speed">Скорост (м/сек)</string>
-    <string name="description_max_elevation">Максимално изкачване: %1$d м (%2$d фута)</string>
+    <string name="description_max_altitude">Максимално изкачване: %1$d м (%2$d фута)</string>
     <string name="description_max_grade">Максимален наклон: %1$d %%</string>
     <string name="description_max_speed">Максимална скорост: %1$.2f км/ч (%2$.1f мили/ч)</string>
-    <string name="description_min_elevation">Минимално изкачване: %1$d м (%2$d фута)</string>
+    <string name="description_min_altitude">Минимално изкачване: %1$d м (%2$d фута)</string>
     <string name="description_min_grade">Минимален наклон: %1$d %%</string>
     <string name="description_moving_time">Време на движение: %1$s</string>
     <string name="description_pace_imperial">Темпо (мин/мил)</string>
@@ -288,7 +288,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">Средна скорост на движение</string>
     <string name="stats_average_pace">Средно темпо</string>
     <string name="stats_average_speed">Средна скорост</string>
-    <string name="stats_elevation">Надморска височина</string>
+    <string name="stats_altitude">Надморска височина</string>
     <string name="stats_fastest_pace">Най-бързо темпо</string>
     <string name="stats_gain">Увеличаване</string>
     <string name="stats_grade">Наклон</string>

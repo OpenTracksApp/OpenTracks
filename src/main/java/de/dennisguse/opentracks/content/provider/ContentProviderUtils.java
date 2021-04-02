@@ -97,10 +97,10 @@ public class ContentProviderUtils {
         int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
         int movingTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MOVINGTIME);
         int maxSpeedIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAXSPEED);
-        int minElevationIndex = cursor.getColumnIndexOrThrow(TracksColumns.MINELEVATION);
-        int maxElevationIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAXELEVATION);
-        int elevationGainIndex = cursor.getColumnIndexOrThrow(TracksColumns.ELEVATIONGAIN);
-        int elevationLossIndex = cursor.getColumnIndexOrThrow(TracksColumns.ELEVATIONLOSS);
+        int minAltitudeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MIN_ALTITUDE);
+        int maxAltitudeIndex = cursor.getColumnIndexOrThrow(TracksColumns.MAX_ALTITUDE);
+        int altitudeGainIndex = cursor.getColumnIndexOrThrow(TracksColumns.ALTITUDE_GAIN);
+        int altitudeLossIndex = cursor.getColumnIndexOrThrow(TracksColumns.ALTITUDE_LOSS);
         int iconIndex = cursor.getColumnIndexOrThrow(TracksColumns.ICON);
 
         Track track = new Track();
@@ -138,17 +138,17 @@ public class ContentProviderUtils {
         if (!cursor.isNull(maxSpeedIndex)) {
             trackStatistics.setMaxSpeed(cursor.getFloat(maxSpeedIndex));
         }
-        if (!cursor.isNull(minElevationIndex)) {
-            trackStatistics.setMinElevation(cursor.getFloat(minElevationIndex));
+        if (!cursor.isNull(minAltitudeIndex)) {
+            trackStatistics.setMinAltitude(cursor.getFloat(minAltitudeIndex));
         }
-        if (!cursor.isNull(maxElevationIndex)) {
-            trackStatistics.setMaxElevation(cursor.getFloat(maxElevationIndex));
+        if (!cursor.isNull(maxAltitudeIndex)) {
+            trackStatistics.setMaxAltitude(cursor.getFloat(maxAltitudeIndex));
         }
-        if (!cursor.isNull(elevationGainIndex)) {
-            trackStatistics.setTotalElevationGain(cursor.getFloat(elevationGainIndex));
+        if (!cursor.isNull(altitudeGainIndex)) {
+            trackStatistics.setTotalAltitudeGain(cursor.getFloat(altitudeGainIndex));
         }
-        if (!cursor.isNull(elevationLossIndex)) {
-            trackStatistics.setTotalElevationLoss(cursor.getFloat(elevationLossIndex));
+        if (!cursor.isNull(altitudeLossIndex)) {
+            trackStatistics.setTotalAltitudeLoss(cursor.getFloat(altitudeLossIndex));
         }
         if (!cursor.isNull(iconIndex)) {
             track.setIcon(cursor.getString(iconIndex));
@@ -284,10 +284,10 @@ public class ContentProviderUtils {
         values.put(TracksColumns.AVGSPEED, trackStatistics.getAverageSpeed());
         values.put(TracksColumns.AVGMOVINGSPEED, trackStatistics.getAverageMovingSpeed());
         values.put(TracksColumns.MAXSPEED, trackStatistics.getMaxSpeed());
-        values.put(TracksColumns.MINELEVATION, trackStatistics.getMinElevation());
-        values.put(TracksColumns.MAXELEVATION, trackStatistics.getMaxElevation());
-        values.put(TracksColumns.ELEVATIONGAIN, trackStatistics.getTotalElevationGain());
-        values.put(TracksColumns.ELEVATIONLOSS, trackStatistics.getTotalElevationLoss());
+        values.put(TracksColumns.MIN_ALTITUDE, trackStatistics.getMinAltitude());
+        values.put(TracksColumns.MAX_ALTITUDE, trackStatistics.getMaxAltitude());
+        values.put(TracksColumns.ALTITUDE_GAIN, trackStatistics.getTotalAltitudeGain());
+        values.put(TracksColumns.ALTITUDE_LOSS, trackStatistics.getTotalAltitudeLoss());
         values.put(TracksColumns.ICON, track.getIcon());
 
         return values;
@@ -562,11 +562,11 @@ public class ContentProviderUtils {
             trackPoint.setPower(cursor.getFloat(indexes.sensorPowerIndex));
         }
 
-        if (!cursor.isNull(indexes.elevationGainIndex)) {
-            trackPoint.setElevationGain(cursor.getFloat(indexes.elevationGainIndex));
+        if (!cursor.isNull(indexes.altitudeGainIndex)) {
+            trackPoint.setAltitudeGain(cursor.getFloat(indexes.altitudeGainIndex));
         }
-        if (!cursor.isNull(indexes.elevationLossIndex)) {
-            trackPoint.setElevationLoss(cursor.getFloat(indexes.elevationLossIndex));
+        if (!cursor.isNull(indexes.altitudeLossIndex)) {
+            trackPoint.setAltitudeLoss(cursor.getFloat(indexes.altitudeLossIndex));
         }
 
         return trackPoint;
@@ -713,11 +713,11 @@ public class ContentProviderUtils {
             values.put(TrackPointsColumns.SENSOR_POWER, trackPoint.getPower());
         }
 
-        if (trackPoint.hasElevationGain()) {
-            values.put(TrackPointsColumns.ELEVATION_GAIN, trackPoint.getElevationGain());
+        if (trackPoint.hasAltitudeGain()) {
+            values.put(TrackPointsColumns.ALTITUDE_GAIN, trackPoint.getAltitudeGain());
         }
-        if (trackPoint.hasElevationLoss()) {
-            values.put(TrackPointsColumns.ELEVATION_LOSS, trackPoint.getElevationLoss());
+        if (trackPoint.hasAltitudeLoss()) {
+            values.put(TrackPointsColumns.ALTITUDE_LOSS, trackPoint.getAltitudeLoss());
         }
 
         return values;

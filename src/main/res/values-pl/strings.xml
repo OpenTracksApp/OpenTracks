@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Średnia prędkość ruchu: %1$.2f km/h (mil/h: %2$.1f)</string>
     <string name="description_average_pace_in_minute">Średnie tempo: %1$s min/km (%2$s min/milę)</string>
     <string name="description_average_speed">Średnia prędkość: %1$.2f km/h (mil/h: %2$.1f)</string>
-    <string name="description_elevation_gain">Różnica wysokości: %1$d m (stóp: %2$d)</string>
-    <string name="description_elevation_imperial">Wysokość (stopy)</string>
-    <string name="description_elevation_metric">Wysokość (m)</string>
+    <string name="description_altitude_gain">Różnica wysokości: %1$d m (stóp: %2$d)</string>
+    <string name="description_altitude_imperial">Wysokość (stopy)</string>
+    <string name="description_altitude_metric">Wysokość (m)</string>
     <string name="description_fastest_pace_in_minute">Najszybsze tempo: %1$s min/km (%2$s min/milę)</string>
     <string name="description_location_accuracy">Dokładność (m)</string>
     <string name="description_location_altitude">Wysokość (m)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">Szerokość geograficzna (stopnie)</string>
     <string name="description_location_longitude">Długość geograficzna (stopnie)</string>
     <string name="description_location_speed">Prędkość (m/s)</string>
-    <string name="description_max_elevation">Maksymalna wysokość: %1$d m (stóp: %2$d)</string>
+    <string name="description_max_altitude">Maksymalna wysokość: %1$d m (stóp: %2$d)</string>
     <string name="description_max_grade">Maksymalne nachylenie: %1$d%%</string>
     <string name="description_max_speed">Maksymalna prędkość: %1$.2f km/h (mil/h: %2$.1f)</string>
-    <string name="description_min_elevation">Minimalna wysokość: %1$d m (stóp: %2$d)</string>
+    <string name="description_min_altitude">Minimalna wysokość: %1$d m (stóp: %2$d)</string>
     <string name="description_min_grade">Minimalne nachylenie: %1$d%%</string>
     <string name="description_moving_time">Czas w ruchu: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/milę)</string>
@@ -321,7 +321,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">Średnia prędkość ruchu</string>
     <string name="stats_average_pace">Średnie tempo</string>
     <string name="stats_average_speed">Średnia prędkość</string>
-    <string name="stats_elevation">Wysokość</string>
+    <string name="stats_altitude">Wysokość</string>
     <string name="stats_fastest_pace">Najszybsze tempo</string>
     <!-- NOTE: gain/loss is in fact elevation gain/loss-->
     <string name="stats_gain">Przewyższenie w góre</string>
@@ -535,7 +535,7 @@ limitations under the License.
 \n * pokazuje ślady na mapie (zobacz poniżej)</string>
     <string name="settings_default_export_uri_title">Katalog eksportu śladów</string>
     <string name="instant_export_enabled_summary">Eksportuj ślad do pamięci po zakończeniu nagrywania</string>
-    <string name="description_elevation_loss">Strata wysokości: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_loss">Strata wysokości: %1$d m (%2$d ft)</string>
     <string name="export_without_photos">bez zdjęć</string>
     <string name="export_with_photos">wraz z fotografiami</string>
     <string name="description_default_speed_or_pace">Według rodzaju działalności</string>

@@ -14,11 +14,11 @@ import de.dennisguse.opentracks.util.PressureSensorUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
- * Estimates the elevation gain and elevation loss using the device's pressure sensor (i.e., barometer).
+ * Estimates the altitude gain and altitude loss using the device's pressure sensor (i.e., barometer).
  */
-public class ElevationSumManager implements SensorEventListener {
+public class AltitudeSumManager implements SensorEventListener {
 
-    private static final String TAG = ElevationSumManager.class.getSimpleName();
+    private static final String TAG = AltitudeSumManager.class.getSimpleName();
 
     private static final int SAMPLING_RATE = 3 * (int) UnitConversions.ONE_SECOND_US;
 
@@ -28,8 +28,8 @@ public class ElevationSumManager implements SensorEventListener {
 
     private float lastSeenSensorValue_hPa;
 
-    private float elevationGain_m;
-    private float elevationLoss_m;
+    private float altitudeGain_m;
+    private float altitudeLoss_m;
 
     public void start(Context context) {
         SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
@@ -66,19 +66,19 @@ public class ElevationSumManager implements SensorEventListener {
     }
 
     public @Nullable
-    Float getElevationGain_m() {
-        return isConnected ? elevationGain_m : null;
+    Float getAltitudeGain_m() {
+        return isConnected ? altitudeGain_m : null;
     }
 
     public @Nullable
-    Float getElevationLoss_m() {
-        return isConnected ? elevationLoss_m : null;
+    Float getAltitudeLoss_m() {
+        return isConnected ? altitudeLoss_m : null;
     }
 
     public void reset() {
         Log.d(TAG, "Reset");
-        elevationGain_m = 0;
-        elevationLoss_m = 0;
+        altitudeGain_m = 0;
+        altitudeLoss_m = 0;
     }
 
     @Override
@@ -103,15 +103,15 @@ public class ElevationSumManager implements SensorEventListener {
             return;
         }
 
-        PressureSensorUtils.ElevationChange elevationChange = PressureSensorUtils.computeChangesWithSmoothing_m(lastAcceptedPressureValue_hPa, lastSeenSensorValue_hPa, value_hPa);
-        if (elevationChange != null) {
-            elevationGain_m += elevationChange.getElevationGain_m();
-            elevationLoss_m += elevationChange.getElevationLoss_m();
-            lastAcceptedPressureValue_hPa = elevationChange.getCurrentSensorValue_hPa();
+        PressureSensorUtils.AltitudeChange altitudeChange = PressureSensorUtils.computeChangesWithSmoothing_m(lastAcceptedPressureValue_hPa, lastSeenSensorValue_hPa, value_hPa);
+        if (altitudeChange != null) {
+            altitudeGain_m += altitudeChange.getAltitudeGain_m();
+            altitudeLoss_m += altitudeChange.getAltitudeLoss_m();
+            lastAcceptedPressureValue_hPa = altitudeChange.getCurrentSensorValue_hPa();
         }
 
         lastSeenSensorValue_hPa = value_hPa;
 
-        Log.v(TAG, "elevation gain: " + elevationGain_m + ", elevation loss: " + elevationLoss_m);
+        Log.v(TAG, "altitude gain: " + altitudeGain_m + ", altitude loss: " + altitudeLoss_m);
     }
 }

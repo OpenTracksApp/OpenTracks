@@ -46,7 +46,7 @@ public class GPXTrackExporter implements TrackExporter {
 
     private static final String TAG = GPXTrackExporter.class.getSimpleName();
 
-    private static final NumberFormat ELEVATION_FORMAT = NumberFormat.getInstance(Locale.US);
+    private static final NumberFormat ALTITUDE_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat COORDINATE_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat SPEED_FORMAT = NumberFormat.getInstance(Locale.US);
     private static final NumberFormat DISTANCE_FORMAT = NumberFormat.getInstance(Locale.US);
@@ -59,8 +59,8 @@ public class GPXTrackExporter implements TrackExporter {
          * GPX readers expect to see fractional numbers with US-style punctuation.
          * That is, they want periods for decimal points, rather than commas.
          */
-        ELEVATION_FORMAT.setMaximumFractionDigits(1);
-        ELEVATION_FORMAT.setGroupingUsed(false);
+        ALTITUDE_FORMAT.setMaximumFractionDigits(1);
+        ALTITUDE_FORMAT.setGroupingUsed(false);
 
         COORDINATE_FORMAT.setMaximumFractionDigits(6);
         COORDINATE_FORMAT.setMaximumIntegerDigits(3);
@@ -237,7 +237,7 @@ public class GPXTrackExporter implements TrackExporter {
         if (printWriter != null) {
             printWriter.println("<wpt " + formatLocation(marker.getLatitude(), marker.getLongitude()) + ">");
             if (marker.hasAltitude()) {
-                printWriter.println("<ele>" + ELEVATION_FORMAT.format(marker.getAltitude()) + "</ele>");
+                printWriter.println("<ele>" + ALTITUDE_FORMAT.format(marker.getAltitude()) + "</ele>");
             }
             printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(marker.getTime()) + "</time>");
             printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
@@ -281,12 +281,12 @@ public class GPXTrackExporter implements TrackExporter {
             printWriter.println("<trkpt " + formatLocation(trackPoint.getLatitude(), trackPoint.getLongitude()) + ">");
 
             if (trackPoint.hasAltitude()) {
-                printWriter.println("<ele>" + ELEVATION_FORMAT.format(trackPoint.getAltitude()) + "</ele>");
+                printWriter.println("<ele>" + ALTITUDE_FORMAT.format(trackPoint.getAltitude()) + "</ele>");
             }
 
             printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(trackPoint.getTime()) + "</time>");
 
-            if (trackPoint.hasSpeed() || trackPoint.hasHeartRate() || trackPoint.hasCyclingCadence() || trackPoint.hasElevationGain() || trackPoint.hasElevationLoss()) {
+            if (trackPoint.hasSpeed() || trackPoint.hasHeartRate() || trackPoint.hasCyclingCadence() || trackPoint.hasAltitudeGain() || trackPoint.hasAltitudeLoss()) {
                 printWriter.println("<extensions><gpxtpx:TrackPointExtension>");
 
                 if (trackPoint.hasSpeed()) {
@@ -305,16 +305,16 @@ public class GPXTrackExporter implements TrackExporter {
                     printWriter.println("<pwr:PowerInWatts>" + POWER_FORMAT.format(trackPoint.getPower()) + "</pwr:PowerInWatts>");
                 }
 
-                if (trackPoint.hasElevationGain()) {
-                    printWriter.println("<opentracks:gain>" + ELEVATION_FORMAT.format(trackPoint.getElevationGain()) + "</opentracks:gain>");
+                if (trackPoint.hasAltitudeGain()) {
+                    printWriter.println("<opentracks:gain>" + ALTITUDE_FORMAT.format(trackPoint.getAltitudeGain()) + "</opentracks:gain>");
                 }
 
-                if (trackPoint.hasElevationLoss()) {
-                    printWriter.println("<opentracks:loss>" + ELEVATION_FORMAT.format(trackPoint.getElevationLoss()) + "</opentracks:loss>");
+                if (trackPoint.hasAltitudeLoss()) {
+                    printWriter.println("<opentracks:loss>" + ALTITUDE_FORMAT.format(trackPoint.getAltitudeLoss()) + "</opentracks:loss>");
                 }
 
                 if (trackPoint.hasSensorDistance()) {
-                    printWriter.println("<opentracks:distance>" + DISTANCE_FORMAT.format(trackPoint.getElevationLoss()) + "</opentracks:distance>");
+                    printWriter.println("<opentracks:distance>" + DISTANCE_FORMAT.format(trackPoint.getAltitudeLoss()) + "</opentracks:distance>");
                 }
 
                 printWriter.println("</gpxtpx:TrackPointExtension></extensions>");

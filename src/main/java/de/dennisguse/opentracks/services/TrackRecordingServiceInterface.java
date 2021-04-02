@@ -74,18 +74,18 @@ public interface TrackRecordingServiceInterface {
     SensorDataSet getSensorData();
 
     /**
-     * Gets the current elevation gain.
+     * Gets the current altitude gain.
      *
-     * @return elevation gain in m or null.
+     * @return altitude gain in m or null.
      */
-    Float getElevationGain_m();
+    Float getAltitudeGain_m();
 
     /**
-     * Gets the current elevation loss.
+     * Gets the current altitude loss.
      *
-     * @return elevation loss in m or null.
+     * @return altitude loss in m or null.
      */
-    Float getElevationLoss_m();
+    Float getAltitudeLoss_m();
 
     @VisibleForTesting
     void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager);

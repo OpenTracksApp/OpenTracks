@@ -70,8 +70,8 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     private final ArrayList<Float> cadenceList = new ArrayList<>();
     private final ArrayList<Float> heartRateList = new ArrayList<>();
     private final ArrayList<Float> powerList = new ArrayList<>();
-    private final ArrayList<Float> elevationGainList = new ArrayList<>();
-    private final ArrayList<Float> elevationLossList = new ArrayList<>();
+    private final ArrayList<Float> altitudeGainList = new ArrayList<>();
+    private final ArrayList<Float> altitudeLossList = new ArrayList<>();
 
     public KmlFileTrackImporter(Context context) {
         this(context, new ContentProviderUtils(context));
@@ -221,8 +221,8 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         heartRateList.clear();
         cadenceList.clear();
         powerList.clear();
-        elevationGainList.clear();
-        elevationLossList.clear();
+        altitudeGainList.clear();
+        altitudeLossList.clear();
     }
 
     protected void onTrackSegmentEnd() {
@@ -246,11 +246,11 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
             if (i < powerList.size()) {
                 trackPoint.setPower(powerList.get(i));
             }
-            if (i < elevationGainList.size()) {
-                trackPoint.setElevationGain(elevationGainList.get(i));
+            if (i < altitudeGainList.size()) {
+                trackPoint.setAltitudeGain(altitudeGainList.get(i));
             }
-            if (i < elevationLossList.size()) {
-                trackPoint.setElevationLoss(elevationLossList.get(i));
+            if (i < altitudeLossList.size()) {
+                trackPoint.setAltitudeLoss(altitudeLossList.get(i));
             }
 
             insertTrackPoint(trackPoint);
@@ -327,11 +327,11 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
             case KMLTrackExporter.EXTENDED_DATA_TYPE_CADENCE:
                 cadenceList.add(value);
                 break;
-            case KMLTrackExporter.EXTENDED_DATA_TYPE_ELEVATION_GAIN:
-                elevationGainList.add(value);
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_ALTITUDE_GAIN:
+                altitudeGainList.add(value);
                 break;
-            case KMLTrackExporter.EXTENDED_DATA_TYPE_ELEVATION_LOSS:
-                elevationLossList.add(value);
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_ALTITUDE_LOSS:
+                altitudeLossList.add(value);
                 break;
             default:
                 Log.w(TAG, "Data from extended data " + extendedDataType + " is not (yet) supported.");

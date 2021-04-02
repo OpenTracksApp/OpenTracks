@@ -13,7 +13,7 @@ public class ChartPoint {
     private double timeOrDistance;
 
     //Y-axis
-    private double elevation;
+    private double altitude;
     private double speed;
     private double pace;
     private double heartRate = Double.NaN;
@@ -21,8 +21,8 @@ public class ChartPoint {
     private double power = Double.NaN;
 
     @VisibleForTesting
-    ChartPoint(double elevation) {
-        this.elevation = elevation;
+    ChartPoint(double altitude) {
+        this.altitude = altitude;
     }
 
     public ChartPoint(@NonNull TrackStatisticsUpdater trackStatisticsUpdater, TrackPoint trackPoint, boolean chartByDistance, boolean metricUnits) {
@@ -38,9 +38,9 @@ public class ChartPoint {
             timeOrDistance = trackStatistics.getTotalTime().toMillis();
         }
 
-        elevation = trackStatisticsUpdater.getSmoothedElevation();
+        altitude = trackStatisticsUpdater.getSmoothedAltitude();
         if (!metricUnits) {
-            elevation *= UnitConversions.M_TO_FT;
+            altitude *= UnitConversions.M_TO_FT;
         }
 
         speed = trackStatisticsUpdater.getSmoothedSpeed() * UnitConversions.MPS_TO_KMH;
@@ -65,8 +65,8 @@ public class ChartPoint {
         return timeOrDistance;
     }
 
-    public double getElevation() {
-        return elevation;
+    public double getAltitude() {
+        return altitude;
     }
 
     public double getSpeed() {

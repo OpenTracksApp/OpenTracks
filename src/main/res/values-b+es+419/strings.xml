@@ -71,9 +71,9 @@
     <string name="description_average_moving_speed">Velocidad promedio de movimiento: %1$.2f km/h (%2$.1f mi/h).</string>
     <string name="description_average_pace_in_minute">Velocidad promedio: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Velocidad promedio: %1$.2f km/h (%2$.1f mi/h).</string>
-    <string name="description_elevation_gain">Altitud: %1$d m (%2$d pies).</string>
-    <string name="description_elevation_imperial">Elevación (pies)</string>
-    <string name="description_elevation_metric">Elevación (m)</string>
+    <string name="description_altitude_gain">Altitud: %1$d m (%2$d pies).</string>
+    <string name="description_altitude_imperial">Elevación (pies)</string>
+    <string name="description_altitude_metric">Elevación (m)</string>
     <string name="description_fastest_pace_in_minute">Velocidad más rápida: %1$s min/km (%2$s min/mi)</string>
     <string name="description_location_accuracy">Precisión (m)</string>
     <string name="description_location_altitude">Altitud (m)</string>
@@ -81,10 +81,10 @@
     <string name="description_location_latitude">Latitud (grados)</string>
     <string name="description_location_longitude">Longitud (grados)</string>
     <string name="description_location_speed">Velocidad (m/s)</string>
-    <string name="description_max_elevation">Elevación máx.: %1$d m (%2$d pies).</string>
+    <string name="description_max_altitude">Elevación máx.: %1$d m (%2$d pies).</string>
     <string name="description_max_grade">Pendiente máx.: %1$d %%.</string>
     <string name="description_max_speed">Velocidad máx.: %1$.2f km/h (%2$.1f mi/h).</string>
-    <string name="description_min_elevation">Elevación mín.: %1$d m (%2$d pies).</string>
+    <string name="description_min_altitude">Elevación mín.: %1$d m (%2$d pies).</string>
     <string name="description_min_grade">Pendiente mín.: %1$d %%.</string>
     <string name="description_moving_time">Tiempo en movimiento: %1$s.</string>
     <string name="description_pace_imperial">Velocidad (min/mi)</string>
@@ -248,7 +248,7 @@
     <string name="stats_average_moving_speed">Velocidad de movimiento promedio</string>
     <string name="stats_average_pace">Ritmo promedio</string>
     <string name="stats_average_speed">Velocidad promedio</string>
-    <string name="stats_elevation">Elevación</string>
+    <string name="stats_altitude">Elevación</string>
     <string name="stats_fastest_pace">Ritmo más rápido</string>
     <string name="stats_gain">Aumento</string>
     <string name="stats_grade">Pendiente</string>

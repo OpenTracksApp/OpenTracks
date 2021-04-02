@@ -330,7 +330,7 @@ public class ExportImportTest {
         }
     }
 
-    private void assertTrackpoints(List<TrackPoint> trackPoints, boolean verifyPower, boolean verifyHeartrate, boolean verifyCadence, boolean verifyElevationGain, boolean verifyElevationLoss, boolean verifyDistance) {
+    private void assertTrackpoints(List<TrackPoint> trackPoints, boolean verifyPower, boolean verifyHeartrate, boolean verifyCadence, boolean verifyAltitudeGain, boolean verifyAltitudeLoss, boolean verifyDistance) {
         List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
         assertEquals(trackPoints.size(), importedTrackPoints.size());
 
@@ -374,11 +374,11 @@ public class ExportImportTest {
             if (verifyPower) {
                 assertEquals("" + trackPoint, trackPoint.getPower(), importedTrackPoint.getPower(), 0.01);
             }
-            if (verifyElevationGain) {
-                assertEquals(trackPoint.getElevationGain(), importedTrackPoint.getElevationGain(), 0.01);
+            if (verifyAltitudeGain) {
+                assertEquals(trackPoint.getAltitudeGain(), importedTrackPoint.getAltitudeGain(), 0.01);
             }
-            if (verifyElevationLoss) {
-                assertEquals(trackPoint.getElevationLoss(), importedTrackPoint.getElevationLoss(), 0.01);
+            if (verifyAltitudeLoss) {
+                assertEquals(trackPoint.getAltitudeLoss(), importedTrackPoint.getAltitudeLoss(), 0.01);
             }
             if (verifyDistance) {
                 assertEquals(trackPoint.getSensorDistance(), importedTrackPoint.getSensorDistance(), 0.01);
@@ -386,7 +386,7 @@ public class ExportImportTest {
         }
     }
 
-    private void assertTrackStatistics(boolean isGpx, boolean verifyElevationGainAndLoss, boolean verifyDistance) {
+    private void assertTrackStatistics(boolean isGpx, boolean verifyAltitudeGainAndLoss, boolean verifyDistance) {
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
 
         assertNotNull(importedTrack.getTrackStatistics());
@@ -414,26 +414,26 @@ public class ExportImportTest {
             assertEquals(trackStatistics.getAverageMovingSpeed(), importedTrackStatistics.getAverageMovingSpeed(), 0.01);
         }
 
-        // Elevation
-        assertEquals(trackStatistics.getMinElevation(), importedTrackStatistics.getMinElevation(), 0.01);
-        assertEquals(trackStatistics.getMaxElevation(), importedTrackStatistics.getMaxElevation(), 0.01);
-        if (verifyElevationGainAndLoss) {
-            assertEquals(trackStatistics.getTotalElevationGain(), importedTrackStatistics.getTotalElevationGain(), 0.01);
-            assertEquals(trackStatistics.getTotalElevationLoss(), importedTrackStatistics.getTotalElevationLoss(), 0.01);
+        // Altitude
+        assertEquals(trackStatistics.getMinAltitude(), importedTrackStatistics.getMinAltitude(), 0.01);
+        assertEquals(trackStatistics.getMaxAltitude(), importedTrackStatistics.getMaxAltitude(), 0.01);
+        if (verifyAltitudeGainAndLoss) {
+            assertEquals(trackStatistics.getTotalAltitudeGain(), importedTrackStatistics.getTotalAltitudeGain(), 0.01);
+            assertEquals(trackStatistics.getTotalAltitudeLoss(), importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
         } else {
-            assertFalse(importedTrackStatistics.hasTotalElevationGain());
-            assertFalse(importedTrackStatistics.hasTotalElevationLoss());
+            assertFalse(importedTrackStatistics.hasTotalAltitudeGain());
+            assertFalse(importedTrackStatistics.hasTotalAltitudeLoss());
         }
     }
 
-    private static TrackPoint createTrackPoint(long time, double latitude, double longitude, float accuracy, float speed, float altitude, float elevationGain, float heartRate, float cyclingCadence, float power, float distance) {
+    private static TrackPoint createTrackPoint(long time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, float distance) {
         TrackPoint tp = new TrackPoint(latitude, longitude, (double) altitude, Instant.ofEpochMilli(time));
         tp.setAccuracy(accuracy);
         tp.setSpeed(speed);
         tp.setHeartRate_bpm(heartRate);
         tp.setCyclingCadence_rpm(cyclingCadence);
         tp.setPower(power);
-        tp.setElevationGain(elevationGain);
+        tp.setAltitudeGain(altitudeGain);
         tp.setSensorDistance(distance);
         return tp;
     }

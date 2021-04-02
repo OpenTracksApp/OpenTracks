@@ -136,9 +136,9 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="description_average_moving_speed">Velocidad de movimiento media: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_average_pace_in_minute">Ritmo medio: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Velocidad media: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_elevation_gain">Aumento de elevación: %1$d m (%2$d ft)</string>
-    <string name="description_elevation_imperial">Elevación (pies)</string>
-    <string name="description_elevation_metric">Elevación (m)</string>
+    <string name="description_altitude_gain">Aumento de elevación: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_imperial">Elevación (pies)</string>
+    <string name="description_altitude_metric">Elevación (m)</string>
     <string name="description_fastest_pace_in_minute">Ritmo máximo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_location_accuracy">Precisión (m)</string>
     <string name="description_location_altitude">Altitud (m)</string>
@@ -146,10 +146,10 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="description_location_latitude">Latitud (grados)</string>
     <string name="description_location_longitude">Longitud (grados)</string>
     <string name="description_location_speed">Velocidad (m/s)</string>
-    <string name="description_max_elevation">Elevación máxima: %1$d m (%2$d ft)</string>
+    <string name="description_max_altitude">Elevación máxima: %1$d m (%2$d ft)</string>
     <string name="description_max_grade">Pendiente máxima: %1$d %%</string>
     <string name="description_max_speed">Velocidad máxima: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_min_elevation">Elevación mínima: %1$d m (%2$d ft)</string>
+    <string name="description_min_altitude">Elevación mínima: %1$d m (%2$d ft)</string>
     <string name="description_min_grade">Pendiente mínima: %1$d %%</string>
     <string name="description_moving_time">Tiempo de movimiento: %1$s</string>
     <string name="description_pace_imperial">Ritmo (min/mi)</string>
@@ -356,7 +356,7 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="stats_average_moving_speed">Velocidad de movimiento media</string>
     <string name="stats_average_pace">Ritmo medio</string>
     <string name="stats_average_speed">Velocidad media</string>
-    <string name="stats_elevation">Elevación</string>
+    <string name="stats_altitude">Elevación</string>
     <string name="stats_fastest_pace">Ritmo máximo</string>
     <string name="stats_gain">Ganancia</string>
     <string name="stats_grade">Pendiente</string>
@@ -594,7 +594,7 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="import_thread_interrupted">Hilo interrumpido</string>
     <string name="import_progress_summary_errors_msg">Errores</string>
     <string name="import_progress_summary_ok_msg">Archivos importados</string>
-    <string name="description_elevation_loss">Pérdida de altura: %1$d m (%2$d pies)</string>
+    <string name="description_altitude_loss">Pérdida de altura: %1$d m (%2$d pies)</string>
     <string name="value_float_mile_hour">%1$.2f mph</string>
     <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
     <string name="value_pace_mile">%1$d:%2$02d min/mi</string>

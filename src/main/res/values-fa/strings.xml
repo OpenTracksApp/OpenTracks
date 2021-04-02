@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">سرعت متوسط حرکت: %1$.2f کیلومتر در ساعت (%2$.1f مایل در ساعت)</string>
     <string name="description_average_pace_in_minute">سرعت متوسط: %1$s دقیقه در کیلومتر (%2$s دقیقه در مایل)</string>
     <string name="description_average_speed">سرعت متوسط: %1$.2f کیلومتر در ساعت (%2$.1f مایل در ساعت)</string>
-    <string name="description_elevation_gain">افزایش ارتفاع: %1$d متر (%2$d فوت)</string>
-    <string name="description_elevation_imperial">ارتفاع (فوت)</string>
-    <string name="description_elevation_metric">ارتفاع (متر)</string>
+    <string name="description_altitude_gain">افزایش ارتفاع: %1$d متر (%2$d فوت)</string>
+    <string name="description_altitude_imperial">ارتفاع (فوت)</string>
+    <string name="description_altitude_metric">ارتفاع (متر)</string>
     <string name="description_fastest_pace_in_minute">بیشترین سرعت: %1$s دقیقه در کیلومتر (%2$s دقیقه در مایل)</string>
     <string name="description_location_accuracy">دقت (متر)</string>
     <string name="description_location_altitude">ارتفاع (متر)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">عرض جغرافیایی (درجه)</string>
     <string name="description_location_longitude">طول جغرافیایی (درجه)</string>
     <string name="description_location_speed">سرعت (متر بر ثانیه)</string>
-    <string name="description_max_elevation">حداکثر ارتفاع: %1$d متر (%2$d فوت)</string>
+    <string name="description_max_altitude">حداکثر ارتفاع: %1$d متر (%2$d فوت)</string>
     <string name="description_max_grade">حداکثر درجه: %% %1$d</string>
     <string name="description_max_speed">حداکثر سرعت: %1$.2f کیلومتر در ساعت (%2$.1f مایل در ساعت)</string>
-    <string name="description_min_elevation">حداقل ارتفاع: %1$d متر (%2$d فوت)</string>
+    <string name="description_min_altitude">حداقل ارتفاع: %1$d متر (%2$d فوت)</string>
     <string name="description_min_grade">حداقل درجه: %% %1$d</string>
     <string name="description_moving_time">زمان حرکت: %1$s</string>
     <string name="description_pace_imperial">سرعت (دقیقه در مایل)</string>
@@ -286,7 +286,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">میانگین سرعت حرکت</string>
     <string name="stats_average_pace">سرعت متوسط</string>
     <string name="stats_average_speed">سرعت متوسط</string>
-    <string name="stats_elevation">ارتفاع</string>
+    <string name="stats_altitude">ارتفاع</string>
     <string name="stats_fastest_pace">سریع‌ترین تندی</string>
     <string name="stats_gain">افزایش</string>
     <string name="stats_grade">درجه</string>

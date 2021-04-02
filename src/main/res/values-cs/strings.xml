@@ -136,9 +136,9 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="description_average_moving_speed">Průměrná rychlost přesunu: %1$.2f km/h (%2$.1f mil/h)</string>
     <string name="description_average_pace_in_minute">Průměrné tempo: %1$s min/km (%2$s min/míli)</string>
     <string name="description_average_speed">Průměrná rychlost: %1$.2f km/h (%2$.1f mil/h)</string>
-    <string name="description_elevation_gain">Převýšení: %1$d m (%2$d stop)</string>
-    <string name="description_elevation_imperial">Nadmořská výška (stopy)</string>
-    <string name="description_elevation_metric">Nadmořská výška (m)</string>
+    <string name="description_altitude_gain">Převýšení: %1$d m (%2$d stop)</string>
+    <string name="description_altitude_imperial">Nadmořská výška (stopy)</string>
+    <string name="description_altitude_metric">Nadmořská výška (m)</string>
     <string name="description_fastest_pace_in_minute">Nejvyšší tempo: %1$s min/km (%2$s min/míli)</string>
     <string name="description_location_accuracy">Přesnost (m)</string>
     <string name="description_location_altitude">Nadmořská výška (m)</string>
@@ -146,10 +146,10 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="description_location_latitude">Zeměpisná šířka (stupně)</string>
     <string name="description_location_longitude">Zeměpisná délka (stupně)</string>
     <string name="description_location_speed">Rychlost (m/s)</string>
-    <string name="description_max_elevation">Maximální výška: %1$d m (%2$d stop)</string>
+    <string name="description_max_altitude">Maximální výška: %1$d m (%2$d stop)</string>
     <string name="description_max_grade">Maximální stoupání: %1$d %%</string>
     <string name="description_max_speed">Maximální rychlost: %1$.2f km/h (%2$.1f mil/h)</string>
-    <string name="description_min_elevation">Minimální výška: %1$d m (%2$d stop)</string>
+    <string name="description_min_altitude">Minimální výška: %1$d m (%2$d stop)</string>
     <string name="description_min_grade">Minimální stoupání: %1$d %%</string>
     <string name="description_moving_time">Doba přesunu: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/míli)</string>
@@ -355,7 +355,7 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="stats_average_moving_speed">Průměrná rychlost pohybu</string>
     <string name="stats_average_pace">Průměrné tempo</string>
     <string name="stats_average_speed">Průměrná rychlost</string>
-    <string name="stats_elevation">Nadmořská výška</string>
+    <string name="stats_altitude">Nadmořská výška</string>
     <string name="stats_fastest_pace">Nejvyšší tempo</string>
     <string name="stats_gain">Nárůst</string>
     <string name="stats_grade">Sklon</string>
@@ -574,7 +574,7 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="generic_skip">Přeskočit</string>
     <string name="activity_type_escooter">elektroskůtr</string>
     <string name="open_track_using_dashboard">Otevřít pomocí OpenTracks-Dashboard</string>
-    <string name="description_elevation_loss">Převýšení: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_loss">Převýšení: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Export po ukončení aktivity selhal, zkontrolujte prosím adresář pro export.</string>
     <string name="stats_loss">Ztráta</string>
     <string name="export_track_already_exists_msg">Trasa %1$s již existuje v cílovém adresáři.</string>

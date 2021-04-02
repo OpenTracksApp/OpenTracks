@@ -50,8 +50,8 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.exporter.ExportServiceResultReceiver;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.HandlerServer;
+import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
-import de.dennisguse.opentracks.services.sensors.ElevationSumManager;
 import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTaskFactory;
 import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
 import de.dennisguse.opentracks.settings.SettingsActivity;
@@ -109,7 +109,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     // The following variables are set when recording:
     private WakeLock wakeLock;
     private BluetoothRemoteSensorManager remoteSensorManager;
-    private ElevationSumManager elevationSumManager;
+    private AltitudeSumManager altitudeSumManager;
 
     private TrackStatisticsUpdater trackStatisticsUpdater;
     private TrackPoint lastTrackPoint;
@@ -159,9 +159,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             remoteSensorManager = null;
         }
 
-        if (elevationSumManager != null) {
-            elevationSumManager.stop(this);
-            elevationSumManager = null;
+        if (altitudeSumManager != null) {
+            altitudeSumManager.stop(this);
+            altitudeSumManager = null;
         }
 
         // Reverse order from onCreate
@@ -340,8 +340,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         remoteSensorManager = new BluetoothRemoteSensorManager(this);
         remoteSensorManager.start();
 
-        elevationSumManager = new ElevationSumManager();
-        elevationSumManager.start(this);
+        altitudeSumManager = new AltitudeSumManager();
+        altitudeSumManager.start(this);
 
         lastTrackPoint = null;
         isIdle = false;
@@ -434,9 +434,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             remoteSensorManager.stop();
             remoteSensorManager = null;
         }
-        if (elevationSumManager != null) {
-            elevationSumManager.stop(this);
-            elevationSumManager = null;
+        if (altitudeSumManager != null) {
+            altitudeSumManager.stop(this);
+            altitudeSumManager = null;
         }
 
         lastTrackPoint = null;
@@ -592,10 +592,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      */
     private void insertTrackPoint(@NonNull Track track, @NonNull TrackPoint trackPoint) {
         try {
-            if (elevationSumManager != null) {
-                trackPoint.setElevationGain(elevationSumManager.getElevationGain_m());
-                trackPoint.setElevationLoss(elevationSumManager.getElevationLoss_m());
-                elevationSumManager.reset();
+            if (altitudeSumManager != null) {
+                trackPoint.setAltitudeGain(altitudeSumManager.getAltitudeGain_m());
+                trackPoint.setAltitudeLoss(altitudeSumManager.getAltitudeLoss_m());
+                altitudeSumManager.reset();
             }
             if (remoteSensorManager != null) {
                 fillWithSensorDataSet(trackPoint);
@@ -632,25 +632,25 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     }
 
     /**
-     * Returns the relative elevation gain (since last trackpoint).
+     * Returns the relative altitude gain (since last trackpoint).
      */
-    Float getElevationGain_m() {
-        if (elevationSumManager == null || !elevationSumManager.isConnected()) {
+    Float getAltitudeGain_m() {
+        if (altitudeSumManager == null || !altitudeSumManager.isConnected()) {
             return null;
         }
 
-        return elevationSumManager.getElevationGain_m();
+        return altitudeSumManager.getAltitudeGain_m();
     }
 
     /**
-     * Returns the relative elevation loss (since last trackpoint).
+     * Returns the relative altitude loss (since last trackpoint).
      */
-    Float getElevationLoss_m() {
-        if (elevationSumManager == null || !elevationSumManager.isConnected()) {
+    Float getAltitudeLoss_m() {
+        if (altitudeSumManager == null || !altitudeSumManager.isConnected()) {
             return null;
         }
 
-        return elevationSumManager.getElevationLoss_m();
+        return altitudeSumManager.getAltitudeLoss_m();
     }
 
     private void showNotification(boolean isGpsStarted) {

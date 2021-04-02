@@ -35,10 +35,10 @@ public class TrackStatisticsUpdaterTest {
         assertEquals(Duration.ofMillis(13999), statistics.getTotalTime());
         assertEquals(Duration.ofSeconds(6), statistics.getMovingTime());
 
-        assertEquals(2.5, statistics.getMinElevation(), 0.01);
-        assertEquals(27.5, statistics.getMaxElevation(), 0.01);
-        assertEquals(27, statistics.getTotalElevationGain(), 0.01);
-        assertEquals(27.0, statistics.getTotalElevationLoss(), 0.01);
+        assertEquals(2.5, statistics.getMinAltitude(), 0.01);
+        assertEquals(27.5, statistics.getMaxAltitude(), 0.01);
+        assertEquals(27, statistics.getTotalAltitudeGain(), 0.01);
+        assertEquals(27.0, statistics.getTotalAltitudeLoss(), 0.01);
 
         assertEquals(14.226, statistics.getMaxSpeed(), 0.01);
         assertEquals(14.226, statistics.getAverageMovingSpeed(), 0.01);

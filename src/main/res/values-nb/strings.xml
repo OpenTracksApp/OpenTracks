@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Gjennomsnittlig forflytningshastighet: %1$.2f km/t (%2$.1f mi/h)</string>
     <string name="description_average_pace_in_minute">Gjennomsnittstempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Gjennomsnittshastighet: %1$.2f km/t (%2$.1f mi/h)</string>
-    <string name="description_elevation_gain">Total stigning: %1$d m (%2$d ft)</string>
-    <string name="description_elevation_imperial">Høyde (ft)</string>
-    <string name="description_elevation_metric">Høyde (m)</string>
+    <string name="description_altitude_gain">Total stigning: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_imperial">Høyde (ft)</string>
+    <string name="description_altitude_metric">Høyde (m)</string>
     <string name="description_fastest_pace_in_minute">Raskeste tempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_location_accuracy">Nøyaktighet (m)</string>
     <string name="description_location_altitude">Høyde (m)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">Breddegrad (grader)</string>
     <string name="description_location_longitude">Lengdegrad (grader)</string>
     <string name="description_location_speed">Hastighet (m/s)</string>
-    <string name="description_max_elevation">Maksstigning: %1$d m (%2$d ft)</string>
+    <string name="description_max_altitude">Maksstigning: %1$d m (%2$d ft)</string>
     <string name="description_max_grade">Maksgrad: %1$d %%</string>
     <string name="description_max_speed">Maksfart: %1$.2f km/t (%2$.1f mi/h)</string>
-    <string name="description_min_elevation">Minimumsstigning: %1$d m (%2$d ft)</string>
+    <string name="description_min_altitude">Minimumsstigning: %1$d m (%2$d ft)</string>
     <string name="description_min_grade">Minimumsgrad: %1$d %%</string>
     <string name="description_moving_time">Forflytningstid: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/mi)</string>
@@ -289,7 +289,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">Gjennomsnittlig forflytningshastighet</string>
     <string name="stats_average_pace">Gjennomsnittlig tempo</string>
     <string name="stats_average_speed">Gjennomsnittlig hastighet</string>
-    <string name="stats_elevation">Høyde</string>
+    <string name="stats_altitude">Høyde</string>
     <string name="stats_fastest_pace">Raskeste tempo</string>
     <string name="stats_gain">Total stigning</string>
     <string name="stats_grade">Helling</string>
@@ -583,7 +583,7 @@ limitations under the License.
     <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
     <string name="value_float_mile_hour">%1$.2f mph</string>
     <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
-    <string name="description_elevation_loss">Total nedstigning: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_loss">Total nedstigning: %1$d m (%2$d ft)</string>
     <string name="stats_loss">Total nedstigning</string>
     <string name="import_prevent_reimport">Du har stilt inn å forhindre at spor importeres om igjen</string>
     <string name="settings_prevent_reimport_tracks_title">Forhindre reimport av spor</string>

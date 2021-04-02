@@ -128,7 +128,7 @@ public class IntervalStatisticsTest {
 		assertEquals(trackStatistics.getTotalDistance(), totalDistance, 0.01);
 		assertEquals(trackStatistics.getTotalTime().toMillis(), totalTime * UnitConversions.S_TO_MS, 1);
 		assertEquals(intervalList.size(), (int) Math.ceil(trackStatistics.getTotalDistance() / distanceInterval));
-		assertEquals(totalGain, trackPoints.size() * TestDataUtil.ELEVATION_GAIN, 0.1);
+		assertEquals(totalGain, trackPoints.size() * TestDataUtil.ALTITUDE_GAIN, 0.1);
 		for (int i = 0; i < intervalList.size() - 1; i++) {
 			assertEquals(intervalList.get(i).getDistance_m(), distanceInterval, 0.001);
 			totalDistance -= intervalList.get(i).getDistance_m();

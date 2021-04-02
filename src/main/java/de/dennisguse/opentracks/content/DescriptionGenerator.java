@@ -127,24 +127,24 @@ public class DescriptionGenerator {
         // Fastest pace
         writePace(stats.getMaxSpeed(), builder, R.string.description_fastest_pace_in_minute, lineBreak);
 
-        // Max elevation
-        if (stats.hasElevationMax()) {
-            writeElevation(stats.getMaxElevation(), builder, R.string.description_max_elevation, lineBreak);
+        // Max altitude
+        if (stats.hasAltitudeMax()) {
+            writeAltitude(stats.getMaxAltitude(), builder, R.string.description_max_altitude, lineBreak);
         }
 
-        // Min elevation
-        if (stats.hasElevationMin()) {
-            writeElevation(stats.getMinElevation(), builder, R.string.description_min_elevation, lineBreak);
+        // Min altitude
+        if (stats.hasAltitudeMin()) {
+            writeAltitude(stats.getMinAltitude(), builder, R.string.description_min_altitude, lineBreak);
         }
 
-        // Elevation gain
-        if (stats.hasTotalElevationGain()) {
-            writeElevation(stats.getTotalElevationGain(), builder, R.string.description_elevation_gain, lineBreak);
+        // Altitude gain
+        if (stats.hasTotalAltitudeGain()) {
+            writeAltitude(stats.getTotalAltitudeGain(), builder, R.string.description_altitude_gain, lineBreak);
         }
 
-        // Elevation loss
-        if (stats.hasTotalElevationLoss()) {
-            writeElevation(stats.getTotalElevationLoss(), builder, R.string.description_elevation_loss, lineBreak);
+        // Altitude loss
+        if (stats.hasTotalAltitudeLoss()) {
+            writeAltitude(stats.getTotalAltitudeLoss(), builder, R.string.description_altitude_loss, lineBreak);
         }
 
         // Recorded time
@@ -201,8 +201,6 @@ public class DescriptionGenerator {
     }
 
     /**
-     * Writes pace.
-     *
      * @param speed     speed in meters per second
      * @param builder   StringBuilder to append pace
      * @param resId     resource id of pace string
@@ -221,18 +219,16 @@ public class DescriptionGenerator {
     }
 
     /**
-     * Writes elevation.
-     *
-     * @param elevation elevation in meters
-     * @param builder   StringBuilder to append elevation
-     * @param resId     resource id of elevation string
-     * @param lineBreak line break string
+     * @param altitude_m altitude_m in meters
+     * @param builder    StringBuilder to append
+     * @param resId      resource id of altitude string
+     * @param lineBreak  line break string
      */
     @VisibleForTesting
-    void writeElevation(double elevation, StringBuilder builder, int resId, String lineBreak) {
-        long elevationInM = Math.round(elevation);
-        long elevationInFt = Math.round(elevation * UnitConversions.M_TO_FT);
-        builder.append(context.getString(resId, elevationInM, elevationInFt));
+    void writeAltitude(double altitude_m, StringBuilder builder, int resId, String lineBreak) {
+        long altitudeInM = Math.round(altitude_m);
+        long altitudeInFt = Math.round(altitude_m * UnitConversions.M_TO_FT);
+        builder.append(context.getString(resId, altitudeInM, altitudeInFt));
         builder.append(lineBreak);
     }
 }

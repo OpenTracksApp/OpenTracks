@@ -44,9 +44,9 @@
             tools:text="Speed" />
 
         <TextView
-            android:id="@+id/interval_elevation"
+            android:id="@+id/interval_altitude"
             style="@style/IntervalLabel"
-            android:text="@string/stats_elevation" />
+            android:text="@string/stats_altitude" />
 
     </LinearLayout>
 

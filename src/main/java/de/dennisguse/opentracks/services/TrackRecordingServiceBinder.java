@@ -98,13 +98,13 @@ class TrackRecordingServiceBinder extends android.os.Binder implements TrackReco
     }
 
     @Override
-    public Float getElevationGain_m() {
-        return trackRecordingService.getElevationGain_m();
+    public Float getAltitudeGain_m() {
+        return trackRecordingService.getAltitudeGain_m();
     }
 
     @Override
-    public Float getElevationLoss_m() {
-        return trackRecordingService.getElevationLoss_m();
+    public Float getAltitudeLoss_m() {
+        return trackRecordingService.getAltitudeLoss_m();
     }
 
     @VisibleForTesting

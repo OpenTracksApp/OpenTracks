@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">ความเร็วการเคลื่อนที่เฉลี่ย: %1$.2f กม./ชม. (%2$.1f ไมล์/ชม.)</string>
     <string name="description_average_pace_in_minute">อัตราก้าวเฉลี่ย: %1$s นาที/กม. (%2$s นาที/ไมล์)</string>
     <string name="description_average_speed">ความเร็วเฉลี่ย: %1$.2f กม./ชม. (%2$.1f ไมล์/ชม.)</string>
-    <string name="description_elevation_gain">ระดับความสูง: %1$d ม. (%2$d ฟุต)</string>
-    <string name="description_elevation_imperial">ระดับความสูง (ฟุต)</string>
-    <string name="description_elevation_metric">ระดับความสูง (เมตร)</string>
+    <string name="description_altitude_gain">ระดับความสูง: %1$d ม. (%2$d ฟุต)</string>
+    <string name="description_altitude_imperial">ระดับความสูง (ฟุต)</string>
+    <string name="description_altitude_metric">ระดับความสูง (เมตร)</string>
     <string name="description_fastest_pace_in_minute">อัตราก้าวสูงสุด: %1$s นาที/กม. (%2$s นาที/ไมล์)</string>
     <string name="description_location_accuracy">ความแม่นยำ (ม.)</string>
     <string name="description_location_altitude">ระดับความสูง (ม.)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">ละติจูด (องศา)</string>
     <string name="description_location_longitude">ลองจิจูด (องศา)</string>
     <string name="description_location_speed">ความเร็ว (ม./วินาที)</string>
-    <string name="description_max_elevation">ระดับความสูงสูงสุด: %1$d ม. (%2$d ฟุต)</string>
+    <string name="description_max_altitude">ระดับความสูงสูงสุด: %1$d ม. (%2$d ฟุต)</string>
     <string name="description_max_grade">ความลาดสูงสุด: %1$d %%</string>
     <string name="description_max_speed">ความเร็วสูงสุด: %1$.2f กม./ชม. (%2$.1f ไมล์/ชม.)</string>
-    <string name="description_min_elevation">ระดับความสูงต่ำสุด: %1$d ม. (%2$d ฟุต)</string>
+    <string name="description_min_altitude">ระดับความสูงต่ำสุด: %1$d ม. (%2$d ฟุต)</string>
     <string name="description_min_grade">ความลาดต่ำสุด: %1$d %%</string>
     <string name="description_moving_time">เวลาการเคลื่อนที่: %1$s</string>
     <string name="description_pace_imperial">อัตราก้าว (นาที/ไมล์)</string>
@@ -286,7 +286,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">ความเร็วในการเคลื่อนที่เฉลี่ย</string>
     <string name="stats_average_pace">ก้าวเฉลี่ย</string>
     <string name="stats_average_speed">ความเร็วเฉลี่ย</string>
-    <string name="stats_elevation">ระดับความสูง</string>
+    <string name="stats_altitude">ระดับความสูง</string>
     <string name="stats_fastest_pace">อ้ตราก้าวที่เร็วที่สุด</string>
     <string name="stats_gain">เพิ่มค่า</string>
     <string name="stats_grade">ระดับความเอียง</string>

@@ -61,8 +61,8 @@ public class KMLTrackExporter implements TrackExporter {
     public static final String EXTENDED_DATA_TYPE_CADENCE = "cadence";
     public static final String EXTENDED_DATA_TYPE_HEART_RATE = "heart_rate";
     public static final String EXTENDED_DATA_TYPE_POWER = "power";
-    public static final String EXTENDED_DATA_TYPE_ELEVATION_GAIN = "elevation_gain";
-    public static final String EXTENDED_DATA_TYPE_ELEVATION_LOSS = "elevation_loss";
+    public static final String EXTENDED_DATA_TYPE_ALTITUDE_GAIN = "elevation_gain";
+    public static final String EXTENDED_DATA_TYPE_ALTITUDE_LOSS = "elevation_loss";
 
     private static final String MARKER_ICON = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png";
     private static final String TRACK_ICON = "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
@@ -79,8 +79,8 @@ public class KMLTrackExporter implements TrackExporter {
     private final List<Float> powerList = new ArrayList<>();
     private final List<Float> cadenceList = new ArrayList<>();
     private final List<Float> heartRateList = new ArrayList<>();
-    private final List<Float> elevationGainList = new ArrayList<>();
-    private final List<Float> elevationLossList = new ArrayList<>();
+    private final List<Float> altitudeGainList = new ArrayList<>();
+    private final List<Float> altitudeLossList = new ArrayList<>();
 
     @Deprecated // Figure out a better way to do this! (if needed)
     private TrackPoint startTrackPoint;
@@ -344,8 +344,8 @@ public class KMLTrackExporter implements TrackExporter {
             powerList.clear();
             cadenceList.clear();
             heartRateList.clear();
-            elevationGainList.clear();
-            elevationLossList.clear();
+            altitudeGainList.clear();
+            altitudeLossList.clear();
         }
     }
 
@@ -370,11 +370,11 @@ public class KMLTrackExporter implements TrackExporter {
                 if (heartRateList.stream().anyMatch(Objects::nonNull)) {
                     writeSimpleArrayData(heartRateList, EXTENDED_DATA_TYPE_HEART_RATE);
                 }
-                if (elevationGainList.stream().anyMatch(Objects::nonNull)) {
-                    writeSimpleArrayData(elevationGainList, EXTENDED_DATA_TYPE_ELEVATION_GAIN);
+                if (altitudeGainList.stream().anyMatch(Objects::nonNull)) {
+                    writeSimpleArrayData(altitudeGainList, EXTENDED_DATA_TYPE_ALTITUDE_GAIN);
                 }
-                if (elevationLossList.stream().anyMatch(Objects::nonNull)) {
-                    writeSimpleArrayData(elevationLossList, EXTENDED_DATA_TYPE_ELEVATION_LOSS);
+                if (altitudeLossList.stream().anyMatch(Objects::nonNull)) {
+                    writeSimpleArrayData(altitudeLossList, EXTENDED_DATA_TYPE_ALTITUDE_LOSS);
                 }
             }
             printWriter.println("</SchemaData>");
@@ -403,8 +403,8 @@ public class KMLTrackExporter implements TrackExporter {
                 cadenceList.add(trackPoint.hasCyclingCadence() ? trackPoint.getCyclingCadence_rpm() : null);
                 powerList.add(trackPoint.hasPower() ? trackPoint.getPower() : null);
 
-                elevationGainList.add(trackPoint.hasElevationGain() ? trackPoint.getElevationGain() : null);
-                elevationLossList.add(trackPoint.hasElevationLoss() ? trackPoint.getElevationLoss() : null);
+                altitudeGainList.add(trackPoint.hasAltitudeGain() ? trackPoint.getAltitudeGain() : null);
+                altitudeLossList.add(trackPoint.hasAltitudeLoss() ? trackPoint.getAltitudeLoss() : null);
             }
         }
     }

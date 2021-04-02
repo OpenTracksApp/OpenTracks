@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Tốc độ di chuyển trung bình: %1$.2f km/h (%2$.1f dặm/h)</string>
     <string name="description_average_pace_in_minute">Nhịp độ bình quân: %1$s phút/km (%2$s phút/dặm)</string>
     <string name="description_average_speed">Tốc độ trung bình: %1$.2f km/h (%2$.1f dặm/h)</string>
-    <string name="description_elevation_gain">Hệ số độ cao: %1$d m (%2$d ft)</string>
-    <string name="description_elevation_imperial">Độ cao (ft)</string>
-    <string name="description_elevation_metric">Độ cao (m)</string>
+    <string name="description_altitude_gain">Hệ số độ cao: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_imperial">Độ cao (ft)</string>
+    <string name="description_altitude_metric">Độ cao (m)</string>
     <string name="description_fastest_pace_in_minute">Nhịp độ nhanh nhất: %1$s phút/km (%2$s phút/dặm)</string>
     <string name="description_location_accuracy">Độ chính xác (m)</string>
     <string name="description_location_altitude">Độ cao (m)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">Vĩ độ (độ)</string>
     <string name="description_location_longitude">Kinh độ (độ)</string>
     <string name="description_location_speed">Tốc độ (m/s)</string>
-    <string name="description_max_elevation">Độ cao tối đa: %1$d m (%2$d ft)</string>
+    <string name="description_max_altitude">Độ cao tối đa: %1$d m (%2$d ft)</string>
     <string name="description_max_grade">Mức tối đa: %1$d %%</string>
     <string name="description_max_speed">Tốc độ tối đa: %1$.2f km/h (%2$.1f dặm/h)</string>
-    <string name="description_min_elevation">Độ cao tối thiểu: %1$d m (%2$d ft)</string>
+    <string name="description_min_altitude">Độ cao tối thiểu: %1$d m (%2$d ft)</string>
     <string name="description_min_grade">Mức tối thiểu: %1$d %%</string>
     <string name="description_moving_time">Thời gian di chuyển: %1$s</string>
     <string name="description_pace_imperial">Nhịp độ (phút/dặm)</string>
@@ -287,7 +287,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">Tốc độ di chuyển trung bình</string>
     <string name="stats_average_pace">Nhịp độ trung bình</string>
     <string name="stats_average_speed">Tốc độ trung bình</string>
-    <string name="stats_elevation">Độ cao</string>
+    <string name="stats_altitude">Độ cao</string>
     <string name="stats_fastest_pace">Nhịp độ nhanh nhất</string>
     <string name="stats_gain">Tăng</string>
     <string name="stats_grade">Độ dốc</string>

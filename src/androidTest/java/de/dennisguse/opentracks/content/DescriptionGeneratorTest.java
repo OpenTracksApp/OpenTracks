@@ -64,20 +64,20 @@ public class DescriptionGeneratorTest {
         stats.setTotalTime(Duration.ofMillis(600000));
         stats.setMovingTime(Duration.ofMillis(300000));
         stats.setMaxSpeed(100);
-        stats.setMaxElevation(550);
-        stats.setMinElevation(-500);
-        stats.setTotalElevationGain(6000f);
-        stats.setTotalElevationLoss(6000f);
+        stats.setMaxAltitude(550);
+        stats.setMinAltitude(-500);
+        stats.setTotalAltitudeGain(6000f);
+        stats.setTotalAltitudeLoss(6000f);
         stats.setStartTime(START_TIME);
         track.setTrackStatistics(stats);
         track.setCategory("hiking");
         String expected = //"Created by"
                 "<a href='https://github.com/OpenTracksApp/OpenTracks'>OpenTracks (Debug)</a><p>"
-                + "Name: -<br>"
-                + "Activity type: hiking<br>"
-                + "Description: -<br>"
-                + "Total distance: 20.00 km (12.4 mi)<br>"
-                + "Total time: 10:00<br>"
+                        + "Name: -<br>"
+                        + "Activity type: hiking<br>"
+                        + "Description: -<br>"
+                        + "Total distance: 20.00 km (12.4 mi)<br>"
+                        + "Total time: 10:00<br>"
                 + "Moving time: 05:00<br>"
                 + "Average speed: 120.00 km/h (74.6 mi/h)<br>"
                 + "Average moving speed: 240.00 km/h (149.1 mi/h)<br>"
@@ -95,17 +95,17 @@ public class DescriptionGeneratorTest {
     }
 
     @Test
-    public void testGenerateTrackDescriptionWithoutMaxMinElevation() {
+    public void testGenerateTrackDescriptionWithoutMaxMinAltitude() {
         Track track = new Track();
         TrackStatistics stats = new TrackStatistics();
         stats.setTotalDistance(20000);
         stats.setTotalTime(Duration.ofMillis(600000));
         stats.setMovingTime(Duration.ofMillis(300000));
         stats.setMaxSpeed(100);
-        stats.setMaxElevation(Double.POSITIVE_INFINITY);
-        stats.setMinElevation(Double.NEGATIVE_INFINITY);
-        stats.setTotalElevationGain(6000f);
-        stats.setTotalElevationLoss(6000f);
+        stats.setMaxAltitude(Double.POSITIVE_INFINITY);
+        stats.setMinAltitude(Double.NEGATIVE_INFINITY);
+        stats.setTotalAltitudeGain(6000f);
+        stats.setTotalAltitudeLoss(6000f);
         stats.setStartTime(START_TIME);
         track.setTrackStatistics(stats);
         track.setCategory("hiking");
@@ -162,12 +162,12 @@ public class DescriptionGeneratorTest {
     }
 
     /**
-     * Tests {@link DescriptionGenerator#writeElevation(double, StringBuilder, int, String)}.
+     * Tests {@link DescriptionGenerator#writeAltitude(double, StringBuilder, int, String)}.
      */
     @Test
-    public void testWriteElevation() {
+    public void testWriteAltitude() {
         StringBuilder builder = new StringBuilder();
-        descriptionGenerator.writeElevation(4.2, builder, R.string.description_min_elevation, "<br>");
+        descriptionGenerator.writeAltitude(4.2, builder, R.string.description_min_altitude, "<br>");
         assertEquals("Min elevation: 4 m (14 ft)<br>", builder.toString());
     }
 

@@ -32,8 +32,8 @@ import java.time.Instant;
 //TODO Check that data ranges are valid (not less than zero etc.)
 public class TrackStatistics {
 
-    // The min and max elevation (meters) seen on this track.
-    private final ExtremityMonitor elevationExtremities = new ExtremityMonitor();
+    // The min and max altitude (meters) seen on this track.
+    private final ExtremityMonitor altitudeExtremities = new ExtremityMonitor();
 
     // The track start time.
     private Instant startTime;
@@ -47,10 +47,8 @@ public class TrackStatistics {
     private Duration movingTime;
     // The maximum speed (meters/second) that we believe is valid.
     private double maxSpeed_mps;
-    // The total elevation gained (meters).
-    private Float totalElevationGain_m = null;
-    // The total elevation lost (meters).
-    private Float totalElevationLoss_m = null;
+    private Float totalAltitudeGain_m = null;
+    private Float totalAltitudeLoss_m = null;
 
     public TrackStatistics() {
         reset();
@@ -68,9 +66,9 @@ public class TrackStatistics {
         totalTime = other.totalTime;
         movingTime = other.movingTime;
         maxSpeed_mps = other.maxSpeed_mps;
-        elevationExtremities.set(other.elevationExtremities.getMin(), other.elevationExtremities.getMax());
-        totalElevationGain_m = other.totalElevationGain_m;
-        totalElevationLoss_m = other.totalElevationLoss_m;
+        altitudeExtremities.set(other.altitudeExtremities.getMin(), other.altitudeExtremities.getMax());
+        totalAltitudeGain_m = other.totalAltitudeGain_m;
+        totalAltitudeLoss_m = other.totalAltitudeLoss_m;
     }
 
     /**
@@ -95,26 +93,26 @@ public class TrackStatistics {
         totalTime = totalTime.plus(other.totalTime);
         movingTime = movingTime.plus(other.movingTime);
         maxSpeed_mps = Math.max(maxSpeed_mps, other.maxSpeed_mps);
-        if (other.elevationExtremities.hasData()) {
-            elevationExtremities.update(other.elevationExtremities.getMin());
-            elevationExtremities.update(other.elevationExtremities.getMax());
+        if (other.altitudeExtremities.hasData()) {
+            altitudeExtremities.update(other.altitudeExtremities.getMin());
+            altitudeExtremities.update(other.altitudeExtremities.getMax());
         }
-        if (totalElevationGain_m == null) {
-            if (other.totalElevationGain_m != null) {
-                totalElevationGain_m = other.totalElevationGain_m;
+        if (totalAltitudeGain_m == null) {
+            if (other.totalAltitudeGain_m != null) {
+                totalAltitudeGain_m = other.totalAltitudeGain_m;
             }
         } else {
-            if (other.totalElevationGain_m != null) {
-                totalElevationGain_m += other.totalElevationGain_m;
+            if (other.totalAltitudeGain_m != null) {
+                totalAltitudeGain_m += other.totalAltitudeGain_m;
             }
         }
-        if (totalElevationLoss_m == null) {
-            if (other.totalElevationLoss_m != null) {
-                totalElevationLoss_m = other.totalElevationLoss_m;
+        if (totalAltitudeLoss_m == null) {
+            if (other.totalAltitudeLoss_m != null) {
+                totalAltitudeLoss_m = other.totalAltitudeLoss_m;
             }
         } else {
-            if (other.totalElevationLoss_m != null) {
-                totalElevationLoss_m += other.totalElevationLoss_m;
+            if (other.totalAltitudeLoss_m != null) {
+                totalAltitudeLoss_m += other.totalAltitudeLoss_m;
             }
         }
     }
@@ -127,8 +125,8 @@ public class TrackStatistics {
         setTotalTime(Duration.ofSeconds(0));
         setMovingTime(Duration.ofSeconds(0));
         setMaxSpeed(0);
-        setTotalElevationGain(null);
-        setTotalElevationLoss(null);
+        setTotalAltitudeGain(null);
+        setTotalAltitudeLoss(null);
     }
 
     public void reset(Instant startTime) {
@@ -224,104 +222,80 @@ public class TrackStatistics {
         return Math.max(maxSpeed_mps, getAverageMovingSpeed());
     }
 
-    /**
-     * Sets the maximum speed.
-     *
-     * @param maxSpeed the maximum speed in meters/second
-     */
-    public void setMaxSpeed(double maxSpeed) {
-        this.maxSpeed_mps = maxSpeed;
+    public void setMaxSpeed(double maxSpeed_mps) {
+        this.maxSpeed_mps = maxSpeed_mps;
     }
 
-    public boolean hasElevationMin() {
-        return !Double.isInfinite(getMinElevation());
+    public boolean hasAltitudeMin() {
+        return !Double.isInfinite(getMinAltitude());
     }
 
-    /**
-     * Gets the minimum elevation.
-     * This is calculated from the smoothed elevation, so this can actually be more than the current elevation.
-     */
-    public double getMinElevation() {
-        return elevationExtremities.getMin();
+    public double getMinAltitude() {
+        return altitudeExtremities.getMin();
     }
 
-    /**
-     * Sets the minimum elevation.
-     *
-     * @param elevation the minimum elevation in meters
-     */
-    public void setMinElevation(double elevation) {
-        elevationExtremities.setMin(elevation);
+    public void setMinAltitude(double altitude_m) {
+        altitudeExtremities.setMin(altitude_m);
     }
 
-    public boolean hasElevationMax() {
-        return !Double.isInfinite(getMaxElevation());
+    public boolean hasAltitudeMax() {
+        return !Double.isInfinite(getMaxAltitude());
     }
 
     /**
-     * Gets the maximum elevation.
-     * This is calculated from the smoothed elevation, so this can actually be less than the current elevation.
+     * Gets the maximum altitude.
+     * This is calculated from the smoothed altitude, so this can actually be less than the current altitude.
      */
-    public double getMaxElevation() {
-        return elevationExtremities.getMax();
+    public double getMaxAltitude() {
+        return altitudeExtremities.getMax();
     }
 
-    /**
-     * Sets the maximum elevation.
-     *
-     * @param elevation_m the maximum elevation in meters
-     */
-    public void setMaxElevation(double elevation_m) {
-        elevationExtremities.setMax(elevation_m);
+    public void setMaxAltitude(double altitude_m) {
+        altitudeExtremities.setMax(altitude_m);
     }
 
-    /**
-     * Updates a new elevation.
-     *
-     * @param elevation_m the elevation value in meters
-     */
-    public void updateElevationExtremities(double elevation_m) {
-        elevationExtremities.update(elevation_m);
+    public void updateAltitudeExtremities(double altitude_m) {
+        altitudeExtremities.update(altitude_m);
     }
 
-    public boolean hasTotalElevationGain() {
-        return totalElevationGain_m != null;
+    public boolean hasTotalAltitudeGain() {
+        return totalAltitudeGain_m != null;
     }
 
     @Nullable
-    public Float getTotalElevationGain() {
-        return totalElevationGain_m;
+    public Float getTotalAltitudeGain() {
+        return totalAltitudeGain_m;
     }
 
-    public void setTotalElevationGain(Float totalElevationGain_m) {
-        this.totalElevationGain_m = totalElevationGain_m;
+    public void setTotalAltitudeGain(Float totalAltitudeGain_m) {
+        this.totalAltitudeGain_m = totalAltitudeGain_m;
     }
 
-    public void addTotalElevationGain(float gain_m) {
-        if (totalElevationGain_m == null) {
-            totalElevationGain_m = 0f;
+    public void addTotalAltitudeGain(float gain_m) {
+        if (totalAltitudeGain_m == null) {
+            totalAltitudeGain_m = 0f;
         }
-        totalElevationGain_m += gain_m;
+        totalAltitudeGain_m += gain_m;
     }
 
-    public boolean hasTotalElevationLoss() {
-        return totalElevationLoss_m != null;
+    public boolean hasTotalAltitudeLoss() {
+        return totalAltitudeLoss_m != null;
     }
 
     @Nullable
-    public Float getTotalElevationLoss() {
-        return totalElevationLoss_m;
+    public Float getTotalAltitudeLoss() {
+        return totalAltitudeLoss_m;
     }
 
-    public void setTotalElevationLoss(Float totalElevationLoss_m) {
-        this.totalElevationLoss_m = totalElevationLoss_m;
+    public void setTotalAltitudeLoss(Float totalAltitudeLoss_m) {
+        this.totalAltitudeLoss_m = totalAltitudeLoss_m;
     }
 
-    public void addTotalElevationLoss(float loss_m) {
-        if (totalElevationLoss_m == null) {
-            totalElevationLoss_m = 0f;
+    public void addTotalAltitudeLoss(float loss_m) {
+        if (totalAltitudeLoss_m == null) {
+            totalAltitudeLoss_m = 0f;
         }
-        totalElevationLoss_m += loss_m;
+        totalAltitudeLoss_m += loss_m;
     }
 
     @NonNull
@@ -330,8 +304,8 @@ public class TrackStatistics {
         return "TrackStatistics { Start Time: " + getStartTime() + "; Stop Time: " + getStopTime()
                 + "; Total Distance: " + getTotalDistance() + "; Total Time: " + getTotalTime()
                 + "; Moving Time: " + getMovingTime() + "; Max Speed: " + getMaxSpeed()
-                + "; Min Elevation: " + getMinElevation() + "; Max Elevation: " + getMaxElevation()
-                + "; Elevation Gain: " + getTotalElevationGain()
-                + "; Elevation Loss: " + getTotalElevationLoss() + "}";
+                + "; Min Altitude: " + getMinAltitude() + "; Max Altitude: " + getMaxAltitude()
+                + "; Altitude Gain: " + getTotalAltitudeGain()
+                + "; Altitude Loss: " + getTotalAltitudeLoss() + "}";
     }
 }

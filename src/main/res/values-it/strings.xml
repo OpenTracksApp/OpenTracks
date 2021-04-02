@@ -130,9 +130,9 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="description_average_moving_speed">Velocità di spostamento media: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_average_pace_in_minute">Ritmo medio: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Velocità media: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_elevation_gain">Dislivello: %1$d m (%2$d ft)</string>
-    <string name="description_elevation_imperial">Altitudine (ft)</string>
-    <string name="description_elevation_metric">Altitudine (m)</string>
+    <string name="description_altitude_gain">Dislivello: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_imperial">Altitudine (ft)</string>
+    <string name="description_altitude_metric">Altitudine (m)</string>
     <string name="description_fastest_pace_in_minute">Ritmo più rapido: %1$s min/km (%2$s min/mi)</string>
     <string name="description_location_accuracy">Precisione (m)</string>
     <string name="description_location_altitude">Altitudine (m)</string>
@@ -140,10 +140,10 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="description_location_latitude">Latitudine (gradi)</string>
     <string name="description_location_longitude">Longitudine (gradi)</string>
     <string name="description_location_speed">Velocità (m/s)</string>
-    <string name="description_max_elevation">Altitudine max: %1$d m (%2$d ft)</string>
+    <string name="description_max_altitude">Altitudine max: %1$d m (%2$d ft)</string>
     <string name="description_max_grade">Pendenza massima: %1$d %%</string>
     <string name="description_max_speed">Velocità massima: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_min_elevation">Altitudine min: %1$d m (%2$d ft)</string>
+    <string name="description_min_altitude">Altitudine min: %1$d m (%2$d ft)</string>
     <string name="description_min_grade">Pendenza minima: %1$d %%</string>
     <string name="description_moving_time">Tempo di spostamento: %1$s</string>
     <string name="description_pace_imperial">Ritmo (min/mi)</string>
@@ -332,7 +332,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="stats_average_moving_speed">Velocità media in movimento</string>
     <string name="stats_average_pace">Ritmo medio</string>
     <string name="stats_average_speed">Velocità media</string>
-    <string name="stats_elevation">Altitudine</string>
+    <string name="stats_altitude">Altitudine</string>
     <string name="stats_fastest_pace">Ritmo più veloce</string>
     <string name="stats_gain">Guadagno</string>
     <string name="stats_grade">Pendenza</string>
@@ -609,7 +609,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="value_float_kilometer_hour">%1$.2f cp/s</string>
     <string name="stats_loss">Perdita</string>
     <string name="settings_sensor_wheel_circumference">Circonferenza della ruota (mm)</string>
-    <string name="description_elevation_loss">Perdita di quota: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_loss">Perdita di quota: %1$d m (%2$d ft)</string>
     <string name="sensor_state_heart_rate_avg">Tasso cardiaco medio</string>
     <string name="sensor_state_cadence_max">Cadenza max</string>
     <string name="sensor_state_cadence_avg">Cadenza media</string>

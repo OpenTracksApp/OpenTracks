@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Povprečna hitrost gibanja: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_average_pace_in_minute">Povprečni tempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Povprečna hitrost: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_elevation_gain">Pridobljena višina: %1$d m (%2$d ft)</string>
-    <string name="description_elevation_imperial">Nadmorska višina (ft)</string>
-    <string name="description_elevation_metric">Nadmorska višina (m)</string>
+    <string name="description_altitude_gain">Pridobljena višina: %1$d m (%2$d ft)</string>
+    <string name="description_altitude_imperial">Nadmorska višina (ft)</string>
+    <string name="description_altitude_metric">Nadmorska višina (m)</string>
     <string name="description_fastest_pace_in_minute">Najhitrejši tempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_location_accuracy">Natančnost (m)</string>
     <string name="description_location_altitude">Nadmorska višina (m)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">Zemljepisna širina (stopinje)</string>
     <string name="description_location_longitude">Zemljepisna dolžina (stopinje)</string>
     <string name="description_location_speed">Hitrost (m/s)</string>
-    <string name="description_max_elevation">Največja višina: %1$d m (%2$d ft)</string>
+    <string name="description_max_altitude">Največja višina: %1$d m (%2$d ft)</string>
     <string name="description_max_grade">Največji naklon: %1$d %%</string>
     <string name="description_max_speed">Največja hitrost: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_min_elevation">Najmanjša višina: %1$d m (%2$d ft)</string>
+    <string name="description_min_altitude">Najmanjša višina: %1$d m (%2$d ft)</string>
     <string name="description_min_grade">Najmanjši naklon: %1$d %%</string>
     <string name="description_moving_time">Čas gibanja: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/mi)</string>
@@ -288,7 +288,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">Povprečna hitrost gibanja</string>
     <string name="stats_average_pace">Povprečni tempo</string>
     <string name="stats_average_speed">Povprečna hitrost</string>
-    <string name="stats_elevation">Nadmorska višina</string>
+    <string name="stats_altitude">Nadmorska višina</string>
     <string name="stats_fastest_pace">Najhitrejši tempo</string>
     <string name="stats_gain">Porast</string>
     <string name="stats_grade">Naklon</string>

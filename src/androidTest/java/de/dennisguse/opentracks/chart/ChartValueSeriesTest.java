@@ -45,15 +45,15 @@ public class ChartValueSeriesTest {
                 Integer.MIN_VALUE,
                 Integer.MAX_VALUE,
                 new int[]{100, 1000},
-                R.string.description_elevation_metric,
-                R.string.description_elevation_imperial,
-                R.color.chart_elevation_fill,
-                R.color.chart_elevation_border,
+                R.string.description_altitude_metric,
+                R.string.description_altitude_imperial,
+                R.color.chart_altitude_fill,
+                R.color.chart_altitude_border,
                 15,
                 18) {
             @Override
             double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
-                return chartPoint.getElevation();
+                return chartPoint.getAltitude();
             }
 
             @Override

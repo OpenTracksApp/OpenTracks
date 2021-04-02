@@ -87,9 +87,9 @@ limitations under the License.
     <string name="description_average_moving_speed">Ortalama hareket hızı: %1$.2f km/sa (%2$.1f mil/sa)</string>
     <string name="description_average_pace_in_minute">Ortalama tempo: %1$s dk/km (%2$s dk/mil)</string>
     <string name="description_average_speed">Ortalama hız: %1$.2f km/sa (%2$.1f mil/sa)</string>
-    <string name="description_elevation_gain">İrtifa kazancı: %1$d m (%2$d fit)</string>
-    <string name="description_elevation_imperial">İrtifa (ft)</string>
-    <string name="description_elevation_metric">İrtifa (m)</string>
+    <string name="description_altitude_gain">İrtifa kazancı: %1$d m (%2$d fit)</string>
+    <string name="description_altitude_imperial">İrtifa (ft)</string>
+    <string name="description_altitude_metric">İrtifa (m)</string>
     <string name="description_fastest_pace_in_minute">En yüksek tempo: %1$s dk/km (%2$s dk/mil)</string>
     <string name="description_location_accuracy">Doğruluk (m)</string>
     <string name="description_location_altitude">Rakım (m)</string>
@@ -97,10 +97,10 @@ limitations under the License.
     <string name="description_location_latitude">Enlem (derece)</string>
     <string name="description_location_longitude">Boylam (derece)</string>
     <string name="description_location_speed">Hız (m/sn)</string>
-    <string name="description_max_elevation">Maks. irtifa: %1$d m (%2$d fit)</string>
+    <string name="description_max_altitude">Maks. irtifa: %1$d m (%2$d fit)</string>
     <string name="description_max_grade">Maks. eğim: %% %1$d</string>
     <string name="description_max_speed">Maks. hız: %1$.2f km/sa (%2$.1f mil/sa)</string>
-    <string name="description_min_elevation">Min. irtifa: %1$d m (%2$d fit)</string>
+    <string name="description_min_altitude">Min. irtifa: %1$d m (%2$d fit)</string>
     <string name="description_min_grade">Min. eğim: %% %1$d</string>
     <string name="description_moving_time">Hareket süresi: %1$s</string>
     <string name="description_pace_imperial">Tempo (dk/mil)</string>
@@ -287,7 +287,7 @@ limitations under the License.
     <string name="stats_average_moving_speed">Ort. hareket hızı</string>
     <string name="stats_average_pace">Ort. tempo</string>
     <string name="stats_average_speed">Ort. hız</string>
-    <string name="stats_elevation">İrtifa</string>
+    <string name="stats_altitude">İrtifa</string>
     <string name="stats_fastest_pace">En hızlı tempo</string>
     <string name="stats_gain">Artış</string>
     <string name="stats_grade">Eğim</string>
