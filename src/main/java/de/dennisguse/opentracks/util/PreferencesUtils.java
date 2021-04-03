@@ -274,7 +274,7 @@ public class PreferencesUtils {
 
     public static boolean shouldInstantExportAfterWorkout(SharedPreferences sharedPreferences, Context context) {
         final boolean INSTANT_POST_WORKOUT_EXPORT_DEFAULT = context.getResources().getBoolean(R.bool.post_workout_export_enabled_default);
-        return getBoolean(sharedPreferences, context, R.string.post_workout_export_enabled_key, INSTANT_POST_WORKOUT_EXPORT_DEFAULT);
+        return getBoolean(sharedPreferences, context, R.string.post_workout_export_enabled_key, INSTANT_POST_WORKOUT_EXPORT_DEFAULT) && isDefaultExportDirectoryUri(sharedPreferences, context);
     }
 
     public static TrackFileFormat getExportTrackFileFormat(SharedPreferences sharedPreferences, Context context) {
