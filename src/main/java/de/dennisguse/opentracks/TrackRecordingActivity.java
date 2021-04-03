@@ -369,7 +369,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 case 0:
                     return StatisticsRecordingFragment.newInstance();
                 case 1:
-                    return IntervalsFragment.IntervalsRecordingFragment.newInstance();
+                    return IntervalsFragment.newInstance(false);
                 case 2:
                     return ChartFragment.newInstance(false);
                 case 3:

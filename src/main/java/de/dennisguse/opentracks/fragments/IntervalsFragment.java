@@ -2,7 +2,6 @@ package de.dennisguse.opentracks.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackActivityDataHubInterface;
@@ -25,7 +29,6 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.databinding.IntervalListViewBinding;
 import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 import de.dennisguse.opentracks.viewmodels.IntervalStatisticsModel;
 
@@ -35,6 +38,8 @@ import de.dennisguse.opentracks.viewmodels.IntervalStatisticsModel;
 public class IntervalsFragment extends Fragment implements TrackDataListener {
 
     private static final String TAG = IntervalsFragment.class.getSimpleName();
+
+    private static final String FROM_TOP_TO_BOTTOM_KEY = "fromTopToBottom";
 
     private IntervalStatisticsModel viewModel;
     protected IntervalStatisticsAdapter.StackMode stackModeListView;
@@ -47,22 +52,38 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     private SharedPreferences sharedPreferences;
 
     private TrackDataHub trackDataHub;
-    private String category;
+    private boolean isReportSpeed;
 
     private IntervalListViewBinding viewBinding;
 
     protected final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
             metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getContext());
-            if (adapter != null) {
-                adapter.notifyDataSetChanged();
+            uploadIntervals();
+            if (spinnerAdapter != null) {
                 spinnerAdapter.notifyDataSetChanged();
             }
         }
     };
 
-    public static Fragment newInstance() {
-        return new IntervalsFragment();
+    /**
+     * Creates an instance of this class.
+     *
+     * @param  fromTopToBottom If true then the intervals are shown from top to bottom (the first interval on top). Otherwise the intervals are shown from bottom to top.
+     * @return IntervalsFragment instance.
+     */
+    public static Fragment newInstance(boolean fromTopToBottom) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(FROM_TOP_TO_BOTTOM_KEY, fromTopToBottom);
+        IntervalsFragment intervalsFragment = new IntervalsFragment();
+        intervalsFragment.setArguments(bundle);
+        return intervalsFragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        stackModeListView = getArguments().getBoolean(FROM_TOP_TO_BOTTOM_KEY, true) ? IntervalStatisticsAdapter.StackMode.STACK_FROM_TOP : IntervalStatisticsAdapter.StackMode.STACK_FROM_BOTTOM;
     }
 
     @Override
@@ -76,14 +97,11 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
         super.onViewCreated(view, savedInstanceState);
 
         sharedPreferences = PreferencesUtils.getSharedPreferences(getContext());
-        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
 
-        viewBinding.intervalList.setEmptyView(viewBinding.intervalListEmptyView);
-
-        stackModeListView = IntervalStatisticsAdapter.StackMode.STACK_FROM_TOP;
-
-        viewModel = new IntervalStatisticsModel();
+        adapter = new IntervalStatisticsAdapter(getContext(), stackModeListView, metricUnits, isReportSpeed);
+        viewBinding.intervalList.setLayoutManager(new LinearLayoutManager(getContext()));
+        // TODO handle empty view: before we did viewBinding.intervalList.setEmptyView(viewBinding.intervalListEmptyView);
+        viewBinding.intervalList.setAdapter(adapter);
 
         spinnerAdapter = new ArrayAdapter<IntervalStatisticsModel.IntervalOption>(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {
             @NonNull
@@ -109,7 +127,7 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedInterval = IntervalStatisticsModel.IntervalOption.values()[i];
-                loadIntervals();
+                uploadIntervals();
             }
 
             @Override
@@ -121,6 +139,10 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     @Override
     public void onResume() {
         super.onResume();
+        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
+        viewModel = new ViewModelProvider(getActivity()).get(IntervalStatisticsModel.class);
+        loadIntervals();
         resumeTrackDataHub();
     }
 
@@ -128,7 +150,6 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     public void onPause() {
         super.onPause();
         pauseTrackDataHub();
-
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
@@ -155,10 +176,15 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
         if (viewModel == null) {
             return;
         }
+        LiveData<List<IntervalStatistics.Interval>> liveData = viewModel.getIntervalStats(metricUnits, selectedInterval);
+        liveData.observe(getActivity(), intervalList -> adapter.swapData(intervalList, metricUnits, isReportSpeed));
+    }
 
-        IntervalStatistics intervalStatistics = viewModel.getIntervalStats(metricUnits, selectedInterval);
-        adapter = new IntervalStatisticsAdapter(getContext(), intervalStatistics.getIntervalList(), category, stackModeListView);
-        viewBinding.intervalList.setAdapter(adapter);
+    private synchronized void uploadIntervals() {
+        if (viewModel == null) {
+            return;
+        }
+        viewModel.upload(metricUnits, selectedInterval);
     }
 
     /**
@@ -185,11 +211,11 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
             getActivity().runOnUiThread(() -> {
                 if (isResumed()) {
                     // Set category.
-                    category = track != null ? track.getCategory() : "";
+                    String category = track != null ? track.getCategory() : "";
 
                     // Set rate label.
-                    boolean reportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), category); //TODO Handle sharedPreferenceChangeListener
-                    viewBinding.intervalRate.setText(reportSpeed ? R.string.stats_speed : R.string.stats_pace);
+                    isReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), category);
+                    viewBinding.intervalRate.setText(isReportSpeed ? R.string.stats_speed : R.string.stats_pace);
                 }
             });
         }
@@ -219,7 +245,7 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     @Override
     public void onNewTrackPointsDone(@NonNull TrackPoint unused) {
         if (isResumed()) {
-            runOnUiThread(this::loadIntervals);
+            runOnUiThread(viewModel::onNewTrackPoints);
         }
     }
 
@@ -247,50 +273,6 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
         FragmentActivity fragmentActivity = getActivity();
         if (fragmentActivity != null) {
             fragmentActivity.runOnUiThread(runnable);
-        }
-    }
-
-    public static class IntervalsRecordingFragment extends IntervalsFragment {
-        // Refreshing intervals stats it's not so demanding so 5 seconds is enough to balance performance and user experience.
-        private static final long UI_UPDATE_INTERVAL = 5 * UnitConversions.ONE_SECOND_MS;
-
-        private Handler intervalHandler;
-
-        private final Runnable intervalRunner = new Runnable() {
-            @Override
-            public void run() {
-                if (isResumed()) {
-                    updateIntervals();
-                    intervalHandler.postDelayed(intervalRunner, UI_UPDATE_INTERVAL);
-                }
-            }
-        };
-
-        public static Fragment newInstance() {
-            return new IntervalsRecordingFragment();
-        }
-
-        @Override
-        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-            super.onViewCreated(view, savedInstanceState);
-            intervalHandler = new Handler();
-            stackModeListView = IntervalStatisticsAdapter.StackMode.STACK_FROM_BOTTOM;
-        }
-
-        @Override
-        public void onResume() {
-            super.onResume();
-            intervalHandler.post(intervalRunner);
-        }
-
-        @Override
-        public void onPause() {
-            super.onPause();
-            intervalHandler.removeCallbacks(intervalRunner);
-        }
-
-        private void updateIntervals() {
-            loadIntervals();
         }
     }
 }

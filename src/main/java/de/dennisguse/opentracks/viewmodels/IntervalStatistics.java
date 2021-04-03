@@ -55,7 +55,6 @@ public class IntervalStatistics {
         }
     }
 
-
     public List<Interval> getIntervalList() {
         return intervalList;
     }

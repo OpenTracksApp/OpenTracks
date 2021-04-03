@@ -268,7 +268,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
                 case 0:
                     return StatisticsRecordedFragment.newInstance(trackId);
                 case 1:
-                    return IntervalsFragment.newInstance();
+                    return IntervalsFragment.newInstance(true);
                 case 2:
                     return ChartFragment.newInstance(false);
                 case 3:
