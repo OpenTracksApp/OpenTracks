@@ -899,7 +899,7 @@ public class ChartView extends View {
             Optional<ChartPoint> lastValid = chartPoints.stream().filter(chartValueSeries::isChartPointValid)
                     .reduce((first, second) -> second);
 
-            if (firstValid.isPresent()) {
+            if (firstValid.isPresent() && lastValid.isPresent()) {
                 Path path = chartValueSeries.getPath();
 
                 int yCorner = topBorder + effectiveHeight;

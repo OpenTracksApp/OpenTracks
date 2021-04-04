@@ -76,7 +76,7 @@ public class KmzTrackImporter implements TrackImporter {
         for (Track.Id trackId : trackIds) {
             if (copyKmzImages(trackId)) {
                 trackIdsWithImages.add(trackId);
-                deleteOrphanImages(context, trackId);
+                deleteOrphanImages(trackId);
             } else {
                 return new ArrayList<>();
             }
@@ -199,10 +199,9 @@ public class KmzTrackImporter implements TrackImporter {
     /**
      * Deletes all images that remained in external storage that doesn't have a marker associated.
      *
-     * @param context the Context object.
      * @param trackId the id of the Track.
      */
-    private void deleteOrphanImages(Context context, Track.Id trackId) {
+    private void deleteOrphanImages(Track.Id trackId) {
         // 1.- Gets all photo names in the markers of the track identified by id.
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
         List<Marker> markers = contentProviderUtils.getMarkers(trackId);

@@ -33,14 +33,11 @@ import androidx.test.rule.ServiceTestRule;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.time.Duration;
 import java.time.Instant;
-import java.time.temporal.TemporalUnit;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;

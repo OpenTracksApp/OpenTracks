@@ -93,9 +93,8 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
                 connect(cyclingPower, address);
             }
 
-            if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_cycling_power_key, key)) {
+            if (PreferencesUtils.isKey(context, R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key, key)) {
                 preferenceWheelCircumference = PreferencesUtils.getWheelCircumference(sharedPreferences, context);
-
             }
         }
     };
@@ -185,7 +184,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
                 Log.d(TAG, "onChanged: speed data repeated.");
                 return;
             }
-            ((SensorDataCycling.DistanceSpeed) sensorData).compute(previous, PreferencesUtils.getWheelCircumference(sharedPreferences, context));
+            ((SensorDataCycling.DistanceSpeed) sensorData).compute(previous, preferenceWheelCircumference);
         }
 
         sensorDataSet.set(sensorData);

@@ -38,7 +38,7 @@ class ExecutorListViewService<T> {
         }
 
         new Thread(() -> {
-            Future future = executorService.submit(runnable);
+            Future<?> future = executorService.submit(runnable);
             try {
                 future.get();
             } catch (ExecutionException | InterruptedException e) {
