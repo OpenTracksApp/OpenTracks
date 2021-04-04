@@ -87,7 +87,8 @@ public class TrackRecordingServiceTestLooper {
     @After
     public void tearDown() throws TimeoutException {
         // Reset service (if some previous test failed)
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)))
+                .getService();
         if (service.isRecording() || service.isPaused()) {
             service.endCurrentTrack();
         }
@@ -219,7 +220,8 @@ public class TrackRecordingServiceTestLooper {
     }
 
     private void fullRecordingSession() throws TimeoutException {
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)))
+                .getService();
         assertFalse(service.isRecording());
 
         // Start a track.

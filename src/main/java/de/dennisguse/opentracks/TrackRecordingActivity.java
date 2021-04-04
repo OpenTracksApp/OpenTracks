@@ -26,9 +26,9 @@ import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.IntervalsFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordingFragment;
-import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
+import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
+import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
@@ -71,7 +71,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             // After binding changes (is available), update the total time in trackController.
             runOnUiThread(() -> trackController.update(true, recordingTrackPaused));
 
-            TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
+            TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
             if (service == null) {
                 Log.d(TAG, "could not get TrackRecordingService");
                 return;

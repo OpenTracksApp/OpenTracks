@@ -40,7 +40,6 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.services.TrackRecordingService;
-import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
@@ -89,7 +88,8 @@ public class ExportImportTest {
 
     @Before
     public void setUp() throws TimeoutException {
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
+                .getService();
 
         trackId = service.startNewTrack();
 

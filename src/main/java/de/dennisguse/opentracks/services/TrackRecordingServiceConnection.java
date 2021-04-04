@@ -46,7 +46,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
 
     private final Runnable callback;
 
-    private TrackRecordingServiceInterface trackRecordingService;
+    private TrackRecordingService trackRecordingService;
 
     public TrackRecordingServiceConnection() {
         callback = null;
@@ -120,7 +120,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     /**
      * Gets the track recording service if bound. Returns null otherwise
      */
-    public TrackRecordingServiceInterface getServiceIfBound() {
+    public TrackRecordingService getServiceIfBound() {
         return trackRecordingService;
     }
 
@@ -129,7 +129,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
      *
      * @param value the value
      */
-    private void setTrackRecordingService(TrackRecordingServiceInterface value) {
+    private void setTrackRecordingService(TrackRecordingService value) {
         trackRecordingService = value;
         if (callback != null) {
             callback.run();
@@ -144,7 +144,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         } catch (RemoteException e) {
             Log.e(TAG, "Failed to bind a death recipient.", e);
         }
-        setTrackRecordingService((TrackRecordingServiceInterface) service);
+        setTrackRecordingService(((TrackRecordingService.Binder) service).getService());
     }
 
     @Override
@@ -163,7 +163,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
      * Resumes the recording track.
      */
     public void resumeTrack() {
-        TrackRecordingServiceInterface service = getServiceIfBound();
+        TrackRecordingService service = getServiceIfBound();
         if (service != null) {
             service.resumeCurrentTrack();
         }
@@ -173,7 +173,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
      * Pauses the recording track.
      */
     public void pauseTrack() {
-        TrackRecordingServiceInterface service = getServiceIfBound();
+        TrackRecordingService service = getServiceIfBound();
         if (service != null) {
             service.pauseCurrentTrack();
         }
@@ -185,7 +185,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
      * @return the id of the marker or null if none could be created.
      */
     public Marker.Id addMarker(Context context, String name, String category, String description, String photoUrl) {
-        TrackRecordingServiceInterface trackRecordingService = getServiceIfBound();
+        TrackRecordingService trackRecordingService = getServiceIfBound();
         if (trackRecordingService == null) {
             Log.d(TAG, "Unable to add marker, no track recording service");
         } else {
@@ -205,7 +205,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     }
 
     public void stopRecording(@NonNull Context context) {
-        TrackRecordingServiceInterface trackRecordingService = getServiceIfBound();
+        TrackRecordingService trackRecordingService = getServiceIfBound();
         if (trackRecordingService == null) {
             Log.e(TAG, "TrackRecordingService not connected.");
         } else {

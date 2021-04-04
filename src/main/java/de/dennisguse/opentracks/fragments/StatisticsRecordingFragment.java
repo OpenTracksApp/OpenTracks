@@ -30,8 +30,8 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.databinding.StatisticsRecordingBinding;
+import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -306,12 +306,12 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
      * Also sets altitude gain and loss.
      */
     private void updateSensorDataUI() {
-        TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+        TrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
 
         if (trackRecordingService == null) {
             Log.d(TAG, "Cannot get the track recording service.");
         } else {
-            SensorDataSet sensorDataSet = trackRecordingService.getSensorData();
+            SensorDataSet sensorDataSet = trackRecordingService.getSensorDataSet();
             if (sensorDataSet != null) {
                 List<SensorDataModel> sensorDataList = new ArrayList<>();
                 if (sensorDataSet.getHeartRate() != null) {
@@ -438,7 +438,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private void updateTotalTime() {
         Duration totalTime = lastTrackStatistics.getTotalTime();
         if (isSelectedTrackRecording()) {
-            TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+            TrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
             if (trackRecordingService != null) {
                 totalTime = trackRecordingService.getTotalTime();
             }

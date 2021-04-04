@@ -40,9 +40,9 @@ import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.IntervalsFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordedFragment;
-import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
+import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
+import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
@@ -77,7 +77,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
     private final Runnable bindCallback = new Runnable() {
         @Override
         public void run() {
-            TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
+            TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
             if (service != null) {
                 service.addListener(TrackRecordedActivity.this);
             }

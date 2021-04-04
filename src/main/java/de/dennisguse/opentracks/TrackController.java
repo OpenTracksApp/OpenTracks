@@ -27,8 +27,8 @@ import android.view.accessibility.AccessibilityEvent;
 import java.time.Duration;
 
 import de.dennisguse.opentracks.databinding.TrackControllerBinding;
+import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
 import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
@@ -221,7 +221,7 @@ public class TrackController implements View.OnTouchListener {
     }
 
     private void updateTotalTime() {
-        TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+        TrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
         if (trackRecordingService != null) {
             totalTime = trackRecordingService.getTotalTime();
         }

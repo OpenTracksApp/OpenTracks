@@ -55,7 +55,7 @@ public class TrackRecordingServiceTestLocation {
     private final Context context = ApplicationProvider.getApplicationContext();
     private ContentProviderUtils contentProviderUtils;
 
-    private TrackRecordingServiceInterface service;
+    private TrackRecordingService service;
 
     @BeforeClass
     public static void preSetUp() {
@@ -77,7 +77,8 @@ public class TrackRecordingServiceTestLocation {
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         sharedPreferences.edit().clear().commit();
 
-        service = ((TrackRecordingServiceInterface) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)));
+        service = ((TrackRecordingService.Binder) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)))
+                .getService();
     }
 
     @After

@@ -113,7 +113,8 @@ public class TrackRecordingServiceTest {
     @After
     public void tearDown() throws TimeoutException {
         // Reset service (if some previous test failed)
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
+                .getService();
         if (service.isRecording() || service.isPaused()) {
             service.endCurrentTrack();
         }
@@ -146,7 +147,8 @@ public class TrackRecordingServiceTest {
         // when
         Intent startIntent = createStartIntent(context);
         mServiceRule.startService(startIntent);
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(startIntent));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(startIntent))
+                .getService();
 
         // then
         // Test if we start in no-recording mode by default.
@@ -160,7 +162,8 @@ public class TrackRecordingServiceTest {
         createDummyTrack(trackId);
 
         // when
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
+                .getService();
 
         // then
         assertFalse(service.isRecording());
@@ -173,7 +176,8 @@ public class TrackRecordingServiceTest {
         createDummyTrack(trackId);
 
         //when
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
+                .getService();
         service.resumeTrack(trackId);
 
         // then
@@ -184,7 +188,8 @@ public class TrackRecordingServiceTest {
     @Test
     public void testRecording_start() throws TimeoutException {
         // given
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
+                .getService();
 
         // when
         Track.Id trackId = service.startNewTrack();
@@ -200,7 +205,8 @@ public class TrackRecordingServiceTest {
     @Test
     public void testRecording_stop() throws TimeoutException {
         // given
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
+                .getService();
         Track.Id trackId = service.startNewTrack();
 
         // when
@@ -218,7 +224,8 @@ public class TrackRecordingServiceTest {
     @Test
     public void testRecording_pauseAndResume() throws TimeoutException {
         // given
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
+                .getService();
         Track.Id trackId = service.startNewTrack();
 
         // when
@@ -244,7 +251,8 @@ public class TrackRecordingServiceTest {
     @Test
     public void testRecording_resumeStoppedTrack() throws TimeoutException, InterruptedException {
         // given
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
+                .getService();
         Track.Id trackId = service.startNewTrack();
         assertTrue(service.isRecording());
         service.endCurrentTrack();
@@ -270,7 +278,8 @@ public class TrackRecordingServiceTest {
     @Test
     public void testRecording_stopPausedTrack() throws TimeoutException {
         // given
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
+                .getService();
         Track.Id trackId = service.startNewTrack();
         assertTrue(service.isRecording());
         service.pauseCurrentTrack();
@@ -293,7 +302,8 @@ public class TrackRecordingServiceTest {
     @Test
     public void testStartNewTrack_alreadyRecording() throws TimeoutException {
         // given
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
+                .getService();
         Track.Id trackId = service.startNewTrack();
         assertTrue(service.isRecording());
 
@@ -309,7 +319,8 @@ public class TrackRecordingServiceTest {
     @Test
     public void testEndCurrentTrack_noRecording() throws TimeoutException {
         // given
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
+                .getService();
         assertFalse(service.isRecording());
 
         // when
@@ -324,7 +335,8 @@ public class TrackRecordingServiceTest {
     @Test
     public void testInsertWaypointMarker_noRecordingTrack() throws TimeoutException {
         // given
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
+                .getService();
         assertFalse(service.isRecording());
 
         // when
@@ -338,7 +350,8 @@ public class TrackRecordingServiceTest {
     @Test
     public void testInsertWaypointMarker_validWaypoint() throws TimeoutException, InterruptedException {
         // given
-        TrackRecordingServiceInterface service = ((TrackRecordingServiceInterface) mServiceRule.bindService(createStartIntent(context)));
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
+                .getService();
         Track.Id trackId = service.startNewTrack();
         assertTrue(service.isRecording());
         newTrackPoint(service);
@@ -377,18 +390,18 @@ public class TrackRecordingServiceTest {
         addTrack(dummyTrack);
     }
 
-    private static void newTrackPoint(TrackRecordingServiceInterface trackRecordingService) throws InterruptedException {
+    private static void newTrackPoint(TrackRecordingService trackRecordingService) throws InterruptedException {
         newTrackPoint(trackRecordingService, 45.0f, 35f, 5, 10, System.currentTimeMillis());
     }
 
-    static void newTrackPoint(TrackRecordingServiceInterface trackRecordingService, double latitude, double longitude, float accuracy, long speed) throws InterruptedException {
+    static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed) throws InterruptedException {
         newTrackPoint(trackRecordingService, latitude, longitude, accuracy, speed, System.currentTimeMillis());
     }
 
     /**
      * Inserts a location and waits for 200ms.
      */
-    private static void newTrackPoint(TrackRecordingServiceInterface trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) throws InterruptedException {
+    private static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) throws InterruptedException {
         Location location = new Location("");
         location.setLongitude(longitude);
         location.setLatitude(latitude);
