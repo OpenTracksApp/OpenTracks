@@ -40,9 +40,9 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.databinding.MarkerListBinding;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
-import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
+import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
+import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 
@@ -73,7 +73,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
     private final Runnable bindCallback = new Runnable() {
         @Override
         public void run() {
-            TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
+            TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
             if (service != null) {
                 service.addListener(MarkerListActivity.this);
             }

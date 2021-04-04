@@ -27,7 +27,6 @@ import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 
@@ -115,7 +114,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private TrackPoint lastTrackPoint;
     private boolean isIdle;
 
-    private TrackRecordingServiceBinder binder = new TrackRecordingServiceBinder(this);
+    private final Binder binder = new Binder();
 
     private HandlerServer handlerServer;
 
@@ -143,7 +142,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
+    public Binder onBind(Intent intent) {
         return binder;
     }
 
@@ -177,9 +176,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         }
 
         contentProviderUtils = null;
-
-        binder.detachFromService();
-        binder = null;
 
         // This should be the next to last operation
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
@@ -255,7 +251,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      *
      * @return the track id
      */
-    Track.Id startNewTrack() {
+    public Track.Id startNewTrack() {
         if (isRecording()) {
             Log.d(TAG, "Ignore startNewTrack. Already recording.");
             return null;
@@ -295,7 +291,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      *
      * @param trackId the id of the track to be resumed.
      */
-    void resumeTrack(Track.Id trackId) {
+    public void resumeTrack(Track.Id trackId) {
         Track track = contentProviderUtils.getTrack(trackId);
         if (track == null) {
             Log.e(TAG, "Ignore resumeTrack. Track " + trackId.getId() + " does not exists.");
@@ -314,7 +310,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         startRecording();
     }
 
-    void resumeCurrentTrack() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    public void resumeCurrentTrack() {
         if (!isRecording() || !isPaused()) {
             Log.d(TAG, "Ignore resumeCurrentTrack. Not recording or not paused.");
             return;
@@ -352,7 +349,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         voiceExecutor.restore();
     }
 
-    void tryStartGps() {
+    public void tryStartGps() {
         if (isRecording()) return;
 
         startGps();
@@ -364,7 +361,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         showNotification(true);
     }
 
-    Track.Id endCurrentTrack() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    public Track.Id endCurrentTrack() {
         if (!isRecording()) {
             Log.d(TAG, "Ignore endCurrentTrack. Not recording.");
             return null;
@@ -397,7 +395,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         return trackId;
     }
 
-    void pauseCurrentTrack() {
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
+    public void pauseCurrentTrack() {
         if (!isRecording() || isPaused()) {
             Log.d(TAG, "Ignore pauseCurrentTrack. Not recording or paused.");
             return;
@@ -444,6 +443,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         handlerServer.stop(this);
 
         stopGps(trackStopped);
+    }
+
+    public void stopGpsAndShutdown() {
+        stopGps(true);
     }
 
     /**
@@ -616,7 +619,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         voiceExecutor.update();
     }
 
-    SensorDataSet getSensorDataSet() {
+    public SensorDataSet getSensorDataSet() {
         if (remoteSensorManager == null) {
             return null;
         }
@@ -634,7 +637,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     /**
      * Returns the relative altitude gain (since last trackpoint).
      */
-    Float getAltitudeGain_m() {
+    public Float getAltitudeGain_m() {
         if (altitudeSumManager == null || !altitudeSumManager.isConnected()) {
             return null;
         }
@@ -645,7 +648,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     /**
      * Returns the relative altitude loss (since last trackpoint).
      */
-    Float getAltitudeLoss_m() {
+    public Float getAltitudeLoss_m() {
         if (altitudeSumManager == null || !altitudeSumManager.isConnected()) {
             return null;
         }
@@ -702,4 +705,14 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         }
     }
 
+    public class Binder extends android.os.Binder {
+
+        private Binder() {
+            super();
+        }
+
+        public TrackRecordingService getService() {
+            return TrackRecordingService.this;
+        }
+    }
 }

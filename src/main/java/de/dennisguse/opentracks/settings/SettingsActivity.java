@@ -23,9 +23,9 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
-import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
+import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
+import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingCadenceAndSpeedPreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingPowerPreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeHeartRatePreference;
@@ -112,7 +112,7 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         private final Runnable bindServiceCallback = new Runnable() {
             @Override
             public void run() {
-                TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
+                TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
                 if (service != null) {
                     service.addListener(PrefsFragment.this);
                 }

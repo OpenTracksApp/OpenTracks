@@ -52,9 +52,9 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.databinding.TrackListBinding;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
-import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
+import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
+import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.ActivityUtils;
@@ -134,7 +134,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             // After binding changes (e.g., becomes available), update the total time in trackController.
             runOnUiThread(() -> trackController.update(isRecording(), recordingTrackPaused));
 
-            TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
+            TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
             if (service == null) {
                 Log.d(TAG, "service not available to start gps or a new recording");
                 gpsStatusValue = GpsStatusValue.GPS_NONE;
@@ -150,7 +150,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 return;
             }
 
-            service.startGps();
+            service.tryStartGps();
             gpsStatusValue = GpsStatusValue.GPS_ENABLED;
             updateGpsMenuItem(true, isRecording());
         }
@@ -325,9 +325,9 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                     trackRecordingServiceConnection.startAndBind(this);
                     bindChangedCallback.run();
                 } else {
-                    TrackRecordingServiceInterface trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
+                    TrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
                     if (trackRecordingService != null) {
-                        trackRecordingService.stopGps();
+                        trackRecordingService.stopGpsAndShutdown();
                     }
                     trackRecordingServiceConnection.unbindAndStop(this);
                 }

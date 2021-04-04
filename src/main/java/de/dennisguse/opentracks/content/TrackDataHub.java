@@ -38,9 +38,9 @@ import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
-import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
+import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.services.TrackRecordingServiceInterface;
+import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 
 /**
  * Track data hub.
@@ -93,7 +93,7 @@ public class TrackDataHub implements TrackRecordingServiceStatus.Listener {
     private ContentObserver trackPointsTableObserver;
 
     private final Runnable bindCallback = () -> {
-        TrackRecordingServiceInterface service = trackRecordingServiceConnection.getServiceIfBound();
+        TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
         if (service != null) {
             service.addListener(TrackDataHub.this);
         }
