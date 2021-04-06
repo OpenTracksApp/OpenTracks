@@ -107,7 +107,7 @@ public class CustomContentProviderUtilsTest {
 
     @Test
     public void testLocationIterator_largeTrack() {
-        testIterator(new Track.Id(1), 20000);
+        testIterator(new Track.Id(1), 20000 / 2);
     }
 
     private void testIterator(Track.Id trackId, int numPoints) {
@@ -1252,7 +1252,7 @@ public class CustomContentProviderUtilsTest {
 
     @Test
     public void testGetSensorStats_veryLongActivity12h() {
-    testGetSensorStats_randomData(43200, false);
+    testGetSensorStats_randomData(43200 / 4, false);
     }
 
     @Test
