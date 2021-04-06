@@ -133,7 +133,6 @@ limitations under the License.
     <string name="export_progress_summary_overwrite_msg">Ścieżki nadpisane</string>
     <string name="export_progress_summary_skip_msg">Ścieżki pominięte</string>
     <string name="export_progress_summary_errors_msg">Błędy</string>
-
     <!-- External Storage -->
     <!-- Files -->
     <string name="files_few">%1$d pliki</string>
@@ -256,7 +255,6 @@ limitations under the License.
     <!-- Settings Advanced -->
     <string name="settings_advanced">Zaawansowane</string>
     <string name="settings_default_trackfileformat">Format pliku eksportu/udostępniania</string>
-
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Wg odległości</string>
     <string name="settings_chart_by_time">Wg czasu</string>
@@ -289,7 +287,6 @@ limitations under the License.
     <string name="settings_night_mode_option_system">Systemowy</string>
     <string name="settings_night_mode_option_day">Dzienny</string>
     <string name="settings_night_mode_option_night">Nocny</string>
-
     <!-- Settings Reset -->
     <string name="settings_reset">Zresetuj</string>
     <string name="settings_reset_confirm_message">Wszystkie ustawienia zostaną zresetowane do wartości domyślnych.</string>
@@ -309,7 +306,6 @@ limitations under the License.
     <string name="settings_stats_units_metric">Metryczne (km, m)</string>
     <string name="settings_stats_units_title">Preferowane jednostki</string>
     <string name="settings_prevent_reimport_tracks_title">Zapobiegaj powtórynym importom ścieżek</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file">Udostępnij plik z trasą</string>
     <string name="share_track_share_file_body">Myślę, że ta trasa może Cię zainteresować.
@@ -454,7 +450,7 @@ limitations under the License.
     <string name="voice_total_distance_miles_other">całkowita odległość: %1$.2f mili</string>
     <string name="voice_total_distance_miles_two">całkowita odległość: 2 mile</string>
     <string name="voice_total_distance_miles_zero">całkowita odległość: 0 mil</string>
-    <string name="voice_total_distance_zero">Zerowa odległość</string>
+    <string name="voice_total_distance_zero">Zerowa odległość.</string>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankomat</string>
     <string name="waypoint_type_bank">bank</string>
@@ -552,10 +548,7 @@ limitations under the License.
     <string name="help_track_export_content"> Ślady można wyeksportować z ustawień jako KMZ, KML lub GPX. KMZ/KML wszystkie dane; GPX tylko lokalizacje. Ścieżki udostępniane za pomocą ikony <i>share</i> są udostępniane jako KMZ. </string>
     <string name="help_data_google_play_services_title">Czy OpenTracks wymaga/używa Google Play Service?</string>
     <string name="help_recording_title">Jak OpenTracks zapisuje dane?</string>
-    <string name="help_recording_content">
--        OpenTracks używa sensorów GPS urządzenia by zapisywać położonie na bieżąco.
--        Jeśli GPS zwraca niedokładne dane (np. położenie, prędkość, wysokość), OpenTracks nic z tym nie może zrobić.
--    </string>
+    <string name="help_recording_content">OpenTracks używa sensorów GPS urządzenia by zapisywać położonie na bieżąco. - Jeśli GPS zwraca niedokładne dane (np. położenie, prędkość, wysokość), OpenTracks nic z tym nie może zrobić.</string>
     <string name="help_data_storage_title">Jak OpenTracks zapisuje dane z czujników?</string>
     <string name="help_support_title">Jak mogę wesprzeć OpenTracks\?</string>
     <string name="help_gps_troubleshooting_title">OpenTracks nie zapisuje lokalizacji\?</string>
@@ -575,8 +568,8 @@ limitations under the License.
 \n g) rób wszystko co uważasz za pomocne dla OpenTracks. </string>
     <string name="generic_separator_done_total">/</string>
     <plurals name="generic_completed_with_errors">
-        <item quantity="one">Zakończone z jednym błędzie</item>
-        <item quantity="few">Ukończone z kilkoma błędzie</item>
+        <item quantity="one">Ukończono z jednym błędem</item>
+        <item quantity="few">Ukończono z kilkoma błędami</item>
         <item quantity="many">Zakończono z błędami %1$d</item>
         <item quantity="other">Zakończono z błędami %1$d</item>
     </plurals>
@@ -584,4 +577,40 @@ limitations under the License.
     <string name="generic_show_errors">Pokaż Błędy</string>
     <string name="generic_completed">Zakończone</string>
     <string name="generic_click_twice_cancel">Kliknij ponownie, aby anulować</string>
+    <string name="import_prevent_reimport">Ustawiono blokadę ścieżki ponownego importu</string>
+    <string name="permission_gps_failed">OpenTracks wymaga pozwolenia na korzystanie z GPS.</string>
+    <string name="sensor_not_known">Czujnik %1$s jest nieznany. Proszę sprawdzić ustawienia.</string>
+    <string name="bluetooth_disabled">Proszę włączyć Bluetooth.</string>
+    <string name="sensor_could_not_scan">Nie można przeprowadzić skanowania w poszukiwaniu urządzeń Bluetooth (błąd %1$i).</string>
+    <string name="import_error_list_dialog_title">Pliki nie importowane</string>
+    <string name="import_unsupported_format">Nieobsługiwany format pliku</string>
+    <string name="sensor_state_heart_rate_max">Maks. tętno</string>
+    <string name="sensor_state_heart_rate_avg">Średnie tętno</string>
+    <string name="sensor_state_cadence_max">Maks. kadencja</string>
+    <string name="sensor_state_cadence_avg">Średnia kadencja</string>
+    <string name="sensor_state_power_avg">Avg Moc</string>
+    <string name="settings_error_initial_values_restored">Przepraszamy, ale wystąpił błąd. Wszystkie ustawienia zostały przywrócone do wartości domyślnych.</string>
+    <string name="track_recording_notification_accuracy">Dokładność lokalizacji: %1$s</string>
+    <string name="stats_grade">Stopień</string>
+    <string name="import_unable_to_import_file">Nie można zaimportować pliku: %1$s</string>
+    <string name="import_parser_error">Błąd parsera: %1$s</string>
+    <string name="import_thread_interrupted">Wątek przerwany</string>
+    <string name="generic_open_track">Otwarta trasa</string>
+    <string name="generic_skip">Pomiń</string>
+    <string name="marker_add_photo_canceled">Anulowane, nie dodano znacznika zdjęć</string>
+    <string name="import_progress_summary_errors_msg">Błędy</string>
+    <string name="import_progress_summary_exists_msg">Już istnieje</string>
+    <string name="import_progress_summary_ok_msg">Pliki importowane</string>
+    <string name="import_file_imported">Plik %1$s zaimportowany</string>
+    <string name="import_no_kml_file_found">W pliku KMZ nie znaleziono pliku doc.kml</string>
+    <string name="import_error_info">%1$s: %2$s</string>
+    <string name="track_detail_resume_success">Teraz wznawiamy trasę</string>
+    <string name="track_detail_record_success">Teraz nagrywamy nowy utwór</string>
+    <string name="track_pace_notification">Prędkość: %1$s</string>
+    <string name="track_speed_notification">Szybkość: %1$s</string>
+    <string name="track_distance_notification">Odległość: %1$s</string>
+    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
+    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
+    <string name="value_float_mile_hour">%1$.2f mph</string>
+    <string name="value_float_kilometer_hour">%1$.2f km/h</string>
 </resources>
