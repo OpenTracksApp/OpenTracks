@@ -44,7 +44,7 @@ public class ChartValueSeriesTest {
                 ApplicationProvider.getApplicationContext(),
                 Integer.MIN_VALUE,
                 Integer.MAX_VALUE,
-                new int[]{100, 1000},
+                new int[]{1, 100, 1000},
                 R.string.description_altitude_metric,
                 R.string.description_altitude_imperial,
                 R.color.chart_altitude_fill,
@@ -75,6 +75,17 @@ public class ChartValueSeriesTest {
     public void testEnabled() {
         series.setEnabled(false);
         assertFalse(series.isEnabled());
+    }
+
+    @Test
+    public void testVerySmallUpdates() {
+        series.update(new ChartPoint(1f));
+        series.update(new ChartPoint(2f));
+        series.update(new ChartPoint(3f));
+        series.updateDimension();
+        assertEquals(1, series.getInterval());
+        assertEquals(1, series.getMinMarkerValue());
+        assertEquals(6, series.getMaxMarkerValue());
     }
 
     @Test
