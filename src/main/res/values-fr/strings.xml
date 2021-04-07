@@ -498,7 +498,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="import_progress_summary_exists_msg">Il existe déjà</string>
     <string name="import_progress_summary_errors_msg">Erreur</string>
     <plurals name="generic_completed_with_errors">
-        <item quantity="one" tools:ignore="ImpliedQuantity">Terminé avec une erreur</item>
+        <item quantity="one">Terminé avec une erreur</item>
         <item quantity="other">Terminé avec des erreurs %1$d</item>
     </plurals>
     <string name="settings_default_trackfileformat">Format de fichier d\'exportation / partage</string>
