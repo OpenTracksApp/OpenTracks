@@ -38,6 +38,7 @@ public class TrackIconUtils {
     private static final String BIKE = "BIKE";
     private static final String MOUNTAIN_BIKE = "MOUNTAIN_BIKE";
     private static final String MOTOR_BIKE = "MOTOR_BIKE";
+    private static final String KAYAK = "KAYAK";
     private static final String BOAT = "BOAT";
     private static final String SAILING = "SAILING";
     private static final String DRIVE = "DRIVE";
@@ -67,6 +68,7 @@ public class TrackIconUtils {
     private static final int[] SKI_LIST = new int[]{R.string.activity_type_cross_country_skiing, R.string.activity_type_skiing};
     private static final int[] SNOW_BOARDING_LIST = new int[]{R.string.activity_type_snow_boarding};
     private static final int[] SKATE_BOARDING_LIST = new int[]{R.string.activity_type_skate_boarding};
+    private static final int[] KAYAKING_LIST = new int[]{R.string.activity_type_kayaking};
     private static final int[] WALK_LIST = new int[]{R.string.activity_type_hiking, R.string.activity_type_off_trail_hiking, R.string.activity_type_speed_walking, R.string.activity_type_trail_hiking, R.string.activity_type_walking};
 
     // List of icons whose sports associated use speed (in km/h or mi/h).
@@ -78,7 +80,7 @@ public class TrackIconUtils {
             // All bike categories.
             R.string.activity_type_biking, R.string.activity_type_cycling, R.string.activity_type_dirt_bike, R.string.activity_type_motor_bike, R.string.activity_type_mountain_biking, R.string.activity_type_road_biking, R.string.activity_type_track_cycling, R.string.activity_type_inline_skating,
             // All boat categories.
-            R.string.activity_type_boat, R.string.activity_type_ferry, R.string.activity_type_motor_boating, R.string.activity_type_rc_boat, R.string.activity_type_sailing,
+            R.string.activity_type_boat, R.string.activity_type_ferry, R.string.activity_type_motor_boating, R.string.activity_type_rc_boat, R.string.activity_type_sailing, R.string.activity_type_kayaking,
             // All drive categories.
             R.string.activity_type_atv, R.string.activity_type_driving, R.string.activity_type_driving_bus, R.string.activity_type_driving_car, R.string.activity_type_escooter, R.string.activity_type_skate_boarding,
             // All wintersport categories
@@ -104,6 +106,7 @@ public class TrackIconUtils {
         MAP.put(MOTOR_BIKE, new Pair<>(R.string.activity_type_motor_bike, R.drawable.ic_activity_motorbike_24dp));
         MAP.put(DRIVE, new Pair<>(R.string.activity_type_driving, R.drawable.ic_activity_drive_24dp));
         MAP.put(AIRPLANE, new Pair<>(R.string.activity_type_airplane, R.drawable.ic_activity_flight_24dp));
+        MAP.put(KAYAK, new Pair<>(R.string.activity_type_kayaking, R.drawable.ic_activity_kayaking_24dp));
         MAP.put(BOAT, new Pair<>(R.string.activity_type_boat, R.drawable.ic_activity_boat_24dp));
         MAP.put(SAILING, new Pair<>(R.string.activity_type_sailing, R.drawable.ic_activity_sailing_24dp));
     }
@@ -169,6 +172,9 @@ public class TrackIconUtils {
         }
         if (inList(context, activityType, MOTOR_BIKE_LIST)) {
             return MOTOR_BIKE;
+        }
+        if (inList(context, activityType, KAYAKING_LIST)) {
+            return KAYAK;
         }
         if (inList(context, activityType, BOAT_LIST)) {
             return BOAT;
