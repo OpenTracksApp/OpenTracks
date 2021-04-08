@@ -187,8 +187,9 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
         boolean isMetricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
         boolean isReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, context, category);
+        Distance minGPSDistance = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
 
-        IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, Distance.one(isMetricUnits));
+        IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, Distance.one(isMetricUnits), minGPSDistance);
         IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
 
         String announcement = AnnouncementUtils.getAnnouncement(context, trackStatistics, isMetricUnits, isReportSpeed, lastInterval);

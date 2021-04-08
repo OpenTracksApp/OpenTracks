@@ -114,7 +114,7 @@ public class IntervalStatisticsTest {
     }
 
     private void whenAndThen(List<TrackPoint> trackPoints, TrackStatistics trackStatistics, float distanceInterval) {
-        IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, Distance.of(distanceInterval));
+        IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, Distance.of(distanceInterval), Distance.of(0));
         List<IntervalStatistics.Interval> intervalList = intervalStatistics.getIntervalList();
         Distance totalDistance = Distance.of(0);
         float totalTime = 0L;
