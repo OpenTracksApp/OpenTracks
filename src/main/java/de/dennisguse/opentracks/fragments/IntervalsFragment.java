@@ -140,11 +140,14 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     @Override
     public void onResume() {
         super.onResume();
+
+        resumeTrackDataHub();
+
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
+
         viewModel = new ViewModelProvider(getActivity()).get(IntervalStatisticsModel.class);
         loadIntervals();
-        resumeTrackDataHub();
     }
 
     @Override
@@ -224,28 +227,28 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
 
     @Override
     public void clearTrackPoints() {
-        if (isResumed()) {
+        if (isResumed() && viewModel != null) {
             viewModel.clear();
         }
     }
 
     @Override
     public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics unused, Speed unused2, double unused3) {
-        if (isResumed()) {
+        if (isResumed() && viewModel != null) {
             viewModel.add(trackPoint);
         }
     }
 
     @Override
     public void onSampledOutTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics unused) {
-        if (isResumed()) {
+        if (isResumed() && viewModel != null) {
             viewModel.add(trackPoint);
         }
     }
 
     @Override
     public void onNewTrackPointsDone() {
-        if (isResumed()) {
+        if (isResumed() && viewModel != null) {
             runOnUiThread(viewModel::onNewTrackPoints);
         }
     }

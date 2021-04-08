@@ -52,7 +52,7 @@ public class AnnouncementUtilsTest {
         stats.setTotalAltitudeGain(6000f);
 
         List<TrackPoint> trackPoints = TestDataUtil.createTrack(new Track.Id(System.currentTimeMillis()), 10).second;
-        IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, Distance.of(1000));
+        IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, Distance.of(1000), Distance.of(0));
         IntervalStatistics.Interval lastInterval = intervalStatistics.getIntervalList().get(intervalStatistics.getIntervalList().size() - 1);
 
         // when
