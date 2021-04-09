@@ -28,12 +28,15 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
 
+import de.dennisguse.opentracks.stats.TrackStatistics;
+
 /**
  * NOTE: A marker is indirectly (via it's location) assigned to one {@link TrackPoint} with trackPoint.hasLocation() == true.
  *
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
+//TODO All data should be final; no default values.
 public final class Marker {
 
     private Id id;
@@ -51,7 +54,7 @@ public final class Marker {
     private Float bearing;
 
     //TODO It is the distance from the track starting point; rename to something more meaningful
-    private double length = 0.0;
+    private Distance length;
     private Duration duration;
 
     @Deprecated //TODO Make an URI instead of String
@@ -62,6 +65,7 @@ public final class Marker {
         this.time = time;
     }
 
+    @Deprecated //TODO Marker cannot be created without length AND duration!
     public Marker(@Nullable Track.Id trackId, @NonNull TrackPoint trackPoint) {
         this.trackId = trackId;
 
@@ -75,16 +79,19 @@ public final class Marker {
         if (trackPoint.hasAccuracy()) this.accuracy = trackPoint.getAccuracy();
         if (trackPoint.hasAltitude()) this.altitude_m = trackPoint.getAltitude();
         if (trackPoint.hasBearing()) this.bearing = trackPoint.getBearing();
+
+        this.length = Distance.of(0); //TODO Not cool!
+        this.duration = Duration.ofMillis(0); //TODO Not cool!
     }
 
-    public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, double length, @NonNull Duration duration, @NonNull TrackPoint trackPoint, String photoUrl) {
+    public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, @NonNull TrackStatistics statistics, @NonNull TrackPoint trackPoint, String photoUrl) {
         this(trackId, trackPoint);
         this.name = name;
         this.description = description;
         this.category = category;
         this.icon = icon;
-        this.length = length;
-        this.duration = duration;
+        this.length = statistics.getTotalDistance();
+        this.duration = statistics.getTotalTime();
         this.photoUrl = photoUrl;
     }
 
@@ -218,11 +225,11 @@ public final class Marker {
         this.bearing = bearing;
     }
 
-    public double getLength() {
+    public Distance getLength() {
         return length;
     }
 
-    public void setLength(double length) {
+    public void setLength(Distance length) {
         this.length = length;
     }
 

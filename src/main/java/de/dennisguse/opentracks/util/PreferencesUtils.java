@@ -27,6 +27,7 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.preference.PreferenceManager;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
 /**
@@ -180,17 +181,21 @@ public class PreferencesUtils {
         return getInt(sharedPreferences, context, R.string.voice_frequency_key, VOICE_FREQUENCY_DEFAULT);
     }
 
-    public static int getRecordingDistanceInterval(SharedPreferences sharedPreferences, Context context) {
-        return getInt(sharedPreferences, context, R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefault(context));
+    public static Distance getRecordingDistanceInterval(SharedPreferences sharedPreferences, Context context) {
+        return Distance.of(getInt(sharedPreferences, context, R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefaultInternal(context)));
     }
 
-    public static int getRecordingDistanceIntervalDefault(Context context) {
+    public static Distance getRecordingDistanceIntervalDefault(Context context) {
+        return Distance.of(getRecordingDistanceIntervalDefaultInternal(context));
+    }
+
+    private static int getRecordingDistanceIntervalDefaultInternal(Context context) {
         return Integer.parseInt(context.getResources().getString(R.string.recording_distance_interval_default));
     }
 
-    public static int getMaxRecordingDistance(SharedPreferences sharedPreferences, Context context) {
+    public static Distance getMaxRecordingDistance(SharedPreferences sharedPreferences, Context context) {
         final int MAX_RECORDING_DISTANCE = Integer.parseInt(context.getResources().getString(R.string.max_recording_distance_default));
-        return getInt(sharedPreferences, context, R.string.max_recording_distance_key, MAX_RECORDING_DISTANCE);
+        return Distance.of(getInt(sharedPreferences, context, R.string.max_recording_distance_key, MAX_RECORDING_DISTANCE));
     }
 
     //TODO Duration

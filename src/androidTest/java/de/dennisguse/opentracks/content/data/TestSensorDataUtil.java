@@ -22,7 +22,7 @@ public class TestSensorDataUtil {
         tp.setAccuracy(1f);
         tp.setAltitude(1f);
         tp.setTime(time);
-        tp.setSpeed(5f + (i / 10f));
+        tp.setSpeed(Speed.of(5f + (i / 10f)));
         tp.setAltitudeGain(3f);
         tp.setAltitudeLoss(3f);
         trackPointList.add(tp);

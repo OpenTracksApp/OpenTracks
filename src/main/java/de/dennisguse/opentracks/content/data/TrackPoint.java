@@ -45,9 +45,6 @@ public class TrackPoint {
 
     private static final Duration MAX_LOCATION_AGE = Duration.ofMinutes(1);
 
-    // Anything faster than that (in meters per second) will be considered moving.
-    private static final double MAX_NO_MOVEMENT_SPEED = 0.224;
-
     private TrackPoint.Id id;
 
     private Instant time;
@@ -55,9 +52,9 @@ public class TrackPoint {
     private Double longitude;
     private Float accuracy;
     private Double altitude_m;
-    private Float speed_mps;
+    private Speed speed;
     private Float bearing;
-    private Float sensorDistance_m;
+    private Distance sensorDistance_m;
 
     public enum Type {
         SEGMENT_START_MANUAL(-2), //Start of a segment due to user interaction (start, resume)
@@ -106,7 +103,7 @@ public class TrackPoint {
         this.latitude = location.getLatitude();
         this.longitude = location.getLongitude();
         this.altitude_m = location.getAltitude();
-        this.speed_mps = location.getSpeed();
+        this.speed = Speed.of(location.getSpeed());
         this.accuracy = location.getAccuracy();
 
         setTime(Instant.now());
@@ -272,19 +269,19 @@ public class TrackPoint {
     }
 
     public boolean hasSpeed() {
-        return speed_mps != null;
+        return speed != null;
     }
 
-    public float getSpeed() {
-        return speed_mps;
+    public Speed getSpeed() {
+        return speed;
     }
 
-    public void setSpeed(Float speed) {
-        this.speed_mps = speed;
+    public void setSpeed(Speed speed) {
+        this.speed = speed;
     }
 
     public boolean isMoving() {
-        return hasSpeed() && getSpeed() >= MAX_NO_MOVEMENT_SPEED;
+        return hasSpeed() && getSpeed().isMoving();
     }
 
     public boolean hasBearing() {
@@ -311,12 +308,12 @@ public class TrackPoint {
         this.accuracy = horizontalAccuracy;
     }
 
-    public float distanceToPrevious(@NonNull TrackPoint previous) {
+    public Distance distanceToPrevious(@NonNull TrackPoint previous) {
         if (hasSensorDistance()) {
             return getSensorDistance();
         }
 
-        return getLocation().distanceTo(previous.getLocation());
+        return Distance.of(getLocation().distanceTo(previous.getLocation()));
     }
 
     public boolean fulfillsAccuracy(int poorAccuracy) {
@@ -336,11 +333,11 @@ public class TrackPoint {
         return sensorDistance_m != null;
     }
 
-    public Float getSensorDistance() {
+    public Distance getSensorDistance() {
         return sensorDistance_m;
     }
 
-    public void setSensorDistance(Float distance_m) {
+    public void setSensorDistance(Distance distance_m) {
         this.sensorDistance_m = distance_m;
     }
 

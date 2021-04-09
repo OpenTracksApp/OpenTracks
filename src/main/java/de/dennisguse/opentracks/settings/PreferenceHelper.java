@@ -32,7 +32,7 @@ final class PreferenceHelper {
         String[] entryValues = context.getResources().getStringArray(R.array.recording_distance_interval_values);
         String[] entries = new String[entryValues.length];
 
-        final int recordingDistanceIntervalDefault = PreferencesUtils.getRecordingDistanceIntervalDefault(context);
+        final int recordingDistanceIntervalDefault = (int) PreferencesUtils.getRecordingDistanceIntervalDefault(context).toM();
 
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);

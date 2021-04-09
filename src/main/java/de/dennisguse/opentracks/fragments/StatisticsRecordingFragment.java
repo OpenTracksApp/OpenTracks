@@ -24,7 +24,9 @@ import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.adapters.SensorsAdapter;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
@@ -371,18 +373,18 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
             SensorDataCycling.DistanceSpeed data = sensorDataSet.getCyclingDistanceSpeed();
 
             if (data.hasValue() && data.isRecent()) {
-                setTotalDistance(data.getValue().distance_overall_m);
-                setSpeed(data.getValue().speed_mps);
+                setTotalDistance(data.getValue().distanceOverall);
+                setSpeed(data.getValue().speed);
             }
             if (data.hasValue() && data.isRecent()) {
-                setSpeed(data.getValue().speed_mps);
+                setSpeed(data.getValue().speed);
             }
         }
     }
 
     private void updateStats() {
 
-        setTotalDistance(0);
+        setTotalDistance(Distance.of(0)); //TODO Why?
 
         // Set activity type
         {
@@ -399,7 +401,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
         // Set average speed/pace
         {
-            double speed = lastTrackStatistics != null ? lastTrackStatistics.getAverageSpeed() : Double.NaN;
+            Speed speed = lastTrackStatistics != null ? lastTrackStatistics.getAverageSpeed() : null;
             viewBinding.statsAverageSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
 
             Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, preferenceMetricUnits, preferenceReportSpeed);
@@ -409,7 +411,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
         // Set max speed/pace
         {
-            double speed = lastTrackStatistics == null ? Double.NaN : lastTrackStatistics.getMaxSpeed();
+            Speed speed = lastTrackStatistics != null ? lastTrackStatistics.getMaxSpeed() : null;
 
             viewBinding.statsMaxSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_max_speed : R.string.stats_fastest_pace);
 
@@ -420,7 +422,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
         // Set moving speed/pace
         {
-            double speed = lastTrackStatistics != null ? lastTrackStatistics.getAverageMovingSpeed() : Double.NaN;
+            Speed speed = lastTrackStatistics != null ? lastTrackStatistics.getAverageMovingSpeed() : null;
 
             viewBinding.statsMovingSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
 
@@ -449,7 +451,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
     private void setLocationValues() {
         // Set speed/pace
-        double speed = lastTrackPoint != null && lastTrackPoint.hasSpeed() ? lastTrackPoint.getSpeed() : Double.NaN;
+        Speed speed = lastTrackPoint != null && lastTrackPoint.hasSpeed() ? lastTrackPoint.getSpeed() : null;
         setSpeed(speed);
 
         // Set altitude
@@ -477,15 +479,15 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         }
     }
 
-    private void setTotalDistance(double sensorDistanceSinceLastTrackpoint) {
-        double totalDistance = lastTrackStatistics != null ? (lastTrackStatistics.getTotalDistance() + sensorDistanceSinceLastTrackpoint) : Double.NaN;
+    private void setTotalDistance(Distance sensorDistanceSinceLastTrackpoint) {
+        Distance totalDistance = lastTrackStatistics != null ? (lastTrackStatistics.getTotalDistance().plus(sensorDistanceSinceLastTrackpoint)) : Distance.invalid();
         Pair<String, String> parts = StringUtils.getDistanceParts(getContext(), totalDistance, preferenceMetricUnits);
 
         viewBinding.statsDistanceValue.setText(parts.first);
         viewBinding.statsDistanceUnit.setText(parts.second);
     }
 
-    private void setSpeed(double speed) {
+    private void setSpeed(Speed speed) {
         viewBinding.statsSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_speed : R.string.stats_pace);
 
         Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, preferenceMetricUnits, preferenceReportSpeed);

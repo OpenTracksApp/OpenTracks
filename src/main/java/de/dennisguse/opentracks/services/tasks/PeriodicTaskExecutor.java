@@ -20,9 +20,9 @@ import android.util.Log;
 import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TrackStatistics;
-import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * Execute a periodic task on a time or distance schedule.
@@ -128,12 +128,9 @@ public class PeriodicTaskExecutor {
             return;
         }
 
-        double distance = trackStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
-        if (!metricUnits) {
-            distance *= UnitConversions.KM_TO_MI;
-        }
+        Distance distance = trackStatistics.getTotalDistance();
 
-        if (distance > nextTaskDistance) {
+        if (distance.greaterThan(Distance.of(nextTaskDistance))) {
             periodicTask.run(trackRecordingService);
             calculateNextTaskDistance();
         }
@@ -178,10 +175,7 @@ public class PeriodicTaskExecutor {
             return;
         }
 
-        double distance = trackStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
-        if (!metricUnits) {
-            distance *= UnitConversions.KM_TO_MI;
-        }
+        double distance = trackStatistics.getTotalDistance().to(metricUnits);
 
         // The index will be negative since the frequency is negative.
         int index = (int) (distance / taskFrequency);

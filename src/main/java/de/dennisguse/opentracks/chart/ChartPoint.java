@@ -29,11 +29,7 @@ public class ChartPoint {
         TrackStatistics trackStatistics = trackStatisticsUpdater.getTrackStatistics();
 
         if (chartByDistance) {
-            double distance = trackStatistics.getTotalDistance() * UnitConversions.M_TO_KM;
-            if (!metricUnits) {
-                distance *= UnitConversions.KM_TO_MI;
-            }
-            timeOrDistance = distance;
+            timeOrDistance = trackStatistics.getTotalDistance().to(metricUnits);
         } else {
             timeOrDistance = trackStatistics.getTotalTime().toMillis();
         }
@@ -43,11 +39,8 @@ public class ChartPoint {
             altitude *= UnitConversions.M_TO_FT;
         }
 
-        speed = trackStatisticsUpdater.getSmoothedSpeed() * UnitConversions.MPS_TO_KMH;
-        if (!metricUnits) {
-            speed *= UnitConversions.KM_TO_MI;
-        }
-        pace = speed == 0 ? 0.0 : 60.0 / speed;
+        speed = trackStatisticsUpdater.getSmoothedSpeed().to(metricUnits);
+        pace = trackStatisticsUpdater.getSmoothedSpeed().toPace(metricUnits).toMillis() * UnitConversions.MS_TO_S * UnitConversions.S_TO_MIN;
         if (trackPoint != null) {
             if (trackPoint.hasHeartRate()) {
                 heartRate = trackPoint.getHeartRate_bpm();

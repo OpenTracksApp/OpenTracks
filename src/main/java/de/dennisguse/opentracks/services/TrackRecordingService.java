@@ -40,6 +40,7 @@ import java.time.Instant;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.TrackRecordingActivity;
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -80,8 +81,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     private SharedPreferences sharedPreferences;
 
-    private int recordingDistanceInterval;
-    private int maxRecordingDistance;
+    private Distance recordingDistanceInterval;
+    private Distance maxRecordingDistance;
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -237,11 +238,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         photoUrl = photoUrl != null ? photoUrl : "";
 
         TrackStatistics stats = trackStatisticsUpdater.getTrackStatistics();
-        double length = stats.getTotalDistance();
-        Duration duration = stats.getTotalTime();
 
         // Insert marker
-        Marker marker = new Marker(name, description, category, icon, serviceStatus.getRecordingTrackId(), length, duration, trackPoint, photoUrl);
+        Marker marker = new Marker(name, description, category, icon, serviceStatus.getRecordingTrackId(), stats, trackPoint, photoUrl);
         Uri uri = contentProviderUtils.insertMarker(marker);
         return new Marker.Id(ContentUris.parseId(uri));
     }
@@ -511,8 +510,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        double distanceToLastTrackLocation = trackPoint.distanceToPrevious(lastValidTrackPoint);
-        if (distanceToLastTrackLocation > maxRecordingDistance) {
+        Distance distanceToLastTrackLocation = trackPoint.distanceToPrevious(lastValidTrackPoint);
+        if (distanceToLastTrackLocation.greaterThan(maxRecordingDistance)) {
             insertTrackPointIfNewer(track, lastTrackPoint);
 
             trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
@@ -523,7 +522,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        if (trackPoint.hasSensorData() || distanceToLastTrackLocation >= recordingDistanceInterval) {
+        if (trackPoint.hasSensorData() || distanceToLastTrackLocation.greaterOrEqualThan(recordingDistanceInterval)) {
             insertTrackPointIfNewer(track, lastTrackPoint);
 
             insertTrackPoint(track, trackPoint);

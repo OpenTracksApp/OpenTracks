@@ -48,6 +48,7 @@ import androidx.loader.content.Loader;
 
 import java.time.Duration;
 
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.databinding.TrackListBinding;
@@ -215,7 +216,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 int iconId = TrackIconUtils.getIconDrawable(icon);
                 String name = cursor.getString(nameIndex);
                 String totalTime = StringUtils.formatElapsedTime(Duration.ofMillis(cursor.getLong(totalTimeIndex)));
-                String totalDistance = StringUtils.formatDistance(TrackListActivity.this, cursor.getDouble(totalDistanceIndex), metricUnits);
+                String totalDistance = StringUtils.formatDistance(TrackListActivity.this, Distance.of(cursor.getDouble(totalDistanceIndex)), metricUnits);
                 int markerCount = cursor.getInt(markerCountIndex);
                 long startTime = cursor.getLong(startTimeIndex);
                 String category = icon != null && !icon.equals("") ? null : cursor.getString(categoryIndex);

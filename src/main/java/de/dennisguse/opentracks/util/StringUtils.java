@@ -36,6 +36,8 @@ import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
 
 /**
  * Various string manipulation methods.
@@ -86,50 +88,38 @@ public class StringUtils {
      * Formats the distance in meters.
      *
      * @param context     the context
-     * @param distance_m  the distance_m
+     * @param distance    the distance
      * @param metricUnits true to use metric units. False to use imperial units
      */
-    public static String formatDistance(Context context, double distance_m, boolean metricUnits) {
-        if (Double.isNaN(distance_m) || Double.isInfinite(distance_m)) {
+    public static String formatDistance(Context context, Distance distance, boolean metricUnits) {
+        if (distance.isInvalid()) {
             return context.getString(R.string.value_unknown);
         }
 
         if (metricUnits) {
-            if (distance_m > 500.0) {
-                distance_m *= UnitConversions.M_TO_KM;
-                return context.getString(R.string.value_float_kilometer, distance_m);
+            if (distance.greaterThan(Distance.of(500))) {
+                return context.getString(R.string.value_float_kilometer, distance.toKM());
             } else {
-                return context.getString(R.string.value_float_meter, distance_m);
+                return context.getString(R.string.value_float_meter, distance.toM());
             }
         } else {
-            if (distance_m * UnitConversions.M_TO_MI > 0.5) {
-                distance_m *= UnitConversions.M_TO_MI;
-                return context.getString(R.string.value_float_mile, distance_m);
+            if (distance.greaterThan(Distance.ofMile(0.5))) {
+                return context.getString(R.string.value_float_mile, distance.toMI());
             } else {
-                distance_m *= UnitConversions.M_TO_FT;
-                return context.getString(R.string.value_float_feet, distance_m);
+                return context.getString(R.string.value_float_feet, distance.toFT());
             }
         }
     }
 
-    public static String formatSpeed(Context context, double speed_mps, boolean metricUnits, boolean reportSpeed) {
-        if (Double.isNaN(speed_mps) || Double.isInfinite(speed_mps)) {
-            speed_mps = 0;
-        }
-
-        double speed = speed_mps * UnitConversions.M_TO_KM; //KM p sec
-        if (!metricUnits) {
-            speed *= UnitConversions.KM_TO_MI;
-        }
-
+    public static String formatSpeed(Context context, Speed speed, boolean metricUnits, boolean reportSpeed) {
         if (reportSpeed) {
             if (metricUnits) {
-                return context.getString(R.string.value_float_kilometer_hour, speed * UnitConversions.S_TO_HR);
+                return context.getString(R.string.value_float_kilometer_hour, speed.toKMH());
             } else {
-                return context.getString(R.string.value_float_mile_hour, speed * UnitConversions.S_TO_HR);
+                return context.getString(R.string.value_float_mile_hour, speed.toMPH());
             }
         } else {
-            int pace = speed == 0 ? 0 : (int) Math.round(1 / speed); //sec / [KM | MI]
+            int pace = (int) speed.toPace(metricUnits).getSeconds();
             int minutes = pace / 60;
             int seconds = pace % 60;
             if (metricUnits) {
@@ -167,45 +157,40 @@ public class StringUtils {
      * Get the formatted distance with unit.
      *
      * @param context     the context
-     * @param distance_m  the distance
+     * @param distance    the distance
      * @param metricUnits true to use metric unit
      * @return the formatted distance (or null) and it's unit as {@link Pair}
      */
-    public static Pair<String, String> getDistanceParts(Context context, double distance_m, boolean metricUnits) {
-        if (Double.isNaN(distance_m) || Double.isInfinite(distance_m)) {
+    public static Pair<String, String> getDistanceParts(Context context, Distance distance, boolean metricUnits) {
+        if (distance.isInvalid()) {
             return new Pair<>(null, context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet));
         }
 
-        int unitId;
         if (metricUnits) {
-            if (distance_m > 500.0) {
-                distance_m *= UnitConversions.M_TO_KM;
-                unitId = R.string.unit_kilometer;
+            if (distance.greaterThan(Distance.of(500))) {
+                return new Pair<>(formatDecimal(distance.toKM()), context.getString(R.string.unit_kilometer));
             } else {
-                unitId = R.string.unit_meter;
+                return new Pair<>(formatDecimal(distance.toM()), context.getString(R.string.unit_meter));
             }
         } else {
-            if (distance_m * UnitConversions.M_TO_MI > 0.5) {
-                distance_m *= UnitConversions.M_TO_MI;
-                unitId = R.string.unit_mile;
+            if (distance.greaterThan(Distance.of(0.5 * UnitConversions.M_TO_MI))) {
+                return new Pair<>(formatDecimal(distance.toMI()), context.getString(R.string.unit_mile));
             } else {
-                distance_m *= UnitConversions.M_TO_FT;
-                unitId = R.string.unit_feet;
+                return new Pair<>(formatDecimal(distance.toFT()), context.getString(R.string.unit_feet));
             }
         }
-        return new Pair<>(formatDecimal(distance_m), context.getString(unitId));
     }
 
     /**
      * Gets the formatted speed with unit.
      *
      * @param context     the context
-     * @param speed_mps   the speed
+     * @param speed       the speed
      * @param metricUnits true to use metric unit
      * @param reportSpeed true to report speed; false for pace
      * @return the formatted speed (or null) and it's unit as {@link Pair}
      */
-    public static Pair<String, String> getSpeedParts(Context context, double speed_mps, boolean metricUnits, boolean reportSpeed) {
+    public static Pair<String, String> getSpeedParts(Context context, Speed speed, boolean metricUnits, boolean reportSpeed) {
         int unitId;
         if (metricUnits) {
             unitId = reportSpeed ? R.string.unit_kilometer_per_hour : R.string.unit_minute_per_kilometer;
@@ -214,21 +199,15 @@ public class StringUtils {
         }
         String unitString = context.getString(unitId);
 
-
-        if (Double.isNaN(speed_mps) || Double.isInfinite(speed_mps)) {
-            speed_mps = 0;
-        }
-
-        double speed = speed_mps * UnitConversions.M_TO_KM; //KM p sec
-        if (!metricUnits) {
-            speed *= UnitConversions.KM_TO_MI;
+        if (speed == null) {
+            speed = Speed.zero();
         }
 
         if (reportSpeed) {
-            return new Pair<>(StringUtils.formatDecimal(speed * UnitConversions.S_TO_HR, 1), unitString);
+            return new Pair<>(StringUtils.formatDecimal(speed.to(metricUnits), 1), unitString);
         }
 
-        int pace = speed == 0 ? 0 : (int) Math.round(1 / speed); //sec / [KM | MI]
+        int pace = (int) speed.toPace(metricUnits).getSeconds();
 
         int minutes = pace / 60;
         int seconds = pace % 60;

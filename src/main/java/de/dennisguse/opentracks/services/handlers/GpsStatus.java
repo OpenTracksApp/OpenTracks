@@ -25,7 +25,7 @@ class GpsStatus {
     private static final Duration SIGNAL_LOST_THRESHOLD = Duration.ofSeconds(10);
 
     // Threshold for accuracy.
-    private double signalBadThreshold;
+    private double signalBadThreshold; //TODO Distance?
     // Threshold for time without points.
     private Duration signalLostThreshold;
 
@@ -67,7 +67,7 @@ class GpsStatus {
         this.context = context;
 
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
-        signalBadThreshold = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
+        signalBadThreshold = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context).toM();
 
         Duration minRecordingInterval = Duration.ofSeconds(PreferencesUtils.getMinRecordingInterval(sharedPreferences, context));
         signalLostThreshold = !minRecordingInterval.isNegative() ? SIGNAL_LOST_THRESHOLD.plus(minRecordingInterval) : SIGNAL_LOST_THRESHOLD;

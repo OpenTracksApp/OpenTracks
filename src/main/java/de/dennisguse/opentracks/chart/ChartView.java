@@ -51,7 +51,6 @@ import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.MarkerUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.ThemeUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * Visualization of the chart.
@@ -994,8 +993,7 @@ public class ChartView extends View {
 
     private double getMarkerXValue(Marker marker) {
         if (chartByDistance) {
-            double length_km = marker.getLength() * UnitConversions.M_TO_KM;
-            return metricUnits ? length_km : length_km * UnitConversions.KM_TO_MI;
+            return marker.getLength().to(metricUnits);
         } else {
             return marker.getDuration().toMillis();
         }

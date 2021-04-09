@@ -22,6 +22,9 @@ import androidx.annotation.Nullable;
 import java.time.Duration;
 import java.time.Instant;
 
+import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
+
 /**
  * Statistical data about a {@link de.dennisguse.opentracks.content.data.Track}.
  * The data in this class should be filled out by {@link TrackStatisticsUpdater}.
@@ -40,13 +43,13 @@ public class TrackStatistics {
     // The track stop time.
     private Instant stopTime;
 
-    private double totalDistance_m;
+    private Distance totalDistance;
     // Updated when new points are received, may be stale.
     private Duration totalTime;
     // Based on when we believe the user is traveling.
     private Duration movingTime;
     // The maximum speed (meters/second) that we believe is valid.
-    private double maxSpeed_mps;
+    private Speed maxSpeed;
     private Float totalAltitudeGain_m = null;
     private Float totalAltitudeLoss_m = null;
 
@@ -62,10 +65,10 @@ public class TrackStatistics {
     public TrackStatistics(TrackStatistics other) {
         startTime = other.startTime;
         stopTime = other.stopTime;
-        totalDistance_m = other.totalDistance_m;
+        totalDistance = other.totalDistance;
         totalTime = other.totalTime;
         movingTime = other.movingTime;
-        maxSpeed_mps = other.maxSpeed_mps;
+        maxSpeed = other.maxSpeed;
         altitudeExtremities.set(other.altitudeExtremities.getMin(), other.altitudeExtremities.getMax());
         totalAltitudeGain_m = other.totalAltitudeGain_m;
         totalAltitudeLoss_m = other.totalAltitudeLoss_m;
@@ -89,10 +92,10 @@ public class TrackStatistics {
             stopTime = stopTime.isAfter(other.stopTime) ? stopTime : other.stopTime;
         }
 
-        totalDistance_m += other.totalDistance_m;
+        totalDistance = totalDistance.plus(other.totalDistance);
         totalTime = totalTime.plus(other.totalTime);
         movingTime = movingTime.plus(other.movingTime);
-        maxSpeed_mps = Math.max(maxSpeed_mps, other.maxSpeed_mps);
+        maxSpeed = Speed.max(maxSpeed, other.maxSpeed);
         if (other.altitudeExtremities.hasData()) {
             altitudeExtremities.update(other.altitudeExtremities.getMin());
             altitudeExtremities.update(other.altitudeExtremities.getMax());
@@ -121,10 +124,10 @@ public class TrackStatistics {
         startTime = null;
         stopTime = null;
 
-        setTotalDistance(0);
+        setTotalDistance(Distance.of(0));
         setTotalTime(Duration.ofSeconds(0));
         setMovingTime(Duration.ofSeconds(0));
-        setMaxSpeed(0);
+        setMaxSpeed(Speed.zero());
         setTotalAltitudeGain(null);
         setTotalAltitudeLoss(null);
     }
@@ -157,16 +160,16 @@ public class TrackStatistics {
         this.stopTime = stopTime;
     }
 
-    public double getTotalDistance() {
-        return totalDistance_m;
+    public Distance getTotalDistance() {
+        return totalDistance;
     }
 
-    public void setTotalDistance(double totalDistance_m) {
-        this.totalDistance_m = totalDistance_m;
+    public void setTotalDistance(Distance totalDistance_m) {
+        this.totalDistance = totalDistance_m;
     }
 
-    public void addTotalDistance(double distance_m) {
-        totalDistance_m += distance_m;
+    public void addTotalDistance(Distance distance_m) {
+        totalDistance = totalDistance.plus(distance_m);
     }
 
     /**
@@ -195,35 +198,26 @@ public class TrackStatistics {
     }
 
     /**
-     * Gets the average speed in meters/second.
+     * Gets the average speed.
      * This calculation only takes into account the displacement until the last point that was accounted for in statistics.
      */
-    public double getAverageSpeed() {
-        if (totalTime.isZero()) {
-            return 0.0;
+    public Speed getAverageSpeed() {
+        if (totalDistance.isZero() && totalDistance.isZero()) {
+            return Speed.of(0);
         }
-        return totalDistance_m / (double) totalTime.getSeconds();
+        return Speed.of(totalDistance.toM() / totalTime.getSeconds());
     }
 
-    /**
-     * Gets the average moving speed in meters/second.
-     */
-    public double getAverageMovingSpeed() {
-        if (movingTime.isZero()) {
-            return 0.0;
-        }
-        return totalDistance_m / (double) movingTime.getSeconds();
+    public Speed getAverageMovingSpeed() {
+        return Speed.of(totalDistance, movingTime);
     }
 
-    /**
-     * Gets the maximum speed in meters/second.
-     */
-    public double getMaxSpeed() {
-        return Math.max(maxSpeed_mps, getAverageMovingSpeed());
+    public Speed getMaxSpeed() {
+        return Speed.max(maxSpeed, getAverageMovingSpeed());
     }
 
-    public void setMaxSpeed(double maxSpeed_mps) {
-        this.maxSpeed_mps = maxSpeed_mps;
+    public void setMaxSpeed(Speed maxSpeed) {
+        this.maxSpeed = maxSpeed;
     }
 
     public boolean hasAltitudeMin() {

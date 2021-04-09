@@ -78,7 +78,7 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
         }
         if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
             if (gpsStatus != null) {
-                gpsStatus.onRecordingDistanceChanged(PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context));
+                gpsStatus.onRecordingDistanceChanged((int) PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context).toM()); //TODO Use Distance?
             }
         }
     }

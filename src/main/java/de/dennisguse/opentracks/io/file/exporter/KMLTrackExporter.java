@@ -395,10 +395,10 @@ public class KMLTrackExporter implements TrackExporter {
             } else {
                 printWriter.println("<gx:coord/>");
             }
-            speedList.add(trackPoint.hasSpeed() ? trackPoint.getSpeed() : null);
+            speedList.add(trackPoint.hasSpeed() ? (float) trackPoint.getSpeed().toMPS() : null);
 
             if (exportSensorData) {
-                distanceList.add(trackPoint.hasSensorDistance() ? trackPoint.getSensorDistance() : null);
+                distanceList.add(trackPoint.hasSensorDistance() ? (float) trackPoint.getSensorDistance().toM() : null);
                 heartRateList.add(trackPoint.hasHeartRate() ? trackPoint.getHeartRate_bpm() : null);
                 cadenceList.add(trackPoint.hasCyclingCadence() ? trackPoint.getCyclingCadence_rpm() : null);
                 powerList.add(trackPoint.hasPower() ? trackPoint.getPower() : null);

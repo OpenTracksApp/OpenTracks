@@ -290,7 +290,7 @@ public class GPXTrackExporter implements TrackExporter {
                 printWriter.println("<extensions><gpxtpx:TrackPointExtension>");
 
                 if (trackPoint.hasSpeed()) {
-                    printWriter.println("<gpxtpx:speed>" + SPEED_FORMAT.format(trackPoint.getSpeed()) + "</gpxtpx:speed>");
+                    printWriter.println("<gpxtpx:speed>" + SPEED_FORMAT.format(trackPoint.getSpeed().toMPS()) + "</gpxtpx:speed>");
                 }
 
                 if (trackPoint.hasHeartRate()) {

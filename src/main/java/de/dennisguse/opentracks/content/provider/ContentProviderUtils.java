@@ -39,8 +39,10 @@ import java.util.List;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.BuildConfig;
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
@@ -127,7 +129,7 @@ public class ContentProviderUtils {
             trackStatistics.setStopTime(Instant.ofEpochMilli(cursor.getLong(stopTimeIndex)));
         }
         if (!cursor.isNull(totalDistanceIndex)) {
-            trackStatistics.setTotalDistance(cursor.getFloat(totalDistanceIndex));
+            trackStatistics.setTotalDistance(Distance.of(cursor.getFloat(totalDistanceIndex)));
         }
         if (!cursor.isNull(totalTimeIndex)) {
             trackStatistics.setTotalTime(Duration.ofMillis(cursor.getLong(totalTimeIndex)));
@@ -136,7 +138,7 @@ public class ContentProviderUtils {
             trackStatistics.setMovingTime(Duration.ofMillis(cursor.getLong(movingTimeIndex)));
         }
         if (!cursor.isNull(maxSpeedIndex)) {
-            trackStatistics.setMaxSpeed(cursor.getFloat(maxSpeedIndex));
+            trackStatistics.setMaxSpeed(Speed.of(cursor.getFloat(maxSpeedIndex)));
         }
         if (!cursor.isNull(minAltitudeIndex)) {
             trackStatistics.setMinAltitude(cursor.getFloat(minAltitudeIndex));
@@ -278,12 +280,12 @@ public class ContentProviderUtils {
         if (trackStatistics.getStopTime() != null) {
             values.put(TracksColumns.STOPTIME, trackStatistics.getStopTime().toEpochMilli());
         }
-        values.put(TracksColumns.TOTALDISTANCE, trackStatistics.getTotalDistance());
+        values.put(TracksColumns.TOTALDISTANCE, trackStatistics.getTotalDistance().toM());
         values.put(TracksColumns.TOTALTIME, trackStatistics.getTotalTime().toMillis());
         values.put(TracksColumns.MOVINGTIME, trackStatistics.getMovingTime().toMillis());
-        values.put(TracksColumns.AVGSPEED, trackStatistics.getAverageSpeed());
-        values.put(TracksColumns.AVGMOVINGSPEED, trackStatistics.getAverageMovingSpeed());
-        values.put(TracksColumns.MAXSPEED, trackStatistics.getMaxSpeed());
+        values.put(TracksColumns.AVGSPEED, trackStatistics.getAverageSpeed().toMPS());
+        values.put(TracksColumns.AVGMOVINGSPEED, trackStatistics.getAverageMovingSpeed().toMPS());
+        values.put(TracksColumns.MAXSPEED, trackStatistics.getMaxSpeed().toMPS());
         values.put(TracksColumns.MIN_ALTITUDE, trackStatistics.getMinAltitude());
         values.put(TracksColumns.MAX_ALTITUDE, trackStatistics.getMaxAltitude());
         values.put(TracksColumns.ALTITUDE_GAIN, trackStatistics.getTotalAltitudeGain());
@@ -343,7 +345,7 @@ public class ContentProviderUtils {
             marker.setIcon(cursor.getString(iconIndex));
         }
         if (!cursor.isNull(lengthIndex)) {
-            marker.setLength(cursor.getFloat(lengthIndex));
+            marker.setLength(Distance.of(cursor.getFloat(lengthIndex)));
         }
         if (!cursor.isNull(durationIndex)) {
             marker.setDuration(Duration.ofMillis(cursor.getLong(durationIndex)));
@@ -480,7 +482,7 @@ public class ContentProviderUtils {
         values.put(MarkerColumns.CATEGORY, marker.getCategory());
         values.put(MarkerColumns.ICON, marker.getIcon());
         values.put(MarkerColumns.TRACKID, marker.getTrackId().getId());
-        values.put(MarkerColumns.LENGTH, marker.getLength());
+        values.put(MarkerColumns.LENGTH, marker.getLength().toM());
         values.put(MarkerColumns.DURATION, marker.getDuration().toMillis());
 
         values.put(MarkerColumns.LONGITUDE, (int) (marker.getLongitude() * 1E6));
@@ -543,7 +545,7 @@ public class ContentProviderUtils {
             trackPoint.setAccuracy(cursor.getFloat(indexes.accuracyIndex));
         }
         if (!cursor.isNull(indexes.speedIndex)) {
-            trackPoint.setSpeed(cursor.getFloat(indexes.speedIndex));
+            trackPoint.setSpeed(Speed.of(cursor.getFloat(indexes.speedIndex)));
         }
         if (!cursor.isNull(indexes.bearingIndex)) {
             trackPoint.setBearing(cursor.getFloat(indexes.bearingIndex));
@@ -556,7 +558,7 @@ public class ContentProviderUtils {
             trackPoint.setCyclingCadence_rpm(cursor.getFloat(indexes.sensorCadenceIndex));
         }
         if (!cursor.isNull(indexes.sensorDistanceIndex)) {
-            trackPoint.setSensorDistance(cursor.getFloat(indexes.sensorDistanceIndex));
+            trackPoint.setSensorDistance(Distance.of(cursor.getFloat(indexes.sensorDistanceIndex)));
         }
         if (!cursor.isNull(indexes.sensorPowerIndex)) {
             trackPoint.setPower(cursor.getFloat(indexes.sensorPowerIndex));
@@ -694,7 +696,7 @@ public class ContentProviderUtils {
             values.put(TrackPointsColumns.ACCURACY, trackPoint.getAccuracy());
         }
         if (trackPoint.hasSpeed()) {
-            values.put(TrackPointsColumns.SPEED, trackPoint.getSpeed());
+            values.put(TrackPointsColumns.SPEED, trackPoint.getSpeed().toMPS());
         }
         if (trackPoint.hasBearing()) {
             values.put(TrackPointsColumns.BEARING, trackPoint.getBearing());
@@ -707,7 +709,7 @@ public class ContentProviderUtils {
             values.put(TrackPointsColumns.SENSOR_CADENCE, trackPoint.getCyclingCadence_rpm());
         }
         if (trackPoint.hasSensorDistance()) {
-            values.put(TrackPointsColumns.SENSOR_DISTANCE, trackPoint.getSensorDistance());
+            values.put(TrackPointsColumns.SENSOR_DISTANCE, trackPoint.getSensorDistance().toM());
         }
         if (trackPoint.hasPower()) {
             values.put(TrackPointsColumns.SENSOR_POWER, trackPoint.getPower());

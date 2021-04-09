@@ -28,6 +28,9 @@ import java.time.Duration;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -70,19 +73,18 @@ public class StringUtilsTest {
     }
 
     /**
-     * Tests {@link StringUtils#formatDistance(android.content.Context, double,
-     * boolean)}.
+     * Tests {@link StringUtils#formatDistance(android.content.Context, Distance, boolean)}.
      */
     @Test
     public void testFormatDistance() {
         // A large number in metric
-        assertEquals("5.00 km", StringUtils.formatDistance(context, 5000, true));
+        assertEquals("5.00 km", StringUtils.formatDistance(context, Distance.of(5000), true));
         // A large number in imperial
-        assertEquals("3.11 mi", StringUtils.formatDistance(context, 5000, false));
+        assertEquals("3.11 mi", StringUtils.formatDistance(context, Distance.of(5000), false));
         // A small number in metric
-        assertEquals("100.00 m", StringUtils.formatDistance(context, 100, true));
+        assertEquals("100.00 m", StringUtils.formatDistance(context, Distance.of(100), true));
         // A small number in imperial
-        assertEquals("328.08 ft", StringUtils.formatDistance(context, 100, false));
+        assertEquals("328.08 ft", StringUtils.formatDistance(context, Distance.of(100), false));
     }
 
     /**
@@ -164,22 +166,22 @@ public class StringUtilsTest {
 
     @Test
     public void testGetSpeedParts() {
-        assertEquals("4:59", StringUtils.getSpeedParts(context, 3.34, true, false).first);
-        assertEquals("5:00", StringUtils.getSpeedParts(context, 3.33, true, false).first);
+        assertEquals("4:59", StringUtils.getSpeedParts(context, Speed.of(3.34), true, false).first);
+        assertEquals("5:00", StringUtils.getSpeedParts(context, Speed.of(3.33), true, false).first);
 
-        assertEquals("11.9", StringUtils.getSpeedParts(context, 3.31, true, true).first);
-        assertEquals("7.5", StringUtils.getSpeedParts(context, 3.34, false, true).first);
+        assertEquals("11.9", StringUtils.getSpeedParts(context, Speed.of(3.31), true, true).first);
+        assertEquals("7.5", StringUtils.getSpeedParts(context, Speed.of(3.34), false, true).first);
 
-        assertEquals("min/km", StringUtils.getSpeedParts(context, 0, true, false).second);
-        assertEquals("min/mi", StringUtils.getSpeedParts(context, 0, false, false).second);
+        assertEquals("min/km", StringUtils.getSpeedParts(context, Speed.zero(), true, false).second);
+        assertEquals("min/mi", StringUtils.getSpeedParts(context, Speed.zero(), false, false).second);
     }
 
     @Test
     public void testFormatSpeed() {
-        assertEquals("4:59 min/km", StringUtils.formatSpeed(context, 3.34, true, false));
-        assertEquals("8:02 min/mi", StringUtils.formatSpeed(context, 3.34, false, false));
+        assertEquals("4:59 min/km", StringUtils.formatSpeed(context, Speed.of(3.34), true, false));
+        assertEquals("8:02 min/mi", StringUtils.formatSpeed(context, Speed.of(3.34), false, false));
 
-        assertEquals("12.02 km/h", StringUtils.formatSpeed(context, 3.34, true, true));
-        assertEquals("7.47 mph", StringUtils.formatSpeed(context, 3.34, false, true));
+        assertEquals("12.02 km/h", StringUtils.formatSpeed(context, Speed.of(3.34), true, true));
+        assertEquals("7.47 mph", StringUtils.formatSpeed(context, Speed.of(3.34), false, true));
     }
 }

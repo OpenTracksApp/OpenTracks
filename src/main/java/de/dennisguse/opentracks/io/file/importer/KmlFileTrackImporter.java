@@ -26,6 +26,8 @@ import org.xml.sax.SAXException;
 
 import java.util.ArrayList;
 
+import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.exporter.KMLTrackExporter;
@@ -231,11 +233,11 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         for (int i = 0; i < trackPoints.size(); i++) {
             TrackPoint trackPoint = trackPoints.get(i);
 
-            if (i < speedList.size()) {
-                trackPoint.setSpeed(speedList.get(i));
+            if (i < speedList.size() && speedList.get(i) != null) {
+                trackPoint.setSpeed(Speed.of(speedList.get(i)));
             }
-            if (i < distanceList.size()) {
-                trackPoint.setSensorDistance(distanceList.get(i));
+            if (i < distanceList.size() && distanceList.get(i) != null) {
+                trackPoint.setSensorDistance(Distance.of(distanceList.get(i)));
             }
             if (i < heartRateList.size()) {
                 trackPoint.setHeartRate_bpm(heartRateList.get(i));
