@@ -242,7 +242,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         TrackStatistics stats = trackStatisticsUpdater.getTrackStatistics();
         double length = stats.getTotalDistance();
-        long duration = stats.getTotalTime().toMillis();
+        Duration duration = stats.getTotalTime();
 
         // Insert marker
         Marker marker = new Marker(name, description, category, icon, serviceStatus.getRecordingTrackId(), length, duration, trackPoint, photoUrl);

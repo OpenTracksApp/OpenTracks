@@ -203,7 +203,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                         String markerDescription = marker.getDescription();
                         String icon = context.getString(R.string.marker_icon_url);
                         double length = trackStatisticsUpdater.getTrackStatistics().getTotalDistance();
-                        long duration = trackStatisticsUpdater.getTrackStatistics().getTotalTime().toMillis();
+                        Duration duration = trackStatisticsUpdater.getTrackStatistics().getTotalTime();
 
                         // Insert marker
                         Marker newMarker = new Marker(marker.getName(), markerDescription, marker.getCategory(), icon, track.getId(), length, duration, trackPoint, marker.getPhotoUrl());

@@ -24,6 +24,7 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Objects;
 
@@ -51,7 +52,7 @@ public final class Marker {
 
     //TODO It is the distance from the track starting point; rename to something more meaningful
     private double length = 0.0;
-    private long duration = 0; //TODO Duration
+    private Duration duration;
 
     @Deprecated //TODO Make an URI instead of String
     private String photoUrl = "";
@@ -76,7 +77,7 @@ public final class Marker {
         if (trackPoint.hasBearing()) this.bearing = trackPoint.getBearing();
     }
 
-    public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, double length, long duration, @NonNull TrackPoint trackPoint, String photoUrl) {
+    public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, double length, @NonNull Duration duration, @NonNull TrackPoint trackPoint, String photoUrl) {
         this(trackId, trackPoint);
         this.name = name;
         this.description = description;
@@ -225,11 +226,11 @@ public final class Marker {
         this.length = length;
     }
 
-    public long getDuration() {
+    public Duration getDuration() {
         return duration;
     }
 
-    public void setDuration(long duration) {
+    public void setDuration(@NonNull Duration duration) {
         this.duration = duration;
     }
 

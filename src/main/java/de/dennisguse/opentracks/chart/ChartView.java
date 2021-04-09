@@ -997,7 +997,7 @@ public class ChartView extends View {
             double length_km = marker.getLength() * UnitConversions.M_TO_KM;
             return metricUnits ? length_km : length_km * UnitConversions.KM_TO_MI;
         } else {
-            return marker.getDuration();
+            return marker.getDuration().toMillis();
         }
     }
 
