@@ -29,6 +29,8 @@ import java.time.Duration;
 import java.time.Instant;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -60,10 +62,10 @@ public class DescriptionGeneratorTest {
     public void testGenerateTrackDescription() {
         Track track = new Track();
         TrackStatistics stats = new TrackStatistics();
-        stats.setTotalDistance(20000);
+        stats.setTotalDistance(Distance.of(20000));
         stats.setTotalTime(Duration.ofMillis(600000));
         stats.setMovingTime(Duration.ofMillis(300000));
-        stats.setMaxSpeed(100);
+        stats.setMaxSpeed(Speed.of(100));
         stats.setMaxAltitude(550);
         stats.setMinAltitude(-500);
         stats.setTotalAltitudeGain(6000f);
@@ -98,10 +100,10 @@ public class DescriptionGeneratorTest {
     public void testGenerateTrackDescriptionWithoutMaxMinAltitude() {
         Track track = new Track();
         TrackStatistics stats = new TrackStatistics();
-        stats.setTotalDistance(20000);
+        stats.setTotalDistance(Distance.of(20000));
         stats.setTotalTime(Duration.ofMillis(600000));
         stats.setMovingTime(Duration.ofMillis(300000));
-        stats.setMaxSpeed(100);
+        stats.setMaxSpeed(Speed.of(100));
         stats.setMaxAltitude(Double.POSITIVE_INFINITY);
         stats.setMinAltitude(Double.NEGATIVE_INFINITY);
         stats.setTotalAltitudeGain(6000f);
@@ -132,12 +134,12 @@ public class DescriptionGeneratorTest {
 
 
     /**
-     * Tests {@link DescriptionGenerator#writeDistance(double, StringBuilder, int, String)}.
+     * Tests {@link DescriptionGenerator#writeDistance(Distance, StringBuilder, int, String)}.
      */
     @Test
     public void testWriteDistance() {
         StringBuilder builder = new StringBuilder();
-        descriptionGenerator.writeDistance(1100, builder, R.string.description_total_distance, "<br>");
+        descriptionGenerator.writeDistance(Distance.of(1100), builder, R.string.description_total_distance, "<br>");
         assertEquals("Total distance: 1.10 km (0.7 mi)<br>", builder.toString());
     }
 
@@ -152,12 +154,12 @@ public class DescriptionGeneratorTest {
     }
 
     /**
-     * Tests {@link DescriptionGenerator#writeSpeed(double, StringBuilder, int, String)}.
+     * Tests {@link DescriptionGenerator#writeSpeed(Speed, StringBuilder, int, String)}.
      */
     @Test
     public void testWriteSpeed() {
         StringBuilder builder = new StringBuilder();
-        descriptionGenerator.writeSpeed(1.1, builder, R.string.description_average_speed, "\n");
+        descriptionGenerator.writeSpeed(Speed.of(1.1), builder, R.string.description_average_speed, "\n");
         assertEquals("Average speed: 3.96 km/h (2.5 mi/h)\n", builder.toString());
     }
 
@@ -172,12 +174,12 @@ public class DescriptionGeneratorTest {
     }
 
     /**
-     * Tests {@link DescriptionGenerator#writePace(double, StringBuilder, int, String)}.
+     * Tests {@link DescriptionGenerator#writePace(Speed, StringBuilder, int, String)}.
      */
     @Test
     public void testWritePace() {
         StringBuilder builder = new StringBuilder();
-        descriptionGenerator.writePace(1.1, builder, R.string.description_average_pace_in_minute, "\n");
+        descriptionGenerator.writePace(Speed.of(1.1), builder, R.string.description_average_pace_in_minute, "\n");
         assertEquals("Average pace: 15:09 min/km (24:23 min/mi)\n", builder.toString());
     }
 }

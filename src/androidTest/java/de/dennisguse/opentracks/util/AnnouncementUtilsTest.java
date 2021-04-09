@@ -11,6 +11,8 @@ import org.junit.runner.RunWith;
 import java.time.Duration;
 import java.util.List;
 
+import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -27,10 +29,10 @@ public class AnnouncementUtilsTest {
     @Test
     public void getAnnouncement_metric() {
         TrackStatistics stats = new TrackStatistics();
-        stats.setTotalDistance(20000);
+        stats.setTotalDistance(Distance.of(20000));
         stats.setTotalTime(Duration.ofHours(2).plusMinutes(5).plusSeconds(10));
         stats.setMovingTime(Duration.ofHours(1).plusMinutes(5).plusSeconds(10));
-        stats.setMaxSpeed(100);
+        stats.setMaxSpeed(Speed.of(100));
         stats.setTotalAltitudeGain(6000f);
 
         // when
@@ -43,10 +45,10 @@ public class AnnouncementUtilsTest {
     @Test
     public void getAnnouncement_withInterval_metric() {
         TrackStatistics stats = new TrackStatistics();
-        stats.setTotalDistance(20000);
+        stats.setTotalDistance(Distance.of(20000));
         stats.setTotalTime(Duration.ofHours(2).plusMinutes(5).plusSeconds(10));
         stats.setMovingTime(Duration.ofHours(1).plusMinutes(5).plusSeconds(10));
-        stats.setMaxSpeed(100);
+        stats.setMaxSpeed(Speed.of(100));
         stats.setTotalAltitudeGain(6000f);
 
         List<TrackPoint> trackPoints = TestDataUtil.createTrack(new Track.Id(System.currentTimeMillis()), 10).second;

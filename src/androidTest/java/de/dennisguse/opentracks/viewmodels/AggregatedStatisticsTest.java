@@ -13,6 +13,8 @@ import java.time.Instant;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.TrackIconUtils;
@@ -25,15 +27,15 @@ public class AggregatedStatisticsTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
 
-    private static Track createTrack(Context context, long totalDistance, long totalTime, String category) {
+    private static Track createTrack(Context context, Distance totalDistance, Duration totalTime, String category) {
         TrackStatistics statistics = new TrackStatistics();
         statistics.setStartTime(Instant.ofEpochMilli(1000L));  // Resulting start time
-        statistics.setStopTime(Instant.ofEpochMilli(1000L + totalTime));
-        statistics.setTotalTime(Duration.ofMillis(totalTime));
-        statistics.setMovingTime(Duration.ofMillis(totalTime));
+        statistics.setStopTime(statistics.getStartTime().plus(totalTime));
+        statistics.setTotalTime(totalTime);
+        statistics.setMovingTime(totalTime);
         statistics.setTotalDistance(totalDistance);
         statistics.setTotalAltitudeGain(50.0f);
-        statistics.setMaxSpeed(50.0);  // Resulting max speed
+        statistics.setMaxSpeed(Speed.of(50.0));  // Resulting max speed
         statistics.setMaxAltitude(1250.0);
         statistics.setMinAltitude(1200.0);  // Resulting min altitude
 
@@ -48,8 +50,8 @@ public class AggregatedStatisticsTest {
     public void testAggregate() {
         // given
         // 10km in 40 minutes.
-        long totalDistance = 10000;
-        long totalTime = 2400000;
+        Distance totalDistance = Distance.of(10000);
+        Duration totalTime = Duration.ofMillis(2400000);
         String biking = context.getString(R.string.activity_type_biking);
         Track track = createTrack(context, totalDistance, totalTime, biking);
 
@@ -62,16 +64,16 @@ public class AggregatedStatisticsTest {
         assertEquals(1, aggregatedStatistics.get(biking).getCountTracks());
 
         TrackStatistics statistics2 = aggregatedStatistics.get(biking).getTrackStatistics();
-        assertEquals(totalDistance, statistics2.getTotalDistance(), 0);
-        assertEquals(Duration.ofMillis(totalTime), statistics2.getMovingTime());
+        assertEquals(totalDistance, statistics2.getTotalDistance());
+        assertEquals(totalTime, statistics2.getMovingTime());
     }
 
     @Test
     public void testAggregate_mountainBiking() {
         // given
         // 10km in 40 minutes.
-        long totalDistance = 10000;
-        long totalTime = 2400000;
+        Distance totalDistance = Distance.of(10000);
+        Duration totalTime = Duration.ofMillis(2400000);
         String mountainBiking = context.getString(R.string.activity_type_mountain_biking);
         Track track = createTrack(context, totalDistance, totalTime, mountainBiking);
 
@@ -86,8 +88,8 @@ public class AggregatedStatisticsTest {
     public void testAggregate_trailRunning() {
         // given
         // 10km in 40 minutes.
-        long totalDistance = 10000;
-        long totalTime = 2400000;
+        Distance totalDistance = Distance.of(10000);
+        Duration totalTime = Duration.ofMillis(2400000);
         String trailRunning = context.getString(R.string.activity_type_trail_running);
         Track track = createTrack(context, totalDistance, totalTime, trailRunning);
 
@@ -102,8 +104,8 @@ public class AggregatedStatisticsTest {
     public void testAggregate_twoBikingTracks() {
         // given
         // 10km in 40 minutes.
-        long totalDistance = 10000;
-        long totalTime = 2400000;
+        Distance totalDistance = Distance.of(10000);
+        Duration totalTime = Duration.ofMillis(2400000);
         String biking = context.getString(R.string.activity_type_biking);
         List<Track> tracks = List.of(createTrack(context, totalDistance, totalTime, biking), createTrack(context, totalDistance, totalTime, biking));
 
@@ -116,20 +118,20 @@ public class AggregatedStatisticsTest {
         assertEquals(2, aggregatedStatistics.get(biking).getCountTracks());
 
         TrackStatistics statistics2 = aggregatedStatistics.get(biking).getTrackStatistics();
-        assertEquals(totalDistance * 2, statistics2.getTotalDistance(), 0);
-        assertEquals(Duration.ofMillis(totalTime * 2), statistics2.getMovingTime());
+        assertEquals(totalDistance.multipliedBy(2), statistics2.getTotalDistance());
+        assertEquals(totalTime.multipliedBy(2), statistics2.getMovingTime());
     }
 
     @Test
     public void testAggregate_threeDifferentTracks() {
         // given
         // 10km in 40 minutes.
-        long totalDistance = 10000;
+        Distance totalDistance = Distance.of(10000);
 
         String biking = context.getString(R.string.activity_type_biking);
         String running = context.getString(R.string.activity_type_running);
         String walking = context.getString(R.string.activity_type_walking);
-        long totalTime = 2400000;
+        Duration totalTime = Duration.ofMillis(2400000);
         List<Track> tracks = List.of(
                 createTrack(context, totalDistance, totalTime, biking),
                 createTrack(context, totalDistance, totalTime, running),
@@ -150,20 +152,20 @@ public class AggregatedStatisticsTest {
 
         {
             TrackStatistics statistics2 = aggregatedStatistics.get(biking).getTrackStatistics();
-            assertEquals(totalDistance, statistics2.getTotalDistance(), 0);
-            assertEquals(Duration.ofMillis(totalTime), statistics2.getMovingTime());
+            assertEquals(totalDistance, statistics2.getTotalDistance());
+            assertEquals(totalTime, statistics2.getMovingTime());
         }
 
         {
             TrackStatistics statistics2 = aggregatedStatistics.get(running).getTrackStatistics();
-            assertEquals(totalDistance, statistics2.getTotalDistance(), 0);
-            assertEquals(Duration.ofMillis(totalTime), statistics2.getMovingTime());
+            assertEquals(totalDistance, statistics2.getTotalDistance());
+            assertEquals(totalTime, statistics2.getMovingTime());
         }
 
         {
             TrackStatistics statistics2 = aggregatedStatistics.get(walking).getTrackStatistics();
-            assertEquals(totalDistance, statistics2.getTotalDistance(), 0);
-            assertEquals(Duration.ofMillis(totalTime), statistics2.getMovingTime());
+            assertEquals(totalDistance, statistics2.getTotalDistance());
+            assertEquals(totalTime, statistics2.getMovingTime());
         }
     }
 
@@ -171,8 +173,8 @@ public class AggregatedStatisticsTest {
     public void testAggregate_severalTracksWithSeveralActivities() {
         // given
         // 10km in 40 minutes.
-        long totalDistance = 10000;
-        long totalTime = 2400000;
+        Distance totalDistance = Distance.of(10000);
+        Duration totalTime = Duration.ofMillis(2400000);
         String biking = context.getString(R.string.activity_type_biking);
         String running = context.getString(R.string.activity_type_running);
         String walking = context.getString(R.string.activity_type_walking);
@@ -213,29 +215,29 @@ public class AggregatedStatisticsTest {
         // Biking.
         {
             TrackStatistics statistics2 = aggregatedStatistics.get(biking).getTrackStatistics();
-            assertEquals(totalDistance * 5, statistics2.getTotalDistance(), 0);
-            assertEquals(Duration.ofMillis(totalTime * 5), statistics2.getMovingTime());
+            assertEquals(totalDistance.multipliedBy(5), statistics2.getTotalDistance());
+            assertEquals(totalTime.multipliedBy(5), statistics2.getMovingTime());
         }
 
         // Running.
         {
             TrackStatistics statistics2 = aggregatedStatistics.get(running).getTrackStatistics();
-            assertEquals(totalDistance * 2, statistics2.getTotalDistance(), 0);
-            assertEquals(Duration.ofMillis(totalTime * 2), statistics2.getMovingTime());
+            assertEquals(totalDistance.multipliedBy(2), statistics2.getTotalDistance());
+            assertEquals(totalTime.multipliedBy(2), statistics2.getMovingTime());
         }
 
         // Walking.
         {
             TrackStatistics statistics2 = aggregatedStatistics.get(walking).getTrackStatistics();
-            assertEquals(totalDistance * 2, statistics2.getTotalDistance(), 0);
-            assertEquals(Duration.ofMillis(totalTime * 2), statistics2.getMovingTime());
+            assertEquals(totalDistance.multipliedBy(2), statistics2.getTotalDistance());
+            assertEquals(totalTime.multipliedBy(2), statistics2.getMovingTime());
         }
 
         // Driving.
         {
             TrackStatistics statistics2 = aggregatedStatistics.get(driving).getTrackStatistics();
-            assertEquals(totalDistance, statistics2.getTotalDistance(), 0);
-            assertEquals(Duration.ofMillis(totalTime), statistics2.getMovingTime());
+            assertEquals(totalDistance, statistics2.getTotalDistance());
+            assertEquals(totalTime, statistics2.getMovingTime());
         }
 
         // Check order

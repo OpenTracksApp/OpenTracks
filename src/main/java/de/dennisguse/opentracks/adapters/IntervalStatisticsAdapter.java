@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 
@@ -52,12 +54,12 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
         } else {
             sumDistance_m = nextPosition * interval.getDistance_m();
         }
-        viewHolder.distance.setText(StringUtils.formatDistance(context, sumDistance_m, metricUnits));
+        viewHolder.distance.setText(StringUtils.formatDistance(context, Distance.of(sumDistance_m), metricUnits));
 
-        viewHolder.rate.setText(StringUtils.formatSpeed(context, interval.getSpeed_ms(), metricUnits, isReportSpeed));
+        viewHolder.rate.setText(StringUtils.formatSpeed(context, Speed.of(interval.getSpeed_ms()), metricUnits, isReportSpeed));
 
-        viewHolder.gain.setText(StringUtils.formatDistance(context, interval.getGain_m(), metricUnits));
-        viewHolder.loss.setText(StringUtils.formatDistance(context, interval.getLoss_m(), metricUnits));
+        viewHolder.gain.setText(StringUtils.formatDistance(context, Distance.of(interval.getGain_m()), metricUnits));
+        viewHolder.loss.setText(StringUtils.formatDistance(context, Distance.of(interval.getLoss_m()), metricUnits));
     }
 
     @Override

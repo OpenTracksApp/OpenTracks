@@ -42,11 +42,14 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
@@ -65,7 +68,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
     private final Context context;
     private final ContentProviderUtils contentProviderUtils;
-    private final int recordingDistanceInterval;
+    private final Distance recordingDistanceInterval;
 
     private final List<Track.Id> trackIds = new ArrayList<>();
     private final List<Marker> markers = new ArrayList<>();
@@ -202,11 +205,10 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                     if (trackPoint.getLatitude() == marker.getLatitude() && trackPoint.getLongitude() == marker.getLongitude()) {
                         String markerDescription = marker.getDescription();
                         String icon = context.getString(R.string.marker_icon_url);
-                        double length = trackStatisticsUpdater.getTrackStatistics().getTotalDistance();
-                        Duration duration = trackStatisticsUpdater.getTrackStatistics().getTotalTime();
+                        TrackStatistics stats = trackStatisticsUpdater.getTrackStatistics();
 
                         // Insert marker
-                        Marker newMarker = new Marker(marker.getName(), markerDescription, marker.getCategory(), icon, track.getId(), length, duration, trackPoint, marker.getPhotoUrl());
+                        Marker newMarker = new Marker(marker.getName(), markerDescription, marker.getCategory(), icon, track.getId(), stats, trackPoint, marker.getPhotoUrl());
                         contentProviderUtils.insertMarker(newMarker);
                     }
 
@@ -374,17 +376,16 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
                      * GPS points tend to have some inherent imprecision, speed and bearing will likely be off, so the statistics for things like max speed will also be off.
                      */
                     if (trackPoint.hasLocation() && trackData.lastLocationInCurrentSegment.hasLocation()) {
-                        float speed = trackData.lastLocationInCurrentSegment.distanceToPrevious(trackPoint) / timeDifference.toMillis();
-                        trackPoint.setSpeed(speed);
+                        trackPoint.setSpeed(Speed.of(trackData.lastLocationInCurrentSegment.distanceToPrevious(trackPoint), timeDifference));
                     }
                 }
             }
             if (trackPoint.hasLocation() && trackData.lastLocationInCurrentSegment.hasLocation()) {
                 trackPoint.setBearing(trackData.lastLocationInCurrentSegment.bearingTo(trackPoint));
 
-                long maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(sharedPreferences, context); //TODO Should only be read once!
-                double distanceToLastTrackLocation = trackPoint.distanceToPrevious(trackData.lastLocationInCurrentSegment);
-                if (distanceToLastTrackLocation > maxRecordingDistance) {
+                Distance maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(sharedPreferences, context); //TODO Should only be read once!
+                Distance distanceToLastTrackLocation = trackPoint.distanceToPrevious(trackData.lastLocationInCurrentSegment);
+                if (distanceToLastTrackLocation.greaterThan(maxRecordingDistance)) {
                     trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
                 }
             }
@@ -460,7 +461,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
 
         if (speed != null) {
             try {
-                trackPoint.setSpeed(Float.parseFloat(speed));
+                trackPoint.setSpeed(Speed.of(speed));
             } catch (Exception e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse speed: %s", speed)), e);
             }
@@ -505,7 +506,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         }
         if (distance != null) {
             try {
-                trackPoint.setSensorDistance(Float.parseFloat(distance));
+                trackPoint.setSensorDistance(Distance.of(distance));
             } catch (Exception e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse distance: %s", distance)), e);
             }

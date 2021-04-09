@@ -6,6 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
 
+import java.time.Duration;
+
+import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.util.UintUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
@@ -122,21 +126,21 @@ public final class SensorDataCycling {
         public void compute(DistanceSpeed previous, int wheel_circumference_mm) {
             if (hasData() && previous != null && previous.hasData()) {
                 float timeDiff_ms = UintUtils.diff(wheelRevolutionsTime, previous.wheelRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * UnitConversions.S_TO_MS;
-                if (timeDiff_ms <= 0) {
+                Duration timeDiff = Duration.ofMillis((long) timeDiff_ms);
+                if (timeDiff.isZero() || timeDiff.isNegative()) {
                     Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
                     value = null;
                 } else {
                     long wheelDiff = UintUtils.diff(wheelRevolutionsCount, previous.wheelRevolutionsCount, UintUtils.UINT16_MAX);
-                    wheelDiff = Math.abs(wheelDiff); //HACK for Garmin Speed 2 as it some of those seem to count backwards
+                    wheelDiff = Math.abs(wheelDiff); //HACK for Garmin Speed 2 as some of those seem to count backwards
 
-                    double timeDiff_s = timeDiff_ms * UnitConversions.MS_TO_S;
-                    float distance_m = (float) (wheelDiff * wheel_circumference_mm * UnitConversions.MM_TO_M);
-                    float distance_overall_m = distance_m;
+                    Distance distance = Distance.of(wheelDiff * wheel_circumference_mm * UnitConversions.MM_TO_M);
+                    Distance distanceOverall = distance;
                     if (previous.hasValue()) {
-                        distance_overall_m += previous.getValue().distance_overall_m;
+                        distanceOverall = distance.plus(previous.getValue().distanceOverall);
                     }
-                    float speed_mps = (float) (distance_m / timeDiff_s);
-                    value = new Data(distance_m, distance_overall_m, speed_mps);
+                    Speed speed_mps = Speed.of(distance, timeDiff);
+                    value = new Data(distance, distanceOverall, speed_mps);
                 }
             }
         }
@@ -144,7 +148,7 @@ public final class SensorDataCycling {
         @Override
         public void reset() {
             if (value != null) {
-                value = new Data(value.distance_m, 0, value.speed_mps);
+                value = new Data(value.distance, Distance.of(0), value.speed);
             }
         }
 
@@ -167,22 +171,22 @@ public final class SensorDataCycling {
         }
 
         public static class Data {
-            public final float distance_m;
-            public final float distance_overall_m;
-            public final float speed_mps;
+            public final Distance distance;
+            public final Distance distanceOverall;
+            public final Speed speed;
 
-            private Data(float distance_m, float distance_overall_m, float speed_mps) {
-                this.distance_m = distance_m;
-                this.distance_overall_m = distance_overall_m;
-                this.speed_mps = speed_mps;
+            private Data(Distance distance, Distance distanceOverall, Speed speed) {
+                this.distance = distance;
+                this.distanceOverall = distanceOverall;
+                this.speed = speed;
             }
 
             @Override
             public String toString() {
                 return "Data{" +
-                        "distance_m=" + distance_m +
-                        ", distance_overall_m=" + distance_overall_m +
-                        ", speed_mps=" + speed_mps +
+                        "distance_m=" + distance +
+                        ", distance_overall_m=" + distanceOverall +
+                        ", speed_mps=" + speed +
                         '}';
             }
         }

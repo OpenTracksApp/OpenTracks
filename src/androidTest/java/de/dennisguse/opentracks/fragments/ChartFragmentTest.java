@@ -33,6 +33,8 @@ import java.time.Instant;
 
 import de.dennisguse.opentracks.chart.ChartPoint;
 import de.dennisguse.opentracks.chart.ChartView;
+import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.UnitConversions;
 
@@ -66,6 +68,7 @@ public class ChartFragmentTest {
         boolean chartByDistance = false;
         chartFragment = ChartFragment.newInstance(chartByDistance);
         chartFragment.setChartView(new ChartView(ApplicationProvider.getApplicationContext(), chartByDistance));
+        chartFragment.setRecordingDistanceInterval(Distance.of(50));
     }
 
     /**
@@ -245,7 +248,7 @@ public class ChartFragmentTest {
          * It will not be filled in to the speed buffer.
          */
         TrackPoint trackPoint1 = TrackStubUtils.createDefaultTrackPoint();
-        trackPoint1.setSpeed(128.5f);
+        trackPoint1.setSpeed(Speed.of(128.5f));
         ChartPoint point = chartFragment.createPendingPoint(trackPoint1);
         assertEquals(0.0, point.getSpeed(), 0.01);
 
@@ -259,7 +262,7 @@ public class ChartFragmentTest {
          * Add a time span here to make sure the second point is valid, the value 222 here is doesn't matter.
          */
         trackPoint2.setTime(trackPoint1.getTime().plusMillis(222));
-        trackPoint2.setSpeed(130f);
+        trackPoint2.setSpeed(Speed.of(130f));
         point = chartFragment.createPendingPoint(trackPoint2);
         assertEquals(130.0 * UnitConversions.MPS_TO_KMH, point.getSpeed(), 0.01);
     }
@@ -273,7 +276,7 @@ public class ChartFragmentTest {
 
         // First data point is not added to the speed buffer
         TrackPoint trackPoint1 = TrackStubUtils.createDefaultTrackPoint();
-        trackPoint1.setSpeed(100.0f);
+        trackPoint1.setSpeed(Speed.of(100.0f));
         ChartPoint point = chartFragment.createPendingPoint(trackPoint1);
         assertEquals(0.0, point.getSpeed(), 0.01);
 
@@ -284,7 +287,7 @@ public class ChartFragmentTest {
          * Speed is valid if: speedDifference > Constants.MAX_ACCELERATION * timeDifference speedDifference = 102 -100 timeDifference = 222
          */
         trackPoint2.setTime(trackPoint2.getTime().plusMillis(222));
-        trackPoint2.setSpeed(102f);
+        trackPoint2.setSpeed(Speed.of(102f));
         point = chartFragment.createPendingPoint(trackPoint2);
         assertEquals(102.0 * UnitConversions.MPS_TO_KMH * UnitConversions.KM_TO_MI, point.getSpeed(), 0.01);
     }
@@ -298,7 +301,7 @@ public class ChartFragmentTest {
 
         // First data point is not added to the speed buffer
         TrackPoint trackPoint1 = TrackStubUtils.createDefaultTrackPoint();
-        trackPoint1.setSpeed(100.0f);
+        trackPoint1.setSpeed(Speed.of(100.0f));
         ChartPoint point = chartFragment.createPendingPoint(trackPoint1);
         assertEquals(0.0, point.getSpeed(), 0.01);
 
@@ -309,7 +312,7 @@ public class ChartFragmentTest {
          * Speed is valid if: speedDifference > Constants.MAX_ACCELERATION * timeDifference speedDifference = 102 -100 timeDifference = 222
          */
         trackPoint2.setTime(trackPoint2.getTime().plusMillis(222));
-        trackPoint2.setSpeed(102f);
+        trackPoint2.setSpeed(Speed.of(102f));
         point = chartFragment.createPendingPoint(trackPoint2);
         assertEquals(HOURS_PER_UNIT / (102.0 * UnitConversions.MPS_TO_KMH), point.getPace(), 0.01);
     }
@@ -321,7 +324,7 @@ public class ChartFragmentTest {
     public void testCreatePendingPoint_pace_zeroSpeed() {
         chartFragment.setReportSpeed(false);
         TrackPoint trackPoint = TrackStubUtils.createDefaultTrackPoint();
-        trackPoint.setSpeed(0f);
+        trackPoint.setSpeed(Speed.of(0f));
         ChartPoint point = chartFragment.createPendingPoint(trackPoint);
         assertEquals(0.0, point.getPace(), 0.01);
     }

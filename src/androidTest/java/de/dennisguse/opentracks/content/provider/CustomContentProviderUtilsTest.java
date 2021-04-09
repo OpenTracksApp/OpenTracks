@@ -42,8 +42,10 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.TestSensorDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
@@ -428,9 +430,9 @@ public class CustomContentProviderUtilsTest {
         statistics.setStopTime(Instant.ofEpochMilli(2500));
         statistics.setTotalTime(Duration.ofMillis(1500));
         statistics.setMovingTime(Duration.ofMillis(700));
-        statistics.setTotalDistance(750.0);
+        statistics.setTotalDistance(Distance.of(750.0));
         statistics.setTotalAltitudeGain(50.0f);
-        statistics.setMaxSpeed(60.0);
+        statistics.setMaxSpeed(Speed.of(60.0));
         statistics.setMaxAltitude(1250.0);
         statistics.setMinAltitude(1200.0);
 
@@ -807,7 +809,7 @@ public class CustomContentProviderUtilsTest {
         assertEquals(longitude, trackPoint.getLongitude(), 0.01);
         assertEquals(latitude, trackPoint.getLatitude(), 0.01);
         assertEquals(time, trackPoint.getTime().toEpochMilli());
-        assertEquals(speed, trackPoint.getSpeed(), 0.01);
+        assertEquals(speed, trackPoint.getSpeed().toMPS(), 0.01);
         assertFalse(trackPoint.hasHeartRate());
     }
 

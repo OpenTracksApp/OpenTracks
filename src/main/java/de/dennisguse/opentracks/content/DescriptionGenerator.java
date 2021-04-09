@@ -24,6 +24,8 @@ import androidx.annotation.VisibleForTesting;
 import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -163,9 +165,9 @@ public class DescriptionGenerator {
      * @param lineBreak line break string
      */
     @VisibleForTesting
-    void writeDistance(double distance, StringBuilder builder, int resId, String lineBreak) {
-        double distanceInKm = distance * UnitConversions.M_TO_KM;
-        double distanceInMi = distanceInKm * UnitConversions.KM_TO_MI;
+    void writeDistance(Distance distance, StringBuilder builder, int resId, String lineBreak) {
+        double distanceInKm = distance.toKM();
+        double distanceInMi = distance.toMI();
         builder.append(context.getString(resId, distanceInKm, distanceInMi));
         builder.append(lineBreak);
     }
@@ -193,21 +195,18 @@ public class DescriptionGenerator {
      * @param lineBreak line break string
      */
     @VisibleForTesting
-    void writeSpeed(double speed, StringBuilder builder, int resId, String lineBreak) {
-        double speedInKmHr = speed * UnitConversions.MPS_TO_KMH;
-        double speedInMiHr = speedInKmHr * UnitConversions.KM_TO_MI;
-        builder.append(context.getString(resId, speedInKmHr, speedInMiHr));
+    void writeSpeed(Speed speed, StringBuilder builder, int resId, String lineBreak) {
+        builder.append(context.getString(resId, speed.toKMH(), speed.toMPH()));
         builder.append(lineBreak);
     }
 
     /**
-     * @param speed     speed in meters per second
      * @param builder   StringBuilder to append pace
      * @param resId     resource id of pace string
      * @param lineBreak line break string
      */
     @VisibleForTesting
-    void writePace(double speed, StringBuilder builder, int resId, String lineBreak) {
+    void writePace(Speed speed, StringBuilder builder, int resId, String lineBreak) {
         Pair<String, String> paceInMetrics = StringUtils.getSpeedParts(context, speed, true, false);
         Pair<String, String> paceInImperial = StringUtils.getSpeedParts(context, speed, false, false);
 

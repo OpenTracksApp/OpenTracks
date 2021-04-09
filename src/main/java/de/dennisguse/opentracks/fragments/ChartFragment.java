@@ -37,6 +37,7 @@ import de.dennisguse.opentracks.chart.ChartPoint;
 import de.dennisguse.opentracks.chart.ChartView;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -66,7 +67,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     private SharedPreferences sharedPreferences;
-    private int recordingDistanceInterval;
+    private Distance recordingDistanceInterval;
 
     private TrackDataHub trackDataHub;
 
@@ -345,5 +346,10 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     @VisibleForTesting
     void setChartByDistance(boolean value) {
         chartByDistance = value;
+    }
+
+    @VisibleForTesting
+    void setRecordingDistanceInterval(Distance value) {
+        recordingDistanceInterval = value;
     }
 }

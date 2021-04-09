@@ -13,6 +13,7 @@ import java.util.List;
 
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
 
 public class TestDataUtil {
@@ -75,10 +76,14 @@ public class TestDataUtil {
                 TrackPoint.createSegmentEndWithTime(Instant.ofEpochSecond(i++ + 1))
         );
 
+        //TODO Use TrackStatisticsUpdater
+        TrackStatistics stats = new TrackStatistics();
+        stats.setTotalDistance(Distance.of(0));
+        stats.setTotalTime(Duration.ofMillis(0));
         List<Marker> markers = List.of(
-                new Marker("Marker 1", "Marker description 1", "Marker category 3", "", trackId, 0.0, Duration.ofMillis(0), trackPoints.get(1), null),
-                new Marker("Marker 2", "Marker description 2", "Marker category 3", "", trackId, 0.0, Duration.ofMillis(0), trackPoints.get(4), null),
-                new Marker("Marker 3", "Marker description 3", "Marker category 3", "", trackId, 0.0, Duration.ofMillis(0), trackPoints.get(5), null)
+                new Marker("Marker 1", "Marker description 1", "Marker category 3", "", trackId, stats, trackPoints.get(1), null),
+                new Marker("Marker 2", "Marker description 2", "Marker category 3", "", trackId, stats, trackPoints.get(4), null),
+                new Marker("Marker 3", "Marker description 3", "Marker category 3", "", trackId, stats, trackPoints.get(5), null)
         );
 
         return new TrackData(track, trackPoints, markers);
@@ -117,7 +122,7 @@ public class TestDataUtil {
         trackPoint.setAccuracy((float) i / 100.0f);
         trackPoint.setAltitude(i * ALTITUDE_INTERVAL);
         trackPoint.setTime(Instant.ofEpochSecond(i + 1));
-        trackPoint.setSpeed(5f + (i / 10f));
+        trackPoint.setSpeed(Speed.of(5f + (i / 10f)));
 
         trackPoint.setHeartRate_bpm(100f + i);
         trackPoint.setCyclingCadence_rpm(300f + i);
@@ -150,7 +155,12 @@ public class TestDataUtil {
         Uri photoUri = FileUtils.getUriForFile(context, dstFile);
         String photoUrl = photoUri.toString();
 
-        return new Marker("Marker name", "Marker description", "Marker category", "", trackId, 0.0, Duration.ofMillis(0), trackPoint, photoUrl);
+        //TODO Use TrackStatisticsUpdater
+        TrackStatistics stats = new TrackStatistics();
+        stats.setTotalDistance(Distance.of(0));
+        stats.setTotalTime(Duration.ofMillis(0));
+
+        return new Marker("Marker name", "Marker description", "Marker category", "", trackId, stats, trackPoint, photoUrl);
     }
 
     public static List<TrackPoint> getTrackPoints(ContentProviderUtils contentProviderUtils, Track.Id trackId) {

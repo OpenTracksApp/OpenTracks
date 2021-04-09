@@ -32,7 +32,9 @@ import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -353,7 +355,7 @@ public class ExportImportTest {
             }
             assertEquals(trackPoint.hasSpeed(), importedTrackPoint.hasSpeed());
             if (trackPoint.hasSpeed()) {
-                assertEquals(trackPoint.getSpeed(), importedTrackPoint.getSpeed(), 0.001);
+                assertEquals(trackPoint.getSpeed().toMPS(), importedTrackPoint.getSpeed().toMPS(), 0.001);
             }
             assertEquals(trackPoint.hasAltitude(), importedTrackPoint.hasAltitude());
             if (trackPoint.hasAltitude()) {
@@ -381,7 +383,7 @@ public class ExportImportTest {
                 assertEquals(trackPoint.getAltitudeLoss(), importedTrackPoint.getAltitudeLoss(), 0.01);
             }
             if (verifyDistance) {
-                assertEquals(trackPoint.getSensorDistance(), importedTrackPoint.getSensorDistance(), 0.01);
+                assertEquals(trackPoint.getSensorDistance(), importedTrackPoint.getSensorDistance());
             }
         }
     }
@@ -405,13 +407,13 @@ public class ExportImportTest {
 
             // Distance
             if (verifyDistance) {
-                assertEquals(trackStatistics.getTotalDistance(), importedTrackStatistics.getTotalDistance(), 0.01);
+                assertEquals(trackStatistics.getTotalDistance(), importedTrackStatistics.getTotalDistance());
             }
 
             // Speed
-            assertEquals(trackStatistics.getMaxSpeed(), importedTrackStatistics.getMaxSpeed(), 0.01);
-            assertEquals(trackStatistics.getAverageSpeed(), importedTrackStatistics.getAverageSpeed(), 0.01);
-            assertEquals(trackStatistics.getAverageMovingSpeed(), importedTrackStatistics.getAverageMovingSpeed(), 0.01);
+            assertEquals(trackStatistics.getMaxSpeed(), importedTrackStatistics.getMaxSpeed());
+            assertEquals(trackStatistics.getAverageSpeed(), importedTrackStatistics.getAverageSpeed());
+            assertEquals(trackStatistics.getAverageMovingSpeed(), importedTrackStatistics.getAverageMovingSpeed());
         }
 
         // Altitude
@@ -429,12 +431,12 @@ public class ExportImportTest {
     private static TrackPoint createTrackPoint(long time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, float distance) {
         TrackPoint tp = new TrackPoint(latitude, longitude, (double) altitude, Instant.ofEpochMilli(time));
         tp.setAccuracy(accuracy);
-        tp.setSpeed(speed);
+        tp.setSpeed(Speed.of(speed));
         tp.setHeartRate_bpm(heartRate);
         tp.setCyclingCadence_rpm(cyclingCadence);
         tp.setPower(power);
         tp.setAltitudeGain(altitudeGain);
-        tp.setSensorDistance(distance);
+        tp.setSensorDistance(Distance.of(distance));
         return tp;
     }
 }

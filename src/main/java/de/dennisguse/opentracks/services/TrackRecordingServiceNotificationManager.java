@@ -11,6 +11,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.core.app.NotificationCompat;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -68,7 +69,7 @@ class TrackRecordingServiceNotificationManager {
     void updateTrackPoint(Context context, TrackStatistics trackStatistics, TrackPoint trackPoint, int recordingGpsAccuracy) {
         String formattedAccuracy = context.getString(R.string.value_none);
         if (trackPoint.hasAccuracy()) {
-            formattedAccuracy = StringUtils.formatDistance(context, trackPoint.getAccuracy(), metricUnits);
+            formattedAccuracy = StringUtils.formatDistance(context, Distance.of(trackPoint.getAccuracy()), metricUnits);
 
             boolean currentLocationWasAccurate = trackPoint.getAccuracy() < recordingGpsAccuracy;
             boolean shouldAlert = !currentLocationWasAccurate && previousLocationWasAccurate;

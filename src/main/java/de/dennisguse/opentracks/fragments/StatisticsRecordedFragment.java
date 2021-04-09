@@ -180,8 +180,7 @@ public class StatisticsRecordedFragment extends Fragment {
     private void updateUI() {
         // Set total distance
         {
-            double totalDistance = trackStatistics.getTotalDistance();
-            Pair<String, String> parts = StringUtils.getDistanceParts(getContext(), totalDistance, preferenceMetricUnits);
+            Pair<String, String> parts = StringUtils.getDistanceParts(getContext(), trackStatistics.getTotalDistance(), preferenceMetricUnits);
 
             viewBinding.statsDistanceValue.setText(parts.first);
             viewBinding.statsDistanceUnit.setText(parts.second);
@@ -201,32 +200,27 @@ public class StatisticsRecordedFragment extends Fragment {
 
         // Set average speed/pace
         {
-            double speed = trackStatistics.getAverageSpeed();
             viewBinding.statsAverageSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
 
-            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, preferenceMetricUnits, preferenceReportSpeed);
+            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), trackStatistics.getAverageSpeed(), preferenceMetricUnits, preferenceReportSpeed);
             viewBinding.statsAverageSpeedValue.setText(parts.first);
             viewBinding.statsAverageSpeedUnit.setText(parts.second);
         }
 
         // Set max speed/pace
         {
-            double speed = trackStatistics.getMaxSpeed();
-
             viewBinding.statsMaxSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_max_speed : R.string.stats_fastest_pace);
 
-            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, preferenceMetricUnits, preferenceReportSpeed);
+            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), trackStatistics.getMaxSpeed(), preferenceMetricUnits, preferenceReportSpeed);
             viewBinding.statsMaxSpeedValue.setText(parts.first);
             viewBinding.statsMaxSpeedUnit.setText(parts.second);
         }
 
         // Set moving speed/pace
         {
-            double speed = trackStatistics.getAverageMovingSpeed();
-
             viewBinding.statsMovingSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
 
-            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, preferenceMetricUnits, preferenceReportSpeed);
+            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), trackStatistics.getAverageMovingSpeed(), preferenceMetricUnits, preferenceReportSpeed);
             viewBinding.statsMovingSpeedValue.setText(parts.first);
             viewBinding.statsMovingSpeedUnit.setText(parts.second);
         }

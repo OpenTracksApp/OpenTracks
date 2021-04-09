@@ -360,12 +360,12 @@ public class TrackRecordingServiceTest {
         Marker.Id markerId = service.insertMarker(null, null, null, null);
 
         // then
-        assertNotEquals(-1L, markerId);
+        assertNotEquals(new Marker.Id(-1L), markerId);
         Marker wpt = contentProviderUtils.getMarker(markerId);
         assertEquals(context.getString(R.string.marker_icon_url), wpt.getIcon());
         assertEquals(context.getString(R.string.marker_name_format, 1), wpt.getName());
         assertEquals(trackId, wpt.getTrackId());
-        assertEquals(0.0, wpt.getLength(), 0.01);
+        assertEquals(0.0, wpt.getLength().toM(), 0.01);
         assertNotNull(wpt.getLocation());
 
         service.endCurrentTrack();
