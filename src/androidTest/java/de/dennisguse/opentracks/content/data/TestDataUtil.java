@@ -6,6 +6,7 @@ import android.util.Pair;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,9 +76,9 @@ public class TestDataUtil {
         );
 
         List<Marker> markers = List.of(
-                new Marker("Marker 1", "Marker description 1", "Marker category 3", "", trackId, 0.0, 0, trackPoints.get(1), null),
-                new Marker("Marker 2", "Marker description 2", "Marker category 3", "", trackId, 0.0, 0, trackPoints.get(4), null),
-                new Marker("Marker 3", "Marker description 3", "Marker category 3", "", trackId, 0.0, 0, trackPoints.get(5), null)
+                new Marker("Marker 1", "Marker description 1", "Marker category 3", "", trackId, 0.0, Duration.ofMillis(0), trackPoints.get(1), null),
+                new Marker("Marker 2", "Marker description 2", "Marker category 3", "", trackId, 0.0, Duration.ofMillis(0), trackPoints.get(4), null),
+                new Marker("Marker 3", "Marker description 3", "Marker category 3", "", trackId, 0.0, Duration.ofMillis(0), trackPoints.get(5), null)
         );
 
         return new TrackData(track, trackPoints, markers);
@@ -149,7 +150,7 @@ public class TestDataUtil {
         Uri photoUri = FileUtils.getUriForFile(context, dstFile);
         String photoUrl = photoUri.toString();
 
-        return new Marker("Marker name", "Marker description", "Marker category", "", trackId, 0.0, 0, trackPoint, photoUrl);
+        return new Marker("Marker name", "Marker description", "Marker category", "", trackId, 0.0, Duration.ofMillis(0), trackPoint, photoUrl);
     }
 
     public static List<TrackPoint> getTrackPoints(ContentProviderUtils contentProviderUtils, Track.Id trackId) {
