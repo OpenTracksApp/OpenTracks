@@ -401,7 +401,7 @@ public class TrackRecordingServiceTest {
     /**
      * Inserts a location and waits for 200ms.
      */
-    private static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) throws InterruptedException {
+    private static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) {
         Location location = new Location("");
         location.setLongitude(longitude);
         location.setLatitude(latitude);
