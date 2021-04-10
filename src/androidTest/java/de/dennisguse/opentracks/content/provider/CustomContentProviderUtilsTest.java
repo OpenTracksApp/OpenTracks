@@ -1252,7 +1252,7 @@ public class CustomContentProviderUtilsTest {
 
     @Test
     public void testGetSensorStats_veryLongActivity12h() {
-    testGetSensorStats_randomData(43200 / 4, false);
+    testGetSensorStats_randomData(43200 / 6, false);
     }
 
     @Test
