@@ -13,9 +13,7 @@ import androidx.test.rule.GrantPermissionRule;
 import androidx.test.rule.ServiceTestRule;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -88,24 +86,25 @@ public class ExportImportTest {
     private Track.Id trackId;
     private Track.Id importTrackId;
 
-    @Before
-    public void setUp() throws TimeoutException {
+    public void setUp(boolean hasSensorDistance) throws TimeoutException {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
                 .getService();
 
         trackId = service.startNewTrack();
 
-        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14, 10, 15, 10, 0, 66, 3, 50, 5), 0);
+        Distance sensorDistance = hasSensorDistance ? Distance.of(5) : null;
+
+        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
         service.insertMarker("Marker 1", "Marker 1 category", "Marker 1 desc", null);
-        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.001, 10, 15, 10, 0, 66, 3, 50, 5), 0);
-        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.002, 10, 15, 10, 0, 66, 3, 50, 5), 0);
+        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
+        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.002, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
         service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
         service.pauseCurrentTrack();
 
         service.resumeCurrentTrack();
-        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.003, 10, 15, 10, 0, 66, 3, 50, 5), 0);
-        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 16, 10, 15, 10, 0, 66, 3, 50, 5), 0);
-        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 16.001, 10, 15, 10, 0, 66, 3, 50, 5), 0);
+        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.003, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
+        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 16, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
+        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 16.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
         service.endCurrentTrack();
 
         track = contentProviderUtils.getTrack(trackId);
@@ -129,17 +128,11 @@ public class ExportImportTest {
         }
     }
 
-    @Ignore("Not implemented")
     @LargeTest
     @Test
-    public void kml_only_track() {
-        // TODO
-        Log.e(TAG, "Test not implemented.");
-    }
+    public void kml_with_trackdetail() throws TimeoutException {
+        setUp(false);
 
-    @LargeTest
-    @Test
-    public void kml_with_trackdetail() {
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
@@ -170,7 +163,7 @@ public class ExportImportTest {
         assertTrackpoints(trackPoints, false, false, false, false, false, false);
 
         // 3. trackstatistics
-        assertTrackStatistics(false, false, false);
+        assertTrackStatistics(false, false, true);
 
         // 4. markers
         assertMarkers();
@@ -178,7 +171,9 @@ public class ExportImportTest {
 
     @LargeTest
     @Test
-    public void kml_with_trackdetail_and_sensordata() {
+    public void kml_with_trackdetail_and_sensordata() throws TimeoutException {
+        setUp(true);
+
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
@@ -216,7 +211,9 @@ public class ExportImportTest {
 
     @LargeTest
     @Test(expected = ImportAlreadyExistsException.class)
-    public void kml_with_trackdetail_and_sensordata_duplicate_trackUUID() {
+    public void kml_with_trackdetail_and_sensordata_duplicate_trackUUID() throws TimeoutException {
+        setUp(false);
+
         // given
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean(context.getString(R.string.import_prevent_reimport_key), true);
@@ -242,7 +239,9 @@ public class ExportImportTest {
 
     @LargeTest
     @Test
-    public void gpx() {
+    public void gpx() throws TimeoutException {
+        setUp(true);
+
         // given
         Track track = contentProviderUtils.getTrack(trackId);
 
@@ -288,7 +287,9 @@ public class ExportImportTest {
 
     @LargeTest
     @Test(expected = ImportAlreadyExistsException.class)
-    public void gpx_duplicate_trackUUID() {
+    public void gpx_duplicate_trackUUID() throws TimeoutException {
+        setUp(false);
+
         // given
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putBoolean(context.getString(R.string.import_prevent_reimport_key), true);
@@ -428,7 +429,7 @@ public class ExportImportTest {
         }
     }
 
-    private static TrackPoint createTrackPoint(long time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, float distance) {
+    private static TrackPoint createTrackPoint(long time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, Distance distance) {
         TrackPoint tp = new TrackPoint(latitude, longitude, (double) altitude, Instant.ofEpochMilli(time));
         tp.setAccuracy(accuracy);
         tp.setSpeed(Speed.of(speed));
@@ -436,7 +437,7 @@ public class ExportImportTest {
         tp.setCyclingCadence_rpm(cyclingCadence);
         tp.setPower(power);
         tp.setAltitudeGain(altitudeGain);
-        tp.setSensorDistance(Distance.of(distance));
+        tp.setSensorDistance(distance);
         return tp;
     }
 }
