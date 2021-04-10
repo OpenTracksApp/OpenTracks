@@ -98,7 +98,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
     }
 
     @Override
-    public void endElement(String uri, String localName, String tag) throws SAXException {
+    public void endElement(String uri, String localName, String tag) {
         switch (tag) {
             case TAG_GPX:
                 onFileEnd();

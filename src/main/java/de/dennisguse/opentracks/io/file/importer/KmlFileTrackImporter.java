@@ -195,7 +195,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         markerType = null;
     }
 
-    private void onMarkerEnd() throws SAXException {
+    private void onMarkerEnd() {
         if (!MARKER_STYLE.equals(markerType)) {
             return;
         }
@@ -262,7 +262,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     /**
      * On track point end. gx:coord end tag.
      */
-    private void onTrackPointEnd() throws SAXException {
+    private void onTrackPointEnd() {
         // Add trackPoint to trackPoints
         if (content == null) {
             return;
