@@ -37,7 +37,6 @@ import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
 import de.dennisguse.opentracks.viewmodels.SensorDataModel;
 
 /**
@@ -50,7 +49,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
     private static final String TAG = StatisticsRecordingFragment.class.getSimpleName();
 
-    private static final long UI_UPDATE_INTERVAL = UnitConversions.ONE_SECOND_MS;
+    private static final Duration UI_UPDATE_INTERVAL = Duration.ofSeconds(1);
 
     public static Fragment newInstance() {
         return new StatisticsRecordingFragment();
@@ -121,7 +120,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
                     updateSensorDataUI();
                 }
 
-                handlerUpdateUI.postDelayed(this, UI_UPDATE_INTERVAL);
+                handlerUpdateUI.postDelayed(this, UI_UPDATE_INTERVAL.toMillis());
             }
         }
     };

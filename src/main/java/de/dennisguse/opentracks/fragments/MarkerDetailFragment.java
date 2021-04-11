@@ -34,6 +34,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import java.time.Duration;
+
 import de.dennisguse.opentracks.MarkerEditActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Marker;
@@ -43,7 +45,6 @@ import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.MarkerUtils;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * A fragment to show marker details.
@@ -55,7 +56,7 @@ public class MarkerDetailFragment extends Fragment {
     private static final String TAG = MarkerDetailFragment.class.getSimpleName();
     private static final String KEY_MARKER_ID = "markerId";
 
-    private static final long HIDE_TEXT_DELAY = 4 * UnitConversions.ONE_SECOND_MS;
+    private static final Duration HIDE_TEXT_DELAY = Duration.ofSeconds(4);
 
     private MenuItem shareMarkerImageMenuItem;
 
@@ -126,7 +127,7 @@ public class MarkerDetailFragment extends Fragment {
             viewBinding.markerDetailMarkerTextGradient.setVisibility(visibility);
             viewBinding.markerDetailMarkerInfo.setVisibility(visibility);
             if (visibility == View.VISIBLE) {
-                handler.postDelayed(hideText, HIDE_TEXT_DELAY);
+                handler.postDelayed(hideText, HIDE_TEXT_DELAY.toMillis());
             }
         });
         return viewBinding.getRoot();
@@ -236,7 +237,7 @@ public class MarkerDetailFragment extends Fragment {
         if (hasPhoto) {
             handler.removeCallbacks(hideText);
             viewBinding.markerDetailMarkerPhoto.setImageURI(marker.getPhotoURI());
-            handler.postDelayed(hideText, HIDE_TEXT_DELAY);
+            handler.postDelayed(hideText, HIDE_TEXT_DELAY.toMillis());
         } else {
             viewBinding.markerDetailMarkerPhoto.setImageResource(MarkerUtils.ICON_ID);
         }

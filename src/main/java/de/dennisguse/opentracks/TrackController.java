@@ -31,7 +31,6 @@ import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * Track controller for record, pause, resume, and stop.
@@ -41,6 +40,8 @@ import de.dennisguse.opentracks.util.UnitConversions;
 public class TrackController implements View.OnTouchListener {
 
     private static final String TAG = TrackController.class.getSimpleName();
+
+    private static final Duration UI_UPDATE_INTERVAL = Duration.ofSeconds(1);
 
     private final Activity activity;
     private final TrackRecordingServiceConnection trackRecordingServiceConnection;
@@ -66,7 +67,7 @@ public class TrackController implements View.OnTouchListener {
             if (isResumed && isRecording && !isRecordingPaused) {
                 updateTotalTime();
                 setTotalTime();
-                handlerUpdateTotalTime.postDelayed(this, UnitConversions.ONE_SECOND_MS);
+                handlerUpdateTotalTime.postDelayed(this, UI_UPDATE_INTERVAL.toMillis());
             }
         }
     };
@@ -180,7 +181,7 @@ public class TrackController implements View.OnTouchListener {
         }
 
         if (isRecording && !isRecordingPaused) {
-            handlerUpdateTotalTime.postDelayed(updateTotalTimeRunnable, UnitConversions.ONE_SECOND_MS);
+            handlerUpdateTotalTime.postDelayed(updateTotalTimeRunnable, UI_UPDATE_INTERVAL.toMillis());
         }
 
         viewBinding.trackControllerRecord.setImageResource(isRecording && !isRecordingPaused ? R.drawable.ic_button_pause : R.drawable.button_record);
