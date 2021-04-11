@@ -314,7 +314,7 @@ public class GPXTrackExporter implements TrackExporter {
                 }
 
                 if (trackPoint.hasSensorDistance()) {
-                    printWriter.println("<opentracks:distance>" + DISTANCE_FORMAT.format(trackPoint.getAltitudeLoss()) + "</opentracks:distance>");
+                    printWriter.println("<opentracks:distance>" + DISTANCE_FORMAT.format(trackPoint.getSensorDistance().toM()) + "</opentracks:distance>");
                 }
 
                 printWriter.println("</gpxtpx:TrackPointExtension></extensions>");
