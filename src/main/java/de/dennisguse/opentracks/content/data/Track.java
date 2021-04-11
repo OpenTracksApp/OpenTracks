@@ -101,11 +101,12 @@ public class Track {
         this.icon = icon;
     }
 
+    @NonNull
     public TrackStatistics getTrackStatistics() {
         return trackStatistics;
     }
 
-    public void setTrackStatistics(TrackStatistics trackStatistics) {
+    public void setTrackStatistics(@NonNull TrackStatistics trackStatistics) {
         this.trackStatistics = trackStatistics;
     }
 
