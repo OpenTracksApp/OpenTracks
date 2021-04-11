@@ -10,8 +10,9 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
+import java.time.Duration;
+
 import de.dennisguse.opentracks.util.PressureSensorUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * Estimates the altitude gain and altitude loss using the device's pressure sensor (i.e., barometer).
@@ -20,7 +21,7 @@ public class AltitudeSumManager implements SensorEventListener {
 
     private static final String TAG = AltitudeSumManager.class.getSimpleName();
 
-    private static final int SAMPLING_RATE = 3 * (int) UnitConversions.ONE_SECOND_US;
+    private static final Duration SAMPLING_RATE = Duration.ofSeconds(3);
 
     private boolean isConnected = false;
 
@@ -39,7 +40,7 @@ public class AltitudeSumManager implements SensorEventListener {
             Log.w(TAG, "No pressure sensor available.");
             isConnected = false;
         } else {
-            isConnected = sensorManager.registerListener(this, pressureSensor, SAMPLING_RATE);
+            isConnected = sensorManager.registerListener(this, pressureSensor, (int) SAMPLING_RATE.toNanos());
         }
 
         lastAcceptedPressureValue_hPa = Float.NaN;
