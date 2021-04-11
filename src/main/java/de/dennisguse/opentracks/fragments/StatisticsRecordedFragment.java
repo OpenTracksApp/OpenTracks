@@ -65,11 +65,13 @@ public class StatisticsRecordedFragment extends Fragment {
         return fragment;
     }
 
-    private TrackStatistics trackStatistics;
     private SensorStatistics sensorStatistics;
     private SensorsAdapter sensorsAdapter;
-    private String category = "";
+
     private Track.Id trackId;
+    @Nullable // Lazily loaded.
+    private Track track;
+
     private ContentProviderUtils contentProviderUtils;
 
     private StatisticsRecordedBinding viewBinding;
@@ -86,9 +88,9 @@ public class StatisticsRecordedFragment extends Fragment {
             preferenceMetricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getContext());
         }
 
-        if (PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
+        if (PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key) && track != null) {
             updateUInecessary = true;
-            preferenceReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), category);
+            preferenceReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), track.getCategory());
         }
 
         if (key != null && updateUInecessary && isResumed()) {
@@ -152,14 +154,13 @@ public class StatisticsRecordedFragment extends Fragment {
             getActivity().runOnUiThread(() -> {
                 if (isResumed()) {
                     Track track = contentProviderUtils.getTrack(trackId);
-                    trackStatistics = track.getTrackStatistics();
                     sensorStatistics = contentProviderUtils.getSensorStats(trackId);
 
-                    String newCategory = track.getCategory();
-                    if (!category.equals(newCategory)) {
-                        category = newCategory;
+                    if ((this.track == null && track != null) || (this.track != null && track != null && !this.track.getCategory().equals(track.getCategory()))) {
                         sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, getString(R.string.stats_rate_key));
                     }
+
+                    this.track = track;
 
                     loadTrackDescription(track);
                     updateUI();
@@ -174,10 +175,11 @@ public class StatisticsRecordedFragment extends Fragment {
     private void loadTrackDescription(@NonNull Track track) {
         viewBinding.statsNameValue.setText(track.getName());
         viewBinding.statsDescriptionValue.setText(track.getDescription());
-        viewBinding.statsStartDatetimeValue.setText(StringUtils.formatDateTime(getContext(), trackStatistics.getStartTime()));
+        viewBinding.statsStartDatetimeValue.setText(StringUtils.formatDateTime(getContext(), track.getTrackStatistics().getStartTime()));
     }
 
     private void updateUI() {
+        TrackStatistics trackStatistics = track.getTrackStatistics();
         // Set total distance
         {
             Pair<String, String> parts = StringUtils.getDistanceParts(getContext(), trackStatistics.getTotalDistance(), preferenceMetricUnits);
@@ -188,7 +190,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
         // Set activity type
         {
-            String trackIconValue = TrackIconUtils.getIconValue(getContext(), category);
+            String trackIconValue = TrackIconUtils.getIconValue(getContext(), track.getCategory());
             viewBinding.statsActivityTypeIcon.setImageDrawable(ContextCompat.getDrawable(getContext(), TrackIconUtils.getIconDrawable(trackIconValue)));
         }
 

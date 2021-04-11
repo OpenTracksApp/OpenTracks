@@ -34,7 +34,6 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.databinding.StatisticsRecordingBinding;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
@@ -52,10 +51,10 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private static final String TAG = StatisticsRecordingFragment.class.getSimpleName();
 
     private static final long UI_UPDATE_INTERVAL = UnitConversions.ONE_SECOND_MS;
+
     public static Fragment newInstance() {
         return new StatisticsRecordingFragment();
     }
-
 
     private TrackDataHub trackDataHub;
 
@@ -64,10 +63,8 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private TrackRecordingServiceConnection trackRecordingServiceConnection = new TrackRecordingServiceConnection();
     private TrackPoint lastTrackPoint;
 
-    //TODO Should not be nullable
-    private TrackStatistics lastTrackStatistics;
-
-    private String category = "";
+    @Nullable // Lazily loaded.
+    private Track track;
 
     private StatisticsRecordingBinding viewBinding;
     private SensorsAdapter sensorsAdapter;
@@ -86,9 +83,9 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
             preferenceMetricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getContext());
         }
 
-        if (PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
+        if (PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key) && track != null) {
             updateUInecessary = true;
-            preferenceReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), category);
+            preferenceReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), track.getCategory());
         }
 
         if (PreferencesUtils.isKey(getContext(), R.string.stats_show_grade_altitude_key, key)) {
@@ -113,7 +110,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private final Runnable updateUIeachSecond = new Runnable() {
         public void run() {
             if (isResumed() && isSelectedTrackRecording()) {
-                if (!isSelectedTrackPaused() && lastTrackStatistics != null) {
+                if (!isSelectedTrackPaused() && track != null) {
                     synchronized (this) {
                         if (lastTrackPoint != null && lastTrackPoint.hasLocation() && !lastTrackPoint.isRecent()) {
                             lastTrackPoint = null;
@@ -142,7 +139,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewBinding = StatisticsRecordingBinding.inflate(inflater, container, false);
-        viewBinding.statsActivityTypeIcon.setOnClickListener(v -> ((TrackRecordingActivity) getActivity()).chooseActivityType(category));
+        viewBinding.statsActivityTypeIcon.setOnClickListener(v -> ((TrackRecordingActivity) getActivity()).chooseActivityType(track != null ? track.getCategory() : "")); //TODO "" would be useless as Track was not yet loaded.
 
         RecyclerView sensorsRecyclerView = viewBinding.statsSensorsRecyclerView;
         sensorsRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -199,12 +196,10 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         if (isResumed()) {
             getActivity().runOnUiThread(() -> {
                 if (isResumed()) {
-                    lastTrackStatistics = track != null ? track.getTrackStatistics() : null;
-                    String newCategory = track != null ? track.getCategory() : "";
-                    if (!category.equals(newCategory)) {
-                        category = newCategory;
+                    if ((this.track == null && track != null) || (this.track != null && track != null && !this.track.getCategory().equals(track.getCategory()))) {
                         sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, getString(R.string.stats_rate_key));
                     }
+                    this.track = track;
                     updateUI();
                 }
             });
@@ -338,12 +333,12 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private void setTotalAltitudeGain(Float altitudeGain_m) {
         Float totalAltitudeGain = altitudeGain_m;
 
-        if (lastTrackStatistics != null && lastTrackStatistics.hasTotalAltitudeGain()) {
+        if (track != null && track.getTrackStatistics().hasTotalAltitudeGain()) {
             if (altitudeGain_m == null) {
-                totalAltitudeGain = lastTrackStatistics.getTotalAltitudeGain();
-            } else {
-                totalAltitudeGain += lastTrackStatistics.getTotalAltitudeGain();
+                totalAltitudeGain = 0f;
             }
+
+            totalAltitudeGain += track.getTrackStatistics().getTotalAltitudeGain();
         }
 
         Pair<String, String> parts = StringUtils.formatAltitude(getContext(), totalAltitudeGain, preferenceMetricUnits);
@@ -355,11 +350,11 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     private void setTotalAltitudeLoss(Float altitudeLoss_m) {
         Float totalAltitudeLoss = altitudeLoss_m;
 
-        if (lastTrackStatistics != null && lastTrackStatistics.hasTotalAltitudeLoss()) {
+        if (track != null && track.getTrackStatistics().hasTotalAltitudeLoss()) {
             if (altitudeLoss_m == null) {
-                totalAltitudeLoss = lastTrackStatistics.getTotalAltitudeLoss();
+                totalAltitudeLoss = track.getTrackStatistics().getTotalAltitudeLoss();
             } else {
-                totalAltitudeLoss += lastTrackStatistics.getTotalAltitudeLoss();
+                totalAltitudeLoss += track.getTrackStatistics().getTotalAltitudeLoss();
             }
         }
 
@@ -387,21 +382,21 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         setTotalDistance(Distance.of(0)); //TODO Why?
 
         // Set activity type
-        {
-            String trackIconValue = TrackIconUtils.getIconValue(getContext(), category);
+        if (track != null) {
+            String trackIconValue = TrackIconUtils.getIconValue(getContext(), track.getCategory());
             viewBinding.statsActivityTypeIcon.setEnabled(isSelectedTrackRecording());
             viewBinding.statsActivityTypeIcon.setImageResource(TrackIconUtils.getIconDrawable(trackIconValue));
         }
 
         // Set time
-        if (lastTrackStatistics != null) {
-            viewBinding.statsMovingTimeValue.setText(StringUtils.formatElapsedTime(lastTrackStatistics.getMovingTime()));
+        if (track != null && track.getTrackStatistics() != null) {
+            viewBinding.statsMovingTimeValue.setText(StringUtils.formatElapsedTime(track.getTrackStatistics().getMovingTime()));
             updateTotalTime();
         }
 
         // Set average speed/pace
         {
-            Speed speed = lastTrackStatistics != null ? lastTrackStatistics.getAverageSpeed() : null;
+            Speed speed = track != null ? track.getTrackStatistics().getAverageSpeed() : null;
             viewBinding.statsAverageSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
 
             Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), speed, preferenceMetricUnits, preferenceReportSpeed);
@@ -411,7 +406,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
         // Set max speed/pace
         {
-            Speed speed = lastTrackStatistics != null ? lastTrackStatistics.getMaxSpeed() : null;
+            Speed speed = track != null ? track.getTrackStatistics().getMaxSpeed() : null;
 
             viewBinding.statsMaxSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_max_speed : R.string.stats_fastest_pace);
 
@@ -422,7 +417,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
         // Set moving speed/pace
         {
-            Speed speed = lastTrackStatistics != null ? lastTrackStatistics.getAverageMovingSpeed() : null;
+            Speed speed = track != null ? track.getTrackStatistics().getAverageMovingSpeed() : null;
 
             viewBinding.statsMovingSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
 
@@ -438,7 +433,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     }
 
     private void updateTotalTime() {
-        Duration totalTime = lastTrackStatistics.getTotalTime();
+        Duration totalTime = track.getTrackStatistics().getTotalTime();
         if (isSelectedTrackRecording()) {
             TrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
             if (trackRecordingService != null) {
@@ -480,7 +475,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     }
 
     private void setTotalDistance(Distance sensorDistanceSinceLastTrackpoint) {
-        Distance totalDistance = lastTrackStatistics != null ? (lastTrackStatistics.getTotalDistance().plus(sensorDistanceSinceLastTrackpoint)) : Distance.invalid();
+        Distance totalDistance = track != null ? (track.getTrackStatistics().getTotalDistance().plus(sensorDistanceSinceLastTrackpoint)) : Distance.invalid();
         Pair<String, String> parts = StringUtils.getDistanceParts(getContext(), totalDistance, preferenceMetricUnits);
 
         viewBinding.statsDistanceValue.setText(parts.first);
