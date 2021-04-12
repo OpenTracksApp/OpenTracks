@@ -59,7 +59,7 @@ public class TestDataUtil {
 
         int i = 0;
         List<TrackPoint> trackPoints = List.of(
-                TrackPoint.createSegmentStartManualWithTime(Instant.ofEpochMilli(i++ + 1)),
+                TrackPoint.createSegmentStartManualWithTime(Instant.ofEpochSecond(i++)),
                 createTrackPoint(i++),
                 createTrackPoint(i++),
                 createTrackPoint(i++),
@@ -67,13 +67,13 @@ public class TestDataUtil {
                 createTrackPoint(i++),
                 createTrackPoint(i++),
                 createTrackPoint(i++),
-                TrackPoint.createSegmentEndWithTime(Instant.ofEpochSecond(i++ + 1)),
+                createTrackPoint(i++, TrackPoint.Type.SEGMENT_END_MANUAL),
 
                 TrackPoint.createSegmentStartManualWithTime(Instant.ofEpochSecond(i++)),
                 createTrackPoint(i++),
                 createTrackPoint(i++),
                 createTrackPoint(i++),
-                TrackPoint.createSegmentEndWithTime(Instant.ofEpochSecond(i++ + 1))
+                createTrackPoint(i, TrackPoint.Type.SEGMENT_END_MANUAL)
         );
 
         //TODO Use TrackStatisticsUpdater
@@ -110,11 +110,6 @@ public class TestDataUtil {
         return pair.first;
     }
 
-    /**
-     * Creates a location.
-     *
-     * @param i the index for the TrackPoint.
-     */
     public static TrackPoint createTrackPoint(int i) {
         TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT);
         trackPoint.setLatitude(INITIAL_LATITUDE + (double) i / 10000.0);

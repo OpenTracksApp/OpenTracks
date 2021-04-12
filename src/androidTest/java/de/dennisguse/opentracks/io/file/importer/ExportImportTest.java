@@ -90,11 +90,15 @@ public class ExportImportTest {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
                 .getService();
 
+
         trackId = service.startNewTrack();
+        //TODO Workaround as those managers overwrite input data; We need to refactor TrackRecordingService to make it actually testable
+        service.setAltitudeSumManager(null);
+        service.setRemoteSensorManager(null);
 
         Distance sensorDistance = hasSensorDistance ? Distance.of(5) : null;
 
-        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
+        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14, 10, 15, 10, 1, 66, 3, 50, sensorDistance), 0);
         service.insertMarker("Marker 1", "Marker 1 category", "Marker 1 desc", null);
         service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
         service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.002, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
@@ -102,6 +106,10 @@ public class ExportImportTest {
         service.pauseCurrentTrack();
 
         service.resumeCurrentTrack();
+        //TODO Workaround as those managers overwrite input data; We need to refactor TrackRecordingService to make it actually testable
+        service.setAltitudeSumManager(null);
+        service.setRemoteSensorManager(null);
+
         service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.003, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
         service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 16, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
         service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 16.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
@@ -437,6 +445,7 @@ public class ExportImportTest {
         tp.setCyclingCadence_rpm(cyclingCadence);
         tp.setPower(power);
         tp.setAltitudeGain(altitudeGain);
+        tp.setAltitudeLoss(altitudeGain); //TODO
         tp.setSensorDistance(distance);
         return tp;
     }

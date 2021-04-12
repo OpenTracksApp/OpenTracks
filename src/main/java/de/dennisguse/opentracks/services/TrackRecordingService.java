@@ -595,8 +595,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private void insertTrackPoint(@NonNull Track track, @NonNull TrackPoint trackPoint) {
         try {
             if (altitudeSumManager != null) {
-                trackPoint.setAltitudeGain(altitudeSumManager.getAltitudeGain_m());
-                trackPoint.setAltitudeLoss(altitudeSumManager.getAltitudeLoss_m());
+                trackPoint.setAltitudeGain(getAltitudeGain_m());
+                trackPoint.setAltitudeLoss(getAltitudeLoss_m());
                 altitudeSumManager.reset();
             }
             if (remoteSensorManager != null) {
@@ -687,6 +687,11 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     @VisibleForTesting
     public void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager) {
         this.remoteSensorManager = remoteSensorManager;
+    }
+
+    @VisibleForTesting
+    public void setAltitudeSumManager(AltitudeSumManager altitudeSumManager) {
+        this.altitudeSumManager = altitudeSumManager;
     }
 
     public GpsStatusValue getGpsStatus() {
