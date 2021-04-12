@@ -26,6 +26,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
@@ -35,7 +36,6 @@ import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.AnnouncementUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 
 /**
@@ -193,7 +193,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         boolean isMetricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
         boolean isReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, context, category);
 
-        IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, (float) (isMetricUnits ? 1d * UnitConversions.KM_TO_M : 1d * UnitConversions.MI_TO_M));
+        IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, Distance.one(isMetricUnits));
         IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
 
         String announcement = AnnouncementUtils.getAnnouncement(context, trackStatistics, isMetricUnits, isReportSpeed, lastInterval);

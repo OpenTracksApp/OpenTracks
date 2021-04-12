@@ -10,8 +10,8 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * This model is used to load intervals for a track.
@@ -21,7 +21,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
 
     private final List<TrackPoint> trackPoints = new ArrayList<>();
     private MutableLiveData<List<IntervalStatistics.Interval>> intervalsLiveData;
-    private float distanceInterval;
+    private Distance distanceInterval;
 
     public IntervalStatisticsModel(@NonNull Application application) {
         super(application);
@@ -35,7 +35,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
                 }
 
                 intervalsLiveData = new MutableLiveData<>();
-                distanceInterval = metricUnits ? (float) (interval.getValue() * UnitConversions.KM_TO_M) : (float) (interval.getValue() * UnitConversions.MI_TO_M);
+                distanceInterval = interval.getValue();
                 loadIntervalStatistics();
             }
             return intervalsLiveData;
@@ -73,7 +73,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
                 interval = IntervalOption.OPTION_1;
             }
 
-            distanceInterval = metricUnits ? (float) (interval.getValue() * UnitConversions.KM_TO_M) : (float) (interval.getValue() * UnitConversions.MI_TO_M);
+            distanceInterval = interval.getValue();
             loadIntervalStatistics();
         }
     }
@@ -91,19 +91,19 @@ public class IntervalStatisticsModel extends AndroidViewModel {
         OPTION_20(20),
         OPTION_50(50);
 
-        private final int value;
+        private final Distance value;
 
         IntervalOption(int value) {
-            this.value = value;
+            this.value = Distance.of(value);
         }
 
-        public int getValue() {
+        public Distance getValue() {
             return value;
         }
 
         @Override
         public String toString() {
-            return "" + value;
+            return "" + (int) value.toM(); //TODO Somehow IntervalsFragment relies on a parsable Integer.
         }
     }
 }

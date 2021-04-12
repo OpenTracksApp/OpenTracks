@@ -20,14 +20,10 @@ public class AnnouncementUtils {
     public static String getAnnouncement(Context context, TrackStatistics trackStatistics, boolean isMetricUnits, boolean isReportSpeed, @Nullable IntervalStatistics.Interval currentInterval) {
         Distance distance = trackStatistics.getTotalDistance();
         Speed distancePerTime = trackStatistics.getAverageMovingSpeed();
-        double currentDistancePerTime = currentInterval != null ? currentInterval.getSpeed_ms() * UnitConversions.MPS_TO_KMH : 0; //TODO Use Speed?
+        Speed currentDistancePerTime = currentInterval != null ? currentInterval.getSpeed() : null;
 
         if (distance.isZero()) {
             return context.getString(R.string.voice_total_distance_zero);
-        }
-
-        if (!isMetricUnits) {
-            currentDistancePerTime *= UnitConversions.KM_TO_MI;
         }
 
         String rate;
@@ -38,17 +34,16 @@ public class AnnouncementUtils {
             double distanceInUnit = distancePerTime.to(isMetricUnits);
             rate = context.getResources().getQuantityString(speedId, getQuantityCount(distanceInUnit), distanceInUnit);
 
-            currentRate = context.getResources().getQuantityString(speedId, getQuantityCount(currentDistancePerTime), currentDistancePerTime);
+            double currentDistancePerTimeInUnit = currentDistancePerTime != null ? currentDistancePerTime.to(isMetricUnits) : 0;
+            currentRate = context.getResources().getQuantityString(speedId, getQuantityCount(currentDistancePerTimeInUnit), currentDistancePerTimeInUnit);
             currentRateMsg = context.getString(R.string.voice_speed_lap, currentRate);
         } else {
-            double timePerDistance = distancePerTime.isZero() ? 0.0 : 1 / distancePerTime.to(isMetricUnits); //TODO PACE
+            Duration time = distancePerTime.toPace(isMetricUnits);
 
             int paceId = isMetricUnits ? R.string.voice_pace_per_kilometer : R.string.voice_pace_per_mile;
-            Duration time = Duration.ofMillis((long) (timePerDistance * UnitConversions.HR_TO_MIN * UnitConversions.MIN_TO_S * UnitConversions.S_TO_MS));
             rate = context.getString(paceId, getAnnounceTime(context, time));
 
-            double currentTimePerDistance = currentDistancePerTime == 0 ? 0.0 : 1 / currentDistancePerTime; //TODO PACE
-            Duration currentTime = Duration.ofMillis((long) (currentTimePerDistance * UnitConversions.HR_TO_MIN * UnitConversions.MIN_TO_S * UnitConversions.S_TO_MS));
+            Duration currentTime = currentDistancePerTime.toPace(isMetricUnits);
             currentRate = context.getString(paceId, getAnnounceTime(context, currentTime));
             currentRateMsg = context.getString(R.string.voice_pace_lap, currentRate);
         }

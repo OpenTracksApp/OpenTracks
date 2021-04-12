@@ -20,6 +20,14 @@ public class Distance {
         return of(distance_mile * UnitConversions.MI_TO_M);
     }
 
+    public static Distance one(boolean metricUnit) {
+        if (metricUnit) {
+            return Distance.of(1);
+        } else {
+            return Distance.ofMile(1);
+        }
+    }
+
     public static Distance invalid() {
         return of(Double.NaN);
     }
@@ -34,8 +42,20 @@ public class Distance {
         return new Distance(distance_m + distance.distance_m);
     }
 
+    public Distance minus(@NonNull Distance distance) {
+        return new Distance(distance_m - distance.distance_m);
+    }
+
     public Distance multipliedBy(double factor) {
         return new Distance(factor * distance_m);
+    }
+
+    public Distance dividedBy(double divisor) {
+        return multipliedBy(1 / divisor);
+    }
+
+    public double dividedBy(@NonNull Distance divisor) {
+        return distance_m / divisor.distance_m;
     }
 
     public boolean isZero() {

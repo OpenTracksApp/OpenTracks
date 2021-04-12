@@ -114,26 +114,27 @@ public class IntervalStatisticsTest {
     }
 
     private void whenAndThen(List<TrackPoint> trackPoints, TrackStatistics trackStatistics, float distanceInterval) {
-        IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, distanceInterval);
+        IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, Distance.of(distanceInterval));
         List<IntervalStatistics.Interval> intervalList = intervalStatistics.getIntervalList();
-        double totalDistance = 0d;
+        Distance totalDistance = Distance.of(0);
         float totalTime = 0L;
         float totalGain = 0f;
         for (IntervalStatistics.Interval i : intervalList) {
-            totalDistance += i.getDistance_m();
-            totalTime += i.getDistance_m() / i.getSpeed_ms();
+            totalDistance = totalDistance.plus(i.getDistance());
+            totalTime += i.getDistance().toM() / i.getSpeed().toMPS();
             totalGain += i.getGain_m();
         }
 
         // then
-        assertEquals(trackStatistics.getTotalDistance().toM(), totalDistance, 0.01);
+        assertEquals(trackStatistics.getTotalDistance().toM(), totalDistance.toM(), 0.01);
         assertEquals(trackStatistics.getTotalTime().toMillis(), totalTime * UnitConversions.S_TO_MS, 1);
         assertEquals(intervalList.size(), (int) Math.ceil(trackStatistics.getTotalDistance().toM() / distanceInterval));
         assertEquals(totalGain, trackPoints.size() * TestDataUtil.ALTITUDE_GAIN, 0.1);
+
         for (int i = 0; i < intervalList.size() - 1; i++) {
-            assertEquals(intervalList.get(i).getDistance_m(), distanceInterval, 0.001);
-            totalDistance -= intervalList.get(i).getDistance_m();
+            assertEquals(intervalList.get(i).getDistance().toM(), distanceInterval, 0.001);
+            totalDistance = totalDistance.minus(intervalList.get(i).getDistance());
         }
-        assertEquals(intervalList.get(intervalList.size() - 1).getDistance_m(), totalDistance, 0.01);
+        assertEquals(intervalList.get(intervalList.size() - 1).getDistance().toM(), totalDistance.toM(), 0.01);
     }
 }
