@@ -22,32 +22,29 @@ package de.dennisguse.opentracks.util;
  */
 public class UnitConversions {
 
+    // Time //TODO Use Duration
     // multiplication factor to convert seconds to milliseconds
     public static final long S_TO_MS = 1000;
 
-    // Time
-    // TODO Use int instead of long.
-    public static final long ONE_SECOND_US = UnitConversions.S_TO_MS * 1000;
-    public static final long ONE_SECOND_MS = UnitConversions.S_TO_MS;
-
     // multiplication factor to convert milliseconds to seconds
+    @Deprecated
     public static final double MS_TO_S = 1d / S_TO_MS;
     // multiplication factor to convert minutes to seconds
+    @Deprecated
     public static final double MIN_TO_S = 60.0;
     // multiplication factor to convert seconds to minutes
+    @Deprecated
     public static final double S_TO_MIN = 1 / MIN_TO_S;
-    // multiplication factor to convert hours to minutes
-    public static final double HR_TO_MIN = 60.0;
     // multiplication factor to convert minutes to hours
-    public static final double MIN_TO_HR = 1 / HR_TO_MIN;
-    public static final double S_TO_HR = 1d / (S_TO_MIN * MIN_TO_HR);
+    @Deprecated
+    public static final double MIN_TO_HR = 1 / 60.0;
 
     // multiplication factor to convert kilometers to miles
     public static final double KM_TO_MI = 0.621371192;
 
     public static final double MM_TO_M = 0.001;
 
-    // Distance
+    // Distance //TODO Make private to Distance class!
     // multiplication factor to convert miles to feet
     private static final double MI_TO_FT = 5280.0;
     // multiplication factor to convert feet to miles

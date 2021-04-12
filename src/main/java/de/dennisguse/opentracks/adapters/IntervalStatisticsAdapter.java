@@ -13,7 +13,6 @@ import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 
@@ -48,15 +47,17 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
         IntervalStatistics.Interval interval = intervalList.get(actualPosition);
         viewHolder.itemView.setTag(actualPosition);
 
-        float sumDistance_m;
+        Distance sumDistance;
         if (isLast && actualPosition > 0) {
-            sumDistance_m = actualPosition * intervalList.get(actualPosition - 1).getDistance_m() + interval.getDistance_m();
+            sumDistance = intervalList.get(actualPosition - 1).getDistance()
+                    .multipliedBy(actualPosition)
+                    .plus(interval.getDistance());
         } else {
-            sumDistance_m = nextPosition * interval.getDistance_m();
+            sumDistance = interval.getDistance().multipliedBy(nextPosition);
         }
-        viewHolder.distance.setText(StringUtils.formatDistance(context, Distance.of(sumDistance_m), metricUnits));
+        viewHolder.distance.setText(StringUtils.formatDistance(context, sumDistance, metricUnits));
 
-        viewHolder.rate.setText(StringUtils.formatSpeed(context, Speed.of(interval.getSpeed_ms()), metricUnits, isReportSpeed));
+        viewHolder.rate.setText(StringUtils.formatSpeed(context, interval.getSpeed(), metricUnits, isReportSpeed));
 
         viewHolder.gain.setText(StringUtils.formatDistance(context, Distance.of(interval.getGain_m()), metricUnits));
         viewHolder.loss.setText(StringUtils.formatDistance(context, Distance.of(interval.getLoss_m()), metricUnits));
