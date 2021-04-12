@@ -123,7 +123,7 @@ public class TrackStatisticsUpdater {
         currentSegment.setStopTime(trackPoint.getTime());
         currentSegment.setTotalTime(Duration.between(currentSegment.getStartTime(), trackPoint.getTime()));
 
-        if (trackPoint.isSegmentStart()) {
+        if (trackPoint.getType() == TrackPoint.Type.SEGMENT_START_MANUAL) {
             reset(trackPoint);
             return;
         }
@@ -181,6 +181,11 @@ public class TrackStatisticsUpdater {
         // Update max speed
         if (trackPoint.hasSpeed() && lastTrackPoint.hasSpeed()) {
             updateSpeed(trackPoint, lastTrackPoint);
+        }
+
+        if (trackPoint.getType() == TrackPoint.Type.SEGMENT_START_AUTOMATIC) {
+            reset(trackPoint);
+            return;
         }
 
         lastTrackPoint = trackPoint;
