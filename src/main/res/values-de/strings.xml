@@ -217,8 +217,8 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="gps_location_access">\"Standortzugriff\"</string>
     <string name="gps_disabled">GPS ist nicht aktiviert. Tippen Sie hier, um zu %1$s wechseln. Drücken Sie \"Zurück\", um zurückzugehen.</string>
     <string name="gps_disabled_my_location">Der aktuelle Standort kann nicht ermittelt werden. Aktivieren Sie mehr Standortquellen unter \"%1$s\" und vergewissern Sie sich, dass der Himmel sichtbar ist. Bitte versuchen Sie es später erneut.</string>
-    <string name="gps_not_found">Das Gerät sendet kein GPS-Signal.</string>
-    <string name="gps_starting">GPS wird gestartet.</string>
+    <string name="gps_not_found">Das Gerät empfängt kein GPS-Signal</string>
+    <string name="gps_starting">GPS wird gestartet</string>
     <string name="gps_wait_for_better_signal">Warten auf besseres GPS-Signal</string>
     <string name="gps_wait_for_signal">Warten auf GPS-Signal</string>
     <!-- Image -->
@@ -584,9 +584,10 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="export_progress_summary_overwrite_msg">Streckenaufzeichnung überschrieben</string>
     <string name="export_progress_summary_skip_msg">Strecke übersprungen</string>
     <string name="export_progress_summary_errors_msg">Fehler</string>
-    <string name="generic_click_twice_cancel">Klicke nochmal zurück um abzubrechen.</string>
+    <string name="generic_click_twice_cancel">Klicke nochmal auf zurück um abzubrechen</string>
     <string name="import_error_list_dialog_title">Dateien wurden nicht importiert</string>
     <string name="voice_speed_lap">Rundengeschwindigkeit %1$s</string>
     <string name="voice_pace_lap">Rundenzeit %1$s</string>
     <string name="toast_message_instant_track_was_exported">Letzte Aufzeichnung exportiert</string>
+    <string name="export_track_already_exists_msg">Der Track %1$s existiert bereits im Zielverzeichnis.</string>
 </resources>
