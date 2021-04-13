@@ -590,4 +590,5 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="voice_pace_lap">Rundenzeit %1$s</string>
     <string name="toast_message_instant_track_was_exported">Letzte Aufzeichnung exportiert</string>
     <string name="export_track_already_exists_msg">Der Track %1$s existiert bereits im Zielverzeichnis.</string>
+    <string name="gps_fixed_and_ready">GPS-Position bestimmt und bereit</string>
 </resources>
