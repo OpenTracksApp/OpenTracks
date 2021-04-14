@@ -291,7 +291,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="sensor_state_cadence_value">%1$d tr/min</string>
     <string name="sensor_state_disconnected">Déconnecté</string>
     <string name="sensor_state_heart_rate">Fréquence cardiaque</string>
-    <string name="sensor_state_heart_rate_value">%1$d bpm</string>
+    <string name="sensor_state_heart_rate_value">%1$d ppm</string>
     <string name="sensor_state_power">Puissance</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_not_known">Capteur %1$s est inconnu. Veuillez vérifier les paramètres.</string>
@@ -358,7 +358,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="stats_average_speed">Vitesse moyenne</string>
     <string name="stats_altitude">Altitude</string>
     <string name="stats_fastest_pace">Allure la plus rapide</string>
-    <string name="stats_gain">Gain</string>
+    <string name="stats_gain">Gagner</string>
     <string name="stats_grade">Inclinaison</string>
     <string name="stats_latitude">Latitude</string>
     <string name="stats_longitude">Longitude</string>
@@ -537,4 +537,28 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <!-- Share image -->
     <string name="share_image_subject">J aimerais partager une image avec vous</string>
     <string name="share_image_body">Je pense que cette image pourrait vous intéresser.</string>
+    <string name="track_pace_notification">Vitesse : %1$s</string>
+    <string name="track_speed_notification">Vitesse : %1$s</string>
+    <string name="track_detail_intervals_tab">Intervalles</string>
+    <string name="interval_list_empty_message">Il n\'y a pas encore d\'intervalle</string>
+    <string name="aggregated_stats_empty_message">Enregistrez votre première piste pour voir les statistiques agrégées</string>
+    <string name="value_float_kilometer_hour">%1$.2f km/h</string>
+    <string name="value_float_mile_hour">%1$.2f mph</string>
+    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
+    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
+    <string name="voice_pace_lap">Temps au tour de %1$s</string>
+    <string name="voice_speed_lap">Vitesse du tour de %1$s</string>
+    <string name="toast_message_instant_track_was_exported">Dernière piste exportée</string>
+    <string name="settings_default_export_uri_title">Répertoire d\'exportation des pistes</string>
+    <string name="instant_export_enabled_title">Exportation instantanée après l\'entraînement</string>
+    <string name="stats_intervals">Intervalles</string>
+    <string name="stats_loss">Perte</string>
+    <string name="settings_prevent_reimport_tracks_title">Empêcher la réimportation de pistes</string>
+    <string name="settings_night_mode_option_night">Nuit</string>
+    <string name="settings_night_mode_option_day">Jour</string>
+    <string name="settings_night_mode_option_system">Système</string>
+    <string name="stats_split_interval">Intervalle partagé</string>
+    <string name="instant_export_enabled_summary">Exportation de la piste vers le stockage après la fin de l\'enregistrement</string>
+    <string name="hold_to_pause">Tenir pour faire une pause</string>
+    <string name="hold_to_stop">Maintenir pour arrêter</string>
 </resources>
