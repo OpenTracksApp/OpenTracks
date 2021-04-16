@@ -20,9 +20,13 @@ public class Distance {
         return of(distance_mile * UnitConversions.MI_TO_M);
     }
 
+    public static Distance ofKilometer(double distance_km) {
+        return of(distance_km * UnitConversions.KM_TO_M);
+    }
+
     public static Distance one(boolean metricUnit) {
         if (metricUnit) {
-            return Distance.of(1);
+            return Distance.ofKilometer(1);
         } else {
             return Distance.ofMile(1);
         }

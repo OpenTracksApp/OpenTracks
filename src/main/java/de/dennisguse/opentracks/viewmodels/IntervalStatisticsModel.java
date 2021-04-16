@@ -35,7 +35,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
                 }
 
                 intervalsLiveData = new MutableLiveData<>();
-                distanceInterval = interval.getValue();
+                distanceInterval = interval.getDistance(metricUnits);
                 loadIntervalStatistics();
             }
             return intervalsLiveData;
@@ -73,7 +73,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
                 interval = IntervalOption.OPTION_1;
             }
 
-            distanceInterval = interval.getValue();
+            distanceInterval = interval.getDistance(metricUnits);
             loadIntervalStatistics();
         }
     }
@@ -91,19 +91,21 @@ public class IntervalStatisticsModel extends AndroidViewModel {
         OPTION_20(20),
         OPTION_50(50);
 
-        private final Distance value;
+        private final int multiplier;
 
-        IntervalOption(int value) {
-            this.value = Distance.of(value);
+        IntervalOption(int multiplier) {
+            this.multiplier = multiplier;
         }
 
-        public Distance getValue() {
-            return value;
+        public Distance getDistance(boolean metricUnits) {
+            return Distance
+                    .one(metricUnits)
+                    .multipliedBy(multiplier);
         }
 
         @Override
         public String toString() {
-            return "" + (int) value.toM(); //TODO Somehow IntervalsFragment relies on a parsable Integer.
+            return "" + multiplier; //TODO Somehow IntervalsFragment relies on a parsable Integer.
         }
     }
 }
