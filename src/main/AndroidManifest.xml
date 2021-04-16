@@ -351,4 +351,10 @@ limitations under the License.
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.TTS_SERVICE" />
+        </intent>
+    </queries>
 </manifest>
