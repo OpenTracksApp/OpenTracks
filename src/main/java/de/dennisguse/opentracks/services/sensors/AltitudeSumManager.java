@@ -40,7 +40,7 @@ public class AltitudeSumManager implements SensorEventListener {
             Log.w(TAG, "No pressure sensor available.");
             isConnected = false;
         } else {
-            isConnected = sensorManager.registerListener(this, pressureSensor, (int) SAMPLING_RATE.toNanos());
+            isConnected = sensorManager.registerListener(this, pressureSensor, SensorManager.SENSOR_DELAY_FASTEST);
         }
 
         lastAcceptedPressureValue_hPa = Float.NaN;
