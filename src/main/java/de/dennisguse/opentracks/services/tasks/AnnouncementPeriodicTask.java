@@ -146,9 +146,9 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
             @Override
             public void onTrackRecordingId(Track.Id trackId) {
                 recordingTrackId = trackId;
+                announce(trackRecordingService.getTrackStatistics());
             }
         });
-        announce(trackRecordingService.getTrackStatistics());
     }
 
     /**
@@ -181,7 +181,11 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         }
 
         Track track = contentProviderUtils.getTrack(recordingTrackId);
-        String category = track != null ? track.getCategory() : "";
+        if (track == null) {
+            Log.i(TAG, "It doesn't exists a track with trackid = " + recordingTrackId);
+            return;
+        }
+        String category = track.getCategory();
 
         //TODO Querying all TrackPoints all the time is inefficient; use TrackDataHub or something else.
         TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null);
