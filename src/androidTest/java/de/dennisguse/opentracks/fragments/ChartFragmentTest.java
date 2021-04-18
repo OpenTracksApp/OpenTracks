@@ -39,6 +39,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Tests {@link ChartFragment}.
@@ -83,9 +84,9 @@ public class ChartFragmentTest {
         ChartPoint point = chartFragment.createPendingPoint(trackPoint);
 
         // then
-        assertEquals(Float.NaN, point.getHeartRate(), 0.01);
-        assertEquals(Float.NaN, point.getCadence(), 0.01);
-        assertEquals(Float.NaN, point.getPower(), 0.01);
+        assertNull(point.getHeartRate());
+        assertNull(point.getCadence());
+        assertNull(point.getPower());
     }
 
     /**

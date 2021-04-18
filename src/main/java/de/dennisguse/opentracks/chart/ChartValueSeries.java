@@ -132,10 +132,10 @@ abstract class ChartValueSeries {
         }
     }
 
-    abstract double extractDataFromChartPoint(@NonNull ChartPoint chartPoint);
+    abstract Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint);
 
     boolean isChartPointValid(@NonNull ChartPoint chartPoint) {
-        return !Double.isNaN(extractDataFromChartPoint(chartPoint));
+        return extractDataFromChartPoint(chartPoint) != null;
     }
 
     protected abstract boolean drawIfChartPointHasNoData();

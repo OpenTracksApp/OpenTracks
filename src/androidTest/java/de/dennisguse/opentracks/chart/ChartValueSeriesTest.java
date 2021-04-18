@@ -52,7 +52,7 @@ public class ChartValueSeriesTest {
                 15,
                 18) {
             @Override
-            double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
+            Double extractDataFromChartPoint(@NonNull ChartPoint chartPoint) {
                 return chartPoint.getAltitude();
             }
 

@@ -14,11 +14,11 @@ public class ChartPoint {
 
     //Y-axis
     private double altitude;
-    private double speed;
-    private double pace;
-    private double heartRate = Double.NaN;
-    private double cadence = Double.NaN;
-    private double power = Double.NaN;
+    private Double speed;
+    private Double pace;
+    private Double heartRate;
+    private Double cadence;
+    private Double power;
 
     @VisibleForTesting
     ChartPoint(double altitude) {
@@ -43,13 +43,13 @@ public class ChartPoint {
         pace = trackStatisticsUpdater.getSmoothedSpeed().toPace(metricUnits).toMillis() * UnitConversions.MS_TO_S * UnitConversions.S_TO_MIN;
         if (trackPoint != null) {
             if (trackPoint.hasHeartRate()) {
-                heartRate = trackPoint.getHeartRate_bpm();
+                heartRate = (double) trackPoint.getHeartRate_bpm();
             }
             if (trackPoint.hasCyclingCadence()) {
-                cadence = trackPoint.getCyclingCadence_rpm();
+                cadence = (double) trackPoint.getCyclingCadence_rpm();
             }
             if (trackPoint.hasPower()) {
-                power = trackPoint.getPower();
+                power = (double) trackPoint.getPower();
             }
         }
     }
@@ -58,39 +58,27 @@ public class ChartPoint {
         return timeOrDistance;
     }
 
-    public double getAltitude() {
+    public Double getAltitude() {
         return altitude;
     }
 
-    public double getSpeed() {
+    public Double getSpeed() {
         return speed;
     }
 
-    public double getPace() {
+    public Double getPace() {
         return pace;
     }
 
-    public boolean hasHeartRate() {
-        return Double.isNaN(heartRate);
-    }
-
-    public double getHeartRate() {
+    public Double getHeartRate() {
         return heartRate;
     }
 
-    public boolean hasCadence() {
-        return Double.isNaN(cadence);
-    }
-
-    public double getCadence() {
+    public Double getCadence() {
         return cadence;
     }
 
-    public boolean hasPower() {
-        return Double.isNaN(power);
-    }
-
-    public double getPower() {
+    public Double getPower() {
         return power;
     }
 }
