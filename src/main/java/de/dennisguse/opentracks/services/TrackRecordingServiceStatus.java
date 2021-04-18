@@ -19,13 +19,17 @@ public class TrackRecordingServiceStatus {
 
     private final List<Listener> listeners = new ArrayList<>();
 
-    public void addListener(@NonNull Listener listener) {
+    void addListener(@NonNull Listener listener) {
         if (this.listeners.contains(listener)) {
             return;
         }
         this.listeners.add(listener);
         listener.onTrackRecordingId(recordingTrackId);
         listener.onTrackRecordingPaused(recordingTrackPaused);
+    }
+
+    void removeListener(@NonNull Listener listener) {
+        this.listeners.remove(listener);
     }
 
     public boolean getRecordingTrackPaused() {

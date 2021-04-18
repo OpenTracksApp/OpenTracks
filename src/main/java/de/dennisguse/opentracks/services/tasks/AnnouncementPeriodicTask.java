@@ -24,6 +24,7 @@ import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.content.data.Distance;
@@ -32,7 +33,6 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.services.TrackRecordingService;
-import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.AnnouncementUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -57,8 +57,6 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     private final AudioManager audioManager;
 
     private final ContentProviderUtils contentProviderUtils;
-
-    private Track.Id recordingTrackId;
 
     private final AudioManager.OnAudioFocusChangeListener audioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
@@ -142,13 +140,8 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
             Log.e(TAG, "TrackRecordingService is null.");
             return;
         }
-        trackRecordingService.addListener(new TrackRecordingServiceStatus.Listener() {
-            @Override
-            public void onTrackRecordingId(Track.Id trackId) {
-                recordingTrackId = trackId;
-                announce(trackRecordingService.getTrackStatistics());
-            }
-        });
+
+        announce(trackRecordingService.getRecordingTrackId(), trackRecordingService.getTrackStatistics());
     }
 
     /**
@@ -156,7 +149,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
      *
      * @param trackStatistics the track statistics
      */
-    private void announce(TrackStatistics trackStatistics) {
+    private void announce(Track.Id trackId, TrackStatistics trackStatistics) {
         if (trackStatistics == null) {
             Log.e(TAG, "TrackStatistics is null.");
             return;
@@ -175,14 +168,15 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
             }
         }
 
-        if (audioManager.getMode() == AudioManager.MODE_IN_CALL || audioManager.getMode() == AudioManager.MODE_IN_COMMUNICATION) {
+        if (Arrays.asList(AudioManager.MODE_IN_CALL, AudioManager.MODE_IN_COMMUNICATION)
+                .contains(audioManager.getMode())) {
             Log.i(TAG, "Speech is not allowed at this time.");
             return;
         }
 
-        Track track = contentProviderUtils.getTrack(recordingTrackId);
+        Track track = contentProviderUtils.getTrack(trackId);
         if (track == null) {
-            Log.i(TAG, "It doesn't exists a track with trackid = " + recordingTrackId);
+            Log.i(TAG, "It doesn't exists a track with trackid = " + track);
             return;
         }
         String category = track.getCategory();
