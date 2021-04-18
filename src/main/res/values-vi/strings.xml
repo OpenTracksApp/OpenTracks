@@ -462,4 +462,8 @@ limitations under the License.
     <string name="waypoint_type_water_fountain">đài phun nước</string>
     <string name="waypoint_type_waypoint">điểm tham chiếu</string>
     <string name="about_preference_title">Về OpenTracks</string>
+    <string name="about_version_name">Tên phiên bản: %1$s</string>
+    <string name="about_version_code">Mã phiên bản: %1$d</string>
+    <string name="about_libraries">Thư viện</string>
+    <string name="help_feature_title">OpenTracks có những tính năng sau đây:</string>
 </resources>
