@@ -192,6 +192,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         return serviceStatus.getRecordingTrackPaused();
     }
 
+    public Track.Id getRecordingTrackId() {
+        return serviceStatus.getRecordingTrackId();
+    }
+
     public TrackStatistics getTrackStatistics() {
         if (trackStatisticsUpdater == null) {
             return null;
@@ -567,6 +571,12 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     public void addListener(@NonNull TrackRecordingServiceStatus.Listener listener) {
         serviceStatus.addListener(listener);
+    }
+
+    //TODO Check that this is used everywhere, where addListener is called!
+    //Otherwise, we keep objects in referenced and waste memory until this service instance is terminated.
+    public void removeListener(@NonNull TrackRecordingServiceStatus.Listener listener) {
+        serviceStatus.removeListener(listener);
     }
 
     /**

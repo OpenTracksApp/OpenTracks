@@ -106,7 +106,7 @@ public class TrackStatisticsUpdater {
      */
     public void addTrackPoint(TrackPoint trackPoint, Distance minGPSDistance) {
         internalAddTrackPoint(trackPoint, minGPSDistance);
-        Log.d(TAG, this.toString());
+        Log.v(TAG, this.toString());
     }
 
     private void internalAddTrackPoint(TrackPoint trackPoint, Distance minGPSDistance) {
