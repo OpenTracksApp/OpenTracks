@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">avião</string>
     <string name="activity_type_atv">quadriciclos</string>
@@ -30,7 +30,7 @@ limitations under the License.
     <string name="activity_type_driving_bus">ônibus</string>
     <string name="activity_type_driving_car">carro</string>
     <string name="activity_type_ferry">balsa</string>
-    <string name="activity_type_frisbee">frisbee</string>
+    <string name="activity_type_frisbee">frízebee</string>
     <string name="activity_type_gliding">asa-delta</string>
     <string name="activity_type_hang_gliding">voo livre</string>
     <string name="activity_type_helicopter">helicóptero</string>
@@ -75,7 +75,7 @@ limitations under the License.
     <string name="activity_type_trail_hiking">caminhada em trilha</string>
     <string name="activity_type_trail_running">corrida em trilha</string>
     <string name="activity_type_train">treino</string>
-    <string name="activity_type_ultimate_frisbee">ultimate frisbee</string>
+    <string name="activity_type_ultimate_frisbee">frízebee final</string>
     <string name="activity_type_unknown">desconhecida</string>
     <string name="activity_type_wakeboarding">esqui aquático</string>
     <string name="activity_type_walking">caminhada</string>
@@ -173,7 +173,7 @@ limitations under the License.
     <string name="image_stop">Parar</string>
     <string name="image_track">Rota</string>
     <!-- Import -->
-    <string name="import_error">Importação: %1$d de %2$s de %3$s</string>
+    <string name="import_error">importados %1$d de %2$s desde %3$s</string>
     <string name="import_no_directory">%1$s não existe</string>
     <string name="import_no_file">Nenhum arquivo para importar. Conecte o dispositivo ao computador e coloque os
     arquivos para importação em %1$s.</string>
@@ -185,7 +185,7 @@ limitations under the License.
     <!-- Marker -->
     <string name="marker_add_error">Não foi possível inserir um marcador. Não há sinal de GPS. Tente novamente.</string>
     <string name="marker_add_success">Um marcador foi inserido</string>
-    <string name="marker_add_canceled">Cancelado. Nenhum marcador foi adicionado.</string>
+    <string name="marker_add_canceled">Cancelado. Nenhum marcador foi adicionado</string>
     <string name="marker_delete_all_confirm_message">Todos os marcadores desta rota serão excluídos permanentemente do dispositivo</string>
     <string name="marker_delete_one_confirm_message">O marcador será excluído permanentemente do dispositivo</string>
     <string name="marker_delete_one_confirm_title">Excluir marcador?</string>
@@ -255,8 +255,8 @@ limitations under the License.
     <string name="settings_recording_location_frequency_summary">%1$s entre os locais gravados</string>
     <string name="settings_recording_max_recording_distance_summary">Um novo segmento será criado se a distância entre os dois locais for maior que %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Distância máxima</string>
-    <string name="settings_recording_min_recording_distance_title">Interv. distância grav.</string>
-    <string name="settings_recording_min_recording_interval_title">Interv. tempo de grav.</string>
+    <string name="settings_recording_min_recording_distance_title">Interv. distância grav</string>
+    <string name="settings_recording_min_recording_interval_title">Interv. tempo de grav</string>
     <string name="settings_recording_min_required_accuracy_summary">O local será ignorado se a precisão for menor que %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Precisão do GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Data (ISO 8601)</string>
@@ -269,7 +269,7 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Redefinir agora?</string>
     <string name="settings_reset_done">Todas as configurações foram revertidas para os valores padrão</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Sensor</string>
+    <string name="settings_sensor">Sensores</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Sensor Bluetooth</string>
     <!-- Settings Stats -->
@@ -278,11 +278,11 @@ limitations under the License.
     <string name="settings_stats_units_imperial">Imperial (milhas, pés)</string>
     <string name="settings_stats_units_metric">Métrica (km, m)</string>
     <string name="settings_stats_units_title">Unidades preferenciais</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file">Compartilhar arquivo da trilha</string>
-    <string name="share_track_share_file_body">Achei que você pudesse se interessar por essa trilha.\n\nPara visualizá-la, use o Google Earth ou outro
-    software de mapas.\n\n%1$s</string>
+    <string name="share_track_share_file_body">Achei que você pudesse se interessar por essa trilha.
+\n
+\n%1$s</string>
     <string name="share_track_subject">Eu gostaria de compartilhar uma trilha com você</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Ritmo médio de movimentação</string>
@@ -296,7 +296,7 @@ limitations under the License.
     <string name="stats_latitude">Latitude</string>
     <string name="stats_longitude">Longitude</string>
     <string name="stats_max">Máx.</string>
-    <string name="stats_max_speed">Velocidade máx.</string>
+    <string name="stats_max_speed">Velocidade máx</string>
     <string name="stats_min">Mín.</string>
     <string name="stats_moving_time">Tempo decorrido</string>
     <string name="stats_pace">Ritmo</string>
@@ -464,4 +464,30 @@ limitations under the License.
     <string name="waypoint_type_waterfall">Cascata</string>
     <string name="waypoint_type_water_fountain">fonte de água</string>
     <string name="waypoint_type_waypoint">ponto de referência</string>
+    <string name="help_track_map_title">Como mostrar uma pista num mapa\?</string>
+    <string name="help_feature_content">* criar pistas GPS
+\n * utilizar um sensor do ritmo cardíaco (apenas Bluetooth LE)
+\n * anúncios de voz (por tempo ou distância)
+\n * criar marcadores (incl. imagens)
+\n * funciona completamente offline
+\n * mostrar pistas num mapa (ver abaixo)</string>
+    <string name="help_track_map_content"> Utilize o pequeno ícone do mapa.
+\n a) (actualizações ao vivo) Instalar <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Fornece mapas online ou offline através de <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n Na verdade, o OSMDashboard é uma aplicação separada que só pode aceder (temporariamente) aos dados da(s) faixa(s) que vão ser mostrados.
+\n b) Através de uma aplicação de mapa normal (por exemplo, <a href="http://osmand.net/">OsmAnd</a> e <a href="https://maps.me/">MAPS.ME</a>). Estas aplicações precisam de suportar o formato de ficheiro KMZ (apenas locais e timestamps). De facto, uma aplicação precisa de suportar <i>ACTION_VIEW</i> com MIME <i>application/vnd.google-earth.kmz</i>. </string>
+    <string name="help_gps_troubleshooting_content"> O que se pode fazer:
+\n a) verificar se o GPS está activado,
+\n b) melhorar a recepção GPS (por exemplo, ir para o exterior),
+\n c) verificar com <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> app, e
+\n d) desactivar a poupança de energia.
+\n
+\n Se tudo isto não ajudar, por favor, informe um erro. </string>
+    <string name="help_support_content"> Pode:
+\n a) espalhar a palavra sobre OpenTracks,
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">propose features</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">reportar bugs</a>,
+\n d) ajuda no desenvolvimento de software,
+\n e) comprar em <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\n f) doar, e
+\n g) fazer o que achar que ajuda a OpenTracks. </string>
 </resources>
