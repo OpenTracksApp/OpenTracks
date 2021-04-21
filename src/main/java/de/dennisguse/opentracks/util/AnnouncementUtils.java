@@ -43,7 +43,7 @@ public class AnnouncementUtils {
             int paceId = isMetricUnits ? R.string.voice_pace_per_kilometer : R.string.voice_pace_per_mile;
             rate = context.getString(paceId, getAnnounceTime(context, time));
 
-            Duration currentTime = currentDistancePerTime.toPace(isMetricUnits);
+            Duration currentTime = currentDistancePerTime != null ? currentDistancePerTime.toPace(isMetricUnits) : Duration.ofMillis(0);
             currentRate = context.getString(paceId, getAnnounceTime(context, currentTime));
             currentRateMsg = context.getString(R.string.voice_pace_lap, currentRate);
         }
