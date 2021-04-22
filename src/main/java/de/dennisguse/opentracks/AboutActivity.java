@@ -1,7 +1,6 @@
 package de.dennisguse.opentracks;
 
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -31,10 +30,5 @@ public class AboutActivity extends AbstractActivity {
     protected View getRootView() {
         viewBinding = AboutBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return false;
     }
 }
