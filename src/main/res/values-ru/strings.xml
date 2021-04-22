@@ -157,9 +157,9 @@ limitations under the License.
     <string name="gps_disabled">GPS-модуль не включен. Нажмите здесь, чтобы открыть \"%1$s\". Нажмите \"Назад\", чтобы вернуться.</string>
     <string name="gps_disabled_my_location">Не удалось определить местоположение. Добавьте другие источники передачи данных в настройках (%1$s) и убедитесь, что приему сигнала ничего не препятствует. Затем повторите попытку.</string>
     <string name="gps_not_found">GPS-модуль не найден</string>
-    <string name="gps_starting">Включение GPS-модуля…</string>
-    <string name="gps_wait_for_better_signal">Поиск спутников GPS…</string>
-    <string name="gps_wait_for_signal">Ожидание сигнала GPS…</string>
+    <string name="gps_starting">Включение GPS-модуля</string>
+    <string name="gps_wait_for_better_signal">Поиск спутников GPS</string>
+    <string name="gps_wait_for_signal">Ожидание сигнала GPS</string>
     <!-- Image -->
     <string name="image_application">Приложение</string>
     <string name="image_arrow">Стрелка</string>
@@ -172,7 +172,7 @@ limitations under the License.
     <string name="image_stop">Стоп</string>
     <string name="image_track">Трек</string>
     <!-- Import -->
-    <string name="import_error">Импортировано: %1$d из %2$s (из %3$s)</string>
+    <string name="import_error">Импортировано: %1$d из %2$s (от %3$s)</string>
     <string name="import_no_directory">%1$s не существует</string>
     <string name="import_no_file">Нет файлов для импорта. Подсоедините устройство к компьютеру и укажите путь к файлам, которые нужно импортировать в %1$s.</string>
     <string name="import_no_file_title">Импорт файлов</string>
@@ -278,7 +278,9 @@ limitations under the License.
     <string name="settings_stats_units_title">Система измерений</string>
     <!-- Share Track -->
     <string name="share_track_share_file">Опубликовать трек</string>
-    <string name="share_track_share_file_body">Я думаю этот маршрут покажется вам интересным.\n\nИспользуйте Google Планета Земля или другое картографическое ПО для просмотра трека.\n\n%1$s</string>
+    <string name="share_track_share_file_body">Я думаю этот маршрут покажется вам интересным.
+\n
+\n%1$s</string>
     <string name="share_track_subject">Хочу поделиться треком</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Средняя длина шага</string>
@@ -341,7 +343,7 @@ limitations under the License.
     <string name="value_float_feet">%1$.2f фт</string>
     <string name="value_float_kilometer">%1$.2f км</string>
     <string name="value_float_meter">%1$.2f м</string>
-    <string name="value_float_mile">%1$.2f мил.</string>
+    <string name="value_float_mile">%1$.2f мил</string>
     <string name="value_float_mile_poor_gps">%1$.1f мил. (слабый сигнал)</string>
     <string name="value_integer_feet">%1$d фт</string>
     <string name="value_integer_feet_excellent_gps">%1$d фт (отличный сигнал)</string>
@@ -352,11 +354,11 @@ limitations under the License.
     <string name="value_integer_meter_excellent_gps">%1$d м (отличный сигнал)</string>
     <string name="value_integer_meter_poor_gps">%1$d м (слабый сигнал)</string>
     <string name="value_integer_meter_recommended">%1$d м (рекомендуется)</string>
-    <string name="value_integer_mile">%1$d мил.</string>
+    <string name="value_integer_mile">%1$d мил</string>
     <string name="value_integer_mile_hour">%1$d миль/ч</string>
-    <string name="value_integer_minute">%1$d мин.</string>
+    <string name="value_integer_minute">%1$d мин</string>
     <string name="value_integer_percent">%1$d %%</string>
-    <string name="value_integer_second">%1$d сек.</string>
+    <string name="value_integer_second">%1$d сек</string>
     <string name="value_none">Нет</string>
     <string name="value_off">Выкл.</string>
     <string name="value_smallest">Мин. время</string>
@@ -394,7 +396,7 @@ limitations under the License.
     <string name="voice_speed_miles_per_hour_other">%1$.1f мили в час</string>
     <string name="voice_speed_miles_per_hour_two">2 мили в час</string>
     <string name="voice_speed_miles_per_hour_zero">0 миль в час</string>
-    <string name="voice_template">Длина треков: %1$s за %2$s (%3$s).</string>
+    <string name="voice_template">Длина треков: %1$s за %2$s (%3$s)</string>
     <string name="voice_total_distance_kilometers_few">Общая длина: %1$.2f километра</string>
     <string name="voice_total_distance_kilometers_many">Общая длина: %1$.2f километров</string>
     <string name="voice_total_distance_kilometers_one">Общая длина: 1 километр</string>
@@ -486,4 +488,5 @@ limitations under the License.
     <string name="help_recording_title">Как OpenTracks записывает данные\?</string>
     <string name="help_track_export_content"> Трек может быть экспортирован из \"Настроек\" в виде KMZ, KML или GPX. KMZ/KML все данные; GPX только местоположения. Поделиться треком можно через значок <i>поделиться</i> предоставляется как KMZ. </string>
     <string name="help_recording_content">OpenTracks использует датчик GPS устройства для непрерывной записи местоположения. Если устройство GPS сообщает неточные данные (например, местоположение, скорость, высоту), OpenTracks ничего не может с этим поделать.</string>
+    <string name="export_progress_summary_new_msg">Новые экспортируемые треки</string>
 </resources>
