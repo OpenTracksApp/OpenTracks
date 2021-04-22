@@ -600,7 +600,7 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
     <string name="sensor_state_cadence_max">Cadencia máxima</string>
     <string name="sensor_state_cadence_avg">Cadencia media</string>
-    <string name="value_float_kilometer_hour">%1$.2f kp/h</string>
+    <string name="value_float_kilometer_hour">%1$.2f km/h</string>
     <string name="export_progress_summary_overwrite_msg">Pistas sobrescritas</string>
     <string name="export_progress_summary_skip_msg">Pistas omitidas</string>
     <string name="export_progress_summary_errors_msg">Errores</string>
