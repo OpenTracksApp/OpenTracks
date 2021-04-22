@@ -13,7 +13,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
---><resources>
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="about_preference_title">À propos d\'OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> est une application de suivi sportif qui respecte totalement votre vie privée.</string>
     <string name="about_url">Page web du projet : <a href="%1$s">%1$s</a></string>
@@ -604,7 +605,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="import_progress_summary_exists_msg">Il existe déjà</string>
     <string name="import_progress_summary_errors_msg">Erreur</string>
     <plurals name="generic_completed_with_errors">
-        <item quantity="one">Terminé avec une erreur</item>
+        <item quantity="one" tools:ignore="ImpliedQuantity">Terminé avec une erreur</item>
         <item quantity="other">Terminé avec des erreurs %1$d</item>
     </plurals>
     <string name="settings_default_trackfileformat">Format de fichier d\'exportation / partage</string>
