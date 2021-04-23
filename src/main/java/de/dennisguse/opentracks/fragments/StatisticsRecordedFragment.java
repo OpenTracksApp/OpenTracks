@@ -18,6 +18,7 @@ package de.dennisguse.opentracks.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +54,8 @@ import de.dennisguse.opentracks.viewmodels.SensorDataModel;
  * @author Rodrigo Damazio
  */
 public class StatisticsRecordedFragment extends Fragment {
+
+    private static final String TAG = StatisticsRecordedFragment.class.getSimpleName();
 
     private static final String TRACK_ID_KEY = "trackId";
 
@@ -154,13 +157,19 @@ public class StatisticsRecordedFragment extends Fragment {
             getActivity().runOnUiThread(() -> {
                 if (isResumed()) {
                     Track track = contentProviderUtils.getTrack(trackId);
-                    sensorStatistics = contentProviderUtils.getSensorStats(trackId);
-
-                    if ((this.track == null && track != null) || (this.track != null && track != null && !this.track.getCategory().equals(track.getCategory()))) {
-                        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, getString(R.string.stats_rate_key));
+                    if (track == null) {
+                        Log.e(TAG, "track cannot be null");
+                        getActivity().finish();
+                        return;
                     }
 
+                    sensorStatistics = contentProviderUtils.getSensorStats(trackId);
+
+                    boolean prefsChanged = this.track == null || (!this.track.getCategory().equals(track.getCategory()));
                     this.track = track;
+                    if (prefsChanged) {
+                        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, getString(R.string.stats_rate_key));
+                    }
 
                     loadTrackDescription(track);
                     updateUI();
