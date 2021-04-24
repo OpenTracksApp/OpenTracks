@@ -53,6 +53,7 @@ import de.dennisguse.opentracks.util.IntentUtils;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
+//TODO Should not use TrackRecordingServiceConnection; only used to determine if there is NO current recording, to enable resume functionality.
 public class TrackRecordedActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackActivityDataHubInterface, TrackRecordingServiceStatus.Listener {
 
     private static final String TAG = TrackRecordedActivity.class.getSimpleName();
@@ -299,7 +300,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
         }
     }
 
-    public void startPostponedEnterTransitionWith(View viewIcon, View viewName) {
+    public void startPostponedEnterTransitionWith(View viewIcon) {
         ViewCompat.setTransitionName(viewIcon, TrackRecordedActivity.VIEW_TRACK_ICON);
         startPostponedEnterTransition();
     }

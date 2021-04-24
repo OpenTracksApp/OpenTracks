@@ -38,9 +38,6 @@ import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
-import de.dennisguse.opentracks.services.TrackRecordingService;
-import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 
 /**
  * Track data hub.
@@ -50,7 +47,8 @@ import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
  *
  * @author Rodrigo Damazio
  */
-public class TrackDataHub implements TrackRecordingServiceStatus.Listener {
+//TODO register contentobserver only for exact URL (incl. trackId) to not filter here.
+public class TrackDataHub {
 
     /**
      * Target number of track points displayed by the diagrams (recommended).
@@ -75,11 +73,12 @@ public class TrackDataHub implements TrackRecordingServiceStatus.Listener {
     private HandlerThread handlerThread;
     private Handler handler;
 
-    private TrackRecordingServiceConnection trackRecordingServiceConnection;
-
-    // Preference values
     private Track.Id selectedTrackId;
+    @Deprecated
+    //TODO Is there a better way to handle this? e.g., passing information rather from Activity than from Activity to TrackDataHub
     private Track.Id recordingTrackId;
+    @Deprecated
+    //TODO Is there a better way to handle this? e.g., passing information rather from Activity than from Activity to TrackDataHub
     private boolean recordingTrackPaused;
 
     // Track points sampling state
@@ -91,13 +90,6 @@ public class TrackDataHub implements TrackRecordingServiceStatus.Listener {
     private ContentObserver tracksTableObserver;
     private ContentObserver markersTableObserver;
     private ContentObserver trackPointsTableObserver;
-
-    private final Runnable bindCallback = () -> {
-        TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
-        if (service != null) {
-            service.addListener(TrackDataHub.this);
-        }
-    };
 
     public TrackDataHub(Context context) {
         this(context, new TrackDataManager(), new ContentProviderUtils(context), TARGET_DISPLAYED_TRACKPOINTS);
@@ -148,9 +140,6 @@ public class TrackDataHub implements TrackRecordingServiceStatus.Listener {
         };
         contentResolver.registerContentObserver(TrackPointsColumns.CONTENT_URI_BY_ID, false, trackPointsTableObserver);
 
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindCallback);
-        trackRecordingServiceConnection.bind(context);
-
         handler.post(() -> {
             if (started) {
                 loadDataForAll();
@@ -177,8 +166,6 @@ public class TrackDataHub implements TrackRecordingServiceStatus.Listener {
             handlerThread = null;
         }
         handler = null;
-
-        trackRecordingServiceConnection.unbind(context);
     }
 
     public void loadTrack(final @NonNull Track.Id trackId) {
@@ -425,13 +412,11 @@ public class TrackDataHub implements TrackRecordingServiceStatus.Listener {
         lastSeenTrackPointId = null;
     }
 
-    @Override
-    public void onTrackRecordingPaused(boolean isPaused) {
-        recordingTrackPaused = isPaused;
+    public void setRecordingTrackId(Track.Id recordingTrackId) {
+        this.recordingTrackId = recordingTrackId;
     }
 
-    @Override
-    public void onTrackRecordingId(Track.Id trackId) {
-        recordingTrackId = trackId;
+    public void setRecordingTrackPaused(boolean recordingTrackPaused) {
+        this.recordingTrackPaused = recordingTrackPaused;
     }
 }

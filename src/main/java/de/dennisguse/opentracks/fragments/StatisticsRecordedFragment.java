@@ -175,7 +175,7 @@ public class StatisticsRecordedFragment extends Fragment {
                     updateUI();
                     updateSensorUI();
 
-                    ((TrackRecordedActivity) getActivity()).startPostponedEnterTransitionWith(viewBinding.statsActivityTypeIcon, viewBinding.statsNameValue);
+                    ((TrackRecordedActivity) getActivity()).startPostponedEnterTransitionWith(viewBinding.statsActivityTypeIcon);
                 }
             });
         }

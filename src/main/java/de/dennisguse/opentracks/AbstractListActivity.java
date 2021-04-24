@@ -29,7 +29,7 @@ import de.dennisguse.opentracks.util.IntentUtils;
 
 /**
  * An abstract class for the following common tasks across
- * {@link TrackListActivity}, {@link TrackRecordedActivity}, and {@link TrackRecordedActivity}:
+ * {@link TrackListActivity} and {@link TrackRecordedActivity}:
  * <p>
  * - share track <br>
  * - delete tracks <br>
