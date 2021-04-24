@@ -489,4 +489,5 @@ limitations under the License.
     <string name="help_track_export_content"> Трек может быть экспортирован из \"Настроек\" в виде KMZ, KML или GPX. KMZ/KML все данные; GPX только местоположения. Поделиться треком можно через значок <i>поделиться</i> предоставляется как KMZ. </string>
     <string name="help_recording_content">OpenTracks использует датчик GPS устройства для непрерывной записи местоположения. Если устройство GPS сообщает неточные данные (например, местоположение, скорость, высоту), OpenTracks ничего не может с этим поделать.</string>
     <string name="export_progress_summary_new_msg">Новые экспортируемые треки</string>
+    <string name="help_data_storage_title">Как OpenTracks записывает данные с датчиков\?</string>
 </resources>
