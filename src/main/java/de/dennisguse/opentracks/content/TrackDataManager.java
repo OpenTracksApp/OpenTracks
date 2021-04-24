@@ -41,10 +41,10 @@ class TrackDataManager {
     }
 
     void unregisterTrackDataListener(TrackDataListener trackDataListener) {
-        dataListenerTracks.add(trackDataListener);
-        dataListenerMarkers.add(trackDataListener);
-        dataListenerTrackPoints_SampledIn.add(trackDataListener);
-        dataListenerTrackPoints_SampledOut.add(trackDataListener);
+        dataListenerTracks.remove(trackDataListener);
+        dataListenerMarkers.remove(trackDataListener);
+        dataListenerTrackPoints_SampledIn.remove(trackDataListener);
+        dataListenerTrackPoints_SampledOut.remove(trackDataListener);
     }
 
     boolean hasListeners() {
