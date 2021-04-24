@@ -87,6 +87,8 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
                 // A recording track is on.
                 trackDataHub.loadTrack(trackId);
+                trackDataHub.setRecordingTrackId(trackId);
+
                 trackController.update(true, false);
                 trackController.onResume(true, recordingTrackPaused);
             }
@@ -404,17 +406,20 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     public void onTrackRecordingPaused(boolean isPaused) {
         if (recordingTrackPaused != isPaused) {
             trackController.update(true, isPaused);
+            trackDataHub.setRecordingTrackPaused(isPaused);
         }
         recordingTrackPaused = isPaused;
         setLockscreenPolicy();
         setScreenOnPolicy();
     }
 
+    //TODO Why should this be interesting? This activity is only used for currently recording tracks.
     @Override
     public void onTrackRecordingId(Track.Id newTrackId) {
         if (newTrackId != null && !newTrackId.equals(trackId)) {
             trackId = newTrackId;
             trackController.update(true, recordingTrackPaused);
+            trackDataHub.setRecordingTrackId(newTrackId);
         }
     }
 }
