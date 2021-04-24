@@ -256,7 +256,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      */
     public Track.Id startNewTrack() {
         if (isRecording()) {
-            Log.d(TAG, "Ignore startNewTrack. Already recording.");
+            Log.w(TAG, "Ignore startNewTrack. Already recording.");
             return null;
         }
 
@@ -316,7 +316,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void resumeCurrentTrack() {
         if (!isRecording() || !isPaused()) {
-            Log.d(TAG, "Ignore resumeCurrentTrack. Not recording or not paused.");
+            Log.w(TAG, "Ignore resumeCurrentTrack. Not recording or not paused.");
             return;
         }
 
@@ -365,10 +365,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-    public Track.Id endCurrentTrack() {
+    public void endCurrentTrack() {
         if (!isRecording()) {
-            Log.d(TAG, "Ignore endCurrentTrack. Not recording.");
-            return null;
+            Log.w(TAG, "Ignore endCurrentTrack. Not recording.");
+            return;
         }
 
         // Need to remember the recordingTrackId before setting it to null
@@ -394,14 +394,12 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         ExportUtils.postWorkoutExport(this, track, new ExportServiceResultReceiver(new Handler(), this));
 
         endRecording(true);
-
-        return trackId;
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void pauseCurrentTrack() {
         if (!isRecording() || isPaused()) {
-            Log.d(TAG, "Ignore pauseCurrentTrack. Not recording or paused.");
+            Log.w(TAG, "Ignore pauseCurrentTrack. Not recording or paused.");
             return;
         }
 
