@@ -64,24 +64,27 @@ public class TrackDeleteActivity extends AbstractActivity {
 
             runOnUiThread(TrackDeleteActivity.this::onAsyncTaskCompleted);
         });
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         deleteThread.start();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        deleteThread.interrupt();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         viewBinding = null;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (deleteThread.getState() == Thread.State.TERMINATED) {
+            onAsyncTaskCompleted();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        deleteThread.interrupt();
     }
 
     @Override
