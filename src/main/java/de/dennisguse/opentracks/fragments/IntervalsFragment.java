@@ -25,9 +25,11 @@ import de.dennisguse.opentracks.adapters.IntervalStatisticsAdapter;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.databinding.IntervalListViewBinding;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 import de.dennisguse.opentracks.viewmodels.IntervalStatisticsModel;
@@ -229,21 +231,21 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     }
 
     @Override
-    public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint) {
+    public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics unused, Speed unused2, double unused3) {
         if (isResumed()) {
             viewModel.add(trackPoint);
         }
     }
 
     @Override
-    public void onSampledOutTrackPoint(@NonNull TrackPoint trackPoint) {
+    public void onSampledOutTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics unused) {
         if (isResumed()) {
             viewModel.add(trackPoint);
         }
     }
 
     @Override
-    public void onNewTrackPointsDone(@NonNull TrackPoint unused) {
+    public void onNewTrackPointsDone(@NonNull TrackPoint unused, @NonNull TrackStatistics alsoUnused) {
         if (isResumed()) {
             runOnUiThread(viewModel::onNewTrackPoints);
         }

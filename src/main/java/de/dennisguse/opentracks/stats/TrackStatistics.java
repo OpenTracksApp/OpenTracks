@@ -18,6 +18,7 @@ package de.dennisguse.opentracks.stats;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -193,6 +194,7 @@ public class TrackStatistics {
         this.movingTime = movingTime;
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void addMovingTime(Duration time) {
         movingTime = movingTime.plus(time);
     }
@@ -265,6 +267,7 @@ public class TrackStatistics {
         this.totalAltitudeGain_m = totalAltitudeGain_m;
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void addTotalAltitudeGain(float gain_m) {
         if (totalAltitudeGain_m == null) {
             totalAltitudeGain_m = 0f;
@@ -285,6 +288,7 @@ public class TrackStatistics {
         this.totalAltitudeLoss_m = totalAltitudeLoss_m;
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void addTotalAltitudeLoss(float loss_m) {
         if (totalAltitudeLoss_m == null) {
             totalAltitudeLoss_m = 0f;
