@@ -19,8 +19,10 @@ package de.dennisguse.opentracks.content;
 import androidx.annotation.NonNull;
 
 import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
  * Listener for track data changes.
@@ -47,20 +49,23 @@ public interface TrackDataListener {
      *
      * @param trackPoint the trackPoint
      */
-    void onSampledInTrackPoint(@NonNull TrackPoint trackPoint);
+    default void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, Speed smoothedSpeed, double smoothedAltitude_m) {
+    }
 
     /**
      * Called when a sampled out track point is read.
      *
      * @param trackPoint the trackPoint
      */
-    void onSampledOutTrackPoint(@NonNull TrackPoint trackPoint);
+    default void onSampledOutTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics) {
+    }
 
     /**
      * Called when finish sending new track points.
-     * This gets called after every batch of calls to {@link #onSampledInTrackPoint(TrackPoint)} and {@link #onSampledOutTrackPoint(TrackPoint)}.
+     * This gets called after every batch of calls to {@link #onSampledInTrackPoint(TrackPoint, TrackStatistics, Speed, double)} and {@link #onSampledOutTrackPoint(TrackPoint, TrackStatistics)}.
      */
-    void onNewTrackPointsDone(@NonNull TrackPoint lastTrackPoint);
+    default void onNewTrackPointsDone(@NonNull TrackPoint lastTrackPoint, @NonNull TrackStatistics trackStatistics) {
+    }
 
     /**
      * Called to clear previously sent markers.

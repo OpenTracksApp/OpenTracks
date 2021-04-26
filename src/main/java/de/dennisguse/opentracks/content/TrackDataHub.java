@@ -30,6 +30,7 @@ import androidx.annotation.VisibleForTesting;
 import java.util.Collections;
 import java.util.Set;
 
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
@@ -38,6 +39,7 @@ import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
+import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 
 /**
  * Track data hub.
@@ -349,6 +351,8 @@ public class TrackDataHub {
             next = new TrackPoint.Id(localLastSeenTrackPointIdId.getId() + 1); //TODO startTrackPointId + 1 is an assumption assumption; should be derived from the DB.
         }
 
+        TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater();
+
         TrackPoint trackPoint = null;
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, next)) {
 
@@ -370,15 +374,16 @@ public class TrackDataHub {
                     samplingFrequency = 1 + (int) (numTotalPoints / targetNumPoints);
                 }
 
+                trackStatisticsUpdater.addTrackPoint(trackPoint, Distance.of(50)); //TODO
 
                 // Also include the last point if the selected track is not recording.
                 if ((localNumLoadedTrackPoints % samplingFrequency == 0) || (trackPointId == lastTrackPointId && !isSelectedTrackRecording())) {
                     for (TrackDataListener trackDataListener : sampledInListeners) {
-                        trackDataListener.onSampledInTrackPoint(trackPoint);
+                        trackDataListener.onSampledInTrackPoint(trackPoint, trackStatisticsUpdater.getTrackStatistics(), trackStatisticsUpdater.getSmoothedSpeed(), trackStatisticsUpdater.getSmoothedAltitude());
                     }
                 } else {
                     for (TrackDataListener trackDataListener : sampledOutListeners) {
-                        trackDataListener.onSampledOutTrackPoint(trackPoint);
+                        trackDataListener.onSampledOutTrackPoint(trackPoint, trackStatisticsUpdater.getTrackStatistics());
                     }
                 }
 
@@ -398,7 +403,7 @@ public class TrackDataHub {
 
         if (trackPoint != null) {
             for (TrackDataListener listener : sampledInListeners) {
-                listener.onNewTrackPointsDone(trackPoint);
+                listener.onNewTrackPointsDone(trackPoint, trackStatisticsUpdater.getTrackStatistics());
             }
         }
     }

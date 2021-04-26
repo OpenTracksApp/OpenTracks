@@ -34,6 +34,7 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.databinding.StatisticsRecordingBinding;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
@@ -211,17 +212,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
     }
 
     @Override
-    public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint) {
-        // We don't care.
-    }
-
-    @Override
-    public void onSampledOutTrackPoint(@NonNull TrackPoint trackPoint) {
-        // We don't care.
-    }
-
-    @Override
-    public void onNewTrackPointsDone(@NonNull TrackPoint newLastTrackPoint) {
+    public void onNewTrackPointsDone(@NonNull TrackPoint newLastTrackPoint, @NonNull TrackStatistics trackStatistics) {
         if (isResumed()) {
             getActivity().runOnUiThread(() -> {
                 if (isResumed()) {
@@ -388,7 +379,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
         }
 
         // Set time
-        if (track != null && track.getTrackStatistics() != null) {
+        if (track != null) {
             viewBinding.statsMovingTimeValue.setText(StringUtils.formatElapsedTime(track.getTrackStatistics().getMovingTime()));
             updateTotalTime();
         }
