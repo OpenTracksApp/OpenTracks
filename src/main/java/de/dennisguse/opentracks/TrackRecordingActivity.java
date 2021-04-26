@@ -211,6 +211,8 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
         if (trackId != null) {
             trackDataHub.loadTrack(trackId);
+            trackDataHub.setRecordingTrackId(trackId);
+            trackDataHub.setRecordingTrackPaused(recordingTrackPaused);
             trackController.onResume(true, recordingTrackPaused);
         }
 
