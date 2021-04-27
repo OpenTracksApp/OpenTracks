@@ -28,6 +28,8 @@ However, often only one value is provided.
 
 * Wahoo Speed (Model: WFRPMSPD)
 
+* CooSpo cadence and speed sensor (model: BK467)
+
 ### Cadence
 
 * Garmin Cadence Sensor 2
