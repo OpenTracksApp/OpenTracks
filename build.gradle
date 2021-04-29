@@ -49,6 +49,10 @@ android {
         viewBinding = true
     }
 
+    aaptOptions {
+        cruncherEnabled = false
+    }
+
     defaultConfig {
         applicationId "de.dennisguse.opentracks"
         versionCode 4009
