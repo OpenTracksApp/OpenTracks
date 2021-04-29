@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -42,7 +43,6 @@ import de.dennisguse.opentracks.fragments.IntervalsFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordedFragment;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
@@ -54,7 +54,7 @@ import de.dennisguse.opentracks.util.IntentUtils;
  * @author Rodrigo Damazio
  */
 //TODO Should not use TrackRecordingServiceConnection; only used to determine if there is NO current recording, to enable resume functionality.
-public class TrackRecordedActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackActivityDataHubInterface, TrackRecordingServiceStatus.Listener {
+public class TrackRecordedActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackActivityDataHubInterface {
 
     private static final String TAG = TrackRecordedActivity.class.getSimpleName();
 
@@ -72,6 +72,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
     private TrackRecordedBinding viewBinding;
 
     private Track.Id trackId;
+    private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
 
@@ -79,9 +80,14 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
         @Override
         public void run() {
             TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
-            if (service != null) {
-                service.addListener(TrackRecordedActivity.this);
+            if (service == null) {
+                Log.w(TAG, "could not get TrackRecordingService");
+                return;
             }
+
+            service.getRecordingStatusObservable()
+                    .observe(TrackRecordedActivity.this, status -> onRecordingStatusChanged(status));
+
         }
     };
 
@@ -162,7 +168,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.track_detail_markers).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
-        menu.findItem(R.id.track_detail_resume_track).setVisible(recordingTrackId == null);
+        menu.findItem(R.id.track_detail_resume_track).setVisible(!recordingStatus.isRecording());
         Track track = contentProviderUtils.getTrack(trackId);
         setTitle(track != null ? track.getName() : "");
         return super.onPrepareOptionsMenu(menu);
@@ -217,11 +223,12 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
         return super.onOptionsItemSelected(item);
     }
 
+    @Nullable
     @Override
-    protected TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
-        // Not needed.
-        return null;
+    protected Track.Id getRecordingTrackId() {
+        return recordingStatus.getTrackId();
     }
+
 
     @Override
     protected void onTrackDeleted() {
@@ -305,8 +312,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
         startPostponedEnterTransition();
     }
 
-    @Override
-    public void onTrackRecordingId(Track.Id trackId) {
-        recordingTrackId = trackId;
+    private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
+        recordingStatus = status;
     }
 }

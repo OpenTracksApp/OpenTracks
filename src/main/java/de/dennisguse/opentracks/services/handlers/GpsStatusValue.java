@@ -20,4 +20,8 @@ public enum GpsStatusValue {
         this.icon = icon;
         this.message = message;
     }
+
+    public boolean isGpsStarted() {
+        return this != GpsStatusValue.GPS_NONE && this != GpsStatusValue.GPS_DISABLED;
+    }
 }

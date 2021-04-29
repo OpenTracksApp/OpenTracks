@@ -39,6 +39,7 @@ import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
+import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 
 /**
@@ -76,12 +77,8 @@ public class TrackDataHub {
     private Handler handler;
 
     private Track.Id selectedTrackId;
-    @Deprecated
-    //TODO Is there a better way to handle this? e.g., passing information rather from Activity than from Activity to TrackDataHub
-    private Track.Id recordingTrackId;
-    @Deprecated
-    //TODO Is there a better way to handle this? e.g., passing information rather from Activity than from Activity to TrackDataHub
-    private boolean recordingTrackPaused;
+
+    private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
     // Track points sampling state
     private int numLoadedPoints;
@@ -208,14 +205,14 @@ public class TrackDataHub {
      * Returns true if the selected track is recording.
      */
     public boolean isSelectedTrackRecording() {
-        return selectedTrackId != null && selectedTrackId.equals(recordingTrackId);
+        return selectedTrackId != null && selectedTrackId.equals(recordingStatus.getTrackId());
     }
 
     /**
      * Returns true if the selected track is paused.
      */
     public boolean isSelectedTrackPaused() {
-        return selectedTrackId != null && selectedTrackId.equals(recordingTrackId) && recordingTrackPaused;
+        return selectedTrackId != null && selectedTrackId.equals(recordingStatus.getTrackId()) && recordingStatus.isPaused();
     }
 
     /**
@@ -417,11 +414,7 @@ public class TrackDataHub {
         lastSeenTrackPointId = null;
     }
 
-    public void setRecordingTrackId(Track.Id recordingTrackId) {
-        this.recordingTrackId = recordingTrackId;
-    }
-
-    public void setRecordingTrackPaused(boolean recordingTrackPaused) {
-        this.recordingTrackPaused = recordingTrackPaused;
+    public void setRecordingStatus(TrackRecordingService.RecordingStatus recordingStatus) {
+        this.recordingStatus = recordingStatus;
     }
 }

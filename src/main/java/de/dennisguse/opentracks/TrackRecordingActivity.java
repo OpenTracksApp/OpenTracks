@@ -28,7 +28,6 @@ import de.dennisguse.opentracks.fragments.IntervalsFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordingFragment;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
@@ -44,7 +43,7 @@ import de.dennisguse.opentracks.util.TrackUtils;
  */
 //NOTE: This activity does NOT react to preference changes of R.string.recording_track_id_key.
 //This mode of communication should be removed anyhow.
-public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackActivityDataHubInterface, TrackController.Callback, TrackRecordingServiceStatus.Listener {
+public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackActivityDataHubInterface, TrackController.Callback {
 
     public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -62,20 +61,23 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     private TrackRecordingBinding viewBinding;
 
     // Initialized from Intent; if a new track recording is started, a new TrackId will be provided by TrackRecordingService
+    @Deprecated
     private Track.Id trackId;
-    private boolean recordingTrackPaused;
+
+    private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
         public void run() {
-            // After binding changes (is available), update the total time in trackController.
-            runOnUiThread(() -> trackController.update(true, recordingTrackPaused));
-
             TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
             if (service == null) {
-                Log.d(TAG, "could not get TrackRecordingService");
+                Log.w(TAG, "could not get TrackRecordingService");
                 return;
             }
+
+            service.getRecordingStatusObservable()
+                    .observe(TrackRecordingActivity.this, status -> onRecordingStatusChanged(status));
+
             if (!service.isRecording()) {
                 if (trackId == null) {
                     // trackId isn't initialized -> leads a new recording.
@@ -87,12 +89,10 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
                 // A recording track is on.
                 trackDataHub.loadTrack(trackId);
-                trackDataHub.setRecordingTrackId(trackId);
+                trackDataHub.setRecordingStatus(recordingStatus);
 
-                trackController.update(true, false);
-                trackController.onResume(true, recordingTrackPaused);
+                trackController.onResume(recordingStatus);
             }
-            service.addListener(TrackRecordingActivity.this);
         }
     };
 
@@ -109,10 +109,8 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 setFullscreenPolicy();
             }
             if (key == null) return;
-            runOnUiThread(() -> {
-                TrackRecordingActivity.this.invalidateOptionsMenu();
-                trackController.update(true, recordingTrackPaused);
-            });
+
+            runOnUiThread(TrackRecordingActivity.this::invalidateOptionsMenu);
         }
     };
 
@@ -207,13 +205,13 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         super.onResume();
 
         // Update UI
-        this.invalidateOptionsMenu();
+        invalidateOptionsMenu();
 
         if (trackId != null) {
+            //TODO Pass recordingStatus directly to them
             trackDataHub.loadTrack(trackId);
-            trackDataHub.setRecordingTrackId(trackId);
-            trackDataHub.setRecordingTrackPaused(recordingTrackPaused);
-            trackController.onResume(true, recordingTrackPaused);
+            trackDataHub.setRecordingStatus(recordingStatus);
+            trackController.onResume(recordingStatus);
         }
 
         /*
@@ -264,7 +262,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        updateMenuItems(recordingTrackPaused);
+        updateMenuItems(recordingStatus.isPaused());
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -339,14 +337,12 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     public void recordStart() {
         updateMenuItems(false);
         trackRecordingServiceConnection.resumeTrack();
-        trackController.update(true, false);
     }
 
     @Override
     public void recordPause() {
         updateMenuItems(true);
         trackRecordingServiceConnection.pauseTrack();
-        trackController.update(true, true);
     }
 
     @Override
@@ -404,24 +400,13 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         }
     }
 
-    @Override
-    public void onTrackRecordingPaused(boolean isPaused) {
-        if (recordingTrackPaused != isPaused) {
-            trackController.update(true, isPaused);
-            trackDataHub.setRecordingTrackPaused(isPaused);
-        }
-        recordingTrackPaused = isPaused;
+    private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
+        recordingStatus = status;
+
+        trackController.update(recordingStatus);
+        trackDataHub.setRecordingStatus(recordingStatus);
+
         setLockscreenPolicy();
         setScreenOnPolicy();
-    }
-
-    //TODO Why should this be interesting? This activity is only used for currently recording tracks.
-    @Override
-    public void onTrackRecordingId(Track.Id newTrackId) {
-        if (newTrackId != null && !newTrackId.equals(trackId)) {
-            trackId = newTrackId;
-            trackController.update(true, recordingTrackPaused);
-            trackDataHub.setRecordingTrackId(newTrackId);
-        }
     }
 }

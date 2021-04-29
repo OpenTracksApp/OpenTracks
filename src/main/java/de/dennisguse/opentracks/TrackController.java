@@ -37,6 +37,8 @@ import de.dennisguse.opentracks.util.StringUtils;
  *
  * @author Jimmy Shih
  */
+//TODO Subscribe to TrackRecordingService.recordingStatus
+//TODO Could be a fragment
 public class TrackController implements View.OnTouchListener {
 
     private static final String TAG = TrackController.class.getSimpleName();
@@ -54,17 +56,16 @@ public class TrackController implements View.OnTouchListener {
     private final TrackControllerBinding viewBinding;
     private final TransitionDrawable transition;
 
-    private boolean isRecording;
-    private boolean isRecordingPaused;
+
+    private TrackRecordingService.RecordingStatus recordingStatus;
     private Duration totalTime;
-    private boolean isResumed = false;
 
     private final Callback callback;
 
     // A runnable to update the total time.
     private final Runnable updateTotalTimeRunnable = new Runnable() {
         public void run() {
-            if (isResumed && isRecording && !isRecordingPaused) {
+            if (isResumed() && recordingStatus.isRecordingAndNotPaused()) {
                 updateTotalTime();
                 setTotalTime();
                 handlerUpdateTotalTime.postDelayed(this, UI_UPDATE_INTERVAL.toMillis());
@@ -84,7 +85,7 @@ public class TrackController implements View.OnTouchListener {
 
         viewBinding.trackControllerRecord.setOnTouchListener(this);
         viewBinding.trackControllerRecord.setOnClickListener((view) -> {
-            if (buttonDelay != null || (isRecording && !isRecordingPaused)) {
+            if (buttonDelay != null || recordingStatus.isRecordingAndNotPaused()) {
                 return;
             }
 
@@ -120,7 +121,7 @@ public class TrackController implements View.OnTouchListener {
         //To pause a recording
         if (viewBinding.trackControllerRecord.equals(view)
                 && event.getAction() == MotionEvent.ACTION_DOWN
-                && isRecording && !isRecordingPaused) {
+                && recordingStatus.isRecordingAndNotPaused()) {
 
             transition.startTransition(buttonDelayDuration);
 
@@ -143,7 +144,7 @@ public class TrackController implements View.OnTouchListener {
         //To stop a recording
         if (viewBinding.trackControllerStop.equals(view)
                 && event.getAction() == MotionEvent.ACTION_DOWN
-                && isRecording) {
+                && recordingStatus.isRecording()) {
 
 
             transition.startTransition(buttonDelayDuration);
@@ -165,13 +166,15 @@ public class TrackController implements View.OnTouchListener {
         return false;
     }
 
-    public void update(boolean recording, boolean paused) {
-        if (!isResumed) {
+    public void update(TrackRecordingService.RecordingStatus recordingStatus) {
+        if (!isResumed()) {
             handlerUpdateTotalTime.removeCallbacks(updateTotalTimeRunnable);
             return;
         }
-        isRecording = recording;
-        isRecordingPaused = paused;
+
+        this.recordingStatus = recordingStatus;
+        boolean isRecording = recordingStatus.isRecording();
+        boolean isRecordingPaused = recordingStatus.isPaused();
         boolean visible = alwaysShow || isRecording;
         viewBinding.trackControllerContainer.setVisibility(visible ? View.VISIBLE : View.GONE);
 
@@ -197,19 +200,19 @@ public class TrackController implements View.OnTouchListener {
 
         viewBinding.trackControllerTotalTime.setVisibility(isRecording ? View.VISIBLE : View.INVISIBLE);
 
-        if (isRecording) {
+        if (recordingStatus.isRecording()) {
             updateTotalTime();
             setTotalTime();
         }
     }
 
-    void onResume(boolean recording, boolean paused) {
-        isResumed = true;
-        update(recording, paused);
+    void onResume(TrackRecordingService.RecordingStatus recordingStatus) {
+        this.recordingStatus = recordingStatus;
+        update(recordingStatus);
     }
 
     void onPause() {
-        isResumed = false;
+        recordingStatus = null;
         handlerUpdateTotalTime.removeCallbacks(updateTotalTimeRunnable);
     }
 
@@ -235,12 +238,18 @@ public class TrackController implements View.OnTouchListener {
     }
 
     private void showStatusSetDefaultText() {
-        viewBinding.trackControllerStatus.setText(isRecordingPaused ? R.string.generic_paused : R.string.generic_recording);
+        viewBinding.trackControllerStatus.setText(recordingStatus.isPaused() ? R.string.generic_paused : R.string.generic_recording);
+    }
+
+    private boolean isResumed() {
+        return recordingStatus != null;
     }
 
     public interface Callback {
         void recordStart();
+
         void recordPause();
+
         void recordStop();
     }
 }

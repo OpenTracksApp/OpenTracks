@@ -20,6 +20,7 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,7 +43,6 @@ import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
 import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 
@@ -51,7 +51,7 @@ import de.dennisguse.opentracks.util.IntentUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public class MarkerListActivity extends AbstractActivity implements DeleteMarkerCaller, TrackRecordingServiceStatus.Listener {
+public class MarkerListActivity extends AbstractActivity implements DeleteMarkerCaller {
 
     public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -59,8 +59,8 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
     private ContentProviderUtils contentProviderUtils;
 
-    private Track.Id recordingTrackId;
-    private boolean recordingTrackPaused;
+    private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
+
     private Track track;
     private MarkerResourceCursorAdapter resourceCursorAdapter;
 
@@ -74,9 +74,13 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         @Override
         public void run() {
             TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
-            if (service != null) {
-                service.addListener(MarkerListActivity.this);
+            if (service == null) {
+                Log.w(TAG, "could not get TrackRecordingService");
+                return;
             }
+
+            service.getRecordingStatusObservable()
+                    .observe(MarkerListActivity.this, status -> onRecordingStatusChanged(status));
         }
     };
 
@@ -178,7 +182,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        insertMarkerMenuItem.setVisible(track != null && track.getId().equals(recordingTrackId) && !recordingTrackPaused);
+        insertMarkerMenuItem.setVisible(track != null && track.getId().equals(recordingStatus.getTrackId()) && !recordingStatus.isPaused());
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -290,6 +294,10 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         // Do nothing
     }
 
+    private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
+        recordingStatus = status;
+    }
+
     private class MarkerLoaderCallback implements LoaderManager.LoaderCallbacks<Cursor> {
 
         private String searchQuery = null;
@@ -343,15 +351,5 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         public void onLoaderReset(@NonNull Loader<Cursor> loader) {
             resourceCursorAdapter.swapCursor(null);
         }
-    }
-
-    @Override
-    public void onTrackRecordingPaused(boolean isPaused) {
-        recordingTrackPaused = isPaused;
-    }
-
-    @Override
-    public void onTrackRecordingId(Track.Id trackId) {
-        recordingTrackId = trackId;
     }
 }
