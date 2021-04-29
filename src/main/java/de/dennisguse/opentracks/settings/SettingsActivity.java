@@ -20,12 +20,10 @@ import java.util.Locale;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.services.TrackRecordingServiceStatus;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingCadenceAndSpeedPreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingPowerPreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeHeartRatePreference;
@@ -93,7 +91,7 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, prefsFragment).commit();
     }
 
-    public static class PrefsFragment extends PreferenceFragmentCompat implements TrackRecordingServiceStatus.Listener {
+    public static class PrefsFragment extends PreferenceFragmentCompat {
 
         private SharedPreferences sharedPreferences;
 
@@ -107,15 +105,20 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         };
 
         private TrackRecordingServiceConnection trackRecordingServiceConnection;
-        private boolean isRecording;
+        private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
         private final Runnable bindServiceCallback = new Runnable() {
             @Override
             public void run() {
                 TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
-                if (service != null) {
-                    service.addListener(PrefsFragment.this);
+                if (service == null) {
+                    Log.w(TAG, "could not get TrackRecordingService");
+                    return;
                 }
+
+                service.getRecordingStatusObservable()
+                        .observe(PrefsFragment.this, status -> onRecordingStatusChanged(status));
+
             }
         };
 
@@ -218,6 +221,7 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
             Preference importPreference = findPreference(getString(R.string.settings_import));
             Preference exportPreference = findPreference(getString(R.string.settings_export));
 
+            boolean isRecording = recordingStatus.isRecording();
             resetPreference.setSummary(isRecording ? getString(R.string.settings_not_while_recording) : "");
             importPreference.setSummary(isRecording ? getString(R.string.settings_not_while_recording) : "");
             exportPreference.setSummary(isRecording ? getString(R.string.settings_not_while_recording) : "");
@@ -292,10 +296,9 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
             });
         }
 
-        @Override
-        public void onTrackRecordingId(Track.Id trackId) {
-            if (trackId != null && !isRecording && isAdded()) {
-                isRecording = true;
+        private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
+            this.recordingStatus = status;
+            if (!status.isRecording() && isAdded()) {
                 updatePrefsDependOnRecording();
             }
         }

@@ -44,6 +44,7 @@ import static org.junit.Assert.assertNotNull;
  * So, if it is executed on a real device, data might be lost.
  */
 @RunWith(AndroidJUnit4.class)
+//TODO Implement as mock test; no need to store data in database
 public class TrackRecordingServiceTestLocation {
 
     @Rule

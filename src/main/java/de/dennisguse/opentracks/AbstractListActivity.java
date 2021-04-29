@@ -18,6 +18,8 @@ package de.dennisguse.opentracks;
 
 import android.content.Intent;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -36,14 +38,14 @@ import de.dennisguse.opentracks.util.IntentUtils;
  *
  * @author Jimmy Shih
  */
+//TODO It is actually not a List; we need a better name for this class
+//TODO Check if this class is still such a good idea; inheritance might limit maintainability
 public abstract class AbstractListActivity extends AbstractActivity implements ConfirmDeleteCaller {
 
     private static final String TAG = AbstractListActivity.class.getSimpleName();
 
     protected static final int GPS_REQUEST_CODE = 6;
     private static final int DELETE_REQUEST_CODE = 3;
-
-    protected Track.Id recordingTrackId;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -68,7 +70,7 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
         boolean stopRecording = false;
 
         for (Track.Id trackId : trackIds) {
-            if (trackId.equals(recordingTrackId)) {
+            if (trackId.equals(getRecordingTrackId())) {
                 stopRecording = true;
                 break;
             }
@@ -87,10 +89,17 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
      * Gets the track recording service connection.
      * For stopping the current recording if need to delete the current recording track.
      */
-    abstract protected TrackRecordingServiceConnection getTrackRecordingServiceConnection();
+    protected TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
+        return null;
+    }
 
     /**
      * Called after {@link TrackDeleteActivity} returns its result.
      */
     abstract protected void onTrackDeleted();
+
+    @Nullable
+    protected Track.Id getRecordingTrackId() {
+        return null;
+    }
 }
