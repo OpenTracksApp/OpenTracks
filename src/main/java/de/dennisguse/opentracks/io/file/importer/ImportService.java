@@ -46,23 +46,22 @@ public class ImportService extends JobIntentService {
     }
 
     private void importFile(DocumentFile file) {
-        TrackImporter trackImporter;
+        ArrayList<Track.Id> trackIds = new ArrayList<>();
+
         String fileExtension = FileUtils.getExtension(file);
         try {
 
             if (TrackFileFormat.GPX.getExtension().equals(fileExtension)) {
-                trackImporter = new XMLImporter(new GpxFileTrackImporter(this));
+                trackIds.addAll(new XMLImporter(new GpxFileTrackImporter(this)).importFile(this, file.getUri()));
             } else if (TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.getExtension().equals(fileExtension)) {
-                trackImporter = new XMLImporter(new KmlFileTrackImporter(this));
+                trackIds.addAll(new XMLImporter(new KmlFileTrackImporter(this)).importFile(this, file.getUri()));
             } else if (TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.getExtension().equals(fileExtension)) {
-                trackImporter = new KmzTrackImporter();
+                trackIds.addAll(new KmzTrackImporter().importFile(this, file.getUri()));
             } else {
                 Log.d(TAG, "Unsupported file format.");
                 sendResult(ImportServiceResultReceiver.RESULT_CODE_ERROR, null, file, getString(R.string.import_unsupported_format));
                 return;
             }
-
-            ArrayList<Track.Id> trackIds = new ArrayList<>(trackImporter.importFile(this, file.getUri()));
 
             if (!trackIds.isEmpty()) {
                 sendResult(ImportServiceResultReceiver.RESULT_CODE_IMPORTED, trackIds, file, getString(R.string.import_file_imported, file.getName()));

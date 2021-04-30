@@ -19,7 +19,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import de.dennisguse.opentracks.content.data.Track;
 
-public class XMLImporter implements TrackImporter {
+public class XMLImporter {
 
     private static final String TAG = XMLImporter.class.getSimpleName();
 
@@ -29,7 +29,6 @@ public class XMLImporter implements TrackImporter {
         this.parser = parser;
     }
 
-    @Override
     @NonNull
     public List<Track.Id> importFile(Context context, Uri uri) throws ImportParserException, ImportAlreadyExistsException, IOException {
         try (InputStream inputStream = context.getContentResolver().openInputStream(uri)) {
