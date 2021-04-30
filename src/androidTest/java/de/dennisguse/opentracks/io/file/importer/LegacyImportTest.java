@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class LegacyImportTest {
      */
     @LargeTest
     @Test
-    public void kml_with_statistics_marker() {
+    public void kml_with_statistics_marker() throws IOException {
         // given
         XMLImporter trackImporter = new XMLImporter(new KmlFileTrackImporter(context));
         InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.legacy_kml_statistics_marker);
@@ -90,7 +91,7 @@ public class LegacyImportTest {
      */
     @LargeTest
     @Test(expected = ImportParserException.class)
-    public void kml_without_locations() {
+    public void kml_without_locations() throws IOException {
         // given
         XMLImporter trackImporter = new XMLImporter(new KmlFileTrackImporter(context));
         InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.legacy_kml_empty);
@@ -104,7 +105,7 @@ public class LegacyImportTest {
      */
     @LargeTest
     @Test
-    public void gpx_with_pause_resume() {
+    public void gpx_with_pause_resume() throws IOException {
         // given
         XMLImporter trackImporter = new XMLImporter(new GpxFileTrackImporter(context));
         InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.legacy_gpx_pause_resume);

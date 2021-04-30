@@ -13,7 +13,6 @@ import androidx.core.app.JobIntentService;
 import androidx.documentfile.provider.DocumentFile;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import de.dennisguse.opentracks.R;
@@ -49,21 +48,21 @@ public class ImportService extends JobIntentService {
     private void importFile(DocumentFile file) {
         TrackImporter trackImporter;
         String fileExtension = FileUtils.getExtension(file);
+        try {
 
-        if (TrackFileFormat.GPX.getExtension().equals(fileExtension)) {
-            trackImporter = new XMLImporter(new GpxFileTrackImporter(this));
-        } else if (TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.getExtension().equals(fileExtension)) {
-            trackImporter = new XMLImporter(new KmlFileTrackImporter(this));
-        } else if (TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.getExtension().equals(fileExtension)) {
-            trackImporter = new KmzTrackImporter(this, file.getUri());
-        } else {
-            Log.d(TAG, "Unsupported file format.");
-            sendResult(ImportServiceResultReceiver.RESULT_CODE_ERROR, null, file, getString(R.string.import_unsupported_format));
-            return;
-        }
+            if (TrackFileFormat.GPX.getExtension().equals(fileExtension)) {
+                trackImporter = new XMLImporter(new GpxFileTrackImporter(this));
+            } else if (TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.getExtension().equals(fileExtension)) {
+                trackImporter = new XMLImporter(new KmlFileTrackImporter(this));
+            } else if (TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.getExtension().equals(fileExtension)) {
+                trackImporter = new KmzTrackImporter();
+            } else {
+                Log.d(TAG, "Unsupported file format.");
+                sendResult(ImportServiceResultReceiver.RESULT_CODE_ERROR, null, file, getString(R.string.import_unsupported_format));
+                return;
+            }
 
-        try (InputStream inputStream = getContentResolver().openInputStream(file.getUri())) {
-            ArrayList<Track.Id> trackIds = new ArrayList<>(trackImporter.importFile(inputStream));
+            ArrayList<Track.Id> trackIds = new ArrayList<>(trackImporter.importFile(this, file.getUri()));
 
             if (!trackIds.isEmpty()) {
                 sendResult(ImportServiceResultReceiver.RESULT_CODE_IMPORTED, trackIds, file, getString(R.string.import_file_imported, file.getName()));

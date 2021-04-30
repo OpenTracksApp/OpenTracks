@@ -15,9 +15,10 @@
  */
 package de.dennisguse.opentracks.io.file.importer;
 
-import androidx.annotation.NonNull;
+import android.content.Context;
+import android.net.Uri;
 
-import java.io.InputStream;
+import java.io.IOException;
 import java.util.List;
 
 import de.dennisguse.opentracks.content.data.Track;
@@ -29,11 +30,5 @@ import de.dennisguse.opentracks.content.data.Track;
  */
 public interface TrackImporter {
 
-    /**
-     * Import a file.
-     *
-     * @param inputStream the file's input stream
-     */
-    @NonNull
-    List<Track.Id> importFile(InputStream inputStream) throws ImportParserException;
+    List<Track.Id> importFile(Context context, Uri uri) throws IOException, ImportParserException;
 }
