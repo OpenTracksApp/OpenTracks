@@ -19,6 +19,11 @@ import javax.xml.parsers.SAXParserFactory;
 
 import de.dennisguse.opentracks.content.data.Track;
 
+/**
+ * Uses SAX2 to parse XML files.
+ * <p>
+ * NOTE: SAX2 always closes InputStreams after processing.
+ */
 public class XMLImporter {
 
     private static final String TAG = XMLImporter.class.getSimpleName();
