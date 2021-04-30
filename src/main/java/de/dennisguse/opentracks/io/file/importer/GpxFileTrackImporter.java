@@ -22,6 +22,7 @@ import androidx.annotation.VisibleForTesting;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.Locale;
 
@@ -81,6 +82,11 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
     @VisibleForTesting
     GpxFileTrackImporter(Context context, ContentProviderUtils contentProviderUtils) {
         super(context, contentProviderUtils);
+    }
+
+    @Override
+    public DefaultHandler getHandler() {
+        return this;
     }
 
     @Override

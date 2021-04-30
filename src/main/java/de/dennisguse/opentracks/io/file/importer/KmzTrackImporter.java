@@ -71,7 +71,7 @@ public class KmzTrackImporter implements TrackImporter {
     List<Track.Id> importFile(InputStream inputStream) {
         List<Track.Id> trackIds = findAndParseKmlFile(inputStream);
 
-        ArrayList<Track.Id> trackIdsWithImages = new ArrayList<>();
+        List<Track.Id> trackIdsWithImages = new ArrayList<>();
 
         for (Track.Id trackId : trackIds) {
             if (copyKmzImages(trackId)) {
@@ -228,7 +228,7 @@ public class KmzTrackImporter implements TrackImporter {
     }
 
     private List<Track.Id> parseKml(ZipInputStream zipInputStream) {
-        KmlFileTrackImporter kmlFileTrackImporter = new KmlFileTrackImporter(context);
+        XMLImporter kmlFileTrackImporter = new XMLImporter(new KmlFileTrackImporter(context));
 
         try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(getKml(zipInputStream))) {
             return kmlFileTrackImporter.importFile(byteArrayInputStream);
@@ -244,6 +244,7 @@ public class KmzTrackImporter implements TrackImporter {
      *
      * @param zipInputStream the zip input stream
      */
+    //TODO We should be able to process the stream; we are wasting memory here.
     private byte[] getKml(ZipInputStream zipInputStream) throws IOException {
         try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
             byte[] buffer = new byte[BUFFER_SIZE];

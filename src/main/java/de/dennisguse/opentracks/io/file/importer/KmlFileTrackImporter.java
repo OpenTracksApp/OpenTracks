@@ -23,6 +23,7 @@ import androidx.annotation.VisibleForTesting;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.ArrayList;
 
@@ -81,6 +82,11 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     @VisibleForTesting
     KmlFileTrackImporter(Context context, ContentProviderUtils contentProviderUtils) {
         super(context, contentProviderUtils);
+    }
+
+    @Override
+    public DefaultHandler getHandler() {
+        return this;
     }
 
     @Override
