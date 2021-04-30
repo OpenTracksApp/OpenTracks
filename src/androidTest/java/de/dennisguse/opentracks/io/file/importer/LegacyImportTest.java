@@ -50,7 +50,7 @@ public class LegacyImportTest {
     @Test
     public void kml_with_statistics_marker() {
         // given
-        KmlFileTrackImporter trackImporter = new KmlFileTrackImporter(context);
+        XMLImporter trackImporter = new XMLImporter(new KmlFileTrackImporter(context));
         InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.legacy_kml_statistics_marker);
 
         // when
@@ -92,7 +92,7 @@ public class LegacyImportTest {
     @Test(expected = ImportParserException.class)
     public void kml_without_locations() {
         // given
-        KmlFileTrackImporter trackImporter = new KmlFileTrackImporter(context);
+        XMLImporter trackImporter = new XMLImporter(new KmlFileTrackImporter(context));
         InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.legacy_kml_empty);
 
         // when
@@ -106,7 +106,7 @@ public class LegacyImportTest {
     @Test
     public void gpx_with_pause_resume() {
         // given
-        GpxFileTrackImporter trackImporter = new GpxFileTrackImporter(context);
+        XMLImporter trackImporter = new XMLImporter(new GpxFileTrackImporter(context));
         InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.legacy_gpx_pause_resume);
 
         // when

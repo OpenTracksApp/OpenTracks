@@ -51,9 +51,9 @@ public class ImportService extends JobIntentService {
         String fileExtension = FileUtils.getExtension(file);
 
         if (TrackFileFormat.GPX.getExtension().equals(fileExtension)) {
-            trackImporter = new GpxFileTrackImporter(this);
+            trackImporter = new XMLImporter(new GpxFileTrackImporter(this));
         } else if (TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.getExtension().equals(fileExtension)) {
-            trackImporter = new KmlFileTrackImporter(this);
+            trackImporter = new XMLImporter(new KmlFileTrackImporter(this));
         } else if (TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.getExtension().equals(fileExtension)) {
             trackImporter = new KmzTrackImporter(this, file.getUri());
         } else {

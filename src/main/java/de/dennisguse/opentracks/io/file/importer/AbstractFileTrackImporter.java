@@ -18,7 +18,6 @@ package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteConstraintException;
 import android.net.Uri;
 import android.util.Log;
 
@@ -29,17 +28,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParserFactory;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
@@ -62,7 +56,7 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
  *
  * @author Jimmy Shih
  */
-abstract class AbstractFileTrackImporter extends DefaultHandler implements TrackImporter {
+abstract class AbstractFileTrackImporter extends DefaultHandler implements XMLImporter.TrackParser {
 
     private static final String TAG = AbstractFileTrackImporter.class.getSimpleName();
 
@@ -124,24 +118,6 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         } else {
             // In 99% of the cases, a single call to this method will be made for each sequence of characters we're interested in, so we'll rarely be concatenating strings, thus not justifying the use of a StringBuilder.
             content += newContent;
-        }
-    }
-
-    @Override
-    @NonNull
-    public List<Track.Id> importFile(InputStream inputStream) {
-        try {
-            SAXParserFactory.newInstance().newSAXParser().parse(inputStream, this);
-            return trackIds;
-        } catch (IOException | SAXException | ParserConfigurationException | ParsingException e) {
-            Log.e(TAG, "Unable to import file", e);
-            if (trackIds.size() > 0) {
-                cleanImport();
-            }
-            throw new ImportParserException(e);
-        } catch (SQLiteConstraintException e) {
-            Log.e(TAG, "Unable to import file", e);
-            throw new ImportAlreadyExistsException(e);
         }
     }
 
@@ -484,10 +460,12 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         }
     }
 
-    /**
-     * Cleans up import.
-     */
-    private void cleanImport() {
+    @Override
+    public List<Track.Id> getImportTrackIds() {
+        return trackIds;
+    }
+
+    public void cleanImport() {
         contentProviderUtils.deleteTracks(context, trackIds);
     }
 
