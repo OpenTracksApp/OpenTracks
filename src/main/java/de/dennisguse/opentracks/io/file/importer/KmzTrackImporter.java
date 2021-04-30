@@ -22,10 +22,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -51,8 +50,6 @@ public class KmzTrackImporter {
     private static final String TAG = KmzTrackImporter.class.getSimpleName();
 
     private static final List<String> KMZ_IMAGES_EXT = Arrays.asList("jpeg", "jpg", "png");
-
-    private static final int BUFFER_SIZE = 4096;
 
     private Context context;
 
@@ -207,33 +204,17 @@ public class KmzTrackImporter {
         }
     }
 
-    private List<Track.Id> parseKml(ZipInputStream zipInputStream) {
+    private List<Track.Id> parseKml(ZipInputStream zipInputStream) throws IOException {
         XMLImporter kmlFileTrackImporter = new XMLImporter(new KmlFileTrackImporter(context));
 
-        try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(getKml(zipInputStream))) {
-            return kmlFileTrackImporter.importFile(byteArrayInputStream);
-        } catch (ImportParserException | ImportAlreadyExistsException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new ImportParserException(e);
-        }
-    }
-
-    /**
-     * Gets the kml as byte array.
-     *
-     * @param zipInputStream the zip input stream
-     */
-    //TODO We should be able to process the stream; we are wasting memory here.
-    private byte[] getKml(ZipInputStream zipInputStream) throws IOException {
-        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
-            byte[] buffer = new byte[BUFFER_SIZE];
-            int count;
-            while ((count = zipInputStream.read(buffer)) != -1) {
-                byteArrayOutputStream.write(buffer, 0, count);
+        InputStream nonClosableInputStream = new FilterInputStream(zipInputStream) {
+            @Override
+            public void close() {
+                // SAX2 always tries close InputStreams; but that would also close our ZIP file.
             }
-            return byteArrayOutputStream.toByteArray();
-        }
+        };
+
+        return kmlFileTrackImporter.importFile(nonClosableInputStream);
     }
 
     /**
@@ -243,6 +224,7 @@ public class KmzTrackImporter {
      * @param trackId        the track's id which image belongs to.
      * @param fileName       the file name
      */
+    @Deprecated //TODO Use JDK9's inputStream.transferTo() instead of manual buffer
     private void readAndSaveImageFile(ZipInputStream zipInputStream, Track.Id trackId, String fileName) throws IOException {
         if (trackId == null || fileName.equals("")) {
             return;
@@ -252,7 +234,7 @@ public class KmzTrackImporter {
         File file = new File(dir, fileName);
 
         try (FileOutputStream fileOutputStream = new FileOutputStream(file)) {
-            byte[] buffer = new byte[BUFFER_SIZE];
+            byte[] buffer = new byte[4096];
             int count;
             while ((count = zipInputStream.read(buffer)) != -1) {
                 fileOutputStream.write(buffer, 0, count);
