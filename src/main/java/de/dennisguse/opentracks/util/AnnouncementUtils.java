@@ -49,7 +49,7 @@ public class AnnouncementUtils {
         }
 
         int totalDistanceId = isMetricUnits ? R.plurals.voiceTotalDistanceKilometers : R.plurals.voiceTotalDistanceMiles;
-        double distanceInUnit = distance.to(isMetricUnits);
+        double distanceInUnit = distance.toKM_Miles(isMetricUnits);
         String totalDistance = context.getResources().getQuantityString(totalDistanceId, getQuantityCount(distanceInUnit), distanceInUnit);
 
         currentRateMsg = currentInterval == null ? "" : " " + currentRateMsg;

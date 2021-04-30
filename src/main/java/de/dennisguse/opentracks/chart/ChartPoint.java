@@ -29,12 +29,12 @@ public class ChartPoint {
 
     public ChartPoint(@NonNull TrackStatistics trackStatistics, @NonNull TrackPoint trackPoint, Speed smoothedSpeed, double smoothedAltitude_m, boolean chartByDistance, boolean metricUnits) {
         if (chartByDistance) {
-            timeOrDistance = trackStatistics.getTotalDistance().to(metricUnits);
+            timeOrDistance = trackStatistics.getTotalDistance().toKM_Miles(metricUnits);
         } else {
             timeOrDistance = trackStatistics.getTotalTime().toMillis();
         }
 
-        altitude = Distance.of(smoothedAltitude_m).to(metricUnits);
+        altitude = Distance.of(smoothedAltitude_m).toM_FT(metricUnits);
 
         speed = smoothedSpeed.to(metricUnits);
         pace = smoothedSpeed.toPace(metricUnits).toMillis() * UnitConversions.MS_TO_S * UnitConversions.S_TO_MIN;

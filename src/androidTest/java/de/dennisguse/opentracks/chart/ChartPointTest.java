@@ -54,7 +54,7 @@ public class ChartPointTest {
         ChartPoint point = new ChartPoint(statistics, TrackStubUtils.createDefaultTrackPoint(), Speed.of(10), 50, false, true);
 
         // then
-        assertEquals(0.05, point.getAltitude(), 0.01);
+        assertEquals(50, point.getAltitude(), 0.01);
         assertEquals(36, point.getSpeed(), 0.01);
         assertEquals(1.66, point.getPace(), 0.01);
     }
