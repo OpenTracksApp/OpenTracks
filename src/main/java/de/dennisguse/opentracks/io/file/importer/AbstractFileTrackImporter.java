@@ -430,7 +430,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
         return null;
     }
 
-    private TrackPoint createTrackPoint() throws ParsingException {
+    protected TrackPoint createTrackPoint() throws ParsingException {
         TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT);
 
         try {
@@ -450,65 +450,11 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse latitude longitude: %s %s", latitude, longitude)), e);
         }
 
-
         if (altitude != null) {
             try {
                 trackPoint.setAltitude(Double.parseDouble(altitude));
             } catch (NumberFormatException e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse altitude: %s", altitude)), e);
-            }
-        }
-
-        if (speed != null) {
-            try {
-                trackPoint.setSpeed(Speed.of(speed));
-            } catch (Exception e) {
-                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse speed: %s", speed)), e);
-            }
-        }
-        if (heartrate != null) {
-            try {
-                trackPoint.setHeartRate_bpm(Float.parseFloat(heartrate));
-            } catch (Exception e) {
-                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse heart rate: %s", heartrate)), e);
-            }
-        }
-
-        if (cadence != null) {
-            try {
-                trackPoint.setCyclingCadence_rpm(Float.parseFloat(cadence));
-            } catch (Exception e) {
-                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse cadence: %s", cadence)), e);
-            }
-        }
-
-        if (power != null) {
-            try {
-                trackPoint.setPower(Float.parseFloat(power));
-            } catch (Exception e) {
-                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse power: %s", power)), e);
-            }
-        }
-
-        if (gain != null) {
-            try {
-                trackPoint.setAltitudeGain(Float.parseFloat(gain));
-            } catch (Exception e) {
-                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse altitude gain: %s", gain)), e);
-            }
-        }
-        if (loss != null) {
-            try {
-                trackPoint.setAltitudeLoss(Float.parseFloat(loss));
-            } catch (Exception e) {
-                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse altitude loss: %s", loss)), e);
-            }
-        }
-        if (distance != null) {
-            try {
-                trackPoint.setSensorDistance(Distance.of(distance));
-            } catch (Exception e) {
-                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse distance: %s", distance)), e);
             }
         }
 
@@ -571,7 +517,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements Track
             super(message);
         }
 
-        private ParsingException(@NonNull String message, Exception cause) {
+        protected ParsingException(@NonNull String message, Exception cause) {
             super(message, cause);
         }
 
