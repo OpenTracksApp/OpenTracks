@@ -3,24 +3,27 @@ package de.dennisguse.opentracks.io.file.importer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Looper;
 import android.util.Log;
 
 import androidx.preference.PreferenceManager;
 import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.GrantPermissionRule;
 import androidx.test.rule.ServiceTestRule;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -41,7 +44,6 @@ import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TrackStatistics;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -53,7 +55,7 @@ import static org.junit.Assert.assertTrue;
  * Export a track to {@link TrackFileFormat} and verify that the import is identical.
  * <p>
  */
-@RunWith(JUnit4.class)
+@RunWith(AndroidJUnit4.class)
 public class ExportImportTest {
 
     private static final String TAG = ExportImportTest.class.getSimpleName();
@@ -71,7 +73,6 @@ public class ExportImportTest {
     }
 
     private final Context context = ApplicationProvider.getApplicationContext();
-    private final SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
 
     private final ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
 
@@ -79,12 +80,27 @@ public class ExportImportTest {
     private static final String TRACK_CATEGORY = "the category";
     private static final String TRACK_DESCRIPTION = "the description";
 
+    private File tmpFile;
+    private Uri tmpFileUri;
+
     private Track track;
     private List<Marker> markers = new ArrayList<>();
     private List<TrackPoint> trackPoints = new ArrayList<>();
 
     private Track.Id trackId;
     private Track.Id importTrackId;
+
+    @Before
+    public void fileSetup() throws IOException {
+        tmpFile = File.createTempFile("test", "test", context.getFilesDir());
+        tmpFileUri = Uri.fromFile(tmpFile);
+    }
+
+    @After
+    public void FileTearDown() {
+        tmpFile.deleteOnExit();
+        tmpFileUri = null;
+    }
 
     public void setUp(boolean hasSensorDistance) throws TimeoutException {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
@@ -138,7 +154,7 @@ public class ExportImportTest {
 
     @LargeTest
     @Test
-    public void kml_with_trackdetail() throws TimeoutException {
+    public void kml_with_trackdetail() throws TimeoutException, FileNotFoundException {
         setUp(false);
 
         // given
@@ -148,12 +164,11 @@ public class ExportImportTest {
 
         // when
         // 1. export
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        trackExporter.writeTrack(track, outputStream);
+        trackExporter.writeTrack(track, context.getContentResolver().openOutputStream(tmpFileUri));
         contentProviderUtils.deleteTrack(context, trackId);
 
         // 2. import
-        InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+        InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
         XMLImporter trackImporter = new XMLImporter(new KmlFileTrackImporter(context));
         importTrackId = trackImporter.importFile(inputStream).get(0);
 
@@ -179,7 +194,7 @@ public class ExportImportTest {
 
     @LargeTest
     @Test
-    public void kml_with_trackdetail_and_sensordata() throws TimeoutException {
+    public void kml_with_trackdetail_and_sensordata() throws TimeoutException, FileNotFoundException {
         setUp(true);
 
         // given
@@ -189,13 +204,52 @@ public class ExportImportTest {
 
         // when
         // 1. export
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        trackExporter.writeTrack(track, outputStream);
+        trackExporter.writeTrack(track, context.getContentResolver().openOutputStream(tmpFileUri));
         contentProviderUtils.deleteTrack(context, trackId);
 
         // 2. import
-        InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+        InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
         XMLImporter trackImporter = new XMLImporter(new KmlFileTrackImporter(context));
+        importTrackId = trackImporter.importFile(inputStream).get(0);
+
+        // then
+        // 1. track
+        Track importedTrack = contentProviderUtils.getTrack(importTrackId);
+        assertNotNull(importedTrack);
+        assertEquals(track.getCategory(), importedTrack.getCategory());
+        assertEquals(track.getDescription(), importedTrack.getDescription());
+        assertEquals(track.getName(), importedTrack.getName());
+        assertEquals(track.getIcon(), importedTrack.getIcon());
+
+        // 2. trackpoints
+        assertTrackpoints(trackPoints, true, true, true, true, true, true);
+
+        // 2. trackstatistics
+        assertTrackStatistics(false, true, true);
+
+        // 4. markers
+        assertMarkers();
+    }
+
+    //TODO Does not test images
+    @LargeTest
+    @Test
+    public void kmz_with_trackdetail_and_sensordata() throws TimeoutException, IOException {
+        setUp(true);
+
+        // given
+        Track track = contentProviderUtils.getTrack(trackId);
+
+        TrackExporter trackExporter = TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context);
+
+        // when
+        // 1. export
+        trackExporter.writeTrack(track, context.getContentResolver().openOutputStream(tmpFileUri));
+        contentProviderUtils.deleteTrack(context, trackId);
+
+        // 2. import
+        InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
+        TrackImporter trackImporter = new KmzTrackImporter(context, tmpFileUri);
         importTrackId = trackImporter.importFile(inputStream).get(0);
 
         // then
@@ -219,7 +273,7 @@ public class ExportImportTest {
 
     @LargeTest
     @Test(expected = ImportAlreadyExistsException.class)
-    public void kml_with_trackdetail_and_sensordata_duplicate_trackUUID() throws TimeoutException {
+    public void kml_with_trackdetail_and_sensordata_duplicate_trackUUID() throws TimeoutException, FileNotFoundException {
         setUp(false);
 
         // given
@@ -231,12 +285,10 @@ public class ExportImportTest {
         TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context);
 
         // when
-        // 1. export
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        trackExporter.writeTrack(track, outputStream);
+        trackExporter.writeTrack(track, context.getContentResolver().openOutputStream(tmpFileUri));
 
         // 2. import
-        InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+        InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
         XMLImporter trackImporter = new XMLImporter(new KmlFileTrackImporter(context));
         importTrackId = trackImporter.importFile(inputStream).get(0);
 
@@ -247,7 +299,7 @@ public class ExportImportTest {
 
     @LargeTest
     @Test
-    public void gpx() throws TimeoutException {
+    public void gpx() throws TimeoutException, FileNotFoundException {
         setUp(true);
 
         // given
@@ -257,12 +309,11 @@ public class ExportImportTest {
 
         // when
         // 1. export
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        trackExporter.writeTrack(track, outputStream);
+        trackExporter.writeTrack(track, context.getContentResolver().openOutputStream(tmpFileUri));
         contentProviderUtils.deleteTrack(context, trackId);
 
         // 2. import
-        InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+        InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
         XMLImporter trackImporter = new XMLImporter(new GpxFileTrackImporter(context, contentProviderUtils));
         importTrackId = trackImporter.importFile(inputStream).get(0);
 
@@ -295,7 +346,7 @@ public class ExportImportTest {
 
     @LargeTest
     @Test(expected = ImportAlreadyExistsException.class)
-    public void gpx_duplicate_trackUUID() throws TimeoutException {
+    public void gpx_duplicate_trackUUID() throws TimeoutException, FileNotFoundException {
         setUp(false);
 
         // given
@@ -308,11 +359,10 @@ public class ExportImportTest {
 
         // when
         // 1. export
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        trackExporter.writeTrack(track, outputStream);
+        trackExporter.writeTrack(track, context.getContentResolver().openOutputStream(tmpFileUri));
 
         // 2. import
-        InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+        InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
         XMLImporter trackImporter = new XMLImporter(new GpxFileTrackImporter(context, contentProviderUtils));
         importTrackId = trackImporter.importFile(inputStream).get(0);
 
