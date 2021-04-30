@@ -22,7 +22,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Instant;
@@ -154,7 +153,7 @@ public class ExportImportTest {
 
     @LargeTest
     @Test
-    public void kml_with_trackdetail() throws TimeoutException, FileNotFoundException {
+    public void kml_with_trackdetail() throws TimeoutException, IOException {
         setUp(false);
 
         // given
@@ -194,7 +193,7 @@ public class ExportImportTest {
 
     @LargeTest
     @Test
-    public void kml_with_trackdetail_and_sensordata() throws TimeoutException, FileNotFoundException {
+    public void kml_with_trackdetail_and_sensordata() throws TimeoutException, IOException {
         setUp(true);
 
         // given
@@ -248,9 +247,8 @@ public class ExportImportTest {
         contentProviderUtils.deleteTrack(context, trackId);
 
         // 2. import
-        InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        TrackImporter trackImporter = new KmzTrackImporter(context, tmpFileUri);
-        importTrackId = trackImporter.importFile(inputStream).get(0);
+        KmzTrackImporter trackImporter = new KmzTrackImporter();
+        importTrackId = trackImporter.importFile(context, tmpFileUri).get(0);
 
         // then
         // 1. track
@@ -273,7 +271,7 @@ public class ExportImportTest {
 
     @LargeTest
     @Test(expected = ImportAlreadyExistsException.class)
-    public void kml_with_trackdetail_and_sensordata_duplicate_trackUUID() throws TimeoutException, FileNotFoundException {
+    public void kml_with_trackdetail_and_sensordata_duplicate_trackUUID() throws TimeoutException, IOException {
         setUp(false);
 
         // given
@@ -299,7 +297,7 @@ public class ExportImportTest {
 
     @LargeTest
     @Test
-    public void gpx() throws TimeoutException, FileNotFoundException {
+    public void gpx() throws TimeoutException, IOException {
         setUp(true);
 
         // given
@@ -346,7 +344,7 @@ public class ExportImportTest {
 
     @LargeTest
     @Test(expected = ImportAlreadyExistsException.class)
-    public void gpx_duplicate_trackUUID() throws TimeoutException, FileNotFoundException {
+    public void gpx_duplicate_trackUUID() throws TimeoutException, IOException {
         setUp(false);
 
         // given

@@ -54,27 +54,17 @@ public class KmzTrackImporter implements TrackImporter {
 
     private static final int BUFFER_SIZE = 4096;
 
-    private final Context context;
-    private final Uri uriKmzFile;
+    private Context context;
 
-    /**
-     * @param context the context
-     * @param uriFile URI of the kmz file.
-     */
-    public KmzTrackImporter(Context context, Uri uriFile) {
+    @NonNull
+    public List<Track.Id> importFile(Context context, Uri fileUri) throws IOException {
         this.context = context;
-        this.uriKmzFile = uriFile;
-    }
-
-    @Override
-    public @NonNull
-    List<Track.Id> importFile(InputStream inputStream) {
-        List<Track.Id> trackIds = findAndParseKmlFile(inputStream);
+        List<Track.Id> trackIds = findAndParseKmlFile(fileUri);
 
         List<Track.Id> trackIdsWithImages = new ArrayList<>();
 
         for (Track.Id trackId : trackIds) {
-            if (copyKmzImages(trackId)) {
+            if (copyKmzImages(fileUri, trackId)) {
                 trackIdsWithImages.add(trackId);
                 deleteOrphanImages(trackId);
             } else {
@@ -90,8 +80,8 @@ public class KmzTrackImporter implements TrackImporter {
      *
      * @return false if there are errors or true otherwise.
      */
-    private boolean copyKmzImages(Track.Id trackId) {
-        try (InputStream inputStream = context.getContentResolver().openInputStream(uriKmzFile);
+    private boolean copyKmzImages(Uri uri, Track.Id trackId) throws IOException {
+        try (InputStream inputStream = context.getContentResolver().openInputStream(uri);
              ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
             ZipEntry zipEntry;
 
@@ -110,9 +100,6 @@ public class KmzTrackImporter implements TrackImporter {
             }
 
             return true;
-        } catch (IOException e) {
-            Log.e(TAG, "Unable to import file", e);
-            return false;
         }
     }
 
@@ -154,13 +141,9 @@ public class KmzTrackImporter implements TrackImporter {
         return KMZ_IMAGES_EXT.contains(fileExt);
     }
 
-    /**
-     * Finds KmzTrackExporter.KMZ_KML_FILE file inside kmz file (inputStream) and it parses it.
-     *
-     * @param inputStream kmz input stream.
-     */
-    private List<Track.Id> findAndParseKmlFile(InputStream inputStream) {
-        try (ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
+    private List<Track.Id> findAndParseKmlFile(Uri uri) throws IOException {
+        try (InputStream inputStream = context.getContentResolver().openInputStream(uri);
+             ZipInputStream zipInputStream = new ZipInputStream(inputStream)) {
             ZipEntry zipEntry;
             ArrayList<Track.Id> trackIds = new ArrayList<>();
 
@@ -190,9 +173,6 @@ public class KmzTrackImporter implements TrackImporter {
         } catch (ImportParserException | ImportAlreadyExistsException e) {
             Log.e(TAG, "Unable to import file", e);
             throw e;
-        } catch (IOException e) {
-            Log.e(TAG, "Unable to import file", e);
-            throw new ImportParserException(e);
         }
     }
 

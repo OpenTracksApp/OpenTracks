@@ -1,6 +1,8 @@
 package de.dennisguse.opentracks.io.file.importer;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -29,12 +31,17 @@ public class XMLImporter implements TrackImporter {
 
     @Override
     @NonNull
-    public List<Track.Id> importFile(InputStream inputStream) throws ImportParserException, ImportAlreadyExistsException {
+    public List<Track.Id> importFile(Context context, Uri uri) throws ImportParserException, ImportAlreadyExistsException, IOException {
+        try (InputStream inputStream = context.getContentResolver().openInputStream(uri)) {
+            return importFile(inputStream);
+        }
+    }
+
+    public List<Track.Id> importFile(InputStream inputStream) throws ImportParserException, ImportAlreadyExistsException, IOException {
         try {
             SAXParserFactory.newInstance().newSAXParser().parse(inputStream, parser.getHandler());
-            List<Track.Id> trackIds = parser.getImportTrackIds();
-            return trackIds;
-        } catch (IOException | SAXException | ParserConfigurationException | AbstractFileTrackImporter.ParsingException e) {
+            return parser.getImportTrackIds();
+        } catch (SAXException | ParserConfigurationException | AbstractFileTrackImporter.ParsingException e) {
             Log.e(TAG, "Unable to import file", e);
             if (parser.getImportTrackIds().size() > 0) {
                 parser.cleanImport();
