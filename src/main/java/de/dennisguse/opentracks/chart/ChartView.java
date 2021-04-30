@@ -993,7 +993,7 @@ public class ChartView extends View {
 
     private double getMarkerXValue(Marker marker) {
         if (chartByDistance) {
-            return marker.getLength().to(metricUnits);
+            return marker.getLength().toKM_Miles(metricUnits);
         } else {
             return marker.getDuration().toMillis();
         }

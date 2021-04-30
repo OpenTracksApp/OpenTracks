@@ -98,24 +98,12 @@ public class Distance {
         return toKM() * UnitConversions.KM_TO_MI;
     }
 
-    public double to(boolean metricUnit) {
-        return to(metricUnit ? Unit.KM : Unit.MILES);
+    public double toKM_Miles(boolean metricUnit) {
+        return metricUnit ? toKM() : toMI();
     }
 
-    public double to(Unit unit) {
-        switch (unit) {
-            case KM:
-                return toKM();
-            case MILES:
-                return toMI();
-            default:
-                throw new RuntimeException("Not implemented");
-        }
-    }
-
-    public enum Unit {
-        KM,
-        MILES
+    public double toM_FT(boolean metricUnit) {
+        return metricUnit ? toM() : toFT();
     }
 
     @Override

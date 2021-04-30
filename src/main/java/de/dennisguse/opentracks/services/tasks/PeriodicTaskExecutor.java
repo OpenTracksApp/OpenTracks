@@ -175,7 +175,7 @@ public class PeriodicTaskExecutor {
             return;
         }
 
-        double distance = trackStatistics.getTotalDistance().to(metricUnits);
+        double distance = trackStatistics.getTotalDistance().toKM_Miles(metricUnits);
 
         // The index will be negative since the frequency is negative.
         int index = (int) (distance / taskFrequency);
