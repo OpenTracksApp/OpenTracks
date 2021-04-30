@@ -46,7 +46,7 @@ import de.dennisguse.opentracks.util.FileUtils;
  *
  * @author Jimmy Shih
  */
-public class KmzTrackImporter implements TrackImporter {
+public class KmzTrackImporter {
 
     private static final String TAG = KmzTrackImporter.class.getSimpleName();
 
