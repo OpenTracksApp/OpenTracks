@@ -20,6 +20,7 @@ import android.os.Parcel;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -51,7 +52,7 @@ public class TrackPoint {
     private Double latitude;
     private Double longitude;
     private Float accuracy;
-    private Double altitude_m;
+    private Altitude altitude;
     private Speed speed;
     private Float bearing;
     private Distance sensorDistance_m;
@@ -102,7 +103,7 @@ public class TrackPoint {
 
         this.latitude = location.getLatitude();
         this.longitude = location.getLongitude();
-        this.altitude_m = location.getAltitude();
+        this.altitude = Altitude.WGS84.of(location.getAltitude());
         this.speed = Speed.of(location.getSpeed());
         this.accuracy = location.getAccuracy();
 
@@ -114,11 +115,11 @@ public class TrackPoint {
         this.time = time;
     }
 
-    public TrackPoint(double latitude, double longitude, Double altitude, Instant time) {
+    public TrackPoint(double latitude, double longitude, Altitude altitude, Instant time) {
         this(Type.TRACKPOINT);
         this.latitude = latitude;
         this.longitude = longitude;
-        this.altitude_m = altitude;
+        this.altitude = altitude;
         this.time = time;
     }
 
@@ -212,7 +213,7 @@ public class TrackPoint {
             location.setAccuracy(accuracy);
         }
         if (hasAltitude()) {
-            location.setAltitude(altitude_m);
+            location.setAltitude(altitude.toM());
         }
 
         return location;
@@ -257,15 +258,20 @@ public class TrackPoint {
 
 
     public boolean hasAltitude() {
-        return altitude_m != null;
+        return altitude != null;
     }
 
-    public double getAltitude() {
-        return altitude_m;
+    public Altitude getAltitude() {
+        return altitude;
     }
 
-    public void setAltitude(double altitude) {
-        this.altitude_m = altitude;
+    @VisibleForTesting
+    public void setAltitude(double altitude_m) {
+        this.altitude = Altitude.WGS84.of(altitude_m);
+    }
+
+    public void setAltitude(Altitude altitude) {
+        this.altitude = altitude;
     }
 
     public boolean hasSpeed() {

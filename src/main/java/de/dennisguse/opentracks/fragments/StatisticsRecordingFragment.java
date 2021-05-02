@@ -444,7 +444,7 @@ public class StatisticsRecordingFragment extends Fragment implements TrackDataLi
 
         if (preferenceShowAltitude) {
             // Current altitude
-            Float altitude = lastTrackPoint != null && lastTrackPoint.hasAltitude() ? (float) lastTrackPoint.getAltitude() : null;
+            Float altitude = lastTrackPoint != null && lastTrackPoint.hasAltitude() ? (float) lastTrackPoint.getAltitude().toM() : null;
             Pair<String, String> parts = StringUtils.formatAltitude(getContext(), altitude, preferenceMetricUnits);
             viewBinding.statsAltitudeCurrentValue.setText(parts.first);
             viewBinding.statsAltitudeCurrentUnit.setText(parts.second);

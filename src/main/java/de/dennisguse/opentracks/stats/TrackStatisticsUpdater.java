@@ -148,7 +148,7 @@ public class TrackStatisticsUpdater {
 
         //Update absolute (GPS-based) altitude
         if (trackPoint.hasAltitude()) {
-            updateAbsoluteAltitude(trackPoint.getAltitude());
+            updateAbsoluteAltitude(trackPoint.getAltitude().toM());
         }
 
         if (lastTrackPoint == null || lastMovingTrackPoint == null) {
