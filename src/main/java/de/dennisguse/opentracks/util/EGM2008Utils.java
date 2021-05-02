@@ -33,7 +33,7 @@ public class EGM2008Utils {
     private EGM2008Utils() {
     }
 
-    public static EGM2008Correction createEGM2008Correction(Context context, Location location) throws IOException {
+    public static EGM2008Correction createCorrection(Context context, Location location) throws IOException {
         Indices indices = getIndices(location);
 
         try (DataInputStream dataInputStream = new DataInputStream(context.getResources().openRawResource(EGM2008_5_DATA))) {
@@ -84,7 +84,7 @@ public class EGM2008Utils {
         protected final int v01;
         protected final int v11;
 
-        public EGM2008Correction(Indices indices, DataInputStream dataInputStream) throws IOException {
+        private EGM2008Correction(Indices indices, DataInputStream dataInputStream) throws IOException {
             this.indices = indices;
 
             v00 = getUndulationRaw(dataInputStream, indices);
