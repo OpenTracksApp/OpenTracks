@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -46,6 +47,7 @@ import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
+import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * An activity to show the track detail, record a new track or resumes an existing one.
@@ -67,6 +69,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
 
     // The following are set in onCreate.
     private ContentProviderUtils contentProviderUtils;
+    private SharedPreferences sharedPreferences;
     private TrackDataHub trackDataHub;
 
     private TrackRecordedBinding viewBinding;
@@ -91,11 +94,22 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
         }
     };
 
+    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (PreferencesUtils.isKey(TrackRecordedActivity.this, R.string.recording_distance_interval_key, key)) {
+                trackDataHub.setRecordingDistanceInterval(PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, TrackRecordedActivity.this));
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         contentProviderUtils = new ContentProviderUtils(this);
+        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
+
         handleIntent(getIntent());
 
         trackDataHub = new TrackDataHub(this);
@@ -116,6 +130,10 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
     @Override
     protected void onStart() {
         super.onStart();
+
+        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
+
         trackDataHub.start();
     }
 
@@ -138,6 +156,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
         super.onStop();
         trackRecordingServiceConnection.unbind(this);
         trackDataHub.stop();
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
     @Override
