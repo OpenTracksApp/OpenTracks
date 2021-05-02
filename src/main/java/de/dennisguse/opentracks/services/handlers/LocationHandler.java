@@ -38,6 +38,7 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
         gpsStatus = new GpsStatus(context, this);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         registerLocationListener();
+        gpsStatus.start();
     }
 
     @Override

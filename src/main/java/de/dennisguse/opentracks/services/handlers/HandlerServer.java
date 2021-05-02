@@ -63,10 +63,6 @@ public class HandlerServer {
         service.newGpsStatus(gpsStatusValue);
     }
 
-    public GpsStatusValue getGpsStatus() {
-        return locationHandler.getGpsStatus();
-    }
-
     public interface HandlerServerInterface {
         void newTrackPoint(TrackPoint trackPoint, int gpsAccuracy);
         void newGpsStatus(GpsStatusValue gpsStatusValue);
