@@ -237,7 +237,7 @@ public class GPXTrackExporter implements TrackExporter {
         if (printWriter != null) {
             printWriter.println("<wpt " + formatLocation(marker.getLatitude(), marker.getLongitude()) + ">");
             if (marker.hasAltitude()) {
-                printWriter.println("<ele>" + ALTITUDE_FORMAT.format(marker.getAltitude()) + "</ele>");
+                printWriter.println("<ele>" + ALTITUDE_FORMAT.format(marker.getAltitude().toM()) + "</ele>");
             }
             printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(marker.getTime()) + "</time>");
             printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
@@ -281,7 +281,7 @@ public class GPXTrackExporter implements TrackExporter {
             printWriter.println("<trkpt " + formatLocation(trackPoint.getLatitude(), trackPoint.getLongitude()) + ">");
 
             if (trackPoint.hasAltitude()) {
-                printWriter.println("<ele>" + ALTITUDE_FORMAT.format(trackPoint.getAltitude()) + "</ele>");
+                printWriter.println("<ele>" + ALTITUDE_FORMAT.format(trackPoint.getAltitude().toM()) + "</ele>");
             }
 
             printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(trackPoint.getTime()) + "</time>");

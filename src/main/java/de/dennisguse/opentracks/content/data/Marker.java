@@ -50,7 +50,7 @@ public final class Marker {
     private Double latitude;
     private Double longitude;
     private Float accuracy;
-    private Double altitude_m;
+    private Altitude altitude;
     private Float bearing;
 
     //TODO It is the distance from the track starting point; rename to something more meaningful
@@ -77,7 +77,7 @@ public final class Marker {
         this.latitude = trackPoint.getLatitude();
         this.longitude = trackPoint.getLongitude();
         if (trackPoint.hasAccuracy()) this.accuracy = trackPoint.getAccuracy();
-        if (trackPoint.hasAltitude()) this.altitude_m = trackPoint.getAltitude();
+        if (trackPoint.hasAltitude()) this.altitude = trackPoint.getAltitude();
         if (trackPoint.hasBearing()) this.bearing = trackPoint.getBearing();
 
         this.length = Distance.of(0); //TODO Not cool!
@@ -167,7 +167,7 @@ public final class Marker {
             location.setAccuracy(accuracy);
         }
         if (hasAltitude()) {
-            location.setAltitude(altitude_m);
+            location.setAltitude(altitude.toM());
         }
 
         return location;
@@ -202,15 +202,15 @@ public final class Marker {
     }
 
     public boolean hasAltitude() {
-        return altitude_m != null;
+        return altitude != null;
     }
 
-    public Double getAltitude() {
-        return altitude_m;
+    public Altitude getAltitude() {
+        return altitude;
     }
 
-    public void setAltitude(double altitude_m) {
-        this.altitude_m = altitude_m;
+    public void setAltitude(Altitude altitude) {
+        this.altitude = altitude;
     }
 
     public boolean hasBearing() {

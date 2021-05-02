@@ -36,6 +36,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Speed;
@@ -428,7 +429,7 @@ abstract class AbstractFileTrackImporter extends DefaultHandler implements XMLIm
 
         if (altitude != null) {
             try {
-                trackPoint.setAltitude(Double.parseDouble(altitude));
+                trackPoint.setAltitude(Altitude.WGS84.of(Double.parseDouble(altitude)));
             } catch (NumberFormatException e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse altitude: %s", altitude)), e);
             }

@@ -32,6 +32,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Speed;
@@ -416,7 +417,7 @@ public class ExportImportTest {
             }
             assertEquals(trackPoint.hasAltitude(), importedTrackPoint.hasAltitude());
             if (trackPoint.hasAltitude()) {
-                assertEquals(trackPoint.getAltitude(), importedTrackPoint.getAltitude(), 0.001);
+                assertEquals(trackPoint.getAltitude().toM(), importedTrackPoint.getAltitude().toM(), 0.001);
             }
 
             if (type.equals(TrackPoint.Type.SEGMENT_START_MANUAL) || type.equals(TrackPoint.Type.SEGMENT_END_MANUAL)) {
@@ -486,7 +487,7 @@ public class ExportImportTest {
     }
 
     private static TrackPoint createTrackPoint(long time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, Distance distance) {
-        TrackPoint tp = new TrackPoint(latitude, longitude, (double) altitude, Instant.ofEpochMilli(time));
+        TrackPoint tp = new TrackPoint(latitude, longitude, Altitude.WGS84.of(altitude), Instant.ofEpochMilli(time));
         tp.setAccuracy(accuracy);
         tp.setSpeed(Speed.of(speed));
         tp.setHeartRate_bpm(heartRate);

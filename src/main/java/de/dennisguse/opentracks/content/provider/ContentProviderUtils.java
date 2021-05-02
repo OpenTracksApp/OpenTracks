@@ -39,6 +39,7 @@ import java.util.List;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.BuildConfig;
+import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
@@ -320,7 +321,7 @@ public class ContentProviderUtils {
             marker.setLatitude(((double) cursor.getInt(latitudeIndex)) / 1E6);
         }
         if (!cursor.isNull(altitudeIndex)) {
-            marker.setAltitude(cursor.getFloat(altitudeIndex));
+            marker.setAltitude(Altitude.WGS84.of(cursor.getFloat(altitudeIndex)));
         }
         if (!cursor.isNull(accuracyIndex)) {
             marker.setAccuracy(cursor.getFloat(accuracyIndex));
@@ -489,7 +490,7 @@ public class ContentProviderUtils {
         values.put(MarkerColumns.LATITUDE, (int) (marker.getLatitude() * 1E6));
         values.put(MarkerColumns.TIME, marker.getTime().toEpochMilli());
         if (marker.hasAltitude()) {
-            values.put(MarkerColumns.ALTITUDE, marker.getAltitude());
+            values.put(MarkerColumns.ALTITUDE, marker.getAltitude().toM());
         }
         if (marker.hasAccuracy()) {
             values.put(MarkerColumns.ACCURACY, marker.getAccuracy());
@@ -539,7 +540,7 @@ public class ContentProviderUtils {
             trackPoint.setTime(Instant.ofEpochMilli(cursor.getLong(indexes.timeIndex)));
         }
         if (!cursor.isNull(indexes.altitudeIndex)) {
-            trackPoint.setAltitude(cursor.getFloat(indexes.altitudeIndex));
+            trackPoint.setAltitude(Altitude.WGS84.of(cursor.getFloat(indexes.altitudeIndex)));
         }
         if (!cursor.isNull(indexes.accuracyIndex)) {
             trackPoint.setAccuracy(cursor.getFloat(indexes.accuracyIndex));
@@ -690,7 +691,7 @@ public class ContentProviderUtils {
         }
         values.put(TrackPointsColumns.TIME, trackPoint.getTime().toEpochMilli());
         if (trackPoint.hasAltitude()) {
-            values.put(TrackPointsColumns.ALTITUDE, trackPoint.getAltitude());
+            values.put(TrackPointsColumns.ALTITUDE, trackPoint.getAltitude().toM());
         }
         if (trackPoint.hasAccuracy()) {
             values.put(TrackPointsColumns.ACCURACY, trackPoint.getAccuracy());

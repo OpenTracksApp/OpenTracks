@@ -152,7 +152,7 @@ public class LegacyImportTest {
         if (altitude == null) {
             assertFalse(trackPoint.hasAltitude());
         } else {
-            assertEquals(altitude, (Double) trackPoint.getAltitude());
+            assertEquals(altitude, (Double) trackPoint.getAltitude().toM());
         }
 
     }
