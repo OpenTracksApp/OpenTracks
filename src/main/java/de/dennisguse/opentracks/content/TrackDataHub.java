@@ -78,6 +78,8 @@ public class TrackDataHub {
 
     private Track.Id selectedTrackId;
 
+    private Distance recordingDistanceInterval;
+
     private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
     // Track points sampling state
@@ -371,7 +373,7 @@ public class TrackDataHub {
                     samplingFrequency = 1 + (int) (numTotalPoints / targetNumPoints);
                 }
 
-                trackStatisticsUpdater.addTrackPoint(trackPoint, Distance.of(50)); //TODO
+                trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
 
                 // Also include the last point if the selected track is not recording.
                 if ((localNumLoadedTrackPoints % samplingFrequency == 0) || (trackPointId == lastTrackPointId && !isSelectedTrackRecording())) {
@@ -416,5 +418,9 @@ public class TrackDataHub {
 
     public void setRecordingStatus(TrackRecordingService.RecordingStatus recordingStatus) {
         this.recordingStatus = recordingStatus;
+    }
+
+    public void setRecordingDistanceInterval(Distance recordingDistanceInterval) {
+        this.recordingDistanceInterval = recordingDistanceInterval;
     }
 }
