@@ -577,7 +577,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     public void newGpsStatus(GpsStatusValue gpsStatusValue) {
         notificationManager.updateContent(getString(gpsStatusValue.message));
 
-        gpsStatusObservable.postValue(gpsStatusValue);
+        //TODO This check should not be necessary, but prevents a crash; somehow the shutdown is not working correctly as we should not receive a notification then.
+        if (gpsStatusObservable != null) {
+            gpsStatusObservable.postValue(gpsStatusValue);
+        }
     }
 
     /**
@@ -767,13 +770,14 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return isRecording() && !isPaused();
         }
 
-        public RecordingStatus pause() {
-            return new RecordingStatus(getTrackId(), true);
-        }
-
-        public RecordingStatus record(@NonNull Track.Id track) {
-            return new RecordingStatus(trackId, false);
-        }
+//      TODO Use
+//        public RecordingStatus pause() {
+//            return new RecordingStatus(getTrackId(), true);
+//        }
+//
+//        public RecordingStatus record(@NonNull Track.Id trackId) {
+//            return new RecordingStatus(trackId, false);
+//        }
 
         public RecordingStatus stop() {
             return STATUS_DEFAULT;

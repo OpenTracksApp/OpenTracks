@@ -14,7 +14,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
- * This class handle GPS status according to received locations and some thresholds.
+ * This class handle GPS status according to received locations` and some thresholds.
  */
 //TODO should handle sharedpreference changes
 class GpsStatus {
@@ -56,6 +56,7 @@ class GpsStatus {
 
         public void stop() {
             stopped = true;
+            sendStatus(gpsStatus, GpsStatusValue.GPS_NONE);
         }
     }
 
@@ -75,10 +76,15 @@ class GpsStatus {
         gpsStatusHandler = new Handler();
     }
 
+    public void start() {
+        client.onGpsStatusChanged(GpsStatusValue.GPS_NONE, GpsStatusValue.GPS_ENABLED);
+    }
+
     /**
      * The client that uses GpsStatus has to call this method to stop the Runnable if needed.
      */
     public void stop() {
+        client.onGpsStatusChanged(gpsStatus, GpsStatusValue.GPS_NONE);
         client = null;
         if (gpsStatusRunner != null) {
             gpsStatusRunner.stop();
