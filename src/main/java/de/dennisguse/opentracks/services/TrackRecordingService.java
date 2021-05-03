@@ -54,7 +54,7 @@ import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.HandlerServer;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
-import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTaskFactory;
+import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTask;
 import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -139,7 +139,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         handlerServer = new HandlerServer(this);
 
         contentProviderUtils = new ContentProviderUtils(this);
-        voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTaskFactory());
+        voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTask.Factory());
 
         notificationManager = new TrackRecordingServiceNotificationManager(this);
 

@@ -17,6 +17,9 @@ package de.dennisguse.opentracks.services.tasks;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
+
 import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
@@ -52,14 +55,13 @@ public class PeriodicTaskExecutor {
 
     private boolean metricUnits;
 
-    // The next distance for the distance periodic task
-    private double nextTaskDistance = Double.MAX_VALUE;
+    private Distance nextTaskDistance = Distance.of(Double.MAX_VALUE);
 
-    public PeriodicTaskExecutor(TrackRecordingService trackRecordingService, PeriodicTaskFactory periodicTaskFactory) {
+    public PeriodicTaskExecutor(@NonNull TrackRecordingService trackRecordingService, PeriodicTaskFactory periodicTaskFactory) {
         this.trackRecordingService = trackRecordingService;
         this.periodicTaskFactory = periodicTaskFactory;
 
-        TASK_FREQUENCY_OFF = Integer.parseInt(trackRecordingService.getBaseContext().getResources().getString(R.string.frequency_off));
+        TASK_FREQUENCY_OFF = Integer.parseInt(trackRecordingService.getString(R.string.frequency_off));
         taskFrequency = TASK_FREQUENCY_OFF;
     }
 
@@ -97,7 +99,7 @@ public class PeriodicTaskExecutor {
             timerTaskExecutor.scheduleTask(Duration.ofMinutes(taskFrequency));
         } else {
             // For distance periodic task
-            calculateNextTaskDistance();
+            updateNextTaskDistance();
         }
     }
 
@@ -128,39 +130,30 @@ public class PeriodicTaskExecutor {
             return;
         }
 
-        Distance distance = trackStatistics.getTotalDistance();
-
-        if (distance.greaterThan(Distance.of(nextTaskDistance))) {
+        if (trackStatistics.getTotalDistance().greaterThan(nextTaskDistance)) {
             periodicTask.run(trackRecordingService);
-            calculateNextTaskDistance();
+            updateNextTaskDistance();
         }
     }
 
-    /**
-     * Sets task frequency.
-     *
-     * @param taskFrequency the task frequency
-     */
     public void setTaskFrequency(int taskFrequency) {
         this.taskFrequency = taskFrequency;
         restore();
     }
 
-    /**
-     * Sets metricUnits.
-     *
-     * @param metricUnits true to use metric units
-     */
     public void setMetricUnits(boolean metricUnits) {
         this.metricUnits = metricUnits;
-        calculateNextTaskDistance();
+        updateNextTaskDistance();
     }
 
-    /**
-     * Calculates the next distance for the distance periodic task.
-     */
-    private void calculateNextTaskDistance() {
+    private void updateNextTaskDistance() {
         if (!trackRecordingService.isRecording() || trackRecordingService.isPaused() || periodicTask == null) {
+            return;
+        }
+
+        if (!isDistanceFrequency()) {
+            nextTaskDistance = Distance.of(Double.MAX_VALUE);
+            Log.d(TAG, "SplitManager: Distance splits disabled.");
             return;
         }
 
@@ -169,18 +162,16 @@ public class PeriodicTaskExecutor {
             return;
         }
 
-        if (!isDistanceFrequency()) {
-            nextTaskDistance = Double.MAX_VALUE;
-            Log.d(TAG, "SplitManager: Distance splits disabled.");
-            return;
-        }
+        nextTaskDistance = calculateNextTaskDistance(trackStatistics);
+    }
 
-        double distance = trackStatistics.getTotalDistance().toKM_Miles(metricUnits);
+    @VisibleForTesting
+    public Distance calculateNextTaskDistance(TrackStatistics trackStatistics) {
+        Distance distance = trackStatistics.getTotalDistance();
 
-        // The index will be negative since the frequency is negative.
-        int index = (int) (distance / taskFrequency);
-        index -= 1;
-        nextTaskDistance = taskFrequency * index;
+        Distance announcementInterval = Distance.one(metricUnits).multipliedBy(Math.abs(taskFrequency));
+        int index = (int) (distance.dividedBy(announcementInterval));
+        return announcementInterval.multipliedBy(index + 1);
     }
 
     /**

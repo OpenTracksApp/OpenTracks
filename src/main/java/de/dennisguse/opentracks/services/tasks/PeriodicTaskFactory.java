@@ -18,6 +18,8 @@ package de.dennisguse.opentracks.services.tasks;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 /**
  * An interface for classes that can create {@link PeriodicTask}.
  *
@@ -30,5 +32,6 @@ interface PeriodicTaskFactory {
      *
      * @return the task, or null if the task is not supported
      */
+    @NonNull
     PeriodicTask create(Context context);
 }
