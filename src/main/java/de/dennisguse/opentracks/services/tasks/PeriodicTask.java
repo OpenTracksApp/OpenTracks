@@ -16,6 +16,8 @@
 
 package de.dennisguse.opentracks.services.tasks;
 
+import androidx.annotation.NonNull;
+
 import de.dennisguse.opentracks.services.TrackRecordingService;
 
 /**
@@ -35,7 +37,7 @@ public interface PeriodicTask {
      *
      * @param trackRecordingService the track recording service
      */
-    void run(TrackRecordingService trackRecordingService);
+    void run(@NonNull TrackRecordingService trackRecordingService);
 
     /**
      * Shuts down this task and clean up resources.

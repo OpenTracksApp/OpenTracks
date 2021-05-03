@@ -23,6 +23,8 @@ import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
@@ -135,7 +137,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     }
 
     @Override
-    public void run(TrackRecordingService trackRecordingService) {
+    public void run(@NonNull TrackRecordingService trackRecordingService) {
         if (trackRecordingService == null) {
             Log.e(TAG, "TrackRecordingService is null.");
             return;
@@ -230,5 +232,19 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     private void speakAnnouncement(String announcement) {
         // We don't care about the utterance id. It is supplied here to force onUtteranceCompleted to be called.
         tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null, "not used");
+    }
+
+    /**
+     * A {@link PeriodicTaskFactory} for text-to-speech announcement periodic task.
+     *
+     * @author Rodrigo Damazio
+     */
+    public static class Factory implements PeriodicTaskFactory {
+
+        @Override
+        @NonNull
+        public PeriodicTask create(Context context) {
+            return new AnnouncementPeriodicTask(context);
+        }
     }
 }

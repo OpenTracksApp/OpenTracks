@@ -31,6 +31,7 @@ import androidx.test.rule.GrantPermissionRule;
 import androidx.test.rule.ServiceTestRule;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -83,6 +84,10 @@ public class TrackRecordingServiceTest {
         if (Looper.myLooper() == null) Looper.prepare();
     }
 
+    @AfterClass
+    public static void finalTearDown() {
+        if (Looper.myLooper() != null) Looper.myLooper().quit();
+    }
 
     private final Context context = ApplicationProvider.getApplicationContext();
     private final SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
