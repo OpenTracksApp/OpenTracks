@@ -613,4 +613,5 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="track_pace_notification">Fart: %1$s</string>
     <string name="track_distance_notification">Afstand: %1$s</string>
     <string name="track_speed_notification">Hastighed: %1$s</string>
+    <string name="about_third_party_data">Data fra tredjeparter</string>
 </resources>
