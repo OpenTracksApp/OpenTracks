@@ -299,7 +299,7 @@ public final class Marker {
             parcel.writeLong(id);
         }
 
-        public static final Parcelable.Creator<Id> CREATOR = new Parcelable.Creator<Id>() {
+        public static final Parcelable.Creator<Id> CREATOR = new Parcelable.Creator<>() {
             public Id createFromParcel(Parcel in) {
                 return new Id(in.readLong());
             }

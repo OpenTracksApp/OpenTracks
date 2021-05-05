@@ -169,7 +169,7 @@ public class Track {
             parcel.writeLong(id);
         }
 
-        public static final Parcelable.Creator<Track.Id> CREATOR = new Parcelable.Creator<Track.Id>() {
+        public static final Parcelable.Creator<Track.Id> CREATOR = new Parcelable.Creator<>() {
             public Track.Id createFromParcel(Parcel in) {
                 return new Track.Id(in.readLong());
             }

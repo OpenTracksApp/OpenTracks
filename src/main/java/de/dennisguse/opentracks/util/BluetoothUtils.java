@@ -23,8 +23,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,11 +40,10 @@ public class BluetoothUtils {
     public static final UUID HEART_RATE_SERVICE_UUID = new UUID(0x180D00001000L, 0x800000805f9b34fbL);
     public static final UUID HEART_RATE_MEASUREMENT_CHAR_UUID = new UUID(0x2A3700001000L, 0x800000805f9b34fbL);
 
-    public static final List<UUID> HEART_RATE_SUPPORTING_DEVICES = Collections.unmodifiableList(Arrays.asList(
-            BluetoothUtils.HEART_RATE_SERVICE_UUID,
+    //Miband3
+    public static final List<UUID> HEART_RATE_SUPPORTING_DEVICES = List.of(BluetoothUtils.HEART_RATE_SERVICE_UUID,
             //Devices that support HEART_RATE_SERVICE_UUID, but do not announce HEART_RATE_SERVICE_UUID in there BLE announcement messages (during device discovery).
-            UUID.fromString("0000fee0-0000-1000-8000-00805f9b34fb") //Miband3
-    ));
+            UUID.fromString("0000fee0-0000-1000-8000-00805f9b34fb"));
 
     public static final UUID CYCLING_POWER_UUID = new UUID(0x181800001000L, 0x800000805f9b34fbL);
     public static final UUID CYCLING_POWER_MEASUREMENT_CHAR_UUID = new UUID(0x2A6300001000L, 0x800000805f9b34fbL);

@@ -50,7 +50,7 @@ public class MarkerResourceCursorAdapter extends ResourceCursorAdapter implement
         final long usedMemory = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
         final int cacheSize = (int) (Runtime.getRuntime().maxMemory() - usedMemory) / 8;
 
-        memoryCache = new LruCache<String, Bitmap>(cacheSize) {
+        memoryCache = new LruCache<>(cacheSize) {
             @Override
             protected int sizeOf(@NonNull String key, @NonNull Bitmap bitmap) {
                 return bitmap.getByteCount();
