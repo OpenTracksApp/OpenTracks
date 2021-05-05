@@ -490,4 +490,120 @@ limitations under the License.
     <string name="help_recording_content">OpenTracks использует датчик GPS устройства для непрерывной записи местоположения. Если устройство GPS сообщает неточные данные (например, местоположение, скорость, высоту), OpenTracks ничего не может с этим поделать.</string>
     <string name="export_progress_summary_new_msg">Новые экспортируемые треки</string>
     <string name="help_data_storage_title">Как OpenTracks записывает данные с датчиков\?</string>
+    <string name="export_track_already_exists_msg">Дорожка %1$s уже существует в каталоге назначения.</string>
+    <string name="export_without_photos">без фотографий</string>
+    <string name="export_with_photos">с фотографией</string>
+    <string name="description_default_speed_or_pace">По типу деятельности</string>
+    <string name="export_all_do_it_for_all">делать это во всех конфликтах</string>
+    <string name="stats_loss">Потери</string>
+    <string name="export_progress_summary_skip_msg">Пропущенные дорожки</string>
+    <string name="generic_click_twice_cancel">Нажмите назад, чтобы отменить</string>
+    <string name="generic_completed">Завершено</string>
+    <string name="generic_show_errors">Показать ошибки</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="generic_skip">Скип</string>
+    <string name="generic_open_track">Открытая трасса</string>
+    <string name="export_progress_summary_errors_msg">Ошибки</string>
+    <string name="import_file_imported">Файл %1$s импортирован</string>
+    <string name="import_error_list_dialog_title">Файлы не импортированы</string>
+    <string name="import_error_info">%1$s: %2$s</string>
+    <string name="import_no_kml_file_found">Файл doc.kml не найден в KMZ</string>
+    <string name="import_unable_to_import_file">Невозможно импортировать файл: %1$s</string>
+    <string name="import_parser_error">Ошибка парсера: %1$s</string>
+    <string name="import_unsupported_format">Недопустимый формат файла</string>
+    <string name="import_thread_interrupted">Нить прервана</string>
+    <string name="gps_fixed_and_ready">GPS зафиксирован и готов</string>
+    <string name="gps_disabled_msg">GPS отключен</string>
+    <string name="marker_add_photo_canceled">Отменено, фотомаркер не добавлен</string>
+    <string name="import_progress_summary_exists_msg">Уже существует</string>
+    <string name="import_progress_summary_ok_msg">Импорт файлов</string>
+    <string name="menu_resume_track">След от резюме</string>
+    <string name="settings_night_mode_title">UI Тема</string>
+    <string name="open_track_as_trackfileformat">Открыть как %1$s</string>
+    <string name="open_track_as_GPX">Открыть как GPX</string>
+    <string name="open_track_as_KMZ">Открыть как KMZ</string>
+    <string name="open_track_using_dashboard">Открыть с помощью OpenTracks-Dashboard</string>
+    <string name="help_support_title">Как поддержать OpenTracks\?</string>
+    <string name="help_gps_troubleshooting_title">OpenTracks не регистрирует местоположения\?</string>
+    <string name="activity_type_escooter">эскулап</string>
+    <string name="app_not_installed_show_on_map">Пожалуйста, установите приложение, которое поддерживает представление данных карты.</string>
+    <string name="permission_gps_failed">OpenTracks требует разрешения на использование GPS.</string>
+    <string name="settings_prevent_reimport_tracks_title">Предотвращение повторного импорта треков</string>
+    <string name="sensor_state_cadence_max">Макс. каденция</string>
+    <string name="sensor_state_cadence_avg">Средний каденс</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">Полный экран</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">Во время записи не выключайте экран.</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">Не выключайте экран</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Показывать статистику на экране блокировки</string>
+    <string name="settings_default_trackfileformat">Формат экспорта/обмена файлами</string>
+    <string name="sensor_state_heart_rate_max">Максимальный пульс</string>
+    <string name="sensor_state_heart_rate_avg">Средний пульс</string>
+    <string name="bluetooth_disabled">Включите Bluetooth.</string>
+    <string name="sensor_not_known">Датчик %1$s неизвестен. Пожалуйста, проверьте настройки.</string>
+    <string name="sensor_state_power_avg">Средняя мощность</string>
+    <string name="track_recording_notification_accuracy">Точность расположения: %1$s</string>
+    <string name="stats_split_interval">Раздельный интервал</string>
+    <string name="stats_intervals">Интервалы</string>
+    <string name="settings_sensor_wheel_circumference">Окружность колеса (мм)</string>
+    <string name="settings_sensor_disconnected">Отключен от %1$s</string>
+    <string name="settings_sensor_connecting">Подключен к %1$s</string>
+    <string name="settings_night_mode_option_night">Ночь</string>
+    <string name="settings_night_mode_option_day">День</string>
+    <string name="export_progress_summary_overwrite_msg">Перезапись дорожек</string>
+    <string name="export_track_errors">Треки не экспортируются</string>
+    <string name="export_error_post_workout">Сбой экспорта после тренировки, пожалуйста, проверьте каталог экспорта.</string>
+    <string name="description_altitude_loss">Потеря высоты: %1$d м (%2$d футов)</string>
+    <string name="settings_default_export_uri_title">Каталог экспорта треков</string>
+    <string name="instant_export_enabled_summary">Экспорт дорожки в хранилище после завершения записи</string>
+    <string name="share_image_subject">Я хотел бы поделиться с вами изображением</string>
+    <string name="track_detail_record_success">Сейчас записываю новый трек</string>
+    <string name="track_detail_intervals_tab">Интервалы</string>
+    <string name="help_data_storage_content"> Данные датчика хранятся в каждом месте записи. Применительно к датчику пульса это означает, что для каждого места сохраняется только <i>одно</i> измерение пульса. Если вы стоите на месте или находитесь в помещении, данные датчика не будут записаны (но они будут отображаться). </string>
+    <string name="help_gps_troubleshooting_content"> Что вы можете сделать:
+\n a) проверить, включен ли GPS,
+\n б) улучшить прием GPS (например, выехать на природу),
+\n c) проверить с помощью приложения <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, и
+\n г) отключите энергосбережение.
+\n
+\n Если все это не поможет, пожалуйста, сообщите об ошибке. </string>
+    <string name="track_pace_notification">Темп: %1$s</string>
+    <string name="track_speed_notification">Скорость: %1$s</string>
+    <string name="track_distance_notification">Расстояние: %1$s</string>
+    <string name="value_pace_kilometer">%1$d:%2$02d мин/км</string>
+    <string name="value_pace_mile">%1$d:%2$02d мин/миль</string>
+    <string name="value_float_mile_hour">%1$.2f mph</string>
+    <string name="value_float_kilometer_hour">%1$.2f км/ч</string>
+    <string name="interval_list_empty_message">Интервалов пока нет</string>
+    <string name="aggregated_stats_empty_message">Запишите свой первый трек, чтобы увидеть агрегированную статистику</string>
+    <string name="track_detail_resume_success">Теперь возобновляем путь</string>
+    <string name="voice_pace_lap">Время круга %1$s</string>
+    <string name="voice_speed_lap">Скорость круга %1$s</string>
+    <string name="instant_export_enabled_title">Мгновенный экспорт после тренировки</string>
+    <string name="toast_message_instant_track_was_exported">Последний экспортированный трек</string>
+    <string name="hold_to_pause">Удерживайте для паузы</string>
+    <string name="hold_to_stop">Удерживать для остановки</string>
+    <string name="share_image_body">Я думаю, вас может заинтересовать это изображение.</string>
+    <string name="help_support_content"> Вы можете:
+\n a) распространять информацию об OpenTracks,
+\n б) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">предлагать возможности</a>,
+\n в) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">сообщать об ошибках</a>,
+\n d) помогать в разработке программного обеспечения,
+\n д) покупать в <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\n f) жертвовать, и
+\n g) делать все, что, по вашему мнению, поможет OpenTracks. </string>
+    <string name="settings_error_initial_values_restored">Извините, но произошла ошибка. Все настройки были возвращены к значениям по умолчанию.</string>
+    <string name="settings_night_mode_option_system">Система</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Во время записи присутствует полноэкранный режим.</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">Во время записи показывайте статистику, не разблокируя устройство.</string>
+    <string name="menu_insert_gallery_img">Вставка изображения галереи</string>
+    <string name="sensor_could_not_scan">Не удалось выполнить сканирование устройств Bluetooth (ошибка %1$i).</string>
+    <string name="import_progress_summary_errors_msg">Ошибки</string>
+    <string name="generic_overwrite">Перезаписать</string>
+    <string name="import_prevent_reimport">Вы настроили предотвращение повторного импорта трека</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Завершена с одной ошибкой</item>
+        <item quantity="few">Завершено с ошибками</item>
+        <item quantity="many">Завершено с %1$d ошибок</item>
+        <item quantity="other">Завершено с %1$d ошибок</item>
+    </plurals>
 </resources>
