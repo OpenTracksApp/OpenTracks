@@ -610,4 +610,5 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="track_distance_notification">Kaugus: %1$s</string>
     <string name="track_speed_notification">Kiirus: %1$s</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
+    <string name="about_third_party_data">Kolmanda osapoole andmed</string>
 </resources>
