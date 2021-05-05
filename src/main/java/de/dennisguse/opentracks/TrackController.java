@@ -20,6 +20,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.accessibility.AccessibilityEvent;
@@ -99,6 +100,10 @@ public class TrackController implements View.OnTouchListener {
     @SuppressLint("ClickableViewAccessibility") //We do accessibility manually.
     @Override
     public boolean onTouch(final View view, MotionEvent event) {
+        if (!isResumed()) {
+            Log.w(TAG, "The UI is already gone, no need to update anything; seen on Android 7.1.2");
+            return false;
+        }
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
             return false;
         }
