@@ -154,7 +154,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="description_sensor_heart_rate">Frequenza cardiaca (bpm)</string>
     <string name="description_sensor_power">Potenza (W)</string>
     <string name="description_speed_imperial">Velocità (mi/hr)</string>
-    <string name="description_speed_metric">Velocità (km/hr)</string>
+    <string name="description_speed_metric">Velocità (km/h)</string>
     <string name="description_time">Durata</string>
     <string name="description_total_distance">Distanza totale: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Tempo totale: %1$s</string>
@@ -334,7 +334,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="stats_average_speed">Velocità media</string>
     <string name="stats_altitude">Altitudine</string>
     <string name="stats_fastest_pace">Ritmo più veloce</string>
-    <string name="stats_gain">Guadagno</string>
+    <string name="stats_gain">Salita</string>
     <string name="stats_grade">Pendenza</string>
     <string name="stats_latitude">Latitudine</string>
     <string name="stats_longitude">Longitude</string>
@@ -536,8 +536,8 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
 \ng) Fare tutto ciò che si pensa possa aiutare OpenTracks. </string>
     <string name="activity_type_escooter">Scooter elettrico</string>
     <string name="app_not_installed_show_on_map">Si prega di installare un\'applicazione che possa mostrare i dati delle mappe.</string>
-    <string name="export_with_photos">Con le foto</string>
-    <string name="export_without_photos">Senza foto</string>
+    <string name="export_with_photos">con foto</string>
+    <string name="export_without_photos">senza foto</string>
     <string name="export_track_already_exists_msg">Il percorso %1$s esiste già nella cartella di salvataggio.</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Completato con un errore</item>
@@ -573,9 +573,9 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="bluetooth_disabled">Per favore, attiva il Bluetooth.</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Mostra le statistiche sulla schermata di blocco</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Mantieni lo schermo acceso</string>
-    <string name="settings_recording_keep_screen_on_while_recording_summary">Durante la registrazione, tenere acceso lo schermo.</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">Durante la registrazione, tiene acceso lo schermo.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Schermo intero</string>
-    <string name="settings_recording_fullscreen_on_while_recording_summary">Durante la registrazione, espandi a schermo intero.</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Durante la registrazione, espande a schermo intero.</string>
     <string name="settings_night_mode_option_system">Sistema</string>
     <string name="settings_night_mode_option_day">Chiaro</string>
     <string name="settings_night_mode_option_night">Scuro</string>
@@ -607,7 +607,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="sensor_state_heart_rate_max">Frequenza cardiaca max</string>
     <string name="value_pace_kilometer">%1$d:%2$02d min/cm</string>
     <string name="value_float_kilometer_hour">%1$.2f cp/s</string>
-    <string name="stats_loss">Perdita</string>
+    <string name="stats_loss">Discesa</string>
     <string name="settings_sensor_wheel_circumference">Circonferenza della ruota (mm)</string>
     <string name="description_altitude_loss">Perdita di quota: %1$d m (%2$d ft)</string>
     <string name="sensor_state_heart_rate_avg">Tasso cardiaco medio</string>
