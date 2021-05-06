@@ -600,10 +600,4 @@ limitations under the License.
     <string name="import_progress_summary_errors_msg">Ошибки</string>
     <string name="generic_overwrite">Перезаписать</string>
     <string name="import_prevent_reimport">Вы настроили предотвращение повторного импорта трека</string>
-    <plurals name="generic_completed_with_errors">
-        <item quantity="one">Завершена с одной ошибкой</item>
-        <item quantity="few">Завершено с ошибками</item>
-        <item quantity="many">Завершено с %1$d ошибок</item>
-        <item quantity="other">Завершено с %1$d ошибок</item>
-    </plurals>
 </resources>
