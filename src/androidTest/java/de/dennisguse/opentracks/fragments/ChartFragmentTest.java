@@ -28,7 +28,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.dennisguse.opentracks.chart.ChartView;
-import de.dennisguse.opentracks.content.data.Distance;
 
 /**
  * Tests {@link ChartFragment}.
@@ -59,7 +58,6 @@ public class ChartFragmentTest {
         boolean chartByDistance = false;
         chartFragment = ChartFragment.newInstance(chartByDistance);
         chartFragment.setChartView(new ChartView(ApplicationProvider.getApplicationContext(), chartByDistance));
-        chartFragment.setRecordingDistanceInterval(Distance.of(50));
     }
 
     @Test

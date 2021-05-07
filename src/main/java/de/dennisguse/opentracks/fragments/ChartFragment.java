@@ -318,24 +318,4 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     void setChartView(ChartView view) {
         chartView = view;
     }
-
-    @VisibleForTesting
-    void setMetricUnits(boolean value) {
-        chartView.setMetricUnits(value);
-    }
-
-    @VisibleForTesting
-    void setReportSpeed(boolean value) {
-        chartView.setReportSpeed(value);
-    }
-
-    @VisibleForTesting
-    void setChartByDistance(boolean value) {
-        chartByDistance = value;
-    }
-
-    @VisibleForTesting
-    void setRecordingDistanceInterval(Distance value) {
-        recordingDistanceInterval = value;
-    }
 }
