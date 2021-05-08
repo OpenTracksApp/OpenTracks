@@ -231,10 +231,10 @@ limitations under the License.
     <!-- Sensor State -->
     <string name="sensor_state_battery">Mức pin</string>
     <string name="sensor_state_cadence">Nhịp</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
+    <string name="sensor_state_cadence_value">%1$d vòng/phút</string>
     <string name="sensor_state_disconnected">Đã ngắt kết nối</string>
     <string name="sensor_state_heart_rate">Nhịp tim</string>
-    <string name="sensor_state_heart_rate_value">%1$d bpm</string>
+    <string name="sensor_state_heart_rate_value">%1$d nhịp đập/phút</string>
     <string name="sensor_state_power">Công suất</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Không khả dụng khi đang ghi tuyến đường</string>
@@ -279,7 +279,9 @@ limitations under the License.
     <string name="settings_stats_units_title">Đơn vị ưa thích</string>
     <!-- Share Track -->
     <string name="share_track_share_file">Chia sẻ tệp tuyến đường</string>
-    <string name="share_track_share_file_body">Tôi nghĩ rằng bạn có thể quan tâm đến tuyến đường này.\n\nĐể xem tuyến đường này, hãy sử dụng Google Earth hoặc phần mềm vẽ bản đồ khác.\n\n%1$s</string>
+    <string name="share_track_share_file_body">Tôi nghĩ bạn có thể sẽ quan tâm đến tuyến đường này.
+\n
+\n%1$s</string>
     <string name="share_track_subject">Tôi muốn chia sẻ một tuyến đường với bạn</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Nhịp độ di chuyển trung bình</string>
@@ -306,7 +308,7 @@ limitations under the License.
     <string name="track_markers">%1$s Điểm đánh dấu</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Tuyến đường và các điểm đánh dấu của nó sẽ bị xóa vĩnh viễn khỏi thiết bị.</string>
-    <string name="track_delete_one_confirm_title">Xóa tuyến đường</string>
+    <string name="track_delete_one_confirm_title">Xóa tuyến đường\?</string>
     <string name="track_delete_multiple_confirm_message">Các tuyến đường được chọn và điểm đánh dấu của chúng sẽ bị xóa vĩnh viễn khỏi thiết bị.</string>
     <string name="track_delete_progress_message">Đang xóa…</string>
     <!-- Track Detail -->
@@ -466,4 +468,19 @@ limitations under the License.
     <string name="about_version_code">Mã phiên bản: %1$d</string>
     <string name="about_libraries">Thư viện</string>
     <string name="help_feature_title">OpenTracks có những tính năng sau đây:</string>
+    <string name="help_storage_pictures_content">Chúng được lưu trữ trong bộ nhớ trong của ứng dụng (vd: chỉ truy cập được từ trong OpenTracks).</string>
+    <string name="help_data_google_play_services_title">OpenTracks có yêu cầu/sử dụng Dịch vụ Google Play không\?</string>
+    <string name="help_recording_title">OpenTracks ghi lại dữ liệu như thế nào\?</string>
+    <string name="about_description"><i>OpenTracks</i> là một ứng dụng theo dõi thể thao hoàn toàn tôn trọng sự riêng tư của bạn.</string>
+    <string name="about_url">Trang web của dự án: <a href="%1$s">%1$s</a></string>
+    <string name="about_history">OpenTracks là một fork của <a href="https://code.google.com/archive/p/mytracks/"><i>MyTracks của Google</i></a> (bị ngừng tiếp tục vào năm 2016).</string>
+    <string name="help_feature_content">* tạo các tuyến đường GPS
+\n* sử dụng cảm biến nhịp tim (chỉ Bluetooth LE)
+\n* tuyên bố bằng giọng nói (thời gian hoặc khoảng cách)
+\n* tạo đánh dấu (bao gồm hình ảnh)
+\n* hoạt động hoàn toàn ngoại tuyến
+\n* hiện đường đi trên bản đồ (xem bên dưới)</string>
+    <string name="help_track_map_title">Hiện tuyến đường trên bản đồ như thế nào\?</string>
+    <string name="about_third_party_data">Dữ liệu bên thứ ba</string>
+    <string name="help_storage_pictures_title">OpenTracks lưu trữ các ảnh được chụp làm đánh dấu như thế nào\?</string>
 </resources>
