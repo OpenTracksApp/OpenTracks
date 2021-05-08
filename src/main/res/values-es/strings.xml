@@ -611,4 +611,5 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="track_distance_notification">Distancia: %1$s</string>
     <string name="track_speed_notification">Velocidad: %1$s</string>
     <string name="track_pace_notification">Ritmo: %1$s</string>
+    <string name="about_third_party_data">Datos de terceros</string>
 </resources>
