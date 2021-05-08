@@ -613,4 +613,5 @@ limitations under the License.
     <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
     <string name="value_float_mile_hour">%1$.2f mph</string>
     <string name="value_float_kilometer_hour">%1$.2f km/h</string>
+    <string name="about_third_party_data">Dane osób trzecich</string>
 </resources>
