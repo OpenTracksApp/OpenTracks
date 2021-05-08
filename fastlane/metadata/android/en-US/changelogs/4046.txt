@@ -1,0 +1,15 @@
+v3.18.0: OpenTracks
+
+Changes:
+- Altitude is shown in EGM2008 (stored/exported as WGS84)
+
+Bugfix:
+- Fixed memory leak (introduced in v3.17.0)
+- Charts: altitude should be in M/FT (introduced in v3.17.1)
+- Charts: while recording was not correctly updated (introduced in v3.17.3)
+- TrackDataHub did not account for recordingDistanceInterval (introduced in v3.17.2)
+
+Developer:
+- Disable PNG crunching (reproducible build)
+- Refactored TrackImporter and optimized KMZ import
+- Use LiveData for TrackRecordingService to UI communication (removing memory leak)
