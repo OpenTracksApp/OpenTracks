@@ -618,4 +618,5 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="track_distance_notification">Distanza: %1$s</string>
     <string name="track_speed_notification">Velocità: %1$s</string>
     <string name="track_pace_notification">Ritmo: %1$s</string>
+    <string name="about_third_party_data">Dati di terzi</string>
 </resources>
