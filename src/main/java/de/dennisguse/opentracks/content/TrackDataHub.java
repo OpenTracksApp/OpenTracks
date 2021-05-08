@@ -155,7 +155,6 @@ public class TrackDataHub {
         }
 
         started = false;
-        trackStatisticsUpdater = null;
 
         //Unregister listeners
         ContentResolver contentResolver = context.getContentResolver();
@@ -168,6 +167,7 @@ public class TrackDataHub {
             handlerThread = null;
         }
         handler = null;
+        trackStatisticsUpdater = null;
     }
 
     public void loadTrack(final @NonNull Track.Id trackId) {
