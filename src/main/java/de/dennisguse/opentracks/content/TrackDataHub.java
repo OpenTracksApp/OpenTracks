@@ -91,6 +91,7 @@ public class TrackDataHub {
     private int numLoadedPoints;
     private TrackPoint.Id firstSeenTrackPointId;
     private TrackPoint.Id lastSeenTrackPointId;
+    private TrackStatisticsUpdater trackStatisticsUpdater;
 
     // Registered listeners
     private ContentObserver tracksTableObserver;
@@ -145,12 +146,6 @@ public class TrackDataHub {
             }
         };
         contentResolver.registerContentObserver(TrackPointsColumns.CONTENT_URI_BY_ID, false, trackPointsTableObserver);
-
-        handler.post(() -> {
-            if (started) {
-                loadDataForAll();
-            }
-        });
     }
 
     public void stop() {
@@ -160,6 +155,7 @@ public class TrackDataHub {
         }
 
         started = false;
+        trackStatisticsUpdater = null;
 
         //Unregister listeners
         ContentResolver contentResolver = context.getContentResolver();
@@ -355,8 +351,6 @@ public class TrackDataHub {
             next = new TrackPoint.Id(localLastSeenTrackPointIdId.getId() + 1); //TODO startTrackPointId + 1 is an assumption assumption; should be derived from the DB.
         }
 
-        TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater();
-
         TrackPoint trackPoint = null;
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, next)) {
 
@@ -439,6 +433,7 @@ public class TrackDataHub {
         numLoadedPoints = 0;
         firstSeenTrackPointId = null;
         lastSeenTrackPointId = null;
+        trackStatisticsUpdater = new TrackStatisticsUpdater();
     }
 
     public void setRecordingStatus(TrackRecordingService.RecordingStatus recordingStatus) {
