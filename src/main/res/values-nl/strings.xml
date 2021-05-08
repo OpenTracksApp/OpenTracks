@@ -610,4 +610,5 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="track_speed_notification">Snelheid: %1$s</string>
     <string name="track_distance_notification">Afstand: %1$s</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
+    <string name="about_third_party_data">Gegevens van derden</string>
 </resources>
