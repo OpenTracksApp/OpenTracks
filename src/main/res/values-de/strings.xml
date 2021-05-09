@@ -559,7 +559,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="export_track_errors">Aufzeichnungen wurden nicht exportiert</string>
     <string name="settings_default_export_uri_title">Track Export Verzeichnis</string>
     <string name="import_progress_summary_ok_msg">Dateien importiert</string>
-    <string name="export_all_do_it_for_all">Für aale Konflikte übernehmen</string>
+    <string name="export_all_do_it_for_all">Für alle Konflikte übernehmen</string>
     <string name="export_progress_summary_new_msg">Neue Tracks exportiert</string>
     <string name="activity_type_escooter">E-Scooter</string>
     <string name="import_unsupported_format">Nicht unterstütztes Dateiformat</string>
@@ -594,4 +594,11 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="instant_export_enabled_title">Sofortiger Export im Anschluss an die Übung</string>
     <string name="instant_export_enabled_summary">Streckenaufzeichnung nach Beendigung der Aufnahme in den Speicher exportieren</string>
     <string name="generic_open_track">Offene Strecke</string>
+    <string name="sensor_state_power_avg">Durchschnittliche Leistung</string>
+    <string name="sensor_state_cadence_avg">Durchschnittliche Trittfrequenz</string>
+    <string name="sensor_state_cadence_max">Maximale Trittfrequenz</string>
+    <string name="stats_split_interval">Teile die Intervalle</string>
+    <string name="track_distance_notification">Strecke: %1$s</string>
+    <string name="track_speed_notification">Geschwindigkeit: %1$s</string>
+    <string name="track_pace_notification">Tempo: %1$s</string>
 </resources>
