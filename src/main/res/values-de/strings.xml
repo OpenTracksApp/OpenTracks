@@ -231,7 +231,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="image_photo_marker">Fotomarkierung</string>
     <string name="image_record">Aufzeichnen</string>
     <string name="image_stop">Beenden</string>
-    <string name="image_track">Track</string>
+    <string name="image_track">Strecke</string>
     <!-- Import -->
     <string name="import_error">%1$d von %2$s aus %3$s importiert</string>
     <string name="import_no_directory">%1$s ist nicht vorhanden.</string>
@@ -379,7 +379,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="stats_distance">Entfernung</string>
     <string name="stats_total_time">Gesamtzeit</string>
     <!-- Track -->
-    <string name="track_name_format">Track %1$d</string>
+    <string name="track_name_format">Strecke %1$d</string>
     <string name="track_record_notification">Der Track wird aufgezeichnet…</string>
     <string name="track_recording_notification_accuracy">Standortgenauigkeit: %1$s</string>
     <string name="track_markers">Markierungen für %1$s</string>
@@ -601,4 +601,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="track_distance_notification">Strecke: %1$s</string>
     <string name="track_speed_notification">Geschwindigkeit: %1$s</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
+    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
+    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
 </resources>
