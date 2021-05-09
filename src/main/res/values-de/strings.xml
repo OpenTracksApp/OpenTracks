@@ -124,7 +124,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="activity_type_sled">Schlittenfahren</string>
     <string name="activity_type_snow_boarding">Snowboarden</string>
     <string name="activity_type_snow_shoeing">Schneeschuhwandern</string>
-    <string name="activity_type_speed_walking">Speed-​​Walking</string>
+    <string name="activity_type_speed_walking">Sportliches Gehen</string>
     <string name="activity_type_street_running">Laufen (Straßenuntergrund)</string>
     <string name="activity_type_surfing">Surfen</string>
     <string name="activity_type_track_cycling">Bahnradfahren</string>
@@ -214,9 +214,9 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="generic_tracks">Strecken</string>
     <string name="generic_yes">Ja</string>
     <!-- Gps -->
-    <string name="gps_location_access">\"Standortzugriff\"</string>
-    <string name="gps_disabled">GPS ist nicht aktiviert. Tippen Sie hier, um zu %1$s wechseln. Drücken Sie \"Zurück\", um zurückzugehen.</string>
-    <string name="gps_disabled_my_location">Der aktuelle Standort kann nicht ermittelt werden. Aktivieren Sie mehr Standortquellen unter \"%1$s\" und vergewissern Sie sich, dass der Himmel sichtbar ist. Bitte versuchen Sie es später erneut.</string>
+    <string name="gps_location_access">„Standortzugriff“</string>
+    <string name="gps_disabled">GPS ist nicht aktiviert. Tippen Sie hier, um zu %1$s wechseln. Drücken Sie „Zurück“, um zurückzugehen.</string>
+    <string name="gps_disabled_my_location">Der aktuelle Standort kann nicht ermittelt werden. Aktivieren Sie mehr Standortquellen unter „%1$s“ und vergewissern Sie sich, dass der Himmel sichtbar ist. Bitte versuchen Sie es später erneut.</string>
     <string name="gps_not_found">Das Gerät empfängt kein GPS-Signal</string>
     <string name="gps_starting">GPS wird gestartet</string>
     <string name="gps_wait_for_better_signal">Warten auf besseres GPS-Signal</string>
@@ -325,7 +325,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="settings_recording_auto_resume_track_timeout_summary">Eine Aufzeichnung nach dem Neustart fortsetzen, wenn der letzte Standort innerhalb der letzten %1$s aufgezeichnet wurde</string>
     <string name="settings_recording_auto_resume_track_timeout_title">Automat. Fortsetzung</string>
     <string name="settings_recording_default_activity_title">Standardaktivität</string>
-    <string name="settings_recording_location_frequency_summary">Entfernungs-/Zeitintervall %1$s zwischen zwei Standortaufzeichnungen:</string>
+    <string name="settings_recording_location_frequency_summary">Entfernungs-/Zeitintervall %1$s zwischen zwei Standortaufzeichnungen</string>
     <string name="settings_recording_max_recording_distance_summary">Ein neues Segment wird erstellt, wenn die Entfernung zwischen zwei Standorten mehr als %1$s beträgt.</string>
     <string name="settings_recording_max_recording_distance_title">Max. Entfernung</string>
     <string name="settings_recording_min_recording_distance_title">Entfernungsintervall aufz.</string>
@@ -491,7 +491,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="voice_total_distance_miles_other">Gesamtstrecke: %1$.2f Meilen</string>
     <string name="voice_total_distance_miles_two">Gesamtstrecke: 2 Meilen</string>
     <string name="voice_total_distance_miles_zero">Gesamtstrecke: 0 Meilen</string>
-    <string name="voice_total_distance_zero">Die Gesamtstrecke in \"Meine Tracks\" ist null.</string>
+    <string name="voice_total_distance_zero">Die Gesamtstrecke ist null.</string>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Geldautomat</string>
     <string name="waypoint_type_bank">Bank</string>
@@ -557,7 +557,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="import_progress_summary_errors_msg">Fehler</string>
     <string name="import_progress_summary_exists_msg">Schon vorhanden</string>
     <string name="export_track_errors">Aufzeichnungen wurden nicht exportiert</string>
-    <string name="settings_default_export_uri_title">Track Export Verzeichnis</string>
+    <string name="settings_default_export_uri_title">Track-Export-Verzeichnis</string>
     <string name="import_progress_summary_ok_msg">Dateien importiert</string>
     <string name="export_all_do_it_for_all">Für alle Konflikte übernehmen</string>
     <string name="export_progress_summary_new_msg">Neue Tracks exportiert</string>
@@ -578,7 +578,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="generic_overwrite">Überschreiben</string>
     <string name="generic_skip">Überspringen</string>
     <string name="generic_separator_done_total">/</string>
-    <string name="generic_show_errors">Zeige Fehler</string>
+    <string name="generic_show_errors">Fehler anzeigen</string>
     <string name="generic_completed">Abgeschlossen</string>
     <string name="gps_disabled_msg">GPS deaktiviert</string>
     <string name="export_progress_summary_overwrite_msg">Streckenaufzeichnung überschrieben</string>
@@ -597,7 +597,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="sensor_state_power_avg">Durchschnittliche Leistung</string>
     <string name="sensor_state_cadence_avg">Durchschnittliche Trittfrequenz</string>
     <string name="sensor_state_cadence_max">Maximale Trittfrequenz</string>
-    <string name="stats_split_interval">Teile die Intervalle</string>
+    <string name="stats_split_interval">Geteilte Intervalle</string>
     <string name="track_distance_notification">Strecke: %1$s</string>
     <string name="track_speed_notification">Geschwindigkeit: %1$s</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
