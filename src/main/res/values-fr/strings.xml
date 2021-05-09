@@ -205,7 +205,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="generic_tracks">Parcours</string>
     <string name="generic_yes">Oui</string>
     <!-- Gps -->
-    <string name="gps_location_access">\"Données de localisation\"</string>
+    <string name="gps_location_access">« Données de localisation »</string>
     <string name="gps_disabled">Le GPS n\'est pas activé. Appuyez ici pour accéder aux %1$s. Appuyez sur le bouton Retour pour revenir en arrière.</string>
     <string name="gps_disabled_my_location">Impossible de déterminer la position actuelle. Veuillez activer d\'autres sources de localisation dans les %1$s et vous assurer
     que le ciel est visible. Veuillez réessayer ultérieurement.</string>
@@ -284,7 +284,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <!-- Search -->
     <string name="search_global_description">Parcours et repères</string>
     <string name="search_list_empty_message">Aucun parcours ni repère ne correspond à votre recherche</string>
-    <string name="search_list_marker_track_location">Dans la piste \" %1$s \".</string>
+    <string name="search_list_marker_track_location">Dans la piste « %1$s ».</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Niveau de la batterie</string>
     <string name="sensor_state_cadence">Cadences</string>
@@ -591,7 +591,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="generic_overwrite">Écraser</string>
     <string name="generic_show_errors">Afficher les erreurs</string>
     <string name="generic_separator_done_total">/</string>
-    <string name="generic_skip">Sauter</string>
+    <string name="generic_skip">Ignorer</string>
     <string name="generic_open_track">Voie ouverte</string>
     <string name="gps_disabled_msg">GPS désactivé</string>
     <string name="gps_fixed_and_ready">GPS fixe et prêt</string>
