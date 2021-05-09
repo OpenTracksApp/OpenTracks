@@ -31,10 +31,10 @@ limitations under the License.
         * toimii täysin ilman verkkoyhteyttä\n
         * näytä jäljet kartalla (ks. alla)</string>
     <string name="help_track_map_title">Kuinka näen jäljen kartalla?</string>
-    <string name="help_track_map_content">" UsKäytä pientä karttakuvaketta.
-\n a) (live-päivityksiä) Asenna &lt;a href=\"https://github.com/OpenTracksApp/OSMDashboard\"&gt;OSMDashboard&lt;/a&gt;. Se tarjoaa online-tai offline-karttoja kautta &lt;a href=\"https://www.openstreetmap.org\"&gt;OpenStreetMap&lt;/a&gt;.
-\n Itse asiassa, OSMDashboard on erillinen sovellus, joka vain voi käyttää (tilapäisesti) tiedot track(s), joka tulee näkyviin.
-\n b) Kautta tavallinen kartta sovellus (esim. &lt;a href=\"http://osmand.net/\"&gt;OsmAnd&lt;/a&gt; ja &lt;a href=\"https://maps.me/\"&gt;KARTAT.MINULLE&lt;/a&gt;). Nämä sovellukset tarvitsevat tukea KMZ-muodossa (vain paikoissa ja aikaleimat). Itse asiassa sovelluksen on tuettava &lt; i&gt;ACTION_VIEW&lt; / i&gt; MIME &lt;i&gt;application / vnd: n kanssa.google-maa.kmz&lt;/i&gt;. "</string>
+    <string name="help_track_map_content"> Käytä pientä karttakuvaketta.
+\n a) (live-päivityksiä) Asenna <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Se tarjoaa online-tai offline-karttoja kautta <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n OSMDashboard on erillinen sovellus, joka voi lukea väliaikaisesti reittien dataa näyttääkseen ne.
+\n b) Tavallisella karttasovelluksella (esim. <a href="http://osmand.net/">OsmAnd</a> ja <a href="https://maps.me/">MAPS.ME</a>). Näiden sovellusten pitää tukea reittejä KMZ-muodossa (vain paikat ja aikaleimat). Itse asiassa sovelluksen on tuettava <i>ACTION_VIEW</i> MIME:llä <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_storage_pictures_title">Miten OpenTracks tallentaa merkkeihin liittyen otetut kuvat?</string>
     <string name="help_storage_pictures_content">Ne säilytetään sovelluksen sisäisessä tallennustilassa (eli ne näkyvät vain OpenTracksin sisällä).</string>
     <string name="help_track_export_title">Miten vien tai jaan tallennettuja reittejä?</string>
@@ -56,13 +56,13 @@ limitations under the License.
 \nJos kaikki ei auta, ilmoita virheestä. </string>
     <string name="help_support_title">Miten voin tukea OpenTracksin kehitystä?</string>
     <string name="help_support_content"> Sinä pystyt:
-\n \u0020a) levittää sanaa OpenTracksista,
-\n \u0020b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues"> ehdottaa ominaisuuksia </a>,
-\n \u0020c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues"> ilmoita virheistä </a>,
-\n \u0020d) auttaa ohjelmistokehityksessä,
-\n \u0020e) osta <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore"> Google Play -kaupasta </a>,
-\n \u0020f) lahjoittaa ja
-\n \u0020g) tee mitä tahansa mielestäsi auttaa OpenTracksia. </string>
+\na) levittää sanaa OpenTracksista,
+\nb) <a href="https://github.com/OpenTracksApp/OpenTracks/issues"> ehdottaa ominaisuuksia </a>,
+\nc) <a href="https://github.com/OpenTracksApp/OpenTracks/issues"> ilmoita virheistä </a>,
+\nd) auttaa ohjelmistokehityksessä,
+\ne) osta <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore"> Google Play -kaupasta </a>,
+\nf) lahjoittaa ja
+\ng) tee mitä tahansa mielestäsi auttaa OpenTracksia. </string>
     <string name="open_track_using_dashboard">Avaa OpenTracks-Dashboardilla</string>
     <string name="open_track_as_KMZ">Avaa KMZ-muodossa</string>
     <string name="open_track_as_GPX">Avaa GPX-muodossa</string>
@@ -575,14 +575,14 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="import_progress_summary_ok_msg">Tuodut tiedostot</string>
     <string name="import_progress_summary_exists_msg">Jo olemassa</string>
     <string name="import_progress_summary_errors_msg">Virhe</string>
-    <string name="generic_click_twice_cancel">Peruuta uudelleen napsauttamalla</string>
+    <string name="generic_click_twice_cancel">Paina takaisin uudestaan keskeyttääksesi</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Kokoruutu</string>
     <string name="interval_list_empty_message">Ei ole mitään intervallia vielä</string>
     <string name="export_error_post_workout">Treenin jälkeinen vienti epäonnistui, tarkista vientihakemisto.</string>
     <string name="export_progress_summary_overwrite_msg">Kappaleet ylikirjoitettu</string>
     <plurals name="generic_completed_with_errors">
-        <item quantity="one">Täydennetty yhdellä virheellä</item>
-        <item quantity="other">Täydennetty %1$d virheillä</item>
+        <item quantity="one">Valmista yhdellä virheellä</item>
+        <item quantity="other">Valmista %1$d virheellä</item>
     </plurals>
     <string name="export_track_already_exists_msg">Kappale %1$s on jo olemassa kohdehakemistossa.</string>
     <string name="export_all_do_it_for_all">tee se kaikkien konfliktien vuoksi</string>
@@ -595,12 +595,12 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="export_progress_summary_new_msg">Uusia kappaleita viety</string>
     <string name="export_progress_summary_skip_msg">Kappaleet ohitettu</string>
     <string name="export_progress_summary_errors_msg">Virhe</string>
-    <string name="generic_overwrite">Korvata</string>
-    <string name="generic_skip">Ohittaa</string>
+    <string name="generic_overwrite">Korvaa</string>
+    <string name="generic_skip">Ohita</string>
     <string name="generic_separator_done_total">/</string>
-    <string name="generic_show_errors">Näytä Virheet</string>
+    <string name="generic_show_errors">Näytä virheet</string>
     <string name="gps_disabled_msg">GPS pois käytöstä</string>
-    <string name="generic_completed">Täydellinen</string>
+    <string name="generic_completed">Valmis</string>
     <string name="sensor_state_power_avg">Avg Teho</string>
     <string name="description_altitude_loss">Korkeussijaintitappio: %1$d m (%2$d ft)</string>
     <string name="sensor_state_heart_rate_max">Maksimisyke</string>
@@ -611,7 +611,7 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="sensor_state_cadence_avg">Keskim.Poljinnopeus</string>
     <string name="sensor_state_cadence_max">Suurin Poljinnopeus</string>
     <string name="value_float_mile_hour">%1$.2f mt</string>
-    <string name="generic_open_track">Avaa Raita</string>
+    <string name="generic_open_track">Avattu reitti</string>
     <string name="track_distance_notification">Etäisyys: %1$s</string>
     <string name="track_pace_notification">Vauhti: %1$s</string>
     <string name="track_speed_notification">Nopeus: %1$s</string>
