@@ -589,7 +589,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="voice_speed_lap">Rundengeschwindigkeit %1$s</string>
     <string name="voice_pace_lap">Rundenzeit %1$s</string>
     <string name="toast_message_instant_track_was_exported">Letzte Aufzeichnung exportiert</string>
-    <string name="export_track_already_exists_msg">Der Track %1$s existiert bereits im Zielverzeichnis.</string>
+    <string name="export_track_already_exists_msg">Die Streckenaufzeichung %1$s existiert bereits im Zielordner.</string>
     <string name="gps_fixed_and_ready">GPS-Position bestimmt und bereit</string>
     <string name="instant_export_enabled_title">Sofortiger Export im Anschluss an die Übung</string>
     <string name="instant_export_enabled_summary">Streckenaufzeichnung nach Beendigung der Aufnahme in den Speicher exportieren</string>
