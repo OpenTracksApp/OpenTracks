@@ -196,7 +196,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="generic_tracks">Percorsi</string>
     <string name="generic_yes">Sì</string>
     <!-- Gps -->
-    <string name="gps_location_access">\"Accesso alla posizione\"</string>
+    <string name="gps_location_access">«Accesso alla posizione»</string>
     <string name="gps_disabled">GPS non attivato. Tocca qui per andare a %1$s. Poi premi il pulsante per tornare indietro.</string>
     <string name="gps_disabled_my_location">Impossibile determinare la posizione corrente. Attiva ulteriori fonti per la determinazione della posizione in %1$s e assicurati che
     il cielo sia visibile. Riprova più tardi.</string>
@@ -271,7 +271,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <!-- Search -->
     <string name="search_global_description">Percorsi e indicatori</string>
     <string name="search_list_empty_message">Non ci sono percorsi o indicatori corrispondenti alla tua ricerca</string>
-    <string name="search_list_marker_track_location">Nel percorso \"%1$s\".</string>
+    <string name="search_list_marker_track_location">Nel percorso «%1$s».</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Livello batteria</string>
     <string name="sensor_state_cadence">Cadenza</string>
@@ -553,7 +553,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="export_all_do_it_for_all">Esegui ciò per tutti i conflitti</string>
     <string name="export_track_errors">Percorsi non esportati</string>
     <string name="generic_overwrite">Sovrascrivere</string>
-    <string name="generic_skip">Saltare</string>
+    <string name="generic_skip">Ignora</string>
     <string name="generic_separator_done_total">/</string>
     <string name="generic_show_errors">Mostra gli errori</string>
     <string name="generic_completed">Completato</string>
@@ -589,9 +589,9 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="share_image_body">Penso che potresti essere interessat@ in questa immagine.</string>
     <string name="hold_to_stop">Tieni premuto per fermare</string>
     <string name="hold_to_pause">Tieni premuto per mettere in pausa</string>
-    <string name="instant_export_enabled_summary">È stata completata l\' esportazione del percorso finito nella memoria interna del tuo dispositivo</string>
+    <string name="instant_export_enabled_summary">È stata completata l\'esportazione del percorso finito nella memoria interna del tuo dispositivo</string>
     <string name="instant_export_enabled_title">Esportazione istantanea post-allenamento</string>
-    <string name="generic_open_track">Apri traccia</string>
+    <string name="generic_open_track">Traccia aperta</string>
     <string name="import_prevent_reimport">È stato impostato impedisci reimportazione traccia</string>
     <string name="export_error_post_workout">Esportazione post-allenamento non riuscita, controllare la directory di esportazione.</string>
     <string name="settings_prevent_reimport_tracks_title">Impedire la reimportazione delle tracce</string>
