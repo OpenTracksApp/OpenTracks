@@ -42,6 +42,7 @@ import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.IntervalsFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordedFragment;
+import de.dennisguse.opentracks.services.TrackDeleteService;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.SettingsActivity;
@@ -56,7 +57,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  * @author Rodrigo Damazio
  */
 //TODO Should not use TrackRecordingServiceConnection; only used to determine if there is NO current recording, to enable resume functionality.
-public class TrackRecordedActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackActivityDataHubInterface {
+public class TrackRecordedActivity extends AbstractTrackDeleteActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackActivityDataHubInterface {
 
     private static final String TAG = TrackRecordedActivity.class.getSimpleName();
 
@@ -248,9 +249,17 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
         return recordingStatus.getTrackId();
     }
 
+    @Override
+    protected void onTrackDeleteStatus(TrackDeleteService.DeleteStatus deleteStatus) {
+        super.onTrackDeleteStatus(deleteStatus);
+        Log.e("probando", "trackId: " + trackId);
+        if (deleteStatus.isDeleted(trackId)) {
+            runOnUiThread(this::finish);
+        }
+    }
 
     @Override
-    protected void onTrackDeleted() {
+    protected void onDeleteConfirmed() {
         runOnUiThread(this::finish);
     }
 
