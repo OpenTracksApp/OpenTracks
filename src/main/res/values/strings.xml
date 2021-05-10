@@ -352,6 +352,7 @@ limitations under the License.
     <string name="menu_resume_track">Resume track</string>
     <!-- OpenTracks -->
     <string name="recording_service">Recording service</string>
+    <string name="delete_service">Delete service</string>
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks requires permission to use GPS.</string>
     <!-- Search -->
@@ -475,6 +476,7 @@ limitations under the License.
     <string name="track_delete_one_confirm_title">Delete track?</string>
     <string name="track_delete_multiple_confirm_message">The selected tracks and their markers will be permanently deleted from the device.</string>
     <string name="track_delete_progress_message">Deleting&#8230;</string>
+    <string name="track_delete_progress">%1$d/%2$d</string>
     <!-- Track Detail -->
     <string name="track_detail_chart_tab">Chart</string>
     <string name="track_detail_stats_tab">Stats</string>

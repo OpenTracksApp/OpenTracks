@@ -19,10 +19,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.anything;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -95,6 +98,13 @@ public class EspressoUITest {
             // stop
             trackControllerStopButton.perform(veryLongTouch(1600));
         }
+    }
+
+    @LargeTest
+    @Test
+    public void selectAndDeleteTrack() {
+        onView(withId(R.id.track_list)).check(matches(isDisplayed()));
+        onData(anything()).inAdapterView(withId(R.id.track_list)).atPosition(0).perform(veryLongTouch(2000));
     }
 
     private static ViewAction veryLongTouch(final int duration_ms) {

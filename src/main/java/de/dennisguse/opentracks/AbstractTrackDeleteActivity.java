@@ -16,8 +16,6 @@
 
 package de.dennisguse.opentracks;
 
-import android.content.Intent;
-
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -26,33 +24,38 @@ import java.util.Arrays;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
+import de.dennisguse.opentracks.services.TrackDeleteService;
+import de.dennisguse.opentracks.services.TrackDeleteServiceConnection;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.util.IntentUtils;
 
 /**
  * An abstract class for the following common tasks across
  * {@link TrackListActivity} and {@link TrackRecordedActivity}:
  * <p>
- * - share track <br>
  * - delete tracks <br>
  *
  * @author Jimmy Shih
  */
-//TODO It is actually not a List; we need a better name for this class
 //TODO Check if this class is still such a good idea; inheritance might limit maintainability
-public abstract class AbstractListActivity extends AbstractActivity implements ConfirmDeleteCaller {
+public abstract class AbstractTrackDeleteActivity extends AbstractActivity implements ConfirmDeleteCaller, TrackDeleteServiceConnection.Listener {
 
-    private static final String TAG = AbstractListActivity.class.getSimpleName();
+    private static final String TAG = AbstractTrackDeleteActivity.class.getSimpleName();
 
-    protected static final int GPS_REQUEST_CODE = 6;
-    private static final int DELETE_REQUEST_CODE = 3;
+    private TrackDeleteServiceConnection trackDeleteServiceConnection;
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == DELETE_REQUEST_CODE) {
-            onTrackDeleted();
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
+    protected void onStart() {
+        super.onStart();
+        trackDeleteServiceConnection = new TrackDeleteServiceConnection(this);
+        trackDeleteServiceConnection.bind(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (trackDeleteServiceConnection != null) {
+            trackDeleteServiceConnection.unbind(this);
+            trackDeleteServiceConnection = null;
         }
     }
 
@@ -69,6 +72,8 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
     public void onConfirmDeleteDone(Track.Id... trackIds) {
         boolean stopRecording = false;
 
+        onDeleteConfirmed();
+
         for (Track.Id trackId : trackIds) {
             if (trackId.equals(getRecordingTrackId())) {
                 stopRecording = true;
@@ -79,10 +84,9 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
         if (stopRecording) {
             getTrackRecordingServiceConnection().stopRecording(this);
         }
-        Intent intent = IntentUtils.newIntent(this, TrackDeleteActivity.class);
-        intent.putParcelableArrayListExtra(TrackDeleteActivity.EXTRA_TRACK_IDS, new ArrayList<>(Arrays.asList(trackIds)));
-        startActivityForResult(intent, DELETE_REQUEST_CODE);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+        trackDeleteServiceConnection = new TrackDeleteServiceConnection(this);
+        trackDeleteServiceConnection.startAndBind(this, new ArrayList<>(Arrays.asList(trackIds)));
     }
 
     /**
@@ -94,12 +98,28 @@ public abstract class AbstractListActivity extends AbstractActivity implements C
     }
 
     /**
-     * Called after {@link TrackDeleteActivity} returns its result.
+     * Called every time a track is deleted.
      */
-    abstract protected void onTrackDeleted();
+    protected void onTrackDeleteStatus(TrackDeleteService.DeleteStatus deleteStatus) {
+        if (deleteStatus.isFinished() && trackDeleteServiceConnection != null) {
+            trackDeleteServiceConnection.unbind(this);
+            trackDeleteServiceConnection = null;
+        }
+    }
+
+    protected abstract void onDeleteConfirmed();
 
     @Nullable
     protected Track.Id getRecordingTrackId() {
         return null;
+    }
+
+    @Override
+    public void connected() {
+        TrackDeleteService service = trackDeleteServiceConnection.getServiceIfBound();
+        if (service == null) {
+            return;
+        }
+        service.getDeletingStatusObservable().observe(AbstractTrackDeleteActivity.this, status -> onTrackDeleteStatus(status));
     }
 }

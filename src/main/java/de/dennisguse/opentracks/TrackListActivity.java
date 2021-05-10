@@ -71,9 +71,11 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, ControllerFragment.Callback {
+public class TrackListActivity extends AbstractTrackDeleteActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, ControllerFragment.Callback {
 
     private static final String TAG = TrackListActivity.class.getSimpleName();
+
+    protected static final int GPS_REQUEST_CODE = 6;
 
     // The following are set in onCreate
     private SharedPreferences sharedPreferences;
@@ -398,7 +400,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     }
 
     @Override
-    protected void onTrackDeleted() {
+    protected void onDeleteConfirmed() {
         // Do nothing
     }
 
@@ -459,7 +461,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             return true;
         }
 
-
         if (itemId == R.id.list_context_menu_edit) {
             Intent intent = IntentUtils.newIntent(this, TrackEditActivity.class)
                     .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackIds[0]);
@@ -471,6 +472,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             deleteTracks(trackIds);
             return true;
         }
+
         if (itemId == R.id.list_context_menu_select_all) {
             for (int i = 0; i < viewBinding.trackList.getCount(); i++) {
                 viewBinding.trackList.setItemChecked(i, true);
