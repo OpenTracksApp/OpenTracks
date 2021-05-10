@@ -39,13 +39,13 @@ public class EspressoUITest {
     public void record_pause_resume_stop() {
         {
             // TrackListActivity: start recording
-            ViewInteraction trackControllerRecordButton = onView(withId(R.id.track_controller_record));
+            ViewInteraction trackControllerRecordButton = onView(withId(R.id.controller_record));
             trackControllerRecordButton.perform(click());
         }
         {
             // TrackRecordingActivity
-            ViewInteraction trackControllerRecordButton = onView(withId(R.id.track_controller_record));
-            ViewInteraction trackControllerStopButton = onView(withId(R.id.track_controller_stop));
+            ViewInteraction trackControllerRecordButton = onView(withId(R.id.controller_record));
+            ViewInteraction trackControllerStopButton = onView(withId(R.id.controller_stop));
 
             // wait; stay recording
             trackControllerRecordButton.perform(waitFor(5000));
@@ -72,13 +72,13 @@ public class EspressoUITest {
     public void record_move_through_tabs() {
         {
             // TrackListActivity: start recording
-            ViewInteraction trackControllerRecordButton = onView(withId(R.id.track_controller_record));
+            ViewInteraction trackControllerRecordButton = onView(withId(R.id.controller_record));
             trackControllerRecordButton.perform(click());
         }
         {
             // TrackRecordingActivity
             ViewInteraction tabLayout = onView(withId(R.id.track_detail_activity_tablayout));
-            ViewInteraction trackControllerStopButton = onView(withId(R.id.track_controller_stop));
+            ViewInteraction trackControllerStopButton = onView(withId(R.id.controller_stop));
 
             tabLayout.perform(selectTabAtIndex(1));
             tabLayout.perform(waitFor(1000));

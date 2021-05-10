@@ -23,7 +23,6 @@ import java.util.ArrayList;
 
 import de.dennisguse.opentracks.ContextualActionModeCallback;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.TrackController;
 
 import static android.content.Context.VIBRATOR_SERVICE;
 
@@ -88,7 +87,7 @@ public class ActivityUtils {
         });
     }
 
-    public static void configureSearchWidget(Activity activity, final MenuItem menuItem, final TrackController trackController) {
+    public static void configureSearchWidget(Activity activity, final MenuItem menuItem) {
         final SearchView searchView = (SearchView) menuItem.getActionView();
         SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
         if (searchManager != null) {
@@ -99,16 +98,6 @@ public class ActivityUtils {
         }
         searchView.setQueryRefinementEnabled(true);
         searchView.setSubmitButtonEnabled(true);
-        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
-            // Hide and show trackController when searchable widget has focus/no focus
-            if (trackController != null) {
-                if (hasFocus) {
-                    trackController.hide();
-                } else {
-                    trackController.show();
-                }
-            }
-        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -136,8 +125,8 @@ public class ActivityUtils {
         });
     }
 
-    public static void vibrate(Activity activity, int milliseconds) {
-        final Vibrator vibrator = (Vibrator) activity.getSystemService(VIBRATOR_SERVICE);
+    public static void vibrate(Context context, int milliseconds) {
+        final Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {

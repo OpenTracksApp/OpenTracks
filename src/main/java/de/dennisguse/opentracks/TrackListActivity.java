@@ -71,14 +71,13 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackController.Callback {
+public class TrackListActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, ControllerFragment.Callback {
 
     private static final String TAG = TrackListActivity.class.getSimpleName();
 
     // The following are set in onCreate
     private SharedPreferences sharedPreferences;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
-    private TrackController trackController;
     private ResourceCursorAdapter resourceCursorAdapter;
 
     private TrackListBinding viewBinding;
@@ -118,7 +117,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
                 runOnUiThread(() -> {
                     TrackListActivity.this.invalidateOptionsMenu();
                     loaderCallbacks.restart();
-                    trackController.onResume(recordingStatus);
                 });
             }
         }
@@ -132,9 +130,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
         public void run() {
-            // After binding changes (e.g., becomes available), update the total time in trackController.
-            runOnUiThread(() -> trackController.update(recordingStatus));
-
             TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
             if (service == null) {
                 Log.e(TAG, "service not available to start gps or a new recording");
@@ -170,14 +165,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
-        trackController = new TrackController(this, viewBinding.trackControllerContainer, trackRecordingServiceConnection, true, this);
-
-
-        // Show trackController when search dialog is dismissed
-        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-        if (searchManager != null) {
-            searchManager.setOnDismissListener(() -> trackController.show());
-        }
 
         viewBinding.trackList.setEmptyView(viewBinding.trackListEmptyView);
         viewBinding.trackList.setOnItemClickListener((parent, view, position, trackId) -> {
@@ -251,21 +238,12 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-
-        // Update UI
-        trackController.onPause();
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
 
         // Update UI
         this.invalidateOptionsMenu();
         LoaderManager.getInstance(this).restartLoader(0, null, loaderCallbacks);
-        trackController.onResume(recordingStatus);
     }
 
     @Override
@@ -298,7 +276,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         getMenuInflater().inflate(R.menu.track_list, menu);
 
         searchMenuItem = menu.findItem(R.id.track_list_search);
-        ActivityUtils.configureSearchWidget(this, searchMenuItem, trackController);
+        ActivityUtils.configureSearchWidget(this, searchMenuItem);
         startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
 
         return super.onCreateOptionsMenu(menu);
@@ -394,13 +372,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         }
 
         loaderCallbacks.setSearch(searchQuery);
-    }
-
-    @Override
-    public boolean onSearchRequested() {
-        // Hide trackController when search dialog is shown
-        trackController.hide();
-        return super.onSearchRequested();
     }
 
     @Override
@@ -585,10 +556,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         updateGpsMenuItem(true, recordingStatus.isRecording());
     }
 
-
     private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
         recordingStatus = status;
-
-        trackController.update(recordingStatus);
     }
 }
