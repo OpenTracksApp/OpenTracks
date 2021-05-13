@@ -284,7 +284,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        updateMenuItems(gpsStatusValue.isGpsStarted(), recordingStatus.isRecording());
+        updateGpsMenuItem(gpsStatusValue.isGpsStarted(), recordingStatus.isRecording());
 
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setQuery("", false);
@@ -397,21 +397,12 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     }
 
     /**
-     * Updates the menu items with not fixed icon for gps option.
-     *
-     * @param isGpsStarted true if gps is started
-     * @param isRecording  true if recording
-     */
-    private void updateMenuItems(boolean isGpsStarted, boolean isRecording) {
-        updateGpsMenuItem(isGpsStarted, isRecording);
-    }
-
-    /**
      * Updates the menu items with the icon specified.
      *
      * @param isGpsStarted true if gps is started
      * @param isRecording  true if recording
      */
+    //TODO Check if if can be avoided to call this outside of onGpsStatusChanged()
     private void updateGpsMenuItem(boolean isGpsStarted, boolean isRecording) {
         if (startGpsMenuItem != null) {
             startGpsMenuItem.setVisible(!isRecording);
@@ -529,25 +520,25 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     public void recordStart() {
         if (recordingStatus.getTrackId() == null) {
             // Not recording -> Recording
-            updateMenuItems(false, true);
+            updateGpsMenuItem(false, true);
             Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class);
             startActivity(newIntent);
         } else if (recordingStatus.isPaused()) {
             // Paused -> Resume
-            updateMenuItems(false, true);
+            updateGpsMenuItem(false, true);
             trackRecordingServiceConnection.resumeTrack();
         }
     }
 
     @Override
     public void recordPause() {
-        updateMenuItems(false, true);
+        updateGpsMenuItem(false, true);
         trackRecordingServiceConnection.pauseTrack();
     }
 
     @Override
     public void recordStop() {
-        updateMenuItems(false, false);
+        updateGpsMenuItem(false, false);
         trackRecordingServiceConnection.stopRecording(TrackListActivity.this);
     }
 
