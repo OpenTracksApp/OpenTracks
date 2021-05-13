@@ -44,6 +44,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
 
     private static final String TAG = TrackRecordingServiceConnection.class.getSimpleName();
 
+    @Deprecated //TODO Implement proper interface that passes the current TrackRecordingService
     private final Runnable callback;
 
     private TrackRecordingService trackRecordingService;

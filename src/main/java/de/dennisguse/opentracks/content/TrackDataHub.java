@@ -78,6 +78,7 @@ public class TrackDataHub {
     private EGM2008Utils.EGM2008Correction egm2008Correction;
 
     private boolean started;
+    //TODO Check if this is needed.
     private HandlerThread handlerThread;
     private Handler handler;
 

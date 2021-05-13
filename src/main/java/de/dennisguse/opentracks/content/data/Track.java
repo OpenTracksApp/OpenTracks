@@ -49,6 +49,16 @@ public class Track {
     public Track() {
     }
 
+    public Track(Track track) {
+        this.id = track.id;
+        this.uuid = track.uuid;
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.icon = icon;
+        this.trackStatistics = trackStatistics;
+    }
+
     /**
      * May be null if the track was not loaded from the database.
      */
