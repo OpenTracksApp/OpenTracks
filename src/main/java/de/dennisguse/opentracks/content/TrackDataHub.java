@@ -402,11 +402,7 @@ public class TrackDataHub {
             lastSeenTrackPointId = localLastSeenTrackPointIdId;
         }
 
-        if (trackPoint != null) {
-            for (TrackDataListener listener : sampledInListeners) {
-                listener.onNewTrackPointsDone(trackPoint, trackStatisticsUpdater.getTrackStatistics());
-            }
-        }
+        sampledInListeners.stream().forEach(TrackDataListener::onNewTrackPointsDone);
     }
 
     private void correctAltitude(TrackPoint trackPoint) {
