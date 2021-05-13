@@ -24,7 +24,6 @@ import de.dennisguse.opentracks.TrackActivityDataHubInterface;
 import de.dennisguse.opentracks.adapters.IntervalStatisticsAdapter;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
-import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -245,25 +244,10 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     }
 
     @Override
-    public void onNewTrackPointsDone(@NonNull TrackPoint unused, @NonNull TrackStatistics alsoUnused) {
+    public void onNewTrackPointsDone() {
         if (isResumed()) {
             runOnUiThread(viewModel::onNewTrackPoints);
         }
-    }
-
-    @Override
-    public void clearMarkers() {
-        // We don't care.
-    }
-
-    @Override
-    public void onNewMarker(Marker marker) {
-        // We don't care.
-    }
-
-    @Override
-    public void onNewMarkersDone() {
-        // We don't care.
     }
 
     /**

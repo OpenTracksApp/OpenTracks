@@ -235,7 +235,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     @Override
-    public void onNewTrackPointsDone(@NonNull TrackPoint unused, @NonNull TrackStatistics alsoUnused) {
+    public void onNewTrackPointsDone() {
         if (isResumed()) {
             chartView.addChartPoints(pendingPoints);
             pendingPoints.clear();
