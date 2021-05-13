@@ -159,7 +159,7 @@ public class TrackStatisticsUpdater {
 
         if (!trackPoint.hasSensorDistance()) {
             // GPS-based distance/speed
-            Distance movingDistance = lastMovingTrackPoint.distanceToPrevious(trackPoint);
+            Distance movingDistance = trackPoint.distanceToPrevious(lastMovingTrackPoint);
             if (movingDistance.lessThan(minGPSDistance) && !trackPoint.isMoving()) {
                 speedBuffer_mps.reset();
                 lastTrackPoint = trackPoint;

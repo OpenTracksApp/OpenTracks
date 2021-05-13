@@ -146,6 +146,34 @@ public class TrackStatisticsUpdaterTest {
         assertEquals(15, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
     }
 
+    @Test
+    public void addTrackPoint_distance_from_GPS_moving_and_sensor_disconnecting() {
+        // given
+        TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
+
+        TrackPoint tp1 = new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochMilli(1000));
+        TrackPoint tp2 = new TrackPoint(0, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(2000));
+        TrackPoint tp3 = new TrackPoint(0.00001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(3000));
+        tp3.setSensorDistance(Distance.of(5f));
+        TrackPoint tp4 = new TrackPoint(0.0005, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(4000));
+        TrackPoint tp5 = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochMilli(5000));
+
+        // when
+        subject.addTrackPoint(tp1, GPS_DISTANCE);
+        subject.addTrackPoint(tp2, GPS_DISTANCE);
+        subject.addTrackPoint(tp3, GPS_DISTANCE);
+
+        // then
+        assertEquals(5, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
+
+        // when
+        subject.addTrackPoint(tp4, GPS_DISTANCE);
+        subject.addTrackPoint(tp5, GPS_DISTANCE);
+
+        // then
+        assertEquals(59.18, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
+    }
+
     @Ignore("TODO: create a concept ont to compute speed from GPS and sensor")
     @Test
     public void addTrackPoint_speed_from_GPS_not_moving() {
