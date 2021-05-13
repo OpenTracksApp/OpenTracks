@@ -24,6 +24,10 @@ public class Distance {
         return of(distance_km * UnitConversions.KM_TO_M);
     }
 
+    public static Distance ofMM(double distance_mm) {
+        return of(distance_mm * UnitConversions.MM_TO_M);
+    }
+
     public static Distance one(boolean metricUnit) {
         if (metricUnit) {
             return Distance.ofKilometer(1);
