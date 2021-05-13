@@ -31,8 +31,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import java.time.Duration;
-
 import de.dennisguse.opentracks.databinding.ControllerFragmentBinding;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
@@ -49,10 +47,6 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
 
     private static final String TAG = ControllerFragment.class.getSimpleName();
 
-    @Deprecated
-    //TODO TrackRecordingService should provide LifeData for time (replace internal timer)
-    private static final Duration UI_UPDATE_INTERVAL = Duration.ofSeconds(1);
-    @Deprecated
     private Handler handlerUpdateTotalTime;
 
     private Runnable buttonDelay;
@@ -63,7 +57,7 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
 
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private TrackRecordingService.RecordingStatus recordingStatus;
-    private Duration totalTime;
+    private TrackRecordingService.RecordingData recordingData;
 
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
@@ -76,18 +70,9 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
 
             service.getRecordingStatusObservable()
                     .observe(ControllerFragment.this, status -> onRecordingStatusChanged(status));
-        }
-    };
 
-    // A runnable to update the total time.
-    @Deprecated
-    private final Runnable updateTotalTimeRunnable = new Runnable() {
-        public void run() {
-            if (isResumed() && recordingStatus.isRecordingAndNotPaused()) {
-                updateTotalTime();
-                setTotalTime();
-                handlerUpdateTotalTime.postDelayed(this, UI_UPDATE_INTERVAL.toMillis());
-            }
+            service.getRecordingDataObservable()
+                    .observe(ControllerFragment.this, recordingData -> onTotalTimeChanged(recordingData));
         }
     };
 
@@ -127,12 +112,6 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
     public void onResume() {
         super.onResume();
         trackRecordingServiceConnection.startConnection(getContext());
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        handlerUpdateTotalTime.removeCallbacks(updateTotalTimeRunnable);
     }
 
     @Override
@@ -239,19 +218,6 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
         viewBinding.controllerContainer.setVisibility(View.VISIBLE);
     }
 
-    private void updateTotalTime() {
-        TrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
-        if (trackRecordingService != null) {
-            totalTime = trackRecordingService.getTotalTime();
-        }
-    }
-
-    private void setTotalTime() {
-        if (totalTime != null) {
-            viewBinding.controllerTotalTime.setText(StringUtils.formatElapsedTimeWithHour(totalTime));
-        }
-    }
-
     private void showStatusSetDefaultText() {
         viewBinding.controllerStatus.setText(recordingStatus.isPaused() ? R.string.generic_paused : R.string.generic_recording);
     }
@@ -271,13 +237,6 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
     private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
         recordingStatus = status;
 
-        if (!recordingStatus.isRecording()) {
-            handlerUpdateTotalTime.removeCallbacks(updateTotalTimeRunnable);
-        }
-        if (recordingStatus.isRecordingAndNotPaused()) {
-            handlerUpdateTotalTime.postDelayed(updateTotalTimeRunnable, UI_UPDATE_INTERVAL.toMillis());
-        }
-
         viewBinding.controllerRecord.setImageResource(recordingStatus.isRecordingAndNotPaused() ? R.drawable.ic_button_pause : R.drawable.button_record);
         viewBinding.controllerRecord.setContentDescription(getContext().getString(recordingStatus.isRecordingAndNotPaused() ? R.string.image_pause : R.string.image_record));
 
@@ -290,10 +249,11 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
         }
 
         viewBinding.controllerTotalTime.setVisibility(recordingStatus.isRecording() ? View.VISIBLE : View.INVISIBLE);
+    }
 
-        if (recordingStatus.isRecording()) {
-            updateTotalTime();
-            setTotalTime();
-        }
+    private void onTotalTimeChanged(TrackRecordingService.RecordingData recordingData) {
+        this.recordingData = recordingData;
+
+        viewBinding.controllerTotalTime.setText(StringUtils.formatElapsedTimeWithHour(this.recordingData.getTrackStatistics().getTotalTime()));
     }
 }

@@ -76,13 +76,29 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     private static final String TAG = TrackRecordingService.class.getSimpleName();
 
+    private static final Duration RECORDING_DATA_UPDATE_INTERVAL = Duration.ofSeconds(1);
+
     public static final RecordingStatus STATUS_DEFAULT = new RecordingStatus(null, false);
+    public static final RecordingData NOT_RECORDING = new RecordingData(null, null, null);
     public static final GpsStatusValue STATUS_GPS_DEFAULT = GpsStatusValue.GPS_NONE;
 
     // The following variables are set in onCreate:
     private ContentProviderUtils contentProviderUtils;
     private PeriodicTaskExecutor voiceExecutor;
     private TrackRecordingServiceNotificationManager notificationManager;
+
+    private Handler handler;
+    private final Runnable updateRecordingData = new Runnable() {
+        @Override
+        public void run() {
+            Track track = contentProviderUtils.getTrack(recordingStatus.getTrackId());
+            track.getTrackStatistics().setTotalTime(TrackRecordingService.this.getTotalTime());
+
+            SensorDataSet sensorDataSet = fillWithSensorDataSet(lastTrackPoint);
+            recordingDataObservable.postValue(new RecordingData(track, lastTrackPoint, sensorDataSet));
+            handler.postDelayed(this, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
+        }
+    };
 
     private SharedPreferences sharedPreferences;
 
@@ -127,14 +143,18 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private RecordingStatus recordingStatus;
     private MutableLiveData<RecordingStatus> recordingStatusObservable;
     private MutableLiveData<GpsStatusValue> gpsStatusObservable;
+    private MutableLiveData<RecordingData> recordingDataObservable;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        handler = new Handler();
+
         recordingStatusObservable = new MutableLiveData<>();
         updateRecordingStatus(STATUS_DEFAULT);
         gpsStatusObservable = new MutableLiveData<>(STATUS_GPS_DEFAULT);
+        recordingDataObservable = new MutableLiveData<>(NOT_RECORDING);
 
         handlerServer = new HandlerServer(this);
 
@@ -160,6 +180,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     @Override
     public void onDestroy() {
+        handler = null;
+
         handlerServer.stop(this);
         handlerServer = null;
 
@@ -192,6 +214,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         recordingStatusObservable = null;
         gpsStatusObservable = null;
+        recordingDataObservable = null;
 
         super.onDestroy();
     }
@@ -208,6 +231,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         return recordingStatus.getTrackId();
     }
 
+    //TODO
     public TrackStatistics getTrackStatistics() {
         if (trackStatisticsUpdater == null) {
             return null;
@@ -352,6 +376,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         remoteSensorManager = new BluetoothRemoteSensorManager(this);
         remoteSensorManager.start();
 
+        handler.postDelayed(updateRecordingData, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
+
         altitudeSumManager = new AltitudeSumManager();
         altitudeSumManager.start(this);
 
@@ -438,6 +464,13 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      * @param trackStopped true if track is stopped, false if track is paused
      */
     private void endRecording(boolean trackStopped) {
+        if (trackStopped) {
+            recordingDataObservable.postValue(NOT_RECORDING);
+        } else {
+            updateRecordingData.run();
+        }
+        handler.removeCallbacks(updateRecordingData);
+
         // Shutdown periodic tasks
         voiceExecutor.shutdown();
 
@@ -613,14 +646,18 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
                 trackPoint.setAltitudeLoss(getAltitudeLoss_m());
                 altitudeSumManager.reset();
             }
+
+            //TODO We need a copy of the SensorDataSet as data will be reset!
+            SensorDataSet sensorDataSet = fillWithSensorDataSet(trackPoint);
             if (remoteSensorManager != null) {
-                fillWithSensorDataSet(trackPoint);
                 remoteSensorManager.reset();
             }
             contentProviderUtils.insertTrackPoint(trackPoint, track.getId());
             trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
-
             track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
+
+            recordingDataObservable.postValue(new RecordingData(track, trackPoint, sensorDataSet));
+
             contentProviderUtils.updateTrack(track);
         } catch (SQLiteException e) {
             /*
@@ -632,25 +669,26 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         voiceExecutor.update();
     }
 
-    public SensorDataSet getSensorDataSet() {
+    private SensorDataSet fillWithSensorDataSet(TrackPoint trackPoint) {
         if (remoteSensorManager == null) {
             return null;
         }
 
-        return remoteSensorManager.getSensorData();
-    }
+        SensorDataSet sensorData = remoteSensorManager.getSensorData();
+        if (sensorData == null) {
+            return null;
+        }
 
-    private void fillWithSensorDataSet(TrackPoint trackPoint) {
-        SensorDataSet sensorData = getSensorDataSet();
-        if (sensorData != null) {
+        if (trackPoint != null) {
             sensorData.fillTrackPoint(trackPoint);
         }
+        return sensorData;
     }
 
     /**
      * Returns the relative altitude gain (since last trackpoint).
      */
-    public Float getAltitudeGain_m() {
+    private Float getAltitudeGain_m() {
         if (altitudeSumManager == null || !altitudeSumManager.isConnected()) {
             return null;
         }
@@ -661,7 +699,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     /**
      * Returns the relative altitude loss (since last trackpoint).
      */
-    public Float getAltitudeLoss_m() {
+    private Float getAltitudeLoss_m() {
         if (altitudeSumManager == null || !altitudeSumManager.isConnected()) {
             return null;
         }
@@ -710,6 +748,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     public LiveData<GpsStatusValue> getGpsStatusObservable() {
         return gpsStatusObservable;
+    }
+
+    public MutableLiveData<RecordingData> getRecordingDataObservable() {
+        return recordingDataObservable;
     }
 
     public LiveData<RecordingStatus> getRecordingStatusObservable() {
@@ -790,6 +832,52 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
                     "trackId=" + trackId +
                     ", paused=" + paused +
                     '}';
+        }
+    }
+
+    public static class RecordingData {
+
+        private final Track track;
+
+        private final TrackPoint latestTrackPoint;
+
+        private final SensorDataSet sensorDataSet;
+
+        /**
+         * {@link Track} and {@link TrackPoint} must be immutable (i.e., their content does not change).
+         */
+        public RecordingData(Track track, TrackPoint lastTrackPoint, SensorDataSet sensorDataSet) {
+            this.track = track;
+            this.latestTrackPoint = lastTrackPoint;
+            this.sensorDataSet = sensorDataSet;
+        }
+
+        public Track getTrack() {
+            return track;
+        }
+
+        public String getTrackCategory() {
+            if (track == null) {
+                return "";
+            }
+            return track.getCategory();
+        }
+
+        @NonNull
+        public TrackStatistics getTrackStatistics() {
+            if (track == null) {
+                return new TrackStatistics();
+            }
+
+            return track.getTrackStatistics();
+        }
+
+        public TrackPoint getLatestTrackPoint() {
+            return latestTrackPoint;
+        }
+
+        public SensorDataSet getSensorDataSet() {
+            return sensorDataSet;
         }
     }
 }

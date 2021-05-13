@@ -178,7 +178,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         }
         String category = track.getCategory();
 
-        //TODO Querying all TrackPoints all the time is inefficient; use TrackDataHub or something else.
+        //TODO Querying all TrackPoints all the time is inefficient; get infos from TrackRecordingService
         TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null);
         ArrayList<TrackPoint> trackPoints = new ArrayList<>();
         while (trackPointIterator.hasNext()) {
