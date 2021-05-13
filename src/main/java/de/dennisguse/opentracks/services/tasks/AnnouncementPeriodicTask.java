@@ -138,11 +138,6 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
     @Override
     public void run(@NonNull TrackRecordingService trackRecordingService) {
-        if (trackRecordingService == null) {
-            Log.e(TAG, "TrackRecordingService is null.");
-            return;
-        }
-
         announce(trackRecordingService.getRecordingTrackId(), trackRecordingService.getTrackStatistics());
     }
 

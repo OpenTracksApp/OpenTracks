@@ -3,10 +3,12 @@ package de.dennisguse.opentracks.settings;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.documentfile.provider.DocumentFile;
@@ -93,6 +95,9 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
 
     public static class PrefsFragment extends PreferenceFragmentCompat {
 
+        private TextToSpeech tts;
+        private int ttsInitStatus;
+
         private SharedPreferences sharedPreferences;
 
         private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
@@ -125,6 +130,22 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         // Used to forward update from ChooseActivityTypeDialogFragment; TODO Could be replaced with LiveData.
         private ActivityTypePreference.ActivityPreferenceDialog activityPreferenceDialog;
 
+        private Preference voiceAnnouncements;
+
+        @Override
+        public void onCreate(@Nullable Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            ttsInitStatus = TextToSpeech.ERROR;
+            tts = new TextToSpeech(getContext(), status -> {
+                ttsInitStatus = status;
+                Log.i(TAG, "TextToSpeech initialized with status " + status);
+
+                if (voiceAnnouncements != null) {
+                    updateVoiceAnnouncements();
+                }
+            });
+        }
+
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             sharedPreferences = PreferencesUtils.getSharedPreferences(getContext());
@@ -150,6 +171,9 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
                 //Use same value for not set as Androidx ListPreference and EditTextPreference
                 return directory != null ? directory.getName() : getString(R.string.not_set);
             });
+
+            voiceAnnouncements = findPreference(getString(R.string.voice_frequency_key));
+            updateVoiceAnnouncements();
         }
 
         @Override
@@ -208,6 +232,8 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
             super.onDestroy();
             trackRecordingServiceConnection.unbind(getContext());
             sharedPreferences = null;
+            voiceAnnouncements = null;
+            tts = null;
         }
 
         public void setDefaultActivity(String iconValue) {
@@ -296,6 +322,10 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
             });
         }
 
+        private void updateVoiceAnnouncements() {
+            voiceAnnouncements.setEnabled(ttsInitStatus == TextToSpeech.SUCCESS);
+        }
+
         private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
             this.recordingStatus = status;
             if (!status.isRecording() && isAdded()) {
@@ -303,5 +333,4 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
             }
         }
     }
-
 }
