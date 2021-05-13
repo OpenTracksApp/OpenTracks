@@ -142,9 +142,9 @@ public class PreferencesUtils {
         return getString(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_speed_key, getBluetoothSensorAddressNone(context));
     }
 
-    public static int getWheelCircumference(SharedPreferences sharedPreferences, Context context) {
+    public static Distance getWheelCircumference(SharedPreferences sharedPreferences, Context context) {
         final int DEFAULT = Integer.parseInt(context.getResources().getString(R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_default));
-        return getInt(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key, DEFAULT);
+        return Distance.ofMM(getInt(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key, DEFAULT));
     }
 
     public static String getBluetoothCyclingPowerSensorAddress(SharedPreferences sharedPreferences, Context context) {

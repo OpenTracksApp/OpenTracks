@@ -25,6 +25,7 @@ import android.util.Log;
 import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.sensor.SensorData;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
@@ -57,7 +58,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
     private boolean started = false;
 
     private final SharedPreferences sharedPreferences;
-    private int preferenceWheelCircumference;
+    private Distance preferenceWheelCircumference;
 
     private final BluetoothConnectionManager.HeartRate heartRate = new BluetoothConnectionManager.HeartRate(this);
     private final BluetoothConnectionManager.CyclingCadence cyclingCadence = new BluetoothConnectionManager.CyclingCadence(this);
