@@ -149,7 +149,7 @@
     <string name="image_record">Gravar</string>
     <string name="image_stop">Parar</string>
     <string name="image_track">Rota</string>
-    <string name="import_error">Importação: %1$d de %2$s de %3$s</string>
+    <string name="import_error">Importado %1$d a %2$s de %3$s</string>
     <string name="import_no_directory">%1$s não existe</string>
     <string name="import_no_file">Nenhum arquivo para importar. Conecte o dispositivo ao computador e coloque os
     arquivos para importação em %1$s.</string>
@@ -200,10 +200,10 @@
     <string name="search_list_marker_track_location">Na trilha \"%1$s\".</string>
     <string name="sensor_state_battery">Nível da bateria</string>
     <string name="sensor_state_cadence">Cadência</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
+    <string name="sensor_state_cadence_value">%1$d ram</string>
     <string name="sensor_state_disconnected">Desconectado</string>
     <string name="sensor_state_heart_rate">Frequência cardíaca</string>
-    <string name="sensor_state_heart_rate_value">%1$d bpm</string>
+    <string name="sensor_state_heart_rate_value">%1$d bom</string>
     <string name="sensor_state_power">Alimentação</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Não disponível durante a gravação de uma trilha</string>
@@ -557,4 +557,5 @@
     <string name="track_distance_notification">Distância: %1$s</string>
     <string name="track_speed_notification">Velocidade: %1$s</string>
     <string name="track_pace_notification">Parcela: %1$s</string>
+    <string name="about_third_party_data">Dados de terceiros</string>
 </resources>
