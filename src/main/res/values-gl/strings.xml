@@ -616,4 +616,5 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="track_distance_notification">Distancia: %1$s</string>
     <string name="track_pace_notification">Ritmo: %1$s</string>
     <string name="track_speed_notification">Velocidade: %1$s</string>
+    <string name="about_third_party_data">Datos de terceiros alleos</string>
 </resources>
