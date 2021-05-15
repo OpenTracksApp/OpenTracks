@@ -61,7 +61,6 @@ import de.dennisguse.opentracks.util.UUIDUtils;
 public class ContentProviderUtils {
 
     private static final String TAG = ContentProviderUtils.class.getSimpleName();
-    private static final int MAX_LATITUDE = 90000000;
 
     // The authority (the first part of the URI) for the app's content provider.
     @VisibleForTesting
@@ -161,8 +160,10 @@ public class ContentProviderUtils {
 
     @VisibleForTesting
     public void deleteAllTracks(Context context) {
+        //TODO Both calls should not be necessary
         contentResolver.delete(TrackPointsColumns.CONTENT_URI_BY_ID, null, null);
         contentResolver.delete(MarkerColumns.CONTENT_URI, null, null);
+
         // Delete tracks last since it triggers a database vaccum call
         contentResolver.delete(TracksColumns.CONTENT_URI, null, null);
 
@@ -190,6 +191,7 @@ public class ContentProviderUtils {
     }
 
     //TODO Only use for tests; also move to tests.
+    @VisibleForTesting
     public List<Track> getTracks() {
         ArrayList<Track> tracks = new ArrayList<>();
         try (Cursor cursor = getTrackCursor(null, null, TracksColumns._ID)) {
@@ -203,9 +205,6 @@ public class ContentProviderUtils {
         return tracks;
     }
 
-    /**
-     * @param trackId the track id.
-     */
     public Track getTrack(Track.Id trackId) {
         if (trackId == null) {
             return null;
@@ -218,9 +217,6 @@ public class ContentProviderUtils {
         return null;
     }
 
-    /**
-     * @param trackUUID the track uuid.
-     */
     public Track getTrack(@NonNull UUID trackUUID) {
         String trackUUIDsearch = UUIDUtils.toHex(trackUUID);
         try (Cursor cursor = getTrackCursor("hex(" + TracksColumns.UUID + ")=?", new String[]{trackUUIDsearch}, null)) {
@@ -609,6 +605,7 @@ public class ContentProviderUtils {
      * @param location the location
      * @return trackPoint id if the location is in the track. -1L otherwise.
      */
+    @Deprecated
     public TrackPoint.Id getTrackPointId(Track.Id trackId, Location location) {
         String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns.TIME + "=?)";
         String[] selectionArgs = new String[]{Long.toString(trackId.getId()), Long.toString(location.getTime())};
@@ -740,6 +737,7 @@ public class ContentProviderUtils {
         return new TrackPointIterator(this, trackId, startTrackPointId);
     }
 
+    @Deprecated
     private TrackPoint findTrackPointBy(String selection, String[] selectionArgs) {
         try (Cursor cursor = getTrackPointCursor(null, selection, selectionArgs, TrackPointsColumns._ID)) {
             if (cursor != null && cursor.moveToNext()) {

@@ -518,13 +518,12 @@ public class KMLTrackExporter implements TrackExporter {
         return location.getBearing();
     }
 
-    private String getCoordinates(Location location, String separator) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(location.getLongitude()).append(separator).append(location.getLatitude());
+    private static String getCoordinates(Location location, String separator) {
+        String result = location.getLongitude() + separator + location.getLatitude();
         if (location.hasAltitude()) {
-            builder.append(separator).append(location.getAltitude());
+            result += separator + location.getAltitude();
         }
-        return builder.toString();
+        return result;
     }
 
     /**
