@@ -261,15 +261,16 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
     @Override
     public void onBackPressed() {
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+        }
+
         if (loaderCallbacks.getSearchQuery() != null) {
             loaderCallbacks.setSearch(null);
             return;
         }
-        SearchView searchView = (SearchView) searchMenuItem.getActionView();
-        if (!searchView.isIconified()) {
-            searchView.setIconified(true);
-            return;
-        }
+
         super.onBackPressed();
     }
 

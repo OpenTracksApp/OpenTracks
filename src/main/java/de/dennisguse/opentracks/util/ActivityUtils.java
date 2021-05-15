@@ -87,7 +87,7 @@ public class ActivityUtils {
         });
     }
 
-    public static void configureSearchWidget(Activity activity, final MenuItem menuItem) {
+    public static SearchView configureSearchWidget(Activity activity, final MenuItem menuItem) {
         final SearchView searchView = (SearchView) menuItem.getActionView();
         SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
         if (searchManager != null) {
@@ -96,33 +96,8 @@ public class ActivityUtils {
         } else {
             Log.w(TAG, "Could not retrieve SearchManager.");
         }
-        searchView.setQueryRefinementEnabled(true);
         searchView.setSubmitButtonEnabled(true);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                menuItem.collapseActionView();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
-            @Override
-            public boolean onSuggestionSelect(int position) {
-                return false;
-            }
-
-            @Override
-            public boolean onSuggestionClick(int position) {
-                menuItem.collapseActionView();
-                return false;
-            }
-        });
+        return searchView;
     }
 
     public static void vibrate(Context context, int milliseconds) {

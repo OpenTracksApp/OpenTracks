@@ -276,7 +276,13 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         getMenuInflater().inflate(R.menu.track_list, menu);
 
         searchMenuItem = menu.findItem(R.id.track_list_search);
-        ActivityUtils.configureSearchWidget(this, searchMenuItem);
+        SearchView searchView = ActivityUtils.configureSearchWidget(this, searchMenuItem);
+        searchView.setOnCloseListener(() -> {
+            searchView.clearFocus();
+            searchMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+            return true;
+        });
+
         startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
 
         return super.onCreateOptionsMenu(menu);
@@ -333,6 +339,12 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             return true;
         }
 
+        if (item.getItemId() == R.id.track_list_search) {
+            SearchView searchView = (SearchView) searchMenuItem.getActionView();
+            searchView.setIconified(false);
+            searchMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -345,16 +357,22 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     }
 
     @Override
+    public void overridePendingTransition(int enterAnim, int exitAnim) {
+        //Disable animations as it is weird going into searchMode; looks okay for SplashScreen.
+    }
+
+    @Override
     public void onBackPressed() {
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+        }
+
         if (loaderCallbacks.getSearchQuery() != null) {
             loaderCallbacks.setSearch(null);
             return;
         }
-        SearchView searchView = (SearchView) searchMenuItem.getActionView();
-        if (!searchView.isIconified()) {
-            searchView.setIconified(true);
-            return;
-        }
+
         super.onBackPressed();
     }
 

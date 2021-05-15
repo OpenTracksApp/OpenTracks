@@ -32,7 +32,6 @@ limitations under the License.
         android:id="@+id/track_list_search"
         android:title="@string/menu_search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        android:visible="false"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/track_list_markers"
