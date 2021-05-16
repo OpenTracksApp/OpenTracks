@@ -605,4 +605,5 @@ limitations under the License.
 \n * jelölések létrehozása (képekkel együtt)
 \n * teljesen offline működik
 \n * pályák megjelenítése térképen (lásd alább)</string>
+    <string name="about_third_party_data">Harmadik féltől származó adatok</string>
 </resources>
