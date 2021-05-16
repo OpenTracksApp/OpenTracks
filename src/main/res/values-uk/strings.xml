@@ -607,4 +607,5 @@ limitations under the License.
     <string name="track_distance_notification">Відстань: %1$s</string>
     <string name="track_speed_notification">Швидкість: %1$s</string>
     <string name="track_pace_notification">Темп: %1$s</string>
+    <string name="about_third_party_data">Дані третіх сторін</string>
 </resources>
