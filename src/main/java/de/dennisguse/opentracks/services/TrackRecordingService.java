@@ -91,11 +91,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private final Runnable updateRecordingData = new Runnable() {
         @Override
         public void run() {
-            Track track = contentProviderUtils.getTrack(recordingStatus.getTrackId());
-            track.getTrackStatistics().setTotalTime(TrackRecordingService.this.getTotalTime());
-
-            SensorDataSet sensorDataSet = fillWithSensorDataSet(lastTrackPoint);
-            recordingDataObservable.postValue(new RecordingData(track, lastTrackPoint, sensorDataSet));
+            updateRecordingDataWhileRecording();
             handler.postDelayed(this, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
         }
     };
@@ -464,12 +460,12 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      * @param trackStopped true if track is stopped, false if track is paused
      */
     private void endRecording(boolean trackStopped) {
-        if (trackStopped) {
-            recordingDataObservable.postValue(NOT_RECORDING);
-        } else {
-            updateRecordingData.run();
-        }
         handler.removeCallbacks(updateRecordingData);
+        if (!trackStopped) {
+            updateRecordingDataWhileRecording();
+        } else {
+            recordingDataObservable.postValue(NOT_RECORDING);
+        }
 
         // Shutdown periodic tasks
         voiceExecutor.shutdown();
@@ -752,6 +748,18 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     public MutableLiveData<RecordingData> getRecordingDataObservable() {
         return recordingDataObservable;
+    }
+
+    private void updateRecordingDataWhileRecording() {
+        if (!recordingStatus.isRecording()) {
+            Log.w(TAG, "Currently not recording; cannot update data.");
+            return;
+        }
+        Track track = contentProviderUtils.getTrack(recordingStatus.getTrackId());
+        track.getTrackStatistics().setTotalTime(TrackRecordingService.this.getTotalTime());
+
+        SensorDataSet sensorDataSet = fillWithSensorDataSet(lastTrackPoint);
+        recordingDataObservable.postValue(new RecordingData(track, lastTrackPoint, sensorDataSet));
     }
 
     public LiveData<RecordingStatus> getRecordingStatusObservable() {
