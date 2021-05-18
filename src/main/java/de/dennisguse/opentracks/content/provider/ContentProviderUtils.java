@@ -205,10 +205,7 @@ public class ContentProviderUtils {
         return tracks;
     }
 
-    public Track getTrack(Track.Id trackId) {
-        if (trackId == null) {
-            return null;
-        }
+    public Track getTrack(@NonNull Track.Id trackId) {
         try (Cursor cursor = getTrackCursor(TracksColumns._ID + "=?", new String[]{Long.toString(trackId.getId())}, null)) {
             if (cursor != null && cursor.moveToNext()) {
                 return createTrack(cursor);
