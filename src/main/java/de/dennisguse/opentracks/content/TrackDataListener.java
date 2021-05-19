@@ -77,7 +77,7 @@ public interface TrackDataListener {
      *
      * @param marker the marker
      */
-    default void onNewMarker(Marker marker) {
+    default void onNewMarker(@NonNull Marker marker) {
     }
 
     /**

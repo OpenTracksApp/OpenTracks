@@ -26,6 +26,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -114,7 +115,7 @@ public class ChartView extends View {
     private int effectiveWidth = 0;
     private int effectiveHeight = 0;
 
-    private final boolean chartByDistance;
+    private boolean chartByDistance = false;
     private boolean metricUnits = true;
     private boolean reportSpeed = true;
     private boolean showPointer = false;
@@ -189,9 +190,9 @@ public class ChartView extends View {
         }
     });
 
-    public ChartView(Context context, final boolean chartByDistance) {
-        super(context);
-        this.chartByDistance = chartByDistance;
+    public ChartView(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
+
         int fontSizeSmall = ThemeUtils.getFontSizeSmallInPx(context);
         int fontSizeMedium = ThemeUtils.getFontSizeMediumInPx(context);
 
@@ -364,6 +365,10 @@ public class ChartView extends View {
     @Override
     public boolean canScrollHorizontally(int direction) {
         return true;
+    }
+
+    public void setChartByDistance(boolean chartByDistance) {
+        this.chartByDistance = chartByDistance;
     }
 
     public boolean getMetricUnits() {
