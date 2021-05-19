@@ -21,10 +21,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
@@ -34,10 +32,8 @@ import java.util.List;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackActivityDataHubInterface;
 import de.dennisguse.opentracks.chart.ChartPoint;
-import de.dennisguse.opentracks.chart.ChartView;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
-import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
@@ -68,7 +64,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     private SharedPreferences sharedPreferences;
-    private Distance recordingDistanceInterval;
 
     private TrackDataHub trackDataHub;
 
@@ -80,39 +75,33 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     private boolean chartByDistance;
 
     private ChartBinding viewBinding;
-    // UI elements
-    private ChartView chartView;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key)) {
                 boolean metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getContext());
-                if (metricUnits != chartView.getMetricUnits()) {
-                    chartView.setMetricUnits(metricUnits);
+                if (metricUnits != viewBinding.chartView.getMetricUnits()) {
+                    viewBinding.chartView.setMetricUnits(metricUnits);
                     runOnUiThread(() -> {
                         if (isResumed()) {
-                            chartView.requestLayout();
+                            viewBinding.chartView.requestLayout();
                         }
                     });
                 }
             }
             if (PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
                 boolean reportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), category);
-                if (reportSpeed != chartView.getReportSpeed()) {
-                    chartView.setReportSpeed(reportSpeed);
-                    chartView.applyReportSpeed();
+                if (reportSpeed != viewBinding.chartView.getReportSpeed()) {
+                    viewBinding.chartView.setReportSpeed(reportSpeed);
+                    viewBinding.chartView.applyReportSpeed();
 
                     runOnUiThread(() -> {
                         if (isResumed()) {
-                            chartView.requestLayout();
+                            viewBinding.chartView.requestLayout();
                         }
                     });
                 }
-            }
-
-            if (PreferencesUtils.isKey(getContext(), R.string.recording_distance_interval_key, key)) {
-                recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, getContext());
             }
         }
     };
@@ -123,12 +112,12 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     private final Runnable updateChart = new Runnable() {
         @Override
         public void run() {
-            if (!isResumed() || trackDataHub == null) {
+            if (!isResumed()) {
                 return;
             }
 
-            chartView.setShowPointer(isSelectedTrackRecording());
-            chartView.invalidate();
+            viewBinding.chartView.setShowPointer(isSelectedTrackRecording());
+            viewBinding.chartView.invalidate();
         }
     };
 
@@ -138,25 +127,13 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         super.onCreate(savedInstanceState);
 
         chartByDistance = getArguments().getBoolean(KEY_CHART_VIEW_BY_DISTANCE_KEY, true);
-
-        recordingDistanceInterval = PreferencesUtils.getRecordingDistanceIntervalDefault(getContext());
-
-        // Create a chartView here to store data thus won't need to reload all the data on every onStart or onResume.
-        chartView = new ChartView(getContext(), chartByDistance);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         viewBinding = ChartBinding.inflate(inflater, container, false);
+        viewBinding.chartView.setChartByDistance(chartByDistance);
         return viewBinding.getRoot();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        viewBinding.chartViewLayout.addView(chartView, layoutParams);
     }
 
     @Override
@@ -179,13 +156,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-
-        viewBinding.chartViewLayout.removeView(chartView);
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         viewBinding = null;
@@ -199,78 +169,64 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
     @Override
     public void onTrackUpdated(Track track) {
-        if (isResumed()) {
-            if (track == null || track.getTrackStatistics() == null) {
-                category = "";
-                return;
-            }
+        if (track == null) {
+            category = "";
+            return;
+        }
 
-            category = track.getCategory();
-            boolean reportSpeed = PreferencesUtils.isReportSpeed(PreferencesUtils.getSharedPreferences(getContext()), getContext(), category);
-            if (reportSpeed != chartView.getReportSpeed()) {
-                chartView.setReportSpeed(reportSpeed);
-                chartView.applyReportSpeed();
-            }
+        category = track.getCategory();
+        boolean reportSpeed = PreferencesUtils.isReportSpeed(PreferencesUtils.getSharedPreferences(getContext()), getContext(), category);
+        if (reportSpeed != viewBinding.chartView.getReportSpeed()) {
+            viewBinding.chartView.setReportSpeed(reportSpeed);
+            viewBinding.chartView.applyReportSpeed();
         }
     }
 
     @Override
     public void clearTrackPoints() {
-        if (isResumed()) {
-            pendingPoints.clear();
-            chartView.reset();
-            runOnUiThread(() -> {
-                if (isResumed()) {
-                    chartView.resetScroll();
-                }
-            });
-        }
+        pendingPoints.clear();
+        viewBinding.chartView.reset();
+        runOnUiThread(() -> {
+            if (isResumed()) {
+                viewBinding.chartView.resetScroll();
+            }
+        });
     }
 
     public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, Speed smoothedSpeed, double smoothedAltitude_m) {
-        if (isResumed()) {
-            ChartPoint point = new ChartPoint(trackStatistics, trackPoint, smoothedSpeed, smoothedAltitude_m, chartByDistance, chartView.getMetricUnits());
-            pendingPoints.add(point);
-        }
+        ChartPoint point = new ChartPoint(trackStatistics, trackPoint, smoothedSpeed, smoothedAltitude_m, chartByDistance, viewBinding.chartView.getMetricUnits());
+        pendingPoints.add(point);
     }
 
     @Override
     public void onNewTrackPointsDone() {
-        if (isResumed()) {
-            chartView.addChartPoints(pendingPoints);
-            pendingPoints.clear();
-            runOnUiThread(updateChart);
-        }
+        viewBinding.chartView.addChartPoints(pendingPoints);
+        pendingPoints.clear();
+        runOnUiThread(updateChart);
     }
 
     @Override
     public void clearMarkers() {
-        if (isResumed()) {
-            chartView.clearMarker();
-        }
+        viewBinding.chartView.clearMarker();
     }
 
     @Override
-    public void onNewMarker(Marker marker) {
-        if (isResumed() && marker != null) {
-            chartView.addMarker(marker);
-        }
+    public void onNewMarker(@NonNull Marker marker) {
+        viewBinding.chartView.addMarker(marker);
     }
 
     @Override
     public void onNewMarkersDone() {
-        if (isResumed()) {
-            runOnUiThread(updateChart);
-        }
+        runOnUiThread(updateChart);
     }
 
     /**
      * Checks the chart settings.
      */
     private void checkChartSettings() {
-        boolean needUpdate = chartView.applyReportSpeed();
+        boolean needUpdate = viewBinding.chartView.applyReportSpeed();
         if (needUpdate) {
-            chartView.postInvalidate();
+            viewBinding.chartView.postInvalidate();
         }
     }
 
@@ -312,10 +268,5 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         if (fragmentActivity != null) {
             fragmentActivity.runOnUiThread(runnable);
         }
-    }
-
-    @VisibleForTesting
-    void setChartView(ChartView view) {
-        chartView = view;
     }
 }
