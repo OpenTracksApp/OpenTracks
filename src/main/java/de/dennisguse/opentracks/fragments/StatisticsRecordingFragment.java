@@ -307,12 +307,12 @@ public class StatisticsRecordingFragment extends Fragment {
     private void onRecordingDataChanged(TrackRecordingService.RecordingData recordingData) {
         String oldCategory = this.recordingData.getTrackCategory();
         String newCategory = recordingData.getTrackCategory();
+        this.recordingData = recordingData;
 
         if (!oldCategory.equals(newCategory)) {
             sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, getString(R.string.stats_rate_key));
         }
 
-        this.recordingData = recordingData;
         this.latestTrackPoint = recordingData.getLatestTrackPoint();
         if (latestTrackPoint != null && latestTrackPoint.hasLocation() && !latestTrackPoint.isRecent()) {
             latestTrackPoint = null;
