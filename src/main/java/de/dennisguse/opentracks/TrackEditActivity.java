@@ -29,7 +29,6 @@ import de.dennisguse.opentracks.databinding.TrackEditBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
  * An activity that let's the user see and edit the user editable track meta data such as track name, activity type, and track description.
@@ -39,7 +38,6 @@ import de.dennisguse.opentracks.util.TrackUtils;
 public class TrackEditActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
 
     public static final String EXTRA_TRACK_ID = "track_id";
-    public static final String EXTRA_NEW_TRACK = "new_track";
 
     private static final String TAG = TrackEditActivity.class.getSimpleName();
 
@@ -47,7 +45,6 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
 
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private ContentProviderUtils contentProviderUtils;
-    private Track track;
     private String iconValue;
 
     private TrackEditBinding viewBinding;
@@ -65,13 +62,17 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
         }
 
         contentProviderUtils = new ContentProviderUtils(this);
-        track = contentProviderUtils.getTrack(trackId);
-        if (track == null) {
-            Log.e(TAG, "No track for " + trackId.getId());
-            finish();
-            return;
-        }
+        ContentProviderUtils.RunOutUIThread.build(contentProviderUtils).getTrack(trackId).observe(this, track -> {
+            if (track == null) {
+                Log.e(TAG, "No track for " + trackId.getId());
+                finish();
+                return;
+            }
+            setupUI(track, bundle);
+        });
+    }
 
+    private void setupUI(@NonNull Track track, Bundle bundle) {
         viewBinding.trackEditName.setText(track.getName());
 
         viewBinding.trackEditActivityType.setText(track.getCategory());
@@ -100,22 +101,15 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
         viewBinding.trackEditDescription.setText(track.getDescription());
 
         viewBinding.trackEditSave.setOnClickListener(v -> {
-            TrackUtils.updateTrack(TrackEditActivity.this, track, viewBinding.trackEditName.getText().toString(),
-                    viewBinding.trackEditActivityType.getText().toString(), viewBinding.trackEditDescription.getText().toString(),
-                    contentProviderUtils);
-            finish();
+            ContentProviderUtils.RunOutUIThread.build(contentProviderUtils)
+                    .updateTrack(TrackEditActivity.this, track, viewBinding.trackEditName.getText().toString(), viewBinding.trackEditActivityType.getText().toString(), viewBinding.trackEditDescription.getText().toString())
+                    .observe(TrackEditActivity.this, updated -> finish());
         });
 
-        if (getIntent().getBooleanExtra(EXTRA_NEW_TRACK, false)) {
-            setTitle(R.string.track_edit_new_track_title);
-            viewBinding.trackEditCancel.setVisibility(View.GONE);
-        } else {
-            setTitle(R.string.menu_edit);
-            viewBinding.trackEditCancel.setOnClickListener(v -> finish());
-            viewBinding.trackEditCancel.setVisibility(View.VISIBLE);
-        }
+        setTitle(R.string.menu_edit);
+        viewBinding.trackEditCancel.setOnClickListener(v -> finish());
+        viewBinding.trackEditCancel.setVisibility(View.VISIBLE);
     }
-
 
     @Override
     protected void onStart() {

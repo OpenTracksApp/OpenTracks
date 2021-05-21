@@ -33,7 +33,6 @@ import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.TrackUtils;
 
 /**
  * An activity to show the track detail, record a new track or resumes an existing one.
@@ -126,13 +125,16 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         if (savedInstanceState != null) {
             //Activity was recreated.
             trackId = savedInstanceState.getParcelable(EXTRA_TRACK_ID);
-        } else {
+        } else if (getIntent().hasExtra(EXTRA_TRACK_ID)) {
             // Resume a track
             trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
-            if (trackId != null && contentProviderUtils.getTrack(trackId) == null) {
-                Log.w(TAG, "TrackId does not exists; cannot continue the recording.");
-                finish();
-            }
+            Log.e("probando", "trackId: " + trackId);
+            ContentProviderUtils.RunOutUIThread.build(contentProviderUtils).getTrack(trackId).observe(this, track -> {
+                if (track == null) {
+                    Log.w(TAG, "TrackId does not exists; cannot continue the recording.");
+                    finish();
+                }
+            });
         }
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
@@ -319,9 +321,17 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
     @Override
     public void onChooseActivityTypeDone(String iconValue) {
-        Track track = contentProviderUtils.getTrack(trackId);
-        String category = getString(TrackIconUtils.getIconActivityType(iconValue));
-        TrackUtils.updateTrack(this, track, null, category, null, contentProviderUtils);
+        ContentProviderUtils.RunOutUIThread.build(contentProviderUtils).getTrack(trackId).observe(this, track -> {
+            if (track == null) {
+                Log.w(TAG, "TrackId does not exists; cannot continue the recording.");
+                finish();
+                return;
+            }
+            String category = getString(TrackIconUtils.getIconActivityType(iconValue));
+            track.setCategory(category);
+            track.setIcon(TrackIconUtils.getIconValue(this, category));
+            contentProviderUtils.updateTrack(track);
+        });
     }
 
     @Override

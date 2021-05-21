@@ -34,7 +34,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import de.dennisguse.opentracks.content.TrackDataHub;
-import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.databinding.TrackRecordedBinding;
@@ -64,7 +63,6 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     public static final String VIEW_TRACK_ICON = "track_icon";
 
     public static final String EXTRA_TRACK_ID = "track_id";
-    public static final String EXTRA_MARKER_ID = "marker_id";
 
     private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
 
@@ -252,7 +250,6 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     @Override
     protected void onTrackDeleteStatus(TrackDeleteService.DeleteStatus deleteStatus) {
         super.onTrackDeleteStatus(deleteStatus);
-        Log.e("probando", "trackId: " + trackId);
         if (deleteStatus.isDeleted(trackId)) {
             runOnUiThread(this::finish);
         }
@@ -273,18 +270,6 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
 
     private void handleIntent(Intent intent) {
         trackId = intent.getParcelableExtra(EXTRA_TRACK_ID);
-
-        Marker.Id markerId = intent.getParcelableExtra(EXTRA_MARKER_ID);
-        if (markerId != null) {
-            // Use the trackId from the marker
-            Marker marker = contentProviderUtils.getMarker(markerId);
-            if (marker == null) {
-                finish();
-                return;
-            }
-            trackId = marker.getTrackId();
-        }
-
         if (trackId == null) {
             Log.e(TAG, "TrackDetailActivity needs EXTRA_TRACK_ID.");
             finish();

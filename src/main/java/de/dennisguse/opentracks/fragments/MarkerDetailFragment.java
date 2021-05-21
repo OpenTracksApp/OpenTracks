@@ -139,8 +139,6 @@ public class MarkerDetailFragment extends Fragment {
 
         // Need to update the marker in case returning after an edit
         updateMarker(true);
-        updateUi();
-        updateMenuItems();
     }
 
     @Override
@@ -168,7 +166,7 @@ public class MarkerDetailFragment extends Fragment {
         // View pager caches the neighboring fragments in the resumed state.
         // If becoming visible from the resumed state, update the UI to display the text above the image.
         if (isResumed()) {
-            if (menuVisible) {
+            if (menuVisible && marker != null) {
                 updateUi();
             } else {
                 handler.removeCallbacks(hideText);
@@ -181,7 +179,6 @@ public class MarkerDetailFragment extends Fragment {
         inflater.inflate(R.menu.marker_detail, menu);
         shareMarkerImageMenuItem = menu.findItem(R.id.marker_detail_share);
         updateMarker(false);
-        updateMenuItems();
     }
 
     private void updateMenuItems() {
@@ -224,11 +221,16 @@ public class MarkerDetailFragment extends Fragment {
 
     private void updateMarker(boolean refresh) {
         if (refresh || marker == null) {
-            marker = contentProviderUtils.getMarker(markerId);
-            if (marker == null) {
-                Log.d(TAG, "marker is null");
-                getParentFragmentManager().popBackStack();
-            }
+            ContentProviderUtils.RunOutUIThread.build(contentProviderUtils).getMarker(markerId).observe(this, marker -> {
+                if (marker == null) {
+                    Log.d(TAG, "marker is null");
+                    getParentFragmentManager().popBackStack();
+                } else {
+                    this.marker = marker;
+                    updateUi();
+                    updateMenuItems();
+                }
+            });
         }
     }
 
@@ -243,7 +245,6 @@ public class MarkerDetailFragment extends Fragment {
         }
 
         ListItemUtils.setTextView(getActivity(), viewBinding.markerDetailMarkerName, marker.getName(), hasPhoto);
-
 
         ListItemUtils.setTextView(getActivity(), viewBinding.markerDetailMarkerCategory, StringUtils.getCategory(marker.getCategory()), hasPhoto);
 

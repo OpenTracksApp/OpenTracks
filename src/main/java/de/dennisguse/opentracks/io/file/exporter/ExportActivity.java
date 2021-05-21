@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks.io.file.exporter;
 
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -204,26 +203,30 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     }
 
     private void initExport(int from) {
-        try (Cursor cursor = contentProviderUtils.getTrackCursor(null, null, TracksColumns._ID)) {
-            if (cursor == null) {
-                onExportEnded();
-                return;
-            }
+        ContentProviderUtils.RunOutUIThread.build(contentProviderUtils).getTrackCursor(null, null, TracksColumns._ID).observe(this, cursor -> {
+            try {
+                if (cursor == null) {
+                    onExportEnded();
+                    return;
+                }
 
-            trackExportTotalCount = cursor.getCount();
-            viewBinding.exportProgressTotal.setText("" + trackExportTotalCount);
-            for (int i = from; i < trackExportTotalCount; i++) {
-                cursor.moveToPosition(i);
-                Track track = ContentProviderUtils.createTrack(cursor);
-                tracks.add(track);
-            }
+                trackExportTotalCount = cursor.getCount();
+                viewBinding.exportProgressTotal.setText("" + trackExportTotalCount);
+                for (int i = from; i < trackExportTotalCount; i++) {
+                    cursor.moveToPosition(i);
+                    Track track = ContentProviderUtils.createTrack(cursor);
+                    tracks.add(track);
+                }
 
-            if (!tracks.isEmpty()) {
-                export(tracks.get(0));
-            } else {
-                onExportEnded();
+                if (!tracks.isEmpty()) {
+                    export(tracks.get(0));
+                } else {
+                    onExportEnded();
+                }
+            } finally {
+                cursor.close();
             }
-        }
+        });
     }
 
     /**
@@ -318,25 +321,26 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         }
 
         Track.Id trackId = resultData.getParcelable(ExportServiceResultReceiver.RESULT_EXTRA_TRACK_ID);
-        Track track = contentProviderUtils.getTrack(trackId);
 
-        switch (resultCode) {
-            case ExportServiceResultReceiver.RESULT_CODE_ERROR:
-                trackExportErrorCount++;
-                trackErrors.add(track.getName());
-                break;
-            case ExportServiceResultReceiver.RESULT_CODE_SUCCESS:
-                if (ExportUtils.isExportFileExists(track.getUuid(), trackFileFormat.getExtension(), directoryFiles)) {
-                    trackExportOverwrittenCount++;
-                } else {
-                    trackExportSuccessCount++;
-                }
-                break;
-            default:
-                throw new RuntimeException(TAG + ": export service result code invalid: " + resultCode);
-        }
+        ContentProviderUtils.RunOutUIThread.build(contentProviderUtils).getTrack(trackId).observe(this, track -> {
+            switch (resultCode) {
+                case ExportServiceResultReceiver.RESULT_CODE_ERROR:
+                    trackExportErrorCount++;
+                    trackErrors.add(track.getName());
+                    break;
+                case ExportServiceResultReceiver.RESULT_CODE_SUCCESS:
+                    if (ExportUtils.isExportFileExists(track.getUuid(), trackFileFormat.getExtension(), directoryFiles)) {
+                        trackExportOverwrittenCount++;
+                    } else {
+                        trackExportSuccessCount++;
+                    }
+                    break;
+                default:
+                    throw new RuntimeException(TAG + ": export service result code invalid: " + resultCode);
+            }
 
-        onExportCompleted(track);
+            onExportCompleted(track);
+        });
     }
 
     private void conflict(Track track) {

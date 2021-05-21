@@ -54,19 +54,21 @@ public class MarkerEditViewModel extends AndroidViewModel {
     }
 
     private void loadData(Track.Id trackId, Marker.Id markerId) {
-        Marker marker;
-        isNewMarker = markerId == null;
-        if (isNewMarker) {
-            int nextMarkerNumber = trackId == null ? 0 : new ContentProviderUtils(getApplication()).getNextMarkerNumber(trackId);
-            marker = new Marker(trackId, (Instant) null);
-            marker.setName(getApplication().getString(R.string.marker_name_format, nextMarkerNumber));
-        } else {
-            marker = new ContentProviderUtils(getApplication()).getMarker(markerId);
-            if (marker.hasPhoto()) {
-                photoOriginalUri = marker.getPhotoURI();
+        new Thread(() -> {
+            Marker marker;
+            isNewMarker = markerId == null;
+            if (isNewMarker) {
+                int nextMarkerNumber = trackId == null ? 0 : new ContentProviderUtils(getApplication()).getNextMarkerNumber(trackId);
+                marker = new Marker(trackId, (Instant) null);
+                marker.setName(getApplication().getString(R.string.marker_name_format, nextMarkerNumber));
+            } else {
+                marker = new ContentProviderUtils(getApplication()).getMarker(markerId);
+                if (marker.hasPhoto()) {
+                    photoOriginalUri = marker.getPhotoURI();
+                }
             }
-        }
-        markerData.postValue(marker);
+            markerData.postValue(marker);
+        }).start();
     }
 
     private @NonNull Marker getMarker() throws NoSuchElementException {
@@ -147,11 +149,14 @@ public class MarkerEditViewModel extends AndroidViewModel {
         marker.setName(name);
         marker.setCategory(category);
         marker.setDescription(description);
-        new ContentProviderUtils(getApplication()).updateMarker(getApplication(), marker);
 
-        if (photoOriginalUri != null && (!marker.hasPhoto() || !photoOriginalUri.equals(marker.getPhotoURI()))) {
-            deletePhoto(photoOriginalUri);
-        }
+        new Thread(() -> {
+            new ContentProviderUtils(getApplication()).updateMarker(getApplication(), marker);
+
+            if (photoOriginalUri != null && (!marker.hasPhoto() || !photoOriginalUri.equals(marker.getPhotoURI()))) {
+                deletePhoto(photoOriginalUri);
+            }
+        }).start();
     }
 
     public void onDone(String name, String category, String description) {

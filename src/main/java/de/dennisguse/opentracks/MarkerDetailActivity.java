@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +29,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
@@ -73,27 +73,31 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
             return;
         }
 
+        setUI(markerId);
+    }
+
+    @Override
+    protected View getRootView() {
+        viewBinding = MarkerDetailActivityBinding.inflate(getLayoutInflater());
+        return viewBinding.getRoot();
+    }
+
+    @Override
+    public void onMarkerDeleted() {
+        runOnUiThread(this::finish);
+    }
+
+    private void setUI(Marker.Id markerId) {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
-        Marker marker = contentProviderUtils.getMarker(markerId);
-
         markerIds = new ArrayList<>();
-        int markerIndex = -1;
+        ContentProviderUtils.RunOutUIThread.build(contentProviderUtils).getMarkerIds(markerId, null, -1).observe(this, markerIdList -> {
+            markerIds = markerIdList;
+            int markerIndex = IntStream.range(0, markerIds.size()).filter(i -> markerId.equals(markerIds.get(i))).findFirst().orElse(-1);
+            setAdapter(markerIndex);
+        });
+    }
 
-        //TODO Load only markerIds, not the whole marker
-        try (Cursor cursor = contentProviderUtils.getMarkerCursor(marker.getTrackId(), null, -1)) {
-            if (cursor != null && cursor.moveToFirst()) {
-                for (int i = 0; i < cursor.getCount(); i++) {
-                    Marker currentMarker = contentProviderUtils.createMarker(cursor);
-                    markerIds.add(currentMarker.getId());
-                    if (markerId.equals(currentMarker.getId())) {
-                        markerIndex = markerIds.size() - 1;
-                    }
-
-                    cursor.moveToNext();
-                }
-            }
-        }
-
+    private void setAdapter(int markerIndex) {
         final MarkerDetailPagerAdapter markerAdapter = new MarkerDetailPagerAdapter(getSupportFragmentManager());
         viewBinding.makerDetailActivityViewPager.setAdapter(markerAdapter);
         viewBinding.makerDetailActivityViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -112,17 +116,6 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
             }
         });
         viewBinding.makerDetailActivityViewPager.setCurrentItem(markerIndex == -1 ? 0 : markerIndex);
-    }
-
-    @Override
-    protected View getRootView() {
-        viewBinding = MarkerDetailActivityBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
-    }
-
-    @Override
-    public void onMarkerDeleted() {
-        runOnUiThread(this::finish);
     }
 
     /**

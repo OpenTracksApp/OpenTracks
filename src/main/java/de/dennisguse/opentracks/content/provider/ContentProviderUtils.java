@@ -28,6 +28,7 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
+import androidx.lifecycle.MutableLiveData;
 
 import java.io.File;
 import java.time.Duration;
@@ -51,6 +52,7 @@ import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
+import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.UUIDUtils;
 
 /**
@@ -351,10 +353,10 @@ public class ContentProviderUtils {
         return marker;
     }
 
-    public void deleteMarker(Context context, Marker.Id markerId) {
+    public int deleteMarker(Context context, Marker.Id markerId) {
         final Marker marker = getMarker(markerId);
         deleteMarkerPhoto(context, marker);
-        contentResolver.delete(MarkerColumns.CONTENT_URI, MarkerColumns._ID + "=?", new String[]{Long.toString(markerId.getId())});
+        return contentResolver.delete(MarkerColumns.CONTENT_URI, MarkerColumns._ID + "=?", new String[]{Long.toString(markerId.getId())});
     }
 
     /**
@@ -801,5 +803,98 @@ public class ContentProviderUtils {
 
         }
         return sensorStatistics;
+    }
+
+
+    public static class RunOutUIThread {
+
+        private final ContentProviderUtils contentProviderUtils;
+
+        private RunOutUIThread(ContentProviderUtils contentProviderUtils) {
+            this.contentProviderUtils = contentProviderUtils;
+        }
+
+        public static RunOutUIThread build(ContentProviderUtils cpu) {
+            return new RunOutUIThread(cpu);
+        }
+
+        public MutableLiveData<Track> getTrack(Track.Id trackId) {
+            MutableLiveData<Track> liveData = new MutableLiveData<>();
+            new Thread(() -> {
+                if (trackId != null) {
+                    liveData.postValue(contentProviderUtils.getTrack(trackId));
+                } else {
+                    liveData.postValue(null);
+                }
+            }).start();
+            return liveData;
+        }
+
+        public MutableLiveData<Cursor> getTrackCursor(String selection, String[] selectionArgs, String sortOrder) {
+            MutableLiveData<Cursor> liveData = new MutableLiveData<>();
+            new Thread(() -> liveData.postValue(contentProviderUtils.getTrackCursor(selection, selectionArgs, sortOrder))).start();
+            return liveData;
+        }
+
+        public MutableLiveData<Boolean> updateTrack(Context context, Track track, String name, String category, String description) {
+            MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+            new Thread(() -> {
+                boolean update = false;
+                if (name != null) {
+                    track.setName(name);
+                    update = true;
+                }
+                if (category != null) {
+                    track.setCategory(category);
+                    track.setIcon(TrackIconUtils.getIconValue(context, category));
+                    update = true;
+                }
+                if (description != null) {
+                    track.setDescription(description);
+                    update = true;
+                }
+                if (update) {
+                    contentProviderUtils.updateTrack(track);
+                }
+                liveData.postValue(update);
+            }).start();
+            return liveData;
+        }
+
+        public MutableLiveData<List<Marker.Id>> getMarkerIds(@NonNull Marker.Id markerId, @Nullable Marker.Id minMarkerId, int maxCount) {
+            MutableLiveData<List<Marker.Id>> liveData = new MutableLiveData<>();
+            new Thread(() -> {
+                Marker marker = contentProviderUtils.getMarker(markerId);
+                List<Marker.Id> markerIds = new ArrayList<>();
+                try (Cursor cursor = contentProviderUtils.getMarkerCursor(marker.getTrackId(), minMarkerId, maxCount)) {
+                    if (cursor != null && cursor.moveToFirst()) {
+                        for (int i = 0; i < cursor.getCount(); i++) {
+                            markerIds.add(contentProviderUtils.createMarker(cursor).getId());
+                            cursor.moveToNext();
+                        }
+                    }
+                }
+                liveData.postValue(markerIds);
+            }).start();
+            return liveData;
+        }
+
+        public MutableLiveData<Integer> deleteMarkers(Context context, List<Marker.Id> markerIds) {
+            MutableLiveData<Integer> liveData = new MutableLiveData<>();
+            new Thread(() -> {
+                int count = 0;
+                for (Marker.Id markerId : markerIds) {
+                    count += contentProviderUtils.deleteMarker(context, markerId);
+                }
+                liveData.postValue(count);
+            }).start();
+            return liveData;
+        }
+
+        public MutableLiveData<Marker> getMarker(@NonNull Marker.Id markerId) {
+            MutableLiveData<Marker> liveData = new MutableLiveData<>();
+            new Thread(() -> liveData.postValue(contentProviderUtils.getMarker(markerId))).start();
+            return liveData;
+        }
     }
 }

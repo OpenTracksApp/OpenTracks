@@ -156,24 +156,25 @@ public class StatisticsRecordedFragment extends Fragment {
         if (isResumed()) {
             getActivity().runOnUiThread(() -> {
                 if (isResumed()) {
-                    Track track = contentProviderUtils.getTrack(trackId);
-                    if (track == null) {
-                        Log.e(TAG, "track cannot be null");
-                        getActivity().finish();
-                        return;
-                    }
+                    ContentProviderUtils.RunOutUIThread.build(contentProviderUtils).getTrack(trackId).observe( this, track -> {
+                        if (track == null) {
+                            Log.e(TAG, "track cannot be null");
+                            getActivity().finish();
+                            return;
+                        }
 
-                    sensorStatistics = contentProviderUtils.getSensorStats(trackId);
+                        sensorStatistics = contentProviderUtils.getSensorStats(trackId);
 
-                    boolean prefsChanged = this.track == null || (!this.track.getCategory().equals(track.getCategory()));
-                    this.track = track;
-                    if (prefsChanged) {
-                        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, getString(R.string.stats_rate_key));
-                    }
+                        boolean prefsChanged = this.track == null || (!this.track.getCategory().equals(track.getCategory()));
+                        this.track = track;
+                        if (prefsChanged) {
+                            sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, getString(R.string.stats_rate_key));
+                        }
 
-                    loadTrackDescription(track);
-                    updateUI();
-                    updateSensorUI();
+                        loadTrackDescription(track);
+                        updateUI();
+                        updateSensorUI();
+                    });
 
                     ((TrackRecordedActivity) getActivity()).startPostponedEnterTransitionWith(viewBinding.statsActivityTypeIcon);
                 }
