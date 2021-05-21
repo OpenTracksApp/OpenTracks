@@ -353,6 +353,11 @@ public class TrackDataHub {
         }
 
         TrackPoint trackPoint = null;
+        TrackStatisticsUpdater currentUpdater = trackStatisticsUpdater; //TODO This prevents a NPE if stop() is happening while notifyTrackPointsTableUpdate()
+        if (currentUpdater == null) {
+            Log.e(TAG, "notifyTrackPointsTableUpdate() while being stopped.");
+            return;
+        }
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, next)) {
 
             while (trackPointIterator.hasNext()) {
@@ -375,16 +380,16 @@ public class TrackDataHub {
                     samplingFrequency = 1 + (int) (numTotalPoints / targetNumPoints);
                 }
 
-                trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
+                currentUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
 
                 // Also include the last point if the selected track is not recording.
                 if ((localNumLoadedTrackPoints % samplingFrequency == 0) || (trackPointId == lastTrackPointId && !isSelectedTrackRecording())) {
                     for (TrackDataListener trackDataListener : sampledInListeners) {
-                        trackDataListener.onSampledInTrackPoint(trackPoint, trackStatisticsUpdater.getTrackStatistics(), trackStatisticsUpdater.getSmoothedSpeed(), trackStatisticsUpdater.getSmoothedAltitude());
+                        trackDataListener.onSampledInTrackPoint(trackPoint, currentUpdater.getTrackStatistics(), currentUpdater.getSmoothedSpeed(), currentUpdater.getSmoothedAltitude());
                     }
                 } else {
                     for (TrackDataListener trackDataListener : sampledOutListeners) {
-                        trackDataListener.onSampledOutTrackPoint(trackPoint, trackStatisticsUpdater.getTrackStatistics());
+                        trackDataListener.onSampledOutTrackPoint(trackPoint, currentUpdater.getTrackStatistics());
                     }
                 }
 
