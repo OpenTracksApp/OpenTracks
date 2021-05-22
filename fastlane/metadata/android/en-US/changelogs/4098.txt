@@ -1,0 +1,7 @@
+v3.18.2: OpenTracks
+
+Bugfix:
+- Crash while moving from charts to another activity/app #787
+
+Developer:
+- TrackRecordingService pushes data to UI while recording
