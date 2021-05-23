@@ -16,6 +16,7 @@
 
 package de.dennisguse.opentracks.fragments;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,7 +25,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -169,55 +169,69 @@ public class ChartFragment extends Fragment implements TrackDataListener {
 
     @Override
     public void onTrackUpdated(Track track) {
-        if (track == null) {
-            category = "";
-            return;
-        }
+        if (isResumed()) {
+            if (track == null) {
+                category = "";
+                return;
+            }
 
-        category = track.getCategory();
-        boolean reportSpeed = PreferencesUtils.isReportSpeed(PreferencesUtils.getSharedPreferences(getContext()), getContext(), category);
-        if (reportSpeed != viewBinding.chartView.getReportSpeed()) {
-            viewBinding.chartView.setReportSpeed(reportSpeed);
-            viewBinding.chartView.applyReportSpeed();
+            category = track.getCategory();
+            boolean reportSpeed = PreferencesUtils.isReportSpeed(PreferencesUtils.getSharedPreferences(getContext()), getContext(), category);
+            if (reportSpeed != viewBinding.chartView.getReportSpeed()) {
+                viewBinding.chartView.setReportSpeed(reportSpeed);
+                viewBinding.chartView.applyReportSpeed();
+            }
         }
     }
 
     @Override
     public void clearTrackPoints() {
-        pendingPoints.clear();
-        viewBinding.chartView.reset();
-        runOnUiThread(() -> {
-            if (isResumed()) {
-                viewBinding.chartView.resetScroll();
-            }
-        });
+        if (isResumed()) {
+            pendingPoints.clear();
+            viewBinding.chartView.reset();
+            runOnUiThread(() -> {
+                if (isResumed()) {
+                    viewBinding.chartView.resetScroll();
+                }
+            });
+        }
     }
 
     public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, Speed smoothedSpeed, double smoothedAltitude_m) {
-        ChartPoint point = new ChartPoint(trackStatistics, trackPoint, smoothedSpeed, smoothedAltitude_m, chartByDistance, viewBinding.chartView.getMetricUnits());
-        pendingPoints.add(point);
+        if (isResumed()) {
+            ChartPoint point = new ChartPoint(trackStatistics, trackPoint, smoothedSpeed, smoothedAltitude_m, chartByDistance, viewBinding.chartView.getMetricUnits());
+            pendingPoints.add(point);
+        }
     }
 
     @Override
     public void onNewTrackPointsDone() {
-        viewBinding.chartView.addChartPoints(pendingPoints);
-        pendingPoints.clear();
-        runOnUiThread(updateChart);
+        if (isResumed()) {
+            viewBinding.chartView.addChartPoints(pendingPoints);
+            pendingPoints.clear();
+            runOnUiThread(updateChart);
+        }
     }
 
     @Override
     public void clearMarkers() {
-        viewBinding.chartView.clearMarker();
+        if (isResumed()) {
+            viewBinding.chartView.clearMarker();
+        }
     }
 
     @Override
     public void onNewMarker(@NonNull Marker marker) {
-        viewBinding.chartView.addMarker(marker);
+        if (isResumed()) {
+            viewBinding.chartView.addMarker(marker);
+        }
     }
 
     @Override
     public void onNewMarkersDone() {
-        runOnUiThread(updateChart);
+        if (isResumed()) {
+            runOnUiThread(updateChart);
+        }
     }
 
     /**
@@ -264,7 +278,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
      * @param runnable the runnable
      */
     private void runOnUiThread(Runnable runnable) {
-        FragmentActivity fragmentActivity = getActivity();
+        Activity fragmentActivity = getActivity();
         if (fragmentActivity != null) {
             fragmentActivity.runOnUiThread(runnable);
         }
