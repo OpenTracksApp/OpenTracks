@@ -342,14 +342,16 @@ public class TrackDataHub {
         }
 
         TrackPoint trackPoint = null;
-        TrackStatisticsUpdater currentUpdater = trackStatisticsUpdater; //TODO This prevents a NPE if stop() is happening while notifyTrackPointsTableUpdate()
-        if (currentUpdater == null) {
-            Log.e(TAG, "notifyTrackPointsTableUpdate() while being stopped.");
-            return;
-        }
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, next)) {
 
             while (trackPointIterator.hasNext()) {
+                if (!isStarted()) {
+                    break;
+                }
+
+                //Prevents a NPE if stop() is happening while notifyTrackPointsTableUpdate()
+                TrackStatisticsUpdater currentUpdater = trackStatisticsUpdater;
+
                 trackPoint = trackPointIterator.next();
                 TrackPoint.Id trackPointId = trackPoint.getId();
 
