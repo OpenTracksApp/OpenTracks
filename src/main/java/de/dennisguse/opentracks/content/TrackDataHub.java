@@ -29,6 +29,7 @@ import androidx.annotation.VisibleForTesting;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import de.dennisguse.opentracks.content.data.Altitude;
@@ -71,7 +72,7 @@ public class TrackDataHub {
     private static final String TAG = TrackDataHub.class.getSimpleName();
 
     private final Context context;
-    private final TrackDataManager trackDataManager;
+    private final Set<TrackDataListener> listeners;
     private final ContentProviderUtils contentProviderUtils;
     private final int targetNumPoints;
 
@@ -100,13 +101,13 @@ public class TrackDataHub {
     private ContentObserver trackPointsTableObserver;
 
     public TrackDataHub(Context context) {
-        this(context, new TrackDataManager(), new ContentProviderUtils(context), TARGET_DISPLAYED_TRACKPOINTS);
+        this(context, new ContentProviderUtils(context), TARGET_DISPLAYED_TRACKPOINTS);
     }
 
     @VisibleForTesting
-    private TrackDataHub(Context context, TrackDataManager trackDataManager, ContentProviderUtils contentProviderUtils, int targetNumPoints) {
+    private TrackDataHub(Context context, ContentProviderUtils contentProviderUtils, int targetNumPoints) {
         this.context = context;
-        this.trackDataManager = trackDataManager;
+        this.listeners = new HashSet<>();
         this.contentProviderUtils = contentProviderUtils;
         this.targetNumPoints = targetNumPoints;
         resetSamplingState();
@@ -127,7 +128,7 @@ public class TrackDataHub {
         tracksTableObserver = new ContentObserver(handler) {
             @Override
             public void onChange(boolean selfChange) {
-                notifyTracksTableUpdate(trackDataManager.getListenerTracks());
+                notifyTracksTableUpdate(listeners);
             }
         };
         contentResolver.registerContentObserver(TracksColumns.CONTENT_URI, false, tracksTableObserver);
@@ -135,7 +136,7 @@ public class TrackDataHub {
         markersTableObserver = new ContentObserver(handler) {
             @Override
             public void onChange(boolean selfChange) {
-                notifyMarkersTableUpdate(trackDataManager.getListenerMarkers());
+                notifyMarkersTableUpdate(listeners);
             }
         };
         contentResolver.registerContentObserver(MarkerColumns.CONTENT_URI, false, markersTableObserver);
@@ -143,7 +144,7 @@ public class TrackDataHub {
         trackPointsTableObserver = new ContentObserver(handler) {
             @Override
             public void onChange(boolean selfChange) {
-                notifyTrackPointsTableUpdate(true, trackDataManager.getListenerTrackPoints_SampledIn(), trackDataManager.getListenerTrackPoints_SampledOut());
+                notifyTrackPointsTableUpdate(true, listeners);
             }
         };
         contentResolver.registerContentObserver(TrackPointsColumns.CONTENT_URI_BY_ID, false, trackPointsTableObserver);
@@ -187,9 +188,9 @@ public class TrackDataHub {
      *
      * @param trackDataListener the track data listener
      */
-    public void registerTrackDataListener(final TrackDataListener trackDataListener, final boolean tracksTable, final boolean markersTable, final boolean trackPointsTable_SampleIn, final boolean trackPointsTable_SampleOut) {
+    public void registerTrackDataListener(final TrackDataListener trackDataListener) {
         handler.post(() -> {
-            trackDataManager.registerTrackDataListener(trackDataListener, tracksTable, markersTable, trackPointsTable_SampleIn, trackPointsTable_SampleOut);
+            listeners.add(trackDataListener);
             if (started) {
                 loadDataForListener(trackDataListener);
             }
@@ -202,7 +203,7 @@ public class TrackDataHub {
      * @param trackDataListener the track data listener
      */
     public void unregisterTrackDataListener(final TrackDataListener trackDataListener) {
-        handler.post(() -> trackDataManager.unregisterTrackDataListener(trackDataListener));
+        handler.post(() -> listeners.remove(trackDataListener));
     }
 
     /**
@@ -224,17 +225,17 @@ public class TrackDataHub {
      */
     private void loadDataForAll() {
         resetSamplingState();
-        if (!trackDataManager.hasListeners()) {
+        if (listeners.isEmpty()) {
             return;
         }
 
-        notifyTracksTableUpdate(trackDataManager.getListenerTracks());
+        notifyTracksTableUpdate(listeners);
 
-        for (TrackDataListener listener : trackDataManager.getListenerTrackPoints_SampledIn()) {
+        for (TrackDataListener listener : listeners) {
             listener.clearTrackPoints();
         }
-        notifyTrackPointsTableUpdate(true, trackDataManager.getListenerTrackPoints_SampledIn(), trackDataManager.getListenerTrackPoints_SampledOut());
-        notifyMarkersTableUpdate(trackDataManager.getListenerMarkers());
+        notifyTrackPointsTableUpdate(true, listeners);
+        notifyMarkersTableUpdate(listeners);
     }
 
     /**
@@ -245,25 +246,19 @@ public class TrackDataHub {
     private void loadDataForListener(TrackDataListener trackDataListener) {
         Set<TrackDataListener> trackDataListeners = Collections.singleton(trackDataListener);
 
-        if (trackDataManager.listensForTracks(trackDataListener)) {
-            notifyTracksTableUpdate(trackDataListeners);
-        }
+        //Track
+        notifyTracksTableUpdate(trackDataListeners);
 
-        boolean hasSampledIn = trackDataManager.listensForTrackPoints_SampledIn(trackDataListener);
-        boolean hasSampledOut = trackDataManager.listensForTrackPoints_SampledOut(trackDataListener);
-        if (hasSampledIn || hasSampledOut) {
-            trackDataListener.clearTrackPoints();
-            boolean isOnlyListener = trackDataManager.getNumberOfListeners() == 1;
-            if (isOnlyListener) {
-                resetSamplingState();
-            }
-            Set<TrackDataListener> sampledOutListeners = hasSampledOut ? trackDataListeners : Collections.emptySet();
-            notifyTrackPointsTableUpdate(isOnlyListener, trackDataListeners, sampledOutListeners);
+        //TrackPoints
+        trackDataListener.clearTrackPoints();
+        boolean isOnlyListener = listeners.size() == 1;
+        if (isOnlyListener) {
+            resetSamplingState();
         }
+        notifyTrackPointsTableUpdate(isOnlyListener, trackDataListeners);
 
-        if (trackDataManager.listensForMarkers(trackDataListener)) {
-            notifyMarkersTableUpdate(trackDataListeners);
-        }
+        //Markers
+        notifyMarkersTableUpdate(trackDataListeners);
     }
 
     /**
@@ -316,11 +311,9 @@ public class TrackDataHub {
      * Notifies track points table update; to be run in the {@link #handler} thread.
      *
      * @param updateSamplingState true to update the sampling state
-     * @param sampledInListeners  the sampled-in listeners
-     * @param sampledOutListeners the sampled-out listeners
      */
-    private void notifyTrackPointsTableUpdate(boolean updateSamplingState, Set<TrackDataListener> sampledInListeners, Set<TrackDataListener> sampledOutListeners) {
-        if (sampledInListeners.isEmpty() && sampledOutListeners.isEmpty()) {
+    private void notifyTrackPointsTableUpdate(boolean updateSamplingState, Set<TrackDataListener> listeners) {
+        if (listeners.isEmpty()) {
             return;
         }
 
@@ -328,7 +321,7 @@ public class TrackDataHub {
             // Reload and resample the track at a lower frequency.
             Log.i(TAG, "Resampling track after " + numLoadedPoints + " points.");
             resetSamplingState();
-            for (TrackDataListener listener : sampledInListeners) {
+            for (TrackDataListener listener : listeners) {
                 listener.clearTrackPoints();
             }
         }
@@ -384,11 +377,11 @@ public class TrackDataHub {
 
                 // Also include the last point if the selected track is not recording.
                 if ((localNumLoadedTrackPoints % samplingFrequency == 0) || (trackPointId == lastTrackPointId && !isSelectedTrackRecording())) {
-                    for (TrackDataListener trackDataListener : sampledInListeners) {
+                    for (TrackDataListener trackDataListener : listeners) {
                         trackDataListener.onSampledInTrackPoint(trackPoint, currentUpdater.getTrackStatistics(), currentUpdater.getSmoothedSpeed(), currentUpdater.getSmoothedAltitude());
                     }
                 } else {
-                    for (TrackDataListener trackDataListener : sampledOutListeners) {
+                    for (TrackDataListener trackDataListener : listeners) {
                         trackDataListener.onSampledOutTrackPoint(trackPoint, currentUpdater.getTrackStatistics());
                     }
                 }
@@ -407,7 +400,7 @@ public class TrackDataHub {
             lastSeenTrackPointId = localLastSeenTrackPointIdId;
         }
 
-        sampledInListeners.stream().forEach(TrackDataListener::onNewTrackPointsDone);
+        listeners.stream().forEach(TrackDataListener::onNewTrackPointsDone);
     }
 
     private void correctAltitude(TrackPoint trackPoint) {
