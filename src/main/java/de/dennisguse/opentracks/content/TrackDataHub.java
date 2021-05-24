@@ -78,7 +78,6 @@ public class TrackDataHub {
 
     private EGM2008Utils.EGM2008Correction egm2008Correction;
 
-    private boolean started;
     //TODO Check if this is needed.
     private HandlerThread handlerThread;
     private Handler handler;
@@ -114,11 +113,10 @@ public class TrackDataHub {
     }
 
     public void start() {
-        if (started) {
+        if (isStarted()) {
             Log.i(TAG, "TrackDataHub already started, ignoring start.");
             return;
         }
-        started = true;
         handlerThread = new HandlerThread(TAG);
         handlerThread.start();
         handler = new Handler(handlerThread.getLooper());
@@ -151,12 +149,10 @@ public class TrackDataHub {
     }
 
     public void stop() {
-        if (!started) {
+        if (!isStarted()) {
             Log.i(TAG, "TrackDataHub not started, ignoring stop.");
             return;
         }
-
-        started = false;
 
         //Unregister listeners
         ContentResolver contentResolver = context.getContentResolver();
@@ -191,7 +187,7 @@ public class TrackDataHub {
     public void registerTrackDataListener(final TrackDataListener trackDataListener) {
         handler.post(() -> {
             listeners.add(trackDataListener);
-            if (started) {
+            if (isStarted()) {
                 loadDataForListener(trackDataListener);
             }
         });
@@ -429,6 +425,10 @@ public class TrackDataHub {
         firstSeenTrackPointId = null;
         lastSeenTrackPointId = null;
         trackStatisticsUpdater = new TrackStatisticsUpdater();
+    }
+
+    private boolean isStarted() {
+        return handlerThread != null;
     }
 
     public void setRecordingStatus(TrackRecordingService.RecordingStatus recordingStatus) {
