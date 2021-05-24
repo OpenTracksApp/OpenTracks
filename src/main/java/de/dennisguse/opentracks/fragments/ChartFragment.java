@@ -250,7 +250,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
      */
     private synchronized void resumeTrackDataHub() {
         trackDataHub = ((TrackActivityDataHubInterface) getActivity()).getTrackDataHub();
-        trackDataHub.registerTrackDataListener(this, true, true, true, true);
+        trackDataHub.registerTrackDataListener(this);
     }
 
     /**

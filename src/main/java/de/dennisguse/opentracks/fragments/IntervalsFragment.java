@@ -194,7 +194,7 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
      */
     private synchronized void resumeTrackDataHub() {
         trackDataHub = ((TrackActivityDataHubInterface) getActivity()).getTrackDataHub();
-        trackDataHub.registerTrackDataListener(this, true, false, true, true);
+        trackDataHub.registerTrackDataListener(this);
     }
 
     /**
