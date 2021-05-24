@@ -399,8 +399,8 @@
     <string name="help_feature_content">* crear pistas de GPS
 \n* utilizar un sensor de frecuencia cardíaca (solo Bluetooth LE)
 \n* anuncios de voz (por tiempo o distancia)
-\n* crear marcadores (incluidas imágenes) 
-\n* funciona completamente sin conexión 
+\n* crear marcadores (incluidas imágenes)
+\n* funciona completamente sin conexión
 \n* mostrar pistas en un mapa (ver más abajo)</string>
     <string name="help_track_map_title">¿Cómo mostrar un camino en un mapa\?</string>
     <string name="help_storage_pictures_title">¿Cómo almacena OpenTracks las imágenes que se tomaron como marcadores\?</string>
