@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
+import java.util.List;
 
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
@@ -98,10 +99,13 @@ public class TrackStatisticsUpdater {
         return trackInitialized;
     }
 
+    public void addTrackPoints(List<TrackPoint> trackPoints, Distance minGPSDistance) {
+        for (TrackPoint tp : trackPoints) {
+            addTrackPoint(tp, minGPSDistance);
+        }
+    }
+
     /**
-     * Adds a trackPoint.
-     *
-     * @param trackPoint     the trackPoint
      * @param minGPSDistance the min recording distance
      */
     public void addTrackPoint(TrackPoint trackPoint, Distance minGPSDistance) {
