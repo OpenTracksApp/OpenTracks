@@ -58,6 +58,7 @@ public class XMLImporter {
     }
 
     interface TrackParser {
+        @Deprecated
         DefaultHandler getHandler();
 
         List<Track.Id> getImportTrackIds();

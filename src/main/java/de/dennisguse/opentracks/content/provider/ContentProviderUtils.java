@@ -243,6 +243,7 @@ public class ContentProviderUtils {
      * @param track the track
      * @return the content provider URI of the inserted track.
      */
+    ///TODO Return Track.Id
     public Uri insertTrack(Track track) {
         return contentResolver.insert(TracksColumns.CONTENT_URI, createContentValues(track));
     }
@@ -569,12 +570,22 @@ public class ContentProviderUtils {
     }
 
     //TODO Only used for file import; might be better to replace it.
+    //TODO Rename to bulkInsert
     public int bulkInsertTrackPoint(List<TrackPoint> trackPoints, Track.Id trackId) {
         ContentValues[] values = new ContentValues[trackPoints.size()];
         for (int i = 0; i < trackPoints.size(); i++) {
             values[i] = createContentValues(trackPoints.get(i), trackId);
         }
         return contentResolver.bulkInsert(TrackPointsColumns.CONTENT_URI_BY_ID, values);
+    }
+
+    //TODO Set trackId in this method.
+    public int bulkInsertMarkers(List<Marker> markers, Track.Id trackId) {
+        ContentValues[] values = new ContentValues[markers.size()];
+        for (int i = 0; i < markers.size(); i++) {
+            values[i] = createContentValues(markers.get(i));
+        }
+        return contentResolver.bulkInsert(MarkerColumns.CONTENT_URI, values);
     }
 
     /**

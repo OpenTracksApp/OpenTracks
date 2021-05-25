@@ -17,28 +17,38 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.location.Location;
 import android.util.Log;
 
-import androidx.annotation.VisibleForTesting;
-
 import org.xml.sax.Attributes;
+import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Speed;
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.exporter.KMLTrackExporter;
+import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.util.StringUtils;
+import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * Imports a KML file.
  *
  * @author Jimmy Shih
  */
-public class KmlFileTrackImporter extends AbstractFileTrackImporter {
+public class KmlFileTrackImporter extends DefaultHandler implements XMLImporter.TrackParser {
 
     private static final String TAG = KmlFileTrackImporter.class.getSimpleName();
 
@@ -64,29 +74,50 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
 
     private static final String ATTRIBUTE_NAME = "name";
 
-    private boolean trackStarted = false;
+    private Locator locator;
+
+    private final Context context;
+
+    // Belongs to the current track
+    private final ArrayList<Instant> whenList = new ArrayList<>();
+    private final ArrayList<Location> locationList = new ArrayList<>();
+
     private String extendedDataType;
-    private final ArrayList<TrackPoint> trackPoints = new ArrayList<>();
-    private final ArrayList<Float> speedList = new ArrayList<>();
-    private final ArrayList<Float> distanceList = new ArrayList<>();
-    private final ArrayList<Float> cadenceList = new ArrayList<>();
-    private final ArrayList<Float> heartRateList = new ArrayList<>();
-    private final ArrayList<Float> powerList = new ArrayList<>();
+    private final ArrayList<Float> sensorSpeedList = new ArrayList<>();
+    private final ArrayList<Float> sensorDistanceList = new ArrayList<>();
+    private final ArrayList<Float> sensorCadenceList = new ArrayList<>();
+    private final ArrayList<Float> sensorHeartRateList = new ArrayList<>();
+    private final ArrayList<Float> sensorPowerList = new ArrayList<>();
     private final ArrayList<Float> altitudeGainList = new ArrayList<>();
     private final ArrayList<Float> altitudeLossList = new ArrayList<>();
 
+    private final ArrayList<Marker> markers = new ArrayList<>();
+
+    // The current element content
+    private String content = "";
+
+    private String icon;
+    private String name;
+    private String description;
+    private String category;
+    private String latitude;
+    private String longitude;
+    private String altitude;
+    private String markerType;
+    private String photoUrl;
+    private String uuid;
+
+    private final TrackImporter trackImporter;
+
     public KmlFileTrackImporter(Context context) {
-        this(context, new ContentProviderUtils(context));
-    }
+        this.context = context;
 
-    @VisibleForTesting
-    KmlFileTrackImporter(Context context, ContentProviderUtils contentProviderUtils) {
-        super(context, contentProviderUtils);
-    }
-
-    @Override
-    public DefaultHandler getHandler() {
-        return this;
+        //TODO move this to instantiation of this class
+        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
+        Distance maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(sharedPreferences, context);
+        Distance recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
+        boolean preventReimport = PreferencesUtils.getPreventReimportTracks(sharedPreferences, context);
+        this.trackImporter = new TrackImporter(context, new ContentProviderUtils(context), recordingDistanceInterval, maxRecordingDistance, preventReimport);
     }
 
     @Override
@@ -98,11 +129,10 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
                 onMarkerStart();
                 break;
             case TAG_GX_MULTI_TRACK:
-                trackStarted = true;
-                onTrackStart();
+                trackImporter.newTrack();
                 break;
             case TAG_GX_TRACK:
-                if (!trackStarted) {
+                if (trackImporter == null) {
                     throw new SAXException("No " + TAG_GX_MULTI_TRACK);
                 }
                 onTrackSegmentStart();
@@ -114,10 +144,15 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
     }
 
     @Override
+    public void characters(char[] ch, int start, int length) {
+        content += new String(ch, start, length);
+    }
+
+    @Override
     public void endElement(String uri, String localName, String tag) throws SAXException {
         switch (tag) {
             case TAG_KML:
-                onFileEnd();
+                onFileEnded();
                 break;
             case TAG_PLACEMARK:
             case TAG_PHOTO_OVERLAY:
@@ -134,7 +169,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
                 onTrackSegmentEnd();
                 break;
             case TAG_GX_COORD:
-                onTrackPointEnd();
+                onCoordEnded();
                 break;
             case TAG_GX_VALUE:
                 onExtendedDataValueEnd();
@@ -166,7 +201,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
                 break;
             case TAG_WHEN:
                 if (content != null) {
-                    time = content.trim();
+                    whenList.add(StringUtils.parseTime(content.trim()));
                 }
 
                 break;
@@ -183,7 +218,7 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         }
 
         // Reset element content
-        content = null;
+        content = "";
     }
 
     private void onMarkerStart() {
@@ -196,7 +231,6 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         latitude = null;
         longitude = null;
         altitude = null;
-        time = null;
         markerType = null;
     }
 
@@ -204,7 +238,30 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         if (!MARKER_STYLE.equals(markerType)) {
             return;
         }
-        addMarker();
+
+        if (whenList.size() != 1) {
+            Log.w(TAG, "Marker without time ignored.");
+            return;
+        }
+
+        Location location = createLocation(longitude, latitude, altitude);
+        if (location == null) {
+            Log.w(TAG, "Marker with invalid coordinates ignored: " + location);
+            return;
+        }
+
+        Marker marker = new Marker(null, new TrackPoint(TrackPoint.Type.TRACKPOINT, location, whenList.get(0))); //TODO Creating marker without need
+        marker.setName(name != null ? name : "");
+        marker.setDescription(description != null ? description : "");
+        marker.setCategory(category != null ? category : "");
+        marker.setPhotoUrl(photoUrl);
+        markers.add(marker);
+
+        name = null;
+        description = null;
+        category = null;
+        photoUrl = null;
+        whenList.clear();
     }
 
     private void onMarkerLocationEnd() {
@@ -219,39 +276,56 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         }
     }
 
-    @Override
-    protected void onTrackSegmentStart() {
-        super.onTrackSegmentStart();
-        trackPoints.clear();
-        speedList.clear();
-        distanceList.clear();
-        heartRateList.clear();
-        cadenceList.clear();
-        powerList.clear();
+    private void onTrackSegmentStart() {
+        locationList.clear();
+        whenList.clear();
+
+        sensorSpeedList.clear();
+        sensorDistanceList.clear();
+        sensorHeartRateList.clear();
+        sensorCadenceList.clear();
+        sensorPowerList.clear();
         altitudeGainList.clear();
         altitudeLossList.clear();
     }
 
-    protected void onTrackSegmentEnd() {
-        super.onTrackSegmentEnd();
-        // Close a track segment by inserting the segment locations
-        for (int i = 0; i < trackPoints.size(); i++) {
-            TrackPoint trackPoint = trackPoints.get(i);
+    private void onTrackSegmentEnd() {
+        if (locationList.size() != whenList.size()) {
+            throw new ImportParserException("<coords> and <when> should have the same count.");
+        }
 
-            if (i < speedList.size() && speedList.get(i) != null) {
-                trackPoint.setSpeed(Speed.of(speedList.get(i)));
+        // Close a track segment by inserting the segment locations
+        for (int i = 0; i < locationList.size(); i++) {
+            Instant time = whenList.get(i);
+            Location location = locationList.get(i);
+
+            TrackPoint trackPoint;
+            if (i == 0) {
+                if (location == null) {
+                    trackPoint = TrackPoint.createSegmentStartManualWithTime(time);
+                } else {
+                    trackPoint = new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, location, time);
+                }
+            } else if (i == locationList.size() - 1 && location == null) {
+                trackPoint = TrackPoint.createSegmentEndWithTime(time);
+            } else {
+                trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, location, time);
             }
-            if (i < distanceList.size() && distanceList.get(i) != null) {
-                trackPoint.setSensorDistance(Distance.of(distanceList.get(i)));
+
+            if (i < sensorSpeedList.size() && sensorSpeedList.get(i) != null) {
+                trackPoint.setSpeed(Speed.of(sensorSpeedList.get(i)));
             }
-            if (i < heartRateList.size()) {
-                trackPoint.setHeartRate_bpm(heartRateList.get(i));
+            if (i < sensorDistanceList.size() && sensorDistanceList.get(i) != null) {
+                trackPoint.setSensorDistance(Distance.of(sensorDistanceList.get(i)));
             }
-            if (i < cadenceList.size()) {
-                trackPoint.setCyclingCadence_rpm(cadenceList.get(i));
+            if (i < sensorHeartRateList.size()) {
+                trackPoint.setHeartRate_bpm(sensorHeartRateList.get(i));
             }
-            if (i < powerList.size()) {
-                trackPoint.setPower(powerList.get(i));
+            if (i < sensorCadenceList.size()) {
+                trackPoint.setCyclingCadence_rpm(sensorCadenceList.get(i));
+            }
+            if (i < sensorPowerList.size()) {
+                trackPoint.setPower(sensorPowerList.get(i));
             }
             if (i < altitudeGainList.size()) {
                 trackPoint.setAltitudeGain(altitudeGainList.get(i));
@@ -260,18 +334,11 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
                 trackPoint.setAltitudeLoss(altitudeLossList.get(i));
             }
 
-            insertTrackPoint(trackPoint);
+            trackImporter.addTrackPoint(trackPoint);
         }
     }
 
-    /**
-     * On track point end. gx:coord end tag.
-     */
-    private void onTrackPointEnd() {
-        // Add trackPoint to trackPoints
-        if (content == null) {
-            return;
-        }
+    private void onCoordEnded() {
         String[] parts = content.trim().split(" ");
         if (parts.length == 2 || parts.length == 3) {
             longitude = parts[0];
@@ -279,33 +346,41 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
             altitude = parts.length == 3 ? parts[2] : null;
         }
 
-        // Similar to GPX
-        boolean isFirstTrackPointInSegment = isFirstTrackPointInSegment();
-        TrackPoint trackPoint = getTrackPoint();
-        if (isFirstTrackPointInSegment) {
-            TrackPoint.Type type = !trackPoint.hasLocation() ? TrackPoint.Type.SEGMENT_START_MANUAL : TrackPoint.Type.SEGMENT_START_AUTOMATIC;
+        locationList.add(createLocation(longitude, latitude, altitude));
 
-            trackPoint.setType(type);
-        }
-        trackPoints.add(trackPoint);
-
-        // Reset variables for next trackpoint (which might not have such data).
-        time = null;
         longitude = null;
         latitude = null;
         altitude = null;
     }
 
-    /**
-     * On extended data start. gx:SimpleArrayData start tag.
-     */
+    private Location createLocation(String longitude, String latitude, String altitude) {
+        Location location = null;
+        if (longitude != null || latitude != null) {
+            location = new Location("import");
+
+            try {
+                location.setLatitude(Double.parseDouble(latitude));
+                location.setLongitude(Double.parseDouble(longitude));
+            } catch (NumberFormatException e) {
+                throw new AbstractFileTrackImporter.ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse latitude longitude: %s %s", latitude, longitude)), e);
+            }
+
+            if (altitude != null) {
+                try {
+                    location.setAltitude(Double.parseDouble(altitude));
+                } catch (NumberFormatException e) {
+                    throw new AbstractFileTrackImporter.ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse altitude: %s", altitude)), e);
+                }
+            }
+        }
+        return location;
+    }
+
+
     private void onExtendedDataStart(Attributes attributes) {
         extendedDataType = attributes.getValue(ATTRIBUTE_NAME);
     }
 
-    /**
-     * On extended data value end. gx:value end tag.
-     */
     private void onExtendedDataValueEnd() throws SAXException {
         Float value = null;
         if (content != null) {
@@ -320,19 +395,19 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
         }
         switch (extendedDataType) {
             case KMLTrackExporter.EXTENDED_DATA_TYPE_SPEED:
-                speedList.add(value);
+                sensorSpeedList.add(value);
                 break;
             case KMLTrackExporter.EXTENDED_DATA_TYPE_DISTANCE:
-                distanceList.add(value);
+                sensorDistanceList.add(value);
                 break;
             case KMLTrackExporter.EXTENDED_DATA_TYPE_POWER:
-                powerList.add(value);
+                sensorPowerList.add(value);
                 break;
             case KMLTrackExporter.EXTENDED_DATA_TYPE_HEART_RATE:
-                heartRateList.add(value);
+                sensorHeartRateList.add(value);
                 break;
             case KMLTrackExporter.EXTENDED_DATA_TYPE_CADENCE:
-                cadenceList.add(value);
+                sensorCadenceList.add(value);
                 break;
             case KMLTrackExporter.EXTENDED_DATA_TYPE_ALTITUDE_GAIN:
                 altitudeGainList.add(value);
@@ -343,5 +418,56 @@ public class KmlFileTrackImporter extends AbstractFileTrackImporter {
             default:
                 Log.w(TAG, "Data from extended data " + extendedDataType + " is not (yet) supported.");
         }
+    }
+
+    private void onTrackEnd() {
+        Track track = new Track();
+        track.setName(name != null ? name : "");
+
+        try {
+            track.setUuid(UUID.fromString(uuid));
+        } catch (IllegalArgumentException | NullPointerException e) {
+            Log.w(TAG, "could not parse Track UUID, generating a new one.");
+            track.setUuid(UUID.randomUUID());
+        }
+
+        track.setDescription(description != null ? description : "");
+
+        if (category != null) {
+            track.setCategory(category);
+
+            if (icon == null) {
+                //TODO exporting/importing icon is not implemented.
+                icon = TrackIconUtils.getIconValue(context, category);
+            }
+        }
+
+        track.setIcon(icon != null ? icon : "");
+
+        trackImporter.setTrack(track);
+    }
+
+    private String createErrorMessage(String message) {
+        return String.format(Locale.US, "Parsing error at line: %d column: %d. %s", locator.getLineNumber(), locator.getColumnNumber(), message);
+    }
+
+    private void onFileEnded() {
+        trackImporter.addMarkers(markers);
+        trackImporter.finish();
+    }
+
+    @Override
+    public DefaultHandler getHandler() {
+        return this;
+    }
+
+    @Override
+    public List<Track.Id> getImportTrackIds() {
+        return trackImporter.getTrackIds();
+    }
+
+    @Override
+    public void cleanImport() {
+        trackImporter.cleanImport();
     }
 }

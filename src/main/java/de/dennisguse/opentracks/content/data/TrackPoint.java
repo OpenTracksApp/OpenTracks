@@ -55,7 +55,7 @@ public class TrackPoint {
     private Altitude altitude;
     private Speed speed;
     private Float bearing;
-    private Distance sensorDistance_m;
+    private Distance sensorDistance;
 
     public enum Type {
         SEGMENT_START_MANUAL(-2), //Start of a segment due to user interaction (start, resume)
@@ -99,7 +99,11 @@ public class TrackPoint {
     }
 
     public TrackPoint(@NonNull Location location) {
-        this(Type.TRACKPOINT);
+        this(Type.TRACKPOINT, location, Instant.now());
+    }
+
+    public TrackPoint(@NonNull Type type, @NonNull Location location, @NonNull Instant time) {
+        this(type);
 
         this.latitude = location.getLatitude();
         this.longitude = location.getLongitude();
@@ -107,7 +111,9 @@ public class TrackPoint {
         this.speed = Speed.of(location.getSpeed());
         this.accuracy = location.getAccuracy();
 
-        setTime(Instant.now());
+        //TODO Should we copy the bearing?
+
+        setTime(time);
     }
 
     public TrackPoint(@NonNull Type type, Instant time) {
@@ -314,9 +320,13 @@ public class TrackPoint {
         this.accuracy = horizontalAccuracy;
     }
 
+    @Nullable
     public Distance distanceToPrevious(@NonNull TrackPoint previous) {
         if (hasSensorDistance()) {
             return getSensorDistance();
+        }
+        if (!(hasLocation() && previous.hasLocation())) {
+            return null;
         }
 
         return Distance.of(getLocation().distanceTo(previous.getLocation()));
@@ -336,15 +346,15 @@ public class TrackPoint {
 
     // Sensor data
     public boolean hasSensorDistance() {
-        return sensorDistance_m != null;
+        return sensorDistance != null;
     }
 
     public Distance getSensorDistance() {
-        return sensorDistance_m;
+        return sensorDistance;
     }
 
     public void setSensorDistance(Distance distance_m) {
-        this.sensorDistance_m = distance_m;
+        this.sensorDistance = distance_m;
     }
 
     public boolean hasSensorData() {

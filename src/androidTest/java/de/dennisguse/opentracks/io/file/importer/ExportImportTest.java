@@ -406,18 +406,18 @@ public class ExportImportTest {
             // TODO Not exported for GPX/KML
             //   assertEquals(trackPoint.getAccuracy(), importedTrackPoint.getAccuracy(), 0.01);
 
-            assertEquals(trackPoint.hasLocation(), importedTrackPoint.hasLocation());
+            assertEquals("" + i, trackPoint.hasLocation(), importedTrackPoint.hasLocation());
             if (trackPoint.hasLocation()) {
-                assertEquals(trackPoint.getLatitude(), importedTrackPoint.getLatitude(), 0.001);
-                assertEquals(trackPoint.getLongitude(), importedTrackPoint.getLongitude(), 0.001);
+                assertEquals("" + i, trackPoint.getLatitude(), importedTrackPoint.getLatitude(), 0.001);
+                assertEquals("" + i, trackPoint.getLongitude(), importedTrackPoint.getLongitude(), 0.001);
             }
-            assertEquals(trackPoint.hasSpeed(), importedTrackPoint.hasSpeed());
+            assertEquals("" + i, trackPoint.hasSpeed(), importedTrackPoint.hasSpeed());
             if (trackPoint.hasSpeed()) {
-                assertEquals(trackPoint.getSpeed().toMPS(), importedTrackPoint.getSpeed().toMPS(), 0.001);
+                assertEquals("" + i, trackPoint.getSpeed().toMPS(), importedTrackPoint.getSpeed().toMPS(), 0.001);
             }
-            assertEquals(trackPoint.hasAltitude(), importedTrackPoint.hasAltitude());
+            assertEquals("" + i, trackPoint.hasAltitude(), importedTrackPoint.hasAltitude());
             if (trackPoint.hasAltitude()) {
-                assertEquals(trackPoint.getAltitude().toM(), importedTrackPoint.getAltitude().toM(), 0.001);
+                assertEquals("" + i, trackPoint.getAltitude().toM(), importedTrackPoint.getAltitude().toM(), 0.001);
             }
 
             if (type.equals(TrackPoint.Type.SEGMENT_START_MANUAL) || type.equals(TrackPoint.Type.SEGMENT_END_MANUAL)) {
@@ -426,13 +426,13 @@ public class ExportImportTest {
             }
 
             if (verifyHeartrate) {
-                assertEquals("" + trackPoint, trackPoint.getHeartRate_bpm(), importedTrackPoint.getHeartRate_bpm(), 0.01);
+                assertEquals("" + i, trackPoint.getHeartRate_bpm(), importedTrackPoint.getHeartRate_bpm(), 0.01);
             }
             if (verifyCadence) {
-                assertEquals("" + trackPoint, trackPoint.getCyclingCadence_rpm(), importedTrackPoint.getCyclingCadence_rpm(), 0.01);
+                assertEquals("" + i, trackPoint.getCyclingCadence_rpm(), importedTrackPoint.getCyclingCadence_rpm(), 0.01);
             }
             if (verifyPower) {
-                assertEquals("" + trackPoint, trackPoint.getPower(), importedTrackPoint.getPower(), 0.01);
+                assertEquals("" + i, trackPoint.getPower(), importedTrackPoint.getPower(), 0.01);
             }
             if (verifyAltitudeGain) {
                 assertEquals(trackPoint.getAltitudeGain(), importedTrackPoint.getAltitudeGain(), 0.01);
