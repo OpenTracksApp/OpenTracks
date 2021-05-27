@@ -54,9 +54,9 @@ import de.dennisguse.opentracks.util.StringUtils;
  *
  * @author Jimmy Shih
  */
-public class GpxFileTrackImporter extends DefaultHandler implements XMLImporter.TrackParser {
+public class GpxTrackImporter extends DefaultHandler implements XMLImporter.TrackParser {
 
-    private static final String TAG = GpxFileTrackImporter.class.getSimpleName();
+    private static final String TAG = GpxTrackImporter.class.getSimpleName();
 
     private static final String TAG_DESCRIPTION = "desc";
     private static final String TAG_COMMENT = "cmt";
@@ -115,12 +115,12 @@ public class GpxFileTrackImporter extends DefaultHandler implements XMLImporter.
 
     private final TrackImporter trackImporter;
 
-    public GpxFileTrackImporter(Context context) {
+    public GpxTrackImporter(Context context) {
         this(context, new ContentProviderUtils(context));
     }
 
     @VisibleForTesting
-    GpxFileTrackImporter(Context context, ContentProviderUtils contentProviderUtils) {
+    GpxTrackImporter(Context context, ContentProviderUtils contentProviderUtils) {
         this.context = context;
 
         //TODO move this to instantiation of this class

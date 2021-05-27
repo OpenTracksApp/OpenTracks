@@ -52,9 +52,9 @@ public class ImportService extends JobIntentService {
         try {
 
             if (TrackFileFormat.GPX.getExtension().equals(fileExtension)) {
-                trackIds.addAll(new XMLImporter(new GpxFileTrackImporter(this)).importFile(this, file.getUri()));
+                trackIds.addAll(new XMLImporter(new GpxTrackImporter(this)).importFile(this, file.getUri()));
             } else if (TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.getExtension().equals(fileExtension)) {
-                trackIds.addAll(new XMLImporter(new KmlFileTrackImporter(this)).importFile(this, file.getUri()));
+                trackIds.addAll(new XMLImporter(new KmlTrackImporter(this)).importFile(this, file.getUri()));
             } else if (TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.getExtension().equals(fileExtension)) {
                 trackIds.addAll(new KmzTrackImporter().importFile(this, file.getUri()));
             } else {

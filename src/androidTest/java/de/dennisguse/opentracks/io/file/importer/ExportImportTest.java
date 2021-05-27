@@ -169,7 +169,7 @@ public class ExportImportTest {
 
         // 2. import
         InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        XMLImporter trackImporter = new XMLImporter(new KmlFileTrackImporter(context));
+        XMLImporter trackImporter = new XMLImporter(new KmlTrackImporter(context));
         importTrackId = trackImporter.importFile(inputStream).get(0);
 
         // then
@@ -209,7 +209,7 @@ public class ExportImportTest {
 
         // 2. import
         InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        XMLImporter trackImporter = new XMLImporter(new KmlFileTrackImporter(context));
+        XMLImporter trackImporter = new XMLImporter(new KmlTrackImporter(context));
         importTrackId = trackImporter.importFile(inputStream).get(0);
 
         // then
@@ -288,7 +288,7 @@ public class ExportImportTest {
 
         // 2. import
         InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        XMLImporter trackImporter = new XMLImporter(new KmlFileTrackImporter(context));
+        XMLImporter trackImporter = new XMLImporter(new KmlTrackImporter(context));
         importTrackId = trackImporter.importFile(inputStream).get(0);
 
         // then
@@ -313,7 +313,7 @@ public class ExportImportTest {
 
         // 2. import
         InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        XMLImporter trackImporter = new XMLImporter(new GpxFileTrackImporter(context, contentProviderUtils));
+        XMLImporter trackImporter = new XMLImporter(new GpxTrackImporter(context, contentProviderUtils));
         importTrackId = trackImporter.importFile(inputStream).get(0);
 
         // then
@@ -362,7 +362,7 @@ public class ExportImportTest {
 
         // 2. import
         InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        XMLImporter trackImporter = new XMLImporter(new GpxFileTrackImporter(context, contentProviderUtils));
+        XMLImporter trackImporter = new XMLImporter(new GpxTrackImporter(context, contentProviderUtils));
         importTrackId = trackImporter.importFile(inputStream).get(0);
 
         // then
