@@ -451,7 +451,7 @@ limitations under the License.
     <string name="waypoint_type_pothole">hull i veien</string>
     <string name="waypoint_type_railway_crossing">jernbaneovergang</string>
     <string name="waypoint_type_restaurant">restaurant</string>
-    <string name="waypoint_type_shopping">innhandling</string>
+    <string name="waypoint_type_shopping">handel</string>
     <string name="waypoint_type_sight">severdighet</string>
     <string name="waypoint_type_store">butikk</string>
     <string name="waypoint_type_swimming_pool">svømmebasseng</string>
@@ -607,6 +607,6 @@ limitations under the License.
     <string name="track_speed_notification">Hastighet: %1$s</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
     <string name="about_third_party_data">Tredjepartsdata</string>
-    <string name="delete_service">Slett tjeneste</string>
+    <string name="delete_service">Slettingstjeneste</string>
     <string name="track_delete_progress">%1$d/%2$d</string>
 </resources>
