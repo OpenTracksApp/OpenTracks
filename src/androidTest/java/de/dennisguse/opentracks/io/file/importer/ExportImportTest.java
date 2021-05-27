@@ -90,10 +90,14 @@ public class ExportImportTest {
     private Track.Id trackId;
     private Track.Id importTrackId;
 
+    private TrackImporter trackImporter;
+
     @Before
     public void fileSetup() throws IOException {
         tmpFile = File.createTempFile("test", "test", context.getFilesDir());
         tmpFileUri = Uri.fromFile(tmpFile);
+
+        trackImporter = new TrackImporter(context, contentProviderUtils, Distance.of(10), Distance.of(200), true);
     }
 
     @After
@@ -169,8 +173,8 @@ public class ExportImportTest {
 
         // 2. import
         InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        XMLImporter trackImporter = new XMLImporter(new KmlTrackImporter(context));
-        importTrackId = trackImporter.importFile(inputStream).get(0);
+        XMLImporter importer = new XMLImporter(new KmlTrackImporter(context, trackImporter));
+        importTrackId = importer.importFile(inputStream).get(0);
 
         // then
         // 1. track
@@ -209,8 +213,8 @@ public class ExportImportTest {
 
         // 2. import
         InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        XMLImporter trackImporter = new XMLImporter(new KmlTrackImporter(context));
-        importTrackId = trackImporter.importFile(inputStream).get(0);
+        XMLImporter importer = new XMLImporter(new KmlTrackImporter(context, trackImporter));
+        importTrackId = importer.importFile(inputStream).get(0);
 
         // then
         // 1. track
@@ -248,8 +252,8 @@ public class ExportImportTest {
         contentProviderUtils.deleteTrack(context, trackId);
 
         // 2. import
-        KmzTrackImporter trackImporter = new KmzTrackImporter();
-        importTrackId = trackImporter.importFile(context, tmpFileUri).get(0);
+        KmzTrackImporter importer = new KmzTrackImporter(context, trackImporter);
+        importTrackId = importer.importFile(tmpFileUri).get(0);
 
         // then
         // 1. track
@@ -288,8 +292,8 @@ public class ExportImportTest {
 
         // 2. import
         InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        XMLImporter trackImporter = new XMLImporter(new KmlTrackImporter(context));
-        importTrackId = trackImporter.importFile(inputStream).get(0);
+        XMLImporter importer = new XMLImporter(new KmlTrackImporter(context, trackImporter));
+        importTrackId = importer.importFile(inputStream).get(0);
 
         // then
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
@@ -313,8 +317,8 @@ public class ExportImportTest {
 
         // 2. import
         InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        XMLImporter trackImporter = new XMLImporter(new GpxTrackImporter(context, contentProviderUtils));
-        importTrackId = trackImporter.importFile(inputStream).get(0);
+        XMLImporter importer = new XMLImporter(new GpxTrackImporter(context, trackImporter));
+        importTrackId = importer.importFile(inputStream).get(0);
 
         // then
         // 1. track
@@ -362,8 +366,8 @@ public class ExportImportTest {
 
         // 2. import
         InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        XMLImporter trackImporter = new XMLImporter(new GpxTrackImporter(context, contentProviderUtils));
-        importTrackId = trackImporter.importFile(inputStream).get(0);
+        XMLImporter importer = new XMLImporter(new GpxTrackImporter(context, trackImporter));
+        importTrackId = importer.importFile(inputStream).get(0);
 
         // then
         // 1. track

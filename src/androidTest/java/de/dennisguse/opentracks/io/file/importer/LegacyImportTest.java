@@ -7,6 +7,7 @@ import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -34,7 +36,14 @@ public class LegacyImportTest {
     private final Context context = ApplicationProvider.getApplicationContext();
     private final ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
 
+    private TrackImporter trackImporter;
+
     private Track.Id importTrackId;
+
+    @Before
+    public void setUp() {
+        trackImporter = new TrackImporter(context, contentProviderUtils, Distance.of(10), Distance.of(200), true);
+    }
 
     @After
     public void tearDown() {
@@ -51,12 +60,12 @@ public class LegacyImportTest {
     @Test
     public void kml_with_statistics_marker() throws IOException {
         // given
-        XMLImporter trackImporter = new XMLImporter(new KmlTrackImporter(context));
+        XMLImporter importer = new XMLImporter(new KmlTrackImporter(context, trackImporter));
         InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.legacy_kml_statistics_marker);
 
         // when
         // 1. import
-        importTrackId = trackImporter.importFile(inputStream).get(0);
+        importTrackId = importer.importFile(inputStream).get(0);
 
         // then
         // 1. track
@@ -93,11 +102,11 @@ public class LegacyImportTest {
     @Test(expected = ImportParserException.class)
     public void kml_without_locations() throws IOException {
         // given
-        XMLImporter trackImporter = new XMLImporter(new KmlTrackImporter(context));
+        XMLImporter importer = new XMLImporter(new KmlTrackImporter(context, trackImporter));
         InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.legacy_kml_empty);
 
         // when
-        importTrackId = trackImporter.importFile(inputStream).get(0);
+        importTrackId = importer.importFile(inputStream).get(0);
     }
 
     /**
@@ -107,12 +116,12 @@ public class LegacyImportTest {
     @Test
     public void gpx_with_pause_resume() throws IOException {
         // given
-        XMLImporter trackImporter = new XMLImporter(new GpxTrackImporter(context));
+        XMLImporter importer = new XMLImporter(new GpxTrackImporter(context, trackImporter));
         InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.legacy_gpx_pause_resume);
 
         // when
         // 1. import
-        importTrackId = trackImporter.importFile(inputStream).get(0);
+        importTrackId = importer.importFile(inputStream).get(0);
 
         // then
         // 1. track
