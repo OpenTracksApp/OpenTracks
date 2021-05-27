@@ -205,7 +205,7 @@ public class KmzTrackImporter {
     }
 
     private List<Track.Id> parseKml(ZipInputStream zipInputStream) throws IOException {
-        XMLImporter kmlFileTrackImporter = new XMLImporter(new KmlFileTrackImporter(context));
+        XMLImporter kmlFileTrackImporter = new XMLImporter(new KmlTrackImporter(context));
 
         InputStream nonClosableInputStream = new FilterInputStream(zipInputStream) {
             @Override

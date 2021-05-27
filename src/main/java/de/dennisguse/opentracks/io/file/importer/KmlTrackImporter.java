@@ -46,9 +46,9 @@ import de.dennisguse.opentracks.util.StringUtils;
  *
  * @author Jimmy Shih
  */
-public class KmlFileTrackImporter extends DefaultHandler implements XMLImporter.TrackParser {
+public class KmlTrackImporter extends DefaultHandler implements XMLImporter.TrackParser {
 
-    private static final String TAG = KmlFileTrackImporter.class.getSimpleName();
+    private static final String TAG = KmlTrackImporter.class.getSimpleName();
 
     private static final String MARKER_STYLE = "#" + KMLTrackExporter.MARKER_STYLE;
 
@@ -107,7 +107,7 @@ public class KmlFileTrackImporter extends DefaultHandler implements XMLImporter.
 
     private final TrackImporter trackImporter;
 
-    public KmlFileTrackImporter(Context context) {
+    public KmlTrackImporter(Context context) {
         this.context = context;
 
         //TODO move this to instantiation of this class
