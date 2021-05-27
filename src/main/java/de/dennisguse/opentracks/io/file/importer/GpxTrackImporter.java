@@ -17,10 +17,7 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
-
-import androidx.annotation.VisibleForTesting;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
@@ -38,8 +35,6 @@ import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
@@ -115,20 +110,9 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
 
     private final TrackImporter trackImporter;
 
-    public GpxTrackImporter(Context context) {
-        this(context, new ContentProviderUtils(context));
-    }
-
-    @VisibleForTesting
-    GpxTrackImporter(Context context, ContentProviderUtils contentProviderUtils) {
+    public GpxTrackImporter(Context context, TrackImporter trackImporter) {
         this.context = context;
-
-        //TODO move this to instantiation of this class
-        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
-        Distance maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(sharedPreferences, context);
-        Distance recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
-        boolean preventReimport = PreferencesUtils.getPreventReimportTracks(sharedPreferences, context);
-        this.trackImporter = new TrackImporter(context, contentProviderUtils, recordingDistanceInterval, maxRecordingDistance, preventReimport);
+        this.trackImporter = trackImporter;
     }
 
     @Override

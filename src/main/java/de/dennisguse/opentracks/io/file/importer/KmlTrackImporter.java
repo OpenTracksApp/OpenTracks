@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.util.Log;
 
@@ -36,9 +35,7 @@ import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.exporter.KMLTrackExporter;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
@@ -107,15 +104,9 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
 
     private final TrackImporter trackImporter;
 
-    public KmlTrackImporter(Context context) {
+    public KmlTrackImporter(Context context, TrackImporter trackImporter) {
         this.context = context;
-
-        //TODO move this to instantiation of this class
-        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
-        Distance maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(sharedPreferences, context);
-        Distance recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
-        boolean preventReimport = PreferencesUtils.getPreventReimportTracks(sharedPreferences, context);
-        this.trackImporter = new TrackImporter(context, new ContentProviderUtils(context), recordingDistanceInterval, maxRecordingDistance, preventReimport);
+        this.trackImporter = trackImporter;
     }
 
     @Override
