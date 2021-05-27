@@ -28,6 +28,7 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
+import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * Handles logic to import:
@@ -93,8 +94,28 @@ public class TrackImporter {
         this.markers.addAll(markers);
     }
 
-    void setTrack(Track track) {
-        this.track = track;
+    void setTrack(Context context, String name, String uuid, String description, String category, String icon) {
+        track = new Track();
+        track.setName(name != null ? name : "");
+
+        try {
+            track.setUuid(UUID.fromString(uuid));
+        } catch (IllegalArgumentException | NullPointerException e) {
+            Log.w(TAG, "could not parse Track UUID, generating a new one.");
+            track.setUuid(UUID.randomUUID());
+        }
+
+        track.setDescription(description != null ? description : "");
+
+        if (category != null) {
+            track.setCategory(category);
+
+            if (icon == null) {
+                icon = TrackIconUtils.getIconValue(context, category);
+            }
+        }
+
+        track.setIcon(icon != null ? icon : "");
     }
 
     void finish() {
@@ -155,12 +176,11 @@ public class TrackImporter {
                 Instant time = current.getTime();
                 if (current.getLatitude() == 100) {
                     //TODO Remove by 31st December 2021.
-                    current = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL);
-                    current.setTime(time);
+                    trackPoints.set(i, new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, time));
                 } else if (current.getLatitude() == 200) {
                     //TODO Remove by 31st December 2021.
-                    current = new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL);
-                    current.setTime(time);
+                    trackPoints.set(i, new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, time));
+                    //TODO Delete location
                 } else if (!LocationUtils.isValidLocation(current.getLocation())) {
                     throw new ImportParserException("Invalid location detected: " + current);
                 }

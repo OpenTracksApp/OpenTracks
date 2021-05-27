@@ -30,7 +30,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
@@ -41,7 +40,6 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.exporter.KMLTrackExporter;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
  * Imports a KML file.
@@ -121,6 +119,11 @@ public class KmlFileTrackImporter extends DefaultHandler implements XMLImporter.
     }
 
     @Override
+    public void setDocumentLocator(Locator locator) {
+        this.locator = locator;
+    }
+
+    @Override
     public void startElement(String uri, String localName, String tag, Attributes attributes) throws SAXException {
         switch (tag) {
             case TAG_PLACEMARK:
@@ -152,7 +155,7 @@ public class KmlFileTrackImporter extends DefaultHandler implements XMLImporter.
     public void endElement(String uri, String localName, String tag) throws SAXException {
         switch (tag) {
             case TAG_KML:
-                onFileEnded();
+                onFileEnd();
                 break;
             case TAG_PLACEMARK:
             case TAG_PHOTO_OVERLAY:
@@ -163,7 +166,7 @@ public class KmlFileTrackImporter extends DefaultHandler implements XMLImporter.
                 onMarkerLocationEnd();
                 break;
             case TAG_GX_MULTI_TRACK:
-                onTrackEnd();
+                trackImporter.setTrack(context, name, uuid, description, category, icon);
                 break;
             case TAG_GX_TRACK:
                 onTrackSegmentEnd();
@@ -362,14 +365,14 @@ public class KmlFileTrackImporter extends DefaultHandler implements XMLImporter.
                 location.setLatitude(Double.parseDouble(latitude));
                 location.setLongitude(Double.parseDouble(longitude));
             } catch (NumberFormatException e) {
-                throw new AbstractFileTrackImporter.ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse latitude longitude: %s %s", latitude, longitude)), e);
+                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse latitude longitude: %s %s", latitude, longitude)), e);
             }
 
             if (altitude != null) {
                 try {
                     location.setAltitude(Double.parseDouble(altitude));
                 } catch (NumberFormatException e) {
-                    throw new AbstractFileTrackImporter.ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse altitude: %s", altitude)), e);
+                    throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse altitude: %s", altitude)), e);
                 }
             }
         }
@@ -420,38 +423,11 @@ public class KmlFileTrackImporter extends DefaultHandler implements XMLImporter.
         }
     }
 
-    private void onTrackEnd() {
-        Track track = new Track();
-        track.setName(name != null ? name : "");
-
-        try {
-            track.setUuid(UUID.fromString(uuid));
-        } catch (IllegalArgumentException | NullPointerException e) {
-            Log.w(TAG, "could not parse Track UUID, generating a new one.");
-            track.setUuid(UUID.randomUUID());
-        }
-
-        track.setDescription(description != null ? description : "");
-
-        if (category != null) {
-            track.setCategory(category);
-
-            if (icon == null) {
-                //TODO exporting/importing icon is not implemented.
-                icon = TrackIconUtils.getIconValue(context, category);
-            }
-        }
-
-        track.setIcon(icon != null ? icon : "");
-
-        trackImporter.setTrack(track);
-    }
-
     private String createErrorMessage(String message) {
         return String.format(Locale.US, "Parsing error at line: %d column: %d. %s", locator.getLineNumber(), locator.getColumnNumber(), message);
     }
 
-    private void onFileEnded() {
+    private void onFileEnd() {
         trackImporter.addMarkers(markers);
         trackImporter.finish();
     }

@@ -17,19 +17,30 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
 
 import org.xml.sax.Attributes;
+import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
+import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Speed;
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.util.StringUtils;
 
 /**
  * Imports a GPX file.
@@ -43,7 +54,9 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
  *
  * @author Jimmy Shih
  */
-public class GpxFileTrackImporter extends AbstractFileTrackImporter {
+public class GpxFileTrackImporter extends DefaultHandler implements XMLImporter.TrackParser {
+
+    private static final String TAG = GpxFileTrackImporter.class.getSimpleName();
 
     private static final String TAG_DESCRIPTION = "desc";
     private static final String TAG_COMMENT = "cmt";
@@ -70,23 +83,57 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
     private static final String TAG_EXTENSION_LOSS = "opentracks:loss";
     private static final String TAG_EXTENSION_DISTANCE = "opentracks:distance";
 
-    /**
-     * Constructor.
-     *
-     * @param context the context
-     */
+    private Locator locator;
+
+    private final Context context;
+
+    // Belongs to the current track
+    private final ArrayList<Marker> markers = new ArrayList<>();
+
+    // The current element content
+    private String content = "";
+
+    private String name;
+    private String description;
+    private String category;
+    private String latitude;
+    private String longitude;
+    private String altitude;
+    private String time;
+    private String speed;
+    private String heartrate;
+    private String cadence;
+    private String power;
+    protected String markerType;
+    protected String photoUrl;
+    protected String uuid;
+    protected String gain;
+    protected String loss;
+    protected String distance;
+
+    private final LinkedList<TrackPoint> currentSegment = new LinkedList<>();
+
+    private final TrackImporter trackImporter;
+
     public GpxFileTrackImporter(Context context) {
         this(context, new ContentProviderUtils(context));
     }
 
     @VisibleForTesting
     GpxFileTrackImporter(Context context, ContentProviderUtils contentProviderUtils) {
-        super(context, contentProviderUtils);
+        this.context = context;
+
+        //TODO move this to instantiation of this class
+        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
+        Distance maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(sharedPreferences, context);
+        Distance recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
+        boolean preventReimport = PreferencesUtils.getPreventReimportTracks(sharedPreferences, context);
+        this.trackImporter = new TrackImporter(context, contentProviderUtils, recordingDistanceInterval, maxRecordingDistance, preventReimport);
     }
 
     @Override
-    public DefaultHandler getHandler() {
-        return this;
+    public void setDocumentLocator(Locator locator) {
+        this.locator = locator;
     }
 
     @Override
@@ -96,7 +143,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
                 onMarkerStart(attributes);
                 break;
             case TAG_TRACK:
-                onTrackStart();
+                trackImporter.newTrack();
                 break;
             case TAG_TRACK_SEGMENT:
                 onTrackSegmentStart();
@@ -105,6 +152,11 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
                 onTrackPointStart(attributes);
                 break;
         }
+    }
+
+    @Override
+    public void characters(char[] ch, int start, int length) {
+        content += new String(ch, start, length);
     }
 
     @Override
@@ -117,13 +169,13 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
                 onMarkerEnd();
                 break;
             case TAG_TRACK:
-                onTrackEnd();
+                trackImporter.setTrack(context, name, uuid, description, category, null);
                 break;
             case TAG_TRACK_SEGMENT:
                 onTrackSegmentEnd();
                 break;
             case TAG_TRACK_POINT:
-                onTrackPointEnd();
+                currentSegment.add(createTrackPoint());
                 break;
             case TAG_NAME:
                 if (content != null) {
@@ -197,33 +249,65 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
                 break;
         }
 
-        // Reset element content
-        content = null;
+        content = "";
     }
 
-    @Override
-    protected void onTrackStart() throws SAXException {
-        super.onTrackStart();
-        name = null;
-        description = null;
-        category = null;
+    private void onTrackSegmentStart() {
     }
 
-    @Override
-    protected TrackPoint createTrackPoint() throws ParsingException {
-        TrackPoint trackPoint = super.createTrackPoint();
+    private void onTrackSegmentEnd() {
+        if (currentSegment.isEmpty()) {
+            Log.w(TAG, "No locations in current segment.");
+            return;
+        }
+
+        TrackPoint first = currentSegment.getFirst();
+        first.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
+
+        trackImporter.addTrackPoints(currentSegment);
+        currentSegment.clear();
+    }
+
+
+    private TrackPoint createTrackPoint() throws ParsingException {
+        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT);
+
+        try {
+            trackPoint.setTime(StringUtils.parseTime(time));
+        } catch (Exception e) {
+            throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse time: %s", time)), e);
+        }
+
+        if (latitude == null || longitude == null) {
+            return trackPoint;
+        }
+
+        try {
+            trackPoint.setLatitude(Double.parseDouble(latitude));
+            trackPoint.setLongitude(Double.parseDouble(longitude));
+        } catch (NumberFormatException e) {
+            throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse latitude longitude: %s %s", latitude, longitude)), e);
+        }
+
+        if (altitude != null) {
+            try {
+                trackPoint.setAltitude(Altitude.WGS84.of(Double.parseDouble(altitude)));
+            } catch (NumberFormatException e) {
+                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse altitude: %s", altitude)), e);
+            }
+        }
 
         if (speed != null) {
             try {
                 trackPoint.setSpeed(Speed.of(speed));
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse speed: %s", speed)), e);
             }
         }
         if (heartrate != null) {
             try {
                 trackPoint.setHeartRate_bpm(Float.parseFloat(heartrate));
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse heart rate: %s", heartrate)), e);
             }
         }
@@ -239,7 +323,7 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
         if (power != null) {
             try {
                 trackPoint.setPower(Float.parseFloat(power));
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse power: %s", power)), e);
             }
         }
@@ -247,21 +331,21 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
         if (gain != null) {
             try {
                 trackPoint.setAltitudeGain(Float.parseFloat(gain));
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse altitude gain: %s", gain)), e);
             }
         }
         if (loss != null) {
             try {
                 trackPoint.setAltitudeLoss(Float.parseFloat(loss));
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse altitude loss: %s", loss)), e);
             }
         }
         if (distance != null) {
             try {
                 trackPoint.setSensorDistance(Distance.of(distance));
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse distance: %s", distance)), e);
             }
         }
@@ -269,11 +353,6 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
         return trackPoint;
     }
 
-    /**
-     * On track point start.
-     *
-     * @param attributes the attributes
-     */
     private void onTrackPointStart(Attributes attributes) {
         latitude = attributes.getValue(ATTRIBUTE_LAT);
         longitude = attributes.getValue(ATTRIBUTE_LON);
@@ -283,15 +362,6 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
         power = null;
         gain = null;
         loss = null;
-    }
-
-    private void onTrackPointEnd() {
-        boolean isFirstTrackPointInSegment = isFirstTrackPointInSegment();
-        TrackPoint trackPoint = getTrackPoint();
-        if (isFirstTrackPointInSegment) {
-            trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
-        }
-        insertTrackPoint(trackPoint);
     }
 
     private void onMarkerStart(Attributes attributes) {
@@ -307,6 +377,57 @@ public class GpxFileTrackImporter extends AbstractFileTrackImporter {
     }
 
     private void onMarkerEnd() {
-        addMarker();
+        // Markers must have a time, else cannot match to the track points
+        if (time == null) {
+            Log.w(TAG, "Marker without time; ignored.");
+            return;
+        }
+
+        TrackPoint trackPoint = createTrackPoint();
+
+        if (!trackPoint.hasLocation()) {
+            Log.w(TAG, "Marker with invalid coordinates ignored: " + trackPoint.getLocation());
+            return;
+        }
+        Marker marker = new Marker(null, trackPoint);
+
+        if (name != null) {
+            marker.setName(name);
+        }
+        if (description != null) {
+            marker.setDescription(description);
+        }
+        if (category != null) {
+            marker.setCategory(category);
+        }
+
+        if (photoUrl != null) {
+            marker.setPhotoUrl(photoUrl);
+        }
+        markers.add(marker);
+    }
+
+    private String createErrorMessage(String message) {
+        return String.format(Locale.US, "Parsing error at line: %d column: %d. %s", locator.getLineNumber(), locator.getColumnNumber(), message);
+    }
+
+    private void onFileEnd() {
+        trackImporter.addMarkers(markers);
+        trackImporter.finish();
+    }
+
+    @Override
+    public DefaultHandler getHandler() {
+        return this;
+    }
+
+    @Override
+    public List<Track.Id> getImportTrackIds() {
+        return trackImporter.getTrackIds();
+    }
+
+    @Override
+    public void cleanImport() {
+        trackImporter.cleanImport();
     }
 }
