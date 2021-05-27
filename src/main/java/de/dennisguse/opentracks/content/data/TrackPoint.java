@@ -204,6 +204,7 @@ public class TrackPoint {
         this.longitude = longitude;
     }
 
+    //TODO Better return null, if no location is present aka latitude == null etc.
     @NonNull
     public Location getLocation() {
         Location location = new Location("");
@@ -336,10 +337,12 @@ public class TrackPoint {
         return hasAccuracy() && accuracy < poorAccuracy;
     }
 
+    //TODO Bearing requires a location; what do we do if we don't have any?
     public float bearingTo(@NonNull TrackPoint dest) {
         return getLocation().bearingTo(dest.getLocation());
     }
 
+    //TODO Bearing requires a location; what do we do if we don't have any?
     public float bearingTo(@NonNull Location dest) {
         return getLocation().bearingTo(dest);
     }
