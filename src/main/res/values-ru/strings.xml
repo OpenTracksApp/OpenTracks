@@ -600,4 +600,7 @@ limitations under the License.
     <string name="import_progress_summary_errors_msg">Ошибки</string>
     <string name="generic_overwrite">Перезаписать</string>
     <string name="import_prevent_reimport">Вы настроили предотвращение повторного импорта трека</string>
+    <string name="delete_service">Удалить службу</string>
+    <string name="track_delete_progress">%1$d/%2$d</string>
+    <string name="about_third_party_data">Сторонние данные</string>
 </resources>
