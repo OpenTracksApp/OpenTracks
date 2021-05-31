@@ -16,6 +16,7 @@ import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
  */
 public enum TrackFileFormat {
 
+    @Deprecated //Not needed anymore; we now have OSMDashboard; was only used to share with other applications
     KML_ONLY_TRACK {
         @Override
         public TrackExporter createTrackExporter(Context context) {
