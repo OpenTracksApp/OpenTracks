@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
@@ -207,7 +208,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     @Override
     public void onNewTrackPointsDone() {
         if (isResumed()) {
-            viewBinding.chartView.addChartPoints(pendingPoints);
+            //Avoid ConcurrentModificationException exception
+            viewBinding.chartView.addChartPoints(Collections.unmodifiableList(pendingPoints));
             pendingPoints.clear();
             runOnUiThread(updateChart);
         }
