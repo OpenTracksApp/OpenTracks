@@ -88,6 +88,40 @@ public class KMLImportTest {
     }
 
     /**
+     * Coordinates / when might not be ordered by increasing time.
+     */
+    @LargeTest
+    @Test
+    public void kml22_time_decreases() throws IOException {
+        // given
+        XMLImporter importer = new XMLImporter(new KmlTrackImporter(context, trackImporter));
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.kml22_time_decreases);
+
+        // when
+        // 1. import
+        importTrackId = importer.importFile(inputStream).get(0);
+
+        // then
+        // 1. track
+        Track importedTrack = contentProviderUtils.getTrack(importTrackId);
+        assertNotNull(importedTrack);
+        assertEquals("", importedTrack.getCategory());
+        assertEquals("", importedTrack.getDescription());
+        assertEquals("", importedTrack.getName());
+        assertEquals("", importedTrack.getIcon());
+
+        // 2. markers
+        assertEquals(0, contentProviderUtils.getMarkerCount(importTrackId));
+
+        // 3. trackpoints
+        List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
+        assertEquals(2, importedTrackPoints.size());
+
+        GPXImportTest.assertTrackpoint(importedTrackPoints.get(0), TrackPoint.Type.TRACKPOINT, "2021-05-29T18:06:21.767Z", 14.0, 3.0, 10.0);
+        GPXImportTest.assertTrackpoint(importedTrackPoints.get(1), TrackPoint.Type.SEGMENT_START_MANUAL, "2021-05-29T18:06:22.042Z", null, null, null);
+    }
+
+    /**
      * Check that data with statistics markers is imported and those ignored.
      * Statistics marker were created to avoid recomputing the track statistics (e.g., distance until a certain time).
      */

@@ -12,6 +12,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -138,6 +139,19 @@ public class TrackImporter {
             //TODO This is a workaround until we have proper UI.
             track.setUuid(UUID.randomUUID());
         }
+
+        Collections.sort(trackPoints, new Comparator<TrackPoint>() {
+            @Override
+            public int compare(TrackPoint o1, TrackPoint o2) {
+                if (o1.getTime().isBefore(o2.getTime())) {
+                    return -1;
+                }
+                if (o1.getTime().isAfter(o2.getTime())) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
 
         TrackStatisticsUpdater updater = new TrackStatisticsUpdater();
         updater.addTrackPoints(trackPoints, recordingDistanceInterval);
