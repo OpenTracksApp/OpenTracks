@@ -34,7 +34,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import de.dennisguse.opentracks.content.TrackDataHub;
-import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.databinding.TrackRecordedBinding;
@@ -251,7 +250,6 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     @Override
     protected void onTrackDeleteStatus(TrackDeleteService.DeleteStatus deleteStatus) {
         super.onTrackDeleteStatus(deleteStatus);
-        Log.e("probando", "trackId: " + trackId);
         if (deleteStatus.isDeleted(trackId)) {
             runOnUiThread(this::finish);
         }
