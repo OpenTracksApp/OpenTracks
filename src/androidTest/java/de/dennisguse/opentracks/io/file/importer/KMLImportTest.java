@@ -177,4 +177,15 @@ public class KMLImportTest {
         // when
         importTrackId = importer.importFile(inputStream).get(0);
     }
+
+    @LargeTest
+    @Test(expected = ImportParserException.class)
+    public void kml_when_locations_different() throws IOException {
+        // given
+        XMLImporter importer = new XMLImporter(new KmlTrackImporter(context, trackImporter));
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.kml22_when_locations_different);
+
+        // when
+        importTrackId = importer.importFile(inputStream).get(0);
+    }
 }
