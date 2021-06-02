@@ -612,4 +612,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="track_speed_notification">Rychlost: %1$s</string>
     <string name="track_pace_notification">Rychlost: %1$s</string>
     <string name="about_third_party_data">Údaje třetích stran</string>
+    <string name="track_delete_progress">%1$d/%2$d</string>
+    <string name="delete_service">Služba mazání</string>
 </resources>
