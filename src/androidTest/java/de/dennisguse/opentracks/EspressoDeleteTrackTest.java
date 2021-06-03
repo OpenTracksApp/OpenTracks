@@ -4,7 +4,6 @@ package de.dennisguse.opentracks;
 import android.app.ActivityManager;
 import android.app.Instrumentation;
 import android.content.Context;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;

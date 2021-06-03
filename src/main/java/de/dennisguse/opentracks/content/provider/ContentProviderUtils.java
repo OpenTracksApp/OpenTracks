@@ -745,6 +745,16 @@ public class ContentProviderUtils {
         return new TrackPointIterator(this, trackId, startTrackPointId);
     }
 
+    public List<TrackPoint> getTrackPoints(final Track.Id trackId, final TrackPoint.Id startTrackPointId) {
+        List<TrackPoint> trackPoints = new ArrayList<>();
+        try (TrackPointIterator trackPointIterator = getTrackPointLocationIterator(trackId, startTrackPointId)) {
+            while (trackPointIterator.hasNext()) {
+                trackPoints.add(trackPointIterator.next());
+            }
+        }
+        return trackPoints;
+    }
+
     @Deprecated
     private TrackPoint findTrackPointBy(String selection, String[] selectionArgs) {
         try (Cursor cursor = getTrackPointCursor(null, selection, selectionArgs, TrackPointsColumns._ID)) {

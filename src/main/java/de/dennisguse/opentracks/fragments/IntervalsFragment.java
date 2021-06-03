@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,15 +19,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.TrackActivityDataHubInterface;
 import de.dennisguse.opentracks.adapters.IntervalStatisticsAdapter;
-import de.dennisguse.opentracks.content.TrackDataHub;
-import de.dennisguse.opentracks.content.TrackDataListener;
-import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.databinding.IntervalListViewBinding;
-import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 import de.dennisguse.opentracks.viewmodels.IntervalStatisticsModel;
@@ -36,31 +30,31 @@ import de.dennisguse.opentracks.viewmodels.IntervalStatisticsModel;
 /**
  * A fragment to display the intervals from recorded track.
  */
-public class IntervalsFragment extends Fragment implements TrackDataListener {
+public class IntervalsFragment extends Fragment {
 
     private static final String TAG = IntervalsFragment.class.getSimpleName();
 
     private static final String FROM_TOP_TO_BOTTOM_KEY = "fromTopToBottom";
+    private static final String TRACK_ID_KEY = "trackId";
 
     private IntervalStatisticsModel viewModel;
     protected IntervalStatisticsAdapter.StackMode stackModeListView;
     private IntervalStatisticsModel.IntervalOption selectedInterval;
 
+    private Track.Id trackId;
     private boolean metricUnits;
     private IntervalStatisticsAdapter adapter;
     private ArrayAdapter<IntervalStatisticsModel.IntervalOption> spinnerAdapter;
 
     private SharedPreferences sharedPreferences;
 
-    private TrackDataHub trackDataHub;
     private boolean isReportSpeed;
 
     private IntervalListViewBinding viewBinding;
 
     protected final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
-            metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getContext());
-            uploadIntervals();
+            updateIntervals(PreferencesUtils.isMetricUnits(sharedPreferences, getContext()), selectedInterval);
             if (spinnerAdapter != null) {
                 spinnerAdapter.notifyDataSetChanged();
             }
@@ -70,12 +64,14 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     /**
      * Creates an instance of this class.
      *
+     * @param trackId          track's id.
      * @param  fromTopToBottom If true then the intervals are shown from top to bottom (the first interval on top). Otherwise the intervals are shown from bottom to top.
      * @return IntervalsFragment instance.
      */
-    public static Fragment newInstance(boolean fromTopToBottom) {
+    public static Fragment newInstance(Track.Id trackId, boolean fromTopToBottom) {
         Bundle bundle = new Bundle();
         bundle.putBoolean(FROM_TOP_TO_BOTTOM_KEY, fromTopToBottom);
+        bundle.putParcelable(TRACK_ID_KEY, trackId);
         IntervalsFragment intervalsFragment = new IntervalsFragment();
         intervalsFragment.setArguments(bundle);
         return intervalsFragment;
@@ -85,6 +81,7 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         stackModeListView = getArguments().getBoolean(FROM_TOP_TO_BOTTOM_KEY, true) ? IntervalStatisticsAdapter.StackMode.STACK_FROM_TOP : IntervalStatisticsAdapter.StackMode.STACK_FROM_BOTTOM;
+        trackId = getArguments().getParcelable(TRACK_ID_KEY);
     }
 
     @Override
@@ -127,8 +124,7 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
         viewBinding.spinnerIntervals.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedInterval = IntervalStatisticsModel.IntervalOption.values()[i];
-                uploadIntervals();
+                updateIntervals(metricUnits, IntervalStatisticsModel.IntervalOption.values()[i]);
             }
 
             @Override
@@ -141,10 +137,14 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     public void onResume() {
         super.onResume();
 
-        resumeTrackDataHub();
-
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
+
+        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(getContext());
+        Track track = contentProviderUtils.getTrack(trackId);
+        if (track != null) {
+            isReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), track.getCategory());
+        }
 
         viewModel = new ViewModelProvider(getActivity()).get(IntervalStatisticsModel.class);
         loadIntervals();
@@ -153,8 +153,8 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
     @Override
     public void onPause() {
         super.onPause();
-        pauseTrackDataHub();
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        viewModel.onPause();
     }
 
     @Override
@@ -180,88 +180,17 @@ public class IntervalsFragment extends Fragment implements TrackDataListener {
         if (viewModel == null) {
             return;
         }
-        LiveData<List<IntervalStatistics.Interval>> liveData = viewModel.getIntervalStats(metricUnits, selectedInterval);
+        LiveData<List<IntervalStatistics.Interval>> liveData = viewModel.getIntervalStats(trackId, metricUnits, selectedInterval);
         liveData.observe(getActivity(), intervalList -> adapter.swapData(intervalList, metricUnits, isReportSpeed));
     }
 
-    private synchronized void uploadIntervals() {
-        if (viewModel == null) {
-            return;
-        }
-        viewModel.upload(metricUnits, selectedInterval);
-    }
+    private synchronized void updateIntervals(boolean metricUnits, IntervalStatisticsModel.IntervalOption selectedInterval) {
+        boolean update = metricUnits != this.metricUnits || !selectedInterval.equals(this.selectedInterval);
+        this.metricUnits = metricUnits;
+        this.selectedInterval = selectedInterval;
 
-    /**
-     * Resumes the trackDataHub.
-     * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
-     */
-    private synchronized void resumeTrackDataHub() {
-        trackDataHub = ((TrackActivityDataHubInterface) getActivity()).getTrackDataHub();
-        trackDataHub.registerTrackDataListener(this);
-    }
-
-    /**
-     * Pauses the trackDataHub.
-     * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
-     */
-    private synchronized void pauseTrackDataHub() {
-        trackDataHub.unregisterTrackDataListener(this);
-        trackDataHub = null;
-    }
-
-    @Override
-    public void onTrackUpdated(Track track) {
-        if (isResumed()) {
-            getActivity().runOnUiThread(() -> {
-                if (isResumed()) {
-                    // Set category.
-                    String category = track != null ? track.getCategory() : "";
-
-                    // Set rate label.
-                    isReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), category);
-                    viewBinding.intervalRate.setText(isReportSpeed ? R.string.stats_speed : R.string.stats_pace);
-                }
-            });
-        }
-    }
-
-    @Override
-    public void clearTrackPoints() {
-        if (isResumed() && viewModel != null) {
-            viewModel.clear();
-        }
-    }
-
-    @Override
-    public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics unused, Speed unused2, double unused3) {
-        if (isResumed() && viewModel != null) {
-            viewModel.add(trackPoint);
-        }
-    }
-
-    @Override
-    public void onSampledOutTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics unused) {
-        if (isResumed() && viewModel != null) {
-            viewModel.add(trackPoint);
-        }
-    }
-
-    @Override
-    public void onNewTrackPointsDone() {
-        if (isResumed() && viewModel != null) {
-            runOnUiThread(viewModel::onNewTrackPoints);
-        }
-    }
-
-    /**
-     * Runs a runnable on the UI thread.
-     *
-     * @param runnable the runnable
-     */
-    private void runOnUiThread(Runnable runnable) {
-        FragmentActivity fragmentActivity = getActivity();
-        if (fragmentActivity != null) {
-            fragmentActivity.runOnUiThread(runnable);
+        if (update && viewModel != null) {
+            viewModel.update(trackId, this.metricUnits, this.selectedInterval);
         }
     }
 }

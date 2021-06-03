@@ -72,10 +72,6 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     public List<IntervalStatistics.Interval> swapData(List<IntervalStatistics.Interval> data, boolean metricUnits, boolean isReportSpeed) {
-        if (intervalList == data && this.metricUnits == metricUnits && this.isReportSpeed == isReportSpeed) {
-            return null;
-        }
-
         this.metricUnits = metricUnits;
         this.isReportSpeed = isReportSpeed;
         intervalList = data;

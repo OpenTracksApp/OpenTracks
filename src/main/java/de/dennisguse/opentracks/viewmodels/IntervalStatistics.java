@@ -14,25 +14,32 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 
 public class IntervalStatistics {
-    private final List<Interval> intervalList = new ArrayList<>();
+    private TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater();
+    private final List<Interval> intervalList;
     private final Distance distanceInterval;
+    private final Distance minGPSDistance;
+    private Interval interval, lastInterval;
 
     /**
-     * @param trackPoints      the list of TrackPoint.
      * @param distanceInterval distance of every interval.
      * @param minGPSDistance   the setting value for GPS distance.
      */
-    public IntervalStatistics(@NonNull List<TrackPoint> trackPoints, Distance distanceInterval, Distance minGPSDistance) {
-        intervalList.clear();
+    public IntervalStatistics(Distance distanceInterval, Distance minGPSDistance) {
         this.distanceInterval = distanceInterval;
+        this.minGPSDistance = minGPSDistance;
 
+        interval = new Interval();
+        lastInterval = new Interval();
+        intervalList = new ArrayList<>();
+        intervalList.add(lastInterval);
+    }
+
+    public void addTrackPoints(@NonNull List<TrackPoint> trackPoints) {
         if (trackPoints.size() == 0) {
             return;
         }
 
-        TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater();
-        Interval interval = new Interval();
-
+        boolean newIntervalAdded = false;
         for (TrackPoint trackPoint : trackPoints) {
             trackStatisticsUpdater.addTrackPoint(trackPoint, minGPSDistance);
 
@@ -43,17 +50,24 @@ public class IntervalStatistics {
                 Interval adjustedInterval = new Interval(interval);
                 adjustedInterval.adjust(adjustFactor);
 
+                intervalList.remove(intervalList.size() - 1);
                 intervalList.add(adjustedInterval);
 
                 interval = new Interval(interval.distance.minus(adjustedInterval.distance), interval.time.minus(adjustedInterval.time));
                 trackStatisticsUpdater = new TrackStatisticsUpdater();
                 trackStatisticsUpdater.addTrackPoint(trackPoint, minGPSDistance);
+
+                lastInterval = new Interval(interval);
+                intervalList.add(lastInterval);
+
+                newIntervalAdded = true;
             }
         }
 
-        if (trackStatisticsUpdater.getTrackStatistics().getTotalDistance().toM() >= 1d) {
-            interval.update(trackStatisticsUpdater.getTrackStatistics(), null);
-            intervalList.add(interval);
+        if (newIntervalAdded) {
+            lastInterval.update(trackStatisticsUpdater.getTrackStatistics(), null);
+        } else {
+            lastInterval.set(trackStatisticsUpdater.getTrackStatistics());
         }
     }
 
@@ -110,7 +124,7 @@ public class IntervalStatistics {
             loss_m = i.loss_m;
         }
 
-        public void adjust(double adjustFactor) {
+        private void adjust(double adjustFactor) {
             distance = distance.multipliedBy(adjustFactor);
             time = Duration.ofMillis((long) (time.toMillis() * adjustFactor));
         }
@@ -131,7 +145,7 @@ public class IntervalStatistics {
             return loss_m;
         }
 
-        public void update(TrackStatistics trackStatistics, @Nullable TrackPoint lastTrackPoint) {
+        private void update(TrackStatistics trackStatistics, @Nullable TrackPoint lastTrackPoint) {
             distance = distance.plus(trackStatistics.getTotalDistance());
             time = time.plus(trackStatistics.getTotalTime());
             gain_m = trackStatistics.hasTotalAltitudeGain() ? trackStatistics.getTotalAltitudeGain() : gain_m;
@@ -140,6 +154,13 @@ public class IntervalStatistics {
                 gain_m = lastTrackPoint.hasAltitudeGain() ? gain_m - lastTrackPoint.getAltitudeGain() : gain_m;
                 loss_m = lastTrackPoint.hasAltitudeLoss() ? loss_m - lastTrackPoint.getAltitudeLoss() : loss_m;
             }
+        }
+
+        private void set(TrackStatistics trackStatistics) {
+            distance = trackStatistics.getTotalDistance();
+            time = trackStatistics.getTotalTime();
+            gain_m = trackStatistics.hasTotalAltitudeGain() ? trackStatistics.getTotalAltitudeGain() : gain_m;
+            loss_m = trackStatistics.hasTotalAltitudeLoss() ? trackStatistics.getTotalAltitudeLoss() : loss_m;
         }
     }
 }
