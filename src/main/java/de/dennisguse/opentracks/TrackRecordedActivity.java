@@ -289,7 +289,7 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
                 case 0:
                     return StatisticsRecordedFragment.newInstance(trackId);
                 case 1:
-                    return IntervalsFragment.newInstance(true);
+                    return IntervalsFragment.newInstance(trackId, true);
                 case 2:
                     return ChartFragment.newInstance(false);
                 case 3:
