@@ -1,0 +1,13 @@
+v3.18.3: OpenTracks
+
+Changes:
+- KML parsing does not require order of when/gx:coords
+- Track importer: reorders locations by timestamp
+- Removed rendered launcher icons for Android < 8.0.0 (API 26)
+  (might look slightly different, but avoid problems for reproducible builds)
+
+Bugfix:
+- Avoid crash in charts due to race condition
+
+Developer:
+- Split GPX and KML importer (removed common inheritance)
