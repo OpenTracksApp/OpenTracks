@@ -64,8 +64,8 @@ public class TrackStatisticsUpdater {
 
     private final TrackStatistics trackStatistics;
 
-    private final DoubleRingBuffer altitudeBuffer_m = new DoubleRingBuffer(ALTITUDE_SMOOTHING_FACTOR);
-    private final DoubleRingBuffer speedBuffer_mps = new DoubleRingBuffer(SPEED_SMOOTHING_FACTOR);
+    private final DoubleRingBuffer altitudeBuffer_m;
+    private final DoubleRingBuffer speedBuffer_mps;
 
     // The current segment's statistics
     private final TrackStatistics currentSegment = new TrackStatistics();
@@ -75,7 +75,7 @@ public class TrackStatisticsUpdater {
     private TrackPoint lastMovingTrackPoint;
 
     public TrackStatisticsUpdater() {
-        trackStatistics = new TrackStatistics();
+        this(new TrackStatistics());
     }
 
     /**
@@ -86,6 +86,22 @@ public class TrackStatisticsUpdater {
     public TrackStatisticsUpdater(TrackStatistics trackStatistics) {
         this.trackStatistics = trackStatistics;
         trackInitialized = true;
+
+        altitudeBuffer_m = new DoubleRingBuffer(ALTITUDE_SMOOTHING_FACTOR);
+        speedBuffer_mps = new DoubleRingBuffer(SPEED_SMOOTHING_FACTOR);
+    }
+
+    public TrackStatisticsUpdater(TrackStatisticsUpdater toCopy) {
+        this.trackInitialized = toCopy.trackInitialized;
+        this.segmentInitialized = toCopy.segmentInitialized;
+        this.altitudeBuffer_m = new DoubleRingBuffer(toCopy.altitudeBuffer_m);
+        this.speedBuffer_mps = new DoubleRingBuffer(toCopy.speedBuffer_mps);
+
+        this.lastTrackPoint = toCopy.lastTrackPoint;
+        this.lastMovingTrackPoint = toCopy.lastMovingTrackPoint;
+
+        this.trackStatistics = toCopy.getTrackStatistics();
+        this.currentSegment.merge(toCopy.currentSegment);
     }
 
     public TrackStatistics getTrackStatistics() {
@@ -109,11 +125,6 @@ public class TrackStatisticsUpdater {
      * @param minGPSDistance the min recording distance
      */
     public void addTrackPoint(TrackPoint trackPoint, Distance minGPSDistance) {
-        internalAddTrackPoint(trackPoint, minGPSDistance);
-        Log.v(TAG, this.toString());
-    }
-
-    private void internalAddTrackPoint(TrackPoint trackPoint, Distance minGPSDistance) {
         if (!trackInitialized) {
             trackStatistics.setStartTime(trackPoint.getTime());
             trackInitialized = true;
