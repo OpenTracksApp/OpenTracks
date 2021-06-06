@@ -411,11 +411,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="value_adapt_accuracy">Täpsuse kohandamine</string>
     <string name="value_adapt_battery_life">Kohandage aku elueale</string>
     <string name="value_always">Alati</string>
-    <string name="value_float_feet">%1$.2f jalga</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f miili</string>
-    <string name="value_float_mile_poor_gps">%1$.1f miili (nõrk GPS-signaal)</string>
     <string name="value_integer_feet">%1$d jalga</string>
     <string name="value_integer_feet_excellent_gps">%1$d jalga (tugev GPS-signaal)</string>
     <string name="value_integer_feet_recommended">%1$d jalga (soovitatav)</string>
@@ -579,10 +574,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="stats_split_interval">Jagatud intervall</string>
     <string name="stats_intervals">Intervallid</string>
     <string name="interval_list_empty_message">Ei ole ühtegi intervalli veel</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
-    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
-    <string name="value_float_mile_hour">%1$.2f mph</string>
-    <string name="value_float_kilometer_hour">%1$.2f km/h</string>
     <string name="voice_speed_lap">Ringi kiirus %1$s</string>
     <string name="hold_to_stop">Hoidke lõpetada</string>
     <string name="hold_to_pause">Hoidke pausi</string>

@@ -422,11 +422,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="value_adapt_accuracy">Säädä tarkkuutta</string>
     <string name="value_adapt_battery_life">Sovita akun kestoon</string>
     <string name="value_always">Aina</string>
-    <string name="value_float_feet">%1$.2f jalkaa</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mailia</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mailia (heikko GPS)</string>
     <string name="value_integer_feet">%1$d jalkaa</string>
     <string name="value_integer_feet_excellent_gps">%1$d jalkaa (erinomainen GPS)</string>
     <string name="value_integer_feet_recommended">%1$d jalkaa (suositus)</string>
@@ -560,7 +555,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="settings_default_export_uri_title">Seuraa vientihakemistoa</string>
     <string name="instant_export_enabled_summary">Vie raita varastoon tallennuksen jälkeen on valmis</string>
     <string name="voice_speed_lap">Kierrosnopeus %1$s</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
     <string name="settings_sensor_wheel_circumference">Pyörän ympärysmitta (mm)</string>
     <string name="stats_intervals">Välein</string>
     <string name="import_thread_interrupted">Lanka keskeytetty</string>
@@ -605,12 +599,9 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="description_altitude_loss">Korkeussijaintitappio: %1$d m (%2$d ft)</string>
     <string name="sensor_state_heart_rate_max">Maksimisyke</string>
     <string name="sensor_state_heart_rate_avg">Avg syke</string>
-    <string name="value_float_kilometer_hour">%1$.2f k/t</string>
-    <string name="value_pace_mile">%1$d:%2$02d min/mailia</string>
     <string name="activity_type_escooter">eskootteri</string>
     <string name="sensor_state_cadence_avg">Keskim.Poljinnopeus</string>
     <string name="sensor_state_cadence_max">Suurin Poljinnopeus</string>
-    <string name="value_float_mile_hour">%1$.2f mt</string>
     <string name="generic_open_track">Avattu reitti</string>
     <string name="track_distance_notification">Etäisyys: %1$s</string>
     <string name="track_pace_notification">Vauhti: %1$s</string>

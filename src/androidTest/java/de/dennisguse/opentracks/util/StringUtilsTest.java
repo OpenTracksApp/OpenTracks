@@ -153,15 +153,15 @@ public class StringUtilsTest {
         assertEquals("10", StringUtils.formatDecimal(10.1, 0));
         assertEquals("-0", StringUtils.formatDecimal(-0.1, 0));
 
-        assertEquals("0", StringUtils.formatDecimal(0.0, 2));
-        assertEquals("0.1", StringUtils.formatDecimal(0.1, 2));
-        assertEquals("1.1", StringUtils.formatDecimal(1.1, 2));
-        assertEquals("10", StringUtils.formatDecimal(10, 2));
-        assertEquals("10.1", StringUtils.formatDecimal(10.1, 2));
+        assertEquals("0.00", StringUtils.formatDecimal(0.0, 2));
+        assertEquals("0.10", StringUtils.formatDecimal(0.1, 2));
+        assertEquals("1.10", StringUtils.formatDecimal(1.1, 2));
+        assertEquals("10.00", StringUtils.formatDecimal(10, 2));
+        assertEquals("10.10", StringUtils.formatDecimal(10.1, 2));
         assertEquals("10.11", StringUtils.formatDecimal(10.111, 2));
-        assertEquals("-0.1", StringUtils.formatDecimal(-0.1, 2));
+        assertEquals("-0.10", StringUtils.formatDecimal(-0.1, 2));
 
-        assertEquals("1", StringUtils.formatDecimal(0.99, 1));
+        assertEquals("1.0", StringUtils.formatDecimal(0.99, 1));
     }
 
     @Test
@@ -181,7 +181,7 @@ public class StringUtilsTest {
         assertEquals("4:59 min/km", StringUtils.formatSpeed(context, Speed.of(3.34), true, false));
         assertEquals("8:02 min/mi", StringUtils.formatSpeed(context, Speed.of(3.34), false, false));
 
-        assertEquals("12.02 km/h", StringUtils.formatSpeed(context, Speed.of(3.34), true, true));
-        assertEquals("7.47 mph", StringUtils.formatSpeed(context, Speed.of(3.34), false, true));
+        assertEquals("12.0 km/h", StringUtils.formatSpeed(context, Speed.of(3.34), true, true));
+        assertEquals("7.5 mph", StringUtils.formatSpeed(context, Speed.of(3.34), false, true));
     }
 }

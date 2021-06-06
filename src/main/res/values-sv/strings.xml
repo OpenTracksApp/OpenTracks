@@ -339,11 +339,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Anpassa för noggrannhet</string>
     <string name="value_adapt_battery_life">Anpassa för batterilivslängd</string>
     <string name="value_always">Alltid</string>
-    <string name="value_float_feet">%1$.2f fot</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mile</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mile (dålig GPS-mottagning)</string>
     <string name="value_integer_feet">%1$d fot</string>
     <string name="value_integer_feet_excellent_gps">%1$d fot (utmärkt GPS-mottagning)</string>
     <string name="value_integer_feet_recommended">%1$d fot (rekommenderas)</string>

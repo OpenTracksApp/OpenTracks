@@ -411,11 +411,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="value_adapt_accuracy">Aanpassen voor nauwkeurigheid</string>
     <string name="value_adapt_battery_life">Aanpassen voor resterende accutijd</string>
     <string name="value_always">Altijd</string>
-    <string name="value_float_feet">%1$.2f ft</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mi</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mi (slecht GPS-signaal)</string>
     <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (uitstekend GPS-signaal)</string>
     <string name="value_integer_feet_recommended">%1$d ft (aanbevolen)</string>
@@ -553,7 +548,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="import_no_kml_file_found">Geen doc.kml bestand gevonden in KMZ</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Volledig scherm</string>
     <string name="gps_fixed_and_ready">GPS vast en klaar</string>
-    <string name="value_float_kilometer_hour">%1$.2f km/h</string>
     <string name="aggregated_stats_empty_message">Neem uw eerste track op om geaggregeerde statistieken te zien</string>
     <string name="track_detail_intervals_tab">Intervallen</string>
     <string name="settings_sensor_wheel_circumference">Wielomtrek (mm)</string>
@@ -574,12 +568,9 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_night_mode_option_system">Systeem</string>
     <string name="settings_night_mode_title">UI Thema</string>
     <string name="stats_loss">Verlies</string>
-    <string name="value_float_mile_hour">%1$.2f mph</string>
     <string name="interval_list_empty_message">Er zijn nog geen intervallen</string>
     <string name="stats_split_interval">Gesplitst interval</string>
     <string name="stats_intervals">Intervallen</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
-    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
     <string name="voice_pace_lap">Rondetijd van %1$s</string>
     <string name="voice_speed_lap">Ronde snelheid van %1$s</string>
     <string name="instant_export_enabled_title">Directe export na de training</string>

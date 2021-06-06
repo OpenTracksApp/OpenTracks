@@ -339,11 +339,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">ปรับความแม่นยำ</string>
     <string name="value_adapt_battery_life">ปรับเพื่อแบตเตอรี่</string>
     <string name="value_always">เปิดใช้งานเสมอ</string>
-    <string name="value_float_feet">%1$.2f ฟุต</string>
-    <string name="value_float_kilometer">%1$.2f กม.</string>
-    <string name="value_float_meter">%1$.2f ม.</string>
-    <string name="value_float_mile">%1$.2f ไมล์</string>
-    <string name="value_float_mile_poor_gps">%1$.1f ไมล์ (สัญญาณ GPS ไม่ดี)</string>
     <string name="value_integer_feet">%1$d ฟุต</string>
     <string name="value_integer_feet_excellent_gps">%1$d ฟุต (สัญญาณ GPS ดี)</string>
     <string name="value_integer_feet_recommended">%1$d ฟุต (แนะนำ)</string>

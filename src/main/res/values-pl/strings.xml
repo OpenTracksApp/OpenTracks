@@ -378,11 +378,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Dostosuj pod kątem dokładności</string>
     <string name="value_adapt_battery_life">Dostosuj pod kątem żywotności baterii</string>
     <string name="value_always">Zawsze</string>
-    <string name="value_float_feet">%1$.2f ft</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mi</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mi (słaby sygnał GPS)</string>
     <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (doskonały sygnał GPS)</string>
     <string name="value_integer_feet_recommended">%1$d ft (zalecane)</string>
@@ -609,10 +604,6 @@ limitations under the License.
     <string name="track_pace_notification">Prędkość: %1$s</string>
     <string name="track_speed_notification">Szybkość: %1$s</string>
     <string name="track_distance_notification">Odległość: %1$s</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
-    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
-    <string name="value_float_mile_hour">%1$.2f mph</string>
-    <string name="value_float_kilometer_hour">%1$.2f km/h</string>
     <string name="about_third_party_data">Dane osób trzecich</string>
     <string name="delete_service">Usługa usuwania</string>
     <string name="track_delete_progress">%1$d/%2$d</string>

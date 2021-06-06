@@ -291,11 +291,6 @@
     <string name="value_adapt_accuracy">התאם למען הדיוק</string>
     <string name="value_adapt_battery_life">התאם לחיי הסוללה</string>
     <string name="value_always">תמיד</string>
-    <string name="value_float_feet">%1$.2f רגל</string>
-    <string name="value_float_kilometer">%1$.2f ק\"מ</string>
-    <string name="value_float_meter">%1$.2f מ\'</string>
-    <string name="value_float_mile">%1$.2f מייל</string>
-    <string name="value_float_mile_poor_gps">%1$.1f מייל (GPS חלש)</string>
     <string name="value_integer_feet">%1$d רגל</string>
     <string name="value_integer_feet_excellent_gps">%1$d רגל (GPS מעולה)</string>
     <string name="value_integer_feet_recommended">%1$d רגל (מומלץ)</string>

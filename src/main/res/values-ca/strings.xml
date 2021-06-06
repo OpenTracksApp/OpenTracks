@@ -341,11 +341,6 @@ es vegi el cel. Torneu-ho a provar més tard.</string>
     <string name="value_adapt_accuracy">Adapta\'n la precisió</string>
     <string name="value_adapt_battery_life">Adapta a la durada de la bateria</string>
     <string name="value_always">Sempre</string>
-    <string name="value_float_feet">%1$.2f peus</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f milles</string>
-    <string name="value_float_mile_poor_gps">%1$.1f milles (GPS amb poca senyal)</string>
     <string name="value_integer_feet">%1$d peus</string>
     <string name="value_integer_feet_excellent_gps">%1$d peus (senyal de GPS excel·lent)</string>
     <string name="value_integer_feet_recommended">%1$d peus (recomanat)</string>

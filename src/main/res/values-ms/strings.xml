@@ -341,11 +341,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Sesuaikan untuk ketepatan</string>
     <string name="value_adapt_battery_life">Sesuaikan untuk hayat bateri</string>
     <string name="value_always">Sentiasa</string>
-    <string name="value_float_feet">%1$.2f kaki</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f batu</string>
-    <string name="value_float_mile_poor_gps">%1$.1f batu (GPS lemah)</string>
     <string name="value_integer_feet">%1$d kaki</string>
     <string name="value_integer_feet_excellent_gps">%1$d kaki (GPS bagus)</string>
     <string name="value_integer_feet_recommended">%1$d kaki (disyorkan)</string>

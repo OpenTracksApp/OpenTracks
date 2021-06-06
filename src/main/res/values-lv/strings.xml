@@ -340,11 +340,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Pielāgot precizitātei</string>
     <string name="value_adapt_battery_life">Pielāgot akumulatora darbības ilgumam</string>
     <string name="value_always">Vienmēr</string>
-    <string name="value_float_feet">%1$.2f pēda(-as)</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f jūdze(-es)</string>
-    <string name="value_float_mile_poor_gps">%1$.1f jūdze(-es) (vājš GPS)</string>
     <string name="value_integer_feet">%1$d pēda(-as)</string>
     <string name="value_integer_feet_excellent_gps">%1$d pēda(-as) (izcilas kvalitātes GPS)</string>
     <string name="value_integer_feet_recommended">%1$d pēdas (ieteicams)</string>

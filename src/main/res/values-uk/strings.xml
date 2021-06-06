@@ -341,11 +341,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Адаптувати для точності</string>
     <string name="value_adapt_battery_life">Адаптувати до часу роботи батареї</string>
     <string name="value_always">Завжди</string>
-    <string name="value_float_feet">%1$.2f фт</string>
-    <string name="value_float_kilometer">%1$.2f км</string>
-    <string name="value_float_meter">%1$.2f м</string>
-    <string name="value_float_mile">Миль: %1$.2f</string>
-    <string name="value_float_mile_poor_gps">Миль: %1$.1f (слабкий сигнал GPS)</string>
     <string name="value_integer_feet">%1$d фут</string>
     <string name="value_integer_feet_excellent_gps">%1$d фут. (відмінний сигнал GPS)</string>
     <string name="value_integer_feet_recommended">%1$d фут. (рекомендовано)</string>
@@ -474,14 +469,11 @@ limitations under the License.
     <string name="stats_split_interval">Розділити на</string>
     <string name="track_recording_notification_accuracy">Точність місцеположення: %1$s</string>
     <string name="track_detail_intervals_tab">Інтервали</string>
-    <string name="value_pace_mile">%1$d:%2$02d хв/милі</string>
     <string name="voice_speed_lap">Швидкість кола %1$s</string>
     <string name="voice_pace_lap">Час кола %1$s</string>
     <string name="track_detail_record_success">Зараз записується новий трек</string>
     <string name="track_detail_resume_success">Відновлюємо запис треку</string>
     <string name="interval_list_empty_message">Ще немає інтервалу</string>
-    <string name="value_float_kilometer_hour">%1$.2f км/г</string>
-    <string name="value_float_mile_hour">%1$.2f миль/г</string>
     <string name="share_image_body">Думаю, вам може бути цікаво це зображення.</string>
     <string name="hold_to_pause">Затисніть</string>
     <string name="instant_export_enabled_summary">Експорт треку в сховище після завершення запису</string>
@@ -582,7 +574,6 @@ limitations under the License.
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Під час запису показувати статистику без розблокування пристрою.</string>
     <string name="stats_loss">Втрачено</string>
     <string name="stats_intervals">Інтервали</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d хв/км</string>
     <string name="share_image_subject">Я хотів би поділитися з вами зображенням</string>
     <string name="toast_message_instant_track_was_exported">Останній трек експортовано</string>
     <string name="settings_default_export_uri_title">Каталог експорту треків</string>

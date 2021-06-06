@@ -341,11 +341,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Prilagodi za natančnost</string>
     <string name="value_adapt_battery_life">Prilagodi za življenjsko dobo baterije</string>
     <string name="value_always">Vedno</string>
-    <string name="value_float_feet">%1$.2f čevljev</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mi</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mi (slab signal GPS)</string>
     <string name="value_integer_feet">%1$d čevljev</string>
     <string name="value_integer_feet_excellent_gps">%1$d čevljev (odličen signal GPS)</string>
     <string name="value_integer_feet_recommended">%1$d čevljev (priporočeno)</string>

@@ -412,11 +412,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="value_adapt_accuracy">Doitu zehaztasuna</string>
     <string name="value_adapt_battery_life">Doitu bateriaren iraupenera</string>
     <string name="value_always">Beti</string>
-    <string name="value_float_feet">%1$.2f oin</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mi</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mi (GPS ahula)</string>
     <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (GPS bikaina)</string>
     <string name="value_integer_feet_recommended">%1$d oin (gomendatua)</string>
@@ -543,13 +538,9 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="activity_type_escooter">eskooterra</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Grabatzen ari zaren bitartean, pantaila osoan ikusi.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Pantaila osoa</string>
-    <string name="value_float_mile_hour">%1$.2f mph</string>
-    <string name="value_float_kilometer_hour">%1$.2f km/h</string>
-    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
     <string name="settings_default_export_uri_title">Track esportazio-direktorioa</string>
     <string name="instant_export_enabled_title">Berehalako post-entrenamendu esportatu</string>
     <string name="instant_export_enabled_summary">Esportazio-pista biltegiratze ondoren grabaketa amaitu da</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
     <string name="interval_list_empty_message">Ez dira edozein tarte oraindik</string>
     <string name="aggregated_stats_empty_message">Grabatu zure lehen pista ikusteko batzen estatistikak</string>
     <string name="open_track_as_GPX">Ireki gisa GPX</string>
