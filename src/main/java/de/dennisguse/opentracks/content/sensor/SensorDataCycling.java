@@ -128,20 +128,21 @@ public final class SensorDataCycling {
                 float timeDiff_ms = UintUtils.diff(wheelRevolutionsTime, previous.wheelRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * UnitConversions.S_TO_MS;
                 Duration timeDiff = Duration.ofMillis((long) timeDiff_ms);
                 if (timeDiff.isZero() || timeDiff.isNegative()) {
-                    Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
+                    Log.e(TAG, "Timestamps difference is invalid: cannot compute speed.");
                     value = null;
-                } else {
-                    long wheelDiff = UintUtils.diff(wheelRevolutionsCount, previous.wheelRevolutionsCount, UintUtils.UINT16_MAX);
-                    wheelDiff = Math.abs(wheelDiff); //HACK for Garmin Speed 2 as some of those seem to count backwards
-
-                    Distance distance = wheelCircumference.multipliedBy(wheelDiff);
-                    Distance distanceOverall = distance;
-                    if (previous.hasValue()) {
-                        distanceOverall = distance.plus(previous.getValue().distanceOverall);
-                    }
-                    Speed speed_mps = Speed.of(distance, timeDiff);
-                    value = new Data(distance, distanceOverall, speed_mps);
+                    return;
                 }
+
+                long wheelDiff = UintUtils.diff(wheelRevolutionsCount, previous.wheelRevolutionsCount, UintUtils.UINT16_MAX);
+                wheelDiff = Math.abs(wheelDiff); //HACK for Garmin Speed 2 as some of those seem to count backwards
+
+                Distance distance = wheelCircumference.multipliedBy(wheelDiff);
+                Distance distanceOverall = distance;
+                if (previous.hasValue()) {
+                    distanceOverall = distance.plus(previous.getValue().distanceOverall);
+                }
+                Speed speed_mps = Speed.of(distance, timeDiff);
+                value = new Data(distance, distanceOverall, speed_mps);
             }
         }
 

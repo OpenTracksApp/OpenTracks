@@ -48,7 +48,9 @@ public class TrackPoint {
 
     private TrackPoint.Id id;
 
+    @NonNull
     private Instant time;
+
     private Double latitude;
     private Double longitude;
     private Float accuracy;
@@ -96,10 +98,16 @@ public class TrackPoint {
 
     public TrackPoint(@NonNull Type type) {
         this.type = type;
+        this.time = Instant.now(); //TODO This may result in #800
+    }
+
+    public TrackPoint(@NonNull Type type, Instant time) {
+        this(type);
+        this.time = time;
     }
 
     public TrackPoint(@NonNull Location location) {
-        this(Type.TRACKPOINT, location, Instant.now());
+        this(Type.TRACKPOINT, location, Instant.now()); //TODO This may result in #800
     }
 
     public TrackPoint(@NonNull Type type, @NonNull Location location, @NonNull Instant time) {
@@ -114,11 +122,6 @@ public class TrackPoint {
         //TODO Should we copy the bearing?
 
         setTime(time);
-    }
-
-    public TrackPoint(@NonNull Type type, Instant time) {
-        this(type);
-        this.time = time;
     }
 
     public TrackPoint(double latitude, double longitude, Altitude altitude, Instant time) {

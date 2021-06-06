@@ -670,7 +670,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return null;
         }
 
-        SensorDataSet sensorData = remoteSensorManager.getSensorData();
+        SensorDataSet sensorData = remoteSensorManager.getSensorData(); //TODO Should return a copy of SensorDataSet
         if (sensorData == null) {
             return null;
         }
@@ -756,10 +756,18 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
         Track track = contentProviderUtils.getTrack(recordingStatus.getTrackId());
-        track.getTrackStatistics().setTotalTime(TrackRecordingService.this.getTotalTime());
 
-        SensorDataSet sensorDataSet = fillWithSensorDataSet(lastTrackPoint);
-        recordingDataObservable.postValue(new RecordingData(track, lastTrackPoint, sensorDataSet));
+        // Compute temporary track statistics using sensorData and update time.
+        //TODO This somehow should happen in the HandlerServer as we create a new TrackPoint.
+        TrackStatisticsUpdater tmpTrackStatisticsUpdater = new TrackStatisticsUpdater(trackStatisticsUpdater);
+        TrackPoint tmpLastTrackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT);
+        SensorDataSet sensorDataSet = fillWithSensorDataSet(tmpLastTrackPoint);
+
+        tmpTrackStatisticsUpdater.addTrackPoint(tmpLastTrackPoint, recordingDistanceInterval);
+        track.setTrackStatistics(tmpTrackStatisticsUpdater.getTrackStatistics());
+
+
+        recordingDataObservable.postValue(new RecordingData(track, tmpLastTrackPoint, sensorDataSet));
     }
 
     public LiveData<RecordingStatus> getRecordingStatusObservable() {
