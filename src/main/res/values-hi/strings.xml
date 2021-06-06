@@ -339,11 +339,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">सटीकता के लिए ग्रहण करें</string>
     <string name="value_adapt_battery_life">बैटरी जीवन के लिए ग्रहण करें</string>
     <string name="value_always">हमेशा</string>
-    <string name="value_float_feet">%1$.2f फुट</string>
-    <string name="value_float_kilometer">%1$.2f किमी</string>
-    <string name="value_float_meter">%1$.2f मी</string>
-    <string name="value_float_mile">%1$.2f मी</string>
-    <string name="value_float_mile_poor_gps">%1$.1f मी (खराब GPS)</string>
     <string name="value_integer_feet">%1$d फुट</string>
     <string name="value_integer_feet_excellent_gps">%1$d फुट (उत्कृष्ट GPS)</string>
     <string name="value_integer_feet_recommended">%1$d फ़ुट (अनुशंसित)</string>

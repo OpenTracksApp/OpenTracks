@@ -290,11 +290,6 @@
     <string name="value_adapt_accuracy">Adapter pour la précision</string>
     <string name="value_adapt_battery_life">Optimiser pour économiser la pile</string>
     <string name="value_always">Toujours</string>
-    <string name="value_float_feet">%1$.2f pi</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mi</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mi (mauvaise réception GPS)</string>
     <string name="value_integer_feet">%1$d pi</string>
     <string name="value_integer_feet_excellent_gps">%1$d pi(s) (réception GPS excellente)</string>
     <string name="value_integer_feet_recommended">%1$d pi (recommandé)</string>

@@ -342,11 +342,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Tilpass for nøyaktighet</string>
     <string name="value_adapt_battery_life">Tilpass for batterilevetid</string>
     <string name="value_always">Alltid</string>
-    <string name="value_float_feet">%1$.2f fot</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mi</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mi (dårlig GPS)</string>
     <string name="value_integer_feet">%1$d fot</string>
     <string name="value_integer_feet_excellent_gps">%1$d fot (utmerket GPS)</string>
     <string name="value_integer_feet_recommended">%1$d fot (anbefales)</string>
@@ -579,10 +574,6 @@ limitations under the License.
 \n e) kjøpe i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) donere, og
 \n g) gjøre hva du tror hjelper OpenTracks. </string>
-    <string name="value_float_kilometer_hour">%1$.2f km/t</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
-    <string name="value_float_mile_hour">%1$.2f mph</string>
-    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
     <string name="description_altitude_loss">Total nedstigning: %1$d m (%2$d ft)</string>
     <string name="stats_loss">Total nedstigning</string>
     <string name="import_prevent_reimport">Du har stilt inn å forhindre at spor importeres om igjen</string>

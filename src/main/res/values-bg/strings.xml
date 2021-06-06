@@ -341,11 +341,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Адаптиране за точност</string>
     <string name="value_adapt_battery_life">Адаптиране спрямо батерията</string>
     <string name="value_always">Винаги</string>
-    <string name="value_float_feet">%1$.2f фт</string>
-    <string name="value_float_kilometer">%1$.2f км</string>
-    <string name="value_float_meter">%1$.2f м</string>
-    <string name="value_float_mile">%1$.2f мил</string>
-    <string name="value_float_mile_poor_gps">%1$.1f мил (слаб GPS)</string>
     <string name="value_integer_feet">%1$d фт</string>
     <string name="value_integer_feet_excellent_gps">%1$d фт (отличен GPS)</string>
     <string name="value_integer_feet_recommended">%1$d фт (препоръчително)</string>

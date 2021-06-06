@@ -342,11 +342,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Pritaikyti siekiant tikslumo</string>
     <string name="value_adapt_battery_life">Pritaik. taus. akum.</string>
     <string name="value_always">Visada</string>
-    <string name="value_float_feet">%1$.2f pėd.</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f myl.</string>
-    <string name="value_float_mile_poor_gps">%1$.1f myl. (prastas GPS)</string>
     <string name="value_integer_feet">%1$d pėd.</string>
     <string name="value_integer_feet_excellent_gps">%1$d pėd. (puikus GPS)</string>
     <string name="value_integer_feet_recommended">%1$d pėd. (rekomenduojama)</string>

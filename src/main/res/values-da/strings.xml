@@ -417,11 +417,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="value_adapt_accuracy">Juster nøjagtighed</string>
     <string name="value_adapt_battery_life">Tilpas til batterilevetid</string>
     <string name="value_always">Altid</string>
-    <string name="value_float_feet">%1$.2f fod</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mil</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mil (dårlig GPS)</string>
     <string name="value_integer_feet">%1$d fod</string>
     <string name="value_integer_feet_excellent_gps">%1$d fod (fremragende GPS)</string>
     <string name="value_integer_feet_recommended">%1$d fod (anbefales)</string>
@@ -545,10 +540,7 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="open_track_as_trackfileformat">Åbn som %1$s</string>
     <string name="activity_type_escooter">elektrisk scooter</string>
     <string name="generic_click_twice_cancel">Klik tilbage igen for at annullere</string>
-    <string name="value_float_kilometer_hour">%1$.2f km/t</string>
     <string name="import_unable_to_import_file">Kunne ikke importere filen:%1$s</string>
-    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
     <string name="import_prevent_reimport">Du har indstillet forhindre genimport af spor</string>
     <string name="settings_default_export_uri_title">Spor eksportmappe</string>
     <string name="instant_export_enabled_summary">Eksporter spor til lagring, når optagelsen er færdig</string>
@@ -583,7 +575,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="interval_list_empty_message">Der er ikke noget interval endnu</string>
     <string name="aggregated_stats_empty_message">Optag dit første spor for at se aggregerede statistikker</string>
     <string name="track_detail_intervals_tab">Intervaller</string>
-    <string name="value_float_mile_hour">%1$.2f mph</string>
     <string name="voice_pace_lap">Omgangstid på %1$s</string>
     <string name="voice_speed_lap">Omgangshastighed på %1$s</string>
     <string name="hold_to_pause">Hold nede for at holde pause</string>

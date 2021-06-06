@@ -412,11 +412,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="value_adapt_accuracy">Adaptar para obtener valores exactos</string>
     <string name="value_adapt_battery_life">Adaptar a la duración de la batería</string>
     <string name="value_always">Siempre</string>
-    <string name="value_float_feet">%1$.2f pies</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f millas</string>
-    <string name="value_float_mile_poor_gps">%1$.1f millas (señal de GPS débil)</string>
     <string name="value_integer_feet">%1$d pies</string>
     <string name="value_integer_feet_excellent_gps">%1$d pies (señal de GPS excelente)</string>
     <string name="value_integer_feet_recommended">%1$d pies (recomendado)</string>
@@ -595,12 +590,8 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="import_progress_summary_errors_msg">Errores</string>
     <string name="import_progress_summary_ok_msg">Archivos importados</string>
     <string name="description_altitude_loss">Pérdida de altura: %1$d m (%2$d pies)</string>
-    <string name="value_float_mile_hour">%1$.2f mph</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
-    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
     <string name="sensor_state_cadence_max">Cadencia máxima</string>
     <string name="sensor_state_cadence_avg">Cadencia media</string>
-    <string name="value_float_kilometer_hour">%1$.2f km/h</string>
     <string name="export_progress_summary_overwrite_msg">Pistas sobrescritas</string>
     <string name="export_progress_summary_skip_msg">Pistas omitidas</string>
     <string name="export_progress_summary_errors_msg">Errores</string>

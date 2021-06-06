@@ -76,16 +76,10 @@ final class PreferenceHelper {
                 }
             } else {
                 int feet = (int) (value * UnitConversions.M_TO_FT);
-                if (feet < 2000) {
-                    displayValue = context.getString(R.string.value_integer_feet, feet);
-                    if (value == maxRecordingDistanceDefault) {
-                        entries[i] = context.getString(R.string.value_integer_feet_recommended, feet);
-                    } else {
-                        entries[i] = displayValue;
-                    }
+                displayValue = context.getString(R.string.value_integer_feet, feet);
+                if (value == maxRecordingDistanceDefault) {
+                    entries[i] = context.getString(R.string.value_integer_feet_recommended, feet);
                 } else {
-                    double mile = feet * UnitConversions.FT_TO_MI;
-                    displayValue = context.getString(R.string.value_float_mile, mile);
                     entries[i] = displayValue;
                 }
             }
@@ -118,24 +112,14 @@ final class PreferenceHelper {
                 }
             } else {
                 int feet = (int) (value * UnitConversions.M_TO_FT);
-                if (feet < 2000) {
-                    displayValue = context.getString(R.string.value_integer_feet, feet);
+                displayValue = context.getString(R.string.value_integer_feet, feet);
 
-                    if (value == recordingGPSAccuracyDefault) {
-                        entries[i] = context.getString(R.string.value_integer_feet_recommended, feet);
-                    } else if (value == recordingGPSAccuracyExcellent) {
-                        entries[i] = context.getString(R.string.value_integer_feet_excellent_gps, feet);
-                    } else {
-                        entries[i] = displayValue;
-                    }
+                if (value == recordingGPSAccuracyDefault) {
+                    entries[i] = context.getString(R.string.value_integer_feet_recommended, feet);
+                } else if (value == recordingGPSAccuracyExcellent) {
+                    entries[i] = context.getString(R.string.value_integer_feet_excellent_gps, feet);
                 } else {
-                    double mile = feet * UnitConversions.FT_TO_MI;
-                    displayValue = context.getString(R.string.value_float_mile, mile);
-                    if (value == recordingGPSAccuracyPoor) {
-                        entries[i] = context.getString(R.string.value_float_mile_poor_gps, mile);
-                    } else {
-                        entries[i] = displayValue;
-                    }
+                    entries[i] = displayValue;
                 }
             }
         }

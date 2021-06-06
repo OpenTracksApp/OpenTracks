@@ -422,11 +422,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="value_adapt_accuracy">Genauigkeit anpassen</string>
     <string name="value_adapt_battery_life">An Akkulaufzeit anpassen</string>
     <string name="value_always">Immer</string>
-    <string name="value_float_feet">%1$.2f ft</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f Meilen</string>
-    <string name="value_float_mile_poor_gps">%1$.1f Meilen (schlechtes GPS-Signal)</string>
     <string name="value_integer_feet">%1$d Fuß</string>
     <string name="value_integer_feet_excellent_gps">%1$d Fuß (ausgezeichnetes GPS-Signal)</string>
     <string name="value_integer_feet_recommended">%1$d Fuß (empfohlen)</string>
@@ -601,6 +596,4 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="track_distance_notification">Strecke: %1$s</string>
     <string name="track_speed_notification">Geschwindigkeit: %1$s</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
-    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
 </resources>

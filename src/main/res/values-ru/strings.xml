@@ -340,11 +340,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Макс. точность</string>
     <string name="value_adapt_battery_life">Мин. расход батареи</string>
     <string name="value_always">Всегда</string>
-    <string name="value_float_feet">%1$.2f фт</string>
-    <string name="value_float_kilometer">%1$.2f км</string>
-    <string name="value_float_meter">%1$.2f м</string>
-    <string name="value_float_mile">%1$.2f мил</string>
-    <string name="value_float_mile_poor_gps">%1$.1f мил. (слабый сигнал)</string>
     <string name="value_integer_feet">%1$d фт</string>
     <string name="value_integer_feet_excellent_gps">%1$d фт (отличный сигнал)</string>
     <string name="value_integer_feet_recommended">%1$d фт (рекомендуется)</string>
@@ -569,10 +564,6 @@ limitations under the License.
     <string name="track_pace_notification">Темп: %1$s</string>
     <string name="track_speed_notification">Скорость: %1$s</string>
     <string name="track_distance_notification">Расстояние: %1$s</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d мин/км</string>
-    <string name="value_pace_mile">%1$d:%2$02d мин/миль</string>
-    <string name="value_float_mile_hour">%1$.2f mph</string>
-    <string name="value_float_kilometer_hour">%1$.2f км/ч</string>
     <string name="interval_list_empty_message">Интервалов пока нет</string>
     <string name="aggregated_stats_empty_message">Запишите свой первый трек, чтобы увидеть агрегированную статистику</string>
     <string name="track_detail_resume_success">Теперь возобновляем путь</string>

@@ -341,11 +341,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">精度を重視</string>
     <string name="value_adapt_battery_life">電池残量を重視</string>
     <string name="value_always">常に使用する</string>
-    <string name="value_float_feet">%1$.2fフィート</string>
-    <string name="value_float_kilometer">%1$.2fkm</string>
-    <string name="value_float_meter">%1$.2fm</string>
-    <string name="value_float_mile">%1$.2fmi</string>
-    <string name="value_float_mile_poor_gps">%1$.1fmi（GPS信号: 弱）</string>
     <string name="value_integer_feet">%1$dft</string>
     <string name="value_integer_feet_excellent_gps">%1$dft（GPS信号: 強）</string>
     <string name="value_integer_feet_recommended">%1$dft（推奨）</string>
