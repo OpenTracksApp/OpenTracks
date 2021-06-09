@@ -34,7 +34,7 @@ limitations under the License.
     <string name="help_track_map_title">¿Como mostrar a ruta nun mapa?</string>
     <string name="help_track_map_content"> Usa a icona do mapa pequeno.
 \n a) (actualizacións en directo) Instala <a href="https://github.com/OpenTracksApp/OSMDashboard"> OSMDashboard </a>. Ofrece mapas en liña ou fóra de liña a través de <a href="https://www.openstreetmap.org"> OpenStreetMap </a>.
-\n \u0020En realidade, OSMDashboard é unha aplicación independente que só pode acceder (temporalmente) aos datos das pistas que se amosarán.
+\n En realidade, OSMDashboard é unha aplicación independente que só pode acceder (temporalmente) aos datos das pistas que se amosarán.
 \n b) A través dunha aplicación de mapa normal (por exemplo, <a href="http://osmand.net/">OsmAnd</a> e <a href="https://maps.me/">MAPS.ME</a>). Estas aplicacións precisan admitir o formato de ficheiro KMZ (só localizacións e marcas de tempo). De feito, unha aplicación ten que admitir <i> ACTION_VIEW </i> con MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_storage_pictures_title">¿De que xeito garda OpenTracks as fotos tomadas como marcadores?</string>
     <string name="help_storage_pictures_content">Gárdanse no almacenaxe interno da app (só accesible desde OpenTracks).</string>
@@ -236,7 +236,7 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="image_stop">Deter</string>
     <string name="image_track">Traxecto</string>
     <!-- Import -->
-    <string name="import_error">Importados: %1$d de %2$s de %3$s</string>
+    <string name="import_error">Importados: %1$d de %2$s desde %3$s</string>
     <string name="import_no_directory">%1$s non existe</string>
     <string name="import_no_file">Non hai ficheiros para importar. Conecta o teu dispositivo ao ordenador e coloca os ficheiros para importar en %1$s.</string>
     <string name="import_no_file_title">Importar ficheiros</string>
@@ -422,7 +422,7 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="unit_kilometer_per_hour">km/h</string>
     <string name="unit_meter">m</string>
     <string name="unit_mile">km</string>
-    <string name="unit_mile_per_hour">km/h</string>
+    <string name="unit_mile_per_hour">mph</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/km</string>
     <!-- Value -->
