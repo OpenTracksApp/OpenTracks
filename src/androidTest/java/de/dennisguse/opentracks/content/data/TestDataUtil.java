@@ -14,6 +14,7 @@ import java.util.List;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.stats.TrackStatistics;
+import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.FileUtils;
 
 public class TestDataUtil {
@@ -165,5 +166,21 @@ public class TestDataUtil {
             trackPoints.add(trackPointIterator.next());
         }
         return trackPoints;
+    }
+
+    public static Pair<Track.Id, TrackStatistics> buildTrackWithTrackPoints(ContentProviderUtils contentProviderUtils, int numberOfPoints) {
+        Track dummyTrack = new Track();
+        dummyTrack.setId(new Track.Id(System.currentTimeMillis()));
+        dummyTrack.setName("Dummy Track");
+        contentProviderUtils.insertTrack(dummyTrack);
+        TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater();
+        for (int i = 0; i < numberOfPoints; i++) {
+            TrackPoint tp = TestDataUtil.createTrackPoint(i);
+            contentProviderUtils.insertTrackPoint(tp, dummyTrack.getId());
+            trackStatisticsUpdater.addTrackPoint(tp, Distance.of(0));
+        }
+        dummyTrack.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
+        contentProviderUtils.updateTrack(dummyTrack);
+        return new Pair<>(dummyTrack.getId(), trackStatisticsUpdater.getTrackStatistics());
     }
 }

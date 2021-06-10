@@ -1,6 +1,5 @@
 package de.dennisguse.opentracks.viewmodels;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.time.Duration;
@@ -10,6 +9,7 @@ import java.util.List;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 
@@ -34,24 +34,28 @@ public class IntervalStatistics {
         intervalList.add(lastInterval);
     }
 
-    public void addTrackPoints(@NonNull List<TrackPoint> trackPoints) {
-        if (trackPoints.size() == 0) {
-            return;
-        }
-
+    /**
+     * Complete intervals with the tracks points from the iterator.
+     *
+     * @param trackPointIterator
+     * @return the last track point's id used to compute the intervals.
+     */
+    public TrackPoint.Id addTrackPoints(TrackPointIterator trackPointIterator) {
         boolean newIntervalAdded = false;
-        for (TrackPoint trackPoint : trackPoints) {
+        TrackPoint trackPoint = null;
+
+        while (trackPointIterator.hasNext()) {
+            trackPoint = trackPointIterator.next();
             trackStatisticsUpdater.addTrackPoint(trackPoint, minGPSDistance);
 
             if (trackStatisticsUpdater.getTrackStatistics().getTotalDistance().plus(interval.distance).greaterOrEqualThan(distanceInterval)) {
-                interval.update(trackStatisticsUpdater.getTrackStatistics(), trackPoint);
+                interval.add(trackStatisticsUpdater.getTrackStatistics(), trackPoint);
 
                 double adjustFactor = distanceInterval.dividedBy(interval.distance);
                 Interval adjustedInterval = new Interval(interval);
                 adjustedInterval.adjust(adjustFactor);
 
-                intervalList.remove(intervalList.size() - 1);
-                intervalList.add(adjustedInterval);
+                intervalList.set(intervalList.size() - 1, adjustedInterval);
 
                 interval = new Interval(interval.distance.minus(adjustedInterval.distance), interval.time.minus(adjustedInterval.time));
                 trackStatisticsUpdater = new TrackStatisticsUpdater();
@@ -65,10 +69,12 @@ public class IntervalStatistics {
         }
 
         if (newIntervalAdded) {
-            lastInterval.update(trackStatisticsUpdater.getTrackStatistics(), null);
+            lastInterval.add(trackStatisticsUpdater.getTrackStatistics(), null);
         } else {
             lastInterval.set(trackStatisticsUpdater.getTrackStatistics());
         }
+
+        return trackPoint != null ? trackPoint.getId() : null;
     }
 
     public List<Interval> getIntervalList() {
@@ -145,7 +151,7 @@ public class IntervalStatistics {
             return loss_m;
         }
 
-        private void update(TrackStatistics trackStatistics, @Nullable TrackPoint lastTrackPoint) {
+        private void add(TrackStatistics trackStatistics, @Nullable TrackPoint lastTrackPoint) {
             distance = distance.plus(trackStatistics.getTotalDistance());
             time = time.plus(trackStatistics.getTotalTime());
             gain_m = trackStatistics.hasTotalAltitudeGain() ? trackStatistics.getTotalAltitudeGain() : gain_m;

@@ -37,6 +37,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.StreamSupport;
 
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.content.data.Altitude;
@@ -743,16 +744,6 @@ public class ContentProviderUtils {
      */
     public TrackPointIterator getTrackPointLocationIterator(final Track.Id trackId, final TrackPoint.Id startTrackPointId) {
         return new TrackPointIterator(this, trackId, startTrackPointId);
-    }
-
-    public List<TrackPoint> getTrackPoints(final Track.Id trackId, final TrackPoint.Id startTrackPointId) {
-        List<TrackPoint> trackPoints = new ArrayList<>();
-        try (TrackPointIterator trackPointIterator = getTrackPointLocationIterator(trackId, startTrackPointId)) {
-            while (trackPointIterator.hasNext()) {
-                trackPoints.add(trackPointIterator.next());
-            }
-        }
-        return trackPoints;
     }
 
     @Deprecated
