@@ -21,6 +21,7 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
@@ -47,6 +48,9 @@ public class IntervalStatisticsModel extends AndroidViewModel {
         super(application);
         minGPSDistance = PreferencesUtils.getRecordingDistanceInterval(PreferencesUtils.getSharedPreferences(application), application);
         contentResolver = getApplication().getContentResolver();
+        handlerThread = new HandlerThread(TAG);
+        handlerThread.start();
+        handler = new Handler(handlerThread.getLooper());
     }
 
     @Override
@@ -54,6 +58,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
         super.onCleared();
         if (trackPointsTableObserver != null) {
             contentResolver.unregisterContentObserver(trackPointsTableObserver);
+            trackPointsTableObserver = null;
         }
         if (handlerThread != null) {
             handlerThread.getLooper().quit();
@@ -75,25 +80,6 @@ public class IntervalStatisticsModel extends AndroidViewModel {
             loadIntervalStatistics(trackId);
         }
 
-        registerTrackPointsObserver(trackId);
-
-        return intervalsLiveData;
-    }
-
-    private void loadIntervalStatistics(Track.Id trackId) {
-        executor.execute(() -> {
-            ContentProviderUtils contentProviderUtils = new ContentProviderUtils(getApplication());
-            List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId, lastTrackPointId);
-            lastTrackPointId = trackPoints.size() > 0 ? trackPoints.get(trackPoints.size() - 1).getId() : lastTrackPointId;
-            intervalStatistics.addTrackPoints(trackPoints);
-            intervalsLiveData.postValue(intervalStatistics.getIntervalList());
-        });
-    }
-
-    private void registerTrackPointsObserver(Track.Id trackId) {
-        handlerThread = new HandlerThread(TAG);
-        handlerThread.start();
-        handler = new Handler(handlerThread.getLooper());
         trackPointsTableObserver = new ContentObserver(handler) {
             @Override
             public void onChange(boolean selfChange, Uri uri) {
@@ -101,6 +87,18 @@ public class IntervalStatisticsModel extends AndroidViewModel {
             }
         };
         contentResolver.registerContentObserver(TrackPointsColumns.CONTENT_URI_BY_TRACKID, false, trackPointsTableObserver);
+
+        return intervalsLiveData;
+    }
+
+    private void loadIntervalStatistics(Track.Id trackId) {
+        executor.execute(() -> {
+            ContentProviderUtils contentProviderUtils = new ContentProviderUtils(getApplication());
+            try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, lastTrackPointId)) {
+                lastTrackPointId = intervalStatistics.addTrackPoints(trackPointIterator);
+                intervalsLiveData.postValue(intervalStatistics.getIntervalList());
+            }
+        });
     }
 
     public void onPause() {
@@ -145,7 +143,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
                     .multipliedBy(multiplier);
         }
 
-        public boolean equals(IntervalOption intervalOption) {
+        public boolean sameMultiplier(IntervalOption intervalOption) {
             return intervalOption != null && this.multiplier == intervalOption.multiplier;
         }
 

@@ -178,19 +178,13 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         }
         String category = track.getCategory();
 
-        //TODO Querying all TrackPoints all the time is inefficient; get infos from TrackRecordingService
-        TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null);
-        ArrayList<TrackPoint> trackPoints = new ArrayList<>();
-        while (trackPointIterator.hasNext()) {
-            trackPoints.add(trackPointIterator.next());
-        }
-
         boolean isMetricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
         boolean isReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, context, category);
         Distance minGPSDistance = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
 
+        TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null);
         IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.one(isMetricUnits), minGPSDistance);
-        intervalStatistics.addTrackPoints(trackPoints);
+        intervalStatistics.addTrackPoints(trackPointIterator);
         IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
 
         String announcement = AnnouncementUtils.getAnnouncement(context, trackStatistics, isMetricUnits, isReportSpeed, lastInterval);
