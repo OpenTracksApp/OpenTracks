@@ -15,8 +15,6 @@ import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * Provides cadence in rpm and speed in milliseconds from Bluetooth LE Cycling Cadence and Speed sensors.
- * <p>
- * https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=261449
  */
 public final class SensorDataCycling {
 
@@ -96,7 +94,7 @@ public final class SensorDataCycling {
 
     public static class DistanceSpeed extends SensorData<DistanceSpeed.Data> {
 
-        private final Integer wheelRevolutionsCount; // UINT16
+        private final Integer wheelRevolutionsCount; // UINT32
         private final Integer wheelRevolutionsTime; // UINT16; 1/1024s
 
         public DistanceSpeed(String sensorAddress) {
@@ -133,8 +131,7 @@ public final class SensorDataCycling {
                     return;
                 }
 
-                long wheelDiff = UintUtils.diff(wheelRevolutionsCount, previous.wheelRevolutionsCount, UintUtils.UINT16_MAX);
-                wheelDiff = Math.abs(wheelDiff); //HACK for Garmin Speed 2 as some of those seem to count backwards
+                long wheelDiff = UintUtils.diff(wheelRevolutionsCount, previous.wheelRevolutionsCount, UintUtils.UINT32_MAX);
 
                 Distance distance = wheelCircumference.multipliedBy(wheelDiff);
                 Distance distanceOverall = distance;
@@ -164,11 +161,11 @@ public final class SensorDataCycling {
             if (!(obj instanceof DistanceSpeed)) return false;
 
             DistanceSpeed comp = (DistanceSpeed) obj;
-            if (hasData() && comp.hasData() == hasData()) {
-                return getWheelRevolutionsCount() == comp.getWheelRevolutionsCount() && getWheelRevolutionsTime() == comp.getWheelRevolutionsTime();
-            } else {
+            if (!(hasData() && comp.hasData())) {
                 return false;
             }
+
+            return getWheelRevolutionsCount() == comp.getWheelRevolutionsCount() && getWheelRevolutionsTime() == comp.getWheelRevolutionsTime();
         }
 
         public static class Data {

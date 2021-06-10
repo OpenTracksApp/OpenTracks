@@ -215,7 +215,7 @@ public class StringUtils {
         }
 
         StringBuilder builder = new StringBuilder();
-        builder.append("[").append(category).append("]");
+        builder.append(getCategory(category));
         if (description != null && description.length() != 0) {
             builder.append(" ").append(description);
         }
