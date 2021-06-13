@@ -111,7 +111,7 @@ public class SensorDataCyclingTest {
     @Test
     public void compute_speed_rollOverCount() {
         // given
-        SensorDataCycling.DistanceSpeed previous = new SensorDataCycling.DistanceSpeed("sensorAddress", "sensorName", UintUtils.UINT16_MAX - 1, 1024);
+        SensorDataCycling.DistanceSpeed previous = new SensorDataCycling.DistanceSpeed("sensorAddress", "sensorName", UintUtils.UINT32_MAX - 1, 1024);
         SensorDataCycling.DistanceSpeed current = new SensorDataCycling.DistanceSpeed("sensorAddress", "sensorName", 0, 2048);
 
         // when

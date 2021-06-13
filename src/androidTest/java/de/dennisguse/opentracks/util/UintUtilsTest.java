@@ -18,6 +18,6 @@ public class UintUtilsTest {
 
     @Test
     public void realData() {
-        assertEquals(3, UintUtils.diff(381616, 381615, UintUtils.UINT32_MAX));
+        assertEquals(1, UintUtils.diff(381616, 381615, UintUtils.UINT32_MAX));
     }
 }

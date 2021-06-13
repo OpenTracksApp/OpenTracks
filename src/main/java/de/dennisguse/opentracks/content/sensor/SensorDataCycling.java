@@ -94,7 +94,7 @@ public final class SensorDataCycling {
 
     public static class DistanceSpeed extends SensorData<DistanceSpeed.Data> {
 
-        private final Integer wheelRevolutionsCount; // UINT32
+        private final Long wheelRevolutionsCount; // UINT32
         private final Integer wheelRevolutionsTime; // UINT16; 1/1024s
 
         public DistanceSpeed(String sensorAddress) {
@@ -103,7 +103,7 @@ public final class SensorDataCycling {
             this.wheelRevolutionsTime = null;
         }
 
-        public DistanceSpeed(String sensorAddress, String sensorName, int wheelRevolutionsCount, int wheelRevolutionsTime) {
+        public DistanceSpeed(String sensorAddress, String sensorName, long wheelRevolutionsCount, int wheelRevolutionsTime) {
             super(sensorAddress, sensorName);
             this.wheelRevolutionsCount = wheelRevolutionsCount;
             this.wheelRevolutionsTime = wheelRevolutionsTime;
@@ -113,7 +113,7 @@ public final class SensorDataCycling {
             return wheelRevolutionsCount != null && wheelRevolutionsTime != null;
         }
 
-        public int getWheelRevolutionsCount() {
+        public long getWheelRevolutionsCount() {
             return wheelRevolutionsCount;
         }
 

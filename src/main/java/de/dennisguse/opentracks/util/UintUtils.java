@@ -18,7 +18,7 @@ public class UintUtils {
             throw new RuntimeException("a or b cannot be less than zero.");
         }
         if (a > UINT_MAX || b > UINT_MAX) {
-            throw new RuntimeException("a or b are outside of the allowed range." + a + " " + b);
+            throw new RuntimeException("a or b are outside of the allowed range.");
         }
 
         if (a >= b) {
