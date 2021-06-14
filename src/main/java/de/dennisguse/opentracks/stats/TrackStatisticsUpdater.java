@@ -172,13 +172,14 @@ public class TrackStatisticsUpdater {
             return;
         }
 
-        if (!trackPoint.hasSensorDistance()) {
+        if (!trackPoint.hasSensorDistance()
+                && trackPoint.hasLocation() && lastMovingTrackPoint.hasLocation()) {
             // GPS-based distance/speed
             Distance movingDistance = trackPoint.distanceToPrevious(lastMovingTrackPoint);
-            if (movingDistance.lessThan(minGPSDistance) && !trackPoint.isMoving()) {
+            if (movingDistance != null && movingDistance.lessThan(minGPSDistance) && !trackPoint.isMoving()) {
                 speedBuffer_mps.reset();
                 lastTrackPoint = trackPoint;
-                return;
+                return; //TOOD Why? Is there nothing to be done afterwards?
             }
             // Update total distance
             currentSegment.addTotalDistance(movingDistance);
