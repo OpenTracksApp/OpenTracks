@@ -18,10 +18,10 @@ import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.action.MotionEvents;
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -55,7 +55,7 @@ public class EspressoDeleteTrackTest {
     public ActivityScenarioRule<TrackListActivity> mActivityTestRule = new ActivityScenarioRule<>(TrackListActivity.class);
 
     @Rule
-    public GrantPermissionRule mGrantPermissionRule = GrantPermissionRule.grant("android.permission.ACCESS_FINE_LOCATION");
+    public GrantPermissionRule mGrantPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
 
     private MyIdlingResource idlingResource;
 
@@ -241,7 +241,7 @@ public class EspressoDeleteTrackTest {
 
     private class MyIdlingResource implements IdlingResource {
 
-        private Context context;
+        private final Context context;
         private ResourceCallback resourceCallback;
 
         public MyIdlingResource(Context context) {
