@@ -154,7 +154,9 @@ public class IntervalsFragment extends Fragment {
     public void onPause() {
         super.onPause();
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        viewModel.onPause();
+        if (viewModel != null) {
+            viewModel.onPause();
+        }
     }
 
     @Override
@@ -180,6 +182,7 @@ public class IntervalsFragment extends Fragment {
         if (viewModel == null) {
             return;
         }
+        viewBinding.intervalRate.setText(isReportSpeed ? getString(R.string.stats_speed) : getString(R.string.stats_pace));
         LiveData<List<IntervalStatistics.Interval>> liveData = viewModel.getIntervalStats(trackId, metricUnits, selectedInterval);
         liveData.observe(getActivity(), intervalList -> adapter.swapData(intervalList, metricUnits, isReportSpeed));
     }
