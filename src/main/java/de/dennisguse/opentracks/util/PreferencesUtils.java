@@ -112,6 +112,16 @@ public class PreferencesUtils {
         return STATS_UNIT.equals(getString(sharedPreferences, context, R.string.stats_units_key, STATS_UNIT));
     }
 
+    public static void setMetricUnits(SharedPreferences sharedPreferences, Context context, boolean metricUnits) {
+        String unit;
+        if (metricUnits) {
+            unit = context.getString(R.string.stats_units_metric);
+        } else {
+            unit = context.getString(R.string.stats_units_imperial);
+        }
+        setString(sharedPreferences, context, R.string.stats_units_key, unit);
+    }
+
     public static boolean isReportSpeed(SharedPreferences sharedPreferences, Context context, String category) {
         final String STATS_RATE_DEFAULT = context.getString(R.string.stats_rate_default);
         String currentStatsRate = getString(sharedPreferences, context, R.string.stats_rate_key, STATS_RATE_DEFAULT);

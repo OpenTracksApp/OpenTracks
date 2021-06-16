@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks;
 
 
+import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -12,6 +13,7 @@ import androidx.test.espresso.ViewInteraction;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 
 import org.hamcrest.Description;
@@ -19,6 +21,7 @@ import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onData;
@@ -47,7 +50,12 @@ public class EspressoCategoryUnitTest {
     public ActivityScenarioRule<TrackListActivity> mActivityTestRule = new ActivityScenarioRule<>(TrackListActivity.class);
 
     @Rule
-    public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
+    public TestRule mRuntimePermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
+
+    private final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+    @Rule
+    public TestRule mLocaleRule = new PreferenceMetricUnitRule(context, true);
 
     @Test
     public void changeBetweenCategoryUpdateProperlyUnitTest() {
