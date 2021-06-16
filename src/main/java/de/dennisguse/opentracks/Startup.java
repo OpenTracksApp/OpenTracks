@@ -30,8 +30,7 @@ public class Startup extends Application {
         // Set default values of preferences on first start.
         SharedPreferences sharedPreferences = PreferencesUtils.resetPreferences(this, false);
         if (PreferencesUtils.getString(sharedPreferences, this, R.string.stats_units_key, "").equals("")) {
-            String statsUnits = getString(Locale.US.equals(Locale.getDefault()) ? R.string.stats_units_imperial : R.string.stats_units_metric);
-            PreferencesUtils.setString(sharedPreferences, this, R.string.stats_units_key, statsUnits);
+            PreferencesUtils.setMetricUnits(sharedPreferences, this, !Locale.US.equals(Locale.getDefault()));
         }
 
         ActivityUtils.applyNightMode(sharedPreferences, this);
