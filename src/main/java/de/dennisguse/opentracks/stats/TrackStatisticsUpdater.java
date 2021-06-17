@@ -68,7 +68,7 @@ public class TrackStatisticsUpdater {
     private final DoubleRingBuffer speedBuffer_mps;
 
     // The current segment's statistics
-    private final TrackStatistics currentSegment = new TrackStatistics();
+    private final TrackStatistics currentSegment;
     // Current segment's last trackPoint
     private TrackPoint lastTrackPoint;
     // Current segment's last moving trackPoint
@@ -85,6 +85,8 @@ public class TrackStatisticsUpdater {
      */
     public TrackStatisticsUpdater(TrackStatistics trackStatistics) {
         this.trackStatistics = trackStatistics;
+        this.currentSegment = new TrackStatistics();
+
         trackInitialized = true;
 
         altitudeBuffer_m = new DoubleRingBuffer(ALTITUDE_SMOOTHING_FACTOR);
@@ -92,6 +94,9 @@ public class TrackStatisticsUpdater {
     }
 
     public TrackStatisticsUpdater(TrackStatisticsUpdater toCopy) {
+        this.currentSegment = new TrackStatistics(toCopy.currentSegment);
+        this.trackStatistics = new TrackStatistics(toCopy.trackStatistics);
+
         this.trackInitialized = toCopy.trackInitialized;
         this.segmentInitialized = toCopy.segmentInitialized;
         this.altitudeBuffer_m = new DoubleRingBuffer(toCopy.altitudeBuffer_m);
@@ -99,9 +104,6 @@ public class TrackStatisticsUpdater {
 
         this.lastTrackPoint = toCopy.lastTrackPoint;
         this.lastMovingTrackPoint = toCopy.lastMovingTrackPoint;
-
-        this.trackStatistics = toCopy.getTrackStatistics();
-        this.currentSegment.merge(toCopy.currentSegment);
     }
 
     public TrackStatistics getTrackStatistics() {

@@ -193,4 +193,31 @@ public class TrackStatisticsUpdaterTest {
     @Test
     public void addTrackPoint_speed_from_GPS_moving_and_sensor_speed() {
     }
+
+    @Test
+    public void copy_constructor() {
+        // given
+        TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
+
+        TrackPoint tp1 = new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochMilli(1000));
+        TrackPoint tp2 = new TrackPoint(0, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(2000));
+        TrackPoint tp3 = new TrackPoint(0.00001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(3000));
+        TrackPoint tp4 = new TrackPoint(0.0005, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(4000));
+        TrackPoint tp5 = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochMilli(5000));
+
+        subject.addTrackPoint(tp1, GPS_DISTANCE);
+        subject.addTrackPoint(tp2, GPS_DISTANCE);
+        subject.addTrackPoint(tp3, GPS_DISTANCE);
+        subject.addTrackPoint(tp4, GPS_DISTANCE);
+
+        // when
+        TrackStatisticsUpdater copy = new TrackStatisticsUpdater(subject);
+        subject.addTrackPoint(tp5, GPS_DISTANCE);
+        copy.addTrackPoint(tp5, GPS_DISTANCE);
+
+
+        // then
+        assertEquals(55.287, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
+        assertEquals(55.287, copy.getTrackStatistics().getTotalDistance().toM(), 0.01);
+    }
 }
