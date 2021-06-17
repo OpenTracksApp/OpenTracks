@@ -136,7 +136,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="description_average_moving_speed">Vitesse moyenne de déplacement : %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_average_pace_in_minute">Vitesse moyenne : %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Vitesse moyenne : %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_altitude_gain">Dénivelé : %1$d m (%2$d pi)</string>
+    <string name="description_altitude_gain">Dénivelé positif : %1$d m (%2$d pi)</string>
     <string name="description_altitude_imperial">Altitude (pi)</string>
     <string name="description_altitude_metric">Altitude (m)</string>
     <string name="description_fastest_pace_in_minute">Vitesse maximale : %1$s min/km (%2$s min/mi)</string>
@@ -358,7 +358,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="stats_average_speed">Vitesse moyenne</string>
     <string name="stats_altitude">Altitude</string>
     <string name="stats_fastest_pace">Allure la plus rapide</string>
-    <string name="stats_gain">Gagner</string>
+    <string name="stats_gain">Dénivelé positif</string>
     <string name="stats_grade">Inclinaison</string>
     <string name="stats_latitude">Latitude</string>
     <string name="stats_longitude">Longitude</string>
@@ -543,7 +543,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_default_export_uri_title">Répertoire d\'exportation des traces</string>
     <string name="instant_export_enabled_title">Exportation instantanée après l\'entraînement</string>
     <string name="stats_intervals">Intervalles</string>
-    <string name="stats_loss">Perte</string>
+    <string name="stats_loss">Dénivelé négatif</string>
     <string name="settings_prevent_reimport_tracks_title">Empêcher la réimportation de traces</string>
     <string name="settings_night_mode_option_night">Nuit</string>
     <string name="settings_night_mode_option_day">Jour</string>
@@ -552,7 +552,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="instant_export_enabled_summary">Exportation de la trace vers le stockage après la fin de l\'enregistrement</string>
     <string name="hold_to_pause">Tenir pour faire une pause</string>
     <string name="hold_to_stop">Maintenir pour arrêter</string>
-    <string name="track_distance_notification">Distanciation : %1$s</string>
+    <string name="track_distance_notification">Distance : %1$s</string>
     <string name="open_track_as_KMZ">Ouvert comme KMZ</string>
     <string name="open_track_as_GPX">Ouvert en tant que GPX</string>
     <string name="open_track_as_trackfileformat">Ouvrir comme %1$s</string>
@@ -577,7 +577,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="sensor_state_cadence_avg">Cadence moyenne</string>
     <string name="generic_click_twice_cancel">Cliquez sur retour pour annuler</string>
     <string name="export_progress_summary_new_msg">Nouvelles traces exportées</string>
-    <string name="export_progress_summary_skip_msg">Traces sautées</string>
+    <string name="export_progress_summary_skip_msg">Traces ignorées</string>
     <string name="export_progress_summary_errors_msg">Erreurs</string>
     <string name="generic_overwrite">Écraser</string>
     <string name="generic_show_errors">Afficher les erreurs</string>
@@ -599,7 +599,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
         <item quantity="other">Terminé avec des erreurs %1$d</item>
     </plurals>
     <string name="settings_default_trackfileformat">Format de fichier d\'exportation / partage</string>
-    <string name="description_altitude_loss">Perte d\'altitude : %1$d m (%2$d ft)</string>
+    <string name="description_altitude_loss">Dénivelé négatif : %1$d m (%2$d ft)</string>
     <string name="export_track_already_exists_msg">La trace %1$s existe déjà dans le répertoire de destination.</string>
     <string name="export_progress_summary_overwrite_msg">Traces écrasées</string>
     <string name="about_third_party_data">Données de tiers</string>
