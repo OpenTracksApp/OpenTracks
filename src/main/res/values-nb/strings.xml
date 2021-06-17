@@ -335,7 +335,7 @@ limitations under the License.
     <string name="unit_kilometer_per_hour">km/t</string>
     <string name="unit_meter">m</string>
     <string name="unit_mile">mi</string>
-    <string name="unit_mile_per_hour">mi/h</string>
+    <string name="unit_mile_per_hour">mph</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/mi</string>
     <!-- Value -->
@@ -393,7 +393,7 @@ limitations under the License.
     <string name="voice_speed_miles_per_hour_other">%1$.1f engelske mil i timen</string>
     <string name="voice_speed_miles_per_hour_two">2 engelske mil i timen</string>
     <string name="voice_speed_miles_per_hour_zero">0 engelske mil i timen</string>
-    <string name="voice_template">Spor %1$s om %2$s ved %3$s</string>
+    <string name="voice_template">OpenTracks %1$s på %2$s med %3$s</string>
     <string name="voice_total_distance_kilometers_few">total distanse %1$.2f kilometer</string>
     <string name="voice_total_distance_kilometers_many">total distanse %1$.2f kilometer</string>
     <string name="voice_total_distance_kilometers_one">total distanse 1 kilometer</string>
