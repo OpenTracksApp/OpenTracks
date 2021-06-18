@@ -27,6 +27,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -37,6 +38,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -74,8 +77,6 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
 public class TrackListActivity extends AbstractTrackDeleteActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, ControllerFragment.Callback {
 
     private static final String TAG = TrackListActivity.class.getSimpleName();
-
-    protected static final int GPS_REQUEST_CODE = 6;
 
     // The following are set in onCreate
     private SharedPreferences sharedPreferences;
@@ -254,17 +255,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == GPS_REQUEST_CODE) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    @Override
     protected View getRootView() {
         viewBinding = TrackListBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
@@ -408,9 +398,25 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     }
 
     private void requestGPSPermissions() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            return;
         }
+
+        ActivityResultLauncher<String[]> locationPermissionRequest = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+                    Boolean fineLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false);
+                    if (fineLocationGranted == null || !fineLocationGranted) {
+                        Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+        );
+        String[] permissions;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
+            permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+        } else {
+            permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
+        }
+        locationPermissionRequest.launch(permissions);
     }
 
     /**
