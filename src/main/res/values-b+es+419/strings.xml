@@ -205,7 +205,6 @@
     <string name="settings_reset_done">Se restablecieron los valores predeterminados de todas las opciones de configuración</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Sensor de Bluetooth</string>
-    <string name="settings_stats_coordinate">Latitud/longitud</string>
     <string name="settings_stats_rate_title">Tasa preferida</string>
     <string name="settings_stats_units_imperial">Imperiales (millas, pies)</string>
     <string name="settings_stats_units_metric">Métricas (km, m)</string>

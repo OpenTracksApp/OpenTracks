@@ -322,7 +322,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_sensor_disconnected">Desconectado de %1$s</string>
     <string name="settings_sensor_wheel_circumference">Circunferencia da roda (mm)</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Latitude/lonxitude</string>
     <string name="settings_stats_rate_title">Indicador preferido</string>
     <string name="settings_stats_units_imperial">Imperiais (millas, pés)</string>
     <string name="settings_stats_units_metric">Métricas (km, m)</string>

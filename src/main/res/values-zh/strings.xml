@@ -255,7 +255,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth_sensor">蓝牙传感器</string>
     <string name="settings_sensor_wheel_circumference">车轮周长 (mm)</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">纬度/经度</string>
     <string name="settings_stats_rate_title">首选速率</string>
     <string name="settings_stats_units_imperial">英制（英里、英尺）</string>
     <string name="settings_stats_units_metric">公制（公里、米）</string>

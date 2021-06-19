@@ -242,7 +242,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Датчик Bluetooth</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Широта/долгота</string>
     <string name="settings_stats_rate_title">Предпочтение</string>
     <string name="settings_stats_units_imperial">Британская (мили, футы)</string>
     <string name="settings_stats_units_metric">Метрическая (км, м)</string>

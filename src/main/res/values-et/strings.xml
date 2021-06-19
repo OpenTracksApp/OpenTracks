@@ -306,7 +306,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="settings_sensor_connecting">Ühendatud anduriga %1$s</string>
     <string name="settings_sensor_disconnected">Lahti ühendatud %1$s</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Laiuskraad/pikkuskraad</string>
     <string name="settings_stats_rate_title">Eelistatud määr</string>
     <string name="settings_stats_units_imperial">Inglise mõõtühikud (miili, jalga)</string>
     <string name="settings_stats_units_metric">Meetermõõdustik (km, m)</string>

@@ -307,7 +307,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="settings_sensor_connecting">Honekin konektatuta: %1$s</string>
     <string name="settings_sensor_disconnected">Deskonektatuta %1$s</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Latitudea/Longitudea</string>
     <string name="settings_stats_rate_title">Erritmo hobetsia</string>
     <string name="settings_stats_units_imperial">Inperiala (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrikoa (km, m)</string>

@@ -239,7 +239,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">บลูทูธ</string>
     <string name="settings_sensor_bluetooth_sensor">เซ็นเซอร์บลูทูธ</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">ละติจูด/ลองจิจูด</string>
     <string name="settings_stats_rate_title">อัตราที่ต้องการ</string>
     <string name="settings_stats_units_imperial">หน่วยอังกฤษ (ไมล์, ฟุต)</string>
     <string name="settings_stats_units_metric">หน่วยเมตริก (กม., เมตร)</string>

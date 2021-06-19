@@ -241,7 +241,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth сензор</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Географска шир./дуж.</string>
     <string name="settings_stats_rate_title">Жељени темпо</string>
     <string name="settings_stats_units_imperial">Империјалне (ми, ст)</string>
     <string name="settings_stats_units_metric">Метричке (км, м)</string>

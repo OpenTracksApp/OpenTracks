@@ -240,7 +240,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Cảm biến bluetooth</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Vĩ độ/Kinh độ</string>
     <string name="settings_stats_rate_title">Tốc độ ưa thích</string>
     <string name="settings_stats_units_imperial">Hệ đo lường Anh (mi, ft)</string>
     <string name="settings_stats_units_metric">Hệ mét (km, m)</string>

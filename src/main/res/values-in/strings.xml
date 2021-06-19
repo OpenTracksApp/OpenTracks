@@ -202,7 +202,6 @@
     <string name="settings_reset_done">Semua setelan telah dikembalikan ke nilai default</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Sensor Bluetooth</string>
-    <string name="settings_stats_coordinate">Lintang/Bujur</string>
     <string name="settings_stats_rate_title">Laju yang dipilih</string>
     <string name="settings_stats_units_imperial">Imperial (mil, kaki)</string>
     <string name="settings_stats_units_metric">Metrik (km, m)</string>

@@ -307,7 +307,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="settings_sensor_connecting">Připojeno k senzoru %1$s</string>
     <string name="settings_sensor_disconnected">Odpojeno od %1$s</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Zeměpisná šířka/délka</string>
     <string name="settings_stats_rate_title">Preferovaná rychlost</string>
     <string name="settings_stats_units_imperial">Imperiální jednotky (míle, stopy)</string>
     <string name="settings_stats_units_metric">Metrické jednotky (km, m)</string>

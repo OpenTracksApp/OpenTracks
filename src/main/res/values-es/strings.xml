@@ -307,7 +307,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="settings_sensor_connecting">Conectado a %1$s</string>
     <string name="settings_sensor_disconnected">Desconectado de %1$s</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Latitud/Longitud</string>
     <string name="settings_stats_rate_title">Ritmo preferido</string>
     <string name="settings_stats_units_imperial">Imperial (millas, pies)</string>
     <string name="settings_stats_units_metric">Métrica (km, m)</string>

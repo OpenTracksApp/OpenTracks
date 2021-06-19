@@ -241,7 +241,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth-sensor</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Bredde- og lengdegrad</string>
     <string name="settings_stats_rate_title">Foretrukket måling</string>
     <string name="settings_stats_units_imperial">Britisk (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrisk (km, m)</string>

@@ -203,7 +203,6 @@
     <string name="settings_reset_done">Les valeurs par défaut de tous les paramètres ont bien été rétablies</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Capteur Bluetooth</string>
-    <string name="settings_stats_coordinate">Latitude/longitude</string>
     <string name="settings_stats_rate_title">Mode de calcul souhaité</string>
     <string name="settings_stats_units_imperial">Unités impériales (mi, pi)</string>
     <string name="settings_stats_units_metric">Unités métriques (km, m)</string>

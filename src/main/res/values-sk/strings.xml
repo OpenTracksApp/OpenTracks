@@ -241,7 +241,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Senzor Bluetooth</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Zemepis. šírka/dĺžka</string>
     <string name="settings_stats_rate_title">Preferovaná hodnota</string>
     <string name="settings_stats_units_imperial">Imperiálne jednotky (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrické jednotky (km, m)</string>

@@ -270,7 +270,6 @@ limitations under the License.
     <string name="settings_sensor_disconnected">Rozłaczony z %1$s</string>
     <string name="settings_sensor_wheel_circumference">Obwód koła (mm)</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Długości i szerokości geograficznej</string>
     <string name="settings_stats_rate_title">Wybór tempo/prędkość</string>
     <string name="settings_stats_units_imperial">Imperialne (mile, stopy)</string>
     <string name="settings_stats_units_metric">Metryczne (km, m)</string>

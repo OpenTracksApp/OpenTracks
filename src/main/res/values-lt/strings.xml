@@ -242,7 +242,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">„Bluetooth“ jutiklis</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Platuma ir ilguma</string>
     <string name="settings_stats_rate_title">Pageidaujamas greitis</string>
     <string name="settings_stats_units_imperial">Imperinės (myl., pėdos)</string>
     <string name="settings_stats_units_metric">Metrinės (km, m)</string>

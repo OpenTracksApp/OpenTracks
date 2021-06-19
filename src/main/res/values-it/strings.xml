@@ -284,7 +284,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Sensore bluetooth</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Latitudine/longitudine</string>
     <string name="settings_stats_rate_title">Velocità preferita</string>
     <string name="settings_stats_units_imperial">Imperiale (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrico (km, m)</string>

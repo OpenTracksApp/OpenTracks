@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Do not translate anything in this file directly. -->
-    <string name="stats_show_coordinate_key" translatable="false">statsShowCoordinate</string>
-    <bool name="stats_show_coordinate_default" translatable="false">true</bool>
-
-    <string name="stats_show_grade_altitude_key" translatable="false">statsShowGradeElevation</string>
-    <bool name="stats_show_altitude_default" translatable="false">true</bool>
-
     <string name="stats_show_on_lockscreen_while_recording_key" translatable="false">trackdetail_show_on_lockscreen_while_recording</string>
     <bool name="stats_show_on_lockscreen_while_recording_default" translatable="false">false</bool>
 
@@ -277,4 +271,56 @@
         <item>@string/settings_night_mode_option_day</item>
         <item>@string/settings_night_mode_option_night</item>
     </string-array>
+
+    <!-- Stats layout customization -->
+    <string name="stats_custom_layout_key" translatable="false">statsCustomLayoutKey</string>
+
+    <!-- Stats layout customization: number of columns per row -->
+    <string name="stats_custom_layout_columns_key" translatable="false">statsCustomLayoutColumnsKey</string>
+    <integer name="stats_custom_layout_columns_default" translatable="false">3</integer>
+
+    <!-- Stats layout customization: key -->
+    <string name="stats_custom_layout_fields_key" translatable="false">statsCustomLayoutFieldsKey</string>
+    <!-- Stats layout customization: all fields title available -->
+    <string-array name="stats_custom_layout_all_fields_value">
+        <item>@string/stats_total_time</item>
+        <item>@string/stats_moving_time</item>
+        <item>@string/stats_distance</item>
+        <item>@string/stats_speed</item>
+        <item>@string/stats_average_moving_speed</item>
+        <item>@string/stats_average_speed</item>
+        <item>@string/stats_max_speed</item>
+        <item>@string/stats_pace</item>
+        <item>@string/stats_average_moving_pace</item>
+        <item>@string/stats_average_pace</item>
+        <item>@string/stats_fastest_pace</item>
+        <item>@string/stats_altitude</item>
+        <item>@string/stats_gain</item>
+        <item>@string/stats_loss</item>
+        <item>@string/stats_latitude</item>
+        <item>@string/stats_longitude</item>
+        <item>@string/stats_sensors_heart_rate</item>
+        <item>@string/stats_sensors_cadence</item>
+        <item>@string/stats_sensors_power</item>
+    </string-array>
+    <!-- Stats layout customization: default fields -->
+    <string-array name="stats_custom_layout_fields_default_value">
+        <item>@string/stats_moving_time</item>
+        <item>@string/stats_distance</item>
+        <item>@string/stats_speed</item>
+        <item>@string/stats_average_moving_speed</item>
+        <item>@string/stats_max_speed</item>
+        <item>@string/stats_pace</item>
+        <item>@string/stats_average_moving_pace</item>
+        <item>@string/stats_fastest_pace</item>
+        <item>@string/stats_altitude</item>
+        <item>@string/stats_gain</item>
+        <item>@string/stats_loss</item>
+    </string-array>
+
+    <!-- Stats empty values -->
+    <string name="stats_empty_value_integer" translatable="false">0</string>
+    <string name="stats_empty_value_float" translatable="false">0.0</string>
+    <string name="stats_empty_value_time" translatable="false">00:00</string>
+
 </resources>

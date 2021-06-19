@@ -240,7 +240,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth सेंसर</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">अक्षांश/देशांतर</string>
     <string name="settings_stats_rate_title">पसंदीदा दर</string>
     <string name="settings_stats_units_imperial">इंपीरियल (मील, फुट)</string>
     <string name="settings_stats_units_metric">मेट्रिक (किमी, मी)</string>

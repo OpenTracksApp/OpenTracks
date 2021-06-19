@@ -42,7 +42,7 @@
 
     <TextView
         android:id="@+id/aggregated_stats_type_label"
-        style="@style/StatsLargeLabel"
+        style="@style/LargeLabel"
         android:layout_marginStart="16dp"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp"
@@ -53,7 +53,7 @@
 
     <TextView
         android:id="@+id/aggregated_stats_num_tracks"
-        style="@style/StatsLargeLabel"
+        style="@style/LargeLabel"
         android:layout_marginStart="4dp"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="0dp"
@@ -63,12 +63,9 @@
         tools:text="(1)" />
 
     <!-- Distance -->
-
-    <!-- Time -->
-
     <TextView
         android:id="@+id/aggregated_stats_distance"
-        style="@style/StatsLargeValue"
+        style="@style/StatsPrimaryValue"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toStartOf="@id/aggregated_stats_distance_unit"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -86,9 +83,10 @@
         app:layout_constraintStart_toEndOf="@+id/aggregated_stats_distance"
         tools:text="km" />
 
+    <!-- Time -->
     <TextView
         android:id="@+id/aggregated_stats_time"
-        style="@style/StatsLargeValue"
+        style="@style/StatsPrimaryValue"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="@id/guideline3"

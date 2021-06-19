@@ -241,7 +241,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth sensors</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Platums/garums</string>
     <string name="settings_stats_rate_title">Vēlamais rādītājs</string>
     <string name="settings_stats_units_imperial">Standarta (jūdzes, pēdas)</string>
     <string name="settings_stats_units_metric">Metriskās (km, m)</string>

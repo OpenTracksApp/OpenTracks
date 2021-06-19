@@ -43,14 +43,6 @@ limitations under the License.
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_show">
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/stats_show_altitude_default"
-            android:key="@string/stats_show_grade_altitude_key"
-            android:title="@string/stats_altitude" />
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/stats_show_coordinate_default"
-            android:key="@string/stats_show_coordinate_key"
-            android:title="@string/settings_stats_coordinate" />
         <ListPreference
             android:defaultValue="@string/night_mode_default"
             android:entries="@array/night_mode_options"
@@ -64,6 +56,9 @@ limitations under the License.
         android:key="@string/settings_recording_key"
         android:title="@string/settings_recording"
         app:initialExpandedChildrenCount="4">
+        <Preference
+            app:key="@string/stats_custom_layout_key"
+            app:title="@string/settings_recording_customize_layout_title" />
         <SwitchPreferenceCompat
             android:defaultValue="@bool/stats_show_on_lockscreen_while_recording_default"
             android:key="@string/stats_show_on_lockscreen_while_recording_key"

@@ -203,7 +203,6 @@
     <string name="settings_reset_done">所有設定已還原為預設值</string>
     <string name="settings_sensor_bluetooth">藍牙</string>
     <string name="settings_sensor_bluetooth_sensor">藍牙感應器</string>
-    <string name="settings_stats_coordinate">緯度/經度</string>
     <string name="settings_stats_rate_title">偏好速率</string>
     <string name="settings_stats_units_imperial">英制 (英里、英尺)</string>
     <string name="settings_stats_units_metric">公制 (公里、公尺)</string>

@@ -88,7 +88,7 @@
         <!-- Distance -->
         <TextView
             android:id="@+id/stats_distance_label"
-            style="@style/StatsLargeLabel"
+            style="@style/LargeLabel"
             android:text="@string/stats_distance"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toEndOf="@id/guideline"
@@ -97,7 +97,7 @@
 
         <TextView
             android:id="@+id/stats_distance_value"
-            style="@style/StatsLargeValue"
+            style="@style/StatsPrimaryValue"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/guideline"
@@ -116,7 +116,7 @@
         <!-- Moving time -->
         <TextView
             android:id="@+id/stats_moving_time_label"
-            style="@style/StatsLargeLabel"
+            style="@style/LargeLabel"
             android:text="@string/stats_moving_time"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toEndOf="@id/guideline2"
@@ -125,7 +125,7 @@
 
         <TextView
             android:id="@+id/stats_moving_time_value"
-            style="@style/StatsLargeValue"
+            style="@style/StatsPrimaryValue"
             android:value="@string/value_unknown"
             app:layout_constraintStart_toEndOf="@id/guideline2"
             app:layout_constraintEnd_toStartOf="@id/guideline3"
@@ -170,7 +170,7 @@
         <!-- Speed/Pace max -->
         <TextView
             android:id="@+id/stats_max_speed_label"
-            style="@style/StatsLargeLabel"
+            style="@style/LargeLabel"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toEndOf="@id/guideline"
             app:layout_constraintEnd_toStartOf="@id/guideline2"
@@ -179,7 +179,7 @@
 
         <TextView
             android:id="@+id/stats_max_speed_value"
-            style="@style/StatsLargeValue"
+            style="@style/StatsPrimaryValue"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/guideline"
@@ -198,7 +198,7 @@
         <!-- Avg. moving speed/pace -->
         <TextView
             android:id="@+id/stats_moving_speed_label"
-            style="@style/StatsLargeLabel"
+            style="@style/LargeLabel"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toEndOf="@id/guideline2"
             app:layout_constraintEnd_toStartOf="@id/guideline3"
@@ -207,7 +207,7 @@
 
         <TextView
             android:id="@+id/stats_moving_speed_value"
-            style="@style/StatsLargeValue"
+            style="@style/StatsPrimaryValue"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/guideline2"
@@ -277,7 +277,7 @@
 
         <TextView
             android:id="@+id/stats_altitude_gain_label"
-            style="@style/StatsLargeLabel"
+            style="@style/LargeLabel"
             android:text="@string/stats_gain"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toEndOf="@id/guideline"
@@ -286,7 +286,7 @@
 
         <TextView
             android:id="@+id/stats_altitude_gain_value"
-            style="@style/StatsLargeValue"
+            style="@style/StatsPrimaryValue"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/guideline"
@@ -304,7 +304,7 @@
 
         <TextView
             android:id="@+id/stats_altitude_loss_label"
-            style="@style/StatsLargeLabel"
+            style="@style/LargeLabel"
             android:text="@string/stats_loss"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toEndOf="@id/guideline2"
@@ -313,7 +313,7 @@
 
         <TextView
             android:id="@+id/stats_altitude_loss_value"
-            style="@style/StatsLargeValue"
+            style="@style/StatsPrimaryValue"
             android:value="@string/value_unknown"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/guideline2"

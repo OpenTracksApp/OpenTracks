@@ -241,7 +241,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth sensörü</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Enlem/Boylam</string>
     <string name="settings_stats_rate_title">Tercih edilen oran</string>
     <string name="settings_stats_units_imperial">İngiliz (mil, fit)</string>
     <string name="settings_stats_units_metric">Metrik (km, m)</string>

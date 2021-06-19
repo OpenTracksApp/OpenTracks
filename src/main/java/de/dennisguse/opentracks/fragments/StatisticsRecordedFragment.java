@@ -31,12 +31,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordedActivity;
-import de.dennisguse.opentracks.adapters.SensorsAdapter;
+import de.dennisguse.opentracks.adapters.StatsAdapter;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.databinding.StatisticsRecordedBinding;
@@ -45,7 +44,8 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.viewmodels.SensorDataModel;
+import de.dennisguse.opentracks.viewmodels.StatsDataBuilder;
+import de.dennisguse.opentracks.viewmodels.StatsData;
 
 /**
  * A fragment to display track statistics to the user for a recorded {@link Track}.
@@ -69,7 +69,7 @@ public class StatisticsRecordedFragment extends Fragment {
     }
 
     private SensorStatistics sensorStatistics;
-    private SensorsAdapter sensorsAdapter;
+    private StatsAdapter sensorsAdapter;
 
     private Track.Id trackId;
     @Nullable // Lazily loaded.
@@ -114,7 +114,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
         sharedPreferences = PreferencesUtils.getSharedPreferences(getContext());
 
-        sensorsAdapter = new SensorsAdapter(getContext());
+        sensorsAdapter = new StatsAdapter(getContext());
     }
 
     @Override
@@ -238,10 +238,6 @@ public class StatisticsRecordedFragment extends Fragment {
 
         // Set altitude gain and loss
         {
-            // Make altitude visible?
-            boolean show = PreferencesUtils.isShowStatsAltitude(sharedPreferences, getContext());
-            viewBinding.statsAltitudeGroup.setVisibility(show ? View.VISIBLE : View.GONE);
-
             Float altitudeGain_m = trackStatistics.getTotalAltitudeGain();
             Float altitudeLoss_m = trackStatistics.getTotalAltitudeLoss();
 
@@ -254,6 +250,9 @@ public class StatisticsRecordedFragment extends Fragment {
             parts = StringUtils.getAltitudeParts(getContext(), altitudeLoss_m, preferenceMetricUnits);
             viewBinding.statsAltitudeLossValue.setText(parts.first);
             viewBinding.statsAltitudeLossUnit.setText(parts.second);
+
+            boolean show = altitudeGain_m != null && altitudeLoss_m != null;
+            viewBinding.statsAltitudeGroup.setVisibility(show ? View.VISIBLE : View.GONE);
         }
     }
 
@@ -262,18 +261,7 @@ public class StatisticsRecordedFragment extends Fragment {
             return;
         }
 
-        List<SensorDataModel> sensorDataList = new ArrayList<>();
-        if (sensorStatistics.hasHeartRate()) {
-            sensorDataList.add(new SensorDataModel(R.string.sensor_state_heart_rate_max, R.string.sensor_unit_beats_per_minute, sensorStatistics.getMaxHeartRate()));
-            sensorDataList.add(new SensorDataModel(R.string.sensor_state_heart_rate_avg, R.string.sensor_unit_beats_per_minute, sensorStatistics.getAvgHeartRate()));
-        }
-        if (sensorStatistics.hasCadence()) {
-            sensorDataList.add(new SensorDataModel(R.string.sensor_state_cadence_max, R.string.sensor_unit_rounds_per_minute, sensorStatistics.getMaxCadence()));
-            sensorDataList.add(new SensorDataModel(R.string.sensor_state_cadence_avg, R.string.sensor_unit_rounds_per_minute, sensorStatistics.getAvgCadence()));
-        }
-        if (sensorStatistics.hasPower()) {
-            sensorDataList.add(new SensorDataModel(R.string.sensor_state_power_avg, R.string.sensor_unit_power, sensorStatistics.getAvgPower()));
-        }
+        List<StatsData> sensorDataList = StatsDataBuilder.fromSensorStatistics(getContext(), sensorStatistics);
         if (sensorDataList.size() > 0) {
             sensorsAdapter.swapData(sensorDataList);
         }

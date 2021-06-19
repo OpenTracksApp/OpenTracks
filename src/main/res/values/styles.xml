@@ -100,11 +100,15 @@ limitations under the License.
     </style>
     <!-- sensor state value -->
     <!-- stats horizontal line -->
-    <style name="StatsHorizontalLine">
+    <style name="HorizontalLine">
         <item name="android:background">@color/stats_separator</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:layout_margin">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
         <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="StatsHorizontalLine" parent="HorizontalLine">
+        <item name="android:layout_margin">8dp</item>
     </style>
     <!-- stats large item container -->
     <style name="StatsLargeItemContainer">
@@ -121,6 +125,7 @@ limitations under the License.
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">?attr/colorAccent</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">8dp</item>
     </style>
 
     <style name="IntervalLabel" parent="@style/LargeLabel">
@@ -133,25 +138,53 @@ limitations under the License.
         <item name="android:layout_gravity">center</item>
     </style>
 
-    <style name="StatsLargeLabel" parent="@style/LargeLabel">
+    <style name="StatsPrimaryLabel" parent="@style/TextMicro">
         <item name="android:gravity">center</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:singleLine">false</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">?attr/colorAccent</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:paddingLeft">4dp</item>
         <item name="android:paddingRight">4dp</item>
         <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
-    <style name="StatsLargeValue" parent="@style/TextLarge">
+    <style name="StatsSecondaryLabel" parent="@style/TextMicro">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingRight">4dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="StatsLabelHidden" parent="@style/StatsPrimaryLabel">
+        <item name="android:textColor">@android:color/secondary_text_dark</item>
+    </style>
+
+    <style name="StatsPrimaryValue" parent="@style/TextLarge">
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textSize">32sp</item>
+        <item name="android:textSize">36sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StatsSecondaryValue" parent="@style/TextLarge">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="StatsValueHidden" parent="@style/StatsPrimaryValue">
+        <item name="android:textColor">@android:color/secondary_text_dark</item>
     </style>
     <!-- stats large value container -->
     <style name="StatsLargeValueContainer">
@@ -290,4 +323,14 @@ limitations under the License.
     </style>
 
     <style name="ProgressBar" parent="@style/Widget.AppCompat.ProgressBar.Horizontal" />
+
+    <!-- Card View for stats -->
+    <style name="StatsCardView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardElevation">1dp</item>
+        <item name="cardMaxElevation">1dp</item>
+        <item name="cardPreventCornerOverlap">true</item>
+        <item name="cardUseCompatPadding">true</item>
+    </style>
 </resources>

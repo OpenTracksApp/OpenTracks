@@ -313,7 +313,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="settings_sensor_connecting">Yhdistetty: %1$s</string>
     <string name="settings_sensor_disconnected">Yhteys katkaistu: %1$s</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Leveys-/pituusaste</string>
     <string name="settings_stats_rate_title">Haluttu nopeus</string>
     <string name="settings_stats_units_imperial">Brittiläinen järj.
 (maili, jalka)</string>

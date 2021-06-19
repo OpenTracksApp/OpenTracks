@@ -242,7 +242,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Senzor Bluetootha</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Geografska širina/duljina</string>
     <string name="settings_stats_rate_title">Preferirana stopa</string>
     <string name="settings_stats_units_imperial">Imperijalne (milje, stope)</string>
     <string name="settings_stats_units_metric">Metričke (km, m)</string>

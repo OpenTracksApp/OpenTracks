@@ -241,7 +241,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Αισθητήρας Bluetooth</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Πλάτος/Μήκος</string>
     <string name="settings_stats_rate_title">Προτιμώμενος ρυθμός</string>
     <string name="settings_stats_units_imperial">Αγγλοσαξονικό (μίλια, πόδια)</string>
     <string name="settings_stats_units_metric">Μετρικό (χλμ, μέτρα)</string>

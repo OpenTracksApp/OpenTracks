@@ -244,7 +244,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">البلوتوث</string>
     <string name="settings_sensor_bluetooth_sensor">مستشعر بلوتوث</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">خط العرض/خط الطول</string>
     <string name="settings_stats_rate_title">المعدل المفضل</string>
     <string name="settings_stats_units_imperial">وحدات القياس البريطانية (ميل، قدم)</string>
     <string name="settings_stats_units_metric">وحدات القياس المترية (كم، م)</string>

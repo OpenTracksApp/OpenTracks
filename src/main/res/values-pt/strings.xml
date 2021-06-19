@@ -241,7 +241,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Sensor Bluetooth</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Latitude/longitude</string>
     <string name="settings_stats_rate_title">Taxa preferencial</string>
     <string name="settings_stats_units_imperial">Imperial (milhas, pés)</string>
     <string name="settings_stats_units_metric">Métrica (km, m)</string>

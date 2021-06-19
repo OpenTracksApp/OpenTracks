@@ -246,6 +246,7 @@ limitations under the License.
     </plurals>
     <string name="generic_completed">Completed</string>
     <string name="generic_click_twice_cancel">Click back again to cancel</string>
+    <string name="generic_choose_an_option">Choose an option</string>
     <!-- Gps -->
     <string name="gps_starting">Starting GPS</string>
     <string name="gps_wait_for_better_signal">Waiting for a better GPS signal</string>
@@ -355,6 +356,8 @@ limitations under the License.
     <string name="settings_chart_by_distance">By distance</string>
     <string name="settings_chart_by_time">By time</string>
     <!-- Settings Recording -->
+    <string name="settings_recording_customize_layout_title">Customize your recording layout</string>
+    <string name="settings_recording_customize_layout_select_columns">Data fields per row</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Show statistics on lockscreen</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">While recording, show statistics without unlocking the device.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Keep screen on</string>
@@ -400,7 +403,6 @@ limitations under the License.
     <string name="settings_sensor_wheel_circumference">Wheel circumference (mm)</string>
 
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Latitude/Longitude</string>
     <string name="settings_stats_rate_title">Preferred rate</string>
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
     <string name="settings_stats_units_metric">Metric (km, m)</string>
@@ -430,6 +432,9 @@ limitations under the License.
     <string name="stats_total_time">Total time</string>
     <string name="stats_intervals">Intervals</string>
     <string name="stats_split_interval">Split interval</string>
+    <string name="stats_sensors_heart_rate">Heart Rate</string>
+    <string name="stats_sensors_cadence">Cadence</string>
+    <string name="stats_sensors_power">Power</string>
     <!-- Track -->
     <string name="track_name_format">Track %1$d</string>
     <string name="track_record_notification">Recording your track&#8230;</string>
@@ -589,4 +594,9 @@ limitations under the License.
     <string name="instant_export_enabled_title">Instant post-workout export</string>
 
     <string name="settings_default_export_uri_title">Track export directory</string>
+    <string name="title_activity_settings_custom_layout">Customize Recording Layout</string>
+    <!-- Fields -->
+    <string name="field_set_primary">Primary</string>
+    <string name="field_set_secondary">Secondary</string>
+    <string name="field_remove_from_layout">Remove</string>
 </resources>

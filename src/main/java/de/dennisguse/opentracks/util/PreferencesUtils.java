@@ -26,8 +26,13 @@ import androidx.annotation.VisibleForTesting;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.preference.PreferenceManager;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Layout;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
 /**
@@ -123,6 +128,12 @@ public class PreferencesUtils {
         editor.apply();
     }
 
+    public static void setInt(SharedPreferences sharedPreferences, Context context, int keyId, int value) {
+        Editor editor = sharedPreferences.edit();
+        editor.putInt(getKey(context, keyId), value);
+        editor.apply();
+    }
+
     public static boolean isMetricUnits(SharedPreferences sharedPreferences, Context context) {
         final String STATS_UNIT = context.getString(R.string.stats_units_default);
         return STATS_UNIT.equals(getString(sharedPreferences, context, R.string.stats_units_key, STATS_UNIT));
@@ -190,16 +201,6 @@ public class PreferencesUtils {
     public static boolean shouldUseFullscreen(SharedPreferences sharedPreferences, Context context) {
         final boolean DEFAULT = context.getResources().getBoolean(R.bool.stats_fullscreen_while_recording_default);
         return getBoolean(sharedPreferences, context, R.string.stats_fullscreen_while_recording_key, DEFAULT);
-    }
-
-    public static boolean isShowStatsAltitude(SharedPreferences sharedPreferences, Context context) {
-        final boolean STATS_SHOW_ALTITUDE = context.getResources().getBoolean(R.bool.stats_show_altitude_default);
-        return getBoolean(sharedPreferences, context, R.string.stats_show_grade_altitude_key, STATS_SHOW_ALTITUDE);
-    }
-
-    public static boolean isStatsShowCoordinate(SharedPreferences sharedPreferences, Context context) {
-        final boolean STATS_SHOW_COORDINATE = context.getResources().getBoolean(R.bool.stats_show_coordinate_default);
-        return getBoolean(sharedPreferences, context, R.string.stats_show_coordinate_key, STATS_SHOW_COORDINATE);
     }
 
     public static int getVoiceFrequency(SharedPreferences sharedPreferences, Context context) {
@@ -313,5 +314,49 @@ public class PreferencesUtils {
 
     public static boolean isDefaultExportDirectoryUri(SharedPreferences sharedPreferences, Context context) {
         return getDefaultExportDirectoryUri(sharedPreferences, context) != null;
+    }
+
+    public static int getLayoutColumns(SharedPreferences sharedPreferences, Context context) {
+        return getInt(sharedPreferences, context, R.string.stats_custom_layout_columns_key, context.getResources().getInteger(R.integer.stats_custom_layout_columns_default));
+    }
+
+    public static void setLayoutColumns(SharedPreferences sharedPreferences, Context context, int columns) {
+        setInt(sharedPreferences, context, R.string.stats_custom_layout_columns_key, columns);
+    }
+
+    private static String buildDefaultLayout(Context context) {
+        String[] allFields = context.getResources().getStringArray(R.array.stats_custom_layout_all_fields_value);
+        List<String> defaultFields = Arrays.asList(context.getResources().getStringArray(R.array.stats_custom_layout_fields_default_value));
+        StringBuilder csvCustomLayout = new StringBuilder(context.getString(R.string.default_activity_default) + ";" + defaultFields.stream().collect(Collectors.joining(",1,1;")) + ",1,1;");
+
+        for (String field : allFields) {
+            if (!defaultFields.contains(field)) {
+                csvCustomLayout.append(field).append(",0,1;");
+            }
+        }
+
+        return csvCustomLayout.toString();
+    }
+
+    public static Layout getCustomLayout(SharedPreferences sharedPreferences, Context context) {
+        String csvCustomLayout = getString(sharedPreferences, context, R.string.stats_custom_layout_fields_key, buildDefaultLayout(context));
+        List<String> csvParts = Arrays.asList(csvCustomLayout.split(";"));
+        Layout layout = new Layout(csvParts.get(0));
+        for (int i = 1; i < csvParts.size(); i++) {
+            List<String> fieldParts = Arrays.asList(csvParts.get(i).split(","));
+            layout.addField(fieldParts.get(0), fieldParts.get(1).equals("1"), fieldParts.get(2).equals("1"));
+        }
+
+        return layout;
+    }
+
+    public static void setCustomLayout(SharedPreferences sharedPreferences, Context context, Layout layout) {
+        List<Layout.Field> fields = layout.getFields();
+        if (fields.size() == 0) {
+            return;
+        }
+
+        String csv = layout.getProfile() + ";" + fields.stream().map(field -> field.getTitle() + "," + (field.isVisible() ? "1" : "0") + "," + (field.isPrimary() ? "1" : "0")).collect(Collectors.joining(";")) + ";";
+        setString(sharedPreferences, context, R.string.stats_custom_layout_fields_key, csv);
     }
 }

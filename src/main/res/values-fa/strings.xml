@@ -240,7 +240,6 @@ limitations under the License.
     <string name="settings_sensor_bluetooth">بلوتوث</string>
     <string name="settings_sensor_bluetooth_sensor">حسگر بلوتوث</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">عرض جغرافیایی/ طول جغرافیایی</string>
     <string name="settings_stats_rate_title">اولویت سنجه سرعت</string>
     <string name="settings_stats_units_imperial">انگلیسی (مایل، فوت)</string>
     <string name="settings_stats_units_metric">متریک (کیلومتر، متر)</string>
