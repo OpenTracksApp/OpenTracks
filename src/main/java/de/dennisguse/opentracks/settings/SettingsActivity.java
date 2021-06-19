@@ -208,6 +208,13 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
                             }
                     );
 
+            Preference customLayoutPreference = findPreference(getString(R.string.stats_custom_layout_key));
+            customLayoutPreference.setOnPreferenceClickListener((preference) -> {
+                Intent intent = new Intent(getContext(), SettingsCustomLayoutActivity.class);
+                startActivity(intent);
+                return true;
+            });
+
             announcementsFrequency = findPreference(getString(R.string.voice_frequency_key));
             announcementsSpeed = findPreference(getString(R.string.voice_speed_rate_key));
             updateVoiceAnnouncements();

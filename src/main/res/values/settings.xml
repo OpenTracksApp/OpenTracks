@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Do not translate anything in this file directly. -->
-    <string name="stats_show_coordinate_key" translatable="false">statsShowCoordinate</string>
-    <bool name="stats_show_coordinate_default" translatable="false">true</bool>
-
-    <string name="stats_show_grade_altitude_key" translatable="false">statsShowGradeElevation</string>
-    <bool name="stats_show_altitude_default" translatable="false">true</bool>
-
     <string name="stats_show_on_lockscreen_while_recording_key" translatable="false">trackdetail_show_on_lockscreen_while_recording</string>
     <bool name="stats_show_on_lockscreen_while_recording_default" translatable="false">false</bool>
 
@@ -17,6 +11,7 @@
     <bool name="stats_fullscreen_while_recording_default" translatable="false">false</bool>
 
     <string name="settings_reset_key" translatable="false">settingsReset</string>
+    <string name="settings_layout_reset_key" translatable="false">settingsLayoutReset</string>
 
     <string name="settings_sensor_bluetooth_heart_rate_key" translatable="false">bluetoothSensor</string>
     <string name="settings_sensor_bluetooth_cycling_cadence_key" translatable="false">bluetoothCyclingCadenceSensor</string>
@@ -278,4 +273,130 @@
         <item>@string/settings_night_mode_option_day</item>
         <item>@string/settings_night_mode_option_night</item>
     </string-array>
+
+    <!-- Stats layout customization -->
+    <string name="stats_custom_layout_key" translatable="false">statsCustomLayoutKey</string>
+
+    <!-- Stats layout customization: number of columns per row -->
+    <string name="stats_custom_layout_columns_key" translatable="false">statsCustomLayoutColumnsKey</string>
+    <integer name="stats_custom_layout_columns_default" translatable="false">2</integer>
+
+    <!-- Stats layout customization: key -->
+    <string name="stats_custom_layout_fields_key" translatable="false">statsCustomLayoutFieldsKey</string>
+    <!-- Stats keys -->
+    <string name="stats_custom_layout_distance_key" translatable="false">distance</string>
+    <string name="stats_custom_layout_total_time_key" translatable="false">total_time</string>
+    <string name="stats_custom_layout_speed_key" translatable="false">speed</string>
+    <string name="stats_custom_layout_moving_time_key" translatable="false">moving_time</string>
+    <string name="stats_custom_layout_average_speed_key" translatable="false">average_speed</string>
+    <string name="stats_custom_layout_max_speed_key" translatable="false">max_speed</string>
+    <string name="stats_custom_layout_average_moving_speed_key" translatable="false">average_moving_speed</string>
+    <string name="stats_custom_layout_altitude_key" translatable="false">altitude</string>
+    <string name="stats_custom_layout_gain_key" translatable="false">gain</string>
+    <string name="stats_custom_layout_loss_key" translatable="false">loss</string>
+    <string name="stats_custom_layout_pace_key" translatable="false">pace</string>
+    <string name="stats_custom_layout_average_moving_pace_key" translatable="false">average_moving_pace</string>
+    <string name="stats_custom_layout_average_pace_key" translatable="false">average_pace</string>
+    <string name="stats_custom_layout_fastest_pace_key" translatable="false">fastest_pace</string>
+    <string name="stats_custom_layout_coordinates_key" translatable="false">coordinates</string>
+    <string name="stats_custom_layout_heart_rate_key" translatable="false">heart_rate</string>
+    <string name="stats_custom_layout_average_heart_rate_key" translatable="false">average_heart_rate</string>
+    <string name="stats_custom_layout_cadence_key" translatable="false">cadence</string>
+    <string name="stats_custom_layout_average_cadence_key" translatable="false">average_cadence</string>
+    <string name="stats_custom_layout_power_key" translatable="false">power</string>
+    <!--
+    Default dataFields for stats layout customization in a set of arrays.
+    Every array has two items:
+    - Key value for the dataField.
+    - Comma separated flags for: visible, primary and span/wide for the dataField.
+    -->
+    <string name="stats_custom_layout_fields_default_value_separator" translatable="false">_</string>
+    <string-array name="stats_custom_layout_fields_default_value_0">
+        <item>@string/stats_custom_layout_distance_key</item>
+        <item>1,1,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_1">
+        <item>@string/stats_custom_layout_total_time_key</item>
+        <item>1,1,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_2">
+        <item>@string/stats_custom_layout_speed_key</item>
+        <item>1,1,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_3">
+        <item>@string/stats_custom_layout_moving_time_key</item>
+        <item>1,1,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_4">
+        <item>@string/stats_custom_layout_average_speed_key</item>
+        <item>1,0,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_5">
+        <item>@string/stats_custom_layout_max_speed_key</item>
+        <item>1,0,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_6">
+        <item>@string/stats_custom_layout_average_moving_speed_key</item>
+        <item>1,0,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_7">
+        <item>@string/stats_custom_layout_altitude_key</item>
+        <item>1,0,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_8">
+        <item>@string/stats_custom_layout_gain_key</item>
+        <item>1,0,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_9">
+        <item>@string/stats_custom_layout_loss_key</item>
+        <item>1,0,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_10">
+        <item>@string/stats_custom_layout_pace_key</item>
+        <item>0,0,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_11">
+        <item>@string/stats_custom_layout_average_moving_pace_key</item>
+        <item>0,0,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_12">
+        <item>@string/stats_custom_layout_average_pace_key</item>
+        <item>0,0,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_13">
+        <item>@string/stats_custom_layout_fastest_pace_key</item>
+        <item>0,0,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_14">
+        <item>@string/stats_custom_layout_coordinates_key</item>
+        <item>0,0,1</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_15">
+        <item>@string/stats_custom_layout_heart_rate_key</item>
+        <item>0,0,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_16">
+        <item>@string/stats_custom_layout_cadence_key</item>
+        <item>0,0,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_17">
+        <item>@string/stats_custom_layout_power_key</item>
+        <item>0,0,0</item>
+    </string-array>
+
+    <!-- Stats empty values -->
+    <string name="stats_empty_value_integer" translatable="false">0</string>
+    <string name="stats_empty_value_float" translatable="false">0.0</string>
+    <string name="stats_empty_value_time" translatable="false">00:00</string>
+    <string name="stats_empty_value_coordinates" translatable="false">0.0, 0.0</string>
+
+    <!-- Statistics dataFields: columns per row -->
+    <integer-array name="stats_custom_layout_fields_columns_per_row">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </integer-array>
+
+    <string name="prefs_last_version_key" translatable="false">lastVersionKey</string>
+
 </resources>

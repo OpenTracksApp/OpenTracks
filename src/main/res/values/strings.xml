@@ -196,6 +196,8 @@ limitations under the License.
     <string name="description_time">Time</string>
     <string name="description_total_distance">Total distance: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Total time: %1$s</string>
+    <string name="description_speed_source_sensor">Sensor: %1$s</string>
+    <string name="description_speed_source_gps">GPS</string>
     <!-- Export -->
     <string name="export_with_photos">with photos</string>
     <string name="export_without_photos">without photos</string>
@@ -236,6 +238,7 @@ limitations under the License.
     </plurals>
     <string name="generic_completed">Completed</string>
     <string name="generic_click_twice_cancel">Click back again to cancel</string>
+    <string name="generic_choose_an_option">Choose an option</string>
     <!-- Gps -->
     <string name="gps_starting">Starting GPS</string>
     <string name="gps_wait_for_better_signal">Waiting for a better GPS signal</string>
@@ -332,6 +335,8 @@ limitations under the License.
     <string name="settings_chart_by_distance">By distance</string>
     <string name="settings_chart_by_time">By time</string>
     <!-- Settings Recording -->
+    <string name="settings_recording_customize_layout_title">Customize your recording layout</string>
+    <string name="settings_recording_customize_layout_select_columns">Data fields per row</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Show statistics on lockscreen</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">While recording, show statistics without unlocking the device.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Keep screen on</string>
@@ -356,8 +361,15 @@ limitations under the License.
     <string name="settings_night_mode_option_day">Day</string>
     <string name="settings_night_mode_option_night">Night</string>
 
-    <!-- Settings Reset -->
+    <!-- Reset -->
     <string name="settings_reset">Reset</string>
+    <!-- Custom Layout Reset -->
+    <string name="settings_layout_reset">Reset Custom Layout</string>
+    <string name="settings_layout_reset_confirm_message">All layout settings will be reverted to the default values. This will not delete any tracks on the device.</string>
+    <string name="settings_layout_reset_confirm_title">Reset your layouts?</string>
+    <string name="settings_layout_reset_done">All layout settings have been reverted to the default values</string>
+    <!-- Settings Reset -->
+    <string name="settings_all_reset">Reset All Settings</string>
     <string name="settings_reset_confirm_message">All settings will be reverted to the default values. This will not delete any tracks on the device.</string>
     <string name="settings_reset_confirm_title">Reset now?</string>
     <string name="settings_reset_done">All settings have been reverted to the default values</string>
@@ -373,7 +385,6 @@ limitations under the License.
     <string name="settings_sensor_wheel_circumference">Wheel circumference (mm)</string>
 
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Latitude/Longitude</string>
     <string name="settings_stats_rate_title">Preferred rate</string>
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
     <string name="settings_stats_units_metric">Metric (km, m)</string>
@@ -392,6 +403,7 @@ limitations under the License.
     <string name="stats_fastest_pace">Fastest pace</string>
     <string name="stats_gain">Gain</string>
     <string name="stats_loss">Loss</string>
+    <string name="stats_coordinates">Latitude/Longitude</string>
     <string name="stats_latitude">Latitude</string>
     <string name="stats_longitude">Longitude</string>
     <string name="stats_max_speed">Max speed</string>
@@ -401,6 +413,9 @@ limitations under the License.
     <string name="stats_distance">Distance</string>
     <string name="stats_total_time">Total time</string>
     <string name="stats_split_interval">Split interval</string>
+    <string name="stats_sensors_heart_rate">Heart Rate</string>
+    <string name="stats_sensors_cadence">Cadence</string>
+    <string name="stats_sensors_power">Power</string>
     <!-- Track -->
     <string name="track_name_format">Track %1$d</string>
     <string name="track_recording_notification_accuracy">Location accuracy: %1$s</string>
@@ -436,6 +451,9 @@ limitations under the License.
     <string name="unit_mile_per_hour">mph</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/mi</string>
+    <!-- Location Coordinates -->
+    <string name="location_coordinate">%1$s°</string>
+    <string name="location_latitude_longitude">%1$s, %2$s</string>
     <!-- Value -->
     <string name="value_adapt_accuracy">Adapt for accuracy</string>
     <string name="value_adapt_battery_life">Adapt for battery life</string>
@@ -553,4 +571,9 @@ limitations under the License.
     <string name="instant_export_enabled_title">Instant post-workout export</string>
 
     <string name="settings_default_export_uri_title">Track export directory</string>
+    <string name="title_activity_settings_custom_layout">Customize Recording Layout</string>
+    <!-- Fields -->
+    <string name="field_set_primary">Primary</string>
+    <string name="field_set_secondary">Secondary</string>
+    <string name="field_remove_from_layout">Remove</string>
 </resources>

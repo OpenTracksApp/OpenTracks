@@ -43,7 +43,6 @@ class TrackPoint {
     - sensor_power
 }
 
-
 class Marker {
     - id
     - trackId
@@ -57,6 +56,26 @@ class Marker {
     - latitude
     - photoUrl
 }
+
+class DataField {
+    - key
+    - title
+    - isVisible
+    - isPrimary
+    - isWide
+}
+
+class StatisticData {
+    - value
+    - unit
+    - description
+}
+StatisticData o-- DataField
+
+class Layout {
+    - profile
+}
+Layout "1" o-- "many" DataField
 
 note left of TrackPoint
 As of OpenTracks version 3.15.0, all times are using device time.

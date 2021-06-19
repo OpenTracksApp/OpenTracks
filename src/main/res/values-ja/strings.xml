@@ -212,7 +212,6 @@ limitations under the License.
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">緯度/経度</string>
     <string name="settings_stats_rate_title">計測方法</string>
     <string name="settings_stats_units_imperial">ヤード･ポンド法（マイル、フィート）</string>
     <string name="settings_stats_units_metric">メートル法（km、m）</string>

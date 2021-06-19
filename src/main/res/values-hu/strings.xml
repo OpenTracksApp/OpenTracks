@@ -213,7 +213,6 @@ limitations under the License.
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Szélesség/hosszúság</string>
     <string name="settings_stats_rate_title">Mérték választása</string>
     <string name="settings_stats_units_imperial">Angolszász (mérföld, láb)</string>
     <string name="settings_stats_units_metric">Metrikus (km, m)</string>
