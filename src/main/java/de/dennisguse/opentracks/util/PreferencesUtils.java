@@ -16,9 +16,11 @@
 
 package de.dennisguse.opentracks.util;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.util.Log;
 
@@ -26,8 +28,16 @@ import androidx.annotation.VisibleForTesting;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.preference.PreferenceManager;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.DataField;
 import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Layout;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
 /**
@@ -44,7 +54,9 @@ public class PreferencesUtils {
 
     @Deprecated //Should only be used to get a sharedPreference for more than one interaction!
     public static SharedPreferences getSharedPreferences(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        PreferencesOpenHelper.newInstance(context, sharedPreferences).checkForUpgrade();
+        return sharedPreferences;
     }
 
     public static String getDefaultActivity(SharedPreferences sharedPreferences, Context context) {
@@ -80,7 +92,7 @@ public class PreferencesUtils {
         return sharedPreferences.getBoolean(getKey(context, keyId), defaultValue);
     }
 
-    private static int getInt(SharedPreferences sharedPreferences, Context context, int keyId, int defaultValue) {
+    static int getInt(SharedPreferences sharedPreferences, Context context, int keyId, int defaultValue) {
         try {
             return sharedPreferences.getInt(getKey(context, keyId), defaultValue);
         } catch (ClassCastException e) {
@@ -120,6 +132,12 @@ public class PreferencesUtils {
     public static void setString(SharedPreferences sharedPreferences, Context context, int keyId, String value) {
         Editor editor = sharedPreferences.edit();
         editor.putString(getKey(context, keyId), value);
+        editor.apply();
+    }
+
+    static void setInt(SharedPreferences sharedPreferences, Context context, int keyId, int value) {
+        Editor editor = sharedPreferences.edit();
+        editor.putInt(getKey(context, keyId), value);
         editor.apply();
     }
 
@@ -194,16 +212,6 @@ public class PreferencesUtils {
     public static boolean shouldUseFullscreen(SharedPreferences sharedPreferences, Context context) {
         final boolean DEFAULT = context.getResources().getBoolean(R.bool.stats_fullscreen_while_recording_default);
         return getBoolean(sharedPreferences, context, R.string.stats_fullscreen_while_recording_key, DEFAULT);
-    }
-
-    public static boolean isShowStatsAltitude(SharedPreferences sharedPreferences, Context context) {
-        final boolean STATS_SHOW_ALTITUDE = context.getResources().getBoolean(R.bool.stats_show_altitude_default);
-        return getBoolean(sharedPreferences, context, R.string.stats_show_grade_altitude_key, STATS_SHOW_ALTITUDE);
-    }
-
-    public static boolean isStatsShowCoordinate(SharedPreferences sharedPreferences, Context context) {
-        final boolean STATS_SHOW_COORDINATE = context.getResources().getBoolean(R.bool.stats_show_coordinate_default);
-        return getBoolean(sharedPreferences, context, R.string.stats_show_coordinate_key, STATS_SHOW_COORDINATE);
     }
 
     public static int getVoiceFrequency(SharedPreferences sharedPreferences, Context context) {
@@ -317,5 +325,79 @@ public class PreferencesUtils {
 
     public static boolean isDefaultExportDirectoryUri(SharedPreferences sharedPreferences, Context context) {
         return getDefaultExportDirectoryUri(sharedPreferences, context) != null;
+    }
+
+    public static int getLayoutColumns(SharedPreferences sharedPreferences, Context context) {
+        return getInt(sharedPreferences, context, R.string.stats_custom_layout_columns_key, context.getResources().getInteger(R.integer.stats_custom_layout_columns_default));
+    }
+
+    public static void setLayoutColumns(SharedPreferences sharedPreferences, Context context, int columns) {
+        setInt(sharedPreferences, context, R.string.stats_custom_layout_columns_key, columns);
+    }
+
+    private static List<TypedArray> getMultiTypedArray(Context context, String key) {
+        List<TypedArray> typedArrays = new ArrayList<>();
+
+        try {
+            Class<R.array> resource = R.array.class;
+            Field field;
+            int i = 0;
+
+            do {
+                field = resource.getField(key + context.getString(R.string.stats_custom_layout_fields_default_value_separator) + i);
+                typedArrays.add(context.getResources().obtainTypedArray(field.getInt(null)));
+                i++;
+            } while (field != null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
+        }
+
+        return typedArrays;
+    }
+
+    @SuppressLint("ResourceType")
+    static String buildDefaultLayout(Context context) {
+        List<TypedArray> fieldsArrays = getMultiTypedArray(context, "stats_custom_layout_fields_default_value");
+        return context.getString(R.string.default_activity_default) + CsvConstants.LINE_SEPARATOR
+                + fieldsArrays.stream().map(i -> i.getString(0) + CsvConstants.ITEM_SEPARATOR + i.getString(1)).collect(Collectors.joining(CsvConstants.LINE_SEPARATOR))
+                + CsvConstants.LINE_SEPARATOR;
+    }
+
+    public static Layout getCustomLayout(SharedPreferences sharedPreferences, Context context) {
+        String csvCustomLayout = getString(sharedPreferences, context, R.string.stats_custom_layout_fields_key, buildDefaultLayout(context));
+        List<String> csvParts = Arrays.asList(csvCustomLayout.split(CsvConstants.LINE_SEPARATOR));
+        Layout layout = new Layout(csvParts.get(0));
+        for (int i = 1; i < csvParts.size(); i++) {
+            String[] fieldParts = csvParts.get(i).split(CsvConstants.ITEM_SEPARATOR);
+            layout.addField(fieldParts[0], DataField.getTitleByKey(context, fieldParts[0]), fieldParts[1].equals(DataField.YES_VALUE), fieldParts[2].equals(DataField.YES_VALUE), fieldParts[0].equals(context.getString(R.string.stats_custom_layout_coordinates_key)));
+        }
+
+        return layout;
+    }
+
+    public static void setCustomLayout(SharedPreferences sharedPreferences, Context context, Layout layout) {
+        List<DataField> fields = layout.getFields();
+        if (fields.isEmpty()) {
+            return;
+        }
+
+        String csv = layout.getProfile() + CsvConstants.LINE_SEPARATOR
+                + fields.stream().map(DataField::toCsv).collect(Collectors.joining(CsvConstants.LINE_SEPARATOR)) + CsvConstants.LINE_SEPARATOR;
+        setString(sharedPreferences, context, R.string.stats_custom_layout_fields_key, csv);
+    }
+
+    public static void resetCustomLayoutPreferences(Context context) {
+        SharedPreferences settings = getSharedPreferences(context);
+        if (settings.contains(context.getString(R.string.stats_custom_layout_fields_key))) {
+            SharedPreferences.Editor editor = settings.edit();
+            editor.remove(context.getString(R.string.stats_custom_layout_fields_key));
+            editor.commit();
+        }
+        if (settings.contains(context.getString(R.string.stats_custom_layout_columns_key))) {
+            SharedPreferences.Editor editor = settings.edit();
+            editor.remove(context.getString(R.string.stats_custom_layout_columns_key));
+            editor.commit();
+        }
     }
 }

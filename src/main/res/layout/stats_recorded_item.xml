@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp">
+
+    <TextView
+        android:id="@+id/stats_description_main"
+        style="@style/LargeLabel"
+        tools:text="@string/sensor_state_heart_rate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/stats_value"
+        style="@style/StatsPrimaryValue"
+        android:value="@string/value_unknown"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toBottomOf="@id/stats_description_main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/stats_unit"
+        tools:text="90" />
+
+    <TextView
+        android:id="@+id/stats_unit"
+        style="@style/StatsUnit"
+        tools:text="@string/sensor_unit_beats_per_minute"
+        app:layout_constraintStart_toEndOf="@id/stats_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/stats_value" />
+
+    <TextView
+        android:id="@+id/stats_description_secondary"
+        style="@style/StatsTinyValue"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stats_value"
+        tools:visibility="visible"
+        tools:text="90" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

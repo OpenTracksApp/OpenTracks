@@ -3,6 +3,7 @@ package de.dennisguse.opentracks.settings;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
@@ -35,15 +36,23 @@ public class ResetDialogPreference extends DialogPreference {
 
         @Override
         public void onDialogClosed(boolean positiveResult) {
-            if (positiveResult) {
-                FragmentActivity activity = getActivity();
+            if (!positiveResult) {
+                return;
+            }
 
+            FragmentActivity activity = getActivity();
+
+            String preferenceKey = getArguments().getString(PreferenceDialogFragmentCompat.ARG_KEY);
+            if (preferenceKey.equals(getString(R.string.settings_reset_key))) {
                 PreferencesUtils.resetPreferences(activity, true);
                 Toast.makeText(activity, R.string.settings_reset_done, Toast.LENGTH_SHORT).show();
+            } else if (preferenceKey.equals(getString(R.string.settings_layout_reset_key))) {
+                PreferencesUtils.resetCustomLayoutPreferences(activity);
+                Toast.makeText(activity, R.string.settings_layout_reset_done, Toast.LENGTH_SHORT).show();
+            }
 
-                if (activity instanceof ResetCallback) {
-                    ((ResetCallback) activity).onReset();
-                }
+            if (activity instanceof ResetCallback) {
+                ((ResetCallback) activity).onReset();
             }
         }
     }

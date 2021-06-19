@@ -214,7 +214,6 @@ limitations under the License.
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Latitudine/longitudine</string>
     <string name="settings_stats_rate_title">Rata de preferat</string>
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrică (km, m)</string>

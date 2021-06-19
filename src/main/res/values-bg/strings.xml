@@ -213,7 +213,6 @@ limitations under the License.
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Ширина и дължина</string>
     <string name="settings_stats_rate_title">Предпочитана мярка</string>
     <string name="settings_stats_units_imperial">Имперски (мил, фт)</string>
     <string name="settings_stats_units_metric">Метрични (км, м)</string>

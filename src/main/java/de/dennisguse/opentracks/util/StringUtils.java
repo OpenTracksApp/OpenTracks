@@ -124,10 +124,22 @@ public class StringUtils {
     /**
      * Formats a coordinate
      *
+     * @param context    the context's object.
      * @param coordinate the coordinate
      */
-    public static String formatCoordinate(double coordinate) {
-        return Location.convert(coordinate, Location.FORMAT_DEGREES) + COORDINATE_DEGREE;
+    public static String formatCoordinate(Context context, double coordinate) {
+        return context.getString(R.string.location_coordinate, Location.convert(coordinate, Location.FORMAT_DEGREES));
+    }
+
+    /**
+     * Formats a complete coordinate (latitude, longitude)
+     *
+     * @param context   the context's object.
+     * @param latitude  the coordinate's latitude.
+     * @param longitude the coordinate's longitude.
+     */
+    public static String formatCoordinate(Context context, double latitude, double longitude) {
+        return context.getString(R.string.location_latitude_longitude, Location.convert(latitude, Location.FORMAT_DEGREES), Location.convert(longitude, Location.FORMAT_DEGREES));
     }
 
     /**
@@ -189,6 +201,33 @@ public class StringUtils {
         int minutes = pace / 60;
         int seconds = pace % 60;
         return new Pair<>(context.getString(R.string.time, minutes, seconds), unitString);
+    }
+
+    public static Pair<String, String> getHeartRateParts(Context context, Float heartrate_bpm) {
+        String value = context.getString(R.string.value_none);
+        if (heartrate_bpm != null) {
+            value = StringUtils.formatDecimal(heartrate_bpm, 0);
+        }
+
+        return new Pair<>(value, context.getString(R.string.sensor_unit_beats_per_minute));
+    }
+
+    public static Pair<String, String> getCadenceParts(Context context, Float cadence_rpm) {
+        String value = context.getString(R.string.value_none);
+        if (cadence_rpm != null) {
+            value = StringUtils.formatDecimal(cadence_rpm, 0);
+        }
+
+        return new Pair<>(value, context.getString(R.string.sensor_unit_rounds_per_minute));
+    }
+
+    public static Pair<String, String> getPowerParts(Context context, Float power_w) {
+        String value = context.getString(R.string.value_none);
+        if (power_w != null) {
+            value = StringUtils.formatDecimal(power_w, 0);
+        }
+
+        return new Pair<>(value, context.getString(R.string.sensor_unit_power));
     }
 
     /**
