@@ -151,8 +151,8 @@
     <string name="image_track">Lacak</string>
     <string name="import_error">Mengimpor %1$d dari %2$s dari %3$s</string>
     <string name="import_no_directory">%1$s tidak ada.</string>
-    <string name="import_no_file">Tidak ada file untuk diimpor. Hubungkan perangkat ke komputer Anda dan tempatkan file yang akan diimpor di %1$s.</string>
-    <string name="import_no_file_title">Impor file</string>
+    <string name="import_no_file">Tidak ada berkas untuk diimpor. Hubungkan perangkat ke komputer Anda dan tempatkan file yang akan diimpor di %1$s.</string>
+    <string name="import_no_file_title">Impor berkas</string>
     <string name="import_progress_message">Mengimpor dari %1$s…</string>
     <string name="import_selection_option">Semua %1$s</string>
     <string name="import_selection_title">Impor dari penyimpanan external</string>
@@ -160,10 +160,10 @@
     <string name="marker_add_error">Tidak dapat memasukkan penanda. Tidak ada sinyal GPS. Coba lagi.</string>
     <string name="marker_add_success">Penanda disisipkan.</string>
     <string name="marker_add_canceled">Batal, penanda tidak ditambahkan</string>
-    <string name="marker_delete_all_confirm_message">Semua penanda untuk lintasan ini akan dihapus permanen dari perangkat</string>
-    <string name="marker_delete_one_confirm_message">Penanda akan dihapus permanen dari perangkat</string>
+    <string name="marker_delete_all_confirm_message">Semua penanda untuk lintasan ini akan dihapus secara permanen dari perangkat</string>
+    <string name="marker_delete_one_confirm_message">Penanda akan dihapus secara permanen dari perangkat</string>
     <string name="marker_delete_one_confirm_title">Hapus penanda?</string>
-    <string name="marker_delete_multiple_confirm_message">Penanda yang dipilih akan dihapus permanen dari perangkat</string>
+    <string name="marker_delete_multiple_confirm_message">Penanda yang dipilih akan dihapus secara permanen dari perangkat</string>
     <string name="marker_label_end">%1$s (Akhir)</string>
     <string name="marker_label_start">%1$s (Awal)</string>
     <string name="marker_name_format">Penanda %1$d</string>
@@ -229,7 +229,7 @@
     <string name="settings_recording_track_name_number_option">Angka</string>
     <string name="settings_recording_track_name_title">Nama trek default</string>
     <string name="settings_reset">Setel ulang</string>
-    <string name="settings_reset_confirm_message">Semua setelan akan diubah ke nilai default.</string>
+    <string name="settings_reset_confirm_message">Semua setelan akan diubah ke nilai default. Tiada lintasan yang akan dihapus dari perangkat.</string>
     <string name="settings_reset_confirm_title">Setel ulang sekarang?</string>
     <string name="settings_reset_done">Semua setelan telah dikembalikan ke nilai default</string>
     <string name="settings_sensor">Sensor</string>
@@ -406,4 +406,18 @@
     <string name="waypoint_type_waterfall">air terjun</string>
     <string name="waypoint_type_water_fountain">air mancur</string>
     <string name="waypoint_type_waypoint">titik jalan</string>
+    <string name="settings_night_mode_option_night">Malam</string>
+    <string name="open_track_as_KMZ">Buka sebagai KMZ</string>
+    <string name="import_error_list_dialog_title">Berkas tidak diimpor</string>
+    <string name="import_file_imported">Berkas %1$s telah diimpor</string>
+    <string name="settings_night_mode_option_day">Siang</string>
+    <string name="help_support_title">Bagaimana mendukung OpenTracks\?</string>
+    <string name="import_progress_summary_errors_msg">Kesalahan</string>
+    <string name="open_track_as_GPX">Buka sebagai GPX</string>
+    <string name="settings_error_initial_values_restored">Maaf, kesalahan terjadi. Semua setelan telah dikembalikan ke nilai default</string>
+    <string name="track_speed_notification">Kecepatan: %1$s</string>
+    <string name="import_unable_to_import_file">Tidak bisa mengimpor berkas: %1$s</string>
+    <string name="open_track_as_trackfileformat">Buka sebagai %1$s</string>
+    <string name="track_distance_notification">Jarak: %1$s</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">Selama perekaman,</string>
 </resources>
