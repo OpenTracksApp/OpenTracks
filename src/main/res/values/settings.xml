@@ -238,6 +238,17 @@
         <item>-50</item>
         <item>-100</item>
     </string-array>
+    <string name="voice_speed_rate_key" translatable="false">voiceSpeedRate</string>
+    <string name="voice_speed_rate_default" translatable="false">0.9</string>
+    <string-array name="voice_speed_rate_values">
+        <item>0.7</item>
+        <item>0.8</item>
+        <item>@string/voice_speed_rate_default</item>
+        <item>1.0</item>
+        <item>1.1</item>
+        <item>1.2</item>
+        <item>1.3</item>
+    </string-array>
 
     <string name="export_trackfileformat_key" translatable="false">exportTrackFileFormat</string>
     <!-- See TrackFileFormat -->

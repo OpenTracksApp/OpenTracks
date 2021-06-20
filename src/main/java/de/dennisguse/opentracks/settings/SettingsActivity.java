@@ -130,7 +130,8 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         // Used to forward update from ChooseActivityTypeDialogFragment; TODO Could be replaced with LiveData.
         private ActivityTypePreference.ActivityPreferenceDialog activityPreferenceDialog;
 
-        private Preference voiceAnnouncements;
+        private Preference announcementsFrequency;
+        private Preference announcementsSpeed;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -140,7 +141,7 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
                 ttsInitStatus = status;
                 Log.i(TAG, "TextToSpeech initialized with status " + status);
 
-                if (voiceAnnouncements != null) {
+                if (announcementsFrequency != null && announcementsSpeed != null) {
                     updateVoiceAnnouncements();
                 }
             });
@@ -172,7 +173,8 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
                 return directory != null ? directory.getName() : getString(R.string.not_set);
             });
 
-            voiceAnnouncements = findPreference(getString(R.string.voice_frequency_key));
+            announcementsFrequency = findPreference(getString(R.string.voice_frequency_key));
+            announcementsSpeed = findPreference(getString(R.string.voice_speed_rate_key));
             updateVoiceAnnouncements();
         }
 
@@ -232,7 +234,8 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
             super.onDestroy();
             trackRecordingServiceConnection.unbind(getContext());
             sharedPreferences = null;
-            voiceAnnouncements = null;
+            announcementsFrequency = null;
+            announcementsSpeed = null;
             tts = null;
         }
 
@@ -323,7 +326,9 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         }
 
         private void updateVoiceAnnouncements() {
-            voiceAnnouncements.setEnabled(ttsInitStatus == TextToSpeech.SUCCESS);
+            boolean enabled = ttsInitStatus == TextToSpeech.SUCCESS;
+            announcementsFrequency.setEnabled(enabled);
+            announcementsSpeed.setEnabled(enabled);
         }
 
         private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
