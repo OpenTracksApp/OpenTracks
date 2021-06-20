@@ -96,6 +96,22 @@ public class PreferencesUtils {
         }
     }
 
+    private static float getFloat(SharedPreferences sharedPreferences, Context context, int keyId, float defaultValue) {
+        try {
+            return sharedPreferences.getFloat(getKey(context, keyId), defaultValue);
+        } catch (ClassCastException e) {
+            //Ignore
+        }
+
+        //NOTE: We assume that the data was stored as String due to use of ListPreference.
+        try {
+            String stringValue = sharedPreferences.getString(getKey(context, keyId), null);
+            return Float.parseFloat(stringValue);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
+
     public static String getString(SharedPreferences sharedPreferences, Context context, int keyId, String defaultValue) {
         return sharedPreferences.getString(getKey(context, keyId), defaultValue);
     }
@@ -189,6 +205,11 @@ public class PreferencesUtils {
     public static int getVoiceFrequency(SharedPreferences sharedPreferences, Context context) {
         final int VOICE_FREQUENCY_DEFAULT = Integer.parseInt(context.getResources().getString(R.string.voice_frequency_default));
         return getInt(sharedPreferences, context, R.string.voice_frequency_key, VOICE_FREQUENCY_DEFAULT);
+    }
+
+    public static float getVoiceSpeedRate(SharedPreferences sharedPreferences, Context context) {
+        final float DEFAULT = Float.parseFloat(context.getResources().getString(R.string.voice_frequency_default));
+        return getFloat(sharedPreferences, context, R.string.voice_speed_rate_key, DEFAULT);
     }
 
     public static Distance getRecordingDistanceInterval(SharedPreferences sharedPreferences, Context context) {
