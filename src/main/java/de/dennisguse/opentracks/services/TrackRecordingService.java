@@ -36,12 +36,14 @@ import androidx.core.app.TaskStackBuilder;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.TrackRecordingActivity;
+import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
@@ -59,6 +61,7 @@ import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
+import de.dennisguse.opentracks.util.EGM2008Utils;
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -127,6 +130,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private WakeLock wakeLock;
     private BluetoothRemoteSensorManager remoteSensorManager;
     private AltitudeSumManager altitudeSumManager;
+
+    private EGM2008Utils.EGM2008Correction egm2008Correction;
 
     private TrackStatisticsUpdater trackStatisticsUpdater;
     private TrackPoint lastTrackPoint;
@@ -539,6 +544,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         fillWithSensorDataSet(trackPoint);
 
+        correctAltitude(trackPoint);
+
         notificationManager.updateTrackPoint(this, track.getTrackStatistics(), trackPoint, recordingGpsAccuracy);
 
         //TODO Figure out how to avoid loading the lastValidTrackPoint from the database
@@ -600,6 +607,25 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         Log.d(TAG, "Not recording TrackPoint, idle");
         lastTrackPoint = trackPoint;
+    }
+
+    //TODO Identical to TrackDataHub
+    private void correctAltitude(TrackPoint trackPoint) {
+        if (!trackPoint.hasLocation() || !trackPoint.hasAltitude()) {
+            Log.d(TAG, "No altitude correction necessary.");
+            return;
+        }
+
+        if (egm2008Correction == null || !egm2008Correction.canCorrect(trackPoint.getLocation())) {
+            try {
+                egm2008Correction = EGM2008Utils.createCorrection(this, trackPoint.getLocation());
+            } catch (IOException e) {
+                Log.e(TAG, "Could not load altitude correction for " + trackPoint, e);
+                return;
+            }
+        }
+
+        trackPoint.setAltitude(Altitude.EGM2008.of(egm2008Correction.correctAltitude(trackPoint.getLocation())));
     }
 
     @Override
