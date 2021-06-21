@@ -652,8 +652,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
             track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
 
-            recordingDataObservable.postValue(new RecordingData(track, trackPoint, sensorDataSet));
-
             contentProviderUtils.updateTrack(track);
         } catch (SQLiteException e) {
             /*
@@ -761,11 +759,18 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         //TODO This somehow should happen in the HandlerServer as we create a new TrackPoint.
         TrackStatisticsUpdater tmpTrackStatisticsUpdater = new TrackStatisticsUpdater(trackStatisticsUpdater);
         TrackPoint tmpLastTrackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT);
+
+        if (lastTrackPoint != null && lastTrackPoint.hasLocation()) {
+            //TODO Should happen in TrackPoint? via constructor
+            tmpLastTrackPoint.setAltitude(lastTrackPoint.getAltitude());
+            tmpLastTrackPoint.setLongitude(lastTrackPoint.getLongitude());
+            tmpLastTrackPoint.setLatitude(lastTrackPoint.getLatitude());
+        }
+
         SensorDataSet sensorDataSet = fillWithSensorDataSet(tmpLastTrackPoint);
 
         tmpTrackStatisticsUpdater.addTrackPoint(tmpLastTrackPoint, recordingDistanceInterval);
         track.setTrackStatistics(tmpTrackStatisticsUpdater.getTrackStatistics());
-
 
         recordingDataObservable.postValue(new RecordingData(track, tmpLastTrackPoint, sensorDataSet));
     }

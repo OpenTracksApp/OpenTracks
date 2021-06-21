@@ -276,10 +276,18 @@ public class StatisticsRecordingFragment extends Fragment {
 
         if (preferenceShowAltitude) {
             // Current altitude
-            Float altitude = latestTrackPoint != null && latestTrackPoint.hasAltitude() ? (float) latestTrackPoint.getAltitude().toM() : null;
+            Float altitude = null;
+            int labelId = R.string.value_unknown;
+            if (latestTrackPoint != null && latestTrackPoint.hasAltitude()) {
+                altitude = (float) latestTrackPoint.getAltitude().toM();
+                labelId = latestTrackPoint.getAltitude().getLabelId();
+            }
+
             Pair<String, String> parts = StringUtils.formatAltitude(getContext(), altitude, preferenceMetricUnits);
             viewBinding.statsAltitudeCurrentValue.setText(parts.first);
             viewBinding.statsAltitudeCurrentUnit.setText(parts.second);
+
+            viewBinding.statsAltitudeCurrentLabelEgm.setText(labelId);
         }
 
         // Set coordinate
@@ -313,7 +321,7 @@ public class StatisticsRecordingFragment extends Fragment {
             sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, getString(R.string.stats_rate_key));
         }
 
-        this.latestTrackPoint = recordingData.getLatestTrackPoint();
+        latestTrackPoint = recordingData.getLatestTrackPoint();
         if (latestTrackPoint != null && latestTrackPoint.hasLocation() && !latestTrackPoint.isRecent()) {
             latestTrackPoint = null;
         }
