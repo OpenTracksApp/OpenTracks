@@ -360,7 +360,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="share_track_subject">Ich möchte einen Track mit dir teilen</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Durchschnitt\n(Bewegung)</string>
-    <string name="stats_average_moving_speed">Durchschnittsgeshwindigkeit
+    <string name="stats_average_moving_speed">Durchschnittsgeschwindigkeit
 \n(Bewegung)</string>
     <string name="stats_average_pace">Durchschnitt</string>
     <string name="stats_average_speed">Durchschnitt</string>
