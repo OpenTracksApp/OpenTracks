@@ -120,6 +120,6 @@ public abstract class AbstractTrackDeleteActivity extends AbstractActivity imple
         if (service == null) {
             return;
         }
-        service.getDeletingStatusObservable().observe(AbstractTrackDeleteActivity.this, status -> onTrackDeleteStatus(status));
+        service.getDeletingStatusObservable().observe(AbstractTrackDeleteActivity.this, this::onTrackDeleteStatus);
     }
 }

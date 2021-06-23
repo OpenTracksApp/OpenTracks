@@ -239,7 +239,7 @@ public class EspressoDeleteTrackTest {
     }
 
 
-    private class MyIdlingResource implements IdlingResource {
+    private static class MyIdlingResource implements IdlingResource {
 
         private final Context context;
         private ResourceCallback resourceCallback;

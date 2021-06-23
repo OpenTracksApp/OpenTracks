@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SearchView;
@@ -107,12 +106,6 @@ public class ActivityUtils {
         } else {
             vibrator.vibrate(milliseconds);
         }
-    }
-
-    public static void toast(final Activity activity, final int resId, final int duration, final int gravity) {
-        final Toast toast = Toast.makeText(activity, resId, duration);
-        toast.setGravity(gravity, 0, 0);
-        toast.show();
     }
 
     public static void applyNightMode(SharedPreferences sharedPreferences, Context context) {

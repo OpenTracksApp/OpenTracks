@@ -109,18 +109,15 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         }
     };
 
-    private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (PreferencesUtils.isKey(TrackListActivity.this, R.string.stats_units_key, key)) {
-                metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, TrackListActivity.this);
-            }
-            if (key != null) {
-                runOnUiThread(() -> {
-                    TrackListActivity.this.invalidateOptionsMenu();
-                    loaderCallbacks.restart();
-                });
-            }
+    private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
+        if (PreferencesUtils.isKey(TrackListActivity.this, R.string.stats_units_key, key)) {
+            metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, TrackListActivity.this);
+        }
+        if (key != null) {
+            runOnUiThread(() -> {
+                TrackListActivity.this.invalidateOptionsMenu();
+                loaderCallbacks.restart();
+            });
         }
     };
 

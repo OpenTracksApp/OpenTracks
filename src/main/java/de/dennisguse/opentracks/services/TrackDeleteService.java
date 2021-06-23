@@ -137,9 +137,9 @@ public class TrackDeleteService extends Service {
     }
 
     public static class DeleteStatus {
-        private int progress;
-        private int max;
-        private Track.Id trackId;
+        private final int progress;
+        private final int max;
+        private final Track.Id trackId;
 
         /**
          * @param trackId  Track.Id just deleted if any.

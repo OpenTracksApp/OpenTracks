@@ -4,10 +4,6 @@ import androidx.annotation.NonNull;
 
 public class ParsingException extends RuntimeException {
 
-    private ParsingException(@NonNull String message) {
-        super(message);
-    }
-
     protected ParsingException(@NonNull String message, Exception cause) {
         super(message, cause);
     }

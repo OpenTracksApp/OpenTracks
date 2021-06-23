@@ -130,7 +130,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 trackImporter.newTrack();
                 break;
             case TAG_TRACK_SEGMENT:
-                onTrackSegmentStart();
+                //Nothing to do here.
                 break;
             case TAG_TRACK_POINT:
                 onTrackPointStart(attributes);
@@ -234,9 +234,6 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
         }
 
         content = "";
-    }
-
-    private void onTrackSegmentStart() {
     }
 
     private void onTrackSegmentEnd() {
