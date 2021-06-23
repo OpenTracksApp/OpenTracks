@@ -788,6 +788,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         if (lastTrackPoint != null && lastTrackPoint.hasLocation()) {
             //TODO Should happen in TrackPoint? via constructor
+            tmpLastTrackPoint.setSpeed(lastTrackPoint.getSpeed());
             tmpLastTrackPoint.setAltitude(lastTrackPoint.getAltitude());
             tmpLastTrackPoint.setLongitude(lastTrackPoint.getLongitude());
             tmpLastTrackPoint.setLatitude(lastTrackPoint.getLatitude());
