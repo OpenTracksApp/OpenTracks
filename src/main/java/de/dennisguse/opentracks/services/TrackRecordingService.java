@@ -240,20 +240,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         return trackStatisticsUpdater.getTrackStatistics();
     }
 
-    //TODO Throw exception, when not recording.
-    public Duration getTotalTime() {
-        if (trackStatisticsUpdater == null) {
-            return Duration.ofSeconds(0);
-        }
-        if (isPaused()) {
-            return trackStatisticsUpdater.getTrackStatistics().getTotalTime();
-        }
-
-        TrackStatistics statistics = trackStatisticsUpdater.getTrackStatistics();
-        return Duration.between(statistics.getStopTime(), Instant.now())
-                .plus(statistics.getTotalTime());
-    }
-
     public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
         if (!isRecording() || isPaused()) {
             return null;

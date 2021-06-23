@@ -10,8 +10,6 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
-import java.time.Duration;
-
 import de.dennisguse.opentracks.util.PressureSensorUtils;
 
 /**
@@ -20,8 +18,6 @@ import de.dennisguse.opentracks.util.PressureSensorUtils;
 public class AltitudeSumManager implements SensorEventListener {
 
     private static final String TAG = AltitudeSumManager.class.getSimpleName();
-
-    private static final Duration SAMPLING_RATE = Duration.ofSeconds(3);
 
     private boolean isConnected = false;
 

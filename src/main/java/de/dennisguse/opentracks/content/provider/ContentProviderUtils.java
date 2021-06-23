@@ -37,7 +37,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.StreamSupport;
 
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.content.data.Altitude;

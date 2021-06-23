@@ -92,10 +92,10 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     private static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView distance;
-        TextView rate;
-        TextView gain;
-        TextView loss;
+        final TextView distance;
+        final TextView rate;
+        final TextView gain;
+        final TextView loss;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
