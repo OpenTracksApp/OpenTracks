@@ -275,7 +275,7 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="menu_stop_gps">Ukončit GPS</string>
     <string name="menu_view_photo">Zobrazit fotku</string>
     <string name="menu_voice_frequency">Frekvence oznámení</string>
-    <string name="menu_resume_track">Obnovit skladbu</string>
+    <string name="menu_resume_track">Obnovit měření</string>
     <!-- OpenTracks -->
     <string name="recording_service">Služba pro záznam</string>
     <!-- Permission -->
