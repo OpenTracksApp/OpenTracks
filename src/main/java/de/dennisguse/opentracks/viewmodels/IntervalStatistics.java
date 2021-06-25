@@ -104,8 +104,8 @@ public class IntervalStatistics {
     public static class Interval {
         private Distance distance = Distance.of(0);
         private Duration time = Duration.ofSeconds(0);
-        private float gain_m;
-        private float loss_m;
+        private Float gain_m;
+        private Float loss_m;
 
         public Interval() {
         }
@@ -143,8 +143,16 @@ public class IntervalStatistics {
             return Speed.of(distance, time);
         }
 
+        public boolean hasGain() {
+            return gain_m != null;
+        }
+
         public float getGain_m() {
             return gain_m;
+        }
+
+        public boolean hasLoss() {
+            return loss_m != null;
         }
 
         public float getLoss_m() {
