@@ -59,8 +59,9 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
 
         viewHolder.rate.setText(StringUtils.formatSpeed(context, interval.getSpeed(), metricUnits, isReportSpeed));
 
-        viewHolder.gain.setText(StringUtils.formatDistance(context, Distance.of(interval.getGain_m()), metricUnits));
-        viewHolder.loss.setText(StringUtils.formatDistance(context, Distance.of(interval.getLoss_m()), metricUnits));
+        viewHolder.gain.setText(interval.hasGain() ? StringUtils.formatDistance(context, Distance.of(interval.getGain_m()), metricUnits) : context.getString(R.string.value_unknown));
+        viewHolder.loss.setText(interval.hasLoss() ? StringUtils.formatDistance(context, Distance.of(interval.getLoss_m()), metricUnits) : context.getString(R.string.value_unknown));
+
     }
 
     @Override
