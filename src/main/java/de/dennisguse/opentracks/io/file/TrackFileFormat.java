@@ -16,41 +16,10 @@ import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
  */
 public enum TrackFileFormat {
 
-    @Deprecated //Not needed anymore; we now have OSMDashboard; was only used to share with other applications
-    KML_ONLY_TRACK {
-        @Override
-        public TrackExporter createTrackExporter(Context context) {
-            return new KMLTrackExporter(context, false, false, false);
-        }
-
-        @Override
-        public String getMimeType() {
-            return MIME_KML;
-        }
-
-        public String getExtension() {
-            return "kml";
-        }
-    },
-    KML_WITH_TRACKDETAIL {
-        @Override
-        public TrackExporter createTrackExporter(Context context) {
-            return new KMLTrackExporter(context, true, false, false);
-        }
-
-        @Override
-        public String getMimeType() {
-            return MIME_KML;
-        }
-
-        public String getExtension() {
-            return "kml";
-        }
-    },
     KML_WITH_TRACKDETAIL_AND_SENSORDATA {
         @Override
         public TrackExporter createTrackExporter(Context context) {
-            return new KMLTrackExporter(context, true, true, false);
+            return new KMLTrackExporter(context, false);
         }
 
         @Override
@@ -62,61 +31,15 @@ public enum TrackFileFormat {
             return "kml";
         }
     },
-    KMZ_ONLY_TRACK {
-        private static final boolean exportPhotos = false;
 
-        @Override
-        public TrackExporter createTrackExporter(Context context) {
-            KMLTrackExporter exporter = new KMLTrackExporter(context, false, false, exportPhotos);
-            return new KmzTrackExporter(context, new ContentProviderUtils(context), exporter, exportPhotos);
-        }
-
-        @Override
-        public String getMimeType() {
-            return MIME_KMZ;
-        }
-
-        public String getExtension() {
-            return "kmz";
-        }
-
-        @Override
-        public boolean includesPhotos() {
-            return exportPhotos;
-        }
-    },
-    KMZ_WITH_TRACKDETAIL {
-
-        private static final boolean exportPhotos = false;
-
-        @Override
-        public TrackExporter createTrackExporter(Context context) {
-            KMLTrackExporter exporter = new KMLTrackExporter(context, true, false, exportPhotos);
-            return new KmzTrackExporter(context, new ContentProviderUtils(context), exporter, exportPhotos);
-        }
-
-        @Override
-        public String getMimeType() {
-            return MIME_KMZ;
-        }
-
-        public String getExtension() {
-            return "kmz";
-        }
-
-        @Override
-        public boolean includesPhotos() {
-            return exportPhotos;
-        }
-
-    },
+    @Deprecated //TODO Check if we really need this
     KMZ_WITH_TRACKDETAIL_AND_SENSORDATA {
 
         private static final boolean exportPhotos = false;
 
         @Override
         public TrackExporter createTrackExporter(Context context) {
-            KMLTrackExporter exporter = new KMLTrackExporter(context, true, true, exportPhotos);
+            KMLTrackExporter exporter = new KMLTrackExporter(context, exportPhotos);
             return new KmzTrackExporter(context, new ContentProviderUtils(context), exporter, exportPhotos);
         }
 
@@ -133,16 +56,15 @@ public enum TrackFileFormat {
         public boolean includesPhotos() {
             return exportPhotos;
         }
-
-
     },
+
     KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES {
 
         private static final boolean exportPhotos = true;
 
         @Override
         public TrackExporter createTrackExporter(Context context) {
-            KMLTrackExporter exporter = new KMLTrackExporter(context, true, true, exportPhotos);
+            KMLTrackExporter exporter = new KMLTrackExporter(context, exportPhotos);
             return new KmzTrackExporter(context, new ContentProviderUtils(context), exporter, exportPhotos);
         }
 
