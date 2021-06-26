@@ -13,6 +13,8 @@ import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 
 /**
  * Definition of all possible track formats.
+ * <p>
+ * NOTE: The names of the entries are used in the user's settings.
  */
 public enum TrackFileFormat {
 
