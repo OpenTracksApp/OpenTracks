@@ -158,46 +158,6 @@ public class ExportImportTest {
 
     @LargeTest
     @Test
-    public void kml_with_trackdetail() throws TimeoutException, IOException {
-        setUp(false);
-
-        // given
-        Track track = contentProviderUtils.getTrack(trackId);
-
-        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL.createTrackExporter(context);
-
-        // when
-        // 1. export
-        trackExporter.writeTrack(track, context.getContentResolver().openOutputStream(tmpFileUri));
-        contentProviderUtils.deleteTrack(context, trackId);
-
-        // 2. import
-        InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        XMLImporter importer = new XMLImporter(new KmlTrackImporter(context, trackImporter));
-        importTrackId = importer.importFile(inputStream).get(0);
-
-        // then
-        // 1. track
-        Track importedTrack = contentProviderUtils.getTrack(importTrackId);
-        assertNotNull(importedTrack);
-        assertEquals(track.getCategory(), importedTrack.getCategory());
-        assertEquals(track.getDescription(), importedTrack.getDescription());
-        assertEquals(track.getName(), importedTrack.getName());
-        assertEquals(track.getIcon(), importedTrack.getIcon());
-        assertEquals(track.getUuid(), importedTrack.getUuid());
-
-        // 2. trackpoints
-        assertTrackpoints(trackPoints, false, false, false, false, false, false);
-
-        // 3. trackstatistics
-        assertTrackStatistics(false, false, true);
-
-        // 4. markers
-        assertMarkers();
-    }
-
-    @LargeTest
-    @Test
     public void kml_with_trackdetail_and_sensordata() throws TimeoutException, IOException {
         setUp(true);
 

@@ -25,14 +25,14 @@ public class PreferencesUtilsTest {
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString(context.getString(R.string.export_trackfileformat_key), TrackFileFormat.KMZ_WITH_TRACKDETAIL.name());
+        editor.putString(context.getString(R.string.export_trackfileformat_key), TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.name());
         editor.commit();
 
         // when
         TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(sharedPreferences, context);
 
         // then
-        assertEquals(TrackFileFormat.KMZ_WITH_TRACKDETAIL, trackFileFormat);
+        assertEquals(TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA, trackFileFormat);
     }
 
     @Test
