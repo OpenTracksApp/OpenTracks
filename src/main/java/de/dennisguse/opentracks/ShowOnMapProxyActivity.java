@@ -57,10 +57,9 @@ public abstract class ShowOnMapProxyActivity extends AppCompatActivity {
         context.startActivity(Intent.createChooser(intent, context.getString(R.string.open_track_as_trackfileformat, trackFileFormat.getExtension())));
     }
 
-    @Deprecated //TODO I guess we should send KML; zipping should not really improve the situation.
-    public static class KMZ extends ShowOnMapProxyActivity {
-        public KMZ() {
-            super(TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA);
+    public static class KML extends ShowOnMapProxyActivity {
+        public KML() {
+            super(TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA);
         }
     }
 
