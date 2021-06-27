@@ -25,8 +25,8 @@ public class AltitudeSumManager implements SensorEventListener {
 
     private float lastSeenSensorValue_hPa;
 
-    private float altitudeGain_m;
-    private float altitudeLoss_m;
+    private Float altitudeGain_m;
+    private Float altitudeLoss_m;
 
     public void start(Context context) {
         SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
@@ -74,8 +74,8 @@ public class AltitudeSumManager implements SensorEventListener {
 
     public void reset() {
         Log.d(TAG, "Reset");
-        altitudeGain_m = 0;
-        altitudeLoss_m = 0;
+        altitudeGain_m = null;
+        altitudeLoss_m = null;
     }
 
     @Override
@@ -102,8 +102,12 @@ public class AltitudeSumManager implements SensorEventListener {
 
         PressureSensorUtils.AltitudeChange altitudeChange = PressureSensorUtils.computeChangesWithSmoothing_m(lastAcceptedPressureValue_hPa, lastSeenSensorValue_hPa, value_hPa);
         if (altitudeChange != null) {
-            altitudeGain_m += altitudeChange.getAltitudeGain_m();
+            altitudeGain_m = altitudeGain_m != null ? altitudeGain_m : 0;
+            altitudeGain_m = altitudeChange.getAltitudeGain_m();
+
+            altitudeLoss_m = altitudeLoss_m != null ? altitudeLoss_m : 0;
             altitudeLoss_m += altitudeChange.getAltitudeLoss_m();
+
             lastAcceptedPressureValue_hPa = altitudeChange.getCurrentSensorValue_hPa();
         }
 
