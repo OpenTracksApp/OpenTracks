@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Looper;
-import android.util.Log;
 
 import androidx.preference.PreferenceManager;
 import androidx.test.core.app.ApplicationProvider;
@@ -186,7 +185,9 @@ public class ExportImportTest {
         assertEquals(track.getIcon(), importedTrack.getIcon());
 
         // 2. trackpoints
-        assertTrackpoints(trackPoints, true, true, true, true, true, true);
+        TrackPointAssert a = new TrackPointAssert()
+                .noAccuracy();
+        a.assertEquals(trackPoints, TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId));
 
         // 2. trackstatistics
         assertTrackStatistics(false, true, true);
@@ -225,7 +226,9 @@ public class ExportImportTest {
         assertEquals(track.getIcon(), importedTrack.getIcon());
 
         // 2. trackpoints
-        assertTrackpoints(trackPoints, true, true, true, true, true, true);
+        TrackPointAssert a = new TrackPointAssert()
+                .noAccuracy();
+        a.assertEquals(trackPoints, TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId));
 
         // 2. trackstatistics
         assertTrackStatistics(false, true, true);
@@ -298,7 +301,8 @@ public class ExportImportTest {
         trackPointsWithCoordinates.get(0).setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
         trackPointsWithCoordinates.get(3).setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
 
-        assertTrackpoints(trackPointsWithCoordinates, true, true, true, true, true, false);
+        TrackPointAssert a = new TrackPointAssert();
+        a.assertEquals(trackPointsWithCoordinates, TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId));
 
         // 3. trackstatistics
         assertTrackStatistics(true, true, false);
@@ -351,62 +355,6 @@ public class ExportImportTest {
             assertEquals(marker.getLocation().getLatitude(), importMarker.getLocation().getLatitude(), 0.001);
             assertEquals(marker.getLocation().getLongitude(), importMarker.getLocation().getLongitude(), 0.001);
             assertEquals(marker.getLocation().getAltitude(), importMarker.getLocation().getAltitude(), 0.001);
-        }
-    }
-
-    private void assertTrackpoints(List<TrackPoint> trackPoints, boolean verifyPower, boolean verifyHeartrate, boolean verifyCadence, boolean verifyAltitudeGain, boolean verifyAltitudeLoss, boolean verifyDistance) {
-        List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
-        assertEquals(trackPoints.size(), importedTrackPoints.size());
-
-        for (int i = 0; i < trackPoints.size(); i++) {
-            TrackPoint trackPoint = trackPoints.get(i);
-            TrackPoint importedTrackPoint = importedTrackPoints.get(i);
-
-            assertEquals(trackPoint.getTime(), importedTrackPoint.getTime());
-            TrackPoint.Type type = trackPoint.getType();
-            Log.e(TAG, "" + importedTrackPoint.getType().equals(type));
-            assertEquals("" + i, type, importedTrackPoint.getType());
-
-            // TODO Not exported for GPX/KML
-            //   assertEquals(trackPoint.getAccuracy(), importedTrackPoint.getAccuracy(), 0.01);
-
-            assertEquals("" + i, trackPoint.hasLocation(), importedTrackPoint.hasLocation());
-            if (trackPoint.hasLocation()) {
-                assertEquals("" + i, trackPoint.getLatitude(), importedTrackPoint.getLatitude(), 0.001);
-                assertEquals("" + i, trackPoint.getLongitude(), importedTrackPoint.getLongitude(), 0.001);
-            }
-            assertEquals("" + i, trackPoint.hasSpeed(), importedTrackPoint.hasSpeed());
-            if (trackPoint.hasSpeed()) {
-                assertEquals("" + i, trackPoint.getSpeed().toMPS(), importedTrackPoint.getSpeed().toMPS(), 0.001);
-            }
-            assertEquals("" + i, trackPoint.hasAltitude(), importedTrackPoint.hasAltitude());
-            if (trackPoint.hasAltitude()) {
-                assertEquals("" + i, trackPoint.getAltitude().toM(), importedTrackPoint.getAltitude().toM(), 0.001);
-            }
-
-            if (type.equals(TrackPoint.Type.SEGMENT_START_MANUAL) || type.equals(TrackPoint.Type.SEGMENT_END_MANUAL)) {
-                //TODO REMOVE
-                continue;
-            }
-
-            if (verifyHeartrate) {
-                assertEquals("" + i, trackPoint.getHeartRate_bpm(), importedTrackPoint.getHeartRate_bpm(), 0.01);
-            }
-            if (verifyCadence) {
-                assertEquals("" + i, trackPoint.getCyclingCadence_rpm(), importedTrackPoint.getCyclingCadence_rpm(), 0.01);
-            }
-            if (verifyPower) {
-                assertEquals("" + i, trackPoint.getPower(), importedTrackPoint.getPower(), 0.01);
-            }
-            if (verifyAltitudeGain) {
-                assertEquals(trackPoint.getAltitudeGain(), importedTrackPoint.getAltitudeGain(), 0.01);
-            }
-            if (verifyAltitudeLoss) {
-                assertEquals(trackPoint.getAltitudeLoss(), importedTrackPoint.getAltitudeLoss(), 0.01);
-            }
-            if (verifyDistance) {
-                assertEquals(trackPoint.getSensorDistance(), importedTrackPoint.getSensorDistance());
-            }
         }
     }
 

@@ -21,10 +21,8 @@ import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.util.StringUtils;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -80,31 +78,16 @@ public class GPXImportTest {
         assertEquals(6, importedTrackPoints.size());
 
         // first segment
-        assertTrackpoint(importedTrackPoints.get(0), TrackPoint.Type.SEGMENT_START_AUTOMATIC, "2021-01-07T21:51:59.179Z", 14.0, 3.0, 10.0);
-        assertTrackpoint(importedTrackPoints.get(1), TrackPoint.Type.TRACKPOINT, "2021-01-07T21:52:00.653Z", 14.001, 3.0, 10.0);
-        assertTrackpoint(importedTrackPoints.get(2), TrackPoint.Type.TRACKPOINT, "2021-01-07T21:52:01.010Z", 14.002, 3.0, 10.0);
-        assertTrackpoint(importedTrackPoints.get(3), TrackPoint.Type.SEGMENT_END_MANUAL, "2021-01-07T21:52:02.658Z", null, null, null);
+        TrackPointAssert a = new TrackPointAssert();
+        a.assertEquals(List.of(
+                a.expect(TrackPoint.Type.SEGMENT_START_AUTOMATIC, "2021-01-07T21:51:59.179Z", 14.0, 3.0, 10.0),
+                a.expect(TrackPoint.Type.TRACKPOINT, "2021-01-07T21:52:00.653Z", 14.001, 3.0, 10.0),
+                a.expect(TrackPoint.Type.TRACKPOINT, "2021-01-07T21:52:01.010Z", 14.002, 3.0, 10.0),
+                a.expect(TrackPoint.Type.SEGMENT_END_MANUAL, "2021-01-07T21:52:02.658Z"),
 
-        // created resume trackpoint with time of next valid trackpoint
-        assertTrackpoint(importedTrackPoints.get(4), TrackPoint.Type.SEGMENT_START_MANUAL, "2021-01-07T21:52:03.873Z", null, null, null);
-        assertTrackpoint(importedTrackPoints.get(5), TrackPoint.Type.TRACKPOINT, "2021-01-07T21:52:04.103Z", 14.003, 3.0, 10.0);
-    }
-
-    static void assertTrackpoint(final TrackPoint trackPoint, final TrackPoint.Type type, final String when, final Double longitude, final Double latitude, final Double altitude) {
-        assertEquals(StringUtils.parseTime(when), trackPoint.getTime());
-        assertEquals(type, trackPoint.getType());
-
-        if (longitude == null) {
-            assertFalse(trackPoint.hasLocation());
-        } else {
-            assertEquals(latitude, (Double) trackPoint.getLatitude());
-            assertEquals(longitude, (Double) trackPoint.getLongitude());
-        }
-
-        if (altitude == null) {
-            assertFalse(trackPoint.hasAltitude());
-        } else {
-            assertEquals(altitude, (Double) trackPoint.getAltitude().toM());
-        }
+                // created resume trackpoint with time of next valid trackpoint
+                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL, "2021-01-07T21:52:03.873Z"),
+                a.expect(TrackPoint.Type.TRACKPOINT, "2021-01-07T21:52:04.103Z", 14.003, 3.0, 10.0)
+        ), importedTrackPoints);
     }
 }
