@@ -111,25 +111,23 @@ public class TrackPoint {
     }
 
     public TrackPoint(@NonNull Type type, @NonNull Location location, @NonNull Instant time) {
-        this(type);
+        this(type, time);
 
         this.latitude = location.getLatitude();
         this.longitude = location.getLongitude();
-        this.altitude = Altitude.WGS84.of(location.getAltitude());
-        this.speed = Speed.of(location.getSpeed());
-        this.accuracy = location.getAccuracy();
+        this.altitude = location.hasAltitude() ? Altitude.WGS84.of(location.getAltitude()) : null;
+        this.speed = location.hasSpeed() ? Speed.of(location.getSpeed()) : null;
+        this.accuracy = location.hasAccuracy() ? location.getAccuracy() : null;
 
         //TODO Should we copy the bearing?
-
-        setTime(time);
     }
 
+    @VisibleForTesting
     public TrackPoint(double latitude, double longitude, Altitude altitude, Instant time) {
-        this(Type.TRACKPOINT);
+        this(Type.TRACKPOINT, time);
         this.latitude = latitude;
         this.longitude = longitude;
         this.altitude = altitude;
-        this.time = time;
     }
 
     @Deprecated //See #316
