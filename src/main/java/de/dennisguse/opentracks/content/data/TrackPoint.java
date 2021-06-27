@@ -161,8 +161,9 @@ public class TrackPoint {
         return type;
     }
 
-    public void setType(@NonNull Type type) {
+    public TrackPoint setType(@NonNull Type type) {
         this.type = type;
+        return this;
     }
 
     public boolean isSegmentStart() {
@@ -193,16 +194,18 @@ public class TrackPoint {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public TrackPoint setLatitude(double latitude) {
         this.latitude = latitude;
+        return this;
     }
 
     public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public TrackPoint setLongitude(double longitude) {
         this.longitude = longitude;
+        return this;
     }
 
     //TODO Better return null, if no location is present aka latitude == null etc.
@@ -235,8 +238,9 @@ public class TrackPoint {
         return altitudeGain_m;
     }
 
-    public void setAltitudeGain(Float altitudeGain_m) {
+    public TrackPoint setAltitudeGain(Float altitudeGain_m) {
         this.altitudeGain_m = altitudeGain_m;
+        return this;
     }
 
     public boolean hasAltitudeLoss() {
@@ -247,16 +251,18 @@ public class TrackPoint {
         return altitudeLoss_m;
     }
 
-    public void setAltitudeLoss(Float altitudeLoss_m) {
+    public TrackPoint setAltitudeLoss(Float altitudeLoss_m) {
         this.altitudeLoss_m = altitudeLoss_m;
+        return this;
     }
 
     public Instant getTime() {
         return time;
     }
 
-    public void setTime(Instant time) {
+    public TrackPoint setTime(Instant time) {
         this.time = time;
+        return this;
     }
 
     public boolean isRecent() {
@@ -278,8 +284,9 @@ public class TrackPoint {
         this.altitude = Altitude.WGS84.of(altitude_m);
     }
 
-    public void setAltitude(Altitude altitude) {
+    public TrackPoint setAltitude(Altitude altitude) {
         this.altitude = altitude;
+        return this;
     }
 
     public boolean hasSpeed() {
@@ -290,8 +297,9 @@ public class TrackPoint {
         return speed;
     }
 
-    public void setSpeed(Speed speed) {
+    public TrackPoint setSpeed(Speed speed) {
         this.speed = speed;
+        return this;
     }
 
     public boolean isMoving() {
@@ -306,8 +314,9 @@ public class TrackPoint {
         return bearing;
     }
 
-    public void setBearing(Float bearing) {
+    public TrackPoint setBearing(Float bearing) {
         this.bearing = bearing;
+        return this;
     }
 
     public boolean hasAccuracy() {
@@ -318,8 +327,9 @@ public class TrackPoint {
         return accuracy;
     }
 
-    public void setAccuracy(float horizontalAccuracy) {
+    public TrackPoint setAccuracy(float horizontalAccuracy) {
         this.accuracy = horizontalAccuracy;
+        return this;
     }
 
     @Nullable
@@ -357,8 +367,9 @@ public class TrackPoint {
         return sensorDistance;
     }
 
-    public void setSensorDistance(Distance distance_m) {
+    public TrackPoint setSensorDistance(Distance distance_m) {
         this.sensorDistance = distance_m;
+        return this;
     }
 
     public boolean hasSensorData() {
@@ -373,8 +384,9 @@ public class TrackPoint {
         return heartRate_bpm;
     }
 
-    public void setHeartRate_bpm(Float heartRate_bpm) {
+    public TrackPoint setHeartRate_bpm(Float heartRate_bpm) {
         this.heartRate_bpm = heartRate_bpm;
+        return this;
     }
 
     public boolean hasCyclingCadence() {
@@ -385,8 +397,9 @@ public class TrackPoint {
         return cyclingCadence_rpm;
     }
 
-    public void setCyclingCadence_rpm(Float cyclingCadence_rpm) {
+    public TrackPoint setCyclingCadence_rpm(Float cyclingCadence_rpm) {
         this.cyclingCadence_rpm = cyclingCadence_rpm;
+        return this;
     }
 
     public boolean hasPower() {
@@ -397,8 +410,9 @@ public class TrackPoint {
         return power;
     }
 
-    public void setPower(Float power) {
+    public TrackPoint setPower(Float power) {
         this.power = power;
+        return this;
     }
 
     @NonNull

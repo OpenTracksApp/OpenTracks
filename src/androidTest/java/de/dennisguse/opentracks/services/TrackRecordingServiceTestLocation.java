@@ -4,7 +4,6 @@ import android.content.ContentProvider;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Looper;
-import android.util.Pair;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -31,10 +30,10 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.io.file.importer.TrackPointAssert;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
@@ -114,16 +113,17 @@ public class TrackRecordingServiceTestLocation {
         assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertEquals(8, trackPoints.size());
-        assertTrackPoints(List.of(
-                new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 1),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 2),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 3),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 4),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 5),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 6),
-                new Pair<>(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+        TrackPointAssert a = new TrackPointAssert()
+                .ignoreTime();
+        a.assertEquals(List.of(
+                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL),
+                a.expect(TrackPoint.Type.TRACKPOINT, 1),
+                a.expect(TrackPoint.Type.TRACKPOINT, 2),
+                a.expect(TrackPoint.Type.TRACKPOINT, 3),
+                a.expect(TrackPoint.Type.TRACKPOINT, 4),
+                a.expect(TrackPoint.Type.TRACKPOINT, 5),
+                a.expect(TrackPoint.Type.TRACKPOINT, 6),
+                a.expect(TrackPoint.Type.SEGMENT_END_MANUAL)
         ), trackPoints);
     }
 
@@ -148,32 +148,15 @@ public class TrackRecordingServiceTestLocation {
         assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertEquals(4, trackPoints.size());
-        assertTrackPoints(List.of(
-                new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 1),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 6),
-                new Pair<>(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+        TrackPointAssert a = new TrackPointAssert()
+                .ignoreTime();
+        a.assertEquals(List.of(
+                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL),
+                a.expect(TrackPoint.Type.TRACKPOINT, 1),
+                a.expect(TrackPoint.Type.TRACKPOINT, 6),
+                a.expect(TrackPoint.Type.SEGMENT_END_MANUAL)
         ), trackPoints);
     }
-
-//    @MediumTest
-//    @Test
-//    public void testOnLocationChangedAsync_repeatedTime() throws Exception {
-//        // when
-//        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 5, 15, 5);
-//        TrackRecordingServiceTest.insertLocation(service, 55.0, 35.0, 5, 15, 5);
-//        TrackRecordingServiceTest.insertLocation(service, 65.0, 35.0, 5, 15, 5);
-//
-//        service.endCurrentTrack();
-//
-//        // then
-//        Assert.assertFalse(service.isRecording());
-//
-//        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
-//        Assert.assertEquals(1, trackPoints.size());
-//        Assert.assertEquals(45.0, trackPoints.get(0).getLatitude(), 0.01);
-//    }
 
     @MediumTest
     @Test
@@ -195,12 +178,14 @@ public class TrackRecordingServiceTestLocation {
         assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertTrackPoints(List.of(
-                new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 1),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 2),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 6),
-                new Pair<>(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+        TrackPointAssert a = new TrackPointAssert()
+                .ignoreTime();
+        a.assertEquals(List.of(
+                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL),
+                a.expect(TrackPoint.Type.TRACKPOINT, 1),
+                a.expect(TrackPoint.Type.TRACKPOINT, 2),
+                a.expect(TrackPoint.Type.TRACKPOINT, 6),
+                a.expect(TrackPoint.Type.SEGMENT_END_MANUAL)
         ), trackPoints);
     }
 
@@ -224,14 +209,15 @@ public class TrackRecordingServiceTestLocation {
         assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertEquals(6, trackPoints.size());
-        assertTrackPoints(List.of(
-                new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 1),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 2),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 5),  //TODO Check why this trackPoint is inserted.
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 6),
-                new Pair<>(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+        TrackPointAssert a = new TrackPointAssert()
+                .ignoreTime();
+        a.assertEquals(List.of(
+                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL),
+                a.expect(TrackPoint.Type.TRACKPOINT, 1),
+                a.expect(TrackPoint.Type.TRACKPOINT, 2),
+                a.expect(TrackPoint.Type.TRACKPOINT, 5), //TODO Check why this trackPoint is inserted.
+                a.expect(TrackPoint.Type.TRACKPOINT, 6),
+                a.expect(TrackPoint.Type.SEGMENT_END_MANUAL)
         ), trackPoints);
     }
 
@@ -270,16 +256,17 @@ public class TrackRecordingServiceTestLocation {
         assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertEquals(8, trackPoints.size());
-        assertTrackPoints(List.of(
-                new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 1),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 2),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 3),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 4),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 5),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 6),
-                new Pair<>(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+        TrackPointAssert a = new TrackPointAssert()
+                .ignoreTime();
+        a.assertEquals(List.of(
+                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL),
+                a.expect(TrackPoint.Type.TRACKPOINT, 1, 5f),
+                a.expect(TrackPoint.Type.TRACKPOINT, 2, 5f),
+                a.expect(TrackPoint.Type.TRACKPOINT, 3, 5f),
+                a.expect(TrackPoint.Type.TRACKPOINT, 4, 5f),
+                a.expect(TrackPoint.Type.TRACKPOINT, 5, 5f),
+                a.expect(TrackPoint.Type.TRACKPOINT, 6, 5f),
+                a.expecHeartrate(TrackPoint.Type.SEGMENT_END_MANUAL, 5f)
         ), trackPoints);
     }
 
@@ -302,27 +289,19 @@ public class TrackRecordingServiceTestLocation {
         assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertEquals(7, trackPoints.size());
-        assertTrackPoints(List.of(
-                new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 1),
 
-                new Pair<>(TrackPoint.Type.SEGMENT_START_AUTOMATIC, 2),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 3),
+        TrackPointAssert a = new TrackPointAssert()
+                .ignoreTime();
+        a.assertEquals(List.of(
+                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL),
+                a.expect(TrackPoint.Type.TRACKPOINT, 1),
 
-                new Pair<>(TrackPoint.Type.SEGMENT_START_AUTOMATIC, 4),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 5),
-                new Pair<>(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+                a.expect(TrackPoint.Type.SEGMENT_START_AUTOMATIC, 2),
+                a.expect(TrackPoint.Type.TRACKPOINT, 3),
+
+                a.expect(TrackPoint.Type.SEGMENT_START_AUTOMATIC, 4),
+                a.expect(TrackPoint.Type.TRACKPOINT, 5),
+                a.expect(TrackPoint.Type.SEGMENT_END_MANUAL)
         ), trackPoints);
-    }
-
-    private void assertTrackPoints(List<Pair<TrackPoint.Type, Object>> typeAndAccuracy, List<TrackPoint> actual) {
-        assertEquals(typeAndAccuracy.size(), actual.size());
-        for (int i = 0; i < typeAndAccuracy.size(); i++) {
-            assertEquals(typeAndAccuracy.get(i).first, actual.get(i).getType());
-            if (typeAndAccuracy.get(i).second != null) {
-                assertEquals((Integer) typeAndAccuracy.get(i).second, actual.get(i).getAccuracy(), 0.01);
-            }
-        }
     }
 }

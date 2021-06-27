@@ -78,13 +78,14 @@ public class KMLImportTest {
 
         // 3. trackpoints
         List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
-        assertEquals(5, importedTrackPoints.size());
-
-        GPXImportTest.assertTrackpoint(importedTrackPoints.get(0), TrackPoint.Type.SEGMENT_START_MANUAL, "2021-05-29T18:06:21.767Z", null, null, null);
-        GPXImportTest.assertTrackpoint(importedTrackPoints.get(1), TrackPoint.Type.TRACKPOINT, "2021-05-29T18:06:22.042Z", 14.0, 3.0, 10.0);
-        GPXImportTest.assertTrackpoint(importedTrackPoints.get(2), TrackPoint.Type.TRACKPOINT, "2021-05-29T18:06:22.192Z", 14.001, 3.0, 10.0);
-        GPXImportTest.assertTrackpoint(importedTrackPoints.get(3), TrackPoint.Type.TRACKPOINT, "2021-05-29T18:06:22.318Z", 14.002, 3.0, 10.0);
-        GPXImportTest.assertTrackpoint(importedTrackPoints.get(4), TrackPoint.Type.SEGMENT_END_MANUAL, "2021-05-29T18:06:22.512Z", null, null, null);
+        TrackPointAssert a = new TrackPointAssert();
+        a.assertEquals(List.of(
+                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL, "2021-05-29T18:06:21.767Z"),
+                a.expect(TrackPoint.Type.TRACKPOINT, "2021-05-29T18:06:22.042Z", 14.0, 3.0, 10.0),
+                a.expect(TrackPoint.Type.TRACKPOINT, "2021-05-29T18:06:22.192Z", 14.001, 3.0, 10.0),
+                a.expect(TrackPoint.Type.TRACKPOINT, "2021-05-29T18:06:22.318Z", 14.002, 3.0, 10.0),
+                a.expect(TrackPoint.Type.SEGMENT_END_MANUAL, "2021-05-29T18:06:22.512Z")
+        ), importedTrackPoints);
     }
 
     /**
@@ -115,10 +116,12 @@ public class KMLImportTest {
 
         // 3. trackpoints
         List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
-        assertEquals(2, importedTrackPoints.size());
 
-        GPXImportTest.assertTrackpoint(importedTrackPoints.get(0), TrackPoint.Type.TRACKPOINT, "2021-05-29T18:06:21.767Z", 14.0, 3.0, 10.0);
-        GPXImportTest.assertTrackpoint(importedTrackPoints.get(1), TrackPoint.Type.SEGMENT_START_MANUAL, "2021-05-29T18:06:22.042Z", null, null, null);
+        TrackPointAssert a = new TrackPointAssert();
+        a.assertEquals(List.of(
+                a.expect(TrackPoint.Type.TRACKPOINT, "2021-05-29T18:06:21.767Z", 14.0, 3.0, 10.0),
+                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL, "2021-05-29T18:06:22.042Z")
+        ), importedTrackPoints);
     }
 
     /**
@@ -150,17 +153,25 @@ public class KMLImportTest {
 
         // 3. trackpoints
         List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
-        assertEquals(6, importedTrackPoints.size());
 
-        // first 3 trackpoints
-        GPXImportTest.assertTrackpoint(importedTrackPoints.get(0), TrackPoint.Type.SEGMENT_START_AUTOMATIC, "2020-11-28T17:06:22.401Z", 1.234156, 12.340097, 469.286376953125);
-        GPXImportTest.assertTrackpoint(importedTrackPoints.get(1), TrackPoint.Type.TRACKPOINT, "2020-11-28T17:06:25.448Z", 1.23415, 12.340036, 439.1626281738281);
-        GPXImportTest.assertTrackpoint(importedTrackPoints.get(2), TrackPoint.Type.TRACKPOINT, "2020-11-28T17:06:47.888Z", 1.23405, 12.340057, 421.8070983886719);
+        TrackPointAssert a = new TrackPointAssert();
+        a.assertEquals(List.of(
+                // first 3 trackpoints
+                a.expect(TrackPoint.Type.SEGMENT_START_AUTOMATIC, "2020-11-28T17:06:22.401Z", 1.234156, 12.340097, 469.286376953125)
+                        .setAltitudeGain(0f),
+                a.expect(TrackPoint.Type.TRACKPOINT, "2020-11-28T17:06:25.448Z", 1.23415, 12.340036, 439.1626281738281)
+                        .setAltitudeGain(0f),
+                a.expect(TrackPoint.Type.TRACKPOINT, "2020-11-28T17:06:47.888Z", 1.23405, 12.340057, 421.8070983886719)
+                        .setAltitudeGain(0f),
 
-        // created resume trackpoint with time of next valid trackpoint
-        GPXImportTest.assertTrackpoint(importedTrackPoints.get(3), TrackPoint.Type.SEGMENT_START_AUTOMATIC, "2020-11-28T17:06:55.861Z", 1.23405, 12.340057, 419.93902587890625);
-        GPXImportTest.assertTrackpoint(importedTrackPoints.get(4), TrackPoint.Type.TRACKPOINT, "2020-11-28T17:06:56.905Z", 1.23405, 12.340057, 419.9036560058594);
-        GPXImportTest.assertTrackpoint(importedTrackPoints.get(5), TrackPoint.Type.TRACKPOINT, "2020-11-28T17:07:20.870Z", 1.234046, 12.340082, 417.99432373046875);
+                // created resume trackpoint with time of next valid trackpoint
+                a.expect(TrackPoint.Type.SEGMENT_START_AUTOMATIC, "2020-11-28T17:06:55.861Z", 1.23405, 12.340057, 419.93902587890625)
+                        .setAltitudeGain(0f),
+                a.expect(TrackPoint.Type.TRACKPOINT, "2020-11-28T17:06:56.905Z", 1.23405, 12.340057, 419.9036560058594)
+                        .setAltitudeGain(0f),
+                a.expect(TrackPoint.Type.TRACKPOINT, "2020-11-28T17:07:20.870Z", 1.234046, 12.340082, 417.99432373046875)
+                        .setAltitudeGain(0f)
+        ), importedTrackPoints);
     }
 
     /**
