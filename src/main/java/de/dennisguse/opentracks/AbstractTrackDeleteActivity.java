@@ -16,10 +16,14 @@
 
 package de.dennisguse.opentracks;
 
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
@@ -70,23 +74,17 @@ public abstract class AbstractTrackDeleteActivity extends AbstractActivity imple
 
     @Override
     public void onConfirmDeleteDone(Track.Id... trackIds) {
-        boolean stopRecording = false;
+        ArrayList<Track.Id> trackIdList = new ArrayList<>(Arrays.asList(trackIds))
+                .stream().filter(trackId -> !trackId.equals(getRecordingTrackId())).collect(Collectors.toCollection(ArrayList::new));
 
         onDeleteConfirmed();
 
-        for (Track.Id trackId : trackIds) {
-            if (trackId.equals(getRecordingTrackId())) {
-                stopRecording = true;
-                break;
-            }
-        }
-
-        if (stopRecording) {
-            getTrackRecordingServiceConnection().stopRecording(this);
+        if (trackIds.length > trackIdList.size()) {
+            Toast.makeText(this, getString(R.string.track_delete_not_recording), Toast.LENGTH_LONG).show();
         }
 
         trackDeleteServiceConnection = new TrackDeleteServiceConnection(this);
-        trackDeleteServiceConnection.startAndBind(this, new ArrayList<>(Arrays.asList(trackIds)));
+        trackDeleteServiceConnection.startAndBind(this, trackIdList);
     }
 
     /**
