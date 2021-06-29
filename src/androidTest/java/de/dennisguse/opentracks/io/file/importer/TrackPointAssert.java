@@ -11,6 +11,8 @@ public class TrackPointAssert {
     private boolean assertTime = true;
     private boolean assertAccuracy = true;
 
+    private double delta = 0.001;
+
     public TrackPointAssert() {
     }
 
@@ -25,34 +27,34 @@ public class TrackPointAssert {
         if (expected.hasLocation()) {
             Assert.assertEquals(expected.hasLocation(), actual.hasLocation());
             if (expected.hasLocation()) {
-                Assert.assertEquals(expected.getLatitude(), actual.getLatitude(), 0.001);
-                Assert.assertEquals(expected.getLongitude(), actual.getLongitude(), 0.001);
+                Assert.assertEquals(expected.getLatitude(), actual.getLatitude(), delta);
+                Assert.assertEquals(expected.getLongitude(), actual.getLongitude(), delta);
             }
 
             Assert.assertEquals(expected.hasAltitude(), actual.hasAltitude());
             if (expected.hasAltitude()) {
-                Assert.assertEquals(expected.getAltitude().toM(), actual.getAltitude().toM(), 0.001);
+                Assert.assertEquals(expected.getAltitude().toM(), actual.getAltitude().toM(), delta);
             }
         }
 
         Assert.assertEquals(expected.hasAltitudeGain(), actual.hasAltitudeGain());
         if (expected.hasAltitudeGain()) {
-            Assert.assertEquals(expected.getAltitudeGain(), actual.getAltitudeGain(), 0.001);
+            Assert.assertEquals(expected.getAltitudeGain(), actual.getAltitudeGain(), delta);
         }
         Assert.assertEquals(expected.hasAltitudeLoss(), actual.hasAltitudeLoss());
         if (expected.hasAltitudeLoss()) {
-            Assert.assertEquals(expected.getAltitudeLoss(), actual.getAltitudeLoss(), 0.001);
+            Assert.assertEquals(expected.getAltitudeLoss(), actual.getAltitudeLoss(), delta);
         }
 
         Assert.assertEquals(expected.hasSpeed(), actual.hasSpeed());
         if (expected.hasSpeed()) {
-            Assert.assertEquals(expected.getSpeed().toMPS(), actual.getSpeed().toMPS(), 0.001);
+            Assert.assertEquals(expected.getSpeed().toMPS(), actual.getSpeed().toMPS(), delta);
         }
 
         if (assertAccuracy) {
             Assert.assertEquals(expected.hasAccuracy(), actual.hasAccuracy());
             if (expected.hasAccuracy()) {
-                Assert.assertEquals(expected.getAccuracy(), actual.getAccuracy(), 0.001);
+                Assert.assertEquals(expected.getAccuracy(), actual.getAccuracy(), delta);
             }
         } else {
             Assert.assertFalse(actual.hasAccuracy());
@@ -60,22 +62,22 @@ public class TrackPointAssert {
 
         Assert.assertEquals(expected.hasSensorDistance(), actual.hasSensorDistance());
         if (expected.hasSensorDistance()) {
-            Assert.assertEquals(expected.getSensorDistance().toM(), actual.getSensorDistance().toM(), 0.001);
+            Assert.assertEquals(expected.getSensorDistance().toM(), actual.getSensorDistance().toM(), delta);
         }
 
         Assert.assertEquals(expected.hasHeartRate(), actual.hasHeartRate());
         if (expected.hasHeartRate()) {
-            Assert.assertEquals(expected.getHeartRate_bpm(), actual.getHeartRate_bpm(), 0.001);
+            Assert.assertEquals(expected.getHeartRate_bpm(), actual.getHeartRate_bpm(), delta);
         }
 
         Assert.assertEquals(expected.hasPower(), actual.hasPower());
         if (expected.hasPower()) {
-            Assert.assertEquals(expected.getPower(), actual.getPower(), 0.001);
+            Assert.assertEquals(expected.getPower(), actual.getPower(), delta);
         }
 
         Assert.assertEquals(expected.hasCyclingCadence(), actual.hasCyclingCadence());
         if (expected.hasCyclingCadence()) {
-            Assert.assertEquals(expected.getCyclingCadence_rpm(), actual.getCyclingCadence_rpm(), 0.001);
+            Assert.assertEquals(expected.getCyclingCadence_rpm(), actual.getCyclingCadence_rpm(), delta);
         }
     }
 
@@ -94,6 +96,11 @@ public class TrackPointAssert {
 
     public TrackPointAssert noAccuracy() {
         this.assertAccuracy = false;
+        return this;
+    }
+
+    public TrackPointAssert setDelta(double delta) {
+        this.delta = delta;
         return this;
     }
 }
