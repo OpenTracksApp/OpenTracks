@@ -301,7 +301,8 @@ public class ExportImportTest {
         trackPointsWithCoordinates.get(0).setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
         trackPointsWithCoordinates.get(3).setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
 
-        TrackPointAssert a = new TrackPointAssert();
+        TrackPointAssert a = new TrackPointAssert()
+                .setDelta(0.05); // speed is not fully
         a.assertEquals(trackPointsWithCoordinates, TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId));
 
         // 3. trackstatistics
