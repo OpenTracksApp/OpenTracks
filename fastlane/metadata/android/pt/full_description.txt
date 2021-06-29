@@ -1,0 +1,11 @@
+OpenTracks é um aplicativo de rastreamento de esportes que respeita totalmente a sua privacidade.
+
+Características:
+* Rastreamento de esportes: monitore seu esporte e atividades ao ar livre
+* Fotos e marcadores: marque locais interessantes durante o rastreamento
+* Ganho e perda de altitude: via sensor barométrico
+* Altitude mostrada no EGM2008 (acima do nível médio do mar); exportado como WGS84
+* Anúncios de voz
+* Suporta sensores Bluetooth LE: frequência cardíaca, velocidade e distância (ciclismo), cadência (ciclismo) e medidor de potência (ciclismo)
+* Exportar dados: exporte trilhas como KMZ (incluindo fotos), KML ou GPX
+* Sem acesso à Internet: a Internet não é usada
