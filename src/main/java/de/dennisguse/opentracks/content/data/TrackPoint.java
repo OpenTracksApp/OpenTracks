@@ -280,8 +280,9 @@ public class TrackPoint {
     }
 
     @VisibleForTesting
-    public void setAltitude(double altitude_m) {
+    public TrackPoint setAltitude(double altitude_m) {
         this.altitude = Altitude.WGS84.of(altitude_m);
+        return this;
     }
 
     public TrackPoint setAltitude(Altitude altitude) {

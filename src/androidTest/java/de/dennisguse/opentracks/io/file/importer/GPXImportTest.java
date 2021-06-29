@@ -14,6 +14,7 @@ import org.junit.runners.JUnit4;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Instant;
 import java.util.List;
 
 import de.dennisguse.opentracks.content.data.Distance;
@@ -81,16 +82,28 @@ public class GPXImportTest {
         // first segment
         TrackPointAssert a = new TrackPointAssert();
         a.assertEquals(List.of(
-                a.expect(TrackPoint.Type.SEGMENT_START_AUTOMATIC, "2021-01-07T21:51:59.179Z", 14.0, 3.0, 10.0),
-                a.expect(TrackPoint.Type.TRACKPOINT, "2021-01-07T21:52:00.653Z", 14.001, 3.0, 10.0)
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2021-01-07T21:51:59.179Z"))
+                        .setLatitude(3)
+                        .setLongitude(14)
+                        .setAltitude(10),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-01-07T21:52:00.653Z"))
+                        .setLatitude(3)
+                        .setLongitude(14.001)
+                        .setAltitude(10)
                         .setSpeed(Speed.of(75.4192)),
-                a.expect(TrackPoint.Type.TRACKPOINT, "2021-01-07T21:52:01.010Z", 14.002, 3.0, 10.0)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-01-07T21:52:01.010Z"))
+                        .setLatitude(3)
+                        .setLongitude(14.002)
+                        .setAltitude(10)
                         .setSpeed(Speed.of(311.3948)),
-                a.expect(TrackPoint.Type.SEGMENT_END_MANUAL, "2021-01-07T21:52:02.658Z"),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse("2021-01-07T21:52:02.658Z")),
 
                 // created resume trackpoint with time of next valid trackpoint
-                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL, "2021-01-07T21:52:03.873Z"),
-                a.expect(TrackPoint.Type.TRACKPOINT, "2021-01-07T21:52:04.103Z", 14.003, 3.0, 10.0)
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse("2021-01-07T21:52:03.873Z")),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-01-07T21:52:04.103Z"))
+                        .setLatitude(3)
+                        .setLongitude(14.003)
+                        .setAltitude(10)
         ), importedTrackPoints);
     }
 }
