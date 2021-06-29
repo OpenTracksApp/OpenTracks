@@ -1,0 +1,12 @@
+v3. 18. 5: OpenTracks
+
+Perubahan:
+- Voice mengumumkan kecepatan dapat diaturname
+- API <26: ikon peluncur omits latar belakang
+
+Bugfixesunit-format:
+- Recording UI: Tampilkan nilai yang benar 
+- Recording UI: Tampilkan (lagi) ketinggian di EGM2008
+
+Pengembang:
+- Android12 permissions (BLUETOOTH_CONNECT)
