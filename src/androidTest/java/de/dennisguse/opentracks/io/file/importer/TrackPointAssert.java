@@ -5,7 +5,6 @@ import org.junit.Assert;
 import java.util.List;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.util.StringUtils;
 
 public class TrackPointAssert {
 
@@ -86,41 +85,6 @@ public class TrackPointAssert {
         for (int i = 0; i < expected.size(); i++) {
             assertEquals(expected.get(i), actual.get(i));
         }
-    }
-
-    public TrackPoint expect(final TrackPoint.Type type) {
-        return new TrackPoint(type);
-    }
-
-    public TrackPoint expect(final TrackPoint.Type type, float accuracy) {
-        TrackPoint tp = new TrackPoint(type);
-        tp.setAccuracy(accuracy);
-        return tp;
-    }
-
-    public TrackPoint expect(final TrackPoint.Type type, float accuracy, float heartrate) {
-        TrackPoint tp = new TrackPoint(type);
-        tp.setAccuracy(accuracy);
-        tp.setHeartRate_bpm(heartrate);
-        return tp;
-    }
-
-    public TrackPoint expecHeartrate(final TrackPoint.Type type, float heartrate) {
-        TrackPoint tp = new TrackPoint(type);
-        tp.setHeartRate_bpm(heartrate);
-        return tp;
-    }
-
-    public TrackPoint expect(final TrackPoint.Type type, final String when) {
-        return new TrackPoint(type, StringUtils.parseTime(when));
-    }
-
-    public TrackPoint expect(final TrackPoint.Type type, final String when, final double longitude, final double latitude, final double altitude) {
-        TrackPoint tp = expect(type, when);
-        tp.setLongitude(longitude);
-        tp.setLatitude(latitude);
-        tp.setAltitude(altitude);
-        return tp;
     }
 
     public TrackPointAssert ignoreTime() {

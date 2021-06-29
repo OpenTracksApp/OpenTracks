@@ -117,20 +117,26 @@ public class TrackRecordingServiceTestLocation {
         TrackPointAssert a = new TrackPointAssert()
                 .ignoreTime();
         a.assertEquals(List.of(
-                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL),
-                a.expect(TrackPoint.Type.TRACKPOINT, 1)
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(1)
                         .setSpeed(Speed.of(15)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 2)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(2)
                         .setSpeed(Speed.of(15)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 3)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(3)
                         .setSpeed(Speed.of(15)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 4)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(4)
                         .setSpeed(Speed.of(15)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 5)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(5)
                         .setSpeed(Speed.of(15)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 6)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(6)
                         .setSpeed(Speed.of(15)),
-                a.expect(TrackPoint.Type.SEGMENT_END_MANUAL)
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
         ), trackPoints);
     }
 
@@ -158,12 +164,14 @@ public class TrackRecordingServiceTestLocation {
         TrackPointAssert a = new TrackPointAssert()
                 .ignoreTime();
         a.assertEquals(List.of(
-                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL),
-                a.expect(TrackPoint.Type.TRACKPOINT, 1)
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(1)
                         .setSpeed(Speed.of(15)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 6)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(6)
                         .setSpeed(Speed.of(15)),
-                a.expect(TrackPoint.Type.SEGMENT_END_MANUAL)
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
         ), trackPoints);
     }
 
@@ -190,14 +198,17 @@ public class TrackRecordingServiceTestLocation {
         TrackPointAssert a = new TrackPointAssert()
                 .ignoreTime();
         a.assertEquals(List.of(
-                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL),
-                a.expect(TrackPoint.Type.TRACKPOINT, 1)
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(1)
                         .setSpeed(Speed.of(0)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 2) //TODO Why is this added? Systems is idle and not moving at all.
+                new TrackPoint(TrackPoint.Type.TRACKPOINT) //TODO Why is this added? Systems is idle and not moving at all.
+                        .setAccuracy(2)
                         .setSpeed(Speed.of(0)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 6)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(6)
                         .setSpeed(Speed.of(0)),
-                a.expect(TrackPoint.Type.SEGMENT_END_MANUAL)
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
         ), trackPoints);
     }
 
@@ -224,16 +235,20 @@ public class TrackRecordingServiceTestLocation {
         TrackPointAssert a = new TrackPointAssert()
                 .ignoreTime();
         a.assertEquals(List.of(
-                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL),
-                a.expect(TrackPoint.Type.TRACKPOINT, 1)
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(1)
                         .setSpeed(Speed.of(15)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 2) //TODO Check why this trackPoint is inserted.
+                new TrackPoint(TrackPoint.Type.TRACKPOINT) //TODO Check why this trackPoint is inserted.
+                        .setAccuracy(2)
                         .setSpeed(Speed.of(0)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 5) //TODO Check why this trackPoint is inserted.
+                new TrackPoint(TrackPoint.Type.TRACKPOINT) //TODO Check why this trackPoint is inserted.
+                        .setAccuracy(5)
                         .setSpeed(Speed.of(0)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 6)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(6)
                         .setSpeed(Speed.of(15)),
-                a.expect(TrackPoint.Type.SEGMENT_END_MANUAL)
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
         ), trackPoints);
     }
 
@@ -275,20 +290,33 @@ public class TrackRecordingServiceTestLocation {
         TrackPointAssert a = new TrackPointAssert()
                 .ignoreTime();
         a.assertEquals(List.of(
-                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL),
-                a.expect(TrackPoint.Type.TRACKPOINT, 1, 5f)
-                        .setSpeed(Speed.of(0)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 2, 5f)
-                        .setSpeed(Speed.of(0)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 3, 5f)
-                        .setSpeed(Speed.of(0)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 4, 5f)
-                        .setSpeed(Speed.of(0)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 5, 5f)
-                        .setSpeed(Speed.of(0)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 6, 5f)
-                        .setSpeed(Speed.of(0)),
-                a.expecHeartrate(TrackPoint.Type.SEGMENT_END_MANUAL, 5f)
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(1)
+                        .setSpeed(Speed.of(0))
+                        .setHeartRate_bpm(5f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(2)
+                        .setSpeed(Speed.of(0))
+                        .setHeartRate_bpm(5f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(3)
+                        .setSpeed(Speed.of(0))
+                        .setHeartRate_bpm(5f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(4)
+                        .setSpeed(Speed.of(0))
+                        .setHeartRate_bpm(5f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(5)
+                        .setSpeed(Speed.of(0))
+                        .setHeartRate_bpm(5f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(6)
+                        .setSpeed(Speed.of(0))
+                        .setHeartRate_bpm(5f),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
+                        .setHeartRate_bpm(5f)
         ), trackPoints);
     }
 
@@ -315,20 +343,25 @@ public class TrackRecordingServiceTestLocation {
         TrackPointAssert a = new TrackPointAssert()
                 .ignoreTime();
         a.assertEquals(List.of(
-                a.expect(TrackPoint.Type.SEGMENT_START_MANUAL),
-                a.expect(TrackPoint.Type.TRACKPOINT, 1)
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(1)
                         .setSpeed(Speed.of(0)),
 
-                a.expect(TrackPoint.Type.SEGMENT_START_AUTOMATIC, 2)
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC)
+                        .setAccuracy(2)
                         .setSpeed(Speed.of(0)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 3)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(3)
                         .setSpeed(Speed.of(0)),
 
-                a.expect(TrackPoint.Type.SEGMENT_START_AUTOMATIC, 4)
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC)
+                        .setAccuracy(4)
                         .setSpeed(Speed.of(0)),
-                a.expect(TrackPoint.Type.TRACKPOINT, 5)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setAccuracy(5)
                         .setSpeed(Speed.of(0)),
-                a.expect(TrackPoint.Type.SEGMENT_END_MANUAL)
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
         ), trackPoints);
     }
 }
