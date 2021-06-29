@@ -45,8 +45,7 @@ public class TrackPointAssert {
             Assert.assertEquals(expected.getAltitudeLoss(), actual.getAltitudeLoss(), 0.001);
         }
 
-        // TODO Speed is always computed even if none was exported, thus this assert fails for now;
-//         Assert.assertEquals(expected.hasSpeed(), actual.hasSpeed());
+        Assert.assertEquals(expected.hasSpeed(), actual.hasSpeed());
         if (expected.hasSpeed()) {
             Assert.assertEquals(expected.getSpeed().toMPS(), actual.getSpeed().toMPS(), 0.001);
         }

@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -81,8 +82,10 @@ public class GPXImportTest {
         TrackPointAssert a = new TrackPointAssert();
         a.assertEquals(List.of(
                 a.expect(TrackPoint.Type.SEGMENT_START_AUTOMATIC, "2021-01-07T21:51:59.179Z", 14.0, 3.0, 10.0),
-                a.expect(TrackPoint.Type.TRACKPOINT, "2021-01-07T21:52:00.653Z", 14.001, 3.0, 10.0),
-                a.expect(TrackPoint.Type.TRACKPOINT, "2021-01-07T21:52:01.010Z", 14.002, 3.0, 10.0),
+                a.expect(TrackPoint.Type.TRACKPOINT, "2021-01-07T21:52:00.653Z", 14.001, 3.0, 10.0)
+                        .setSpeed(Speed.of(75.4192)),
+                a.expect(TrackPoint.Type.TRACKPOINT, "2021-01-07T21:52:01.010Z", 14.002, 3.0, 10.0)
+                        .setSpeed(Speed.of(311.3948)),
                 a.expect(TrackPoint.Type.SEGMENT_END_MANUAL, "2021-01-07T21:52:02.658Z"),
 
                 // created resume trackpoint with time of next valid trackpoint

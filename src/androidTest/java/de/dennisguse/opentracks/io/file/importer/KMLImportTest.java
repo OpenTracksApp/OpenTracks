@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -82,8 +83,10 @@ public class KMLImportTest {
         a.assertEquals(List.of(
                 a.expect(TrackPoint.Type.SEGMENT_START_MANUAL, "2021-05-29T18:06:21.767Z"),
                 a.expect(TrackPoint.Type.TRACKPOINT, "2021-05-29T18:06:22.042Z", 14.0, 3.0, 10.0),
-                a.expect(TrackPoint.Type.TRACKPOINT, "2021-05-29T18:06:22.192Z", 14.001, 3.0, 10.0),
-                a.expect(TrackPoint.Type.TRACKPOINT, "2021-05-29T18:06:22.318Z", 14.002, 3.0, 10.0),
+                a.expect(TrackPoint.Type.TRACKPOINT, "2021-05-29T18:06:22.192Z", 14.001, 3.0, 10.0)
+                        .setSpeed(Speed.of(741.1196)),
+                a.expect(TrackPoint.Type.TRACKPOINT, "2021-05-29T18:06:22.318Z", 14.002, 3.0, 10.0)
+                        .setSpeed(Speed.of(882.2853)),
                 a.expect(TrackPoint.Type.SEGMENT_END_MANUAL, "2021-05-29T18:06:22.512Z")
         ), importedTrackPoints);
     }
@@ -158,19 +161,25 @@ public class KMLImportTest {
         a.assertEquals(List.of(
                 // first 3 trackpoints
                 a.expect(TrackPoint.Type.SEGMENT_START_AUTOMATIC, "2020-11-28T17:06:22.401Z", 1.234156, 12.340097, 469.286376953125)
-                        .setAltitudeGain(0f),
+                        .setAltitudeGain(0f)
+                        .setSpeed(Speed.of(0.539)),
                 a.expect(TrackPoint.Type.TRACKPOINT, "2020-11-28T17:06:25.448Z", 1.23415, 12.340036, 439.1626281738281)
-                        .setAltitudeGain(0f),
+                        .setAltitudeGain(0f)
+                        .setSpeed(Speed.of(0.1577)),
                 a.expect(TrackPoint.Type.TRACKPOINT, "2020-11-28T17:06:47.888Z", 1.23405, 12.340057, 421.8070983886719)
-                        .setAltitudeGain(0f),
+                        .setAltitudeGain(0f)
+                        .setSpeed(Speed.of(0)),
 
                 // created resume trackpoint with time of next valid trackpoint
                 a.expect(TrackPoint.Type.SEGMENT_START_AUTOMATIC, "2020-11-28T17:06:55.861Z", 1.23405, 12.340057, 419.93902587890625)
-                        .setAltitudeGain(0f),
+                        .setAltitudeGain(0f)
+                        .setSpeed(Speed.of(0)),
                 a.expect(TrackPoint.Type.TRACKPOINT, "2020-11-28T17:06:56.905Z", 1.23405, 12.340057, 419.9036560058594)
-                        .setAltitudeGain(0f),
+                        .setAltitudeGain(0f)
+                        .setSpeed(Speed.of(0)),
                 a.expect(TrackPoint.Type.TRACKPOINT, "2020-11-28T17:07:20.870Z", 1.234046, 12.340082, 417.99432373046875)
                         .setAltitudeGain(0f)
+                        .setSpeed(Speed.of(0))
         ), importedTrackPoints);
     }
 
