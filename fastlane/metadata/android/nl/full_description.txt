@@ -1,0 +1,11 @@
+OpenTracks is een sport tracking applicatie die uw privacy volledig respecteert.
+
+Kenmerken:
+* Sport tracking: volg uw sport en outdoor activiteiten
+* Foto's en markeringen: markeer interessante locaties tijdens het volgen
+* Hoogte winst en verlies: via barometrische sensor
+* Hoogte weergegeven in EGM2008 (boven gemiddeld zeeniveau); geëxporteerd als WGS84
+* Spraakaankondigingen
+* Ondersteunt Bluetooth LE-sensoren: hartslag, snelheid en afstand (fietsen), cadans (fietsen), en vermogensmeter (fietsen)
+* Exporteer gegevens: exporteer tracks als KMZ (incl. foto's), KML, of GPX
+* Geen toegang tot internet: Internet wordt niet gebruikt
