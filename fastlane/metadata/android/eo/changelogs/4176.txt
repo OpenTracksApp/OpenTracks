@@ -1,0 +1,12 @@
+v3.18.5: OpenTracks
+
+Ŝanĝoj:
+- Voĉo anonco rapido configurable
+- API <26: Launcher ikono forgesas fono
+
+Bugfixes:
+- Registranta#? UI: montri ĝentilan valoroj 
+- Registranta#? UI: montri (denove) alteco en EGM2008
+
+Ellaboranto:
+- Android12 permesoj (BLUETOOTH_CONNECT)
