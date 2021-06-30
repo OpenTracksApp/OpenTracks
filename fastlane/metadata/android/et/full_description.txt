@@ -1,0 +1,11 @@
+OpenTracks on spordi jälgimise rakendus, mis austab täielikult teie privaatsust.
+
+Omadused:
+* Spordi jälgimine: jälgige oma spordi- ja vabaõhutegevust.
+* Fotod ja markerid: märkige jälgimise ajal huvipakkuvad kohad.
+* Kõrguse suurenemine ja vähenemine: baromeetrilise anduri abil
+* Kõrgus näitab EGM2008 (üle keskmise merepinna); eksporditakse WGS84 kujul.
+* Häälteated
+* Toetab Bluetooth LE andureid: südame löögisagedus, kiirus ja distants (jalgrattasõit), takistus (jalgrattasõit) ja jõumõõtja (jalgrattasõit).
+* Andmete eksport: eksportida rajad kas KMZ (sh fotod), KML või GPX kujul.
+* Interneti-ühendus puudub: Internetti ei kasutata
