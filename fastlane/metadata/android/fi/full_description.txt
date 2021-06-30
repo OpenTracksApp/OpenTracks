@@ -1,0 +1,11 @@
+OpenTracks on urheiluseurantasovellus, joka kunnioittaa täysin yksityisyyttäsi.
+
+Ominaisuudet:
+* Urheilun seuranta: seuraa urheilua ja ulkoilua.
+* Kuvat ja merkit: merkitse mielenkiintoiset paikat seurannan aikana.
+* Korkeuden nousu ja lasku: barometrisen anturin avulla.
+* Korkeus näytetään EGM2008:na (keskimääräisen merenpinnan yläpuolella); viedään WGS84-muodossa.
+* Ääni-ilmoitukset
+* Tukee Bluetooth LE -antureita: syke, nopeus ja etäisyys (pyöräily), askeltiheys (pyöräily) ja tehomittari (pyöräily).
+* Tietojen vienti: vie radat joko KMZ- (sis. valokuvat), KML- tai GPX-muodossa.
+* Ei Internet-yhteyttä: Internetiä ei käytetä
