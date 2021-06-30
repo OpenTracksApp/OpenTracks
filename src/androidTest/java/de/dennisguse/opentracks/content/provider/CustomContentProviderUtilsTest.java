@@ -135,12 +135,12 @@ public class CustomContentProviderUtilsTest {
 
         List<TrackPoint> trackPoints = new ArrayList<>(numPoints);
         for (int i = 0; i < numPoints; ++i) {
-            Location loc = new Location("test");
-            loc.setLatitude(37.0 + (double) i / 10000.0);
-            loc.setLongitude(57.0 - (double) i / 10000.0);
-            loc.setAccuracy((float) i / 100.0f);
-            loc.setAltitude(i * 2.5);
-            trackPoints.add(new TrackPoint(loc));
+            TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                    .setLatitude(37.0 + (double) i / 10000.0)
+                    .setLongitude(57.0 - (double) i / 10000.0)
+                    .setAccuracy((float) i / 100.0f)
+                    .setAltitude(i * 2.5);
+            trackPoints.add(trackPoint);
         }
         contentProviderUtils.bulkInsertTrackPoint(trackPoints, id);
 
@@ -1252,7 +1252,7 @@ public class CustomContentProviderUtilsTest {
 
     @Test
     public void testGetSensorStats_veryLongActivity12h() {
-    testGetSensorStats_randomData(43200 / 6, false);
+        testGetSensorStats_randomData(43200 / 6, false);
     }
 
     @Test
