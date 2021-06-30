@@ -1,0 +1,11 @@
+Az OpenTracks egy sportkövető alkalmazás, amely teljes mértékben tiszteletben tartja az Ön magánéletét.
+
+Tulajdonságok:
+* Sportkövetés: kövesse nyomon sport- és szabadtéri tevékenységeit.
+* Fotók és jelölések: jelölje meg az érdekes helyeket a követés során
+* Magassági nyereség és veszteség: barometrikus érzékelőn keresztül
+* Magasság EGM2008-ban (átlagos tengerszint feletti magasság); exportálható WGS84 formátumban.
+* Hangbejelentések
+* Támogatja a Bluetooth LE érzékelőket: pulzusszám, sebesség és távolság (kerékpározás), lépésszám (kerékpározás) és teljesítménymérő (kerékpározás).
+* Adatok exportálása: a pályák exportálása KMZ (fényképekkel együtt), KML vagy GPX formátumban.
+* Nincs internet-hozzáférés: Az internetet nem használja

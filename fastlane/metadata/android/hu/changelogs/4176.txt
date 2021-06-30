@@ -1,0 +1,12 @@
+v3.18.5: OpenTracks
+
+Változások:
+- Hangbemondás sebessége konfigurálható
+- API <26: Az indító ikon kihagyja a hátteret.
+
+Hibajavítások:
+- Felvételi felhasználói felület: helyes értékek megjelenítése 
+- Felvételi felhasználói felület: EGM2008-ban (újra) magasság megjelenítése
+
+Fejlesztő:
+- Android12 engedélyek (BLUETOOTH_CONNECT)
