@@ -1,0 +1,12 @@
+v3.18.5: OpenTracks
+
+Ændringer:
+- Ændringer: Stemmemeddelelseshastighed kan konfigureres
+- API <26: Ikonet i startopsætningen udelader baggrund
+
+Fejlrettelser:
+- Optagelse UI: Vis korrekte værdier 
+- Optagelse UI: viser (igen) højde i EGM2008
+
+Udvikler:
+- Android12-tilladelser (BLUETOOTH_CONNECT)
