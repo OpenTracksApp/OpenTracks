@@ -655,8 +655,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
                 altitudeSumManager.reset();
             }
 
-            //TODO We need a copy of the SensorDataSet as data will be reset!
-            SensorDataSet sensorDataSet = fillWithSensorDataSet(trackPoint);
+            fillWithSensorDataSet(trackPoint);
             if (remoteSensorManager != null) {
                 remoteSensorManager.reset();
             }

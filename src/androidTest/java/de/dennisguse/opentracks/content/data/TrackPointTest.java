@@ -1,7 +1,5 @@
 package de.dennisguse.opentracks.content.data;
 
-import android.location.Location;
-
 import org.junit.Test;
 
 import java.time.Instant;
@@ -31,15 +29,13 @@ public class TrackPointTest {
 
     @Test
     public void distanceToPrevious() {
-        Location l1 = new Location("test");
-        l1.setLatitude(0);
-        l1.setLongitude(0.0001);
-        TrackPoint tp1 = new TrackPoint(l1);
+        TrackPoint tp1 = new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                .setLatitude(0)
+                .setLongitude(0.0001);
 
-        Location l2 = new Location("test");
-        l2.setLatitude(0);
-        l2.setLongitude(0.0002);
-        TrackPoint tp2 = new TrackPoint(l2);
+        TrackPoint tp2 = new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                .setLatitude(0)
+                .setLongitude(0.0002);
 
         // without sensor distance
         assertEquals(11.13, tp2.distanceToPrevious(tp1).toM(), 0.01);
