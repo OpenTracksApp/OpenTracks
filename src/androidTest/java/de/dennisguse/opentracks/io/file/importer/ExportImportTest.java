@@ -45,7 +45,6 @@ import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -190,7 +189,7 @@ public class ExportImportTest {
         a.assertEquals(trackPoints, TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId));
 
         // 2. trackstatistics
-        assertTrackStatistics(false, true, true);
+        assertTrackStatistics(false, true);
 
         // 4. markers
         assertMarkers();
@@ -231,7 +230,7 @@ public class ExportImportTest {
         a.assertEquals(trackPoints, TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId));
 
         // 2. trackstatistics
-        assertTrackStatistics(false, true, true);
+        assertTrackStatistics(false, true);
 
         // 4. markers
         assertMarkers();
@@ -302,11 +301,12 @@ public class ExportImportTest {
         trackPointsWithCoordinates.get(3).setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
 
         TrackPointAssert a = new TrackPointAssert()
-                .setDelta(0.05); // speed is not fully
+                .setDelta(0.05)
+                .noAccuracy(); // speed is not fully
         a.assertEquals(trackPointsWithCoordinates, TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId));
 
         // 3. trackstatistics
-        assertTrackStatistics(true, true, false);
+        assertTrackStatistics(true, false);
 
         // 4. markers
         assertMarkers();
@@ -355,11 +355,12 @@ public class ExportImportTest {
 
             assertEquals(marker.getLocation().getLatitude(), importMarker.getLocation().getLatitude(), 0.001);
             assertEquals(marker.getLocation().getLongitude(), importMarker.getLocation().getLongitude(), 0.001);
-            assertEquals(marker.getLocation().getAltitude(), importMarker.getLocation().getAltitude(), 0.001);
+            assertEquals(marker.getLocation().getAltitude(), importMarker.getLocation().getAltitude(), 0.1);
         }
     }
 
-    private void assertTrackStatistics(boolean isGpx, boolean verifyAltitudeGainAndLoss, boolean verifyDistance) {
+    private void assertTrackStatistics(boolean isGpx, boolean verifyDistance) {
+        double delta = isGpx ? 0.1 : 0.01;
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
 
         assertNotNull(importedTrack.getTrackStatistics());
@@ -388,15 +389,14 @@ public class ExportImportTest {
         }
 
         // Altitude
-        assertEquals(trackStatistics.getMinAltitude(), importedTrackStatistics.getMinAltitude(), 0.01);
-        assertEquals(trackStatistics.getMaxAltitude(), importedTrackStatistics.getMaxAltitude(), 0.01);
-        if (verifyAltitudeGainAndLoss) {
-            assertEquals(trackStatistics.getTotalAltitudeGain(), importedTrackStatistics.getTotalAltitudeGain(), 0.01);
-            assertEquals(trackStatistics.getTotalAltitudeLoss(), importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
+        assertEquals(trackStatistics.getMinAltitude(), importedTrackStatistics.getMinAltitude(), delta);
+        if (isGpx) {
+            assertEquals(trackStatistics.getMaxAltitude(), importedTrackStatistics.getMaxAltitude(), 2);
         } else {
-            assertFalse(importedTrackStatistics.hasTotalAltitudeGain());
-            assertFalse(importedTrackStatistics.hasTotalAltitudeLoss());
+            assertEquals(trackStatistics.getMaxAltitude(), importedTrackStatistics.getMaxAltitude(), delta);
         }
+        assertEquals(trackStatistics.getTotalAltitudeGain(), importedTrackStatistics.getTotalAltitudeGain(), delta);
+        assertEquals(trackStatistics.getTotalAltitudeLoss(), importedTrackStatistics.getTotalAltitudeLoss(), delta);
     }
 
     private static TrackPoint createTrackPoint(long time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, Distance distance) {

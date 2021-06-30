@@ -119,21 +119,33 @@ public class TrackRecordingServiceTestLocation {
         a.assertEquals(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(1)
                         .setSpeed(Speed.of(15)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.0001)
+                        .setLongitude(35)
                         .setAccuracy(2)
                         .setSpeed(Speed.of(15)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.0001)
+                        .setLongitude(35)
                         .setAccuracy(3)
                         .setSpeed(Speed.of(15)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.0002)
+                        .setLongitude(35)
                         .setAccuracy(4)
                         .setSpeed(Speed.of(15)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.0003)
+                        .setLongitude(35)
                         .setAccuracy(5)
                         .setSpeed(Speed.of(15)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.0004)
+                        .setLongitude(35)
                         .setAccuracy(6)
                         .setSpeed(Speed.of(15)),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
@@ -166,9 +178,13 @@ public class TrackRecordingServiceTestLocation {
         a.assertEquals(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(1)
                         .setSpeed(Speed.of(15)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.0005)
+                        .setLongitude(35)
                         .setAccuracy(6)
                         .setSpeed(Speed.of(15)),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
@@ -200,12 +216,18 @@ public class TrackRecordingServiceTestLocation {
         a.assertEquals(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(1)
                         .setSpeed(Speed.of(0)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT) //TODO Why is this added? Systems is idle and not moving at all.
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(2)
                         .setSpeed(Speed.of(0)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(6)
                         .setSpeed(Speed.of(0)),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
@@ -237,15 +259,23 @@ public class TrackRecordingServiceTestLocation {
         a.assertEquals(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(1)
                         .setSpeed(Speed.of(15)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT) //TODO Check why this trackPoint is inserted.
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(2)
                         .setSpeed(Speed.of(0)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT) //TODO Check why this trackPoint is inserted.
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(5)
                         .setSpeed(Speed.of(0)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(6)
                         .setSpeed(Speed.of(15)),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
@@ -292,26 +322,38 @@ public class TrackRecordingServiceTestLocation {
         a.assertEquals(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(1)
                         .setSpeed(Speed.of(0))
                         .setHeartRate_bpm(5f),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(2)
                         .setSpeed(Speed.of(0))
                         .setHeartRate_bpm(5f),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(3)
                         .setSpeed(Speed.of(0))
                         .setHeartRate_bpm(5f),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(4)
                         .setSpeed(Speed.of(0))
                         .setHeartRate_bpm(5f),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(5)
                         .setSpeed(Speed.of(0))
                         .setHeartRate_bpm(5f),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(6)
                         .setSpeed(Speed.of(0))
                         .setHeartRate_bpm(5f),
@@ -345,20 +387,30 @@ public class TrackRecordingServiceTestLocation {
         a.assertEquals(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
                         .setAccuracy(1)
                         .setSpeed(Speed.of(0)),
 
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC)
+                        .setLatitude(45.1)
+                        .setLongitude(35)
                         .setAccuracy(2)
                         .setSpeed(Speed.of(0)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.1)
+                        .setLongitude(35)
                         .setAccuracy(3)
                         .setSpeed(Speed.of(0)),
 
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC)
+                        .setLatitude(45.2)
+                        .setLongitude(35)
                         .setAccuracy(4)
                         .setSpeed(Speed.of(0)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.2)
+                        .setLongitude(35)
                         .setAccuracy(5)
                         .setSpeed(Speed.of(0)),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
