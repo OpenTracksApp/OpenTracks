@@ -136,7 +136,7 @@ public class IntentUtils {
             uris.add(marker.getPhotoURI());
         }
 
-        if (uris.size() == 0) {
+        if (uris.isEmpty()) {
             return null;
         }
 

@@ -77,7 +77,7 @@ public class ShareContentProvider extends CustomContentProvider {
     }
 
     public static Pair<Uri, String> createURI(Set<Track.Id> trackIds, String trackName, @NonNull TrackFileFormat trackFileFormat) {
-        if (trackIds.size() == 0) {
+        if (trackIds.isEmpty()) {
             throw new UnsupportedOperationException();
         }
 

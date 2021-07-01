@@ -42,7 +42,7 @@ public abstract class ShowOnMapProxyActivity extends AppCompatActivity {
      * @param trackIds the track ids
      */
     private static void showTrackfileFormat(Context context, TrackFileFormat trackFileFormat, Set<Track.Id> trackIds) {
-        if (trackIds.size() == 0) {
+        if (trackIds.isEmpty()) {
             return;
         }
 

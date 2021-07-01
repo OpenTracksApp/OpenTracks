@@ -416,21 +416,6 @@ public class ContentProviderUtils {
         return markers;
     }
 
-    //TODO Move to testing package
-    @Deprecated
-    public int getMarkerCount(Track.Id trackId) {
-        String[] projection = new String[]{"count(*) AS count"};
-        String selection = MarkerColumns.TRACKID + "=?";
-        String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
-        try (Cursor cursor = contentResolver.query(MarkerColumns.CONTENT_URI, projection, selection, selectionArgs, MarkerColumns._ID)) {
-            if (cursor == null) {
-                return 0;
-            }
-            cursor.moveToFirst();
-            return cursor.getInt(0);
-        }
-    }
-
     /**
      * @return the content provider URI of the inserted marker.
      */

@@ -76,7 +76,7 @@ public class KMLImportTest {
         assertEquals("", importedTrack.getIcon());
 
         // 2. markers
-        assertEquals(0, contentProviderUtils.getMarkerCount(importTrackId));
+        assertEquals(0, contentProviderUtils.getMarkers(importTrackId).size());
 
         // 3. trackpoints
         List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
@@ -125,7 +125,7 @@ public class KMLImportTest {
         assertEquals("", importedTrack.getIcon());
 
         // 2. markers
-        assertEquals(0, contentProviderUtils.getMarkerCount(importTrackId));
+        assertEquals(0, contentProviderUtils.getMarkers(importTrackId).size());
 
         // 3. trackpoints
         List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
@@ -165,7 +165,7 @@ public class KMLImportTest {
         assertEquals("UNKNOWN", importedTrack.getIcon());
 
         // 2. markers
-        assertEquals(0, contentProviderUtils.getMarkerCount(importTrackId));
+        assertEquals(0, contentProviderUtils.getMarkers(importTrackId).size());
 
         // 3. trackpoints
         List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
