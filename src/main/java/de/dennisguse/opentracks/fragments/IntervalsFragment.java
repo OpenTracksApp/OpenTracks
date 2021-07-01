@@ -64,7 +64,6 @@ public class IntervalsFragment extends Fragment {
     /**
      * Creates an instance of this class.
      *
-     * @param trackId
      * @param  fromTopToBottom If true then the intervals are shown from top to bottom (the first interval on top). Otherwise the intervals are shown from bottom to top.
      * @return IntervalsFragment instance.
      */

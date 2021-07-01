@@ -341,7 +341,7 @@ public class ExportImportTest {
     }
 
     private void assertMarkers() {
-        assertEquals(markers.size(), contentProviderUtils.getMarkerCount(importTrackId));
+        assertEquals(markers.size(), contentProviderUtils.getMarkers(importTrackId).size());
 
         List<Marker> importedMarkers = contentProviderUtils.getMarkers(importTrackId);
         for (int i = 0; i < markers.size(); i++) {

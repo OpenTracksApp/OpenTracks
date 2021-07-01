@@ -37,7 +37,6 @@ public class IntervalStatistics {
     /**
      * Complete intervals with the tracks points from the iterator.
      *
-     * @param trackPointIterator
      * @return the last track point's id used to compute the intervals.
      */
     public TrackPoint.Id addTrackPoints(TrackPointIterator trackPointIterator) {
