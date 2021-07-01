@@ -1,0 +1,12 @@
+v3.18.5: OpenTracks
+
+Thay đổi:
+- Giọng nói thông báo tốc độ cấu hình
+- HIỂN <26: biểu tượng Phóng bỏ qua nền
+
+Lỗi:
+- Ghi UI: hiển thị chính xác giá trị 
+- Ghi UI: show (một lần nữa) độ cao trong EGM2008
+
+Phát triển:
+- Android12 quyền (BLUETOOTH_CONNECT)

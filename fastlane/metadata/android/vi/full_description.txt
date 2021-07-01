@@ -1,0 +1,11 @@
+OpenTracks là một môn thể thao theo dõi ứng dụng hoàn toàn tôn trọng sự riêng tư.
+
+Tính năng:
+* Thể theo dõi theo dõi thể thao và hoạt động ngoài trời
+* Ảnh và đánh dấu: đánh dấu địa điểm thú vị trong khi theo dõi
+* Độ cao được và mất: thông qua khí quyển cảm biến
+* Độ cao thể hiện trong EGM2008 (trên mực nước biển); xuất khẩu như WGS84
+* Tiếng nói thông báo
+* Hỗ trợ Bluetooth LE cảm biến: tim, tốc độ và khoảng cách (đi xe đạp), nhịp (đi xe đạp), và đồng hồ điện (đi xe đạp)
+* Xuất dữ liệu: xuất bài hát hoặc là BIỂU (bao gồm. ảnh) DÕI hay C
+* Không có Internet: Internet là không được sử dụng
