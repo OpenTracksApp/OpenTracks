@@ -461,7 +461,7 @@ limitations under the License.
     <string name="waypoint_type_waypoint">路标</string>
     <string name="about_url">项目主页：<a href="%1$s">%1$s</a></string>
     <string name="about_history">OpenTracks 是 <a href="https://code.google.com/archive/p/mytracks/"><i>Google MyTracks</i></a>（终止于 2016 年）的一个分支版本。</string>
-    <string name="open_track_as_KMZ">作为 KMZ 文件打开</string>
+    <string name="open_track_as_KML">作为 KML 文件打开</string>
     <string name="open_track_as_trackfileformat">作为 %1$s 文件打开</string>
     <string name="about_preference_title">关于 OpenTracks</string>
     <string name="about_version_name">版本名称：%1$s</string>

@@ -502,7 +502,7 @@ limitations under the License.
     <string name="help_gps_troubleshooting_title">OpenTracks не записує моє місцеположення\?</string>
     <string name="help_support_title">Як я можу підтримати OpenTracks\?</string>
     <string name="open_track_using_dashboard">Відкрити за допомогою OpenTracks-Dashboard</string>
-    <string name="open_track_as_KMZ">Відкрити як KMZ</string>
+    <string name="open_track_as_KML">Відкрити як KML</string>
     <string name="open_track_as_GPX">Відкрити як GPX</string>
     <string name="open_track_as_trackfileformat">Відкрити яка %1$s</string>
     <string name="activity_type_escooter">електро-байк</string>

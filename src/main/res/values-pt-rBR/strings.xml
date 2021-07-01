@@ -501,7 +501,7 @@
 \n Se tudo não ajudar, por favor relate um bug. </string>
     <string name="help_support_title">Como posso oferecer suporte a OpenTracks\?</string>
     <string name="open_track_using_dashboard">Abrir usando OpenTracks-Dashboard</string>
-    <string name="open_track_as_KMZ">Abrir como KMZ</string>
+    <string name="open_track_as_KML">Abrir como KML</string>
     <string name="open_track_as_GPX">Abrir como GPX</string>
     <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
     <string name="help_track_export_title">Como posso exportar/compartilhar trilhas gravadas\?</string>

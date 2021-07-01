@@ -504,7 +504,7 @@ limitations under the License.
     <string name="help_feature_title">OpenTracks posiada następujące funkcje:</string>
     <string name="help_track_map_title">Jak pokazywać trasę na mapie\?</string>
     <string name="open_track_using_dashboard">Otwórz używając OpenTracks-Dashboard</string>
-    <string name="open_track_as_KMZ">Otwórz jako KMZ</string>
+    <string name="open_track_as_KML">Otwórz jako KML</string>
     <string name="open_track_as_GPX">Otwórz jako GPX</string>
     <string name="open_track_as_trackfileformat">Otwórz jako %1$s</string>
     <string name="about_description"><i>OpenTracks</i> to aplikacja do śledzenia aktywności sportowej która całkowicie respektuje Twoją prywatność.</string>

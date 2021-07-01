@@ -516,7 +516,7 @@ limitations under the License.
     <string name="settings_night_mode_title">UI Тема</string>
     <string name="open_track_as_trackfileformat">Открыть как %1$s</string>
     <string name="open_track_as_GPX">Открыть как GPX</string>
-    <string name="open_track_as_KMZ">Открыть как KMZ</string>
+    <string name="open_track_as_KML">Открыть как KML</string>
     <string name="open_track_using_dashboard">Открыть с помощью OpenTracks-Dashboard</string>
     <string name="help_support_title">Как поддержать OpenTracks\?</string>
     <string name="help_gps_troubleshooting_title">OpenTracks не регистрирует местоположения\?</string>

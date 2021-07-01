@@ -532,7 +532,7 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <!-- Share image -->
     <string name="share_image_subject">Me gustaría compartir una imagen contigo</string>
     <string name="share_image_body">Creo que esta imagen te podría interesar.</string>
-    <string name="open_track_as_KMZ">Abrir como KMZ</string>
+    <string name="open_track_as_KML">Abrir como KML</string>
     <string name="open_track_as_GPX">Abrir como GPX</string>
     <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
     <string name="activity_type_escooter">escúter</string>

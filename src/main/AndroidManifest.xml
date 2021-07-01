@@ -308,8 +308,8 @@ limitations under the License.
 
         <activity android:name=".settings.SettingsActivity" />
 
-        <activity android:name=".ShowOnMapProxyActivity$KMZ">
-            <intent-filter android:label="@string/open_track_as_KMZ">
+        <activity android:name=".ShowOnMapProxyActivity$KML">
+            <intent-filter android:label="@string/open_track_as_KML">
                 <action android:name="Intent.OpenTracks-Dashboard" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

@@ -532,7 +532,7 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <!-- Share image -->
     <string name="share_image_subject">Irudi bat zurekin partekatu nahi nuke</string>
     <string name="share_image_body">Irudi hau interesatuko zaizuela uste dut.</string>
-    <string name="open_track_as_KMZ">Ireki gisa KMZ</string>
+    <string name="open_track_as_KML">Ireki gisa KML</string>
     <string name="open_track_using_dashboard">Ireki erabiliz OpenTracks-Arbel</string>
     <string name="open_track_as_trackfileformat">Ireki gisa %1$s</string>
     <string name="activity_type_escooter">eskooterra</string>

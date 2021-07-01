@@ -531,7 +531,7 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <!-- Share image -->
     <string name="share_image_subject">Chtěl bych s vámi sdílet obrázek</string>
     <string name="share_image_body">Myslím, že by vás mohl tento obrázek zajímat.</string>
-    <string name="open_track_as_KMZ">Otevřít jako KMZ</string>
+    <string name="open_track_as_KML">Otevřít jako KML</string>
     <string name="open_track_as_GPX">Otevřít jako GPX</string>
     <string name="open_track_as_trackfileformat">Otevřít jako %1$s</string>
     <string name="export_all_do_it_for_all">provést pro všechny konflikty</string>

@@ -507,7 +507,7 @@
     <string name="help_gps_troubleshooting_title">¿OpenTracks no registra ubicaciones\?</string>
     <string name="help_support_title">¿Cómo puedo ayudar a OpenTracks\?</string>
     <string name="open_track_using_dashboard">Abrir usando el Tablero OpenTracks</string>
-    <string name="open_track_as_KMZ">Abrir como KMZ</string>
+    <string name="open_track_as_KML">Abrir como KML</string>
     <string name="open_track_as_GPX">Abrir como GPX</string>
     <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
     <string name="activity_type_escooter">moto</string>

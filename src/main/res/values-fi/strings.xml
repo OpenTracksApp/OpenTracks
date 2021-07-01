@@ -64,7 +64,7 @@ limitations under the License.
 \nf) lahjoittaa ja
 \ng) tee mitä tahansa mielestäsi auttaa OpenTracksia. </string>
     <string name="open_track_using_dashboard">Avaa OpenTracks-Dashboardilla</string>
-    <string name="open_track_as_KMZ">Avaa KMZ-muodossa</string>
+    <string name="open_track_as_KML">Avaa KML-muodossa</string>
     <string name="open_track_as_GPX">Avaa GPX-muodossa</string>
     <string name="open_track_as_trackfileformat">Avaa %1$s-muodossa</string>
     <!-- Activity Type -->

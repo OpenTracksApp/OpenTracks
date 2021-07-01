@@ -97,9 +97,9 @@ limitations under the License.
     </string>
 
     <string name="open_track_using_dashboard">Open using OpenTracks-Dashboard</string>
-    <string name="open_track_as_KMZ">Open as KMZ</string>
+    <string name="open_track_as_KML">Open as KML</string>
     <string name="open_track_as_GPX">Open as GPX</string>
-    <string name="open_track_as_trackfileformat">Open as %1$s</string>
+    <string name="open_track_as_trackfileformat" translatable="false">Open as %1$s</string>
 
     <!-- Activity Type -->
     <string name="activity_type_airplane">airplane</string>

@@ -535,7 +535,7 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="open_track_using_dashboard">Open kasutades OpenTracks-Dashboard</string>
     <string name="activity_type_escooter">eskuuter</string>
     <string name="open_track_as_GPX">Avatud kui GPX</string>
-    <string name="open_track_as_KMZ">Avatud kui KMZ</string>
+    <string name="open_track_as_KML">Avatud kui KML</string>
     <string name="description_altitude_loss">Kõrguse kadu: %1$d m (%2$d ft)</string>
     <string name="export_all_do_it_for_all">tehke seda kõigi konfliktide jaoks</string>
     <string name="export_error_post_workout">Treeningujärgne eksport nurjus, palun kontrolli ekspordikataloogi.</string>

@@ -68,7 +68,7 @@ e) kaufen in <a href="https://play.google.com/store/apps/details?id=de.dennisgus
 f) spenden, und\n
 g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="open_track_using_dashboard">Öffne mithilfe des OpenTracks-Dashboard</string>
-    <string name="open_track_as_KMZ">Als KMZ öffnen</string>
+    <string name="open_track_as_KML">Als KML öffnen</string>
     <string name="open_track_as_GPX">Als GPX öffnen</string>
     <string name="open_track_as_trackfileformat">Als %1$s öffnen</string>
     <!-- Activity Type -->

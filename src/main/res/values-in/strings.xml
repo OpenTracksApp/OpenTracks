@@ -407,7 +407,7 @@
     <string name="waypoint_type_water_fountain">air mancur</string>
     <string name="waypoint_type_waypoint">titik jalan</string>
     <string name="settings_night_mode_option_night">Malam</string>
-    <string name="open_track_as_KMZ">Buka sebagai KMZ</string>
+    <string name="open_track_as_KML">Buka sebagai KML</string>
     <string name="import_error_list_dialog_title">Berkas tidak diimpor</string>
     <string name="import_file_imported">Berkas %1$s telah diimpor</string>
     <string name="settings_night_mode_option_day">Siang</string>

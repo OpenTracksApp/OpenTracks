@@ -459,7 +459,7 @@ limitations under the License.
     <string name="waypoint_type_waterfall">foss</string>
     <string name="waypoint_type_water_fountain">vannfontene</string>
     <string name="waypoint_type_waypoint">rutepunkt</string>
-    <string name="open_track_as_KMZ">Åpne som KMZ</string>
+    <string name="open_track_as_KML">Åpne som KML</string>
     <string name="description_default_speed_or_pace">Etter aktivitetstype</string>
     <string name="export_without_photos">uten bilder</string>
     <string name="export_all_do_it_for_all">gjør det for alle konflikter</string>

@@ -536,7 +536,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="description_altitude_loss">Hoogteverlies: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Post-workout export mislukt, controleer de export map.</string>
     <string name="open_track_using_dashboard">Openen met behulp van OpenTracks-Dashboard</string>
-    <string name="open_track_as_KMZ">Openen als KMZ</string>
+    <string name="open_track_as_KML">Openen als KML</string>
     <string name="open_track_as_GPX">Openen als GPX</string>
     <string name="open_track_as_trackfileformat">Openen als %1$s</string>
     <string name="activity_type_escooter">scooter</string>

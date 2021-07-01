@@ -475,7 +475,7 @@ limitations under the License.
     <string name="help_gps_troubleshooting_title">Az OpenTracks nem rögzíti a helyszíneket\?</string>
     <string name="help_support_title">Hogyan tudom támogatni az OpenTracks-t\?</string>
     <string name="open_track_using_dashboard">Megnyitás az OpenTracks-Dashboard segítségével</string>
-    <string name="open_track_as_KMZ">Megnyitás KMZ-ként</string>
+    <string name="open_track_as_KML">Megnyitás KML-ként</string>
     <string name="open_track_as_GPX">Megnyitás GPX-ként</string>
     <string name="open_track_as_trackfileformat">Megnyitás %1$s néven</string>
     <string name="activity_type_escooter">eszkoter</string>

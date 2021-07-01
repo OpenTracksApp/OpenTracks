@@ -68,7 +68,7 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
 \n f) facer unha doazón, e
 \n g) calquera cousa que estimes axuda a OpenTracks. </string>
     <string name="open_track_using_dashboard">Abrir usando OpenTracks-Dashboard</string>
-    <string name="open_track_as_KMZ">Abrir como KMZ</string>
+    <string name="open_track_as_KML">Abrir como KML</string>
     <string name="open_track_as_GPX">Abrir como GPX</string>
     <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
     <!-- Activity Type -->

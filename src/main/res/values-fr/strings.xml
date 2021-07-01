@@ -553,7 +553,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="hold_to_pause">Tenir pour faire une pause</string>
     <string name="hold_to_stop">Maintenir pour arrêter</string>
     <string name="track_distance_notification">Distance : %1$s</string>
-    <string name="open_track_as_KMZ">Ouvert comme KMZ</string>
+    <string name="open_track_as_KML">Ouvert comme KML</string>
     <string name="open_track_as_GPX">Ouvert en tant que GPX</string>
     <string name="open_track_as_trackfileformat">Ouvrir comme %1$s</string>
     <string name="open_track_using_dashboard">Ouvrir en utilisant OpenTracks-Dashboard</string>
