@@ -596,4 +596,19 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="track_distance_notification">Strecke: %1$s</string>
     <string name="track_speed_notification">Geschwindigkeit: %1$s</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
+    <string name="menu_voice_rate">Sprachgeschwindigkeit</string>
+    <string name="import_prevent_reimport">Du hast re-import von Tracks verhindern aktiviert</string>
+    <string name="about_third_party_data">Daten von Drittherstellern</string>
+    <string name="sensor_state_heart_rate_max">Maximaler Puls</string>
+    <string name="track_delete_not_recording">Dieser Track kann nicht gelöscht werden, da er gerade aufgezeichnet wird.</string>
+    <string name="interval_list_empty_message">Noch kein Intervall vorhanden</string>
+    <string name="import_parser_error">Parser Fehler: %1$s</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Ganzen Bildschirm während Aufnahmen verwenden.</string>
+    <string name="sensor_state_heart_rate_avg">Durchschnittlicher Puls</string>
+    <string name="settings_prevent_reimport_tracks_title">Re-import von Tracks verhindern</string>
+    <string name="import_no_kml_file_found">Keine doc.kml Datei im KMZ gefunden</string>
+    <string name="track_delete_progress">%1$d/%2$d</string>
+    <string name="import_thread_interrupted">Thread unterbrochen</string>
+    <string name="import_unable_to_import_file">Importieren der Datei gescheitert: %1$s</string>
+    <string name="delete_service">Löschdienst</string>
 </resources>
