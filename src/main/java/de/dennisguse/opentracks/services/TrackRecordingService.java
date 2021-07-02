@@ -778,6 +778,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             tmpLastTrackPoint.setLongitude(lastTrackPoint.getLongitude());
             tmpLastTrackPoint.setLatitude(lastTrackPoint.getLatitude());
         }
+        tmpLastTrackPoint.setAltitudeGain(getAltitudeGain_m());
+        tmpLastTrackPoint.setAltitudeLoss(getAltitudeLoss_m());
 
         SensorDataSet sensorDataSet = fillWithSensorDataSet(tmpLastTrackPoint);
 

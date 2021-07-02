@@ -100,12 +100,13 @@ public class AltitudeSumManager implements SensorEventListener {
             return;
         }
 
+        altitudeGain_m = altitudeGain_m != null ? altitudeGain_m : 0;
+        altitudeLoss_m = altitudeLoss_m != null ? altitudeLoss_m : 0;
+
         PressureSensorUtils.AltitudeChange altitudeChange = PressureSensorUtils.computeChangesWithSmoothing_m(lastAcceptedPressureValue_hPa, lastSeenSensorValue_hPa, value_hPa);
         if (altitudeChange != null) {
-            altitudeGain_m = altitudeGain_m != null ? altitudeGain_m : 0;
-            altitudeGain_m = altitudeChange.getAltitudeGain_m();
+            altitudeGain_m += altitudeChange.getAltitudeGain_m();
 
-            altitudeLoss_m = altitudeLoss_m != null ? altitudeLoss_m : 0;
             altitudeLoss_m += altitudeChange.getAltitudeLoss_m();
 
             lastAcceptedPressureValue_hPa = altitudeChange.getCurrentSensorValue_hPa();

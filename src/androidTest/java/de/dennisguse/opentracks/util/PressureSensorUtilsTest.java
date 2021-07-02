@@ -16,7 +16,7 @@ public class PressureSensorUtilsTest {
 
         // when // then
         for (float v : sensorValues_hPa) {
-            assertNull(PressureSensorUtils.computeChanges_m(firstSensorValue, v));
+            assertNull(PressureSensorUtils.computeChanges(firstSensorValue, v));
         }
     }
 
@@ -33,7 +33,7 @@ public class PressureSensorUtilsTest {
         float lastUsedPressureValue_hPa = firstSensorValue;
 
         for (float v : sensorValues_hPa) {
-            PressureSensorUtils.AltitudeChange altitudeChange = PressureSensorUtils.computeChanges_m(lastUsedPressureValue_hPa, v);
+            PressureSensorUtils.AltitudeChange altitudeChange = PressureSensorUtils.computeChanges(lastUsedPressureValue_hPa, v);
             if (altitudeChange != null) {
                 altitudeGain_m += altitudeChange.getAltitudeGain_m();
                 altitudeLoss += altitudeChange.getAltitudeLoss_m();
