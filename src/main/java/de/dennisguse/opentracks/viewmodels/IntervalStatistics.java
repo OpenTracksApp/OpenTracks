@@ -163,10 +163,8 @@ public class IntervalStatistics {
             time = time.plus(trackStatistics.getTotalTime());
             gain_m = trackStatistics.hasTotalAltitudeGain() ? trackStatistics.getTotalAltitudeGain() : gain_m;
             loss_m = trackStatistics.hasTotalAltitudeLoss() ? trackStatistics.getTotalAltitudeLoss() : loss_m;
-            if (gain_m != null && lastTrackPoint != null && lastTrackPoint.hasAltitudeGain()) {
+            if (hasGain() && lastTrackPoint != null && lastTrackPoint.hasAltitudeGain()) {
                 gain_m = gain_m - lastTrackPoint.getAltitudeGain();
-            }
-            if (loss_m != null && lastTrackPoint != null && lastTrackPoint.hasAltitudeLoss()) {
                 loss_m = loss_m - lastTrackPoint.getAltitudeLoss();
             }
         }
