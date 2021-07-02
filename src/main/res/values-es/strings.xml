@@ -205,7 +205,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="generic_tracks">Rutas</string>
     <string name="generic_yes">Sí</string>
     <!-- Gps -->
-    <string name="gps_location_access">\"Acceso a la ubicación\"</string>
     <string name="gps_disabled">El GPS no está habilitado. Toca aquí para ir a %1$s. Pulsa el botón Atrás para volver.</string>
     <string name="gps_disabled_my_location">No se puede determinar la ubicación actual. Habilita más fuentes de ubicación en %1$s y asegúrate de que se pueda ver el cielo. Vuelve a intentarlo más tarde.</string>
     <string name="gps_not_found">No se ha encontrado ningún GPS en el dispositivo</string>

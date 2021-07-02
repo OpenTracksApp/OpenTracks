@@ -153,7 +153,6 @@ limitations under the License.
     <string name="generic_tracks">トラック</string>
     <string name="generic_yes">はい</string>
     <!-- Gps -->
-    <string name="gps_location_access">[位置情報アクセス]</string>
     <string name="gps_disabled">GPSが有効になっていません。%1$sにアクセスするにはここをタップします。前に戻るには[戻る]ボタンを押します。</string>
     <string name="gps_disabled_my_location">現在地を特定できません。[%1$s]で他の位置情報を有効にして、空が見える場所に移動してください。
     後でもう一度やり直してください。</string>

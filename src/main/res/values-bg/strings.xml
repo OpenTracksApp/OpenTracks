@@ -153,7 +153,6 @@ limitations under the License.
     <string name="generic_tracks">Маршрути</string>
     <string name="generic_yes">Да</string>
     <!-- Gps -->
-    <string name="gps_location_access">„Достъп до местоположението“</string>
     <string name="gps_disabled">GPS не е активиран. Докоснете тук, за да отидете на %1$s. Натиснете бутона за назад, за да се върнете.</string>
     <string name="gps_disabled_my_location">Текущото местоположение не може да бъде определено. Активирайте още източници на местоположение от %1$s и се уверете, че небето се вижда. Опитайте отново по-късно.</string>
     <string name="gps_not_found">Няма намерен GPS на устройството.</string>

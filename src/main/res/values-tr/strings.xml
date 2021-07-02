@@ -153,7 +153,6 @@ limitations under the License.
     <string name="generic_tracks">Parkurlar</string>
     <string name="generic_yes">Evet</string>
     <!-- Gps -->
-    <string name="gps_location_access">\"Konum erişimi\"</string>
     <string name="gps_disabled">GPS etkin değil. %1$s bölümüne gitmek için buraya hafifçe vurun. Geri dönmek için geri düğmesine basın.</string>
     <string name="gps_disabled_my_location">Geçerli konum belirlenemiyor. Daha fazla konum kaynağını etkinleştirmek için %1$s bölümüne gidin ve gökyüzünün görünür olduğundan emin olun. Daha sonra tekrar deneyin.</string>
     <string name="gps_not_found">Bu cihazda GPS bulunamadı</string>

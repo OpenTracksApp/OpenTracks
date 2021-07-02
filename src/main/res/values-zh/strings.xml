@@ -153,7 +153,6 @@ limitations under the License.
     <string name="generic_tracks">路线</string>
     <string name="generic_yes">是</string>
     <!-- Gps -->
-    <string name="gps_location_access">‘位置信息使用权’</string>
     <string name="gps_disabled">GPS 未启用，请点按此处转至 %1$s。按“后退”按钮返回。</string>
     <string name="gps_disabled_my_location">无法确定当前位置。请进入%1$s启用更多位置来源，并确保
     您看得到天空。请稍后再试。</string>

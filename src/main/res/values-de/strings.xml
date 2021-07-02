@@ -214,7 +214,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="generic_tracks">Strecken</string>
     <string name="generic_yes">Ja</string>
     <!-- Gps -->
-    <string name="gps_location_access">„Standortzugriff“</string>
     <string name="gps_disabled">GPS ist nicht aktiviert. Tippen Sie hier, um zu %1$s wechseln. Drücken Sie „Zurück“, um zurückzugehen.</string>
     <string name="gps_disabled_my_location">Der aktuelle Standort kann nicht ermittelt werden. Aktivieren Sie mehr Standortquellen unter „%1$s“ und vergewissern Sie sich, dass der Himmel sichtbar ist. Bitte versuchen Sie es später erneut.</string>
     <string name="gps_not_found">Das Gerät empfängt kein GPS-Signal</string>

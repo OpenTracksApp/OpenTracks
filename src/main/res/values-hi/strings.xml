@@ -153,7 +153,6 @@ limitations under the License.
     <string name="generic_tracks">ट्रैक</string>
     <string name="generic_yes">हां</string>
     <!-- Gps -->
-    <string name="gps_location_access">सही स्थान</string>
     <string name="gps_disabled">GPS अक्षम है. %1$s पर जाने के लिए यहां टैप करें. लौटने के लिए  वापस जाएं बटन को दबाएं.</string>
     <string name="gps_disabled_my_location">वर्तमान स्थान का निर्धारण नहीं किया जा सकता. %1$s पर अधिक स्थान स्रोतों को सक्षम करें और सुनिश्चित करें कि आसमान दिख रहा है. बाद में पुन: प्रयास करें.</string>
     <string name="gps_not_found">उपकरण पर कोई GPS नहीं मिला</string>

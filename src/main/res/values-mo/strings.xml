@@ -131,7 +131,6 @@
     <string name="generic_success_title">Aţi reuşit</string>
     <string name="generic_tracks">Trasee</string>
     <string name="generic_yes">Da</string>
-    <string name="gps_location_access">„Acces la locație”</string>
     <string name="gps_disabled">GPS-ul nu este activat. Apăsați aici pentru a accesa %1$s. Apăsați butonul Înapoi pentru a reveni.</string>
     <string name="gps_disabled_my_location">Locația curentă nu poate fi determinată. Activați mai multe surse de localizare la %1$s și asigurați-vă că este vizibil cerul. Încercați din nou mai târziu.</string>
     <string name="gps_not_found">Nu se găsește niciun sistem GPS pe dispozitiv</string>

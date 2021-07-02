@@ -153,7 +153,6 @@ limitations under the License.
     <string name="generic_tracks">เส้นการเดินทาง</string>
     <string name="generic_yes">ใช่</string>
     <!-- Gps -->
-    <string name="gps_location_access">การเข้าถึงข้อมูลตำแหน่ง</string>
     <string name="gps_disabled">ไม่ได้เปิดใช้งาน GPS กดที่นี่เพื่อไปที่ %1$s โปรดกดปุ่มย้อนกลับเพื่อกลับไป</string>
     <string name="gps_disabled_my_location">ไม่สามารถกำหนดตำแหน่งปัจจุบันได้ เปิดใช้งานแหล่งข้อมูลตำแหน่งเพิ่มเติมที่ %1$s และตรวจดูให้แน่ใจว่าสามารถมองเห็นท้องฟ้าได้ แล้วลองอีกครั้งในภายหลัง</string>
     <string name="gps_not_found">ไม่พบ GPS บนอุปกรณ์</string>

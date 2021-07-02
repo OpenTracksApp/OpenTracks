@@ -131,7 +131,6 @@
     <string name="generic_success_title">Berhasil</string>
     <string name="generic_tracks">Lintasan</string>
     <string name="generic_yes">Ya</string>
-    <string name="gps_location_access">Akses lokasi</string>
     <string name="gps_disabled">GPS tidak diaktifkan. Ketuk di sini menuju %1$s. Tekan tombol kembali untuk mundur.</string>
     <string name="gps_disabled_my_location">Lokasi saat ini tidak dapat ditentukan. Aktifkan sumber lokasi lainnya pada %1$s &amp; pastikan
     langit terlihat. Coba lagi nanti.</string>

@@ -265,7 +265,6 @@ limitations under the License.
     <string name="generic_completed">Completed</string>
     <string name="generic_click_twice_cancel">Click back again to cancel</string>
     <!-- Gps -->
-    <string name="gps_location_access">&#8216;Location access&#8217;</string>
     <string name="gps_disabled">GPS not enabled. Tap here to go to %1$s. Press the back button to return.</string>
     <string name="gps_disabled_my_location">Current location cannot be determined. Enable more location sources at %1$s &amp; make sure the sky is visible. Try again later.</string>
     <string name="gps_not_found">No GPS is found on the device</string>

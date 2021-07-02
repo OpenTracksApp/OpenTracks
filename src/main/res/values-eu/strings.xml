@@ -206,7 +206,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="generic_tracks">Ibilbideak</string>
     <string name="generic_yes">Bai</string>
     <!-- Gps -->
-    <string name="gps_location_access">\"Kokapenerako sarbidea\"</string>
     <string name="gps_disabled">GPSa ez dago gaituta. %1$s atalera joateko, sakatu hau. Itzultzeko, sakatu Atzera botoia.</string>
     <string name="gps_disabled_my_location">Ezin da uneko kokapena zehaztu. Gaitu kokapen-iturburu gehiago %1$s atalean eta ziurtatu zerua ikus dezakezula. Saiatu berriro geroago.</string>
     <string name="gps_not_found">Ez da GPSrik aurkitu gailuan</string>

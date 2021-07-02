@@ -153,7 +153,6 @@ limitations under the License.
     <string name="generic_tracks">Trase</string>
     <string name="generic_yes">Da</string>
     <!-- Gps -->
-    <string name="gps_location_access">\"Pristup lokaciji\"</string>
     <string name="gps_disabled">GPS nije omogućen. Dotaknite ovdje da biste posjetili %1$s. Pritisnite gumb Natrag da biste se vratili.</string>
     <string name="gps_disabled_my_location">Nije moguće utvrditi trenutačnu lokaciju. Omogućite više izvora lokacije u odjeljku %1$s i provjerite je li nebo vidljivo. Pokušajte ponovo kasnije.</string>
     <string name="gps_not_found">Na uređaju nije pronađen GPS</string>

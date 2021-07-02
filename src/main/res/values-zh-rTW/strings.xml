@@ -131,7 +131,6 @@
     <string name="generic_success_title">成功</string>
     <string name="generic_tracks">足跡</string>
     <string name="generic_yes">是</string>
-    <string name="gps_location_access">「位置資訊存取權」</string>
     <string name="gps_disabled">GPS 尚未啟用，請輕觸這裡以前往%1$s。按一下返回鈕即可返回上一頁。</string>
     <string name="gps_disabled_my_location">無法確認目前位置。請前往 %1$s啟用更多位置來源，同時確定
     您所在的位置可以看見天空，並於稍後再試一次。</string>

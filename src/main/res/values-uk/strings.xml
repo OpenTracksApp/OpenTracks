@@ -153,7 +153,6 @@ limitations under the License.
     <string name="generic_tracks">Шляхи</string>
     <string name="generic_yes">Так</string>
     <!-- Gps -->
-    <string name="gps_location_access">\"Доступ до місцезнаходження\"</string>
     <string name="gps_disabled">GPS вимкнено. Натисніть тут, щоб перейти до меню %1$s. Щоб повернутися, натисніть кнопку \"Назад\".</string>
     <string name="gps_disabled_my_location">Неможливо визначити поточне місцезнаходження. Запустіть кілька джерел визначення місцезнаходження в меню %1$s і переконайтеся, що видно небо. Після цього повторіть спробу.</string>
     <string name="gps_not_found">На пристрої відсутній GPS-приймач</string>

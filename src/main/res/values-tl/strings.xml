@@ -153,7 +153,6 @@ limitations under the License.
     <string name="generic_tracks">Mga Track</string>
     <string name="generic_yes">Oo</string>
     <!-- Gps -->
-    <string name="gps_location_access">\'Access sa lokasyon\'</string>
     <string name="gps_disabled">Hindi pinagagana ang GPS. I-tap dito upang pumunta sa %1$s . Pindutin ang back button upang bumalik.</string>
     <string name="gps_disabled_my_location">Hindi matukoy ang kasalukuyang lokasyon. I-enable ang mas maraming mapagkukunan ng lokasyon sa %1$s at tiyaking nakikita ang kalangitan. Subukang muli mamaya.</string>
     <string name="gps_not_found">Walang GPS na natagpuan sa device</string>

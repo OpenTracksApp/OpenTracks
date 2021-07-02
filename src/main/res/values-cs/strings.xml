@@ -205,7 +205,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="generic_tracks">Trasy</string>
     <string name="generic_yes">Ano</string>
     <!-- Gps -->
-    <string name="gps_location_access">Přístup k poloze</string>
     <string name="gps_disabled">Systém GPS není zapnutý. Klepnutím sem přejdete na možnost %1$s. Stisknutím tlačítka Zpět se vrátíte.</string>
     <string name="gps_disabled_my_location">Aktuální polohu nelze určit. V části %1$s aktivujte další zdroje pro zjišťování polohy a ujistěte se, že vidíte oblohu. Zkuste to znovu později.</string>
     <string name="gps_not_found">Zařízení neobsahuje GPS</string>

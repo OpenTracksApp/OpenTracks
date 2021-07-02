@@ -153,7 +153,6 @@ limitations under the License.
     <string name="generic_tracks">Maršruti</string>
     <string name="generic_yes">Jā</string>
     <!-- Gps -->
-    <string name="gps_location_access">Piekļuve atrašanās vietai</string>
     <string name="gps_disabled">GPS nav iespējots. Pieskarieties šeit, lai dotos uz %1$s. Lai atgrieztos, nospiediet pogu Atpakaļ.</string>
     <string name="gps_disabled_my_location">Pašreizējo atrašanās vietu nevar noteikt. Sadaļā %1$s iespējojiet vairāk atrašanās vietas noteikšanas avotus un pārliecinieties, ka debesis ir redzamas. Mēģiniet vēlreiz vēlāk.</string>
     <string name="gps_not_found">Neizdevās atrast GPS navigāciju šajā ierīcē</string>

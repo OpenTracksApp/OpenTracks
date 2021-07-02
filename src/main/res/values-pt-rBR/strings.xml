@@ -131,7 +131,6 @@
     <string name="generic_success_title">Sucesso</string>
     <string name="generic_tracks">Trilhas</string>
     <string name="generic_yes">Sim</string>
-    <string name="gps_location_access">\"Acesso ao local\"</string>
     <string name="gps_disabled">GPS inativo. Toque aqui para ir para %1$s. Pressione o botão \"Voltar\" para retornar.</string>
     <string name="gps_disabled_my_location">Não é possível determinar o local atual. Ative mais fontes da localização em %1$s. Além disso, verifique se
     o céu está visível. Tente novamente mais tarde.</string>

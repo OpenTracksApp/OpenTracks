@@ -131,7 +131,6 @@
     <string name="generic_success_title">Êxito</string>
     <string name="generic_tracks">Percursos</string>
     <string name="generic_yes">Sim</string>
-    <string name="gps_location_access">\"Acesso à localização\"</string>
     <string name="gps_disabled">GPS não ativado. Toque aqui para ir para %1$s. Prima o botão voltar para regressar.</string>
     <string name="gps_disabled_my_location">A localização atual não pode ser determinada. Ative mais origens de localização em %1$s e certifique-se de que o céu está visível. Tente novamente mais tarde.</string>
     <string name="gps_not_found">Nenhum GPS encontrado no dispositivo</string>

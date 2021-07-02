@@ -196,7 +196,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="generic_tracks">Percorsi</string>
     <string name="generic_yes">Sì</string>
     <!-- Gps -->
-    <string name="gps_location_access">«Accesso alla posizione»</string>
     <string name="gps_disabled">GPS non attivato. Tocca qui per andare a %1$s. Poi premi il pulsante per tornare indietro.</string>
     <string name="gps_disabled_my_location">Impossibile determinare la posizione corrente. Attiva ulteriori fonti per la determinazione della posizione in %1$s e assicurati che
     il cielo sia visibile. Riprova più tardi.</string>

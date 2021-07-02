@@ -153,7 +153,6 @@ limitations under the License.
     <string name="generic_tracks">Đường đi</string>
     <string name="generic_yes">Có</string>
     <!-- Gps -->
-    <string name="gps_location_access">‘Quyền truy cập thông tin vị trí’</string>
     <string name="gps_disabled">GPS chưa được bật. Hãy chạm vào đây để chuyển tới %1$s. Nhấn nút quay lại để trở về.</string>
     <string name="gps_disabled_my_location">Không xác định được vị trí hiện tại. Hãy bật thêm nguồn vị trí tại %1$s và chắc chắn rằng bạn có thể nhìn thấy bầu trời. Vui lòng thử lại sau.</string>
     <string name="gps_not_found">Không tìm thấy GPS trên thiết bị</string>

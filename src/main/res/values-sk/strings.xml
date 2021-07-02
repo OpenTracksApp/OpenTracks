@@ -153,7 +153,6 @@ limitations under the License.
     <string name="generic_tracks">Trasy</string>
     <string name="generic_yes">Áno</string>
     <!-- Gps -->
-    <string name="gps_location_access">Prístup k polohe</string>
     <string name="gps_disabled">GPS nie je povolené. Kliknite sem pre prechod na %1$s . Stlačte tlačidlo \"späť\" pre návrat.</string>
     <string name="gps_disabled_my_location">Nemožno určiť aktuálnu polohu. Povoľte ďalšie zdroje určenia polohy v časti %1$s a uistite sa, že vidíte na oblohu. Skúste to znova neskôr.</string>
     <string name="gps_not_found">V zariadení sa nenašiel systém GPS</string>

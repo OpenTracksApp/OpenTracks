@@ -153,7 +153,6 @@ limitations under the License.
     <string name="generic_tracks">Lagu</string>
     <string name="generic_yes">Ya</string>
     <!-- Gps -->
-    <string name="gps_location_access">‘Akses lokasi’</string>
     <string name="gps_disabled">GPS tidak didayakan. Ketik di sini untuk pergi ke %1$s. Tekan butang kembali untuk kembali.</string>
     <string name="gps_disabled_my_location">Lokasi semasa tidak dapat ditentukan. Dayakan sumber lokasi lagi di %1$s &amp; pastikan langit dapat dilihat. Cuba sebentar lagi.</string>
     <string name="gps_not_found">Tiada GPS ditemui pada peranti</string>

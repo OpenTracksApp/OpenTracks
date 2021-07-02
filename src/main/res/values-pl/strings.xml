@@ -161,7 +161,6 @@ limitations under the License.
     <string name="generic_tracks">Trasy</string>
     <string name="generic_yes">Tak</string>
     <!-- Gps -->
-    <string name="gps_location_access">„Dostęp do lokalizacji”</string>
     <string name="gps_disabled">GPS nie jest włączony. Kliknij tutaj, aby przejść do %1$s. Naciśnij przycisk Wstecz, aby wrócić.</string>
     <string name="gps_disabled_my_location">Nie można określić aktualnej lokalizacji. Otwórz %1$s, włącz więcej źródeł określania lokalizacji i upewnij się,
     że widok nieba nie jest przesłonięty. Spróbuj ponownie później.</string>

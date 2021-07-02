@@ -131,7 +131,6 @@
     <string name="generic_success_title">הצלחה</string>
     <string name="generic_tracks">מסלולים</string>
     <string name="generic_yes">כן</string>
-    <string name="gps_location_access">\'גישה למיקום\'</string>
     <string name="gps_disabled">ה-GPS מושבת. לחץ כאן כדי לעבור אל %1$s. הקש על הלחצן \'הקודם\' כדי לחזור.</string>
     <string name="gps_disabled_my_location">לא ניתן לקבוע את המיקום הנוכחי. הפעל מקורות מיקום נוספים ב-%1$s ודא שאין מבנים או עצמים החוסמים 
     קו ראייה ישיר לשמיים. נסה שוב מאוחר יותר.</string>

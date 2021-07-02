@@ -215,7 +215,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="generic_tracks">Traxectos</string>
     <string name="generic_yes">Si</string>
     <!-- Gps -->
-    <string name="gps_location_access">\"Acceso á situación\"</string>
     <string name="gps_disabled">O GPS non está habilitado. Toca aquí para ir a %1$s. Preme o botón Atrás para volver atrás.</string>
     <string name="gps_disabled_my_location">Non se pode determinar a situación actual. Habilita máis fontes de localización en %1$s e asegúrate de que o ceo estea visible. Téntao de novo máis tarde.</string>
     <string name="gps_not_found">Non se atopou ningún GPS no dispositivo</string>
