@@ -22,10 +22,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorData;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
@@ -158,7 +161,12 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         }
     }
 
-    public SensorDataSet getSensorData() {
+    public void fill(@NonNull TrackPoint trackPoint) {
+        sensorDataSet.fillTrackPoint(trackPoint);
+    }
+
+    public SensorDataSet getSensorDataSet() {
+        // TODO Should return a copy.
         return sensorDataSet;
     }
 

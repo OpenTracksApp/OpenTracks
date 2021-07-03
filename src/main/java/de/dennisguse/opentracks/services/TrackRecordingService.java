@@ -363,10 +363,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         remoteSensorManager = new BluetoothRemoteSensorManager(this);
         remoteSensorManager.start();
 
-        handler.postDelayed(updateRecordingData, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
-
         altitudeSumManager = new AltitudeSumManager();
         altitudeSumManager.start(this);
+
+        handler.postDelayed(updateRecordingData, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
 
         lastTrackPoint = null;
         isIdle = false;
@@ -528,7 +528,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        fillWithSensorDataSet(trackPoint);
+        remoteSensorManager.fill(trackPoint);
 
         correctAltitude(trackPoint);
 
@@ -649,16 +649,14 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      */
     private void insertTrackPoint(@NonNull Track track, @NonNull TrackPoint trackPoint) {
         try {
-            if (altitudeSumManager != null) {
-                trackPoint.setAltitudeGain(getAltitudeGain_m());
-                trackPoint.setAltitudeLoss(getAltitudeLoss_m());
+            if (!TrackPoint.Type.SEGMENT_START_MANUAL.equals(trackPoint.getType())) {
+                altitudeSumManager.fill(trackPoint);
                 altitudeSumManager.reset();
-            }
 
-            fillWithSensorDataSet(trackPoint);
-            if (remoteSensorManager != null) {
+                remoteSensorManager.fill(trackPoint);
                 remoteSensorManager.reset();
             }
+
             contentProviderUtils.insertTrackPoint(trackPoint, track.getId());
             trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
             track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
@@ -672,44 +670,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             Log.w(TAG, "SQLiteException", e);
         }
         voiceExecutor.update();
-    }
-
-    private SensorDataSet fillWithSensorDataSet(TrackPoint trackPoint) {
-        if (remoteSensorManager == null) {
-            return null;
-        }
-
-        SensorDataSet sensorData = remoteSensorManager.getSensorData(); //TODO Should return a copy of SensorDataSet
-        if (sensorData == null) {
-            return null;
-        }
-
-        if (trackPoint != null) {
-            sensorData.fillTrackPoint(trackPoint);
-        }
-        return sensorData;
-    }
-
-    /**
-     * Returns the relative altitude gain (since last trackpoint).
-     */
-    private Float getAltitudeGain_m() {
-        if (altitudeSumManager == null || !altitudeSumManager.isConnected()) {
-            return null;
-        }
-
-        return altitudeSumManager.getAltitudeGain_m();
-    }
-
-    /**
-     * Returns the relative altitude loss (since last trackpoint).
-     */
-    private Float getAltitudeLoss_m() {
-        if (altitudeSumManager == null || !altitudeSumManager.isConnected()) {
-            return null;
-        }
-
-        return altitudeSumManager.getAltitudeLoss_m();
     }
 
     private void showNotification(boolean isGpsStarted) {
@@ -741,13 +701,17 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         }
     }
 
+    // This is used to modify the state of this service while testing; must be called after startNewTrack().
+    @Deprecated
     @VisibleForTesting
-    public void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager) {
+    public void setRemoteSensorManager(@NonNull BluetoothRemoteSensorManager remoteSensorManager) {
         this.remoteSensorManager = remoteSensorManager;
     }
 
+    // This is used to modify the state of this service while testing; must be called after startNewTrack().
+    @Deprecated
     @VisibleForTesting
-    public void setAltitudeSumManager(AltitudeSumManager altitudeSumManager) {
+    public void setAltitudeSumManager(@NonNull AltitudeSumManager altitudeSumManager) {
         this.altitudeSumManager = altitudeSumManager;
     }
 
@@ -778,15 +742,14 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             tmpLastTrackPoint.setLongitude(lastTrackPoint.getLongitude());
             tmpLastTrackPoint.setLatitude(lastTrackPoint.getLatitude());
         }
-        tmpLastTrackPoint.setAltitudeGain(getAltitudeGain_m());
-        tmpLastTrackPoint.setAltitudeLoss(getAltitudeLoss_m());
 
-        SensorDataSet sensorDataSet = fillWithSensorDataSet(tmpLastTrackPoint);
+        altitudeSumManager.fill(tmpLastTrackPoint);
+        remoteSensorManager.fill(tmpLastTrackPoint);
 
         tmpTrackStatisticsUpdater.addTrackPoint(tmpLastTrackPoint, recordingDistanceInterval);
         track.setTrackStatistics(tmpTrackStatisticsUpdater.getTrackStatistics());
 
-        recordingDataObservable.postValue(new RecordingData(track, tmpLastTrackPoint, sensorDataSet));
+        recordingDataObservable.postValue(new RecordingData(track, tmpLastTrackPoint, remoteSensorManager.getSensorDataSet()));
     }
 
     public LiveData<RecordingStatus> getRecordingStatusObservable() {
