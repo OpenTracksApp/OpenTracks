@@ -59,9 +59,6 @@ public class TrackStatisticsUpdater {
      */
     private static final double MAX_ACCELERATION = 0.02;
 
-    private boolean trackInitialized = false;
-    private boolean segmentInitialized = false;
-
     private final TrackStatistics trackStatistics;
 
     private final DoubleRingBuffer altitudeBuffer_m;
@@ -87,8 +84,6 @@ public class TrackStatisticsUpdater {
         this.trackStatistics = trackStatistics;
         this.currentSegment = new TrackStatistics();
 
-        trackInitialized = true;
-
         altitudeBuffer_m = new DoubleRingBuffer(ALTITUDE_SMOOTHING_FACTOR);
         speedBuffer_mps = new DoubleRingBuffer(SPEED_SMOOTHING_FACTOR);
     }
@@ -97,8 +92,6 @@ public class TrackStatisticsUpdater {
         this.currentSegment = new TrackStatistics(toCopy.currentSegment);
         this.trackStatistics = new TrackStatistics(toCopy.trackStatistics);
 
-        this.trackInitialized = toCopy.trackInitialized;
-        this.segmentInitialized = toCopy.segmentInitialized;
         this.altitudeBuffer_m = new DoubleRingBuffer(toCopy.altitudeBuffer_m);
         this.speedBuffer_mps = new DoubleRingBuffer(toCopy.speedBuffer_mps);
 
@@ -113,10 +106,6 @@ public class TrackStatisticsUpdater {
         return stats;
     }
 
-    public boolean isTrackInitialized() {
-        return trackInitialized;
-    }
-
     public void addTrackPoints(List<TrackPoint> trackPoints, Distance minGPSDistance) {
         for (TrackPoint tp : trackPoints) {
             addTrackPoint(tp, minGPSDistance);
@@ -127,13 +116,8 @@ public class TrackStatisticsUpdater {
      * @param minGPSDistance the min recording distance
      */
     public void addTrackPoint(TrackPoint trackPoint, Distance minGPSDistance) {
-        if (!trackInitialized) {
-            trackStatistics.setStartTime(trackPoint.getTime());
-            trackInitialized = true;
-        }
-        if (!segmentInitialized) {
+        if (currentSegment.getStartTime() == null) {
             currentSegment.setStartTime(trackPoint.getTime());
-            segmentInitialized = true;
         }
 
         // Always update time

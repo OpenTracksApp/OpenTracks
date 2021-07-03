@@ -17,11 +17,58 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 public class TrackStatisticsUpdaterTest {
 
     private static final Distance GPS_DISTANCE = Distance.of(50);
+
+    @Test
+    public void empty() {
+        // when
+        TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
+
+        // then
+        TrackStatistics statistics = subject.getTrackStatistics();
+        assertNull(statistics.getStartTime());
+        assertNull(statistics.getStopTime());
+        assertEquals(Duration.ZERO, statistics.getTotalTime());
+        assertEquals(Duration.ZERO, statistics.getMovingTime());
+
+        assertEquals(Speed.of(0), statistics.getAverageSpeed());
+        assertEquals(Speed.of(0), statistics.getAverageMovingSpeed());
+        assertEquals(Speed.of(0), statistics.getMaxSpeed());
+
+        assertNull(statistics.getTotalAltitudeGain());
+        assertNull(statistics.getTotalAltitudeLoss());
+    }
+
+    @Test
+    public void startTime() {
+        // given
+        Instant startTime = Instant.parse("2021-10-24T23:00:00.000Z");
+        TrackPoint tp = new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, startTime);
+
+        // when
+        TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
+
+        subject.addTrackPoint(tp, GPS_DISTANCE);
+
+        // then
+        TrackStatistics statistics = subject.getTrackStatistics();
+        assertEquals(startTime, statistics.getStartTime());
+        assertEquals(startTime, statistics.getStopTime());
+        assertEquals(Duration.ZERO, statistics.getTotalTime());
+        assertEquals(Duration.ZERO, statistics.getMovingTime());
+
+        assertEquals(Speed.of(0), statistics.getAverageSpeed());
+        assertEquals(Speed.of(0), statistics.getAverageMovingSpeed());
+        assertEquals(Speed.of(0), statistics.getMaxSpeed());
+
+        assertNull(statistics.getTotalAltitudeGain());
+        assertNull(statistics.getTotalAltitudeLoss());
+    }
 
     @Test
     public void addTrackPoint_TestingTrack() {
