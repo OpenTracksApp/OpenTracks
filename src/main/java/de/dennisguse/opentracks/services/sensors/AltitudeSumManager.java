@@ -7,9 +7,11 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.PressureSensorUtils;
 
 /**
@@ -60,6 +62,11 @@ public class AltitudeSumManager implements SensorEventListener {
     @VisibleForTesting
     public void setConnected(boolean isConnected) {
         this.isConnected = isConnected;
+    }
+
+    public void fill(@NonNull TrackPoint trackPoint) {
+        trackPoint.setAltitudeGain(altitudeGain_m);
+        trackPoint.setAltitudeLoss(altitudeLoss_m);
     }
 
     public @Nullable

@@ -110,9 +110,6 @@ public class ExportImportTest {
 
 
         trackId = service.startNewTrack();
-        //TODO Workaround as those managers overwrite input data; We need to refactor TrackRecordingService to make it actually testable
-        service.setAltitudeSumManager(null);
-        service.setRemoteSensorManager(null);
 
         Distance sensorDistance = hasSensorDistance ? Distance.of(5) : null;
 
@@ -124,9 +121,6 @@ public class ExportImportTest {
         service.pauseCurrentTrack();
 
         service.resumeCurrentTrack();
-        //TODO Workaround as those managers overwrite input data; We need to refactor TrackRecordingService to make it actually testable
-        service.setAltitudeSumManager(null);
-        service.setRemoteSensorManager(null);
 
         service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.003, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
         service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 16, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
