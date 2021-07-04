@@ -187,7 +187,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="files_zero">0 faili</string>
     <!-- Generic -->
     <string name="generic_add">Lisa</string>
-    <string name="generic_cancel">Tühista</string>
     <string name="generic_delete_all_confirm_title">Kas kustutada kõik?</string>
     <string name="generic_delete_selected_confirm_title">Kas kustutada valitud?</string>
     <string name="generic_description">Kirjeldus</string>
@@ -196,7 +195,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="generic_name">Nimi</string>
     <string name="generic_name_line">Nimi: %1$s</string>
     <string name="generic_no">Ei</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">Peatatud</string>
     <string name="generic_progress_title">Oodake …</string>
     <string name="generic_recording">Salvestamine…</string>

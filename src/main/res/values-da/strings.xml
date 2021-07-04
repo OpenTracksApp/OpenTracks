@@ -191,7 +191,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="files_zero">0 filer</string>
     <!-- Generic -->
     <string name="generic_add">Tilføj</string>
-    <string name="generic_cancel">Annuller</string>
     <string name="generic_delete_all_confirm_title">Skal alle slettes?</string>
     <string name="generic_delete_selected_confirm_title">Skal de valgte slettes?</string>
     <string name="generic_description">Beskrivelse</string>
@@ -200,7 +199,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="generic_name">Navn</string>
     <string name="generic_name_line">Navn: %1$s</string>
     <string name="generic_no">Nej</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">Midlertidigt afbrudt</string>
     <string name="generic_progress_title">Vent…</string>
     <string name="generic_recording">Registrerer…</string>

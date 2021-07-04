@@ -135,7 +135,6 @@ limitations under the License.
     <string name="files_zero">0 failų</string>
     <!-- Generic -->
     <string name="generic_add">Papildyti</string>
-    <string name="generic_cancel">Atšaukti</string>
     <string name="generic_delete_all_confirm_title">Ištrinti viską?</string>
     <string name="generic_delete_selected_confirm_title">Ištrinti pasirinktus?</string>
     <string name="generic_description">Aprašymas</string>
@@ -144,7 +143,6 @@ limitations under the License.
     <string name="generic_name">Vardas</string>
     <string name="generic_name_line">Vardas: %1$s</string>
     <string name="generic_no">Ne</string>
-    <string name="generic_ok">Gerai</string>
     <string name="generic_paused">Pristabdyta</string>
     <string name="generic_progress_title">Palaukite…</string>
     <string name="generic_recording">Įrašoma…</string>

@@ -114,7 +114,6 @@
     <string name="files_two">2 arquivos</string>
     <string name="files_zero">0 arquivos</string>
     <string name="generic_add">Adicionar</string>
-    <string name="generic_cancel">Cancelar</string>
     <string name="generic_delete_all_confirm_title">Excluir tudo?</string>
     <string name="generic_delete_selected_confirm_title">Excluir selecionados?</string>
     <string name="generic_description">Descrição</string>
@@ -123,7 +122,6 @@
     <string name="generic_name">Nome</string>
     <string name="generic_name_line">Nome: %1$s</string>
     <string name="generic_no">Não</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">Pausada</string>
     <string name="generic_progress_title">Aguarde…</string>
     <string name="generic_recording">Gravando…</string>

@@ -291,7 +291,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
 
     private void onExportEnded() {
         viewBinding.exportProgressRightButton.setVisibility(View.VISIBLE);
-        viewBinding.exportProgressRightButton.setText(getString(R.string.generic_ok));
+        viewBinding.exportProgressRightButton.setText(getString(android.R.string.ok));
         viewBinding.exportProgressRightButton.setOnClickListener((view) -> finish());
 
         viewBinding.exportProgressAlertIcon.setVisibility(View.VISIBLE);

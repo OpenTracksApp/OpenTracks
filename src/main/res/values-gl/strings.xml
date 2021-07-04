@@ -197,7 +197,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="files_zero">0 ficheiros</string>
     <!-- Generic -->
     <string name="generic_add">Engadir</string>
-    <string name="generic_cancel">Cancelar</string>
     <string name="generic_delete_all_confirm_title">Eliminar todos?</string>
     <string name="generic_delete_selected_confirm_title">Eliminar a selección?</string>
     <string name="generic_description">Descrición</string>
@@ -206,7 +205,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="generic_name">Nome</string>
     <string name="generic_name_line">Nome: %1$s</string>
     <string name="generic_no">Non</string>
-    <string name="generic_ok">Aceptar</string>
     <string name="generic_paused">En pausa</string>
     <string name="generic_progress_title">Agarda…</string>
     <string name="generic_recording">Gravando…</string>

@@ -135,7 +135,6 @@ limitations under the License.
     <string name="files_zero">0 dosya</string>
     <!-- Generic -->
     <string name="generic_add">Ekle</string>
-    <string name="generic_cancel">İptal</string>
     <string name="generic_delete_all_confirm_title">Tümü silinsin mi?</string>
     <string name="generic_delete_selected_confirm_title">Seçilenler silinsin mi?</string>
     <string name="generic_description">Açıklama</string>
@@ -144,7 +143,6 @@ limitations under the License.
     <string name="generic_name">Adı</string>
     <string name="generic_name_line">Adı: %1$s</string>
     <string name="generic_no">Hayır</string>
-    <string name="generic_ok">Tamam</string>
     <string name="generic_paused">Duraklatıldı</string>
     <string name="generic_progress_title">Lütfen bekleyin…</string>
     <string name="generic_recording">Kaydediliyor…</string>

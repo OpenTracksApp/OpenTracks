@@ -196,7 +196,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="files_zero">0 Dateien</string>
     <!-- Generic -->
     <string name="generic_add">Hinzufügen</string>
-    <string name="generic_cancel">Abbrechen</string>
     <string name="generic_delete_all_confirm_title">Alles löschen?</string>
     <string name="generic_delete_selected_confirm_title">Ausgewählte Elemente löschen?</string>
     <string name="generic_description">Beschreibung</string>
@@ -205,7 +204,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="generic_name">Name</string>
     <string name="generic_name_line">Name: %1$s</string>
     <string name="generic_no">Nein</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">Pausiert</string>
     <string name="generic_progress_title">Bitte warten…</string>
     <string name="generic_recording">Aufzeichnung…</string>

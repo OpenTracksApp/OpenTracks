@@ -114,7 +114,6 @@
     <string name="files_two">2 file</string>
     <string name="files_zero">0 file</string>
     <string name="generic_add">Tambahkan</string>
-    <string name="generic_cancel">Batal</string>
     <string name="generic_delete_all_confirm_title">Hapus semua?</string>
     <string name="generic_delete_selected_confirm_title">Hapus yang dipilih?</string>
     <string name="generic_description">Deskripsi</string>
@@ -123,7 +122,6 @@
     <string name="generic_name">Nama</string>
     <string name="generic_name_line">Nama: %1$s</string>
     <string name="generic_no">Tidak</string>
-    <string name="generic_ok">Oke</string>
     <string name="generic_paused">Dijeda</string>
     <string name="generic_progress_title">Harap tunggu…</string>
     <string name="generic_recording">Merekam…</string>

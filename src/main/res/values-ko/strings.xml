@@ -135,7 +135,6 @@ limitations under the License.
     <string name="files_zero">파일 0개</string>
     <!-- Generic -->
     <string name="generic_add">추가하기</string>
-    <string name="generic_cancel">취소</string>
     <string name="generic_delete_all_confirm_title">모두 삭제하시겠습니까?</string>
     <string name="generic_delete_selected_confirm_title">선택한 항목을 삭제하시겠습니까?</string>
     <string name="generic_description">설명</string>
@@ -144,7 +143,6 @@ limitations under the License.
     <string name="generic_name">이름</string>
     <string name="generic_name_line">이름: %1$s</string>
     <string name="generic_no">아니오</string>
-    <string name="generic_ok">확인</string>
     <string name="generic_paused">일시중지됨</string>
     <string name="generic_progress_title">잠시 기다려 주세요…</string>
     <string name="generic_recording">기록 중…</string>

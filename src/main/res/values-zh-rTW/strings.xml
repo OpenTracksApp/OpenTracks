@@ -114,7 +114,6 @@
     <string name="files_two">2 個檔案</string>
     <string name="files_zero">0 個檔案</string>
     <string name="generic_add">新增</string>
-    <string name="generic_cancel">取消</string>
     <string name="generic_delete_all_confirm_title">確定要全部刪除？</string>
     <string name="generic_delete_selected_confirm_title">確定要刪除所選項目？</string>
     <string name="generic_description">內容描述</string>
@@ -123,7 +122,6 @@
     <string name="generic_name">名稱</string>
     <string name="generic_name_line">名稱：%1$s</string>
     <string name="generic_no">否</string>
-    <string name="generic_ok">確定</string>
     <string name="generic_paused">已暫停</string>
     <string name="generic_progress_title">請稍候…</string>
     <string name="generic_recording">正在記錄…</string>

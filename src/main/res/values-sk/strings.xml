@@ -135,7 +135,6 @@ limitations under the License.
     <string name="files_zero">0 súborov</string>
     <!-- Generic -->
     <string name="generic_add">Pridať</string>
-    <string name="generic_cancel">Zrušiť</string>
     <string name="generic_delete_all_confirm_title">Odstrániť všetko?</string>
     <string name="generic_delete_selected_confirm_title">Odstrániť vybraté položky?</string>
     <string name="generic_description">Popis</string>
@@ -144,7 +143,6 @@ limitations under the License.
     <string name="generic_name">Meno</string>
     <string name="generic_name_line">Meno: %1$s</string>
     <string name="generic_no">Nie</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">Pozastavené</string>
     <string name="generic_progress_title">Počkajte…</string>
     <string name="generic_recording">Zaznamenáva sa…</string>

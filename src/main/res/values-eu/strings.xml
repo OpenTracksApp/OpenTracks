@@ -188,7 +188,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="files_zero">0 fitxategi</string>
     <!-- Generic -->
     <string name="generic_add">Gehitu</string>
-    <string name="generic_cancel">Utzi</string>
     <string name="generic_delete_all_confirm_title">Guztiak ezabatu nahi dituzu?</string>
     <string name="generic_delete_selected_confirm_title">Hautatutakoak ezabatu nahi dituzu?</string>
     <string name="generic_description">Azalpena</string>
@@ -197,7 +196,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="generic_name">Izena</string>
     <string name="generic_name_line">Izena: %1$s</string>
     <string name="generic_no">Ez</string>
-    <string name="generic_ok">Ados</string>
     <string name="generic_paused">Etenda</string>
     <string name="generic_progress_title">Itxaron, mesedez…</string>
     <string name="generic_recording">Grabatzen…</string>

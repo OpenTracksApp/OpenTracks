@@ -135,7 +135,6 @@ limitations under the License.
     <string name="files_zero">0 αρχεία</string>
     <!-- Generic -->
     <string name="generic_add">Προσθήκη</string>
-    <string name="generic_cancel">Ακύρωση</string>
     <string name="generic_delete_all_confirm_title">Διαγραφή όλων;</string>
     <string name="generic_delete_selected_confirm_title">Διαγραφή επιλεγμένων;</string>
     <string name="generic_description">Περιγραφή</string>
@@ -144,7 +143,6 @@ limitations under the License.
     <string name="generic_name">Όνομα</string>
     <string name="generic_name_line">Όνομα: %1$s</string>
     <string name="generic_no">Όχι</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">Σε παύση</string>
     <string name="generic_progress_title">Περιμένετε…</string>
     <string name="generic_recording">Καταγραφή…</string>

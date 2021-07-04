@@ -135,7 +135,6 @@ limitations under the License.
     <string name="files_zero">0 filer</string>
     <!-- Generic -->
     <string name="generic_add">Lägg till</string>
-    <string name="generic_cancel">Avbryt</string>
     <string name="generic_delete_all_confirm_title">Ta bort alla?</string>
     <string name="generic_delete_selected_confirm_title">Ta bort markerade?</string>
     <string name="generic_description">Beskrivning</string>
@@ -144,7 +143,6 @@ limitations under the License.
     <string name="generic_name">Namn</string>
     <string name="generic_name_line">Namn: %1$s</string>
     <string name="generic_no">Nej</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">Pausat</string>
     <string name="generic_progress_title">Vänta…</string>
     <string name="generic_recording">Spelar in…</string>

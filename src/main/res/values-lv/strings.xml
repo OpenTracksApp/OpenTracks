@@ -135,7 +135,6 @@ limitations under the License.
     <string name="files_zero">0 failu</string>
     <!-- Generic -->
     <string name="generic_add">Pievienot</string>
-    <string name="generic_cancel">Atcelt</string>
     <string name="generic_delete_all_confirm_title">Vai dzēst visu?</string>
     <string name="generic_delete_selected_confirm_title">Vai dzēst atlasītos vienumus?</string>
     <string name="generic_description">Apraksts</string>
@@ -144,7 +143,6 @@ limitations under the License.
     <string name="generic_name">Nosaukums</string>
     <string name="generic_name_line">Nosaukums: %1$s</string>
     <string name="generic_no">Nē</string>
-    <string name="generic_ok">Labi</string>
     <string name="generic_paused">Apturēts</string>
     <string name="generic_progress_title">Lūdzu, gaidiet…</string>
     <string name="generic_recording">Notiek ierakstīšana…</string>

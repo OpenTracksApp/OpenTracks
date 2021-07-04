@@ -187,7 +187,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="files_zero">0 bestanden</string>
     <!-- Generic -->
     <string name="generic_add">Toevoegen</string>
-    <string name="generic_cancel">Annuleren</string>
     <string name="generic_delete_all_confirm_title">Alles verwijderen?</string>
     <string name="generic_delete_selected_confirm_title">Geselecteerde items verwijderen?</string>
     <string name="generic_description">Beschrijving</string>
@@ -196,7 +195,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="generic_name">Naam</string>
     <string name="generic_name_line">Naam: %1$s</string>
     <string name="generic_no">Nee</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">Onderbroken</string>
     <string name="generic_progress_title">Een ogenblik geduld…</string>
     <string name="generic_recording">Opnemen…</string>

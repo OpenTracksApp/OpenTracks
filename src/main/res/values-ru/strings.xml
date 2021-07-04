@@ -135,7 +135,6 @@ limitations under the License.
     <string name="files_zero">0 файлов</string>
     <!-- Generic -->
     <string name="generic_add">Добавить</string>
-    <string name="generic_cancel">Отмена</string>
     <string name="generic_delete_all_confirm_title">Удалить все?</string>
     <string name="generic_delete_selected_confirm_title">Удалить выбранное?</string>
     <string name="generic_description">Описание</string>
@@ -144,7 +143,6 @@ limitations under the License.
     <string name="generic_name">Название</string>
     <string name="generic_name_line">Название: %1$s</string>
     <string name="generic_no">Нет</string>
-    <string name="generic_ok">ОК</string>
     <string name="generic_paused">Пауза</string>
     <string name="generic_progress_title">Подождите…</string>
     <string name="generic_recording">Запись…</string>

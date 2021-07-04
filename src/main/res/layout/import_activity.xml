@@ -224,7 +224,7 @@
             android:id="@+id/import_progress_right_button"
             style="@style/BottomButton"
             android:layout_gravity="end"
-            android:text="@string/generic_ok"
+            android:text="@android:string/ok"
             android:visibility="gone"
             tools:visibility="visible"/>
     </LinearLayout>

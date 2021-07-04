@@ -114,7 +114,6 @@
     <string name="files_two">שני קבצים</string>
     <string name="files_zero">אפס קבצים</string>
     <string name="generic_add">הוסף</string>
-    <string name="generic_cancel">ביטול</string>
     <string name="generic_delete_all_confirm_title">למחוק את הכל?</string>
     <string name="generic_delete_selected_confirm_title">למחוק את הפריטים שנבחרו?</string>
     <string name="generic_description">תיאור</string>
@@ -123,7 +122,6 @@
     <string name="generic_name">שם</string>
     <string name="generic_name_line">שם: %1$s</string>
     <string name="generic_no">לא</string>
-    <string name="generic_ok">אישור</string>
     <string name="generic_paused">מושהה</string>
     <string name="generic_progress_title">אנא המתן…</string>
     <string name="generic_recording">מקליט…</string>

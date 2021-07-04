@@ -135,7 +135,6 @@ limitations under the License.
     <string name="files_zero">0 फ़ाइलें</string>
     <!-- Generic -->
     <string name="generic_add">जोड़ें</string>
-    <string name="generic_cancel">रद्द करें</string>
     <string name="generic_delete_all_confirm_title">सभी हटाएं?</string>
     <string name="generic_delete_selected_confirm_title">चयनित हटाएं?</string>
     <string name="generic_description">विवरण</string>
@@ -144,7 +143,6 @@ limitations under the License.
     <string name="generic_name">नाम</string>
     <string name="generic_name_line">नाम: %1$s</string>
     <string name="generic_no">नहीं</string>
-    <string name="generic_ok">ठीक</string>
     <string name="generic_paused">पॉज़ किया गया</string>
     <string name="generic_progress_title">कृपया प्रतीक्षा करें…</string>
     <string name="generic_recording">रेकॉर्ड हो रहा है…</string>

@@ -178,7 +178,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="files_zero">0 file</string>
     <!-- Generic -->
     <string name="generic_add">Aggiungi</string>
-    <string name="generic_cancel">Annulla</string>
     <string name="generic_delete_all_confirm_title">Eliminare tutto?</string>
     <string name="generic_delete_selected_confirm_title">Eliminare selezione?</string>
     <string name="generic_description">Descrizione</string>
@@ -187,7 +186,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="generic_name">Nome</string>
     <string name="generic_name_line">Nome: %1$s</string>
     <string name="generic_no">No</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">In pausa</string>
     <string name="generic_progress_title">Attendere…</string>
     <string name="generic_recording">Registrazione…</string>

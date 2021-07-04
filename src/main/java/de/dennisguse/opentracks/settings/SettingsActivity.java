@@ -74,7 +74,7 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
                     .setIcon(R.drawable.ic_logo_24dp)
                     .setTitle(R.string.app_name)
                     .setMessage(R.string.export_error_post_workout)
-                    .setNeutralButton(R.string.generic_ok, null)
+                    .setNeutralButton(android.R.string.ok, null)
                     .create()
                     .show();
         }

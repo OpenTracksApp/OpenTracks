@@ -176,7 +176,7 @@ public class ImportActivity extends FragmentActivity {
         viewBinding.importProgressAlertIcon.setVisibility(View.VISIBLE);
 
         viewBinding.importProgressRightButton.setVisibility(View.VISIBLE);
-        viewBinding.importProgressRightButton.setText(getString(R.string.generic_ok));
+        viewBinding.importProgressRightButton.setText(getString(android.R.string.ok));
         viewBinding.importProgressRightButton.setOnClickListener((view) -> {
             getViewModelStore().clear();
             finish();

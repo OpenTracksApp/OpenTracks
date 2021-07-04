@@ -135,7 +135,6 @@ limitations under the License.
     <string name="files_zero">0 filer</string>
     <!-- Generic -->
     <string name="generic_add">Legg til</string>
-    <string name="generic_cancel">Avbryt</string>
     <string name="generic_delete_all_confirm_title">Vil du slette alle?</string>
     <string name="generic_delete_selected_confirm_title">Vil du slette de valgte elementene?</string>
     <string name="generic_description">Beskrivelse</string>
@@ -144,7 +143,6 @@ limitations under the License.
     <string name="generic_name">Navn</string>
     <string name="generic_name_line">Navn: %1$s</string>
     <string name="generic_no">Nei</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">I pausemodus</string>
     <string name="generic_progress_title">Vent litt …</string>
     <string name="generic_recording">Tar opp …</string>
