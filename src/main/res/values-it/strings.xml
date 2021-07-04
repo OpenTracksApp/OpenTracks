@@ -134,17 +134,9 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="description_altitude_imperial">Altitudine (ft)</string>
     <string name="description_altitude_metric">Altitudine (m)</string>
     <string name="description_fastest_pace_in_minute">Ritmo più rapido: %1$s min/km (%2$s min/mi)</string>
-    <string name="description_location_accuracy">Precisione (m)</string>
-    <string name="description_location_altitude">Altitudine (m)</string>
-    <string name="description_location_bearing">Rotta (gradi)</string>
-    <string name="description_location_latitude">Latitudine (gradi)</string>
-    <string name="description_location_longitude">Longitudine (gradi)</string>
-    <string name="description_location_speed">Velocità (m/s)</string>
     <string name="description_max_altitude">Altitudine max: %1$d m (%2$d ft)</string>
-    <string name="description_max_grade">Pendenza massima: %1$d %%</string>
     <string name="description_max_speed">Velocità massima: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_min_altitude">Altitudine min: %1$d m (%2$d ft)</string>
-    <string name="description_min_grade">Pendenza minima: %1$d %%</string>
     <string name="description_moving_time">Tempo di spostamento: %1$s</string>
     <string name="description_pace_imperial">Ritmo (min/mi)</string>
     <string name="description_pace_metric">Ritmo (min/km)</string>
@@ -158,8 +150,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="description_time">Durata</string>
     <string name="description_total_distance">Distanza totale: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Tempo totale: %1$s</string>
-    <string name="description_track_point">Punto</string>
-    <string name="description_track_segment">Segmento</string>
     <!-- Export -->
     <string name="export_all_option">Tutto come %1$s</string>
     <string name="export_all_title">Esporta nella memoria esterna</string>
@@ -178,7 +168,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="files_zero">0 file</string>
     <!-- Generic -->
     <string name="generic_add">Aggiungi</string>
-    <string name="generic_delete_all_confirm_title">Eliminare tutto?</string>
     <string name="generic_delete_selected_confirm_title">Eliminare selezione?</string>
     <string name="generic_description">Descrizione</string>
     <string name="generic_description_line">Descrizione: %1$s</string>
@@ -187,16 +176,11 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="generic_name_line">Nome: %1$s</string>
     <string name="generic_no">No</string>
     <string name="generic_paused">In pausa</string>
-    <string name="generic_progress_title">Attendere…</string>
     <string name="generic_recording">Registrazione…</string>
     <string name="generic_save">Salva</string>
     <string name="generic_success_title">Riuscito</string>
     <string name="generic_tracks">Percorsi</string>
     <!-- Gps -->
-    <string name="gps_disabled">GPS non attivato. Tocca qui per andare a %1$s. Poi premi il pulsante per tornare indietro.</string>
-    <string name="gps_disabled_my_location">Impossibile determinare la posizione corrente. Attiva ulteriori fonti per la determinazione della posizione in %1$s e assicurati che
-    il cielo sia visibile. Riprova più tardi.</string>
-    <string name="gps_not_found">Nessun GPS presente sul dispositivo</string>
     <string name="gps_starting">Avvio GPS in corso</string>
     <string name="gps_wait_for_better_signal">In attesa di un miglior segnale GPS</string>
     <string name="gps_wait_for_signal">In attesa del segnale GPS</string>
@@ -205,7 +189,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="image_arrow">Freccia</string>
     <string name="image_marker">Indicatore</string>
     <string name="image_marker_count">Contatore indicatori</string>
-    <string name="image_my_location">La mia posizione</string>
     <string name="image_pause">Pausa</string>
     <string name="image_photo_marker">Indicatore fotografico</string>
     <string name="image_record">Registra</string>
@@ -225,17 +208,14 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="marker_add_error">Impossibile inserire un indicatore. Nessun segnale GPS.</string>
     <string name="marker_add_success">È stato inserito un indicatore</string>
     <string name="marker_add_canceled">Operazione annullata, nessun indicatore aggiunto</string>
-    <string name="marker_delete_all_confirm_message">Tutti gli indicatori per questo percorso verranno eliminati definitivamente dal dispositivo</string>
     <string name="marker_delete_one_confirm_message">L\'indicatore verrà eliminato definitivamente dal dispositivo</string>
     <string name="marker_delete_one_confirm_title">Eliminare indicatore?</string>
     <string name="marker_delete_multiple_confirm_message">Gli indicatori selezionati verranno eliminati definitivamente dal dispositivo</string>
     <string name="marker_label_end">%1$s (Fine)</string>
     <string name="marker_label_start">%1$s (Inizio)</string>
     <string name="marker_name_format">Indicatore %1$d</string>
-    <string name="marker_split_name_format">Suddividi %1$d</string>
     <string name="marker_title">%1$d di %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">Dall\'ultimo indicatore parziale:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Tipo di indicatore (ad es. cascata)</string>
     <string name="marker_edit_marker_type_hint">Tipo di indicatore</string>
@@ -253,11 +233,9 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="menu_markers">Indicatori</string>
     <string name="menu_search">Cerca</string>
     <string name="menu_select_all">Seleziona tutto</string>
-    <string name="menu_sensor_state">Sensore di stato</string>
     <string name="menu_settings">Impostazioni</string>
     <string name="menu_share">Condividi</string>
     <string name="menu_show_on_map">Visualizza su mappa</string>
-    <string name="menu_split_frequency">Frequenza parziale</string>
     <string name="menu_start_gps">Accendi GPS</string>
     <string name="menu_stop_gps">Spegni GPS</string>
     <string name="menu_view_photo">Visualizza foto</string>
@@ -267,12 +245,10 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <!-- Search -->
     <string name="search_global_description">Percorsi e indicatori</string>
     <string name="search_list_empty_message">Non ci sono percorsi o indicatori corrispondenti alla tua ricerca</string>
-    <string name="search_list_marker_track_location">Nel percorso «%1$s».</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Livello batteria</string>
     <string name="sensor_state_cadence">Cadenza</string>
     <string name="sensor_state_cadence_value">%1$d giri al minuto</string>
-    <string name="sensor_state_disconnected">Disconnesso</string>
     <string name="sensor_state_heart_rate">Battito cardiaco</string>
     <string name="sensor_state_heart_rate_value">%1$d battiti al minuto</string>
     <string name="sensor_state_power">Potenza</string>
@@ -284,7 +260,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Pedistanza</string>
     <string name="settings_chart_by_time">Per durata</string>
-    <string name="settings_chart_x_axis">Asse X</string>
     <string name="settings_recording">Registrazione</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Riprendi sempre una registrazione dopo il riavvio</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Non riprendere mai una registrazione dopo il riavvio</string>
@@ -308,7 +283,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_reset_confirm_title">Reimpostare ora?</string>
     <string name="settings_reset_done">Tutte le impostazioni sono ripristinate sui valori predefiniti</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Sensore</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Sensore bluetooth</string>
     <!-- Settings Stats -->
@@ -331,12 +305,9 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="stats_altitude">Altitudine</string>
     <string name="stats_fastest_pace">Ritmo più veloce</string>
     <string name="stats_gain">Salita</string>
-    <string name="stats_grade">Pendenza</string>
     <string name="stats_latitude">Latitudine</string>
     <string name="stats_longitude">Longitude</string>
-    <string name="stats_max">Max</string>
     <string name="stats_max_speed">Velocità massima</string>
-    <string name="stats_min">Min</string>
     <string name="stats_moving_time">Tempo in movimento</string>
     <string name="stats_pace">Ritmo</string>
     <string name="stats_speed">Velocità</string>
@@ -526,7 +497,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
 \nf) Fare una donazione, infine
 \ng) Fare tutto ciò che si pensa possa aiutare OpenTracks. </string>
     <string name="activity_type_escooter">Scooter elettrico</string>
-    <string name="app_not_installed_show_on_map">Si prega di installare un\'applicazione che possa mostrare i dati delle mappe.</string>
     <string name="export_with_photos">con foto</string>
     <string name="export_without_photos">senza foto</string>
     <string name="export_track_already_exists_msg">Il percorso %1$s esiste già nella cartella di salvataggio.</string>
@@ -559,7 +529,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="import_file_imported">File %1$s importato</string>
     <string name="import_thread_interrupted">Thread interrotto</string>
     <string name="marker_add_photo_canceled">Annullato, nessun marker foto aggiunto</string>
-    <string name="sensor_not_known">Il sensore %1$s è sconosciuto. Si prega di controllare le impostazioni.</string>
     <string name="sensor_could_not_scan">Impossibile eseguire la scansione per i dispositivi Bluetooth (errore %1$i).</string>
     <string name="bluetooth_disabled">Per favore, attiva il Bluetooth.</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Mostra le statistiche sulla schermata di blocco</string>
@@ -573,8 +542,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_sensor_connecting">Connesso a %1$s</string>
     <string name="settings_sensor_disconnected">Disconnesso da %1$s</string>
     <string name="track_detail_intervals_tab">Intervalli</string>
-    <string name="track_detail_record_success">Sto registrando un nuovo percorso</string>
-    <string name="track_detail_resume_success">Riprendendo il percorso</string>
     <string name="interval_list_empty_message">Non c\'è ancora nessun intervallo</string>
     <string name="voice_pace_lap">Tempo sul giro di %1$s</string>
     <string name="share_image_body">Penso che potresti essere interessat@ in questa immagine.</string>

@@ -91,17 +91,9 @@ limitations under the License.
     <string name="description_altitude_imperial">Elevation (ft)</string>
     <string name="description_altitude_metric">Elevation (m)</string>
     <string name="description_fastest_pace_in_minute">Pinakamabilis na bilis: %1$s (na) min/km (%2$s (na) min/mi)</string>
-    <string name="description_location_accuracy">Katumpakan (m)</string>
-    <string name="description_location_altitude">Altitude (m)</string>
-    <string name="description_location_bearing">Bearing (deg)</string>
-    <string name="description_location_latitude">Latitude (deg)</string>
-    <string name="description_location_longitude">Longitude (deg)</string>
-    <string name="description_location_speed">Bilis (m/s)</string>
     <string name="description_max_altitude">Max elevation: %1$d m (%2$d piye)</string>
-    <string name="description_max_grade">Max na grado: %1$d %%</string>
     <string name="description_max_speed">Max na bilis: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_min_altitude">Min na elevation: %1$d m (%2$d piye)</string>
-    <string name="description_min_grade">Min na grado: %1$d %%</string>
     <string name="description_moving_time">Oras ng paglipat: %1$s</string>
     <string name="description_pace_imperial">Bilis (min/mi)</string>
     <string name="description_pace_metric">Bilis (min/km)</string>
@@ -115,8 +107,6 @@ limitations under the License.
     <string name="description_time">Oras</string>
     <string name="description_total_distance">Kabuuang distansya: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Kabuuang oras: %1$s</string>
-    <string name="description_track_point">Punto</string>
-    <string name="description_track_segment">Segment</string>
     <!-- Export -->
     <string name="export_all_option">Lahat bilang %1$s</string>
     <string name="export_all_title">I-export sa external storage</string>
@@ -135,7 +125,6 @@ limitations under the License.
     <string name="files_zero">0 file</string>
     <!-- Generic -->
     <string name="generic_add">Idagdag</string>
-    <string name="generic_delete_all_confirm_title">Tanggalin lahat?</string>
     <string name="generic_delete_selected_confirm_title">Tanggalin ang pinili?</string>
     <string name="generic_description">Paglalarawan</string>
     <string name="generic_description_line">Paglalarawan: %1$s</string>
@@ -144,15 +133,11 @@ limitations under the License.
     <string name="generic_name_line">Pangalan: %1$s</string>
     <string name="generic_no">Hindi</string>
     <string name="generic_paused">Naka-pause</string>
-    <string name="generic_progress_title">Mangyaring maghintay…</string>
     <string name="generic_recording">Nagre-record…</string>
     <string name="generic_save">I-save</string>
     <string name="generic_success_title">Tagumpay</string>
     <string name="generic_tracks">Mga Track</string>
     <!-- Gps -->
-    <string name="gps_disabled">Hindi pinagagana ang GPS. I-tap dito upang pumunta sa %1$s . Pindutin ang back button upang bumalik.</string>
-    <string name="gps_disabled_my_location">Hindi matukoy ang kasalukuyang lokasyon. I-enable ang mas maraming mapagkukunan ng lokasyon sa %1$s at tiyaking nakikita ang kalangitan. Subukang muli mamaya.</string>
-    <string name="gps_not_found">Walang GPS na natagpuan sa device</string>
     <string name="gps_starting">Sinisimulan ang GPS</string>
     <string name="gps_wait_for_better_signal">Naghihintay para sa isang mas mahusay na signal ng GPS</string>
     <string name="gps_wait_for_signal">Naghihintay para sa signal ng GPS</string>
@@ -161,7 +146,6 @@ limitations under the License.
     <string name="image_arrow">Arrow</string>
     <string name="image_marker">Marker</string>
     <string name="image_marker_count">Bilang ng marker</string>
-    <string name="image_my_location">Aking Lokasyon</string>
     <string name="image_pause">Pause</string>
     <string name="image_photo_marker">Marker ng larawan</string>
     <string name="image_record">Mag-record</string>
@@ -180,17 +164,14 @@ limitations under the License.
     <string name="marker_add_error">Hindi makapaglagay ng marker. Walang signal ng GPS. Subukang muli.</string>
     <string name="marker_add_success">Ipinasok ang isang marker</string>
     <string name="marker_add_canceled">Kinansela, walang idinagdag na marker</string>
-    <string name="marker_delete_all_confirm_message">Permanenteng tatanggalin ang lahat ng marker para sa track na ito mula sa device</string>
     <string name="marker_delete_one_confirm_message">Permanenteng tatanggalin ang marker mula sa device</string>
     <string name="marker_delete_one_confirm_title">Tanggalin ang marker?</string>
     <string name="marker_delete_multiple_confirm_message">Permanenteng tatanggalin ang mga piling marker mula sa device</string>
     <string name="marker_label_end">%1$s (End)</string>
     <string name="marker_label_start">%1$s (Start)</string>
     <string name="marker_name_format">Marker %1$d</string>
-    <string name="marker_split_name_format">Paghahati %1$d</string>
     <string name="marker_title">%1$d ng %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">Mula sa huling split marker:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Uri ng marker (hal.talon)</string>
     <string name="marker_edit_marker_type_hint">Uri ng marker</string>
@@ -208,11 +189,9 @@ limitations under the License.
     <string name="menu_markers">Mga Marker</string>
     <string name="menu_search">Paghahanap</string>
     <string name="menu_select_all">Piliin lahat</string>
-    <string name="menu_sensor_state">Sensor state</string>
     <string name="menu_settings">Mga Setting</string>
     <string name="menu_share">Ibahagi</string>
     <string name="menu_show_on_map">Ipakita sa mapa</string>
-    <string name="menu_split_frequency">Hatiin ang dalas</string>
     <string name="menu_start_gps">Simulan ang GPS</string>
     <string name="menu_stop_gps">Itigil ang GPS</string>
     <string name="menu_view_photo">Tingnan ang larawan</string>
@@ -222,12 +201,10 @@ limitations under the License.
     <!-- Search -->
     <string name="search_global_description">Mga track at marker</string>
     <string name="search_list_empty_message">Walang mga track o marker na tumugma sa iyong paghahanap</string>
-    <string name="search_list_marker_track_location">Sa track na \'%1$s\'.</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Antas ng baterya</string>
     <string name="sensor_state_cadence">Cadence</string>
     <string name="sensor_state_cadence_value">%1$d rpm</string>
-    <string name="sensor_state_disconnected">Hindi nakakonekta</string>
     <string name="sensor_state_heart_rate">Heart rate</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Power</string>
@@ -239,7 +216,6 @@ limitations under the License.
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Ayon sa distansya</string>
     <string name="settings_chart_by_time">Ayon sa oras</string>
-    <string name="settings_chart_x_axis">X axis</string>
     <string name="settings_recording">Pagre-rekord</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Palaging ipagpatuloy ang isang pag-record pagkatapos mag-reboot</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Huwag ipagpatuloy ang isang pag-record pagkatapos i-reboot</string>
@@ -263,7 +239,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">I-reset ngayon?</string>
     <string name="settings_reset_done">Ibinalik ang lahat ng setting sa mga default na value</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Sensor</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth sensor</string>
     <!-- Settings Stats -->
@@ -285,12 +260,9 @@ limitations under the License.
     <string name="stats_altitude">Elevation</string>
     <string name="stats_fastest_pace">Pinakamabilis na tulin</string>
     <string name="stats_gain">Gain</string>
-    <string name="stats_grade">Grade</string>
     <string name="stats_latitude">Latitude</string>
     <string name="stats_longitude">Longitude</string>
-    <string name="stats_max">Max</string>
     <string name="stats_max_speed">Max na bilis</string>
-    <string name="stats_min">Min</string>
     <string name="stats_moving_time">Oras ng pagkilos</string>
     <string name="stats_pace">Tulin</string>
     <string name="stats_speed">Bilis</string>

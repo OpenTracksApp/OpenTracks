@@ -75,17 +75,9 @@
     <string name="description_altitude_imperial">Elevación (pies)</string>
     <string name="description_altitude_metric">Elevación (m)</string>
     <string name="description_fastest_pace_in_minute">Velocidad más rápida: %1$s min/km (%2$s min/mi)</string>
-    <string name="description_location_accuracy">Precisión (m)</string>
-    <string name="description_location_altitude">Altitud (m)</string>
-    <string name="description_location_bearing">Rumbo (grados)</string>
-    <string name="description_location_latitude">Latitud (grados)</string>
-    <string name="description_location_longitude">Longitud (grados)</string>
-    <string name="description_location_speed">Velocidad (m/s)</string>
     <string name="description_max_altitude">Elevación máx.: %1$d m (%2$d pies)</string>
-    <string name="description_max_grade">Pendiente máx.: %1$d %%</string>
     <string name="description_max_speed">Velocidad máx.: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_min_altitude">Elevación mín.: %1$d m (%2$d pies)</string>
-    <string name="description_min_grade">Pendiente mín.: %1$d %%</string>
     <string name="description_moving_time">Tiempo en movimiento: %1$s</string>
     <string name="description_pace_imperial">Velocidad (min/mi)</string>
     <string name="description_pace_metric">Velocidad (min/km)</string>
@@ -98,8 +90,6 @@
     <string name="description_time">Tiempo</string>
     <string name="description_total_distance">Distancia total: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Tiempo total: %1$s</string>
-    <string name="description_track_point">Punto</string>
-    <string name="description_track_segment">Segmento</string>
     <string name="export_all_option">Todo como %1$s</string>
     <string name="export_all_title">Exportar a unidad de almacenamiento externa</string>
     <string name="export_error">Se exportaron %1$d de %2$s a %3$s</string>
@@ -114,7 +104,6 @@
     <string name="files_two">2 archivos</string>
     <string name="files_zero">0 archivos</string>
     <string name="generic_add">Agregar</string>
-    <string name="generic_delete_all_confirm_title">¿Eliminar todo?</string>
     <string name="generic_delete_selected_confirm_title">¿Eliminar elementos seleccionados?</string>
     <string name="generic_description">Descripción</string>
     <string name="generic_description_line">Descripción: %1$s</string>
@@ -123,14 +112,10 @@
     <string name="generic_name_line">Nombre: %1$s</string>
     <string name="generic_no">No</string>
     <string name="generic_paused">En pausa</string>
-    <string name="generic_progress_title">Espera…</string>
     <string name="generic_recording">Grabando…</string>
     <string name="generic_save">Guardar</string>
     <string name="generic_success_title">Éxito</string>
     <string name="generic_tracks">Rutas</string>
-    <string name="gps_disabled">El GPS no está habilitado. Puntea aquí para ir a %1$s. Para volver, presiona el botón Atrás.</string>
-    <string name="gps_disabled_my_location">No se puede determinar la ubicación actual. Habilita más fuentes de ubicación en %1$s y asegúrate de que se pueda ver el cielo. Vuelve a intentarlo más tarde.</string>
-    <string name="gps_not_found">No se encontró ningún GPS en el dispositivo</string>
     <string name="gps_starting">Iniciando GPS</string>
     <string name="gps_wait_for_better_signal">Esperando una mejor señal de GPS</string>
     <string name="gps_wait_for_signal">Esperando señal de GPS</string>
@@ -138,7 +123,6 @@
     <string name="image_arrow">Flecha</string>
     <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Recuento de marcadores</string>
-    <string name="image_my_location">Mi ubicación</string>
     <string name="image_pause">Pausa</string>
     <string name="image_photo_marker">Marcador de foto</string>
     <string name="image_record">Grabar</string>
@@ -155,16 +139,13 @@
     <string name="marker_add_error">No se puede insertar un marcador. No se recibe señal de GPS. Vuelve a intentarlo.</string>
     <string name="marker_add_success">Se insertó un marcador</string>
     <string name="marker_add_canceled">Cancelado, no se agregó ningún marcador</string>
-    <string name="marker_delete_all_confirm_message">Todos los marcadores de esta ruta se eliminarán del dispositivo de forma permanente</string>
     <string name="marker_delete_one_confirm_message">El marcador se eliminará del dispositivo de forma permanente</string>
     <string name="marker_delete_one_confirm_title">¿Eliminar marcador?</string>
     <string name="marker_delete_multiple_confirm_message">Los marcadores seleccionados se eliminarán del dispositivo de forma permanente</string>
     <string name="marker_label_end">%1$s (Fin)</string>
     <string name="marker_label_start">%1$s (Inicio)</string>
     <string name="marker_name_format">Marcador %1$d</string>
-    <string name="marker_split_name_format">%1$d de división</string>
     <string name="marker_title">%1$d de %2$d</string>
-    <string name="marker_detail_statistics_title">Desde el último marcador de división:</string>
     <string name="marker_edit_marker_type">Tipo de marcador (p. ej., cascada)</string>
     <string name="marker_edit_marker_type_hint">Tipo de marcador</string>
     <string name="marker_list_empty_message">No tienes ningún marcador</string>
@@ -180,11 +161,9 @@
     <string name="menu_markers">Marcadores</string>
     <string name="menu_search">Buscar</string>
     <string name="menu_select_all">Seleccionar todo</string>
-    <string name="menu_sensor_state">Estado del sensor</string>
     <string name="menu_settings">Configuración</string>
     <string name="menu_share">Compartir</string>
     <string name="menu_show_on_map">Mostrar en el mapa</string>
-    <string name="menu_split_frequency">Frecuencia de división</string>
     <string name="menu_start_gps">Iniciar GPS</string>
     <string name="menu_stop_gps">Detener GPS</string>
     <string name="menu_view_photo">Ver foto</string>
@@ -193,11 +172,9 @@
     <string name="recording_service">Servicio de grabación</string>
     <string name="search_global_description">Recorridos y marcadores</string>
     <string name="search_list_empty_message">No hay rutas ni marcadores que coincidan con tu búsqueda</string>
-    <string name="search_list_marker_track_location">En el recorrido “%1$s”.</string>
     <string name="sensor_state_battery">Nivel de la batería</string>
     <string name="sensor_state_cadence">Cadencia</string>
     <string name="sensor_state_cadence_value">%1$d rpm</string>
-    <string name="sensor_state_disconnected">Desconectado</string>
     <string name="sensor_state_heart_rate">Frecuencia cardíaca</string>
     <string name="sensor_state_heart_rate_value">%1$d lpm</string>
     <string name="sensor_state_power">Potencia</string>
@@ -207,7 +184,6 @@
     <string name="settings_advanced">Opciones avanzadas</string>
     <string name="settings_chart_by_distance">Por distancia</string>
     <string name="settings_chart_by_time">Por tiempo</string>
-    <string name="settings_chart_x_axis">Eje X</string>
     <string name="settings_recording">Grabación</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Siempre reanudar la grabación después de reiniciar</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Nunca reanudar la grabación después de reiniciar</string>
@@ -229,7 +205,6 @@
     <string name="settings_reset_confirm_message">Todos los parámetros de configuración se restablecerán a los valores predeterminados.</string>
     <string name="settings_reset_confirm_title">¿Restablecer ahora?</string>
     <string name="settings_reset_done">Se restablecieron los valores predeterminados de todas las opciones de configuración</string>
-    <string name="settings_sensor">Sensor</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Sensor de Bluetooth</string>
     <string name="settings_stats_coordinate">Latitud/longitud</string>
@@ -249,12 +224,9 @@
     <string name="stats_altitude">Elevación</string>
     <string name="stats_fastest_pace">Ritmo más rápido</string>
     <string name="stats_gain">Aumento</string>
-    <string name="stats_grade">Pendiente</string>
     <string name="stats_latitude">Latitud</string>
     <string name="stats_longitude">Longitud</string>
-    <string name="stats_max">Máx.</string>
     <string name="stats_max_speed">Velocidad máxima</string>
-    <string name="stats_min">Mín.</string>
     <string name="stats_moving_time">Tiempo en movimiento</string>
     <string name="stats_pace">Ritmo</string>
     <string name="stats_speed">Velocidad</string>
@@ -269,7 +241,6 @@
     <string name="track_delete_progress_message">Eliminando…</string>
     <string name="track_detail_chart_tab">Gráfico</string>
     <string name="track_detail_stats_tab">Estadísticas</string>
-    <string name="track_detail_record_success">Grabando una nueva ruta</string>
     <string name="track_edit_activity_type">Tipo de actividad (p. ej., senderismo)</string>
     <string name="track_edit_activity_type_hint">Tipo de actividad</string>
     <string name="track_edit_new_track_title">Nuevo recorrido</string>
@@ -469,7 +440,6 @@
     <string name="import_thread_interrupted">Hilo interrumpido</string>
     <string name="import_no_kml_file_found">No se ha encontrado ningún archivo doc.kml en KMZ</string>
     <string name="sensor_state_power_avg">Potencia promedio</string>
-    <string name="sensor_not_known">El sensor %1$s es desconocido. Compruebe la configuración.</string>
     <string name="sensor_could_not_scan">No se pudieron buscar dispositivos Bluetooth (error %1$i).</string>
     <string name="settings_prevent_reimport_tracks_title">Evitar reimportar los recorridos</string>
     <string name="track_distance_notification">Distancia: %1$s</string>
@@ -507,7 +477,6 @@
     <string name="open_track_as_GPX">Abrir como GPX</string>
     <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
     <string name="activity_type_escooter">moto</string>
-    <string name="app_not_installed_show_on_map">Instale una aplicación que admita la presentación de datos de mapas.</string>
     <string name="description_speed_ms">Velocidad (m/s)</string>
     <string name="description_default_speed_or_pace">Por tipo de actividad</string>
     <string name="export_with_photos">con fotos</string>
@@ -544,6 +513,5 @@
     <string name="track_pace_notification">Ritmo: %1$s</string>
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="track_detail_intervals_tab">Intervalos</string>
-    <string name="track_detail_resume_success">Ahora reanudando el recorrido</string>
     <string name="interval_list_empty_message">Aún no hay ningún intervalo</string>
 </resources>

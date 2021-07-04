@@ -91,17 +91,9 @@ limitations under the License.
     <string name="description_altitude_imperial">Höjd (ft)</string>
     <string name="description_altitude_metric">Höjd (m)</string>
     <string name="description_fastest_pace_in_minute">Snabbaste tempo: %1$s min/km (%2$s min/mi)</string>
-    <string name="description_location_accuracy">Noggrannhet (m)</string>
-    <string name="description_location_altitude">Höjd (m)</string>
-    <string name="description_location_bearing">Riktning (grader)</string>
-    <string name="description_location_latitude">Latitud (grader)</string>
-    <string name="description_location_longitude">Longitud (grader)</string>
-    <string name="description_location_speed">Hastighet (m/s)</string>
     <string name="description_max_altitude">Max. höjd: %1$d m (%2$d ft)</string>
-    <string name="description_max_grade">Max. lutning: %1$d %%</string>
     <string name="description_max_speed">Max. hastighet: %1$.2f km/tim (%2$.1f mi/h)</string>
     <string name="description_min_altitude">Min. höjd: %1$d m (%2$d ft)</string>
-    <string name="description_min_grade">Min. lutning: %1$d %%</string>
     <string name="description_moving_time">Förflyttningstid: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/mi)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
@@ -115,8 +107,6 @@ limitations under the License.
     <string name="description_time">Tid</string>
     <string name="description_total_distance">Total sträcka: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Total tid: %1$s</string>
-    <string name="description_track_point">Punkt</string>
-    <string name="description_track_segment">Sträcka</string>
     <!-- Export -->
     <string name="export_all_option">Alla som %1$s</string>
     <string name="export_all_title">Exportera till extern lagringsenhet</string>
@@ -135,7 +125,6 @@ limitations under the License.
     <string name="files_zero">0 filer</string>
     <!-- Generic -->
     <string name="generic_add">Lägg till</string>
-    <string name="generic_delete_all_confirm_title">Ta bort alla?</string>
     <string name="generic_delete_selected_confirm_title">Ta bort markerade?</string>
     <string name="generic_description">Beskrivning</string>
     <string name="generic_description_line">Beskrivning: %1$s</string>
@@ -144,15 +133,11 @@ limitations under the License.
     <string name="generic_name_line">Namn: %1$s</string>
     <string name="generic_no">Nej</string>
     <string name="generic_paused">Pausat</string>
-    <string name="generic_progress_title">Vänta…</string>
     <string name="generic_recording">Spelar in…</string>
     <string name="generic_save">Spara</string>
     <string name="generic_success_title">Klart</string>
     <string name="generic_tracks">Spår</string>
     <!-- Gps -->
-    <string name="gps_disabled">GPS inte aktiverad. Tryck här för att gå till %1$s. Tryck på knappen Tillbaka för att återvända.</string>
-    <string name="gps_disabled_my_location">Aktuell plats går inte att fastställa. Aktivera fler platskällor i %1$s och kontrollera att himlen är synlig. Försök igen senare.</string>
-    <string name="gps_not_found">Enheten har inte GPS</string>
     <string name="gps_starting">Startar GPS</string>
     <string name="gps_wait_for_better_signal">Väntar på en bättre GPS-signal</string>
     <string name="gps_wait_for_signal">Väntar på GPS-signal</string>
@@ -161,7 +146,6 @@ limitations under the License.
     <string name="image_arrow">Pil</string>
     <string name="image_marker">Markör</string>
     <string name="image_marker_count">Antal markörer</string>
-    <string name="image_my_location">Min plats</string>
     <string name="image_pause">Pausa</string>
     <string name="image_photo_marker">Fotomarkör</string>
     <string name="image_record">Spela in</string>
@@ -180,17 +164,14 @@ limitations under the License.
     <string name="marker_add_error">Det går inte att infoga en markör. Ingen GPS-signal. Försök igen.</string>
     <string name="marker_add_success">En markör infogades</string>
     <string name="marker_add_canceled">Avbruten, ingen markör tillagd</string>
-    <string name="marker_delete_all_confirm_message">Alla markörer för detta spår tas permanent bort från enheten</string>
     <string name="marker_delete_one_confirm_message">Markören tas permanent bort från enheten</string>
     <string name="marker_delete_one_confirm_title">Ta bort markör?</string>
     <string name="marker_delete_multiple_confirm_message">Markerade markörer tas bort permanent från enheten</string>
     <string name="marker_label_end">%1$s (Slut)</string>
     <string name="marker_label_start">%1$s (Start)</string>
     <string name="marker_name_format">Markör %1$d</string>
-    <string name="marker_split_name_format">Dela %1$d</string>
     <string name="marker_title">%1$d av %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">Sedan förra delningsmarkören:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Markörtyp (t.ex. vattenfall)</string>
     <string name="marker_edit_marker_type_hint">Markörtyp</string>
@@ -208,11 +189,9 @@ limitations under the License.
     <string name="menu_markers">Markörer</string>
     <string name="menu_search">Sök</string>
     <string name="menu_select_all">Markera alla</string>
-    <string name="menu_sensor_state">Sensorläge</string>
     <string name="menu_settings">Inställningar</string>
     <string name="menu_share">Dela</string>
     <string name="menu_show_on_map">Visa på karta</string>
-    <string name="menu_split_frequency">Delningsfrekvens</string>
     <string name="menu_start_gps">Starta GPS</string>
     <string name="menu_stop_gps">Stoppa GPS</string>
     <string name="menu_view_photo">Visa foto</string>
@@ -222,12 +201,10 @@ limitations under the License.
     <!-- Search -->
     <string name="search_global_description">Spår och markörer</string>
     <string name="search_list_empty_message">Inga spår eller markörer matchade sökningen</string>
-    <string name="search_list_marker_track_location">På spåret %1$s.</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Batterinivå</string>
     <string name="sensor_state_cadence">Kadens</string>
     <string name="sensor_state_cadence_value">%1$d rpm</string>
-    <string name="sensor_state_disconnected">Frånkopplad</string>
     <string name="sensor_state_heart_rate">Puls</string>
     <string name="sensor_state_heart_rate_value">%1$d BPM</string>
     <string name="sensor_state_power">Kraft</string>
@@ -239,7 +216,6 @@ limitations under the License.
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Efter avstånd</string>
     <string name="settings_chart_by_time">Efter tid</string>
-    <string name="settings_chart_x_axis">X-axel</string>
     <string name="settings_recording">Inspelning</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Återuppta alltid en inspelning efter omstart</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Återuppta aldrig en inspelning efter omstart</string>
@@ -263,7 +239,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Återställ nu?</string>
     <string name="settings_reset_done">Alla inställningar har återställts till standardvärdena</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Sensor</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth-sensor</string>
     <!-- Settings Stats -->
@@ -285,12 +260,9 @@ limitations under the License.
     <string name="stats_altitude">Stigning</string>
     <string name="stats_fastest_pace">Snabbaste tempo</string>
     <string name="stats_gain">Ökning</string>
-    <string name="stats_grade">Lutning</string>
     <string name="stats_latitude">Latitud</string>
     <string name="stats_longitude">Longitud</string>
-    <string name="stats_max">Max</string>
     <string name="stats_max_speed">Maximal hastighet</string>
-    <string name="stats_min">Min</string>
     <string name="stats_moving_time">Rörelsetid</string>
     <string name="stats_pace">Tempo</string>
     <string name="stats_speed">Hastighet</string>

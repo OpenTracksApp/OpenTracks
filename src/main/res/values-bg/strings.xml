@@ -91,17 +91,9 @@ limitations under the License.
     <string name="description_altitude_imperial">Надморска височина (фт)</string>
     <string name="description_altitude_metric">Надморска височина (м)</string>
     <string name="description_fastest_pace_in_minute">Най-бързо темпо: %1$s мин/км (%2$s мин/мил)</string>
-    <string name="description_location_accuracy">Точност (м)</string>
-    <string name="description_location_altitude">Надморска височина (м)</string>
-    <string name="description_location_bearing">Пеленг (градуси)</string>
-    <string name="description_location_latitude">Географска ширина (градуси)</string>
-    <string name="description_location_longitude">Географска дължина (градуси)</string>
-    <string name="description_location_speed">Скорост (м/сек)</string>
     <string name="description_max_altitude">Максимално изкачване: %1$d м (%2$d фута)</string>
-    <string name="description_max_grade">Максимален наклон: %1$d %%</string>
     <string name="description_max_speed">Максимална скорост: %1$.2f км/ч (%2$.1f мили/ч)</string>
     <string name="description_min_altitude">Минимално изкачване: %1$d м (%2$d фута)</string>
-    <string name="description_min_grade">Минимален наклон: %1$d %%</string>
     <string name="description_moving_time">Време на движение: %1$s</string>
     <string name="description_pace_imperial">Темпо (мин/мил)</string>
     <string name="description_pace_metric">Темпо (мин/км)</string>
@@ -115,8 +107,6 @@ limitations under the License.
     <string name="description_time">Време</string>
     <string name="description_total_distance">Общо разстояние: %1$.2f км (%2$.1f мили)</string>
     <string name="description_total_time">Общо време: %1$s</string>
-    <string name="description_track_point">Точка</string>
-    <string name="description_track_segment">Сегмент</string>
     <!-- Export -->
     <string name="export_all_option">Всичко като %1$s</string>
     <string name="export_all_title">Експортиране във външно хранилище</string>
@@ -135,7 +125,6 @@ limitations under the License.
     <string name="files_zero">0 файла</string>
     <!-- Generic -->
     <string name="generic_add">Прибавяне</string>
-    <string name="generic_delete_all_confirm_title">Да се изтрият ли всички?</string>
     <string name="generic_delete_selected_confirm_title">Да се изтрият ли избраните?</string>
     <string name="generic_description">Описание</string>
     <string name="generic_description_line">Описание: %1$s</string>
@@ -144,15 +133,11 @@ limitations under the License.
     <string name="generic_name_line">Име: %1$s</string>
     <string name="generic_no">Не</string>
     <string name="generic_paused">На пауза</string>
-    <string name="generic_progress_title">Моля, изчакайте…</string>
     <string name="generic_recording">Записва се…</string>
     <string name="generic_save">Запазване</string>
     <string name="generic_success_title">Успех</string>
     <string name="generic_tracks">Маршрути</string>
     <!-- Gps -->
-    <string name="gps_disabled">GPS не е активиран. Докоснете тук, за да отидете на %1$s. Натиснете бутона за назад, за да се върнете.</string>
-    <string name="gps_disabled_my_location">Текущото местоположение не може да бъде определено. Активирайте още източници на местоположение от %1$s и се уверете, че небето се вижда. Опитайте отново по-късно.</string>
-    <string name="gps_not_found">Няма намерен GPS на устройството.</string>
     <string name="gps_starting">GPS се включва.</string>
     <string name="gps_wait_for_better_signal">Изчаква се по-добър сигнал за GPS.</string>
     <string name="gps_wait_for_signal">Изчаква се сигнал за GPS.</string>
@@ -161,7 +146,6 @@ limitations under the License.
     <string name="image_arrow">Стрелка</string>
     <string name="image_marker">Маркер</string>
     <string name="image_marker_count">Брой маркери</string>
-    <string name="image_my_location">Моето местоположение</string>
     <string name="image_pause">Пауза</string>
     <string name="image_photo_marker">Маркер за снимки</string>
     <string name="image_record">Запис</string>
@@ -181,17 +165,14 @@ limitations under the License.
     <string name="marker_add_error">Маркерът не може да се вмъкне. Няма сигнал за GPS. Опитайте отново.</string>
     <string name="marker_add_success">Маркерът бе вмъкнат.</string>
     <string name="marker_add_canceled">Добавянето на маркер бе отменено.</string>
-    <string name="marker_delete_all_confirm_message">Всички маркери за този маршрут ще бъдат окончателно изтрити от устройството.</string>
     <string name="marker_delete_one_confirm_message">Маркерът ще бъде окончателно изтрит от устройството.</string>
     <string name="marker_delete_one_confirm_title">Да се изтрие ли маркерът?</string>
     <string name="marker_delete_multiple_confirm_message">Избраните маркери ще бъдат окончателно изтрити от устройството.</string>
     <string name="marker_label_end">%1$s (Край)</string>
     <string name="marker_label_start">%1$s (Начало)</string>
     <string name="marker_name_format">Маркер %1$d</string>
-    <string name="marker_split_name_format">Разделяне %1$d</string>
     <string name="marker_title">%1$d от %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">От последния разделителен маркер:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Тип маркер (напр. водопад)</string>
     <string name="marker_edit_marker_type_hint">Тип маркер</string>
@@ -209,11 +190,9 @@ limitations under the License.
     <string name="menu_markers">Маркери</string>
     <string name="menu_search">Търсене</string>
     <string name="menu_select_all">Избиране на всички</string>
-    <string name="menu_sensor_state">Състояние на сензора</string>
     <string name="menu_settings">Настройки</string>
     <string name="menu_share">Споделяне</string>
     <string name="menu_show_on_map">Показване на картата</string>
-    <string name="menu_split_frequency">Честота на разделяне</string>
     <string name="menu_start_gps">Стартиране на GPS</string>
     <string name="menu_stop_gps">Спиране на GPS</string>
     <string name="menu_view_photo">Показв. на снимката</string>
@@ -223,12 +202,10 @@ limitations under the License.
     <!-- Search -->
     <string name="search_global_description">Маршрути и маркери</string>
     <string name="search_list_empty_message">Няма маршрути или маркери, отговарящи на търсените от вас.</string>
-    <string name="search_list_marker_track_location">В маршрут „%1$s“.</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Ниво на батерията</string>
     <string name="sensor_state_cadence">Такт</string>
     <string name="sensor_state_cadence_value">%1$d об/мин</string>
-    <string name="sensor_state_disconnected">Изключено</string>
     <string name="sensor_state_heart_rate">Сърдечен ритъм</string>
     <string name="sensor_state_heart_rate_value">%1$d уд/мин</string>
     <string name="sensor_state_power">Захранване</string>
@@ -240,7 +217,6 @@ limitations under the License.
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">По разстояние</string>
     <string name="settings_chart_by_time">По време</string>
-    <string name="settings_chart_x_axis">Ос X</string>
     <string name="settings_recording">Записване</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Записването се възобновява винаги след рестартиране</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Записването не се възобновява никога след рестартиране</string>
@@ -264,7 +240,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Да се зададе ли повторно сега?</string>
     <string name="settings_reset_done">Всички настройки са възстановени до стойностите по подразбиране.</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Сензор</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth сензор</string>
     <!-- Settings Stats -->
@@ -287,12 +262,9 @@ limitations under the License.
     <string name="stats_altitude">Надморска височина</string>
     <string name="stats_fastest_pace">Най-бързо темпо</string>
     <string name="stats_gain">Увеличаване</string>
-    <string name="stats_grade">Наклон</string>
     <string name="stats_latitude">Географска ширина</string>
     <string name="stats_longitude">Географска дължина</string>
-    <string name="stats_max">Макс.</string>
     <string name="stats_max_speed">Максимална скорост</string>
-    <string name="stats_min">Мин.</string>
     <string name="stats_moving_time">Време на движението</string>
     <string name="stats_pace">Темпо</string>
     <string name="stats_speed">Скорост</string>

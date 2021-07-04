@@ -129,7 +129,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="activity_type_walking">kõndimine</string>
     <string name="activity_type_water_skiing">veesuusatamine</string>
     <string name="activity_type_wind_surfing">purilauasõit</string>
-    <string name="app_not_installed_show_on_map">Installige rakendus, mis toetab kaardiandmete esitamist.</string>
     <!-- Description -->
     <string name="description_activity_type">Tegevuse tüüp: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Keskmine liikumiskiirus: %1$s min/km (%2$s min/mi)</string>
@@ -140,17 +139,9 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="description_altitude_imperial">Kõrgus (jalga)</string>
     <string name="description_altitude_metric">Kõrgus (m)</string>
     <string name="description_fastest_pace_in_minute">Kõrgeim tempo: %1$s min/km (%2$s min/mi)</string>
-    <string name="description_location_accuracy">Täpsus (m)</string>
-    <string name="description_location_altitude">Kõrgus (m)</string>
-    <string name="description_location_bearing">Kalle (kraadides)</string>
-    <string name="description_location_latitude">Laiuskraad (kraadides)</string>
-    <string name="description_location_longitude">Pikkuskraad (kraadides)</string>
-    <string name="description_location_speed">Kiirus (m/s)</string>
     <string name="description_max_altitude">Max kõrgus: %1$d m (%2$d jalga)</string>
-    <string name="description_max_grade">Max kalle: %1$d %%</string>
     <string name="description_max_speed">Max kiirus: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_min_altitude">Min kõrgus: %1$d m ( %2$d jalga)</string>
-    <string name="description_min_grade">Min kalle: %1$d %%</string>
     <string name="description_moving_time">Liikumisaeg: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/mi)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
@@ -165,8 +156,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="description_time">Aeg</string>
     <string name="description_total_distance">Kogupikkus: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Koguaeg: %1$s</string>
-    <string name="description_track_point">Punkt</string>
-    <string name="description_track_segment">Lõik</string>
     <!-- Export -->
     <string name="export_all_option">Kõik %1$s-failina</string>
     <string name="export_all_title">Ekspordi välismällu</string>
@@ -187,7 +176,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="files_zero">0 faili</string>
     <!-- Generic -->
     <string name="generic_add">Lisa</string>
-    <string name="generic_delete_all_confirm_title">Kas kustutada kõik?</string>
     <string name="generic_delete_selected_confirm_title">Kas kustutada valitud?</string>
     <string name="generic_description">Kirjeldus</string>
     <string name="generic_description_line">Kirjeldus: %1$s</string>
@@ -196,15 +184,11 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="generic_name_line">Nimi: %1$s</string>
     <string name="generic_no">Ei</string>
     <string name="generic_paused">Peatatud</string>
-    <string name="generic_progress_title">Oodake …</string>
     <string name="generic_recording">Salvestamine…</string>
     <string name="generic_save">Salvesta</string>
     <string name="generic_success_title">Õnnestus</string>
     <string name="generic_tracks">Rajad</string>
     <!-- Gps -->
-    <string name="gps_disabled">GPS ei ole lubatud. Kohta %1$s minemiseks puudutage seda. Naasmiseks vajutage nuppu Tagasi.</string>
-    <string name="gps_disabled_my_location">Praegust asukohta ei saa kindlaks teha. Lubage rohkem asukohaallikaid menüüs %1$s ja veenduge, et taevas on nähtav. Proovige hiljem uuesti.</string>
-    <string name="gps_not_found">Seadmel ei leitud GPS-i</string>
     <string name="gps_starting">GPS-i käivitamine</string>
     <string name="gps_wait_for_better_signal">Oodatakse paremat GPS-signaali</string>
     <string name="gps_wait_for_signal">Oodatakse GPS-signaali</string>
@@ -213,7 +197,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="image_arrow">Nool</string>
     <string name="image_marker">Mark</string>
     <string name="image_marker_count">Markerite arv</string>
-    <string name="image_my_location">Minu asukoht</string>
     <string name="image_pause">Peata</string>
     <string name="image_photo_marker">Fotomarker</string>
     <string name="image_record">Salvesta</string>
@@ -233,17 +216,14 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="marker_add_success">Marker lisati</string>
     <string name="marker_add_canceled">Tühistatud, markerit ei lisatud</string>
     <string name="marker_add_photo_canceled">Tühistatud, fotomarkerit pole lisatud</string>
-    <string name="marker_delete_all_confirm_message">Kõik selle raja markerid kustutatakse seadmest jäädavalt</string>
     <string name="marker_delete_one_confirm_message">Marker kustutatakse seadmest jäädavalt</string>
     <string name="marker_delete_one_confirm_title">Kas kustutada marker?</string>
     <string name="marker_delete_multiple_confirm_message">Valitud markerid kustutatakse seadmest jäädavalt</string>
     <string name="marker_label_end">%1$s (Lõpp)</string>
     <string name="marker_label_start">%1$s (Algus)</string>
     <string name="marker_name_format">Mark %1$d</string>
-    <string name="marker_split_name_format">Jaotus %1$d</string>
     <string name="marker_title">%1$d/%2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">Viimasest jaotusmarkerist alates:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Markeri tüüp (nt juga)</string>
     <string name="marker_edit_marker_type_hint">Markeri tüüp</string>
@@ -262,11 +242,9 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="menu_markers">Markerid</string>
     <string name="menu_search">Otsing</string>
     <string name="menu_select_all">Vali kõik</string>
-    <string name="menu_sensor_state">Anduri olek</string>
     <string name="menu_settings">Seaded</string>
     <string name="menu_share">Jaga</string>
     <string name="menu_show_on_map">Kuva kaardil</string>
-    <string name="menu_split_frequency">Jaotussagedus</string>
     <string name="menu_start_gps">Käivita GPS</string>
     <string name="menu_stop_gps">Peata GPS</string>
     <string name="menu_view_photo">Foto kuvamine</string>
@@ -279,17 +257,14 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <!-- Search -->
     <string name="search_global_description">Rajad ja markerid</string>
     <string name="search_list_empty_message">Ükski rada ega marker ei sobinud teie otsinguga</string>
-    <string name="search_list_marker_track_location">Rajal „%1$s”.</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Aku tase</string>
     <string name="sensor_state_cadence">Rütm</string>
     <string name="sensor_state_cadence_value">%1$d p/min</string>
-    <string name="sensor_state_disconnected">Ühendus on katkestatud</string>
     <string name="sensor_state_heart_rate">Pulsisagedus</string>
     <string name="sensor_state_heart_rate_value">%1$d lööki minutis</string>
     <string name="sensor_state_power">Võimsus</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="sensor_not_known">Andur %1$s pole teada. Kontrollige seadeid.</string>
     <string name="sensor_could_not_scan">Bluetooth-seadmeid ei õnnestunud skannida (tõrge %1$i).</string>
     <string name="bluetooth_disabled">Lubage Bluetooth.</string>
     <string name="settings_not_while_recording">Raja salvestamise ajal ei ole kättesaadav</string>
@@ -299,7 +274,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Vahemaa järgi</string>
     <string name="settings_chart_by_time">Aja järgi</string>
-    <string name="settings_chart_x_axis">X-telg</string>
     <!-- Settings Recording -->
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Kuva lukukraanil statistikat</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Salvestamise ajal näidake statistikat ilma seadet avamata.</string>
@@ -329,7 +303,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="settings_reset_done">Kõik seaded on taastatud vaikeväärtustena</string>
     <string name="settings_error_initial_values_restored">Vabandust, kuid ilmnes viga. Kõik sätted on taastatud vaikeväärtustele.</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Andur</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetoothi andur</string>
     <string name="settings_sensor_connecting">Ühendatud anduriga %1$s</string>
@@ -354,12 +327,9 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="stats_altitude">Kõrgus</string>
     <string name="stats_fastest_pace">Kiireim tempo</string>
     <string name="stats_gain">Saavutatud</string>
-    <string name="stats_grade">Kalle</string>
     <string name="stats_latitude">Laiuskraad</string>
     <string name="stats_longitude">Pikkuskraad</string>
-    <string name="stats_max">Max</string>
     <string name="stats_max_speed">Max kiirus</string>
-    <string name="stats_min">Min</string>
     <string name="stats_moving_time">Liikumisaeg</string>
     <string name="stats_pace">Tempo</string>
     <string name="stats_speed">Kiirus</string>
@@ -378,8 +348,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <!-- Track Detail -->
     <string name="track_detail_chart_tab">Diagramm</string>
     <string name="track_detail_stats_tab">Statistika</string>
-    <string name="track_detail_record_success">Nüüd salvestatakse uut rada</string>
-    <string name="track_detail_resume_success">Nüüd jätkame rada</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Tegevus (nt matkamine)</string>
     <string name="track_edit_activity_type_hint">Tegevuse tüüp</string>
