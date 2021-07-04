@@ -203,7 +203,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="generic_save">Opslaan</string>
     <string name="generic_success_title">Geslaagd</string>
     <string name="generic_tracks">Routes</string>
-    <string name="generic_yes">Ja</string>
     <!-- Gps -->
     <string name="gps_disabled">GPS is niet ingeschakeld. Tik hier om naar %1$s te gaan. Druk op de knop \'Terug\' om terug te keren.</string>
     <string name="gps_disabled_my_location">Huidige locatie kan niet worden bepaald. Schakel meer locatiebronnen in via %1$s en zorg ervoor dat de hemel zichtbaar is. Probeer het later opnieuw.</string>

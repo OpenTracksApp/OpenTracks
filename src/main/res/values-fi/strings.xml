@@ -208,7 +208,6 @@ limitations under the License.
     <string name="generic_save">Tallenna</string>
     <string name="generic_success_title">Onnistui</string>
     <string name="generic_tracks">Reitit</string>
-    <string name="generic_yes">Kyllä</string>
     <!-- Gps -->
     <string name="gps_disabled">GPS ei ole käytössä. Siirry kohteeseen %1$s napauttamalla tätä. Palaa painamalla Takaisin-painiketta.</string>
     <string name="gps_disabled_my_location">Nykyistä sijaintia ei voi määrittää. Ota lisää sijaintilähteitä käyttöön kohteessa %1$s ja

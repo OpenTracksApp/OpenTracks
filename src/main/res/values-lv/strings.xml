@@ -151,7 +151,6 @@ limitations under the License.
     <string name="generic_save">Saglabāt</string>
     <string name="generic_success_title">Paveikts</string>
     <string name="generic_tracks">Maršruti</string>
-    <string name="generic_yes">Jā</string>
     <!-- Gps -->
     <string name="gps_disabled">GPS nav iespējots. Pieskarieties šeit, lai dotos uz %1$s. Lai atgrieztos, nospiediet pogu Atpakaļ.</string>
     <string name="gps_disabled_my_location">Pašreizējo atrašanās vietu nevar noteikt. Sadaļā %1$s iespējojiet vairāk atrašanās vietas noteikšanas avotus un pārliecinieties, ka debesis ir redzamas. Mēģiniet vēlreiz vēlāk.</string>

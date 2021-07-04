@@ -151,7 +151,6 @@ limitations under the License.
     <string name="generic_save">Сохранить</string>
     <string name="generic_success_title">Готово</string>
     <string name="generic_tracks">Треки</string>
-    <string name="generic_yes">Да</string>
     <!-- Gps -->
     <string name="gps_disabled">GPS-модуль не включен. Нажмите здесь, чтобы открыть \"%1$s\". Нажмите \"Назад\", чтобы вернуться.</string>
     <string name="gps_disabled_my_location">Не удалось определить местоположение. Добавьте другие источники передачи данных в настройках (%1$s) и убедитесь, что приему сигнала ничего не препятствует. Затем повторите попытку.</string>

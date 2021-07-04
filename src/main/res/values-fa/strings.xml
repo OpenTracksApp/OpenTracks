@@ -151,7 +151,6 @@ limitations under the License.
     <string name="generic_save">ذخیره</string>
     <string name="generic_success_title">موفقیت‌آمیز بود</string>
     <string name="generic_tracks">مسیرها</string>
-    <string name="generic_yes">بله</string>
     <!-- Gps -->
     <string name="gps_disabled">GPS فعال نیست. برای رفتن به %1$s اینجا ضربه بزنید. برای برگشت دکمه بازگشت را فشار دهید.</string>
     <string name="gps_disabled_my_location">موقعیت مکانی کنونی را نمی‌توان تعیین کرد. در %1$s منابع بیشتری را برای موقعیت مکانی فعال کنید و مطمئن شوید که چیزی مانع دیدن آسمان نباشد. بعداً دوباره امتحان کنید.</string>

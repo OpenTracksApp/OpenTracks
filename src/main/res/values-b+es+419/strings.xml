@@ -130,7 +130,6 @@
     <string name="generic_save">Guardar</string>
     <string name="generic_success_title">Éxito</string>
     <string name="generic_tracks">Rutas</string>
-    <string name="generic_yes">Sí</string>
     <string name="gps_disabled">El GPS no está habilitado. Puntea aquí para ir a %1$s. Para volver, presiona el botón Atrás.</string>
     <string name="gps_disabled_my_location">No se puede determinar la ubicación actual. Habilita más fuentes de ubicación en %1$s y asegúrate de que se pueda ver el cielo. Vuelve a intentarlo más tarde.</string>
     <string name="gps_not_found">No se encontró ningún GPS en el dispositivo</string>

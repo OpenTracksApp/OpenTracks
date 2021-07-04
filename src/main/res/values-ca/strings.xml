@@ -151,7 +151,6 @@ limitations under the License.
     <string name="generic_save">Desa</string>
     <string name="generic_success_title">Correcte</string>
     <string name="generic_tracks">Rutes</string>
-    <string name="generic_yes">Sí</string>
     <!-- Gps -->
     <string name="gps_disabled">El GPS no està activat. Premeu aquí per anar a %1$s. Premeu el botó Enrere per tornar.</string>
     <string name="gps_disabled_my_location">No es pot determinar la ubicació actual. Activeu més fonts d\'ubicació a %1$s i assegureu-vos que

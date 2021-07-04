@@ -151,7 +151,6 @@ limitations under the License.
     <string name="generic_save">Shrani</string>
     <string name="generic_success_title">Uspešno</string>
     <string name="generic_tracks">Poti</string>
-    <string name="generic_yes">Da</string>
     <!-- Gps -->
     <string name="gps_disabled">GPS ni omogočen. Tapnite tukaj, da odprete %1$s. Za vrnitev nazaj pritisnite gumb Nazaj.</string>
     <string name="gps_disabled_my_location">Trenutne lokacije ni mogoče določiti. V možnosti %1$s omogočite več virov lokacij in zagotovite,

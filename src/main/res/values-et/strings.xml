@@ -203,7 +203,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="generic_save">Salvesta</string>
     <string name="generic_success_title">Õnnestus</string>
     <string name="generic_tracks">Rajad</string>
-    <string name="generic_yes">Jah</string>
     <!-- Gps -->
     <string name="gps_disabled">GPS ei ole lubatud. Kohta %1$s minemiseks puudutage seda. Naasmiseks vajutage nuppu Tagasi.</string>
     <string name="gps_disabled_my_location">Praegust asukohta ei saa kindlaks teha. Lubage rohkem asukohaallikaid menüüs %1$s ja veenduge, et taevas on nähtav. Proovige hiljem uuesti.</string>

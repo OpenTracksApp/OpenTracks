@@ -151,7 +151,6 @@ limitations under the License.
     <string name="generic_save">Mentés</string>
     <string name="generic_success_title">Sikerült</string>
     <string name="generic_tracks">Számok</string>
-    <string name="generic_yes">Igen</string>
     <!-- Gps -->
     <string name="gps_disabled">A GPS nincs engedélyezve. Érintse meg itt, ha a következőre szeretne lépni: %1$s. A visszalépéshez nyomja meg a vissza gombot.</string>
     <string name="gps_disabled_my_location">Jelenlegi helyét nem lehet meghatározni. Engedélyezzen több helyforrást itt: %1$s, és gondoskodjon arról, hogy az ég látható legyen. Próbálja meg később.</string>

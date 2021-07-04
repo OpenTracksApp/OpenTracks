@@ -159,7 +159,6 @@ limitations under the License.
     <string name="generic_save">Zapisz</string>
     <string name="generic_success_title">Udało się</string>
     <string name="generic_tracks">Trasy</string>
-    <string name="generic_yes">Tak</string>
     <!-- Gps -->
     <string name="gps_disabled">GPS nie jest włączony. Kliknij tutaj, aby przejść do %1$s. Naciśnij przycisk Wstecz, aby wrócić.</string>
     <string name="gps_disabled_my_location">Nie można określić aktualnej lokalizacji. Otwórz %1$s, włącz więcej źródeł określania lokalizacji i upewnij się,

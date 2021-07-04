@@ -207,7 +207,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="generic_save">Gem</string>
     <string name="generic_success_title">Gennemført</string>
     <string name="generic_tracks">Ruter</string>
-    <string name="generic_yes">Ja</string>
     <!-- Gps -->
     <string name="gps_disabled">GPS er ikke aktiveret. Tryk her for at gå til %1$s. Tryk på knappen Tilbage for at vende tilbage.</string>
     <string name="gps_disabled_my_location">Den aktuelle placering kan ikke bestemmes. Aktivér flere placeringskilder i %1$s, og sørg for, at

@@ -151,7 +151,6 @@ limitations under the License.
     <string name="generic_save">αποθήκευση</string>
     <string name="generic_success_title">Επιτυχώς</string>
     <string name="generic_tracks">Διαδρομές</string>
-    <string name="generic_yes">Ναι</string>
     <!-- Gps -->
     <string name="gps_disabled">Το GPS δεν είναι ενεργοποιημένο. Πατήστε εδώ για να μεταβείτε στο %1$s. Πατήστε το κουμπί \"Πίσω\" για να επιστρέψετε.</string>
     <string name="gps_disabled_my_location">Η τρέχουσα τοποθεσία δεν μπορεί να προσδιοριστεί. Ενεργοποιήστε περισσότερες πηγές εντοπισμού στο μενού %1$s και βεβαιωθείτε ότι ο ουρανός είναι καθαρός. Δοκιμάστε ξανά αργότερα.</string>

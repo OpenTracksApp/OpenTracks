@@ -151,7 +151,6 @@ limitations under the License.
     <string name="generic_save">Сачувај</string>
     <string name="generic_success_title">Успело je</string>
     <string name="generic_tracks">Праћења</string>
-    <string name="generic_yes">Да</string>
     <!-- Gps -->
     <string name="gps_disabled">GPS није омогућен. Додирните овде да бисте отишли на %1$s. Притисните дугме за назад да бисте се вратили.</string>
     <string name="gps_disabled_my_location">Није могуће утврдити тренутну локацију. Омогућите још извора локације у %1$s и проверите да ли је небо видљиво. Покушајте поново касније.</string>

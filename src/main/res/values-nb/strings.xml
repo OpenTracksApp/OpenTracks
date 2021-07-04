@@ -151,7 +151,6 @@ limitations under the License.
     <string name="generic_save">Lagre</string>
     <string name="generic_success_title">Vellykket</string>
     <string name="generic_tracks">Spor</string>
-    <string name="generic_yes">Ja</string>
     <!-- Gps -->
     <string name="gps_disabled">GPS er ikke aktivert. Trykk her for å gå til %1$s. Trykk på tilbake-knappen for å gå tilbake.</string>
     <string name="gps_disabled_my_location">Den nåværende posisjonen kan ikke fastslås. Aktiver flere posisjonskilder i %1$s, og

@@ -130,7 +130,6 @@
     <string name="generic_save">Save</string>
     <string name="generic_success_title">Success</string>
     <string name="generic_tracks">Tracks</string>
-    <string name="generic_yes">Yes</string>
     <string name="gps_disabled">GPS not enabled. Tap here to go to %1$s. Press the back button to return.</string>
     <string name="gps_disabled_my_location">Current location cannot be determined. Enable more location sources at %1$s and make sure the sky is visible. Try again later.</string>
     <string name="gps_not_found">No GPS found on the device</string>

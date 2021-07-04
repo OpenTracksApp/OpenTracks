@@ -203,7 +203,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="generic_save">Enregistrer</string>
     <string name="generic_success_title">Opération réussie</string>
     <string name="generic_tracks">Parcours</string>
-    <string name="generic_yes">Oui</string>
     <!-- Gps -->
     <string name="gps_disabled">Le GPS n\'est pas activé. Appuyez ici pour accéder aux %1$s. Appuyez sur le bouton Retour pour revenir en arrière.</string>
     <string name="gps_disabled_my_location">Impossible de déterminer la position actuelle. Veuillez activer d\'autres sources de localisation dans les %1$s et vous assurer

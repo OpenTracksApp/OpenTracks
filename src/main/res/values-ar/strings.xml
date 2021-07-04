@@ -151,7 +151,6 @@ limitations under the License.
     <string name="generic_save">حفظ</string>
     <string name="generic_success_title">تم بنجاح</string>
     <string name="generic_tracks">المسارات</string>
-    <string name="generic_yes">نعم</string>
     <!-- Gps -->
     <string name="gps_disabled">نظام تحديد المواقع العالمي (GPS) غير ممكّن. انقر هنا للانتقال إلى %1$s. اضغط على زر الرجوع للعودة.</string>
     <string name="gps_disabled_my_location">لا يمكن تحديد الموقع الحالي. تستطيع تمكين مصادر أكثر للموقع على‏ ‏%1$s‏ ‏وتأكد من أنك في مكان مفتوح. حاول مرة أخرى في وقت لاحق.</string>

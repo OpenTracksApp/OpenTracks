@@ -151,7 +151,6 @@ limitations under the License.
     <string name="generic_save">Spara</string>
     <string name="generic_success_title">Klart</string>
     <string name="generic_tracks">Spår</string>
-    <string name="generic_yes">Ja</string>
     <!-- Gps -->
     <string name="gps_disabled">GPS inte aktiverad. Tryck här för att gå till %1$s. Tryck på knappen Tillbaka för att återvända.</string>
     <string name="gps_disabled_my_location">Aktuell plats går inte att fastställa. Aktivera fler platskällor i %1$s och kontrollera att himlen är synlig. Försök igen senare.</string>
