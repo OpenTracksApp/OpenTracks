@@ -189,12 +189,12 @@ public class StatisticsRecordingFragment extends Fragment {
         }
 
         {
-            Pair<String, String> parts = StringUtils.formatAltitude(getContext(), recordingData.getTrackStatistics().getTotalAltitudeGain(), preferenceMetricUnits);
+            Pair<String, String> parts = StringUtils.getAltitudeParts(getContext(), recordingData.getTrackStatistics().getTotalAltitudeGain(), preferenceMetricUnits);
             viewBinding.statsAltitudeGainValue.setText(parts.first);
             viewBinding.statsAltitudeGainUnit.setText(parts.second);
         }
         {
-            Pair<String, String> parts = StringUtils.formatAltitude(getContext(), recordingData.getTrackStatistics().getTotalAltitudeLoss(), preferenceMetricUnits);
+            Pair<String, String> parts = StringUtils.getAltitudeParts(getContext(), recordingData.getTrackStatistics().getTotalAltitudeLoss(), preferenceMetricUnits);
             viewBinding.statsAltitudeLossValue.setText(parts.first);
             viewBinding.statsAltitudeLossUnit.setText(parts.second);
         }
@@ -283,7 +283,7 @@ public class StatisticsRecordingFragment extends Fragment {
                 labelId = latestTrackPoint.getAltitude().getLabelId();
             }
 
-            Pair<String, String> parts = StringUtils.formatAltitude(getContext(), altitude, preferenceMetricUnits);
+            Pair<String, String> parts = StringUtils.getAltitudeParts(getContext(), altitude, preferenceMetricUnits);
             viewBinding.statsAltitudeCurrentValue.setText(parts.first);
             viewBinding.statsAltitudeCurrentUnit.setText(parts.second);
 
