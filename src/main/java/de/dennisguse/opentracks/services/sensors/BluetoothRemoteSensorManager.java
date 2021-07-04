@@ -166,8 +166,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
     }
 
     public SensorDataSet getSensorDataSet() {
-        // TODO Should return a copy.
-        return sensorDataSet;
+        return new SensorDataSet(sensorDataSet);
     }
 
     public void reset() {
