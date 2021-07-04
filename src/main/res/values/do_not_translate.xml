@@ -28,6 +28,7 @@ limitations under the License.
     <!-- If the order depends on the language, we might need to make this translatable -->
     <string name="distance_with_unit" translatable="false">%1$s %2$s</string>
     <string name="speed_with_unit" translatable="false">%1$s %2$s</string>
+    <string name="altitude_with_unit" translatable="false">%1$s %2$s</string>
     <string name="time" translatable="false">%1$d:%2$02d</string>
 
     <!-- List here all used libraries (will be shown in the about activity -->
