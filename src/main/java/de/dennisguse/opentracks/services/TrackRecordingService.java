@@ -743,8 +743,13 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             tmpLastTrackPoint.setLatitude(lastTrackPoint.getLatitude());
         }
 
-        altitudeSumManager.fill(tmpLastTrackPoint);
-        remoteSensorManager.fill(tmpLastTrackPoint);
+        BluetoothRemoteSensorManager localRemoteSensorManager = this.remoteSensorManager;
+        AltitudeSumManager localAltitudeSumManager = this.altitudeSumManager;
+        if (localAltitudeSumManager != null && localRemoteSensorManager != null) {
+            // onEndRecording the managers might already be set to null.
+            localAltitudeSumManager.fill(tmpLastTrackPoint);
+            localRemoteSensorManager.fill(tmpLastTrackPoint);
+        }
 
         tmpTrackStatisticsUpdater.addTrackPoint(tmpLastTrackPoint, recordingDistanceInterval);
         track.setTrackStatistics(tmpTrackStatisticsUpdater.getTrackStatistics());
