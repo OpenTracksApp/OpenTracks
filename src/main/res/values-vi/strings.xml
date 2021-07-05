@@ -117,12 +117,9 @@ limitations under the License.
     <string name="export_title">Xuất sang…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d tệp</string>
-    <string name="files_many">%1$d tệp</string>
-    <string name="files_one">1 tệp</string>
-    <string name="files_other">%1$d tệp</string>
-    <string name="files_two">2 tệp</string>
-    <string name="files_zero">0 tệp</string>
+    <plurals name="files">
+        <item quantity="other">%1$d tệp</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Thêm</string>
     <string name="generic_delete_selected_confirm_title">Xóa phần được chọn?</string>

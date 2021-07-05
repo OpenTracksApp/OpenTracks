@@ -117,12 +117,11 @@ limitations under the License.
     <string name="export_title">Eksportuoti į…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d failai</string>
-    <string name="files_many">%1$d failai</string>
-    <string name="files_one">1 failas</string>
-    <string name="files_other">%1$d failų</string>
-    <string name="files_two">2 failai</string>
-    <string name="files_zero">0 failų</string>
+    <plurals name="files">
+        <item quantity="one">%1$d failas</item>
+        <item quantity="few">%1$d failai</item>
+        <item quantity="other">%1$d failų</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Papildyti</string>
     <string name="generic_delete_selected_confirm_title">Ištrinti pasirinktus?</string>

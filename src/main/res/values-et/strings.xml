@@ -168,12 +168,10 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="export_title">Eksportimine …</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d faili</string>
-    <string name="files_many">%1$d faili</string>
-    <string name="files_one">1 fail</string>
-    <string name="files_other">%1$d faili</string>
-    <string name="files_two">2 faili</string>
-    <string name="files_zero">0 faili</string>
+    <plurals name="files">
+        <item quantity="one">1 fail</item>
+        <item quantity="other">%1$d faili</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Lisa</string>
     <string name="generic_delete_selected_confirm_title">Kas kustutada valitud?</string>

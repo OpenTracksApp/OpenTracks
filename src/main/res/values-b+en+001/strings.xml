@@ -97,12 +97,10 @@
     <string name="export_progress_message">Exporting to %1$s…</string>
     <string name="export_success">Exported %1$s to %2$s</string>
     <string name="export_title">Export to…</string>
-    <string name="files_few">%1$d files</string>
-    <string name="files_many">%1$d files</string>
-    <string name="files_one">1 file</string>
-    <string name="files_other">%1$d files</string>
-    <string name="files_two">2 files</string>
-    <string name="files_zero">0 files</string>
+    <plurals name="files">
+        <item quantity="one">1 file</item>
+        <item quantity="other">%1$d files</item>
+    </plurals>
     <string name="generic_add">Add</string>
     <string name="generic_delete_selected_confirm_title">Delete selected?</string>
     <string name="generic_description">Description</string>

@@ -117,12 +117,12 @@ limitations under the License.
     <string name="export_title">Izvozi v …</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">št. datotek: %1$d</string>
-    <string name="files_many">št. datotek: %1$d</string>
-    <string name="files_one">1 datoteka</string>
-    <string name="files_other">%1$d datotek</string>
-    <string name="files_two">2 datoteki</string>
-    <string name="files_zero">0 datotek</string>
+    <plurals name="files">
+        <item quantity="one">%1$d datoteka</item>
+        <item quantity="two">%1$d datoteki</item>
+        <item quantity="few">št. datotek: %1$d</item>
+        <item quantity="other">%1$d datotek</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Dodaj</string>
     <string name="generic_delete_selected_confirm_title">Izbriši izbrano?</string>

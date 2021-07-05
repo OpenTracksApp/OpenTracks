@@ -117,12 +117,10 @@ limitations under the License.
     <string name="export_title">Εξαγωγή σε…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d αρχεία</string>
-    <string name="files_many">%1$d αρχεία</string>
-    <string name="files_one">1 αρχείο</string>
-    <string name="files_other">%1$d αρχεία</string>
-    <string name="files_two">2 αρχεία</string>
-    <string name="files_zero">0 αρχεία</string>
+    <plurals name="files">
+        <item quantity="one">1 αρχείο</item>
+        <item quantity="other">%1$d αρχεία</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Προσθήκη</string>
     <string name="generic_delete_selected_confirm_title">Διαγραφή επιλεγμένων;</string>

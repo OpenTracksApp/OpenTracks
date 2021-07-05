@@ -117,12 +117,10 @@ limitations under the License.
     <string name="export_title">Eksport ke…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d fail</string>
-    <string name="files_many">%1$d fail</string>
-    <string name="files_one">1 fail</string>
-    <string name="files_other">%1$d fail</string>
-    <string name="files_two">2 fail</string>
-    <string name="files_zero">0 fail</string>
+    <plurals name="files">
+        <item quantity="other">%1$d fail</item>
+    </plurals>
+
     <!-- Generic -->
     <string name="generic_add">Tambah</string>
     <string name="generic_delete_selected_confirm_title">Padamkan yang dipilih?</string>

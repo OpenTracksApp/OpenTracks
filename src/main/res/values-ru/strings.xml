@@ -117,12 +117,12 @@ limitations under the License.
     <string name="export_title">Экспорт в…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d файла</string>
-    <string name="files_many">%1$d файлов</string>
-    <string name="files_one">1 файл</string>
-    <string name="files_other">%1$d файла</string>
-    <string name="files_two">2 файла</string>
-    <string name="files_zero">0 файлов</string>
+    <plurals name="files">
+        <item quantity="one">%1$d файл</item>
+        <item quantity="few">%1$d файла</item>
+        <item quantity="many">%1$d файлов</item>
+        <item quantity="other">%1$d файла</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Добавить</string>
     <string name="generic_delete_selected_confirm_title">Удалить выбранное?</string>

@@ -217,12 +217,10 @@ limitations under the License.
     <string name="export_progress_summary_errors_msg">Errors</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d files</string>
-    <string name="files_many">%1$d files</string>
-    <string name="files_one">1 file</string>
-    <string name="files_other">%1$d files</string>
-    <string name="files_two">2 files</string>
-    <string name="files_zero">0 files</string>
+    <plurals name="files">
+        <item quantity="one">1 file</item>
+        <item quantity="other">%1$d files</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Add</string>
     <string name="generic_delete_selected_confirm_title">Delete selected?</string>

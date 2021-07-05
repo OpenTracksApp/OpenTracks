@@ -117,12 +117,9 @@ limitations under the License.
     <string name="export_title">エクスポート先…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d個のファイル</string>
-    <string name="files_many">%1$d個のファイル</string>
-    <string name="files_one">1個のファイル</string>
-    <string name="files_other">%1$d個のファイル</string>
-    <string name="files_two">2個のファイル</string>
-    <string name="files_zero">0個のファイル</string>
+    <plurals name="files">
+        <item quantity="other">%1$d個のファイル</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">追加</string>
     <string name="generic_delete_selected_confirm_title">選択したアイテムを削除しますか？</string>

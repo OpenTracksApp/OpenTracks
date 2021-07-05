@@ -160,12 +160,10 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="export_title">Esporta in…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d file</string>
-    <string name="files_many">%1$d file</string>
-    <string name="files_one">1 file</string>
-    <string name="files_other">%1$d file</string>
-    <string name="files_two">2 file</string>
-    <string name="files_zero">0 file</string>
+    <plurals name="files">
+        <item quantity="one">1 file</item>
+        <item quantity="other">%1$d file</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Aggiungi</string>
     <string name="generic_delete_selected_confirm_title">Eliminare selezione?</string>

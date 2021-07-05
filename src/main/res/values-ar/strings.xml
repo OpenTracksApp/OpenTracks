@@ -117,12 +117,14 @@ limitations under the License.
     <string name="export_title">تصدير إلى…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d‏ ملفات</string>
-    <string name="files_many">%1$d‏ ملفًا</string>
-    <string name="files_one">1 ملف</string>
-    <string name="files_other">%1$d‏ من الملفات</string>
-    <string name="files_two">2 ملفان</string>
-    <string name="files_zero">0 ملفات</string>
+    <plurals name="files">
+        <item quantity="zero">0 ملفات</item>
+        <item quantity="one">1 ملف</item>
+        <item quantity="two">2 ملفان</item>
+        <item quantity="few">%1$d‏ ملفات</item>
+        <item quantity="many">%1$d‏ ملفًا</item>
+        <item quantity="other">%1$d‏ من الملفات</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">إضافة</string>
     <string name="generic_delete_selected_confirm_title">حذف ما تم تحديده؟</string>

@@ -125,12 +125,12 @@ limitations under the License.
     <string name="export_progress_summary_errors_msg">Błędy</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d pliki</string>
-    <string name="files_many">%1$d plików</string>
-    <string name="files_one">1 plik</string>
-    <string name="files_other">%1$d pliku</string>
-    <string name="files_two">2 pliki</string>
-    <string name="files_zero">0 plików</string>
+    <plurals name="files">
+        <item quantity="one">1 plik</item>
+        <item quantity="few">%1$d pliki</item>
+        <item quantity="many">%1$d plików</item>
+        <item quantity="other">%1$d pliku</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Dodaj</string>
     <string name="generic_delete_selected_confirm_title">Usunąć wybrane?</string>

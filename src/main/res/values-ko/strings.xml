@@ -117,12 +117,9 @@ limitations under the License.
     <string name="export_title">내보내기…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">파일 %1$d개</string>
-    <string name="files_many">파일 %1$d개</string>
-    <string name="files_one">파일 1개</string>
-    <string name="files_other">파일 %1$d개</string>
-    <string name="files_two">파일 2개</string>
-    <string name="files_zero">파일 0개</string>
+    <plurals name="files">
+        <item quantity="other">파일 %1$d개</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">추가하기</string>
     <string name="generic_delete_selected_confirm_title">선택한 항목을 삭제하시겠습니까?</string>

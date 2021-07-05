@@ -97,12 +97,14 @@
     <string name="export_progress_message">Se exportă în %1$s…</string>
     <string name="export_success">S-a(u) exportat %1$s în %2$s</string>
     <string name="export_title">Exportați în…</string>
-    <string name="files_few">%1$d fișiere</string>
-    <string name="files_many">%1$d (de) fișiere</string>
-    <string name="files_one">1 fișier</string>
-    <string name="files_other">%1$d (de) fișiere</string>
-    <string name="files_two">2 fișiere</string>
-    <string name="files_zero">0 fișiere</string>
+    <plurals name="files">
+        <item quantity="zero">0 fișiere</item>
+        <item quantity="one">1 fișier</item>
+        <item quantity="two">2 fișiere</item>
+        <item quantity="few">%1$d fișiere</item>
+        <item quantity="many">%1$d (de) fișiere</item>
+        <item quantity="other">%1$d (de) fișiere</item>
+    </plurals>
     <string name="generic_add">Adăugați</string>
     <string name="generic_delete_selected_confirm_title">Ștergeți cele selectate?</string>
     <string name="generic_description">Descriere</string>

@@ -117,12 +117,11 @@ limitations under the License.
     <string name="export_title">Exportovať do…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d súbory</string>
-    <string name="files_many">%1$d súborov</string>
-    <string name="files_one">1 súbor</string>
-    <string name="files_other">%1$d súborov</string>
-    <string name="files_two">2 súbory</string>
-    <string name="files_zero">0 súborov</string>
+    <plurals name="files">
+        <item quantity="one">1 súbor</item>
+        <item quantity="few">%1$d súbory</item>
+        <item quantity="other">%1$d súborov</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Pridať</string>
     <string name="generic_delete_selected_confirm_title">Odstrániť vybraté položky?</string>

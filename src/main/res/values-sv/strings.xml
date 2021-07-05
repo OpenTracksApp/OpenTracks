@@ -117,12 +117,10 @@ limitations under the License.
     <string name="export_title">Exportera till …</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d filer</string>
-    <string name="files_many">%1$d filer</string>
-    <string name="files_one">1 fil</string>
-    <string name="files_other">%1$d filer</string>
-    <string name="files_two">2 filer</string>
-    <string name="files_zero">0 filer</string>
+    <plurals name="files">
+        <item quantity="one">1 fil</item>
+        <item quantity="other">%1$d filer</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Lägg till</string>
     <string name="generic_delete_selected_confirm_title">Ta bort markerade?</string>

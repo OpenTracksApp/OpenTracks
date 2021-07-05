@@ -117,12 +117,10 @@ limitations under the License.
     <string name="export_title">Exportálás ide:…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d fájl</string>
-    <string name="files_many">%1$d fájl</string>
-    <string name="files_one">1 fájl</string>
-    <string name="files_other">%1$d fájl</string>
-    <string name="files_two">2 fájl</string>
-    <string name="files_zero">0 fájl</string>
+    <plurals name="files">
+        <item quantity="one">1 fájl</item>
+        <item quantity="other">%1$d fájl</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Hozzáadás</string>
     <string name="generic_delete_selected_confirm_title">Törli a kiválasztott(ak)at?</string>

@@ -178,12 +178,10 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="export_title">Exportar a…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d ficheiros</string>
-    <string name="files_many">%1$d ficheiros</string>
-    <string name="files_one">1 ficheiro</string>
-    <string name="files_other">%1$d ficheiros</string>
-    <string name="files_two">2 ficheiros</string>
-    <string name="files_zero">0 ficheiros</string>
+    <plurals name="files">
+        <item quantity="one">1 ficheiro</item>
+        <item quantity="other">%1$d ficheiros</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Engadir</string>
     <string name="generic_delete_selected_confirm_title">Eliminar a selección?</string>

@@ -117,12 +117,11 @@ limitations under the License.
     <string name="export_title">Exportați în…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d fișiere</string>
-    <string name="files_many">%1$d (de) fișiere</string>
-    <string name="files_one">1 fișier</string>
-    <string name="files_other">%1$d (de) fișiere</string>
-    <string name="files_two">2 fișiere</string>
-    <string name="files_zero">0 fișiere</string>
+    <plurals name="files">
+        <item quantity="one">1 fișier</item>
+        <item quantity="few">%1$d fișiere</item>
+        <item quantity="other">%1$d (de) fișiere</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Adăugați</string>
     <string name="generic_delete_selected_confirm_title">Ștergeți cele selectate?</string>

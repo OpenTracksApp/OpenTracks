@@ -117,12 +117,10 @@ limitations under the License.
     <string name="export_title">صادر کردن به…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d فایل</string>
-    <string name="files_many">%1$d فایل</string>
-    <string name="files_one">۱ فایل</string>
-    <string name="files_other">%1$d فایل</string>
-    <string name="files_two">۲ فایل</string>
-    <string name="files_zero">۰ فایل</string>
+    <plurals name="files">
+        <item quantity="one">%1$d فایل</item>
+        <item quantity="other">%1$d فایل</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">افزودن</string>
     <string name="generic_delete_selected_confirm_title">موارد انتخابی حذف شود؟</string>

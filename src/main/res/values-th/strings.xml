@@ -117,12 +117,9 @@ limitations under the License.
     <string name="export_title">ส่งออกลงใน…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d ไฟล์</string>
-    <string name="files_many">%1$d ไฟล์</string>
-    <string name="files_one">1 ไฟล์</string>
-    <string name="files_other">%1$d ไฟล์</string>
-    <string name="files_two">2 ไฟล์</string>
-    <string name="files_zero">0 ไฟล์</string>
+    <plurals name="files">
+        <item quantity="other">%1$d ไฟล</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">เพิ่ม</string>
     <string name="generic_delete_selected_confirm_title">ลบรายการที่เลือกใช่ไหม</string>

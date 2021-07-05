@@ -176,13 +176,11 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="export_success">%1$s in %2$s exportiert</string>
     <string name="export_title">Exportieren in…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <string name="files_few">%1$d Dateien</string>
-    <string name="files_many">%1$d Dateien</string>
-    <string name="files_one">1 Datei</string>
-    <string name="files_other">%1$d Dateien</string>
-    <string name="files_two">2 Dateien</string>
-    <string name="files_zero">0 Dateien</string>
+    <!-- Files -->=
+    <plurals name="files">
+        <item quantity="one">1 Datei</item>
+        <item quantity="other">%1$d Dateien</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Hinzufügen</string>
     <string name="generic_delete_selected_confirm_title">Ausgewählte Elemente löschen?</string>
