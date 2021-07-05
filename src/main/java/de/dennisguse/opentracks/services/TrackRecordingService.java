@@ -95,7 +95,13 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         @Override
         public void run() {
             updateRecordingDataWhileRecording();
-            handler.postDelayed(this, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
+            Handler localHandler = TrackRecordingService.this.handler;
+            if (localHandler == null) {
+                // when this happens, no recording is running and we should not send any notifications.
+                //TODO This implementation is not a good idea; rather solve the issue for this properly
+                return;
+            }
+            localHandler.postDelayed(this, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
         }
     };
 
@@ -745,16 +751,18 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         BluetoothRemoteSensorManager localRemoteSensorManager = this.remoteSensorManager;
         AltitudeSumManager localAltitudeSumManager = this.altitudeSumManager;
-        if (localAltitudeSumManager != null && localRemoteSensorManager != null) {
-            // onEndRecording the managers might already be set to null.
-            localAltitudeSumManager.fill(tmpLastTrackPoint);
-            localRemoteSensorManager.fill(tmpLastTrackPoint);
+        if (localAltitudeSumManager == null || localRemoteSensorManager == null) {
+            // when this happens, no recording is running and we should not send any notifications.
+            //TODO This implementation is not a good idea; rather solve the issue for this properly
+            return;
         }
-
+        localAltitudeSumManager.fill(tmpLastTrackPoint);
+        SensorDataSet sensorDataSet = localRemoteSensorManager.getSensorDataSet();
+        sensorDataSet.fillTrackPoint(tmpLastTrackPoint);
         tmpTrackStatisticsUpdater.addTrackPoint(tmpLastTrackPoint, recordingDistanceInterval);
         track.setTrackStatistics(tmpTrackStatisticsUpdater.getTrackStatistics());
 
-        recordingDataObservable.postValue(new RecordingData(track, tmpLastTrackPoint, remoteSensorManager.getSensorDataSet()));
+        recordingDataObservable.postValue(new RecordingData(track, tmpLastTrackPoint, sensorDataSet));
     }
 
     public LiveData<RecordingStatus> getRecordingStatusObservable() {
