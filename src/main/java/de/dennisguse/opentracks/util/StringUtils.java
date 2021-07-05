@@ -284,7 +284,7 @@ public class StringUtils {
 
         if (altitude_m != null) {
             double value = Distance.of(altitude_m).toM_FT(metricUnits);
-            formattedValue = StringUtils.formatDecimal(value, 0);
+            formattedValue = StringUtils.formatDecimal(value, 1);
         }
 
         return new Pair<>(formattedValue, unit);
