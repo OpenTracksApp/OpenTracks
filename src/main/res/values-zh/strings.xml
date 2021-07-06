@@ -194,6 +194,8 @@ limitations under the License.
     <string name="menu_stop_gps">关闭 GPS</string>
     <string name="menu_view_photo">查看照片</string>
     <string name="menu_voice_frequency">语音提示频率</string>
+    <string name="menu_voice_rate">语音提示速率</string>
+    <string name="menu_resume_track">继续</string>
     <!-- OpenTracks -->
     <string name="recording_service">记录服务</string>
     <!-- Search -->
@@ -211,9 +213,17 @@ limitations under the License.
     <string name="settings_show">显示</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">高级</string>
+    <string name="settings_default_trackfileformat">导出文件格式</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">按距离</string>
     <string name="settings_chart_by_time">按时间</string>
+    <!-- Settings Recording -->
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">锁屏显示</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">记录时，无需解锁设备即可显示记录信息。</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">保持亮屏</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">记录时，保持屏幕常亮。</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">全屏显示</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">记录时，全屏幕显示。</string>
     <string name="settings_recording">记录</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">重启后一律继续记录</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">重启后一律不再继续记录</string>
@@ -231,6 +241,10 @@ limitations under the License.
     <string name="settings_recording_track_name_date_local_option">日期（本地）</string>
     <string name="settings_recording_track_name_number_option">编号</string>
     <string name="settings_recording_track_name_title">默认路线名称</string>
+    <string name="settings_night_mode_title">界面样式</string>
+    <string name="settings_night_mode_option_system">跟随系统</string>
+    <string name="settings_night_mode_option_day">白天模式</string>
+    <string name="settings_night_mode_option_night">夜间模式</string>
     <!-- Settings Reset -->
     <string name="settings_reset">重置</string>
     <string name="settings_reset_confirm_message">所有设置都将恢复为默认值。</string>
@@ -239,12 +253,14 @@ limitations under the License.
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">蓝牙</string>
     <string name="settings_sensor_bluetooth_sensor">蓝牙传感器</string>
+    <string name="settings_sensor_wheel_circumference">车轮周长 (mm)</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">纬度/经度</string>
     <string name="settings_stats_rate_title">首选速率</string>
     <string name="settings_stats_units_imperial">英制（英里、英尺）</string>
     <string name="settings_stats_units_metric">公制（公里、米）</string>
     <string name="settings_stats_units_title">首选单位</string>
+    <string name="settings_prevent_reimport_tracks_title">禁止导出重复数据</string>
     <!-- Share Track -->
     <string name="share_track_share_file">分享路线文件</string>
     <string name="share_track_share_file_body">我想您可能会对此路线感兴趣。
@@ -267,6 +283,8 @@ limitations under the License.
     <string name="stats_speed">速度</string>
     <string name="stats_distance">距离</string>
     <string name="stats_total_time">总时间</string>
+    <string name="stats_intervals">分段信息</string>
+    <string name="stats_split_interval">分段间隔</string>
     <!-- Track -->
     <string name="track_name_format">路线 %1$d</string>
     <string name="track_record_notification">正在记录路线…</string>
@@ -436,4 +454,13 @@ limitations under the License.
     <string name="activity_type_escooter">电动车</string>
     <string name="description_altitude_loss">海拔降低：%1$d 米（%2$d 英尺）</string>
     <string name="description_default_speed_or_pace">按活动类型</string>
+    <!-- Share image -->
+    <string name="hold_to_stop">长按停止</string>
+    <string name="hold_to_pause">长按暂停</string>
+    <string name="toast_message_instant_track_was_exported">导出最近一次活动数据</string>
+
+    <string name="instant_export_enabled_summary">活动结束后，自动导出数据</string>
+    <string name="instant_export_enabled_title">自动导出</string>
+
+    <string name="settings_default_export_uri_title">选择导出目录</string>
 </resources>
