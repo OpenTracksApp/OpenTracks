@@ -328,26 +328,32 @@ limitations under the License.
     <string name="value_smallest">الأصغر</string>
     <string name="value_smallest_recommended">الأصغر (موصى به)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d ساعات</string>
-    <string name="voice_hours_many">%1$d ساعة</string>
-    <string name="voice_hours_one">ساعة واحدة</string>
-    <string name="voice_hours_other">%1$d ساعة</string>
-    <string name="voice_hours_two">ساعتان</string>
-    <string name="voice_hours_zero">0 ساعة</string>
-    <string name="voice_minutes_few">%1$d دقائق</string>
-    <string name="voice_minutes_many">%1$d دقيقة</string>
-    <string name="voice_minutes_one">دقيقة واحدة</string>
-    <string name="voice_minutes_other">%1$d دقيقة</string>
-    <string name="voice_minutes_two">دقيقتان</string>
-    <string name="voice_minutes_zero">0 دقائق</string>
+    <plurals name="voiceHours">
+        <item quantity="zero">0 ساعة</item>
+        <item quantity="one">ساعة واحدة</item>
+        <item quantity="two">ساعتان</item>
+        <item quantity="few">%1$d ساعات</item>
+        <item quantity="many">%1$d ساعة</item>
+        <item quantity="other">%1$d ساعة</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="zero">0 دقائق</item>
+        <item quantity="one">دقيقة واحدة</item>
+        <item quantity="two">دقيقتان</item>
+        <item quantity="few">%1$d دقائق</item>
+        <item quantity="many">%1$d دقيقة</item>
+        <item quantity="other">%1$d دقيقة</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="zero">0 ثانية</item>
+        <item quantity="one">ثانية واحدة</item>
+        <item quantity="two">ثانيتان</item>
+        <item quantity="few">%1$d ثوانٍ</item>
+        <item quantity="many">%1$d ثانية</item>
+        <item quantity="other">%1$d ثانية</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s لكل كيلومتر</string>
     <string name="voice_pace_per_mile">%1$s لكل ميل</string>
-    <string name="voice_seconds_few">%1$d ثوانٍ</string>
-    <string name="voice_seconds_many">%1$d ثانية</string>
-    <string name="voice_seconds_one">ثانية واحدة</string>
-    <string name="voice_seconds_other">%1$d ثانية</string>
-    <string name="voice_seconds_two">ثانيتان</string>
-    <string name="voice_seconds_zero">0 ثانية</string>
     <string name="voice_speed_kilometers_per_hour_few">%1$.1f كيلومتر في الساعة</string>
     <string name="voice_speed_kilometers_per_hour_many">%1$.1f كيلومتر في الساعة</string>
     <string name="voice_speed_kilometers_per_hour_one">1 كيلومتر في الساعة</string>

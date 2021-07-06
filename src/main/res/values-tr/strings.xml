@@ -325,26 +325,20 @@ limitations under the License.
     <string name="value_smallest">En küçük</string>
     <string name="value_smallest_recommended">En küçük (önerilir)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d saat</string>
-    <string name="voice_hours_many">%1$d saat</string>
-    <string name="voice_hours_one">1 saat</string>
-    <string name="voice_hours_other">%1$d saat</string>
-    <string name="voice_hours_two">2 saat</string>
-    <string name="voice_hours_zero">0 saat</string>
-    <string name="voice_minutes_few">%1$d dakika</string>
-    <string name="voice_minutes_many">%1$d dakika</string>
-    <string name="voice_minutes_one">1 dakika</string>
-    <string name="voice_minutes_other">%1$d dakika</string>
-    <string name="voice_minutes_two">2 dakika</string>
-    <string name="voice_minutes_zero">0 dakika</string>
+    <plurals name="voiceHours">
+        <item quantity="one">1 saat</item>
+        <item quantity="other">%1$d saat</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">1 dakika</item>
+        <item quantity="other">%1$d dakika</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">1 saniye</item>
+        <item quantity="other">%1$d saniye</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">kilometrede %1$s</string>
     <string name="voice_pace_per_mile">milde %1$s</string>
-    <string name="voice_seconds_few">%1$d saniye</string>
-    <string name="voice_seconds_many">%1$d saniye</string>
-    <string name="voice_seconds_one">1 saniye</string>
-    <string name="voice_seconds_other">%1$d saniye</string>
-    <string name="voice_seconds_two">2 saniye</string>
-    <string name="voice_seconds_zero">0 saniye</string>
     <string name="voice_speed_kilometers_per_hour_few">Saatte %1$.1f kilometre</string>
     <string name="voice_speed_kilometers_per_hour_many">saatte %1$.1f kilometre</string>
     <string name="voice_speed_kilometers_per_hour_one">saatte 1 kilometre</string>

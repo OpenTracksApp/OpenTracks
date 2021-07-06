@@ -397,26 +397,20 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="value_smallest">Mindste</string>
     <string name="value_smallest_recommended">Mindst (anbefalet)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d timer</string>
-    <string name="voice_hours_many">%1$d timer</string>
-    <string name="voice_hours_one">1 time</string>
-    <string name="voice_hours_other">%1$d timer</string>
-    <string name="voice_hours_two">2 timer</string>
-    <string name="voice_hours_zero">0 timer</string>
-    <string name="voice_minutes_few">%1$d minutter</string>
-    <string name="voice_minutes_many">%1$d minutter</string>
-    <string name="voice_minutes_one">1 minut</string>
-    <string name="voice_minutes_other">%1$d minutter</string>
-    <string name="voice_minutes_two">2 minutter</string>
-    <string name="voice_minutes_zero">0 minutter</string>
+    <plurals name="voiceHours">
+        <item quantity="one">1 time</item>
+        <item quantity="other">>%1$d timer</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">1 minut</item>
+        <item quantity="other">%1$d minutter</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">1 sekund</item>
+        <item quantity="other">%1$d sekunder</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s pr. kilometer</string>
     <string name="voice_pace_per_mile">%1$s pr. mil</string>
-    <string name="voice_seconds_few">%1$d sekunder</string>
-    <string name="voice_seconds_many">%1$d sekunder</string>
-    <string name="voice_seconds_one">1 sekund</string>
-    <string name="voice_seconds_other">%1$d sekunder</string>
-    <string name="voice_seconds_two">2 sekunder</string>
-    <string name="voice_seconds_zero">0 sekunder</string>
     <string name="voice_speed_kilometers_per_hour_few">%1$.1f kilometer i timen</string>
     <string name="voice_speed_kilometers_per_hour_many">%1$.1f kilometer i timen</string>
     <string name="voice_speed_kilometers_per_hour_one">1 kilometer i timen</string>

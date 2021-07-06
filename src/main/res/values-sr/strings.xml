@@ -325,26 +325,23 @@ limitations under the License.
     <string name="value_smallest">Најмање</string>
     <string name="value_smallest_recommended">Најмање (препоручено)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d сата</string>
-    <string name="voice_hours_many">%1$d сати</string>
-    <string name="voice_hours_one">1 сат</string>
-    <string name="voice_hours_other">%1$d сати</string>
-    <string name="voice_hours_two">2 сата</string>
-    <string name="voice_hours_zero">0 сати</string>
-    <string name="voice_minutes_few">%1$d минута</string>
-    <string name="voice_minutes_many">%1$d минута</string>
-    <string name="voice_minutes_one">1 минут</string>
-    <string name="voice_minutes_other">%1$d минута</string>
-    <string name="voice_minutes_two">2 минута</string>
-    <string name="voice_minutes_zero">0 минута</string>
+    <plurals name="voiceHours">
+        <item quantity="one">%1$d сат</item>
+        <item quantity="few">%1$d сати</item>
+        <item quantity="other">%1$d сата</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">%1$d минут</item>
+        <item quantity="few">%1$d минута</item>
+        <item quantity="other">%1$d минута</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">%1$d секунда</item>
+        <item quantity="few">%1$d секунде</item>
+        <item quantity="other">%1$d секунди</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s по километру</string>
     <string name="voice_pace_per_mile">%1$s по миљи</string>
-    <string name="voice_seconds_few">%1$d секунде</string>
-    <string name="voice_seconds_many">%1$d секунди</string>
-    <string name="voice_seconds_one">1 секунда</string>
-    <string name="voice_seconds_other">%1$d секунди</string>
-    <string name="voice_seconds_two">2 секунде</string>
-    <string name="voice_seconds_zero">0 секунди</string>
     <string name="voice_speed_kilometers_per_hour_few">%1$.1f километра на сат</string>
     <string name="voice_speed_kilometers_per_hour_many">%1$.1f километара на сат</string>
     <string name="voice_speed_kilometers_per_hour_one">1 километар на сат</string>

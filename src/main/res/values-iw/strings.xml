@@ -276,26 +276,26 @@
     <string name="value_off">מושתק</string>
     <string name="value_smallest">הקטן ביותר</string>
     <string name="value_smallest_recommended">הנמוך ביותר (מומלץ)</string>
-    <string name="voice_hours_few">%1$d שעות</string>
-    <string name="voice_hours_many">%1$d שעות</string>
-    <string name="voice_hours_one">שעה אחת</string>
-    <string name="voice_hours_other">%1$d שעות</string>
-    <string name="voice_hours_two">שעתיים</string>
-    <string name="voice_hours_zero">אפס שעות</string>
-    <string name="voice_minutes_few">%1$d דקות</string>
-    <string name="voice_minutes_many">%1$d דקות</string>
-    <string name="voice_minutes_one">דקה אחת</string>
-    <string name="voice_minutes_other">%1$d דקות</string>
-    <string name="voice_minutes_two">שתי דקות</string>
-    <string name="voice_minutes_zero">אפס דקות</string>
+    <plurals name="voiceHours">
+        <item quantity="one">שעה אחת</item>
+        <item quantity="two">שעתיים</item>
+        <item quantity="many">>%1$d שעות</item>
+        <item quantity="other">%1$d שעות</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">דקה אחת</item>
+        <item quantity="two">>שתי דקות</item>
+        <item quantity="many">>%1$d דקות</item>
+        <item quantity="other">%1$d דקות</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">שנייה אחת</item>
+        <item quantity="two">שתי שניות</item>
+        <item quantity="many">%1$d שניות</item>
+        <item quantity="other">%1$d שניותr</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s לקילומטר</string>
     <string name="voice_pace_per_mile">%1$s למייל</string>
-    <string name="voice_seconds_few">%1$d שניות</string>
-    <string name="voice_seconds_many">%1$d שניות</string>
-    <string name="voice_seconds_one">שנייה אחת</string>
-    <string name="voice_seconds_other">%1$d שניות</string>
-    <string name="voice_seconds_two">שתי שניות</string>
-    <string name="voice_seconds_zero">אפס שניות</string>
     <string name="voice_speed_kilometers_per_hour_few">%1$.1f קילומטר לשעה</string>
     <string name="voice_speed_kilometers_per_hour_many">%1$.1f קילומטר לשעה</string>
     <string name="voice_speed_kilometers_per_hour_one">קילומטר אחד לשעה</string>

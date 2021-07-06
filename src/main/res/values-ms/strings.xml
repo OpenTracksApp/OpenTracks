@@ -326,26 +326,17 @@ limitations under the License.
     <string name="value_smallest">Paling kecil</string>
     <string name="value_smallest_recommended">Terkecil (disyorkan)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d jam</string>
-    <string name="voice_hours_many">%1$d jam</string>
-    <string name="voice_hours_one">1 jam</string>
-    <string name="voice_hours_other">%1$d jam</string>
-    <string name="voice_hours_two">2 jam</string>
-    <string name="voice_hours_zero">0 jam</string>
-    <string name="voice_minutes_few">%1$d minit</string>
-    <string name="voice_minutes_many">%1$d minit</string>
-    <string name="voice_minutes_one">1 minit</string>
-    <string name="voice_minutes_other">%1$d minit</string>
-    <string name="voice_minutes_two">2 minit</string>
-    <string name="voice_minutes_zero">0 minit</string>
+    <plurals name="voiceHours">
+        <item quantity="other">%1$d jam</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="other">%1$d minit</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="other">%1$d saat</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s sekilometer</string>
     <string name="voice_pace_per_mile">%1$s sejam</string>
-    <string name="voice_seconds_few">%1$d saat</string>
-    <string name="voice_seconds_many">%1$d saat</string>
-    <string name="voice_seconds_one">1 saat</string>
-    <string name="voice_seconds_other">%1$d saat</string>
-    <string name="voice_seconds_two">2 saat</string>
-    <string name="voice_seconds_zero">0 saat</string>
     <string name="voice_speed_kilometers_per_hour_few">%1$.1f kilometer sejam</string>
     <string name="voice_speed_kilometers_per_hour_many">%1$.1f kilometer sejam</string>
     <string name="voice_speed_kilometers_per_hour_one">1 kilometer sejam</string>

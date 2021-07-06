@@ -275,26 +275,20 @@
     <string name="value_off">Off</string>
     <string name="value_smallest">Smallest</string>
     <string name="value_smallest_recommended">Smallest (recommended)</string>
-    <string name="voice_hours_few">%1$d hours</string>
-    <string name="voice_hours_many">%1$d hours</string>
-    <string name="voice_hours_one">1 hour</string>
-    <string name="voice_hours_other">%1$d hours</string>
-    <string name="voice_hours_two">2 hours</string>
-    <string name="voice_hours_zero">0 hours</string>
-    <string name="voice_minutes_few">%1$d minutes</string>
-    <string name="voice_minutes_many">%1$d minutes</string>
-    <string name="voice_minutes_one">1 minute</string>
-    <string name="voice_minutes_other">%1$d minutes</string>
-    <string name="voice_minutes_two">2 minutes</string>
-    <string name="voice_minutes_zero">0 minutes</string>
+    <plurals name="voiceHours">
+        <item quantity="one">1 hour</item>
+        <item quantity="other">%1$d hours</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">1 minute</item>
+        <item quantity="other">%1$d minutes</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">1 second</item>
+        <item quantity="other">%1$d seconds</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s per kilometre</string>
     <string name="voice_pace_per_mile">%1$s per mile</string>
-    <string name="voice_seconds_few">%1$d seconds</string>
-    <string name="voice_seconds_many">%1$d seconds</string>
-    <string name="voice_seconds_one">1 second</string>
-    <string name="voice_seconds_other">%1$d seconds</string>
-    <string name="voice_seconds_two">2 seconds</string>
-    <string name="voice_seconds_zero">0 seconds</string>
     <string name="voice_speed_kilometers_per_hour_few">%1$.1f kilometres per hour</string>
     <string name="voice_speed_kilometers_per_hour_many">%1$.1f kilometres per hour</string>
     <string name="voice_speed_kilometers_per_hour_one">1 kilometre per hour</string>

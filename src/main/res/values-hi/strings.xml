@@ -324,26 +324,20 @@ limitations under the License.
     <string name="value_smallest">सबसे छोटा</string>
     <string name="value_smallest_recommended">सबसे छोटा (अनुशंसित)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d घंटे</string>
-    <string name="voice_hours_many">%1$d घंटे</string>
-    <string name="voice_hours_one">1 घंटा</string>
-    <string name="voice_hours_other">%1$d घंटे</string>
-    <string name="voice_hours_two">2 घंटे</string>
-    <string name="voice_hours_zero">0 घंटे</string>
-    <string name="voice_minutes_few">%1$d मिनट</string>
-    <string name="voice_minutes_many">%1$d मिनट</string>
-    <string name="voice_minutes_one">1 मिनट</string>
-    <string name="voice_minutes_other">%1$d मिनट</string>
-    <string name="voice_minutes_two">2 मिनट</string>
-    <string name="voice_minutes_zero">0 मिनट</string>
+    <plurals name="voiceHours">
+        <item quantity="one">%1$d घंटा</item>
+        <item quantity="other">%1$d घंटे</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">%1$d मिनट</item>
+        <item quantity="other">%1$d मिनट</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">%1$d सेकंड</item>
+        <item quantity="other">%1$d सेकंड</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s प्रति किलोमीटर</string>
     <string name="voice_pace_per_mile">%1$s प्रति मील</string>
-    <string name="voice_seconds_few">%1$d सेकंड</string>
-    <string name="voice_seconds_many">%1$d सेकंड</string>
-    <string name="voice_seconds_one">1 सेकंड</string>
-    <string name="voice_seconds_other">%1$d सेकंड</string>
-    <string name="voice_seconds_two">2 सेकंड</string>
-    <string name="voice_seconds_zero">0 सेकंड</string>
     <string name="voice_speed_kilometers_per_hour_few">%1$.1f किलोमीटर प्रति घंटा</string>
     <string name="voice_speed_kilometers_per_hour_many">%1$.1f किलोमीटर प्रति घंटा</string>
     <string name="voice_speed_kilometers_per_hour_one">1 किलोमीटर प्रति घंटा</string>
