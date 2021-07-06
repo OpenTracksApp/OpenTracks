@@ -341,20 +341,18 @@ limitations under the License.
         <item quantity="few">%1$d sekunde</item>
         <item quantity="other">%1$d sekunda</item>
     </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">%1$.1f kilometra na sat</item>
+        <item quantity="few">%1$.1f kilometra na sat</item>
+        <item quantity="other">%1$.1f kilometara na sat</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">%1$.1f milje na sat</item>
+        <item quantity="few">%1$.1f milje na sat</item>
+        <item quantity="other">%1$.1f milja na sat</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s po kilometru</string>
     <string name="voice_pace_per_mile">%1$s po milji</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f kilometra na sat</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f kilometara na sat</string>
-    <string name="voice_speed_kilometers_per_hour_one">jednog kilometra na sat</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f kilometara na sat</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 kilometra na sat</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 kilometara na sat</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f milje na sat</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f milja na sat</string>
-    <string name="voice_speed_miles_per_hour_one">jedne milje na sat</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f milja na sat</string>
-    <string name="voice_speed_miles_per_hour_two">dvije milje na sat</string>
-    <string name="voice_speed_miles_per_hour_zero">0 milja na sat</string>
     <string name="voice_template">Moje staze %1$s za %2$s brzinom od %3$s</string>
     <string name="voice_total_distance_kilometers_few">ukupna udaljenost %1$.2f kilometra</string>
     <string name="voice_total_distance_kilometers_many">ukupna udaljenost %1$.2f kilometara</string>

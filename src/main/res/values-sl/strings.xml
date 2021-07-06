@@ -343,21 +343,21 @@ limitations under the License.
         <item quantity="one">%1$d sekunda</item>
         <item quantity="two">%1$d sekundi</item>
         <item quantity="few">%1$d sekund</item>
-        <item quantity="other">>%1$d sekund</item>
+        <item quantity="other">%1$d sekund</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">%1$.1f kilometer na uro</item>
+        <item quantity="two">%1$.1f kilometra na uro</item>
+        <item quantity="few">%1$.1f kilometrov na uro</item>
+        <item quantity="other">%1$.1f kilometrov na uro</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">%1$.1f milj na uro</item>
+        <item quantity="two">%1$.1f milji na uro</item>
+        <item quantity="few">%1$.1f milj na uro</item>
+        <item quantity="other">%1$.1f milj na uro</item>
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s na kilometer</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f kilometrov na uro</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f kilometrov na uro</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 kilometer na uro</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f kilometrov na uro</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 kilometra na uro</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 kilometrov na uro</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f milj na uro</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f milj na uro</string>
-    <string name="voice_speed_miles_per_hour_one">1 milja na uro</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f milj na uro</string>
-    <string name="voice_speed_miles_per_hour_two">2 milji na uro</string>
-    <string name="voice_speed_miles_per_hour_zero">0 milj na uro</string>
     <string name="voice_template">Moje poti %1$s v %2$s pri %3$s</string>
     <string name="voice_total_distance_kilometers_few">skupna razdalja %1$.2f kilometrov</string>
     <string name="voice_total_distance_kilometers_many">skupna razdalja %1$.2f kilometrov</string>

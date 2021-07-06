@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
---><resources>
+-->
+<resources>
     <string name="about_preference_title">Umbes OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> on spordi jälgimise rakendus, mis austab täielikult teie privaatsust.</string>
     <string name="about_url">Projekti veebileht: <a href="%1$s">%1$s</a></string>
@@ -404,20 +404,16 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
         <item quantity="one">1 sekund</item>
         <item quantity="other">%1$d sekundit</item>
     </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">1 kilomeeter tunnis</item>
+        <item quantity="other">%1$.1f kilomeetrit tunnisr</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">1 miil tunnis</item>
+        <item quantity="other">%1$.1f miili tunnis</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s kilomeetri kohta</string>
     <string name="voice_pace_per_mile">%1$s miilis</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f kilomeetrit tunnis</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f kilomeetrit tunnis</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 kilomeeter tunnis</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f kilomeetrit tunnis</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 kilomeetrit tunnis</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 kilomeetrit tunnis</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f miili tunnis</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f miili tunnis</string>
-    <string name="voice_speed_miles_per_hour_one">1 miil tunnis</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f miili tunnis</string>
-    <string name="voice_speed_miles_per_hour_two">2 miili tunnis</string>
-    <string name="voice_speed_miles_per_hour_zero">0 miili tunnis</string>
     <string name="voice_template">Minu rajad %1$s ajaga %2$s ja kiirusega %3$s</string>
     <string name="voice_total_distance_kilometers_few">kogupikkus %1$.2f kilomeetrit</string>
     <string name="voice_total_distance_kilometers_many">kogupikkus %1$.2f kilomeetrit</string>

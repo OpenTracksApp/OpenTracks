@@ -279,13 +279,13 @@
     <plurals name="voiceHours">
         <item quantity="one">שעה אחת</item>
         <item quantity="two">שעתיים</item>
-        <item quantity="many">>%1$d שעות</item>
+        <item quantity="many">%1$d שעות</item>
         <item quantity="other">%1$d שעות</item>
     </plurals>
     <plurals name="voiceMinutes">
         <item quantity="one">דקה אחת</item>
-        <item quantity="two">>שתי דקות</item>
-        <item quantity="many">>%1$d דקות</item>
+        <item quantity="two">שתי דקות</item>
+        <item quantity="many">%1$d דקות</item>
         <item quantity="other">%1$d דקות</item>
     </plurals>
     <plurals name="voiceSeconds">
@@ -294,20 +294,20 @@
         <item quantity="many">%1$d שניות</item>
         <item quantity="other">%1$d שניותr</item>
     </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">קילומטר אחד לשעה</item>
+        <item quantity="two">שני קילומטר לשעה</item>
+        <item quantity="many">%1$.1f קילומטר לשעה</item>
+        <item quantity="other">%1$.1f קילומטר לשעה</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">מייל אחד לשעה</item>
+        <item quantity="two">שני מייל לשעה</item>
+        <item quantity="many">%1$.1f מייל לשעה</item>
+        <item quantity="other">%1$.1f מייל לשעה</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s לקילומטר</string>
     <string name="voice_pace_per_mile">%1$s למייל</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f קילומטר לשעה</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f קילומטר לשעה</string>
-    <string name="voice_speed_kilometers_per_hour_one">קילומטר אחד לשעה</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f קילומטר לשעה</string>
-    <string name="voice_speed_kilometers_per_hour_two">שני קילומטר לשעה</string>
-    <string name="voice_speed_kilometers_per_hour_zero">אפס קילומטר לשעה</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f מייל לשעה</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f מייל לשעה</string>
-    <string name="voice_speed_miles_per_hour_one">מייל אחד לשעה</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f מייל לשעה</string>
-    <string name="voice_speed_miles_per_hour_two">שני מייל לשעה</string>
-    <string name="voice_speed_miles_per_hour_zero">אפס מייל לשעה</string>
     <string name="voice_template">\'המסלולים שלי\' %1$s במשך %2$s במהירות %3$s</string>
     <string name="voice_total_distance_kilometers_few">המרחק הכולל הוא %1$.2f קילומטר</string>
     <string name="voice_total_distance_kilometers_many">המרחק הכולל הוא %1$.2f קילומטר</string>

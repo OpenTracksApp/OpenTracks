@@ -336,20 +336,16 @@ limitations under the License.
         <item quantity="one">%1$d ثانیه</item>
         <item quantity="other">%1$d ثانیه</item>
     </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">%1$.1f کیلومتر در ساعت</item>
+        <item quantity="other">%1$.1f کیلومتر در ساعت</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">%1$.1f مایل در ساعت</item>
+        <item quantity="other">%1$.1f مایل در ساعت</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s در کیلومتر</string>
     <string name="voice_pace_per_mile">%1$s در مایل</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f کیلومتر در ساعت</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f کیلومتر در ساعت</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 کیلومتر در ساعت</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f کیلومتر در ساعت</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 کیلومتر در ساعت</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 کیلومتر در ساعت</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f مایل در ساعت</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f مایل در ساعت</string>
-    <string name="voice_speed_miles_per_hour_one">1 مایل در ساعت</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f مایل در ساعت</string>
-    <string name="voice_speed_miles_per_hour_two">2 مایل در ساعت</string>
-    <string name="voice_speed_miles_per_hour_zero">0 مایل در ساعت</string>
     <string name="voice_template">مسیرهای من‏‏ %1$s در %2$s با %3$s</string>
     <string name="voice_total_distance_kilometers_few">کل مسافت %1$.2f کیلومتر</string>
     <string name="voice_total_distance_kilometers_many">کل مسافت %1$.2f کیلومتر</string>

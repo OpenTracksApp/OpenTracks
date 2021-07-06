@@ -337,20 +337,16 @@ limitations under the License.
         <item quantity="one">1 saniye</item>
         <item quantity="other">%1$d saniye</item>
     </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">saatte 1 kilometre</item>
+        <item quantity="other">saatte %1$.1f kilometre</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">saatte 1 mil</item>
+        <item quantity="other">saatte %1$.1f mil</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">kilometrede %1$s</string>
     <string name="voice_pace_per_mile">milde %1$s</string>
-    <string name="voice_speed_kilometers_per_hour_few">Saatte %1$.1f kilometre</string>
-    <string name="voice_speed_kilometers_per_hour_many">saatte %1$.1f kilometre</string>
-    <string name="voice_speed_kilometers_per_hour_one">saatte 1 kilometre</string>
-    <string name="voice_speed_kilometers_per_hour_other">saatte %1$.1f kilometre</string>
-    <string name="voice_speed_kilometers_per_hour_two">saatte 2 kilometre</string>
-    <string name="voice_speed_kilometers_per_hour_zero">Saatte 0 kilometre</string>
-    <string name="voice_speed_miles_per_hour_few">saatte %1$.1f mil</string>
-    <string name="voice_speed_miles_per_hour_many">saatte %1$.1f mil</string>
-    <string name="voice_speed_miles_per_hour_one">saatte 1 mil</string>
-    <string name="voice_speed_miles_per_hour_other">saatte %1$.1f mil</string>
-    <string name="voice_speed_miles_per_hour_two">saatte 2 mil</string>
-    <string name="voice_speed_miles_per_hour_zero">saatte 0 mil</string>
     <string name="voice_template">OpenTracks %3$s hızla %2$s sürede %1$s mesafe</string>
     <string name="voice_total_distance_kilometers_few">toplam mesafe %1$.2f kilometre</string>
     <string name="voice_total_distance_kilometers_many">toplam mesafe %1$.2f kilometre</string>

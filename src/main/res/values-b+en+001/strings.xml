@@ -287,20 +287,16 @@
         <item quantity="one">1 second</item>
         <item quantity="other">%1$d seconds</item>
     </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">1 kilometer per hour</item>
+        <item quantity="other">%1$.1f kilometers per hour</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">1 mile per hour</item>
+        <item quantity="other">%1$.1f miles per hour</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s per kilometre</string>
     <string name="voice_pace_per_mile">%1$s per mile</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f kilometres per hour</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f kilometres per hour</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 kilometre per hour</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f kilometres per hour</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 kilometres per hour</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 kilometres per hour</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f miles per hour</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f miles per hour</string>
-    <string name="voice_speed_miles_per_hour_one">1 mile per hour</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f miles per hour</string>
-    <string name="voice_speed_miles_per_hour_two">2 miles per hour</string>
-    <string name="voice_speed_miles_per_hour_zero">0 miles per hour</string>
     <string name="voice_template">OpenTracks %1$s in %2$s at %3$s</string>
     <string name="voice_total_distance_kilometers_few">total distance %1$.2f kilometres</string>
     <string name="voice_total_distance_kilometers_many">total distance %1$.2f kilometres</string>

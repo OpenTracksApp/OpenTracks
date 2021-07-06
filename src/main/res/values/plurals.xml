@@ -14,22 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
-    <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="zero">@string/voice_speed_kilometers_per_hour_zero</item>
-        <item quantity="one">@string/voice_speed_kilometers_per_hour_one</item>
-        <item quantity="two">@string/voice_speed_kilometers_per_hour_two</item>
-        <item quantity="few">@string/voice_speed_kilometers_per_hour_few</item>
-        <item quantity="many">@string/voice_speed_kilometers_per_hour_many</item>
-        <item quantity="other">@string/voice_speed_kilometers_per_hour_other</item>
-    </plurals>
-    <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="zero">@string/voice_speed_miles_per_hour_zero</item>
-        <item quantity="one">@string/voice_speed_miles_per_hour_one</item>
-        <item quantity="two">@string/voice_speed_miles_per_hour_two</item>
-        <item quantity="few">@string/voice_speed_miles_per_hour_few</item>
-        <item quantity="many">@string/voice_speed_miles_per_hour_many</item>
-        <item quantity="other">@string/voice_speed_miles_per_hour_other</item>
-    </plurals>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="zero">@string/voice_total_distance_kilometers_zero</item>
         <item quantity="one">@string/voice_total_distance_kilometers_one</item>

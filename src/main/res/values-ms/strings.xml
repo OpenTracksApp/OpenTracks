@@ -335,20 +335,14 @@ limitations under the License.
     <plurals name="voiceSeconds">
         <item quantity="other">%1$d saat</item>
     </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="other">1$.1f kilometer sejam</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="other">%1$.1f batu sejam</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s sekilometer</string>
     <string name="voice_pace_per_mile">%1$s sejam</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f kilometer sejam</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f kilometer sejam</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 kilometer sejam</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f kilometer sejam</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 kilometer sejam</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 kilometer sejam</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f batu sejam</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f batu sejam</string>
-    <string name="voice_speed_miles_per_hour_one">1 batu sejam</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f batu sejam</string>
-    <string name="voice_speed_miles_per_hour_two">2 batu sejam</string>
-    <string name="voice_speed_miles_per_hour_zero">0 batu sejam</string>
     <string name="voice_template">Laluan Saya %1$s dalam %2$s pada %3$s</string>
     <string name="voice_total_distance_kilometers_few">jumlah jarak %1$.2f kilometer</string>
     <string name="voice_total_distance_kilometers_many">jumlah jarak %1$.2f kilometer</string>

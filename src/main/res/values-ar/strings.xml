@@ -352,20 +352,24 @@ limitations under the License.
         <item quantity="many">%1$d ثانية</item>
         <item quantity="other">%1$d ثانية</item>
     </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="zero">0 كيلومتر في الساعة</item>
+        <item quantity="one">1 كيلومتر في الساعة</item>
+        <item quantity="two">2 كيلومتر في الساعة</item>
+        <item quantity="few">%1$.1f كيلومتر في الساعة</item>
+        <item quantity="many">%1$.1f كيلومتر في الساعة</item>
+        <item quantity="other">%1$.1f كيلومتر في الساعة</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="zero">0 ميل في الساعة</item>
+        <item quantity="one">ميل واحد في الساعة</item>
+        <item quantity="two">2 ميل في الساعة</item>
+        <item quantity="few">%1$.1f أميال في الساعة</item>
+        <item quantity="many">%1$.1f ميلاً في الساعة</item>
+        <item quantity="other">%1$.1f من الأميال في الساعة</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s لكل كيلومتر</string>
     <string name="voice_pace_per_mile">%1$s لكل ميل</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f كيلومتر في الساعة</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f كيلومتر في الساعة</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 كيلومتر في الساعة</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f كيلومتر في الساعة</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 كيلومتر في الساعة</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 كيلومتر في الساعة</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f أميال في الساعة</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f ميلاً في الساعة</string>
-    <string name="voice_speed_miles_per_hour_one">ميل واحد في الساعة</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f من الأميال في الساعة</string>
-    <string name="voice_speed_miles_per_hour_two">2 ميل في الساعة</string>
-    <string name="voice_speed_miles_per_hour_zero">0 ميل في الساعة</string>
     <string name="voice_template">مساراتي‏ %1$s‏ في‏ %2$s‏ بسرعة‏ %3$s</string>
     <string name="voice_total_distance_kilometers_few">المسافة الإجمالية %1$.2f كيلومتر</string>
     <string name="voice_total_distance_kilometers_many">المسافة الإجمالية %1$.2f كيلومتر</string>

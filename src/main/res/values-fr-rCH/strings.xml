@@ -256,7 +256,7 @@
     <string name="value_adapt_accuracy">Adapter pour la précision</string>
     <string name="value_adapt_battery_life">Économiser la batterie</string>
     <string name="value_always">Toujours</string>
-        <string name="value_integer_feet">%1$d pied(s)</string>
+    <string name="value_integer_feet">%1$d pied(s)</string>
     <string name="value_integer_feet_excellent_gps">%1$d pied(s) (réception GPS excellente)</string>
     <string name="value_integer_feet_recommended">%1$d pied(s) (recommandé)</string>
     <string name="value_integer_kilometer">%1$d km</string>
@@ -286,20 +286,16 @@
         <item quantity="one">%1$d minute</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">%1$.1f kilomètre-heure</item>
+        <item quantity="other">%1$.1f kilomètres-heure</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">%1$.1f mile par heure</item>
+        <item quantity="other">%1$.1f miles par heure</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s par kilomètre</string>
     <string name="voice_pace_per_mile">%1$s par mile</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f kilomètres-heure</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f kilomètres-heure</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 kilomètre-heure</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f kilomètres-heure</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 kilomètres-heure</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 kilomètre-heure</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f miles par heure</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f miles par heure</string>
-    <string name="voice_speed_miles_per_hour_one">1 mile par heure</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f miles par heure</string>
-    <string name="voice_speed_miles_per_hour_two">2 miles par heure</string>
-    <string name="voice_speed_miles_per_hour_zero">0 mile par heure</string>
     <string name="voice_template">Mes parcours : %1$s en %2$s à %3$s</string>
     <string name="voice_total_distance_kilometers_few">distance totale %1$.2f kilomètres</string>
     <string name="voice_total_distance_kilometers_many">distance totale %1$.2f kilomètres</string>

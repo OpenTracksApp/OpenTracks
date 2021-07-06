@@ -327,18 +327,6 @@ limitations under the License.
     <string name="value_smallest">Mažiausia</string>
     <string name="value_smallest_recommended">Mažiausia (rekomenduojama)</string>
     <!-- Voice -->
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f km per valandą</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f km per valandą</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 kilometras per valandą</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f km per valandą</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 kilometrai per valandą</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 kilometrų per valandą</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f myl. per val.</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f myl. per val.</string>
-    <string name="voice_speed_miles_per_hour_one">1 myl. per val.</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f myl. per val.</string>
-    <string name="voice_speed_miles_per_hour_two">2 mylios per val.</string>
-    <string name="voice_speed_miles_per_hour_zero">0 mylių per valandą</string>
     <string name="voice_template">Mano kelionės: %1$s per %2$s, %3$s greičiu</string>
     <string name="voice_total_distance_kilometers_few">bendras atstumas %1$.2f km</string>
     <string name="voice_total_distance_kilometers_many">bendras atstumas %1$.2f km</string>

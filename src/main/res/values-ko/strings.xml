@@ -332,20 +332,14 @@ limitations under the License.
     <plurals name="voiceSeconds">
         <item quantity="other">%1$d초</item>
     </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="other">시속 %1$.1f킬로미터</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="other">시간 당 %1$.1f마일</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">킬로미터 당 %1$s</string>
     <string name="voice_pace_per_mile">마일 당 %1$s</string>
-    <string name="voice_speed_kilometers_per_hour_few">시속 %1$.1f킬로미터</string>
-    <string name="voice_speed_kilometers_per_hour_many">시속 %1$.1f킬로미터</string>
-    <string name="voice_speed_kilometers_per_hour_one">시속 1킬로미터</string>
-    <string name="voice_speed_kilometers_per_hour_other">시속 %1$.1f킬로미터</string>
-    <string name="voice_speed_kilometers_per_hour_two">시속 2킬로미터</string>
-    <string name="voice_speed_kilometers_per_hour_zero">시속 0킬로미터</string>
-    <string name="voice_speed_miles_per_hour_few">시간 당 %1$.1f마일</string>
-    <string name="voice_speed_miles_per_hour_many">시간 당 %1$.1f마일</string>
-    <string name="voice_speed_miles_per_hour_one">시간 당 1마일</string>
-    <string name="voice_speed_miles_per_hour_other">시간 당 %1$.1f마일</string>
-    <string name="voice_speed_miles_per_hour_two">시속 2마일</string>
-    <string name="voice_speed_miles_per_hour_zero">시속 0마일</string>
     <string name="voice_template">내 운동기록은 %1$s을(를) %2$s에 완료했으며 속도는 %3$s입니다.</string>
     <string name="voice_total_distance_kilometers_few">총 거리 %1$.2f킬로미터</string>
     <string name="voice_total_distance_kilometers_many">총 거리 %1$.2f킬로미터</string>

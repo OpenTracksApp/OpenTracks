@@ -352,20 +352,13 @@ limitations under the License.
     <plurals name="voiceSeconds">
         <item quantity="other">%1$d 秒</item>
     </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="other">每小时 %1$.1f 公里</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="other">每小时 %1$.1f 英里</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">每公里 %1$s</string>
-    <string name="voice_pace_per_mile">每英里 %1$s</string>
-    <string name="voice_speed_kilometers_per_hour_few">每小时 %1$.1f 公里</string>
-    <string name="voice_speed_kilometers_per_hour_many">每小时 %1$.1f 公里</string>
-    <string name="voice_speed_kilometers_per_hour_one">每小时 1 公里</string>
-    <string name="voice_speed_kilometers_per_hour_other">每小时 %1$.1f 公里</string>
-    <string name="voice_speed_kilometers_per_hour_two">每小时 2 公里</string>
-    <string name="voice_speed_kilometers_per_hour_zero">每小时 0 公里</string>
-    <string name="voice_speed_miles_per_hour_few">每小时 %1$.1f 英里</string>
-    <string name="voice_speed_miles_per_hour_many">每小时 %1$.1f 英里</string>
-    <string name="voice_speed_miles_per_hour_one">每小时 1 英里</string>
-    <string name="voice_speed_miles_per_hour_other">每小时 %1$.1f 英里</string>
-    <string name="voice_speed_miles_per_hour_two">每小时 2 英里</string>
-    <string name="voice_speed_miles_per_hour_zero">每小时 0 英里</string>
     <string name="voice_template">“我的足迹”距离：%1$s；时间：%2$s；速度：%3$s</string>
     <string name="voice_total_distance_kilometers_few">总距离 %1$.2f 公里</string>
     <string name="voice_total_distance_kilometers_many">总距离 %1$.2f 公里</string>

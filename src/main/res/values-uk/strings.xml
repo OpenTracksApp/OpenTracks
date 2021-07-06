@@ -346,20 +346,20 @@ limitations under the License.
         <item quantity="many">%1$d секунд</item>
         <item quantity="other">1$d секунд</item>
     </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">%1$.1f кілометр на годину</item>
+        <item quantity="few">%1$.1f кілометри на годину</item>
+        <item quantity="many">%1$.1f км/год</item>
+        <item quantity="other">%1$.1f кілометра на годину</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">%1$.1f миля на годину</item>
+        <item quantity="few">%1$.1f милі на годину</item>
+        <item quantity="many">%1$.1f миль на годину</item>
+        <item quantity="other">%1$.1f милі на годину</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s на кілометр</string>
     <string name="voice_pace_per_mile">%1$s на милю</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f кілометри на годину</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f км/год</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 кілометр на годину</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f кілометра на годину</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 кілометри на годину</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 кілометрів на годину</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f милі на годину</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f миль на годину</string>
-    <string name="voice_speed_miles_per_hour_one">1 миля на годину</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f милі на годину</string>
-    <string name="voice_speed_miles_per_hour_two">2 милі на годину</string>
-    <string name="voice_speed_miles_per_hour_zero">0 миль на годину</string>
     <string name="voice_template">Подолано %1$s за %2$s (зі швидкістю %3$s)</string>
     <string name="voice_total_distance_kilometers_few">загальна відстань: %1$.2f км</string>
     <string name="voice_total_distance_kilometers_many">загальна відстань: %1$.2f км</string>
