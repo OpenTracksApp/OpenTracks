@@ -80,3 +80,6 @@ captures/
 Appfile
 releasePlayStore/*
 Gemfile.lock
+
+# VSCode
+*.code-workspace

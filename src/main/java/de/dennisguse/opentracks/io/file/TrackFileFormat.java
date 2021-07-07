@@ -7,6 +7,7 @@ import java.util.Locale;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.exporter.GPXTrackExporter;
+import de.dennisguse.opentracks.io.file.exporter.GPXTrackExporterForStrava;
 import de.dennisguse.opentracks.io.file.exporter.KMLTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
@@ -28,6 +29,10 @@ public enum TrackFileFormat {
         public String getMimeType() {
             return MIME_KML;
         }
+        
+        public String getUIName() {
+            return "KML";
+        }
 
         public String getExtension() {
             return "kml";
@@ -48,6 +53,10 @@ public enum TrackFileFormat {
         @Override
         public String getMimeType() {
             return MIME_KMZ;
+        }
+
+        public String getUIName() {
+            return "KMZ";
         }
 
         public String getExtension() {
@@ -79,6 +88,10 @@ public enum TrackFileFormat {
             return "kmz";
         }
 
+        public String getUIName() {
+            return "KMZ";
+        }
+
         @Override
         public boolean includesPhotos() {
             return exportPhotos;
@@ -94,6 +107,29 @@ public enum TrackFileFormat {
         @Override
         public String getMimeType() {
             return "application/gpx+xml";
+        }
+
+        public String getUIName() {
+            return "GPX (OpenTracks)";
+        }
+
+        public String getExtension() {
+            return "gpx";
+        }
+    },
+    GPX_FOR_STRAVA {
+        @Override
+        public TrackExporter createTrackExporter(Context context) {
+            return new GPXTrackExporterForStrava(new ContentProviderUtils(context), context.getString(R.string.app_name));
+        }
+
+        @Override
+        public String getMimeType() {
+            return "application/gpx+xml";
+        }
+
+        public String getUIName() {
+            return "GPX (Strava)";
         }
 
         public String getExtension() {
@@ -116,6 +152,11 @@ public enum TrackFileFormat {
      * @param context the context
      */
     public abstract TrackExporter createTrackExporter(Context context);
+
+    /**
+     * Returns the name used in the UI for each format.
+     */
+    public abstract String getUIName();
 
     /**
      * Returns the file extension for each format.

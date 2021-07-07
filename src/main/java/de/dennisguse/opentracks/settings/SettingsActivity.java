@@ -293,15 +293,14 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
 
 
         private void setExportTrackFileFormatOptions() {
-            final TrackFileFormat[] trackFileFormats = {TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES, TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.GPX};
+            final TrackFileFormat[] trackFileFormats = {TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES, TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.GPX, TrackFileFormat.GPX_FOR_STRAVA};
             String[] entries = new String[trackFileFormats.length];
             String[] entryValues = new String[trackFileFormats.length];
 
             for (int i = 0; i < entries.length; i++) {
                 TrackFileFormat trackFileFormat = trackFileFormats[i];
-                String trackFileFormatUpperCase = trackFileFormat.getExtension().toUpperCase(Locale.US); //ASCII upper case
                 int photoMessageId = trackFileFormat.includesPhotos() ? R.string.export_with_photos : R.string.export_without_photos;
-                entries[i] = String.format("%s (%s)", trackFileFormatUpperCase, getString(photoMessageId));
+                entries[i] = String.format("%s (%s)", trackFileFormat.getUIName(), getString(photoMessageId));
                 entryValues[i] = trackFileFormat.name();
             }
 
