@@ -341,7 +341,7 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">kilometrede %1$s</string>
     <string name="voice_pace_per_mile">milde %1$s</string>
-    <string name="voice_template">OpenTracks %3$s hızla %2$s sürede %1$s mesafe</string>
+    <string name="voice_template">%3$s hızla %2$s sürede %1$s mesafe</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">toplam mesafe 1 kilometre</item>
         <item quantity="other">toplam mesafe %1$.2f kilometre</item>

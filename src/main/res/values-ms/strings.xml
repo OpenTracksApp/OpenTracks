@@ -337,7 +337,7 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s sekilometer</string>
     <string name="voice_pace_per_mile">%1$s sejam</string>
-    <string name="voice_template">Laluan Saya %1$s dalam %2$s pada %3$s</string>
+    <string name="voice_template">%1$s dalam %2$s pada %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">jumlah jarak 1 kilometer</item>
         <item quantity="other">jumlah jarak %1$.2f kilometer</item>

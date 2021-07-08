@@ -426,7 +426,7 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s por quilómetro</string>
     <string name="voice_pace_per_mile">%1$s por quilómetro</string>
-    <string name="voice_template">OpenTracks: %1$s en %2$s a %3$s</string>
+    <string name="voice_template">%1$s en %2$s a %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">distancia total 1 quilómetro</item>
         <item quantity="other">distancia total %1$.2f quilómetros</item>

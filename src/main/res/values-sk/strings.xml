@@ -346,7 +346,7 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s na kilometer</string>
     <string name="voice_pace_per_mile">%1$s na míľu</string>
-    <string name="voice_template">Moje trasy %1$s, čas %2$s, rýchlosť %3$s</string>
+    <string name="voice_template">%1$s, čas %2$s, rýchlosť %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">celková vzdialenosť 1 kilometer</item>
         <item quantity="few">celková vzdialenosť %1$.2f kilometra</item>

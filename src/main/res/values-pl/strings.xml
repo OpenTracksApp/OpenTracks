@@ -391,7 +391,7 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s na kilometr</string>
     <string name="voice_pace_per_mile">%1$s na milę</string>
-    <string name="voice_template">Aktualna trasa: %1$s w czasie %2$s z prędkością %3$s</string>
+    <string name="voice_template">%1$s w czasie %2$s z prędkością %3$s</string>
     <string name="voice_speed_lap">Prędkosć w interwale %1$s</string>
     <string name="voice_pace_lap">Czas w interwale %1$s</string>
     <plurals name="voiceTotalDistanceKilometers">

@@ -342,7 +342,7 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s kilométerenként</string>
     <string name="voice_pace_per_mile">%1$s mérföldenként</string>
-    <string name="voice_template">Saját útvonalak: %1$s %2$s alatt %3$s sebességgel</string>
+    <string name="voice_template">%1$s %2$s alatt %3$s sebességgel</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">össztávolság: 1 kilométer</item>
         <item quantity="other">össztávolság: %1$.2f kilométer</item>

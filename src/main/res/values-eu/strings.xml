@@ -409,7 +409,7 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s kilometro bakoitzeko</string>
     <string name="voice_pace_per_mile">%1$s miliako</string>
-    <string name="voice_template">OpenTracks. Distantzia: %1$s. Denbora: %2$s. Abiadura: %3$s</string>
+    <string name="voice_template">Distantzia: %1$s. Denbora: %2$s. Abiadura: %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">distantzia, guztira: 1 kilometro</item>
         <item quantity="other">distantzia, guztira: %1$.2f kilometro</item>

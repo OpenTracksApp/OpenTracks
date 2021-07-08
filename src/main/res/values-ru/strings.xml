@@ -353,7 +353,7 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s на километр</string>
     <string name="voice_pace_per_mile">%1$s на милю</string>
-    <string name="voice_template">Длина треков: %1$s за %2$s (%3$s)</string>
+    <string name="voice_template">%1$s за %2$s (%3$s)</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">Общая длина: %1$.2f километр</item>
         <item quantity="few">Общая длина: %1$.2f километра</item>

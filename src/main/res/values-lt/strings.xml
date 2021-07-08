@@ -321,7 +321,7 @@ limitations under the License.
     <string name="value_smallest">Mažiausia</string>
     <string name="value_smallest_recommended">Mažiausia (rekomenduojama)</string>
     <!-- Voice -->
-    <string name="voice_template">Mano kelionės: %1$s per %2$s, %3$s greičiu</string>
+    <string name="voice_template">%1$s per %2$s, %3$s greičiu</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">bendras atstumas %1$.2f kilometras</item>
         <item quantity="few">bendras atstumas %1$.2f kilometrai</item>

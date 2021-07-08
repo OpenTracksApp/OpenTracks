@@ -346,7 +346,7 @@ limitations under the License.
         <item quantity="other">%1$.1f (de) mile pe oră</item>
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s pe kilometru</string>
-    <string name="voice_template">Traseele mele %1$s în %2$s cu %3$s</string>
+    <string name="voice_template">%1$s în %2$s cu %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">distanţa totală 1 kilometru</item>
         <item quantity="few">distanţa totală %1$.2f kilometri</item>

@@ -340,7 +340,7 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s per kilometer</string>
     <string name="voice_pace_per_mile">%1$s per mile</string>
-    <string name="voice_template">OpenTracks %1$s på %2$s med %3$s</string>
+    <string name="voice_template">%1$s på %2$s med %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">totalt avstånd 1 kilometer</item>
         <item quantity="other">totalt avstånd %1$.2f kilometer</item>

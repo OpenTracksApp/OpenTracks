@@ -341,7 +341,7 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s per quilòmetre</string>
     <string name="voice_pace_per_mile">%1$s per milla</string>
-    <string name="voice_template">OpenTracks: %1$s en %2$s a %3$s</string>
+    <string name="voice_template">%1$s en %2$s a %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">1 quilòmetre de distància total</item>
         <item quantity="other">%1$.2f quilòmetres de distància total</item>

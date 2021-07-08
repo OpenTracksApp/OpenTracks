@@ -413,7 +413,7 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s pr. kilometer</string>
     <string name="voice_pace_per_mile">%1$s pr. mil</string>
-    <string name="voice_template">OpenTracks %1$s på %2$s ved %3$s</string>
+    <string name="voice_template">%1$s på %2$s ved %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">afstand i alt 1 kilometer</item>
         <item quantity="other">afstand i alt %1$.2f kilometer</item>
