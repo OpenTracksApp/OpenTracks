@@ -414,19 +414,14 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="voice_pace_per_kilometer">%1$s pr. kilometer</string>
     <string name="voice_pace_per_mile">%1$s pr. mil</string>
     <string name="voice_template">OpenTracks %1$s på %2$s ved %3$s</string>
-    <string name="voice_total_distance_kilometers_few">afstand i alt %1$.2f km</string>
-    <string name="voice_total_distance_kilometers_many">afstand i alt %1$.2f km</string>
-    <string name="voice_total_distance_kilometers_one">afstand i alt 1 kilometer</string>
-    <string name="voice_total_distance_kilometers_other">afstand i alt %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_two">afstand i alt 2 km</string>
-    <string name="voice_total_distance_kilometers_zero">afstand i alt 0 km</string>
-    <string name="voice_total_distance_miles_few">afstand i alt %1$.2f mil</string>
-    <string name="voice_total_distance_miles_many">afstand i alt %1$.2f mil</string>
-    <string name="voice_total_distance_miles_one">afstand i alt 1 mil</string>
-    <string name="voice_total_distance_miles_other">afstand i alt %1$.2f mil</string>
-    <string name="voice_total_distance_miles_two">afstand i alt 2 mil</string>
-    <string name="voice_total_distance_miles_zero">afstand i alt 0 mil</string>
-    <string name="voice_total_distance_zero">Afstand i alt i OpenTracks er nul.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">afstand i alt 1 kilometer</item>
+        <item quantity="other">afstand i alt %1$.2f kilometer</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">afstand i alt 1 mil</item>
+        <item quantity="other">afstand i alt %1$.2f mil</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Pengeautomat</string>
     <string name="waypoint_type_bank">bank</string>

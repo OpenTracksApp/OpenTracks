@@ -342,19 +342,14 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">%1$s ανά χιλιόμετρο</string>
     <string name="voice_pace_per_mile">%1$s ανά μίλι</string>
     <string name="voice_template">Οι διαδρομές μου %1$s σε %2$s με ταχύτητα %3$s</string>
-    <string name="voice_total_distance_kilometers_few">συνολική απόσταση %1$.2f χιλιόμετρα</string>
-    <string name="voice_total_distance_kilometers_many">συνολική απόσταση %1$.2f χιλιόμετρα</string>
-    <string name="voice_total_distance_kilometers_one">συνολική απόσταση 1 χιλιόμετρο</string>
-    <string name="voice_total_distance_kilometers_other">συνολική απόσταση %1$.2f χιλιόμετρα</string>
-    <string name="voice_total_distance_kilometers_two">συνολική απόσταση 2 χιλιόμετρα</string>
-    <string name="voice_total_distance_kilometers_zero">συνολική απόσταση 0 χιλιόμετρα</string>
-    <string name="voice_total_distance_miles_few">συνολική απόσταση %1$.2f μίλια</string>
-    <string name="voice_total_distance_miles_many">συνολική απόσταση %1$.2f μίλια</string>
-    <string name="voice_total_distance_miles_one">συνολική απόσταση 1 μίλι</string>
-    <string name="voice_total_distance_miles_other">συνολική απόσταση %1$.2f μίλια</string>
-    <string name="voice_total_distance_miles_two">συνολική απόσταση 2 μίλια</string>
-    <string name="voice_total_distance_miles_zero">συνολική απόσταση 0 μίλια</string>
-    <string name="voice_total_distance_zero">OpenTracks συνολική απόσταση μηδέν.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">συνολική απόσταση 1 χιλιόμετρο</item>
+        <item quantity="other">συνολική απόσταση %1$.2f χιλιόμετρα</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">συνολική απόσταση 1 μίλι</item>
+        <item quantity="other">συνολική απόσταση %1$.2f μίλια</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">τράπεζα</string>

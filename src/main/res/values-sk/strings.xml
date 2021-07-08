@@ -347,19 +347,16 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">%1$s na kilometer</string>
     <string name="voice_pace_per_mile">%1$s na míľu</string>
     <string name="voice_template">Moje trasy %1$s, čas %2$s, rýchlosť %3$s</string>
-    <string name="voice_total_distance_kilometers_few">celková vzdialenosť %1$.2f kilometra</string>
-    <string name="voice_total_distance_kilometers_many">celková vzdialenosť %1$.2f kilometra</string>
-    <string name="voice_total_distance_kilometers_one">celková vzdialenosť 1 kilometer</string>
-    <string name="voice_total_distance_kilometers_other">celková vzdialenosť %1$.2f kilometra</string>
-    <string name="voice_total_distance_kilometers_two">celková vzdialenosť 2 kilometre</string>
-    <string name="voice_total_distance_kilometers_zero">celková vzdialenosť 0 kilometrov</string>
-    <string name="voice_total_distance_miles_few">celková vzdialenosť %1$.2f míle</string>
-    <string name="voice_total_distance_miles_many">celková vzdialenosť %1$.2f míle</string>
-    <string name="voice_total_distance_miles_one">celková vzdialenosť 1 míľa</string>
-    <string name="voice_total_distance_miles_other">celková vzdialenosť %1$.2f míľ</string>
-    <string name="voice_total_distance_miles_two">celková vzdialenosť 2 míle</string>
-    <string name="voice_total_distance_miles_zero">celková vzdialenosť 0 míľ</string>
-    <string name="voice_total_distance_zero">Moje trasy – celková vzdialenosť nula.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">celková vzdialenosť 1 kilometer</item>
+        <item quantity="few">celková vzdialenosť %1$.2f kilometra</item>
+        <item quantity="other">celková vzdialenosť %1$.2f kilometra</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">celková vzdialenosť 1 míľa</item>
+        <item quantity="few">celková vzdialenosť %1$.2f míle</item>
+        <item quantity="other">celková vzdialenosť %1$.2f míľ</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankomat</string>
     <string name="waypoint_type_bank">banka</string>

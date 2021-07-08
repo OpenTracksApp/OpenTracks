@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
---><resources>
+-->
+<resources>
     <string name="about_preference_title">Over OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> is een sporttrackingapplicatie die uw privacy volledig respecteert.</string>
     <string name="about_url">Project webpagina: <a href="%1$s">%1$s</a></string>
@@ -409,19 +409,14 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="voice_pace_per_kilometer">%1$s te kilometer</string>
     <string name="voice_pace_per_mile">%1$s per mijl</string>
     <string name="voice_template">Mijn routes %1$s in %2$s bij %3$s</string>
-    <string name="voice_total_distance_kilometers_few">totale afstand %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_many">totale afstand %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_one">totale afstand 1 kilometer</string>
-    <string name="voice_total_distance_kilometers_other">totale afstand %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_two">totale afstand 2 kilometer</string>
-    <string name="voice_total_distance_kilometers_zero">totale afstand 0 kilometer</string>
-    <string name="voice_total_distance_miles_few">totale afstand %1$.2f mijl</string>
-    <string name="voice_total_distance_miles_many">totale afstand %1$.2f mijl</string>
-    <string name="voice_total_distance_miles_one">totale afstand 1 mijl</string>
-    <string name="voice_total_distance_miles_other">totale afstand %1$.2f mijl</string>
-    <string name="voice_total_distance_miles_two">totale afstand 2 mijl</string>
-    <string name="voice_total_distance_miles_zero">totale afstand 0 mijl</string>
-    <string name="voice_total_distance_zero">Totale afstand van OpenTracks is nul.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">totale afstand 1 kilometer</item>
+        <item quantity="other">totale afstand %1$.2f kilometer</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">totale afstand 1 mijl</item>
+        <item quantity="other">totale afstand %1$.2f mijl</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Pinautomaat</string>
     <string name="waypoint_type_bank">bank</string>

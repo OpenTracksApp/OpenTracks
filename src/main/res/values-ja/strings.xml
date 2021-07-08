@@ -336,19 +336,12 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">1キロあたり%1$s</string>
     <string name="voice_pace_per_mile">1マイルあたり%1$s</string>
     <string name="voice_template">OpenTracksの記録距離は%1$s、所要時間は%2$s、ペースは%3$sです</string>
-    <string name="voice_total_distance_kilometers_few">合計距離%1$.2fキロ</string>
-    <string name="voice_total_distance_kilometers_many">合計距離%1$.2fキロ</string>
-    <string name="voice_total_distance_kilometers_one">合計距離1キロ</string>
-    <string name="voice_total_distance_kilometers_other">合計距離%1$.2fキロ</string>
-    <string name="voice_total_distance_kilometers_two">総距離2キロ</string>
-    <string name="voice_total_distance_kilometers_zero">合計距離0キロ</string>
-    <string name="voice_total_distance_miles_few">合計距離%1$.2fマイル</string>
-    <string name="voice_total_distance_miles_many">合計距離%1$.2fマイル</string>
-    <string name="voice_total_distance_miles_one">合計距離1マイル</string>
-    <string name="voice_total_distance_miles_other">合計距離%1$.2fマイル</string>
-    <string name="voice_total_distance_miles_two">合計距離2マイル</string>
-    <string name="voice_total_distance_miles_zero">合計距離0マイル</string>
-    <string name="voice_total_distance_zero">OpenTracksの合計距離はゼロです。</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="other">合計距離%1$.2fキロ</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="other">合計距離%1$.2fマイル</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">銀行</string>

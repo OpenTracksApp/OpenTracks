@@ -419,19 +419,14 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="voice_pace_per_kilometer">%1$s kilometriä kohti</string>
     <string name="voice_pace_per_mile">%1$s mailia kohti</string>
     <string name="voice_template">Omat reitit: %1$s ajassa %2$s nopeudella %3$s</string>
-    <string name="voice_total_distance_kilometers_few">kokonaisetäisyys %1$.2f kilometriä</string>
-    <string name="voice_total_distance_kilometers_many">kokonaisetäisyys %1$.2f kilometriä</string>
-    <string name="voice_total_distance_kilometers_one">kokonaisetäisyys 1 kilometri</string>
-    <string name="voice_total_distance_kilometers_other">kokonaisetäisyys %1$.2f kilometriä</string>
-    <string name="voice_total_distance_kilometers_two">kokonaisetäisyys 2 kilometriä</string>
-    <string name="voice_total_distance_kilometers_zero">kokonaisetäisyys 0 kilometriä</string>
-    <string name="voice_total_distance_miles_few">kokonaisetäisyys %1$.2f mailia</string>
-    <string name="voice_total_distance_miles_many">kokonaisetäisyys %1$.2f mailia</string>
-    <string name="voice_total_distance_miles_one">kokonaisetäisyys 1 maili</string>
-    <string name="voice_total_distance_miles_other">kokonaisetäisyys %1$.2f mailia</string>
-    <string name="voice_total_distance_miles_two">kokonaisetäisyys 2 mailia</string>
-    <string name="voice_total_distance_miles_zero">kokonaisetäisyys 0 mailia</string>
-    <string name="voice_total_distance_zero">Oman reitin kokonaisetäisyys on nolla.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">kokonaisetäisyys 1 kilometri</item>
+        <item quantity="other">kokonaisetäisyys %1$.2f kilometriä</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">kokonaisetäisyys 1 maili</item>
+        <item quantity="other">kokonaisetäisyys %1$.2f mailia</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">pankkiautomaatti</string>
     <string name="waypoint_type_bank">pankki</string>

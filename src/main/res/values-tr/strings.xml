@@ -342,19 +342,14 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">kilometrede %1$s</string>
     <string name="voice_pace_per_mile">milde %1$s</string>
     <string name="voice_template">OpenTracks %3$s hızla %2$s sürede %1$s mesafe</string>
-    <string name="voice_total_distance_kilometers_few">toplam mesafe %1$.2f kilometre</string>
-    <string name="voice_total_distance_kilometers_many">toplam mesafe %1$.2f kilometre</string>
-    <string name="voice_total_distance_kilometers_one">toplam mesafe 1 kilometre</string>
-    <string name="voice_total_distance_kilometers_other">toplam mesafe %1$.2f kilometre</string>
-    <string name="voice_total_distance_kilometers_two">toplam mesafe 2 kilometre</string>
-    <string name="voice_total_distance_kilometers_zero">toplam mesafe 0 kilometre</string>
-    <string name="voice_total_distance_miles_few">toplam mesafe %1$.2f mil</string>
-    <string name="voice_total_distance_miles_many">toplam mesafe %1$.2f mil</string>
-    <string name="voice_total_distance_miles_one">toplam mesafe 1 mil</string>
-    <string name="voice_total_distance_miles_other">toplam mesafe %1$.2f mil</string>
-    <string name="voice_total_distance_miles_two">toplam mesafe 2 mil</string>
-    <string name="voice_total_distance_miles_zero">toplam mesafe 0 mil</string>
-    <string name="voice_total_distance_zero">OpenTracks toplam mesafe sıfır.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">toplam mesafe 1 kilometre</item>
+        <item quantity="other">toplam mesafe %1$.2f kilometre</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">toplam mesafe 1 mil</item>
+        <item quantity="other">toplam mesafe %1$.2f mil</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">banka</string>

@@ -335,19 +335,12 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">킬로미터 당 %1$s</string>
     <string name="voice_pace_per_mile">마일 당 %1$s</string>
     <string name="voice_template">내 운동기록은 %1$s을(를) %2$s에 완료했으며 속도는 %3$s입니다.</string>
-    <string name="voice_total_distance_kilometers_few">총 거리 %1$.2f킬로미터</string>
-    <string name="voice_total_distance_kilometers_many">총 거리 %1$.2f킬로미터</string>
-    <string name="voice_total_distance_kilometers_one">총 거리 1킬로미터</string>
-    <string name="voice_total_distance_kilometers_other">총 거리 %1$.2f킬로미터</string>
-    <string name="voice_total_distance_kilometers_two">총 거리 2킬로미터</string>
-    <string name="voice_total_distance_kilometers_zero">총 거리 0킬로미터</string>
-    <string name="voice_total_distance_miles_few">총 거리 %1$.2f마일</string>
-    <string name="voice_total_distance_miles_many">총 거리 %1$.2f마일</string>
-    <string name="voice_total_distance_miles_one">총 거리 1마일</string>
-    <string name="voice_total_distance_miles_other">총 거리 %1$.2f마일</string>
-    <string name="voice_total_distance_miles_two">총 거리 2마일</string>
-    <string name="voice_total_distance_miles_zero">총 거리 0마일</string>
-    <string name="voice_total_distance_zero">내 운동기록의 총 거리는 0입니다.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="other">총 거리 %1$.2f킬로미터</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="other">총 거리 %1$.2f마일</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">은행</string>

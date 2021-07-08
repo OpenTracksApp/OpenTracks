@@ -420,19 +420,14 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="voice_pace_per_kilometer">%1$s pro Kilometer</string>
     <string name="voice_pace_per_mile">%1$s pro Meile</string>
     <string name="voice_template">Meine Tracks: %1$s in %2$s bei %3$s</string>
-    <string name="voice_total_distance_kilometers_few">Gesamtstrecke: %1$.2f Kilometer</string>
-    <string name="voice_total_distance_kilometers_many">Gesamtstrecke: %1$.2f Kilometer</string>
-    <string name="voice_total_distance_kilometers_one">Gesamtstrecke: 1 Kilometer</string>
-    <string name="voice_total_distance_kilometers_other">Gesamtstrecke: %1$.2f Kilometer</string>
-    <string name="voice_total_distance_kilometers_two">Gesamtstrecke: 2 Kilometer</string>
-    <string name="voice_total_distance_kilometers_zero">Gesamtstrecke: 0 Kilometer</string>
-    <string name="voice_total_distance_miles_few">Gesamtstrecke: %1$.2f Meilen</string>
-    <string name="voice_total_distance_miles_many">Gesamtstrecke: %1$.2f Meilen</string>
-    <string name="voice_total_distance_miles_one">Gesamtstrecke: 1 Meile</string>
-    <string name="voice_total_distance_miles_other">Gesamtstrecke: %1$.2f Meilen</string>
-    <string name="voice_total_distance_miles_two">Gesamtstrecke: 2 Meilen</string>
-    <string name="voice_total_distance_miles_zero">Gesamtstrecke: 0 Meilen</string>
-    <string name="voice_total_distance_zero">Die Gesamtstrecke ist null.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">Gesamtstrecke: 1 Kilometer</item>
+        <item quantity="other">Gesamtstrecke: %1$.2f Kilometer</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">Gesamtstrecke: 1 Meile</item>
+        <item quantity="other">Gesamtstrecke: %1$.2f Meilen</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Geldautomat</string>
     <string name="waypoint_type_bank">Bank</string>

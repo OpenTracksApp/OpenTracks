@@ -316,19 +316,22 @@
     <string name="voice_pace_per_kilometer">%1$s pe kilometru</string>
     <string name="voice_pace_per_mile">%1$s pe milă</string>
     <string name="voice_template">Traseele mele %1$s în %2$s cu %3$s</string>
-    <string name="voice_total_distance_kilometers_few">distanţa totală %1$.2f kilometri</string>
-    <string name="voice_total_distance_kilometers_many">distanţa totală %1$.2f (de) kilometri</string>
-    <string name="voice_total_distance_kilometers_one">distanţa totală 1 kilometru</string>
-    <string name="voice_total_distance_kilometers_other">distanţa totală %1$.2f (de) kilometri</string>
-    <string name="voice_total_distance_kilometers_two">distanţa totală 2 kilometri</string>
-    <string name="voice_total_distance_kilometers_zero">distanţa totală 0 kilometri</string>
-    <string name="voice_total_distance_miles_few">distanţa totală %1$.2f mile</string>
-    <string name="voice_total_distance_miles_many">distanţa totală %1$.2f (de) mile</string>
-    <string name="voice_total_distance_miles_one">distanţa totală 1 milă</string>
-    <string name="voice_total_distance_miles_other">distanţa totală %1$.2f (de) mile</string>
-    <string name="voice_total_distance_miles_two">distanţa totală 2 mile</string>
-    <string name="voice_total_distance_miles_zero">distanţa totală 0 mile</string>
-    <string name="voice_total_distance_zero">Distanţa totală în Traseele mele, zero.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="zero">distanţa totală 0 kilometri</item>
+        <item quantity="one">distanţa totală 1 kilometru</item>
+        <item quantity="two">distanţa totală 2 kilometri</item>
+        <item quantity="few">distanţa totală %1$.2f kilometri</item>
+        <item quantity="many">distanţa totală %1$.2f (de) kilometri</item>
+        <item quantity="other">distanţa totală %1$.2f (de) kilometri</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="zero">distanţa totală 0 mile</item>
+        <item quantity="one">distanţa totală 1 milă</item>
+        <item quantity="two">distanţa totală 2 mile</item>
+        <item quantity="few">distanţa totală %1$.2f mile</item>
+        <item quantity="many">distanţa totală %1$.2f (de) mile</item>
+        <item quantity="other">distanţa totală %1$.2f (de) mile</item>
+    </plurals>
     <string name="waypoint_type_atm">Bancomat</string>
     <string name="waypoint_type_bank">bancă</string>
     <string name="waypoint_type_bar">bar</string>

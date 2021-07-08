@@ -22,8 +22,11 @@ public class AnnouncementUtils {
         Speed distancePerTime = trackStatistics.getAverageMovingSpeed();
         Speed currentDistancePerTime = currentInterval != null ? currentInterval.getSpeed() : null;
 
+        int totalDistanceId = isMetricUnits ? R.plurals.voiceTotalDistanceKilometers : R.plurals.voiceTotalDistanceMiles;
+        double distanceInUnit = distance.toKM_Miles(isMetricUnits);
+        String totalDistance = context.getResources().getQuantityString(totalDistanceId, getQuantityCount(distanceInUnit), distanceInUnit);
         if (distance.isZero()) {
-            return context.getString(R.string.voice_total_distance_zero);
+            return totalDistance;
         }
 
         String rate;
@@ -31,8 +34,8 @@ public class AnnouncementUtils {
         String currentRateMsg;
         if (isReportSpeed) {
             int speedId = isMetricUnits ? R.plurals.voiceSpeedKilometersPerHour : R.plurals.voiceSpeedMilesPerHour;
-            double distanceInUnit = distancePerTime.to(isMetricUnits);
-            rate = context.getResources().getQuantityString(speedId, getQuantityCount(distanceInUnit), distanceInUnit);
+            double speedInUnit = distancePerTime.to(isMetricUnits);
+            rate = context.getResources().getQuantityString(speedId, getQuantityCount(speedInUnit), speedInUnit);
 
             double currentDistancePerTimeInUnit = currentDistancePerTime != null ? currentDistancePerTime.to(isMetricUnits) : 0;
             currentRate = context.getResources().getQuantityString(speedId, getQuantityCount(currentDistancePerTimeInUnit), currentDistancePerTimeInUnit);
@@ -47,10 +50,6 @@ public class AnnouncementUtils {
             currentRate = context.getString(paceId, getAnnounceTime(context, currentTime));
             currentRateMsg = context.getString(R.string.voice_pace_lap, currentRate);
         }
-
-        int totalDistanceId = isMetricUnits ? R.plurals.voiceTotalDistanceKilometers : R.plurals.voiceTotalDistanceMiles;
-        double distanceInUnit = distance.toKM_Miles(isMetricUnits);
-        String totalDistance = context.getResources().getQuantityString(totalDistanceId, getQuantityCount(distanceInUnit), distanceInUnit);
 
         currentRateMsg = currentInterval == null ? "" : " " + currentRateMsg;
 

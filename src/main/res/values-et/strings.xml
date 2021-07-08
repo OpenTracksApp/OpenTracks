@@ -409,19 +409,14 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="voice_pace_per_kilometer">%1$s kilomeetri kohta</string>
     <string name="voice_pace_per_mile">%1$s miilis</string>
     <string name="voice_template">Minu rajad %1$s ajaga %2$s ja kiirusega %3$s</string>
-    <string name="voice_total_distance_kilometers_few">kogupikkus %1$.2f kilomeetrit</string>
-    <string name="voice_total_distance_kilometers_many">kogupikkus %1$.2f kilomeetrit</string>
-    <string name="voice_total_distance_kilometers_one">kogupikkus 1 kilomeeter</string>
-    <string name="voice_total_distance_kilometers_other">kogupikkus %1$.2f kilomeetrit</string>
-    <string name="voice_total_distance_kilometers_two">kogupikkus 2 km</string>
-    <string name="voice_total_distance_kilometers_zero">kogupikkus 0 kilomeetrit</string>
-    <string name="voice_total_distance_miles_few">kogupikkus %1$.2f miili</string>
-    <string name="voice_total_distance_miles_many">kogupikkus %1$.2f miili</string>
-    <string name="voice_total_distance_miles_one">kogupikkus 1 miil</string>
-    <string name="voice_total_distance_miles_other">kogupikkus %1$.2f miili</string>
-    <string name="voice_total_distance_miles_two">kogupikkus 2 miili</string>
-    <string name="voice_total_distance_miles_zero">kogupikkus 0 miili</string>
-    <string name="voice_total_distance_zero">Radade kogupikkus on null.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">kogupikkus 1 kilomeeter</item>
+        <item quantity="other">kogupikkus %1$.2f kilomeetrit</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">kogupikkus 1 miil</item>
+        <item quantity="other">kogupikkus %1$.2f miili</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Sularahaautomaat</string>
     <string name="waypoint_type_bank">pank</string>

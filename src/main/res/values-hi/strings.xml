@@ -341,19 +341,14 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">%1$s प्रति किलोमीटर</string>
     <string name="voice_pace_per_mile">%1$s प्रति मील</string>
     <string name="voice_template">पदचिन्ह %3$s पर %2$s में %1$s</string>
-    <string name="voice_total_distance_kilometers_few">कुल दूरी %1$.2f किलोमीटर</string>
-    <string name="voice_total_distance_kilometers_many">कुल दूरी %1$.2f किलोमीटर</string>
-    <string name="voice_total_distance_kilometers_one">कुल दूरी 1 किलोमीटर</string>
-    <string name="voice_total_distance_kilometers_other">कुल दूरी %1$.2f किलोमीटर</string>
-    <string name="voice_total_distance_kilometers_two">कुल दूरी 2 किलोमीटर</string>
-    <string name="voice_total_distance_kilometers_zero">कुल दूरी 0 किलोमीटर</string>
-    <string name="voice_total_distance_miles_few">कुल दूरी %1$.2f मील</string>
-    <string name="voice_total_distance_miles_many">कुल दूरी %1$.2f मील</string>
-    <string name="voice_total_distance_miles_one">कुल दूरी 1 मील</string>
-    <string name="voice_total_distance_miles_other">कुल दूरी %1$.2f मील</string>
-    <string name="voice_total_distance_miles_two">कुल दूरी 2 मील</string>
-    <string name="voice_total_distance_miles_zero">कुल दूरी 0 मील</string>
-    <string name="voice_total_distance_zero">मेरे ट्रैक की कुल दूरी शून्य है.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">कुल दूरी %1$.2f किलोमीटर</item>
+        <item quantity="other">कुल दूरी %1$.2f किलोमीटर</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">कुल दूरी %1$.2f मील</item>
+        <item quantity="other">कुल दूरी %1$.2f मील</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">बैंक</string>

@@ -343,19 +343,14 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">%1$s per kilometer</string>
     <string name="voice_pace_per_mile">%1$s per engelsk mil</string>
     <string name="voice_template">OpenTracks %1$s på %2$s med %3$s</string>
-    <string name="voice_total_distance_kilometers_few">total distanse %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_many">total distanse %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_one">total distanse 1 kilometer</string>
-    <string name="voice_total_distance_kilometers_other">total distanse %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_two">total distanse 2 kilometer</string>
-    <string name="voice_total_distance_kilometers_zero">total distanse 0 kilometer</string>
-    <string name="voice_total_distance_miles_few">total distanse %1$.2f engelske mil</string>
-    <string name="voice_total_distance_miles_many">total distanse %1$.2f engelske mil</string>
-    <string name="voice_total_distance_miles_one">total distanse 1 engelsk mil</string>
-    <string name="voice_total_distance_miles_other">total distanse %1$.2f engelske mil</string>
-    <string name="voice_total_distance_miles_two">total distanse 2 engelske mil</string>
-    <string name="voice_total_distance_miles_zero">total distanse 0 engelske mil</string>
-    <string name="voice_total_distance_zero">OpenTracks totale distanse er null.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">total distanse 1 kilometer</item>
+        <item quantity="other">total distanse %1$.2f kilometer</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">total distanse 1 engelsk mil</item>
+        <item quantity="other">total distanse %1$.2f engelske mil</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Minibank</string>
     <string name="waypoint_type_bank">bank</string>

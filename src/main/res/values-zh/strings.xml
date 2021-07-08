@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
---><resources>
+-->
+<resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">坐飞机</string>
     <string name="activity_type_atv">全地形越野</string>
@@ -354,19 +354,12 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">每公里 %1$s</string>
     <string name="voice_template">“我的足迹”距离：%1$s；时间：%2$s；速度：%3$s</string>
-    <string name="voice_total_distance_kilometers_few">总距离 %1$.2f 公里</string>
-    <string name="voice_total_distance_kilometers_many">总距离 %1$.2f 公里</string>
-    <string name="voice_total_distance_kilometers_one">总距离 1 公里</string>
-    <string name="voice_total_distance_kilometers_other">总距离 %1$.2f 公里</string>
-    <string name="voice_total_distance_kilometers_two">总距离 2 公里</string>
-    <string name="voice_total_distance_kilometers_zero">总距离 0 公里</string>
-    <string name="voice_total_distance_miles_few">总距离 %1$.2f 英里</string>
-    <string name="voice_total_distance_miles_many">总距离 %1$.2f 英里</string>
-    <string name="voice_total_distance_miles_one">总距离 1 英里</string>
-    <string name="voice_total_distance_miles_other">总距离 %1$.2f 英里</string>
-    <string name="voice_total_distance_miles_two">总距离 2 英里</string>
-    <string name="voice_total_distance_miles_zero">总距离 0 英里</string>
-    <string name="voice_total_distance_zero">“我的足迹”总距离为零。</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="other">总距离 %1$.2f 公里</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="other">总距离 %1$.2f 英里</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">自动取款机</string>
     <string name="waypoint_type_bank">银行</string>

@@ -515,19 +515,14 @@ limitations under the License.
     <string name="voice_template">OpenTracks %1$s in %2$s at %3$s</string>
     <string name="voice_speed_lap">Lap speed of %1$s</string>
     <string name="voice_pace_lap">Lap time of %1$s</string>
-    <string name="voice_total_distance_kilometers_few">total distance %1$.2f kilometers</string>
-    <string name="voice_total_distance_kilometers_many">total distance %1$.2f kilometers</string>
-    <string name="voice_total_distance_kilometers_one">total distance 1 kilometer</string>
-    <string name="voice_total_distance_kilometers_other">total distance %1$.2f kilometers</string>
-    <string name="voice_total_distance_kilometers_two">total distance 2 kilometers</string>
-    <string name="voice_total_distance_kilometers_zero">total distance 0 kilometers</string>
-    <string name="voice_total_distance_miles_few">total distance %1$.2f miles</string>
-    <string name="voice_total_distance_miles_many">total distance %1$.2f miles</string>
-    <string name="voice_total_distance_miles_one">total distance 1 mile</string>
-    <string name="voice_total_distance_miles_other">total distance %1$.2f miles</string>
-    <string name="voice_total_distance_miles_two">total distance 2 miles</string>
-    <string name="voice_total_distance_miles_zero">total distance 0 miles</string>
-    <string name="voice_total_distance_zero">OpenTracks total distance zero.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">total distance 1 kilometer</item>
+        <item quantity="other">total distance %1$.2f kilometers</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">total distance 1 mile</item>
+        <item quantity="other">total distance %1$.2f miles</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">bank</string>

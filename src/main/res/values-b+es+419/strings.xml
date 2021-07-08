@@ -295,19 +295,14 @@
     <string name="voice_pace_per_kilometer">%1$s por kilómetro</string>
     <string name="voice_pace_per_mile">%1$s por milla</string>
     <string name="voice_template">OpenTracks de %1$s en %2$s a %3$s</string>
-    <string name="voice_total_distance_kilometers_few">distancia total: %1$.2f kilómetros</string>
-    <string name="voice_total_distance_kilometers_many">distancia total: %1$.2f kilómetros</string>
-    <string name="voice_total_distance_kilometers_one">distancia total: 1 kilómetro</string>
-    <string name="voice_total_distance_kilometers_other">distancia total: %1$.2f kilómetros</string>
-    <string name="voice_total_distance_kilometers_two">distancia total: 2 kilómetros</string>
-    <string name="voice_total_distance_kilometers_zero">distancia total: 0 kilómetros</string>
-    <string name="voice_total_distance_miles_few">distancia total: %1$.2f millas</string>
-    <string name="voice_total_distance_miles_many">distancia total: %1$.2f millas</string>
-    <string name="voice_total_distance_miles_one">distancia total: 1 milla</string>
-    <string name="voice_total_distance_miles_other">distancia total: %1$.2f millas</string>
-    <string name="voice_total_distance_miles_two">distancia total: 2 millas</string>
-    <string name="voice_total_distance_miles_zero">distancia total: 0 millas</string>
-    <string name="voice_total_distance_zero">La distancia total de OpenTracks es igual a cero.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">distancia total de 1 kilómetro</item>
+        <item quantity="other">distancia total de %1$.2f kilómetros</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">distancia total de 1 milla</item>
+        <item quantity="other">distancia total de %1$.2f millas</item>
+    </plurals>
     <string name="waypoint_type_atm">cajero automático</string>
     <string name="waypoint_type_bank">banco</string>
     <string name="waypoint_type_bar">barra</string>

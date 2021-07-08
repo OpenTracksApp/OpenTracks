@@ -343,19 +343,14 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">%1$s kilométerenként</string>
     <string name="voice_pace_per_mile">%1$s mérföldenként</string>
     <string name="voice_template">Saját útvonalak: %1$s %2$s alatt %3$s sebességgel</string>
-    <string name="voice_total_distance_kilometers_few">össztávolság: %1$.2f kilométer</string>
-    <string name="voice_total_distance_kilometers_many">össztávolság: %1$.2f kilométer</string>
-    <string name="voice_total_distance_kilometers_one">össztávolság: 1 kilométer</string>
-    <string name="voice_total_distance_kilometers_other">össztávolság: %1$.2f kilométer</string>
-    <string name="voice_total_distance_kilometers_two">össztávolság: 2 kilométer</string>
-    <string name="voice_total_distance_kilometers_zero">össztávolság: 0 kilométer</string>
-    <string name="voice_total_distance_miles_few">össztávolság: %1$.2f mérföld</string>
-    <string name="voice_total_distance_miles_many">össztávolság: %1$.2f mérföld</string>
-    <string name="voice_total_distance_miles_one">össztávolság: 1 mérföld</string>
-    <string name="voice_total_distance_miles_other">össztávolság: %1$.2f mérföld</string>
-    <string name="voice_total_distance_miles_two">össztávolság: 2 mérföld</string>
-    <string name="voice_total_distance_miles_zero">össztávolság: 0 mérföld</string>
-    <string name="voice_total_distance_zero">Saját útvonalak - össztávolság nulla.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">össztávolság: 1 kilométer</item>
+        <item quantity="other">össztávolság: %1$.2f kilométer</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">össztávolság: 1 mérföld</item>
+        <item quantity="other">össztávolság: %1$.2f mérföld</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankautomata</string>
     <string name="waypoint_type_bank">bank</string>

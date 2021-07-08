@@ -338,19 +338,14 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">%1$s sekilometer</string>
     <string name="voice_pace_per_mile">%1$s sejam</string>
     <string name="voice_template">Laluan Saya %1$s dalam %2$s pada %3$s</string>
-    <string name="voice_total_distance_kilometers_few">jumlah jarak %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_many">jumlah jarak %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_one">jumlah jarak 1 kilometer</string>
-    <string name="voice_total_distance_kilometers_other">jumlah jarak %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_two">jumlah jarak 2 kilometer</string>
-    <string name="voice_total_distance_kilometers_zero">jumlah jarak 0 kilometer</string>
-    <string name="voice_total_distance_miles_few">jumlah jarak %1$.2f batu</string>
-    <string name="voice_total_distance_miles_many">jumlah jarak %1$.2f batu</string>
-    <string name="voice_total_distance_miles_one">jumlah jarak 1 batu</string>
-    <string name="voice_total_distance_miles_other">jumlah jarak %1$.2f batu</string>
-    <string name="voice_total_distance_miles_two">jumlah jarak 2 batu</string>
-    <string name="voice_total_distance_miles_zero">jumlah jarak 0 batu</string>
-    <string name="voice_total_distance_zero">Jumlah jarak Jejak Saya ialah kosong.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">jumlah jarak 1 kilometer</item>
+        <item quantity="other">jumlah jarak %1$.2f kilometer</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">jumlah jarak 1 batu</item>
+        <item quantity="other">jumlah jarak %1$.2f batu</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">bank</string>

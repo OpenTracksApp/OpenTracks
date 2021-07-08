@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
---><resources>
+-->
+<resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">máy bay</string>
     <string name="activity_type_atv">ATV</string>
@@ -337,19 +337,12 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">%1$s mỗi ki lô mét</string>
     <string name="voice_pace_per_mile">%1$s mỗi dặm</string>
     <string name="voice_template">Tuyến đường của tôi là %1$s trong %2$s tại %3$s</string>
-    <string name="voice_total_distance_kilometers_few">tổng khoảng cách là %1$.2f ki lô mét</string>
-    <string name="voice_total_distance_kilometers_many">tổng khoảng cách là %1$.2f ki lô mét</string>
-    <string name="voice_total_distance_kilometers_one">tổng khoảng cách là 1 ki lô mét</string>
-    <string name="voice_total_distance_kilometers_other">tổng khoảng cách là %1$.2f ki lô mét</string>
-    <string name="voice_total_distance_kilometers_two">tổng khoảng cách là 2 ki lô mét</string>
-    <string name="voice_total_distance_kilometers_zero">tổng khoảng cách là 0 ki lô mét</string>
-    <string name="voice_total_distance_miles_few">tổng khoảng cách %1$.2f là dặm</string>
-    <string name="voice_total_distance_miles_many">tổng khoảng cách là %1$.2f dặm</string>
-    <string name="voice_total_distance_miles_one">tổng khoảng cách là 1 dặm</string>
-    <string name="voice_total_distance_miles_other">tổng khoảng cách là %1$.2f dặm</string>
-    <string name="voice_total_distance_miles_two">tổng khoảng cách là 2 dặm</string>
-    <string name="voice_total_distance_miles_zero">tổng khoảng cách là 0 dặm</string>
-    <string name="voice_total_distance_zero">Tổng khoảng cách Tuyến đường của tôi là 0.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="other">tổng khoảng cách là %1$.2f ki lô mét</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="other">tổng khoảng cách là %1$.2f dặm</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">ngân hàng</string>

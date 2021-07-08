@@ -291,19 +291,14 @@
     <string name="voice_pace_per_kilometer">%1$s par kilomètre</string>
     <string name="voice_pace_per_mile">%1$s par mille</string>
     <string name="voice_template">Mes parcours : %1$s en %2$s à %3$s</string>
-    <string name="voice_total_distance_kilometers_few">distance totale : %1$.2f kilomètres</string>
-    <string name="voice_total_distance_kilometers_many">distance totale : %1$.2f kilomètres</string>
-    <string name="voice_total_distance_kilometers_one">distance totale : 1 kilomètre</string>
-    <string name="voice_total_distance_kilometers_other">distance totale : %1$.2f kilomètres</string>
-    <string name="voice_total_distance_kilometers_two">distance totale : 2 kilomètres</string>
-    <string name="voice_total_distance_kilometers_zero">distance totale : 0 km</string>
-    <string name="voice_total_distance_miles_few">distance totale : %1$.2f milles</string>
-    <string name="voice_total_distance_miles_many">distance totale : %1$.2f milles</string>
-    <string name="voice_total_distance_miles_one">distance totale : 1 mille</string>
-    <string name="voice_total_distance_miles_other">distance totale : %1$.2f milles</string>
-    <string name="voice_total_distance_miles_two">distance totale : 2 milles</string>
-    <string name="voice_total_distance_miles_zero">distance totale : 0 mille</string>
-    <string name="voice_total_distance_zero">Distance totale de Mes Parcours : zéro kilomètre.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">distance totale %1$.2f kilomètre</item>
+        <item quantity="other">distance totale %1$.2f kilomètres</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">distance totale %1$.2f mile</item>
+        <item quantity="other">distance totale %1$.2f miles</item>
+    </plurals>
     <string name="waypoint_type_atm">guichet automatique bancaire</string>
     <string name="waypoint_type_bank">banque</string>
     <string name="waypoint_type_bar">bar</string>

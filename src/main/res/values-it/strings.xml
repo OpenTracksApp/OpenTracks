@@ -386,19 +386,14 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="voice_pace_per_kilometer">%1$s per chilometro</string>
     <string name="voice_pace_per_mile">%1$s per miglio</string>
     <string name="voice_template">OpenTracks %1$s in %2$s a %3$s</string>
-    <string name="voice_total_distance_kilometers_few">distanza totale %1$.2f km</string>
-    <string name="voice_total_distance_kilometers_many">distanza totale %1$.2f km</string>
-    <string name="voice_total_distance_kilometers_one">distanza totale 1 km</string>
-    <string name="voice_total_distance_kilometers_other">distanza totale %1$.2f km</string>
-    <string name="voice_total_distance_kilometers_two">distanza totale 2 km</string>
-    <string name="voice_total_distance_kilometers_zero">distanza totale 0 km</string>
-    <string name="voice_total_distance_miles_few">distanza totale %1$.2f miglia</string>
-    <string name="voice_total_distance_miles_many">distanza totale %1$.2f miglia</string>
-    <string name="voice_total_distance_miles_one">distanza totale 1 miglio</string>
-    <string name="voice_total_distance_miles_other">distanza totale %1$.2f miglia</string>
-    <string name="voice_total_distance_miles_two">distanza totale 2 miglia</string>
-    <string name="voice_total_distance_miles_zero">distanza totale 0 miglia</string>
-    <string name="voice_total_distance_zero">Distanza totale OpenTracks uguale a zero.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">distanza totale 1 chilometro</item>
+        <item quantity="other">distanza totale 2 chilometri</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">distanza totale 1 miglio</item>
+        <item quantity="other">distanza totale %1$.2f miglia</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Bancomat</string>
     <string name="waypoint_type_bank">banca</string>

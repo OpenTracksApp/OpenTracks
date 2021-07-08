@@ -345,16 +345,11 @@ limitations under the License.
         <item quantity="one">kopējais garums ir %1$.1f kilometrs</item>
         <item quantity="other">kopējais garums ir %1$.1f kilometri</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s kilometrā</string>
-    <string name="voice_pace_per_mile">%1$s jūdzē</string>
-    <string name="voice_template">Manas pēdas: attālums – %1$s, laiks – %2$s, ātrums – %3$s.</string>
-    <string name="voice_total_distance_miles_few">kopējais garums ir %1$.2f jūdzes</string>
-    <string name="voice_total_distance_miles_many">kopējais garums ir %1$.2f jūdzes</string>
-    <string name="voice_total_distance_miles_one">kopējais garums ir 1 jūdze</string>
-    <string name="voice_total_distance_miles_other">kopējais garums ir %1$.2f jūdzes</string>
-    <string name="voice_total_distance_miles_two">kopējais garums ir 2 jūdzes</string>
-    <string name="voice_total_distance_miles_zero">kopējais garums ir 0 jūdzes</string>
-    <string name="voice_total_distance_zero">Kopējais manu maršrutu garums ir nulle.</string>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="zero">kopējais garums ir %1$.1f jūdzes</item>
+        <item quantity="one">kopējais garums ir %1$.1f jūdze</item>
+        <item quantity="other">kopējais garums ir %1$.1f jūdzes</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Bankas automāts</string>
     <string name="waypoint_type_bank">banka</string>

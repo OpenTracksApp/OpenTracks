@@ -353,19 +353,18 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s na kilometer</string>
     <string name="voice_template">Moje poti %1$s v %2$s pri %3$s</string>
-    <string name="voice_total_distance_kilometers_few">skupna razdalja %1$.2f kilometrov</string>
-    <string name="voice_total_distance_kilometers_many">skupna razdalja %1$.2f kilometrov</string>
-    <string name="voice_total_distance_kilometers_one">skupna razdalja 1 kilometer</string>
-    <string name="voice_total_distance_kilometers_other">skupna razdalja %1$.2f kilometrov</string>
-    <string name="voice_total_distance_kilometers_two">skupna razdalja 2 kilometra</string>
-    <string name="voice_total_distance_kilometers_zero">skupna razdalja 0 kilometrov</string>
-    <string name="voice_total_distance_miles_few">skupna razdalja %1$.2f milj</string>
-    <string name="voice_total_distance_miles_many">skupna razdalja %1$.2f milj</string>
-    <string name="voice_total_distance_miles_one">skupna razdalja 1 milja</string>
-    <string name="voice_total_distance_miles_other">skupna razdalja %1$.2f milj</string>
-    <string name="voice_total_distance_miles_two">skupna razdalja 2 milji</string>
-    <string name="voice_total_distance_miles_zero">skupna razdalja 0 milj</string>
-    <string name="voice_total_distance_zero">Skupna razdalja Mojih poti je nič.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">skupna razdalja %1$.2f kilometer</item>
+        <item quantity="two">skupna razdalja %1$.2f kilometra</item>
+        <item quantity="few">skupna razdalja %1$.2f kilometrov</item>
+        <item quantity="other">skupna razdalja %1$.2f kilometrov</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">skupna razdalja %1$.2f milja</item>
+        <item quantity="two">skupna razdalja %1$.2f milji</item>
+        <item quantity="few">skupna razdalja %1$.2f milj</item>
+        <item quantity="other">skupna razdalja %1$.2f milj</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankomat</string>
     <string name="waypoint_type_bank">banka</string>

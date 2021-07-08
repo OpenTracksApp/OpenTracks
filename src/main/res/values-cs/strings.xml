@@ -415,19 +415,16 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="voice_pace_per_kilometer">%1$s na kilometr</string>
     <string name="voice_pace_per_mile">%1$s na míli</string>
     <string name="voice_template">Moje trasy: %1$s za %2$s rychlostí %3$s</string>
-    <string name="voice_total_distance_kilometers_few">celková vzdálenost %1$.2f kilometry</string>
-    <string name="voice_total_distance_kilometers_many">celková vzdálenost %1$.2f kilometrů</string>
-    <string name="voice_total_distance_kilometers_one">celková vzdálenost 1 kilometr</string>
-    <string name="voice_total_distance_kilometers_other">celková vzdálenost %1$.2f kilometrů</string>
-    <string name="voice_total_distance_kilometers_two">celková vzdálenost 2 kilometry</string>
-    <string name="voice_total_distance_kilometers_zero">celková vzdálenost 0 kilometrů</string>
-    <string name="voice_total_distance_miles_few">celková vzdálenost %1$.2f míle</string>
-    <string name="voice_total_distance_miles_many">celková vzdálenost %1$.2f mil</string>
-    <string name="voice_total_distance_miles_one">celková vzdálenost 1 míle</string>
-    <string name="voice_total_distance_miles_other">celková vzdálenost %1$.2f mil</string>
-    <string name="voice_total_distance_miles_two">celková vzdálenost 2 míle</string>
-    <string name="voice_total_distance_miles_zero">celková vzdálenost 0 mil</string>
-    <string name="voice_total_distance_zero">Celková vzdálenost Mých tras je nulová.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">celková vzdálenost 1 kilometr</item>
+        <item quantity="few">celková vzdálenost %1$.2f kilometry</item>
+        <item quantity="other">celková vzdálenost %1$.2f kilometrů</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">celková vzdálenost 1 míle</item>
+        <item quantity="few">celková vzdálenost %1$.2f míle</item>
+        <item quantity="other">celková vzdálenost %1$.2f mil</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Bankomat</string>
     <string name="waypoint_type_bank">banka</string>

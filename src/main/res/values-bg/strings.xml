@@ -343,19 +343,14 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">%1$s на километър</string>
     <string name="voice_pace_per_mile">%1$s на миля</string>
     <string name="voice_template">Моите маршрути: %1$s за %2$s при %3$s</string>
-    <string name="voice_total_distance_kilometers_few">общо разстояние %1$.2f километра</string>
-    <string name="voice_total_distance_kilometers_many">общо разстояние %1$.2f километра</string>
-    <string name="voice_total_distance_kilometers_one">общо разстояние 1 километър</string>
-    <string name="voice_total_distance_kilometers_other">общо разстояние %1$.2f километра</string>
-    <string name="voice_total_distance_kilometers_two">общо разстояние 2 километра</string>
-    <string name="voice_total_distance_kilometers_zero">общо разстояние 0 километра</string>
-    <string name="voice_total_distance_miles_few">общо разстояние %1$.2f мили</string>
-    <string name="voice_total_distance_miles_many">общо разстояние %1$.2f мили</string>
-    <string name="voice_total_distance_miles_one">общо разстояние 1 миля</string>
-    <string name="voice_total_distance_miles_other">общо разстояние %1$.2f мили</string>
-    <string name="voice_total_distance_miles_two">общо разстояние 2 мили</string>
-    <string name="voice_total_distance_miles_zero">общо разстояние 0 мили</string>
-    <string name="voice_total_distance_zero">Общото разстояние в Моите маршрути е нула.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">общо разстояние 1 километър</item>
+        <item quantity="other">общо разстояние %1$.2f километра</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">общо разстояние 1 миля</item>
+        <item quantity="other">общо разстояние %1$.2f мили</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Банкомат</string>
     <string name="waypoint_type_bank">банка</string>

@@ -394,19 +394,18 @@ limitations under the License.
     <string name="voice_template">Aktualna trasa: %1$s w czasie %2$s z prędkością %3$s</string>
     <string name="voice_speed_lap">Prędkosć w interwale %1$s</string>
     <string name="voice_pace_lap">Czas w interwale %1$s</string>
-    <string name="voice_total_distance_kilometers_one">całkowita odległość: 1 kilometr</string>
-    <string name="voice_total_distance_kilometers_few">całkowita odległość: %1$.2f kilometra</string>
-    <string name="voice_total_distance_kilometers_many">całkowita odległość: %1$.2f kilometra</string>
-    <string name="voice_total_distance_kilometers_other">całkowita odległość: %1$.2f kilometra</string>
-    <string name="voice_total_distance_kilometers_two">całkowita odległość: 2 kilometry</string>
-    <string name="voice_total_distance_kilometers_zero">całkowita odległość: 0 kilometrów</string>
-    <string name="voice_total_distance_miles_one">całkowita odległość: 1 mila</string>
-    <string name="voice_total_distance_miles_few">całkowita odległość: %1$.2f mili</string>
-    <string name="voice_total_distance_miles_many">całkowita odległość: %1$.2f mili</string>
-    <string name="voice_total_distance_miles_other">całkowita odległość: %1$.2f mili</string>
-    <string name="voice_total_distance_miles_two">całkowita odległość: 2 mile</string>
-    <string name="voice_total_distance_miles_zero">całkowita odległość: 0 mil</string>
-    <string name="voice_total_distance_zero">Zerowa odległość.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">całkowita odległość: 1 kilometr</item>
+        <item quantity="few">całkowita odległość: %1$.2f kilometra</item>
+        <item quantity="many">całkowita odległość: %1$.2f kilometra</item>
+        <item quantity="other">całkowita odległość: %1$.2f kilometra</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">całkowita odległość: 1 mila</item>
+        <item quantity="few">całkowita odległość: %1$.2f mili</item>
+        <item quantity="many">całkowita odległość: %1$.2f mili</item>
+        <item quantity="other">całkowita odległość: %1$.2f mili</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankomat</string>
     <string name="waypoint_type_bank">bank</string>

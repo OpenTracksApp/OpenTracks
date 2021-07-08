@@ -285,19 +285,12 @@
     <string name="voice_pace_per_kilometer">%1$s per kilometer</string>
     <string name="voice_pace_per_mile">%1$s per mil</string>
     <string name="voice_template">Lintasan Saya %1$s dalam %2$s pada kecepatan %3$s</string>
-    <string name="voice_total_distance_kilometers_few">jarak total %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_many">jarak total %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_one">jarak total 1 kilometer</string>
-    <string name="voice_total_distance_kilometers_other">jarak total %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_two">jarak total 2 kilometer</string>
-    <string name="voice_total_distance_kilometers_zero">jarak total 0 kilometer</string>
-    <string name="voice_total_distance_miles_few">jarak total %1$.2f mil</string>
-    <string name="voice_total_distance_miles_many">jarak total %1$.2f mil</string>
-    <string name="voice_total_distance_miles_one">jarak total 1 mil</string>
-    <string name="voice_total_distance_miles_other">jarak total %1$.2f mil</string>
-    <string name="voice_total_distance_miles_two">jarak total 2 mil</string>
-    <string name="voice_total_distance_miles_zero">Jarak total 0 mil</string>
-    <string name="voice_total_distance_zero">Jarak total Lintasan Saya adalah nol.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="other">jarak total %1$.2f kilometer</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="other">jarak total %1$.2f mil</item>
+    </plurals>
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">bank</string>
     <string name="waypoint_type_bar">bar</string>

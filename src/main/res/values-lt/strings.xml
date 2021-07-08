@@ -322,19 +322,11 @@ limitations under the License.
     <string name="value_smallest_recommended">Mažiausia (rekomenduojama)</string>
     <!-- Voice -->
     <string name="voice_template">Mano kelionės: %1$s per %2$s, %3$s greičiu</string>
-    <string name="voice_total_distance_kilometers_few">bendras atstumas %1$.2f km</string>
-    <string name="voice_total_distance_kilometers_many">bendras atstumas %1$.2f km</string>
-    <string name="voice_total_distance_kilometers_one">bendras atstumas 1 kilometras</string>
-    <string name="voice_total_distance_kilometers_other">bendras atstumas %1$.2f km</string>
-    <string name="voice_total_distance_kilometers_two">bendras atstumas 2 kilometrai</string>
-    <string name="voice_total_distance_kilometers_zero">bendras atstumas 0 kilometrų</string>
-    <string name="voice_total_distance_miles_few">bendras atstumas %1$.2f myl.</string>
-    <string name="voice_total_distance_miles_many">bendras atstumas %1$.2f myl.</string>
-    <string name="voice_total_distance_miles_one">bendras atstumas 1 mylia</string>
-    <string name="voice_total_distance_miles_other">bendras atstumas %1$.2f myl.</string>
-    <string name="voice_total_distance_miles_two">bendras atstumas 2 mylios</string>
-    <string name="voice_total_distance_miles_zero">bendras atstumas 0 mylių</string>
-    <string name="voice_total_distance_zero">Mano kelionių bendras atstumas lygus nuliui.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">bendras atstumas %1$.2f kilometras</item>
+        <item quantity="few">bendras atstumas %1$.2f kilometrai</item>
+        <item quantity="other">bendras atstumas %1$.2f kilometrų</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">bankas</string>

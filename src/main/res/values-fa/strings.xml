@@ -341,19 +341,14 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">%1$s در کیلومتر</string>
     <string name="voice_pace_per_mile">%1$s در مایل</string>
     <string name="voice_template">مسیرهای من‏‏ %1$s در %2$s با %3$s</string>
-    <string name="voice_total_distance_kilometers_few">کل مسافت %1$.2f کیلومتر</string>
-    <string name="voice_total_distance_kilometers_many">کل مسافت %1$.2f کیلومتر</string>
-    <string name="voice_total_distance_kilometers_one">کل مسافت 1 کیلومتر</string>
-    <string name="voice_total_distance_kilometers_other">کل مسافت %1$.2f کیلومتر</string>
-    <string name="voice_total_distance_kilometers_two">کل مسافت 2 کیلومتر</string>
-    <string name="voice_total_distance_kilometers_zero">کل مسافت 0 کیلومتر</string>
-    <string name="voice_total_distance_miles_few">کل مسافت %1$.2f مایل</string>
-    <string name="voice_total_distance_miles_many">کل مسافت %1$.2f مایل</string>
-    <string name="voice_total_distance_miles_one">کل مسافت 1 مایل</string>
-    <string name="voice_total_distance_miles_other">کل مسافت %1$.2f مایل</string>
-    <string name="voice_total_distance_miles_two">کل مسافت 2 مایل</string>
-    <string name="voice_total_distance_miles_zero">کل مسافت 0 مایل</string>
-    <string name="voice_total_distance_zero">جمع مسافت OpenTracks صفر است.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">کل مسافت %1$.2f کیلومتر</item>
+        <item quantity="other">کل مسافت %1$.2f کیلومتر</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">کل مسافت %1$.2f مایل</item>
+        <item quantity="other">کل مسافت %1$.2f مایل</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">خودپرداز</string>
     <string name="waypoint_type_bank">بانک</string>

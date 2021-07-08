@@ -335,19 +335,12 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">%1$s ต่อกิโลเมตร</string>
     <string name="voice_pace_per_mile">%1$s ต่อไมล์</string>
     <string name="voice_template">เส้นการเดินทางของฉันเป็นระยะ %1$s ใน %2$s ที่ความเร็ว %3$s</string>
-    <string name="voice_total_distance_kilometers_few">รวมระยะทาง %1$.2f กิโลเมตร</string>
-    <string name="voice_total_distance_kilometers_many">รวมระยะทาง %1$.2f กิโลเมตร</string>
-    <string name="voice_total_distance_kilometers_one">รวมระยะทาง 1 กิโลเมตร</string>
-    <string name="voice_total_distance_kilometers_other">รวมระยะทาง %1$.2f กิโลเมตร</string>
-    <string name="voice_total_distance_kilometers_two">รวมระยะทาง 2 กิโลเมตร</string>
-    <string name="voice_total_distance_kilometers_zero">รวมระยะทาง 0 กิโลเมตร</string>
-    <string name="voice_total_distance_miles_few">รวมระยะทาง %1$.2f ไมล์</string>
-    <string name="voice_total_distance_miles_many">รวมระยะทาง %1$.2f ไมล์</string>
-    <string name="voice_total_distance_miles_one">รวมระยะทาง 1 ไมล์</string>
-    <string name="voice_total_distance_miles_other">รวมระยะทาง %1$.2f ไมล์</string>
-    <string name="voice_total_distance_miles_two">รวมระยะทาง 2 ไมล์</string>
-    <string name="voice_total_distance_miles_zero">รวมระยะทาง 0 ไมล์</string>
-    <string name="voice_total_distance_zero">ระยะเส้นการเดินทางทั้งหมดของฉันเป็นศูนย์</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="other">รวมระยะทาง %1$.2f กิโลเมตร</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="other">รวมระยะทาง %1$.2f ไมล์</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">เอทีเอ็ม</string>
     <string name="waypoint_type_bank">ธนาคาร</string>

@@ -410,19 +410,14 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="voice_pace_per_kilometer">%1$s kilometro bakoitzeko</string>
     <string name="voice_pace_per_mile">%1$s miliako</string>
     <string name="voice_template">OpenTracks. Distantzia: %1$s. Denbora: %2$s. Abiadura: %3$s</string>
-    <string name="voice_total_distance_kilometers_few">distantzia, guztira: %1$.2f kilometro</string>
-    <string name="voice_total_distance_kilometers_many">distantzia, guztira: %1$.2f kilometro</string>
-    <string name="voice_total_distance_kilometers_one">distantzia, guztira: 1 kilometro</string>
-    <string name="voice_total_distance_kilometers_other">distantzia, guztira: %1$.2f kilometro</string>
-    <string name="voice_total_distance_kilometers_two">distantzia, guztira: 2 kilometro</string>
-    <string name="voice_total_distance_kilometers_zero">distantzia, guztira: 0 kilometro</string>
-    <string name="voice_total_distance_miles_few">distantzia, guztira: %1$.2f milia</string>
-    <string name="voice_total_distance_miles_many">distantzia, guztira: %1$.2f milia</string>
-    <string name="voice_total_distance_miles_one">distantzia, guztira: 1 milia</string>
-    <string name="voice_total_distance_miles_other">distantzia, guztira: %1$.2f milia</string>
-    <string name="voice_total_distance_miles_two">distantzia, guztira: 2 milia</string>
-    <string name="voice_total_distance_miles_zero">distantzia, guztira: 0 milia</string>
-    <string name="voice_total_distance_zero">Nire ibilbideen distantzia, guztira, zero da.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">distantzia, guztira: 1 kilometro</item>
+        <item quantity="other">distantzia, guztira: %1$.2f kilometro</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">distantzia, guztira: 1 milia</item>
+        <item quantity="other">distantzia, guztira: %1$.2f milia</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">kutxazaina</string>
     <string name="waypoint_type_bank">bankua</string>

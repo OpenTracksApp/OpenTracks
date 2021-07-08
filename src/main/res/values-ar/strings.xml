@@ -365,19 +365,22 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">%1$s لكل كيلومتر</string>
     <string name="voice_pace_per_mile">%1$s لكل ميل</string>
     <string name="voice_template">مساراتي‏ %1$s‏ في‏ %2$s‏ بسرعة‏ %3$s</string>
-    <string name="voice_total_distance_kilometers_few">المسافة الإجمالية %1$.2f كيلومتر</string>
-    <string name="voice_total_distance_kilometers_many">المسافة الإجمالية %1$.2f كيلومتر</string>
-    <string name="voice_total_distance_kilometers_one">المسافة الإجمالية كيلومتر واحد</string>
-    <string name="voice_total_distance_kilometers_other">المسافة الإجمالية %1$.2f كيلومتر</string>
-    <string name="voice_total_distance_kilometers_two">المسافة الإجمالية 2 كيلومتر</string>
-    <string name="voice_total_distance_kilometers_zero">المسافة الإجمالية 0 كيلومتر</string>
-    <string name="voice_total_distance_miles_few">المسافة الإجمالية %1$.2f أميال</string>
-    <string name="voice_total_distance_miles_many">مجموع المسافة %1$.2f ميلاً</string>
-    <string name="voice_total_distance_miles_one">إجمالي المسافة ميل واحد</string>
-    <string name="voice_total_distance_miles_other">المسافة الإجمالية %1$.2f من الأميال</string>
-    <string name="voice_total_distance_miles_two">المسافة الإجمالية 2 ميل</string>
-    <string name="voice_total_distance_miles_zero">المسافة الإجمالية 0 ميل</string>
-    <string name="voice_total_distance_zero">المسافة الإجمالية لمساراتي صفر.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="zero">المسافة الإجمالية 0 كيلومتر</item>
+        <item quantity="one">المسافة الإجمالية كيلومتر واحد</item>
+        <item quantity="two">المسافة الإجمالية 2 كيلومتر</item>
+        <item quantity="few">المسافة الإجمالية %1$.2f كيلومتر</item>
+        <item quantity="many">المسافة الإجمالية %1$.2f كيلومتر</item>
+        <item quantity="other">المسافة الإجمالية %1$.2f كيلومتر</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="zero">المسافة الإجمالية 2 ميل</item>
+        <item quantity="one">إجمالي المسافة ميل واحد</item>
+        <item quantity="two">المسافة الإجمالية 0 ميل</item>
+        <item quantity="few">المسافة الإجمالية %1$.2f أميال</item>
+        <item quantity="many">مجموع المسافة %1$.2f ميلاً</item>
+        <item quantity="other">المسافة الإجمالية %1$.2f من الأميال</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">أجهزة الصراف الآلي</string>
     <string name="waypoint_type_bank">مصرف</string>

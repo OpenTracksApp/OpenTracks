@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
---><resources>
+-->
+<resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">avião</string>
     <string name="activity_type_atv">quadriciclos</string>
@@ -343,19 +343,14 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">%1$s por quilômetro</string>
     <string name="voice_pace_per_mile">%1$s por milha</string>
     <string name="voice_template">Minhas trilhas, %1$s em %2$s a %3$s</string>
-    <string name="voice_total_distance_kilometers_few">distância total de %1$.2f quilômetros</string>
-    <string name="voice_total_distance_kilometers_many">distância total de %1$.2f quilômetros</string>
-    <string name="voice_total_distance_kilometers_one">distância total de 1 quilômetro</string>
-    <string name="voice_total_distance_kilometers_other">distância total de %1$.2f quilômetros</string>
-    <string name="voice_total_distance_kilometers_two">distância total de 2 quilômetros</string>
-    <string name="voice_total_distance_kilometers_zero">distância total de 0 quilômetro</string>
-    <string name="voice_total_distance_miles_few">distância total de %1$.2f milhas</string>
-    <string name="voice_total_distance_miles_many">distância total de %1$.2f milhas</string>
-    <string name="voice_total_distance_miles_one">distância total de 1 milha</string>
-    <string name="voice_total_distance_miles_other">distância total de %1$.2f milhas</string>
-    <string name="voice_total_distance_miles_two">distância total de 2 milhas</string>
-    <string name="voice_total_distance_miles_zero">distância total de 0 milha</string>
-    <string name="voice_total_distance_zero">Minhas trilhas, distância total zero.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">distância total %1$.2f quilômetro</item>
+        <item quantity="other">distância total de %1$.2f quilómetros</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">distância total %1$.2f milha</item>
+        <item quantity="other">distância total de %1$.2f milhas</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">caixa eletrônico</string>
     <string name="waypoint_type_bank">banco</string>

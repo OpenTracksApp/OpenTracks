@@ -341,19 +341,14 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">%1$s per kilometer</string>
     <string name="voice_pace_per_mile">%1$s per mile</string>
     <string name="voice_template">OpenTracks %1$s på %2$s med %3$s</string>
-    <string name="voice_total_distance_kilometers_few">totalt avstånd %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_many">totalt avstånd %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_one">totalt avstånd 1 kilometer</string>
-    <string name="voice_total_distance_kilometers_other">totalt avstånd %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_two">total sträcka 2 kilometer</string>
-    <string name="voice_total_distance_kilometers_zero">totalt avstånd 0 kilometer</string>
-    <string name="voice_total_distance_miles_few">totalt avstånd %1$.2f miles</string>
-    <string name="voice_total_distance_miles_many">totalt avstånd %1$.2f miles</string>
-    <string name="voice_total_distance_miles_one">totalt avstånd 1 km</string>
-    <string name="voice_total_distance_miles_other">totalt avstånd %1$.2f miles</string>
-    <string name="voice_total_distance_miles_two">total sträcka 2 miles</string>
-    <string name="voice_total_distance_miles_zero">totalt avstånd 0 miles</string>
-    <string name="voice_total_distance_zero">Mina spår: totalt avstånd noll.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">totalt avstånd 1 kilometer</item>
+        <item quantity="other">totalt avstånd %1$.2f kilometer</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">totalt avstånd 1 miles</item>
+        <item quantity="other">totalt avstånd %1$.2f miles</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankomat</string>
     <string name="waypoint_type_bank">bank</string>

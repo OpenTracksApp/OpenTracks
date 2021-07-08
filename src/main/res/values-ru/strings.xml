@@ -354,19 +354,18 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">%1$s на километр</string>
     <string name="voice_pace_per_mile">%1$s на милю</string>
     <string name="voice_template">Длина треков: %1$s за %2$s (%3$s)</string>
-    <string name="voice_total_distance_kilometers_few">Общая длина: %1$.2f километра</string>
-    <string name="voice_total_distance_kilometers_many">Общая длина: %1$.2f километров</string>
-    <string name="voice_total_distance_kilometers_one">Общая длина: 1 километр</string>
-    <string name="voice_total_distance_kilometers_other">Общая длина: %1$.2f километра</string>
-    <string name="voice_total_distance_kilometers_two">Общая длина: 2 километра</string>
-    <string name="voice_total_distance_kilometers_zero">Общая длина: 0 километров</string>
-    <string name="voice_total_distance_miles_few">Общая длина: %1$.2f мили</string>
-    <string name="voice_total_distance_miles_many">Общая длина: %1$.2f миль</string>
-    <string name="voice_total_distance_miles_one">Общая длина: 1 миля</string>
-    <string name="voice_total_distance_miles_other">Общая длина: %1$.2f мили</string>
-    <string name="voice_total_distance_miles_two">Общая длина: 2 мили</string>
-    <string name="voice_total_distance_miles_zero">Общая длина: 0 миль</string>
-    <string name="voice_total_distance_zero">Общая длина трека равна нулю.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">Общая длина: %1$.2f километр</item>
+        <item quantity="few">Общая длина: %1$.2f километра</item>
+        <item quantity="many">Общая длина: %1$.2f километров</item>
+        <item quantity="other">Общая длина: %1$.2f километра</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">Общая длина: %1$.2f миля</item>
+        <item quantity="few">Общая длина: %1$.2f мили</item>
+        <item quantity="many">Общая длина: %1$.2f миль</item>
+        <item quantity="other">Общая длина: %1$.2f мили</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Банкомат</string>
     <string name="waypoint_type_bank">Банк</string>

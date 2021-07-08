@@ -342,19 +342,14 @@ limitations under the License.
     <string name="voice_pace_per_kilometer">%1$s per quilòmetre</string>
     <string name="voice_pace_per_mile">%1$s per milla</string>
     <string name="voice_template">OpenTracks: %1$s en %2$s a %3$s</string>
-    <string name="voice_total_distance_kilometers_few">%1$.2f quilòmetres de distància total</string>
-    <string name="voice_total_distance_kilometers_many">%1$.2f quilòmetres de distància total</string>
-    <string name="voice_total_distance_kilometers_one">1 quilòmetre de distància total</string>
-    <string name="voice_total_distance_kilometers_other">%1$.2f quilòmetres de distància total</string>
-    <string name="voice_total_distance_kilometers_two">2 quilòmetres de distància total</string>
-    <string name="voice_total_distance_kilometers_zero">0 quilòmetres de distància total</string>
-    <string name="voice_total_distance_miles_few">%1$.2f milles de distància total</string>
-    <string name="voice_total_distance_miles_many">%1$.2f milles de distància total</string>
-    <string name="voice_total_distance_miles_one">1 milla de distància total</string>
-    <string name="voice_total_distance_miles_other">%1$.2f milles de distància total</string>
-    <string name="voice_total_distance_miles_two">2 milles de distància total</string>
-    <string name="voice_total_distance_miles_zero">0 milles de distància total</string>
-    <string name="voice_total_distance_zero">La distància total de OpenTracks és zero.</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">1 quilòmetre de distància total</item>
+        <item quantity="other">%1$.2f quilòmetres de distància total</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">1 milla de distància total</item>
+        <item quantity="other">%1$.2f milles de distància total</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">caixer</string>
     <string name="waypoint_type_bank">banc</string>

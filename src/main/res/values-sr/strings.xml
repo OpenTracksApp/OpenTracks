@@ -344,16 +344,11 @@ limitations under the License.
         <item quantity="few">укупна раздаљина %1$.2f километра</item>
         <item quantity="other">укупна раздаљина %1$.2f километара</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s по километру</string>
-    <string name="voice_pace_per_mile">%1$s по миљи</string>
-    <string name="voice_template">Моја праћења %1$s за %2$s брзином од %3$s</string>
-    <string name="voice_total_distance_miles_few">укупна раздаљина %1$.2f миље</string>
-    <string name="voice_total_distance_miles_many">укупна раздаљина %1$.2f миља</string>
-    <string name="voice_total_distance_miles_one">укупна раздаљина 1 миља</string>
-    <string name="voice_total_distance_miles_other">укупна раздаљина %1$.2f миља</string>
-    <string name="voice_total_distance_miles_two">укупна раздаљина 2 миље</string>
-    <string name="voice_total_distance_miles_zero">укупна раздаљина 0 миља</string>
-    <string name="voice_total_distance_zero">Укупна раздаљина у Мојим праћењима је једнака нули.</string>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">укупна раздаљина %1$.2f миља</item>
+        <item quantity="few">укупна раздаљина %1$.2f миља</item>
+        <item quantity="other">укупна раздаљина %1$.2f миља</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">банкомат</string>
     <string name="waypoint_type_bank">банка</string>
