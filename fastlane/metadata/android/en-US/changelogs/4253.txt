@@ -1,0 +1,16 @@
+v3.18.6: OpenTracks
+
+Changes:
+- "Show on map"-functionality via  KML instead of KMZ
+- Voice announcement do not include app name
+- While recording: elevation gain/loss is updated every second
+- Store descriptions translated
+
+Bufixes:
+- Fixed invalid voice announcement translations
+
+Developer:
+- Android12 permissions (BLUETOOTH_SCAN)
+- Android12 permissions (ACCESS_COARSE_LOCATION)
+- Asserting for TrackPoints (testing)
+- Removed unused translations
