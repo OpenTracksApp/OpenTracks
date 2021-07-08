@@ -382,11 +382,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     }
 
     @Override
-    protected TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
-        return trackRecordingServiceConnection;
-    }
-
-    @Override
     protected void onDeleteConfirmed() {
         // Do nothing
     }

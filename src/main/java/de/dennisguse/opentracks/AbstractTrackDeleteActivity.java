@@ -29,7 +29,6 @@ import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
 import de.dennisguse.opentracks.services.TrackDeleteService;
 import de.dennisguse.opentracks.services.TrackDeleteServiceConnection;
-import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 
 /**
  * An abstract class for the following common tasks across
@@ -84,14 +83,6 @@ public abstract class AbstractTrackDeleteActivity extends AbstractActivity imple
 
         trackDeleteServiceConnection = new TrackDeleteServiceConnection(this);
         trackDeleteServiceConnection.startAndBind(this, trackIdList);
-    }
-
-    /**
-     * Gets the track recording service connection.
-     * For stopping the current recording if need to delete the current recording track.
-     */
-    protected TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
-        return null;
     }
 
     /**

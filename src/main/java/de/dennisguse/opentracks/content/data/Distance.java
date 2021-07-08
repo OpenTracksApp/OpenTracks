@@ -36,10 +36,6 @@ public class Distance {
         }
     }
 
-    public static Distance invalid() {
-        return of(Double.NaN);
-    }
-
     private final double distance_m;
 
     private Distance(double distance_m) {
@@ -56,10 +52,6 @@ public class Distance {
 
     public Distance multipliedBy(double factor) {
         return new Distance(factor * distance_m);
-    }
-
-    public Distance dividedBy(double divisor) {
-        return multipliedBy(1 / divisor);
     }
 
     public double dividedBy(@NonNull Distance divisor) {
