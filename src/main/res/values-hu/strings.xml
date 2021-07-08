@@ -288,12 +288,6 @@ limitations under the License.
     <string name="track_list_empty_message">Indítsa el következő kalandja rögzítését itt</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d pálya</string>
-    <string name="tracks_many">%1$d pálya</string>
-    <string name="tracks_one">1 pálya</string>
-    <string name="tracks_other">%1$d pálya</string>
-    <string name="tracks_two">2 pálya</string>
-    <string name="tracks_zero">0 pálya</string>
     <!-- Unit -->
     <string name="unit_feet">láb</string>
     <string name="unit_kilometer">km</string>
@@ -339,12 +333,10 @@ limitations under the License.
         <item quantity="other">%1$d másodperc</item>
     </plurals>
     <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="zero">0 kilométer óránként</item>
         <item quantity="one">1 kilométer óránként</item>
         <item quantity="other">%1$.1f kilométer óránként</item>
     </plurals>
     <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="zero">0 mérföld óránként</item>
         <item quantity="one">1 mérföld óránként</item>
         <item quantity="other">%1$.1f mérföld óránként</item>
     </plurals>

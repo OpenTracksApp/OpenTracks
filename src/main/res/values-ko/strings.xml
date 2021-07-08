@@ -285,12 +285,6 @@ limitations under the License.
     <string name="track_list_empty_message">여기에서 새로운 활동을 기록해 보세요.</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">운동기록 %1$d개</string>
-    <string name="tracks_many">운동기록 %1$d개</string>
-    <string name="tracks_one">운동기록 1개</string>
-    <string name="tracks_other">운동기록 %1$d개</string>
-    <string name="tracks_two">운동기록 2개</string>
-    <string name="tracks_zero">운동기록 0개</string>
     <!-- Unit -->
     <string name="unit_feet">피트</string>
     <string name="unit_kilometer">km</string>

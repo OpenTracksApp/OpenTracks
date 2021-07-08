@@ -305,12 +305,6 @@ limitations under the License.
     <string name="track_list_empty_message">在这里开始记录您的新冒险</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d条路线</string>
-    <string name="tracks_many">%1$d条路线</string>
-    <string name="tracks_one">1条路线</string>
-    <string name="tracks_other">%1$d条路线</string>
-    <string name="tracks_two">2条路线</string>
-    <string name="tracks_zero">0条路线</string>
     <!-- Unit -->
     <string name="unit_feet">英尺</string>
     <string name="unit_kilometer">公里</string>

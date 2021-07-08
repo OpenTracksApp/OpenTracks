@@ -354,12 +354,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="track_list_empty_message">Neem uw volgende avontuur hier op</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d routes</string>
-    <string name="tracks_many">%1$d routes</string>
-    <string name="tracks_one">1 route</string>
-    <string name="tracks_other">%1$d routes</string>
-    <string name="tracks_two">2 routes</string>
-    <string name="tracks_zero">0 routes</string>
     <!-- Unit -->
     <string name="unit_feet">ft</string>
     <string name="unit_kilometer">km</string>

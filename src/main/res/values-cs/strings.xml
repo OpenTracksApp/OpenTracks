@@ -355,12 +355,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="track_list_empty_message">Spustit záznam trasy</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d trasy</string>
-    <string name="tracks_many">%1$d tras</string>
-    <string name="tracks_one">1 trasa</string>
-    <string name="tracks_other">%1$d tras</string>
-    <string name="tracks_two">2 trasy</string>
-    <string name="tracks_zero">0 tras</string>
     <!-- Unit -->
     <string name="unit_feet">stop</string>
     <string name="unit_kilometer">km</string>

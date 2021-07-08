@@ -355,12 +355,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="track_list_empty_message">Hasi hurrengo abentura grabatzen</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d ibilbide</string>
-    <string name="tracks_many">%1$d ibilbide</string>
-    <string name="tracks_one">1 ibilbide</string>
-    <string name="tracks_other">%1$d ibilbide</string>
-    <string name="tracks_two">2 ibilbide</string>
-    <string name="tracks_zero">0 ibilbide</string>
     <!-- Unit -->
     <string name="unit_feet">oin</string>
     <string name="unit_kilometer">km</string>

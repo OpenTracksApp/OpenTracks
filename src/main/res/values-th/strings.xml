@@ -285,12 +285,6 @@ limitations under the License.
     <string name="track_list_empty_message">เริ่มบันทึกผจญภัยต่อไปของคุณที่นี่</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d เส้นการเดินทาง</string>
-    <string name="tracks_many">%1$d เส้นการเดินทาง</string>
-    <string name="tracks_one">1 เส้นการเดินทาง</string>
-    <string name="tracks_other">%1$d เส้นการเดินทาง</string>
-    <string name="tracks_two">2 เส้นการเดินทาง</string>
-    <string name="tracks_zero">0 เส้นการเดินทาง</string>
     <!-- Unit -->
     <string name="unit_feet">ฟุต</string>
     <string name="unit_kilometer">กม.</string>

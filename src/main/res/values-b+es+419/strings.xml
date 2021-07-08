@@ -243,12 +243,6 @@
     <string name="track_edit_activity_type_hint">Tipo de actividad</string>
     <string name="track_edit_new_track_title">Nuevo recorrido</string>
     <string name="track_list_empty_message">Comienza a grabar aquí tu próxima aventura</string>
-    <string name="tracks_few">%1$d recorridos</string>
-    <string name="tracks_many">%1$d recorridos</string>
-    <string name="tracks_one">1 recorrido</string>
-    <string name="tracks_other">%1$d recorridos</string>
-    <string name="tracks_two">2 recorridos</string>
-    <string name="tracks_zero">0 recorridos</string>
     <string name="unit_feet">pie</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/h</string>

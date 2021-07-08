@@ -286,12 +286,6 @@ limitations under the License.
     <string name="track_list_empty_message">अपनी अगली साहसिक यात्रा यहां रिकॉर्ड करना शुरू करें</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d ट्रैक</string>
-    <string name="tracks_many">%1$d ट्रैक</string>
-    <string name="tracks_one">1 ट्रैक</string>
-    <string name="tracks_other">%1$d ट्रैक</string>
-    <string name="tracks_two">2 ट्रैक</string>
-    <string name="tracks_zero">0 ट्रैक</string>
     <!-- Unit -->
     <string name="unit_feet">फ़ीट</string>
     <string name="unit_kilometer">किमी</string>

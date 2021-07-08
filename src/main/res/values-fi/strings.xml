@@ -364,12 +364,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="aggregated_stats_empty_message">Tallenna ensimmäinen reittisi nähdäksesi koottuja tilastoja</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d reittiä</string>
-    <string name="tracks_many">%1$d reittiä</string>
-    <string name="tracks_one">1 reitti</string>
-    <string name="tracks_other">%1$d reittiä</string>
-    <string name="tracks_two">2 reittiä</string>
-    <string name="tracks_zero">0 reittiä</string>
     <!-- Unit -->
     <string name="unit_feet">jalkaa</string>
     <string name="unit_kilometer">km</string>

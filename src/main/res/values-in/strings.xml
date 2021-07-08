@@ -238,12 +238,6 @@
     <string name="track_edit_activity_type_hint">Jenis aktivitas</string>
     <string name="track_edit_new_track_title">Lintasan Baru</string>
     <string name="track_list_empty_message">Mulai merekam petualangan Anda berikutnya di sini</string>
-    <string name="tracks_few">%1$d trek</string>
-    <string name="tracks_many">%1$d trek</string>
-    <string name="tracks_one">1 trek</string>
-    <string name="tracks_other">%1$d trek</string>
-    <string name="tracks_two">2 trek</string>
-    <string name="tracks_zero">{0} trek</string>
     <string name="unit_feet">kaki</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/j</string>

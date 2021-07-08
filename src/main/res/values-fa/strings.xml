@@ -286,12 +286,6 @@ limitations under the License.
     <string name="track_list_empty_message">ضبط ماجراجویی بعدی خودتان را از اینجا شروع کنید</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d گذر</string>
-    <string name="tracks_many">%1$d گذر</string>
-    <string name="tracks_one">۱ گذر</string>
-    <string name="tracks_other">%1$d گذر</string>
-    <string name="tracks_two">۲ گذر</string>
-    <string name="tracks_zero">۰ گذر</string>
     <!-- Unit -->
     <string name="unit_feet">فوت</string>
     <string name="unit_kilometer">کیلومتر</string>

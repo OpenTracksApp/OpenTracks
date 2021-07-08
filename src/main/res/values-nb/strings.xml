@@ -288,12 +288,6 @@ limitations under the License.
     <string name="track_list_empty_message">Begynn å ta opp din neste aktivitet her</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d spor</string>
-    <string name="tracks_many">%1$d spor</string>
-    <string name="tracks_one">1 spor</string>
-    <string name="tracks_other">%1$d spor</string>
-    <string name="tracks_two">2 spor</string>
-    <string name="tracks_zero">0 spor</string>
     <!-- Unit -->
     <string name="unit_feet">fot</string>
     <string name="unit_kilometer">km</string>

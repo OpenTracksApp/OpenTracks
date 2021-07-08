@@ -365,12 +365,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="aggregated_stats_empty_message">Zeichnen Sie Ihren ersten Track auf um aggregierte Statistiken zu sehen</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d Tracks</string>
-    <string name="tracks_many">%1$d Tracks</string>
-    <string name="tracks_one">1 Track</string>
-    <string name="tracks_other">%1$d Tracks</string>
-    <string name="tracks_two">2 Tracks</string>
-    <string name="tracks_zero">0 Tracks</string>
     <!-- Unit -->
     <string name="unit_feet">Fuß</string>
     <string name="unit_kilometer">km</string>

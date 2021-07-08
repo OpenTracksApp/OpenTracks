@@ -354,12 +354,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="track_list_empty_message">Alustage oma järgmise seikluse salvestamist siin</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d rada</string>
-    <string name="tracks_many">%1$d rada</string>
-    <string name="tracks_one">1 rada</string>
-    <string name="tracks_other">%1$d rada</string>
-    <string name="tracks_two">2 rada</string>
-    <string name="tracks_zero">0 rada</string>
     <!-- Unit -->
     <string name="unit_feet">jalga</string>
     <string name="unit_kilometer">km</string>

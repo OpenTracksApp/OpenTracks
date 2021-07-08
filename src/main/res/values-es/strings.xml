@@ -355,12 +355,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="track_list_empty_message">Empieza a grabar aquí tu próxima aventura</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d rutas</string>
-    <string name="tracks_many">%1$d rutas</string>
-    <string name="tracks_one">1 ruta</string>
-    <string name="tracks_other">%1$d rutas</string>
-    <string name="tracks_two">2 rutas</string>
-    <string name="tracks_zero">0 ruta</string>
     <!-- Unit -->
     <string name="unit_feet">pies</string>
     <string name="unit_kilometer">km</string>

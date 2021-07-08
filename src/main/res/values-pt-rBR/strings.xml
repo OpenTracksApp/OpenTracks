@@ -242,12 +242,6 @@
     <string name="track_edit_activity_type_hint">Tipo de atividade</string>
     <string name="track_edit_new_track_title">Trilha nova</string>
     <string name="track_list_empty_message">Comece a gravar sua próxima aventura aqui</string>
-    <string name="tracks_few">%1$d trilhas</string>
-    <string name="tracks_many">%1$d trilhas</string>
-    <string name="tracks_one">1 trilha</string>
-    <string name="tracks_other">%1$d trilhas</string>
-    <string name="tracks_two">2 trilhas</string>
-    <string name="tracks_zero">0 trilhas</string>
     <string name="unit_feet">pés</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/h</string>

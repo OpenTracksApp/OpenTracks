@@ -331,12 +331,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="track_list_empty_message">Inizia a registrare la tua prossima avventura qui</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d percorsi</string>
-    <string name="tracks_many">%1$d percorsi</string>
-    <string name="tracks_one">1 percorso</string>
-    <string name="tracks_other">%1$d percorsi</string>
-    <string name="tracks_two">2 percorsi</string>
-    <string name="tracks_zero">0 percorsi</string>
     <!-- Unit -->
     <string name="unit_feet">pd</string>
     <string name="unit_kilometer">km</string>

@@ -287,12 +287,6 @@ limitations under the License.
     <string name="track_list_empty_message">Tu spustite zaznamenávanie ďalšieho dobrodružstva</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d trasy</string>
-    <string name="tracks_many">%1$d trás</string>
-    <string name="tracks_one">1 trasa</string>
-    <string name="tracks_other">%1$d trás</string>
-    <string name="tracks_two">2 trasy</string>
-    <string name="tracks_zero">0 trás</string>
     <!-- Unit -->
     <string name="unit_feet">st.</string>
     <string name="unit_kilometer">km</string>

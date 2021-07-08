@@ -287,12 +287,6 @@ limitations under the License.
     <string name="track_list_empty_message">Bắt đầu ghi lại cuộc phiêu lưu tiếp theo của bạn ở đây</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d tuyến đường</string>
-    <string name="tracks_many">%1$d tuyến đường</string>
-    <string name="tracks_one">1 tuyến đường</string>
-    <string name="tracks_other">%1$d tuyến đường</string>
-    <string name="tracks_two">2 tuyến đường</string>
-    <string name="tracks_zero">0 tuyến đường</string>
     <!-- Unit -->
     <string name="unit_feet">ft</string>
     <string name="unit_kilometer">km</string>

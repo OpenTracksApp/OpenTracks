@@ -289,12 +289,6 @@ limitations under the License.
     <string name="track_list_empty_message">Tukaj začnite snemati svojo naslednjo pustolovščino</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">št. poti: %1$d</string>
-    <string name="tracks_many">št. poti: %1$d</string>
-    <string name="tracks_one">1 pot</string>
-    <string name="tracks_other">%1$d poti</string>
-    <string name="tracks_two">2 poti</string>
-    <string name="tracks_zero">0 poti</string>
     <!-- Unit -->
     <string name="unit_feet">čevljev</string>
     <string name="unit_kilometer">km</string>

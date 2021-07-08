@@ -287,12 +287,6 @@ limitations under the License.
     <string name="track_list_empty_message">Comenceu a enregistrar aquí la vostra pròxima aventura.</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d rutes</string>
-    <string name="tracks_many">%1$d rutes</string>
-    <string name="tracks_one">1 ruta</string>
-    <string name="tracks_other">%1$d rutes</string>
-    <string name="tracks_two">2 rutes</string>
-    <string name="tracks_zero">0 rutes</string>
     <!-- Unit -->
     <string name="unit_feet">peus</string>
     <string name="unit_kilometer">km</string>

@@ -287,12 +287,6 @@ limitations under the License.
     <string name="track_list_empty_message">Ξεκινήστε την εγγραφή της επόμενης περιπέτειάς σας εδώ</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d ίχνη</string>
-    <string name="tracks_many">%1$d ίχνη</string>
-    <string name="tracks_one">1 ίχνος</string>
-    <string name="tracks_other">%1$d ίχνη</string>
-    <string name="tracks_two">2 ίχνη</string>
-    <string name="tracks_zero">0 ίχνη</string>
     <!-- Unit -->
     <string name="unit_feet">πόδια</string>
     <string name="unit_kilometer">χλμ.</string>

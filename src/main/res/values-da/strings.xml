@@ -359,12 +359,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="track_list_empty_message">Her kan du gå i gang med at registrere dit næste eventyr</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d ruter</string>
-    <string name="tracks_many">%1$d ruter</string>
-    <string name="tracks_one">1 rute</string>
-    <string name="tracks_other">%1$d ruter</string>
-    <string name="tracks_two">2 ruter</string>
-    <string name="tracks_zero">0 ruter</string>
     <!-- Unit -->
     <string name="unit_feet">fod</string>
     <string name="unit_kilometer">km</string>

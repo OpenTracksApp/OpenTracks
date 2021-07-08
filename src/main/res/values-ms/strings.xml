@@ -288,12 +288,6 @@ limitations under the License.
     <string name="track_list_empty_message">Mula merakam pengembaraan anda yang seterusnya di sini</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d laluan</string>
-    <string name="tracks_many">%1$d laluan</string>
-    <string name="tracks_one">1 laluan</string>
-    <string name="tracks_other">%1$d laluan</string>
-    <string name="tracks_two">2 laluan</string>
-    <string name="tracks_zero">0 laluan</string>
     <!-- Unit -->
     <string name="unit_feet">kaki</string>
     <string name="unit_kilometer">km</string>

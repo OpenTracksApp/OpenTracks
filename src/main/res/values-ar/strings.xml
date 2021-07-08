@@ -290,12 +290,6 @@ limitations under the License.
     <string name="track_list_empty_message">بدء تسجيل مغامرتك التالية هنا</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d‏ مسارات</string>
-    <string name="tracks_many">%1$d‏ مسارًا</string>
-    <string name="tracks_one">1 مسار</string>
-    <string name="tracks_other">%1$d‏ من المسارات</string>
-    <string name="tracks_two">2 مساران</string>
-    <string name="tracks_zero">0 مسارات</string>
     <!-- Unit -->
     <string name="unit_feet">قدم</string>
     <string name="unit_kilometer">كم</string>

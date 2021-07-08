@@ -288,12 +288,6 @@ limitations under the License.
     <string name="track_list_empty_message">Sāciet ierakstīt savu nākamo piedzīvojumu šeit</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d maršruti</string>
-    <string name="tracks_many">%1$d maršruti</string>
-    <string name="tracks_one">1 maršruts</string>
-    <string name="tracks_other">%1$d maršruti</string>
-    <string name="tracks_two">2 maršruti</string>
-    <string name="tracks_zero">0 maršrutu</string>
     <!-- Unit -->
     <string name="unit_feet">pēdas</string>
     <string name="unit_kilometer">km</string>

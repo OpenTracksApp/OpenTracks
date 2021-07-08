@@ -286,12 +286,6 @@ limitations under the License.
     <string name="track_list_empty_message">このボタンでトラックの記録を開始しよう</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d件のトラック</string>
-    <string name="tracks_many">%1$d件のトラック</string>
-    <string name="tracks_one">1件のトラック</string>
-    <string name="tracks_other">%1$d件のトラック</string>
-    <string name="tracks_two">2件のトラック</string>
-    <string name="tracks_zero">0件のトラック</string>
     <!-- Unit -->
     <string name="unit_feet">ft</string>
     <string name="unit_kilometer">km</string>

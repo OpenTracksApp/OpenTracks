@@ -289,12 +289,6 @@ limitations under the License.
     <string name="track_list_empty_message">Запишите свой первый трек здесь</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d трека</string>
-    <string name="tracks_many">%1$d треков</string>
-    <string name="tracks_one">1 трек</string>
-    <string name="tracks_other">%1$d трека</string>
-    <string name="tracks_two">2 трека</string>
-    <string name="tracks_zero">0 треков</string>
     <!-- Unit -->
     <string name="unit_feet">фт</string>
     <string name="unit_kilometer">км</string>

@@ -239,12 +239,6 @@
     <string name="track_edit_activity_type_hint">活動類型</string>
     <string name="track_edit_new_track_title">新足跡</string>
     <string name="track_list_empty_message">按這裡開始記錄新的冒險</string>
-    <string name="tracks_few">%1$d 個足跡</string>
-    <string name="tracks_many">%1$d 個足跡</string>
-    <string name="tracks_one">1 個足跡</string>
-    <string name="tracks_other">%1$d 個足跡</string>
-    <string name="tracks_two">2 個足跡</string>
-    <string name="tracks_zero">0 個足跡</string>
     <string name="unit_feet">英尺</string>
     <string name="unit_kilometer">公里</string>
     <string name="unit_kilometer_per_hour">公里/小時</string>

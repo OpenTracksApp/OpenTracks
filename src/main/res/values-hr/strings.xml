@@ -288,12 +288,6 @@ limitations under the License.
     <string name="track_list_empty_message">Počnite snimati svoju sljedeću avanturu ovdje</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d staze</string>
-    <string name="tracks_many">%1$d staza</string>
-    <string name="tracks_one">1 staza</string>
-    <string name="tracks_other">%1$d staza</string>
-    <string name="tracks_two">2 staze</string>
-    <string name="tracks_zero">0 staza</string>
     <!-- Unit -->
     <string name="unit_feet">ft</string>
     <string name="unit_kilometer">km</string>

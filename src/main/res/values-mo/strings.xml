@@ -244,12 +244,6 @@
     <string name="track_edit_activity_type_hint">Tipul de activitate</string>
     <string name="track_edit_new_track_title">Traseu nou</string>
     <string name="track_list_empty_message">Începeți aici înregistrarea următoarei aventuri</string>
-    <string name="tracks_few">%1$d trasee</string>
-    <string name="tracks_many">%1$d (de) trasee</string>
-    <string name="tracks_one">1 traseu</string>
-    <string name="tracks_other">%1$d (de) trasee</string>
-    <string name="tracks_two">2 trasee</string>
-    <string name="tracks_zero">0 trasee</string>
     <string name="unit_feet">ft</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/h</string>

@@ -240,12 +240,6 @@
     <string name="track_edit_activity_type_hint">Activity type</string>
     <string name="track_edit_new_track_title">New Track</string>
     <string name="track_list_empty_message">Start recording your next adventure here</string>
-    <string name="tracks_few">%1$d tracks</string>
-    <string name="tracks_many">%1$d tracks</string>
-    <string name="tracks_one">1 track</string>
-    <string name="tracks_other">%1$d tracks</string>
-    <string name="tracks_two">2 tracks</string>
-    <string name="tracks_zero">0 tracks</string>
     <string name="unit_feet">ft</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/h</string>

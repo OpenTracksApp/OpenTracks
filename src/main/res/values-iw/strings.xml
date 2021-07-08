@@ -241,12 +241,6 @@
     <string name="track_edit_activity_type_hint">סוג פעילות</string>
     <string name="track_edit_new_track_title">מסלול חדש</string>
     <string name="track_list_empty_message">התחל להקליט את ההרפתקה הבאה שלך כאן</string>
-    <string name="tracks_few">%1$d מסלולים</string>
-    <string name="tracks_many">%1$d מסלולים</string>
-    <string name="tracks_one">מסלול אחד</string>
-    <string name="tracks_other">%1$d מסלולים</string>
-    <string name="tracks_two">שני מסלולים</string>
-    <string name="tracks_zero">אפס מסלולים</string>
     <string name="unit_feet">רגל</string>
     <string name="unit_kilometer">ק\"מ</string>
     <string name="unit_kilometer_per_hour">קמ\"ש</string>

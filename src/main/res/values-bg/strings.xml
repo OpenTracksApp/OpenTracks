@@ -288,12 +288,6 @@ limitations under the License.
     <string name="track_list_empty_message">Започнете да записвате следващото си приключение тук.</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d маршрута</string>
-    <string name="tracks_many">%1$d маршрута</string>
-    <string name="tracks_one">1 маршрут</string>
-    <string name="tracks_other">%1$d маршрута</string>
-    <string name="tracks_two">2 маршрута</string>
-    <string name="tracks_zero">0 маршрута</string>
     <!-- Unit -->
     <string name="unit_feet">фт</string>
     <string name="unit_kilometer">км</string>

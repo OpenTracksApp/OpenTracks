@@ -239,12 +239,6 @@
     <string name="track_edit_activity_type_hint">Type d\'activité</string>
     <string name="track_edit_new_track_title">Nouveau parcours</string>
     <string name="track_list_empty_message">Commencez à enregistrer votre prochaine aventure ici</string>
-    <string name="tracks_few">%1$d parcours</string>
-    <string name="tracks_many">%1$d parcours</string>
-    <string name="tracks_one">1 parcours</string>
-    <string name="tracks_other">%1$d parcours</string>
-    <string name="tracks_two">2 parcours</string>
-    <string name="tracks_zero">0 parcours</string>
     <string name="unit_feet">pi</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/h</string>

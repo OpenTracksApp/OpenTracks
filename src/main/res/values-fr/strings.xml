@@ -354,12 +354,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="track_list_empty_message">Commencez à enregistrer votre prochaine aventure ici</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d parcours</string>
-    <string name="tracks_many">%1$d parcours</string>
-    <string name="tracks_one">1 parcours</string>
-    <string name="tracks_other">%1$d parcours</string>
-    <string name="tracks_two">2 parcours</string>
-    <string name="tracks_zero">Aucun parcours</string>
     <!-- Unit -->
     <string name="unit_feet">pied(s)</string>
     <string name="unit_kilometer">km</string>

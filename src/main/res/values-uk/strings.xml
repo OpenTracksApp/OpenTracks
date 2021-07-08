@@ -290,12 +290,6 @@ limitations under the License.
     <string name="track_list_empty_message">Запишіть свою наступну пригоду тут</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d шляхи</string>
-    <string name="tracks_many">%1$d шляхів</string>
-    <string name="tracks_one">1 шлях</string>
-    <string name="tracks_other">%1$d шляху</string>
-    <string name="tracks_two">2 шляхи</string>
-    <string name="tracks_zero">0 шляхів</string>
     <!-- Unit -->
     <string name="unit_feet">фут.</string>
     <string name="unit_kilometer">км</string>
