@@ -340,7 +340,7 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s bawat kilometro</string>
     <string name="voice_pace_per_mile">%1$s bawat milya</string>
-    <string name="voice_template">OpenTracks %1$s sa %2$s sa %3$s</string>
+    <string name="voice_template">%1$s sa %2$s sa %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">kabuuang distansya %1$.2f kilometro</item>
         <item quantity="other">kabuuang distansya %1$.2f (na) kilometro</item>

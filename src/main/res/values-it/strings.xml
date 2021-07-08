@@ -385,7 +385,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s per chilometro</string>
     <string name="voice_pace_per_mile">%1$s per miglio</string>
-    <string name="voice_template">OpenTracks %1$s in %2$s a %3$s</string>
+    <string name="voice_template">%1$s in %2$s a %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">distanza totale 1 chilometro</item>
         <item quantity="other">distanza totale 2 chilometri</item>

@@ -340,7 +340,7 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s در کیلومتر</string>
     <string name="voice_pace_per_mile">%1$s در مایل</string>
-    <string name="voice_template">مسیرهای من‏‏ %1$s در %2$s با %3$s</string>
+    <string name="voice_template">‏‏ %1$s در %2$s با %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">کل مسافت %1$.2f کیلومتر</item>
         <item quantity="other">کل مسافت %1$.2f کیلومتر</item>

@@ -414,7 +414,7 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s na kilometr</string>
     <string name="voice_pace_per_mile">%1$s na míli</string>
-    <string name="voice_template">Moje trasy: %1$s za %2$s rychlostí %3$s</string>
+    <string name="voice_template">%1$s za %2$s rychlostí %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">celková vzdálenost 1 kilometr</item>
         <item quantity="few">celková vzdálenost %1$.2f kilometry</item>

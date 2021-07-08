@@ -408,7 +408,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s par kilomètre</string>
     <string name="voice_pace_per_mile">%1$s par mile</string>
-    <string name="voice_template">Mes parcours : %1$s en %2$s à %3$s</string>
+    <string name="voice_template">%1$s en %2$s à %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">distance totale %1$.2f kilomètre</item>
         <item quantity="other">distance totale %1$.2f kilomètres</item>

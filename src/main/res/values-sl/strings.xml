@@ -352,7 +352,7 @@ limitations under the License.
         <item quantity="other">%1$.1f milj na uro</item>
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s na kilometer</string>
-    <string name="voice_template">Moje poti %1$s v %2$s pri %3$s</string>
+    <string name="voice_template">%1$s v %2$s pri %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">skupna razdalja %1$.2f kilometer</item>
         <item quantity="two">skupna razdalja %1$.2f kilometra</item>

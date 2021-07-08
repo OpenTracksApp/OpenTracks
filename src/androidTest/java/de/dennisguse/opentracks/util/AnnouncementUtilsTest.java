@@ -47,7 +47,7 @@ public class AnnouncementUtilsTest {
         String announcement = AnnouncementUtils.getAnnouncement(context, stats, true, true, null);
 
         // then
-        assertEquals("OpenTracks total distance 20.00 kilometers in 1 hour 5 minutes 10 seconds at 18.4 kilometers per hour", announcement);
+        assertEquals("total distance 20.00 kilometers in 1 hour 5 minutes 10 seconds at 18.4 kilometers per hour", announcement);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class AnnouncementUtilsTest {
 
         // then
         assertEquals(
-                "OpenTracks total distance " +
+                "total distance " +
                         StringUtils.getDistanceParts(context, stats.getTotalDistance(), true).first +
                         " kilometers in " + buildAndGetTimeText(stats.getTotalTime(), false) + " at " +
                         StringUtils.getSpeedParts(context, stats.getAverageMovingSpeed(), true, true).first +
@@ -92,7 +92,7 @@ public class AnnouncementUtilsTest {
         String announcement = AnnouncementUtils.getAnnouncement(context, stats, true, false, null);
 
         // then
-        assertEquals("OpenTracks total distance 20.00 kilometers in 1 hour 5 minutes 10 seconds at 3 minutes 15 seconds per kilometer", announcement);
+        assertEquals("total distance 20.00 kilometers in 1 hour 5 minutes 10 seconds at 3 minutes 15 seconds per kilometer", announcement);
     }
 
     @Test
@@ -114,7 +114,7 @@ public class AnnouncementUtilsTest {
 
         // then
         assertEquals(
-                "OpenTracks total distance " +
+                "total distance " +
                         StringUtils.getDistanceParts(context, stats.getTotalDistance(), true).first +
                         " kilometers in " + buildAndGetTimeText(stats.getTotalTime(), false) + " at " +
                         buildAndGetTimeText(stats.getAverageMovingSpeed().toPace(true), true) +
@@ -137,7 +137,7 @@ public class AnnouncementUtilsTest {
         String announcement = AnnouncementUtils.getAnnouncement(context, stats, false, true, null);
 
         // then
-        assertEquals("OpenTracks total distance 12.43 miles in 1 hour 5 minutes 10 seconds at 11.4 miles per hour", announcement);
+        assertEquals("total distance 12.43 miles in 1 hour 5 minutes 10 seconds at 11.4 miles per hour", announcement);
     }
 
     @Test
@@ -159,7 +159,7 @@ public class AnnouncementUtilsTest {
 
         // then
         assertEquals(
-                "OpenTracks total distance " +
+                "total distance " +
                         StringUtils.getDistanceParts(context, stats.getTotalDistance(), false).first +
                         " miles in " + buildAndGetTimeText(stats.getTotalTime(), false) + " at " +
                         StringUtils.getSpeedParts(context, stats.getAverageMovingSpeed(), false, true).first +
@@ -182,7 +182,7 @@ public class AnnouncementUtilsTest {
         String announcement = AnnouncementUtils.getAnnouncement(context, stats, false, false, null);
 
         // then
-        assertEquals("OpenTracks total distance 12.43 miles in 1 hour 5 minutes 10 seconds at 5 minutes 15 seconds per mile", announcement);
+        assertEquals("total distance 12.43 miles in 1 hour 5 minutes 10 seconds at 5 minutes 15 seconds per mile", announcement);
     }
 
     @Test
@@ -203,9 +203,9 @@ public class AnnouncementUtilsTest {
         String announcement = AnnouncementUtils.getAnnouncement(context, stats, false, false, lastInterval);
 
         // then
-        //assertEquals("OpenTracks total distance 12.43 miles in 1 hour 5 minutes 10 seconds at 5 minutes 15 seconds per mile Lap time of 1 minute 53 seconds per mile", announcement);
+        //assertEquals("total distance 12.43 miles in 1 hour 5 minutes 10 seconds at 5 minutes 15 seconds per mile Lap time of 1 minute 53 seconds per mile", announcement);
         assertEquals(
-                "OpenTracks total distance " +
+                "total distance " +
                         StringUtils.getDistanceParts(context, stats.getTotalDistance(), false).first +
                         " miles in " + buildAndGetTimeText(stats.getTotalTime(), false) + " at " +
                         buildAndGetTimeText(stats.getAverageMovingSpeed().toPace(false), true) +

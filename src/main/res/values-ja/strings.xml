@@ -335,7 +335,7 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">1キロあたり%1$s</string>
     <string name="voice_pace_per_mile">1マイルあたり%1$s</string>
-    <string name="voice_template">OpenTracksの記録距離は%1$s、所要時間は%2$s、ペースは%3$sです</string>
+    <string name="voice_template">の記録距離は%1$s、所要時間は%2$s、ペースは%3$sです</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="other">合計距離%1$.2fキロ</item>
     </plurals>

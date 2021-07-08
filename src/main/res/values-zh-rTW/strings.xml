@@ -285,7 +285,7 @@
     </plurals>
     <string name="voice_pace_per_kilometer">每小時 %1$s 英里</string>
     <string name="voice_pace_per_mile">每英里 %1$s</string>
-    <string name="voice_template">我的足跡：%1$s (時間：%2$s，速度：%3$s)。</string>
+    <string name="voice_template">%1$s (時間：%2$s，速度：%3$s)。</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="other">總距離 %1$.2f 公里</item>
     </plurals>

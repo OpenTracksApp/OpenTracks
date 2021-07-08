@@ -336,7 +336,7 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s mỗi ki lô mét</string>
     <string name="voice_pace_per_mile">%1$s mỗi dặm</string>
-    <string name="voice_template">Tuyến đường của tôi là %1$s trong %2$s tại %3$s</string>
+    <string name="voice_template">%1$s trong %2$s tại %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="other">tổng khoảng cách là %1$.2f ki lô mét</item>
     </plurals>

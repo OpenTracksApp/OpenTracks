@@ -419,7 +419,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s pro Kilometer</string>
     <string name="voice_pace_per_mile">%1$s pro Meile</string>
-    <string name="voice_template">Meine Tracks: %1$s in %2$s bei %3$s</string>
+    <string name="voice_template">%1$s in %2$s bei %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">Gesamtstrecke: 1 Kilometer</item>
         <item quantity="other">Gesamtstrecke: %1$.2f Kilometer</item>

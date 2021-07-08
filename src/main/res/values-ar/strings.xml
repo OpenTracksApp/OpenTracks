@@ -364,7 +364,7 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s لكل كيلومتر</string>
     <string name="voice_pace_per_mile">%1$s لكل ميل</string>
-    <string name="voice_template">مساراتي‏ %1$s‏ في‏ %2$s‏ بسرعة‏ %3$s</string>
+    <string name="voice_template">%1$s‏ في‏ %2$s‏ بسرعة‏ %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="zero">المسافة الإجمالية 0 كيلومتر</item>
         <item quantity="one">المسافة الإجمالية كيلومتر واحد</item>

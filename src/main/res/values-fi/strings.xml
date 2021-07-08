@@ -418,7 +418,7 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s kilometriä kohti</string>
     <string name="voice_pace_per_mile">%1$s mailia kohti</string>
-    <string name="voice_template">Omat reitit: %1$s ajassa %2$s nopeudella %3$s</string>
+    <string name="voice_template">%1$s ajassa %2$s nopeudella %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">kokonaisetäisyys 1 kilometri</item>
         <item quantity="other">kokonaisetäisyys %1$.2f kilometriä</item>

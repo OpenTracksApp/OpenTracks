@@ -315,7 +315,7 @@
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s pe kilometru</string>
     <string name="voice_pace_per_mile">%1$s pe milă</string>
-    <string name="voice_template">Traseele mele %1$s în %2$s cu %3$s</string>
+    <string name="voice_template">%1$s în %2$s cu %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="zero">distanţa totală 0 kilometri</item>
         <item quantity="one">distanţa totală 1 kilometru</item>

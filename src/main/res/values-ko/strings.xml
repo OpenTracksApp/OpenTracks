@@ -334,7 +334,7 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">킬로미터 당 %1$s</string>
     <string name="voice_pace_per_mile">마일 당 %1$s</string>
-    <string name="voice_template">내 운동기록은 %1$s을(를) %2$s에 완료했으며 속도는 %3$s입니다.</string>
+    <string name="voice_template">%1$s을(를) %2$s에 완료했으며 속도는 %3$s입니다.</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="other">총 거리 %1$.2f킬로미터</item>
     </plurals>

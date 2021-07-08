@@ -408,7 +408,7 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s kilomeetri kohta</string>
     <string name="voice_pace_per_mile">%1$s miilis</string>
-    <string name="voice_template">Minu rajad %1$s ajaga %2$s ja kiirusega %3$s</string>
+    <string name="voice_template">%1$s ajaga %2$s ja kiirusega %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">kogupikkus 1 kilomeeter</item>
         <item quantity="other">kogupikkus %1$.2f kilomeetrit</item>

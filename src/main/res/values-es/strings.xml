@@ -409,7 +409,7 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s por kilómetro</string>
     <string name="voice_pace_per_mile">%1$s por milla</string>
-    <string name="voice_template">OpenTracks de %1$s en %2$s a %3$s</string>
+    <string name="voice_template">%1$s en %2$s a %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">distancia total de 1 kilómetro</item>
         <item quantity="other">distancia total de %1$.2f kilómetros</item>

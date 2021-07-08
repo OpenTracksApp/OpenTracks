@@ -340,7 +340,7 @@ limitations under the License.
     </plurals>
     <string name="voice_pace_per_kilometer">%1$s प्रति किलोमीटर</string>
     <string name="voice_pace_per_mile">%1$s प्रति मील</string>
-    <string name="voice_template">पदचिन्ह %3$s पर %2$s में %1$s</string>
+    <string name="voice_template">%3$s पर %2$s में %1$s</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">कुल दूरी %1$.2f किलोमीटर</item>
         <item quantity="other">कुल दूरी %1$.2f किलोमीटर</item>
