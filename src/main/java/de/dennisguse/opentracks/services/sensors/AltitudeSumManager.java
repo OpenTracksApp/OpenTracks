@@ -55,10 +55,6 @@ public class AltitudeSumManager implements SensorEventListener {
         reset();
     }
 
-    public boolean isConnected() {
-        return isConnected;
-    }
-
     @VisibleForTesting
     public void setConnected(boolean isConnected) {
         this.isConnected = isConnected;

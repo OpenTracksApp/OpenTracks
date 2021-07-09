@@ -49,12 +49,8 @@ public class ShareContentProvider extends CustomContentProvider {
     private static final String TAG = ShareContentProvider.class.getSimpleName();
 
     private static final int URI_GPX = 0;
-    private static final int URI_KML_ONLY = 1;
-    private static final int URI_KML_WITH_TRACKDETAIL = 2;
     private static final int URI_KML_WITH_TRACKDETAIL_SENSORDATA = 3;
 
-    private static final int URI_KMZ_ONLY_TRACK = 4;
-    private static final int URI_KMZ_WITH_TRACKDETAIL = 5;
     private static final int URI_KMZ_WITH_TRACKDETAIL_AND_SENSORDATA = 6;
     private static final int URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES = 7;
 

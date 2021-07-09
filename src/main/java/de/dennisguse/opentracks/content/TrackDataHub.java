@@ -210,13 +210,6 @@ public class TrackDataHub {
     }
 
     /**
-     * Returns true if the selected track is paused.
-     */
-    public boolean isSelectedTrackPaused() {
-        return selectedTrackId != null && selectedTrackId.equals(recordingStatus.getTrackId()) && recordingStatus.isPaused();
-    }
-
-    /**
      * Loads data for all listeners. To be run in the {@link #handler} thread.
      */
     private void loadDataForAll() {

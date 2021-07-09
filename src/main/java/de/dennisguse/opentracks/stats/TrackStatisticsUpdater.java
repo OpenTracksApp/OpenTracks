@@ -236,7 +236,6 @@ public class TrackStatisticsUpdater {
 
     private void updateAbsoluteAltitude(double altitude) {
         // Update altitude using the smoothed average
-        double oldAverage = altitudeBuffer_m.getAverage();
         altitudeBuffer_m.setNext(altitude);
         double newAverage = altitudeBuffer_m.getAverage();
 
