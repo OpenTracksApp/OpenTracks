@@ -16,22 +16,28 @@ public class HandlerServer {
 
     private static final String TAG = HandlerServer.class.getSimpleName();
 
-    private final LocationHandler locationHandler;
+    private Context context;
+
     private final HandlerServerInterface service;
+
     private ExecutorService serviceExecutor;
 
+    private final LocationHandler locationHandler;
+    private final EGM2008CorrectionManager egm2008CorrectionManager = new EGM2008CorrectionManager();
+
     public HandlerServer(HandlerServerInterface service) {
-        this.locationHandler = new LocationHandler(this);
         this.service = service;
+        this.locationHandler = new LocationHandler(this);
     }
 
     @VisibleForTesting
     HandlerServer(LocationHandler locationHandler, HandlerServerInterface service) {
-        this.locationHandler = locationHandler;
         this.service = service;
+        this.locationHandler = locationHandler;
     }
 
-    public void start(Context context) {
+    public void start(@NonNull Context context) {
+        this.context = context;
         serviceExecutor = Executors.newSingleThreadExecutor();
 
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
@@ -39,23 +45,28 @@ public class HandlerServer {
         locationHandler.onSharedPreferenceChanged(context, sharedPreferences, null);
     }
 
-    public void stop(Context context) {
+    public void stop() {
         locationHandler.onStop(context);
 
         if (serviceExecutor != null) {
             serviceExecutor.shutdownNow();
         }
         serviceExecutor = null;
+
+        this.context = null;
     }
 
     public void onSharedPreferenceChanged(@NonNull Context context, @NonNull SharedPreferences preferences, String key) {
         locationHandler.onSharedPreferenceChanged(context, preferences, key);
     }
 
-    public void sendTrackPoint(TrackPoint trackPoint, int recordingGpsAccuracy) {
+    public void onNewTrackPoint(TrackPoint trackPoint, int recordingGpsAccuracy) {
         if (serviceExecutor == null || serviceExecutor.isTerminated() || serviceExecutor.isShutdown()) {
             return;
         }
+
+        egm2008CorrectionManager.correctAltitude(context, trackPoint);
+
         serviceExecutor.execute(() -> service.newTrackPoint(trackPoint, recordingGpsAccuracy));
     }
 

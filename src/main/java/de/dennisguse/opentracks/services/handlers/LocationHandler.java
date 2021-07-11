@@ -120,7 +120,7 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
         }
 
         lastValidTrackPoint = trackPoint;
-        handlerServer.sendTrackPoint(trackPoint, recordingGpsAccuracy);
+        handlerServer.onNewTrackPoint(trackPoint, recordingGpsAccuracy);
     }
 
     @Override
