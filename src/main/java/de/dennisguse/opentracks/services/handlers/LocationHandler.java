@@ -17,7 +17,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
-class LocationHandler implements HandlerServer.Handler, LocationListener, GpsStatus.GpsStatusListener {
+class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
 
     private final String TAG = LocationHandler.class.getSimpleName();
 
@@ -33,7 +33,6 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
         this.handlerServer = handlerServer;
     }
 
-    @Override
     public void onStart(@NonNull Context context) {
         gpsStatus = new GpsStatus(context, this);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -41,7 +40,6 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
         gpsStatus.start();
     }
 
-    @Override
     public void onStop(@NonNull Context context) {
         unregisterLocationListener();
         locationManager = null;
@@ -51,7 +49,6 @@ class LocationHandler implements HandlerServer.Handler, LocationListener, GpsSta
         }
     }
 
-    @Override
     public void onSharedPreferenceChanged(@NonNull Context context, @NonNull SharedPreferences sharedPreferences, String key) {
         if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
             int minRecordingInterval = PreferencesUtils.getMinRecordingInterval(sharedPreferences, context);

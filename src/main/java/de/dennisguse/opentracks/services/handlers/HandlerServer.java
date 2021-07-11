@@ -76,12 +76,4 @@ public class HandlerServer {
         void newTrackPoint(TrackPoint trackPoint, int gpsAccuracy);
         void newGpsStatus(GpsStatusValue gpsStatusValue);
     }
-
-    public interface Handler {
-        void onStart(@NonNull Context context);
-
-        void onStop(@NonNull Context context);
-
-        void onSharedPreferenceChanged(@NonNull Context context, @NonNull SharedPreferences preferences, String key);
-    }
 }
