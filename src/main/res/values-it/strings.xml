@@ -256,7 +256,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avanzate</string>
     <!-- Settings Chart -->
-    <string name="settings_chart_by_distance">Pedistanza</string>
+    <string name="settings_chart_by_distance">Per distanza</string>
     <string name="settings_chart_by_time">Per durata</string>
     <string name="settings_recording">Registrazione</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Riprendi sempre una registrazione dopo il riavvio</string>
