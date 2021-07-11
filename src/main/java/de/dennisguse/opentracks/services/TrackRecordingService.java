@@ -36,14 +36,12 @@ import androidx.core.app.TaskStackBuilder;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.TrackRecordingActivity;
-import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
@@ -52,6 +50,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.exporter.ExportServiceResultReceiver;
+import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.HandlerServer;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
@@ -61,7 +60,6 @@ import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
-import de.dennisguse.opentracks.util.EGM2008Utils;
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -137,7 +135,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private BluetoothRemoteSensorManager remoteSensorManager;
     private AltitudeSumManager altitudeSumManager;
 
-    private EGM2008Utils.EGM2008Correction egm2008Correction;
+    private EGM2008CorrectionManager egm2008CorrectionManager;
 
     private TrackStatisticsUpdater trackStatisticsUpdater;
     private TrackPoint lastTrackPoint;
@@ -170,6 +168,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         notificationManager = new TrackRecordingServiceNotificationManager(this);
 
+        egm2008CorrectionManager = new EGM2008CorrectionManager();
+
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
@@ -201,6 +201,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             altitudeSumManager.stop(this);
             altitudeSumManager = null;
         }
+
+        egm2008CorrectionManager = null;
 
         // Reverse order from onCreate
         showNotification(false); //TODO Why?
@@ -536,7 +538,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         remoteSensorManager.fill(trackPoint);
 
-        correctAltitude(trackPoint);
+        egm2008CorrectionManager.correctAltitude(this, trackPoint);
 
         notificationManager.updateTrackPoint(this, track.getTrackStatistics(), trackPoint, recordingGpsAccuracy);
 
@@ -599,25 +601,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         Log.d(TAG, "Not recording TrackPoint, idle");
         lastTrackPoint = trackPoint;
-    }
-
-    //TODO Identical to TrackDataHub
-    private void correctAltitude(TrackPoint trackPoint) {
-        if (!trackPoint.hasLocation() || !trackPoint.hasAltitude()) {
-            Log.d(TAG, "No altitude correction necessary.");
-            return;
-        }
-
-        if (egm2008Correction == null || !egm2008Correction.canCorrect(trackPoint.getLocation())) {
-            try {
-                egm2008Correction = EGM2008Utils.createCorrection(this, trackPoint.getLocation());
-            } catch (IOException e) {
-                Log.e(TAG, "Could not load altitude correction for " + trackPoint, e);
-                return;
-            }
-        }
-
-        trackPoint.setAltitude(Altitude.EGM2008.of(egm2008Correction.correctAltitude(trackPoint.getLocation())));
     }
 
     @Override
