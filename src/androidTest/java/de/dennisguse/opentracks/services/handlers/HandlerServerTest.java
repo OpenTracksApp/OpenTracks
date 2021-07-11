@@ -39,7 +39,7 @@ public class HandlerServerTest {
 
     @After
     public void tearDown() {
-        subject.stop(context);
+        subject.stop();
     }
 
     @Test
@@ -58,7 +58,7 @@ public class HandlerServerTest {
         int accuracy = 50;
 
         // when
-        subject.sendTrackPoint(trackPoint, accuracy);
+        subject.onNewTrackPoint(trackPoint, accuracy);
 
         // then
         Thread.sleep(10); // Wait for executor service

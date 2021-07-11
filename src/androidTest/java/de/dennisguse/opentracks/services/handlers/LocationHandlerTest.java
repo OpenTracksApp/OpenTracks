@@ -60,7 +60,7 @@ public class LocationHandlerTest {
         locationHandler.onLocationChanged(createLocation(45f, 35f, 3, 5, System.currentTimeMillis()));
 
         // then
-        verify(handlerServer, times(1)).sendTrackPoint(any(TrackPoint.class), any(Integer.class));
+        verify(handlerServer, times(1)).onNewTrackPoint(any(TrackPoint.class), any(Integer.class));
     }
 
     /**
@@ -76,7 +76,7 @@ public class LocationHandlerTest {
         locationHandler.onLocationChanged(createLocation(latitude, 35f, 3, 5, System.currentTimeMillis()));
 
         // then
-        verify(handlerServer, times(0)).sendTrackPoint(any(TrackPoint.class), any(Integer.class));
+        verify(handlerServer, times(0)).onNewTrackPoint(any(TrackPoint.class), any(Integer.class));
     }
 
     /**
@@ -92,7 +92,7 @@ public class LocationHandlerTest {
 
         // then
         // no newTrackPoint called
-        verify(handlerServer, times(0)).sendTrackPoint(any(TrackPoint.class), any(Integer.class));
+        verify(handlerServer, times(0)).onNewTrackPoint(any(TrackPoint.class), any(Integer.class));
     }
 
     @Test
@@ -105,7 +105,7 @@ public class LocationHandlerTest {
         locationHandler.onLocationChanged(createLocation(99.0, 35.0, Long.MAX_VALUE, 15, System.currentTimeMillis()));
 
         // then
-        verify(handlerServer, times(1)).sendTrackPoint(any(TrackPoint.class), any(Integer.class));
+        verify(handlerServer, times(1)).onNewTrackPoint(any(TrackPoint.class), any(Integer.class));
     }
 
     /**

@@ -50,7 +50,6 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.exporter.ExportServiceResultReceiver;
-import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.HandlerServer;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
@@ -135,8 +134,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private BluetoothRemoteSensorManager remoteSensorManager;
     private AltitudeSumManager altitudeSumManager;
 
-    private EGM2008CorrectionManager egm2008CorrectionManager;
-
     private TrackStatisticsUpdater trackStatisticsUpdater;
     private TrackPoint lastTrackPoint;
     private boolean isIdle;
@@ -168,8 +165,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         notificationManager = new TrackRecordingServiceNotificationManager(this);
 
-        egm2008CorrectionManager = new EGM2008CorrectionManager();
-
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
         sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
@@ -189,7 +184,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     public void onDestroy() {
         handler = null;
 
-        handlerServer.stop(this);
+        handlerServer.stop();
         handlerServer = null;
 
         if (remoteSensorManager != null) {
@@ -201,8 +196,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             altitudeSumManager.stop(this);
             altitudeSumManager = null;
         }
-
-        egm2008CorrectionManager = null;
 
         // Reverse order from onCreate
         showNotification(false); //TODO Why?
@@ -481,7 +474,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         lastTrackPoint = null;
 
-        handlerServer.stop(this);
+        handlerServer.stop();
 
         stopGps(trackStopped);
     }
@@ -498,7 +491,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     void stopGps(boolean shutdown) {
         if (!isRecording()) return;
 
-        handlerServer.stop(this);
+        handlerServer.stop();
         showNotification(false);
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
         if (shutdown) {
@@ -537,8 +530,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         }
 
         remoteSensorManager.fill(trackPoint);
-
-        egm2008CorrectionManager.correctAltitude(this, trackPoint);
 
         notificationManager.updateTrackPoint(this, track.getTrackStatistics(), trackPoint, recordingGpsAccuracy);
 
