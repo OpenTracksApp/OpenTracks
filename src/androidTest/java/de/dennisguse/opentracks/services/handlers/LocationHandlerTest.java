@@ -15,7 +15,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
@@ -46,9 +45,10 @@ public class LocationHandlerTest {
         // Let's use default values.
         sharedPreferences.edit().clear().commit();
 
-        locationHandler.onSharedPreferenceChanged(context, sharedPreferences, context.getString(R.string.recording_gps_accuracy_key));
-        locationHandler.onSharedPreferenceChanged(context, sharedPreferences, context.getString(R.string.min_recording_interval_key));
-        locationHandler.onStart(context);
+        //TODO REMOVE
+//        locationHandler.onSharedPreferenceChanged(context, sharedPreferences, context.getString(R.string.recording_gps_accuracy_key));
+//        locationHandler.onSharedPreferenceChanged(context, sharedPreferences, context.getString(R.string.min_recording_interval_key));
+        locationHandler.onStart(context, sharedPreferences);
     }
 
     /**
