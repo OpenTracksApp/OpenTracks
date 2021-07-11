@@ -142,7 +142,9 @@ public class ExportImportTest {
 
     @After
     public void tearDown() {
-        contentProviderUtils.deleteTrack(context, trackId);
+        if (trackId != null) {
+            contentProviderUtils.deleteTrack(context, trackId);
+        }
         if (importTrackId != null) {
             contentProviderUtils.deleteTrack(context, importTrackId);
         }
