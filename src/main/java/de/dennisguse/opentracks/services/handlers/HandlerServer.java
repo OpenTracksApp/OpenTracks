@@ -6,9 +6,6 @@ import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
@@ -19,8 +16,8 @@ public class HandlerServer {
     private Context context;
 
     private final HandlerServerInterface service;
-
-    private ExecutorService serviceExecutor;
+// Disabled to simplify testing and implementation of #822
+//    private ExecutorService serviceExecutor;
 
     private final LocationHandler locationHandler;
     private final EGM2008CorrectionManager egm2008CorrectionManager = new EGM2008CorrectionManager();
@@ -38,7 +35,7 @@ public class HandlerServer {
 
     public void start(@NonNull Context context) {
         this.context = context;
-        serviceExecutor = Executors.newSingleThreadExecutor();
+//        serviceExecutor = Executors.newSingleThreadExecutor();
 
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         locationHandler.onStart(context);
@@ -48,10 +45,10 @@ public class HandlerServer {
     public void stop() {
         locationHandler.onStop(context);
 
-        if (serviceExecutor != null) {
-            serviceExecutor.shutdownNow();
-        }
-        serviceExecutor = null;
+//        if (serviceExecutor != null) {
+//            serviceExecutor.shutdownNow();
+//        }
+//        serviceExecutor = null;
 
         this.context = null;
     }
@@ -61,13 +58,14 @@ public class HandlerServer {
     }
 
     public void onNewTrackPoint(TrackPoint trackPoint, int recordingGpsAccuracy) {
-        if (serviceExecutor == null || serviceExecutor.isTerminated() || serviceExecutor.isShutdown()) {
-            return;
-        }
+//        if (serviceExecutor == null || serviceExecutor.isTerminated() || serviceExecutor.isShutdown()) {
+//            return;
+//        }
 
         egm2008CorrectionManager.correctAltitude(context, trackPoint);
 
-        serviceExecutor.execute(() -> service.newTrackPoint(trackPoint, recordingGpsAccuracy));
+//        serviceExecutor.execute(() -> service.newTrackPoint(trackPoint, recordingGpsAccuracy));
+        service.newTrackPoint(trackPoint, recordingGpsAccuracy);
     }
 
     void sendGpsStatus(GpsStatusValue gpsStatusValue) {
