@@ -27,12 +27,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
@@ -43,8 +41,8 @@ import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.services.TrackRecordingService;
+import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
-import de.dennisguse.opentracks.util.EGM2008Utils;
 
 /**
  * Track data hub.
@@ -76,7 +74,7 @@ public class TrackDataHub {
     private final ContentProviderUtils contentProviderUtils;
     private final int targetNumPoints;
 
-    private EGM2008Utils.EGM2008Correction egm2008Correction;
+    private final EGM2008CorrectionManager egm2008Correction = new EGM2008CorrectionManager();
 
     //TODO Check if this is needed.
     private HandlerThread handlerThread;
@@ -353,7 +351,7 @@ public class TrackDataHub {
                     break;
                 }
 
-                correctAltitude(trackPoint);
+                egm2008Correction.correctAltitude(context, trackPoint);
 
                 if (localFirstSeenTrackPointId == null) {
                     localFirstSeenTrackPointId = trackPointId;
@@ -394,23 +392,7 @@ public class TrackDataHub {
         listeners.stream().forEach(TrackDataListener::onNewTrackPointsDone);
     }
 
-    private void correctAltitude(TrackPoint trackPoint) {
-        if (!trackPoint.hasLocation() || !trackPoint.hasAltitude()) {
-            Log.d(TAG, "No altitude correction necessary.");
-            return;
-        }
 
-        if (egm2008Correction == null || !egm2008Correction.canCorrect(trackPoint.getLocation())) {
-            try {
-                egm2008Correction = EGM2008Utils.createCorrection(context, trackPoint.getLocation());
-            } catch (IOException e) {
-                Log.e(TAG, "Could not load altitude correction for " + trackPoint, e);
-                return;
-            }
-        }
-
-        trackPoint.setAltitude(Altitude.EGM2008.of(egm2008Correction.correctAltitude(trackPoint.getLocation())));
-    }
 
     /**
      * Resets the track points sampling states.
