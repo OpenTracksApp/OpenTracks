@@ -33,14 +33,15 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
         this.handlerServer = handlerServer;
     }
 
-    public void onStart(@NonNull Context context) {
+    public void onStart(@NonNull Context context, SharedPreferences sharedPreferences) {
+        onSharedPreferenceChanged(context, sharedPreferences, null);
         gpsStatus = new GpsStatus(context, this);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         registerLocationListener();
         gpsStatus.start();
     }
 
-    public void onStop(@NonNull Context context) {
+    public void onStop() {
         unregisterLocationListener();
         locationManager = null;
         if (gpsStatus != null) {

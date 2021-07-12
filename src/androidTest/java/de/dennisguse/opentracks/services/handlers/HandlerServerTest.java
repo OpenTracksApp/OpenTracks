@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -42,15 +43,7 @@ public class HandlerServerTest {
         subject.stop();
     }
 
-    @Test
-    public void onSharedPreferenceChanged() {
-        // when
-        subject.onSharedPreferenceChanged(context, sharedPreferences, null);
-
-        // then
-        verify(locationHandler).onSharedPreferenceChanged(context, sharedPreferences, null);
-    }
-
+    @Ignore("ServiceExecutor disabled for #822")
     @Test
     public void sendTrackPoint() throws InterruptedException {
         // given
