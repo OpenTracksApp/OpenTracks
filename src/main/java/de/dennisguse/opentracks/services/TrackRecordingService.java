@@ -52,8 +52,6 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.exporter.ExportServiceResultReceiver;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.HandlerServer;
-import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
-import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTask;
 import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
 import de.dennisguse.opentracks.settings.SettingsActivity;
@@ -125,14 +123,12 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
                 maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(sharedPreferences, context);
             }
 
-            handlerServer.onSharedPreferenceChanged(context, sharedPreferences, key);
+            handlerServer.onSharedPreferenceChanged(sharedPreferences, key);
         }
     };
 
     // The following variables are set when recording:
     private WakeLock wakeLock;
-    private BluetoothRemoteSensorManager remoteSensorManager;
-    private AltitudeSumManager altitudeSumManager;
 
     private TrackStatisticsUpdater trackStatisticsUpdater;
     private TrackPoint lastTrackPoint;
@@ -186,16 +182,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         handlerServer.stop();
         handlerServer = null;
-
-        if (remoteSensorManager != null) {
-            remoteSensorManager.stop();
-            remoteSensorManager = null;
-        }
-
-        if (altitudeSumManager != null) {
-            altitudeSumManager.stop(this);
-            altitudeSumManager = null;
-        }
 
         // Reverse order from onCreate
         showNotification(false); //TODO Why?
@@ -361,18 +347,14 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      */
     private void startRecording() {
         // Update instance variables
-        remoteSensorManager = new BluetoothRemoteSensorManager(this);
-        remoteSensorManager.start();
-
-        altitudeSumManager = new AltitudeSumManager();
-        altitudeSumManager.start(this);
-
         handler.postDelayed(updateRecordingData, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
 
         lastTrackPoint = null;
         isIdle = false;
 
         startGps();
+
+        handlerServer.resetSensorData();
 
         // Restore periodic tasks
         voiceExecutor.restore();
@@ -412,7 +394,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
                     insertTrackPointIfNewer(track, lastTrackPoint);
                 }
 
-                insertTrackPoint(track, TrackPoint.createSegmentEnd());
+                TrackPoint segmentEnd = TrackPoint.createSegmentEnd();
+                handlerServer.fillAndReset(segmentEnd);
+                insertTrackPoint(track, segmentEnd);
             }
         }
 
@@ -463,15 +447,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         voiceExecutor.shutdown();
 
         // Update instance variables
-        if (remoteSensorManager != null) {
-            remoteSensorManager.stop();
-            remoteSensorManager = null;
-        }
-        if (altitudeSumManager != null) {
-            altitudeSumManager.stop(this);
-            altitudeSumManager = null;
-        }
-
         lastTrackPoint = null;
 
         handlerServer.stop();
@@ -528,8 +503,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             Log.w(TAG, "Ignore newTrackPoint. No track.");
             return;
         }
-
-        remoteSensorManager.fill(trackPoint);
 
         notificationManager.updateTrackPoint(this, track.getTrackStatistics(), trackPoint, recordingGpsAccuracy);
 
@@ -629,14 +602,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      */
     private void insertTrackPoint(@NonNull Track track, @NonNull TrackPoint trackPoint) {
         try {
-            if (!TrackPoint.Type.SEGMENT_START_MANUAL.equals(trackPoint.getType())) {
-                altitudeSumManager.fill(trackPoint);
-                altitudeSumManager.reset();
-
-                remoteSensorManager.fill(trackPoint);
-                remoteSensorManager.reset();
-            }
-
             contentProviderUtils.insertTrackPoint(trackPoint, track.getId());
             trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
             track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
@@ -681,18 +646,19 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         }
     }
 
-    // This is used to modify the state of this service while testing; must be called after startNewTrack().
     @Deprecated
     @VisibleForTesting
-    public void setRemoteSensorManager(@NonNull BluetoothRemoteSensorManager remoteSensorManager) {
-        this.remoteSensorManager = remoteSensorManager;
+    public HandlerServer getHandlerServer() {
+        return handlerServer;
     }
 
-    // This is used to modify the state of this service while testing; must be called after startNewTrack().
+    /**
+     * To mock locations (to not get it from GPS).
+     */
     @Deprecated
     @VisibleForTesting
-    public void setAltitudeSumManager(@NonNull AltitudeSumManager altitudeSumManager) {
-        this.altitudeSumManager = altitudeSumManager;
+    public void stopProcessingGPS() {
+        handlerServer.stopGPS();
     }
 
     public LiveData<GpsStatusValue> getGpsStatusObservable() {
@@ -723,16 +689,14 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             tmpLastTrackPoint.setLatitude(lastTrackPoint.getLatitude());
         }
 
-        BluetoothRemoteSensorManager localRemoteSensorManager = this.remoteSensorManager;
-        AltitudeSumManager localAltitudeSumManager = this.altitudeSumManager;
-        if (localAltitudeSumManager == null || localRemoteSensorManager == null) {
+        HandlerServer localHandlerServer = this.handlerServer;
+        if (localHandlerServer == null) {
             // when this happens, no recording is running and we should not send any notifications.
             //TODO This implementation is not a good idea; rather solve the issue for this properly
             return;
         }
-        localAltitudeSumManager.fill(tmpLastTrackPoint);
-        SensorDataSet sensorDataSet = localRemoteSensorManager.getSensorDataSet();
-        sensorDataSet.fillTrackPoint(tmpLastTrackPoint);
+
+        SensorDataSet sensorDataSet = localHandlerServer.fill(tmpLastTrackPoint);
         tmpTrackStatisticsUpdater.addTrackPoint(tmpLastTrackPoint, recordingDistanceInterval);
         track.setTrackStatistics(tmpTrackStatisticsUpdater.getTrackStatistics());
 

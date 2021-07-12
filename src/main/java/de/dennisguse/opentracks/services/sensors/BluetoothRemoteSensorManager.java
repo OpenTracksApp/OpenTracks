@@ -161,11 +161,8 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         }
     }
 
-    public void fill(@NonNull TrackPoint trackPoint) {
+    public SensorDataSet fill(@NonNull TrackPoint trackPoint) {
         sensorDataSet.fillTrackPoint(trackPoint);
-    }
-
-    public SensorDataSet getSensorDataSet() {
         return new SensorDataSet(sensorDataSet);
     }
 

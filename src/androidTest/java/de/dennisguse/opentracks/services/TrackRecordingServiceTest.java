@@ -406,13 +406,14 @@ public class TrackRecordingServiceTest {
     /**
      * Inserts a location and waits for 200ms.
      */
-    private static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) {
+    private static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) throws InterruptedException {
         TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(time))
                 .setLongitude(longitude)
                 .setLatitude(latitude)
                 .setAccuracy(accuracy)
                 .setSpeed(Speed.of(speed))
                 .setBearing(3.0f);
-        trackRecordingService.newTrackPoint(trackPoint, 50);
+
+        trackRecordingService.getHandlerServer().onNewTrackPoint(trackPoint, 50);
     }
 }
