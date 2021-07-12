@@ -506,7 +506,8 @@ public class ContentProviderUtils {
      * @param indexes the cached trackPoints indexes
      */
     static TrackPoint fillTrackPoint(Cursor cursor, CachedTrackPointsIndexes indexes) {
-        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.getById(cursor.getInt(indexes.typeIndex)));
+        Instant time = Instant.ofEpochMilli(cursor.getLong(indexes.timeIndex));
+        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.getById(cursor.getInt(indexes.typeIndex)), time);
         trackPoint.setId(new TrackPoint.Id(cursor.getInt(indexes.idIndex)));
 
         if (!cursor.isNull(indexes.longitudeIndex)) {
@@ -514,9 +515,6 @@ public class ContentProviderUtils {
         }
         if (!cursor.isNull(indexes.latitudeIndex)) {
             trackPoint.setLatitude(((double) cursor.getInt(indexes.latitudeIndex)) / 1E6);
-        }
-        if (!cursor.isNull(indexes.timeIndex)) {
-            trackPoint.setTime(Instant.ofEpochMilli(cursor.getLong(indexes.timeIndex)));
         }
         if (!cursor.isNull(indexes.altitudeIndex)) {
             trackPoint.setAltitude(Altitude.WGS84.of(cursor.getFloat(indexes.altitudeIndex)));

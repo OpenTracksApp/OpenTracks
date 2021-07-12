@@ -128,8 +128,6 @@ class GpsStatus {
         }
 
         if (trackPoint != null) {
-            // Update trackPoint's time to the current time millis when trackPoint has been received.
-            trackPoint.setTime(Instant.now());
             lastValidTrackPoint = trackPoint;
         }
         lastTrackPoint = trackPoint;

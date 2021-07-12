@@ -112,12 +112,11 @@ public class TestDataUtil {
     }
 
     public static TrackPoint createTrackPoint(int i) {
-        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT);
+        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochSecond(i + 1));
         trackPoint.setLatitude(INITIAL_LATITUDE + (double) i / 10000.0);
         trackPoint.setLongitude(INITIAL_LONGITUDE - (double) i / 10000.0);
         trackPoint.setAccuracy((float) i / 100.0f);
         trackPoint.setAltitude(i * ALTITUDE_INTERVAL);
-        trackPoint.setTime(Instant.ofEpochSecond(i + 1));
         trackPoint.setSpeed(Speed.of(5f + (i / 10f)));
 
         trackPoint.setHeartRate_bpm(100f + i);

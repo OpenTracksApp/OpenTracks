@@ -89,7 +89,7 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
      */
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        TrackPoint trackPoint = new TrackPoint(location);
+        TrackPoint trackPoint = new TrackPoint(location, handlerServer.createNow());
         boolean isAccurate = trackPoint.fulfillsAccuracy(recordingGpsAccuracy);
         boolean isValid = LocationUtils.isValidLocation(location);
 

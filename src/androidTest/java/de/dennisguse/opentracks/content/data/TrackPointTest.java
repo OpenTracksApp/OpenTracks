@@ -13,27 +13,25 @@ public class TrackPointTest {
 
     @Test
     public void isRecent_true() {
-        TrackPoint tp = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL);
-        tp.setTime(Instant.now());
+        TrackPoint tp = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.now());
 
         assertTrue(tp.isRecent());
     }
 
     @Test
     public void isRecent_false() {
-        TrackPoint tp = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL);
-        tp.setTime(Instant.now().minus(2, ChronoUnit.MINUTES));
+        TrackPoint tp = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.now().minus(2, ChronoUnit.MINUTES));
 
         assertFalse(tp.isRecent());
     }
 
     @Test
     public void distanceToPrevious() {
-        TrackPoint tp1 = new TrackPoint(TrackPoint.Type.TRACKPOINT)
+        TrackPoint tp1 = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(0))
                 .setLatitude(0)
                 .setLongitude(0.0001);
 
-        TrackPoint tp2 = new TrackPoint(TrackPoint.Type.TRACKPOINT)
+        TrackPoint tp2 = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(1))
                 .setLatitude(0)
                 .setLongitude(0.0002);
 
