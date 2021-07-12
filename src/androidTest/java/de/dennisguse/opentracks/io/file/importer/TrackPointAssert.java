@@ -80,6 +80,19 @@ public class TrackPointAssert {
     }
 
     public void assertEquals(List<TrackPoint> expected, List<TrackPoint> actual) {
+        try {
+            Assert.assertEquals(expected.size(), actual.size());
+        } catch (AssertionError e) {
+            throw new AssertionError("Expected: " + expected + " actual: " + actual);
+        }
+
+        for (int i = 0; i < expected.size(); i++) {
+            try {
+                assertEquals(expected.get(i), actual.get(i));
+            } catch (AssertionError e) {
+                throw new AssertionError("Expected: " + expected.get(i) + " actual: " + actual.get(i));
+            }
+        }
         Assert.assertEquals(expected.size(), actual.size());
 
         for (int i = 0; i < expected.size(); i++) {
