@@ -24,6 +24,7 @@ import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -251,14 +252,14 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
 
 
     private TrackPoint createTrackPoint() throws ParsingException {
-        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT);
-
+        Instant parsedTime = null;
         try {
-            trackPoint.setTime(StringUtils.parseTime(time));
+            parsedTime = StringUtils.parseTime(time);
         } catch (Exception e) {
             throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse time: %s", time)), e);
         }
 
+        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, parsedTime);
         if (latitude == null || longitude == null) {
             return trackPoint;
         }

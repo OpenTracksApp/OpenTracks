@@ -47,7 +47,7 @@ public class HandlerServerTest {
     @Test
     public void sendTrackPoint() throws InterruptedException {
         // given
-        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT);
+        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, null);
         int accuracy = 50;
 
         // when

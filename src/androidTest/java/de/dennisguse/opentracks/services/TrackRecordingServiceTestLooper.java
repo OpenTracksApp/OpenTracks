@@ -234,7 +234,8 @@ public class TrackRecordingServiceTestLooper {
 
         // Insert a few points, markers and statistics.
         for (int i = 0; i < 30; i++) {
-            TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT)
+            //TODO Should send locations to LocationHandler instead of TrackPoints to HandlerServer?
+            TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, service.getHandlerServer().createNow())
                     .setLongitude(35.0f + i / 10.0f)
                     .setLatitude(45.0f - i / 5.0f)
                     .setAccuracy(5)
@@ -242,7 +243,7 @@ public class TrackRecordingServiceTestLooper {
                     .setBearing(3.0f);
 
             int prefAccuracy = PreferencesUtils.getRecordingGPSAccuracy(sharedPreferences, context);
-            service.newTrackPoint(trackPoint, prefAccuracy);
+            service.getHandlerServer().onNewTrackPoint(trackPoint, prefAccuracy);
 
             if (i % 7 == 0) {
                 service.insertMarker(null, null, null, null);

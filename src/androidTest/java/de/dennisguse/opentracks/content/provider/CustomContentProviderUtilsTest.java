@@ -135,7 +135,7 @@ public class CustomContentProviderUtilsTest {
 
         List<TrackPoint> trackPoints = new ArrayList<>(numPoints);
         for (int i = 0; i < numPoints; ++i) {
-            TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT)
+            TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(i))
                     .setLatitude(37.0 + (double) i / 10000.0)
                     .setLongitude(57.0 - (double) i / 10000.0)
                     .setAccuracy((float) i / 100.0f)

@@ -49,7 +49,7 @@ public class TrackPoint {
     private TrackPoint.Id id;
 
     @NonNull
-    private Instant time;
+    private final Instant time;
 
     private Double latitude;
     private Double longitude;
@@ -96,18 +96,13 @@ public class TrackPoint {
     private Float altitudeGain_m = null;
     private Float altitudeLoss_m = null;
 
-    public TrackPoint(@NonNull Type type) {
+    public TrackPoint(@NonNull Type type, @NonNull Instant time) {
         this.type = type;
-        this.time = Instant.now(); //TODO This may result in #800
-    }
-
-    public TrackPoint(@NonNull Type type, Instant time) {
-        this(type);
         this.time = time;
     }
 
-    public TrackPoint(@NonNull Location location) {
-        this(Type.TRACKPOINT, location, Instant.now()); //TODO This may result in #800
+    public TrackPoint(@NonNull Location location, @NonNull Instant time) {
+        this(Type.TRACKPOINT, location, time);
     }
 
     public TrackPoint(@NonNull Type type, @NonNull Location location, @NonNull Instant time) {
@@ -130,26 +125,12 @@ public class TrackPoint {
         this.altitude = altitude;
     }
 
-    @Deprecated //See #316
-    public static TrackPoint createSegmentStartManual() {
-        return createSegmentStartManualWithTime(Instant.now());
-    }
-
     public static TrackPoint createSegmentStartManualWithTime(Instant time) {
         return new TrackPoint(Type.SEGMENT_START_MANUAL, time);
     }
 
-    @Deprecated //See #316
-    public static TrackPoint createSegmentStartAutomatic() {
-        return createSegmentStartAutomaticWithTime(Instant.now());
-    }
-
     public static TrackPoint createSegmentStartAutomaticWithTime(Instant time) {
         return new TrackPoint(Type.SEGMENT_START_AUTOMATIC, time);
-    }
-
-    public static TrackPoint createSegmentEnd() {
-        return createSegmentEndWithTime(Instant.now());
     }
 
     public static TrackPoint createSegmentEndWithTime(Instant time) {
@@ -256,13 +237,9 @@ public class TrackPoint {
         return this;
     }
 
+    @NonNull
     public Instant getTime() {
         return time;
-    }
-
-    public TrackPoint setTime(Instant time) {
-        this.time = time;
-        return this;
     }
 
     public boolean isRecent() {

@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -281,7 +282,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         // Update database
         track.setId(trackId);
 
-        TrackPoint segmentStartTrackPoint = TrackPoint.createSegmentStartManual();
+        TrackPoint segmentStartTrackPoint = handlerServer.createSegmentStartManual();
         trackStatisticsUpdater = new TrackStatisticsUpdater();
         insertTrackPoint(track, segmentStartTrackPoint);
 
@@ -315,7 +316,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         track.getTrackStatistics().setStopTime(Instant.now());
         trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics());
 
-        insertTrackPoint(track, TrackPoint.createSegmentStartManual());
+        insertTrackPoint(track, handlerServer.createSegmentStartManual());
 
         // Set recording status
         updateRecordingStatus(new RecordingStatus(trackId, false));
@@ -336,7 +337,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         // Update database
         Track track = contentProviderUtils.getTrack(getRecordingTrackId());
         if (track != null) {
-            insertTrackPoint(track, TrackPoint.createSegmentStartManual());
+            insertTrackPoint(track, handlerServer.createSegmentStartManual());
         }
 
         startRecording();
@@ -394,8 +395,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
                     insertTrackPointIfNewer(track, lastTrackPoint);
                 }
 
-                TrackPoint segmentEnd = TrackPoint.createSegmentEnd();
-                handlerServer.fillAndReset(segmentEnd);
+                TrackPoint segmentEnd = handlerServer.createSegmentEnd();
                 insertTrackPoint(track, segmentEnd);
             }
         }
@@ -422,7 +422,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             if (lastTrackPoint != null) {
                 insertTrackPointIfNewer(track, lastTrackPoint);
             }
-            insertTrackPoint(track, TrackPoint.createSegmentEnd());
+            insertTrackPoint(track, handlerServer.createSegmentEnd());
         }
 
         endRecording(false);
@@ -677,17 +677,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         Track track = contentProviderUtils.getTrack(recordingStatus.getTrackId());
 
         // Compute temporary track statistics using sensorData and update time.
-        //TODO This somehow should happen in the HandlerServer as we create a new TrackPoint.
-        TrackStatisticsUpdater tmpTrackStatisticsUpdater = new TrackStatisticsUpdater(trackStatisticsUpdater);
-        TrackPoint tmpLastTrackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT);
-
-        if (lastTrackPoint != null && lastTrackPoint.hasLocation()) {
-            //TODO Should happen in TrackPoint? via constructor
-            tmpLastTrackPoint.setSpeed(lastTrackPoint.getSpeed());
-            tmpLastTrackPoint.setAltitude(lastTrackPoint.getAltitude());
-            tmpLastTrackPoint.setLongitude(lastTrackPoint.getLongitude());
-            tmpLastTrackPoint.setLatitude(lastTrackPoint.getLatitude());
-        }
 
         HandlerServer localHandlerServer = this.handlerServer;
         if (localHandlerServer == null) {
@@ -696,11 +685,14 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        SensorDataSet sensorDataSet = localHandlerServer.fill(tmpLastTrackPoint);
-        tmpTrackStatisticsUpdater.addTrackPoint(tmpLastTrackPoint, recordingDistanceInterval);
+        //TODO This somehow should happen in the HandlerServer as we create a new TrackPoint.
+        TrackStatisticsUpdater tmpTrackStatisticsUpdater = new TrackStatisticsUpdater(trackStatisticsUpdater);
+        Pair<TrackPoint, SensorDataSet> current = localHandlerServer.createCurrentTrackPoint(lastTrackPoint);
+
+        tmpTrackStatisticsUpdater.addTrackPoint(current.first, recordingDistanceInterval);
         track.setTrackStatistics(tmpTrackStatisticsUpdater.getTrackStatistics());
 
-        recordingDataObservable.postValue(new RecordingData(track, tmpLastTrackPoint, sensorDataSet));
+        recordingDataObservable.postValue(new RecordingData(track, current.first, current.second));
     }
 
     public LiveData<RecordingStatus> getRecordingStatusObservable() {

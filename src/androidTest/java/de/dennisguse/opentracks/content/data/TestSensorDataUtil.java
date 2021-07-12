@@ -12,7 +12,7 @@ public class TestSensorDataUtil {
 
     public void add(Instant time, Float hr, Float cadence, Float power, TrackPoint.Type type) {
         sensorDataList.add(new TestSensorDataUtil.SensorData(time, hr, cadence, power, type));
-        TrackPoint tp = new TrackPoint(type);
+        TrackPoint tp = new TrackPoint(type, time);
         int i = trackPointList.size() + 1;
         tp.setLatitude(TestDataUtil.INITIAL_LATITUDE + (double) i / 10000.0);
         tp.setLongitude(TestDataUtil.INITIAL_LONGITUDE - (double) i / 10000.0);
@@ -21,7 +21,6 @@ public class TestSensorDataUtil {
         tp.setPower(power);
         tp.setAccuracy(1f);
         tp.setAltitude(1f);
-        tp.setTime(time);
         tp.setSpeed(Speed.of(5f + (i / 10f)));
         tp.setAltitudeGain(3f);
         tp.setAltitudeLoss(3f);
