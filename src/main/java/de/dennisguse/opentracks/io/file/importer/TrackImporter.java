@@ -86,10 +86,6 @@ public class TrackImporter {
         this.trackPoints.addAll(trackPoints);
     }
 
-    void addMarker(Marker marker) {
-        this.markers.add(marker);
-    }
-
     void addMarkers(List<Marker> markers) {
         this.markers.addAll(markers);
     }

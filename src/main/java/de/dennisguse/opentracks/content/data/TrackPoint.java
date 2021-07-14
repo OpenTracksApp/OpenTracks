@@ -129,10 +129,6 @@ public class TrackPoint {
         return new TrackPoint(Type.SEGMENT_START_MANUAL, time);
     }
 
-    public static TrackPoint createSegmentStartAutomaticWithTime(Instant time) {
-        return new TrackPoint(Type.SEGMENT_START_AUTOMATIC, time);
-    }
-
     public static TrackPoint createSegmentEndWithTime(Instant time) {
         return new TrackPoint(Type.SEGMENT_END_MANUAL, time);
     }

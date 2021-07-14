@@ -172,8 +172,4 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
     public void onGpsStatusChanged(GpsStatusValue prevStatus, GpsStatusValue currentStatus) {
         handlerServer.sendGpsStatus(currentStatus);
     }
-
-    public GpsStatusValue getGpsStatus() {
-        return gpsStatus != null ? gpsStatus.getGpsStatus() : GpsStatusValue.GPS_NONE;
-    }
 }
