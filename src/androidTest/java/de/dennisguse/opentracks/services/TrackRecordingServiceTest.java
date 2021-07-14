@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
 import android.os.IBinder;
 import android.os.Looper;
 
+import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.MediumTest;
@@ -37,7 +38,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.time.Clock;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -51,6 +54,9 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
+import de.dennisguse.opentracks.io.file.importer.TrackPointAssert;
+import de.dennisguse.opentracks.services.handlers.HandlerServer;
+import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
@@ -99,8 +105,16 @@ public class TrackRecordingServiceTest {
         return new Intent(context, TrackRecordingService.class);
     }
 
+    private final AltitudeSumManager altitudeSumManager = new AltitudeSumManager() {
+        @Override
+        public void fill(@NonNull TrackPoint trackPoint) {
+            trackPoint.setAltitudeGain(0f);
+            trackPoint.setAltitudeLoss(0f);
+        }
+    };
+
     @Before
-    public void setUp() {
+    public void setUp() throws TimeoutException {
         // Set up the mock content resolver
         ContentProvider customContentProvider = new CustomContentProvider() {
         };
@@ -123,6 +137,7 @@ public class TrackRecordingServiceTest {
         if (service.isRecording() || service.isPaused()) {
             service.endCurrentTrack();
         }
+        service.getHandlerServer().setClock(Clock.systemUTC());
 
         // Ensure that the database is empty after every test
         contentProviderUtils.deleteAllTracks(context);
@@ -191,38 +206,32 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
-    public void testRecording_start() throws TimeoutException {
-        // given
-        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
-                .getService();
-
-        // when
-        Track.Id trackId = service.startNewTrack();
-
-        // then
-        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-
-        assertEquals(1, trackPoints.size());
-        assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(0).getType());
-    }
-
-    @MediumTest
-    @Test
     public void testRecording_stop() throws TimeoutException {
         // given
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
+
+        HandlerServer handlerServer = service.getHandlerServer();
+
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
+        handlerServer.stopGPS();
+        handlerServer.setAltitudeSumManager(altitudeSumManager);
 
         // when
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
         service.endCurrentTrack();
 
         // then
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
 
-        assertEquals(2, trackPoints.size());
-        assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(0).getType());
-        assertEquals(TrackPoint.Type.SEGMENT_END_MANUAL, trackPoints.get(1).getType());
+        TrackPointAssert a = new TrackPointAssert();
+        a.assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse("2020-02-02T02:02:02Z")),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse("2020-02-02T02:02:03Z"))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+        ), trackPoints);
     }
 
     @MediumTest
@@ -231,25 +240,37 @@ public class TrackRecordingServiceTest {
         // given
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
+
+        HandlerServer handlerServer = service.getHandlerServer();
+
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
+        handlerServer.stopGPS();
+        handlerServer.setAltitudeSumManager(altitudeSumManager);
 
         // when
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
         service.pauseCurrentTrack();
 
         // then
         assertEquals(2, contentProviderUtils.getTrackPointCursor(trackId, null).getCount());
 
         //when
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:04Z"), ZoneId.of("CET")));
         service.resumeTrack(trackId);
 
         // then
         assertTrue(service.isRecording());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertEquals(3, trackPoints.size());
-        assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(0).getType());
-        assertEquals(TrackPoint.Type.SEGMENT_END_MANUAL, trackPoints.get(1).getType());
-        assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(2).getType());
+        TrackPointAssert a = new TrackPointAssert();
+        a.assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse("2020-02-02T02:02:02Z")),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse("2020-02-02T02:02:03Z"))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse("2020-02-02T02:02:04Z"))
+        ), trackPoints);
     }
 
     @MediumTest
@@ -258,25 +279,40 @@ public class TrackRecordingServiceTest {
         // given
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
+
+        HandlerServer handlerServer = service.getHandlerServer();
+
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
-        assertTrue(service.isRecording());
+        handlerServer.stopGPS();
+        handlerServer.setAltitudeSumManager(altitudeSumManager);
+
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
         service.endCurrentTrack();
 
-        assertEquals(2, contentProviderUtils.getTrackPointCursor(trackId, null).getCount());
-
         // when
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:04Z"), ZoneId.of("CET")));
         service.resumeTrack(trackId);
-        newTrackPoint(service);
+        handlerServer.stopGPS();
+        handlerServer.setAltitudeSumManager(altitudeSumManager);
+
+        handlerServer.onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:05Z")), 50);
 
         // then
         assertTrue(service.isRecording());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertEquals(4, trackPoints.size());
-        assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(0).getType());
-        assertEquals(TrackPoint.Type.SEGMENT_END_MANUAL, trackPoints.get(1).getType());
-        assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(2).getType());
-        assertEquals(TrackPoint.Type.TRACKPOINT, trackPoints.get(3).getType());
+        TrackPointAssert a = new TrackPointAssert();
+        a.assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse("2020-02-02T02:02:02Z")),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse("2020-02-02T02:02:03Z"))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse("2020-02-02T02:02:04Z")),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:05Z"))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+        ), trackPoints);
     }
 
     @MediumTest
@@ -285,22 +321,32 @@ public class TrackRecordingServiceTest {
         // given
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
+
+        HandlerServer handlerServer = service.getHandlerServer();
+
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
-        assertTrue(service.isRecording());
+        handlerServer.stopGPS();
+        handlerServer.setAltitudeSumManager(altitudeSumManager);
+
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
         service.pauseCurrentTrack();
 
-        assertEquals(2, contentProviderUtils.getTrackPointCursor(trackId, null).getCount());
-
         // when
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:04Z"), ZoneId.of("CET")));
         service.endCurrentTrack();
 
         // then
         assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertEquals(2, trackPoints.size());
-        assertEquals(TrackPoint.Type.SEGMENT_START_MANUAL, trackPoints.get(0).getType());
-        assertEquals(TrackPoint.Type.SEGMENT_END_MANUAL, trackPoints.get(1).getType());
+        TrackPointAssert a = new TrackPointAssert();
+        a.assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse("2020-02-02T02:02:02Z")),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse("2020-02-02T02:02:03Z"))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+        ), trackPoints);
     }
 
     @MediumTest
@@ -357,9 +403,19 @@ public class TrackRecordingServiceTest {
         // given
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
+
+        HandlerServer handlerServer = service.getHandlerServer();
+        handlerServer.stopGPS();
+
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
+
         assertTrue(service.isRecording());
-        newTrackPoint(service);
+        handlerServer.onNewTrackPoint(
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:03Z"))
+                        .setLatitude(10)
+                        .setLongitude(10)
+                , 50);
 
         // when
         Marker.Id markerId = service.insertMarker(null, null, null, null);
@@ -393,10 +449,6 @@ public class TrackRecordingServiceTest {
         trackStatistics.setStopTime(now.minusSeconds(1L));
         dummyTrack.setTrackStatistics(trackStatistics);
         addTrack(dummyTrack);
-    }
-
-    private static void newTrackPoint(TrackRecordingService trackRecordingService) throws InterruptedException {
-        newTrackPoint(trackRecordingService, 45.0f, 35f, 5, 10, System.currentTimeMillis());
     }
 
     static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed) throws InterruptedException {

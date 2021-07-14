@@ -90,7 +90,7 @@ public class TrackPointAssert {
             try {
                 assertEquals(expected.get(i), actual.get(i));
             } catch (AssertionError e) {
-                throw new AssertionError("Expected: " + expected.get(i) + " actual: " + actual.get(i));
+                throw new AssertionError("Expected: " + expected.get(i) + " actual: " + actual.get(i), e);
             }
         }
         Assert.assertEquals(expected.size(), actual.size());

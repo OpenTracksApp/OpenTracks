@@ -28,8 +28,8 @@ public class HandlerServer {
 // Disabled to simplify testing and implementation of #822
 //    private ExecutorService serviceExecutor;
 
-    @VisibleForTesting
-    private Clock clock;
+    @NonNull
+    private Clock clock = Clock.systemUTC();
 
     private final LocationHandler locationHandler;
     private final EGM2008CorrectionManager egm2008CorrectionManager = new EGM2008CorrectionManager();
@@ -151,11 +151,7 @@ public class HandlerServer {
 
     //TODO Limit visibility
     public Instant createNow() {
-        if (clock != null) {
-            return Instant.now(clock);
-        } else {
-            return Instant.now();
-        }
+        return Instant.now(clock);
     }
 
     @Deprecated
@@ -168,6 +164,11 @@ public class HandlerServer {
     @VisibleForTesting
     public void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager) {
         this.remoteSensorManager = remoteSensorManager;
+    }
+
+    @VisibleForTesting
+    public void setClock(@NonNull Clock clock) {
+        this.clock = clock;
     }
 
     void sendGpsStatus(GpsStatusValue gpsStatusValue) {

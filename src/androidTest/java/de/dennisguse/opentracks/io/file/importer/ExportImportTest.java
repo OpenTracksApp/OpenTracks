@@ -23,7 +23,9 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Clock;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -42,6 +44,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.services.TrackRecordingService;
+import de.dennisguse.opentracks.services.handlers.HandlerServer;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 import static org.junit.Assert.assertEquals;
@@ -51,12 +54,9 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Export a track to {@link TrackFileFormat} and verify that the import is identical.
- * <p>
  */
 @RunWith(AndroidJUnit4.class)
 public class ExportImportTest {
-
-    private static final String TAG = ExportImportTest.class.getSimpleName();
 
     @Rule
     public final ServiceTestRule mServiceRule = ServiceTestRule.withTimeout(5, TimeUnit.SECONDS);
@@ -99,32 +99,43 @@ public class ExportImportTest {
     }
 
     @After
-    public void FileTearDown() {
+    public void FileTearDown() throws TimeoutException {
         tmpFile.deleteOnExit();
         tmpFileUri = null;
+
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
+                .getService();
+        service.getHandlerServer().setClock(Clock.systemUTC());
     }
 
     public void setUp(boolean hasSensorDistance) throws TimeoutException {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
                 .getService();
 
+        HandlerServer handlerServer = service.getHandlerServer();
 
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         trackId = service.startNewTrack();
 
         Distance sensorDistance = hasSensorDistance ? Distance.of(5) : null;
 
-        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14, 10, 15, 10, 1, 66, 3, 50, sensorDistance), 0);
+        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:03Z"), 3, 14, 10, 15, 10, 1, 66, 3, 50, sensorDistance), 0);
         service.insertMarker("Marker 1", "Marker 1 category", "Marker 1 desc", null);
-        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
-        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.002, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
+        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:04Z"), 3, 14.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
+        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:05Z"), 3, 14.002, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
         service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
+
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:06Z"), ZoneId.of("CET")));
         service.pauseCurrentTrack();
 
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:20Z"), ZoneId.of("CET")));
         service.resumeCurrentTrack();
 
-        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 14.003, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
-        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 16, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
-        service.newTrackPoint(createTrackPoint(System.currentTimeMillis(), 3, 16.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
+        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:21Z"), 3, 14.003, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
+        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:22Z"), 3, 16, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
+        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:23Z"), 3, 16.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
+
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:24Z"), ZoneId.of("CET")));
         service.endCurrentTrack();
 
         track = contentProviderUtils.getTrack(trackId);
@@ -395,8 +406,8 @@ public class ExportImportTest {
         assertEquals(trackStatistics.getTotalAltitudeLoss(), importedTrackStatistics.getTotalAltitudeLoss(), delta);
     }
 
-    private static TrackPoint createTrackPoint(long time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, Distance distance) {
-        TrackPoint tp = new TrackPoint(latitude, longitude, Altitude.WGS84.of(altitude), Instant.ofEpochMilli(time));
+    private static TrackPoint createTrackPoint(Instant time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, Distance distance) {
+        TrackPoint tp = new TrackPoint(latitude, longitude, Altitude.WGS84.of(altitude), time);
         tp.setAccuracy(accuracy);
         tp.setSpeed(Speed.of(speed));
         tp.setHeartRate_bpm(heartRate);
