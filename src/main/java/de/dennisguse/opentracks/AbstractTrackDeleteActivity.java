@@ -18,8 +18,6 @@ package de.dennisguse.opentracks;
 
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -40,8 +38,6 @@ import de.dennisguse.opentracks.services.TrackDeleteServiceConnection;
  */
 //TODO Check if this class is still such a good idea; inheritance might limit maintainability
 public abstract class AbstractTrackDeleteActivity extends AbstractActivity implements ConfirmDeleteCaller, TrackDeleteServiceConnection.Listener {
-
-    private static final String TAG = AbstractTrackDeleteActivity.class.getSimpleName();
 
     private TrackDeleteServiceConnection trackDeleteServiceConnection;
 
@@ -97,10 +93,7 @@ public abstract class AbstractTrackDeleteActivity extends AbstractActivity imple
 
     protected abstract void onDeleteConfirmed();
 
-    @Nullable
-    protected Track.Id getRecordingTrackId() {
-        return null;
-    }
+    protected abstract Track.Id getRecordingTrackId();
 
     @Override
     public void connected() {

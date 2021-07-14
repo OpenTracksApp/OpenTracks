@@ -160,6 +160,7 @@ public class TrackDeleteService extends Service {
             return this.trackId != null && this.trackId.equals(trackId);
         }
 
+        @NonNull
         @Override
         public String toString() {
             return "DeleteStatus{" +

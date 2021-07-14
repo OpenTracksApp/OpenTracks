@@ -105,7 +105,7 @@ public class KMLTrackExporter implements TrackExporter {
             Instant startTime = tracks[0].getTrackStatistics().getStartTime();
             for (Track track : tracks) {
                 Duration offset = Duration.between(track.getTrackStatistics().getStartTime(), startTime);
-                writeLocations(track, offset);
+                writeLocations(track);
             }
             if (hasMultipleTracks) {
                 writeMultiTrackEnd();
@@ -144,7 +144,7 @@ public class KMLTrackExporter implements TrackExporter {
         }
     }
 
-    private void writeLocations(Track track, Duration offset) throws InterruptedException {
+    private void writeLocations(Track track) throws InterruptedException {
         boolean wroteTrack = false;
         boolean wroteSegment = false;
 
@@ -229,7 +229,7 @@ public class KMLTrackExporter implements TrackExporter {
             printWriter.println("<atom:generator>" + StringUtils.formatCData(context.getString(R.string.app_name)) + "</atom:generator>");
 
             writeTrackStyle();
-            writePlacemarkerStyle(MARKER_STYLE, MARKER_ICON, 20, 2);
+            writePlacemarkerStyle();
             printWriter.println("<Schema id=\"" + SCHEMA_ID + "\">");
 
             writeSimpleArrayStyle(EXTENDED_DATA_TYPE_SPEED, context.getString(R.string.description_speed_ms));
@@ -263,7 +263,7 @@ public class KMLTrackExporter implements TrackExporter {
                 float heading = getHeading(marker.getTrackId(), marker.getLocation());
                 writePhotoOverlay(marker, heading);
             } else {
-                writePlacemark(marker.getName(), marker.getCategory(), marker.getDescription(), MARKER_STYLE, marker.getLocation());
+                writePlacemark(marker.getName(), marker.getCategory(), marker.getDescription(), marker.getLocation());
             }
         }
     }
@@ -406,16 +406,15 @@ public class KMLTrackExporter implements TrackExporter {
      * @param name        the name
      * @param category    the category
      * @param description the description
-     * @param styleName   the style name
      * @param location    the location
      */
-    private void writePlacemark(String name, String category, String description, String styleName, Location location) {
+    private void writePlacemark(String name, String category, String description, Location location) {
         if (location != null) {
             printWriter.println("<Placemark>");
             printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
             printWriter.println("<description>" + StringUtils.formatCData(description) + "</description>");
             printWriter.println("<TimeStamp><when>" + getTime(location) + "</when></TimeStamp>");
-            printWriter.println("<styleUrl>#" + styleName + "</styleUrl>");
+            printWriter.println("<styleUrl>#" + KMLTrackExporter.MARKER_STYLE + "</styleUrl>");
             writeCategory(category);
             printWriter.println("<Point>");
             printWriter.println("<coordinates>" + getCoordinates(location, ",") + "</coordinates>");
@@ -521,17 +520,12 @@ public class KMLTrackExporter implements TrackExporter {
 
     /**
      * Writes a placemarker style.
-     *
-     * @param name the name of the style
-     * @param url  the url of the style icon
-     * @param x    the x position of the hotspot
-     * @param y    the y position of the hotspot
      */
-    private void writePlacemarkerStyle(String name, String url, int x, int y) {
-        printWriter.println("<Style id=\"" + name + "\"><IconStyle>");
+    private void writePlacemarkerStyle() {
+        printWriter.println("<Style id=\"" + KMLTrackExporter.MARKER_STYLE + "\"><IconStyle>");
         printWriter.println("<scale>1.3</scale>");
-        printWriter.println("<Icon><href>" + url + "</href></Icon>");
-        printWriter.println("<hotSpot x=\"" + x + "\" y=\"" + y + "\" xunits=\"pixels\" yunits=\"pixels\"/>");
+        printWriter.println("<Icon><href>" + KMLTrackExporter.MARKER_ICON + "</href></Icon>");
+        printWriter.println("<hotSpot x=\"" + 20 + "\" y=\"" + 2 + "\" xunits=\"pixels\" yunits=\"pixels\"/>");
         printWriter.println("</IconStyle></Style>");
     }
 
