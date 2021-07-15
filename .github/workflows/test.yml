@@ -22,3 +22,11 @@ jobs:
           profile: Nexus 6
           script: ./gradlew connectedCheck
 
+      - name: Archive
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: build/reports/androidTests/
+          retention-days: 7
+
