@@ -43,6 +43,7 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
     }
 
     public void onStop() {
+        lastTrackPoint = null;
         if (locationManager != null) {
             locationManager.removeUpdates(this);
             locationManager = null;
