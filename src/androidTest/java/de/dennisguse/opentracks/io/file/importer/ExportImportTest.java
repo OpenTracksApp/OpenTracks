@@ -119,10 +119,10 @@ public class ExportImportTest {
 
         Distance sensorDistance = hasSensorDistance ? Distance.of(5) : null;
 
-        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:03Z"), 3, 14, 10, 15, 10, 1, 66, 3, 50, sensorDistance), 0);
+        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:03Z"), 3, 14, 10, 15, 10, 1, 66, 3, 50, sensorDistance), Distance.of(0));
         service.insertMarker("Marker 1", "Marker 1 category", "Marker 1 desc", null);
-        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:04Z"), 3, 14.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
-        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:05Z"), 3, 14.002, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
+        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:04Z"), 3, 14.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance), Distance.of(0));
+        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:05Z"), 3, 14.002, 10, 15, 10, 0, 66, 3, 50, sensorDistance), Distance.of(0));
         service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
 
         handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:06Z"), ZoneId.of("CET")));
@@ -131,9 +131,9 @@ public class ExportImportTest {
         handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:20Z"), ZoneId.of("CET")));
         service.resumeCurrentTrack();
 
-        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:21Z"), 3, 14.003, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
-        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:22Z"), 3, 16, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
-        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:23Z"), 3, 16.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance), 0);
+        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:21Z"), 3, 14.003, 10, 15, 10, 0, 66, 3, 50, sensorDistance), Distance.of(0));
+        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:22Z"), 3, 16, 10, 15, 10, 0, 66, 3, 50, sensorDistance), Distance.of(0));
+        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:23Z"), 3, 16.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance), Distance.of(0));
 
         handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:24Z"), ZoneId.of("CET")));
         service.endCurrentTrack();
@@ -408,7 +408,7 @@ public class ExportImportTest {
 
     private static TrackPoint createTrackPoint(Instant time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, Distance distance) {
         TrackPoint tp = new TrackPoint(latitude, longitude, Altitude.WGS84.of(altitude), time);
-        tp.setAccuracy(accuracy);
+        tp.setHorizontalAccuracy(Distance.of(accuracy));
         tp.setSpeed(Speed.of(speed));
         tp.setHeartRate_bpm(heartRate);
         tp.setCyclingCadence_rpm(cyclingCadence);

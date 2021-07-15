@@ -40,20 +40,21 @@ public class TrackRecordingServiceNotificationManagerTest {
 
     @Test
     public void updateLocation_triggersAlertOnlyOnFirstInaccurateLocation() {
-        when(trackPointMock.hasAccuracy()).thenReturn(true);
-        when(trackPointMock.getAccuracy()).thenReturn(999f);
+        when(trackPointMock.hasHorizontalAccuracy()).thenReturn(true);
+        when(trackPointMock.getHorizontalAccuracy()).thenReturn(Distance.of(999f));
         when(trackPointMock.getSpeed()).thenReturn(Speed.of(0));
         when(trackStatisticsMock.getTotalDistance()).thenReturn(Distance.of(0));
-        when(notificationCompatBuilder.setOnlyAlertOnce(anyBoolean())).thenReturn(notificationCompatBuilder);
+        when(notificationCompatBuilder.setOnlyAlertOnce(anyBoolean()))
+                .thenReturn(notificationCompatBuilder);
 
         TrackRecordingServiceNotificationManager subject = new TrackRecordingServiceNotificationManager(notificationManager, notificationCompatBuilder);
         subject.setMetricUnits(true);
 
         // when
-        subject.updateTrackPoint(context, trackStatisticsMock, trackPointMock, 100);
-        subject.updateTrackPoint(context, trackStatisticsMock, trackPointMock, 100);
-        subject.updateTrackPoint(context, trackStatisticsMock, trackPointMock, 1000);
-        subject.updateTrackPoint(context, trackStatisticsMock, trackPointMock, 100);
+        subject.updateTrackPoint(context, trackStatisticsMock, trackPointMock, Distance.of(100));
+        subject.updateTrackPoint(context, trackStatisticsMock, trackPointMock, Distance.of(100));
+        subject.updateTrackPoint(context, trackStatisticsMock, trackPointMock, Distance.of(1000));
+        subject.updateTrackPoint(context, trackStatisticsMock, trackPointMock, Distance.of(100));
 
         // then
         verify(notificationCompatBuilder, times(6)).setOnlyAlertOnce(true);

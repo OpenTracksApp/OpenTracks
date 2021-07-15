@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 
 import static org.mockito.Mockito.verify;
@@ -48,13 +49,13 @@ public class HandlerServerTest {
     public void sendTrackPoint() throws InterruptedException {
         // given
         TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, null);
-        int accuracy = 50;
+        Distance horizontalAccuracyThreshold = Distance.of(50);
 
         // when
-        subject.onNewTrackPoint(trackPoint, accuracy);
+        subject.onNewTrackPoint(trackPoint, horizontalAccuracyThreshold);
 
         // then
         Thread.sleep(10); // Wait for executor service
-        verify(server).newTrackPoint(trackPoint, accuracy);
+        verify(server).newTrackPoint(trackPoint, horizontalAccuracyThreshold);
     }
 }

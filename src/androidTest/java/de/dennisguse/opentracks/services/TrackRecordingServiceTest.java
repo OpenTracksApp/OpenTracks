@@ -47,6 +47,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
@@ -296,7 +297,7 @@ public class TrackRecordingServiceTest {
         handlerServer.stopGPS();
         handlerServer.setAltitudeSumManager(altitudeSumManager);
 
-        handlerServer.onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:05Z")), 50);
+        handlerServer.onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:05Z")), Distance.of(50));
 
         // then
         assertTrue(service.isRecording());
@@ -415,7 +416,7 @@ public class TrackRecordingServiceTest {
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:03Z"))
                         .setLatitude(10)
                         .setLongitude(10)
-                , 50);
+                , Distance.of(50));
 
         // when
         Marker.Id markerId = service.insertMarker(null, null, null, null);
@@ -458,14 +459,14 @@ public class TrackRecordingServiceTest {
     /**
      * Inserts a location and waits for 200ms.
      */
-    private static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) throws InterruptedException {
+    private static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) {
         TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(time))
                 .setLongitude(longitude)
                 .setLatitude(latitude)
-                .setAccuracy(accuracy)
+                .setHorizontalAccuracy(Distance.of(accuracy))
                 .setSpeed(Speed.of(speed))
                 .setBearing(3.0f);
 
-        trackRecordingService.getHandlerServer().onNewTrackPoint(trackPoint, 50);
+        trackRecordingService.getHandlerServer().onNewTrackPoint(trackPoint, Distance.of(50));
     }
 }

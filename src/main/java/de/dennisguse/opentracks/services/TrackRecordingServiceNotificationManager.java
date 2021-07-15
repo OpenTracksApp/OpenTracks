@@ -65,12 +65,12 @@ class TrackRecordingServiceNotificationManager {
         updateNotification();
     }
 
-    void updateTrackPoint(Context context, TrackStatistics trackStatistics, TrackPoint trackPoint, int recordingGpsAccuracy) {
+    void updateTrackPoint(Context context, TrackStatistics trackStatistics, TrackPoint trackPoint, Distance recordingGpsAccuracy) {
         String formattedAccuracy = context.getString(R.string.value_none);
-        if (trackPoint.hasAccuracy()) {
-            formattedAccuracy = StringUtils.formatDistance(context, Distance.of(trackPoint.getAccuracy()), metricUnits);
+        if (trackPoint.hasHorizontalAccuracy()) {
+            formattedAccuracy = StringUtils.formatDistance(context, trackPoint.getHorizontalAccuracy(), metricUnits);
 
-            boolean currentLocationWasAccurate = trackPoint.getAccuracy() < recordingGpsAccuracy;
+            boolean currentLocationWasAccurate = trackPoint.getHorizontalAccuracy().lessThan(recordingGpsAccuracy);
             boolean shouldAlert = !currentLocationWasAccurate && previousLocationWasAccurate;
             notificationBuilder.setOnlyAlertOnce(!shouldAlert);
             previousLocationWasAccurate = currentLocationWasAccurate;

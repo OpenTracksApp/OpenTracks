@@ -49,7 +49,8 @@ public final class Marker {
     private final Instant time;
     private Double latitude;
     private Double longitude;
-    private Float accuracy;
+    @Deprecated //Not needed
+    private Distance accuracy;
     private Altitude altitude;
     private Float bearing;
 
@@ -96,7 +97,7 @@ public final class Marker {
     public void setTrackPoint(TrackPoint trackPoint) {
         this.latitude = trackPoint.getLatitude();
         this.longitude = trackPoint.getLongitude();
-        if (trackPoint.hasAccuracy()) this.accuracy = trackPoint.getAccuracy();
+        if (trackPoint.hasHorizontalAccuracy()) this.accuracy = trackPoint.getHorizontalAccuracy();
         if (trackPoint.hasAltitude()) this.altitude = trackPoint.getAltitude();
         if (trackPoint.hasBearing()) this.bearing = trackPoint.getBearing();
     }
@@ -173,7 +174,7 @@ public final class Marker {
             location.setBearing(bearing);
         }
         if (hasAccuracy()) {
-            location.setAccuracy(accuracy);
+            location.setAccuracy((float) accuracy.toM());
         }
         if (hasAltitude()) {
             location.setAltitude(altitude.toM());
@@ -202,11 +203,11 @@ public final class Marker {
         return accuracy != null;
     }
 
-    public Float getAccuracy() {
+    public Distance getAccuracy() {
         return accuracy;
     }
 
-    public void setAccuracy(Float accuracy) {
+    public void setAccuracy(Distance accuracy) {
         this.accuracy = accuracy;
     }
 

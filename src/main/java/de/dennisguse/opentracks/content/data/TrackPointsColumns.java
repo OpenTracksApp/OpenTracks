@@ -45,7 +45,7 @@ public interface TrackPointsColumns extends BaseColumns {
 
     String TIME = "time";
     String ALTITUDE = "elevation";
-    String ACCURACY = "accuracy";
+    String HORIZONTAL_ACCURACY = "accuracy";
     String SPEED = "speed";
     String BEARING = "bearing";
     String SENSOR_HEARTRATE = "sensor_heartrate";
@@ -69,7 +69,7 @@ public interface TrackPointsColumns extends BaseColumns {
             + LATITUDE + " INTEGER, "
             + TIME + " INTEGER, "
             + ALTITUDE + " FLOAT, "
-            + ACCURACY + " FLOAT, "
+            + HORIZONTAL_ACCURACY + " FLOAT, "
             + SPEED + " FLOAT, "
             + BEARING + " FLOAT, "
             + SENSOR_HEARTRATE + " FLOAT, "

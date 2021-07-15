@@ -53,7 +53,7 @@ public class TrackPoint {
 
     private Double latitude;
     private Double longitude;
-    private Float accuracy;
+    private Distance horizontalAccuracy;
     private Altitude altitude;
     private Speed speed;
     private Float bearing;
@@ -112,7 +112,7 @@ public class TrackPoint {
         this.longitude = location.getLongitude();
         this.altitude = location.hasAltitude() ? Altitude.WGS84.of(location.getAltitude()) : null;
         this.speed = location.hasSpeed() ? Speed.of(location.getSpeed()) : null;
-        this.accuracy = location.hasAccuracy() ? location.getAccuracy() : null;
+        this.horizontalAccuracy = location.hasAccuracy() ? Distance.of(location.getAccuracy()) : null;
 
         //TODO Should we copy the bearing?
     }
@@ -197,8 +197,8 @@ public class TrackPoint {
         if (hasBearing()) {
             location.setBearing(bearing);
         }
-        if (hasAccuracy()) {
-            location.setAccuracy(accuracy);
+        if (hasHorizontalAccuracy()) {
+            location.setAccuracy((float) horizontalAccuracy.toM());
         }
         if (hasAltitude()) {
             location.setAltitude(altitude.toM());
@@ -293,16 +293,16 @@ public class TrackPoint {
         return this;
     }
 
-    public boolean hasAccuracy() {
-        return accuracy != null;
+    public boolean hasHorizontalAccuracy() {
+        return horizontalAccuracy != null;
     }
 
-    public float getAccuracy() {
-        return accuracy;
+    public Distance getHorizontalAccuracy() {
+        return horizontalAccuracy;
     }
 
-    public TrackPoint setAccuracy(float horizontalAccuracy) {
-        this.accuracy = horizontalAccuracy;
+    public TrackPoint setHorizontalAccuracy(Distance horizontalAccuracy) {
+        this.horizontalAccuracy = horizontalAccuracy;
         return this;
     }
 
@@ -318,8 +318,8 @@ public class TrackPoint {
         return Distance.of(getLocation().distanceTo(previous.getLocation()));
     }
 
-    public boolean fulfillsAccuracy(int poorAccuracy) {
-        return hasAccuracy() && accuracy < poorAccuracy;
+    public boolean fulfillsAccuracy(Distance thresholdHorizontalAccuracy) {
+        return hasHorizontalAccuracy() && horizontalAccuracy.lessThan(thresholdHorizontalAccuracy);
     }
 
     //TODO Bearing requires a location; what do we do if we don't have any?
@@ -397,11 +397,11 @@ public class TrackPoint {
             return result;
         }
         result += ": lat=" + getLatitude() + " lng=" + getLongitude();
-        if (!hasAccuracy()) {
+        if (!hasHorizontalAccuracy()) {
             return result;
         }
 
-        return result + " acc=" + getAccuracy();
+        return result + " acc=" + getHorizontalAccuracy();
     }
 
     public static class Id {

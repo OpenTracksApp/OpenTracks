@@ -18,6 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.Instant;
 
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
@@ -66,7 +67,7 @@ public class LocationHandlerTest {
         locationHandler.onLocationChanged(createLocation(45f, 35f, 3, 5, System.currentTimeMillis()));
 
         // then
-        verify(handlerServer, times(1)).onNewTrackPoint(any(TrackPoint.class), any(Integer.class));
+        verify(handlerServer, times(1)).onNewTrackPoint(any(TrackPoint.class), any(Distance.class));
     }
 
     /**
@@ -82,7 +83,7 @@ public class LocationHandlerTest {
         locationHandler.onLocationChanged(createLocation(latitude, 35f, 3, 5, System.currentTimeMillis()));
 
         // then
-        verify(handlerServer, times(0)).onNewTrackPoint(any(TrackPoint.class), any(Integer.class));
+        verify(handlerServer, times(0)).onNewTrackPoint(any(TrackPoint.class), any(Distance.class));
     }
 
     /**
@@ -91,14 +92,14 @@ public class LocationHandlerTest {
     @Test
     public void testOnLocationChanged_poorAccuracy() {
         // given
-        int prefAccuracy = PreferencesUtils.getRecordingGPSAccuracy(sharedPreferences, context);
+        Distance prefAccuracy = PreferencesUtils.getThresholdHorizontalAccuracy(sharedPreferences, context);
 
         // when
-        locationHandler.onLocationChanged(createLocation(45f, 35f, prefAccuracy + 1, 5, System.currentTimeMillis()));
+        locationHandler.onLocationChanged(createLocation(45f, 35f, (float) (prefAccuracy.toM() + 1), 5, System.currentTimeMillis()));
 
         // then
         // no newTrackPoint called
-        verify(handlerServer, times(0)).onNewTrackPoint(any(TrackPoint.class), any(Integer.class));
+        verify(handlerServer, times(0)).onNewTrackPoint(any(TrackPoint.class), any(Distance.class));
     }
 
     @Test
@@ -111,7 +112,7 @@ public class LocationHandlerTest {
         locationHandler.onLocationChanged(createLocation(99.0, 35.0, Long.MAX_VALUE, 15, System.currentTimeMillis()));
 
         // then
-        verify(handlerServer, times(1)).onNewTrackPoint(any(TrackPoint.class), any(Integer.class));
+        verify(handlerServer, times(1)).onNewTrackPoint(any(TrackPoint.class), any(Distance.class));
     }
 
     /**
