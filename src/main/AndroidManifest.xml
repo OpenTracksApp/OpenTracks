@@ -73,17 +73,21 @@ limitations under the License.
 
         <activity android:name=".io.file.importer.DirectoryChooserActivity$ImportDirectoryChooserActivity" />
 
-        <activity android:name=".io.file.importer.ImportActivity">
+        <activity
+            android:name=".io.file.importer.ImportActivity"
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="android.intent.action.SEND_MULTIPLE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="application/gpx+xml" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="android.intent.action.SEND_MULTIPLE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="application/gpx" />
             </intent-filter>
@@ -142,6 +146,7 @@ limitations under the License.
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <action android:name="android.intent.action.SEND_MULTIPLE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="application/vnd.google-earth.kmz" />
             </intent-filter>
@@ -257,7 +262,9 @@ limitations under the License.
             </intent-filter>
         </activity>
 
-        <activity android:name=".MarkerDetailActivity">
+        <activity
+            android:name=".MarkerDetailActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="de.dennisguse.opentracks.MarkerDetails" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -268,6 +275,7 @@ limitations under the License.
 
         <activity
             android:name=".MarkerListActivity"
+            android:exported="true"
             android:label="@string/menu_markers"
             android:launchMode="singleTop">
             <intent-filter>
@@ -280,6 +288,7 @@ limitations under the License.
 
         <activity
             android:name=".TrackListActivity"
+            android:exported="true"
             android:launchMode="singleTop"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -308,13 +317,17 @@ limitations under the License.
 
         <activity android:name=".settings.SettingsActivity" />
 
-        <activity android:name=".ShowOnMapProxyActivity$KML">
+        <activity
+            android:name=".ShowOnMapProxyActivity$KML"
+            android:exported="true">
             <intent-filter android:label="@string/open_track_as_KML">
                 <action android:name="Intent.OpenTracks-Dashboard" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ShowOnMapProxyActivity$GPX">
+        <activity
+            android:name=".ShowOnMapProxyActivity$GPX"
+            android:exported="true">
             <intent-filter android:label="@string/open_track_as_GPX">
                 <action android:name="Intent.OpenTracks-Dashboard" />
                 <category android:name="android.intent.category.DEFAULT" />
