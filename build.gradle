@@ -24,13 +24,8 @@ def getVersionName = { ->
             commandLine 'git', 'describe', '--tags'
             standardOutput = stdout
         }
-        exec {
-            commandLine 'git', 'log', '--format="%h"', '-n 1'
-            standardOutput = stdout
-        }
-        return stdout.toString().replace('\n', '-').replace('"', '').trim()
-    }
-    catch (ignored) {
+        return stdout.toString().trim()
+    } catch (ignored) {
         return null
     }
 }
@@ -59,7 +54,6 @@ android {
         versionName "v3.18.6"
 
         buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
-
 
 
         minSdkVersion 21
