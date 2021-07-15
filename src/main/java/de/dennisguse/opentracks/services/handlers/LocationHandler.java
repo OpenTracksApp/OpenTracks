@@ -42,8 +42,11 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
     }
 
     public void onStop() {
-        unregisterLocationListener();
-        locationManager = null;
+        if (locationManager != null) {
+            locationManager.removeUpdates(this);
+            locationManager = null;
+        }
+
         if (gpsStatus != null) {
             gpsStatus.stop();
             gpsStatus = null;
@@ -63,9 +66,7 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
                 locationListenerPolicy = new AbsoluteLocationListenerPolicy(Duration.ofSeconds(minRecordingInterval));
             }
 
-            if (locationManager != null) {
-                registerLocationListener();
-            }
+            registerLocationListener();
         }
         if (PreferencesUtils.isKey(context, R.string.recording_gps_accuracy_key, key)) {
             recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(sharedPreferences, context);
@@ -151,15 +152,6 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
         } catch (SecurityException e) {
             Log.e(TAG, "Could not register location listener; permissions not granted.", e);
         }
-    }
-
-    private void unregisterLocationListener() {
-        if (locationManager == null) {
-            Log.e(TAG, "locationManager is null.");
-            return;
-        }
-        locationManager.removeUpdates(this);
-        locationManager = null;
     }
 
     /**
