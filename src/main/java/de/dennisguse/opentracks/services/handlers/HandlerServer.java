@@ -134,16 +134,21 @@ public class HandlerServer {
         return segmentEnd;
     }
 
-    //TODO get lastTrackPoint from LocationHandler
-    public Pair<TrackPoint, SensorDataSet> createCurrentTrackPoint(@Nullable TrackPoint lastTrackPoint) {
+    public Pair<TrackPoint, SensorDataSet> createCurrentTrackPoint(@Nullable TrackPoint lastValidTrackPoint) {
         TrackPoint currentTrackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, createNow());
+        TrackPoint lastTrackPoint = locationHandler.getLastTrackPoint();
 
         if (lastTrackPoint != null && lastTrackPoint.hasLocation()) {
-            //TODO Should happen in TrackPoint? via constructor
             currentTrackPoint.setSpeed(lastTrackPoint.getSpeed());
             currentTrackPoint.setAltitude(lastTrackPoint.getAltitude());
-            currentTrackPoint.setLongitude(lastTrackPoint.getLongitude());
-            currentTrackPoint.setLatitude(lastTrackPoint.getLatitude());
+            if (lastTrackPoint.hasBearing()) {
+                currentTrackPoint.setBearing(lastTrackPoint.getBearing());
+            }
+        }
+        if (lastValidTrackPoint != null && lastValidTrackPoint.hasLocation()) {
+            //We are taking the coordinates from the last stored TrackPoint, so the distance is monotonously increasing.
+            currentTrackPoint.setLongitude(lastValidTrackPoint.getLongitude());
+            currentTrackPoint.setLatitude(lastValidTrackPoint.getLatitude());
         }
         SensorDataSet sensorDataSet = fill(currentTrackPoint);
 

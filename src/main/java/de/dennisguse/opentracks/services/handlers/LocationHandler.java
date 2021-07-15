@@ -28,7 +28,7 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
     private LocationListenerPolicy locationListenerPolicy;
     private Duration currentRecordingInterval;
     private Distance thresholdHorizontalAccuracy;
-    private TrackPoint lastValidTrackPoint;
+    private TrackPoint lastTrackPoint;
 
     public LocationHandler(HandlerServer handlerServer) {
         this.handlerServer = handlerServer;
@@ -110,8 +110,8 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
         }
 
         Duration idleTime = Duration.ofSeconds(0);
-        if (lastValidTrackPoint != null && trackPoint.getTime().isAfter(lastValidTrackPoint.getTime())) {
-            idleTime = Duration.between(lastValidTrackPoint.getTime(), trackPoint.getTime());
+        if (lastTrackPoint != null && trackPoint.getTime().isAfter(lastTrackPoint.getTime())) {
+            idleTime = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
         }
 
         locationListenerPolicy.updateIdleTime(idleTime);
@@ -119,7 +119,7 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
             registerLocationListener();
         }
 
-        lastValidTrackPoint = trackPoint;
+        lastTrackPoint = trackPoint;
         handlerServer.onNewTrackPoint(trackPoint, thresholdHorizontalAccuracy);
     }
 
@@ -153,6 +153,10 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
         } catch (SecurityException e) {
             Log.e(TAG, "Could not register location listener; permissions not granted.", e);
         }
+    }
+
+    TrackPoint getLastTrackPoint() {
+        return lastTrackPoint;
     }
 
     /**
