@@ -3,6 +3,7 @@ name: Test
 on: [ push ]
 jobs:
   test:
+    timeout-minutes: 45
     runs-on: macos-latest
     strategy:
       matrix:
