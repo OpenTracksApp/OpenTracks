@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.Clock;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -50,7 +51,6 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Export a track to {@link TrackFileFormat} and verify that the import is identical.
@@ -161,47 +161,6 @@ public class ExportImportTest {
         }
     }
 
-    @LargeTest
-    @Test
-    public void kml_with_trackdetail_and_sensordata() throws TimeoutException, IOException {
-        setUp(true);
-
-        // given
-        Track track = contentProviderUtils.getTrack(trackId);
-
-        TrackExporter trackExporter = TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context);
-
-        // when
-        // 1. export
-        trackExporter.writeTrack(track, context.getContentResolver().openOutputStream(tmpFileUri));
-        contentProviderUtils.deleteTrack(context, trackId);
-
-        // 2. import
-        InputStream inputStream = context.getContentResolver().openInputStream(tmpFileUri);
-        XMLImporter importer = new XMLImporter(new KmlTrackImporter(context, trackImporter));
-        importTrackId = importer.importFile(inputStream).get(0);
-
-        // then
-        // 1. track
-        Track importedTrack = contentProviderUtils.getTrack(importTrackId);
-        assertNotNull(importedTrack);
-        assertEquals(track.getCategory(), importedTrack.getCategory());
-        assertEquals(track.getDescription(), importedTrack.getDescription());
-        assertEquals(track.getName(), importedTrack.getName());
-        assertEquals(track.getIcon(), importedTrack.getIcon());
-
-        // 2. trackpoints
-        TrackPointAssert a = new TrackPointAssert()
-                .noAccuracy();
-        a.assertEquals(trackPoints, TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId));
-
-        // 2. trackstatistics
-        assertTrackStatistics(false, true);
-
-        // 4. markers
-        assertMarkers();
-    }
-
     //TODO Does not test images
     @LargeTest
     @Test
@@ -236,8 +195,30 @@ public class ExportImportTest {
                 .noAccuracy();
         a.assertEquals(trackPoints, TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId));
 
-        // 2. trackstatistics
-        assertTrackStatistics(false, true);
+        // 3. trackstatistics
+        TrackStatistics importedTrackStatistics = importedTrack.getTrackStatistics();
+
+        // Time
+        assertEquals(Instant.parse("2020-02-02T02:02:02Z"), importedTrackStatistics.getStartTime());
+        assertEquals(Instant.parse("2020-02-02T02:02:24Z"), importedTrackStatistics.getStopTime());
+
+        assertEquals(track.getTrackStatistics().getTotalTime(), importedTrackStatistics.getTotalTime());
+        assertEquals(Duration.ofSeconds(8), importedTrackStatistics.getTotalTime());
+        assertEquals(Duration.ofSeconds(4), importedTrackStatistics.getMovingTime());
+
+        // Distance
+        assertEquals(Distance.of(30), importedTrackStatistics.getTotalDistance());
+
+        // Speed
+        assertEquals(Speed.of(15), importedTrackStatistics.getMaxSpeed());
+        assertEquals(Speed.of(3.75), importedTrackStatistics.getAverageSpeed());
+        assertEquals(Speed.of(7.5), importedTrackStatistics.getAverageMovingSpeed());
+
+        // Altitude
+        assertEquals(10, importedTrackStatistics.getMinAltitude(), 0.01);
+        assertEquals(10, importedTrackStatistics.getMaxAltitude(), 0.01);
+        assertEquals(1, importedTrackStatistics.getTotalAltitudeGain(), 0.01);
+        assertEquals(1, importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
 
         // 4. markers
         assertMarkers();
@@ -291,14 +272,14 @@ public class ExportImportTest {
 
         // then
         // 1. track
-        Track trackImported = contentProviderUtils.getTrack(importTrackId);
-        assertNotNull(trackImported);
-        assertEquals(track.getCategory(), trackImported.getCategory());
-        assertEquals(track.getDescription(), trackImported.getDescription());
-        assertEquals(track.getName(), trackImported.getName());
+        Track importedTrack = contentProviderUtils.getTrack(importTrackId);
+        assertNotNull(importedTrack);
+        assertEquals(track.getCategory(), importedTrack.getCategory());
+        assertEquals(track.getDescription(), importedTrack.getDescription());
+        assertEquals(track.getName(), importedTrack.getName());
 
         //TODO exporting and importing a track icon is not yet supported by GpxTrackWriter.
-        //assertEquals(track.getIcon(), trackImported.getIcon());
+        //assertEquals(track.getIcon(), importedTrack.getIcon());
 
         // 2. trackpoints
         // The GPX exporter does not support exporting TrackPoints without lat/lng.
@@ -313,7 +294,29 @@ public class ExportImportTest {
         a.assertEquals(trackPointsWithCoordinates, TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId));
 
         // 3. trackstatistics
-        assertTrackStatistics(true, false);
+        TrackStatistics trackStatistics = track.getTrackStatistics();
+        TrackStatistics importedTrackStatistics = importedTrack.getTrackStatistics();
+
+        // Time
+        assertEquals(Instant.parse("2020-02-02T02:02:03Z"), importedTrackStatistics.getStartTime());
+        assertEquals(Instant.parse("2020-02-02T02:02:23Z"), importedTrackStatistics.getStopTime());
+
+        assertEquals(Duration.ofSeconds(20), importedTrackStatistics.getTotalTime());
+        assertEquals(Duration.ofSeconds(19), importedTrackStatistics.getMovingTime());
+
+        // Distance
+        assertEquals(Distance.of(30), importedTrackStatistics.getTotalDistance());
+
+        // Speed
+        assertEquals(Speed.of(15), importedTrackStatistics.getMaxSpeed());
+        assertEquals(Speed.of(1.5), importedTrackStatistics.getAverageSpeed());
+        assertEquals(Speed.of(1.5789473684210527), importedTrackStatistics.getAverageMovingSpeed());
+
+        // Altitude
+        assertEquals(10, importedTrackStatistics.getMinAltitude(), 0.01);
+        assertEquals(10, importedTrackStatistics.getMaxAltitude(), 0.01);
+        assertEquals(1, importedTrackStatistics.getTotalAltitudeGain(), 0.01);
+        assertEquals(1, importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
 
         // 4. markers
         assertMarkers();
@@ -364,46 +367,6 @@ public class ExportImportTest {
             assertEquals(marker.getLocation().getLongitude(), importMarker.getLocation().getLongitude(), 0.001);
             assertEquals(marker.getLocation().getAltitude(), importMarker.getLocation().getAltitude(), 0.1);
         }
-    }
-
-    private void assertTrackStatistics(boolean isGpx, boolean verifyDistance) {
-        double delta = isGpx ? 0.1 : 0.01;
-        Track importedTrack = contentProviderUtils.getTrack(importTrackId);
-
-        assertNotNull(importedTrack.getTrackStatistics());
-
-        TrackStatistics trackStatistics = track.getTrackStatistics();
-        TrackStatistics importedTrackStatistics = importedTrack.getTrackStatistics();
-
-        // Time
-        assertTrue(trackStatistics.getStartTime().isBefore(trackStatistics.getStopTime())); //Just to be sure.
-        if (!isGpx) {
-            assertEquals(trackStatistics.getStartTime(), importedTrackStatistics.getStartTime());
-            assertEquals(trackStatistics.getStopTime(), importedTrackStatistics.getStopTime());
-
-            assertEquals(trackStatistics.getTotalTime(), importedTrackStatistics.getTotalTime());
-            assertEquals(trackStatistics.getMovingTime(), importedTrackStatistics.getMovingTime());
-
-            // Distance
-            if (verifyDistance) {
-                assertEquals(trackStatistics.getTotalDistance(), importedTrackStatistics.getTotalDistance());
-            }
-
-            // Speed
-            assertEquals(trackStatistics.getMaxSpeed(), importedTrackStatistics.getMaxSpeed());
-            assertEquals(trackStatistics.getAverageSpeed(), importedTrackStatistics.getAverageSpeed());
-            assertEquals(trackStatistics.getAverageMovingSpeed(), importedTrackStatistics.getAverageMovingSpeed());
-        }
-
-        // Altitude
-        assertEquals(trackStatistics.getMinAltitude(), importedTrackStatistics.getMinAltitude(), delta);
-        if (isGpx) {
-            assertEquals(trackStatistics.getMaxAltitude(), importedTrackStatistics.getMaxAltitude(), 2);
-        } else {
-            assertEquals(trackStatistics.getMaxAltitude(), importedTrackStatistics.getMaxAltitude(), delta);
-        }
-        assertEquals(trackStatistics.getTotalAltitudeGain(), importedTrackStatistics.getTotalAltitudeGain(), delta);
-        assertEquals(trackStatistics.getTotalAltitudeLoss(), importedTrackStatistics.getTotalAltitudeLoss(), delta);
     }
 
     private static TrackPoint createTrackPoint(Instant time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, Distance distance) {

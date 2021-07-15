@@ -336,9 +336,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         // Update database
         Track track = contentProviderUtils.getTrack(getRecordingTrackId());
-        if (track != null) {
-            insertTrackPoint(track, handlerServer.createSegmentStartManual());
-        }
+        trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics());
+        insertTrackPoint(track, handlerServer.createSegmentStartManual());
 
         startRecording();
     }

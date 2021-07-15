@@ -121,6 +121,10 @@ public class TrackStatistics {
         }
     }
 
+    public boolean isInitialized() {
+        return startTime != null;
+    }
+
     public void reset() {
         startTime = null;
         stopTime = null;

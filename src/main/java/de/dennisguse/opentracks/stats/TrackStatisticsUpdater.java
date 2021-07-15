@@ -116,18 +116,18 @@ public class TrackStatisticsUpdater {
      * @param minGPSDistance the min recording distance
      */
     public void addTrackPoint(TrackPoint trackPoint, Distance minGPSDistance) {
-        if (currentSegment.getStartTime() == null) {
+        if (trackPoint.getType() == TrackPoint.Type.SEGMENT_START_MANUAL) {
+            reset(trackPoint);
+            return;
+        }
+
+        if (!currentSegment.isInitialized()) {
             currentSegment.setStartTime(trackPoint.getTime());
         }
 
         // Always update time
         currentSegment.setStopTime(trackPoint.getTime());
         currentSegment.setTotalTime(Duration.between(currentSegment.getStartTime(), trackPoint.getTime()));
-
-        if (trackPoint.getType() == TrackPoint.Type.SEGMENT_START_MANUAL) {
-            reset(trackPoint);
-            return;
-        }
 
         // Process sensor data
         if (trackPoint.hasAltitudeGain()) {
@@ -195,7 +195,9 @@ public class TrackStatisticsUpdater {
     }
 
     private void reset(TrackPoint trackPoint) {
-        trackStatistics.merge(currentSegment);
+        if (currentSegment.isInitialized()) {
+            trackStatistics.merge(currentSegment);
+        }
         currentSegment.reset(trackPoint.getTime());
 
         lastTrackPoint = null;
