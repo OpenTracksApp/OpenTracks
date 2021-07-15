@@ -31,7 +31,7 @@ class CachedTrackPointsIndexes {
         latitudeIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.LATITUDE);
         timeIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.TIME);
         altitudeIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALTITUDE);
-        accuracyIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.ACCURACY);
+        accuracyIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.HORIZONTAL_ACCURACY);
         speedIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.SPEED);
         bearingIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.BEARING);
         sensorHeartRateIndex = cursor.getColumnIndexOrThrow(TrackPointsColumns.SENSOR_HEARTRATE);

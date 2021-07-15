@@ -318,7 +318,7 @@ public class ContentProviderUtils {
             marker.setAltitude(Altitude.WGS84.of(cursor.getFloat(altitudeIndex)));
         }
         if (!cursor.isNull(accuracyIndex)) {
-            marker.setAccuracy(cursor.getFloat(accuracyIndex));
+            marker.setAccuracy(Distance.of(cursor.getFloat(accuracyIndex)));
         }
         if (!cursor.isNull(bearingIndex)) {
             marker.setBearing(cursor.getFloat(bearingIndex));
@@ -472,7 +472,7 @@ public class ContentProviderUtils {
             values.put(MarkerColumns.ALTITUDE, marker.getAltitude().toM());
         }
         if (marker.hasAccuracy()) {
-            values.put(MarkerColumns.ACCURACY, marker.getAccuracy());
+            values.put(MarkerColumns.ACCURACY, marker.getAccuracy().toM());
         }
         if (marker.hasBearing()) {
             values.put(MarkerColumns.BEARING, marker.getBearing());
@@ -520,7 +520,7 @@ public class ContentProviderUtils {
             trackPoint.setAltitude(Altitude.WGS84.of(cursor.getFloat(indexes.altitudeIndex)));
         }
         if (!cursor.isNull(indexes.accuracyIndex)) {
-            trackPoint.setAccuracy(cursor.getFloat(indexes.accuracyIndex));
+            trackPoint.setHorizontalAccuracy(Distance.of(cursor.getFloat(indexes.accuracyIndex)));
         }
         if (!cursor.isNull(indexes.speedIndex)) {
             trackPoint.setSpeed(Speed.of(cursor.getFloat(indexes.speedIndex)));
@@ -681,8 +681,8 @@ public class ContentProviderUtils {
         if (trackPoint.hasAltitude()) {
             values.put(TrackPointsColumns.ALTITUDE, trackPoint.getAltitude().toM());
         }
-        if (trackPoint.hasAccuracy()) {
-            values.put(TrackPointsColumns.ACCURACY, trackPoint.getAccuracy());
+        if (trackPoint.hasHorizontalAccuracy()) {
+            values.put(TrackPointsColumns.HORIZONTAL_ACCURACY, trackPoint.getHorizontalAccuracy().toM());
         }
         if (trackPoint.hasSpeed()) {
             values.put(TrackPointsColumns.SPEED, trackPoint.getSpeed().toMPS());

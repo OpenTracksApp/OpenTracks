@@ -19,7 +19,7 @@ public class TestSensorDataUtil {
         tp.setHeartRate_bpm(hr);
         tp.setCyclingCadence_rpm(cadence);
         tp.setPower(power);
-        tp.setAccuracy(1f);
+        tp.setHorizontalAccuracy(Distance.of(1f));
         tp.setAltitude(1f);
         tp.setSpeed(Speed.of(5f + (i / 10f)));
         tp.setAltitudeGain(3f);

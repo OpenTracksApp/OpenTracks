@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -238,11 +239,11 @@ public class TrackRecordingServiceTestLooper {
             TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, service.getHandlerServer().createNow())
                     .setLongitude(35.0f + i / 10.0f)
                     .setLatitude(45.0f - i / 5.0f)
-                    .setAccuracy(5)
+                    .setHorizontalAccuracy(Distance.of(5))
                     .setSpeed(Speed.of(10))
                     .setBearing(3.0f);
 
-            int prefAccuracy = PreferencesUtils.getRecordingGPSAccuracy(sharedPreferences, context);
+            Distance prefAccuracy = PreferencesUtils.getThresholdHorizontalAccuracy(sharedPreferences, context);
             service.getHandlerServer().onNewTrackPoint(trackPoint, prefAccuracy);
 
             if (i % 7 == 0) {

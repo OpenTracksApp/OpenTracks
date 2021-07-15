@@ -492,7 +492,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     }
 
     @Override
-    public void newTrackPoint(TrackPoint trackPoint, int recordingGpsAccuracy) {
+    public void newTrackPoint(TrackPoint trackPoint, Distance thresholdHorizontalAccuracy) {
         if (!isRecording() || isPaused()) {
             Log.w(TAG, "Ignore newTrackPoint. Not recording or paused.");
             return;
@@ -504,7 +504,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        notificationManager.updateTrackPoint(this, track.getTrackStatistics(), trackPoint, recordingGpsAccuracy);
+        notificationManager.updateTrackPoint(this, track.getTrackStatistics(), trackPoint, thresholdHorizontalAccuracy);
 
         //TODO Figure out how to avoid loading the lastValidTrackPoint from the database
         TrackPoint lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(track.getId());

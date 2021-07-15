@@ -138,7 +138,7 @@ public class CustomContentProviderUtilsTest {
             TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(i))
                     .setLatitude(37.0 + (double) i / 10000.0)
                     .setLongitude(57.0 - (double) i / 10000.0)
-                    .setAccuracy((float) i / 100.0f)
+                    .setHorizontalAccuracy(Distance.of(i / 100.0f))
                     .setAltitude(i * 2.5);
             trackPoints.add(trackPoint);
         }

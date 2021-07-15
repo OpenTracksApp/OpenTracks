@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -26,7 +27,7 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
     private GpsStatus gpsStatus;
     private LocationListenerPolicy locationListenerPolicy;
     private Duration currentRecordingInterval;
-    private int recordingGpsAccuracy;
+    private Distance thresholdHorizontalAccuracy;
     private TrackPoint lastValidTrackPoint;
 
     public LocationHandler(HandlerServer handlerServer) {
@@ -69,7 +70,7 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
             registerLocationListener();
         }
         if (PreferencesUtils.isKey(context, R.string.recording_gps_accuracy_key, key)) {
-            recordingGpsAccuracy = PreferencesUtils.getRecordingGPSAccuracy(sharedPreferences, context);
+            thresholdHorizontalAccuracy = PreferencesUtils.getThresholdHorizontalAccuracy(sharedPreferences, context);
         }
         if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
             if (gpsStatus != null) {
@@ -78,7 +79,7 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
         }
         if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
             if (gpsStatus != null) {
-                gpsStatus.onRecordingDistanceChanged((int) PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context).toM()); //TODO Use Distance?
+                gpsStatus.onRecordingDistanceChanged(PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context));
             }
         }
     }
@@ -91,7 +92,7 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
     @Override
     public void onLocationChanged(@NonNull Location location) {
         TrackPoint trackPoint = new TrackPoint(location, handlerServer.createNow());
-        boolean isAccurate = trackPoint.fulfillsAccuracy(recordingGpsAccuracy);
+        boolean isAccurate = trackPoint.fulfillsAccuracy(thresholdHorizontalAccuracy);
         boolean isValid = LocationUtils.isValidLocation(location);
 
         if (gpsStatus != null) {
@@ -119,7 +120,7 @@ class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
         }
 
         lastValidTrackPoint = trackPoint;
-        handlerServer.onNewTrackPoint(trackPoint, recordingGpsAccuracy);
+        handlerServer.onNewTrackPoint(trackPoint, thresholdHorizontalAccuracy);
     }
 
     @Override

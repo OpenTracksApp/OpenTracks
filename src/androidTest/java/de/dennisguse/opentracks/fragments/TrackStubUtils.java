@@ -18,6 +18,7 @@ package de.dennisguse.opentracks.fragments;
 
 import java.time.Instant;
 
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 
@@ -32,7 +33,7 @@ public class TrackStubUtils {
     public static final long INITIAL_TIME = 1000L;
     private static final double INITIAL_LATITUDE = 22;
     private static final double INITIAL_LONGITUDE = 22;
-    private static final float INITIAL_ACCURACY = 5;
+    private static final Distance INITIAL_ACCURACY = Distance.of(5);
     private static final Speed INITIAL_SPEED = Speed.of(10);
     private static final float INITIAL_BEARING = 3.0f;
 
@@ -55,7 +56,7 @@ public class TrackStubUtils {
                 .setLatitude(latitude)
                 .setLongitude(longitude)
                 .setAltitude(altitude)
-                .setAccuracy(INITIAL_ACCURACY)
+                .setHorizontalAccuracy(INITIAL_ACCURACY)
                 .setSpeed(INITIAL_SPEED)
                 .setBearing(INITIAL_BEARING);
     }

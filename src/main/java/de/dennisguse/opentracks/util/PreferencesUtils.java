@@ -247,9 +247,9 @@ public class PreferencesUtils {
         return Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default));
     }
 
-    public static int getRecordingGPSAccuracy(SharedPreferences sharedPreferences, Context context) {
+    public static Distance getThresholdHorizontalAccuracy(SharedPreferences sharedPreferences, Context context) {
         final int RECORDING_GPS_ACCURACY = Integer.parseInt(context.getResources().getString(R.string.recording_gps_accuracy_default));
-        return getInt(sharedPreferences, context, R.string.recording_gps_accuracy_key, RECORDING_GPS_ACCURACY);
+        return Distance.of(getInt(sharedPreferences, context, R.string.recording_gps_accuracy_key, RECORDING_GPS_ACCURACY));
     }
 
     public static boolean shouldInstantExportAfterWorkout(SharedPreferences sharedPreferences, Context context) {

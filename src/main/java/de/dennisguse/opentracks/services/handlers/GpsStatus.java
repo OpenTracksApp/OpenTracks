@@ -5,11 +5,13 @@ import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Handler;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.time.Duration;
 import java.time.Instant;
 
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
@@ -24,8 +26,7 @@ class GpsStatus {
     // The duration that GpsStatus waits from minimal interval to consider GPS lost.
     private static final Duration SIGNAL_LOST_THRESHOLD = Duration.ofSeconds(10);
 
-    // Threshold for accuracy.
-    private double signalBadThreshold; //TODO Distance?
+    private Distance thresholdHorizontalAccuracy;
     // Threshold for time without points.
     private Duration signalLostThreshold;
 
@@ -68,7 +69,7 @@ class GpsStatus {
         this.context = context;
 
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
-        signalBadThreshold = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context).toM();
+        thresholdHorizontalAccuracy = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
 
         Duration minRecordingInterval = Duration.ofSeconds(PreferencesUtils.getMinRecordingInterval(sharedPreferences, context));
         signalLostThreshold = !minRecordingInterval.isNegative() ? SIGNAL_LOST_THRESHOLD.plus(minRecordingInterval) : SIGNAL_LOST_THRESHOLD;
@@ -97,8 +98,8 @@ class GpsStatus {
      *
      * @param value New preference value to signalBadThreshold.
      */
-    public void onRecordingDistanceChanged(int value) {
-        signalBadThreshold = value;
+    public void onRecordingDistanceChanged(@NonNull Distance value) {
+        thresholdHorizontalAccuracy = value;
     }
 
     /**
@@ -147,13 +148,13 @@ class GpsStatus {
             gpsStatus = GpsStatusValue.GPS_SIGNAL_LOST;
             sendStatus(oldStatus, gpsStatus);
             stopStatusRunner();
-        } else if (lastTrackPoint.getAccuracy() > signalBadThreshold && gpsStatus != GpsStatusValue.GPS_SIGNAL_BAD) {
+        } else if (lastTrackPoint.fulfillsAccuracy(thresholdHorizontalAccuracy) && gpsStatus != GpsStatusValue.GPS_SIGNAL_BAD) {
             // Too little accuracy -> bad signal.
             GpsStatusValue oldStatus = gpsStatus;
             gpsStatus = GpsStatusValue.GPS_SIGNAL_BAD;
             sendStatus(oldStatus, gpsStatus);
             startStatusRunner();
-        } else if (lastTrackPoint.getAccuracy() <= signalBadThreshold && gpsStatus != GpsStatusValue.GPS_SIGNAL_FIX) {
+        } else if (lastTrackPoint.fulfillsAccuracy(thresholdHorizontalAccuracy) && gpsStatus != GpsStatusValue.GPS_SIGNAL_FIX) {
             // Gps okay.
             GpsStatusValue oldStatus = gpsStatus;
             gpsStatus = GpsStatusValue.GPS_SIGNAL_FIX;

@@ -12,6 +12,7 @@ import androidx.annotation.VisibleForTesting;
 import java.time.Clock;
 import java.time.Instant;
 
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
@@ -110,7 +111,7 @@ public class HandlerServer {
         locationHandler.onSharedPreferenceChanged(context, preferences, key);
     }
 
-    public void onNewTrackPoint(TrackPoint trackPoint, int recordingGpsAccuracy) {
+    public void onNewTrackPoint(TrackPoint trackPoint, Distance thresholdHorizontalAccuracy) {
 //        if (serviceExecutor == null || serviceExecutor.isTerminated() || serviceExecutor.isShutdown()) {
 //            return;
 //        }
@@ -119,8 +120,8 @@ public class HandlerServer {
         fillAndReset(trackPoint);
 
 
-//        serviceExecutor.execute(() -> service.newTrackPoint(trackPoint, recordingGpsAccuracy));
-        service.newTrackPoint(trackPoint, recordingGpsAccuracy);
+//        serviceExecutor.execute(() -> service.newTrackPoint(trackPoint, thresholdHorizontalAccuracy));
+        service.newTrackPoint(trackPoint, thresholdHorizontalAccuracy);
     }
 
     public TrackPoint createSegmentStartManual() {
@@ -176,7 +177,7 @@ public class HandlerServer {
     }
 
     public interface HandlerServerInterface {
-        void newTrackPoint(TrackPoint trackPoint, int gpsAccuracy);
+        void newTrackPoint(TrackPoint trackPoint, Distance thresholdHorizontalAccuracy);
 
         void newGpsStatus(GpsStatusValue gpsStatusValue);
     }
