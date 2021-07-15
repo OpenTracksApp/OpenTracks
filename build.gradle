@@ -66,6 +66,7 @@ android {
         targetSdkVersion 30
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunnerArguments clearPackageData: 'true'
     }
 
     buildTypes {
@@ -104,4 +105,6 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation 'org.mockito:mockito-android:3.10.0'
+
+    androidTestUtil 'androidx.test:orchestrator:1.4.0'
 }
