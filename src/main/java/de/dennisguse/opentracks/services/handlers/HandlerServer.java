@@ -33,7 +33,6 @@ public class HandlerServer {
     private Clock clock = Clock.systemUTC();
 
     private final LocationHandler locationHandler;
-    private final EGM2008CorrectionManager egm2008CorrectionManager = new EGM2008CorrectionManager();
     private BluetoothRemoteSensorManager remoteSensorManager;
     private AltitudeSumManager altitudeSumManager;
 
@@ -116,9 +115,7 @@ public class HandlerServer {
 //            return;
 //        }
 
-        egm2008CorrectionManager.correctAltitude(context, trackPoint);
         fillAndReset(trackPoint);
-
 
 //        serviceExecutor.execute(() -> service.newTrackPoint(trackPoint, thresholdHorizontalAccuracy));
         service.newTrackPoint(trackPoint, thresholdHorizontalAccuracy);

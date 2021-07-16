@@ -51,6 +51,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.exporter.ExportServiceResultReceiver;
+import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.HandlerServer;
 import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTask;
@@ -85,6 +86,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private ContentProviderUtils contentProviderUtils;
     private PeriodicTaskExecutor voiceExecutor;
     private TrackRecordingServiceNotificationManager notificationManager;
+
+    private final EGM2008CorrectionManager egm2008CorrectionManager = new EGM2008CorrectionManager();
 
     private Handler handler;
     private final Runnable updateRecordingData = new Runnable() {
@@ -688,6 +691,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         TrackStatisticsUpdater tmpTrackStatisticsUpdater = new TrackStatisticsUpdater(trackStatisticsUpdater);
         Pair<TrackPoint, SensorDataSet> current = localHandlerServer.createCurrentTrackPoint(lastTrackPoint);
 
+        egm2008CorrectionManager.correctAltitude(this, current.first);
         tmpTrackStatisticsUpdater.addTrackPoint(current.first, recordingDistanceInterval);
         track.setTrackStatistics(tmpTrackStatisticsUpdater.getTrackStatistics());
 
