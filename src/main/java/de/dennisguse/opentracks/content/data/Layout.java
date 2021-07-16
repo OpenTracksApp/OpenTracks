@@ -11,8 +11,8 @@ public class Layout {
         this.profile = profile;
     }
 
-    public void addField(String title, boolean visible, boolean primary) {
-        fields.add(new Field(title, visible, primary));
+    public void addField(String title, boolean visible, boolean primary, boolean isLong) {
+        fields.add(new Field(title, visible, primary, isLong));
     }
 
     public void addField(Field field) {
@@ -35,11 +35,13 @@ public class Layout {
         private final String title;
         private boolean visible;
         private boolean primary;
+        private final boolean isLong;
 
-        public Field(String title, boolean visible, boolean primary) {
+        public Field(String title, boolean visible, boolean primary, boolean isLong) {
             this.title = title;
             this.visible = visible;
             this.primary = primary;
+            this.isLong = isLong;
         }
 
         public String getTitle() {
@@ -60,6 +62,10 @@ public class Layout {
 
         public void togglePrimary() {
             primary = !primary;
+        }
+
+        public boolean isLong() {
+            return isLong;
         }
     }
 }

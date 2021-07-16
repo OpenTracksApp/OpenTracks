@@ -74,19 +74,12 @@ public class StatsDataBuilder {
             data = new StatsData(StringUtils.getAltitudeParts(context, recordingData.getTrackStatistics().getTotalAltitudeGain(), metricUnits), context.getString(R.string.stats_gain), field.isPrimary());
         } else if (field.getTitle().equals(context.getString(R.string.stats_loss))) {
             data = new StatsData(StringUtils.getAltitudeParts(context, recordingData.getTrackStatistics().getTotalAltitudeLoss(), metricUnits), context.getString(R.string.stats_loss), field.isPrimary());
-        } else if (field.getTitle().equals(context.getString(R.string.stats_latitude))) {
+        } else if (field.getTitle().equals(context.getString(R.string.stats_coordinates))) {
             TrackPoint latestTrackPoint = recordingData.getLatestTrackPoint();
             if (latestTrackPoint != null && latestTrackPoint.hasLocation()) {
-                data = new StatsData(StringUtils.formatCoordinate(latestTrackPoint.getLatitude()), context.getString(R.string.stats_latitude), field.isPrimary());
+                data = new StatsData(StringUtils.formatCoordinate(latestTrackPoint.getLatitude(), latestTrackPoint.getLongitude()), context.getString(R.string.stats_coordinates), field.isPrimary()).setLong();
             } else {
-                data = new StatsData("-", context.getString(R.string.stats_latitude), field.isPrimary());
-            }
-        } else if (field.getTitle().equals(context.getString(R.string.stats_longitude))) {
-            TrackPoint latestTrackPoint = recordingData.getLatestTrackPoint();
-            if (latestTrackPoint != null && latestTrackPoint.hasLocation()) {
-                data = new StatsData(StringUtils.formatCoordinate(latestTrackPoint.getLongitude()), context.getString(R.string.stats_longitude), field.isPrimary());
-            } else {
-                data = new StatsData("-", context.getString(R.string.stats_longitude), field.isPrimary());
+                data = new StatsData("-", context.getString(R.string.stats_coordinates), field.isPrimary()).setLong();
             }
         } else if (field.getTitle().equals(context.getString(R.string.stats_sensors_heart_rate))) {
             SensorDataSet sensorDataSet = recordingData.getSensorDataSet();

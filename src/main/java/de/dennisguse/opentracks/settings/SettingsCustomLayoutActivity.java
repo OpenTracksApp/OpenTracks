@@ -3,7 +3,6 @@ package de.dennisguse.opentracks.settings;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,10 +16,6 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.Collection;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.adapters.SettingsCustomLayoutAdapter;
@@ -32,11 +27,13 @@ import de.dennisguse.opentracks.util.StatsUtils;
 public class SettingsCustomLayoutActivity extends AbstractActivity implements SettingsCustomLayoutAdapter.SettingsCustomLayoutItemClickListener {
 
     private ActivitySettingsCustomLayoutBinding viewBinding;
+    private GridLayoutManager gridLayoutManager;
     private SettingsCustomLayoutAdapter adapterFieldsVisible;
     private SettingsCustomLayoutAdapter adapterFieldsHidden;
     private Layout layoutFieldsVisible;
     private Layout layoutFieldsHidden;
     private SharedPreferences sharedPreferences;
+    private int numColumns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +45,19 @@ public class SettingsCustomLayoutActivity extends AbstractActivity implements Se
         layoutFieldsVisible = StatsUtils.filterVisible(PreferencesUtils.getCustomLayout(sharedPreferences, this), true);
         adapterFieldsVisible = new SettingsCustomLayoutAdapter(this, this, layoutFieldsVisible);
 
+        numColumns = PreferencesUtils.getLayoutColumns(sharedPreferences, this);
         RecyclerView recyclerViewVisible = viewBinding.recyclerViewVisible;
-        recyclerViewVisible.setLayoutManager(new GridLayoutManager(this, PreferencesUtils.getLayoutColumns(sharedPreferences, this)));
+        gridLayoutManager = new GridLayoutManager(this, numColumns);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (adapterFieldsVisible.getItemViewType(position) == SettingsCustomLayoutAdapter.VIEW_TYPE_LONG) {
+                    return numColumns;
+                }
+                return 1;
+            }
+        });
+        recyclerViewVisible.setLayoutManager(gridLayoutManager);
         recyclerViewVisible.setAdapter(adapterFieldsVisible);
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(
@@ -76,7 +84,8 @@ public class SettingsCustomLayoutActivity extends AbstractActivity implements Se
         viewBinding.spinnerOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                recyclerViewVisible.setLayoutManager(new GridLayoutManager(SettingsCustomLayoutActivity.this, position + 1));
+                numColumns = position + 1;
+                gridLayoutManager.setSpanCount(numColumns);
                 PreferencesUtils.setLayoutColumns(sharedPreferences, SettingsCustomLayoutActivity.this, position + 1);
             }
 

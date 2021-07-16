@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.adapters.SettingsCustomLayoutAdapter;
 import de.dennisguse.opentracks.adapters.StatsAdapter;
 import de.dennisguse.opentracks.content.data.Layout;
 import de.dennisguse.opentracks.content.data.Track;
@@ -111,7 +112,17 @@ public class StatisticsRecordingFragment extends Fragment {
 
         RecyclerView recyclerView = viewBinding.statsRecyclerView;
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), RecyclerView.VERTICAL));
-        gridLayoutManager = new GridLayoutManager(getContext(), PreferencesUtils.getLayoutColumns(sharedPreferences, getContext()));
+        final int numColumns = PreferencesUtils.getLayoutColumns(sharedPreferences, getContext());
+        gridLayoutManager = new GridLayoutManager(getContext(), numColumns);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (statsAdapter.getItemViewType(position) == StatsAdapter.VIEW_TYPE_LONG) {
+                    return numColumns;
+                }
+                return 1;
+            }
+        });
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(statsAdapter);
 

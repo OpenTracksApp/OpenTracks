@@ -328,6 +328,7 @@ public class PreferencesUtils {
         String[] allFields = context.getResources().getStringArray(R.array.stats_custom_layout_all_fields_value);
         List<String> defaultFields = Arrays.asList(context.getResources().getStringArray(R.array.stats_custom_layout_fields_default_value));
         StringBuilder csvCustomLayout = new StringBuilder(context.getString(R.string.default_activity_default) + ";");
+
         for (int i = 0; i < defaultFields.size(); i++) {
             csvCustomLayout.append(defaultFields.get(i)).append(",1,").append(i < 4 ? "1;" : "0;");
         }
@@ -347,7 +348,7 @@ public class PreferencesUtils {
         Layout layout = new Layout(csvParts.get(0));
         for (int i = 1; i < csvParts.size(); i++) {
             List<String> fieldParts = Arrays.asList(csvParts.get(i).split(","));
-            layout.addField(fieldParts.get(0), fieldParts.get(1).equals("1"), fieldParts.get(2).equals("1"));
+            layout.addField(fieldParts.get(0), fieldParts.get(1).equals("1"), fieldParts.get(2).equals("1"), fieldParts.get(0).equals(context.getString(R.string.stats_coordinates)));
         }
 
         return layout;

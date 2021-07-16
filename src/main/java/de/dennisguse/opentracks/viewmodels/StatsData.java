@@ -8,6 +8,7 @@ public class StatsData {
     private final String descMain;
     private String descSecondary;
     private final boolean isPrimary;
+    private boolean isLong = false;
 
     public StatsData(String value, String descMain, boolean isPrimary) {
         this.value = value;
@@ -28,6 +29,11 @@ public class StatsData {
         this.descMain = descMain;
         this.descSecondary = descSecondary;
         this.isPrimary = isPrimary;
+    }
+
+    public StatsData setLong() {
+        this.isLong = true;
+        return this;
     }
 
     public String getDescMain() {
@@ -56,5 +62,9 @@ public class StatsData {
 
     public boolean isPrimary() {
         return isPrimary;
+    }
+
+    public boolean isLong() {
+        return isLong;
     }
 }

@@ -429,6 +429,7 @@ limitations under the License.
     <string name="stats_fastest_pace">Fastest pace</string>
     <string name="stats_gain">Gain</string>
     <string name="stats_loss">Loss</string>
+    <string name="stats_coordinates">Latitude/Longitude</string>
     <string name="stats_latitude">Latitude</string>
     <string name="stats_longitude">Longitude</string>
     <string name="stats_max_speed">Max speed</string>

@@ -298,8 +298,7 @@
         <item>@string/stats_altitude</item>
         <item>@string/stats_gain</item>
         <item>@string/stats_loss</item>
-        <item>@string/stats_latitude</item>
-        <item>@string/stats_longitude</item>
+        <item>@string/stats_coordinates</item>
         <item>@string/stats_sensors_heart_rate</item>
         <item>@string/stats_sensors_cadence</item>
         <item>@string/stats_sensors_power</item>

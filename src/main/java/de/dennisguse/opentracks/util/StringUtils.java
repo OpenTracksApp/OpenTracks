@@ -131,6 +131,16 @@ public class StringUtils {
     }
 
     /**
+     * Formats a complete coordinate (latitude, longitude)
+     *
+     * @param latitude
+     * @param longitude
+     */
+    public static String formatCoordinate(double latitude, double longitude) {
+        return Location.convert(latitude, Location.FORMAT_DEGREES) + COORDINATE_DEGREE + ", " + Location.convert(longitude, Location.FORMAT_DEGREES) + COORDINATE_DEGREE;
+    }
+
+    /**
      * Get the formatted distance with unit.
      *
      * @param context     the context

@@ -17,6 +17,9 @@ import de.dennisguse.opentracks.viewmodels.StatsData;
 
 public class StatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public static final int VIEW_TYPE_SHORT = 1;
+    public static final int VIEW_TYPE_LONG = 2;
+
     private List<StatsData> statsDataList;
     private final Context context;
 
@@ -46,6 +49,11 @@ public class StatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         } else {
             return statsDataList.size();
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return statsDataList.get(position).isLong() ? VIEW_TYPE_LONG : VIEW_TYPE_SHORT;
     }
 
     public List<StatsData> swapData(List<StatsData> data) {

@@ -20,6 +20,9 @@ import de.dennisguse.opentracks.util.StatsUtils;
 
 public class SettingsCustomLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    public static final int VIEW_TYPE_SHORT = 1;
+    public static final int VIEW_TYPE_LONG = 2;
+
     private Layout layout;
     private final Context context;
     private final SettingsCustomLayoutItemClickListener itemClickListener;
@@ -59,6 +62,15 @@ public class SettingsCustomLayoutAdapter extends RecyclerView.Adapter<RecyclerVi
         } else {
             return layout.getFields().size();
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return layout.getFields().get(position).isLong() ? VIEW_TYPE_LONG : VIEW_TYPE_SHORT;
+    }
+
+    public Layout.Field getItem(int position) {
+        return layout.getFields().get(position);
     }
 
     public void swapValues(Layout data) {
