@@ -41,27 +41,31 @@ limitations under the License.
         android:required="false" />
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <uses-permission
+        android:name="android.permission.BLUETOOTH"
+        android:maxSdkVersion="30" />
+    <uses-permission
+        android:name="android.permission.BLUETOOTH_ADMIN"
+        android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
 
     <application
         android:name=".Startup"
         android:allowBackup="false"
         android:hardwareAccelerated="true"
-        android:hasFragileUserData="true"
-        android:icon="@mipmap/ic_launcher"
+        android:hasFragileUserData="false"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/ThemeCustom">
 
         <activity android:name=".AboutActivity" />
-
-        <activity
-            android:name=".TrackDeleteActivity"
-            android:theme="@style/TrackDeleteActivity" />
 
         <activity
             android:name=".HelpActivity"
@@ -304,8 +308,8 @@ limitations under the License.
 
         <activity android:name=".settings.SettingsActivity" />
 
-        <activity android:name=".ShowOnMapProxyActivity$KMZ">
-            <intent-filter android:label="@string/open_track_as_KMZ">
+        <activity android:name=".ShowOnMapProxyActivity$KML">
+            <intent-filter android:label="@string/open_track_as_KML">
                 <action android:name="Intent.OpenTracks-Dashboard" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -350,6 +354,13 @@ limitations under the License.
             android:name=".io.file.importer.ImportService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <service
+            android:name=".services.TrackDeleteService"
+            android:enabled="true"
+            android:exported="false"
+            android:icon="@drawable/ic_logo_color_24dp"
+            android:label="@string/delete_service" />
     </application>
 
     <queries>

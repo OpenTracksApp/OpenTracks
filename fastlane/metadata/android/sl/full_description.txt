@@ -1,0 +1,11 @@
+OpenTracks je aplikacija za sledenje športu, ki popolnoma spoštuje vašo zasebnost.
+
+Značilnosti:
+* Športno sledenje: sledite svojim športnim aktivnostim in aktivnostim na prostem.
+* Fotografije in oznake: med sledenjem označite zanimive lokacije
+* Pridobivanje in izgubljanje nadmorske višine: prek barometričnega senzorja
+* Nadmorska višina je prikazana v EGM2008 (nad srednjo morsko gladino); izvozi se kot WGS84
+* Glasovna obvestila
+* Podpira senzorje Bluetooth LE: srčni utrip, hitrost in razdalja (kolesarjenje), kadenca (kolesarjenje) in merilnik moči (kolesarjenje)
+* Izvoz podatkov: izvozite proge kot KMZ (vključno s fotografijami), KML ali GPX
+* Brez dostopa do interneta: Internet se ne uporablja

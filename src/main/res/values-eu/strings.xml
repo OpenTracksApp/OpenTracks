@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
---><resources>
+-->
+<resources>
     <string name="about_preference_title">OpenTracks-i buruz</string>
     <string name="about_description"><i> OpenTracks </i> kirol jarraipena egiteko aplikazioa da, zure pribatutasuna erabat errespetatzen duena.</string>
     <string name="about_url">Proiektuaren web orria: <a href="%1$s">%1$s</a></string>
@@ -130,7 +130,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="activity_type_walking">oinez</string>
     <string name="activity_type_water_skiing">uretako eskia</string>
     <string name="activity_type_wind_surfing">windsurfa</string>
-    <string name="app_not_installed_show_on_map">Mesedez, instalatu maparen datuak aurkezten dituen aplikazioa.</string>
     <!-- Description -->
     <string name="description_activity_type">Jarduera mota: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Batez besteko abiadura, abian: %1$s min/km (%2$s min/mi)</string>
@@ -141,17 +140,9 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="description_altitude_imperial">Altitudea (oinak)</string>
     <string name="description_altitude_metric">Altitudea (m)</string>
     <string name="description_fastest_pace_in_minute">Abiadura bizkorrena: %1$s min/km (%2$s min/mi)</string>
-    <string name="description_location_accuracy">Zehaztasuna (m)</string>
-    <string name="description_location_altitude">Altitudea (m)</string>
-    <string name="description_location_bearing">Norabidea (graduak)</string>
-    <string name="description_location_latitude">Latitudea (graduak)</string>
-    <string name="description_location_longitude">Longitudea (graduak)</string>
-    <string name="description_location_speed">Abiadura (m/s)</string>
     <string name="description_max_altitude">Gehienezko altitudea: %1$d m (%2$d oin)</string>
-    <string name="description_max_grade">Gehienezko malda: %1$d %%</string>
     <string name="description_max_speed">Gehienezko abiadura: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_min_altitude">Gutxieneko altitudea: %1$d m (%2$d oin)</string>
-    <string name="description_min_grade">Gutxieneko malda: %1$d %%</string>
     <string name="description_moving_time">Abian emandako tartea: %1$s</string>
     <string name="description_pace_imperial">Abiadura (min/mi)</string>
     <string name="description_pace_metric">Abiadura (min/km)</string>
@@ -166,8 +157,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="description_time">Iraupena</string>
     <string name="description_total_distance">Distantzia, guztira: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Denbora, guztira: %1$s</string>
-    <string name="description_track_point">Puntua</string>
-    <string name="description_track_segment">Segmentua</string>
     <!-- Export -->
     <string name="export_all_option">Guztiak %1$s</string>
     <string name="export_all_title">Esportatu kanpoko biltegira</string>
@@ -180,16 +169,12 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="export_title">Esportatu hona…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d fitxategi</string>
-    <string name="files_many">%1$d fitxategi</string>
-    <string name="files_one">1 fitxategi</string>
-    <string name="files_other">%1$d fitxategi</string>
-    <string name="files_two">2 fitxategi</string>
-    <string name="files_zero">0 fitxategi</string>
+    <plurals name="files">
+        <item quantity="one">1 fitxategi</item>
+        <item quantity="other">%1$d fitxategi</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Gehitu</string>
-    <string name="generic_cancel">Utzi</string>
-    <string name="generic_delete_all_confirm_title">Guztiak ezabatu nahi dituzu?</string>
     <string name="generic_delete_selected_confirm_title">Hautatutakoak ezabatu nahi dituzu?</string>
     <string name="generic_description">Azalpena</string>
     <string name="generic_description_line">Azalpena: %1$s</string>
@@ -197,19 +182,12 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="generic_name">Izena</string>
     <string name="generic_name_line">Izena: %1$s</string>
     <string name="generic_no">Ez</string>
-    <string name="generic_ok">Ados</string>
     <string name="generic_paused">Etenda</string>
-    <string name="generic_progress_title">Itxaron, mesedez…</string>
     <string name="generic_recording">Grabatzen…</string>
     <string name="generic_save">Gorde</string>
     <string name="generic_success_title">Behar bezala burutu da</string>
     <string name="generic_tracks">Ibilbideak</string>
-    <string name="generic_yes">Bai</string>
     <!-- Gps -->
-    <string name="gps_location_access">\"Kokapenerako sarbidea\"</string>
-    <string name="gps_disabled">GPSa ez dago gaituta. %1$s atalera joateko, sakatu hau. Itzultzeko, sakatu Atzera botoia.</string>
-    <string name="gps_disabled_my_location">Ezin da uneko kokapena zehaztu. Gaitu kokapen-iturburu gehiago %1$s atalean eta ziurtatu zerua ikus dezakezula. Saiatu berriro geroago.</string>
-    <string name="gps_not_found">Ez da GPSrik aurkitu gailuan</string>
     <string name="gps_starting">GPSa hasten</string>
     <string name="gps_wait_for_better_signal">GPS seinale hobearen zain</string>
     <string name="gps_wait_for_signal">GPS seinalearen zain</string>
@@ -218,7 +196,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="image_arrow">Gezia</string>
     <string name="image_marker">Markatzailea</string>
     <string name="image_marker_count">Markatzaile kopurua</string>
-    <string name="image_my_location">Nire kokapena</string>
     <string name="image_pause">Pausatu</string>
     <string name="image_photo_marker">Argazki-markatzailea</string>
     <string name="image_record">Grabatu</string>
@@ -238,17 +215,14 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="marker_add_success">Markatzailea txertatu da</string>
     <string name="marker_add_canceled">Bertan behera utzi da; ez da markatzailea gehitu</string>
     <string name="marker_add_photo_canceled">Ezeztatu, ez da argazki-markarik gehitu</string>
-    <string name="marker_delete_all_confirm_message">Ibilbideko markatzaile guztiak behin betiko ezabatuko dira gailutik</string>
     <string name="marker_delete_one_confirm_message">Markatzailea behin betiko ezabatuko da gailutik</string>
     <string name="marker_delete_one_confirm_title">Markatzailea ezabatu nahi duzu?</string>
     <string name="marker_delete_multiple_confirm_message">Hautatutako markatzaileak behin betiko ezabatuko dira gailutik</string>
     <string name="marker_label_end">%1$s (Amaiera)</string>
     <string name="marker_label_start">%1$s (Hasiera)</string>
     <string name="marker_name_format">%1$d markatzailea</string>
-    <string name="marker_split_name_format">Zatitu %1$d</string>
     <string name="marker_title">%1$d/%2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">Azken zatitze-markatzaileaz geroztik:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Markatzaile mota (adibidez, ur-jauzia)</string>
     <string name="marker_edit_marker_type_hint">Markatzaile mota</string>
@@ -267,11 +241,9 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="menu_markers">Markatzaileak</string>
     <string name="menu_search">Bilatu</string>
     <string name="menu_select_all">Hautatu guztiak</string>
-    <string name="menu_sensor_state">Sentsorearen egoera</string>
     <string name="menu_settings">Ezarpenak</string>
     <string name="menu_share">Partekatu</string>
     <string name="menu_show_on_map">Erakutsi mapan</string>
-    <string name="menu_split_frequency">Zatitze-maiztasuna</string>
     <string name="menu_start_gps">Hasi GPSa</string>
     <string name="menu_stop_gps">Gelditu GPSa</string>
     <string name="menu_view_photo">Ikusi argazkia</string>
@@ -284,17 +256,14 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <!-- Search -->
     <string name="search_global_description">Ibilbideak eta markatzaileak</string>
     <string name="search_list_empty_message">Ez da bilaketarekin bat datorren ibilbide edo markatzailerik aurkitu</string>
-    <string name="search_list_marker_track_location">\"%1$s\" ibilbidean.</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Bateria maila</string>
     <string name="sensor_state_cadence">Erritmoa</string>
     <string name="sensor_state_cadence_value">%1$d mbi</string>
-    <string name="sensor_state_disconnected">Deskonektatuta</string>
     <string name="sensor_state_heart_rate">Maiztasun kardiakoa</string>
     <string name="sensor_state_heart_rate_value">%1$d mbb</string>
     <string name="sensor_state_power">Potentzia</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="sensor_not_known">Sensor %1$s ezezaguna da. Egiaztatu ezarpenak.</string>
     <string name="sensor_could_not_scan">Ezin izan da Bluetooth gailuak bilatu (%1$i errorea).</string>
     <string name="bluetooth_disabled">Mesedez, aktibatu Bluetooth.</string>
     <string name="settings_not_while_recording">Ez dago erabilgarri ibilbidea grabatzen ari den bitartean</string>
@@ -304,7 +273,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Distantziaren arabera</string>
     <string name="settings_chart_by_time">Denboraren arabera</string>
-    <string name="settings_chart_x_axis">X ardatza</string>
     <!-- Settings Recording -->
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Erakutsi estatistika blokeo-pantailan</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Grabatzen ari zaren bitartean, erakutsi estatistikak gailua desblokeatu gabe.</string>
@@ -334,7 +302,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="settings_reset_done">Ezarpen guztiak balio lehenetsietara leheneratu dira</string>
     <string name="settings_error_initial_values_restored">Sentitzen dugu, baina akats bat gertatu da. Ezarpen guztiak lehenetsitako balioetara itzuli dira.</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Sentsorea</string>
     <string name="settings_sensor_bluetooth">Bluetootha</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth sentsorea</string>
     <string name="settings_sensor_connecting">Honekin konektatuta: %1$s</string>
@@ -359,12 +326,9 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="stats_altitude">Altitudea</string>
     <string name="stats_fastest_pace">Pauso-erritmorik bizkorrena</string>
     <string name="stats_gain">Igoera</string>
-    <string name="stats_grade">Inklinazioa</string>
     <string name="stats_latitude">Latitudea</string>
     <string name="stats_longitude">Longitudea</string>
-    <string name="stats_max">Gehienezkoa</string>
     <string name="stats_max_speed">Gehienezko abiadura</string>
-    <string name="stats_min">Gutxienekoa</string>
     <string name="stats_moving_time">Abian emandako denbora</string>
     <string name="stats_pace">Pauso-erritmoa</string>
     <string name="stats_speed">Abiadura</string>
@@ -383,8 +347,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <!-- Track Detail -->
     <string name="track_detail_chart_tab">Diagrama</string>
     <string name="track_detail_stats_tab">Estatistikak</string>
-    <string name="track_detail_record_success">Ibilbide berria grabatzen ari da</string>
-    <string name="track_detail_resume_success">Orain pista berriro hasi zen</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Jarduera mota (adibidez, mendi-txangoa)</string>
     <string name="track_edit_activity_type_hint">Jarduera mota</string>
@@ -393,12 +355,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="track_list_empty_message">Hasi hurrengo abentura grabatzen</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d ibilbide</string>
-    <string name="tracks_many">%1$d ibilbide</string>
-    <string name="tracks_one">1 ibilbide</string>
-    <string name="tracks_other">%1$d ibilbide</string>
-    <string name="tracks_two">2 ibilbide</string>
-    <string name="tracks_zero">0 ibilbide</string>
     <!-- Unit -->
     <string name="unit_feet">oin</string>
     <string name="unit_kilometer">km</string>
@@ -412,11 +368,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="value_adapt_accuracy">Doitu zehaztasuna</string>
     <string name="value_adapt_battery_life">Doitu bateriaren iraupenera</string>
     <string name="value_always">Beti</string>
-    <string name="value_float_feet">%1$.2f oin</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mi</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mi (GPS ahula)</string>
     <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (GPS bikaina)</string>
     <string name="value_integer_feet_recommended">%1$d oin (gomendatua)</string>
@@ -436,52 +387,37 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="value_smallest">Txikiena</string>
     <string name="value_smallest_recommended">Txikiena (gomendatua)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d ordu</string>
-    <string name="voice_hours_many">%1$d ordu</string>
-    <string name="voice_hours_one">1 ordu</string>
-    <string name="voice_hours_other">%1$d ordu</string>
-    <string name="voice_hours_two">2 ordu</string>
-    <string name="voice_hours_zero">0 ordu</string>
-    <string name="voice_minutes_few">%1$d minutu</string>
-    <string name="voice_minutes_many">%1$d minutu</string>
-    <string name="voice_minutes_one">1 minutu</string>
-    <string name="voice_minutes_other">%1$d minutu</string>
-    <string name="voice_minutes_two">2 minutu</string>
-    <string name="voice_minutes_zero">0 minutu</string>
+    <plurals name="voiceHours">
+        <item quantity="one">1 ordu</item>
+        <item quantity="other">%1$d ordu</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">1 minutu</item>
+        <item quantity="other">%1$d minutu</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">1 segundo</item>
+        <item quantity="other">%1$d segundo</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">1 kilometro orduko</item>
+        <item quantity="other">%1$.1f kilometro orduko</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">1 milia orduko</item>
+        <item quantity="other">%1$.1f milia orduko</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s kilometro bakoitzeko</string>
     <string name="voice_pace_per_mile">%1$s miliako</string>
-    <string name="voice_seconds_few">%1$d segundo</string>
-    <string name="voice_seconds_many">%1$d segundo</string>
-    <string name="voice_seconds_one">1 segundo</string>
-    <string name="voice_seconds_other">%1$d segundo</string>
-    <string name="voice_seconds_two">2 segundo</string>
-    <string name="voice_seconds_zero">0 segundo</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f kilometro orduko</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f kilometro orduko</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 kilometro orduko</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f kilometro orduko</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 kilometro orduko</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 kilometro orduko</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f milia orduko</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f milia orduko</string>
-    <string name="voice_speed_miles_per_hour_one">1 milia orduko</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f milia orduko</string>
-    <string name="voice_speed_miles_per_hour_two">2 milia orduko</string>
-    <string name="voice_speed_miles_per_hour_zero">0 milia orduko</string>
-    <string name="voice_template">OpenTracks. Distantzia: %1$s. Denbora: %2$s. Abiadura: %3$s</string>
-    <string name="voice_total_distance_kilometers_few">distantzia, guztira: %1$.2f kilometro</string>
-    <string name="voice_total_distance_kilometers_many">distantzia, guztira: %1$.2f kilometro</string>
-    <string name="voice_total_distance_kilometers_one">distantzia, guztira: 1 kilometro</string>
-    <string name="voice_total_distance_kilometers_other">distantzia, guztira: %1$.2f kilometro</string>
-    <string name="voice_total_distance_kilometers_two">distantzia, guztira: 2 kilometro</string>
-    <string name="voice_total_distance_kilometers_zero">distantzia, guztira: 0 kilometro</string>
-    <string name="voice_total_distance_miles_few">distantzia, guztira: %1$.2f milia</string>
-    <string name="voice_total_distance_miles_many">distantzia, guztira: %1$.2f milia</string>
-    <string name="voice_total_distance_miles_one">distantzia, guztira: 1 milia</string>
-    <string name="voice_total_distance_miles_other">distantzia, guztira: %1$.2f milia</string>
-    <string name="voice_total_distance_miles_two">distantzia, guztira: 2 milia</string>
-    <string name="voice_total_distance_miles_zero">distantzia, guztira: 0 milia</string>
-    <string name="voice_total_distance_zero">Nire ibilbideen distantzia, guztira, zero da.</string>
+    <string name="voice_template">Distantzia: %1$s. Denbora: %2$s. Abiadura: %3$s</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">distantzia, guztira: 1 kilometro</item>
+        <item quantity="other">distantzia, guztira: %1$.2f kilometro</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">distantzia, guztira: 1 milia</item>
+        <item quantity="other">distantzia, guztira: %1$.2f milia</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">kutxazaina</string>
     <string name="waypoint_type_bank">bankua</string>
@@ -537,19 +473,15 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <!-- Share image -->
     <string name="share_image_subject">Irudi bat zurekin partekatu nahi nuke</string>
     <string name="share_image_body">Irudi hau interesatuko zaizuela uste dut.</string>
-    <string name="open_track_as_KMZ">Ireki gisa KMZ</string>
+    <string name="open_track_as_KML">Ireki gisa KML</string>
     <string name="open_track_using_dashboard">Ireki erabiliz OpenTracks-Arbel</string>
     <string name="open_track_as_trackfileformat">Ireki gisa %1$s</string>
     <string name="activity_type_escooter">eskooterra</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Grabatzen ari zaren bitartean, pantaila osoan ikusi.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Pantaila osoa</string>
-    <string name="value_float_mile_hour">%1$.2f mph</string>
-    <string name="value_float_kilometer_hour">%1$.2f km/h</string>
-    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
     <string name="settings_default_export_uri_title">Track esportazio-direktorioa</string>
     <string name="instant_export_enabled_title">Berehalako post-entrenamendu esportatu</string>
     <string name="instant_export_enabled_summary">Esportazio-pista biltegiratze ondoren grabaketa amaitu da</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
     <string name="interval_list_empty_message">Ez dira edozein tarte oraindik</string>
     <string name="aggregated_stats_empty_message">Grabatu zure lehen pista ikusteko batzen estatistikak</string>
     <string name="open_track_as_GPX">Ireki gisa GPX</string>
@@ -611,4 +543,7 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="track_distance_notification">Distantzia: %1$s</string>
     <string name="track_speed_notification">Abiadura: %1$s</string>
     <string name="track_pace_notification">Erritmoa: %1$s</string>
+    <string name="about_third_party_data">Hirugarrenen datuak</string>
+    <string name="delete_service">Ezabatzeko zerbitzua</string>
+    <string name="track_delete_progress">%1$d/%2$d</string>
 </resources>

@@ -44,7 +44,7 @@ public final class Marker {
     private String description = "";
     private String category = "";
     private String icon = "";
-    private final Track.Id trackId;
+    private Track.Id trackId;
 
     private final Instant time;
     private Double latitude;
@@ -74,16 +74,13 @@ public final class Marker {
         if (!trackPoint.hasLocation())
             throw new RuntimeException("Marker requires a trackpoint with a location.");
 
-        this.latitude = trackPoint.getLatitude();
-        this.longitude = trackPoint.getLongitude();
-        if (trackPoint.hasAccuracy()) this.accuracy = trackPoint.getAccuracy();
-        if (trackPoint.hasAltitude()) this.altitude = trackPoint.getAltitude();
-        if (trackPoint.hasBearing()) this.bearing = trackPoint.getBearing();
+        setTrackPoint(trackPoint);
 
         this.length = Distance.of(0); //TODO Not cool!
         this.duration = Duration.ofMillis(0); //TODO Not cool!
     }
 
+    @Deprecated
     public Marker(String name, String description, String category, String icon, @NonNull Track.Id trackId, @NonNull TrackStatistics statistics, @NonNull TrackPoint trackPoint, String photoUrl) {
         this(trackId, trackPoint);
         this.name = name;
@@ -93,6 +90,15 @@ public final class Marker {
         this.length = statistics.getTotalDistance();
         this.duration = statistics.getTotalTime();
         this.photoUrl = photoUrl;
+    }
+
+    //TODO Is somehow part of the initialization process. Can we at least limit visibility?
+    public void setTrackPoint(TrackPoint trackPoint) {
+        this.latitude = trackPoint.getLatitude();
+        this.longitude = trackPoint.getLongitude();
+        if (trackPoint.hasAccuracy()) this.accuracy = trackPoint.getAccuracy();
+        if (trackPoint.hasAltitude()) this.altitude = trackPoint.getAltitude();
+        if (trackPoint.hasBearing()) this.bearing = trackPoint.getBearing();
     }
 
     /**
@@ -143,16 +149,19 @@ public final class Marker {
         this.icon = icon;
     }
 
-    @NonNull
     public Track.Id getTrackId() {
         return trackId;
+    }
+
+    @Deprecated
+    public void setTrackId(@NonNull Track.Id trackId) {
+        this.trackId = trackId;
     }
 
     public boolean hasLocation() {
         return latitude != null || longitude != null;
     }
 
-    @Nullable
     public Location getLocation() {
         Location location = new Location("");
         location.setTime(time.toEpochMilli());

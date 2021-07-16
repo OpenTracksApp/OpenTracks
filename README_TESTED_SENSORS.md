@@ -23,8 +23,6 @@ However, often only one value is provided.
   * Has updatable firmware that requires an account for garmin.com
   * This sensor reports speed data as cadence.
     A workaround is in place.
-  * This sensor sometimes counts backwards (unknown software version).
-    A workaround is in place.
 
 * Wahoo Speed (Model: WFRPMSPD)
 
@@ -50,4 +48,5 @@ Also the distance is not computed.
 * QUARQ Red DZero Powermeter
 * Tacx Satori Smart
 * Wahoo Kickr v4.0
+* Rotor 2INpower DM Road (only supports power measurement, cadence measurement is propietary @ firmware v1.061)
 

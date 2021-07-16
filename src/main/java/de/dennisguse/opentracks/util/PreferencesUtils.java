@@ -96,6 +96,22 @@ public class PreferencesUtils {
         }
     }
 
+    private static float getFloat(SharedPreferences sharedPreferences, Context context, int keyId, float defaultValue) {
+        try {
+            return sharedPreferences.getFloat(getKey(context, keyId), defaultValue);
+        } catch (ClassCastException e) {
+            //Ignore
+        }
+
+        //NOTE: We assume that the data was stored as String due to use of ListPreference.
+        try {
+            String stringValue = sharedPreferences.getString(getKey(context, keyId), null);
+            return Float.parseFloat(stringValue);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
+
     public static String getString(SharedPreferences sharedPreferences, Context context, int keyId, String defaultValue) {
         return sharedPreferences.getString(getKey(context, keyId), defaultValue);
     }
@@ -110,6 +126,16 @@ public class PreferencesUtils {
     public static boolean isMetricUnits(SharedPreferences sharedPreferences, Context context) {
         final String STATS_UNIT = context.getString(R.string.stats_units_default);
         return STATS_UNIT.equals(getString(sharedPreferences, context, R.string.stats_units_key, STATS_UNIT));
+    }
+
+    public static void setMetricUnits(SharedPreferences sharedPreferences, Context context, boolean metricUnits) {
+        String unit;
+        if (metricUnits) {
+            unit = context.getString(R.string.stats_units_metric);
+        } else {
+            unit = context.getString(R.string.stats_units_imperial);
+        }
+        setString(sharedPreferences, context, R.string.stats_units_key, unit);
     }
 
     public static boolean isReportSpeed(SharedPreferences sharedPreferences, Context context, String category) {
@@ -142,9 +168,9 @@ public class PreferencesUtils {
         return getString(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_speed_key, getBluetoothSensorAddressNone(context));
     }
 
-    public static int getWheelCircumference(SharedPreferences sharedPreferences, Context context) {
+    public static Distance getWheelCircumference(SharedPreferences sharedPreferences, Context context) {
         final int DEFAULT = Integer.parseInt(context.getResources().getString(R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_default));
-        return getInt(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key, DEFAULT);
+        return Distance.ofMM(getInt(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key, DEFAULT));
     }
 
     public static String getBluetoothCyclingPowerSensorAddress(SharedPreferences sharedPreferences, Context context) {
@@ -179,6 +205,11 @@ public class PreferencesUtils {
     public static int getVoiceFrequency(SharedPreferences sharedPreferences, Context context) {
         final int VOICE_FREQUENCY_DEFAULT = Integer.parseInt(context.getResources().getString(R.string.voice_frequency_default));
         return getInt(sharedPreferences, context, R.string.voice_frequency_key, VOICE_FREQUENCY_DEFAULT);
+    }
+
+    public static float getVoiceSpeedRate(SharedPreferences sharedPreferences, Context context) {
+        final float DEFAULT = Float.parseFloat(context.getResources().getString(R.string.voice_frequency_default));
+        return getFloat(sharedPreferences, context, R.string.voice_speed_rate_key, DEFAULT);
     }
 
     public static Distance getRecordingDistanceInterval(SharedPreferences sharedPreferences, Context context) {

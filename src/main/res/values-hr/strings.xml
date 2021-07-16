@@ -91,17 +91,9 @@ limitations under the License.
     <string name="description_altitude_imperial">Nadmorska visina (stope)</string>
     <string name="description_altitude_metric">Nadmorska visina (m)</string>
     <string name="description_fastest_pace_in_minute">Najbrži tempo: %1$s min/km (%2$s min/mi)</string>
-    <string name="description_location_accuracy">Točnost (m)</string>
-    <string name="description_location_altitude">Nadmorska visina (m)</string>
-    <string name="description_location_bearing">Pravac (stupnjeva)</string>
-    <string name="description_location_latitude">Geografska širina (stupnjeva)</string>
-    <string name="description_location_longitude">Geografska dužina (stupnjeva)</string>
-    <string name="description_location_speed">Brzina (m/s)</string>
     <string name="description_max_altitude">Najveće povećanje visine: %1$d m (%2$d ft)</string>
-    <string name="description_max_grade">Najviši stupanj: %1$d %%</string>
     <string name="description_max_speed">Najveća brzina: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_min_altitude">Najmanje povećanje visine: %1$d m (%2$d ft)</string>
-    <string name="description_min_grade">Najniži stupanj: %1$d %%</string>
     <string name="description_moving_time">Vrijeme kretanja: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/mi)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
@@ -115,8 +107,6 @@ limitations under the License.
     <string name="description_time">Vrijeme</string>
     <string name="description_total_distance">Ukupna udaljenost: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Ukupno vrijeme: %1$s</string>
-    <string name="description_track_point">Točka</string>
-    <string name="description_track_segment">Segment</string>
     <!-- Export -->
     <string name="export_all_option">Sve kao %1$s</string>
     <string name="export_all_title">Izvoz u vanjsku pohranu</string>
@@ -127,16 +117,13 @@ limitations under the License.
     <string name="export_title">Izvoz u…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d datoteke</string>
-    <string name="files_many">%1$d datoteka</string>
-    <string name="files_one">1 datoteka</string>
-    <string name="files_other">%1$d datoteka</string>
-    <string name="files_two">2 datoteke</string>
-    <string name="files_zero">0 datoteka</string>
+    <plurals name="files">
+        <item quantity="one">%1$d datoteka</item>
+        <item quantity="few">%1$d datoteke</item>
+        <item quantity="other">%1$d datoteka</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Dodaj</string>
-    <string name="generic_cancel">Otkaži</string>
-    <string name="generic_delete_all_confirm_title">Želite li izbrisati sve?</string>
     <string name="generic_delete_selected_confirm_title">Želite li izbrisati odabrano?</string>
     <string name="generic_description">Opis</string>
     <string name="generic_description_line">Opis: %1$s</string>
@@ -144,19 +131,12 @@ limitations under the License.
     <string name="generic_name">Ime</string>
     <string name="generic_name_line">Ime: %1$s</string>
     <string name="generic_no">Ne</string>
-    <string name="generic_ok">U redu</string>
     <string name="generic_paused">Pauzirano</string>
-    <string name="generic_progress_title">Pričekajte…</string>
     <string name="generic_recording">Snimanje…</string>
     <string name="generic_save">Spremi</string>
     <string name="generic_success_title">Uspjeh</string>
     <string name="generic_tracks">Trase</string>
-    <string name="generic_yes">Da</string>
     <!-- Gps -->
-    <string name="gps_location_access">\"Pristup lokaciji\"</string>
-    <string name="gps_disabled">GPS nije omogućen. Dotaknite ovdje da biste posjetili %1$s. Pritisnite gumb Natrag da biste se vratili.</string>
-    <string name="gps_disabled_my_location">Nije moguće utvrditi trenutačnu lokaciju. Omogućite više izvora lokacije u odjeljku %1$s i provjerite je li nebo vidljivo. Pokušajte ponovo kasnije.</string>
-    <string name="gps_not_found">Na uređaju nije pronađen GPS</string>
     <string name="gps_starting">Pokretanje GPS-a</string>
     <string name="gps_wait_for_better_signal">Čeka se bolji signal GPS-a</string>
     <string name="gps_wait_for_signal">Čeka se signal GPS-a</string>
@@ -165,7 +145,6 @@ limitations under the License.
     <string name="image_arrow">Strelica</string>
     <string name="image_marker">Oznaka</string>
     <string name="image_marker_count">Broj oznaka</string>
-    <string name="image_my_location">Moja lokacija</string>
     <string name="image_pause">Pauza</string>
     <string name="image_photo_marker">Oznaka fotografije</string>
     <string name="image_record">Snimanje</string>
@@ -185,17 +164,14 @@ limitations under the License.
     <string name="marker_add_error">Nije moguće umetnuti oznaku. Nema signala GPS-a. Pokušajte ponovo.</string>
     <string name="marker_add_success">Oznaka je umetnuta</string>
     <string name="marker_add_canceled">Otkazano, oznaka nije dodana</string>
-    <string name="marker_delete_all_confirm_message">Sve oznake te trase trajno će se izbrisati s uređaja</string>
     <string name="marker_delete_one_confirm_message">Oznaka će se trajno izbrisati s uređaja</string>
     <string name="marker_delete_one_confirm_title">Želite li izbrisati oznaku?</string>
     <string name="marker_delete_multiple_confirm_message">Odabrane oznake trajno će se izbrisati s uređaja</string>
     <string name="marker_label_end">%1$s (kraj)</string>
     <string name="marker_label_start">%1$s (početak)</string>
     <string name="marker_name_format">Oznaka %1$d</string>
-    <string name="marker_split_name_format">Podijeljena %1$d</string>
     <string name="marker_title">%1$d od %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">Od posljednje podijeljene oznake:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Vrsta oznake (npr. slap)</string>
     <string name="marker_edit_marker_type_hint">Vrsta oznake</string>
@@ -213,11 +189,9 @@ limitations under the License.
     <string name="menu_markers">Oznake</string>
     <string name="menu_search">Pretraživanje</string>
     <string name="menu_select_all">Odaberi sve</string>
-    <string name="menu_sensor_state">Stanje senzora</string>
     <string name="menu_settings">Postavke</string>
     <string name="menu_share">Dijeli</string>
     <string name="menu_show_on_map">Prikaži na karti</string>
-    <string name="menu_split_frequency">Učestalost podjela</string>
     <string name="menu_start_gps">Pokreni GPS</string>
     <string name="menu_stop_gps">Zaustavi GPS</string>
     <string name="menu_view_photo">Prikaz fotografije</string>
@@ -227,12 +201,10 @@ limitations under the License.
     <!-- Search -->
     <string name="search_global_description">Staze i oznake</string>
     <string name="search_list_empty_message">Nijedna trasa ni oznaka ne odgovaraju vašem pretraživanju</string>
-    <string name="search_list_marker_track_location">Na stazi \"%1$s\".</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Razina baterije</string>
     <string name="sensor_state_cadence">Kadenca</string>
     <string name="sensor_state_cadence_value">%1$d o/min</string>
-    <string name="sensor_state_disconnected">Odspojeno</string>
     <string name="sensor_state_heart_rate">Brzina otkucaja srca</string>
     <string name="sensor_state_heart_rate_value">%1$d otkuc./min.</string>
     <string name="sensor_state_power">Napajanje</string>
@@ -244,7 +216,6 @@ limitations under the License.
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Prema udaljenosti</string>
     <string name="settings_chart_by_time">Prema vremenu</string>
-    <string name="settings_chart_x_axis">Os X</string>
     <string name="settings_recording">Snimanje</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Uvijek nastavi snimanje nakon ponovnog pokretanja</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Nikada ne nastavljaj snimanje nakon ponovnog pokretanja</string>
@@ -268,7 +239,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Želite li sada vratiti na zadano?</string>
     <string name="settings_reset_done">Sve su postavke vraćene na zadane vrijednosti</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Senzor</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Senzor Bluetootha</string>
     <!-- Settings Stats -->
@@ -290,12 +260,9 @@ limitations under the License.
     <string name="stats_altitude">Nadmorska visina</string>
     <string name="stats_fastest_pace">Najbrži tempo</string>
     <string name="stats_gain">Porast</string>
-    <string name="stats_grade">Nagib</string>
     <string name="stats_latitude">Geografska širina</string>
     <string name="stats_longitude">Geografska duljina</string>
-    <string name="stats_max">Maks.</string>
     <string name="stats_max_speed">Maksimalna brzina</string>
-    <string name="stats_min">Min.</string>
     <string name="stats_moving_time">Vrijeme kretanja</string>
     <string name="stats_pace">Tempo</string>
     <string name="stats_speed">Brzina</string>
@@ -321,12 +288,6 @@ limitations under the License.
     <string name="track_list_empty_message">Počnite snimati svoju sljedeću avanturu ovdje</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d staze</string>
-    <string name="tracks_many">%1$d staza</string>
-    <string name="tracks_one">1 staza</string>
-    <string name="tracks_other">%1$d staza</string>
-    <string name="tracks_two">2 staze</string>
-    <string name="tracks_zero">0 staza</string>
     <!-- Unit -->
     <string name="unit_feet">ft</string>
     <string name="unit_kilometer">km</string>
@@ -340,11 +301,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Prilagodba radi točnosti</string>
     <string name="value_adapt_battery_life">Prilagodi vijeku trajanja baterije</string>
     <string name="value_always">Uvijek</string>
-    <string name="value_float_feet">%1$.2f ft</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mi</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mi (loš GPS)</string>
     <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (izvrstan GPS)</string>
     <string name="value_integer_feet_recommended">%1$d ft (preporučeno)</string>
@@ -364,52 +320,44 @@ limitations under the License.
     <string name="value_smallest">Najmanja</string>
     <string name="value_smallest_recommended">Najmanji (preporučeno)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d sata</string>
-    <string name="voice_hours_many">%1$d sati</string>
-    <string name="voice_hours_one">1 sat</string>
-    <string name="voice_hours_other">%1$d sati</string>
-    <string name="voice_hours_two">2 sata</string>
-    <string name="voice_hours_zero">0 sati</string>
-    <string name="voice_minutes_few">%1$d minute</string>
-    <string name="voice_minutes_many">%1$d minuta</string>
-    <string name="voice_minutes_one">jednu minutu</string>
-    <string name="voice_minutes_other">%1$d minuta</string>
-    <string name="voice_minutes_two">dvije minute</string>
-    <string name="voice_minutes_zero">0 minuta</string>
+    <plurals name="voiceHours">
+        <item quantity="one">%1$d sat</item>
+        <item quantity="few">%1$d sata</item>
+        <item quantity="other">%1$d sati</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">%1$d minutu</item>
+        <item quantity="few">%1$d minute</item>
+        <item quantity="other">%1$d minuta</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">%1$d sekundu</item>
+        <item quantity="few">%1$d sekunde</item>
+        <item quantity="other">%1$d sekunda</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">%1$.1f kilometra na sat</item>
+        <item quantity="few">%1$.1f kilometra na sat</item>
+        <item quantity="other">%1$.1f kilometara na sat</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">%1$.1f milje na sat</item>
+        <item quantity="few">%1$.1f milje na sat</item>
+        <item quantity="other">%1$.1f milja na sat</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s po kilometru</string>
     <string name="voice_pace_per_mile">%1$s po milji</string>
-    <string name="voice_seconds_few">%1$d sekunde</string>
-    <string name="voice_seconds_many">%1$d sekunda</string>
-    <string name="voice_seconds_one">jednu sekundu</string>
-    <string name="voice_seconds_other">%1$d sekunda</string>
-    <string name="voice_seconds_two">dvije sekunde</string>
-    <string name="voice_seconds_zero">0 sekunda</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f kilometra na sat</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f kilometara na sat</string>
-    <string name="voice_speed_kilometers_per_hour_one">jednog kilometra na sat</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f kilometara na sat</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 kilometra na sat</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 kilometara na sat</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f milje na sat</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f milja na sat</string>
-    <string name="voice_speed_miles_per_hour_one">jedne milje na sat</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f milja na sat</string>
-    <string name="voice_speed_miles_per_hour_two">dvije milje na sat</string>
-    <string name="voice_speed_miles_per_hour_zero">0 milja na sat</string>
-    <string name="voice_template">Moje staze %1$s za %2$s brzinom od %3$s</string>
-    <string name="voice_total_distance_kilometers_few">ukupna udaljenost %1$.2f kilometra</string>
-    <string name="voice_total_distance_kilometers_many">ukupna udaljenost %1$.2f kilometara</string>
-    <string name="voice_total_distance_kilometers_one">ukupna udaljenost 1 kilometar</string>
-    <string name="voice_total_distance_kilometers_other">ukupna udaljenost %1$.2f kilometara</string>
-    <string name="voice_total_distance_kilometers_two">ukupna udaljenost 2 kilometra</string>
-    <string name="voice_total_distance_kilometers_zero">ukupna udaljenost 0 kilometara</string>
-    <string name="voice_total_distance_miles_few">ukupna udaljenost %1$.2f milje</string>
-    <string name="voice_total_distance_miles_many">ukupna udaljenost %1$.2f milja</string>
-    <string name="voice_total_distance_miles_one">ukupna udaljenost 1 milja</string>
-    <string name="voice_total_distance_miles_other">ukupna udaljenost %1$.2f milja</string>
-    <string name="voice_total_distance_miles_two">ukupna udaljenost dvije milje</string>
-    <string name="voice_total_distance_miles_zero">ukupna udaljenost 0 milja</string>
-    <string name="voice_total_distance_zero">Ukupna udaljenost aplikacije OpenTracks iznosi nula.</string>
+    <string name="voice_template">%1$s za %2$s brzinom od %3$s</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">ukupna udaljenost %1$.2f kilometar</item>
+        <item quantity="few">ukupna udaljenost %1$.2f kilometra</item>
+        <item quantity="other">ukupna udaljenost %1$.2f kilometara</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">ukupna udaljenost %1$.2f milja</item>
+        <item quantity="few">ukupna udaljenost %1$.2f milje</item>
+        <item quantity="other">ukupna udaljenost %1$.2f milja</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Bankomat</string>
     <string name="waypoint_type_bank">banka</string>

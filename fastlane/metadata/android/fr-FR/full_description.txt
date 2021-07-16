@@ -4,6 +4,8 @@ Fonctionnalités :
 
 * Suivi d'activité : enregistre vos activités sportives et de plein air
 * Photos et repères : ajout de photos et de repères pendant l'enregistrement de l'activité
-* Rythme cardiaque : support des capteurs Bluetooth LE
-* Export : export des traces au format KML ou GPX
+* Dénivelé positif et négatif: via capteur de pression barométrique
+* Synthèse vocale
+* Prise en charge des capteurs Bluetooth LE : rythme cardiaque, vitesse et distance (vélo), cadence de pédalage (vélo), et capteur de puissance (vélo)
+* Export : export des traces au format  KMZ (photos incluses), KML ou GPX
 * Pas d'accès internet requis : Internet n'est pas nécessaire pour le fonctionnement de l'application

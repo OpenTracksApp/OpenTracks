@@ -27,6 +27,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -37,6 +38,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
@@ -71,14 +74,13 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackController.Callback {
+public class TrackListActivity extends AbstractTrackDeleteActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, ControllerFragment.Callback {
 
     private static final String TAG = TrackListActivity.class.getSimpleName();
 
     // The following are set in onCreate
     private SharedPreferences sharedPreferences;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
-    private TrackController trackController;
     private ResourceCursorAdapter resourceCursorAdapter;
 
     private TrackListBinding viewBinding;
@@ -108,19 +110,15 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         }
     };
 
-    private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (PreferencesUtils.isKey(TrackListActivity.this, R.string.stats_units_key, key)) {
-                metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, TrackListActivity.this);
-            }
-            if (key != null) {
-                runOnUiThread(() -> {
-                    TrackListActivity.this.invalidateOptionsMenu();
-                    loaderCallbacks.restart();
-                    trackController.onResume(recordingStatus);
-                });
-            }
+    private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
+        if (PreferencesUtils.isKey(TrackListActivity.this, R.string.stats_units_key, key)) {
+            metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, TrackListActivity.this);
+        }
+        if (key != null) {
+            runOnUiThread(() -> {
+                TrackListActivity.this.invalidateOptionsMenu();
+                loaderCallbacks.restart();
+            });
         }
     };
 
@@ -132,9 +130,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     private final Runnable bindChangedCallback = new Runnable() {
         @Override
         public void run() {
-            // After binding changes (e.g., becomes available), update the total time in trackController.
-            runOnUiThread(() -> trackController.update(recordingStatus));
-
             TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
             if (service == null) {
                 Log.e(TAG, "service not available to start gps or a new recording");
@@ -170,14 +165,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
-        trackController = new TrackController(this, viewBinding.trackControllerContainer, trackRecordingServiceConnection, true, this);
-
-
-        // Show trackController when search dialog is dismissed
-        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-        if (searchManager != null) {
-            searchManager.setOnDismissListener(() -> trackController.show());
-        }
 
         viewBinding.trackList.setEmptyView(viewBinding.trackListEmptyView);
         viewBinding.trackList.setOnItemClickListener((parent, view, position, trackId) -> {
@@ -251,21 +238,12 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-
-        // Update UI
-        trackController.onPause();
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
 
         // Update UI
         this.invalidateOptionsMenu();
         LoaderManager.getInstance(this).restartLoader(0, null, loaderCallbacks);
-        trackController.onResume(recordingStatus);
     }
 
     @Override
@@ -274,17 +252,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         trackRecordingServiceConnection.unbind(this);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == GPS_REQUEST_CODE) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -298,7 +265,13 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         getMenuInflater().inflate(R.menu.track_list, menu);
 
         searchMenuItem = menu.findItem(R.id.track_list_search);
-        ActivityUtils.configureSearchWidget(this, searchMenuItem, trackController);
+        SearchView searchView = ActivityUtils.configureSearchWidget(this, searchMenuItem);
+        searchView.setOnCloseListener(() -> {
+            searchView.clearFocus();
+            searchMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+            return true;
+        });
+
         startGpsMenuItem = menu.findItem(R.id.track_list_start_gps);
 
         return super.onCreateOptionsMenu(menu);
@@ -306,7 +279,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        updateMenuItems(gpsStatusValue.isGpsStarted(), recordingStatus.isRecording());
+        updateGpsMenuItem(gpsStatusValue.isGpsStarted(), recordingStatus.isRecording());
 
         SearchView searchView = (SearchView) searchMenuItem.getActionView();
         searchView.setQuery("", false);
@@ -355,6 +328,12 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             return true;
         }
 
+        if (item.getItemId() == R.id.track_list_search) {
+            SearchView searchView = (SearchView) searchMenuItem.getActionView();
+            searchView.setIconified(false);
+            searchMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -367,16 +346,22 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     }
 
     @Override
+    public void overridePendingTransition(int enterAnim, int exitAnim) {
+        //Disable animations as it is weird going into searchMode; looks okay for SplashScreen.
+    }
+
+    @Override
     public void onBackPressed() {
+        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+        }
+
         if (loaderCallbacks.getSearchQuery() != null) {
             loaderCallbacks.setSearch(null);
             return;
         }
-        SearchView searchView = (SearchView) searchMenuItem.getActionView();
-        if (!searchView.isIconified()) {
-            searchView.setIconified(true);
-            return;
-        }
+
         super.onBackPressed();
     }
 
@@ -397,19 +382,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     }
 
     @Override
-    public boolean onSearchRequested() {
-        // Hide trackController when search dialog is shown
-        trackController.hide();
-        return super.onSearchRequested();
-    }
-
-    @Override
-    protected TrackRecordingServiceConnection getTrackRecordingServiceConnection() {
-        return trackRecordingServiceConnection;
-    }
-
-    @Override
-    protected void onTrackDeleted() {
+    protected void onDeleteConfirmed() {
         // Do nothing
     }
 
@@ -420,19 +393,25 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     }
 
     private void requestGPSPermissions() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, GPS_REQUEST_CODE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            return;
         }
-    }
 
-    /**
-     * Updates the menu items with not fixed icon for gps option.
-     *
-     * @param isGpsStarted true if gps is started
-     * @param isRecording  true if recording
-     */
-    private void updateMenuItems(boolean isGpsStarted, boolean isRecording) {
-        updateGpsMenuItem(isGpsStarted, isRecording);
+        ActivityResultLauncher<String[]> locationPermissionRequest = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+                    Boolean fineLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false);
+                    if (fineLocationGranted == null || !fineLocationGranted) {
+                        Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }
+        );
+        String[] permissions;
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
+            permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+        } else {
+            permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
+        }
+        locationPermissionRequest.launch(permissions);
     }
 
     /**
@@ -441,6 +420,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
      * @param isGpsStarted true if gps is started
      * @param isRecording  true if recording
      */
+    //TODO Check if if can be avoided to call this outside of onGpsStatusChanged()
     private void updateGpsMenuItem(boolean isGpsStarted, boolean isRecording) {
         if (startGpsMenuItem != null) {
             startGpsMenuItem.setVisible(!isRecording);
@@ -479,7 +459,6 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             return true;
         }
 
-
         if (itemId == R.id.list_context_menu_edit) {
             Intent intent = IntentUtils.newIntent(this, TrackEditActivity.class)
                     .putExtra(TrackEditActivity.EXTRA_TRACK_ID, trackIds[0]);
@@ -491,6 +470,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
             deleteTracks(trackIds);
             return true;
         }
+
         if (itemId == R.id.list_context_menu_select_all) {
             for (int i = 0; i < viewBinding.trackList.getCount(); i++) {
                 viewBinding.trackList.setItemChecked(i, true);
@@ -558,25 +538,25 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
     public void recordStart() {
         if (recordingStatus.getTrackId() == null) {
             // Not recording -> Recording
-            updateMenuItems(false, true);
+            updateGpsMenuItem(false, true);
             Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class);
             startActivity(newIntent);
         } else if (recordingStatus.isPaused()) {
             // Paused -> Resume
-            updateMenuItems(false, true);
+            updateGpsMenuItem(false, true);
             trackRecordingServiceConnection.resumeTrack();
         }
     }
 
     @Override
     public void recordPause() {
-        updateMenuItems(false, true);
+        updateGpsMenuItem(false, true);
         trackRecordingServiceConnection.pauseTrack();
     }
 
     @Override
     public void recordStop() {
-        updateMenuItems(false, false);
+        updateGpsMenuItem(false, false);
         trackRecordingServiceConnection.stopRecording(TrackListActivity.this);
     }
 
@@ -585,10 +565,7 @@ public class TrackListActivity extends AbstractListActivity implements ConfirmDe
         updateGpsMenuItem(true, recordingStatus.isRecording());
     }
 
-
     private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
         recordingStatus = status;
-
-        trackController.update(recordingStatus);
     }
 }

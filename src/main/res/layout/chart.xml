@@ -13,9 +13,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/chart_view_layout"
+
+<de.dennisguse.opentracks.chart.ChartView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/chart_view"
     android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="1"
-    android:orientation="vertical" />
+    android:layout_height="match_parent" />

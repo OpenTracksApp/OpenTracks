@@ -23,10 +23,6 @@ public class Speed {
         return of(Float.parseFloat(speed_mps));
     }
 
-    public static Speed invalid() {
-        return of(Double.NaN);
-    }
-
     public static Speed zero() {
         return of(0.0);
     }

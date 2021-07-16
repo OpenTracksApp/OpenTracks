@@ -1,0 +1,11 @@
+OpenTracks er et program til sporing af sport, der fuldt ud respekterer dit privatliv.
+
+Funktioner:
+* Sport tracking: Spor dine sports- og udendørsaktiviteter
+* Billeder og markører: Markér interessante steder under sporing
+* Højdeforøgelse og -tab: via barometrisk sensor
+* Højde vist i EGM2008 (over middelhavets overflade); eksporteret som WGS84
+* Stemmemeddelelser
+* Understøtter Bluetooth LE-sensorer: puls, hastighed og distance (cykling), kadence (cykling) og effektmåler (cykling)
+* Eksport af data: Eksportér spor enten som KMZ (inkl. fotos), KML eller GPX
+* Ingen internetadgang: Internet bruges ikke

@@ -61,7 +61,6 @@ import de.dennisguse.opentracks.util.UUIDUtils;
 public class ContentProviderUtils {
 
     private static final String TAG = ContentProviderUtils.class.getSimpleName();
-    private static final int MAX_LATITUDE = 90000000;
 
     // The authority (the first part of the URI) for the app's content provider.
     @VisibleForTesting
@@ -161,8 +160,10 @@ public class ContentProviderUtils {
 
     @VisibleForTesting
     public void deleteAllTracks(Context context) {
+        //TODO Both calls should not be necessary
         contentResolver.delete(TrackPointsColumns.CONTENT_URI_BY_ID, null, null);
         contentResolver.delete(MarkerColumns.CONTENT_URI, null, null);
+
         // Delete tracks last since it triggers a database vaccum call
         contentResolver.delete(TracksColumns.CONTENT_URI, null, null);
 
@@ -190,6 +191,7 @@ public class ContentProviderUtils {
     }
 
     //TODO Only use for tests; also move to tests.
+    @VisibleForTesting
     public List<Track> getTracks() {
         ArrayList<Track> tracks = new ArrayList<>();
         try (Cursor cursor = getTrackCursor(null, null, TracksColumns._ID)) {
@@ -203,13 +205,7 @@ public class ContentProviderUtils {
         return tracks;
     }
 
-    /**
-     * @param trackId the track id.
-     */
-    public Track getTrack(Track.Id trackId) {
-        if (trackId == null) {
-            return null;
-        }
+    public Track getTrack(@NonNull Track.Id trackId) {
         try (Cursor cursor = getTrackCursor(TracksColumns._ID + "=?", new String[]{Long.toString(trackId.getId())}, null)) {
             if (cursor != null && cursor.moveToNext()) {
                 return createTrack(cursor);
@@ -218,9 +214,6 @@ public class ContentProviderUtils {
         return null;
     }
 
-    /**
-     * @param trackUUID the track uuid.
-     */
     public Track getTrack(@NonNull UUID trackUUID) {
         String trackUUIDsearch = UUIDUtils.toHex(trackUUID);
         try (Cursor cursor = getTrackCursor("hex(" + TracksColumns.UUID + ")=?", new String[]{trackUUIDsearch}, null)) {
@@ -250,6 +243,7 @@ public class ContentProviderUtils {
      * @param track the track
      * @return the content provider URI of the inserted track.
      */
+    ///TODO Return Track.Id
     public Uri insertTrack(Track track) {
         return contentResolver.insert(TracksColumns.CONTENT_URI, createContentValues(track));
     }
@@ -422,21 +416,6 @@ public class ContentProviderUtils {
         return markers;
     }
 
-    //TODO Move to testing package
-    @Deprecated
-    public int getMarkerCount(Track.Id trackId) {
-        String[] projection = new String[]{"count(*) AS count"};
-        String selection = MarkerColumns.TRACKID + "=?";
-        String[] selectionArgs = new String[]{Long.toString(trackId.getId())};
-        try (Cursor cursor = contentResolver.query(MarkerColumns.CONTENT_URI, projection, selection, selectionArgs, MarkerColumns._ID)) {
-            if (cursor == null) {
-                return 0;
-            }
-            cursor.moveToFirst();
-            return cursor.getInt(0);
-        }
-    }
-
     /**
      * @return the content provider URI of the inserted marker.
      */
@@ -576,12 +555,22 @@ public class ContentProviderUtils {
     }
 
     //TODO Only used for file import; might be better to replace it.
+    //TODO Rename to bulkInsert
     public int bulkInsertTrackPoint(List<TrackPoint> trackPoints, Track.Id trackId) {
         ContentValues[] values = new ContentValues[trackPoints.size()];
         for (int i = 0; i < trackPoints.size(); i++) {
             values[i] = createContentValues(trackPoints.get(i), trackId);
         }
         return contentResolver.bulkInsert(TrackPointsColumns.CONTENT_URI_BY_ID, values);
+    }
+
+    //TODO Set trackId in this method.
+    public int bulkInsertMarkers(List<Marker> markers, Track.Id trackId) {
+        ContentValues[] values = new ContentValues[markers.size()];
+        for (int i = 0; i < markers.size(); i++) {
+            values[i] = createContentValues(markers.get(i));
+        }
+        return contentResolver.bulkInsert(MarkerColumns.CONTENT_URI, values);
     }
 
     /**
@@ -609,6 +598,7 @@ public class ContentProviderUtils {
      * @param location the location
      * @return trackPoint id if the location is in the track. -1L otherwise.
      */
+    @Deprecated
     public TrackPoint.Id getTrackPointId(Track.Id trackId, Location location) {
         String selection = TrackPointsColumns._ID + "=(SELECT MAX(" + TrackPointsColumns._ID + ") FROM " + TrackPointsColumns.TABLE_NAME + " WHERE " + TrackPointsColumns.TRACKID + "=? AND " + TrackPointsColumns.TIME + "=?)";
         String[] selectionArgs = new String[]{Long.toString(trackId.getId()), Long.toString(location.getTime())};
@@ -740,6 +730,7 @@ public class ContentProviderUtils {
         return new TrackPointIterator(this, trackId, startTrackPointId);
     }
 
+    @Deprecated
     private TrackPoint findTrackPointBy(String selection, String[] selectionArgs) {
         try (Cursor cursor = getTrackPointCursor(null, selection, selectionArgs, TrackPointsColumns._ID)) {
             if (cursor != null && cursor.moveToNext()) {

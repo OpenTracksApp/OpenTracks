@@ -91,17 +91,9 @@ limitations under the License.
     <string name="description_altitude_imperial">Надморска височина (фт)</string>
     <string name="description_altitude_metric">Надморска височина (м)</string>
     <string name="description_fastest_pace_in_minute">Най-бързо темпо: %1$s мин/км (%2$s мин/мил)</string>
-    <string name="description_location_accuracy">Точност (м)</string>
-    <string name="description_location_altitude">Надморска височина (м)</string>
-    <string name="description_location_bearing">Пеленг (градуси)</string>
-    <string name="description_location_latitude">Географска ширина (градуси)</string>
-    <string name="description_location_longitude">Географска дължина (градуси)</string>
-    <string name="description_location_speed">Скорост (м/сек)</string>
     <string name="description_max_altitude">Максимално изкачване: %1$d м (%2$d фута)</string>
-    <string name="description_max_grade">Максимален наклон: %1$d %%</string>
     <string name="description_max_speed">Максимална скорост: %1$.2f км/ч (%2$.1f мили/ч)</string>
     <string name="description_min_altitude">Минимално изкачване: %1$d м (%2$d фута)</string>
-    <string name="description_min_grade">Минимален наклон: %1$d %%</string>
     <string name="description_moving_time">Време на движение: %1$s</string>
     <string name="description_pace_imperial">Темпо (мин/мил)</string>
     <string name="description_pace_metric">Темпо (мин/км)</string>
@@ -115,8 +107,6 @@ limitations under the License.
     <string name="description_time">Време</string>
     <string name="description_total_distance">Общо разстояние: %1$.2f км (%2$.1f мили)</string>
     <string name="description_total_time">Общо време: %1$s</string>
-    <string name="description_track_point">Точка</string>
-    <string name="description_track_segment">Сегмент</string>
     <!-- Export -->
     <string name="export_all_option">Всичко като %1$s</string>
     <string name="export_all_title">Експортиране във външно хранилище</string>
@@ -127,16 +117,12 @@ limitations under the License.
     <string name="export_title">Експортиране във…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d файла</string>
-    <string name="files_many">%1$d файла</string>
-    <string name="files_one">1 файл</string>
-    <string name="files_other">%1$d файла</string>
-    <string name="files_two">2 файла</string>
-    <string name="files_zero">0 файла</string>
+    <plurals name="files">
+        <item quantity="one">1 файл</item>
+        <item quantity="other">%1$d файла</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Прибавяне</string>
-    <string name="generic_cancel">Отказ</string>
-    <string name="generic_delete_all_confirm_title">Да се изтрият ли всички?</string>
     <string name="generic_delete_selected_confirm_title">Да се изтрият ли избраните?</string>
     <string name="generic_description">Описание</string>
     <string name="generic_description_line">Описание: %1$s</string>
@@ -144,19 +130,12 @@ limitations under the License.
     <string name="generic_name">Име</string>
     <string name="generic_name_line">Име: %1$s</string>
     <string name="generic_no">Не</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">На пауза</string>
-    <string name="generic_progress_title">Моля, изчакайте…</string>
     <string name="generic_recording">Записва се…</string>
     <string name="generic_save">Запазване</string>
     <string name="generic_success_title">Успех</string>
     <string name="generic_tracks">Маршрути</string>
-    <string name="generic_yes">Да</string>
     <!-- Gps -->
-    <string name="gps_location_access">„Достъп до местоположението“</string>
-    <string name="gps_disabled">GPS не е активиран. Докоснете тук, за да отидете на %1$s. Натиснете бутона за назад, за да се върнете.</string>
-    <string name="gps_disabled_my_location">Текущото местоположение не може да бъде определено. Активирайте още източници на местоположение от %1$s и се уверете, че небето се вижда. Опитайте отново по-късно.</string>
-    <string name="gps_not_found">Няма намерен GPS на устройството.</string>
     <string name="gps_starting">GPS се включва.</string>
     <string name="gps_wait_for_better_signal">Изчаква се по-добър сигнал за GPS.</string>
     <string name="gps_wait_for_signal">Изчаква се сигнал за GPS.</string>
@@ -165,7 +144,6 @@ limitations under the License.
     <string name="image_arrow">Стрелка</string>
     <string name="image_marker">Маркер</string>
     <string name="image_marker_count">Брой маркери</string>
-    <string name="image_my_location">Моето местоположение</string>
     <string name="image_pause">Пауза</string>
     <string name="image_photo_marker">Маркер за снимки</string>
     <string name="image_record">Запис</string>
@@ -185,17 +163,14 @@ limitations under the License.
     <string name="marker_add_error">Маркерът не може да се вмъкне. Няма сигнал за GPS. Опитайте отново.</string>
     <string name="marker_add_success">Маркерът бе вмъкнат.</string>
     <string name="marker_add_canceled">Добавянето на маркер бе отменено.</string>
-    <string name="marker_delete_all_confirm_message">Всички маркери за този маршрут ще бъдат окончателно изтрити от устройството.</string>
     <string name="marker_delete_one_confirm_message">Маркерът ще бъде окончателно изтрит от устройството.</string>
     <string name="marker_delete_one_confirm_title">Да се изтрие ли маркерът?</string>
     <string name="marker_delete_multiple_confirm_message">Избраните маркери ще бъдат окончателно изтрити от устройството.</string>
     <string name="marker_label_end">%1$s (Край)</string>
     <string name="marker_label_start">%1$s (Начало)</string>
     <string name="marker_name_format">Маркер %1$d</string>
-    <string name="marker_split_name_format">Разделяне %1$d</string>
     <string name="marker_title">%1$d от %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">От последния разделителен маркер:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Тип маркер (напр. водопад)</string>
     <string name="marker_edit_marker_type_hint">Тип маркер</string>
@@ -213,11 +188,9 @@ limitations under the License.
     <string name="menu_markers">Маркери</string>
     <string name="menu_search">Търсене</string>
     <string name="menu_select_all">Избиране на всички</string>
-    <string name="menu_sensor_state">Състояние на сензора</string>
     <string name="menu_settings">Настройки</string>
     <string name="menu_share">Споделяне</string>
     <string name="menu_show_on_map">Показване на картата</string>
-    <string name="menu_split_frequency">Честота на разделяне</string>
     <string name="menu_start_gps">Стартиране на GPS</string>
     <string name="menu_stop_gps">Спиране на GPS</string>
     <string name="menu_view_photo">Показв. на снимката</string>
@@ -227,12 +200,10 @@ limitations under the License.
     <!-- Search -->
     <string name="search_global_description">Маршрути и маркери</string>
     <string name="search_list_empty_message">Няма маршрути или маркери, отговарящи на търсените от вас.</string>
-    <string name="search_list_marker_track_location">В маршрут „%1$s“.</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Ниво на батерията</string>
     <string name="sensor_state_cadence">Такт</string>
     <string name="sensor_state_cadence_value">%1$d об/мин</string>
-    <string name="sensor_state_disconnected">Изключено</string>
     <string name="sensor_state_heart_rate">Сърдечен ритъм</string>
     <string name="sensor_state_heart_rate_value">%1$d уд/мин</string>
     <string name="sensor_state_power">Захранване</string>
@@ -244,7 +215,6 @@ limitations under the License.
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">По разстояние</string>
     <string name="settings_chart_by_time">По време</string>
-    <string name="settings_chart_x_axis">Ос X</string>
     <string name="settings_recording">Записване</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Записването се възобновява винаги след рестартиране</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Записването не се възобновява никога след рестартиране</string>
@@ -268,7 +238,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Да се зададе ли повторно сега?</string>
     <string name="settings_reset_done">Всички настройки са възстановени до стойностите по подразбиране.</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Сензор</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth сензор</string>
     <!-- Settings Stats -->
@@ -291,12 +260,9 @@ limitations under the License.
     <string name="stats_altitude">Надморска височина</string>
     <string name="stats_fastest_pace">Най-бързо темпо</string>
     <string name="stats_gain">Увеличаване</string>
-    <string name="stats_grade">Наклон</string>
     <string name="stats_latitude">Географска ширина</string>
     <string name="stats_longitude">Географска дължина</string>
-    <string name="stats_max">Макс.</string>
     <string name="stats_max_speed">Максимална скорост</string>
-    <string name="stats_min">Мин.</string>
     <string name="stats_moving_time">Време на движението</string>
     <string name="stats_pace">Темпо</string>
     <string name="stats_speed">Скорост</string>
@@ -322,12 +288,6 @@ limitations under the License.
     <string name="track_list_empty_message">Започнете да записвате следващото си приключение тук.</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d маршрута</string>
-    <string name="tracks_many">%1$d маршрута</string>
-    <string name="tracks_one">1 маршрут</string>
-    <string name="tracks_other">%1$d маршрута</string>
-    <string name="tracks_two">2 маршрута</string>
-    <string name="tracks_zero">0 маршрута</string>
     <!-- Unit -->
     <string name="unit_feet">фт</string>
     <string name="unit_kilometer">км</string>
@@ -341,11 +301,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Адаптиране за точност</string>
     <string name="value_adapt_battery_life">Адаптиране спрямо батерията</string>
     <string name="value_always">Винаги</string>
-    <string name="value_float_feet">%1$.2f фт</string>
-    <string name="value_float_kilometer">%1$.2f км</string>
-    <string name="value_float_meter">%1$.2f м</string>
-    <string name="value_float_mile">%1$.2f мил</string>
-    <string name="value_float_mile_poor_gps">%1$.1f мил (слаб GPS)</string>
     <string name="value_integer_feet">%1$d фт</string>
     <string name="value_integer_feet_excellent_gps">%1$d фт (отличен GPS)</string>
     <string name="value_integer_feet_recommended">%1$d фт (препоръчително)</string>
@@ -365,52 +320,37 @@ limitations under the License.
     <string name="value_smallest">Най-малката</string>
     <string name="value_smallest_recommended">Най-малкото (препоръчително)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d часа</string>
-    <string name="voice_hours_many">%1$d часа</string>
-    <string name="voice_hours_one">1 час</string>
-    <string name="voice_hours_other">%1$d часа</string>
-    <string name="voice_hours_two">2 часа</string>
-    <string name="voice_hours_zero">0 часа</string>
-    <string name="voice_minutes_few">%1$d минути</string>
-    <string name="voice_minutes_many">%1$d минути</string>
-    <string name="voice_minutes_one">1 минута</string>
-    <string name="voice_minutes_other">%1$d минути</string>
-    <string name="voice_minutes_two">2 минути</string>
-    <string name="voice_minutes_zero">0 минути</string>
+    <plurals name="voiceHours">
+        <item quantity="one">1 час</item>
+        <item quantity="other">%1$d часа</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">1 минута</item>
+        <item quantity="other">%1$d минути</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">1 секунда</item>
+        <item quantity="other">%1$d секунди</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">1 километър в час</item>
+        <item quantity="other">%1$.1f километра в час</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">1 миля в час</item>
+        <item quantity="other">%1$.1f мили в час</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s на километър</string>
     <string name="voice_pace_per_mile">%1$s на миля</string>
-    <string name="voice_seconds_few">%1$d секунди</string>
-    <string name="voice_seconds_many">%1$d секунди</string>
-    <string name="voice_seconds_one">1 секунда</string>
-    <string name="voice_seconds_other">%1$d секунди</string>
-    <string name="voice_seconds_two">2 секунди</string>
-    <string name="voice_seconds_zero">0 секунди</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f километра в час</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f километра в час</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 километър в час</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f километра в час</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 километра в час</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 километра в час</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f мили в час</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f мили в час</string>
-    <string name="voice_speed_miles_per_hour_one">1 миля в час</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f мили в час</string>
-    <string name="voice_speed_miles_per_hour_two">2 мили в час</string>
-    <string name="voice_speed_miles_per_hour_zero">0 мили в час</string>
-    <string name="voice_template">Моите маршрути: %1$s за %2$s при %3$s</string>
-    <string name="voice_total_distance_kilometers_few">общо разстояние %1$.2f километра</string>
-    <string name="voice_total_distance_kilometers_many">общо разстояние %1$.2f километра</string>
-    <string name="voice_total_distance_kilometers_one">общо разстояние 1 километър</string>
-    <string name="voice_total_distance_kilometers_other">общо разстояние %1$.2f километра</string>
-    <string name="voice_total_distance_kilometers_two">общо разстояние 2 километра</string>
-    <string name="voice_total_distance_kilometers_zero">общо разстояние 0 километра</string>
-    <string name="voice_total_distance_miles_few">общо разстояние %1$.2f мили</string>
-    <string name="voice_total_distance_miles_many">общо разстояние %1$.2f мили</string>
-    <string name="voice_total_distance_miles_one">общо разстояние 1 миля</string>
-    <string name="voice_total_distance_miles_other">общо разстояние %1$.2f мили</string>
-    <string name="voice_total_distance_miles_two">общо разстояние 2 мили</string>
-    <string name="voice_total_distance_miles_zero">общо разстояние 0 мили</string>
-    <string name="voice_total_distance_zero">Общото разстояние в Моите маршрути е нула.</string>
+    <string name="voice_template">%1$s за %2$s при %3$s</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">общо разстояние 1 километър</item>
+        <item quantity="other">общо разстояние %1$.2f километра</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">общо разстояние 1 миля</item>
+        <item quantity="other">общо разстояние %1$.2f мили</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Банкомат</string>
     <string name="waypoint_type_bank">банка</string>

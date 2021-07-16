@@ -91,17 +91,9 @@ limitations under the License.
     <string name="description_altitude_imperial">Aukštis (pėd.)</string>
     <string name="description_altitude_metric">Aukštis (m)</string>
     <string name="description_fastest_pace_in_minute">Greičiausias tempas: %1$s min./km (%2$s min./myl.)</string>
-    <string name="description_location_accuracy">Tikslumas (m)</string>
-    <string name="description_location_altitude">Aukštis virš jūros lygio (m)</string>
-    <string name="description_location_bearing">Pelengas (laipsniai)</string>
-    <string name="description_location_latitude">Platuma (laipsniai)</string>
-    <string name="description_location_longitude">Ilguma (laipsniai)</string>
-    <string name="description_location_speed">Greitis (m/s)</string>
     <string name="description_max_altitude">Maks. aukštis: %1$d m (%2$d pėd.)</string>
-    <string name="description_max_grade">Maks. nuolydis: %1$d %%</string>
     <string name="description_max_speed">Maks. greitis: %1$.2f km/val. (%2$.1f myl./val.)</string>
     <string name="description_min_altitude">Min. aukštis: %1$d m (%2$d pėd.)</string>
-    <string name="description_min_grade">Min. nuolydis: %1$d %%</string>
     <string name="description_moving_time">Judėjimo trukmė: %1$s</string>
     <string name="description_pace_imperial">Tempas (min./myl.)</string>
     <string name="description_pace_metric">Tempas (min./km)</string>
@@ -115,8 +107,6 @@ limitations under the License.
     <string name="description_time">Laikas</string>
     <string name="description_total_distance">Visas atstumas: %1$.2f km (%2$.1f myl.)</string>
     <string name="description_total_time">Visa trukmė: %1$s</string>
-    <string name="description_track_point">Taškas</string>
-    <string name="description_track_segment">Atkarpa</string>
     <!-- Export -->
     <string name="export_all_option">Visi kaip %1$s</string>
     <string name="export_all_title">Eksportuoti į išorinę saugyklą</string>
@@ -127,16 +117,13 @@ limitations under the License.
     <string name="export_title">Eksportuoti į…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d failai</string>
-    <string name="files_many">%1$d failai</string>
-    <string name="files_one">1 failas</string>
-    <string name="files_other">%1$d failų</string>
-    <string name="files_two">2 failai</string>
-    <string name="files_zero">0 failų</string>
+    <plurals name="files">
+        <item quantity="one">%1$d failas</item>
+        <item quantity="few">%1$d failai</item>
+        <item quantity="other">%1$d failų</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Papildyti</string>
-    <string name="generic_cancel">Atšaukti</string>
-    <string name="generic_delete_all_confirm_title">Ištrinti viską?</string>
     <string name="generic_delete_selected_confirm_title">Ištrinti pasirinktus?</string>
     <string name="generic_description">Aprašymas</string>
     <string name="generic_description_line">Aprašymas: %1$s</string>
@@ -144,20 +131,12 @@ limitations under the License.
     <string name="generic_name">Vardas</string>
     <string name="generic_name_line">Vardas: %1$s</string>
     <string name="generic_no">Ne</string>
-    <string name="generic_ok">Gerai</string>
     <string name="generic_paused">Pristabdyta</string>
-    <string name="generic_progress_title">Palaukite…</string>
     <string name="generic_recording">Įrašoma…</string>
     <string name="generic_save">Išsaugoti</string>
     <string name="generic_success_title">Pavyko</string>
     <string name="generic_tracks">Maršrutai</string>
-    <string name="generic_yes">Taip</string>
     <!-- Gps -->
-    <string name="gps_location_access">Vietos prieiga</string>
-    <string name="gps_disabled">GPS neįjungtas. Palieskite čia, jei norite pereiti prie %1$s. Paspauskite grįžimo mygtuką, jei norite grįžti.</string>
-    <string name="gps_disabled_my_location">Dabartinės vietos nustatyti negalima. %1$s įgalinkite daugiau vietos šaltinių ir įsitikinkite, kad
-    matomas dangus. Bandykite dar kartą vėliau.</string>
-    <string name="gps_not_found">Įrenginyje nerasta GPS</string>
     <string name="gps_starting">Paleidžiama GPS</string>
     <string name="gps_wait_for_better_signal">Laukiama geresnio GPS signalo</string>
     <string name="gps_wait_for_signal">Laukiama GPS signalo</string>
@@ -166,7 +145,6 @@ limitations under the License.
     <string name="image_arrow">Rodyklė</string>
     <string name="image_marker">Žymeklis</string>
     <string name="image_marker_count">Žymeklių skaičius</string>
-    <string name="image_my_location">Mano vieta</string>
     <string name="image_pause">Pristabdyti</string>
     <string name="image_photo_marker">Nuotraukos žymeklis</string>
     <string name="image_record">Įrašyti</string>
@@ -186,17 +164,14 @@ limitations under the License.
     <string name="marker_add_error">Nepavyko įterpti žymeklio. Nėra GPS signalo. Bandykite dar kartą.</string>
     <string name="marker_add_success">Žymeklis įterptas</string>
     <string name="marker_add_canceled">Atšaukta, žymeklių nepridėta</string>
-    <string name="marker_delete_all_confirm_message">Visi šio maršruto žymekliai bus visam laikui ištrinti iš įrenginio</string>
     <string name="marker_delete_one_confirm_message">Žymeklis bus visam laikui ištrintas iš įrenginio</string>
     <string name="marker_delete_one_confirm_title">Ištrinti žymeklį?</string>
     <string name="marker_delete_multiple_confirm_message">Pasirinkti žymekliai bus visam laikui ištrinti iš įrenginio</string>
     <string name="marker_label_end">%1$s (pabaiga)</string>
     <string name="marker_label_start">%1$s (pradžia)</string>
     <string name="marker_name_format">Žymeklis %1$d</string>
-    <string name="marker_split_name_format">Išskaidymas %1$d</string>
     <string name="marker_title">%1$d iš %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">Nuo praeito žymeklių sudėjimo:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Žymeklio tipas (pvz., krioklys)</string>
     <string name="marker_edit_marker_type_hint">Žymeklio tipas</string>
@@ -214,11 +189,9 @@ limitations under the License.
     <string name="menu_markers">Žymekliai</string>
     <string name="menu_search">Ieškoti</string>
     <string name="menu_select_all">Pasirinkti viską</string>
-    <string name="menu_sensor_state">Jutiklio būsena</string>
     <string name="menu_settings">Nustatymai</string>
     <string name="menu_share">Bendrinti</string>
     <string name="menu_show_on_map">Rodyti žemėlapyje</string>
-    <string name="menu_split_frequency">Išskaidymo dažnumas</string>
     <string name="menu_start_gps">Įjungti GPS</string>
     <string name="menu_stop_gps">Išjungti GPS</string>
     <string name="menu_view_photo">Žiūrėti nuotrauką</string>
@@ -228,12 +201,10 @@ limitations under the License.
     <!-- Search -->
     <string name="search_global_description">Maršrutai ir maršrutų vietos</string>
     <string name="search_list_empty_message">Jūsų paieškos neatitiko jokie maršrutai ar žymekliai</string>
-    <string name="search_list_marker_track_location">Maršrute \'%1$s\'.</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Akumuliatoriaus lygis</string>
     <string name="sensor_state_cadence">Kadencija</string>
     <string name="sensor_state_cadence_value">%1$d aps./min.</string>
-    <string name="sensor_state_disconnected">Atjungta</string>
     <string name="sensor_state_heart_rate">Širdies susitr. dažnis</string>
     <string name="sensor_state_heart_rate_value">%1$d dūž./min.</string>
     <string name="sensor_state_power">Maitinimas</string>
@@ -245,7 +216,6 @@ limitations under the License.
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Pagal atstumą</string>
     <string name="settings_chart_by_time">Pagal laiką</string>
-    <string name="settings_chart_x_axis">X ašis</string>
     <string name="settings_recording">Įrašymas</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Visada atnaujinti įrašą po paleidimo iš naujo.</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Niekada neatnaujinti įrašo po paleidimo iš naujo.</string>
@@ -269,7 +239,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Nustatyti iš naujo dabar?</string>
     <string name="settings_reset_done">Visi nustatymai buvo grąžinti į numatytąsias reikšmes</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Jutiklis</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">„Bluetooth“ jutiklis</string>
     <!-- Settings Stats -->
@@ -292,12 +261,9 @@ limitations under the License.
     <string name="stats_altitude">Pakilimas</string>
     <string name="stats_fastest_pace">Greičiausias tempas</string>
     <string name="stats_gain">Pelnas</string>
-    <string name="stats_grade">Laipsnis</string>
     <string name="stats_latitude">Platuma</string>
     <string name="stats_longitude">Ilguma</string>
-    <string name="stats_max">Maks.</string>
     <string name="stats_max_speed">Maks. greitis</string>
-    <string name="stats_min">Min.</string>
     <string name="stats_moving_time">Judėjimo trukmė</string>
     <string name="stats_pace">Tempas</string>
     <string name="stats_speed">Greitis</string>
@@ -323,12 +289,6 @@ limitations under the License.
     <string name="track_list_empty_message">Čia pradėkite įrašyti savo naują nuotykį</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d maršrutai</string>
-    <string name="tracks_many">%1$d maršrutai</string>
-    <string name="tracks_one">1 maršrutas</string>
-    <string name="tracks_other">%1$d maršrutų</string>
-    <string name="tracks_two">2 maršrutai</string>
-    <string name="tracks_zero">0 maršrutų</string>
     <!-- Unit -->
     <string name="unit_feet">pėd.</string>
     <string name="unit_kilometer">km</string>
@@ -342,11 +302,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Pritaikyti siekiant tikslumo</string>
     <string name="value_adapt_battery_life">Pritaik. taus. akum.</string>
     <string name="value_always">Visada</string>
-    <string name="value_float_feet">%1$.2f pėd.</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f myl.</string>
-    <string name="value_float_mile_poor_gps">%1$.1f myl. (prastas GPS)</string>
     <string name="value_integer_feet">%1$d pėd.</string>
     <string name="value_integer_feet_excellent_gps">%1$d pėd. (puikus GPS)</string>
     <string name="value_integer_feet_recommended">%1$d pėd. (rekomenduojama)</string>
@@ -366,52 +321,12 @@ limitations under the License.
     <string name="value_smallest">Mažiausia</string>
     <string name="value_smallest_recommended">Mažiausia (rekomenduojama)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d val.</string>
-    <string name="voice_hours_many">%1$d val.</string>
-    <string name="voice_hours_one">1 val.</string>
-    <string name="voice_hours_other">%1$d val.</string>
-    <string name="voice_hours_two">2 valandos</string>
-    <string name="voice_hours_zero">{0}[NULIS]{/0}# val.</string>
-    <string name="voice_minutes_few">%1$d min.</string>
-    <string name="voice_minutes_many">%1$d min.</string>
-    <string name="voice_minutes_one">1 min.</string>
-    <string name="voice_minutes_other">%1$d min.</string>
-    <string name="voice_minutes_two">2 min.</string>
-    <string name="voice_minutes_zero">0 min.</string>
-    <string name="voice_pace_per_kilometer">%1$s per km</string>
-    <string name="voice_pace_per_mile">%1$s per myl.</string>
-    <string name="voice_seconds_few">%1$d sek.</string>
-    <string name="voice_seconds_many">%1$d sek.</string>
-    <string name="voice_seconds_one">1 sek.</string>
-    <string name="voice_seconds_other">%1$d sek.</string>
-    <string name="voice_seconds_two">2 sek.</string>
-    <string name="voice_seconds_zero">{0}[DVI]{/0}# sek.</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f km per valandą</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f km per valandą</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 kilometras per valandą</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f km per valandą</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 kilometrai per valandą</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 kilometrų per valandą</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f myl. per val.</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f myl. per val.</string>
-    <string name="voice_speed_miles_per_hour_one">1 myl. per val.</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f myl. per val.</string>
-    <string name="voice_speed_miles_per_hour_two">2 mylios per val.</string>
-    <string name="voice_speed_miles_per_hour_zero">0 mylių per valandą</string>
-    <string name="voice_template">Mano kelionės: %1$s per %2$s, %3$s greičiu</string>
-    <string name="voice_total_distance_kilometers_few">bendras atstumas %1$.2f km</string>
-    <string name="voice_total_distance_kilometers_many">bendras atstumas %1$.2f km</string>
-    <string name="voice_total_distance_kilometers_one">bendras atstumas 1 kilometras</string>
-    <string name="voice_total_distance_kilometers_other">bendras atstumas %1$.2f km</string>
-    <string name="voice_total_distance_kilometers_two">bendras atstumas 2 kilometrai</string>
-    <string name="voice_total_distance_kilometers_zero">bendras atstumas 0 kilometrų</string>
-    <string name="voice_total_distance_miles_few">bendras atstumas %1$.2f myl.</string>
-    <string name="voice_total_distance_miles_many">bendras atstumas %1$.2f myl.</string>
-    <string name="voice_total_distance_miles_one">bendras atstumas 1 mylia</string>
-    <string name="voice_total_distance_miles_other">bendras atstumas %1$.2f myl.</string>
-    <string name="voice_total_distance_miles_two">bendras atstumas 2 mylios</string>
-    <string name="voice_total_distance_miles_zero">bendras atstumas 0 mylių</string>
-    <string name="voice_total_distance_zero">Mano kelionių bendras atstumas lygus nuliui.</string>
+    <string name="voice_template">%1$s per %2$s, %3$s greičiu</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">bendras atstumas %1$.2f kilometras</item>
+        <item quantity="few">bendras atstumas %1$.2f kilometrai</item>
+        <item quantity="other">bendras atstumas %1$.2f kilometrų</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">bankas</string>

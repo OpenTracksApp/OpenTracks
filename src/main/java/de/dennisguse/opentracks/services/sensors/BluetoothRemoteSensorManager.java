@@ -22,9 +22,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorData;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
@@ -57,7 +61,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
     private boolean started = false;
 
     private final SharedPreferences sharedPreferences;
-    private int preferenceWheelCircumference;
+    private Distance preferenceWheelCircumference;
 
     private final BluetoothConnectionManager.HeartRate heartRate = new BluetoothConnectionManager.HeartRate(this);
     private final BluetoothConnectionManager.CyclingCadence cyclingCadence = new BluetoothConnectionManager.CyclingCadence(this);
@@ -157,8 +161,12 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         }
     }
 
-    public SensorDataSet getSensorData() {
-        return sensorDataSet;
+    public void fill(@NonNull TrackPoint trackPoint) {
+        sensorDataSet.fillTrackPoint(trackPoint);
+    }
+
+    public SensorDataSet getSensorDataSet() {
+        return new SensorDataSet(sensorDataSet);
     }
 
     public void reset() {

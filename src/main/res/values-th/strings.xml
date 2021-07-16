@@ -91,17 +91,9 @@ limitations under the License.
     <string name="description_altitude_imperial">ระดับความสูง (ฟุต)</string>
     <string name="description_altitude_metric">ระดับความสูง (เมตร)</string>
     <string name="description_fastest_pace_in_minute">อัตราก้าวสูงสุด: %1$s นาที/กม. (%2$s นาที/ไมล์)</string>
-    <string name="description_location_accuracy">ความแม่นยำ (ม.)</string>
-    <string name="description_location_altitude">ระดับความสูง (ม.)</string>
-    <string name="description_location_bearing">ทิศทางการเคลื่อนที่ (องศา)</string>
-    <string name="description_location_latitude">ละติจูด (องศา)</string>
-    <string name="description_location_longitude">ลองจิจูด (องศา)</string>
-    <string name="description_location_speed">ความเร็ว (ม./วินาที)</string>
     <string name="description_max_altitude">ระดับความสูงสูงสุด: %1$d ม. (%2$d ฟุต)</string>
-    <string name="description_max_grade">ความลาดสูงสุด: %1$d %%</string>
     <string name="description_max_speed">ความเร็วสูงสุด: %1$.2f กม./ชม. (%2$.1f ไมล์/ชม.)</string>
     <string name="description_min_altitude">ระดับความสูงต่ำสุด: %1$d ม. (%2$d ฟุต)</string>
-    <string name="description_min_grade">ความลาดต่ำสุด: %1$d %%</string>
     <string name="description_moving_time">เวลาการเคลื่อนที่: %1$s</string>
     <string name="description_pace_imperial">อัตราก้าว (นาที/ไมล์)</string>
     <string name="description_pace_metric">อัตราก้าว (นาที/กม.)</string>
@@ -115,8 +107,6 @@ limitations under the License.
     <string name="description_time">เวลา</string>
     <string name="description_total_distance">รวมระยะทาง: %1$.2f กม. (%2$.1f ไมล์)</string>
     <string name="description_total_time">เวลาทั้งหมด: %1$s</string>
-    <string name="description_track_point">จุด</string>
-    <string name="description_track_segment">ส่วน</string>
     <!-- Export -->
     <string name="export_all_option">ทั้งหมดเป็น %1$s</string>
     <string name="export_all_title">ส่งออกไปยังที่จัดเก็บข้อมูลภายนอก</string>
@@ -127,16 +117,11 @@ limitations under the License.
     <string name="export_title">ส่งออกลงใน…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d ไฟล์</string>
-    <string name="files_many">%1$d ไฟล์</string>
-    <string name="files_one">1 ไฟล์</string>
-    <string name="files_other">%1$d ไฟล์</string>
-    <string name="files_two">2 ไฟล์</string>
-    <string name="files_zero">0 ไฟล์</string>
+    <plurals name="files">
+        <item quantity="other">%1$d ไฟล</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">เพิ่ม</string>
-    <string name="generic_cancel">ยกเลิก</string>
-    <string name="generic_delete_all_confirm_title">ลบทั้งหมดใช่ไหม</string>
     <string name="generic_delete_selected_confirm_title">ลบรายการที่เลือกใช่ไหม</string>
     <string name="generic_description">รายละเอียด</string>
     <string name="generic_description_line">รายละเอียด: %1$s</string>
@@ -144,19 +129,12 @@ limitations under the License.
     <string name="generic_name">ชื่อ</string>
     <string name="generic_name_line">ชื่อ: %1$s</string>
     <string name="generic_no">ไม่</string>
-    <string name="generic_ok">ตกลง</string>
     <string name="generic_paused">หยุดชั่วคราว</string>
-    <string name="generic_progress_title">โปรดรอสักครู่…</string>
     <string name="generic_recording">กำลังบันทึก…</string>
     <string name="generic_save">บันทึก</string>
     <string name="generic_success_title">สำเร็จ</string>
     <string name="generic_tracks">เส้นการเดินทาง</string>
-    <string name="generic_yes">ใช่</string>
     <!-- Gps -->
-    <string name="gps_location_access">การเข้าถึงข้อมูลตำแหน่ง</string>
-    <string name="gps_disabled">ไม่ได้เปิดใช้งาน GPS กดที่นี่เพื่อไปที่ %1$s โปรดกดปุ่มย้อนกลับเพื่อกลับไป</string>
-    <string name="gps_disabled_my_location">ไม่สามารถกำหนดตำแหน่งปัจจุบันได้ เปิดใช้งานแหล่งข้อมูลตำแหน่งเพิ่มเติมที่ %1$s และตรวจดูให้แน่ใจว่าสามารถมองเห็นท้องฟ้าได้ แล้วลองอีกครั้งในภายหลัง</string>
-    <string name="gps_not_found">ไม่พบ GPS บนอุปกรณ์</string>
     <string name="gps_starting">กำลังเริ่ม GPS</string>
     <string name="gps_wait_for_better_signal">กำลังรอสัญญาณ GPS ที่ดีกว่านี้</string>
     <string name="gps_wait_for_signal">กำลังรอสัญญาณ GPS</string>
@@ -165,7 +143,6 @@ limitations under the License.
     <string name="image_arrow">ลูกศร</string>
     <string name="image_marker">เครื่องหมาย</string>
     <string name="image_marker_count">จำนวนเครื่องหมาย</string>
-    <string name="image_my_location">ตำแหน่งของฉัน</string>
     <string name="image_pause">หยุด</string>
     <string name="image_photo_marker">เครื่องหมายรูปภาพ</string>
     <string name="image_record">บันทึก</string>
@@ -184,17 +161,14 @@ limitations under the License.
     <string name="marker_add_error">ไม่สามารถใส่เครื่องหมายได้ เนื่องจากไม่มีสัญญาณ GPS โปรดลองอีกครั้ง</string>
     <string name="marker_add_success">ใส่เครื่องหมายแล้ว</string>
     <string name="marker_add_canceled">ยกเลิกแล้ว ไม่มีการเพิ่มเครื่องหมาย</string>
-    <string name="marker_delete_all_confirm_message">เครื่องหมายทั้งหมดสำหรับเส้นการเดินทางนี้จะถูกลบออกอย่างถาวรจากอุปกรณ์</string>
     <string name="marker_delete_one_confirm_message">เครื่องหมายจะถูกลบออกจากอุปกรณ์อย่างถาวร</string>
     <string name="marker_delete_one_confirm_title">ลบเครื่องหมายไหม</string>
     <string name="marker_delete_multiple_confirm_message">เครื่องหมายที่เลือกจะถูกลบออกจากอุปกรณ์อย่างถาวร</string>
     <string name="marker_label_end">%1$s (สิ้นสุด)</string>
     <string name="marker_label_start">%1$s (เริ่ม)</string>
     <string name="marker_name_format">เครื่องหมาย %1$d</string>
-    <string name="marker_split_name_format">แยก %1$d</string>
     <string name="marker_title">%1$d จาก %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">ตั้งแต่เครื่องหมายแยกล่าสุด:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">ประเภทเครื่องหมาย (เช่น น้ำตก)</string>
     <string name="marker_edit_marker_type_hint">ประเภทเครื่องหมาย</string>
@@ -212,11 +186,9 @@ limitations under the License.
     <string name="menu_markers">เครื่องหมาย</string>
     <string name="menu_search">ค้นหา</string>
     <string name="menu_select_all">เลือกทั้งหมด</string>
-    <string name="menu_sensor_state">สถานะเซ็นเซอร์</string>
     <string name="menu_settings">การตั้งค่า</string>
     <string name="menu_share">แบ่งปัน</string>
     <string name="menu_show_on_map">แสดงบนแผนที่</string>
-    <string name="menu_split_frequency">ความถี่การแยก</string>
     <string name="menu_start_gps">เริ่ม GPS</string>
     <string name="menu_stop_gps">หยุด GPS</string>
     <string name="menu_view_photo">ดูรูปภาพ</string>
@@ -226,12 +198,10 @@ limitations under the License.
     <!-- Search -->
     <string name="search_global_description">เส้นการเดินทางและเครื่องหมาย</string>
     <string name="search_list_empty_message">ไม่มีเส้นการเดินทางหรือเครื่องหมายที่ตรงกับการค้นหาของคุณ</string>
-    <string name="search_list_marker_track_location">ในเส้นการเดินทาง \"%1$s\"</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">ระดับแบตเตอรี่</string>
     <string name="sensor_state_cadence">รอบขา</string>
     <string name="sensor_state_cadence_value">%1$d รอบต่อนาที</string>
-    <string name="sensor_state_disconnected">ไม่ได้เชื่อมต่อ</string>
     <string name="sensor_state_heart_rate">อัตราการเต้นหัวใจ</string>
     <string name="sensor_state_heart_rate_value">%1$d ครั้งต่อนาที</string>
     <string name="sensor_state_power">กำลัง</string>
@@ -243,7 +213,6 @@ limitations under the License.
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">ตามระยะทาง</string>
     <string name="settings_chart_by_time">ตามเวลา</string>
-    <string name="settings_chart_x_axis">แกน X</string>
     <string name="settings_recording">การบันทึก</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">บันทึกต่อหลังจากรีบูตเสมอ</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">ไม่บันทึกต่อหลังจากรีบูต</string>
@@ -267,7 +236,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">รีเซ็ตเลยไหม</string>
     <string name="settings_reset_done">การตั้งค่าทั้งหมดถูกเปลี่ยนกลับไปเป็นค่าเริ่มต้นแล้ว</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">เซ็นเซอร์</string>
     <string name="settings_sensor_bluetooth">บลูทูธ</string>
     <string name="settings_sensor_bluetooth_sensor">เซ็นเซอร์บลูทูธ</string>
     <!-- Settings Stats -->
@@ -289,12 +257,9 @@ limitations under the License.
     <string name="stats_altitude">ระดับความสูง</string>
     <string name="stats_fastest_pace">อ้ตราก้าวที่เร็วที่สุด</string>
     <string name="stats_gain">เพิ่มค่า</string>
-    <string name="stats_grade">ระดับความเอียง</string>
     <string name="stats_latitude">ละติจูด</string>
     <string name="stats_longitude">ลองจิจูด</string>
-    <string name="stats_max">สูงสุด</string>
     <string name="stats_max_speed">ความเร็วสูงสุด</string>
-    <string name="stats_min">ต่ำสุด</string>
     <string name="stats_moving_time">เวลาเดินทาง</string>
     <string name="stats_pace">อัตราก้าว</string>
     <string name="stats_speed">ความเร็ว</string>
@@ -320,12 +285,6 @@ limitations under the License.
     <string name="track_list_empty_message">เริ่มบันทึกผจญภัยต่อไปของคุณที่นี่</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d เส้นการเดินทาง</string>
-    <string name="tracks_many">%1$d เส้นการเดินทาง</string>
-    <string name="tracks_one">1 เส้นการเดินทาง</string>
-    <string name="tracks_other">%1$d เส้นการเดินทาง</string>
-    <string name="tracks_two">2 เส้นการเดินทาง</string>
-    <string name="tracks_zero">0 เส้นการเดินทาง</string>
     <!-- Unit -->
     <string name="unit_feet">ฟุต</string>
     <string name="unit_kilometer">กม.</string>
@@ -339,11 +298,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">ปรับความแม่นยำ</string>
     <string name="value_adapt_battery_life">ปรับเพื่อแบตเตอรี่</string>
     <string name="value_always">เปิดใช้งานเสมอ</string>
-    <string name="value_float_feet">%1$.2f ฟุต</string>
-    <string name="value_float_kilometer">%1$.2f กม.</string>
-    <string name="value_float_meter">%1$.2f ม.</string>
-    <string name="value_float_mile">%1$.2f ไมล์</string>
-    <string name="value_float_mile_poor_gps">%1$.1f ไมล์ (สัญญาณ GPS ไม่ดี)</string>
     <string name="value_integer_feet">%1$d ฟุต</string>
     <string name="value_integer_feet_excellent_gps">%1$d ฟุต (สัญญาณ GPS ดี)</string>
     <string name="value_integer_feet_recommended">%1$d ฟุต (แนะนำ)</string>
@@ -363,52 +317,30 @@ limitations under the License.
     <string name="value_smallest">น้อยที่สุด</string>
     <string name="value_smallest_recommended">น้อยที่สุด (แนะนำ)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d ชั่วโมง</string>
-    <string name="voice_hours_many">%1$d ชั่วโมง</string>
-    <string name="voice_hours_one">1 ชั่วโมง</string>
-    <string name="voice_hours_other">%1$d ชั่วโมง</string>
-    <string name="voice_hours_two">2 ชั่วโมง</string>
-    <string name="voice_hours_zero">0 ชั่วโมง</string>
-    <string name="voice_minutes_few">%1$d นาที</string>
-    <string name="voice_minutes_many">%1$d นาที</string>
-    <string name="voice_minutes_one">1 นาที</string>
-    <string name="voice_minutes_other">%1$d นาที</string>
-    <string name="voice_minutes_two">2 นาที</string>
-    <string name="voice_minutes_zero">0 นาที</string>
+    <plurals name="voiceHours">
+        <item quantity="other">%1$d ชั่วโมง</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="other">%1$d นาท</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="other">%1$s ต่อไมล</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="other">%1$.1f กิโลเมตรต่อชั่วโมง</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="other">%1$.1f ไมล์ต่อชั่วโมง</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s ต่อกิโลเมตร</string>
     <string name="voice_pace_per_mile">%1$s ต่อไมล์</string>
-    <string name="voice_seconds_few">%1$d วินาที</string>
-    <string name="voice_seconds_many">%1$d วินาที</string>
-    <string name="voice_seconds_one">1 วินาที</string>
-    <string name="voice_seconds_other">%1$d วินาที</string>
-    <string name="voice_seconds_two">2 วินาที</string>
-    <string name="voice_seconds_zero">0 วินาที</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f กิโลเมตรต่อชั่วโมง</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f กิโลเมตรต่อชั่วโมง</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 กิโลเมตรต่อชั่วโมง</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f กิโลเมตรต่อชั่วโมง</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 กิโลเมตรต่อชั่วโมง</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 กิโลเมตรต่อชั่วโมง</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f ไมล์ต่อชั่วโมง</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f ไมล์ต่อชั่วโมง</string>
-    <string name="voice_speed_miles_per_hour_one">1 ไมล์ต่อชั่วโมง</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f ไมล์ต่อชั่วโมง</string>
-    <string name="voice_speed_miles_per_hour_two">2 ไมล์ต่อชั่วโมง</string>
-    <string name="voice_speed_miles_per_hour_zero">0 ไมล์ต่อชั่วโมง</string>
-    <string name="voice_template">เส้นการเดินทางของฉันเป็นระยะ %1$s ใน %2$s ที่ความเร็ว %3$s</string>
-    <string name="voice_total_distance_kilometers_few">รวมระยะทาง %1$.2f กิโลเมตร</string>
-    <string name="voice_total_distance_kilometers_many">รวมระยะทาง %1$.2f กิโลเมตร</string>
-    <string name="voice_total_distance_kilometers_one">รวมระยะทาง 1 กิโลเมตร</string>
-    <string name="voice_total_distance_kilometers_other">รวมระยะทาง %1$.2f กิโลเมตร</string>
-    <string name="voice_total_distance_kilometers_two">รวมระยะทาง 2 กิโลเมตร</string>
-    <string name="voice_total_distance_kilometers_zero">รวมระยะทาง 0 กิโลเมตร</string>
-    <string name="voice_total_distance_miles_few">รวมระยะทาง %1$.2f ไมล์</string>
-    <string name="voice_total_distance_miles_many">รวมระยะทาง %1$.2f ไมล์</string>
-    <string name="voice_total_distance_miles_one">รวมระยะทาง 1 ไมล์</string>
-    <string name="voice_total_distance_miles_other">รวมระยะทาง %1$.2f ไมล์</string>
-    <string name="voice_total_distance_miles_two">รวมระยะทาง 2 ไมล์</string>
-    <string name="voice_total_distance_miles_zero">รวมระยะทาง 0 ไมล์</string>
-    <string name="voice_total_distance_zero">ระยะเส้นการเดินทางทั้งหมดของฉันเป็นศูนย์</string>
+    <string name="voice_template">%1$s ใน %2$s ที่ความเร็ว %3$s</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="other">รวมระยะทาง %1$.2f กิโลเมตร</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="other">รวมระยะทาง %1$.2f ไมล์</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">เอทีเอ็ม</string>
     <string name="waypoint_type_bank">ธนาคาร</string>

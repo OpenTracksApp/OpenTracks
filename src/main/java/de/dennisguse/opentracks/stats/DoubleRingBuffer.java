@@ -18,6 +18,8 @@ package de.dennisguse.opentracks.stats;
 
 import androidx.annotation.NonNull;
 
+import java.util.Arrays;
+
 /**
  * This class maintains a ring buffer of doubles.
  * This buffer is a convenient class for storing a series of doubles and calculating information about them.
@@ -47,6 +49,12 @@ class DoubleRingBuffer {
         }
         buffer = new double[size];
         reset();
+    }
+
+    DoubleRingBuffer(DoubleRingBuffer toCopy) {
+        this.buffer = Arrays.copyOf(toCopy.buffer, toCopy.buffer.length);
+        this.index = toCopy.index;
+        this.isFull = toCopy.isFull;
     }
 
     /**

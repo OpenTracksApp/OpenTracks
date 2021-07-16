@@ -59,8 +59,9 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
 
         viewHolder.rate.setText(StringUtils.formatSpeed(context, interval.getSpeed(), metricUnits, isReportSpeed));
 
-        viewHolder.gain.setText(StringUtils.formatDistance(context, Distance.of(interval.getGain_m()), metricUnits));
-        viewHolder.loss.setText(StringUtils.formatDistance(context, Distance.of(interval.getLoss_m()), metricUnits));
+        viewHolder.gain.setText(StringUtils.formatAltitude(context, interval.getGain_m(), metricUnits));
+        viewHolder.loss.setText(StringUtils.formatAltitude(context, interval.getLoss_m(), metricUnits));
+
     }
 
     @Override
@@ -72,10 +73,6 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     public List<IntervalStatistics.Interval> swapData(List<IntervalStatistics.Interval> data, boolean metricUnits, boolean isReportSpeed) {
-        if (intervalList == data && this.metricUnits == metricUnits && this.isReportSpeed == isReportSpeed) {
-            return null;
-        }
-
         this.metricUnits = metricUnits;
         this.isReportSpeed = isReportSpeed;
         intervalList = data;
@@ -96,10 +93,10 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     private static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView distance;
-        TextView rate;
-        TextView gain;
-        TextView loss;
+        final TextView distance;
+        final TextView rate;
+        final TextView gain;
+        final TextView loss;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

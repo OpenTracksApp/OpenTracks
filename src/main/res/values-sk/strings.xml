@@ -91,17 +91,9 @@ limitations under the License.
     <string name="description_altitude_imperial">Nadmorská výška (ft)</string>
     <string name="description_altitude_metric">Nadmorská výška (m)</string>
     <string name="description_fastest_pace_in_minute">Najrýchlejšie tempo: %1$s min/km (%2$s min/mi)</string>
-    <string name="description_location_accuracy">Presnosť (m)</string>
-    <string name="description_location_altitude">Nadmorská výška (m)</string>
-    <string name="description_location_bearing">Azimut (°)</string>
-    <string name="description_location_latitude">Zemepisná šírka (°)</string>
-    <string name="description_location_longitude">Zemepisná dĺžka (°)</string>
-    <string name="description_location_speed">Rýchlosť (m/s)</string>
     <string name="description_max_altitude">Max. prevýšenie: %1$d m (%2$d stôp)</string>
-    <string name="description_max_grade">Max. sklon: %1$d %%</string>
     <string name="description_max_speed">Max. rýchlosť: %1$.2f km/h (%2$.1f míľ/h)</string>
     <string name="description_min_altitude">Min. prevýšenie: %1$d m (%2$d stôp)</string>
-    <string name="description_min_grade">Min. sklon: %1$d %%</string>
     <string name="description_moving_time">Čas presunu: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/mi)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
@@ -115,8 +107,6 @@ limitations under the License.
     <string name="description_time">Čas</string>
     <string name="description_total_distance">Celková vzdialenosť: %1$.2f km (%2$.1f míľ)</string>
     <string name="description_total_time">Celkový čas: %1$s</string>
-    <string name="description_track_point">Bod</string>
-    <string name="description_track_segment">Segment</string>
     <!-- Export -->
     <string name="export_all_option">Všetky vo formáte %1$s</string>
     <string name="export_all_title">Exportovať do externého úložiska</string>
@@ -127,16 +117,13 @@ limitations under the License.
     <string name="export_title">Exportovať do…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d súbory</string>
-    <string name="files_many">%1$d súborov</string>
-    <string name="files_one">1 súbor</string>
-    <string name="files_other">%1$d súborov</string>
-    <string name="files_two">2 súbory</string>
-    <string name="files_zero">0 súborov</string>
+    <plurals name="files">
+        <item quantity="one">1 súbor</item>
+        <item quantity="few">%1$d súbory</item>
+        <item quantity="other">%1$d súborov</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Pridať</string>
-    <string name="generic_cancel">Zrušiť</string>
-    <string name="generic_delete_all_confirm_title">Odstrániť všetko?</string>
     <string name="generic_delete_selected_confirm_title">Odstrániť vybraté položky?</string>
     <string name="generic_description">Popis</string>
     <string name="generic_description_line">Popis: %1$s</string>
@@ -144,19 +131,12 @@ limitations under the License.
     <string name="generic_name">Meno</string>
     <string name="generic_name_line">Meno: %1$s</string>
     <string name="generic_no">Nie</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">Pozastavené</string>
-    <string name="generic_progress_title">Počkajte…</string>
     <string name="generic_recording">Zaznamenáva sa…</string>
     <string name="generic_save">Uložiť</string>
     <string name="generic_success_title">Úspech</string>
     <string name="generic_tracks">Trasy</string>
-    <string name="generic_yes">Áno</string>
     <!-- Gps -->
-    <string name="gps_location_access">Prístup k polohe</string>
-    <string name="gps_disabled">GPS nie je povolené. Kliknite sem pre prechod na %1$s . Stlačte tlačidlo \"späť\" pre návrat.</string>
-    <string name="gps_disabled_my_location">Nemožno určiť aktuálnu polohu. Povoľte ďalšie zdroje určenia polohy v časti %1$s a uistite sa, že vidíte na oblohu. Skúste to znova neskôr.</string>
-    <string name="gps_not_found">V zariadení sa nenašiel systém GPS</string>
     <string name="gps_starting">Spúšťa sa systém GPS</string>
     <string name="gps_wait_for_better_signal">Čaká sa na lepší signál systému GPS</string>
     <string name="gps_wait_for_signal">Čaká sa na signál systému GPS</string>
@@ -165,7 +145,6 @@ limitations under the License.
     <string name="image_arrow">Šípka</string>
     <string name="image_marker">Značka</string>
     <string name="image_marker_count">Počet značiek</string>
-    <string name="image_my_location">Moja poloha</string>
     <string name="image_pause">Pozastaviť</string>
     <string name="image_photo_marker">Fotografická značka</string>
     <string name="image_record">Zaznamenať</string>
@@ -184,17 +163,14 @@ limitations under the License.
     <string name="marker_add_error">Značku sa nepodarilo vložiť. Nie je k dispozícii signál GPS. Skúste to znova.</string>
     <string name="marker_add_success">Značka bola vložená</string>
     <string name="marker_add_canceled">Zrušené, nebola pridaná žiadna značka</string>
-    <string name="marker_delete_all_confirm_message">Všetky značky pre túto trasu sa zo zariadenia natrvalo odstránia</string>
     <string name="marker_delete_one_confirm_message">Značka sa zo zariadenia natrvalo odstráni</string>
     <string name="marker_delete_one_confirm_title">Odstrániť značku?</string>
     <string name="marker_delete_multiple_confirm_message">Vybraté značky sa zo zariadenia natrvalo odstránia</string>
     <string name="marker_label_end">%1$s (Cieľ)</string>
     <string name="marker_label_start">%1$s (Štart)</string>
     <string name="marker_name_format">Značka %1$d</string>
-    <string name="marker_split_name_format">Rozdeliť %1$d</string>
     <string name="marker_title">%1$d z %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">Od poslednej rozdeľovacej značky:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Typ značky (napr. vodopád…)</string>
     <string name="marker_edit_marker_type_hint">Typ značky</string>
@@ -212,11 +188,9 @@ limitations under the License.
     <string name="menu_markers">Značky</string>
     <string name="menu_search">Hľadať</string>
     <string name="menu_select_all">Vybrať všetky</string>
-    <string name="menu_sensor_state">Stav senzora</string>
     <string name="menu_settings">Nastavenia</string>
     <string name="menu_share">Zdieľať</string>
     <string name="menu_show_on_map">Zobraziť na mape</string>
-    <string name="menu_split_frequency">Frekvencia rozdeľovania</string>
     <string name="menu_start_gps">Aktivovať GPS</string>
     <string name="menu_stop_gps">Deaktivovať GPS</string>
     <string name="menu_view_photo">Zobraziť fotografiu</string>
@@ -226,12 +200,10 @@ limitations under the License.
     <!-- Search -->
     <string name="search_global_description">Trasy a značky</string>
     <string name="search_list_empty_message">Vyhľadávaniu nezodpovedajú žiadne trasy ani značky</string>
-    <string name="search_list_marker_track_location">Na trase „%1$s“.</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Stav batérie</string>
     <string name="sensor_state_cadence">Kadencia</string>
     <string name="sensor_state_cadence_value">%1$d otáčok/min.</string>
-    <string name="sensor_state_disconnected">Odpojené</string>
     <string name="sensor_state_heart_rate">Srdcová frekvencia</string>
     <string name="sensor_state_heart_rate_value">%1$d úderov/min.</string>
     <string name="sensor_state_power">Výkon</string>
@@ -243,7 +215,6 @@ limitations under the License.
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Podľa vzdialenosti</string>
     <string name="settings_chart_by_time">Podľa času</string>
-    <string name="settings_chart_x_axis">Os X</string>
     <string name="settings_recording">Záznam</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Po reštartovaní vždy obnoviť záznam</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Po reštartovaní nikdy neobnoviť záznam</string>
@@ -267,7 +238,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Obnoviť?</string>
     <string name="settings_reset_done">Boli vrátené predvolené hodnoty všetkých nastavení</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Senzor</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Senzor Bluetooth</string>
     <!-- Settings Stats -->
@@ -289,12 +259,9 @@ limitations under the License.
     <string name="stats_altitude">Nadmorská výška</string>
     <string name="stats_fastest_pace">Najrýchlejšie tempo</string>
     <string name="stats_gain">Zisk</string>
-    <string name="stats_grade">Stúpanie</string>
     <string name="stats_latitude">Zemepisná šírka</string>
     <string name="stats_longitude">Zemepisná dĺžka</string>
-    <string name="stats_max">Max</string>
     <string name="stats_max_speed">Max. rýchlosť</string>
-    <string name="stats_min">Min</string>
     <string name="stats_moving_time">Čas pohybu</string>
     <string name="stats_pace">Tempo</string>
     <string name="stats_speed">Rýchlosť</string>
@@ -320,12 +287,6 @@ limitations under the License.
     <string name="track_list_empty_message">Tu spustite zaznamenávanie ďalšieho dobrodružstva</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d trasy</string>
-    <string name="tracks_many">%1$d trás</string>
-    <string name="tracks_one">1 trasa</string>
-    <string name="tracks_other">%1$d trás</string>
-    <string name="tracks_two">2 trasy</string>
-    <string name="tracks_zero">0 trás</string>
     <!-- Unit -->
     <string name="unit_feet">st.</string>
     <string name="unit_kilometer">km</string>
@@ -339,11 +300,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Prispôsobiť na presnosť</string>
     <string name="value_adapt_battery_life">Prispôsobiť na výdrž batérie</string>
     <string name="value_always">Vždy</string>
-    <string name="value_float_feet">%1$.2f stopy</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mi.</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mi. (slabý signál GPS)</string>
     <string name="value_integer_feet">%1$d st.</string>
     <string name="value_integer_feet_excellent_gps">%1$d st. (výborný signál GPS)</string>
     <string name="value_integer_feet_recommended">%1$d st. (odporúčané)</string>
@@ -363,52 +319,44 @@ limitations under the License.
     <string name="value_smallest">Najmenšie</string>
     <string name="value_smallest_recommended">Najmenšia (odporúčané)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d hodiny</string>
-    <string name="voice_hours_many">%1$d hodín</string>
-    <string name="voice_hours_one">1 hodina</string>
-    <string name="voice_hours_other">%1$d hodín</string>
-    <string name="voice_hours_two">2 hodiny</string>
-    <string name="voice_hours_zero">0 hodín</string>
-    <string name="voice_minutes_few">%1$d minúty</string>
-    <string name="voice_minutes_many">%1$d minút</string>
-    <string name="voice_minutes_one">1 minúta</string>
-    <string name="voice_minutes_other">%1$d minút</string>
-    <string name="voice_minutes_two">2 minúty</string>
-    <string name="voice_minutes_zero">0 minút</string>
+    <plurals name="voiceHours">
+        <item quantity="one">1 hodina</item>
+        <item quantity="few">%1$d hodiny</item>
+        <item quantity="other">%1$d hodín</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">1 minúta</item>
+        <item quantity="few">%1$d minúty</item>
+        <item quantity="other">%1$d minút</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">1 sekunda</item>
+        <item quantity="few">%1$d sekundy</item>
+        <item quantity="other">%1$d sekúnd</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">1 kilometer za hodinu</item>
+        <item quantity="few">%1$.1f kilometre za hodinu</item>
+        <item quantity="other">%1$.1f kilometrov za hodinu</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">1 míľa za hodinu</item>
+        <item quantity="few">%1$.1f míľ za hodinu</item>
+        <item quantity="other">%1$.1f míľ za hodinu</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s na kilometer</string>
     <string name="voice_pace_per_mile">%1$s na míľu</string>
-    <string name="voice_seconds_few">%1$d sekundy</string>
-    <string name="voice_seconds_many">%1$d sekúnd</string>
-    <string name="voice_seconds_one">1 sekunda</string>
-    <string name="voice_seconds_other">%1$d sekúnd</string>
-    <string name="voice_seconds_two">2 sekundy</string>
-    <string name="voice_seconds_zero">0 sekúnd</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f kilometre za hodinu</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f kilometrov za hodinu</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 kilometer za hodinu</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f kilometrov za hodinu</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 kilometre za hodinu</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 kilometrov za hodinu</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f míľ za hodinu</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f míľ za hodinu</string>
-    <string name="voice_speed_miles_per_hour_one">1 míľa za hodinu</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f míľ za hodinu</string>
-    <string name="voice_speed_miles_per_hour_two">2 míle za hodinu</string>
-    <string name="voice_speed_miles_per_hour_zero">0 míľ za hodinu</string>
-    <string name="voice_template">Moje trasy %1$s, čas %2$s, rýchlosť %3$s</string>
-    <string name="voice_total_distance_kilometers_few">celková vzdialenosť %1$.2f kilometra</string>
-    <string name="voice_total_distance_kilometers_many">celková vzdialenosť %1$.2f kilometra</string>
-    <string name="voice_total_distance_kilometers_one">celková vzdialenosť 1 kilometer</string>
-    <string name="voice_total_distance_kilometers_other">celková vzdialenosť %1$.2f kilometra</string>
-    <string name="voice_total_distance_kilometers_two">celková vzdialenosť 2 kilometre</string>
-    <string name="voice_total_distance_kilometers_zero">celková vzdialenosť 0 kilometrov</string>
-    <string name="voice_total_distance_miles_few">celková vzdialenosť %1$.2f míle</string>
-    <string name="voice_total_distance_miles_many">celková vzdialenosť %1$.2f míle</string>
-    <string name="voice_total_distance_miles_one">celková vzdialenosť 1 míľa</string>
-    <string name="voice_total_distance_miles_other">celková vzdialenosť %1$.2f míľ</string>
-    <string name="voice_total_distance_miles_two">celková vzdialenosť 2 míle</string>
-    <string name="voice_total_distance_miles_zero">celková vzdialenosť 0 míľ</string>
-    <string name="voice_total_distance_zero">Moje trasy – celková vzdialenosť nula.</string>
+    <string name="voice_template">%1$s, čas %2$s, rýchlosť %3$s</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">celková vzdialenosť 1 kilometer</item>
+        <item quantity="few">celková vzdialenosť %1$.2f kilometra</item>
+        <item quantity="other">celková vzdialenosť %1$.2f kilometra</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">celková vzdialenosť 1 míľa</item>
+        <item quantity="few">celková vzdialenosť %1$.2f míle</item>
+        <item quantity="other">celková vzdialenosť %1$.2f míľ</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankomat</string>
     <string name="waypoint_type_bank">banka</string>

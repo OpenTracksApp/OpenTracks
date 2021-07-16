@@ -51,11 +51,16 @@ public class KmzTrackImporter {
 
     private static final List<String> KMZ_IMAGES_EXT = Arrays.asList("jpeg", "jpg", "png");
 
-    private Context context;
+    private final Context context;
+    private final TrackImporter trackImporter;
+
+    public KmzTrackImporter(Context context, TrackImporter trackImporter) {
+        this.context = context;
+        this.trackImporter = trackImporter;
+    }
 
     @NonNull
-    public List<Track.Id> importFile(Context context, Uri fileUri) throws IOException {
-        this.context = context;
+    public List<Track.Id> importFile(Uri fileUri) throws IOException {
         List<Track.Id> trackIds = findAndParseKmlFile(fileUri);
 
         List<Track.Id> trackIdsWithImages = new ArrayList<>();
@@ -205,7 +210,7 @@ public class KmzTrackImporter {
     }
 
     private List<Track.Id> parseKml(ZipInputStream zipInputStream) throws IOException {
-        XMLImporter kmlFileTrackImporter = new XMLImporter(new KmlFileTrackImporter(context));
+        XMLImporter kmlFileTrackImporter = new XMLImporter(new KmlTrackImporter(context, trackImporter));
 
         InputStream nonClosableInputStream = new FilterInputStream(zipInputStream) {
             @Override

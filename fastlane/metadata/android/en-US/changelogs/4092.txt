@@ -1,0 +1,13 @@
+v3.18.1: OpenTracks
+
+Changes:
+- Deleting tracks is handled by a service
+- Uninstall deletes all data (i.e., hasFragileData=false)
+
+Bugfixes:
+- Race condition: crash while recording and switching OpenTracks into background
+- Search in track list was not working
+- Cycling speed sensor: distance computation was wrong (only affected statistics)
+
+Developer:
+- ControllerFragment replaces TrackController

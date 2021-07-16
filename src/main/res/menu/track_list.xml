@@ -20,14 +20,14 @@ limitations under the License.
         android:icon="@drawable/ic_statistics_24dp"
         android:title="@string/menu_aggregated_statistics"
         app:showAsAction="ifRoom" />
-    <!-- Icon and title is overwritten by TrackListActivity -->
-    <!-- Hide icon as workaround for https://github.com/OpenTracksApp/OpenTracks/issues/200 -->
+    <!-- Icon, title, and visibility is managed by TrackListActivity -->
     <item
         android:id="@+id/track_list_start_gps"
         android:icon="@drawable/ic_gps_off_24dp"
         android:title="@string/menu_start_gps"
         android:visible="false"
         app:showAsAction="ifRoom" />
+    <!-- TODO SearchAction is only working if it is shown as action. However, only two slots are available. See  #757. -->
     <item
         android:id="@+id/track_list_search"
         android:title="@string/menu_search"

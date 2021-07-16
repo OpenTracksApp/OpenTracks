@@ -4,8 +4,8 @@ import android.content.ContentProvider;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Looper;
-import android.util.Pair;
 
+import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.MediumTest;
@@ -13,6 +13,7 @@ import androidx.test.rule.GrantPermissionRule;
 import androidx.test.rule.ServiceTestRule;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -23,6 +24,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -30,12 +32,12 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.io.file.importer.TrackPointAssert;
+import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
 
 /**
  * Tests insert location.
@@ -58,10 +60,23 @@ public class TrackRecordingServiceTestLocation {
 
     private TrackRecordingService service;
 
+    private final AltitudeSumManager altitudeSumManager = new AltitudeSumManager() {
+        @Override
+        public void fill(@NonNull TrackPoint trackPoint) {
+            trackPoint.setAltitudeGain(0f);
+            trackPoint.setAltitudeLoss(0f);
+        }
+    };
+
     @BeforeClass
     public static void preSetUp() {
         // Prepare looper for Android's message queue
         if (Looper.myLooper() == null) Looper.prepare();
+    }
+
+    @AfterClass
+    public static void finalTearDown() {
+        if (Looper.myLooper() != null) Looper.myLooper().quit();
     }
 
     @Before
@@ -93,6 +108,7 @@ public class TrackRecordingServiceTestLocation {
     public void testOnLocationChangedAsync_movingAccurate() throws Exception {
         // given
         Track.Id trackId = service.startNewTrack();
+        service.setAltitudeSumManager(altitudeSumManager);
 
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 15);
@@ -108,16 +124,55 @@ public class TrackRecordingServiceTestLocation {
         assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertEquals(8, trackPoints.size());
-        assertTrackPoints(List.of(
-                new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 1),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 2),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 3),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 4),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 5),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 6),
-                new Pair<>(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+        TrackPointAssert a = new TrackPointAssert()
+                .ignoreTime();
+        a.assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(1)
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.0001)
+                        .setLongitude(35)
+                        .setAccuracy(2)
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.0001)
+                        .setLongitude(35)
+                        .setAccuracy(3)
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.0002)
+                        .setLongitude(35)
+                        .setAccuracy(4)
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.0003)
+                        .setLongitude(35)
+                        .setAccuracy(5)
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.0004)
+                        .setLongitude(35)
+                        .setAccuracy(6)
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
         ), trackPoints);
     }
 
@@ -126,7 +181,7 @@ public class TrackRecordingServiceTestLocation {
     public void testOnLocationChangedAsync_slowMovingAccurate() throws Exception {
         // given
         Track.Id trackId = service.startNewTrack();
-        assertNotNull(trackId);
+        service.setAltitudeSumManager(altitudeSumManager);
 
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 15);
@@ -142,38 +197,36 @@ public class TrackRecordingServiceTestLocation {
         assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertEquals(4, trackPoints.size());
-        assertTrackPoints(List.of(
-                new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 1),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 6),
-                new Pair<>(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+        TrackPointAssert a = new TrackPointAssert()
+                .ignoreTime();
+        a.assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(1)
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.0005)
+                        .setLongitude(35)
+                        .setAccuracy(6)
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
         ), trackPoints);
     }
-
-//    @MediumTest
-//    @Test
-//    public void testOnLocationChangedAsync_repeatedTime() throws Exception {
-//        // when
-//        TrackRecordingServiceTest.insertLocation(service, 45.0, 35.0, 5, 15, 5);
-//        TrackRecordingServiceTest.insertLocation(service, 55.0, 35.0, 5, 15, 5);
-//        TrackRecordingServiceTest.insertLocation(service, 65.0, 35.0, 5, 15, 5);
-//
-//        service.endCurrentTrack();
-//
-//        // then
-//        Assert.assertFalse(service.isRecording());
-//
-//        List<TrackPoint> trackPoints = contentProviderUtils.getTrackPoints(trackId);
-//        Assert.assertEquals(1, trackPoints.size());
-//        Assert.assertEquals(45.0, trackPoints.get(0).getLatitude(), 0.01);
-//    }
 
     @MediumTest
     @Test
     public void testOnLocationChangedAsync_idle() throws Exception {
         // given
         Track.Id trackId = service.startNewTrack();
+        service.setAltitudeSumManager(altitudeSumManager);
 
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 0);
@@ -189,12 +242,34 @@ public class TrackRecordingServiceTestLocation {
         assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertTrackPoints(List.of(
-                new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 1),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 2),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 6),
-                new Pair<>(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+        TrackPointAssert a = new TrackPointAssert()
+                .ignoreTime();
+        a.assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(1)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT) //TODO Why is this added? Systems is idle and not moving at all.
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(2)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(6)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
         ), trackPoints);
     }
 
@@ -203,6 +278,7 @@ public class TrackRecordingServiceTestLocation {
     public void testOnLocationChangedAsync_idle_withMovement() throws Exception {
         // given
         Track.Id trackId = service.startNewTrack();
+        service.setAltitudeSumManager(altitudeSumManager);
 
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 15);
@@ -218,14 +294,41 @@ public class TrackRecordingServiceTestLocation {
         assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertEquals(6, trackPoints.size());
-        assertTrackPoints(List.of(
-                new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 1),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 2),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 5),  //TODO Check why this trackPoint is inserted.
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 6),
-                new Pair<>(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+        TrackPointAssert a = new TrackPointAssert()
+                .ignoreTime();
+        a.assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(1)
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT) //TODO Check why this trackPoint is inserted.
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(2)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT) //TODO Check why this trackPoint is inserted.
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(5)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(6)
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
         ), trackPoints);
     }
 
@@ -234,7 +337,7 @@ public class TrackRecordingServiceTestLocation {
     public void testOnLocationChangedAsync_idle_withSensorData() throws Exception {
         // given
         Track.Id trackId = service.startNewTrack();
-
+        service.setAltitudeSumManager(altitudeSumManager);
         service.setRemoteSensorManager(new BluetoothRemoteSensorManager(context) {
 
             @Override
@@ -243,10 +346,10 @@ public class TrackRecordingServiceTestLocation {
             }
 
             @Override
-            public SensorDataSet getSensorData() {
+            public void fill(@NonNull TrackPoint trackPoint) {
                 SensorDataSet sensorDataSet = new SensorDataSet();
                 sensorDataSet.set(new SensorDataHeartRate("sensorName", "sensorAddress", 5f));
-                return sensorDataSet;
+                sensorDataSet.fillTrackPoint(trackPoint);
             }
         });
 
@@ -264,16 +367,62 @@ public class TrackRecordingServiceTestLocation {
         assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertEquals(8, trackPoints.size());
-        assertTrackPoints(List.of(
-                new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 1),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 2),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 3),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 4),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 5),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 6),
-                new Pair<>(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+        TrackPointAssert a = new TrackPointAssert()
+                .ignoreTime();
+        a.assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(1)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+                        .setHeartRate_bpm(5f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(2)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+                        .setHeartRate_bpm(5f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(3)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+                        .setHeartRate_bpm(5f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(4)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+                        .setHeartRate_bpm(5f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(5)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+                        .setHeartRate_bpm(5f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(6)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+                        .setHeartRate_bpm(5f),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+                        .setHeartRate_bpm(5f)
         ), trackPoints);
     }
 
@@ -282,6 +431,7 @@ public class TrackRecordingServiceTestLocation {
     public void testOnLocationChangedAsync_segment() throws Exception {
         // given
         Track.Id trackId = service.startNewTrack();
+        service.setAltitudeSumManager(altitudeSumManager);
 
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 0);
@@ -296,27 +446,51 @@ public class TrackRecordingServiceTestLocation {
         assertFalse(service.isRecording());
 
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertEquals(7, trackPoints.size());
-        assertTrackPoints(List.of(
-                new Pair<>(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 1),
 
-                new Pair<>(TrackPoint.Type.SEGMENT_START_AUTOMATIC, 2),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 3),
+        TrackPointAssert a = new TrackPointAssert()
+                .ignoreTime();
+        a.assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setAccuracy(1)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
 
-                new Pair<>(TrackPoint.Type.SEGMENT_START_AUTOMATIC, 4),
-                new Pair<>(TrackPoint.Type.TRACKPOINT, 5),
-                new Pair<>(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC)
+                        .setLatitude(45.1)
+                        .setLongitude(35)
+                        .setAccuracy(2)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.1)
+                        .setLongitude(35)
+                        .setAccuracy(3)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC)
+                        .setLatitude(45.2)
+                        .setLongitude(35)
+                        .setAccuracy(4)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                        .setLatitude(45.2)
+                        .setLongitude(35)
+                        .setAccuracy(5)
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL)
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
         ), trackPoints);
-    }
-
-    private void assertTrackPoints(List<Pair<TrackPoint.Type, Object>> typeAndAccuracy, List<TrackPoint> actual) {
-        assertEquals(typeAndAccuracy.size(), actual.size());
-        for (int i = 0; i < typeAndAccuracy.size(); i++) {
-            assertEquals(typeAndAccuracy.get(i).first, actual.get(i).getType());
-            if (typeAndAccuracy.get(i).second != null) {
-                assertEquals((Integer) typeAndAccuracy.get(i).second, actual.get(i).getAccuracy(), 0.01);
-            }
-        }
     }
 }

@@ -1,0 +1,12 @@
+v3.18.5: OpenTracks
+
+Veranderingen:
+- Spraak aankondiging snelheid configureerbaar
+- API <26: Launcher-pictogram laat achtergrond weg
+
+Bugfixes:
+- Opname UI: toon juiste waarden 
+- Opname UI: toon (opnieuw) hoogte in EGM2008
+
+Ontwikkelaar:
+- Android12-toestemmingen (BLUETOOTH_CONNECT)

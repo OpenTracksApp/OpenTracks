@@ -26,6 +26,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -40,8 +41,8 @@ import androidx.core.view.GestureDetectorCompat;
 import java.text.NumberFormat;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import de.dennisguse.opentracks.MarkerDetailActivity;
 import de.dennisguse.opentracks.R;
@@ -114,7 +115,7 @@ public class ChartView extends View {
     private int effectiveWidth = 0;
     private int effectiveHeight = 0;
 
-    private final boolean chartByDistance;
+    private boolean chartByDistance = false;
     private boolean metricUnits = true;
     private boolean reportSpeed = true;
     private boolean showPointer = false;
@@ -189,9 +190,9 @@ public class ChartView extends View {
         }
     });
 
-    public ChartView(Context context, final boolean chartByDistance) {
-        super(context);
-        this.chartByDistance = chartByDistance;
+    public ChartView(Context context, AttributeSet attributeSet) {
+        super(context, attributeSet);
+
         int fontSizeSmall = ThemeUtils.getFontSizeSmallInPx(context);
         int fontSizeMedium = ThemeUtils.getFontSizeMediumInPx(context);
 
@@ -366,6 +367,10 @@ public class ChartView extends View {
         return true;
     }
 
+    public void setChartByDistance(boolean chartByDistance) {
+        this.chartByDistance = chartByDistance;
+    }
+
     public boolean getMetricUnits() {
         return metricUnits;
     }
@@ -424,7 +429,7 @@ public class ChartView extends View {
                 }
             }
             updateDimensions();
-            updatePaths();
+            updateSeries();
         }
     }
 
@@ -471,7 +476,7 @@ public class ChartView extends View {
     private void zoomIn() {
         if (canZoomIn()) {
             zoomLevel++;
-            updatePaths();
+            updateSeries();
             invalidate();
         }
     }
@@ -486,7 +491,7 @@ public class ChartView extends View {
                 scrollX = maxWidth;
                 scrollTo(scrollX, 0);
             }
-            updatePaths();
+            updateSeries();
             invalidate();
         }
     }
@@ -853,63 +858,49 @@ public class ChartView extends View {
     }
 
     /**
-     * Updates paths.
      * The path needs to be updated any time after the data or the dimensions change.
      */
-    private void updatePaths() {
+    private void updateSeries() {
         synchronized (chartPoints) {
-            for (ChartValueSeries chartValueSeries : seriesList) {
-                chartValueSeries.getPath().reset();
-            }
-            drawPaths();
-            closePaths();
+            seriesList.stream().forEach(this::updateSerie);
         }
     }
 
-    private void drawPaths() {
-        boolean[] hasMoved = new boolean[seriesList.size()];
+    private void updateSerie(ChartValueSeries series) {
+        final int yCorner = topBorder + effectiveHeight;
+        final Path path = series.getPath();
 
-        for (ChartPoint dataPoint : chartPoints) {
-            for (int i = 0; i < seriesList.size(); i++) {
-                ChartValueSeries chartValueSeries = seriesList.get(i);
+        boolean drawFirstPoint = false;
+        path.rewind();
 
-                if (!chartValueSeries.isChartPointValid(dataPoint)) {
-                    continue;
-                }
+        Iterator<ChartPoint> iterator = chartPoints.iterator();
+        while (iterator.hasNext()) {
+            ChartPoint point = iterator.next();
+            if (!series.isChartPointValid(point)) {
+                continue;
+            }
 
-                double value = chartValueSeries.extractDataFromChartPoint(dataPoint);
-                Path path = chartValueSeries.getPath();
-                int x = getX(dataPoint.getTimeOrDistance());
-                int y = getY(chartValueSeries, value);
-                if (!hasMoved[i]) {
-                    hasMoved[i] = true;
-                    path.moveTo(x, y);
-                } else {
-                    path.lineTo(x, y);
-                }
+            double value = series.extractDataFromChartPoint(point);
+            int x = getX(point.getTimeOrDistance());
+            int y = getY(series, value);
+
+            // start from lower left corner
+            if (!drawFirstPoint) {
+                path.moveTo(x, yCorner);
+                drawFirstPoint = true;
+            }
+
+            // draw graph
+            path.lineTo(x, y);
+
+            // last point: move to lower right
+            if (!iterator.hasNext()) {
+                path.lineTo(x, yCorner);
             }
         }
-    }
 
-    private void closePaths() {
-        for (ChartValueSeries chartValueSeries : seriesList) {
-            Optional<ChartPoint> firstValid = chartPoints.stream().filter(chartValueSeries::isChartPointValid)
-                    .findFirst();
-            Optional<ChartPoint> lastValid = chartPoints.stream().filter(chartValueSeries::isChartPointValid)
-                    .reduce((first, second) -> second);
-
-            if (firstValid.isPresent() && lastValid.isPresent()) {
-                Path path = chartValueSeries.getPath();
-
-                int yCorner = topBorder + effectiveHeight;
-
-                path.lineTo(getX(lastValid.get().getTimeOrDistance()), yCorner);
-                path.lineTo(getX(firstValid.get().getTimeOrDistance()), yCorner);
-
-                double value = chartValueSeries.extractDataFromChartPoint(firstValid.get());
-                path.lineTo(getX(firstValid.get().getTimeOrDistance()), getY(chartValueSeries, value));
-            }
-        }
+        // back to lower left corner
+        path.close();
     }
 
     /**
@@ -961,7 +952,7 @@ public class ChartView extends View {
             width = newWidth;
             height = newHeight;
             updateEffectiveDimensions();
-            updatePaths();
+            updateSeries();
         }
     }
 

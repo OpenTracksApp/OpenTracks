@@ -33,7 +33,6 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
-import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
@@ -96,38 +95,15 @@ public class StringUtils {
             return context.getString(R.string.value_unknown);
         }
 
-        if (metricUnits) {
-            if (distance.greaterThan(Distance.of(500))) {
-                return context.getString(R.string.value_float_kilometer, distance.toKM());
-            } else {
-                return context.getString(R.string.value_float_meter, distance.toM());
-            }
-        } else {
-            if (distance.greaterThan(Distance.ofMile(0.5))) {
-                return context.getString(R.string.value_float_mile, distance.toMI());
-            } else {
-                return context.getString(R.string.value_float_feet, distance.toFT());
-            }
-        }
+        Pair<String, String> distanceParts = getDistanceParts(context, distance, metricUnits);
+
+        return context.getString(R.string.distance_with_unit, distanceParts.first, distanceParts.second);
     }
 
     public static String formatSpeed(Context context, Speed speed, boolean metricUnits, boolean reportSpeed) {
-        if (reportSpeed) {
-            if (metricUnits) {
-                return context.getString(R.string.value_float_kilometer_hour, speed.toKMH());
-            } else {
-                return context.getString(R.string.value_float_mile_hour, speed.toMPH());
-            }
-        } else {
-            int pace = (int) speed.toPace(metricUnits).getSeconds();
-            int minutes = pace / 60;
-            int seconds = pace % 60;
-            if (metricUnits) {
-                return context.getString(R.string.value_pace_kilometer, minutes, seconds);
-            } else {
-                return context.getString(R.string.value_pace_mile, minutes, seconds);
-            }
-        }
+        Pair<String, String> distanceParts = getSpeedParts(context, speed, metricUnits, reportSpeed);
+
+        return context.getString(R.string.speed_with_unit, distanceParts.first, distanceParts.second);
     }
 
     private static String formatDecimal(double value) {
@@ -139,6 +115,7 @@ public class StringUtils {
      */
     public static String formatDecimal(double value, int decimalPlaces) {
         DecimalFormat df = new DecimalFormat();
+        df.setMinimumFractionDigits(decimalPlaces);
         df.setMaximumFractionDigits(decimalPlaces);
         df.setRoundingMode(RoundingMode.HALF_EVEN);
         return df.format(value);
@@ -173,7 +150,7 @@ public class StringUtils {
                 return new Pair<>(formatDecimal(distance.toM()), context.getString(R.string.unit_meter));
             }
         } else {
-            if (distance.greaterThan(Distance.of(0.5 * UnitConversions.M_TO_MI))) {
+            if (distance.greaterThan(Distance.ofMile(0.5))) {
                 return new Pair<>(formatDecimal(distance.toMI()), context.getString(R.string.unit_mile));
             } else {
                 return new Pair<>(formatDecimal(distance.toFT()), context.getString(R.string.unit_feet));
@@ -211,7 +188,7 @@ public class StringUtils {
 
         int minutes = pace / 60;
         int seconds = pace % 60;
-        return new Pair<>(String.format(Locale.US, "%d:%02d", minutes, seconds), unitString);
+        return new Pair<>(context.getString(R.string.time, minutes, seconds), unitString);
     }
 
     /**
@@ -238,7 +215,7 @@ public class StringUtils {
         }
 
         StringBuilder builder = new StringBuilder();
-        builder.append("[").append(category).append("]");
+        builder.append(getCategory(category));
         if (description != null && description.length() != 0) {
             builder.append(" ").append(description);
         }
@@ -301,16 +278,22 @@ public class StringUtils {
     /**
      * @return the formatted altitude_m (or null) and it's unit as {@link Pair}
      */
-    public static Pair<String, String> formatAltitude(Context context, Float altitude_m, boolean metricUnits) {
-        String value = context.getString(R.string.value_unknown);
+    public static Pair<String, String> getAltitudeParts(Context context, Float altitude_m, boolean metricUnits) {
+        String formattedValue = context.getString(R.string.value_unknown);
         String unit = context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet);
+
         if (altitude_m != null) {
-            if (!metricUnits) {
-                altitude_m *= (float) UnitConversions.M_TO_FT;
-            }
-            value = StringUtils.formatDecimal(altitude_m, 0);
+            double value = Distance.of(altitude_m).toM_FT(metricUnits);
+            formattedValue = StringUtils.formatDecimal(value, 1);
         }
-        return new Pair<>(value, unit);
+
+        return new Pair<>(formattedValue, unit);
+    }
+
+    public static String formatAltitude(Context context, Float altitude_m, boolean metricUnits) {
+        Pair<String, String> distanceParts = getAltitudeParts(context, altitude_m, metricUnits);
+
+        return context.getString(R.string.altitude_with_unit, distanceParts.first, distanceParts.second);
     }
 
     public static String valueInParentheses(String text) {

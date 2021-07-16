@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SearchView;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 
 import de.dennisguse.opentracks.ContextualActionModeCallback;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.TrackController;
 
 import static android.content.Context.VIBRATOR_SERVICE;
 
@@ -88,7 +86,7 @@ public class ActivityUtils {
         });
     }
 
-    public static void configureSearchWidget(Activity activity, final MenuItem menuItem, final TrackController trackController) {
+    public static SearchView configureSearchWidget(Activity activity, final MenuItem menuItem) {
         final SearchView searchView = (SearchView) menuItem.getActionView();
         SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
         if (searchManager != null) {
@@ -97,58 +95,17 @@ public class ActivityUtils {
         } else {
             Log.w(TAG, "Could not retrieve SearchManager.");
         }
-        searchView.setQueryRefinementEnabled(true);
         searchView.setSubmitButtonEnabled(true);
-        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
-            // Hide and show trackController when searchable widget has focus/no focus
-            if (trackController != null) {
-                if (hasFocus) {
-                    trackController.hide();
-                } else {
-                    trackController.show();
-                }
-            }
-        });
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                menuItem.collapseActionView();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        searchView.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
-            @Override
-            public boolean onSuggestionSelect(int position) {
-                return false;
-            }
-
-            @Override
-            public boolean onSuggestionClick(int position) {
-                menuItem.collapseActionView();
-                return false;
-            }
-        });
+        return searchView;
     }
 
-    public static void vibrate(Activity activity, int milliseconds) {
-        final Vibrator vibrator = (Vibrator) activity.getSystemService(VIBRATOR_SERVICE);
+    public static void vibrate(Context context, int milliseconds) {
+        final Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
         } else {
             vibrator.vibrate(milliseconds);
         }
-    }
-
-    public static void toast(final Activity activity, final int resId, final int duration, final int gravity) {
-        final Toast toast = Toast.makeText(activity, resId, duration);
-        toast.setGravity(gravity, 0, 0);
-        toast.show();
     }
 
     public static void applyNightMode(SharedPreferences sharedPreferences, Context context) {

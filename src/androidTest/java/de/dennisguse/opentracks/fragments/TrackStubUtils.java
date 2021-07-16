@@ -16,8 +16,9 @@
 
 package de.dennisguse.opentracks.fragments;
 
-import android.location.Location;
+import java.time.Instant;
 
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 
 /**
@@ -29,11 +30,10 @@ public class TrackStubUtils {
 
     public static final double INITIAL_ALTITUDE = 22;
     public static final long INITIAL_TIME = 1000L;
-    private static final String LOCATION_PROVIDER = "gps";
     private static final double INITIAL_LATITUDE = 22;
     private static final double INITIAL_LONGITUDE = 22;
     private static final float INITIAL_ACCURACY = 5;
-    private static final float INITIAL_SPEED = 10;
+    private static final Speed INITIAL_SPEED = Speed.of(10);
     private static final float INITIAL_BEARING = 3.0f;
 
     /**
@@ -51,15 +51,12 @@ public class TrackStubUtils {
      * @return a SensorDataSetLocation stub.
      */
     private static TrackPoint createDefaultTrackPoint(double latitude, double longitude, double altitude) {
-        Location location = new Location(LOCATION_PROVIDER);
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        location.setAltitude(altitude);
-        location.setAccuracy(INITIAL_ACCURACY);
-        location.setSpeed(INITIAL_SPEED);
-        location.setTime(INITIAL_TIME); //TODO This is nowadays ignored as the constructor will replace the time.
-        location.setBearing(INITIAL_BEARING);
-
-        return new TrackPoint(location);
+        return new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(INITIAL_TIME))
+                .setLatitude(latitude)
+                .setLongitude(longitude)
+                .setAltitude(altitude)
+                .setAccuracy(INITIAL_ACCURACY)
+                .setSpeed(INITIAL_SPEED)
+                .setBearing(INITIAL_BEARING);
     }
 }

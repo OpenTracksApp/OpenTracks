@@ -1,0 +1,11 @@
+OpenTracks jest aplikacją do śledzenia sportu, która całkowicie szanuje Twoją prywatność.
+
+Cechy:
+* Śledzenie sportu: śledź swoją aktywność sportową i outdoorową.
+* Zdjęcia i markery: zaznacz interesujące lokalizacje podczas śledzenia.
+* Przyrost i utrata wysokości: poprzez czujnik barometryczny
+* Wysokość pokazana w EGM2008 (powyżej średniego poziomu morza); wyeksportowana jako WGS84
+* Komunikaty głosowe
+* Obsługa czujników Bluetooth LE: tętno, prędkość i dystans (kolarstwo), kadencja (kolarstwo) i miernik mocy (kolarstwo)
+* Eksport danych: eksport tras jako KMZ (w tym zdjęcia), KML lub GPX
+* Brak dostępu do Internetu: Internet nie jest używany

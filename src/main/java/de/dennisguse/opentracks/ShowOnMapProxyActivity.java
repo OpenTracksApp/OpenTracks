@@ -42,7 +42,7 @@ public abstract class ShowOnMapProxyActivity extends AppCompatActivity {
      * @param trackIds the track ids
      */
     private static void showTrackfileFormat(Context context, TrackFileFormat trackFileFormat, Set<Track.Id> trackIds) {
-        if (trackIds.size() == 0) {
+        if (trackIds.isEmpty()) {
             return;
         }
 
@@ -57,9 +57,9 @@ public abstract class ShowOnMapProxyActivity extends AppCompatActivity {
         context.startActivity(Intent.createChooser(intent, context.getString(R.string.open_track_as_trackfileformat, trackFileFormat.getExtension())));
     }
 
-    public static class KMZ extends ShowOnMapProxyActivity {
-        public KMZ() {
-            super(TrackFileFormat.KMZ_WITH_TRACKDETAIL);
+    public static class KML extends ShowOnMapProxyActivity {
+        public KML() {
+            super(TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA);
         }
     }
 

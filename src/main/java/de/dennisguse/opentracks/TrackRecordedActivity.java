@@ -34,7 +34,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import de.dennisguse.opentracks.content.TrackDataHub;
-import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.databinding.TrackRecordedBinding;
@@ -42,6 +41,7 @@ import de.dennisguse.opentracks.fragments.ChartFragment;
 import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.fragments.IntervalsFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordedFragment;
+import de.dennisguse.opentracks.services.TrackDeleteService;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.SettingsActivity;
@@ -56,14 +56,13 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  * @author Rodrigo Damazio
  */
 //TODO Should not use TrackRecordingServiceConnection; only used to determine if there is NO current recording, to enable resume functionality.
-public class TrackRecordedActivity extends AbstractListActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackActivityDataHubInterface {
+public class TrackRecordedActivity extends AbstractTrackDeleteActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackActivityDataHubInterface {
 
     private static final String TAG = TrackRecordedActivity.class.getSimpleName();
 
     public static final String VIEW_TRACK_ICON = "track_icon";
 
     public static final String EXTRA_TRACK_ID = "track_id";
-    public static final String EXTRA_MARKER_ID = "marker_id";
 
     private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
 
@@ -248,9 +247,16 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
         return recordingStatus.getTrackId();
     }
 
+    @Override
+    protected void onTrackDeleteStatus(TrackDeleteService.DeleteStatus deleteStatus) {
+        super.onTrackDeleteStatus(deleteStatus);
+        if (deleteStatus.isDeleted(trackId)) {
+            runOnUiThread(this::finish);
+        }
+    }
 
     @Override
-    protected void onTrackDeleted() {
+    protected void onDeleteConfirmed() {
         runOnUiThread(this::finish);
     }
 
@@ -264,18 +270,6 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
 
     private void handleIntent(Intent intent) {
         trackId = intent.getParcelableExtra(EXTRA_TRACK_ID);
-
-        Marker.Id markerId = intent.getParcelableExtra(EXTRA_MARKER_ID);
-        if (markerId != null) {
-            // Use the trackId from the marker
-            Marker marker = contentProviderUtils.getMarker(markerId);
-            if (marker == null) {
-                finish();
-                return;
-            }
-            trackId = marker.getTrackId();
-        }
-
         if (trackId == null) {
             Log.e(TAG, "TrackDetailActivity needs EXTRA_TRACK_ID.");
             finish();
@@ -295,7 +289,7 @@ public class TrackRecordedActivity extends AbstractListActivity implements Confi
                 case 0:
                     return StatisticsRecordedFragment.newInstance(trackId);
                 case 1:
-                    return IntervalsFragment.newInstance(true);
+                    return IntervalsFragment.newInstance(trackId, true);
                 case 2:
                     return ChartFragment.newInstance(false);
                 case 3:

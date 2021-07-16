@@ -1,0 +1,12 @@
+v3.18.5: OpenTracks
+
+Spremembe:
+- Nastavljiva hitrost glasovnega napovedovanja
+- API <26: ikona zaganjalnika izpusti ozadje
+
+Popravki napak:
+- Pripomoček za snemanje: prikaže pravilne vrednosti 
+- Uporabniški vmesnik za snemanje: (ponovno) prikaže nadmorsko višino v EGM2008
+
+Razvijalec:
+- Android12 dovoljenja (BLUETOOTH_CONNECT)

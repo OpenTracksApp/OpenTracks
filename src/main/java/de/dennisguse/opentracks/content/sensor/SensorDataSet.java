@@ -17,6 +17,13 @@ public final class SensorDataSet {
     public SensorDataSet() {
     }
 
+    public SensorDataSet(SensorDataSet toCopy) {
+        this.heartRate = toCopy.heartRate;
+        this.cyclingCadence = toCopy.cyclingCadence;
+        this.cyclingDistanceSpeed = toCopy.cyclingDistanceSpeed;
+        this.cyclingPower = toCopy.cyclingPower;
+    }
+
     public SensorDataHeartRate getHeartRate() {
         return heartRate;
     }

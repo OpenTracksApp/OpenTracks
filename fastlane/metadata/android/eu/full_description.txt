@@ -1,0 +1,11 @@
+OpenTracks kirol bat da, jarraipenerako aplikazio hori guztiz zure pribatutasuna errespetatzen.
+
+Ezaugarri:
+* Kirol jarraipena: track zure kirol eta kanpoko ekintzak
+* Argazkiak eta markatzaileak: mark interesgarria municipios bitartean jarraipena
+* Altitudea irabazia eta galera: via barometric-sentsore
+* Altitudea erakutsi EGM2008 (goian esan nahi itsasoaren maila); gisa esportatuko WGS84
+* Ahots deialdiak
+* Onartzen Bluetooth LE sentsoreak: bihotz-tasa, abiadura eta distantzia (txirrindularitza), kadentzia (txirrindularitza), eta potentzia metro (txirrindularitza)
+* Datuak esportatu: export ibilbideak bai KMZ (incl. argazkiak), KML, edo GPX
+* Ez da Interneterako sarbidea: Internet ez da erabiltzen

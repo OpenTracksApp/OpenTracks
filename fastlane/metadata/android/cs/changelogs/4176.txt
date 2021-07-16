@@ -1,0 +1,12 @@
+v3.18.5: OpenTracks
+
+Změny:
+- Nastavitelná rychlost hlasového hlášení
+- API <26: Ikona spouštěče vynechává pozadí
+
+Opravy chyb:
+- Uživatelské rozhraní nahrávání: zobrazuje správné hodnoty 
+- Uživatelské rozhraní nahrávání: zobrazuje (znovu) nadmořskou výšku v EGM2008
+
+Vývojáři: Změny v nastaveních: - Zlepšena funkce pro nahrávání a nahrávání letů v letadle:
+- Oprávnění Android12 (BLUETOOTH_CONNECT)

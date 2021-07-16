@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
---><resources>
+-->
+<resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">fly</string>
     <string name="activity_type_atv">ATV</string>
@@ -24,7 +24,7 @@ limitations under the License.
     <string name="activity_type_commercial_airplane">passasjerfly</string>
     <string name="activity_type_cross_country_skiing">langrenn</string>
     <string name="activity_type_cycling">sykling</string>
-    <string name="activity_type_dirt_bike">dirt bike</string>
+    <string name="activity_type_dirt_bike">motocross</string>
     <string name="activity_type_donkey_back_riding">eselridning</string>
     <string name="activity_type_driving">kjøring</string>
     <string name="activity_type_driving_bus">busskjøring</string>
@@ -75,9 +75,9 @@ limitations under the License.
     <string name="activity_type_trail_hiking">fottur på sti</string>
     <string name="activity_type_trail_running">terrengløp</string>
     <string name="activity_type_train">tog</string>
-    <string name="activity_type_ultimate_frisbee">ultimate frisbee</string>
+    <string name="activity_type_ultimate_frisbee">ultimate</string>
     <string name="activity_type_unknown">ukjent</string>
-    <string name="activity_type_wakeboarding">wakeboarding</string>
+    <string name="activity_type_wakeboarding">bølgebrett</string>
     <string name="activity_type_walking">gange</string>
     <string name="activity_type_water_skiing">vannski</string>
     <string name="activity_type_wind_surfing">vindsurfing</string>
@@ -91,17 +91,9 @@ limitations under the License.
     <string name="description_altitude_imperial">Høyde (ft)</string>
     <string name="description_altitude_metric">Høyde (m)</string>
     <string name="description_fastest_pace_in_minute">Raskeste tempo: %1$s min/km (%2$s min/mi)</string>
-    <string name="description_location_accuracy">Nøyaktighet (m)</string>
-    <string name="description_location_altitude">Høyde (m)</string>
-    <string name="description_location_bearing">Kurs (grader)</string>
-    <string name="description_location_latitude">Breddegrad (grader)</string>
-    <string name="description_location_longitude">Lengdegrad (grader)</string>
-    <string name="description_location_speed">Hastighet (m/s)</string>
     <string name="description_max_altitude">Maksstigning: %1$d m (%2$d ft)</string>
-    <string name="description_max_grade">Maksgrad: %1$d %%</string>
     <string name="description_max_speed">Maksfart: %1$.2f km/t (%2$.1f mi/h)</string>
     <string name="description_min_altitude">Minimumsstigning: %1$d m (%2$d ft)</string>
-    <string name="description_min_grade">Minimumsgrad: %1$d %%</string>
     <string name="description_moving_time">Forflytningstid: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/mi)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
@@ -115,8 +107,6 @@ limitations under the License.
     <string name="description_time">Tid</string>
     <string name="description_total_distance">Total distanse: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Total tid: %1$s</string>
-    <string name="description_track_point">Punkt</string>
-    <string name="description_track_segment">Segment</string>
     <!-- Export -->
     <string name="export_all_option">Alle som %1$s</string>
     <string name="export_all_title">Eksporter til ekstern lagringsplass</string>
@@ -127,16 +117,12 @@ limitations under the License.
     <string name="export_title">Eksporter til…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d filer</string>
-    <string name="files_many">%1$d filer</string>
-    <string name="files_one">1 fil</string>
-    <string name="files_other">%1$d filer</string>
-    <string name="files_two">2 filer</string>
-    <string name="files_zero">0 filer</string>
+    <plurals name="files">
+        <item quantity="one">1 fil</item>
+        <item quantity="other">%1$d filer</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Legg til</string>
-    <string name="generic_cancel">Avbryt</string>
-    <string name="generic_delete_all_confirm_title">Vil du slette alle?</string>
     <string name="generic_delete_selected_confirm_title">Vil du slette de valgte elementene?</string>
     <string name="generic_description">Beskrivelse</string>
     <string name="generic_description_line">Beskrivelse: %1$s</string>
@@ -144,20 +130,12 @@ limitations under the License.
     <string name="generic_name">Navn</string>
     <string name="generic_name_line">Navn: %1$s</string>
     <string name="generic_no">Nei</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">I pausemodus</string>
-    <string name="generic_progress_title">Vent litt …</string>
     <string name="generic_recording">Tar opp …</string>
     <string name="generic_save">Lagre</string>
     <string name="generic_success_title">Vellykket</string>
     <string name="generic_tracks">Spor</string>
-    <string name="generic_yes">Ja</string>
     <!-- Gps -->
-    <string name="gps_location_access">«Posisjonstilgang»</string>
-    <string name="gps_disabled">GPS er ikke aktivert. Trykk her for å gå til %1$s. Trykk på tilbake-knappen for å gå tilbake.</string>
-    <string name="gps_disabled_my_location">Den nåværende posisjonen kan ikke fastslås. Aktiver flere posisjonskilder i %1$s, og
-    pass på at himmelen er synlig. Prøv igjen senere.</string>
-    <string name="gps_not_found">Fant ingen GPS på enheten</string>
     <string name="gps_starting">Starter GPS</string>
     <string name="gps_wait_for_better_signal">Venter på bedre GPS-signal</string>
     <string name="gps_wait_for_signal">Venter på GPS-signal</string>
@@ -166,7 +144,6 @@ limitations under the License.
     <string name="image_arrow">Pil</string>
     <string name="image_marker">Markør</string>
     <string name="image_marker_count">Markørantall</string>
-    <string name="image_my_location">Min posisjon</string>
     <string name="image_pause">Stans midlertidig</string>
     <string name="image_photo_marker">Bildemarkør</string>
     <string name="image_record">Ta opp</string>
@@ -186,17 +163,14 @@ limitations under the License.
     <string name="marker_add_error">Kan ikke sette inn markør. Har ikke GPS-signal. Prøv på nytt.</string>
     <string name="marker_add_success">En markør ble satt inn</string>
     <string name="marker_add_canceled">Avbrutt – ingen markør lagt til</string>
-    <string name="marker_delete_all_confirm_message">Alle markører for dette sporet blir slettet permanent fra enheten</string>
     <string name="marker_delete_one_confirm_message">Markøren blir slettet permanent fra enheten</string>
     <string name="marker_delete_one_confirm_title">Vil du slette markøren?</string>
     <string name="marker_delete_multiple_confirm_message">De valgte markørene blir slettet permanent fra enheten</string>
     <string name="marker_label_end">%1$s (slutt)</string>
     <string name="marker_label_start">%1$s (start)</string>
     <string name="marker_name_format">Markør %1$d</string>
-    <string name="marker_split_name_format">Del %1$d</string>
     <string name="marker_title">%1$d av %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">Siden forrige delmarkør:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Markørtype (f.eks. foss)</string>
     <string name="marker_edit_marker_type_hint">Markørtype</string>
@@ -214,11 +188,9 @@ limitations under the License.
     <string name="menu_markers">Markører</string>
     <string name="menu_search">Søk</string>
     <string name="menu_select_all">Velg alle</string>
-    <string name="menu_sensor_state">Sensortilstand</string>
     <string name="menu_settings">Innstillinger</string>
     <string name="menu_share">Del</string>
     <string name="menu_show_on_map">Vis på kart</string>
-    <string name="menu_split_frequency">Delefrekvens</string>
     <string name="menu_start_gps">Start GPS</string>
     <string name="menu_stop_gps">Stopp GPS</string>
     <string name="menu_view_photo">Se bildet</string>
@@ -228,12 +200,10 @@ limitations under the License.
     <!-- Search -->
     <string name="search_global_description">Spor og markører</string>
     <string name="search_list_empty_message">Ingen spor eller markører samsvarte med søket ditt</string>
-    <string name="search_list_marker_track_location">I spor ‘%1$s’.</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Batterinivå</string>
     <string name="sensor_state_cadence">Kadens</string>
     <string name="sensor_state_cadence_value">%1$d o/min</string>
-    <string name="sensor_state_disconnected">Frakoblet</string>
     <string name="sensor_state_heart_rate">Puls</string>
     <string name="sensor_state_heart_rate_value">%1$d slag/min</string>
     <string name="sensor_state_power">Strøm</string>
@@ -245,7 +215,6 @@ limitations under the License.
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Etter distanse</string>
     <string name="settings_chart_by_time">Etter tid</string>
-    <string name="settings_chart_x_axis">X-akse</string>
     <string name="settings_recording">Opptak</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Fortsett alltid opptak etter omstart</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Fortsett aldri opptak etter omstart</string>
@@ -269,7 +238,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Vil du tilbakestille nå?</string>
     <string name="settings_reset_done">Alle innstillinger er tilbakestilt til standardverdiene</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Sensor</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth-sensor</string>
     <!-- Settings Stats -->
@@ -292,12 +260,9 @@ limitations under the License.
     <string name="stats_altitude">Høyde</string>
     <string name="stats_fastest_pace">Raskeste tempo</string>
     <string name="stats_gain">Total stigning</string>
-    <string name="stats_grade">Helling</string>
     <string name="stats_latitude">Breddegrad</string>
     <string name="stats_longitude">Lengdegrad</string>
-    <string name="stats_max">Maks</string>
     <string name="stats_max_speed">Maks. hastighet</string>
-    <string name="stats_min">Min</string>
     <string name="stats_moving_time">Forflytningstid</string>
     <string name="stats_pace">Tempo</string>
     <string name="stats_speed">Hastighet</string>
@@ -323,30 +288,19 @@ limitations under the License.
     <string name="track_list_empty_message">Begynn å ta opp din neste aktivitet her</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d spor</string>
-    <string name="tracks_many">%1$d spor</string>
-    <string name="tracks_one">1 spor</string>
-    <string name="tracks_other">%1$d spor</string>
-    <string name="tracks_two">2 spor</string>
-    <string name="tracks_zero">0 spor</string>
     <!-- Unit -->
     <string name="unit_feet">fot</string>
     <string name="unit_kilometer">km</string>
     <string name="unit_kilometer_per_hour">km/t</string>
     <string name="unit_meter">m</string>
     <string name="unit_mile">mi</string>
-    <string name="unit_mile_per_hour">mi/h</string>
+    <string name="unit_mile_per_hour">mph</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/mi</string>
     <!-- Value -->
     <string name="value_adapt_accuracy">Tilpass for nøyaktighet</string>
     <string name="value_adapt_battery_life">Tilpass for batterilevetid</string>
     <string name="value_always">Alltid</string>
-    <string name="value_float_feet">%1$.2f fot</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mi</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mi (dårlig GPS)</string>
     <string name="value_integer_feet">%1$d fot</string>
     <string name="value_integer_feet_excellent_gps">%1$d fot (utmerket GPS)</string>
     <string name="value_integer_feet_recommended">%1$d fot (anbefales)</string>
@@ -366,52 +320,37 @@ limitations under the License.
     <string name="value_smallest">Minst</string>
     <string name="value_smallest_recommended">Minste (anbefales)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d timer</string>
-    <string name="voice_hours_many">%1$d timer</string>
-    <string name="voice_hours_one">1 time</string>
-    <string name="voice_hours_other">%1$d timer</string>
-    <string name="voice_hours_two">2 timer</string>
-    <string name="voice_hours_zero">0 timer</string>
-    <string name="voice_minutes_few">%1$d minutter</string>
-    <string name="voice_minutes_many">%1$d minutter</string>
-    <string name="voice_minutes_one">1 minutt</string>
-    <string name="voice_minutes_other">%1$d minutter</string>
-    <string name="voice_minutes_two">2 minutter</string>
-    <string name="voice_minutes_zero">0 minutter</string>
+    <plurals name="voiceHours">
+        <item quantity="one">1 time</item>
+        <item quantity="other">%1$d timer</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">1 minutt</item>
+        <item quantity="other">%1$d minutter</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">1 sekund</item>
+        <item quantity="other">%1$d sekunder</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">1 kilometer i timen</item>
+        <item quantity="other">%1$.1f kilometer i timen</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">1 engelsk mil i timen</item>
+        <item quantity="other">%1$.1f engelske mil i timen</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s per kilometer</string>
     <string name="voice_pace_per_mile">%1$s per engelsk mil</string>
-    <string name="voice_seconds_few">%1$d sekunder</string>
-    <string name="voice_seconds_many">%1$d sekunder</string>
-    <string name="voice_seconds_one">1 sekund</string>
-    <string name="voice_seconds_other">%1$d sekunder</string>
-    <string name="voice_seconds_two">2 sekunder</string>
-    <string name="voice_seconds_zero">0 sekunder</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f kilometer i timen</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f kilometer i timen</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 kilometer i timen</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f kilometer i timen</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 kilometer i timen</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 kilometer i timen</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f engelske mil i timen</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f engelske mil i timen</string>
-    <string name="voice_speed_miles_per_hour_one">1 engelsk mil i timen</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f engelske mil i timen</string>
-    <string name="voice_speed_miles_per_hour_two">2 engelske mil i timen</string>
-    <string name="voice_speed_miles_per_hour_zero">0 engelske mil i timen</string>
-    <string name="voice_template">Spor %1$s om %2$s ved %3$s</string>
-    <string name="voice_total_distance_kilometers_few">total distanse %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_many">total distanse %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_one">total distanse 1 kilometer</string>
-    <string name="voice_total_distance_kilometers_other">total distanse %1$.2f kilometer</string>
-    <string name="voice_total_distance_kilometers_two">total distanse 2 kilometer</string>
-    <string name="voice_total_distance_kilometers_zero">total distanse 0 kilometer</string>
-    <string name="voice_total_distance_miles_few">total distanse %1$.2f engelske mil</string>
-    <string name="voice_total_distance_miles_many">total distanse %1$.2f engelske mil</string>
-    <string name="voice_total_distance_miles_one">total distanse 1 engelsk mil</string>
-    <string name="voice_total_distance_miles_other">total distanse %1$.2f engelske mil</string>
-    <string name="voice_total_distance_miles_two">total distanse 2 engelske mil</string>
-    <string name="voice_total_distance_miles_zero">total distanse 0 engelske mil</string>
-    <string name="voice_total_distance_zero">OpenTracks totale distanse er null.</string>
+    <string name="voice_template">%1$s på %2$s med %3$s</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">total distanse 1 kilometer</item>
+        <item quantity="other">total distanse %1$.2f kilometer</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">total distanse 1 engelsk mil</item>
+        <item quantity="other">total distanse %1$.2f engelske mil</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Minibank</string>
     <string name="waypoint_type_bank">bank</string>
@@ -451,7 +390,7 @@ limitations under the License.
     <string name="waypoint_type_pothole">hull i veien</string>
     <string name="waypoint_type_railway_crossing">jernbaneovergang</string>
     <string name="waypoint_type_restaurant">restaurant</string>
-    <string name="waypoint_type_shopping">shopping</string>
+    <string name="waypoint_type_shopping">handel</string>
     <string name="waypoint_type_sight">severdighet</string>
     <string name="waypoint_type_store">butikk</string>
     <string name="waypoint_type_swimming_pool">svømmebasseng</string>
@@ -463,8 +402,8 @@ limitations under the License.
     <string name="waypoint_type_tunnel">tunnel</string>
     <string name="waypoint_type_waterfall">foss</string>
     <string name="waypoint_type_water_fountain">vannfontene</string>
-    <string name="waypoint_type_waypoint">veipunkt</string>
-    <string name="open_track_as_KMZ">Åpne som KMZ</string>
+    <string name="waypoint_type_waypoint">rutepunkt</string>
+    <string name="open_track_as_KML">Åpne som KML</string>
     <string name="description_default_speed_or_pace">Etter aktivitetstype</string>
     <string name="export_without_photos">uten bilder</string>
     <string name="export_all_do_it_for_all">gjør det for alle konflikter</string>
@@ -489,7 +428,6 @@ limitations under the License.
     <string name="settings_recording_keep_screen_on_while_recording_summary">Hold skjermen på mens du tar opp.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Fullskjerm</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Mens du tar opp, vis i fullskjerm.</string>
-    <string name="sensor_not_known">Sensor %1$s er ukjent. Kontroller innstillingene.</string>
     <string name="bluetooth_disabled">Slå på Bluetooth.</string>
     <string name="settings_night_mode_title">Brukerflatetema</string>
     <string name="settings_night_mode_option_system">System</string>
@@ -499,8 +437,6 @@ limitations under the License.
     <string name="stats_intervals">Intervaller</string>
     <string name="track_recording_notification_accuracy">Posisjonsnøyaktighet: %1$s</string>
     <string name="track_detail_intervals_tab">Intervaller</string>
-    <string name="track_detail_record_success">Tar nå opp et nytt spor</string>
-    <string name="track_detail_resume_success">Gjenopptar nå sporet</string>
     <string name="aggregated_stats_empty_message">Ta opp ditt første spor for å se samlet statistikk</string>
     <string name="stats_split_interval">Intervall</string>
     <string name="interval_list_empty_message">Det er ingen intervaller ennå</string>
@@ -516,7 +452,6 @@ limitations under the License.
     <string name="open_track_using_dashboard">Åpne med OpenTracks-Dashboard</string>
     <string name="open_track_as_GPX">Åpne som GPX</string>
     <string name="open_track_as_trackfileformat">Åpne som %1$s</string>
-    <string name="app_not_installed_show_on_map">Installer en app som støtter presentasjon av kartdata.</string>
     <string name="export_with_photos">med bilder</string>
     <string name="export_track_already_exists_msg">Sporet %1$s finnes allerede i målmappen.</string>
     <string name="import_unsupported_format">Filformatet støttes ikke</string>
@@ -579,10 +514,6 @@ limitations under the License.
 \n e) kjøpe i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) donere, og
 \n g) gjøre hva du tror hjelper OpenTracks. </string>
-    <string name="value_float_kilometer_hour">%1$.2f km/t</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
-    <string name="value_float_mile_hour">%1$.2f mph</string>
-    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
     <string name="description_altitude_loss">Total nedstigning: %1$d m (%2$d ft)</string>
     <string name="stats_loss">Total nedstigning</string>
     <string name="import_prevent_reimport">Du har stilt inn å forhindre at spor importeres om igjen</string>
@@ -606,4 +537,9 @@ limitations under the License.
     <string name="track_distance_notification">Distanse: %1$s</string>
     <string name="track_speed_notification">Hastighet: %1$s</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
+    <string name="about_third_party_data">Tredjepartsdata</string>
+    <string name="delete_service">Slettingstjeneste</string>
+    <string name="track_delete_progress">%1$d/%2$d</string>
+    <string name="menu_voice_rate">Talehastighet</string>
+    <string name="track_delete_not_recording">Dette sporet kan ikke slettes da det tas opp nå.</string>
 </resources>

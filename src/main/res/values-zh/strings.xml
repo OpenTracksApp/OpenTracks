@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
---><resources>
+-->
+<resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">坐飞机</string>
     <string name="activity_type_atv">全地形越野</string>
@@ -91,17 +91,9 @@ limitations under the License.
     <string name="description_altitude_imperial">海拔（英尺）</string>
     <string name="description_altitude_metric">海拔（米）</string>
     <string name="description_fastest_pace_in_minute">最快步速：%1$s分钟/公里（%2$s分钟/英里）</string>
-    <string name="description_location_accuracy">精度（米）</string>
-    <string name="description_location_altitude">海拔高度（米）</string>
-    <string name="description_location_bearing">导向（度）</string>
-    <string name="description_location_latitude">纬度（度）</string>
-    <string name="description_location_longitude">经度（度）</string>
-    <string name="description_location_speed">速度（米/秒）</string>
     <string name="description_max_altitude">最高海拔：%1$d 米（%2$d 英尺）</string>
-    <string name="description_max_grade">最大坡度：%1$d %%</string>
     <string name="description_max_speed">最高限速：%1$.2f 公里/小时（%2$.1f 英里/小时）</string>
     <string name="description_min_altitude">最低海拔：%1$d 米（%2$d 英尺）</string>
-    <string name="description_min_grade">最小坡度：%1$d %%</string>
     <string name="description_moving_time">移动时间：%1$s</string>
     <string name="description_pace_imperial">步速（分钟/英里）</string>
     <string name="description_pace_metric">步速（分钟/公里）</string>
@@ -115,8 +107,6 @@ limitations under the License.
     <string name="description_time">时间</string>
     <string name="description_total_distance">总距离：%1$.2f 公里（%2$.1f 英里）</string>
     <string name="description_total_time">总时间：%1$s</string>
-    <string name="description_track_point">点</string>
-    <string name="description_track_segment">路段</string>
     <!-- Export -->
     <string name="export_all_option">以 %1$s 格式导出全部</string>
     <string name="export_all_title">导出到外部存储设备</string>
@@ -127,16 +117,11 @@ limitations under the License.
     <string name="export_title">导出到…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d个文件</string>
-    <string name="files_many">%1$d个文件</string>
-    <string name="files_one">1个文件</string>
-    <string name="files_other">%1$d个文件</string>
-    <string name="files_two">2个文件</string>
-    <string name="files_zero">0个文件</string>
+    <plurals name="files">
+        <item quantity="other">%1$d个文件</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">添加</string>
-    <string name="generic_cancel">取消</string>
-    <string name="generic_delete_all_confirm_title">全部删除？</string>
     <string name="generic_delete_selected_confirm_title">删除所选项？</string>
     <string name="generic_description">说明</string>
     <string name="generic_description_line">说明：%1$s</string>
@@ -144,20 +129,12 @@ limitations under the License.
     <string name="generic_name">名称</string>
     <string name="generic_name_line">名称：%1$s</string>
     <string name="generic_no">否</string>
-    <string name="generic_ok">确定</string>
     <string name="generic_paused">已暂停</string>
-    <string name="generic_progress_title">请稍候…</string>
     <string name="generic_recording">正在记录…</string>
     <string name="generic_save">保存</string>
     <string name="generic_success_title">成功</string>
     <string name="generic_tracks">路线</string>
-    <string name="generic_yes">是</string>
     <!-- Gps -->
-    <string name="gps_location_access">‘位置信息使用权’</string>
-    <string name="gps_disabled">GPS 未启用，请点按此处转至 %1$s。按“后退”按钮返回。</string>
-    <string name="gps_disabled_my_location">无法确定当前位置。请进入%1$s启用更多位置来源，并确保
-    您看得到天空。请稍后再试。</string>
-    <string name="gps_not_found">设备上找不到GPS</string>
     <string name="gps_starting">正在启动GPS</string>
     <string name="gps_wait_for_better_signal">正在等待更好的GPS信号</string>
     <string name="gps_wait_for_signal">正在等待GPS信号</string>
@@ -166,7 +143,6 @@ limitations under the License.
     <string name="image_arrow">箭头</string>
     <string name="image_marker">标记</string>
     <string name="image_marker_count">标记数</string>
-    <string name="image_my_location">我的位置</string>
     <string name="image_pause">暂停</string>
     <string name="image_photo_marker">照片标记</string>
     <string name="image_record">记录</string>
@@ -186,17 +162,14 @@ limitations under the License.
     <string name="marker_add_error">无法插入标记，无 GPS 信号。请重试。</string>
     <string name="marker_add_success">已插入标记</string>
     <string name="marker_add_canceled">已取消，未添加标记</string>
-    <string name="marker_delete_all_confirm_message">此路线的所有标记都将永久地从设备中删除</string>
     <string name="marker_delete_one_confirm_message">标记将永久地从设备中删除</string>
     <string name="marker_delete_one_confirm_title">删除标记？</string>
     <string name="marker_delete_multiple_confirm_message">所选标记将永久地从设备中删除</string>
     <string name="marker_label_end">%1$s（终点）</string>
     <string name="marker_label_start">%1$s（起点）</string>
     <string name="marker_name_format">标记 %1$d</string>
-    <string name="marker_split_name_format">分割标记 %1$d</string>
     <string name="marker_title">第%1$d个（共%2$d个）</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">上一个分割标记之后的数据：</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">标记类型（如瀑布）</string>
     <string name="marker_edit_marker_type_hint">标记类型</string>
@@ -214,26 +187,24 @@ limitations under the License.
     <string name="menu_markers">标记</string>
     <string name="menu_search">搜索</string>
     <string name="menu_select_all">全选</string>
-    <string name="menu_sensor_state">传感器状态</string>
     <string name="menu_settings">设置</string>
     <string name="menu_share">分享</string>
     <string name="menu_show_on_map">在地图上显示</string>
-    <string name="menu_split_frequency">分割频率</string>
     <string name="menu_start_gps">启动 GPS</string>
     <string name="menu_stop_gps">关闭 GPS</string>
     <string name="menu_view_photo">查看照片</string>
     <string name="menu_voice_frequency">语音提示频率</string>
+    <string name="menu_voice_rate">语音提示速率</string>
+    <string name="menu_resume_track">继续</string>
     <!-- OpenTracks -->
     <string name="recording_service">记录服务</string>
     <!-- Search -->
     <string name="search_global_description">路线和标记</string>
     <string name="search_list_empty_message">没有与您的搜索相符的路线或标记</string>
-    <string name="search_list_marker_track_location">位于“%1$s”路线。</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">电池电量</string>
     <string name="sensor_state_cadence">蹬车频率</string>
     <string name="sensor_state_cadence_value">%1$d RPM</string>
-    <string name="sensor_state_disconnected">已断开连接</string>
     <string name="sensor_state_heart_rate">心率</string>
     <string name="sensor_state_heart_rate_value">%1$d BPM</string>
     <string name="sensor_state_power">功率</string>
@@ -242,10 +213,17 @@ limitations under the License.
     <string name="settings_show">显示</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">高级</string>
+    <string name="settings_default_trackfileformat">导出文件格式</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">按距离</string>
     <string name="settings_chart_by_time">按时间</string>
-    <string name="settings_chart_x_axis">X 轴</string>
+    <!-- Settings Recording -->
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">锁屏显示</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">记录时，无需解锁设备即可显示记录信息。</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">保持亮屏</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">记录时，保持屏幕常亮。</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">全屏显示</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">记录时，全屏幕显示。</string>
     <string name="settings_recording">记录</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">重启后一律继续记录</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">重启后一律不再继续记录</string>
@@ -263,21 +241,26 @@ limitations under the License.
     <string name="settings_recording_track_name_date_local_option">日期（本地）</string>
     <string name="settings_recording_track_name_number_option">编号</string>
     <string name="settings_recording_track_name_title">默认路线名称</string>
+    <string name="settings_night_mode_title">界面样式</string>
+    <string name="settings_night_mode_option_system">跟随系统</string>
+    <string name="settings_night_mode_option_day">白天模式</string>
+    <string name="settings_night_mode_option_night">夜间模式</string>
     <!-- Settings Reset -->
     <string name="settings_reset">重置</string>
     <string name="settings_reset_confirm_message">所有设置都将恢复为默认值。</string>
     <string name="settings_reset_confirm_title">立即重置？</string>
     <string name="settings_reset_done">所有设置都已恢复为默认值</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">传感器</string>
     <string name="settings_sensor_bluetooth">蓝牙</string>
     <string name="settings_sensor_bluetooth_sensor">蓝牙传感器</string>
+    <string name="settings_sensor_wheel_circumference">车轮周长 (mm)</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">纬度/经度</string>
     <string name="settings_stats_rate_title">首选速率</string>
     <string name="settings_stats_units_imperial">英制（英里、英尺）</string>
     <string name="settings_stats_units_metric">公制（公里、米）</string>
     <string name="settings_stats_units_title">首选单位</string>
+    <string name="settings_prevent_reimport_tracks_title">禁止导出重复数据</string>
     <!-- Share Track -->
     <string name="share_track_share_file">分享路线文件</string>
     <string name="share_track_share_file_body">我想您可能会对此路线感兴趣。
@@ -292,17 +275,16 @@ limitations under the License.
     <string name="stats_altitude">海拔</string>
     <string name="stats_fastest_pace">最快步速</string>
     <string name="stats_gain">爬高</string>
-    <string name="stats_grade">坡度</string>
     <string name="stats_latitude">纬度</string>
     <string name="stats_longitude">经度</string>
-    <string name="stats_max">最大值</string>
     <string name="stats_max_speed">最高速度</string>
-    <string name="stats_min">最小值</string>
     <string name="stats_moving_time">移动时间</string>
     <string name="stats_pace">步速</string>
     <string name="stats_speed">速度</string>
     <string name="stats_distance">距离</string>
     <string name="stats_total_time">总时间</string>
+    <string name="stats_intervals">分段信息</string>
+    <string name="stats_split_interval">分段间隔</string>
     <!-- Track -->
     <string name="track_name_format">路线 %1$d</string>
     <string name="track_record_notification">正在记录路线…</string>
@@ -323,12 +305,6 @@ limitations under the License.
     <string name="track_list_empty_message">在这里开始记录您的新冒险</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d条路线</string>
-    <string name="tracks_many">%1$d条路线</string>
-    <string name="tracks_one">1条路线</string>
-    <string name="tracks_other">%1$d条路线</string>
-    <string name="tracks_two">2条路线</string>
-    <string name="tracks_zero">0条路线</string>
     <!-- Unit -->
     <string name="unit_feet">英尺</string>
     <string name="unit_kilometer">公里</string>
@@ -342,11 +318,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">适应精度</string>
     <string name="value_adapt_battery_life">视电池电量而定</string>
     <string name="value_always">一律启用</string>
-    <string name="value_float_feet">%1$.2f 英尺</string>
-    <string name="value_float_kilometer">%1$.2f 公里</string>
-    <string name="value_float_meter">%1$.2f 米</string>
-    <string name="value_float_mile">%1$.2f 英里</string>
-    <string name="value_float_mile_poor_gps">%1$.1f 英里（GPS 信号差）</string>
     <string name="value_integer_feet">%1$d 英尺</string>
     <string name="value_integer_feet_excellent_gps">%1$d 英尺（GPS 信号极佳）</string>
     <string name="value_integer_feet_recommended">%1$d 英尺（推荐）</string>
@@ -366,52 +337,29 @@ limitations under the License.
     <string name="value_smallest">最小</string>
     <string name="value_smallest_recommended">最小（建议）</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d 小时</string>
-    <string name="voice_hours_many">%1$d 小时</string>
-    <string name="voice_hours_one">1 小时</string>
-    <string name="voice_hours_other">%1$d 小时</string>
-    <string name="voice_hours_two">2 小时</string>
-    <string name="voice_hours_zero">0 小时</string>
-    <string name="voice_minutes_few">%1$d 分钟</string>
-    <string name="voice_minutes_many">%1$d 分钟</string>
-    <string name="voice_minutes_one">1 分钟</string>
-    <string name="voice_minutes_other">%1$d 分钟</string>
-    <string name="voice_minutes_two">2 分钟</string>
-    <string name="voice_minutes_zero">0 分钟</string>
+    <plurals name="voiceHours">
+        <item quantity="other">%1$d 小时</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="other">%1$d 分钟</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="other">%1$d 秒</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="other">每小时 %1$.1f 公里</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="other">每小时 %1$.1f 英里</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">每公里 %1$s</string>
-    <string name="voice_pace_per_mile">每英里 %1$s</string>
-    <string name="voice_seconds_few">%1$d 秒</string>
-    <string name="voice_seconds_many">%1$d 秒</string>
-    <string name="voice_seconds_one">1 秒</string>
-    <string name="voice_seconds_other">%1$d 秒</string>
-    <string name="voice_seconds_two">2 秒</string>
-    <string name="voice_seconds_zero">0 秒</string>
-    <string name="voice_speed_kilometers_per_hour_few">每小时 %1$.1f 公里</string>
-    <string name="voice_speed_kilometers_per_hour_many">每小时 %1$.1f 公里</string>
-    <string name="voice_speed_kilometers_per_hour_one">每小时 1 公里</string>
-    <string name="voice_speed_kilometers_per_hour_other">每小时 %1$.1f 公里</string>
-    <string name="voice_speed_kilometers_per_hour_two">每小时 2 公里</string>
-    <string name="voice_speed_kilometers_per_hour_zero">每小时 0 公里</string>
-    <string name="voice_speed_miles_per_hour_few">每小时 %1$.1f 英里</string>
-    <string name="voice_speed_miles_per_hour_many">每小时 %1$.1f 英里</string>
-    <string name="voice_speed_miles_per_hour_one">每小时 1 英里</string>
-    <string name="voice_speed_miles_per_hour_other">每小时 %1$.1f 英里</string>
-    <string name="voice_speed_miles_per_hour_two">每小时 2 英里</string>
-    <string name="voice_speed_miles_per_hour_zero">每小时 0 英里</string>
-    <string name="voice_template">“我的足迹”距离：%1$s；时间：%2$s；速度：%3$s</string>
-    <string name="voice_total_distance_kilometers_few">总距离 %1$.2f 公里</string>
-    <string name="voice_total_distance_kilometers_many">总距离 %1$.2f 公里</string>
-    <string name="voice_total_distance_kilometers_one">总距离 1 公里</string>
-    <string name="voice_total_distance_kilometers_other">总距离 %1$.2f 公里</string>
-    <string name="voice_total_distance_kilometers_two">总距离 2 公里</string>
-    <string name="voice_total_distance_kilometers_zero">总距离 0 公里</string>
-    <string name="voice_total_distance_miles_few">总距离 %1$.2f 英里</string>
-    <string name="voice_total_distance_miles_many">总距离 %1$.2f 英里</string>
-    <string name="voice_total_distance_miles_one">总距离 1 英里</string>
-    <string name="voice_total_distance_miles_other">总距离 %1$.2f 英里</string>
-    <string name="voice_total_distance_miles_two">总距离 2 英里</string>
-    <string name="voice_total_distance_miles_zero">总距离 0 英里</string>
-    <string name="voice_total_distance_zero">“我的足迹”总距离为零。</string>
+    <string name="voice_template">%1$s；时间：%2$s；速度：%3$s</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="other">总距离 %1$.2f 公里</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="other">总距离 %1$.2f 英里</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">自动取款机</string>
     <string name="waypoint_type_bank">银行</string>
@@ -466,7 +414,7 @@ limitations under the License.
     <string name="waypoint_type_waypoint">路标</string>
     <string name="about_url">项目主页：<a href="%1$s">%1$s</a></string>
     <string name="about_history">OpenTracks 是 <a href="https://code.google.com/archive/p/mytracks/"><i>Google MyTracks</i></a>（终止于 2016 年）的一个分支版本。</string>
-    <string name="open_track_as_KMZ">作为 KMZ 文件打开</string>
+    <string name="open_track_as_KML">作为 KML 文件打开</string>
     <string name="open_track_as_trackfileformat">作为 %1$s 文件打开</string>
     <string name="about_preference_title">关于 OpenTracks</string>
     <string name="about_version_name">版本名称：%1$s</string>
@@ -475,7 +423,15 @@ limitations under the License.
     <string name="help_feature_title">OpenTracks 支持以下特性：</string>
     <string name="open_track_as_GPX">作为 GPX 文件打开</string>
     <string name="activity_type_escooter">电动车</string>
-    <string name="app_not_installed_show_on_map">请先安装一个支持展示地图数据的应用。</string>
     <string name="description_altitude_loss">海拔降低：%1$d 米（%2$d 英尺）</string>
     <string name="description_default_speed_or_pace">按活动类型</string>
+    <!-- Share image -->
+    <string name="hold_to_stop">长按停止</string>
+    <string name="hold_to_pause">长按暂停</string>
+    <string name="toast_message_instant_track_was_exported">导出最近一次活动数据</string>
+
+    <string name="instant_export_enabled_summary">活动结束后，自动导出数据</string>
+    <string name="instant_export_enabled_title">自动导出</string>
+
+    <string name="settings_default_export_uri_title">选择导出目录</string>
 </resources>

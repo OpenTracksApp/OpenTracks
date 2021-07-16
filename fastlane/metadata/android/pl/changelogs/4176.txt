@@ -1,0 +1,12 @@
+v3.18.5: OpenTracks
+
+Zmiany:
+- Konfigurowalna prędkość komunikatów głosowych
+- API <26: Ikona programu uruchamiającego pomija tło
+
+Poprawki błędów:
+- UI nagrywania: pokazuj poprawne wartości 
+- Interfejs użytkownika nagrywania: pokazuj (ponownie) wysokość w EGM2008
+
+Deweloper:
+- Uprawnienia Android12 (BLUETOOTH_CONNECT)

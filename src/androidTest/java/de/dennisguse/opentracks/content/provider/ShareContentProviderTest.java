@@ -29,7 +29,7 @@ public class ShareContentProviderTest {
         trackIds.add(new Track.Id(3));
         trackIds.add(new Track.Id(5));
 
-        Pair<Uri, String> shareURIandMIME = ShareContentProvider.createURI(trackIds, "TrackName", TrackFileFormat.KML_ONLY_TRACK);
+        Pair<Uri, String> shareURIandMIME = ShareContentProvider.createURI(trackIds, "TrackName", TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA);
 
         assertEquals(trackIds, ShareContentProvider.parseURI(shareURIandMIME.first));
     }
@@ -38,8 +38,8 @@ public class ShareContentProviderTest {
     public void testCreateURIescapeFilename() {
         Set<Track.Id> trackIds = new HashSet<>();
         trackIds.add(new Track.Id(1));
-        Pair<Uri, String> shareURIandMIME = ShareContentProvider.createURI(trackIds, "../../&1=1", TrackFileFormat.KML_ONLY_TRACK);
+        Pair<Uri, String> shareURIandMIME = ShareContentProvider.createURI(trackIds, "../../&1=1", TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA);
 
-        assertEquals(Uri.parse("content://de.dennisguse.opentracks.debug.content/tracks/kml_only_track/1/..%2F..%2F%261%3D1.kml"), shareURIandMIME.first);
+        assertEquals(Uri.parse("content://de.dennisguse.opentracks.debug.content/tracks/kml_with_trackdetail_and_sensordata/1/..%2F..%2F%261%3D1.kml"), shareURIandMIME.first);
     }
 }

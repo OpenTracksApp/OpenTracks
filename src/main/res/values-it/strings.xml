@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
---><resources>
+-->
+<resources>
     <string name="about_preference_title">A proposito di OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i>è un\'applicazione di tracciamento sportivo che rispetta completamente la tua privacy.</string>
     <string name="about_url">Pagina web del progetto: <a href="%1$s">%1$s</a></string>
@@ -54,7 +54,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="help_gps_troubleshooting_title">OpenTracks non registra i luoghi?</string>
     <string name="help_support_title">Come posso supportare OpenTracks?</string>
     <string name="open_track_using_dashboard">Apri utilizzando OpenTracks-Dashboard</string>
-    <string name="open_track_as_KMZ">Apri come KMZ</string>
+    <string name="open_track_as_KML">Apri come KML</string>
     <string name="open_track_as_GPX">Apri come GPX</string>
     <string name="open_track_as_trackfileformat">Apri come %1$s</string>
     <!-- Activity Type -->
@@ -134,17 +134,9 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="description_altitude_imperial">Altitudine (ft)</string>
     <string name="description_altitude_metric">Altitudine (m)</string>
     <string name="description_fastest_pace_in_minute">Ritmo più rapido: %1$s min/km (%2$s min/mi)</string>
-    <string name="description_location_accuracy">Precisione (m)</string>
-    <string name="description_location_altitude">Altitudine (m)</string>
-    <string name="description_location_bearing">Rotta (gradi)</string>
-    <string name="description_location_latitude">Latitudine (gradi)</string>
-    <string name="description_location_longitude">Longitudine (gradi)</string>
-    <string name="description_location_speed">Velocità (m/s)</string>
     <string name="description_max_altitude">Altitudine max: %1$d m (%2$d ft)</string>
-    <string name="description_max_grade">Pendenza massima: %1$d %%</string>
     <string name="description_max_speed">Velocità massima: %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_min_altitude">Altitudine min: %1$d m (%2$d ft)</string>
-    <string name="description_min_grade">Pendenza minima: %1$d %%</string>
     <string name="description_moving_time">Tempo di spostamento: %1$s</string>
     <string name="description_pace_imperial">Ritmo (min/mi)</string>
     <string name="description_pace_metric">Ritmo (min/km)</string>
@@ -154,12 +146,10 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="description_sensor_heart_rate">Frequenza cardiaca (bpm)</string>
     <string name="description_sensor_power">Potenza (W)</string>
     <string name="description_speed_imperial">Velocità (mi/hr)</string>
-    <string name="description_speed_metric">Velocità (km/hr)</string>
+    <string name="description_speed_metric">Velocità (km/h)</string>
     <string name="description_time">Durata</string>
     <string name="description_total_distance">Distanza totale: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Tempo totale: %1$s</string>
-    <string name="description_track_point">Punto</string>
-    <string name="description_track_segment">Segmento</string>
     <!-- Export -->
     <string name="export_all_option">Tutto come %1$s</string>
     <string name="export_all_title">Esporta nella memoria esterna</string>
@@ -170,16 +160,12 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="export_title">Esporta in…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d file</string>
-    <string name="files_many">%1$d file</string>
-    <string name="files_one">1 file</string>
-    <string name="files_other">%1$d file</string>
-    <string name="files_two">2 file</string>
-    <string name="files_zero">0 file</string>
+    <plurals name="files">
+        <item quantity="one">1 file</item>
+        <item quantity="other">%1$d file</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Aggiungi</string>
-    <string name="generic_cancel">Annulla</string>
-    <string name="generic_delete_all_confirm_title">Eliminare tutto?</string>
     <string name="generic_delete_selected_confirm_title">Eliminare selezione?</string>
     <string name="generic_description">Descrizione</string>
     <string name="generic_description_line">Descrizione: %1$s</string>
@@ -187,20 +173,12 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="generic_name">Nome</string>
     <string name="generic_name_line">Nome: %1$s</string>
     <string name="generic_no">No</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">In pausa</string>
-    <string name="generic_progress_title">Attendere…</string>
     <string name="generic_recording">Registrazione…</string>
     <string name="generic_save">Salva</string>
     <string name="generic_success_title">Riuscito</string>
     <string name="generic_tracks">Percorsi</string>
-    <string name="generic_yes">Sì</string>
     <!-- Gps -->
-    <string name="gps_location_access">\"Accesso alla posizione\"</string>
-    <string name="gps_disabled">GPS non attivato. Tocca qui per andare a %1$s. Poi premi il pulsante per tornare indietro.</string>
-    <string name="gps_disabled_my_location">Impossibile determinare la posizione corrente. Attiva ulteriori fonti per la determinazione della posizione in %1$s e assicurati che
-    il cielo sia visibile. Riprova più tardi.</string>
-    <string name="gps_not_found">Nessun GPS presente sul dispositivo</string>
     <string name="gps_starting">Avvio GPS in corso</string>
     <string name="gps_wait_for_better_signal">In attesa di un miglior segnale GPS</string>
     <string name="gps_wait_for_signal">In attesa del segnale GPS</string>
@@ -209,7 +187,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="image_arrow">Freccia</string>
     <string name="image_marker">Indicatore</string>
     <string name="image_marker_count">Contatore indicatori</string>
-    <string name="image_my_location">La mia posizione</string>
     <string name="image_pause">Pausa</string>
     <string name="image_photo_marker">Indicatore fotografico</string>
     <string name="image_record">Registra</string>
@@ -229,17 +206,14 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="marker_add_error">Impossibile inserire un indicatore. Nessun segnale GPS.</string>
     <string name="marker_add_success">È stato inserito un indicatore</string>
     <string name="marker_add_canceled">Operazione annullata, nessun indicatore aggiunto</string>
-    <string name="marker_delete_all_confirm_message">Tutti gli indicatori per questo percorso verranno eliminati definitivamente dal dispositivo</string>
     <string name="marker_delete_one_confirm_message">L\'indicatore verrà eliminato definitivamente dal dispositivo</string>
     <string name="marker_delete_one_confirm_title">Eliminare indicatore?</string>
     <string name="marker_delete_multiple_confirm_message">Gli indicatori selezionati verranno eliminati definitivamente dal dispositivo</string>
     <string name="marker_label_end">%1$s (Fine)</string>
     <string name="marker_label_start">%1$s (Inizio)</string>
     <string name="marker_name_format">Indicatore %1$d</string>
-    <string name="marker_split_name_format">Suddividi %1$d</string>
     <string name="marker_title">%1$d di %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">Dall\'ultimo indicatore parziale:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Tipo di indicatore (ad es. cascata)</string>
     <string name="marker_edit_marker_type_hint">Tipo di indicatore</string>
@@ -257,11 +231,9 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="menu_markers">Indicatori</string>
     <string name="menu_search">Cerca</string>
     <string name="menu_select_all">Seleziona tutto</string>
-    <string name="menu_sensor_state">Sensore di stato</string>
     <string name="menu_settings">Impostazioni</string>
     <string name="menu_share">Condividi</string>
     <string name="menu_show_on_map">Visualizza su mappa</string>
-    <string name="menu_split_frequency">Frequenza parziale</string>
     <string name="menu_start_gps">Accendi GPS</string>
     <string name="menu_stop_gps">Spegni GPS</string>
     <string name="menu_view_photo">Visualizza foto</string>
@@ -271,12 +243,10 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <!-- Search -->
     <string name="search_global_description">Percorsi e indicatori</string>
     <string name="search_list_empty_message">Non ci sono percorsi o indicatori corrispondenti alla tua ricerca</string>
-    <string name="search_list_marker_track_location">Nel percorso \"%1$s\".</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Livello batteria</string>
     <string name="sensor_state_cadence">Cadenza</string>
     <string name="sensor_state_cadence_value">%1$d giri al minuto</string>
-    <string name="sensor_state_disconnected">Disconnesso</string>
     <string name="sensor_state_heart_rate">Battito cardiaco</string>
     <string name="sensor_state_heart_rate_value">%1$d battiti al minuto</string>
     <string name="sensor_state_power">Potenza</string>
@@ -286,9 +256,8 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avanzate</string>
     <!-- Settings Chart -->
-    <string name="settings_chart_by_distance">Pedistanza</string>
+    <string name="settings_chart_by_distance">Per distanza</string>
     <string name="settings_chart_by_time">Per durata</string>
-    <string name="settings_chart_x_axis">Asse X</string>
     <string name="settings_recording">Registrazione</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Riprendi sempre una registrazione dopo il riavvio</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Non riprendere mai una registrazione dopo il riavvio</string>
@@ -312,7 +281,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_reset_confirm_title">Reimpostare ora?</string>
     <string name="settings_reset_done">Tutte le impostazioni sono ripristinate sui valori predefiniti</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Sensore</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Sensore bluetooth</string>
     <!-- Settings Stats -->
@@ -334,13 +302,10 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="stats_average_speed">Velocità media</string>
     <string name="stats_altitude">Altitudine</string>
     <string name="stats_fastest_pace">Ritmo più veloce</string>
-    <string name="stats_gain">Guadagno</string>
-    <string name="stats_grade">Pendenza</string>
+    <string name="stats_gain">Salita</string>
     <string name="stats_latitude">Latitudine</string>
     <string name="stats_longitude">Longitude</string>
-    <string name="stats_max">Max</string>
     <string name="stats_max_speed">Velocità massima</string>
-    <string name="stats_min">Min</string>
     <string name="stats_moving_time">Tempo in movimento</string>
     <string name="stats_pace">Ritmo</string>
     <string name="stats_speed">Velocità</string>
@@ -366,12 +331,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="track_list_empty_message">Inizia a registrare la tua prossima avventura qui</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d percorsi</string>
-    <string name="tracks_many">%1$d percorsi</string>
-    <string name="tracks_one">1 percorso</string>
-    <string name="tracks_other">%1$d percorsi</string>
-    <string name="tracks_two">2 percorsi</string>
-    <string name="tracks_zero">0 percorsi</string>
     <!-- Unit -->
     <string name="unit_feet">pd</string>
     <string name="unit_kilometer">km</string>
@@ -385,11 +344,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="value_adapt_accuracy">Adatta per la precisione</string>
     <string name="value_adapt_battery_life">Adatta per la massima durata della batteria</string>
     <string name="value_always">Sempre</string>
-    <string name="value_float_feet">%1$.2f ft</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mi</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mi (GPS debole)</string>
     <string name="value_integer_feet">%1$d pd</string>
     <string name="value_integer_feet_excellent_gps">%1$d pd (GPS forte)</string>
     <string name="value_integer_feet_recommended">%1$d pd (consigliato)</string>
@@ -409,52 +363,37 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="value_smallest">Il più piccolo</string>
     <string name="value_smallest_recommended">Il più piccolo (consigliato)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d ore</string>
-    <string name="voice_hours_many">%1$d ore</string>
-    <string name="voice_hours_one">1 ora</string>
-    <string name="voice_hours_other">%1$d ore</string>
-    <string name="voice_hours_two">2 ore</string>
-    <string name="voice_hours_zero">0 ore</string>
-    <string name="voice_minutes_few">%1$d minuti</string>
-    <string name="voice_minutes_many">%1$d minuti</string>
-    <string name="voice_minutes_one">1 minuto</string>
-    <string name="voice_minutes_other">%1$d minuti</string>
-    <string name="voice_minutes_two">2 minuti</string>
-    <string name="voice_minutes_zero">0 minuti</string>
+    <plurals name="voiceHours">
+        <item quantity="one">1 ora</item>
+        <item quantity="other">%1$d ore</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">1 minuto</item>
+        <item quantity="other">%1$d minuti</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">1 secondo</item>
+        <item quantity="other">%1$d secondi</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">1 km all\'ora</item>
+        <item quantity="other">%1$.1f chilometri all\'ora</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">1 miglio all\'ora</item>
+        <item quantity="other">%1$.1f miglia all\'ora</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s per chilometro</string>
     <string name="voice_pace_per_mile">%1$s per miglio</string>
-    <string name="voice_seconds_few">%1$d secondi</string>
-    <string name="voice_seconds_many">%1$d secondi</string>
-    <string name="voice_seconds_one">1 secondo</string>
-    <string name="voice_seconds_other">%1$d secondi</string>
-    <string name="voice_seconds_two">2 secondi</string>
-    <string name="voice_seconds_zero">{0}[TWO]{/0}# secondi</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f chilometri all\'ora</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f chilometri all\'ora</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 km all\'ora</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f chilometri all\'ora</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 km all\'ora</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 km all\'ora</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f miglia all\'ora</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f miglia all\'ora</string>
-    <string name="voice_speed_miles_per_hour_one">1 miglio all\'ora</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f miglia all\'ora</string>
-    <string name="voice_speed_miles_per_hour_two">2 miglia all\'ora</string>
-    <string name="voice_speed_miles_per_hour_zero">0 miglia all\'ora</string>
-    <string name="voice_template">OpenTracks %1$s in %2$s a %3$s</string>
-    <string name="voice_total_distance_kilometers_few">distanza totale %1$.2f km</string>
-    <string name="voice_total_distance_kilometers_many">distanza totale %1$.2f km</string>
-    <string name="voice_total_distance_kilometers_one">distanza totale 1 km</string>
-    <string name="voice_total_distance_kilometers_other">distanza totale %1$.2f km</string>
-    <string name="voice_total_distance_kilometers_two">distanza totale 2 km</string>
-    <string name="voice_total_distance_kilometers_zero">distanza totale 0 km</string>
-    <string name="voice_total_distance_miles_few">distanza totale %1$.2f miglia</string>
-    <string name="voice_total_distance_miles_many">distanza totale %1$.2f miglia</string>
-    <string name="voice_total_distance_miles_one">distanza totale 1 miglio</string>
-    <string name="voice_total_distance_miles_other">distanza totale %1$.2f miglia</string>
-    <string name="voice_total_distance_miles_two">distanza totale 2 miglia</string>
-    <string name="voice_total_distance_miles_zero">distanza totale 0 miglia</string>
-    <string name="voice_total_distance_zero">Distanza totale OpenTracks uguale a zero.</string>
+    <string name="voice_template">%1$s in %2$s a %3$s</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">distanza totale 1 chilometro</item>
+        <item quantity="other">distanza totale 2 chilometri</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">distanza totale 1 miglio</item>
+        <item quantity="other">distanza totale %1$.2f miglia</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Bancomat</string>
     <string name="waypoint_type_bank">banca</string>
@@ -535,9 +474,8 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
 \nf) Fare una donazione, infine
 \ng) Fare tutto ciò che si pensa possa aiutare OpenTracks. </string>
     <string name="activity_type_escooter">Scooter elettrico</string>
-    <string name="app_not_installed_show_on_map">Si prega di installare un\'applicazione che possa mostrare i dati delle mappe.</string>
-    <string name="export_with_photos">Con le foto</string>
-    <string name="export_without_photos">Senza foto</string>
+    <string name="export_with_photos">con foto</string>
+    <string name="export_without_photos">senza foto</string>
     <string name="export_track_already_exists_msg">Il percorso %1$s esiste già nella cartella di salvataggio.</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Completato con un errore</item>
@@ -553,7 +491,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="export_all_do_it_for_all">Esegui ciò per tutti i conflitti</string>
     <string name="export_track_errors">Percorsi non esportati</string>
     <string name="generic_overwrite">Sovrascrivere</string>
-    <string name="generic_skip">Saltare</string>
+    <string name="generic_skip">Ignora</string>
     <string name="generic_separator_done_total">/</string>
     <string name="generic_show_errors">Mostra gli errori</string>
     <string name="generic_completed">Completato</string>
@@ -568,30 +506,27 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="import_file_imported">File %1$s importato</string>
     <string name="import_thread_interrupted">Thread interrotto</string>
     <string name="marker_add_photo_canceled">Annullato, nessun marker foto aggiunto</string>
-    <string name="sensor_not_known">Il sensore %1$s è sconosciuto. Si prega di controllare le impostazioni.</string>
     <string name="sensor_could_not_scan">Impossibile eseguire la scansione per i dispositivi Bluetooth (errore %1$i).</string>
     <string name="bluetooth_disabled">Per favore, attiva il Bluetooth.</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Mostra le statistiche sulla schermata di blocco</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Mantieni lo schermo acceso</string>
-    <string name="settings_recording_keep_screen_on_while_recording_summary">Durante la registrazione, tenere acceso lo schermo.</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">Durante la registrazione, tiene acceso lo schermo.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Schermo intero</string>
-    <string name="settings_recording_fullscreen_on_while_recording_summary">Durante la registrazione, espandi a schermo intero.</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Durante la registrazione, espande a schermo intero.</string>
     <string name="settings_night_mode_option_system">Sistema</string>
     <string name="settings_night_mode_option_day">Chiaro</string>
     <string name="settings_night_mode_option_night">Scuro</string>
     <string name="settings_sensor_connecting">Connesso a %1$s</string>
     <string name="settings_sensor_disconnected">Disconnesso da %1$s</string>
     <string name="track_detail_intervals_tab">Intervalli</string>
-    <string name="track_detail_record_success">Sto registrando un nuovo percorso</string>
-    <string name="track_detail_resume_success">Riprendendo il percorso</string>
     <string name="interval_list_empty_message">Non c\'è ancora nessun intervallo</string>
     <string name="voice_pace_lap">Tempo sul giro di %1$s</string>
     <string name="share_image_body">Penso che potresti essere interessat@ in questa immagine.</string>
     <string name="hold_to_stop">Tieni premuto per fermare</string>
     <string name="hold_to_pause">Tieni premuto per mettere in pausa</string>
-    <string name="instant_export_enabled_summary">È stata completata l\' esportazione del percorso finito nella memoria interna del tuo dispositivo</string>
+    <string name="instant_export_enabled_summary">È stata completata l\'esportazione del percorso finito nella memoria interna del tuo dispositivo</string>
     <string name="instant_export_enabled_title">Esportazione istantanea post-allenamento</string>
-    <string name="generic_open_track">Apri traccia</string>
+    <string name="generic_open_track">Traccia aperta</string>
     <string name="import_prevent_reimport">È stato impostato impedisci reimportazione traccia</string>
     <string name="export_error_post_workout">Esportazione post-allenamento non riuscita, controllare la directory di esportazione.</string>
     <string name="settings_prevent_reimport_tracks_title">Impedire la reimportazione delle tracce</string>
@@ -605,17 +540,16 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="import_progress_summary_errors_msg">Errore</string>
     <string name="sensor_state_power_avg">Potenza media</string>
     <string name="sensor_state_heart_rate_max">Frequenza cardiaca max</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d min/cm</string>
-    <string name="value_float_kilometer_hour">%1$.2f cp/s</string>
-    <string name="stats_loss">Perdita</string>
+    <string name="stats_loss">Discesa</string>
     <string name="settings_sensor_wheel_circumference">Circonferenza della ruota (mm)</string>
     <string name="description_altitude_loss">Perdita di quota: %1$d m (%2$d ft)</string>
     <string name="sensor_state_heart_rate_avg">Tasso cardiaco medio</string>
     <string name="sensor_state_cadence_max">Cadenza max</string>
     <string name="sensor_state_cadence_avg">Cadenza media</string>
-    <string name="value_float_mile_hour">%1$.2f mpo</string>
-    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
     <string name="track_distance_notification">Distanza: %1$s</string>
     <string name="track_speed_notification">Velocità: %1$s</string>
     <string name="track_pace_notification">Ritmo: %1$s</string>
+    <string name="about_third_party_data">Dati di terzi</string>
+    <string name="delete_service">Servizio di eliminazione</string>
+    <string name="track_delete_progress">%1$d/%2$d</string>
 </resources>

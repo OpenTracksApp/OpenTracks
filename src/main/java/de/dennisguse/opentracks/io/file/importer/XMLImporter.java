@@ -45,7 +45,7 @@ public class XMLImporter {
         try {
             SAXParserFactory.newInstance().newSAXParser().parse(inputStream, parser.getHandler());
             return parser.getImportTrackIds();
-        } catch (SAXException | ParserConfigurationException | AbstractFileTrackImporter.ParsingException e) {
+        } catch (SAXException | ParserConfigurationException | ParsingException e) {
             Log.e(TAG, "Unable to import file", e);
             if (parser.getImportTrackIds().size() > 0) {
                 parser.cleanImport();
@@ -58,6 +58,7 @@ public class XMLImporter {
     }
 
     interface TrackParser {
+        @Deprecated
         DefaultHandler getHandler();
 
         List<Track.Id> getImportTrackIds();

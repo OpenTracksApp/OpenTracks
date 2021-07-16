@@ -47,8 +47,8 @@ public class DialogUtils {
                 .setCancelable(true)
                 .setIcon(R.drawable.ic_delete_forever_24dp)
                 .setMessage(message)
-                .setNegativeButton(R.string.generic_no, null)
-                .setPositiveButton(R.string.generic_yes, okListener)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(android.R.string.ok, okListener)
                 .setTitle(titleId).create();
     }
 

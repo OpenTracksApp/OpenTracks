@@ -91,17 +91,9 @@ limitations under the License.
     <string name="description_altitude_imperial">Надморска висина (ст)</string>
     <string name="description_altitude_metric">Надморска висина (м)</string>
     <string name="description_fastest_pace_in_minute">Најбржи темпо: %1$s min/km (%2$s min/mi)</string>
-    <string name="description_location_accuracy">Прецизност (м)</string>
-    <string name="description_location_altitude">Надморска висина (м)</string>
-    <string name="description_location_bearing">Правац (степени)</string>
-    <string name="description_location_latitude">Географска ширина (степени)</string>
-    <string name="description_location_longitude">Географска дужина (степени)</string>
-    <string name="description_location_speed">Брзина (м/с)</string>
     <string name="description_max_altitude">Максимална надморска висина: %1$d м (%2$d ст)</string>
-    <string name="description_max_grade">Максимална кота: %1$d %%</string>
     <string name="description_max_speed">Максимална брзина: %1$.2f км/ч (%2$.1f ми/ч)</string>
     <string name="description_min_altitude">Минимална надморска висина: %1$d м (%2$d ст)</string>
-    <string name="description_min_grade">Минимална кота: %1$d %%</string>
     <string name="description_moving_time">Време кретања: %1$s</string>
     <string name="description_pace_imperial">Темпо (min/mi)</string>
     <string name="description_pace_metric">Темпо (min/km)</string>
@@ -115,8 +107,6 @@ limitations under the License.
     <string name="description_time">Време</string>
     <string name="description_total_distance">Укупна раздаљина: %1$.2f км (%2$.1f ми)</string>
     <string name="description_total_time">Укупно време: %1$s</string>
-    <string name="description_track_point">Тачка</string>
-    <string name="description_track_segment">Сегмент</string>
     <!-- Export -->
     <string name="export_all_option">Све као %1$s</string>
     <string name="export_all_title">Извоз у спољну меморију</string>
@@ -127,16 +117,13 @@ limitations under the License.
     <string name="export_title">Извоз у…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d датотеке</string>
-    <string name="files_many">%1$d датотека</string>
-    <string name="files_one">1 датотека</string>
-    <string name="files_other">%1$d датотека</string>
-    <string name="files_two">2 датотеке</string>
-    <string name="files_zero">0 датотека</string>
+    <plurals name="files">
+        <item quantity="one">%1$d датотека</item>
+        <item quantity="few">%1$d датотеке</item>
+        <item quantity="other">%1$d датотека</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Додај</string>
-    <string name="generic_cancel">Откажи</string>
-    <string name="generic_delete_all_confirm_title">Желите да избришете све?</string>
     <string name="generic_delete_selected_confirm_title">Желите да избришете изабрано?</string>
     <string name="generic_description">Опис</string>
     <string name="generic_description_line">Опис: %1$s</string>
@@ -144,19 +131,12 @@ limitations under the License.
     <string name="generic_name">Име</string>
     <string name="generic_name_line">Име: %1$s</string>
     <string name="generic_no">Не</string>
-    <string name="generic_ok">Потврди</string>
     <string name="generic_paused">Паузирано</string>
-    <string name="generic_progress_title">Сачекајте…</string>
     <string name="generic_recording">Снимање…</string>
     <string name="generic_save">Сачувај</string>
     <string name="generic_success_title">Успело je</string>
     <string name="generic_tracks">Праћења</string>
-    <string name="generic_yes">Да</string>
     <!-- Gps -->
-    <string name="gps_location_access">„Приступ локацији“</string>
-    <string name="gps_disabled">GPS није омогућен. Додирните овде да бисте отишли на %1$s. Притисните дугме за назад да бисте се вратили.</string>
-    <string name="gps_disabled_my_location">Није могуће утврдити тренутну локацију. Омогућите још извора локације у %1$s и проверите да ли је небо видљиво. Покушајте поново касније.</string>
-    <string name="gps_not_found">GPS није пронађен на уређају</string>
     <string name="gps_starting">GPS се покреће</string>
     <string name="gps_wait_for_better_signal">Чека се бољи GPS сигнал</string>
     <string name="gps_wait_for_signal">Чека се GPS сигнал</string>
@@ -165,7 +145,6 @@ limitations under the License.
     <string name="image_arrow">Стрелица</string>
     <string name="image_marker">Означивач</string>
     <string name="image_marker_count">Број означивача</string>
-    <string name="image_my_location">Мојa локацијa</string>
     <string name="image_pause">Паузирајте</string>
     <string name="image_photo_marker">Означивач слика</string>
     <string name="image_record">Снимите</string>
@@ -184,17 +163,14 @@ limitations under the License.
     <string name="marker_add_error">Није могуће уметнути означивач. Нема GPS сигнала. Покушајте поново.</string>
     <string name="marker_add_success">Означивач је уметнут</string>
     <string name="marker_add_canceled">Отказано је, није додат ниједан означивач</string>
-    <string name="marker_delete_all_confirm_message">Сви означивачи за ово праћење ће бити трајно избрисани са уређаја</string>
     <string name="marker_delete_one_confirm_message">Означивач ће бити трајно избрисан са уређаја</string>
     <string name="marker_delete_one_confirm_title">Желите да избришете означивач?</string>
     <string name="marker_delete_multiple_confirm_message">Изабрани означивачи ће бити трајно избрисани са уређаја</string>
     <string name="marker_label_end">%1$s (Крај)</string>
     <string name="marker_label_start">%1$s (Почетак)</string>
     <string name="marker_name_format">Означивач %1$d</string>
-    <string name="marker_split_name_format">Подела %1$d</string>
     <string name="marker_title">%1$d. од %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">Од последњег разделног означивача:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Тип означивача (нпр. водопад)</string>
     <string name="marker_edit_marker_type_hint">Тип означивача</string>
@@ -212,11 +188,9 @@ limitations under the License.
     <string name="menu_markers">Означивачи</string>
     <string name="menu_search">Претражи</string>
     <string name="menu_select_all">Изабери све</string>
-    <string name="menu_sensor_state">Стање сензора</string>
     <string name="menu_settings">Подешавања</string>
     <string name="menu_share">Дели</string>
     <string name="menu_show_on_map">Прикажи на мапи</string>
-    <string name="menu_split_frequency">Учесталост дељења</string>
     <string name="menu_start_gps">Покрени GPS</string>
     <string name="menu_stop_gps">Заустави GPS</string>
     <string name="menu_view_photo">Прикажи слику</string>
@@ -226,12 +200,10 @@ limitations under the License.
     <!-- Search -->
     <string name="search_global_description">Праћења и означивачи</string>
     <string name="search_list_empty_message">Ниједно праћење ни означивач не одговарају претрази</string>
-    <string name="search_list_marker_track_location">У праћењу „%1$s“.</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Ниво батерије</string>
     <string name="sensor_state_cadence">Каденца</string>
     <string name="sensor_state_cadence_value">%1$d обртаја у минуту</string>
-    <string name="sensor_state_disconnected">Веза је прекинута</string>
     <string name="sensor_state_heart_rate">Пулс</string>
     <string name="sensor_state_heart_rate_value">%1$d откуцаја у минуту</string>
     <string name="sensor_state_power">Снага</string>
@@ -243,7 +215,6 @@ limitations under the License.
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Према раздаљини</string>
     <string name="settings_chart_by_time">Према времену</string>
-    <string name="settings_chart_x_axis">X оса</string>
     <string name="settings_recording">Снимање</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Увек настави бележење после поновног покретања</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Никада не настављај бележење после поновног покретања</string>
@@ -267,7 +238,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Желите да ресетујете?</string>
     <string name="settings_reset_done">Сва подешавања су враћена на подразумеване вредности</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Сензор</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth сензор</string>
     <!-- Settings Stats -->
@@ -289,12 +259,9 @@ limitations under the License.
     <string name="stats_altitude">Узвишење</string>
     <string name="stats_fastest_pace">Најбржи темпо</string>
     <string name="stats_gain">Повећање</string>
-    <string name="stats_grade">Нагиб</string>
     <string name="stats_latitude">Географска ширина</string>
     <string name="stats_longitude">Географска дужина</string>
-    <string name="stats_max">Мaкс.</string>
     <string name="stats_max_speed">Максимална брзина</string>
-    <string name="stats_min">Мин.</string>
     <string name="stats_moving_time">Време кретања</string>
     <string name="stats_pace">Темпо</string>
     <string name="stats_speed">Брзина</string>
@@ -320,12 +287,6 @@ limitations under the License.
     <string name="track_list_empty_message">Започните бележење следеће авантуре овде</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d праћења</string>
-    <string name="tracks_many">%1$d праћења</string>
-    <string name="tracks_one">1 праћење</string>
-    <string name="tracks_other">%1$d праћења</string>
-    <string name="tracks_two">2 праћења</string>
-    <string name="tracks_zero">0 праћења</string>
     <!-- Unit -->
     <string name="unit_feet">ст</string>
     <string name="unit_kilometer">км</string>
@@ -339,11 +300,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Прилагоди за прецизност</string>
     <string name="value_adapt_battery_life">Прилагоди трајању батерије</string>
     <string name="value_always">Увек</string>
-    <string name="value_float_feet">%1$.2f ст</string>
-    <string name="value_float_kilometer">%1$.2f км</string>
-    <string name="value_float_meter">%1$.2f м</string>
-    <string name="value_float_mile">%1$.2f ми</string>
-    <string name="value_float_mile_poor_gps">%1$.1f ми (слаб GPS)</string>
     <string name="value_integer_feet">%1$d ст</string>
     <string name="value_integer_feet_excellent_gps">%1$d ст (одличан GPS)</string>
     <string name="value_integer_feet_recommended">%1$d ст (препоручено)</string>
@@ -363,52 +319,36 @@ limitations under the License.
     <string name="value_smallest">Најмање</string>
     <string name="value_smallest_recommended">Најмање (препоручено)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d сата</string>
-    <string name="voice_hours_many">%1$d сати</string>
-    <string name="voice_hours_one">1 сат</string>
-    <string name="voice_hours_other">%1$d сати</string>
-    <string name="voice_hours_two">2 сата</string>
-    <string name="voice_hours_zero">0 сати</string>
-    <string name="voice_minutes_few">%1$d минута</string>
-    <string name="voice_minutes_many">%1$d минута</string>
-    <string name="voice_minutes_one">1 минут</string>
-    <string name="voice_minutes_other">%1$d минута</string>
-    <string name="voice_minutes_two">2 минута</string>
-    <string name="voice_minutes_zero">0 минута</string>
-    <string name="voice_pace_per_kilometer">%1$s по километру</string>
-    <string name="voice_pace_per_mile">%1$s по миљи</string>
-    <string name="voice_seconds_few">%1$d секунде</string>
-    <string name="voice_seconds_many">%1$d секунди</string>
-    <string name="voice_seconds_one">1 секунда</string>
-    <string name="voice_seconds_other">%1$d секунди</string>
-    <string name="voice_seconds_two">2 секунде</string>
-    <string name="voice_seconds_zero">0 секунди</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f километра на сат</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f километара на сат</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 километар на сат</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f километара на сат</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 километра на сат</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 километара на сат</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f миље на сат</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f миља на сат</string>
-    <string name="voice_speed_miles_per_hour_one">1 миља на сат</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f миља на сат</string>
-    <string name="voice_speed_miles_per_hour_two">2 миље на сат</string>
-    <string name="voice_speed_miles_per_hour_zero">0 миља на сат</string>
-    <string name="voice_template">Моја праћења %1$s за %2$s брзином од %3$s</string>
-    <string name="voice_total_distance_kilometers_few">укупна раздаљина %1$.2f километра</string>
-    <string name="voice_total_distance_kilometers_many">укупна раздаљина %1$.2f километара</string>
-    <string name="voice_total_distance_kilometers_one">укупна раздаљина 1 километар</string>
-    <string name="voice_total_distance_kilometers_other">укупна раздаљина %1$.2f километара</string>
-    <string name="voice_total_distance_kilometers_two">укупна раздаљина 2 километра</string>
-    <string name="voice_total_distance_kilometers_zero">укупна раздаљина 0 километара</string>
-    <string name="voice_total_distance_miles_few">укупна раздаљина %1$.2f миље</string>
-    <string name="voice_total_distance_miles_many">укупна раздаљина %1$.2f миља</string>
-    <string name="voice_total_distance_miles_one">укупна раздаљина 1 миља</string>
-    <string name="voice_total_distance_miles_other">укупна раздаљина %1$.2f миља</string>
-    <string name="voice_total_distance_miles_two">укупна раздаљина 2 миље</string>
-    <string name="voice_total_distance_miles_zero">укупна раздаљина 0 миља</string>
-    <string name="voice_total_distance_zero">Укупна раздаљина у Мојим праћењима је једнака нули.</string>
+    <plurals name="voiceHours">
+        <item quantity="one">%1$d сат</item>
+        <item quantity="few">%1$d сати</item>
+        <item quantity="other">%1$d сата</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">%1$d минут</item>
+        <item quantity="few">%1$d минута</item>
+        <item quantity="other">%1$d минута</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">%1$d секунда</item>
+        <item quantity="few">%1$d секунде</item>
+        <item quantity="other">%1$d секунди</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">%1$.1f километар на сат</item>
+        <item quantity="few">%1$.1f километра на сат</item>
+        <item quantity="other">%1$.1f километара на сат</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">укупна раздаљина %1$.2f километар</item>
+        <item quantity="few">укупна раздаљина %1$.2f километра</item>
+        <item quantity="other">укупна раздаљина %1$.2f километара</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">укупна раздаљина %1$.2f миља</item>
+        <item quantity="few">укупна раздаљина %1$.2f миља</item>
+        <item quantity="other">укупна раздаљина %1$.2f миља</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">банкомат</string>
     <string name="waypoint_type_bank">банка</string>

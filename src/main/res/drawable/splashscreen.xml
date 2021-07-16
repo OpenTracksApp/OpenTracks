@@ -8,8 +8,11 @@
     <item
         android:width="300dp"
         android:height="300dp"
-        android:drawable="@drawable/ic_logo_color_108dp"
-        android:gravity="center_vertical|center_horizontal"
-        tools:targetApi="m" />
+        android:gravity="center"
+        tools:targetApi="m">
+        <inset
+            android:drawable="@drawable/ic_logo_color_24dp"
+            android:inset="20dp" />
+    </item>
 
 </layer-list>

@@ -1,0 +1,12 @@
+v3.18.5: OpenTracks
+
+Aldaketak:
+- Ahots iragarkia abiadura konfiguragarria
+- API <26: Launcher ikonoa alde batera uzten ditu aurrekariak
+
+Bugfixes:
+- Grabaketa UI: erakutsi zuzena balioak
+- Grabaketa UI: erakutsi (berriro) altitude EGM2008
+
+Sustatzailearen:
+- Android12 baimenak (BLUETOOTH_CONNECT)

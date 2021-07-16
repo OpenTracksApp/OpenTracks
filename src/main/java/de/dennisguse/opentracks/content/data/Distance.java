@@ -24,16 +24,16 @@ public class Distance {
         return of(distance_km * UnitConversions.KM_TO_M);
     }
 
+    public static Distance ofMM(double distance_mm) {
+        return of(distance_mm * UnitConversions.MM_TO_M);
+    }
+
     public static Distance one(boolean metricUnit) {
         if (metricUnit) {
             return Distance.ofKilometer(1);
         } else {
             return Distance.ofMile(1);
         }
-    }
-
-    public static Distance invalid() {
-        return of(Double.NaN);
     }
 
     private final double distance_m;
@@ -52,10 +52,6 @@ public class Distance {
 
     public Distance multipliedBy(double factor) {
         return new Distance(factor * distance_m);
-    }
-
-    public Distance dividedBy(double divisor) {
-        return multipliedBy(1 / divisor);
     }
 
     public double dividedBy(@NonNull Distance divisor) {

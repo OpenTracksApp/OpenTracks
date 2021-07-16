@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
---><resources>
+-->
+<resources>
     <string name="about_preference_title">Über OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> ist eine Sport-Tracking-Anwendung, die Ihre Privatsphäre vollständig respektiert.</string>
     <string name="about_url">Projekt-Website: <a href="%1$s">%1$s</a></string>
@@ -68,7 +68,7 @@ e) kaufen in <a href="https://play.google.com/store/apps/details?id=de.dennisgus
 f) spenden, und\n
 g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="open_track_using_dashboard">Öffne mithilfe des OpenTracks-Dashboard</string>
-    <string name="open_track_as_KMZ">Als KMZ öffnen</string>
+    <string name="open_track_as_KML">Als KML öffnen</string>
     <string name="open_track_as_GPX">Als GPX öffnen</string>
     <string name="open_track_as_trackfileformat">Als %1$s öffnen</string>
     <!-- Activity Type -->
@@ -124,7 +124,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="activity_type_sled">Schlittenfahren</string>
     <string name="activity_type_snow_boarding">Snowboarden</string>
     <string name="activity_type_snow_shoeing">Schneeschuhwandern</string>
-    <string name="activity_type_speed_walking">Speed-​​Walking</string>
+    <string name="activity_type_speed_walking">Sportliches Gehen</string>
     <string name="activity_type_street_running">Laufen (Straßenuntergrund)</string>
     <string name="activity_type_surfing">Surfen</string>
     <string name="activity_type_track_cycling">Bahnradfahren</string>
@@ -138,7 +138,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="activity_type_walking">Walking</string>
     <string name="activity_type_water_skiing">Wasserskifahren</string>
     <string name="activity_type_wind_surfing">Windsurfen</string>
-    <string name="app_not_installed_show_on_map">Bitte installiere eine App, die die Darstellung von Kartendaten unterstützt.</string>
     <!-- Description -->
     <string name="description_activity_type">Art der Aktivität: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Durchschnittliches Tempo in Bewegung: %1$s min/km (%2$s min/Meile)</string>
@@ -149,17 +148,9 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="description_altitude_imperial">Höhe (ft)</string>
     <string name="description_altitude_metric">Höhe (m)</string>
     <string name="description_fastest_pace_in_minute">Schnellstes Tempo: %1$s min/km (%2$s min/Meile)</string>
-    <string name="description_location_accuracy">Genauigkeit (m)</string>
-    <string name="description_location_altitude">Höhe (m)</string>
-    <string name="description_location_bearing">Peilung (°)</string>
-    <string name="description_location_latitude">Breitengrad (°)</string>
-    <string name="description_location_longitude">Längengrad (°)</string>
-    <string name="description_location_speed">Geschwindigkeit (m/s)</string>
     <string name="description_max_altitude">Maximale Höhe: %1$d m (%2$d Fuß)</string>
-    <string name="description_max_grade">Maximales Gefälle: %1$d %%</string>
     <string name="description_max_speed">Maximale Geschwindigkeit: %1$.2f km/h (%2$.1f Meile/h)</string>
     <string name="description_min_altitude">Minimale Höhe: %1$d m (%2$d Fuß)</string>
-    <string name="description_min_grade">Minimales Gefälle: %1$d %%</string>
     <string name="description_moving_time">Zeit in Bewegung: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/Meile)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
@@ -174,8 +165,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="description_time">Zeit</string>
     <string name="description_total_distance">Gesamtstrecke: %1$.2f km (%2$.1f Meile/n)</string>
     <string name="description_total_time">Gesamtzeit: %1$s</string>
-    <string name="description_track_point">Punkt</string>
-    <string name="description_track_segment">Segment</string>
     <!-- Export -->
     <string name="export_all_option">Alle als %1$s</string>
     <string name="export_all_title">In externen Speicher exportieren</string>
@@ -187,17 +176,13 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="export_success">%1$s in %2$s exportiert</string>
     <string name="export_title">Exportieren in…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <string name="files_few">%1$d Dateien</string>
-    <string name="files_many">%1$d Dateien</string>
-    <string name="files_one">1 Datei</string>
-    <string name="files_other">%1$d Dateien</string>
-    <string name="files_two">2 Dateien</string>
-    <string name="files_zero">0 Dateien</string>
+    <!-- Files -->=
+    <plurals name="files">
+        <item quantity="one">1 Datei</item>
+        <item quantity="other">%1$d Dateien</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Hinzufügen</string>
-    <string name="generic_cancel">Abbrechen</string>
-    <string name="generic_delete_all_confirm_title">Alles löschen?</string>
     <string name="generic_delete_selected_confirm_title">Ausgewählte Elemente löschen?</string>
     <string name="generic_description">Beschreibung</string>
     <string name="generic_description_line">Beschreibung: %1$s</string>
@@ -205,19 +190,12 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="generic_name">Name</string>
     <string name="generic_name_line">Name: %1$s</string>
     <string name="generic_no">Nein</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">Pausiert</string>
-    <string name="generic_progress_title">Bitte warten…</string>
     <string name="generic_recording">Aufzeichnung…</string>
     <string name="generic_save">Speichern</string>
     <string name="generic_success_title">Erfolgreich</string>
     <string name="generic_tracks">Strecken</string>
-    <string name="generic_yes">Ja</string>
     <!-- Gps -->
-    <string name="gps_location_access">\"Standortzugriff\"</string>
-    <string name="gps_disabled">GPS ist nicht aktiviert. Tippen Sie hier, um zu %1$s wechseln. Drücken Sie \"Zurück\", um zurückzugehen.</string>
-    <string name="gps_disabled_my_location">Der aktuelle Standort kann nicht ermittelt werden. Aktivieren Sie mehr Standortquellen unter \"%1$s\" und vergewissern Sie sich, dass der Himmel sichtbar ist. Bitte versuchen Sie es später erneut.</string>
-    <string name="gps_not_found">Das Gerät empfängt kein GPS-Signal</string>
     <string name="gps_starting">GPS wird gestartet</string>
     <string name="gps_wait_for_better_signal">Warten auf besseres GPS-Signal</string>
     <string name="gps_wait_for_signal">Warten auf GPS-Signal</string>
@@ -226,12 +204,11 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="image_arrow">Pfeil</string>
     <string name="image_marker">Markierung</string>
     <string name="image_marker_count">Anzahl der Markierungen</string>
-    <string name="image_my_location">Mein Standort</string>
     <string name="image_pause">Pausieren</string>
     <string name="image_photo_marker">Fotomarkierung</string>
     <string name="image_record">Aufzeichnen</string>
     <string name="image_stop">Beenden</string>
-    <string name="image_track">Track</string>
+    <string name="image_track">Strecke</string>
     <!-- Import -->
     <string name="import_error">%1$d von %2$s aus %3$s importiert</string>
     <string name="import_no_directory">%1$s ist nicht vorhanden.</string>
@@ -246,17 +223,14 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="marker_add_success">Markierung wurde eingefügt.</string>
     <string name="marker_add_canceled">Abgebrochen. Es wurde keine Markierung hinzugefügt.</string>
     <string name="marker_add_photo_canceled">Abgebrochen, keine Fotomarkierung hinzugefügt</string>
-    <string name="marker_delete_all_confirm_message">Alle Markierungen für diesen Track werden endgültig vom Gerät gelöscht.</string>
     <string name="marker_delete_one_confirm_message">Die Markierung wird endgültig vom Gerät gelöscht.</string>
     <string name="marker_delete_one_confirm_title">Markierung löschen?</string>
     <string name="marker_delete_multiple_confirm_message">Die ausgewählten Markierungen werden endgültig vom Gerät gelöscht.</string>
     <string name="marker_label_end">%1$s (Ende)</string>
     <string name="marker_label_start">%1$s (Start)</string>
     <string name="marker_name_format">%1$d. Markierung</string>
-    <string name="marker_split_name_format">%1$d. Wegpunktmarkierung</string>
     <string name="marker_title">%1$d von %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">Seit letzter Wegpunktmarkierung:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Art der Markierung, z. B. Wasserfall</string>
     <string name="marker_edit_marker_type_hint">Art der Markierung</string>
@@ -275,11 +249,9 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="menu_markers">Markierungen</string>
     <string name="menu_search">Suche</string>
     <string name="menu_select_all">Alle auswählen</string>
-    <string name="menu_sensor_state">Sensorstatus</string>
     <string name="menu_settings">Einstellungen</string>
     <string name="menu_share">Teilen</string>
     <string name="menu_show_on_map">Auf Karte anzeigen</string>
-    <string name="menu_split_frequency">Wegpunkthäufigkeit</string>
     <string name="menu_start_gps">GPS aktivieren</string>
     <string name="menu_stop_gps">GPS deaktivieren</string>
     <string name="menu_view_photo">Foto ansehen</string>
@@ -292,17 +264,14 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <!-- Search -->
     <string name="search_global_description">Tracks und Markierungen</string>
     <string name="search_list_empty_message">Keine Tracks oder Markierungen gefunden, die Ihrer Suchanfrage entsprechen</string>
-    <string name="search_list_marker_track_location">Im Track \"%1$s\".</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Akkustatus</string>
     <string name="sensor_state_cadence">Trittfrequenz</string>
     <string name="sensor_state_cadence_value">%1$d Umdrehungen pro Minute</string>
-    <string name="sensor_state_disconnected">Nicht verbunden</string>
     <string name="sensor_state_heart_rate">Herzfrequenz</string>
     <string name="sensor_state_heart_rate_value">%1$d Schläge pro Minute</string>
     <string name="sensor_state_power">Leistung</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="sensor_not_known">Sensor %1$s ist unbekannt. Bitte überprüfe die Einstellungen.</string>
     <string name="sensor_could_not_scan">Konnte nicht nach Bluetooth-Geräten scannen (Fehler %1$i).</string>
     <string name="bluetooth_disabled">Bitte Bluetooth aktivieren.</string>
     <string name="settings_not_while_recording">Während der Aufzeichnung eines Tracks nicht verfügbar</string>
@@ -313,7 +282,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Nach Strecke</string>
     <string name="settings_chart_by_time">Nach Zeit</string>
-    <string name="settings_chart_x_axis">x-Achse</string>
     <!-- Settings Recording -->
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Zeige Statistiken auf dem Sperrbildschirm</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Zeige während der Aufzeichnung Statistiken an, ohne das Gerät zu entsperren.</string>
@@ -325,7 +293,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="settings_recording_auto_resume_track_timeout_summary">Eine Aufzeichnung nach dem Neustart fortsetzen, wenn der letzte Standort innerhalb der letzten %1$s aufgezeichnet wurde</string>
     <string name="settings_recording_auto_resume_track_timeout_title">Automat. Fortsetzung</string>
     <string name="settings_recording_default_activity_title">Standardaktivität</string>
-    <string name="settings_recording_location_frequency_summary">Entfernungs-/Zeitintervall %1$s zwischen zwei Standortaufzeichnungen:</string>
+    <string name="settings_recording_location_frequency_summary">Entfernungs-/Zeitintervall %1$s zwischen zwei Standortaufzeichnungen</string>
     <string name="settings_recording_max_recording_distance_summary">Ein neues Segment wird erstellt, wenn die Entfernung zwischen zwei Standorten mehr als %1$s beträgt.</string>
     <string name="settings_recording_max_recording_distance_title">Max. Entfernung</string>
     <string name="settings_recording_min_recording_distance_title">Entfernungsintervall aufz.</string>
@@ -343,7 +311,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="settings_reset_done">Alle Einstellungen wurden auf ihre Standardwerte zurückgesetzt.</string>
     <string name="settings_error_initial_values_restored">Entschuldigung, es ist ein Fehler aufgetreten. Alle Einstellungen wurden auf die Standardwerte zurückgesetzt.</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Sensor</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth-Sensor</string>
     <string name="settings_sensor_connecting">Verbunden mit %1$s</string>
@@ -360,26 +327,23 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="share_track_subject">Ich möchte einen Track mit dir teilen</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Durchschnitt\n(Bewegung)</string>
-    <string name="stats_average_moving_speed">Durchschnittsgeshwindigkeit
+    <string name="stats_average_moving_speed">Durchschnittsgeschwindigkeit
 \n(Bewegung)</string>
     <string name="stats_average_pace">Durchschnitt</string>
     <string name="stats_average_speed">Durchschnitt</string>
     <string name="stats_altitude">Höhe</string>
     <string name="stats_fastest_pace">Schnellstes Tempo</string>
     <string name="stats_gain">Anstieg</string>
-    <string name="stats_grade">Gefälle</string>
     <string name="stats_latitude">Breitengrad</string>
     <string name="stats_longitude">Längengrad</string>
-    <string name="stats_max">Max.</string>
     <string name="stats_max_speed">Max. Geschwindigkeit</string>
-    <string name="stats_min">Min.</string>
     <string name="stats_moving_time">Bewegungszeit</string>
     <string name="stats_pace">Tempo</string>
     <string name="stats_speed">Geschwindigkeit</string>
     <string name="stats_distance">Entfernung</string>
     <string name="stats_total_time">Gesamtzeit</string>
     <!-- Track -->
-    <string name="track_name_format">Track %1$d</string>
+    <string name="track_name_format">Strecke %1$d</string>
     <string name="track_record_notification">Der Track wird aufgezeichnet…</string>
     <string name="track_recording_notification_accuracy">Standortgenauigkeit: %1$s</string>
     <string name="track_markers">Markierungen für %1$s</string>
@@ -391,8 +355,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <!-- Track Detail -->
     <string name="track_detail_chart_tab">Diagramm</string>
     <string name="track_detail_stats_tab">Statistik</string>
-    <string name="track_detail_record_success">Neuer Track wird aufgezeichnet</string>
-    <string name="track_detail_resume_success">Jetzt die Strecke wieder fortsetzen</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Art der Aktivität, z. B. Wandern</string>
     <string name="track_edit_activity_type_hint">Art der Aktivität</string>
@@ -403,12 +365,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="aggregated_stats_empty_message">Zeichnen Sie Ihren ersten Track auf um aggregierte Statistiken zu sehen</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d Tracks</string>
-    <string name="tracks_many">%1$d Tracks</string>
-    <string name="tracks_one">1 Track</string>
-    <string name="tracks_other">%1$d Tracks</string>
-    <string name="tracks_two">2 Tracks</string>
-    <string name="tracks_zero">0 Tracks</string>
     <!-- Unit -->
     <string name="unit_feet">Fuß</string>
     <string name="unit_kilometer">km</string>
@@ -422,11 +378,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="value_adapt_accuracy">Genauigkeit anpassen</string>
     <string name="value_adapt_battery_life">An Akkulaufzeit anpassen</string>
     <string name="value_always">Immer</string>
-    <string name="value_float_feet">%1$.2f ft</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f Meilen</string>
-    <string name="value_float_mile_poor_gps">%1$.1f Meilen (schlechtes GPS-Signal)</string>
     <string name="value_integer_feet">%1$d Fuß</string>
     <string name="value_integer_feet_excellent_gps">%1$d Fuß (ausgezeichnetes GPS-Signal)</string>
     <string name="value_integer_feet_recommended">%1$d Fuß (empfohlen)</string>
@@ -446,52 +397,37 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="value_smallest">Kleinster</string>
     <string name="value_smallest_recommended">Kleinster (empfohlen)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d Stunden</string>
-    <string name="voice_hours_many">%1$d Stunden</string>
-    <string name="voice_hours_one">1 Stunde</string>
-    <string name="voice_hours_other">%1$d Stunden</string>
-    <string name="voice_hours_two">2 Stunden</string>
-    <string name="voice_hours_zero">0 Stunden</string>
-    <string name="voice_minutes_few">%1$d Minuten</string>
-    <string name="voice_minutes_many">%1$d Minuten</string>
-    <string name="voice_minutes_one">1 Minute</string>
-    <string name="voice_minutes_other">%1$d Minuten</string>
-    <string name="voice_minutes_two">2 Minuten</string>
-    <string name="voice_minutes_zero">0 Minuten</string>
+    <plurals name="voiceHours">
+        <item quantity="one">1 Stunde</item>
+        <item quantity="other">%1$d Stunden</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">1 Minuten</item>
+        <item quantity="other">%1$d Minuten</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">1 Sekunde</item>
+        <item quantity="other">%1$d Sekunden</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">1 Kilometer pro Stunde</item>
+        <item quantity="other">%1$.1f Kilometer pro Stunde</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">1 Meile pro Stunde</item>
+        <item quantity="other">%1$.1f Meilen pro Stunde</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s pro Kilometer</string>
     <string name="voice_pace_per_mile">%1$s pro Meile</string>
-    <string name="voice_seconds_few">%1$d Sekunden</string>
-    <string name="voice_seconds_many">%1$d Sekunden</string>
-    <string name="voice_seconds_one">1 Sekunde</string>
-    <string name="voice_seconds_other">%1$d Sekunden</string>
-    <string name="voice_seconds_two">2 Sekunden</string>
-    <string name="voice_seconds_zero">0 Sekunden</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f Kilometer pro Stunde</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f Kilometer pro Stunde</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 Kilometer pro Stunde</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f Kilometer pro Stunde</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 Kilometer pro Stunde</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 Kilometer pro Stunde</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f Meilen pro Stunde</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f Meilen pro Stunde</string>
-    <string name="voice_speed_miles_per_hour_one">1 Meile pro Stunde</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f Meilen pro Stunde</string>
-    <string name="voice_speed_miles_per_hour_two">2 Meilen pro Stunde</string>
-    <string name="voice_speed_miles_per_hour_zero">0 Meilen pro Stunde</string>
-    <string name="voice_template">Meine Tracks: %1$s in %2$s bei %3$s</string>
-    <string name="voice_total_distance_kilometers_few">Gesamtstrecke: %1$.2f Kilometer</string>
-    <string name="voice_total_distance_kilometers_many">Gesamtstrecke: %1$.2f Kilometer</string>
-    <string name="voice_total_distance_kilometers_one">Gesamtstrecke: 1 Kilometer</string>
-    <string name="voice_total_distance_kilometers_other">Gesamtstrecke: %1$.2f Kilometer</string>
-    <string name="voice_total_distance_kilometers_two">Gesamtstrecke: 2 Kilometer</string>
-    <string name="voice_total_distance_kilometers_zero">Gesamtstrecke: 0 Kilometer</string>
-    <string name="voice_total_distance_miles_few">Gesamtstrecke: %1$.2f Meilen</string>
-    <string name="voice_total_distance_miles_many">Gesamtstrecke: %1$.2f Meilen</string>
-    <string name="voice_total_distance_miles_one">Gesamtstrecke: 1 Meile</string>
-    <string name="voice_total_distance_miles_other">Gesamtstrecke: %1$.2f Meilen</string>
-    <string name="voice_total_distance_miles_two">Gesamtstrecke: 2 Meilen</string>
-    <string name="voice_total_distance_miles_zero">Gesamtstrecke: 0 Meilen</string>
-    <string name="voice_total_distance_zero">Die Gesamtstrecke in \"Meine Tracks\" ist null.</string>
+    <string name="voice_template">%1$s in %2$s bei %3$s</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">Gesamtstrecke: 1 Kilometer</item>
+        <item quantity="other">Gesamtstrecke: %1$.2f Kilometer</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">Gesamtstrecke: 1 Meile</item>
+        <item quantity="other">Gesamtstrecke: %1$.2f Meilen</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Geldautomat</string>
     <string name="waypoint_type_bank">Bank</string>
@@ -534,7 +470,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="waypoint_type_shopping">Shopping</string>
     <string name="waypoint_type_sight">Sehenswürdigkeit</string>
     <string name="waypoint_type_store">Geschäft</string>
-    <string name="waypoint_type_swimming_pool">Swimmingpool</string>
+    <string name="waypoint_type_swimming_pool">Schwimmbad</string>
     <string name="waypoint_type_telephone">Telefon</string>
     <string name="waypoint_type_theater">Theater</string>
     <string name="waypoint_type_toilet">Toilette</string>
@@ -557,9 +493,9 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="import_progress_summary_errors_msg">Fehler</string>
     <string name="import_progress_summary_exists_msg">Schon vorhanden</string>
     <string name="export_track_errors">Aufzeichnungen wurden nicht exportiert</string>
-    <string name="settings_default_export_uri_title">Track Export Verzeichnis</string>
+    <string name="settings_default_export_uri_title">Track-Export-Verzeichnis</string>
     <string name="import_progress_summary_ok_msg">Dateien importiert</string>
-    <string name="export_all_do_it_for_all">Für aale Konflikte übernehmen</string>
+    <string name="export_all_do_it_for_all">Für alle Konflikte übernehmen</string>
     <string name="export_progress_summary_new_msg">Neue Tracks exportiert</string>
     <string name="activity_type_escooter">E-Scooter</string>
     <string name="import_unsupported_format">Nicht unterstütztes Dateiformat</string>
@@ -578,7 +514,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="generic_overwrite">Überschreiben</string>
     <string name="generic_skip">Überspringen</string>
     <string name="generic_separator_done_total">/</string>
-    <string name="generic_show_errors">Zeige Fehler</string>
+    <string name="generic_show_errors">Fehler anzeigen</string>
     <string name="generic_completed">Abgeschlossen</string>
     <string name="gps_disabled_msg">GPS deaktiviert</string>
     <string name="export_progress_summary_overwrite_msg">Streckenaufzeichnung überschrieben</string>
@@ -589,6 +525,31 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="voice_speed_lap">Rundengeschwindigkeit %1$s</string>
     <string name="voice_pace_lap">Rundenzeit %1$s</string>
     <string name="toast_message_instant_track_was_exported">Letzte Aufzeichnung exportiert</string>
-    <string name="export_track_already_exists_msg">Der Track %1$s existiert bereits im Zielverzeichnis.</string>
+    <string name="export_track_already_exists_msg">Die Streckenaufzeichung %1$s existiert bereits im Zielverzeichnis.</string>
     <string name="gps_fixed_and_ready">GPS-Position bestimmt und bereit</string>
+    <string name="instant_export_enabled_title">Sofortiger Export im Anschluss an die Übung</string>
+    <string name="instant_export_enabled_summary">Streckenaufzeichnung nach Beendigung der Aufnahme in den Speicher exportieren</string>
+    <string name="generic_open_track">Offene Strecke</string>
+    <string name="sensor_state_power_avg">Durchschnittliche Leistung</string>
+    <string name="sensor_state_cadence_avg">Durchschnittliche Trittfrequenz</string>
+    <string name="sensor_state_cadence_max">Maximale Trittfrequenz</string>
+    <string name="stats_split_interval">Geteilte Intervalle</string>
+    <string name="track_distance_notification">Strecke: %1$s</string>
+    <string name="track_speed_notification">Geschwindigkeit: %1$s</string>
+    <string name="track_pace_notification">Tempo: %1$s</string>
+    <string name="menu_voice_rate">Sprachgeschwindigkeit</string>
+    <string name="import_prevent_reimport">Du hast re-import von Tracks verhindern aktiviert</string>
+    <string name="about_third_party_data">Daten von Drittherstellern</string>
+    <string name="sensor_state_heart_rate_max">Maximaler Puls</string>
+    <string name="track_delete_not_recording">Dieser Track kann nicht gelöscht werden, da er gerade aufgezeichnet wird.</string>
+    <string name="interval_list_empty_message">Noch kein Intervall vorhanden</string>
+    <string name="import_parser_error">Parser Fehler: %1$s</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Ganzen Bildschirm während Aufnahmen verwenden.</string>
+    <string name="sensor_state_heart_rate_avg">Durchschnittlicher Puls</string>
+    <string name="settings_prevent_reimport_tracks_title">Re-import von Tracks verhindern</string>
+    <string name="import_no_kml_file_found">Keine doc.kml Datei im KMZ gefunden</string>
+    <string name="track_delete_progress">%1$d/%2$d</string>
+    <string name="import_thread_interrupted">Thread unterbrochen</string>
+    <string name="import_unable_to_import_file">Importieren der Datei gescheitert: %1$s</string>
+    <string name="delete_service">Löschdienst</string>
 </resources>

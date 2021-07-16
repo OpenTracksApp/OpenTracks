@@ -18,11 +18,18 @@ limitations under the License.
     <string name="app_name" translatable="false">OpenTracks</string>
 
     <string name="egm2008" translatable="false">EGM2008</string>
+    <string name="wgs84" translatable="false">WGS84</string>
 
     <string name="third_party_data" translatable="false">
         <a href="https://earth-info.nga.mil/">National Geospatial-Intelligence Agency (NGA)\'s EGM2008 model</a> 5\' minute resolution.
         Data provided by <a href="https://geographiclib.sourceforge.io/html/geoid.html">GeographicLib</a>.
     </string>
+
+    <!-- If the order depends on the language, we might need to make this translatable -->
+    <string name="distance_with_unit" translatable="false">%1$s %2$s</string>
+    <string name="speed_with_unit" translatable="false">%1$s %2$s</string>
+    <string name="altitude_with_unit" translatable="false">%1$s %2$s</string>
+    <string name="time" translatable="false">%1$d:%2$02d</string>
 
     <!-- List here all used libraries (will be shown in the about activity -->
     <string name="third_party_libraries" translatable="false">

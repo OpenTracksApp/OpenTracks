@@ -25,13 +25,11 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.services.TrackRecordingService;
@@ -46,11 +44,6 @@ import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
  * @author Sandor Dornbush
  */
 public class AnnouncementPeriodicTask implements PeriodicTask {
-
-    /**
-     * The rate at which announcements are spoken.
-     */
-    private static final float TTS_SPEECH_RATE = 0.9f;
 
     private static final String TAG = AnnouncementPeriodicTask.class.getSimpleName();
 
@@ -138,11 +131,6 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
     @Override
     public void run(@NonNull TrackRecordingService trackRecordingService) {
-        if (trackRecordingService == null) {
-            Log.e(TAG, "TrackRecordingService is null.");
-            return;
-        }
-
         announce(trackRecordingService.getRecordingTrackId(), trackRecordingService.getTrackStatistics());
     }
 
@@ -183,17 +171,13 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
         }
         String category = track.getCategory();
 
-        //TODO Querying all TrackPoints all the time is inefficient; use TrackDataHub or something else.
-        TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null);
-        ArrayList<TrackPoint> trackPoints = new ArrayList<>();
-        while (trackPointIterator.hasNext()) {
-            trackPoints.add(trackPointIterator.next());
-        }
-
         boolean isMetricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
         boolean isReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, context, category);
+        Distance minGPSDistance = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
 
-        IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, Distance.one(isMetricUnits));
+        TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null);
+        IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.one(isMetricUnits), minGPSDistance);
+        intervalStatistics.addTrackPoints(trackPointIterator);
         IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
 
         String announcement = AnnouncementUtils.getAnnouncement(context, trackStatistics, isMetricUnits, isReportSpeed, lastInterval);
@@ -222,10 +206,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
              */
         }
         tts.setLanguage(locale);
-
-        // Slow down the speed just a bit as it is hard to hear when exercising.
-        tts.setSpeechRate(TTS_SPEECH_RATE);
-
+        tts.setSpeechRate(PreferencesUtils.getVoiceSpeedRate(PreferencesUtils.getSharedPreferences(context), context));
         tts.setOnUtteranceProgressListener(utteranceListener);
     }
 

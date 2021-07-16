@@ -1,0 +1,12 @@
+v3.18.5: OpenTracks
+
+Muudatused:
+- Häälteavituse kiirus konfigureeritav
+- API <26: Käivitaja ikoon jätab tausta välja.
+
+Vigade parandused:
+- Salvestamise UI: näitab õigeid väärtusi 
+- Recording UI: näitab (uuesti) kõrgust EGM2008-s.
+
+Arendaja:
+- Android12 õigused (BLUETOOTH_CONNECT)

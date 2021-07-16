@@ -11,8 +11,6 @@ import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 
-import de.dennisguse.opentracks.R;
-
 public class ErrorListDialog extends DialogFragment {
 
     public static final String TAG = ErrorListDialog.class.getSimpleName();
@@ -61,7 +59,7 @@ public class ErrorListDialog extends DialogFragment {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity())
                 .setTitle(title)
                 .setItems(tracks, null)
-                .setPositiveButton(R.string.generic_ok, (dialog, which) -> dismiss());
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> dismiss());
         return alertDialogBuilder.create();
     }
 }

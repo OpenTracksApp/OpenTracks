@@ -91,17 +91,9 @@ limitations under the License.
     <string name="description_altitude_imperial">ऊंचाई (फुट)</string>
     <string name="description_altitude_metric">ऊंचाई (मी)</string>
     <string name="description_fastest_pace_in_minute">सबसे तेज़ गति: %1$s मिनट/किमी ( %2$s मिनट/मील)</string>
-    <string name="description_location_accuracy">सटीकता (मी)</string>
-    <string name="description_location_altitude">ऊंचाई (मी)</string>
-    <string name="description_location_bearing">दिशामान (डिग्री)</string>
-    <string name="description_location_latitude">अक्षांश (डिग्री)</string>
-    <string name="description_location_longitude">देशांतर (डिग्री)</string>
-    <string name="description_location_speed">गति (मी/से)</string>
     <string name="description_max_altitude">अधिकतम ऊंचाई: %1$d मी (%2$d फु)</string>
-    <string name="description_max_grade">अधिकतम ग्रेड: %1$d %%</string>
     <string name="description_max_speed">अधिकतम गति: %1$.2f किमी/घं (%2$.1f मील/घं)</string>
     <string name="description_min_altitude">न्यूनतम ऊंचाई: %1$d मी (%2$d फु)</string>
-    <string name="description_min_grade">न्यूनतम ग्रेड: %1$d %%</string>
     <string name="description_moving_time">चलायमान समय: %1$s</string>
     <string name="description_pace_imperial">गति (मिनट/मील)</string>
     <string name="description_pace_metric">गति (मिनट/किमी)</string>
@@ -115,8 +107,6 @@ limitations under the License.
     <string name="description_time">समय</string>
     <string name="description_total_distance">कुल दूरी: %1$.2f किमी (%2$.1f मील)</string>
     <string name="description_total_time">कुल समय: %1$s</string>
-    <string name="description_track_point">बिंदु</string>
-    <string name="description_track_segment">खंड</string>
     <!-- Export -->
     <string name="export_all_option">%1$s के रूप वाले सभी को</string>
     <string name="export_all_title">बाह्य संग्रहण पर निर्यात करें</string>
@@ -127,16 +117,12 @@ limitations under the License.
     <string name="export_title">यहां निर्यात करें…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d फ़ाइलें</string>
-    <string name="files_many">%1$d फ़ाइलें</string>
-    <string name="files_one">1 फ़ाइल</string>
-    <string name="files_other">%1$d फ़ाइलें</string>
-    <string name="files_two">2 फ़ाइलें</string>
-    <string name="files_zero">0 फ़ाइलें</string>
+    <plurals name="files">
+        <item quantity="one">%1$d फ़ाइलें</item>
+        <item quantity="other">%1$d फ़ाइलें</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">जोड़ें</string>
-    <string name="generic_cancel">रद्द करें</string>
-    <string name="generic_delete_all_confirm_title">सभी हटाएं?</string>
     <string name="generic_delete_selected_confirm_title">चयनित हटाएं?</string>
     <string name="generic_description">विवरण</string>
     <string name="generic_description_line">विवरण: %1$s</string>
@@ -144,19 +130,12 @@ limitations under the License.
     <string name="generic_name">नाम</string>
     <string name="generic_name_line">नाम: %1$s</string>
     <string name="generic_no">नहीं</string>
-    <string name="generic_ok">ठीक</string>
     <string name="generic_paused">पॉज़ किया गया</string>
-    <string name="generic_progress_title">कृपया प्रतीक्षा करें…</string>
     <string name="generic_recording">रेकॉर्ड हो रहा है…</string>
     <string name="generic_save">सहेजें</string>
     <string name="generic_success_title">सफलता</string>
     <string name="generic_tracks">ट्रैक</string>
-    <string name="generic_yes">हां</string>
     <!-- Gps -->
-    <string name="gps_location_access">सही स्थान</string>
-    <string name="gps_disabled">GPS अक्षम है. %1$s पर जाने के लिए यहां टैप करें. लौटने के लिए  वापस जाएं बटन को दबाएं.</string>
-    <string name="gps_disabled_my_location">वर्तमान स्थान का निर्धारण नहीं किया जा सकता. %1$s पर अधिक स्थान स्रोतों को सक्षम करें और सुनिश्चित करें कि आसमान दिख रहा है. बाद में पुन: प्रयास करें.</string>
-    <string name="gps_not_found">उपकरण पर कोई GPS नहीं मिला</string>
     <string name="gps_starting">GPS को प्रारंभ किया जा रहा है</string>
     <string name="gps_wait_for_better_signal">बेहतर GPS सिग्नल की प्रतीक्षा की जा रही है</string>
     <string name="gps_wait_for_signal">GPS सिग्नल की प्रतीक्षा की जा रही है</string>
@@ -165,7 +144,6 @@ limitations under the License.
     <string name="image_arrow">तीर</string>
     <string name="image_marker">मार्कर</string>
     <string name="image_marker_count">मार्कर गणना</string>
-    <string name="image_my_location">मेरा स्थान</string>
     <string name="image_pause">पॉज़ करें</string>
     <string name="image_photo_marker">फ़ोटो मार्कर</string>
     <string name="image_record">रिकॉर्ड करें</string>
@@ -184,17 +162,14 @@ limitations under the License.
     <string name="marker_add_error">मार्कर नहीं डाल सके. कोई GPS सिग्नल नहीं है. फिर से कोशिश करें.</string>
     <string name="marker_add_success">एक मार्कर सम्मिलित किया गया</string>
     <string name="marker_add_canceled">रद्द किया गया, कोई मार्कर जोड़ा नहीं गया</string>
-    <string name="marker_delete_all_confirm_message">इस ट्रैक के लिए सभी मार्कर को उपकरण से स्थायी रूप से हटा दिया जाएगा</string>
     <string name="marker_delete_one_confirm_message">मार्कर को उपकरण से स्थायी रूप से हटा दिया जाएगा</string>
     <string name="marker_delete_one_confirm_title">मार्कर हटाएं?</string>
     <string name="marker_delete_multiple_confirm_message">चयनित मार्कर उपकरण से स्थायी रूप से हटा दिए जाएंगे</string>
     <string name="marker_label_end">%1$s (अंत)</string>
     <string name="marker_label_start">%1$s (प्रारंभ)</string>
     <string name="marker_name_format">मार्कर %1$d</string>
-    <string name="marker_split_name_format">विभाजन %1$d</string>
     <string name="marker_title">%2$d में से %1$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">पिछले विभाजन मार्कर के बाद से:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">मार्कर प्रकार (उदा., झरना)</string>
     <string name="marker_edit_marker_type_hint">मार्कर प्रकार</string>
@@ -212,11 +187,9 @@ limitations under the License.
     <string name="menu_markers">मार्कर</string>
     <string name="menu_search">खोजें</string>
     <string name="menu_select_all">सभी चुनें</string>
-    <string name="menu_sensor_state">सेंसर स्थिति</string>
     <string name="menu_settings">सेटिंग</string>
     <string name="menu_share">साझा करें</string>
     <string name="menu_show_on_map">नक्शे पर दिखाएं</string>
-    <string name="menu_split_frequency">विभाजन आवृत्ति</string>
     <string name="menu_start_gps">GPS प्रारंभ करें</string>
     <string name="menu_stop_gps">GPS बंद करें</string>
     <string name="menu_view_photo">फ़ोटो देखें</string>
@@ -226,12 +199,10 @@ limitations under the License.
     <!-- Search -->
     <string name="search_global_description">ट्रैक और मार्कर</string>
     <string name="search_list_empty_message">किसी भी ट्रैक या मार्कर का आपकी खोज से मिलान नहीं हुआ</string>
-    <string name="search_list_marker_track_location">ट्रैक \'%1$s\' में.</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">बैटरी स्‍तर</string>
     <string name="sensor_state_cadence">केडेंस</string>
     <string name="sensor_state_cadence_value">%1$d rpm</string>
-    <string name="sensor_state_disconnected">डिस्कनेक्‍ट हो गया</string>
     <string name="sensor_state_heart_rate">हृदय गति</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">पॉवर</string>
@@ -243,7 +214,6 @@ limitations under the License.
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">दूरी के अनुसार</string>
     <string name="settings_chart_by_time">समय के अनुसार</string>
-    <string name="settings_chart_x_axis">एक्स अक्ष</string>
     <string name="settings_recording">रिकॉर्डिंग</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">रीबूट करने के बाद हमेशा रिकॉर्डिंग फिर से शुरू करें</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">रीबूट करने के बाद कभी रिकॉर्डिंग फिर से शुरू न करें</string>
@@ -267,7 +237,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">अभी रीसेट करें?</string>
     <string name="settings_reset_done">सभी सेटिंग को सामान्य मानों में उलट दिया गया है</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">सेंसर</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth सेंसर</string>
     <!-- Settings Stats -->
@@ -289,12 +258,9 @@ limitations under the License.
     <string name="stats_altitude">ऊंचाई</string>
     <string name="stats_fastest_pace">सबसे तेज चाल</string>
     <string name="stats_gain">वृद्धि</string>
-    <string name="stats_grade">ढलान</string>
     <string name="stats_latitude">अक्षांश</string>
     <string name="stats_longitude">देशांतर</string>
-    <string name="stats_max">अधिकतम</string>
     <string name="stats_max_speed">अधिकतम गति</string>
-    <string name="stats_min">न्यूनतम</string>
     <string name="stats_moving_time">चलते रहने का समय</string>
     <string name="stats_pace">चाल</string>
     <string name="stats_speed">गति</string>
@@ -320,12 +286,6 @@ limitations under the License.
     <string name="track_list_empty_message">अपनी अगली साहसिक यात्रा यहां रिकॉर्ड करना शुरू करें</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d ट्रैक</string>
-    <string name="tracks_many">%1$d ट्रैक</string>
-    <string name="tracks_one">1 ट्रैक</string>
-    <string name="tracks_other">%1$d ट्रैक</string>
-    <string name="tracks_two">2 ट्रैक</string>
-    <string name="tracks_zero">0 ट्रैक</string>
     <!-- Unit -->
     <string name="unit_feet">फ़ीट</string>
     <string name="unit_kilometer">किमी</string>
@@ -339,11 +299,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">सटीकता के लिए ग्रहण करें</string>
     <string name="value_adapt_battery_life">बैटरी जीवन के लिए ग्रहण करें</string>
     <string name="value_always">हमेशा</string>
-    <string name="value_float_feet">%1$.2f फुट</string>
-    <string name="value_float_kilometer">%1$.2f किमी</string>
-    <string name="value_float_meter">%1$.2f मी</string>
-    <string name="value_float_mile">%1$.2f मी</string>
-    <string name="value_float_mile_poor_gps">%1$.1f मी (खराब GPS)</string>
     <string name="value_integer_feet">%1$d फुट</string>
     <string name="value_integer_feet_excellent_gps">%1$d फुट (उत्कृष्ट GPS)</string>
     <string name="value_integer_feet_recommended">%1$d फ़ुट (अनुशंसित)</string>
@@ -363,52 +318,37 @@ limitations under the License.
     <string name="value_smallest">सबसे छोटा</string>
     <string name="value_smallest_recommended">सबसे छोटा (अनुशंसित)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d घंटे</string>
-    <string name="voice_hours_many">%1$d घंटे</string>
-    <string name="voice_hours_one">1 घंटा</string>
-    <string name="voice_hours_other">%1$d घंटे</string>
-    <string name="voice_hours_two">2 घंटे</string>
-    <string name="voice_hours_zero">0 घंटे</string>
-    <string name="voice_minutes_few">%1$d मिनट</string>
-    <string name="voice_minutes_many">%1$d मिनट</string>
-    <string name="voice_minutes_one">1 मिनट</string>
-    <string name="voice_minutes_other">%1$d मिनट</string>
-    <string name="voice_minutes_two">2 मिनट</string>
-    <string name="voice_minutes_zero">0 मिनट</string>
+    <plurals name="voiceHours">
+        <item quantity="one">%1$d घंटा</item>
+        <item quantity="other">%1$d घंटे</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">%1$d मिनट</item>
+        <item quantity="other">%1$d मिनट</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">%1$d सेकंड</item>
+        <item quantity="other">%1$d सेकंड</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">%1$.1f किलोमीटर प्रति घंट</item>
+        <item quantity="other">%1$.1f किलोमीटर प्रति घंट</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">%1$.1f  मील प्रति घंटा</item>
+        <item quantity="other">%1$.1f मील प्रति घंट</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s प्रति किलोमीटर</string>
     <string name="voice_pace_per_mile">%1$s प्रति मील</string>
-    <string name="voice_seconds_few">%1$d सेकंड</string>
-    <string name="voice_seconds_many">%1$d सेकंड</string>
-    <string name="voice_seconds_one">1 सेकंड</string>
-    <string name="voice_seconds_other">%1$d सेकंड</string>
-    <string name="voice_seconds_two">2 सेकंड</string>
-    <string name="voice_seconds_zero">0 सेकंड</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f किलोमीटर प्रति घंटा</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f किलोमीटर प्रति घंटा</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 किलोमीटर प्रति घंटा</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f किलोमीटर प्रति घंटा</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 किलोमीटर प्रति घंटा</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 किलोमीटर प्रति घंटा</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f मील प्रति घंटा</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f मील प्रति घंटा</string>
-    <string name="voice_speed_miles_per_hour_one">1 मील प्रति घंटा</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f मील प्रति घंटा</string>
-    <string name="voice_speed_miles_per_hour_two">2 मील प्रति घंटा</string>
-    <string name="voice_speed_miles_per_hour_zero">0 मील प्रति घंटा</string>
-    <string name="voice_template">पदचिन्ह %3$s पर %2$s में %1$s</string>
-    <string name="voice_total_distance_kilometers_few">कुल दूरी %1$.2f किलोमीटर</string>
-    <string name="voice_total_distance_kilometers_many">कुल दूरी %1$.2f किलोमीटर</string>
-    <string name="voice_total_distance_kilometers_one">कुल दूरी 1 किलोमीटर</string>
-    <string name="voice_total_distance_kilometers_other">कुल दूरी %1$.2f किलोमीटर</string>
-    <string name="voice_total_distance_kilometers_two">कुल दूरी 2 किलोमीटर</string>
-    <string name="voice_total_distance_kilometers_zero">कुल दूरी 0 किलोमीटर</string>
-    <string name="voice_total_distance_miles_few">कुल दूरी %1$.2f मील</string>
-    <string name="voice_total_distance_miles_many">कुल दूरी %1$.2f मील</string>
-    <string name="voice_total_distance_miles_one">कुल दूरी 1 मील</string>
-    <string name="voice_total_distance_miles_other">कुल दूरी %1$.2f मील</string>
-    <string name="voice_total_distance_miles_two">कुल दूरी 2 मील</string>
-    <string name="voice_total_distance_miles_zero">कुल दूरी 0 मील</string>
-    <string name="voice_total_distance_zero">मेरे ट्रैक की कुल दूरी शून्य है.</string>
+    <string name="voice_template">%3$s पर %2$s में %1$s</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">कुल दूरी %1$.2f किलोमीटर</item>
+        <item quantity="other">कुल दूरी %1$.2f किलोमीटर</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">कुल दूरी %1$.2f मील</item>
+        <item quantity="other">कुल दूरी %1$.2f मील</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">बैंक</string>

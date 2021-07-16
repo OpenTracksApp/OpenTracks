@@ -39,7 +39,6 @@ import de.dennisguse.opentracks.util.TrackUtils;
 public class TrackEditActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
 
     public static final String EXTRA_TRACK_ID = "track_id";
-    public static final String EXTRA_NEW_TRACK = "new_track";
 
     private static final String TAG = TrackEditActivity.class.getSimpleName();
 
@@ -106,14 +105,9 @@ public class TrackEditActivity extends AbstractActivity implements ChooseActivit
             finish();
         });
 
-        if (getIntent().getBooleanExtra(EXTRA_NEW_TRACK, false)) {
-            setTitle(R.string.track_edit_new_track_title);
-            viewBinding.trackEditCancel.setVisibility(View.GONE);
-        } else {
-            setTitle(R.string.menu_edit);
-            viewBinding.trackEditCancel.setOnClickListener(v -> finish());
-            viewBinding.trackEditCancel.setVisibility(View.VISIBLE);
-        }
+        setTitle(R.string.menu_edit);
+        viewBinding.trackEditCancel.setOnClickListener(v -> finish());
+        viewBinding.trackEditCancel.setVisibility(View.VISIBLE);
     }
 
 

@@ -3,7 +3,6 @@ package de.dennisguse.opentracks.services;
 import android.content.ContentProvider;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.os.Looper;
 
 import androidx.preference.PreferenceManager;
@@ -26,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
@@ -233,16 +233,14 @@ public class TrackRecordingServiceTestLooper {
         assertEquals(trackId, track.getId());
 
         // Insert a few points, markers and statistics.
-        long startTime = System.currentTimeMillis();
         for (int i = 0; i < 30; i++) {
-            Location location = new Location("gps");
-            location.setLongitude(35.0f + i / 10.0f);
-            location.setLatitude(45.0f - i / 5.0f);
-            location.setAccuracy(5);
-            location.setSpeed(10);
-            location.setTime(startTime + i * 10000);
-            location.setBearing(3.0f);
-            TrackPoint trackPoint = new TrackPoint(location);
+            TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT)
+                    .setLongitude(35.0f + i / 10.0f)
+                    .setLatitude(45.0f - i / 5.0f)
+                    .setAccuracy(5)
+                    .setSpeed(Speed.of(10))
+                    .setBearing(3.0f);
+
             int prefAccuracy = PreferencesUtils.getRecordingGPSAccuracy(sharedPreferences, context);
             service.newTrackPoint(trackPoint, prefAccuracy);
 

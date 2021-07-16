@@ -1,0 +1,12 @@
+v3.18.5: OpenTracks
+
+Zmeny:
+- Nastaviteľná rýchlosť hlasového hlásenia
+- API <26: Ikona spúšťača vynecháva pozadie
+
+Opravy chýb:
+- Nahrávanie používateľského rozhrania: zobrazenie správnych hodnôt 
+- Používateľské rozhranie nahrávania: zobrazenie (opäť) nadmorskej výšky v EGM2008
+
+Vývojár:
+- Android12 oprávnenia (BLUETOOTH_CONNECT)

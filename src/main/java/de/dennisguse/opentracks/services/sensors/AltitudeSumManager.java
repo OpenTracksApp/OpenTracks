@@ -7,11 +7,11 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
-import java.time.Duration;
-
+import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.PressureSensorUtils;
 
 /**
@@ -21,16 +21,14 @@ public class AltitudeSumManager implements SensorEventListener {
 
     private static final String TAG = AltitudeSumManager.class.getSimpleName();
 
-    private static final Duration SAMPLING_RATE = Duration.ofSeconds(3);
-
     private boolean isConnected = false;
 
     private float lastAcceptedPressureValue_hPa;
 
     private float lastSeenSensorValue_hPa;
 
-    private float altitudeGain_m;
-    private float altitudeLoss_m;
+    private Float altitudeGain_m;
+    private Float altitudeLoss_m;
 
     public void start(Context context) {
         SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
@@ -57,13 +55,14 @@ public class AltitudeSumManager implements SensorEventListener {
         reset();
     }
 
-    public boolean isConnected() {
-        return isConnected;
-    }
-
     @VisibleForTesting
     public void setConnected(boolean isConnected) {
         this.isConnected = isConnected;
+    }
+
+    public void fill(@NonNull TrackPoint trackPoint) {
+        trackPoint.setAltitudeGain(altitudeGain_m);
+        trackPoint.setAltitudeLoss(altitudeLoss_m);
     }
 
     public @Nullable
@@ -78,8 +77,8 @@ public class AltitudeSumManager implements SensorEventListener {
 
     public void reset() {
         Log.d(TAG, "Reset");
-        altitudeGain_m = 0;
-        altitudeLoss_m = 0;
+        altitudeGain_m = null;
+        altitudeLoss_m = null;
     }
 
     @Override
@@ -104,10 +103,15 @@ public class AltitudeSumManager implements SensorEventListener {
             return;
         }
 
+        altitudeGain_m = altitudeGain_m != null ? altitudeGain_m : 0;
+        altitudeLoss_m = altitudeLoss_m != null ? altitudeLoss_m : 0;
+
         PressureSensorUtils.AltitudeChange altitudeChange = PressureSensorUtils.computeChangesWithSmoothing_m(lastAcceptedPressureValue_hPa, lastSeenSensorValue_hPa, value_hPa);
         if (altitudeChange != null) {
             altitudeGain_m += altitudeChange.getAltitudeGain_m();
+
             altitudeLoss_m += altitudeChange.getAltitudeLoss_m();
+
             lastAcceptedPressureValue_hPa = altitudeChange.getCurrentSensorValue_hPa();
         }
 

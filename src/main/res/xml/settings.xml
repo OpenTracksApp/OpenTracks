@@ -85,6 +85,13 @@ limitations under the License.
             android:key="@string/voice_frequency_key"
             android:title="@string/menu_voice_frequency"
             app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            android:defaultValue="@string/voice_speed_rate_default"
+            android:entryValues="@array/voice_speed_rate_values"
+            android:entries="@array/voice_speed_rate_values"
+            android:key="@string/voice_speed_rate_key"
+            android:title="@string/menu_voice_rate"
+            app:useSimpleSummaryProvider="true" />
         <de.dennisguse.opentracks.settings.ActivityTypePreference
             android:defaultValue="@string/default_activity_default"
             android:key="@string/default_activity_key"
@@ -190,9 +197,9 @@ limitations under the License.
             android:dialogMessage="@string/settings_reset_confirm_message"
             android:dialogTitle="@string/settings_reset_confirm_title"
             android:key="@string/settings_reset_key"
-            android:negativeButtonText="@string/generic_cancel"
+            android:negativeButtonText="@android:string/cancel"
             android:persistent="false"
-            android:positiveButtonText="@string/generic_yes"
+            android:positiveButtonText="@android:string/ok"
             android:title="@string/settings_reset" />
     </PreferenceCategory>
 

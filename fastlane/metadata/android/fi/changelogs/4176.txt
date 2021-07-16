@@ -1,0 +1,12 @@
+v3.18.5: OpenTracks
+
+Muutokset:
+- Ääni-ilmoituksen nopeus konfiguroitavissa
+- API <26: Käynnistimen kuvake jättää taustan pois.
+
+Virheenkorjaukset:
+- Tallennuksen käyttöliittymä: näyttää oikeat arvot 
+- Tallennuksen käyttöliittymä: näytä (uudelleen) korkeus EGM2008:ssa.
+
+Kehittäjä:
+- Android12-oikeudet (BLUETOOTH_CONNECT)

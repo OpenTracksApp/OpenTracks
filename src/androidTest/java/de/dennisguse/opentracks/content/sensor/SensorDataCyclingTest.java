@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.util.UintUtils;
 
 import static org.junit.Assert.assertEquals;
@@ -100,7 +101,7 @@ public class SensorDataCyclingTest {
         SensorDataCycling.DistanceSpeed current = new SensorDataCycling.DistanceSpeed("sensorAddress", "sensorName", 2, 8016);
 
         // when
-        current.compute(previous, 2150);
+        current.compute(previous, Distance.ofMM(2150));
 
         // then
         assertEquals(2.15, current.getValue().distance.toM(), 0.01);
@@ -110,11 +111,11 @@ public class SensorDataCyclingTest {
     @Test
     public void compute_speed_rollOverCount() {
         // given
-        SensorDataCycling.DistanceSpeed previous = new SensorDataCycling.DistanceSpeed("sensorAddress", "sensorName", UintUtils.UINT16_MAX - 1, 1024);
+        SensorDataCycling.DistanceSpeed previous = new SensorDataCycling.DistanceSpeed("sensorAddress", "sensorName", UintUtils.UINT32_MAX - 1, 1024);
         SensorDataCycling.DistanceSpeed current = new SensorDataCycling.DistanceSpeed("sensorAddress", "sensorName", 0, 2048);
 
         // when
-        current.compute(previous, 2000);
+        current.compute(previous, Distance.ofMM(2000));
 
         // then
         assertEquals(2, current.getValue().distance.toM(), 0.01);

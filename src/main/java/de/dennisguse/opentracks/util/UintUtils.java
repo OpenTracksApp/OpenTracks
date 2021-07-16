@@ -11,14 +11,14 @@ public class UintUtils {
     /**
      * Computes a - b for UINT with overflow (b < a).
      *
-     * @return diff or -1 (invalid)
+     * @return diff
      */
     public static long diff(long a, long b, final long UINT_MAX) {
         if (a < 0 || b < 0) {
-            return -1;
+            throw new RuntimeException("a or b cannot be less than zero.");
         }
         if (a > UINT_MAX || b > UINT_MAX) {
-            return -1;
+            throw new RuntimeException("a or b are outside of the allowed range.");
         }
 
         if (a >= b) {

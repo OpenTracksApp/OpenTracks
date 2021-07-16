@@ -1,0 +1,12 @@
+v3.18.5: OpenTracks
+
+Förändring:
+- Röst tillkännagivande hastighet konfigurerbar
+- API < 26: Launcher Ikon utelämnar bakgrund
+
+Buggfixar:
+- Inspelning UI: visa korrekta värden 
+- Inspelning UI: visa (igen) höjd i EGM2008
+
+Utvecklare:
+- Android12 behörigheter (BLUETOOTH_CONNECT)

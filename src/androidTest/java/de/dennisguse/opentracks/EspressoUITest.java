@@ -19,10 +19,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.anything;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -32,20 +35,20 @@ public class EspressoUITest {
     public ActivityScenarioRule<TrackListActivity> mActivityTestRule = new ActivityScenarioRule<>(TrackListActivity.class);
 
     @Rule
-    public GrantPermissionRule mGrantPermissionRule = GrantPermissionRule.grant("android.permission.ACCESS_FINE_LOCATION");
+    public GrantPermissionRule mGrantPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
 
     @LargeTest
     @Test
     public void record_pause_resume_stop() {
         {
             // TrackListActivity: start recording
-            ViewInteraction trackControllerRecordButton = onView(withId(R.id.track_controller_record));
+            ViewInteraction trackControllerRecordButton = onView(withId(R.id.controller_record));
             trackControllerRecordButton.perform(click());
         }
         {
             // TrackRecordingActivity
-            ViewInteraction trackControllerRecordButton = onView(withId(R.id.track_controller_record));
-            ViewInteraction trackControllerStopButton = onView(withId(R.id.track_controller_stop));
+            ViewInteraction trackControllerRecordButton = onView(withId(R.id.controller_record));
+            ViewInteraction trackControllerStopButton = onView(withId(R.id.controller_stop));
 
             // wait; stay recording
             trackControllerRecordButton.perform(waitFor(5000));
@@ -72,13 +75,13 @@ public class EspressoUITest {
     public void record_move_through_tabs() {
         {
             // TrackListActivity: start recording
-            ViewInteraction trackControllerRecordButton = onView(withId(R.id.track_controller_record));
+            ViewInteraction trackControllerRecordButton = onView(withId(R.id.controller_record));
             trackControllerRecordButton.perform(click());
         }
         {
             // TrackRecordingActivity
             ViewInteraction tabLayout = onView(withId(R.id.track_detail_activity_tablayout));
-            ViewInteraction trackControllerStopButton = onView(withId(R.id.track_controller_stop));
+            ViewInteraction trackControllerStopButton = onView(withId(R.id.controller_stop));
 
             tabLayout.perform(selectTabAtIndex(1));
             tabLayout.perform(waitFor(1000));
@@ -95,6 +98,13 @@ public class EspressoUITest {
             // stop
             trackControllerStopButton.perform(veryLongTouch(1600));
         }
+    }
+
+    @LargeTest
+    @Test
+    public void selectAndDeleteTrack() {
+        onView(withId(R.id.track_list)).check(matches(isDisplayed()));
+        onData(anything()).inAdapterView(withId(R.id.track_list)).atPosition(0).perform(veryLongTouch(2000));
     }
 
     private static ViewAction veryLongTouch(final int duration_ms) {

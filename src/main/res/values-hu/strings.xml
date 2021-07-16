@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
---><resources>
+-->
+<resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">repülőgép</string>
     <string name="activity_type_atv">terepjáró</string>
@@ -91,17 +91,9 @@ limitations under the License.
     <string name="description_altitude_imperial">Tengerszint feletti magasság (láb)</string>
     <string name="description_altitude_metric">Tengerszint feletti magasság (m)</string>
     <string name="description_fastest_pace_in_minute">Leggyorsabb tempó: %1$s perc/km (%2$s perc/mérföld)</string>
-    <string name="description_location_accuracy">Pontosság (m)</string>
-    <string name="description_location_altitude">Tengerszint feletti magasság (m)</string>
-    <string name="description_location_bearing">Irány (fok)</string>
-    <string name="description_location_latitude">Földrajzi szélesség (fok)</string>
-    <string name="description_location_longitude">Földrajzi hosszúság (fok)</string>
-    <string name="description_location_speed">Sebesség (m/s)</string>
     <string name="description_max_altitude">Max. magasság: %1$d m (%2$d láb)</string>
-    <string name="description_max_grade">Max. lejtés: %1$d %%</string>
     <string name="description_max_speed">Max. sebesség: %1$.2f km/óra (%2$.1f mérföld/óra)</string>
     <string name="description_min_altitude">Min. magasság: %1$d m (%2$d láb)</string>
-    <string name="description_min_grade">Min. lejtés: %1$d %%</string>
     <string name="description_moving_time">Haladási idő: %1$s</string>
     <string name="description_pace_imperial">Tempó (perc/mérföld)</string>
     <string name="description_pace_metric">Tempó (perc/km)</string>
@@ -115,8 +107,6 @@ limitations under the License.
     <string name="description_time">Idő</string>
     <string name="description_total_distance">Teljes távolság: %1$.2f km (%2$.1f mérföld)</string>
     <string name="description_total_time">Teljes idő: %1$s</string>
-    <string name="description_track_point">Pont</string>
-    <string name="description_track_segment">Szakasz</string>
     <!-- Export -->
     <string name="export_all_option">Mindent %1$s formátumban</string>
     <string name="export_all_title">Exportálás külső tárhelyre</string>
@@ -127,16 +117,12 @@ limitations under the License.
     <string name="export_title">Exportálás ide:…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d fájl</string>
-    <string name="files_many">%1$d fájl</string>
-    <string name="files_one">1 fájl</string>
-    <string name="files_other">%1$d fájl</string>
-    <string name="files_two">2 fájl</string>
-    <string name="files_zero">0 fájl</string>
+    <plurals name="files">
+        <item quantity="one">1 fájl</item>
+        <item quantity="other">%1$d fájl</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Hozzáadás</string>
-    <string name="generic_cancel">Mégse</string>
-    <string name="generic_delete_all_confirm_title">Mindent töröl?</string>
     <string name="generic_delete_selected_confirm_title">Törli a kiválasztott(ak)at?</string>
     <string name="generic_description">Leírás</string>
     <string name="generic_description_line">Leírás: %1$s</string>
@@ -144,19 +130,12 @@ limitations under the License.
     <string name="generic_name">Név</string>
     <string name="generic_name_line">Név: %1$s</string>
     <string name="generic_no">Nem</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">Szüneteltetett</string>
-    <string name="generic_progress_title">Kis türelmet…</string>
     <string name="generic_recording">Rögzítés…</string>
     <string name="generic_save">Mentés</string>
     <string name="generic_success_title">Sikerült</string>
     <string name="generic_tracks">Számok</string>
-    <string name="generic_yes">Igen</string>
     <!-- Gps -->
-    <string name="gps_location_access">\'Helyhozzáférés\'</string>
-    <string name="gps_disabled">A GPS nincs engedélyezve. Érintse meg itt, ha a következőre szeretne lépni: %1$s. A visszalépéshez nyomja meg a vissza gombot.</string>
-    <string name="gps_disabled_my_location">Jelenlegi helyét nem lehet meghatározni. Engedélyezzen több helyforrást itt: %1$s, és gondoskodjon arról, hogy az ég látható legyen. Próbálja meg később.</string>
-    <string name="gps_not_found">Nem található GPS az eszközön</string>
     <string name="gps_starting">GPS indítása</string>
     <string name="gps_wait_for_better_signal">Várakozás jobb GPS-jelre</string>
     <string name="gps_wait_for_signal">Várakozás GPS-jelre</string>
@@ -165,7 +144,6 @@ limitations under the License.
     <string name="image_arrow">Nyíl</string>
     <string name="image_marker">Jelölő</string>
     <string name="image_marker_count">Jelölőszámláló</string>
-    <string name="image_my_location">Saját pozíció</string>
     <string name="image_pause">Szünet</string>
     <string name="image_photo_marker">Fényképjelölő</string>
     <string name="image_record">Rögzítés</string>
@@ -185,17 +163,14 @@ limitations under the License.
     <string name="marker_add_error">Nem sikerült jelölőt beilleszteni. Nincs GPS-jel. Próbálja újra.</string>
     <string name="marker_add_success">Jelölő beszúrása megtörtént</string>
     <string name="marker_add_canceled">Jelölő megadása nélkül megszakítva</string>
-    <string name="marker_delete_all_confirm_message">Minden jelölő véglegesen törlődik a készülékről</string>
     <string name="marker_delete_one_confirm_message">A jelölő véglegesen törlődik a készülékről</string>
     <string name="marker_delete_one_confirm_title">Törli a jelölőt?</string>
     <string name="marker_delete_multiple_confirm_message">A kiválasztott jelölők véglegesen törlődnek a készülékről</string>
     <string name="marker_label_end">%1$s (Végpont)</string>
     <string name="marker_label_start">%1$s (Kezdőpont)</string>
     <string name="marker_name_format">%1$d. jelölő</string>
-    <string name="marker_split_name_format">%1$d. felosztott</string>
     <string name="marker_title">%1$d/%2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">Utolsó felosztott jelölő óta:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Jelölő típusa (pl. vízesés)</string>
     <string name="marker_edit_marker_type_hint">Jelölő típusa</string>
@@ -213,11 +188,9 @@ limitations under the License.
     <string name="menu_markers">Jelölők</string>
     <string name="menu_search">Keresés</string>
     <string name="menu_select_all">Az összes kijelölése</string>
-    <string name="menu_sensor_state">Érzékelő állapota</string>
     <string name="menu_settings">Beállítások</string>
     <string name="menu_share">Megosztás</string>
     <string name="menu_show_on_map">Megjelenítés a térképen</string>
-    <string name="menu_split_frequency">Felosztási gyakoriság</string>
     <string name="menu_start_gps">GPS indítása</string>
     <string name="menu_stop_gps">GPS leállítása</string>
     <string name="menu_view_photo">Fotó megtekintése</string>
@@ -227,12 +200,10 @@ limitations under the License.
     <!-- Search -->
     <string name="search_global_description">Útvonalak és jelölők</string>
     <string name="search_list_empty_message">Egyetlen útvonal vagy jelölő sem felelt meg a keresésnek</string>
-    <string name="search_list_marker_track_location">„%1$s” pályán.</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Akkumulátor töltöttségi szintje</string>
     <string name="sensor_state_cadence">Fordulatszám</string>
     <string name="sensor_state_cadence_value">%1$d fordulat/perc</string>
-    <string name="sensor_state_disconnected">Leválasztva</string>
     <string name="sensor_state_heart_rate">Szívritmus</string>
     <string name="sensor_state_heart_rate_value">%1$d ütés/perc</string>
     <string name="sensor_state_power">Teljesítmény</string>
@@ -244,7 +215,6 @@ limitations under the License.
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Távolság szerint</string>
     <string name="settings_chart_by_time">Idő szerint</string>
-    <string name="settings_chart_x_axis">X tengely</string>
     <string name="settings_recording">Rögzítés</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Rögzítés folytatása újraindítás után mindig</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Rögzítés folytatása újraindítás után soha</string>
@@ -268,7 +238,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Visszaállítja most?</string>
     <string name="settings_reset_done">Minden beállítás visszaállt az alapértelmezett értékre</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Érzékelő</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth érzékelő</string>
     <!-- Settings Stats -->
@@ -291,12 +260,9 @@ limitations under the License.
     <string name="stats_altitude">Magasság</string>
     <string name="stats_fastest_pace">Leggyorsabb ütem</string>
     <string name="stats_gain">Növekedés</string>
-    <string name="stats_grade">Lejtés</string>
     <string name="stats_latitude">Földrajzi szélesség</string>
     <string name="stats_longitude">Földrajzi hosszúság</string>
-    <string name="stats_max">Max.</string>
     <string name="stats_max_speed">Max. sebesség</string>
-    <string name="stats_min">Min.</string>
     <string name="stats_moving_time">Mozgási idő</string>
     <string name="stats_pace">Ütem</string>
     <string name="stats_speed">Sebesség</string>
@@ -322,12 +288,6 @@ limitations under the License.
     <string name="track_list_empty_message">Indítsa el következő kalandja rögzítését itt</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d pálya</string>
-    <string name="tracks_many">%1$d pálya</string>
-    <string name="tracks_one">1 pálya</string>
-    <string name="tracks_other">%1$d pálya</string>
-    <string name="tracks_two">2 pálya</string>
-    <string name="tracks_zero">0 pálya</string>
     <!-- Unit -->
     <string name="unit_feet">láb</string>
     <string name="unit_kilometer">km</string>
@@ -341,11 +301,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Beállítás pontossághoz</string>
     <string name="value_adapt_battery_life">Akkumulátor élettartama szerint</string>
     <string name="value_always">Mindig</string>
-    <string name="value_float_feet">%1$.2f láb</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mérföld</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mérföld (gyenge GPS-jel)</string>
     <string name="value_integer_feet">%1$d láb</string>
     <string name="value_integer_feet_excellent_gps">%1$d láb (kiváló GPS-jel)</string>
     <string name="value_integer_feet_recommended">%1$d láb (ajánlott)</string>
@@ -365,52 +320,37 @@ limitations under the License.
     <string name="value_smallest">Legkisebb</string>
     <string name="value_smallest_recommended">Legkisebb (ajánlott)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d óra</string>
-    <string name="voice_hours_many">%1$d óra</string>
-    <string name="voice_hours_one">1 óra</string>
-    <string name="voice_hours_other">%1$d óra</string>
-    <string name="voice_hours_two">2 óra</string>
-    <string name="voice_hours_zero">0 óra</string>
-    <string name="voice_minutes_few">%1$d perc</string>
-    <string name="voice_minutes_many">%1$d perc</string>
-    <string name="voice_minutes_one">1 perc</string>
-    <string name="voice_minutes_other">%1$d perc</string>
-    <string name="voice_minutes_two">2 perc</string>
-    <string name="voice_minutes_zero">0 perc</string>
+    <plurals name="voiceHours">
+        <item quantity="one">1 óra</item>
+        <item quantity="other">%1$d óra</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">1 perc</item>
+        <item quantity="other">%1$d perc</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">1 másodperc</item>
+        <item quantity="other">%1$d másodperc</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">1 kilométer óránként</item>
+        <item quantity="other">%1$.1f kilométer óránként</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">1 mérföld óránként</item>
+        <item quantity="other">%1$.1f mérföld óránként</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s kilométerenként</string>
     <string name="voice_pace_per_mile">%1$s mérföldenként</string>
-    <string name="voice_seconds_few">%1$d másodperc</string>
-    <string name="voice_seconds_many">%1$d másodperc</string>
-    <string name="voice_seconds_one">1 másodperc</string>
-    <string name="voice_seconds_other">%1$d másodperc</string>
-    <string name="voice_seconds_two">2 másodperc</string>
-    <string name="voice_seconds_zero">0 másodperc</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f kilométer óránként</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f kilométer óránként</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 kilométer óránként</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f kilométer óránként</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 kilométer óránként</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 kilométer óránként</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f mérföld óránként</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f mérföld óránként</string>
-    <string name="voice_speed_miles_per_hour_one">1 mérföld óránként</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f mérföld óránként</string>
-    <string name="voice_speed_miles_per_hour_two">2 mérföld óránként</string>
-    <string name="voice_speed_miles_per_hour_zero">0 mérföld óránként</string>
-    <string name="voice_template">Saját útvonalak: %1$s %2$s alatt %3$s sebességgel</string>
-    <string name="voice_total_distance_kilometers_few">össztávolság: %1$.2f kilométer</string>
-    <string name="voice_total_distance_kilometers_many">össztávolság: %1$.2f kilométer</string>
-    <string name="voice_total_distance_kilometers_one">össztávolság: 1 kilométer</string>
-    <string name="voice_total_distance_kilometers_other">össztávolság: %1$.2f kilométer</string>
-    <string name="voice_total_distance_kilometers_two">össztávolság: 2 kilométer</string>
-    <string name="voice_total_distance_kilometers_zero">össztávolság: 0 kilométer</string>
-    <string name="voice_total_distance_miles_few">össztávolság: %1$.2f mérföld</string>
-    <string name="voice_total_distance_miles_many">össztávolság: %1$.2f mérföld</string>
-    <string name="voice_total_distance_miles_one">össztávolság: 1 mérföld</string>
-    <string name="voice_total_distance_miles_other">össztávolság: %1$.2f mérföld</string>
-    <string name="voice_total_distance_miles_two">össztávolság: 2 mérföld</string>
-    <string name="voice_total_distance_miles_zero">össztávolság: 0 mérföld</string>
-    <string name="voice_total_distance_zero">Saját útvonalak - össztávolság nulla.</string>
+    <string name="voice_template">%1$s %2$s alatt %3$s sebességgel</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">össztávolság: 1 kilométer</item>
+        <item quantity="other">össztávolság: %1$.2f kilométer</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">össztávolság: 1 mérföld</item>
+        <item quantity="other">össztávolság: %1$.2f mérföld</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankautomata</string>
     <string name="waypoint_type_bank">bank</string>
@@ -480,13 +420,12 @@ limitations under the License.
     <string name="help_gps_troubleshooting_title">Az OpenTracks nem rögzíti a helyszíneket\?</string>
     <string name="help_support_title">Hogyan tudom támogatni az OpenTracks-t\?</string>
     <string name="open_track_using_dashboard">Megnyitás az OpenTracks-Dashboard segítségével</string>
-    <string name="open_track_as_KMZ">Megnyitás KMZ-ként</string>
+    <string name="open_track_as_KML">Megnyitás KML-ként</string>
     <string name="open_track_as_GPX">Megnyitás GPX-ként</string>
     <string name="open_track_as_trackfileformat">Megnyitás %1$s néven</string>
     <string name="activity_type_escooter">eszkoter</string>
     <string name="help_recording_content">Az OpenTracks a készülék GPS-érzékelőjét használja a hely folyamatos rögzítésére. Ha a GPS-eszköz pontatlan adatokat (pl. hely, sebesség, magasság) jelent, az OpenTracks nem tud mit tenni.</string>
     <string name="help_data_storage_title">Hogyan tárolja az OpenTracks az érzékelőadatokat\?</string>
-    <string name="app_not_installed_show_on_map">Kérjük, telepítsen egy olyan alkalmazást, amely támogatja a térképadatok megjelenítését.</string>
     <string name="import_error_list_dialog_title">Nem importált fájlok</string>
     <string name="import_progress_summary_errors_msg">Hibák</string>
     <string name="sensor_state_cadence_max">Max kadencia</string>
@@ -496,18 +435,13 @@ limitations under the License.
     <string name="stats_split_interval">Osztott intervallum</string>
     <string name="track_speed_notification">Sebesség: %1$s</string>
     <string name="track_detail_intervals_tab">Intervallum</string>
-    <string name="track_detail_record_success">Most egy új szám felvétele</string>
-    <string name="track_detail_resume_success">Most folytatódik a pálya</string>
     <string name="interval_list_empty_message">Még nincs intervallum</string>
-    <string name="value_float_mile_hour">%1$.2f mph</string>
-    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
     <string name="settings_default_export_uri_title">Pálya export könyvtár</string>
     <string name="instant_export_enabled_summary">Sáv exportálása a tárolóba a felvétel befejezése után</string>
     <string name="toast_message_instant_track_was_exported">Utolsó exportált zeneszám</string>
     <string name="hold_to_pause">Tartsa a szünethez</string>
     <string name="hold_to_stop">Tartsa lenyomva a leállításhoz</string>
     <string name="track_distance_notification">Távolság: %1$s</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
     <string name="instant_export_enabled_title">Azonnali edzés utáni export</string>
     <string name="track_pace_notification">Tempó: %1$s</string>
     <string name="export_with_photos">fotókkal</string>
@@ -519,7 +453,6 @@ limitations under the License.
     <string name="import_unsupported_format">Nem támogatott fájlformátum</string>
     <string name="description_default_speed_or_pace">Tevékenységtípus szerint</string>
     <string name="export_without_photos">fotók nélkül</string>
-    <string name="value_float_kilometer_hour">%1$.2f km/h</string>
     <string name="voice_speed_lap">%1$s körsebessége</string>
     <string name="help_gps_troubleshooting_content"> Mit tehetsz:
 \n a) ellenőrizze, hogy a GPS engedélyezve van-e,
@@ -532,7 +465,6 @@ limitations under the License.
     <string name="generic_completed">Befejezett</string>
     <string name="sensor_state_heart_rate_avg">Átlagos pulzusszám</string>
     <string name="sensor_state_power_avg">Átlagos teljesítmény</string>
-    <string name="sensor_not_known">A %1$s érzékelő ismeretlen. Kérjük, ellenőrizze a beállításokat.</string>
     <string name="bluetooth_disabled">Kérjük, engedélyezze a Bluetooth funkciót.</string>
     <string name="settings_default_trackfileformat">Export/megosztás fájlformátum</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Felvétel közben a statisztika megjelenítése a készülék feloldása nélkül.</string>
@@ -605,4 +537,7 @@ limitations under the License.
 \n * jelölések létrehozása (képekkel együtt)
 \n * teljesen offline működik
 \n * pályák megjelenítése térképen (lásd alább)</string>
+    <string name="about_third_party_data">Harmadik féltől származó adatok</string>
+    <string name="delete_service">Törlési szolgáltatás</string>
+    <string name="track_delete_progress">%1$d/%2$d</string>
 </resources>

@@ -15,8 +15,6 @@ import de.dennisguse.opentracks.util.UnitConversions;
 
 /**
  * Provides cadence in rpm and speed in milliseconds from Bluetooth LE Cycling Cadence and Speed sensors.
- * <p>
- * https://www.bluetooth.org/docman/handlers/downloaddoc.ashx?doc_id=261449
  */
 public final class SensorDataCycling {
 
@@ -96,7 +94,7 @@ public final class SensorDataCycling {
 
     public static class DistanceSpeed extends SensorData<DistanceSpeed.Data> {
 
-        private final Integer wheelRevolutionsCount; // UINT16
+        private final Long wheelRevolutionsCount; // UINT32
         private final Integer wheelRevolutionsTime; // UINT16; 1/1024s
 
         public DistanceSpeed(String sensorAddress) {
@@ -105,7 +103,7 @@ public final class SensorDataCycling {
             this.wheelRevolutionsTime = null;
         }
 
-        public DistanceSpeed(String sensorAddress, String sensorName, int wheelRevolutionsCount, int wheelRevolutionsTime) {
+        public DistanceSpeed(String sensorAddress, String sensorName, long wheelRevolutionsCount, int wheelRevolutionsTime) {
             super(sensorAddress, sensorName);
             this.wheelRevolutionsCount = wheelRevolutionsCount;
             this.wheelRevolutionsTime = wheelRevolutionsTime;
@@ -115,7 +113,7 @@ public final class SensorDataCycling {
             return wheelRevolutionsCount != null && wheelRevolutionsTime != null;
         }
 
-        public int getWheelRevolutionsCount() {
+        public long getWheelRevolutionsCount() {
             return wheelRevolutionsCount;
         }
 
@@ -123,25 +121,25 @@ public final class SensorDataCycling {
             return wheelRevolutionsTime;
         }
 
-        public void compute(DistanceSpeed previous, int wheel_circumference_mm) {
+        public void compute(DistanceSpeed previous, Distance wheelCircumference) {
             if (hasData() && previous != null && previous.hasData()) {
                 float timeDiff_ms = UintUtils.diff(wheelRevolutionsTime, previous.wheelRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * UnitConversions.S_TO_MS;
                 Duration timeDiff = Duration.ofMillis((long) timeDiff_ms);
                 if (timeDiff.isZero() || timeDiff.isNegative()) {
-                    Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
+                    Log.e(TAG, "Timestamps difference is invalid: cannot compute speed.");
                     value = null;
-                } else {
-                    long wheelDiff = UintUtils.diff(wheelRevolutionsCount, previous.wheelRevolutionsCount, UintUtils.UINT16_MAX);
-                    wheelDiff = Math.abs(wheelDiff); //HACK for Garmin Speed 2 as some of those seem to count backwards
-
-                    Distance distance = Distance.of(wheelDiff * wheel_circumference_mm * UnitConversions.MM_TO_M);
-                    Distance distanceOverall = distance;
-                    if (previous.hasValue()) {
-                        distanceOverall = distance.plus(previous.getValue().distanceOverall);
-                    }
-                    Speed speed_mps = Speed.of(distance, timeDiff);
-                    value = new Data(distance, distanceOverall, speed_mps);
+                    return;
                 }
+
+                long wheelDiff = UintUtils.diff(wheelRevolutionsCount, previous.wheelRevolutionsCount, UintUtils.UINT32_MAX);
+
+                Distance distance = wheelCircumference.multipliedBy(wheelDiff);
+                Distance distanceOverall = distance;
+                if (previous.hasValue()) {
+                    distanceOverall = distance.plus(previous.getValue().distanceOverall);
+                }
+                Speed speed_mps = Speed.of(distance, timeDiff);
+                value = new Data(distance, distanceOverall, speed_mps);
             }
         }
 
@@ -163,11 +161,11 @@ public final class SensorDataCycling {
             if (!(obj instanceof DistanceSpeed)) return false;
 
             DistanceSpeed comp = (DistanceSpeed) obj;
-            if (hasData() && comp.hasData() == hasData()) {
-                return getWheelRevolutionsCount() == comp.getWheelRevolutionsCount() && getWheelRevolutionsTime() == comp.getWheelRevolutionsTime();
-            } else {
+            if (!(hasData() && comp.hasData())) {
                 return false;
             }
+
+            return getWheelRevolutionsCount() == comp.getWheelRevolutionsCount() && getWheelRevolutionsTime() == comp.getWheelRevolutionsTime();
         }
 
         public static class Data {

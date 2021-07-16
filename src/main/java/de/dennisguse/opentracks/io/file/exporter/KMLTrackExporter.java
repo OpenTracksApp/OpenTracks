@@ -69,8 +69,6 @@ public class KMLTrackExporter implements TrackExporter {
 
     private final Context context;
     private final boolean exportPhotos;
-    private final boolean exportTrackDetail;
-    private final boolean exportSensorData;
     private final ContentProviderUtils contentProviderUtils;
 
     private PrintWriter printWriter;
@@ -82,13 +80,8 @@ public class KMLTrackExporter implements TrackExporter {
     private final List<Float> altitudeGainList = new ArrayList<>();
     private final List<Float> altitudeLossList = new ArrayList<>();
 
-    @Deprecated // Figure out a better way to do this! (if needed)
-    private TrackPoint startTrackPoint;
-
-    public KMLTrackExporter(Context context, boolean exportTrackDetail, boolean exportSensorData, boolean exportPhotos) {
+    public KMLTrackExporter(Context context, boolean exportPhotos) {
         this.context = context;
-        this.exportTrackDetail = exportTrackDetail;
-        this.exportSensorData = exportSensorData;
         this.exportPhotos = exportPhotos;
         this.contentProviderUtils = new ContentProviderUtils(context);
     }
@@ -160,11 +153,6 @@ public class KMLTrackExporter implements TrackExporter {
                 if (Thread.interrupted()) throw new InterruptedException();
 
                 TrackPoint trackPoint = trackPointIterator.next();
-                setLocationTime(trackPoint, offset);
-                if (startTrackPoint == null) {
-                    startTrackPoint = trackPoint;
-                }
-
                 if (!wroteTrack) {
                     writeBeginTrack(track);
                     wroteTrack = true;
@@ -207,8 +195,6 @@ public class KMLTrackExporter implements TrackExporter {
             }
 
             writeEndTrack();
-
-            startTrackPoint = null;
         }
     }
 
@@ -238,23 +224,19 @@ public class KMLTrackExporter implements TrackExporter {
             printWriter.println("<open>1</open>");
             printWriter.println("<visibility>1</visibility>");
 
-            if (exportTrackDetail) {
-                Track track = tracks[0];
-                printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
-                printWriter.println("<atom:generator>" + StringUtils.formatCData(context.getString(R.string.app_name)) + "</atom:generator>");
-            }
+            Track track = tracks[0];
+            printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
+            printWriter.println("<atom:generator>" + StringUtils.formatCData(context.getString(R.string.app_name)) + "</atom:generator>");
 
             writeTrackStyle();
             writePlacemarkerStyle(MARKER_STYLE, MARKER_ICON, 20, 2);
             printWriter.println("<Schema id=\"" + SCHEMA_ID + "\">");
 
             writeSimpleArrayStyle(EXTENDED_DATA_TYPE_SPEED, context.getString(R.string.description_speed_ms));
+            writeSimpleArrayStyle(EXTENDED_DATA_TYPE_POWER, context.getString(R.string.description_sensor_power));
+            writeSimpleArrayStyle(EXTENDED_DATA_TYPE_CADENCE, context.getString(R.string.description_sensor_cadence));
+            writeSimpleArrayStyle(EXTENDED_DATA_TYPE_HEART_RATE, context.getString(R.string.description_sensor_heart_rate));
 
-            if (exportSensorData) {
-                writeSimpleArrayStyle(EXTENDED_DATA_TYPE_POWER, context.getString(R.string.description_sensor_power));
-                writeSimpleArrayStyle(EXTENDED_DATA_TYPE_CADENCE, context.getString(R.string.description_sensor_cadence));
-                writeSimpleArrayStyle(EXTENDED_DATA_TYPE_HEART_RATE, context.getString(R.string.description_sensor_heart_rate));
-            }
             printWriter.println("</Schema>");
         }
     }
@@ -269,15 +251,13 @@ public class KMLTrackExporter implements TrackExporter {
     private void writeBeginMarkers(Track track) {
         if (printWriter != null) {
             printWriter.println("<Folder>");
-            if (exportTrackDetail) {
-                printWriter.println("<name>" + StringUtils.formatCData(context.getString(R.string.track_markers, track.getName())) + "</name>");
-            }
+            printWriter.println("<name>" + StringUtils.formatCData(context.getString(R.string.track_markers, track.getName())) + "</name>");
             printWriter.println("<open>1</open>");
         }
     }
 
     private void writeMarker(Marker marker) {
-        if (printWriter != null && exportTrackDetail) {
+        if (printWriter != null) {
             boolean existsPhoto = FileUtils.buildInternalPhotoFile(context, marker.getTrackId(), marker.getPhotoURI()) != null;
             if (marker.hasPhoto() && exportPhotos && existsPhoto) {
                 float heading = getHeading(marker.getTrackId(), marker.getLocation());
@@ -312,12 +292,10 @@ public class KMLTrackExporter implements TrackExporter {
         if (printWriter != null) {
             printWriter.println("<Placemark>");
 
-            if (exportTrackDetail) {
-                printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
-                printWriter.println("<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
-                printWriter.println("<icon>" + StringUtils.formatCData(track.getIcon()) + "</icon>");
-                printWriter.println("<opentracks:trackid>" + track.getUuid() + "</opentracks:trackid>");
-            }
+            printWriter.println("<name>" + StringUtils.formatCData(track.getName()) + "</name>");
+            printWriter.println("<description>" + StringUtils.formatCData(track.getDescription()) + "</description>");
+            printWriter.println("<icon>" + StringUtils.formatCData(track.getIcon()) + "</icon>");
+            printWriter.println("<opentracks:trackid>" + track.getUuid() + "</opentracks:trackid>");
 
             printWriter.println("<styleUrl>#" + TRACK_STYLE + "</styleUrl>");
             writeCategory(track.getCategory());
@@ -357,25 +335,23 @@ public class KMLTrackExporter implements TrackExporter {
             if (speedList.stream().anyMatch(Objects::nonNull)) {
                 writeSimpleArrayData(speedList, EXTENDED_DATA_TYPE_SPEED);
             }
-            if (exportSensorData) {
-                if (distanceList.stream().anyMatch(Objects::nonNull)) {
-                    writeSimpleArrayData(distanceList, EXTENDED_DATA_TYPE_DISTANCE);
-                }
-                if (powerList.stream().anyMatch(Objects::nonNull)) {
-                    writeSimpleArrayData(powerList, EXTENDED_DATA_TYPE_POWER);
-                }
-                if (cadenceList.stream().anyMatch(Objects::nonNull)) {
-                    writeSimpleArrayData(cadenceList, EXTENDED_DATA_TYPE_CADENCE);
-                }
-                if (heartRateList.stream().anyMatch(Objects::nonNull)) {
-                    writeSimpleArrayData(heartRateList, EXTENDED_DATA_TYPE_HEART_RATE);
-                }
-                if (altitudeGainList.stream().anyMatch(Objects::nonNull)) {
-                    writeSimpleArrayData(altitudeGainList, EXTENDED_DATA_TYPE_ALTITUDE_GAIN);
-                }
-                if (altitudeLossList.stream().anyMatch(Objects::nonNull)) {
-                    writeSimpleArrayData(altitudeLossList, EXTENDED_DATA_TYPE_ALTITUDE_LOSS);
-                }
+            if (distanceList.stream().anyMatch(Objects::nonNull)) {
+                writeSimpleArrayData(distanceList, EXTENDED_DATA_TYPE_DISTANCE);
+            }
+            if (powerList.stream().anyMatch(Objects::nonNull)) {
+                writeSimpleArrayData(powerList, EXTENDED_DATA_TYPE_POWER);
+            }
+            if (cadenceList.stream().anyMatch(Objects::nonNull)) {
+                writeSimpleArrayData(cadenceList, EXTENDED_DATA_TYPE_CADENCE);
+            }
+            if (heartRateList.stream().anyMatch(Objects::nonNull)) {
+                writeSimpleArrayData(heartRateList, EXTENDED_DATA_TYPE_HEART_RATE);
+            }
+            if (altitudeGainList.stream().anyMatch(Objects::nonNull)) {
+                writeSimpleArrayData(altitudeGainList, EXTENDED_DATA_TYPE_ALTITUDE_GAIN);
+            }
+            if (altitudeLossList.stream().anyMatch(Objects::nonNull)) {
+                writeSimpleArrayData(altitudeLossList, EXTENDED_DATA_TYPE_ALTITUDE_LOSS);
             }
             printWriter.println("</SchemaData>");
             printWriter.println("</ExtendedData>");
@@ -386,9 +362,7 @@ public class KMLTrackExporter implements TrackExporter {
     @VisibleForTesting
     void writeTrackPoint(TrackPoint trackPoint) {
         if (printWriter != null) {
-            if (exportTrackDetail) {
-                printWriter.println("<when>" + getTime(trackPoint.getLocation()) + "</when>");
-            }
+            printWriter.println("<when>" + getTime(trackPoint.getLocation()) + "</when>");
 
             if (trackPoint.hasLocation()) {
                 printWriter.println("<gx:coord>" + (trackPoint.hasLocation() ? getCoordinates(trackPoint.getLocation(), " ") : "") + "</gx:coord>");
@@ -397,15 +371,13 @@ public class KMLTrackExporter implements TrackExporter {
             }
             speedList.add(trackPoint.hasSpeed() ? (float) trackPoint.getSpeed().toMPS() : null);
 
-            if (exportSensorData) {
-                distanceList.add(trackPoint.hasSensorDistance() ? (float) trackPoint.getSensorDistance().toM() : null);
-                heartRateList.add(trackPoint.hasHeartRate() ? trackPoint.getHeartRate_bpm() : null);
-                cadenceList.add(trackPoint.hasCyclingCadence() ? trackPoint.getCyclingCadence_rpm() : null);
-                powerList.add(trackPoint.hasPower() ? trackPoint.getPower() : null);
+            distanceList.add(trackPoint.hasSensorDistance() ? (float) trackPoint.getSensorDistance().toM() : null);
+            heartRateList.add(trackPoint.hasHeartRate() ? trackPoint.getHeartRate_bpm() : null);
+            cadenceList.add(trackPoint.hasCyclingCadence() ? trackPoint.getCyclingCadence_rpm() : null);
+            powerList.add(trackPoint.hasPower() ? trackPoint.getPower() : null);
 
-                altitudeGainList.add(trackPoint.hasAltitudeGain() ? trackPoint.getAltitudeGain() : null);
-                altitudeLossList.add(trackPoint.hasAltitudeLoss() ? trackPoint.getAltitudeLoss() : null);
-            }
+            altitudeGainList.add(trackPoint.hasAltitudeGain() ? trackPoint.getAltitudeGain() : null);
+            altitudeLossList.add(trackPoint.hasAltitudeLoss() ? trackPoint.getAltitudeLoss() : null);
         }
     }
 
@@ -438,7 +410,7 @@ public class KMLTrackExporter implements TrackExporter {
      * @param location    the location
      */
     private void writePlacemark(String name, String category, String description, String styleName, Location location) {
-        if (location != null && exportTrackDetail) {
+        if (location != null) {
             printWriter.println("<Placemark>");
             printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
             printWriter.println("<description>" + StringUtils.formatCData(description) + "</description>");
@@ -453,37 +425,35 @@ public class KMLTrackExporter implements TrackExporter {
     }
 
     private void writePhotoOverlay(Marker marker, float heading) {
-        if (exportTrackDetail) {
-            printWriter.println("<PhotoOverlay>");
-            printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
-            printWriter.println("<description>" + StringUtils.formatCData(marker.getDescription()) + "</description>");
-            printWriter.print("<Camera>");
-            printWriter.print("<longitude>" + marker.getLongitude() + "</longitude>");
-            printWriter.print("<latitude>" + marker.getLatitude() + "</latitude>");
-            printWriter.print("<altitude>20</altitude>");
-            printWriter.print("<heading>" + heading + "</heading>");
-            printWriter.print("<tilt>90</tilt>");
-            printWriter.println("</Camera>");
-            printWriter.println("<TimeStamp><when>" + getTime(marker.getLocation()) + "</when></TimeStamp>");
-            printWriter.println("<styleUrl>#" + MARKER_STYLE + "</styleUrl>");
-            writeCategory(marker.getCategory());
+        printWriter.println("<PhotoOverlay>");
+        printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
+        printWriter.println("<description>" + StringUtils.formatCData(marker.getDescription()) + "</description>");
+        printWriter.print("<Camera>");
+        printWriter.print("<longitude>" + marker.getLongitude() + "</longitude>");
+        printWriter.print("<latitude>" + marker.getLatitude() + "</latitude>");
+        printWriter.print("<altitude>20</altitude>");
+        printWriter.print("<heading>" + heading + "</heading>");
+        printWriter.print("<tilt>90</tilt>");
+        printWriter.println("</Camera>");
+        printWriter.println("<TimeStamp><when>" + getTime(marker.getLocation()) + "</when></TimeStamp>");
+        printWriter.println("<styleUrl>#" + MARKER_STYLE + "</styleUrl>");
+        writeCategory(marker.getCategory());
 
-            if (exportPhotos) {
-                printWriter.println("<Icon><href>" + KmzTrackExporter.buildKmzImageFilePath(marker) + "</href></Icon>");
-            }
-
-            printWriter.print("<ViewVolume>");
-            printWriter.print("<near>10</near>");
-            printWriter.print("<leftFov>-60</leftFov>");
-            printWriter.print("<rightFov>60</rightFov>");
-            printWriter.print("<bottomFov>-45</bottomFov>");
-            printWriter.print("<topFov>45</topFov>");
-            printWriter.println("</ViewVolume>");
-            printWriter.println("<Point>");
-            printWriter.println("<coordinates>" + getCoordinates(marker.getLocation(), ",") + "</coordinates>");
-            printWriter.println("</Point>");
-            printWriter.println("</PhotoOverlay>");
+        if (exportPhotos) {
+            printWriter.println("<Icon><href>" + KmzTrackExporter.buildKmzImageFilePath(marker) + "</href></Icon>");
         }
+
+        printWriter.print("<ViewVolume>");
+        printWriter.print("<near>10</near>");
+        printWriter.print("<leftFov>-60</leftFov>");
+        printWriter.print("<rightFov>60</rightFov>");
+        printWriter.print("<bottomFov>-45</bottomFov>");
+        printWriter.print("<topFov>45</topFov>");
+        printWriter.println("</ViewVolume>");
+        printWriter.println("<Point>");
+        printWriter.println("<coordinates>" + getCoordinates(marker.getLocation(), ",") + "</coordinates>");
+        printWriter.println("</Point>");
+        printWriter.println("</PhotoOverlay>");
     }
 
     /**
@@ -492,11 +462,7 @@ public class KMLTrackExporter implements TrackExporter {
      * @param location the location
      */
     private String getTime(Location location) {
-        if (exportTrackDetail) {
-            return StringUtils.formatDateTimeIso8601(Instant.ofEpochMilli(location.getTime()));
-        } else {
-            return StringUtils.formatDateTimeIso8601(Instant.ofEpochMilli(location.getTime() - startTrackPoint.getTime().toEpochMilli()));
-        }
+        return StringUtils.formatDateTimeIso8601(Instant.ofEpochMilli(location.getTime()));
     }
 
     /**
@@ -518,13 +484,12 @@ public class KMLTrackExporter implements TrackExporter {
         return location.getBearing();
     }
 
-    private String getCoordinates(Location location, String separator) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(location.getLongitude()).append(separator).append(location.getLatitude());
+    private static String getCoordinates(Location location, String separator) {
+        String result = location.getLongitude() + separator + location.getLatitude();
         if (location.hasAltitude()) {
-            builder.append(separator).append(location.getAltitude());
+            result += separator + location.getAltitude();
         }
-        return builder.toString();
+        return result;
     }
 
     /**
@@ -580,18 +545,5 @@ public class KMLTrackExporter implements TrackExporter {
         printWriter.println("<gx:SimpleArrayField name=\"" + name + "\" type=\"float\">");
         printWriter.println("<displayName>" + StringUtils.formatCData(extendedDataType) + "</displayName>");
         printWriter.println("</gx:SimpleArrayField>");
-    }
-
-    /**
-     * Sets a trackPoint time.
-     *
-     * @param trackPoint the trackPoint
-     * @param offset     the time offset
-     */
-    //TODO Why?
-    private void setLocationTime(TrackPoint trackPoint, Duration offset) {
-        if (trackPoint != null) {
-            trackPoint.setTime(trackPoint.getTime().minus(offset));
-        }
     }
 }

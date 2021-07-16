@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
+import java.util.List;
 
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
@@ -58,23 +59,20 @@ public class TrackStatisticsUpdater {
      */
     private static final double MAX_ACCELERATION = 0.02;
 
-    private boolean trackInitialized = false;
-    private boolean segmentInitialized = false;
-
     private final TrackStatistics trackStatistics;
 
-    private final DoubleRingBuffer altitudeBuffer_m = new DoubleRingBuffer(ALTITUDE_SMOOTHING_FACTOR);
-    private final DoubleRingBuffer speedBuffer_mps = new DoubleRingBuffer(SPEED_SMOOTHING_FACTOR);
+    private final DoubleRingBuffer altitudeBuffer_m;
+    private final DoubleRingBuffer speedBuffer_mps;
 
     // The current segment's statistics
-    private final TrackStatistics currentSegment = new TrackStatistics();
+    private final TrackStatistics currentSegment;
     // Current segment's last trackPoint
     private TrackPoint lastTrackPoint;
     // Current segment's last moving trackPoint
     private TrackPoint lastMovingTrackPoint;
 
     public TrackStatisticsUpdater() {
-        trackStatistics = new TrackStatistics();
+        this(new TrackStatistics());
     }
 
     /**
@@ -84,7 +82,21 @@ public class TrackStatisticsUpdater {
      */
     public TrackStatisticsUpdater(TrackStatistics trackStatistics) {
         this.trackStatistics = trackStatistics;
-        trackInitialized = true;
+        this.currentSegment = new TrackStatistics();
+
+        altitudeBuffer_m = new DoubleRingBuffer(ALTITUDE_SMOOTHING_FACTOR);
+        speedBuffer_mps = new DoubleRingBuffer(SPEED_SMOOTHING_FACTOR);
+    }
+
+    public TrackStatisticsUpdater(TrackStatisticsUpdater toCopy) {
+        this.currentSegment = new TrackStatistics(toCopy.currentSegment);
+        this.trackStatistics = new TrackStatistics(toCopy.trackStatistics);
+
+        this.altitudeBuffer_m = new DoubleRingBuffer(toCopy.altitudeBuffer_m);
+        this.speedBuffer_mps = new DoubleRingBuffer(toCopy.speedBuffer_mps);
+
+        this.lastTrackPoint = toCopy.lastTrackPoint;
+        this.lastMovingTrackPoint = toCopy.lastMovingTrackPoint;
     }
 
     public TrackStatistics getTrackStatistics() {
@@ -94,29 +106,18 @@ public class TrackStatisticsUpdater {
         return stats;
     }
 
-    public boolean isTrackInitialized() {
-        return trackInitialized;
+    public void addTrackPoints(List<TrackPoint> trackPoints, Distance minGPSDistance) {
+        for (TrackPoint tp : trackPoints) {
+            addTrackPoint(tp, minGPSDistance);
+        }
     }
 
     /**
-     * Adds a trackPoint.
-     *
-     * @param trackPoint     the trackPoint
      * @param minGPSDistance the min recording distance
      */
     public void addTrackPoint(TrackPoint trackPoint, Distance minGPSDistance) {
-        internalAddTrackPoint(trackPoint, minGPSDistance);
-        Log.v(TAG, this.toString());
-    }
-
-    private void internalAddTrackPoint(TrackPoint trackPoint, Distance minGPSDistance) {
-        if (!trackInitialized) {
-            trackStatistics.setStartTime(trackPoint.getTime());
-            trackInitialized = true;
-        }
-        if (!segmentInitialized) {
+        if (currentSegment.getStartTime() == null) {
             currentSegment.setStartTime(trackPoint.getTime());
-            segmentInitialized = true;
         }
 
         // Always update time
@@ -157,13 +158,14 @@ public class TrackStatisticsUpdater {
             return;
         }
 
-        if (!trackPoint.hasSensorDistance()) {
+        if (!trackPoint.hasSensorDistance()
+                && trackPoint.hasLocation() && lastMovingTrackPoint.hasLocation()) {
             // GPS-based distance/speed
-            Distance movingDistance = lastMovingTrackPoint.distanceToPrevious(trackPoint);
-            if (movingDistance.lessThan(minGPSDistance) && !trackPoint.isMoving()) {
+            Distance movingDistance = trackPoint.distanceToPrevious(lastMovingTrackPoint);
+            if (movingDistance != null && movingDistance.lessThan(minGPSDistance) && !trackPoint.isMoving()) {
                 speedBuffer_mps.reset();
                 lastTrackPoint = trackPoint;
-                return;
+                return; //TOOD Why? Is there nothing to be done afterwards?
             }
             // Update total distance
             currentSegment.addTotalDistance(movingDistance);
@@ -234,7 +236,6 @@ public class TrackStatisticsUpdater {
 
     private void updateAbsoluteAltitude(double altitude) {
         // Update altitude using the smoothed average
-        double oldAverage = altitudeBuffer_m.getAverage();
         altitudeBuffer_m.setNext(altitude);
         double newAverage = altitudeBuffer_m.getAverage();
 

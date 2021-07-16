@@ -91,17 +91,9 @@ limitations under the License.
     <string name="description_altitude_imperial">ارتفاع (فوت)</string>
     <string name="description_altitude_metric">ارتفاع (متر)</string>
     <string name="description_fastest_pace_in_minute">بیشترین سرعت: %1$s دقیقه در کیلومتر (%2$s دقیقه در مایل)</string>
-    <string name="description_location_accuracy">دقت (متر)</string>
-    <string name="description_location_altitude">ارتفاع (متر)</string>
-    <string name="description_location_bearing">زاویه حامل (درجه)</string>
-    <string name="description_location_latitude">عرض جغرافیایی (درجه)</string>
-    <string name="description_location_longitude">طول جغرافیایی (درجه)</string>
-    <string name="description_location_speed">سرعت (متر بر ثانیه)</string>
     <string name="description_max_altitude">حداکثر ارتفاع: %1$d متر (%2$d فوت)</string>
-    <string name="description_max_grade">حداکثر درجه: %% %1$d</string>
     <string name="description_max_speed">حداکثر سرعت: %1$.2f کیلومتر در ساعت (%2$.1f مایل در ساعت)</string>
     <string name="description_min_altitude">حداقل ارتفاع: %1$d متر (%2$d فوت)</string>
-    <string name="description_min_grade">حداقل درجه: %% %1$d</string>
     <string name="description_moving_time">زمان حرکت: %1$s</string>
     <string name="description_pace_imperial">سرعت (دقیقه در مایل)</string>
     <string name="description_pace_metric">سرعت (دقیقه در کیلومتر)</string>
@@ -115,8 +107,6 @@ limitations under the License.
     <string name="description_time">زمان</string>
     <string name="description_total_distance">مجموع فاصله: %1$.2f کیلومتر (%2$.1f مایل)</string>
     <string name="description_total_time">کل زمان: %1$s</string>
-    <string name="description_track_point">نقطه</string>
-    <string name="description_track_segment">بخش</string>
     <!-- Export -->
     <string name="export_all_option">همه به عنوان %1$s</string>
     <string name="export_all_title">صادر کردن به حافظه خارجی</string>
@@ -127,16 +117,12 @@ limitations under the License.
     <string name="export_title">صادر کردن به…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d فایل</string>
-    <string name="files_many">%1$d فایل</string>
-    <string name="files_one">۱ فایل</string>
-    <string name="files_other">%1$d فایل</string>
-    <string name="files_two">۲ فایل</string>
-    <string name="files_zero">۰ فایل</string>
+    <plurals name="files">
+        <item quantity="one">%1$d فایل</item>
+        <item quantity="other">%1$d فایل</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">افزودن</string>
-    <string name="generic_cancel">لغو</string>
-    <string name="generic_delete_all_confirm_title">حذف همه؟</string>
     <string name="generic_delete_selected_confirm_title">موارد انتخابی حذف شود؟</string>
     <string name="generic_description">شرح</string>
     <string name="generic_description_line">شرح: %1$s</string>
@@ -144,19 +130,12 @@ limitations under the License.
     <string name="generic_name">نام</string>
     <string name="generic_name_line">نام: %1$s</string>
     <string name="generic_no">نه</string>
-    <string name="generic_ok">تأیید</string>
     <string name="generic_paused">در حال مکث</string>
-    <string name="generic_progress_title">لطفاً منتظر بمانید…</string>
     <string name="generic_recording">در حال ضبط…</string>
     <string name="generic_save">ذخیره</string>
     <string name="generic_success_title">موفقیت‌آمیز بود</string>
     <string name="generic_tracks">مسیرها</string>
-    <string name="generic_yes">بله</string>
     <!-- Gps -->
-    <string name="gps_location_access">«دسترسی به موقعیت مکانی»</string>
-    <string name="gps_disabled">GPS فعال نیست. برای رفتن به %1$s اینجا ضربه بزنید. برای برگشت دکمه بازگشت را فشار دهید.</string>
-    <string name="gps_disabled_my_location">موقعیت مکانی کنونی را نمی‌توان تعیین کرد. در %1$s منابع بیشتری را برای موقعیت مکانی فعال کنید و مطمئن شوید که چیزی مانع دیدن آسمان نباشد. بعداً دوباره امتحان کنید.</string>
-    <string name="gps_not_found">‏GPS روی دستگاه یافت نشد</string>
     <string name="gps_starting">در حال راه‌اندازی GPS</string>
     <string name="gps_wait_for_better_signal">در انتظار سیگنال GPS بهتر</string>
     <string name="gps_wait_for_signal">در انتظار سیگنال GPS</string>
@@ -165,7 +144,6 @@ limitations under the License.
     <string name="image_arrow">پیکان</string>
     <string name="image_marker">نشانگر</string>
     <string name="image_marker_count">تعداد نشانگر</string>
-    <string name="image_my_location">مکان من</string>
     <string name="image_pause">مکث</string>
     <string name="image_photo_marker">نشانگر عکس</string>
     <string name="image_record">ضبط</string>
@@ -184,17 +162,14 @@ limitations under the License.
     <string name="marker_add_error">درج نشانگر امکان‌پذیر نیست. سیگنال GPS وجود ندارد. دوباره امتحان کنید.</string>
     <string name="marker_add_success">نشانگر درج شد</string>
     <string name="marker_add_canceled">لغو شد، نشانگری اضافه نشد</string>
-    <string name="marker_delete_all_confirm_message">تمام نشانگرهای این مسیر برای همیشه از دستگاه حذف خواهد شد</string>
     <string name="marker_delete_one_confirm_message">نشانگر برای همیشه از دستگاه حذف خواهد شد</string>
     <string name="marker_delete_one_confirm_title">نشانگر حذف شود؟</string>
     <string name="marker_delete_multiple_confirm_message">نشانگرهای انتخاب شده برای همیشه از دستگاه حذف خواهد شد</string>
     <string name="marker_label_end">%1$s (پایان)</string>
     <string name="marker_label_start">%1$s (شروع)</string>
     <string name="marker_name_format">نشانگر %1$d</string>
-    <string name="marker_split_name_format">تقسیم گذر %1$d</string>
     <string name="marker_title">%1$d از %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">از آخرین نشانگر تقسیم گذر:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">نوع نشانگر (برای مثال آبشار)</string>
     <string name="marker_edit_marker_type_hint">نوع نشانگر</string>
@@ -212,11 +187,9 @@ limitations under the License.
     <string name="menu_markers">نشانگرها</string>
     <string name="menu_search">جست‌وجو</string>
     <string name="menu_select_all">انتخاب همه موارد</string>
-    <string name="menu_sensor_state">وضعیت حسگر</string>
     <string name="menu_settings">تنظیمات</string>
     <string name="menu_share">اشتراک‌گذاری</string>
     <string name="menu_show_on_map">نمایش روی نقشه</string>
-    <string name="menu_split_frequency">بسامد تقسیم گذر</string>
     <string name="menu_start_gps">شروع GPS</string>
     <string name="menu_stop_gps">توقف GPS</string>
     <string name="menu_view_photo">مشاهده عکس</string>
@@ -226,12 +199,10 @@ limitations under the License.
     <!-- Search -->
     <string name="search_global_description">گذرها و نشانگرها</string>
     <string name="search_list_empty_message">هیچ مسیر یا نشانگری با جستجوی شما مطابقت نداشت</string>
-    <string name="search_list_marker_track_location">در گذر «%1$s».</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">مقدار شارژ باتری</string>
     <string name="sensor_state_cadence">سرعت دورانی</string>
     <string name="sensor_state_cadence_value">%1$d دور در دقیقه</string>
-    <string name="sensor_state_disconnected">اتصال قطع شد</string>
     <string name="sensor_state_heart_rate">ضربان قلب</string>
     <string name="sensor_state_heart_rate_value">%1$d ضربان در دقیقه</string>
     <string name="sensor_state_power">توان</string>
@@ -243,7 +214,6 @@ limitations under the License.
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">بر حسب مسافت</string>
     <string name="settings_chart_by_time">بر حسب زمان</string>
-    <string name="settings_chart_x_axis">محور X</string>
     <string name="settings_recording">در حال ضبط</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">پس از راه‌اندازی مجدد همیشه ضبط از سر گرفته شود</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">پس از راه‌اندازی مجدد هیچ وقت ضبط از سر گرفته نشود</string>
@@ -267,7 +237,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">اکنون بازنشانی شود؟</string>
     <string name="settings_reset_done">تمام تنظیمات به مقادیر پیش‌فرض برگردانده شدند</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">حسگر</string>
     <string name="settings_sensor_bluetooth">بلوتوث</string>
     <string name="settings_sensor_bluetooth_sensor">حسگر بلوتوث</string>
     <!-- Settings Stats -->
@@ -289,12 +258,9 @@ limitations under the License.
     <string name="stats_altitude">ارتفاع</string>
     <string name="stats_fastest_pace">سریع‌ترین تندی</string>
     <string name="stats_gain">افزایش</string>
-    <string name="stats_grade">درجه</string>
     <string name="stats_latitude">عرض جغرافیایی</string>
     <string name="stats_longitude">طول جغرافیایی</string>
-    <string name="stats_max">بیشترین</string>
     <string name="stats_max_speed">حداکثر سرعت</string>
-    <string name="stats_min">کمترین</string>
     <string name="stats_moving_time">زمان حرکت</string>
     <string name="stats_pace">تندی</string>
     <string name="stats_speed">سرعت</string>
@@ -320,12 +286,6 @@ limitations under the License.
     <string name="track_list_empty_message">ضبط ماجراجویی بعدی خودتان را از اینجا شروع کنید</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d گذر</string>
-    <string name="tracks_many">%1$d گذر</string>
-    <string name="tracks_one">۱ گذر</string>
-    <string name="tracks_other">%1$d گذر</string>
-    <string name="tracks_two">۲ گذر</string>
-    <string name="tracks_zero">۰ گذر</string>
     <!-- Unit -->
     <string name="unit_feet">فوت</string>
     <string name="unit_kilometer">کیلومتر</string>
@@ -339,11 +299,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">تعدیل به خاطر دقت</string>
     <string name="value_adapt_battery_life">تعدیل به خاطر عمر باتری</string>
     <string name="value_always">همیشه</string>
-    <string name="value_float_feet">%1$.2f فوت</string>
-    <string name="value_float_kilometer">%1$.2f کیلومتر</string>
-    <string name="value_float_meter">%1$.2f متر</string>
-    <string name="value_float_mile">%1$.2f مایل</string>
-    <string name="value_float_mile_poor_gps">%1$.1f مایل (GPS ضعیف)</string>
     <string name="value_integer_feet">%1$d فوت</string>
     <string name="value_integer_feet_excellent_gps">%1$d فوت (GPS عالی)</string>
     <string name="value_integer_feet_recommended">%1$d فوت (توصیه می‌شود)</string>
@@ -363,52 +318,37 @@ limitations under the License.
     <string name="value_smallest">کوچکترین</string>
     <string name="value_smallest_recommended">کوچکترین (توصیه می‌شود)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d ساعت</string>
-    <string name="voice_hours_many">%1$d ساعت</string>
-    <string name="voice_hours_one">۱ ساعت</string>
-    <string name="voice_hours_other">%1$d ساعت</string>
-    <string name="voice_hours_two">۲ ساعت</string>
-    <string name="voice_hours_zero">0 ساعت</string>
-    <string name="voice_minutes_few">%1$d دقیقه</string>
-    <string name="voice_minutes_many">%1$d دقیقه</string>
-    <string name="voice_minutes_one">۱ دقیقه</string>
-    <string name="voice_minutes_other">%1$d دقیقه</string>
-    <string name="voice_minutes_two">۲ دقیقه</string>
-    <string name="voice_minutes_zero">0 دقیقه</string>
+    <plurals name="voiceHours">
+        <item quantity="one">%1$d ساعت</item>
+        <item quantity="other">%1$d ساعت</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">%1$d دقیقه</item>
+        <item quantity="other">%1$d دقیقه</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">%1$d ثانیه</item>
+        <item quantity="other">%1$d ثانیه</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">%1$.1f کیلومتر در ساعت</item>
+        <item quantity="other">%1$.1f کیلومتر در ساعت</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">%1$.1f مایل در ساعت</item>
+        <item quantity="other">%1$.1f مایل در ساعت</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s در کیلومتر</string>
     <string name="voice_pace_per_mile">%1$s در مایل</string>
-    <string name="voice_seconds_few">%1$d ثانیه</string>
-    <string name="voice_seconds_many">%1$d ثانیه</string>
-    <string name="voice_seconds_one">۱ ثانیه</string>
-    <string name="voice_seconds_other">%1$d ثانیه</string>
-    <string name="voice_seconds_two">۲ ثانیه</string>
-    <string name="voice_seconds_zero">0 ثانیه</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f کیلومتر در ساعت</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f کیلومتر در ساعت</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 کیلومتر در ساعت</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f کیلومتر در ساعت</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 کیلومتر در ساعت</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 کیلومتر در ساعت</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f مایل در ساعت</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f مایل در ساعت</string>
-    <string name="voice_speed_miles_per_hour_one">1 مایل در ساعت</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f مایل در ساعت</string>
-    <string name="voice_speed_miles_per_hour_two">2 مایل در ساعت</string>
-    <string name="voice_speed_miles_per_hour_zero">0 مایل در ساعت</string>
-    <string name="voice_template">مسیرهای من‏‏ %1$s در %2$s با %3$s</string>
-    <string name="voice_total_distance_kilometers_few">کل مسافت %1$.2f کیلومتر</string>
-    <string name="voice_total_distance_kilometers_many">کل مسافت %1$.2f کیلومتر</string>
-    <string name="voice_total_distance_kilometers_one">کل مسافت 1 کیلومتر</string>
-    <string name="voice_total_distance_kilometers_other">کل مسافت %1$.2f کیلومتر</string>
-    <string name="voice_total_distance_kilometers_two">کل مسافت 2 کیلومتر</string>
-    <string name="voice_total_distance_kilometers_zero">کل مسافت 0 کیلومتر</string>
-    <string name="voice_total_distance_miles_few">کل مسافت %1$.2f مایل</string>
-    <string name="voice_total_distance_miles_many">کل مسافت %1$.2f مایل</string>
-    <string name="voice_total_distance_miles_one">کل مسافت 1 مایل</string>
-    <string name="voice_total_distance_miles_other">کل مسافت %1$.2f مایل</string>
-    <string name="voice_total_distance_miles_two">کل مسافت 2 مایل</string>
-    <string name="voice_total_distance_miles_zero">کل مسافت 0 مایل</string>
-    <string name="voice_total_distance_zero">جمع مسافت OpenTracks صفر است.</string>
+    <string name="voice_template">‏‏ %1$s در %2$s با %3$s</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">کل مسافت %1$.2f کیلومتر</item>
+        <item quantity="other">کل مسافت %1$.2f کیلومتر</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">کل مسافت %1$.2f مایل</item>
+        <item quantity="other">کل مسافت %1$.2f مایل</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">خودپرداز</string>
     <string name="waypoint_type_bank">بانک</string>

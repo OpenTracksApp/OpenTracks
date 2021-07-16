@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,11 +32,11 @@ limitations under the License.
     <string name="help_track_map_title">Comment faire apparaître une trace sur une carte ?</string>
     <string name="help_track_map_content"> Utilisez la petite icône de carte.
 \n a) (mises à jour en direct) Installez <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Il fournit des cartes en ligne ou hors ligne via <a href="https://www.openstreetmap.org ">OpenStreetMap</a>.
-\n En fait, OSMDashboard est une application séparée qui ne peut accéder (temporairement) qu aux données des piste(s) qui vont être affichées.
+\n En fait, OSMDashboard est une application séparée qui ne peut accéder (temporairement) qu aux données des trace(s) qui vont être affichées.
 \n b) Via une application cartographique normale (par exemple) , <a href="http://osmand.net/">OsmAnd</a> et <a href="https://maps.me/">MAPS.ME</a> Ces applications doivent prendre en charge le format de fichier KMZ (uniquement les lieux et les horodatages). En fait, une application doit prendre en charge <i>ACTION_VIEW</i> avec MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_storage_pictures_title">Comment OpenTracks stocke-t-il les photos qui ont été prises comme marqueurs ?</string>
     <string name="help_storage_pictures_content">Elles sont stockées dans le stockage interne de lapplication (c est-à-dire uniquement accessible dans OpenTracks).</string>
-    <string name="help_track_export_title">Comment puis-je exporter/partager des pistes enregistrées ?</string>
+    <string name="help_track_export_title">Comment puis-je exporter/partager des traces enregistrées \?</string>
     <string name="help_track_export_content"> Les traces peuvent être exportées à partir des paramètres en tant que KMZ, KML ou GPX. KMZ/KML toutes les données ; GPX seulement les emplacements. Les traces partagées via l\'icône <i>partager</i> sont partagées au format KMZ. </string>
     <string name="help_data_google_play_services_title">OpenTracks nécessite-t-il/utilise-t-il le service Google Play ?</string>
     <string name="help_recording_title">Comment OpenTracks enregistre-t-il les données ?</string>
@@ -130,28 +129,19 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="activity_type_walking">marche</string>
     <string name="activity_type_water_skiing">ski nautique</string>
     <string name="activity_type_wind_surfing">planche à voile</string>
-    <string name="app_not_installed_show_on_map">Veuillez installer une application qui prend en charge la présentation des données cartographiques.</string>
     <!-- Description -->
     <string name="description_activity_type">Type d\'activité : %1$s</string>
     <string name="description_average_moving_pace_in_minute">Allure moyenne : %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_moving_speed">Vitesse moyenne de déplacement : %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_average_pace_in_minute">Vitesse moyenne : %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Vitesse moyenne : %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_altitude_gain">Dénivelé : %1$d m (%2$d pi)</string>
+    <string name="description_altitude_gain">Dénivelé positif : %1$d m (%2$d pi)</string>
     <string name="description_altitude_imperial">Altitude (pi)</string>
     <string name="description_altitude_metric">Altitude (m)</string>
     <string name="description_fastest_pace_in_minute">Vitesse maximale : %1$s min/km (%2$s min/mi)</string>
-    <string name="description_location_accuracy">Précision (m)</string>
-    <string name="description_location_altitude">Altitude (m)</string>
-    <string name="description_location_bearing">Relèvement (degrés)</string>
-    <string name="description_location_latitude">Latitude (degrés)</string>
-    <string name="description_location_longitude">Longitude (degrés)</string>
-    <string name="description_location_speed">Vitesse (m/s)</string>
     <string name="description_max_altitude">Élévation max. : %1$d m (%2$d pi)</string>
-    <string name="description_max_grade">Inclinaison max. : %1$d %%</string>
     <string name="description_max_speed">Vitesse max. : %1$.2f km/h (%2$.1f mi/h)</string>
     <string name="description_min_altitude">Élévation min. : %1$d m (%2$d pi)</string>
-    <string name="description_min_grade">Inclinaison min. : %1$d %%</string>
     <string name="description_moving_time">Durée du déplacement : %1$s</string>
     <string name="description_pace_imperial">Vitesse (min/mi)</string>
     <string name="description_pace_metric">Vitesse (min/km)</string>
@@ -166,8 +156,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="description_time">Durée</string>
     <string name="description_total_distance">Distance totale : %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Durée totale : %1$s</string>
-    <string name="description_track_point">Point</string>
-    <string name="description_track_segment">Secteur</string>
     <!-- Export -->
     <string name="export_all_option">Tous les parcours au format %1$s</string>
     <string name="export_all_title">Exporter vers la mémoire de stockage externe</string>
@@ -180,16 +168,12 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="export_title">Exporter vers…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d fichiers</string>
-    <string name="files_many">%1$d fichiers</string>
-    <string name="files_one">1 fichier</string>
-    <string name="files_other">%1$d fichiers</string>
-    <string name="files_two">2 fichiers</string>
-    <string name="files_zero">Aucun fichier</string>
+    <plurals name="files">
+        <item quantity="one">%1$d fichier</item>
+        <item quantity="other">%1$d fichiers</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Ajouter</string>
-    <string name="generic_cancel">Annuler</string>
-    <string name="generic_delete_all_confirm_title">Tout supprimer ?</string>
     <string name="generic_delete_selected_confirm_title">Supprimer les éléments sélectionnés ?</string>
     <string name="generic_description">Description</string>
     <string name="generic_description_line">Description : %1$s</string>
@@ -197,20 +181,12 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="generic_name">Nom</string>
     <string name="generic_name_line">Nom : %1$s</string>
     <string name="generic_no">Non</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">En pause</string>
-    <string name="generic_progress_title">Veuillez patienter…</string>
     <string name="generic_recording">Enregistrement…</string>
     <string name="generic_save">Enregistrer</string>
     <string name="generic_success_title">Opération réussie</string>
     <string name="generic_tracks">Parcours</string>
-    <string name="generic_yes">Oui</string>
     <!-- Gps -->
-    <string name="gps_location_access">\"Données de localisation\"</string>
-    <string name="gps_disabled">Le GPS n\'est pas activé. Appuyez ici pour accéder aux %1$s. Appuyez sur le bouton Retour pour revenir en arrière.</string>
-    <string name="gps_disabled_my_location">Impossible de déterminer la position actuelle. Veuillez activer d\'autres sources de localisation dans les %1$s et vous assurer
-    que le ciel est visible. Veuillez réessayer ultérieurement.</string>
-    <string name="gps_not_found">GPS introuvable sur l\'appareil</string>
     <string name="gps_starting">Lancement du GPS en cours</string>
     <string name="gps_wait_for_better_signal">En attente d\'un signal GPS de meilleure qualité</string>
     <string name="gps_wait_for_signal">En attente du signal GPS</string>
@@ -219,7 +195,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="image_arrow">Flèche</string>
     <string name="image_marker">Repère</string>
     <string name="image_marker_count">Nombre de repères</string>
-    <string name="image_my_location">Ma position</string>
     <string name="image_pause">Pause</string>
     <string name="image_photo_marker">Repère de photo</string>
     <string name="image_record">Enregistrer</string>
@@ -239,17 +214,14 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="marker_add_success">Un repère a bien été inséré</string>
     <string name="marker_add_canceled">Opération annulée. Aucun repère n\'a été ajouté</string>
     <string name="marker_add_photo_canceled">Annulé, aucun marqueur de photo ajouté</string>
-    <string name="marker_delete_all_confirm_message">Tous les repères de ce parcours vont être définitivement supprimés de l\'appareil</string>
     <string name="marker_delete_one_confirm_message">Le repère va être définitivement supprimé de l\'appareil</string>
     <string name="marker_delete_one_confirm_title">Supprimer le repère ?</string>
     <string name="marker_delete_multiple_confirm_message">Les repères sélectionnés vont être définitivement supprimés de l\'appareil</string>
     <string name="marker_label_end">%1$s (fin)</string>
     <string name="marker_label_start">%1$s (départ)</string>
     <string name="marker_name_format">Repère %1$d</string>
-    <string name="marker_split_name_format">Point de cheminement %1$d</string>
     <string name="marker_title">%1$d sur %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">Depuis le dernier point de cheminement :</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Type de repère (exemple : cascade)</string>
     <string name="marker_edit_marker_type_hint">Type de repère</string>
@@ -268,16 +240,14 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="menu_markers">Repères</string>
     <string name="menu_search">Rechercher</string>
     <string name="menu_select_all">Tout sélectionner</string>
-    <string name="menu_sensor_state">État du capteur</string>
     <string name="menu_settings">Paramètres</string>
     <string name="menu_share">Partager</string>
     <string name="menu_show_on_map">Afficher sur la carte</string>
-    <string name="menu_split_frequency">Fréquence des points</string>
     <string name="menu_start_gps">Démarrer le GPS</string>
     <string name="menu_stop_gps">Arrêter le GPS</string>
     <string name="menu_view_photo">Afficher la photo</string>
     <string name="menu_voice_frequency">Fréquence vocale</string>
-    <string name="menu_resume_track">Reprendre la piste</string>
+    <string name="menu_resume_track">Reprendre la trace</string>
     <!-- OpenTracks -->
     <string name="recording_service">Service enregistrement</string>
     <!-- Permission -->
@@ -285,17 +255,14 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <!-- Search -->
     <string name="search_global_description">Parcours et repères</string>
     <string name="search_list_empty_message">Aucun parcours ni repère ne correspond à votre recherche</string>
-    <string name="search_list_marker_track_location">Dans la piste \" %1$s \".</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Niveau de la batterie</string>
     <string name="sensor_state_cadence">Cadences</string>
     <string name="sensor_state_cadence_value">%1$d tr/min</string>
-    <string name="sensor_state_disconnected">Déconnecté</string>
     <string name="sensor_state_heart_rate">Fréquence cardiaque</string>
     <string name="sensor_state_heart_rate_value">%1$d ppm</string>
     <string name="sensor_state_power">Puissance</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="sensor_not_known">Capteur %1$s est inconnu. Veuillez vérifier les paramètres.</string>
     <string name="sensor_could_not_scan">Impossible de rechercher les appareils Bluetooth (erreur %1$i).</string>
     <string name="bluetooth_disabled">Veuillez activer Bluetooth.</string>
     <string name="settings_not_while_recording">Non disponible pendant l\'enregistrement d\'un parcours</string>
@@ -305,7 +272,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">En fonction de la distance</string>
     <string name="settings_chart_by_time">En fonction de la durée</string>
-    <string name="settings_chart_x_axis">Axe X</string>
     <!-- Settings Recording -->
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Afficher les statistiques sur l\'écran de verrouillage</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Pendant l\'enregistrement, afficher les statistiques sans déverrouiller l\'appareil.</string>
@@ -335,7 +301,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_reset_done">Les valeurs par défaut de tous les paramètres ont bien été rétablies</string>
     <string name="settings_error_initial_values_restored">Désolé, mais une erreur sest produite. Tous les paramètres ont été rétablis aux valeurs par défaut.</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Dispositif de mesure</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Capteur Bluetooth</string>
     <string name="settings_sensor_connecting">Connecté à %1$s</string>
@@ -359,13 +324,10 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="stats_average_speed">Vitesse moyenne</string>
     <string name="stats_altitude">Altitude</string>
     <string name="stats_fastest_pace">Allure la plus rapide</string>
-    <string name="stats_gain">Gagner</string>
-    <string name="stats_grade">Inclinaison</string>
+    <string name="stats_gain">Dénivelé positif</string>
     <string name="stats_latitude">Latitude</string>
     <string name="stats_longitude">Longitude</string>
-    <string name="stats_max">Maximum</string>
     <string name="stats_max_speed">Vitesse max</string>
-    <string name="stats_min">Minimum</string>
     <string name="stats_moving_time">Durée de déplacement</string>
     <string name="stats_pace">Allure</string>
     <string name="stats_speed">Vitesse</string>
@@ -384,8 +346,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <!-- Track Detail -->
     <string name="track_detail_chart_tab">Graphique</string>
     <string name="track_detail_stats_tab">Statistiques</string>
-    <string name="track_detail_record_success">Enregistrement d\'un nouveau parcours en cours</string>
-    <string name="track_detail_resume_success">Reprenons maintenant la piste</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Type d\'activité (exemple : randonnée)</string>
     <string name="track_edit_activity_type_hint">Type d\'activité</string>
@@ -394,12 +354,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="track_list_empty_message">Commencez à enregistrer votre prochaine aventure ici</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d parcours</string>
-    <string name="tracks_many">%1$d parcours</string>
-    <string name="tracks_one">1 parcours</string>
-    <string name="tracks_other">%1$d parcours</string>
-    <string name="tracks_two">2 parcours</string>
-    <string name="tracks_zero">Aucun parcours</string>
     <!-- Unit -->
     <string name="unit_feet">pied(s)</string>
     <string name="unit_kilometer">km</string>
@@ -413,11 +367,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="value_adapt_accuracy">Adapter pour la précision</string>
     <string name="value_adapt_battery_life">Économiser la batterie</string>
     <string name="value_always">Toujours</string>
-    <string name="value_float_feet">%1$.2f pi</string>
-    <string name="value_float_kilometer">%1$.2f km</string>
-    <string name="value_float_meter">%1$.2f m</string>
-    <string name="value_float_mile">%1$.2f mile(s)</string>
-    <string name="value_float_mile_poor_gps">%1$.1f mile(s) (mauvaise réception GPS)</string>
     <string name="value_integer_feet">%1$d pied(s)</string>
     <string name="value_integer_feet_excellent_gps">%1$d pied(s) (réception GPS excellente)</string>
     <string name="value_integer_feet_recommended">%1$d pied(s) (recommandé)</string>
@@ -437,52 +386,37 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="value_smallest">La plus faible</string>
     <string name="value_smallest_recommended">La plus petite (recommandé)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d heures</string>
-    <string name="voice_hours_many">%1$d heures</string>
-    <string name="voice_hours_one">1 heure</string>
-    <string name="voice_hours_other">%1$d heures</string>
-    <string name="voice_hours_two">2 heures</string>
-    <string name="voice_hours_zero">0 heure</string>
-    <string name="voice_minutes_few">%1$d minutes</string>
-    <string name="voice_minutes_many">%1$d minutes</string>
-    <string name="voice_minutes_one">1 minute</string>
-    <string name="voice_minutes_other">%1$d minutes</string>
-    <string name="voice_minutes_two">2 minutes</string>
-    <string name="voice_minutes_zero">0 minute</string>
+    <plurals name="voiceHours">
+        <item quantity="one">%1$d heure</item>
+        <item quantity="other">%1$d heures</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">%1$d minute</item>
+        <item quantity="other">%1$d minutes</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">%1$.1f kilomètre-heure</item>
+        <item quantity="other">%1$.1f kilomètres-heure</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">%1$.1f mile par heure</item>
+        <item quantity="other">%1$.1f miles par heure</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s par kilomètre</string>
     <string name="voice_pace_per_mile">%1$s par mile</string>
-    <string name="voice_seconds_few">%1$d secondes</string>
-    <string name="voice_seconds_many">%1$d secondes</string>
-    <string name="voice_seconds_one">1 seconde</string>
-    <string name="voice_seconds_other">%1$d secondes</string>
-    <string name="voice_seconds_two">2 secondes</string>
-    <string name="voice_seconds_zero">0 seconde</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f kilomètres-heure</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f kilomètres-heure</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 kilomètre-heure</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f kilomètres-heure</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 kilomètres-heure</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 kilomètre-heure</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f miles par heure</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f miles par heure</string>
-    <string name="voice_speed_miles_per_hour_one">1 mile par heure</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f miles par heure</string>
-    <string name="voice_speed_miles_per_hour_two">2 miles par heure</string>
-    <string name="voice_speed_miles_per_hour_zero">0 mile par heure</string>
-    <string name="voice_template">Mes parcours : %1$s en %2$s à %3$s</string>
-    <string name="voice_total_distance_kilometers_few">distance totale %1$.2f kilomètres</string>
-    <string name="voice_total_distance_kilometers_many">distance totale %1$.2f kilomètres</string>
-    <string name="voice_total_distance_kilometers_one">distance totale 1 kilomètre</string>
-    <string name="voice_total_distance_kilometers_other">distance totale %1$.2f kilomètres</string>
-    <string name="voice_total_distance_kilometers_two">distance totale 2 kilomètres</string>
-    <string name="voice_total_distance_kilometers_zero">distance totale 0 kilomètre</string>
-    <string name="voice_total_distance_miles_few">distance totale %1$.2f miles</string>
-    <string name="voice_total_distance_miles_many">distance totale %1$.2f miles</string>
-    <string name="voice_total_distance_miles_one">distance totale 1 mile</string>
-    <string name="voice_total_distance_miles_other">distance totale %1$.2f miles</string>
-    <string name="voice_total_distance_miles_two">distance totale 2 miles</string>
-    <string name="voice_total_distance_miles_zero">distance totale 0 mile</string>
-    <string name="voice_total_distance_zero">Mes parcours, distance nulle.</string>
+    <string name="voice_template">%1$s en %2$s à %3$s</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">distance totale %1$.2f kilomètre</item>
+        <item quantity="other">distance totale %1$.2f kilomètres</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">distance totale %1$.2f mile</item>
+        <item quantity="other">distance totale %1$.2f miles</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">distributeur de billets</string>
     <string name="waypoint_type_bank">banque</string>
@@ -542,28 +476,24 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="track_speed_notification">Vitesse : %1$s</string>
     <string name="track_detail_intervals_tab">Intervalles</string>
     <string name="interval_list_empty_message">Il n\'y a pas encore d\'intervalle</string>
-    <string name="aggregated_stats_empty_message">Enregistrez votre première piste pour voir les statistiques agrégées</string>
-    <string name="value_float_kilometer_hour">%1$.2f km/h</string>
-    <string name="value_float_mile_hour">%1$.2f mph</string>
-    <string name="value_pace_kilometer">%1$d:%2$02d min/km</string>
-    <string name="value_pace_mile">%1$d:%2$02d min/mi</string>
+    <string name="aggregated_stats_empty_message">Enregistrez votre première trace pour voir les statistiques agrégées</string>
     <string name="voice_pace_lap">Temps au tour de %1$s</string>
     <string name="voice_speed_lap">Vitesse du tour de %1$s</string>
-    <string name="toast_message_instant_track_was_exported">Dernière piste exportée</string>
-    <string name="settings_default_export_uri_title">Répertoire d\'exportation des pistes</string>
+    <string name="toast_message_instant_track_was_exported">Dernière trace exportée</string>
+    <string name="settings_default_export_uri_title">Répertoire d\'exportation des traces</string>
     <string name="instant_export_enabled_title">Exportation instantanée après l\'entraînement</string>
     <string name="stats_intervals">Intervalles</string>
-    <string name="stats_loss">Perte</string>
-    <string name="settings_prevent_reimport_tracks_title">Empêcher la réimportation de pistes</string>
+    <string name="stats_loss">Dénivelé négatif</string>
+    <string name="settings_prevent_reimport_tracks_title">Empêcher la réimportation de traces</string>
     <string name="settings_night_mode_option_night">Nuit</string>
     <string name="settings_night_mode_option_day">Jour</string>
     <string name="settings_night_mode_option_system">Système</string>
     <string name="stats_split_interval">Intervalle partagé</string>
-    <string name="instant_export_enabled_summary">Exportation de la piste vers le stockage après la fin de l\'enregistrement</string>
+    <string name="instant_export_enabled_summary">Exportation de la trace vers le stockage après la fin de l\'enregistrement</string>
     <string name="hold_to_pause">Tenir pour faire une pause</string>
     <string name="hold_to_stop">Maintenir pour arrêter</string>
-    <string name="track_distance_notification">Distanciation : %1$s</string>
-    <string name="open_track_as_KMZ">Ouvert comme KMZ</string>
+    <string name="track_distance_notification">Distance : %1$s</string>
+    <string name="open_track_as_KML">Ouvert comme KML</string>
     <string name="open_track_as_GPX">Ouvert en tant que GPX</string>
     <string name="open_track_as_trackfileformat">Ouvrir comme %1$s</string>
     <string name="open_track_using_dashboard">Ouvrir en utilisant OpenTracks-Dashboard</string>
@@ -571,7 +501,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_sensor_wheel_circumference">Circonférence de roue (millimètre)</string>
     <string name="export_error_post_workout">L\'exportation du post-travail a échoué, veuillez vérifier le répertoire d\'exportation.</string>
     <string name="export_all_do_it_for_all">le faire pour tous les conflits</string>
-    <string name="export_track_errors">Pistes non exportées</string>
+    <string name="export_track_errors">Traces non exportées</string>
     <string name="import_unable_to_import_file">Impossible d\'importer le fichier : %1$s</string>
     <string name="import_no_kml_file_found">Pas de doc.fichier kml trouvé dans KMZ</string>
     <string name="import_error_info">%1$s : %2$s</string>
@@ -586,13 +516,13 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="sensor_state_heart_rate_avg">Rythme cardiaque moyen</string>
     <string name="sensor_state_cadence_avg">Cadence moyenne</string>
     <string name="generic_click_twice_cancel">Cliquez sur retour pour annuler</string>
-    <string name="export_progress_summary_new_msg">Nouvelles pistes exportées</string>
-    <string name="export_progress_summary_skip_msg">Pistes sautées</string>
+    <string name="export_progress_summary_new_msg">Nouvelles traces exportées</string>
+    <string name="export_progress_summary_skip_msg">Traces ignorées</string>
     <string name="export_progress_summary_errors_msg">Erreurs</string>
     <string name="generic_overwrite">Écraser</string>
     <string name="generic_show_errors">Afficher les erreurs</string>
     <string name="generic_separator_done_total">/</string>
-    <string name="generic_skip">Sauter</string>
+    <string name="generic_skip">Ignorer</string>
     <string name="generic_open_track">Voie ouverte</string>
     <string name="gps_disabled_msg">GPS désactivé</string>
     <string name="gps_fixed_and_ready">GPS fixe et prêt</string>
@@ -600,7 +530,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="import_unsupported_format">Format de fichier non pris en charge</string>
     <string name="import_parser_error">Erreur de l\'analyseur : %1$s</string>
     <string name="import_file_imported">Fichier %1$s importé</string>
-    <string name="import_prevent_reimport">Vous avez défini empêcher la réimportation de la piste</string>
+    <string name="import_prevent_reimport">Vous avez défini empêcher la réimportation de la trace</string>
     <string name="import_progress_summary_ok_msg">Les fichiers importés</string>
     <string name="import_progress_summary_exists_msg">Il existe déjà</string>
     <string name="import_progress_summary_errors_msg">Erreur</string>
@@ -609,7 +539,10 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
         <item quantity="other">Terminé avec des erreurs %1$d</item>
     </plurals>
     <string name="settings_default_trackfileformat">Format de fichier d\'exportation / partage</string>
-    <string name="description_altitude_loss">Perte d\'altitude : %1$d m (%2$d ft)</string>
-    <string name="export_track_already_exists_msg">La piste %1$s existe déjà dans le répertoire de destination.</string>
-    <string name="export_progress_summary_overwrite_msg">Pistes écrasées</string>
+    <string name="description_altitude_loss">Dénivelé négatif : %1$d m (%2$d ft)</string>
+    <string name="export_track_already_exists_msg">La trace %1$s existe déjà dans le répertoire de destination.</string>
+    <string name="export_progress_summary_overwrite_msg">Traces écrasées</string>
+    <string name="about_third_party_data">Données de tiers</string>
+    <string name="track_delete_progress">%1$d/%2$d</string>
+    <string name="delete_service">Service de suppression</string>
 </resources>

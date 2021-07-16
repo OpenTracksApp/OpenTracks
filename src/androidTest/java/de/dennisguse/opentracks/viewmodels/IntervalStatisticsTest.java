@@ -1,5 +1,11 @@
 package de.dennisguse.opentracks.viewmodels;
 
+import android.content.Context;
+import android.util.Pair;
+
+import androidx.test.core.app.ApplicationProvider;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -10,6 +16,8 @@ import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.UnitConversions;
@@ -21,8 +29,12 @@ public class IntervalStatisticsTest {
 
     private static final String TAG = IntervalStatisticsTest.class.getSimpleName();
 
-    private List<TrackPoint> buildTrackPoints(int numberOfTrackPoints) {
-        return TestDataUtil.createTrack(new Track.Id(System.currentTimeMillis()), numberOfTrackPoints).second;
+    private final Context context = ApplicationProvider.getApplicationContext();
+    private ContentProviderUtils contentProviderUtils;
+
+    @Before
+    public void setUp() {
+        contentProviderUtils = new ContentProviderUtils(context);
     }
 
     private TrackStatistics buildTrackStatistics(List<TrackPoint> trackPoints) {
@@ -41,12 +53,10 @@ public class IntervalStatisticsTest {
         // With 50 points and interval distance of 1000m.
 
         // given
-        List<TrackPoint> trackPoints = buildTrackPoints(50);
-        TrackStatistics trackStatistics = buildTrackStatistics(trackPoints);
         float distanceInterval = 1000f;
 
         // when and then
-        whenAndThen(trackPoints, trackStatistics, distanceInterval);
+        whenAndThen(50, distanceInterval);
     }
 
     /**
@@ -57,12 +67,10 @@ public class IntervalStatisticsTest {
         // With 200 points and interval distance of 1000m.
 
         // given
-        List<TrackPoint> trackPoints = buildTrackPoints(200);
-        TrackStatistics trackStatistics = buildTrackStatistics(trackPoints);
         float distanceInterval = 1000f;
 
         // when and then
-        whenAndThen(trackPoints, trackStatistics, distanceInterval);
+        whenAndThen(200, distanceInterval);
     }
 
     /**
@@ -73,12 +81,10 @@ public class IntervalStatisticsTest {
         // With 200 points and interval distance of 3000m.
 
         // given
-        List<TrackPoint> trackPoints = buildTrackPoints(200);
-        TrackStatistics trackStatistics = buildTrackStatistics(trackPoints);
         float distanceInterval = 3000f;
 
         // when and then
-        whenAndThen(trackPoints, trackStatistics, distanceInterval);
+        whenAndThen(3000, distanceInterval);
     }
 
     /**
@@ -89,12 +95,10 @@ public class IntervalStatisticsTest {
         // With 1000 points and interval distance of 3000m.
 
         // given
-        List<TrackPoint> trackPoints = buildTrackPoints(1000);
-        TrackStatistics trackStatistics = buildTrackStatistics(trackPoints);
         float distanceInterval = 3000f;
 
         // when and then
-        whenAndThen(trackPoints, trackStatistics, distanceInterval);
+        whenAndThen(1000, distanceInterval);
     }
 
     /**
@@ -105,16 +109,21 @@ public class IntervalStatisticsTest {
         // With 10000 points and interval distance of 1000m.
 
         // given
-        List<TrackPoint> trackPoints = buildTrackPoints(10000);
-        TrackStatistics trackStatistics = buildTrackStatistics(trackPoints);
         float distanceInterval = 1000f;
 
         // when and then
-        whenAndThen(trackPoints, trackStatistics, distanceInterval);
+        whenAndThen(10000, distanceInterval);
     }
 
-    private void whenAndThen(List<TrackPoint> trackPoints, TrackStatistics trackStatistics, float distanceInterval) {
-        IntervalStatistics intervalStatistics = new IntervalStatistics(trackPoints, Distance.of(distanceInterval));
+    private void whenAndThen(int numberOfPoints, float distanceInterval) {
+        IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.of(distanceInterval), Distance.of(0));
+        Pair<Track.Id, TrackStatistics> trackWithStats = TestDataUtil.buildTrackWithTrackPoints(contentProviderUtils, numberOfPoints);
+        Track.Id trackId = trackWithStats.first;
+        TrackStatistics trackStatistics = trackWithStats.second;
+        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, null)) {
+            assertEquals(trackPointIterator.getCount(), numberOfPoints);
+            intervalStatistics.addTrackPoints(trackPointIterator);
+        }
         List<IntervalStatistics.Interval> intervalList = intervalStatistics.getIntervalList();
         Distance totalDistance = Distance.of(0);
         float totalTime = 0L;
@@ -129,7 +138,7 @@ public class IntervalStatisticsTest {
         assertEquals(trackStatistics.getTotalDistance().toM(), totalDistance.toM(), 0.01);
         assertEquals(trackStatistics.getTotalTime().toMillis(), totalTime * UnitConversions.S_TO_MS, 1);
         assertEquals(intervalList.size(), (int) Math.ceil(trackStatistics.getTotalDistance().toM() / distanceInterval));
-        assertEquals(totalGain, trackPoints.size() * TestDataUtil.ALTITUDE_GAIN, 0.1);
+        assertEquals(totalGain, numberOfPoints * TestDataUtil.ALTITUDE_GAIN, 0.1);
 
         for (int i = 0; i < intervalList.size() - 1; i++) {
             assertEquals(intervalList.get(i).getDistance().toM(), distanceInterval, 0.001);

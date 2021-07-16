@@ -96,7 +96,7 @@ limitations under the License.
             android:id="@+id/track_edit_cancel"
             style="@style/BottomButton"
             android:layout_gravity="start"
-            android:text="@string/generic_cancel" />
+            android:text="@android:string/cancel" />
 
         <Button
             android:id="@+id/track_edit_save"

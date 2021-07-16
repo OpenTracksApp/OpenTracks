@@ -1,0 +1,12 @@
+v3.18.5: OpenTracks
+
+Cambios:
+- Velocidad de los anuncios de voz configurable
+- API <26: El icono del lanzador omite el fondo
+
+Corrección de errores:
+- Recording UI: mostrar valores correctos 
+- UI de grabación: mostrar (de nuevo) la altitud en EGM2008
+
+Desarrollador:
+- Permisos Android12 (BLUETOOTH_CONNECT)

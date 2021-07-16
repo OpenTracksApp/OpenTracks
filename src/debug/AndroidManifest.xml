@@ -1,0 +1,7 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:hasFragileUserData="true"
+        tools:replace="android:hasFragileUserData" />
+</manifest>

@@ -43,7 +43,7 @@ import de.dennisguse.opentracks.util.TrackUtils;
  */
 //NOTE: This activity does NOT react to preference changes of R.string.recording_track_id_key.
 //This mode of communication should be removed anyhow.
-public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackActivityDataHubInterface, TrackController.Callback {
+public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackActivityDataHubInterface, ControllerFragment.Callback {
 
     public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -56,7 +56,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     private SharedPreferences sharedPreferences;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private TrackDataHub trackDataHub;
-    private TrackController trackController;
 
     private TrackRecordingBinding viewBinding;
 
@@ -90,8 +89,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 // A recording track is on.
                 trackDataHub.loadTrack(trackId);
                 trackDataHub.setRecordingStatus(recordingStatus);
-
-                trackController.onResume(recordingStatus);
             }
         }
     };
@@ -148,8 +145,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         if (savedInstanceState != null) {
             viewBinding.trackDetailActivityViewPager.setCurrentItem(savedInstanceState.getInt(CURRENT_TAB_TAG_KEY));
         }
-
-        trackController = new TrackController(this, viewBinding.trackControllerContainer, trackRecordingServiceConnection, false, this);
     }
 
     @Override
@@ -214,7 +209,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             //TODO Pass recordingStatus directly to them
             trackDataHub.loadTrack(trackId);
             trackDataHub.setRecordingStatus(recordingStatus);
-            trackController.onResume(recordingStatus);
         }
 
         /*
@@ -231,12 +225,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         super.onSaveInstanceState(outState);
         outState.putInt(CURRENT_TAB_TAG_KEY, viewBinding.trackDetailActivityViewPager.getCurrentItem());
         outState.putParcelable(EXTRA_TRACK_ID, trackId);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        trackController.onPause();
     }
 
     @Override
@@ -372,7 +360,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 case 0:
                     return StatisticsRecordingFragment.newInstance();
                 case 1:
-                    return IntervalsFragment.newInstance(false);
+                    return IntervalsFragment.newInstance(trackId, false);
                 case 2:
                     return ChartFragment.newInstance(false);
                 case 3:
@@ -406,7 +394,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
         recordingStatus = status;
 
-        trackController.update(recordingStatus);
         trackDataHub.setRecordingStatus(recordingStatus);
 
         setLockscreenPolicy();

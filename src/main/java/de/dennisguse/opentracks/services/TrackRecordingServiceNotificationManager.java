@@ -46,8 +46,7 @@ class TrackRecordingServiceNotificationManager {
 
         notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID);
         notificationBuilder
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setOnlyAlertOnce(true)
                 .setOngoing(true)
                 .setCategory(NotificationCompat.CATEGORY_SERVICE)

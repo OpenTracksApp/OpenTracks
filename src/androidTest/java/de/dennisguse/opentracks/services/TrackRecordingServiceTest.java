@@ -19,7 +19,6 @@ import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Location;
 import android.os.IBinder;
 import android.os.Looper;
 
@@ -46,6 +45,7 @@ import java.util.concurrent.TimeoutException;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -407,14 +407,12 @@ public class TrackRecordingServiceTest {
      * Inserts a location and waits for 200ms.
      */
     private static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) {
-        Location location = new Location("");
-        location.setLongitude(longitude);
-        location.setLatitude(latitude);
-        location.setAccuracy(accuracy);
-        location.setSpeed(speed);
-        location.setTime(time);
-        location.setBearing(3.0f);
-        TrackPoint trackPoint = new TrackPoint(location);
+        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(time))
+                .setLongitude(longitude)
+                .setLatitude(latitude)
+                .setAccuracy(accuracy)
+                .setSpeed(Speed.of(speed))
+                .setBearing(3.0f);
         trackRecordingService.newTrackPoint(trackPoint, 50);
     }
 }

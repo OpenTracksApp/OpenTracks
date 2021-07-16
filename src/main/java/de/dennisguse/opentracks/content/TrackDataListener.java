@@ -62,26 +62,28 @@ public interface TrackDataListener {
 
     /**
      * Called when finish sending new track points.
-     * This gets called after every batch of calls to {@link #onSampledInTrackPoint(TrackPoint, TrackStatistics, Speed, double)} and {@link #onSampledOutTrackPoint(TrackPoint, TrackStatistics)}.
      */
-    default void onNewTrackPointsDone(@NonNull TrackPoint lastTrackPoint, @NonNull TrackStatistics trackStatistics) {
+    default void onNewTrackPointsDone() {
     }
 
     /**
      * Called to clear previously sent markers.
      */
-    void clearMarkers();
+    default void clearMarkers() {
+    }
 
     /**
      * Called when a new marker is read.
      *
      * @param marker the marker
      */
-    void onNewMarker(Marker marker);
+    default void onNewMarker(@NonNull Marker marker) {
+    }
 
     /**
      * Called when finish sending new markers.
      * This gets called after every batch of calls to {@link #clearMarkers()} and {@link #onNewMarker(Marker)}.
      */
-    void onNewMarkersDone();
+    default void onNewMarkersDone() {
+    }
 }

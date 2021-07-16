@@ -91,17 +91,9 @@ limitations under the License.
     <string name="description_altitude_imperial">Υψόμετρο (πόδια)</string>
     <string name="description_altitude_metric">Υψόμετρο (μέτρα)</string>
     <string name="description_fastest_pace_in_minute">Ταχύτερος ρυθμός: %1$s λεπτά/χλμ (%2$s λεπτά/μίλι)</string>
-    <string name="description_location_accuracy">Ακρίβεια (μέτρα)</string>
-    <string name="description_location_altitude">Υψόμετρο (μέτρα)</string>
-    <string name="description_location_bearing">Προσανατολισμός (μοίρες)</string>
-    <string name="description_location_latitude">Γεωγραφικό πλάτος (μοίρες)</string>
-    <string name="description_location_longitude">Γεωγραφικό μήκος (μοίρες)</string>
-    <string name="description_location_speed">Ταχύτητα (μέτρα/δευτ)</string>
     <string name="description_max_altitude">Μέγιστη ανύψωση: %1$d μέτρα (%2$d πόδια)</string>
-    <string name="description_max_grade">Μέγ. βαθμός: %1$d %%</string>
     <string name="description_max_speed">Μέγιστη ταχύτητα: %1$.2f χλμ/ώρα (%2$.1f μίλια/ώρα)</string>
     <string name="description_min_altitude">Ελάχιστη ανύψωση: %1$d μέτρα (%2$d πόδια)</string>
-    <string name="description_min_grade">Ελάχ. βαθμός: %1$d %%</string>
     <string name="description_moving_time">Χρόνος μεταφοράς: %1$s</string>
     <string name="description_pace_imperial">Ρυθμός (λεπτά/μίλι)</string>
     <string name="description_pace_metric">Ρυθμός (λεπτά/χλμ)</string>
@@ -115,8 +107,6 @@ limitations under the License.
     <string name="description_time">Χρόνος</string>
     <string name="description_total_distance">Συνολική απόσταση: %1$.2f χλμ (%2$.1f μίλια)</string>
     <string name="description_total_time">Συνολικός χρόνος: %1$s</string>
-    <string name="description_track_point">Σημείο</string>
-    <string name="description_track_segment">Τμήμα</string>
     <!-- Export -->
     <string name="export_all_option">Όλα σε μορφή %1$s</string>
     <string name="export_all_title">Εξαγωγή σε εξωτερικό αποθηκευτικό χώρο</string>
@@ -127,16 +117,12 @@ limitations under the License.
     <string name="export_title">Εξαγωγή σε…</string>
     <!-- External Storage -->
     <!-- Files -->
-    <string name="files_few">%1$d αρχεία</string>
-    <string name="files_many">%1$d αρχεία</string>
-    <string name="files_one">1 αρχείο</string>
-    <string name="files_other">%1$d αρχεία</string>
-    <string name="files_two">2 αρχεία</string>
-    <string name="files_zero">0 αρχεία</string>
+    <plurals name="files">
+        <item quantity="one">1 αρχείο</item>
+        <item quantity="other">%1$d αρχεία</item>
+    </plurals>
     <!-- Generic -->
     <string name="generic_add">Προσθήκη</string>
-    <string name="generic_cancel">Ακύρωση</string>
-    <string name="generic_delete_all_confirm_title">Διαγραφή όλων;</string>
     <string name="generic_delete_selected_confirm_title">Διαγραφή επιλεγμένων;</string>
     <string name="generic_description">Περιγραφή</string>
     <string name="generic_description_line">Περιγραφή: %1$s</string>
@@ -144,19 +130,12 @@ limitations under the License.
     <string name="generic_name">Όνομα</string>
     <string name="generic_name_line">Όνομα: %1$s</string>
     <string name="generic_no">Όχι</string>
-    <string name="generic_ok">OK</string>
     <string name="generic_paused">Σε παύση</string>
-    <string name="generic_progress_title">Περιμένετε…</string>
     <string name="generic_recording">Καταγραφή…</string>
     <string name="generic_save">αποθήκευση</string>
     <string name="generic_success_title">Επιτυχώς</string>
     <string name="generic_tracks">Διαδρομές</string>
-    <string name="generic_yes">Ναι</string>
     <!-- Gps -->
-    <string name="gps_location_access">\'Πρόσβαση τοποθεσίας\'</string>
-    <string name="gps_disabled">Το GPS δεν είναι ενεργοποιημένο. Πατήστε εδώ για να μεταβείτε στο %1$s. Πατήστε το κουμπί \"Πίσω\" για να επιστρέψετε.</string>
-    <string name="gps_disabled_my_location">Η τρέχουσα τοποθεσία δεν μπορεί να προσδιοριστεί. Ενεργοποιήστε περισσότερες πηγές εντοπισμού στο μενού %1$s και βεβαιωθείτε ότι ο ουρανός είναι καθαρός. Δοκιμάστε ξανά αργότερα.</string>
-    <string name="gps_not_found">Δε βρέθηκε GPS στη συσκευή</string>
     <string name="gps_starting">Εκκίνηση GPS</string>
     <string name="gps_wait_for_better_signal">Αναμονή για καλύτερο σήμα GPS</string>
     <string name="gps_wait_for_signal">Αναμονή για σήμα GPS</string>
@@ -165,7 +144,6 @@ limitations under the License.
     <string name="image_arrow">Βέλος</string>
     <string name="image_marker">Δείκτης</string>
     <string name="image_marker_count">Αριθμός δείκτη</string>
-    <string name="image_my_location">Η τοποθεσία μου</string>
     <string name="image_pause">Παύση</string>
     <string name="image_photo_marker">Δείκτης φωτογραφίας</string>
     <string name="image_record">Εγγραφή</string>
@@ -185,17 +163,14 @@ limitations under the License.
     <string name="marker_add_error">Δεν είναι δυνατή η εισαγωγή σήμανσης. Δεν υπάρχει σήμα GPS. Δοκιμάστε ξανά.</string>
     <string name="marker_add_success">Έγινε εισαγωγή δείκτη</string>
     <string name="marker_add_canceled">Ακυρώθηκε, δεν προστέθηκε κανένας δείκτης</string>
-    <string name="marker_delete_all_confirm_message">Όλοι οι δείκτες για αυτή τη διαδρομή θα διαγραφούν οριστικά από τη συσκευή.</string>
     <string name="marker_delete_one_confirm_message">Ο δείκτης θα διαγραφεί οριστικά από τη συσκευή</string>
     <string name="marker_delete_one_confirm_title">Διαγραφή δείκτη;</string>
     <string name="marker_delete_multiple_confirm_message">Οι επιλεγμένοι δείκτες θα διαγραφούν οριστικά από τη συσκευή</string>
     <string name="marker_label_end">%1$s (Τέλος)</string>
     <string name="marker_label_start">%1$s (Αρχή)</string>
     <string name="marker_name_format">Σήμανση %1$d</string>
-    <string name="marker_split_name_format">Διαίρεση %1$d</string>
     <string name="marker_title">%1$d από %2$d</string>
     <!-- Marker Detail -->
-    <string name="marker_detail_statistics_title">Από την τελευταία σήμανση διαίρεσης:</string>
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Τύπος σήμανσης (π.χ. καταρράκτης)</string>
     <string name="marker_edit_marker_type_hint">Τύπος σήμανσης</string>
@@ -213,11 +188,9 @@ limitations under the License.
     <string name="menu_markers">Δείκτες</string>
     <string name="menu_search">Αναζήτηση</string>
     <string name="menu_select_all">Επιλογή όλων</string>
-    <string name="menu_sensor_state">Κατάσταση αισθητήρα</string>
     <string name="menu_settings">Ρυθμίσεις</string>
     <string name="menu_share">Κοινή χρήση</string>
     <string name="menu_show_on_map">Εμφάνιση στον χάρτη</string>
-    <string name="menu_split_frequency">Συχνότητα διαίρεσης</string>
     <string name="menu_start_gps">Έναρξη GPS</string>
     <string name="menu_stop_gps">Διακοπή GPS</string>
     <string name="menu_view_photo">Προβολή φωτογραφίας</string>
@@ -227,12 +200,10 @@ limitations under the License.
     <!-- Search -->
     <string name="search_global_description">Ίχνη και σημάνσεις</string>
     <string name="search_list_empty_message">Δεν υπάρχουν διαδρομές ή δείκτες που να ταιριάζουν στην αναζήτησή σας</string>
-    <string name="search_list_marker_track_location">Στο ίχνος \"%1$s\".</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Στάθμη μπαταρίας</string>
     <string name="sensor_state_cadence">Ρυθμός</string>
     <string name="sensor_state_cadence_value">%1$d rpm</string>
-    <string name="sensor_state_disconnected">Αποσυνδεδεμένος</string>
     <string name="sensor_state_heart_rate">Καρδιακοί παλμοί</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Ισχύς</string>
@@ -244,7 +215,6 @@ limitations under the License.
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Κατά απόσταση</string>
     <string name="settings_chart_by_time">Κατά χρόνο</string>
-    <string name="settings_chart_x_axis">Άξονας Χ</string>
     <string name="settings_recording">Εγγραφή</string>
     <string name="settings_recording_auto_resume_track_timeout_always_summary">Να συνεχίζεται πάντα η εγγραφή μετά την επανεκκίνηση</string>
     <string name="settings_recording_auto_resume_track_timeout_never_summary">Να μην συνεχίζεται ποτέ η εγγραφή μετά την επανεκκίνηση</string>
@@ -268,7 +238,6 @@ limitations under the License.
     <string name="settings_reset_confirm_title">Επαναφορά τώρα;</string>
     <string name="settings_reset_done">Όλες οι ρυθμίσεις έχουν επανέλθει στις προεπιλεγμένες τιμές</string>
     <!-- Settings Sensor -->
-    <string name="settings_sensor">Αισθητήρας</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Αισθητήρας Bluetooth</string>
     <!-- Settings Stats -->
@@ -290,12 +259,9 @@ limitations under the License.
     <string name="stats_altitude">Υψόμετρο</string>
     <string name="stats_fastest_pace">Ταχύτερος ρυθμός</string>
     <string name="stats_gain">Αύξηση</string>
-    <string name="stats_grade">Κλίση</string>
     <string name="stats_latitude">Γεωγραφικό πλάτος</string>
     <string name="stats_longitude">Γεωγραφικό μήκος</string>
-    <string name="stats_max">Μέγιστο</string>
     <string name="stats_max_speed">Μέγιστη ταχύτητα</string>
-    <string name="stats_min">Ελάχιστο</string>
     <string name="stats_moving_time">Διάρκεια κίνησης</string>
     <string name="stats_pace">Ρυθμός</string>
     <string name="stats_speed">Ταχύτητα</string>
@@ -321,12 +287,6 @@ limitations under the License.
     <string name="track_list_empty_message">Ξεκινήστε την εγγραφή της επόμενης περιπέτειάς σας εδώ</string>
     <!-- Track Widget -->
     <!-- Tracks -->
-    <string name="tracks_few">%1$d ίχνη</string>
-    <string name="tracks_many">%1$d ίχνη</string>
-    <string name="tracks_one">1 ίχνος</string>
-    <string name="tracks_other">%1$d ίχνη</string>
-    <string name="tracks_two">2 ίχνη</string>
-    <string name="tracks_zero">0 ίχνη</string>
     <!-- Unit -->
     <string name="unit_feet">πόδια</string>
     <string name="unit_kilometer">χλμ.</string>
@@ -340,11 +300,6 @@ limitations under the License.
     <string name="value_adapt_accuracy">Προσαρμογή για ακρίβεια</string>
     <string name="value_adapt_battery_life">Καλύτερο για μπατ.</string>
     <string name="value_always">Πάντα</string>
-    <string name="value_float_feet">%1$.2f πόδια</string>
-    <string name="value_float_kilometer">%1$.2f χιλιόμετρα</string>
-    <string name="value_float_meter">%1$.2f μέτρα</string>
-    <string name="value_float_mile">%1$.2f μίλια</string>
-    <string name="value_float_mile_poor_gps">%1$.1f μίλια (χαμηλό σήμα GPS)</string>
     <string name="value_integer_feet">%1$d πόδια</string>
     <string name="value_integer_feet_excellent_gps">%1$d πόδια (τέλειο σήμα GPS)</string>
     <string name="value_integer_feet_recommended">%1$d ft (συνιστάται)</string>
@@ -364,52 +319,37 @@ limitations under the License.
     <string name="value_smallest">Μικρότερη</string>
     <string name="value_smallest_recommended">Μικρότερη (συνιστάται)</string>
     <!-- Voice -->
-    <string name="voice_hours_few">%1$d ώρες</string>
-    <string name="voice_hours_many">%1$d ώρες</string>
-    <string name="voice_hours_one">1 ώρα</string>
-    <string name="voice_hours_other">%1$d ώρες</string>
-    <string name="voice_hours_two">2 ώρες</string>
-    <string name="voice_hours_zero">0 ώρες</string>
-    <string name="voice_minutes_few">%1$d λεπτά</string>
-    <string name="voice_minutes_many">%1$d λεπτά</string>
-    <string name="voice_minutes_one">1 λεπτό</string>
-    <string name="voice_minutes_other">%1$d λεπτά</string>
-    <string name="voice_minutes_two">2 λεπτά</string>
-    <string name="voice_minutes_zero">0 λεπτά</string>
+    <plurals name="voiceHours">
+        <item quantity="one">1 ώρα</item>
+        <item quantity="other">%1$d ώρες</item>
+    </plurals>
+    <plurals name="voiceMinutes">
+        <item quantity="one">1 λεπτό</item>
+        <item quantity="other">%1$d λεπτά</item>
+    </plurals>
+    <plurals name="voiceSeconds">
+        <item quantity="one">1 δευτερόλεπτο</item>
+        <item quantity="other">%1$d δευτερόλεπταr</item>
+    </plurals>
+    <plurals name="voiceSpeedKilometersPerHour">
+        <item quantity="one">1 χιλιόμετρο ανά ώρα</item>
+        <item quantity="other">%1$.1f χιλιόμετρα ανά ώρα</item>
+    </plurals>
+    <plurals name="voiceSpeedMilesPerHour">
+        <item quantity="one">1 μίλι ανά ώρα</item>
+        <item quantity="other">%1$.1f μίλια ανά ώρα</item>
+    </plurals>
     <string name="voice_pace_per_kilometer">%1$s ανά χιλιόμετρο</string>
     <string name="voice_pace_per_mile">%1$s ανά μίλι</string>
-    <string name="voice_seconds_few">%1$d δευτερόλεπτα</string>
-    <string name="voice_seconds_many">%1$d δευτερόλεπτα</string>
-    <string name="voice_seconds_one">1 δευτερόλεπτο</string>
-    <string name="voice_seconds_other">%1$d δευτερόλεπτα</string>
-    <string name="voice_seconds_two">2 δευτερόλεπτα</string>
-    <string name="voice_seconds_zero">0 δευτερόλεπτα</string>
-    <string name="voice_speed_kilometers_per_hour_few">%1$.1f χιλιόμετρα ανά ώρα</string>
-    <string name="voice_speed_kilometers_per_hour_many">%1$.1f χιλιόμετρα ανά ώρα</string>
-    <string name="voice_speed_kilometers_per_hour_one">1 χιλιόμετρο ανά ώρα</string>
-    <string name="voice_speed_kilometers_per_hour_other">%1$.1f χιλιόμετρα ανά ώρα</string>
-    <string name="voice_speed_kilometers_per_hour_two">2 χιλιόμετρα ανά ώρα</string>
-    <string name="voice_speed_kilometers_per_hour_zero">0 χιλιόμετρα ανά ώρα</string>
-    <string name="voice_speed_miles_per_hour_few">%1$.1f μίλια ανά ώρα</string>
-    <string name="voice_speed_miles_per_hour_many">%1$.1f μίλια ανά ώρα</string>
-    <string name="voice_speed_miles_per_hour_one">1 μίλι ανά ώρα</string>
-    <string name="voice_speed_miles_per_hour_other">%1$.1f μίλια ανά ώρα</string>
-    <string name="voice_speed_miles_per_hour_two">2 μίλια ανά ώρα</string>
-    <string name="voice_speed_miles_per_hour_zero">0 μίλια ανά ώρα</string>
-    <string name="voice_template">Οι διαδρομές μου %1$s σε %2$s με ταχύτητα %3$s</string>
-    <string name="voice_total_distance_kilometers_few">συνολική απόσταση %1$.2f χιλιόμετρα</string>
-    <string name="voice_total_distance_kilometers_many">συνολική απόσταση %1$.2f χιλιόμετρα</string>
-    <string name="voice_total_distance_kilometers_one">συνολική απόσταση 1 χιλιόμετρο</string>
-    <string name="voice_total_distance_kilometers_other">συνολική απόσταση %1$.2f χιλιόμετρα</string>
-    <string name="voice_total_distance_kilometers_two">συνολική απόσταση 2 χιλιόμετρα</string>
-    <string name="voice_total_distance_kilometers_zero">συνολική απόσταση 0 χιλιόμετρα</string>
-    <string name="voice_total_distance_miles_few">συνολική απόσταση %1$.2f μίλια</string>
-    <string name="voice_total_distance_miles_many">συνολική απόσταση %1$.2f μίλια</string>
-    <string name="voice_total_distance_miles_one">συνολική απόσταση 1 μίλι</string>
-    <string name="voice_total_distance_miles_other">συνολική απόσταση %1$.2f μίλια</string>
-    <string name="voice_total_distance_miles_two">συνολική απόσταση 2 μίλια</string>
-    <string name="voice_total_distance_miles_zero">συνολική απόσταση 0 μίλια</string>
-    <string name="voice_total_distance_zero">OpenTracks συνολική απόσταση μηδέν.</string>
+    <string name="voice_template">%1$s σε %2$s με ταχύτητα %3$s</string>
+    <plurals name="voiceTotalDistanceKilometers">
+        <item quantity="one">συνολική απόσταση 1 χιλιόμετρο</item>
+        <item quantity="other">συνολική απόσταση %1$.2f χιλιόμετρα</item>
+    </plurals>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one">συνολική απόσταση 1 μίλι</item>
+        <item quantity="other">συνολική απόσταση %1$.2f μίλια</item>
+    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">τράπεζα</string>

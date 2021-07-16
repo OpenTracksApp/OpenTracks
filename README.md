@@ -49,39 +49,6 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
     </tr>
 </table>
 
-## Features:
-* __Tracking:__ track your sport and outdoor activities
-* __Photos and Markers:__ mark interesting locations while tracking (also with photos)
-* __Bluetooth LE sensors:__
-  * heart rate
-  * cycling: speed and cadence
-  * cycling: power meter
-* __Export data:__ export tracks either as KMZ (incl. photos), KML or GPX
-* __No Internet access:__ Internet is not used
-* __Voice announcements__
-* __No advertising__
-* __Privacy:__
-    * _does not contain any in-app analytics_
-    * _does not use Google Play Services_
-    * _has no cloud integration_
-
-__Only required permissions:__
-* _ACCESS_FINE_LOCATION_: required to use the GPS.
-
-An overview of Bluetooth LE sensors that are known to work with OpenTracks is in [README_TESTED_SENSORS.md](README_TESTED_SENSORS.md).
-
-_Please note:_
-_OpenTracks_ does not contain a _map_ (as this would require internet access).
-
-## Custom Dashboards (incl. Map)
-As of v3.3.1 OpenTracks enables to use custom dashboards.
-The reference implementation is [OSMDashboard](https://github.com/OpenTracksApp/OSMDashboard), which presents an OpenStreetMap map (showing the current track, incl. updates).
-The developer documentation is in [README_API.md](README_API.md).
-
-Alternatively, recorded tracks can be shared as KMZ/GPX to installed applications (e.g., [OsmAnd](https://play.google.com/store/apps/details?id=net.osmand)).
-However, this is rather slow and does not provide updates while recording.
-
-
 ## Screenshots
 <div>
     <img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot1.png">
@@ -96,12 +63,54 @@ However, this is rather slow and does not provide updates while recording.
 	<img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot8.png">
 </div>
 
+## Features
+* __Tracking:__ track your sport and outdoor activities
+* __Voice announcements__
+* __Photos and Markers:__ mark interesting locations while tracking
+* __Export:__
+  * export tracks either as KMZ (incl. photos), KML, or GPX
+  * export automatically after each recording (e.g., to sync)
+  * avoid duplication: each exported file contain a random unique identifier (i.e., `opentracks:trackid`)
+* __Altitude:__
+  * gain/loss via barometric sensor (if present)
+  * shown in EGM2008 (above mean sea level); exported as WGS84
+* __Bluetooth LE sensors:__
+  * heart rate
+  * cycling: speed and distance
+  * cycling: cadence
+  * cycling: power meter
+
+### Gadgetbridge integration
+
+OpenTracks can be used with [Gadgetbridge](https://www.gadgetbridge.org/):
+* shows statistics via notification on smart watches (requires Gadgetbridge 0.56.1 or later), and
+* Gadgetbridge's GPX exporter generates `opentracks:trackid` to avoid duplication (Gadgetbridge 0.53.0 or later).
+
+### Privacy
+* __No Internet access:__ Internet is not used
+* __No advertising__
+* __No in-app analytics__
+* __No use of Google Play Services__
+
+__Only required permission:__
+* _ACCESS_FINE_LOCATION_: required to use the GPS.
+
+An overview of Bluetooth LE sensors that are known to work with OpenTracks is in [README_TESTED_SENSORS.md](README_TESTED_SENSORS.md).
+
+## Custom Dashboards (incl. map)
+As of v3.3.1, OpenTracks supports custom dashboards.
+The reference implementation is [OSMDashboard](https://github.com/OpenTracksApp/OSMDashboard), which presents an OpenStreetMap map (showing the current track, incl. updates).
+The developer documentation is in [README_API.md](README_API.md).
+
+Alternatively, recorded tracks can be shared as KMZ/GPX with installed applications (e.g., [OsmAnd](https://play.google.com/store/apps/details?id=net.osmand)).
+However, this is rather slow and does not provide updates while recording.
+
 ## Project history
 
 _OpenTracks_ is based upon Google _My Tracks app_ ([code](https://code.google.com/archive/p/mytracks/)).
 Initially, _My Tracks_ was initially released by Google in 2010 as [open-source software](http://google-latlong.blogspot.fr/2010/05/code-for-my-tracks-is-now-yours.html).
 In 2016, [Google decided to discontinue](https://support.google.com/maps/answer/6333516) _My Tracks_ and stopped distributing it via the Google Play store in April 2016.
-The [Plonk42](https://github.com/plonk42) conducted some maintenance work until 2016, so _My Tracks_ could still be used (based upon version _Google's MyTracks_ version 2.0.6).
+Then [Plonk42](https://github.com/plonk42) conducted some maintenance work until 2016, so _My Tracks_ could still be used (based upon version _Google's MyTracks_ version 2.0.6).
 Plonk42's version is available [here](https://github.com/Plonk42/mytracks).
 In 2019, _OpenTracks_ was forked from Plonk42's _My Tracks_ and major rework was conducted.
 
@@ -114,7 +123,7 @@ Rework of _OpenTracks_ included:
 * removing calorie estimation and activity estimation,
 * removing support for ANT+ and Classic Bluetooth,
 * adding support for Bluetooth LE heart rate sensors,
-* removing Protobuf (store sensosensorr data in SQLite columns directly), and
+* removing Protobuf (store sensor data in SQLite columns directly), and
 * removing Android Service API for other apps.
 
 Artwork, logos and user interface remained more or less unchanged.

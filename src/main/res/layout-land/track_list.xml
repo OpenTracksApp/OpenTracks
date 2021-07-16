@@ -27,9 +27,11 @@ limitations under the License.
         android:baselineAligned="false"
         android:orientation="horizontal">
 
-        <include
-            android:id="@+id/track_controller_container"
-            layout="@layout/track_controller" />
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/controller_fragment"
+            android:name="de.dennisguse.opentracks.ControllerFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
 
         <ListView
             android:id="@+id/track_list"
@@ -88,15 +90,9 @@ limitations under the License.
 
                     <TextView
                         style="@style/TextLarge"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight=".7"
                         android:text="@string/track_list_empty_message" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight=".3" />
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>

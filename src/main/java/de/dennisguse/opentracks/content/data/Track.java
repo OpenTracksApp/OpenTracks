@@ -33,6 +33,7 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
+//TODO Do not default initialize attributes; might be confusing for debugging
 public class Track {
 
     private Track.Id id;
@@ -45,9 +46,6 @@ public class Track {
     private String icon = "";
 
     private TrackStatistics trackStatistics = new TrackStatistics();
-
-    public Track() {
-    }
 
     /**
      * May be null if the track was not loaded from the database.
