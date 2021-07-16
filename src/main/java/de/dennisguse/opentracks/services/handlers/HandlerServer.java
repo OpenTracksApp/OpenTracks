@@ -177,6 +177,11 @@ public class HandlerServer {
         this.clock = clock;
     }
 
+    @VisibleForTesting
+    public LocationHandler getLocationHandler() {
+        return locationHandler;
+    }
+
     void sendGpsStatus(GpsStatusValue gpsStatusValue) {
         service.newGpsStatus(gpsStatusValue);
     }

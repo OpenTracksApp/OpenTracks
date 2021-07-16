@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
 
@@ -18,7 +19,8 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
-class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
+@VisibleForTesting(otherwise = 3)
+public class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
 
     private final String TAG = LocationHandler.class.getSimpleName();
 
