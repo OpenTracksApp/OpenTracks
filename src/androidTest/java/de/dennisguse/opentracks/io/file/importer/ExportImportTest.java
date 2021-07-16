@@ -3,9 +3,11 @@ package de.dennisguse.opentracks.io.file.importer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Looper;
 
+import androidx.annotation.NonNull;
 import androidx.preference.PreferenceManager;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -19,6 +21,7 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +37,6 @@ import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Speed;
@@ -42,10 +44,16 @@ import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
+import de.dennisguse.opentracks.content.sensor.SensorDataCyclingPower;
+import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
+import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.handlers.HandlerServer;
+import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
+import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 import static org.junit.Assert.assertEquals;
@@ -81,7 +89,6 @@ public class ExportImportTest {
     private File tmpFile;
     private Uri tmpFileUri;
 
-    private Track track;
     private List<Marker> markers = new ArrayList<>();
     private List<TrackPoint> trackPoints = new ArrayList<>();
 
@@ -119,26 +126,30 @@ public class ExportImportTest {
 
         Distance sensorDistance = hasSensorDistance ? Distance.of(5) : null;
 
-        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:03Z"), 3, 14, 10, 15, 10, 1, 66, 3, 50, sensorDistance), Distance.of(0));
+        sendLocation(handlerServer, Instant.parse("2020-02-02T02:02:03Z"), 3, 14, 10, 15, 10, 1, 66, 3, 50, sensorDistance);
         service.insertMarker("Marker 1", "Marker 1 category", "Marker 1 desc", null);
-        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:04Z"), 3, 14.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance), Distance.of(0));
-        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:05Z"), 3, 14.002, 10, 15, 10, 0, 66, 3, 50, sensorDistance), Distance.of(0));
+        sendLocation(handlerServer, Instant.parse("2020-02-02T02:02:04Z"), 3, 14.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
+        sendLocation(handlerServer, Instant.parse("2020-02-02T02:02:05Z"), 3, 14.002, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
         service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
 
         handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:06Z"), ZoneId.of("CET")));
+        handlerServer.setRemoteSensorManager(new BluetoothRemoteSensorManager(context));
         service.pauseCurrentTrack();
 
         handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:20Z"), ZoneId.of("CET")));
         service.resumeCurrentTrack();
 
-        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:21Z"), 3, 14.003, 10, 15, 10, 0, 66, 3, 50, sensorDistance), Distance.of(0));
-        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:22Z"), 3, 16, 10, 15, 10, 0, 66, 3, 50, sensorDistance), Distance.of(0));
-        service.newTrackPoint(createTrackPoint(Instant.parse("2020-02-02T02:02:23Z"), 3, 16.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance), Distance.of(0));
+        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:21Z"), ZoneId.of("CET")));
+        sendLocation(handlerServer, Instant.parse("2020-02-02T02:02:21Z"), 3, 14.003, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
+
+        sendLocation(handlerServer, Instant.parse("2020-02-02T02:02:22Z"), 3, 16, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
+        sendLocation(handlerServer, Instant.parse("2020-02-02T02:02:23Z"), 3, 16.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
 
         handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:24Z"), ZoneId.of("CET")));
+        handlerServer.setRemoteSensorManager(new BluetoothRemoteSensorManager(context));
         service.endCurrentTrack();
 
-        track = contentProviderUtils.getTrack(trackId);
+        Track track = contentProviderUtils.getTrack(trackId);
         track.setIcon(TRACK_ICON);
         track.setCategory(TRACK_CATEGORY);
         track.setDescription(TRACK_DESCRIPTION);
@@ -369,16 +380,49 @@ public class ExportImportTest {
         }
     }
 
-    private static TrackPoint createTrackPoint(Instant time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, Distance distance) {
-        TrackPoint tp = new TrackPoint(latitude, longitude, Altitude.WGS84.of(altitude), time);
-        tp.setHorizontalAccuracy(Distance.of(accuracy));
-        tp.setSpeed(Speed.of(speed));
-        tp.setHeartRate_bpm(heartRate);
-        tp.setCyclingCadence_rpm(cyclingCadence);
-        tp.setPower(power);
-        tp.setAltitudeGain(altitudeGain);
-        tp.setAltitudeLoss(altitudeGain); //TODO
-        tp.setSensorDistance(distance);
-        return tp;
+    private void sendLocation(HandlerServer handlerServer, Instant time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, Distance distance) {
+        Location location = new Location("mock");
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+        location.setAccuracy(accuracy);
+        location.setSpeed(speed);
+        location.setAltitude(altitude);
+
+        handlerServer.setAltitudeSumManager(new AltitudeSumManager() {
+            @Override
+            public void fill(@NonNull TrackPoint trackPoint) {
+                trackPoint.setAltitudeGain(altitudeGain);
+                trackPoint.setAltitudeLoss(altitudeGain);
+            }
+        });
+
+        handlerServer.setRemoteSensorManager(new BluetoothRemoteSensorManager(context) {
+            @Override
+            public SensorDataSet fill(@NonNull TrackPoint trackPoint) {
+                SensorDataSet sensorDataSet = new SensorDataSet();
+                sensorDataSet.set(new SensorDataCyclingPower("power", "power", power));
+                sensorDataSet.set(new SensorDataHeartRate("heartRate", "heartRate", heartRate));
+
+                SensorDataCycling.Cadence cadence = Mockito.mock(SensorDataCycling.Cadence.class);
+                Mockito.when(cadence.hasValue()).thenReturn(true);
+                Mockito.when(cadence.getValue()).thenReturn(cyclingCadence);
+                sensorDataSet.set(cadence);
+
+                SensorDataCycling.DistanceSpeed.Data distanceSpeedData = Mockito.mock(SensorDataCycling.DistanceSpeed.Data.class);
+                Mockito.when(distanceSpeedData.getDistanceOverall()).thenReturn(distance);
+                Mockito.when(distanceSpeedData.getSpeed()).thenReturn(Speed.of(speed));
+                SensorDataCycling.DistanceSpeed distanceSpeed = Mockito.mock(SensorDataCycling.DistanceSpeed.class);
+                Mockito.when(distanceSpeed.hasValue()).thenReturn(true);
+                Mockito.when(distanceSpeed.getValue()).thenReturn(distanceSpeedData);
+
+                sensorDataSet.set(distanceSpeed);
+
+                sensorDataSet.fillTrackPoint(trackPoint);
+                return sensorDataSet;
+            }
+        });
+
+        handlerServer.setClock(Clock.fixed(time, ZoneId.of("CET")));
+        handlerServer.getLocationHandler().onLocationChanged(location);
     }
 }

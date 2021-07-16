@@ -65,8 +65,8 @@ public final class SensorDataSet {
         }
 
         if (cyclingDistanceSpeed != null && cyclingDistanceSpeed.hasValue()) {
-            trackPoint.setSensorDistance(cyclingDistanceSpeed.getValue().distanceOverall);
-            trackPoint.setSpeed(cyclingDistanceSpeed.getValue().speed);
+            trackPoint.setSensorDistance(cyclingDistanceSpeed.getValue().getDistanceOverall());
+            trackPoint.setSpeed(cyclingDistanceSpeed.getValue().getSpeed());
         }
 
         if (cyclingPower != null && cyclingPower.hasValue()) {

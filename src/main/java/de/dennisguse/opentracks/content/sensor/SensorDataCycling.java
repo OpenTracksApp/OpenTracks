@@ -169,9 +169,9 @@ public final class SensorDataCycling {
         }
 
         public static class Data {
-            public final Distance distance;
-            public final Distance distanceOverall;
-            public final Speed speed;
+            private final Distance distance;
+            private final Distance distanceOverall;
+            private final Speed speed;
 
             private Data(Distance distance, Distance distanceOverall, Speed speed) {
                 this.distance = distance;
@@ -179,12 +179,24 @@ public final class SensorDataCycling {
                 this.speed = speed;
             }
 
+            public Distance getDistance() {
+                return distance;
+            }
+
+            public Distance getDistanceOverall() {
+                return distanceOverall;
+            }
+
+            public Speed getSpeed() {
+                return speed;
+            }
+
             @Override
             public String toString() {
                 return "Data{" +
-                        "distance_m=" + distance +
-                        ", distance_overall_m=" + distanceOverall +
-                        ", speed_mps=" + speed +
+                        "distance=" + getDistance() +
+                        ", distance_overall=" + getDistanceOverall() +
+                        ", speed=" + getSpeed() +
                         '}';
             }
         }

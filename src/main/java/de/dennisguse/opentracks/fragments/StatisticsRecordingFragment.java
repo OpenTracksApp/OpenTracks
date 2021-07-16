@@ -258,7 +258,7 @@ public class StatisticsRecordingFragment extends Fragment {
         if (sensorDataSet != null && sensorDataSet.getCyclingDistanceSpeed() != null) {
             SensorDataCycling.DistanceSpeed data = sensorDataSet.getCyclingDistanceSpeed();
             if (data.hasValue() && data.isRecent()) {
-                speed = data.getValue().speed;
+                speed = data.getValue().getSpeed();
             }
         }
 

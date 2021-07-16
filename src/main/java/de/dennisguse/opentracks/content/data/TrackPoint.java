@@ -203,6 +203,9 @@ public class TrackPoint {
         if (hasAltitude()) {
             location.setAltitude(altitude.toM());
         }
+        if (hasSpeed()) {
+            location.setSpeed((float) speed.toMPS());
+        }
 
         return location;
     }

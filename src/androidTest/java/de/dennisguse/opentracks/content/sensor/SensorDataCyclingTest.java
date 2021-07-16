@@ -104,8 +104,8 @@ public class SensorDataCyclingTest {
         current.compute(previous, Distance.ofMM(2150));
 
         // then
-        assertEquals(2.15, current.getValue().distance.toM(), 0.01);
-        assertEquals(1.20, current.getValue().speed.toMPS(), 0.01);
+        assertEquals(2.15, current.getValue().getDistance().toM(), 0.01);
+        assertEquals(1.20, current.getValue().getSpeed().toMPS(), 0.01);
     }
 
     @Test
@@ -118,8 +118,8 @@ public class SensorDataCyclingTest {
         current.compute(previous, Distance.ofMM(2000));
 
         // then
-        assertEquals(2, current.getValue().distance.toM(), 0.01);
-        assertEquals(2, current.getValue().speed.toMPS(), 0.01);
+        assertEquals(2, current.getValue().getDistance().toM(), 0.01);
+        assertEquals(2, current.getValue().getSpeed().toMPS(), 0.01);
     }
 
     @Test
