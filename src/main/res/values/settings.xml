@@ -11,6 +11,7 @@
     <bool name="stats_fullscreen_while_recording_default" translatable="false">false</bool>
 
     <string name="settings_reset_key" translatable="false">settingsReset</string>
+    <string name="settings_layout_reset_key" translatable="false">settingsLayoutReset</string>
 
     <string name="settings_sensor_bluetooth_heart_rate_key" translatable="false">bluetoothSensor</string>
     <string name="settings_sensor_bluetooth_cycling_cadence_key" translatable="false">bluetoothCyclingCadenceSensor</string>
@@ -277,7 +278,7 @@
 
     <!-- Stats layout customization: number of columns per row -->
     <string name="stats_custom_layout_columns_key" translatable="false">statsCustomLayoutColumnsKey</string>
-    <integer name="stats_custom_layout_columns_default" translatable="false">3</integer>
+    <integer name="stats_custom_layout_columns_default" translatable="false">2</integer>
 
     <!-- Stats layout customization: key -->
     <string name="stats_custom_layout_fields_key" translatable="false">statsCustomLayoutFieldsKey</string>
@@ -305,14 +306,13 @@
     </string-array>
     <!-- Stats layout customization: default fields -->
     <string-array name="stats_custom_layout_fields_default_value">
-        <item>@string/stats_moving_time</item>
         <item>@string/stats_distance</item>
+        <item>@string/stats_total_time</item>
         <item>@string/stats_speed</item>
-        <item>@string/stats_average_moving_speed</item>
+        <item>@string/stats_moving_time</item>
+        <item>@string/stats_average_speed</item>
         <item>@string/stats_max_speed</item>
-        <item>@string/stats_pace</item>
-        <item>@string/stats_average_moving_pace</item>
-        <item>@string/stats_fastest_pace</item>
+        <item>@string/stats_average_moving_speed</item>
         <item>@string/stats_altitude</item>
         <item>@string/stats_gain</item>
         <item>@string/stats_loss</item>

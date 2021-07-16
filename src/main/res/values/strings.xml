@@ -386,8 +386,15 @@ limitations under the License.
     <string name="settings_night_mode_option_day">Day</string>
     <string name="settings_night_mode_option_night">Night</string>
 
-    <!-- Settings Reset -->
+    <!-- Reset -->
     <string name="settings_reset">Reset</string>
+    <!-- Custom Layout Reset -->
+    <string name="settings_layout_reset">Reset Custom Layout</string>
+    <string name="settings_layout_reset_confirm_message">All layout settings will be reverted to the default values. This will not delete any tracks on the device.</string>
+    <string name="settings_layout_reset_confirm_title">Reset your layouts?</string>
+    <string name="settings_layout_reset_done">All layout settings have been reverted to the default values</string>
+    <!-- Settings Reset -->
+    <string name="settings_all_reset">Reset All Settings</string>
     <string name="settings_reset_confirm_message">All settings will be reverted to the default values. This will not delete any tracks on the device.</string>
     <string name="settings_reset_confirm_title">Reset now?</string>
     <string name="settings_reset_done">All settings have been reverted to the default values</string>

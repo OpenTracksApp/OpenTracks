@@ -327,7 +327,10 @@ public class PreferencesUtils {
     private static String buildDefaultLayout(Context context) {
         String[] allFields = context.getResources().getStringArray(R.array.stats_custom_layout_all_fields_value);
         List<String> defaultFields = Arrays.asList(context.getResources().getStringArray(R.array.stats_custom_layout_fields_default_value));
-        StringBuilder csvCustomLayout = new StringBuilder(context.getString(R.string.default_activity_default) + ";" + defaultFields.stream().collect(Collectors.joining(",1,1;")) + ",1,1;");
+        StringBuilder csvCustomLayout = new StringBuilder(context.getString(R.string.default_activity_default) + ";");
+        for (int i = 0; i < defaultFields.size(); i++) {
+            csvCustomLayout.append(defaultFields.get(i)).append(",1,").append(i < 4 ? "1;" : "0;");
+        }
 
         for (String field : allFields) {
             if (!defaultFields.contains(field)) {
@@ -358,5 +361,19 @@ public class PreferencesUtils {
 
         String csv = layout.getProfile() + ";" + fields.stream().map(field -> field.getTitle() + "," + (field.isVisible() ? "1" : "0") + "," + (field.isPrimary() ? "1" : "0")).collect(Collectors.joining(";")) + ";";
         setString(sharedPreferences, context, R.string.stats_custom_layout_fields_key, csv);
+    }
+
+    public static void resetCustomLayoutPreferences(Context context) {
+        SharedPreferences settings = getSharedPreferences(context);
+        if(settings.contains(context.getString(R.string.stats_custom_layout_fields_key))) {
+            SharedPreferences.Editor editor = settings.edit();
+            editor.remove(context.getString(R.string.stats_custom_layout_fields_key));
+            editor.commit();
+        }
+        if(settings.contains(context.getString(R.string.stats_custom_layout_columns_key))) {
+            SharedPreferences.Editor editor = settings.edit();
+            editor.remove(context.getString(R.string.stats_custom_layout_columns_key));
+            editor.commit();
+        }
     }
 }
