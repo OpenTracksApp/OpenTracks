@@ -5,7 +5,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="16dp">
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp">
+
+    <TextView
+        android:id="@+id/stats_value"
+        style="@style/StatsPrimaryValue"
+        android:value="@string/value_unknown"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/stats_unit"
+        tools:text="90" />
+
+    <TextView
+        android:id="@+id/stats_unit"
+        style="@style/StatsUnit"
+        tools:text="@string/sensor_unit_beats_per_minute"
+        app:layout_constraintStart_toEndOf="@id/stats_value"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/stats_value" />
 
     <TextView
         android:id="@+id/stats_desc_main"
@@ -13,7 +32,7 @@
         tools:text="@string/sensor_state_heart_rate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/stats_value" />
 
     <TextView
         android:id="@+id/stats_desc_secondary"
@@ -24,30 +43,5 @@
         app:layout_constraintTop_toBottomOf="@id/stats_desc_main"
         tools:visibility="visible"
         tools:text="90" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/stats_descriptions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="stats_desc_main,stats_desc_secondary" />
-
-    <TextView
-        android:id="@+id/stats_value"
-        style="@style/StatsPrimaryValue"
-        android:value="@string/value_unknown"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/stats_unit"
-        app:layout_constraintTop_toBottomOf="@id/stats_descriptions"
-        tools:text="90" />
-
-    <TextView
-        android:id="@+id/stats_unit"
-        style="@style/StatsUnit"
-        tools:text="@string/sensor_unit_beats_per_minute"
-        app:layout_constraintStart_toEndOf="@id/stats_value"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/stats_value" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
