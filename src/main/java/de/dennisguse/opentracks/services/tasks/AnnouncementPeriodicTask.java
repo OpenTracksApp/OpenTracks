@@ -32,7 +32,6 @@ import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
-import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.AnnouncementUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -130,21 +129,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
     }
 
     @Override
-    public void run(@NonNull TrackRecordingService trackRecordingService) {
-        announce(trackRecordingService.getRecordingTrackId(), trackRecordingService.getTrackStatistics());
-    }
-
-    /**
-     * Runs this task.
-     *
-     * @param trackStatistics the track statistics
-     */
-    private void announce(Track.Id trackId, TrackStatistics trackStatistics) {
-        if (trackStatistics == null) {
-            Log.e(TAG, "TrackStatistics is null.");
-            return;
-        }
-
+    public void run(@NonNull Track.Id trackId, @NonNull TrackStatistics trackStatistics) {
         synchronized (this) {
             if (!ttsReady) {
                 ttsReady = ttsInitStatus == TextToSpeech.SUCCESS;
