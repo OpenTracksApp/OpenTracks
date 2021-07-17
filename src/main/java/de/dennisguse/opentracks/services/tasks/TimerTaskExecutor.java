@@ -22,7 +22,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.dennisguse.opentracks.services.TrackRecordingService;
-import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
  * This class will periodically perform a task.
@@ -50,23 +49,18 @@ class TimerTaskExecutor {
             return;
         }
 
-        TrackStatistics trackStatistics = trackRecordingService.getTrackStatistics();
-        if (trackStatistics == null) {
-            return;
-        }
-
         shutdown();
         periodicTask.start();
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                periodicTask.run(trackRecordingService);
+                trackRecordingService.run(periodicTask);
             }
         };
         timer = new Timer(TimerTaskExecutor.class.getSimpleName());
 
         //TODO Simplify: far too complicated for it's purpose
-        long next = System.currentTimeMillis() + interval.toMillis() - (trackStatistics.getTotalTime().toMillis() % interval.toMillis());
+        long next = System.currentTimeMillis() + interval.toMillis() - (trackRecordingService.getTotalTime().toMillis() % interval.toMillis());
         timer.scheduleAtFixedRate(timerTask, new Date(next), interval.toMillis());
     }
 

@@ -50,6 +50,7 @@ import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.HandlerServer;
 import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTask;
+import de.dennisguse.opentracks.services.tasks.PeriodicTask;
 import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -200,26 +201,16 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         return recordingStatus.isPaused();
     }
 
-    @Deprecated //TODO Only used by announcements; pass data instead of reference
-    public Track.Id getRecordingTrackId() {
-        return recordingStatus.getTrackId();
-    }
-
-    @Deprecated //TODO Only used by announcements; pass data instead of reference
-    public TrackStatistics getTrackStatistics() {
-        if (!isRecording()) {
-            return null;
-        }
-
-        return trackRecordingManager.getTrackStatistics();
-    }
-
     public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
         if (!isRecording() || isPaused()) {
             return null;
         }
 
         return trackRecordingManager.insertMarker(name, category, description, photoUrl);
+    }
+
+    public void run(@NonNull PeriodicTask periodicTask) {
+        periodicTask.run(recordingStatus.getTrackId(), trackRecordingManager.getTrackStatistics());
     }
 
     /**
@@ -264,7 +255,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        resumeTrack(getRecordingTrackId());
+        resumeTrack(recordingStatus.getTrackId());
     }
 
     /**
@@ -301,7 +292,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         // Need to remember the recordingTrackId before setting it to null
         boolean wasPause = isPaused();
-        Track.Id trackId = getRecordingTrackId();
+        Track.Id trackId = recordingStatus.getTrackId();
 
         // Set recording status
         updateRecordingStatus(STATUS_DEFAULT);
@@ -323,7 +314,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         }
 
         // Set recording status
-        updateRecordingStatus(new RecordingStatus(getRecordingTrackId(), true));
+        updateRecordingStatus(new RecordingStatus(recordingStatus.getTrackId(), true));
 
         trackRecordingManager.pause(handlerServer);
 
@@ -383,7 +374,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         trackRecordingManager.onNewTrackPoint(trackPoint, thresholdHorizontalAccuracy);
         notificationManager.updateTrackPoint(this, trackRecordingManager.getTrackStatistics(), trackPoint, thresholdHorizontalAccuracy);
-        voiceExecutor.update();
+        voiceExecutor.update(recordingStatus.getTrackId(), trackRecordingManager.getTrackStatistics());
     }
 
     @Override
@@ -399,7 +390,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     private void showNotification(boolean isGpsStarted) {
         if (isRecording()) {
             Intent intent = IntentUtils.newIntent(this, TrackRecordingActivity.class)
-                    .putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, getRecordingTrackId());
+                    .putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, recordingStatus.getTrackId());
             PendingIntent pendingIntent = TaskStackBuilder.create(this)
                     .addParentStack(TrackRecordingActivity.class)
                     .addNextIntent(intent)
@@ -423,6 +414,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             stopForeground(true);
             notificationManager.cancelNotification();
         }
+    }
+
+    public Duration getTotalTime() {
+        return trackRecordingManager.getTrackStatistics().getTotalTime();
     }
 
     @Deprecated

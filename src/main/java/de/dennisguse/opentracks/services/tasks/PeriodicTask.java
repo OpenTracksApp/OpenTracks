@@ -18,7 +18,8 @@ package de.dennisguse.opentracks.services.tasks;
 
 import androidx.annotation.NonNull;
 
-import de.dennisguse.opentracks.services.TrackRecordingService;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
  * This is interface for a task that will be executed on some schedule.
@@ -34,12 +35,9 @@ public interface PeriodicTask {
 
     /**
      * This method will be called periodically.
-     *
-     * @param trackRecordingService the track recording service
      */
     @Deprecated
-    //TODO Pass actual data instead of TrackRecordingService
-    void run(@NonNull TrackRecordingService trackRecordingService);
+    void run(@NonNull Track.Id trackId, @NonNull TrackStatistics trackStatistics);
 
     /**
      * Shuts down this task and clean up resources.

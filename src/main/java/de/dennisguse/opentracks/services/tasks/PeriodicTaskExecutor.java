@@ -24,6 +24,7 @@ import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
@@ -55,6 +56,7 @@ public class PeriodicTaskExecutor {
 
     private boolean metricUnits;
 
+    private TrackStatistics trackStatistics;
     private Distance nextTaskDistance = Distance.of(Double.MAX_VALUE);
 
     public PeriodicTaskExecutor(@NonNull TrackRecordingService trackRecordingService, PeriodicTaskFactory periodicTaskFactory) {
@@ -84,12 +86,6 @@ public class PeriodicTaskExecutor {
         }
 
         periodicTask = periodicTaskFactory.create(trackRecordingService);
-
-        // Returning null is ok
-        if (periodicTask == null) {
-            Log.d(TAG, "Periodic task is null.");
-            return;
-        }
         periodicTask.start();
 
         if (isTimeFrequency()) {
@@ -120,18 +116,14 @@ public class PeriodicTaskExecutor {
     /**
      * Updates the executor.
      */
-    public void update() {
+    public void update(@NonNull Track.Id trackId, @NonNull TrackStatistics trackStatistics) {
         if (!isDistanceFrequency() || periodicTask == null) {
             return;
         }
 
-        TrackStatistics trackStatistics = trackRecordingService.getTrackStatistics();
-        if (trackStatistics == null) {
-            return;
-        }
-
         if (trackStatistics.getTotalDistance().greaterThan(nextTaskDistance)) {
-            periodicTask.run(trackRecordingService);
+            periodicTask.run(trackId, trackStatistics);
+            this.trackStatistics = trackStatistics;
             updateNextTaskDistance();
         }
     }
@@ -157,7 +149,6 @@ public class PeriodicTaskExecutor {
             return;
         }
 
-        TrackStatistics trackStatistics = trackRecordingService.getTrackStatistics();
         if (trackStatistics == null) {
             return;
         }
