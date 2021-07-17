@@ -96,7 +96,7 @@ public class TrackRecordingServiceTestLocation {
 
         service = ((TrackRecordingService.Binder) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)))
                 .getService();
-        service.stopProcessingGPS();
+        service.getHandlerServer().stopGPS();
     }
 
     @After

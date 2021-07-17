@@ -654,15 +654,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         return handlerServer;
     }
 
-    /**
-     * To mock locations (to not get it from GPS).
-     */
-    @Deprecated
-    @VisibleForTesting
-    public void stopProcessingGPS() {
-        handlerServer.stopGPS();
-    }
-
     public LiveData<GpsStatusValue> getGpsStatusObservable() {
         return gpsStatusObservable;
     }
