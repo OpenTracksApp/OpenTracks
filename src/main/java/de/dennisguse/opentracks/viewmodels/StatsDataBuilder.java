@@ -22,7 +22,9 @@ import de.dennisguse.opentracks.util.StringUtils;
 public class StatsDataBuilder {
 
     public static List<StatsData> fromRecordingData(@NonNull Context context, @NonNull TrackRecordingService.RecordingData recordingData, @NonNull Layout layout, boolean metricUnits) {
-        return layout.getFields().stream().filter(Layout.Field::isVisible).map(i -> StatsDataBuilder.build(context, recordingData, i, metricUnits)).filter(Objects::nonNull).collect(Collectors.toList());
+        List<StatsData> statsDataList = layout.getFields().stream().filter(Layout.Field::isVisible).map(i -> StatsDataBuilder.build(context, recordingData, i, metricUnits)).filter(Objects::nonNull).collect(Collectors.toList());
+        statsDataList.addAll(getSensorStatsDataIfNeeded(context, statsDataList, recordingData));
+        return statsDataList;
     }
 
     private static StatsData build(@NonNull Context context, @NonNull TrackRecordingService.RecordingData recordingData, @NonNull Layout.Field field, boolean metricUnits) {
@@ -120,6 +122,45 @@ public class StatsDataBuilder {
         }
 
         return data;
+    }
+
+    /**
+     * Builds a list of StatsData with sensors connected but not in statsDataList.
+     *
+     * @param context       the Context object.
+     * @param statsDataList list of StatsData already added by the user.
+     * @param recordingData the RecordingData object.
+     * @return              list of StatsData with sensor information not present in statsDataList.
+     */
+    private static List<StatsData> getSensorStatsDataIfNeeded(Context context, List<StatsData> statsDataList, TrackRecordingService.RecordingData recordingData) {
+        List<StatsData> sensorDataList = new ArrayList<>();
+        SensorDataSet sensorDataSet = recordingData.getSensorDataSet();
+        if (statsDataList.stream().noneMatch(i -> i.getDescMain().equals(context.getString(R.string.stats_sensors_heart_rate))) && sensorDataSet != null && sensorDataSet.getHeartRate() != null && sensorDataSet.getHeartRate().hasValue() && sensorDataSet.getHeartRate().isRecent()) {
+            sensorDataList.add(new StatsData(
+                    StringUtils.formatDecimal(sensorDataSet.getHeartRate().getValue(), 0),
+                    context.getString(R.string.sensor_unit_beats_per_minute),
+                    context.getString(R.string.stats_sensors_heart_rate),
+                    sensorDataSet.getHeartRate().getSensorNameOrAddress(),
+                    true));
+        }
+        if (statsDataList.stream().noneMatch(i -> i.getDescMain().equals(context.getString(R.string.stats_sensors_cadence))) && sensorDataSet != null && sensorDataSet.getCyclingCadence() != null && sensorDataSet.getCyclingCadence().hasValue() && sensorDataSet.getCyclingCadence().isRecent()) {
+            sensorDataList.add(new StatsData(
+                    StringUtils.formatDecimal(sensorDataSet.getCyclingCadence().getValue(), 0),
+                    context.getString(R.string.sensor_unit_rounds_per_minute),
+                    context.getString(R.string.stats_sensors_cadence),
+                    sensorDataSet.getCyclingCadence().getSensorNameOrAddress(),
+                    true));
+        }
+        if (statsDataList.stream().noneMatch(i -> i.getDescMain().equals(context.getString(R.string.stats_sensors_power))) && sensorDataSet != null && sensorDataSet.getCyclingPower() != null && sensorDataSet.getCyclingPower().hasValue() && sensorDataSet.getCyclingPower().isRecent()) {
+            sensorDataList.add(new StatsData(
+                    StringUtils.formatDecimal(sensorDataSet.getCyclingPower().getValue(), 0),
+                    context.getString(R.string.sensor_unit_power),
+                    context.getString(R.string.stats_sensors_power),
+                    sensorDataSet.getCyclingPower().getSensorNameOrAddress(),
+                    true));
+        }
+
+        return sensorDataList;
     }
 
     public static List<StatsData> fromSensorStatistics(@NonNull Context context, @NonNull SensorStatistics sensorStatistics) {

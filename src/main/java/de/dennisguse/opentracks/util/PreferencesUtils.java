@@ -366,12 +366,12 @@ public class PreferencesUtils {
 
     public static void resetCustomLayoutPreferences(Context context) {
         SharedPreferences settings = getSharedPreferences(context);
-        if(settings.contains(context.getString(R.string.stats_custom_layout_fields_key))) {
+        if (settings.contains(context.getString(R.string.stats_custom_layout_fields_key))) {
             SharedPreferences.Editor editor = settings.edit();
             editor.remove(context.getString(R.string.stats_custom_layout_fields_key));
             editor.commit();
         }
-        if(settings.contains(context.getString(R.string.stats_custom_layout_columns_key))) {
+        if (settings.contains(context.getString(R.string.stats_custom_layout_columns_key))) {
             SharedPreferences.Editor editor = settings.edit();
             editor.remove(context.getString(R.string.stats_custom_layout_columns_key));
             editor.commit();

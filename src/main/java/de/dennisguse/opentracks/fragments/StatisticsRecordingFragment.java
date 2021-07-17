@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.adapters.SettingsCustomLayoutAdapter;
 import de.dennisguse.opentracks.adapters.StatsAdapter;
 import de.dennisguse.opentracks.content.data.Layout;
 import de.dennisguse.opentracks.content.data.Track;
