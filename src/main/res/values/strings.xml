@@ -197,6 +197,8 @@ limitations under the License.
     <string name="description_time">Time</string>
     <string name="description_total_distance">Total distance: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Total time: %1$s</string>
+    <string name="description_speed_source_sensor">Sensor: %1$s</string>
+    <string name="description_speed_source_gps">GPS</string>
     <!-- Export -->
     <string name="export_all_option">All as %1$s</string>
     <string name="export_all_title">Export to external storage</string>

@@ -51,11 +51,11 @@ public class StatsDataBuilderTest extends TestCase {
 
         // given
         Layout layout = new Layout(context.getString(R.string.default_activity_default));
-        layout.addField(context.getString(R.string.stats_total_time), true, true);
-        layout.addField(context.getString(R.string.stats_moving_time), true, true);
-        layout.addField(context.getString(R.string.stats_distance), true, true);
-        layout.addField(context.getString(R.string.stats_speed), false, true);
-        layout.addField(context.getString(R.string.stats_max_speed), false, true);
+        layout.addField(context.getString(R.string.stats_total_time), true, true, false);
+        layout.addField(context.getString(R.string.stats_moving_time), true, true, false);
+        layout.addField(context.getString(R.string.stats_distance), true, true, false);
+        layout.addField(context.getString(R.string.stats_speed), false, true, false);
+        layout.addField(context.getString(R.string.stats_max_speed), false, true, false);
 
         // when
         List<StatsData> statsDataList = StatsDataBuilder.fromRecordingData(context, recordingDataMock, layout, true);
@@ -77,31 +77,30 @@ public class StatsDataBuilderTest extends TestCase {
 
         // given
         Layout layout = new Layout(context.getString(R.string.default_activity_default));
-        layout.addField(context.getString(R.string.stats_total_time), true, true);
-        layout.addField(context.getString(R.string.stats_moving_time), true, true);
-        layout.addField(context.getString(R.string.stats_distance), true, true);
-        layout.addField(context.getString(R.string.stats_speed), true, true);
-        layout.addField(context.getString(R.string.stats_average_moving_speed), true, true);
-        layout.addField(context.getString(R.string.stats_average_speed), true, true);
-        layout.addField(context.getString(R.string.stats_max_speed), true, true);
-        layout.addField(context.getString(R.string.stats_pace), true, true);
-        layout.addField(context.getString(R.string.stats_average_moving_pace), true, true);
-        layout.addField(context.getString(R.string.stats_average_pace), true, true);
-        layout.addField(context.getString(R.string.stats_fastest_pace), true, true);
-        layout.addField(context.getString(R.string.stats_altitude), true, true);
-        layout.addField(context.getString(R.string.stats_gain), true, true);
-        layout.addField(context.getString(R.string.stats_loss), true, true);
-        layout.addField(context.getString(R.string.stats_latitude), true, true);
-        layout.addField(context.getString(R.string.stats_longitude), true, true);
-        layout.addField(context.getString(R.string.stats_sensors_heart_rate), true, true);
-        layout.addField(context.getString(R.string.stats_sensors_cadence), true, true);
-        layout.addField(context.getString(R.string.stats_sensors_power), true, true);
+        layout.addField(context.getString(R.string.stats_total_time), true, true, false);
+        layout.addField(context.getString(R.string.stats_moving_time), true, true, false);
+        layout.addField(context.getString(R.string.stats_distance), true, true, false);
+        layout.addField(context.getString(R.string.stats_speed), true, true, false);
+        layout.addField(context.getString(R.string.stats_average_moving_speed), true, true, false);
+        layout.addField(context.getString(R.string.stats_average_speed), true, true, false);
+        layout.addField(context.getString(R.string.stats_max_speed), true, true, false);
+        layout.addField(context.getString(R.string.stats_pace), true, true, false);
+        layout.addField(context.getString(R.string.stats_average_moving_pace), true, true, false);
+        layout.addField(context.getString(R.string.stats_average_pace), true, true, false);
+        layout.addField(context.getString(R.string.stats_fastest_pace), true, true, false);
+        layout.addField(context.getString(R.string.stats_altitude), true, true, false);
+        layout.addField(context.getString(R.string.stats_gain), true, true, false);
+        layout.addField(context.getString(R.string.stats_loss), true, true, false);
+        layout.addField(context.getString(R.string.stats_coordinates), true, true, false);
+        layout.addField(context.getString(R.string.stats_sensors_heart_rate), true, true, false);
+        layout.addField(context.getString(R.string.stats_sensors_cadence), true, true, false);
+        layout.addField(context.getString(R.string.stats_sensors_power), true, true, false);
 
         // when
         List<StatsData> statsDataList = StatsDataBuilder.fromRecordingData(context, recordingDataMock, layout, true);
 
         // then
-        assertEquals(statsDataList.size(), 19);
+        assertEquals(statsDataList.size(), 18);
         assertTrue(statsDataList.stream().anyMatch(i -> i.getDescMain().equals(context.getString(R.string.stats_total_time))));
         assertTrue(statsDataList.stream().anyMatch(i -> i.getDescMain().equals(context.getString(R.string.stats_moving_time))));
         assertTrue(statsDataList.stream().anyMatch(i -> i.getDescMain().equals(context.getString(R.string.stats_distance))));
@@ -116,8 +115,7 @@ public class StatsDataBuilderTest extends TestCase {
         assertTrue(statsDataList.stream().anyMatch(i -> i.getDescMain().equals(context.getString(R.string.stats_altitude))));
         assertTrue(statsDataList.stream().anyMatch(i -> i.getDescMain().equals(context.getString(R.string.stats_gain))));
         assertTrue(statsDataList.stream().anyMatch(i -> i.getDescMain().equals(context.getString(R.string.stats_loss))));
-        assertTrue(statsDataList.stream().anyMatch(i -> i.getDescMain().equals(context.getString(R.string.stats_latitude))));
-        assertTrue(statsDataList.stream().anyMatch(i -> i.getDescMain().equals(context.getString(R.string.stats_longitude))));
+        assertTrue(statsDataList.stream().anyMatch(i -> i.getDescMain().equals(context.getString(R.string.stats_coordinates))));
         assertTrue(statsDataList.stream().anyMatch(i -> i.getDescMain().equals(context.getString(R.string.stats_sensors_heart_rate))));
         assertTrue(statsDataList.stream().anyMatch(i -> i.getDescMain().equals(context.getString(R.string.stats_sensors_cadence))));
         assertTrue(statsDataList.stream().anyMatch(i -> i.getDescMain().equals(context.getString(R.string.stats_sensors_power))));

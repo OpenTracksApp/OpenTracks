@@ -31,57 +31,60 @@ public class StatsDataBuilder {
         StatsData data = null;
 
         if (field.getTitle().equals(context.getString(R.string.stats_total_time))) {
-            data = new StatsData(StringUtils.formatElapsedTime(recordingData.getTrackStatistics().getTotalTime()), context.getString(R.string.stats_total_time), field.isPrimary());
+            data = new StatsData(StringUtils.formatElapsedTime(recordingData.getTrackStatistics().getTotalTime()), field.getTitle(), field.isPrimary());
         } else if (field.getTitle().equals(context.getString(R.string.stats_moving_time))) {
-            data = new StatsData(StringUtils.formatElapsedTime(recordingData.getTrackStatistics().getMovingTime()), context.getString(R.string.stats_moving_time), field.isPrimary());
+            data = new StatsData(StringUtils.formatElapsedTime(recordingData.getTrackStatistics().getMovingTime()), field.getTitle(), field.isPrimary());
         } else if (field.getTitle().equals(context.getString(R.string.stats_distance))) {
-            data = new StatsData(StringUtils.getDistanceParts(context, recordingData.getTrackStatistics().getTotalDistance(), metricUnits), context.getString(R.string.stats_distance), field.isPrimary());
-        } else if (field.getTitle().equals(context.getString(R.string.stats_speed))) {
+            data = new StatsData(StringUtils.getDistanceParts(context, recordingData.getTrackStatistics().getTotalDistance(), metricUnits), field.getTitle(), field.isPrimary());
+        } else if (field.getTitle().equals(context.getString(R.string.stats_speed)) || field.getTitle().equals(context.getString(R.string.stats_pace))) {
+            boolean reportSpeed = field.getTitle().equals(context.getString(R.string.stats_speed));
             TrackPoint latestTrackPoint = recordingData.getLatestTrackPoint();
             Speed speed = latestTrackPoint != null && latestTrackPoint.hasSpeed() ? latestTrackPoint.getSpeed() : null;
 
             SensorDataSet sensorDataSet = recordingData.getSensorDataSet();
             if (sensorDataSet != null && sensorDataSet.getCyclingDistanceSpeed() != null && sensorDataSet.getCyclingDistanceSpeed().hasValue() && sensorDataSet.getCyclingDistanceSpeed().isRecent()) {
-                speed = sensorDataSet.getCyclingDistanceSpeed().getValue().speed;
+                Pair<String, String> valueAndUnit = StringUtils.getSpeedParts(context, sensorDataSet.getCyclingDistanceSpeed().getValue().speed, metricUnits, reportSpeed);
+                data = new StatsData(
+                        valueAndUnit.first,
+                        valueAndUnit.second,
+                        field.getTitle(),
+                        context.getString(R.string.description_speed_source_sensor, sensorDataSet.getCyclingDistanceSpeed().getSensorNameOrAddress()),
+                        field.isPrimary());
+            } else {
+                Pair<String, String> valueAndUnit = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
+                data = new StatsData(
+                        valueAndUnit.first,
+                        valueAndUnit.second,
+                        field.getTitle(),
+                        context.getString(R.string.description_speed_source_gps),
+                        field.isPrimary());
             }
-
-            data = new StatsData(StringUtils.getSpeedParts(context, speed, metricUnits, true), context.getString(R.string.stats_speed), field.isPrimary());
         } else if (field.getTitle().equals(context.getString(R.string.stats_average_moving_speed))) {
-            data = new StatsData(StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getAverageMovingSpeed(), metricUnits, true), context.getString(R.string.stats_average_moving_speed), field.isPrimary());
+            data = new StatsData(StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getAverageMovingSpeed(), metricUnits, true), field.getTitle(), field.isPrimary());
         } else if (field.getTitle().equals(context.getString(R.string.stats_average_speed))) {
-            data = new StatsData(StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getAverageSpeed(), metricUnits, true), context.getString(R.string.stats_average_speed), field.isPrimary());
+            data = new StatsData(StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getAverageSpeed(), metricUnits, true), field.getTitle(), field.isPrimary());
         } else if (field.getTitle().equals(context.getString(R.string.stats_max_speed))) {
-            data = new StatsData(StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getMaxSpeed(), metricUnits, true), context.getString(R.string.stats_max_speed), field.isPrimary());
-        } else if (field.getTitle().equals(context.getString(R.string.stats_pace))) {
-            TrackPoint latestTrackPoint = recordingData.getLatestTrackPoint();
-            Speed speed = latestTrackPoint != null && latestTrackPoint.hasSpeed() ? latestTrackPoint.getSpeed() : null;
-
-            SensorDataSet sensorDataSet = recordingData.getSensorDataSet();
-            if (sensorDataSet != null && sensorDataSet.getCyclingDistanceSpeed() != null && sensorDataSet.getCyclingDistanceSpeed().hasValue() && sensorDataSet.getCyclingDistanceSpeed().isRecent()) {
-                speed = sensorDataSet.getCyclingDistanceSpeed().getValue().speed;
-            }
-
-            data = new StatsData(StringUtils.getSpeedParts(context, speed, metricUnits, false), context.getString(R.string.stats_pace), field.isPrimary());
+            data = new StatsData(StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getMaxSpeed(), metricUnits, true), field.getTitle(), field.isPrimary());
         } else if (field.getTitle().equals(context.getString(R.string.stats_average_moving_pace))) {
-            data = new StatsData(StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getAverageMovingSpeed(), metricUnits, false), context.getString(R.string.stats_average_moving_pace), field.isPrimary());
+            data = new StatsData(StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getAverageMovingSpeed(), metricUnits, false), field.getTitle(), field.isPrimary());
         } else if (field.getTitle().equals(context.getString(R.string.stats_average_pace))) {
-            data = new StatsData(StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getAverageSpeed(), metricUnits, false), context.getString(R.string.stats_average_pace), field.isPrimary());
+            data = new StatsData(StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getAverageSpeed(), metricUnits, false), field.getTitle(), field.isPrimary());
         } else if (field.getTitle().equals(context.getString(R.string.stats_fastest_pace))) {
-            data = new StatsData(StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getMaxSpeed(), metricUnits, true), context.getString(R.string.stats_fastest_pace), field.isPrimary());
+            data = new StatsData(StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getMaxSpeed(), metricUnits, true), field.getTitle(), field.isPrimary());
         } else if (field.getTitle().equals(context.getString(R.string.stats_altitude))) {
             TrackPoint latestTrackPoint = recordingData.getLatestTrackPoint();
             Float altitude = latestTrackPoint != null && latestTrackPoint.hasAltitude() ? (float) latestTrackPoint.getAltitude().toM() : null;
-            data = new StatsData(StringUtils.getAltitudeParts(context, altitude, metricUnits), context.getString(R.string.stats_altitude), field.isPrimary());
+            data = new StatsData(StringUtils.getAltitudeParts(context, altitude, metricUnits), field.getTitle(), field.isPrimary());
         } else if (field.getTitle().equals(context.getString(R.string.stats_gain))) {
-            data = new StatsData(StringUtils.getAltitudeParts(context, recordingData.getTrackStatistics().getTotalAltitudeGain(), metricUnits), context.getString(R.string.stats_gain), field.isPrimary());
+            data = new StatsData(StringUtils.getAltitudeParts(context, recordingData.getTrackStatistics().getTotalAltitudeGain(), metricUnits), field.getTitle(), field.isPrimary());
         } else if (field.getTitle().equals(context.getString(R.string.stats_loss))) {
-            data = new StatsData(StringUtils.getAltitudeParts(context, recordingData.getTrackStatistics().getTotalAltitudeLoss(), metricUnits), context.getString(R.string.stats_loss), field.isPrimary());
+            data = new StatsData(StringUtils.getAltitudeParts(context, recordingData.getTrackStatistics().getTotalAltitudeLoss(), metricUnits), field.getTitle(), field.isPrimary());
         } else if (field.getTitle().equals(context.getString(R.string.stats_coordinates))) {
             TrackPoint latestTrackPoint = recordingData.getLatestTrackPoint();
             if (latestTrackPoint != null && latestTrackPoint.hasLocation()) {
-                data = new StatsData(StringUtils.formatCoordinate(latestTrackPoint.getLatitude(), latestTrackPoint.getLongitude()), context.getString(R.string.stats_coordinates), field.isPrimary()).setLong();
+                data = new StatsData(StringUtils.formatCoordinate(latestTrackPoint.getLatitude(), latestTrackPoint.getLongitude()), field.getTitle(), field.isPrimary()).setLong();
             } else {
-                data = new StatsData("-", context.getString(R.string.stats_coordinates), field.isPrimary()).setLong();
+                data = new StatsData("-", field.getTitle(), field.isPrimary()).setLong();
             }
         } else if (field.getTitle().equals(context.getString(R.string.stats_sensors_heart_rate))) {
             SensorDataSet sensorDataSet = recordingData.getSensorDataSet();
@@ -89,11 +92,11 @@ public class StatsDataBuilder {
                 data = new StatsData(
                         StringUtils.formatDecimal(sensorDataSet.getHeartRate().getValue(), 0),
                         context.getString(R.string.sensor_unit_beats_per_minute),
-                        context.getString(R.string.stats_sensors_heart_rate),
+                        field.getTitle(),
                         sensorDataSet.getHeartRate().getSensorNameOrAddress(),
                         field.isPrimary());
             } else {
-                data = new StatsData("-", context.getString(R.string.sensor_unit_beats_per_minute), context.getString(R.string.stats_sensors_heart_rate), "-", field.isPrimary());
+                data = new StatsData("-", context.getString(R.string.sensor_unit_beats_per_minute), field.getTitle(), "-", field.isPrimary());
             }
         } else if (field.getTitle().equals(context.getString(R.string.stats_sensors_cadence))) {
             SensorDataSet sensorDataSet = recordingData.getSensorDataSet();
@@ -101,11 +104,11 @@ public class StatsDataBuilder {
                 data = new StatsData(
                         StringUtils.formatDecimal(sensorDataSet.getCyclingCadence().getValue(), 0),
                         context.getString(R.string.sensor_unit_rounds_per_minute),
-                        context.getString(R.string.stats_sensors_cadence),
+                        field.getTitle(),
                         sensorDataSet.getCyclingCadence().getSensorNameOrAddress(),
                         field.isPrimary());
             } else {
-                data = new StatsData("-", context.getString(R.string.sensor_unit_rounds_per_minute), context.getString(R.string.stats_sensors_cadence), "-", field.isPrimary());
+                data = new StatsData("-", context.getString(R.string.sensor_unit_rounds_per_minute), field.getTitle(), "-", field.isPrimary());
             }
         } else if (field.getTitle().equals(context.getString(R.string.stats_sensors_power))) {
             SensorDataSet sensorDataSet = recordingData.getSensorDataSet();
@@ -113,11 +116,11 @@ public class StatsDataBuilder {
                 data = new StatsData(
                         StringUtils.formatDecimal(sensorDataSet.getCyclingPower().getValue(), 0),
                         context.getString(R.string.sensor_unit_power),
-                        context.getString(R.string.stats_sensors_power),
+                        field.getTitle(),
                         sensorDataSet.getCyclingPower().getSensorNameOrAddress(),
                         field.isPrimary());
             } else {
-                data = new StatsData("-", context.getString(R.string.sensor_unit_power), context.getString(R.string.stats_sensors_power), "-", field.isPrimary());
+                data = new StatsData("-", context.getString(R.string.sensor_unit_power), field.getTitle(), "-", field.isPrimary());
             }
         }
 

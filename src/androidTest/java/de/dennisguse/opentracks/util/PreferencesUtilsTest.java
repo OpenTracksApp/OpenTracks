@@ -123,10 +123,10 @@ public class PreferencesUtilsTest {
         // given
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         Layout layoutSrc = new Layout("road cycling");
-        layoutSrc.addField(new Layout.Field("Moving Time", true, true));
-        layoutSrc.addField(new Layout.Field("Distance", true, false));
-        layoutSrc.addField(new Layout.Field("Moving Avg. Speed", false, true));
-        layoutSrc.addField(new Layout.Field("Speed", false, false));
+        layoutSrc.addField(new Layout.Field("Moving Time", true, true, false));
+        layoutSrc.addField(new Layout.Field("Distance", true, false, false));
+        layoutSrc.addField(new Layout.Field("Moving Avg. Speed", false, true, false));
+        layoutSrc.addField(new Layout.Field("Speed", false, false, false));
 
         // when
         PreferencesUtils.setCustomLayout(sharedPreferences, context, layoutSrc);
