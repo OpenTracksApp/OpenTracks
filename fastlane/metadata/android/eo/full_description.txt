@@ -1,11 +1,11 @@
-OpenTracks estas sporto spuranta aplikon kiu tute respektas vian privatecon.
+OpenTracks estas aplikaĵo por registri vian sportan aktivecon, kiu plene respektas vian privatecon.
 
-Karakterizaĵoj:
-* Sporto spurado: spuri via sporto kaj subĉielaj aktivecoj
-* Fotoj kaj signoj: mark interesaj lokoj dum spurado
-* Altitudo akiro kaj perdo: tra barometric sentilo
-* Altitudo montrita en EGM2008 (supre signifas marnivelo); eksportita kiel WGS84
-* # Vo? o anoncoj
-* Elportas Bluetooth LE sentiloj: koro imposto, rapido kaj distanco (biciklado), kadenco (biciklado), kaj potenco metro (biciklado)
-* Eksportado datumoj: eksporti vojetoj aŭ kiel KMZ (incl. fotoj), KML, aŭ GPX
-* Neniu aliro al Interreto: Internet ne estas uzita
+Eblaĵoj:
+• registri vian sportan kaj alian aktivecon eksterdome
+• fotoj kaj markoj: marki interesajn lokojn dum registri aktivecon
+• registri ŝanĝon de altitudo uzante barometron
+• montri altitudon en EGM2008 ()super averaĝa marnivelo); elporti ilin kiel WGS84
+• voĉaj anoncoj
+• subteno por sentiloj BLE por registri vian pulson; rapidon, veturigitan distancon, pedal-rapidon, povumon (biciklado)
+• elporti datumojn al dosieroj KMZ (kun fotoj), KML aŭ GPX
+• funkcias malkonekte: interreta permeso ne estas uzata
