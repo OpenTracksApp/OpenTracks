@@ -37,6 +37,8 @@ public interface PeriodicTask {
      *
      * @param trackRecordingService the track recording service
      */
+    @Deprecated
+    //TODO Pass actual data instead of TrackRecordingService
     void run(@NonNull TrackRecordingService trackRecordingService);
 
     /**

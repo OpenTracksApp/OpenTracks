@@ -243,9 +243,9 @@ public class ContentProviderUtils {
      * @param track the track
      * @return the content provider URI of the inserted track.
      */
-    ///TODO Return Track.Id
-    public Uri insertTrack(Track track) {
-        return contentResolver.insert(TracksColumns.CONTENT_URI, createContentValues(track));
+    public Track.Id insertTrack(Track track) {
+        Uri uri = contentResolver.insert(TracksColumns.CONTENT_URI, createContentValues(track));
+        return new Track.Id(ContentUris.parseId(uri));
     }
 
     /**

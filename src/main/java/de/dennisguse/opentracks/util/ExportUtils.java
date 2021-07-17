@@ -28,13 +28,13 @@ public class ExportUtils {
 
     private static final String TAG = ExportUtils.class.getSimpleName();
 
-    public static void postWorkoutExport(Context context, Track track, ExportServiceResultReceiver resultReceiver) {
+    public static void postWorkoutExport(Context context, Track.Id trackId, ExportServiceResultReceiver resultReceiver) {
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         if (PreferencesUtils.shouldInstantExportAfterWorkout(sharedPreferences, context)) {
             TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(sharedPreferences, context);
             DocumentFile directory = PreferencesUtils.getDefaultExportDirectoryUri(sharedPreferences, context);
 
-            ExportService.enqueue(context, resultReceiver, track.getId(), trackFileFormat, directory.getUri());
+            ExportService.enqueue(context, resultReceiver, trackId, trackFileFormat, directory.getUri());
         }
     }
 
