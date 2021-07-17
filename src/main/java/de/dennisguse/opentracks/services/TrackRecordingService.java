@@ -18,13 +18,10 @@ package de.dennisguse.opentracks.services;
 
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.database.sqlite.SQLiteException;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager.WakeLock;
@@ -38,7 +35,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.time.Duration;
-import java.time.Instant;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
@@ -47,7 +43,6 @@ import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.exporter.ExportServiceResultReceiver;
@@ -58,13 +53,10 @@ import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTask;
 import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.stats.TrackStatistics;
-import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
-import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.util.TrackNameUtils;
 
 /**
  * A background service that registers a location listener and records track points.
@@ -83,9 +75,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
     public static final GpsStatusValue STATUS_GPS_DEFAULT = GpsStatusValue.GPS_NONE;
 
     // The following variables are set in onCreate:
-    private ContentProviderUtils contentProviderUtils;
     private PeriodicTaskExecutor voiceExecutor;
     private TrackRecordingServiceNotificationManager notificationManager;
+
+    private TrackRecordingManager trackRecordingManager;
 
     private final EGM2008CorrectionManager egm2008CorrectionManager = new EGM2008CorrectionManager();
 
@@ -106,8 +99,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     private SharedPreferences sharedPreferences;
 
-    private Distance recordingDistanceInterval;
-    private Distance maxRecordingDistance;
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
@@ -120,27 +111,19 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             if (PreferencesUtils.isKey(context, R.string.voice_frequency_key, key)) {
                 voiceExecutor.setTaskFrequency(PreferencesUtils.getVoiceFrequency(sharedPreferences, context));
             }
-            if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
-                recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
-            }
-            if (PreferencesUtils.isKey(context, R.string.max_recording_distance_key, key)) {
-                maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(sharedPreferences, context);
-            }
+
 
             handlerServer.onSharedPreferenceChanged(sharedPreferences, key);
+            trackRecordingManager.onSharedPreferenceChanged(sharedPreferences, key);
         }
     };
 
     // The following variables are set when recording:
     private WakeLock wakeLock;
 
-    private TrackStatisticsUpdater trackStatisticsUpdater;
-    private TrackPoint lastTrackPoint;
-    private boolean isIdle;
-
     private final Binder binder = new Binder();
 
-    private HandlerServer handlerServer;
+    private HandlerServer handlerServer; //TODO Move to TrackRecordingManager?
 
     private RecordingStatus recordingStatus;
     private MutableLiveData<RecordingStatus> recordingStatusObservable;
@@ -158,9 +141,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         gpsStatusObservable = new MutableLiveData<>(STATUS_GPS_DEFAULT);
         recordingDataObservable = new MutableLiveData<>(NOT_RECORDING);
 
+        trackRecordingManager = new TrackRecordingManager(this);
         handlerServer = new HandlerServer(this);
 
-        contentProviderUtils = new ContentProviderUtils(this);
         voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTask.Factory());
 
         notificationManager = new TrackRecordingServiceNotificationManager(this);
@@ -199,8 +182,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             voiceExecutor = null;
         }
 
-        contentProviderUtils = null;
-
         // This should be the next to last operation
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
 
@@ -219,16 +200,18 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         return recordingStatus.isPaused();
     }
 
+    @Deprecated //TODO Only used by announcements; pass data instead of reference
     public Track.Id getRecordingTrackId() {
         return recordingStatus.getTrackId();
     }
 
-    //TODO
+    @Deprecated //TODO Only used by announcements; pass data instead of reference
     public TrackStatistics getTrackStatistics() {
-        if (trackStatisticsUpdater == null) {
+        if (!isRecording()) {
             return null;
         }
-        return trackStatisticsUpdater.getTrackStatistics();
+
+        return trackRecordingManager.getTrackStatistics();
     }
 
     public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
@@ -236,31 +219,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return null;
         }
 
-        if (name == null) {
-            Integer nextMarkerNumber = contentProviderUtils.getNextMarkerNumber(getRecordingTrackId());
-            if (nextMarkerNumber == null) {
-                nextMarkerNumber = 1;
-            }
-            name = getString(R.string.marker_name_format, nextMarkerNumber + 1);
-        }
-
-        TrackPoint trackPoint = getLastValidTrackPointInCurrentSegment(getRecordingTrackId());
-        if (trackPoint == null) {
-            Log.i(TAG, "Could not create a marker as trackPoint is unknown.");
-            return null;
-        }
-
-        category = category != null ? category : "";
-        description = description != null ? description : "";
-        String icon = getString(R.string.marker_icon_url);
-        photoUrl = photoUrl != null ? photoUrl : "";
-
-        TrackStatistics stats = trackStatisticsUpdater.getTrackStatistics();
-
-        // Insert marker
-        Marker marker = new Marker(name, description, category, icon, getRecordingTrackId(), stats, trackPoint, photoUrl);
-        Uri uri = contentProviderUtils.insertMarker(marker);
-        return new Marker.Id(ContentUris.parseId(uri));
+        return trackRecordingManager.insertMarker(name, category, description, photoUrl);
     }
 
     /**
@@ -274,29 +233,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return null;
         }
 
-        // Insert a track
-        Track track = new Track();
-        Uri uri = contentProviderUtils.insertTrack(track);
-        Track.Id trackId = new Track.Id(ContentUris.parseId(uri));
-
         // Set recording status
+        Track.Id trackId = trackRecordingManager.start(handlerServer.createSegmentStartManual());
         updateRecordingStatus(new RecordingStatus(trackId, false));
-
-        // Update database
-        track.setId(trackId);
-
-        TrackPoint segmentStartTrackPoint = handlerServer.createSegmentStartManual();
-        trackStatisticsUpdater = new TrackStatisticsUpdater();
-        insertTrackPoint(track, segmentStartTrackPoint);
-
-        //TODO Pass TrackPoint
-        track.setName(TrackNameUtils.getTrackName(this, trackId, segmentStartTrackPoint.getTime()));
-
-        String category = PreferencesUtils.getDefaultActivity(sharedPreferences, this);
-        track.setCategory(category);
-        track.setIcon(TrackIconUtils.getIconValue(this, category));
-        track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
-        contentProviderUtils.updateTrack(track);
 
         startRecording();
         return trackId;
@@ -309,17 +248,8 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
      * @param trackId the id of the track to be resumed.
      */
     public void resumeTrack(Track.Id trackId) {
-        Track track = contentProviderUtils.getTrack(trackId);
-        if (track == null) {
-            Log.e(TAG, "Ignore resumeTrack. Track " + trackId.getId() + " does not exists.");
-            return;
-        }
-
-        // Sync the real time setting the stop time with current time.
-        track.getTrackStatistics().setStopTime(Instant.now());
-        trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics());
-
-        insertTrackPoint(track, handlerServer.createSegmentStartManual());
+        handlerServer.resetSensorData();
+        trackRecordingManager.resume(trackId, handlerServer.createSegmentStartManual());
 
         // Set recording status
         updateRecordingStatus(new RecordingStatus(trackId, false));
@@ -334,30 +264,17 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        // Set recording status
-        updateRecordingStatus(new RecordingStatus(getRecordingTrackId(), false));
-
-        // Update database
-        Track track = contentProviderUtils.getTrack(getRecordingTrackId());
-        trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics());
-        insertTrackPoint(track, handlerServer.createSegmentStartManual());
-
-        startRecording();
+        resumeTrack(getRecordingTrackId());
     }
 
     /**
-     * Common code for starting a new track, resuming a track, or restarting after phone reboot.
+     * Common code for starting a new track or resuming a track.
      */
     private void startRecording() {
         // Update instance variables
         handler.postDelayed(updateRecordingData, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
 
-        lastTrackPoint = null;
-        isIdle = false;
-
         startGps();
-
-        handlerServer.resetSensorData();
 
         // Restore periodic tasks
         voiceExecutor.restore();
@@ -390,20 +307,10 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         updateRecordingStatus(STATUS_DEFAULT);
 
         if (!wasPause) {
-            // Update database
-            Track track = contentProviderUtils.getTrack(trackId);
-            if (track != null) {
-                if (lastTrackPoint != null) {
-                    insertTrackPointIfNewer(track, lastTrackPoint);
-                }
-
-                TrackPoint segmentEnd = handlerServer.createSegmentEnd();
-                insertTrackPoint(track, segmentEnd);
-            }
+            trackRecordingManager.end(handlerServer);
         }
 
-        Track track = contentProviderUtils.getTrack(trackId);
-        ExportUtils.postWorkoutExport(this, track, new ExportServiceResultReceiver(new Handler(), this));
+        ExportUtils.postWorkoutExport(this, trackId, new ExportServiceResultReceiver(new Handler(), this));
 
         endRecording(true);
     }
@@ -418,14 +325,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         // Set recording status
         updateRecordingStatus(new RecordingStatus(getRecordingTrackId(), true));
 
-        // Update database
-        Track track = contentProviderUtils.getTrack(getRecordingTrackId());
-        if (track != null) {
-            if (lastTrackPoint != null) {
-                insertTrackPointIfNewer(track, lastTrackPoint);
-            }
-            insertTrackPoint(track, handlerServer.createSegmentEnd());
-        }
+        trackRecordingManager.pause(handlerServer);
 
         endRecording(false);
 
@@ -449,8 +349,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         voiceExecutor.shutdown();
 
         // Update instance variables
-        lastTrackPoint = null;
-
         handlerServer.stop();
 
         stopGps(trackStopped);
@@ -476,23 +374,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         }
     }
 
-    /**
-     * Gets the last valid track point in the current segment.
-     *
-     * @param trackId the track id
-     * @return the location or null
-     */
-    private TrackPoint getLastValidTrackPointInCurrentSegment(Track.Id trackId) {
-        if (!currentSegmentHasTrackPoint()) {
-            return null;
-        }
-        return contentProviderUtils.getLastValidTrackPoint(trackId);
-    }
-
-    private boolean currentSegmentHasTrackPoint() {
-        return lastTrackPoint != null;
-    }
-
     @Override
     public void newTrackPoint(TrackPoint trackPoint, Distance thresholdHorizontalAccuracy) {
         if (!isRecording() || isPaused()) {
@@ -500,73 +381,9 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        Track track = contentProviderUtils.getTrack(getRecordingTrackId());
-        if (track == null) {
-            Log.w(TAG, "Ignore newTrackPoint. No track.");
-            return;
-        }
-
-        notificationManager.updateTrackPoint(this, track.getTrackStatistics(), trackPoint, thresholdHorizontalAccuracy);
-
-        //TODO Figure out how to avoid loading the lastValidTrackPoint from the database
-        TrackPoint lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(track.getId());
-
-        //Storing trackPoint
-
-        // Always insert the first segment location
-        if (!currentSegmentHasTrackPoint()) {
-            insertTrackPoint(track, trackPoint);
-            lastTrackPoint = trackPoint;
-            return;
-        }
-
-        Distance distanceToLastTrackLocation = trackPoint.distanceToPrevious(lastValidTrackPoint);
-        if (distanceToLastTrackLocation.greaterThan(maxRecordingDistance)) {
-            insertTrackPointIfNewer(track, lastTrackPoint);
-
-            trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
-            insertTrackPoint(track, trackPoint);
-
-            isIdle = false;
-            lastTrackPoint = trackPoint;
-            return;
-        }
-
-        if (trackPoint.hasSensorData() || distanceToLastTrackLocation.greaterOrEqualThan(recordingDistanceInterval)) {
-            insertTrackPointIfNewer(track, lastTrackPoint);
-
-            insertTrackPoint(track, trackPoint);
-
-            isIdle = false;
-
-            lastTrackPoint = trackPoint;
-            return;
-        }
-
-        if (!isIdle && !trackPoint.isMoving()) {
-            insertTrackPointIfNewer(track, lastTrackPoint);
-
-            insertTrackPoint(track, trackPoint);
-
-            isIdle = true;
-
-            lastTrackPoint = trackPoint;
-            return;
-        }
-
-        if (isIdle && trackPoint.isMoving()) {
-            insertTrackPointIfNewer(track, lastTrackPoint);
-
-            insertTrackPoint(track, trackPoint);
-
-            isIdle = false;
-
-            lastTrackPoint = trackPoint;
-            return;
-        }
-
-        Log.d(TAG, "Not recording TrackPoint, idle");
-        lastTrackPoint = trackPoint;
+        trackRecordingManager.onNewTrackPoint(trackPoint, thresholdHorizontalAccuracy);
+        notificationManager.updateTrackPoint(this, trackRecordingManager.getTrackStatistics(), trackPoint, thresholdHorizontalAccuracy);
+        voiceExecutor.update();
     }
 
     @Override
@@ -577,46 +394,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         if (gpsStatusObservable != null) {
             gpsStatusObservable.postValue(gpsStatusValue);
         }
-    }
-
-    /**
-     * Inserts a trackPoint if this trackPoint is different than lastValidTrackPoint.
-     *
-     * @param track      the track
-     * @param trackPoint the trackPoint
-     */
-    private void insertTrackPointIfNewer(@NonNull Track track, @NonNull TrackPoint trackPoint) {
-        TrackPoint lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(track.getId());
-        if (lastValidTrackPoint != null && trackPoint.getTime().equals(lastValidTrackPoint.getTime())) {
-            // Do not insert if inserted already
-            Log.w(TAG, "Ignore insertTrackPoint. trackPoint time same as last valid track point time.");
-            return;
-        }
-
-        insertTrackPoint(track, trackPoint);
-    }
-
-    /**
-     * Inserts a trackPoint.
-     *
-     * @param track      the track
-     * @param trackPoint the trackPoint
-     */
-    private void insertTrackPoint(@NonNull Track track, @NonNull TrackPoint trackPoint) {
-        try {
-            contentProviderUtils.insertTrackPoint(trackPoint, track.getId());
-            trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
-            track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
-
-            contentProviderUtils.updateTrack(track);
-        } catch (SQLiteException e) {
-            /*
-             * Insert failed, most likely because of SqlLite error code 5 (SQLite_BUSY).
-             * This is expected to happen extremely rarely (if our listener gets invoked twice at about the same time).
-             */
-            Log.w(TAG, "SQLiteException", e);
-        }
-        voiceExecutor.update();
     }
 
     private void showNotification(boolean isGpsStarted) {
@@ -667,7 +444,6 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             Log.w(TAG, "Currently not recording; cannot update data.");
             return;
         }
-        Track track = contentProviderUtils.getTrack(recordingStatus.getTrackId());
 
         // Compute temporary track statistics using sensorData and update time.
 
@@ -678,15 +454,11 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
             return;
         }
 
-        //TODO This somehow should happen in the HandlerServer as we create a new TrackPoint.
-        TrackStatisticsUpdater tmpTrackStatisticsUpdater = new TrackStatisticsUpdater(trackStatisticsUpdater);
-        Pair<TrackPoint, SensorDataSet> current = localHandlerServer.createCurrentTrackPoint(lastTrackPoint);
+        Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.get(handlerServer);
+        TrackPoint trackPoint = data.second.first;
+        egm2008CorrectionManager.correctAltitude(this, trackPoint);
 
-        egm2008CorrectionManager.correctAltitude(this, current.first);
-        tmpTrackStatisticsUpdater.addTrackPoint(current.first, recordingDistanceInterval);
-        track.setTrackStatistics(tmpTrackStatisticsUpdater.getTrackStatistics());
-
-        recordingDataObservable.postValue(new RecordingData(track, current.first, current.second));
+        recordingDataObservable.postValue(new RecordingData(data.first, trackPoint, data.second.second));
     }
 
     public LiveData<RecordingStatus> getRecordingStatusObservable() {

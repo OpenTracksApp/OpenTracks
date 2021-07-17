@@ -1,6 +1,5 @@
 package de.dennisguse.opentracks.io.file.importer;
 
-import android.content.ContentUris;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -149,8 +148,7 @@ public class TrackImporter {
         updater.addTrackPoints(trackPoints, recordingDistanceInterval);
         track.setTrackStatistics(updater.getTrackStatistics());
 
-        Uri trackUri = contentProviderUtils.insertTrack(track);
-        Track.Id trackId = new Track.Id(ContentUris.parseId(trackUri));
+        Track.Id trackId = contentProviderUtils.insertTrack(track);
 
         // Store TrackPoints
         adjustTrackPoints();
