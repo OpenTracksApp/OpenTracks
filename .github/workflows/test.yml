@@ -1,6 +1,6 @@
 #https://github.com/marketplace/actions/android-emulator-runner
 name: Test
-on: [push, pull_request]
+on: [ push ]
 jobs:
   test:
     runs-on: macos-latest
