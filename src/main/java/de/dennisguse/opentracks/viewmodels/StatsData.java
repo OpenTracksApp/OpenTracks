@@ -16,6 +16,14 @@ public class StatsData {
         this.isPrimary = isPrimary;
     }
 
+    public StatsData(String value, String unit, String descMain, String descSecondary, boolean isPrimary) {
+        this.value = value;
+        this.unit = unit;
+        this.descMain = descMain;
+        this.descSecondary = descSecondary;
+        this.isPrimary = isPrimary;
+    }
+
     public StatsData(Pair<String, String> valueAndUnit, String descMain, boolean isPrimary) {
         this.value = valueAndUnit.first;
         this.unit = valueAndUnit.second;
@@ -23,9 +31,9 @@ public class StatsData {
         this.isPrimary = isPrimary;
     }
 
-    public StatsData(String value, String unit, String descMain, String descSecondary, boolean isPrimary) {
-        this.value = value;
-        this.unit = unit;
+    public StatsData(Pair<String, String> valueAndUnit, String descMain, String descSecondary, boolean isPrimary) {
+        this.value = valueAndUnit.first;
+        this.unit = valueAndUnit.second;
         this.descMain = descMain;
         this.descSecondary = descSecondary;
         this.isPrimary = isPrimary;

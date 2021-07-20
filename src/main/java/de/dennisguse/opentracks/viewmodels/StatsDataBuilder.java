@@ -43,18 +43,14 @@ public class StatsDataBuilder {
 
             SensorDataSet sensorDataSet = recordingData.getSensorDataSet();
             if (sensorDataSet != null && sensorDataSet.getCyclingDistanceSpeed() != null && sensorDataSet.getCyclingDistanceSpeed().hasValue() && sensorDataSet.getCyclingDistanceSpeed().isRecent()) {
-                Pair<String, String> valueAndUnit = StringUtils.getSpeedParts(context, sensorDataSet.getCyclingDistanceSpeed().getValue().speed, metricUnits, reportSpeed);
                 data = new StatsData(
-                        valueAndUnit.first,
-                        valueAndUnit.second,
+                        StringUtils.getSpeedParts(context, sensorDataSet.getCyclingDistanceSpeed().getValue().speed, metricUnits, reportSpeed),
                         field.getTitle(),
                         context.getString(R.string.description_speed_source_sensor, sensorDataSet.getCyclingDistanceSpeed().getSensorNameOrAddress()),
                         field.isPrimary());
             } else {
-                Pair<String, String> valueAndUnit = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
                 data = new StatsData(
-                        valueAndUnit.first,
-                        valueAndUnit.second,
+                        StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed),
                         field.getTitle(),
                         context.getString(R.string.description_speed_source_gps),
                         field.isPrimary());
@@ -74,7 +70,8 @@ public class StatsDataBuilder {
         } else if (field.getTitle().equals(context.getString(R.string.stats_altitude))) {
             TrackPoint latestTrackPoint = recordingData.getLatestTrackPoint();
             Float altitude = latestTrackPoint != null && latestTrackPoint.hasAltitude() ? (float) latestTrackPoint.getAltitude().toM() : null;
-            data = new StatsData(StringUtils.getAltitudeParts(context, altitude, metricUnits), field.getTitle(), field.isPrimary());
+            String altitudeSource = latestTrackPoint != null && latestTrackPoint.hasAltitude() ? context.getString(latestTrackPoint.getAltitude().getLabelId()) : null;
+            data = new StatsData(StringUtils.getAltitudeParts(context, altitude, metricUnits), field.getTitle(), altitudeSource, field.isPrimary());
         } else if (field.getTitle().equals(context.getString(R.string.stats_gain))) {
             data = new StatsData(StringUtils.getAltitudeParts(context, recordingData.getTrackStatistics().getTotalAltitudeGain(), metricUnits), field.getTitle(), field.isPrimary());
         } else if (field.getTitle().equals(context.getString(R.string.stats_loss))) {
