@@ -28,7 +28,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
+import de.dennisguse.opentracks.content.sensor.SensorDataRunning;
 
 /**
  * Utilities for dealing with bluetooth devices.
@@ -53,6 +56,9 @@ public class BluetoothUtils {
 
     public static final UUID CYCLING_SPEED_CADENCE_SERVICE_UUID = new UUID(0x181600001000L, 0x800000805f9b34fbL);
     public static final UUID CYCLING_SPEED_CADENCE_MEASUREMENT_CHAR_UUID = new UUID(0x2A5B00001000L, 0x800000805f9b34fbL);
+
+    public static final UUID RUNNING_RUNNING_SPEED_CADENCE_UUID = new UUID(0x181400001000L, 0x800000805f9b34fbL);
+    public static final UUID RUNNING_RUNNING_SPEED_CADENCE_CHAR_UUID = new UUID(0x2A5300001000L, 0x800000805f9b34fbL);
 
     private static final String TAG = BluetoothUtils.class.getSimpleName();
 
@@ -135,5 +141,44 @@ public class BluetoothUtils {
         }
 
         return new SensorDataCycling.CadenceAndSpeed(address, sensorName, cadence, speed);
+    }
+
+    public static SensorDataRunning parseRunningSpeedAndCadence(String address, String sensorName, @NonNull BluetoothGattCharacteristic characteristic) {
+        // DOCUMENTATION https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.rsc_measurement.xml
+        int valueLength = characteristic.getValue().length;
+        if (valueLength == 0) {
+            return null;
+        }
+
+        int flags = characteristic.getValue()[0];
+        boolean hasStrideLength = (flags & 0x01) > 0;
+        boolean hasTotalDistance = (flags & 0x02) > 0;
+        boolean hasStatus = (flags & 0x03) > 0; // walking vs running
+
+        Speed speed = null;
+        Float cadence = null;
+        Distance totalDistance = null;
+
+        int index = 1;
+        if (valueLength - index >= 2) {
+            speed = Speed.of(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index) / 256f);
+        }
+
+        index = 3;
+        if (valueLength - index >= 1) {
+            cadence = Float.valueOf(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, index));
+        }
+
+        index = 4;
+        if (hasStrideLength && valueLength - index >= 2) {
+            Distance strideDistance = Distance.ofCM(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index));
+            index += 2;
+        }
+
+        if (hasTotalDistance && valueLength - index >= 2) {
+            totalDistance = Distance.ofDM(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index));
+        }
+
+        return new SensorDataRunning(address, sensorName, speed, cadence, totalDistance);
     }
 }

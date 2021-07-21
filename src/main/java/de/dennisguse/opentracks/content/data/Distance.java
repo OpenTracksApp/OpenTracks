@@ -25,7 +25,15 @@ public class Distance {
     }
 
     public static Distance ofMM(double distance_mm) {
-        return of(distance_mm * UnitConversions.MM_TO_M);
+        return of(0.001 * distance_mm);
+    }
+
+    public static Distance ofCM(double distance_cm) {
+        return of(0.01 * distance_cm);
+    }
+
+    public static Distance ofDM(double distance_dm) {
+        return of(0.1 * distance_dm);
     }
 
     public static Distance one(boolean metricUnit) {

@@ -31,6 +31,7 @@ import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingCadenceAndSpeedPreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingPowerPreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeHeartRatePreference;
+import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeRunningSpeedAndCadencePreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeSensorPreference;
 import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.BluetoothUtils;
@@ -252,6 +253,8 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
                 dialogFragment = BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(preference.getKey(), BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID);
             } else if (preference instanceof BluetoothLeCyclingPowerPreference) {
                 dialogFragment = BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(preference.getKey(), BluetoothUtils.CYCLING_POWER_UUID);
+            } else if (preference instanceof BluetoothLeRunningSpeedAndCadencePreference) {
+                dialogFragment = BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(preference.getKey(), BluetoothUtils.RUNNING_RUNNING_SPEED_CADENCE_UUID);
             }
 
             if (dialogFragment != null) {

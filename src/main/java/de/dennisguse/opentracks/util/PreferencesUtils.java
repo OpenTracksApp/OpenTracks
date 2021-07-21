@@ -177,6 +177,10 @@ public class PreferencesUtils {
         return getString(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_power_key, getBluetoothSensorAddressNone(context));
     }
 
+    public static String getBluetoothRunningSpeedAndCadenceAddress(SharedPreferences sharedPreferences, Context context) {
+        return getString(sharedPreferences, context, R.string.settings_sensor_bluetooth_running_speed_and_cadence_key, getBluetoothSensorAddressNone(context));
+    }
+
     public static boolean shouldShowStatsOnLockscreen(SharedPreferences sharedPreferences, Context context) {
         final boolean STATS_SHOW_ON_LOCKSCREEN_DEFAULT = context.getResources().getBoolean(R.bool.stats_show_on_lockscreen_while_recording_default);
         return getBoolean(sharedPreferences, context, R.string.stats_show_on_lockscreen_while_recording_key, STATS_SHOW_ON_LOCKSCREEN_DEFAULT);

@@ -34,13 +34,14 @@ import de.dennisguse.opentracks.content.sensor.SensorData;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataCyclingPower;
 import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
+import de.dennisguse.opentracks.content.sensor.SensorDataRunning;
 import de.dennisguse.opentracks.util.BluetoothUtils;
 
 /**
  * Manages connection to a Bluetooth LE sensor and subscribes for onChange-notifications.
  * Also parses the transferred data into {@link SensorDataObserver}.
  */
-public abstract class BluetoothConnectionManager {
+public abstract class BluetoothConnectionManager<DataType> {
 
     private static final String TAG = BluetoothConnectionManager.class.getSimpleName();
 
@@ -103,7 +104,7 @@ public abstract class BluetoothConnectionManager {
         public void onCharacteristicChanged(BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic) {
             Log.d(TAG, "Received data from " + gatt.getDevice().getAddress());
 
-            SensorData<?> sensorData = parsePayload(gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
+            SensorData<DataType> sensorData = parsePayload(gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
             if (sensorData != null) {
                 Log.d(TAG, "Decoded data from " + gatt.getDevice().getAddress() + ": " + sensorData);
                 observer.onChanged(sensorData);
@@ -148,14 +149,14 @@ public abstract class BluetoothConnectionManager {
         return address.equals(bluetoothGatt.getDevice().getAddress());
     }
 
-    protected abstract SensorData<?> createEmptySensorData(String address);
+    protected abstract SensorData<DataType> createEmptySensorData(String address);
 
     /**
      * @return null if data could not be parsed.
      */
-    protected abstract SensorData<?> parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic);
+    protected abstract SensorData<DataType> parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic);
 
-    public static class HeartRate extends BluetoothConnectionManager {
+    public static class HeartRate extends BluetoothConnectionManager<Float> {
 
         HeartRate(@NonNull SensorDataObserver observer) {
             super(BluetoothUtils.HEART_RATE_SERVICE_UUID, BluetoothUtils.HEART_RATE_MEASUREMENT_CHAR_UUID, observer);
@@ -174,7 +175,7 @@ public abstract class BluetoothConnectionManager {
         }
     }
 
-    public static class CyclingCadence extends BluetoothConnectionManager {
+    public static class CyclingCadence extends BluetoothConnectionManager<Float> {
 
         CyclingCadence(SensorDataObserver observer) {
             super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPEED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
@@ -205,7 +206,7 @@ public abstract class BluetoothConnectionManager {
         }
     }
 
-    public static class CyclingDistanceSpeed extends BluetoothConnectionManager {
+    public static class CyclingDistanceSpeed extends BluetoothConnectionManager<SensorDataCycling.DistanceSpeed.Data> {
 
         CyclingDistanceSpeed(SensorDataObserver observer) {
             super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPEED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
@@ -232,7 +233,7 @@ public abstract class BluetoothConnectionManager {
         }
     }
 
-    public static class CyclingPower extends BluetoothConnectionManager {
+    public static class CyclingPower extends BluetoothConnectionManager<Float> {
 
         CyclingPower(@NonNull SensorDataObserver observer) {
             super(BluetoothUtils.CYCLING_POWER_UUID, BluetoothUtils.CYCLING_POWER_MEASUREMENT_CHAR_UUID, observer);
@@ -248,6 +249,23 @@ public abstract class BluetoothConnectionManager {
             Integer cyclingPower = BluetoothUtils.parseCyclingPower(characteristic);
 
             return cyclingPower != null ? new SensorDataCyclingPower(address, sensorName, cyclingPower) : null;
+        }
+    }
+
+    public static class RunningSpeedAndCadence extends BluetoothConnectionManager<SensorDataRunning.Data> {
+
+        RunningSpeedAndCadence(@NonNull SensorDataObserver observer) {
+            super(BluetoothUtils.RUNNING_RUNNING_SPEED_CADENCE_UUID, BluetoothUtils.RUNNING_RUNNING_SPEED_CADENCE_CHAR_UUID, observer);
+        }
+
+        @Override
+        protected SensorDataRunning createEmptySensorData(String address) {
+            return new SensorDataRunning(address);
+        }
+
+        @Override
+        protected SensorDataRunning parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
+            return BluetoothUtils.parseRunningSpeedAndCadence(address, sensorName, characteristic);
         }
     }
 

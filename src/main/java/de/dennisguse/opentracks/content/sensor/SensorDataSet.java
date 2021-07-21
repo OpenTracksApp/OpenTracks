@@ -14,6 +14,8 @@ public final class SensorDataSet {
 
     private SensorDataCyclingPower cyclingPower;
 
+    private SensorDataRunning runningDistanceSpeedCadence;
+
     public SensorDataSet() {
     }
 
@@ -22,6 +24,7 @@ public final class SensorDataSet {
         this.cyclingCadence = toCopy.cyclingCadence;
         this.cyclingDistanceSpeed = toCopy.cyclingDistanceSpeed;
         this.cyclingPower = toCopy.cyclingPower;
+        this.runningDistanceSpeedCadence = toCopy.runningDistanceSpeedCadence;
     }
 
     public SensorDataHeartRate getHeartRate() {
@@ -40,6 +43,10 @@ public final class SensorDataSet {
         return cyclingPower;
     }
 
+    public SensorDataRunning getRunningDistanceSpeedCadence() {
+        return runningDistanceSpeedCadence;
+    }
+
     public void set(SensorData<?> data) {
         set(data, data);
     }
@@ -53,6 +60,7 @@ public final class SensorDataSet {
         this.cyclingCadence = null;
         this.cyclingDistanceSpeed = null;
         this.cyclingPower = null;
+        this.runningDistanceSpeedCadence = null;
     }
 
     public void fillTrackPoint(TrackPoint trackPoint) {
@@ -72,6 +80,12 @@ public final class SensorDataSet {
         if (cyclingPower != null && cyclingPower.hasValue()) {
             trackPoint.setPower(cyclingPower.getValue());
         }
+
+        if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasValue()) {
+            trackPoint.setSensorDistance(runningDistanceSpeedCadence.getValue().getDistance());
+            trackPoint.setSpeed(runningDistanceSpeedCadence.getValue().getSpeed());
+            trackPoint.setCyclingCadence_rpm(runningDistanceSpeedCadence.getValue().getCadence());
+        }
     }
 
     public void reset() {
@@ -79,6 +93,8 @@ public final class SensorDataSet {
         if (cyclingCadence != null) cyclingCadence.reset();
         if (cyclingDistanceSpeed != null) cyclingDistanceSpeed.reset();
         if (cyclingPower != null) cyclingPower.reset();
+
+        if (runningDistanceSpeedCadence != null) runningDistanceSpeedCadence.reset();
     }
 
     @NonNull
@@ -87,7 +103,8 @@ public final class SensorDataSet {
         return (getHeartRate() != null ? "" + getHeartRate() : "")
                 + (getCyclingCadence() != null ? " " + getCyclingCadence() : "")
                 + (getCyclingDistanceSpeed() != null ? " " + getCyclingDistanceSpeed() : "")
-                + (getCyclingPower() != null ? " " + getCyclingPower() : "");
+                + (getCyclingPower() != null ? " " + getCyclingPower() : "")
+                + (getRunningDistanceSpeedCadence() != null ? " " + getRunningDistanceSpeedCadence() : "");
     }
 
     private void set(@NonNull SensorData<?> type, SensorData<?> data) {
@@ -107,6 +124,11 @@ public final class SensorDataSet {
 
         if (type instanceof SensorDataCyclingPower) {
             this.cyclingPower = (SensorDataCyclingPower) data;
+            return;
+        }
+
+        if (type instanceof SensorDataRunning) {
+            this.runningDistanceSpeedCadence = (SensorDataRunning) data;
             return;
         }
 
