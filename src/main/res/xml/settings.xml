@@ -138,6 +138,10 @@ limitations under the License.
             android:defaultValue="@string/sensor_type_value_none"
             android:key="@string/settings_sensor_bluetooth_cycling_power_key"
             android:title="@string/sensor_state_power" />
+        <de.dennisguse.opentracks.settings.bluetooth.BluetoothLeRunningSpeedAndCadencePreference
+            android:defaultValue="@string/sensor_type_value_none"
+            android:key="@string/settings_sensor_bluetooth_running_speed_and_cadence_key"
+            android:title="@string/settings_sensor_running_speed_and_cadence" />
         <de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingCadenceAndSpeedPreference
             android:defaultValue="@string/sensor_type_value_none"
             android:key="@string/settings_sensor_bluetooth_cycling_speed_key"

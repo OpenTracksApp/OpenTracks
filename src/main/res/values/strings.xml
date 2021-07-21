@@ -369,6 +369,7 @@ limitations under the License.
 
     <string name="settings_sensor_cycling_distance_speed">Cycling: distance and speed</string>
     <string name="settings_sensor_cycling_cadence">Cycling: cadence</string>
+    <string name="settings_sensor_running_speed_and_cadence">Running: distance, speed, and cadence</string>
     <string name="settings_sensor_wheel_circumference">Wheel circumference (mm)</string>
 
     <!-- Settings Stats -->

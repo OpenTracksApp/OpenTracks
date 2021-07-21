@@ -4,7 +4,10 @@ import android.bluetooth.BluetoothGattCharacteristic;
 
 import org.junit.Test;
 
+import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
+import de.dennisguse.opentracks.content.sensor.SensorDataRunning;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -86,5 +89,19 @@ public class BluetoothUtilsTest {
 
         // then
         assertEquals(40, power_w);
+    }
+
+    @Test
+    public void parseRunningSpeedAndCadence_with_distance() {
+        BluetoothGattCharacteristic characteristic = new BluetoothGattCharacteristic(BluetoothUtils.CYCLING_SPEED_CADENCE_MEASUREMENT_CHAR_UUID, 0, 0);
+        characteristic.setValue(new byte[]{2, 0, 5, 80, 12, 1});
+
+        // when
+        SensorDataRunning sensor = BluetoothUtils.parseRunningSpeedAndCadence("address", "sensorName", characteristic);
+
+        // then
+        assertEquals(Speed.of(5), sensor.getSpeed());
+        assertEquals(80, sensor.getCadence(), 0.01);
+        assertEquals(Distance.of(268), sensor.getTotalDistance());
     }
 }

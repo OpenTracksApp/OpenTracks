@@ -42,8 +42,6 @@ public class UnitConversions {
     // multiplication factor to convert kilometers to miles
     public static final double KM_TO_MI = 0.621371192;
 
-    public static final double MM_TO_M = 0.001;
-
     // Distance //TODO Make private to Distance class!
     // multiplication factor to convert miles to feet
     private static final double MI_TO_FT = 5280.0;

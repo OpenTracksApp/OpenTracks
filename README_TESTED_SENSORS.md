@@ -50,3 +50,8 @@ Also the distance is not computed.
 * Wahoo Kickr v4.0
 * Rotor 2INpower DM Road (only supports power measurement, cadence measurement is propietary @ firmware v1.061)
 
+## RSC: running cadence and speed
+
+We do not support type of movement (i.e., walking vs running).
+
+* Polar Stride

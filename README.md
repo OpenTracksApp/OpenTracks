@@ -79,6 +79,8 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
   * cycling: speed and distance
   * cycling: cadence
   * cycling: power meter
+  * running: speed and cadence
+  An overview of tested sensors: [README_TESTED_SENSORS.md](README_TESTED_SENSORS.md)
 
 ### Gadgetbridge integration
 
