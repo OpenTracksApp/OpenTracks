@@ -54,6 +54,8 @@ public class ShareContentProvider extends CustomContentProvider {
     private static final int URI_KMZ_WITH_TRACKDETAIL_AND_SENSORDATA = 6;
     private static final int URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES = 7;
 
+    private static final int URI_SHARE_PICTURE = 8;
+
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     private static final String TRACKID_DELIMITER = "_";
 
@@ -64,14 +66,22 @@ public class ShareContentProvider extends CustomContentProvider {
 
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA.getName() + "/*/*", URI_KMZ_WITH_TRACKDETAIL_AND_SENSORDATA);
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.getName() + "/*/*", URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES);
+
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.SHARE_PICTURE_PNG.getName() + "/*/*", URI_SHARE_PICTURE);
     }
 
+    /**
+     * @return An URI for one file containing this tracks.
+     */
     public static Pair<Uri, String> createURI(Track.Id trackId, String trackName, @NonNull TrackFileFormat trackFileFormat) {
         Set<Track.Id> trackIds = new HashSet<>(1);
         trackIds.add(trackId);
         return createURI(trackIds, trackName, trackFileFormat);
     }
 
+    /**
+     * @return An URI for one file containing all tracks.
+     */
     public static Pair<Uri, String> createURI(Set<Track.Id> trackIds, String trackName, @NonNull TrackFileFormat trackFileFormat) {
         if (trackIds.isEmpty()) {
             throw new UnsupportedOperationException();
@@ -138,6 +148,9 @@ public class ShareContentProvider extends CustomContentProvider {
             case URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES:
                 return TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES;
 
+            case URI_SHARE_PICTURE:
+                return TrackFileFormat.SHARE_PICTURE_PNG;
+
             default:
                 throw new RuntimeException("Could not derive TrackFileFormat from Uri " + uri);
         }
@@ -163,12 +176,15 @@ public class ShareContentProvider extends CustomContentProvider {
         Object[] values = new Object[projection.length];
         int i = 0;
         for (String col : projection) {
-            if (OpenableColumns.DISPLAY_NAME.equals(col)) {
-                cols[i] = OpenableColumns.DISPLAY_NAME;
-                values[i++] = uri.getLastPathSegment();
-            } else if (OpenableColumns.SIZE.equals(col)) {
-                cols[i] = OpenableColumns.SIZE;
-                values[i++] = -1;
+            switch (col) {
+                case OpenableColumns.DISPLAY_NAME:
+                    cols[i] = OpenableColumns.DISPLAY_NAME;
+                    values[i++] = uri.getLastPathSegment();
+                    break;
+                case OpenableColumns.SIZE:
+                    cols[i] = OpenableColumns.SIZE;
+                    values[i++] = -1; //Report unknown size; if applications need to know, one need to generate the file here also (count bytes that are written to OutputStream.
+                    break;
             }
         }
 
@@ -209,6 +225,7 @@ public class ShareContentProvider extends CustomContentProvider {
 
         PipeDataWriter<String> pipeDataWriter = (output, uri1, mimeType, opts, args) -> {
             try (FileOutputStream fileOutputStream = new FileOutputStream(output.getFileDescriptor())) {
+                // TODO handle failure (i.e., do not export an empty file)
                 trackExporter.writeTrack(tracks.toArray(new Track[0]), fileOutputStream);
             } catch (IOException e) {
                 Log.w(TAG, "there occurred an error while sharing a file: " + e);

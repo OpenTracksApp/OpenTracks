@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.io.file;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import java.util.Locale;
 
@@ -9,6 +10,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.exporter.GPXTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.KMLTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;
+import de.dennisguse.opentracks.io.file.exporter.SharePictureTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 
 /**
@@ -85,6 +87,7 @@ public enum TrackFileFormat {
         }
 
     },
+
     GPX {
         @Override
         public TrackExporter createTrackExporter(Context context) {
@@ -98,6 +101,22 @@ public enum TrackFileFormat {
 
         public String getExtension() {
             return "gpx";
+        }
+    },
+
+    SHARE_PICTURE_PNG {
+        @Override
+        public TrackExporter createTrackExporter(Context context) {
+            return new SharePictureTrackExporter(context, Bitmap.CompressFormat.PNG);
+        }
+
+        @Override
+        public String getMimeType() {
+            return "image/png";
+        }
+
+        public String getExtension() {
+            return "png";
         }
     };
 

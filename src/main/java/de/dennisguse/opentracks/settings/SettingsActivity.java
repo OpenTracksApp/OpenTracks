@@ -293,7 +293,12 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
 
 
         private void setExportTrackFileFormatOptions() {
-            final TrackFileFormat[] trackFileFormats = {TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES, TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA, TrackFileFormat.GPX};
+            final TrackFileFormat[] trackFileFormats = {
+                    TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES,
+                    TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA,
+                    TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA,
+                    TrackFileFormat.GPX
+            };
             String[] entries = new String[trackFileFormats.length];
             String[] entryValues = new String[trackFileFormats.length];
 
