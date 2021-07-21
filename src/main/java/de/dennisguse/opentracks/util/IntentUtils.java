@@ -29,6 +29,7 @@ import androidx.core.content.FileProvider;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import de.dennisguse.opentracks.R;
@@ -37,6 +38,7 @@ import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.ShareContentProvider;
+import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
 /**
  * Utilities for creating intents.
@@ -81,8 +83,6 @@ public class IntentUtils {
             trackDescription = track == null ? "" : new DescriptionGenerator(context).generateTrackDescription(track, false);
         }
 
-        String mime = "";
-
         ArrayList<Uri> uris = new ArrayList<>();
         for (Track.Id trackId : trackIds) {
             Track track = contentProviderUtils.getTrack(trackId);
@@ -91,12 +91,14 @@ public class IntentUtils {
                 continue;
             }
 
-            Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackId, track.getName(), PreferencesUtils.getExportTrackFileFormat(PreferencesUtils.getSharedPreferences(context), context));
-            uris.add(uriAndMime.first);
-            mime = uriAndMime.second;
+            Pair<Uri, String> uriTrackFile = ShareContentProvider.createURI(trackId, track.getName(), PreferencesUtils.getExportTrackFileFormat(PreferencesUtils.getSharedPreferences(context), context));
+            Pair<Uri, String> uriSharePicture = ShareContentProvider.createURI(trackId, track.getName(), TrackFileFormat.SHARE_PICTURE_PNG);
+
+            uris.addAll(Arrays.asList(uriSharePicture.first, uriTrackFile.first));
         }
+
         return new Intent(Intent.ACTION_SEND_MULTIPLE)
-                .setType(mime)
+                .setType("image/*")
                 .putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_track_subject))
