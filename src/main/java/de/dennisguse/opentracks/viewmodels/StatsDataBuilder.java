@@ -44,7 +44,7 @@ public class StatsDataBuilder {
             SensorDataSet sensorDataSet = recordingData.getSensorDataSet();
             if (sensorDataSet != null && sensorDataSet.getCyclingDistanceSpeed() != null && sensorDataSet.getCyclingDistanceSpeed().hasValue() && sensorDataSet.getCyclingDistanceSpeed().isRecent()) {
                 data = new StatsData(
-                        StringUtils.getSpeedParts(context, sensorDataSet.getCyclingDistanceSpeed().getValue().speed, metricUnits, reportSpeed),
+                        StringUtils.getSpeedParts(context, sensorDataSet.getCyclingDistanceSpeed().getValue().getSpeed(), metricUnits, reportSpeed),
                         field.getTitle(),
                         context.getString(R.string.description_speed_source_sensor, sensorDataSet.getCyclingDistanceSpeed().getSensorNameOrAddress()),
                         field.isPrimary());
