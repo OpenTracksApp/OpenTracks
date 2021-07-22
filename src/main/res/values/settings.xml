@@ -282,44 +282,36 @@
 
     <!-- Stats layout customization: key -->
     <string name="stats_custom_layout_fields_key" translatable="false">statsCustomLayoutFieldsKey</string>
-    <!-- Stats layout customization: all fields title available -->
-    <string-array name="stats_custom_layout_all_fields_value">
-        <item>@string/stats_total_time</item>
-        <item>@string/stats_moving_time</item>
-        <item>@string/stats_distance</item>
-        <item>@string/stats_speed</item>
-        <item>@string/stats_average_moving_speed</item>
-        <item>@string/stats_average_speed</item>
-        <item>@string/stats_max_speed</item>
-        <item>@string/stats_pace</item>
-        <item>@string/stats_average_moving_pace</item>
-        <item>@string/stats_average_pace</item>
-        <item>@string/stats_fastest_pace</item>
-        <item>@string/stats_altitude</item>
-        <item>@string/stats_gain</item>
-        <item>@string/stats_loss</item>
-        <item>@string/stats_coordinates</item>
-        <item>@string/stats_sensors_heart_rate</item>
-        <item>@string/stats_sensors_cadence</item>
-        <item>@string/stats_sensors_power</item>
-    </string-array>
-    <!-- Stats layout customization: default fields -->
+    <!--
+    Stats layout customization: default fields.
+    CSV values:
+    <stat name>,<visible (1) or hidden (0)>, <primary (1) or secondary (0)>,<complete row (1) or not (0)>
+    -->
     <string-array name="stats_custom_layout_fields_default_value">
-        <item>@string/stats_distance</item>
-        <item>@string/stats_total_time</item>
-        <item>@string/stats_speed</item>
-        <item>@string/stats_moving_time</item>
-        <item>@string/stats_average_speed</item>
-        <item>@string/stats_max_speed</item>
-        <item>@string/stats_average_moving_speed</item>
-        <item>@string/stats_altitude</item>
-        <item>@string/stats_gain</item>
-        <item>@string/stats_loss</item>
+        <item>distance,1,1,0</item>
+        <item>total_time,1,1,0</item>
+        <item>speed,1,1,0</item>
+        <item>moving_time,1,1,0</item>
+        <item>average_speed,1,0,0</item>
+        <item>max_speed,1,0,0</item>
+        <item>average_moving_speed,1,0,0</item>
+        <item>altitude,1,0,0</item>
+        <item>gain,1,0,0</item>
+        <item>loss,1,0,0</item>
+        <item>pace,0,0,0</item>
+        <item>average_moving_pace,0,0,0</item>
+        <item>average_pace,0,0,0</item>
+        <item>fastest_pace,0,0,0</item>
+        <item>coordinates,0,0,1</item>
+        <item>heart_rate,0,0,0</item>
+        <item>cadence,0,0,0</item>
+        <item>power,0,0,0</item>
     </string-array>
 
     <!-- Stats empty values -->
     <string name="stats_empty_value_integer" translatable="false">0</string>
     <string name="stats_empty_value_float" translatable="false">0.0</string>
     <string name="stats_empty_value_time" translatable="false">00:00</string>
+    <string name="stats_empty_coordinates" translatable="false">0.0, 0.0</string>
 
 </resources>

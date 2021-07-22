@@ -325,21 +325,8 @@ public class PreferencesUtils {
     }
 
     private static String buildDefaultLayout(Context context) {
-        String[] allFields = context.getResources().getStringArray(R.array.stats_custom_layout_all_fields_value);
         List<String> defaultFields = Arrays.asList(context.getResources().getStringArray(R.array.stats_custom_layout_fields_default_value));
-        StringBuilder csvCustomLayout = new StringBuilder(context.getString(R.string.default_activity_default) + ";");
-
-        for (int i = 0; i < defaultFields.size(); i++) {
-            csvCustomLayout.append(defaultFields.get(i)).append(",1,").append(i < 4 ? "1;" : "0;");
-        }
-
-        for (String field : allFields) {
-            if (!defaultFields.contains(field)) {
-                csvCustomLayout.append(field).append(",0,1;");
-            }
-        }
-
-        return csvCustomLayout.toString();
+        return context.getString(R.string.default_activity_default) + ";" + defaultFields.stream().collect(Collectors.joining(";")) + ";";
     }
 
     public static Layout getCustomLayout(SharedPreferences sharedPreferences, Context context) {
