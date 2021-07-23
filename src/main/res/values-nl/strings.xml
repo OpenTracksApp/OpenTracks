@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <string name="about_preference_title">Over OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> is een sporttrackingapplicatie die uw privacy volledig respecteert.</string>
     <string name="about_url">Project webpagina: <a href="%1$s">%1$s</a></string>
@@ -360,7 +360,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="unit_kilometer_per_hour">km/h</string>
     <string name="unit_meter">m</string>
     <string name="unit_mile">mi</string>
-    <string name="unit_mile_per_hour">mi/h</string>
+    <string name="unit_mile_per_hour">mph</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/mi</string>
     <!-- Value -->
@@ -545,4 +545,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="about_third_party_data">Gegevens van derden</string>
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="delete_service">Dienst verwijdering</string>
+    <string name="menu_voice_rate">Spraak snelheid</string>
+    <string name="track_delete_not_recording">Dit fragment kan niet worden gewist omdat het momenteel is opgenomen.</string>
 </resources>
