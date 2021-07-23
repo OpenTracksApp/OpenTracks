@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">авион</string>
     <string name="activity_type_atv">Возила за све терене</string>
@@ -246,7 +246,6 @@ limitations under the License.
     <string name="settings_stats_units_imperial">Империјалне (ми, ст)</string>
     <string name="settings_stats_units_metric">Метричке (км, м)</string>
     <string name="settings_stats_units_title">Жељене јединице</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file">Дели датотеку праћења</string>
     <string name="share_track_share_file_body">Мислим да ће вас можда занимати ово праћење.\n\nДа бисте погледали ово праћење, користите Google Earth или други софтвер за мапирање.\n\n%1$s</string>
@@ -293,7 +292,7 @@ limitations under the License.
     <string name="unit_kilometer_per_hour">км/ч</string>
     <string name="unit_meter">м</string>
     <string name="unit_mile">ми</string>
-    <string name="unit_mile_per_hour">ми/с</string>
+    <string name="unit_mile_per_hour">mph</string>
     <string name="unit_minute_per_kilometer">мин/км</string>
     <string name="unit_minute_per_mile">мин/ми</string>
     <!-- Value -->
