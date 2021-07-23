@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">літак</string>
     <string name="activity_type_atv">Мотовсюдиходи</string>
@@ -296,7 +296,7 @@ limitations under the License.
     <string name="unit_kilometer_per_hour">км/год.</string>
     <string name="unit_meter">м</string>
     <string name="unit_mile">милі</string>
-    <string name="unit_mile_per_hour">миль/год.</string>
+    <string name="unit_mile_per_hour">миль на годину</string>
     <string name="unit_minute_per_kilometer">хв/км</string>
     <string name="unit_minute_per_mile">хв./милю</string>
     <!-- Value -->
@@ -558,4 +558,6 @@ limitations under the License.
     <string name="about_third_party_data">Дані третіх сторін</string>
     <string name="delete_service">Служба видалення</string>
     <string name="track_delete_progress">%1$d/%2$d</string>
+    <string name="track_delete_not_recording">Цей трек не може бути видалений в тому вигляді, в якому він записаний в даний момент.</string>
+    <string name="menu_voice_rate">Швидкість передачі голосу</string>
 </resources>
