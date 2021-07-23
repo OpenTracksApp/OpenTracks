@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">Авиаспорт</string>
     <string name="activity_type_atv">Езда на внедорожниках</string>
@@ -295,7 +295,7 @@ limitations under the License.
     <string name="unit_kilometer_per_hour">км/ч</string>
     <string name="unit_meter">м</string>
     <string name="unit_mile">мил.</string>
-    <string name="unit_mile_per_hour">мил/ч</string>
+    <string name="unit_mile_per_hour">миль/ч</string>
     <string name="unit_minute_per_kilometer">мин/км</string>
     <string name="unit_minute_per_mile">мин/мил</string>
     <!-- Value -->
@@ -548,7 +548,15 @@ limitations under the License.
     <string name="import_progress_summary_errors_msg">Ошибки</string>
     <string name="generic_overwrite">Перезаписать</string>
     <string name="import_prevent_reimport">Вы настроили предотвращение повторного импорта трека</string>
-    <string name="delete_service">Удалить службу</string>
+    <string name="delete_service">Услуга удаления</string>
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="about_third_party_data">Сторонние данные</string>
+    <string name="menu_voice_rate">Скорость голоса</string>
+    <string name="track_delete_not_recording">Эта дорожка не может быть удалена, поскольку она записана в данный момент.</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Завершена с одной ошибкой</item>
+        <item quantity="few">Завершено с ошибками</item>
+        <item quantity="many">Завершено с %1$d ошибок</item>
+        <item quantity="other">Завершено с %1$d ошибок</item>
+    </plurals>
 </resources>
