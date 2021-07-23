@@ -55,9 +55,9 @@ android {
 
         buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
 
-
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 30
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
@@ -90,8 +90,10 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'androidx.preference:preference:1.1.1'
     implementation 'androidx.documentfile:documentfile:1.0.1'
+    implementation "androidx.multidex:multidex:2.0.1"
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
+
 
     androidTestImplementation 'androidx.test:core:1.4.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

@@ -8,6 +8,7 @@ import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.preference.DialogPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
@@ -35,6 +37,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  * Preference to select a discoverable Bluetooth LE device.
  * Based upon ListPreference.
  */
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 public abstract class BluetoothLeSensorPreference extends DialogPreference {
 
     private static final String TAG = BluetoothLeSensorPreference.class.getSimpleName();

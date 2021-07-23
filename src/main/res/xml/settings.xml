@@ -129,7 +129,9 @@ limitations under the License.
             app:useSimpleSummaryProvider="true" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/settings_sensor_bluetooth">
+    <PreferenceCategory
+        android:title="@string/settings_sensor_bluetooth"
+        android:key="@string/settings_sensor_bluetooth_category_key">
         <de.dennisguse.opentracks.settings.bluetooth.BluetoothLeHeartRatePreference
             android:defaultValue="@string/sensor_type_value_none"
             android:key="@string/settings_sensor_bluetooth_heart_rate_key"

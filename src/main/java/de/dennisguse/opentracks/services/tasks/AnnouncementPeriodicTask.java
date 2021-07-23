@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.services.tasks;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
+import android.os.Build;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
@@ -197,7 +198,11 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
     private void speakAnnouncement(String announcement) {
         // We don't care about the utterance id. It is supplied here to force onUtteranceCompleted to be called.
-        tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null, "not used");
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null);
+        } else {
+            tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null, "not used");
+        }
     }
 
     /**

@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.settings;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -145,6 +146,12 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
                     updateVoiceAnnouncements();
                 }
             });
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+                Preference bluetooth = findPreference(getString(R.string.settings_sensor_bluetooth_category_key));
+                bluetooth.setSummary("Requires Android 5.0 or later (SDK21).");
+                bluetooth.setEnabled(false);
+            }
         }
 
         @Override
