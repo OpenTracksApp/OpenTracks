@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.DocumentsContract;
 import android.util.Log;
 
@@ -14,9 +15,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
@@ -73,6 +76,11 @@ public class ExportUtils {
     }
 
     public static List<String> getAllFiles(Context context, Uri directoryUri) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            DocumentFile file = DocumentFile.fromTreeUri(context, directoryUri);
+            return Arrays.stream(file.listFiles()).map(it -> it.getName()).collect(Collectors.toList());
+        }
+
         List<String> fileNames = new ArrayList<>();
         final ContentResolver resolver = context.getContentResolver();
         final Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(directoryUri, DocumentsContract.getDocumentId(directoryUri));
@@ -105,6 +113,11 @@ public class ExportUtils {
     }
 
     private static Uri findFile(Context context, Uri directoryUri, String exportFileName) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            DocumentFile file = DocumentFile.fromTreeUri(context, directoryUri);
+            return file.findFile(exportFileName).getUri();
+        }
+
         final ContentResolver resolver = context.getContentResolver();
         final Uri childrenUri = DocumentsContract.buildChildDocumentsUriUsingTree(directoryUri, DocumentsContract.getDocumentId(directoryUri));
 
