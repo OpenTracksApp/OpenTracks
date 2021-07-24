@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">самолет</string>
     <string name="activity_type_atv">мотовсъдеход</string>
@@ -110,10 +110,10 @@ limitations under the License.
     <!-- Export -->
     <string name="export_all_option">Всичко като %1$s</string>
     <string name="export_all_title">Експортиране във външно хранилище</string>
-    <string name="export_error">Експортирахте %1$d от %2$s в/ъв %3$s.</string>
+    <string name="export_error">Експортирахте %1$d от %2$s в/ъв %3$s</string>
     <string name="export_option">като %1$s в/ъв %2$s</string>
     <string name="export_progress_message">Експортира се в/ъв %1$s…</string>
-    <string name="export_success">Експортирахте %1$s в/ъв %2$s.</string>
+    <string name="export_success">Експортирахте %1$s в/ъв %2$s</string>
     <string name="export_title">Експортиране във…</string>
     <!-- External Storage -->
     <!-- Files -->
@@ -136,9 +136,9 @@ limitations under the License.
     <string name="generic_success_title">Успех</string>
     <string name="generic_tracks">Маршрути</string>
     <!-- Gps -->
-    <string name="gps_starting">GPS се включва.</string>
-    <string name="gps_wait_for_better_signal">Изчаква се по-добър сигнал за GPS.</string>
-    <string name="gps_wait_for_signal">Изчаква се сигнал за GPS.</string>
+    <string name="gps_starting">GPS се включва</string>
+    <string name="gps_wait_for_better_signal">Изчаква се по-добър сигнал за GPS</string>
+    <string name="gps_wait_for_signal">Изчаква се сигнал за GPS</string>
     <!-- Image -->
     <string name="image_application">Приложение</string>
     <string name="image_arrow">Стрелка</string>
@@ -150,22 +150,22 @@ limitations under the License.
     <string name="image_stop">Спиране</string>
     <string name="image_track">Маршрут</string>
     <!-- Import -->
-    <string name="import_error">Импортирахте %1$d от %2$s от %3$s.</string>
-    <string name="import_no_directory">%1$s не съществува.</string>
+    <string name="import_error">Внесени %1$d на %2$s от %3$s</string>
+    <string name="import_no_directory">%1$s не съществува</string>
     <string name="import_no_file">Няма файлове за импортиране. Свържете устройството с компютъра си и поставете файловете, които
 да се импортират в/ъв %1$s.</string>
     <string name="import_no_file_title">Импортиране на файлове</string>
     <string name="import_progress_message">Импортира се от %1$s…</string>
     <string name="import_selection_option">Всички %1$s файлове</string>
     <string name="import_selection_title">Импортиране от външно хранилище</string>
-    <string name="import_success">Импортирахте %1$s от %2$s.</string>
+    <string name="import_success">Импортирахте %1$s от %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">Маркерът не може да се вмъкне. Няма сигнал за GPS. Опитайте отново.</string>
-    <string name="marker_add_success">Маркерът бе вмъкнат.</string>
-    <string name="marker_add_canceled">Добавянето на маркер бе отменено.</string>
-    <string name="marker_delete_one_confirm_message">Маркерът ще бъде окончателно изтрит от устройството.</string>
+    <string name="marker_add_success">Маркерът бе вмъкнат</string>
+    <string name="marker_add_canceled">Добавянето на маркер бе отменено</string>
+    <string name="marker_delete_one_confirm_message">Маркерът ще бъде окончателно изтрит от устройството</string>
     <string name="marker_delete_one_confirm_title">Да се изтрие ли маркерът?</string>
-    <string name="marker_delete_multiple_confirm_message">Избраните маркери ще бъдат окончателно изтрити от устройството.</string>
+    <string name="marker_delete_multiple_confirm_message">Избраните маркери ще бъдат окончателно изтрити от устройството</string>
     <string name="marker_label_end">%1$s (Край)</string>
     <string name="marker_label_start">%1$s (Начало)</string>
     <string name="marker_name_format">Маркер %1$d</string>
@@ -175,7 +175,7 @@ limitations under the License.
     <string name="marker_edit_marker_type">Тип маркер (напр. водопад)</string>
     <string name="marker_edit_marker_type_hint">Тип маркер</string>
     <!-- Marker List -->
-    <string name="marker_list_empty_message">Нямате маркери.</string>
+    <string name="marker_list_empty_message">Нямате маркери</string>
     <!-- Menu -->
     <string name="menu_aggregated_statistics">Събрани статист. данни</string>
     <string name="menu_delete">Изтриване</string>
@@ -199,7 +199,7 @@ limitations under the License.
     <string name="recording_service">Услуга за запис</string>
     <!-- Search -->
     <string name="search_global_description">Маршрути и маркери</string>
-    <string name="search_list_empty_message">Няма маршрути или маркери, отговарящи на търсените от вас.</string>
+    <string name="search_list_empty_message">Няма маршрути или маркери, отговарящи на търсените от вас</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Ниво на батерията</string>
     <string name="sensor_state_cadence">Такт</string>
@@ -208,7 +208,7 @@ limitations under the License.
     <string name="sensor_state_heart_rate_value">%1$d уд/мин</string>
     <string name="sensor_state_power">Захранване</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="settings_not_while_recording">Не е налице при записване на маршрут.</string>
+    <string name="settings_not_while_recording">Не е налице при записване на маршрут</string>
     <string name="settings_show">Показване</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Разширени</string>
@@ -236,7 +236,7 @@ limitations under the License.
     <string name="settings_reset">Нулиране</string>
     <string name="settings_reset_confirm_message">Всички настройки ще бъдат върнати към стандартните им стойности.</string>
     <string name="settings_reset_confirm_title">Да се зададе ли повторно сега?</string>
-    <string name="settings_reset_done">Всички настройки са възстановени до стойностите по подразбиране.</string>
+    <string name="settings_reset_done">Всички настройки са възстановени до стойностите по подразбиране</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_bluetooth_sensor">Bluetooth сензор</string>
@@ -246,11 +246,11 @@ limitations under the License.
     <string name="settings_stats_units_imperial">Имперски (мил, фт)</string>
     <string name="settings_stats_units_metric">Метрични (км, м)</string>
     <string name="settings_stats_units_title">Предпочитани единици</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file">Споделяне на файл с маршрут</string>
-    <string name="share_track_share_file_body">Мисля, че този маршрут може да Ви заинтересува.\n\nЗа да го видите, използвайте Google Земя или друг
-    картографски софтуер.\n\n%1$s</string>
+    <string name="share_track_share_file_body">Мисля, че този маршрут може да Ви заинтересува.
+\n
+\n%1$s</string>
     <string name="share_track_subject">Искам да споделя път с Вас</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Средно темпо на движение</string>
@@ -285,7 +285,7 @@ limitations under the License.
     <string name="track_edit_activity_type_hint">Тип дейност</string>
     <string name="track_edit_new_track_title">Нов маршрут</string>
     <!-- Track List -->
-    <string name="track_list_empty_message">Започнете да записвате следващото си приключение тук.</string>
+    <string name="track_list_empty_message">Започнете да записвате следващото си приключение тук</string>
     <!-- Track Widget -->
     <!-- Tracks -->
     <!-- Unit -->
@@ -294,7 +294,7 @@ limitations under the License.
     <string name="unit_kilometer_per_hour">км/ч</string>
     <string name="unit_meter">м</string>
     <string name="unit_mile">мил</string>
-    <string name="unit_mile_per_hour">мил/ч</string>
+    <string name="unit_mile_per_hour">м/ч</string>
     <string name="unit_minute_per_kilometer">мин/км</string>
     <string name="unit_minute_per_mile">мин/мил</string>
     <!-- Value -->
@@ -403,4 +403,143 @@ limitations under the License.
     <string name="waypoint_type_waterfall">водопад</string>
     <string name="waypoint_type_water_fountain">чешма</string>
     <string name="waypoint_type_waypoint">пътна точка</string>
+    <string name="generic_completed">Завършен</string>
+    <string name="open_track_as_GPX">Отваряне като GPX</string>
+    <string name="sensor_state_heart_rate_max">Максимален пулс</string>
+    <string name="help_gps_troubleshooting_title">OpenTracks не записва локации\?</string>
+    <string name="track_pace_notification">Темп: %1$s</string>
+    <string name="activity_type_escooter">ескотер</string>
+    <string name="menu_voice_rate">Скорост на глас</string>
+    <string name="settings_night_mode_title">Тема на UI</string>
+    <string name="track_delete_not_recording">Тази песен не може да бъде изтрита, тъй като е записана в момента.</string>
+    <string name="generic_open_track">Открита писта</string>
+    <string name="about_url">Уебстраница на проекта: <a href="%1$s">%1$s</a></string>
+    <string name="generic_skip">Пропусни</string>
+    <string name="track_speed_notification">Бързина: %1$s</string>
+    <string name="about_history">OpenTracks е разклонение на <a href="https://code.google.com/archive/p/mytracks/"><i>MyTracks на Google</i></a> (преустановено през 2016 г.).</string>
+    <string name="gps_fixed_and_ready">GPS е фиксиран и готов</string>
+    <string name="import_file_imported">Файл %1$s е импортиран</string>
+    <string name="marker_add_photo_canceled">Отменено, не е добавен снимков маркер</string>
+    <string name="generic_show_errors">Покажи грешките</string>
+    <string name="settings_night_mode_option_day">Ден</string>
+    <string name="export_progress_summary_new_msg">Експорт на нови песни</string>
+    <string name="about_description"><i>OpenTracks</i> е приложение за проследяване на спорт, което напълно зачита поверителността ви.</string>
+    <string name="menu_insert_gallery_img">Вмъкване на снимка в галерията</string>
+    <string name="instant_export_enabled_title">Незабавен износ след тренировка</string>
+    <string name="settings_default_export_uri_title">Директория за износ на писти</string>
+    <string name="track_recording_notification_accuracy">Точност на локацията: %1$s</string>
+    <string name="stats_intervals">Интервали</string>
+    <string name="about_version_name">Име на версията: %1$s</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">По време на запис присъства в режим на цял екран.</string>
+    <string name="import_no_kml_file_found">В KMZ не е открит файл doc.kml</string>
+    <string name="help_gps_troubleshooting_content"> Какво можете да направите:
+\n а) проверете дали GPS е активиран,
+\n б) да подобрите приемането на GPS (например да излезете на открито),
+\n в) проверете с приложението <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, и
+\n г) деактивирайте пестенето на енергия.
+\n
+\n Ако всичко не помогне, моля, докладвайте за грешка. </string>
+    <string name="help_track_map_content"> Използвайте малката икона на картата.
+\n а) (актуализации на живо) Инсталирайте <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Тя предоставя онлайн или офлайн карти чрез <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n Всъщност OSMDashboard е отделно приложение, което може да има достъп (временно) само до данните на трасето (трасетата), които ще бъдат показани.
+\n б) Чрез нормално приложение за карти (напр. чрез <a href="http://osmand.net/">OsmAnd</a> и <a href="https://maps.me/">MAPS.ME</a>). Тези приложения трябва да поддържат файловия формат KMZ (само местоположения и времеви марки). Всъщност едно приложение трябва да поддържа <i>ACTION_VIEW</i> с MIME <i>application/vnd.google-earth.kmz</i>. </string>
+    <string name="help_data_storage_title">Как OpenTracks съхранява данните от сензорите\?</string>
+    <string name="help_data_storage_content"> Данните от сензора се съхраняват за всяко записано място. По отношение на сензора за сърдечен ритъм това означава, че само <i>едно</i> измерване на сърдечния ритъм се съхранява за всяко местоположение. Ако стоите неподвижно или се намирате на закрито, няма да бъдат записани данни от сензора (но те ще бъдат </string>
+    <string name="open_track_as_KML">Отваряне като KML</string>
+    <string name="open_track_as_trackfileformat">Отворете като %1$s</string>
+    <string name="description_altitude_loss">Загуба на височина: %1$d m (%2$d ft)</string>
+    <string name="help_recording_content">OpenTracks използва GPS сензора на устройството, за да записва непрекъснато местоположението. Ако GPS устройството съобщи неточни данни (напр. местоположение, скорост, надморска височина), OpenTracks не може да направи нищо по въпроса.</string>
+    <string name="track_distance_notification">Отстояние: %1$s</string>
+    <string name="help_storage_pictures_title">Как OpenTracks съхранява снимките, които са направени като маркери\?</string>
+    <string name="bluetooth_disabled">Моля, включете Bluetooth.</string>
+    <string name="sensor_could_not_scan">Не можа да сканира за Bluetooth устройства (грешка %1$i).</string>
+    <string name="hold_to_pause">Задръжте за пауза</string>
+    <string name="interval_list_empty_message">Все още няма интервали</string>
+    <string name="track_detail_intervals_tab">Интервали</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">По време на запис показвайте статистически данни, без да отключвате устройството.</string>
+    <string name="sensor_state_cadence_max">Макс. каданс</string>
+    <string name="stats_split_interval">Разделен интервал</string>
+    <string name="export_all_do_it_for_all">направи го за всички конфликти</string>
+    <string name="help_feature_content">* създаване на GPS следи
+\n * използване на сензор за сърдечен ритъм (само Bluetooth LE)
+\n * гласови съобщения (по време или разстояние)
+\n * създаване на маркери (вкл. снимки)
+\n * работи изцяло офлайн
+\n * показване на трасетата на картата (вж. по-долу)</string>
+    <string name="export_progress_summary_overwrite_msg">Презаписани писти</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">Пълен екран</string>
+    <string name="export_track_already_exists_msg">Пътят %1$s вече съществува в директорията на местоназначението.</string>
+    <string name="help_track_export_content"> Следите могат да се експортират от Настройки като KMZ, KML или GPX. KMZ/KML - всички данни; GPX - само местоположенията. Следите, споделени чрез <i>иконата за споделяне</i>, се споделят като KMZ. </string>
+    <string name="import_error_info">%1$s: %2$s</string>
+    <string name="open_track_using_dashboard">Отваряне с помощта на OpenTracks-Dashboard</string>
+    <string name="help_storage_pictures_content">Те се съхраняват във вътрешната памет на приложението (т.е. достъпни са само в OpenTracks).</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">Докато записвате, дръжте екрана включен.</string>
+    <string name="help_track_export_title">Как мога да експортирам/споделям записани песни\?</string>
+    <string name="settings_night_mode_option_night">Нощ</string>
+    <string name="sensor_state_heart_rate_avg">Среден пулс</string>
+    <string name="about_preference_title">За OpenTracks</string>
+    <string name="import_progress_summary_ok_msg">Внесени файлове</string>
+    <string name="export_without_photos">без снимки</string>
+    <string name="import_thread_interrupted">Нишка прекъснат</string>
+    <string name="import_prevent_reimport">Настроили сте да предотвратявате повторното импортиране</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">Запазете екрана включен</string>
+    <string name="import_unable_to_import_file">Невъзможно е да се импортира файл: %1$s</string>
+    <string name="help_recording_title">Как OpenTracks записва данни\?</string>
+    <string name="import_progress_summary_errors_msg">Грешки</string>
+    <string name="import_progress_summary_exists_msg">Вече има</string>
+    <string name="export_track_errors">Не се експортират писти</string>
+    <string name="gps_disabled_msg">GPS е изключен</string>
+    <string name="share_image_body">Мисля, че тази снимка може да ви заинтересува.</string>
+    <string name="voice_speed_lap">Скорост на обиколка от %1$s</string>
+    <string name="help_support_title">Как да подкрепя OpenTracks\?</string>
+    <string name="permission_gps_failed">OpenTracks изисква разрешение за използване на GPS.</string>
+    <string name="sensor_state_power_avg">Средна мощност</string>
+    <string name="help_feature_title">OpenTracks има следните функции:</string>
+    <string name="delete_service">Услуга за изтриване</string>
+    <string name="settings_sensor_disconnected">Изключен от %1$s</string>
+    <string name="settings_night_mode_option_system">Система</string>
+    <string name="settings_prevent_reimport_tracks_title">Забрана за повторно импортиране на песни</string>
+    <string name="export_progress_summary_skip_msg">Пропуснати писти</string>
+    <string name="settings_default_trackfileformat">Формат на файла за експортиране/споделяне</string>
+    <string name="toast_message_instant_track_was_exported">Последна експортирана песен</string>
+    <string name="share_image_subject">Искам да споделя с вас едно изображение</string>
+    <string name="about_libraries">Библиотеки</string>
+    <string name="sensor_state_cadence_avg">Среден каданс</string>
+    <string name="settings_sensor_wheel_circumference">Обиколка на колелото (mm)</string>
+    <string name="settings_sensor_connecting">Свързан към %1$s</string>
+    <string name="description_default_speed_or_pace">По вид дейност</string>
+    <string name="import_error_list_dialog_title">Файловете не се импортират</string>
+    <string name="generic_overwrite">Презапис</string>
+    <string name="export_progress_summary_errors_msg">Грешки</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="hold_to_stop">Задръжте за спиране</string>
+    <string name="aggregated_stats_empty_message">Запишете първата си песен, за да видите обобщени статистически данни</string>
+    <string name="menu_resume_track">Проследяване на CV</string>
+    <string name="help_track_map_title">Как да покажем трасе на карта\?</string>
+    <string name="stats_loss">Загуба</string>
+    <string name="help_support_content"> Можете да:
+\n а) да разпространявате информация за OpenTracks,
+\n б) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">предлагате функции</a>,
+\n в) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">да съобщавате за грешки</a>,
+\n г) да помагате при разработването на софтуера,
+\n д) да купувате в <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\n е) да направите дарение, и
+\n ж) направете всичко, което смятате, че помага на OpenTracks. </string>
+    <string name="voice_pace_lap">Време на обиколка от %1$s</string>
+    <string name="generic_click_twice_cancel">Кликнете отново назад, за да отмените</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Завърши с една грешка</item>
+        <item quantity="other">Завърши с %1$d грешки</item>
+    </plurals>
+    <string name="export_with_photos">със снимки</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Показване на статистически данни на заключения екран</string>
+    <string name="help_data_google_play_services_title">Изисква ли OpenTracks/използва ли услугата Google Play\?</string>
+    <string name="about_version_code">Код на версията: %1$d</string>
+    <string name="track_delete_progress">%1$d/%2$d</string>
+    <string name="export_error_post_workout">Експортът след тренировка е неуспешен, моля, проверете директорията за експорт.</string>
+    <string name="about_third_party_data">Данни от трети страни</string>
+    <string name="import_unsupported_format">Неподдържан формат на файла</string>
+    <string name="settings_error_initial_values_restored">Съжаляваме, но възникна грешка. Всички настройки са възстановени до стойностите по подразбиране.</string>
+    <string name="import_parser_error">Грешка при парсера: %1$s</string>
+    <string name="instant_export_enabled_summary">Експортиране на запис в хранилището след приключване на записа</string>
 </resources>
