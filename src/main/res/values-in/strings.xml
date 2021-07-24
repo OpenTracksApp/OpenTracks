@@ -16,14 +16,14 @@
     <string name="activity_type_driving_car">mengemudi mobil</string>
     <string name="activity_type_ferry">feri</string>
     <string name="activity_type_frisbee">frisbee</string>
-    <string name="activity_type_gliding">gliding</string>
+    <string name="activity_type_gliding">meluncur</string>
     <string name="activity_type_hang_gliding">gantole</string>
     <string name="activity_type_helicopter">helikopter</string>
     <string name="activity_type_hiking">mendaki</string>
     <string name="activity_type_horse_back_riding">naik kuda</string>
     <string name="activity_type_hot_air_balloon">balon udara panas</string>
     <string name="activity_type_ice_sailing">selancar es</string>
-    <string name="activity_type_inline_skating">inline skating</string>
+    <string name="activity_type_inline_skating">sepatu roda</string>
     <string name="activity_type_kayaking">kayak</string>
     <string name="activity_type_kite_surfing">selancar layangan</string>
     <string name="activity_type_land_sailing">berlayar darat</string>
@@ -34,7 +34,7 @@
     <string name="activity_type_off_trail_hiking">hiking bebas</string>
     <string name="activity_type_other">lainnya</string>
     <string name="activity_type_paddling">mendayung</string>
-    <string name="activity_type_para_gliding">para gliding</string>
+    <string name="activity_type_para_gliding">paralayang</string>
     <string name="activity_type_rc_airplane">pesawat radio kontrol</string>
     <string name="activity_type_rc_boat">perahu radio kontrol</string>
     <string name="activity_type_rc_helicopter">helikopter radio kontrol</string>
@@ -57,10 +57,10 @@
     <string name="activity_type_surfing">berselancar</string>
     <string name="activity_type_track_cycling">bersepeda dalam lintasan</string>
     <string name="activity_type_track_running">lintasan lari</string>
-    <string name="activity_type_trail_hiking">trail hiking</string>
+    <string name="activity_type_trail_hiking">jejak hiking</string>
     <string name="activity_type_trail_running">lari lintas jalur</string>
     <string name="activity_type_train">kereta api</string>
-    <string name="activity_type_ultimate_frisbee">ultimate frisbee</string>
+    <string name="activity_type_ultimate_frisbee">frisbee terbaik</string>
     <string name="activity_type_unknown">tidak diketahui</string>
     <string name="activity_type_wakeboarding">wakeboarding</string>
     <string name="activity_type_walking">berjalan</string>
@@ -92,10 +92,10 @@
     <string name="description_total_time">Waktu total: %1$s</string>
     <string name="export_all_option">Semuanya sebagai %1$s</string>
     <string name="export_all_title">Ekspor ke penyimpanan eksternal</string>
-    <string name="export_error">%1$d dari %2$s diekspor ke %3$s.</string>
+    <string name="export_error">%1$d dari %2$s diekspor ke %3$s</string>
     <string name="export_option">sebagai %1$s ke %2$s</string>
     <string name="export_progress_message">Mengekspor ke %1$s…</string>
-    <string name="export_success">%1$s dari %2$s terekspor.</string>
+    <string name="export_success">%1$s dari %2$s terekspor</string>
     <string name="export_title">Ekspor ke…</string>
     <plurals name="files">
         <item quantity="other">%1$d file</item>
@@ -125,8 +125,8 @@
     <string name="image_record">Rekam</string>
     <string name="image_stop">Hentikan</string>
     <string name="image_track">Lacak</string>
-    <string name="import_error">Mengimpor %1$d dari %2$s dari %3$s</string>
-    <string name="import_no_directory">%1$s tidak ada.</string>
+    <string name="import_error">Mengimpor %1$d Dari %2$s dari %3$s</string>
+    <string name="import_no_directory">%1$s tidak ada</string>
     <string name="import_no_file">Tidak ada berkas untuk diimpor. Hubungkan perangkat ke komputer Anda dan tempatkan file yang akan diimpor di %1$s.</string>
     <string name="import_no_file_title">Impor berkas</string>
     <string name="import_progress_message">Mengimpor dari %1$s…</string>
@@ -134,7 +134,7 @@
     <string name="import_selection_title">Impor dari penyimpanan external</string>
     <string name="import_success">Mengimpor %1$s dari %2$s</string>
     <string name="marker_add_error">Tidak dapat memasukkan penanda. Tidak ada sinyal GPS. Coba lagi.</string>
-    <string name="marker_add_success">Penanda disisipkan.</string>
+    <string name="marker_add_success">Penanda disisipkan</string>
     <string name="marker_add_canceled">Batal, penanda tidak ditambahkan</string>
     <string name="marker_delete_one_confirm_message">Penanda akan dihapus secara permanen dari perangkat</string>
     <string name="marker_delete_one_confirm_title">Hapus penanda?</string>
@@ -148,7 +148,7 @@
     <string name="marker_list_empty_message">Anda tidak memiliki penanda</string>
     <string name="menu_aggregated_statistics">Statistik agregat</string>
     <string name="menu_delete">Hapus</string>
-    <string name="menu_edit">Edit</string>
+    <string name="menu_edit">Sunting</string>
     <string name="menu_export_all">Ekspor semua</string>
     <string name="menu_help">Bantuan</string>
     <string name="menu_import_all">Impor semua</string>
@@ -197,7 +197,7 @@
     <string name="settings_recording_track_name_number_option">Angka</string>
     <string name="settings_recording_track_name_title">Nama trek default</string>
     <string name="settings_reset">Setel ulang</string>
-    <string name="settings_reset_confirm_message">Semua setelan akan diubah ke nilai default. Tiada lintasan yang akan dihapus dari perangkat.</string>
+    <string name="settings_reset_confirm_message">Semua pengaturan akan dikembalikan ke nilai baku. Ini tidak akan menghapus trek apapun pada perangkat.</string>
     <string name="settings_reset_confirm_title">Setel ulang sekarang?</string>
     <string name="settings_reset_done">Semua setelan telah dikembalikan ke nilai default</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
@@ -208,7 +208,9 @@
     <string name="settings_stats_units_metric">Metrik (km, m)</string>
     <string name="settings_stats_units_title">Satuan yang dipilih</string>
     <string name="share_track_share_file">Bagikan berkas lintasan</string>
-    <string name="share_track_share_file_body">Saya rasa Anda mungkin tertarik dengan lintasan ini.\n\nUntuk melihat lintasan ini, gunakan Google Earth atau perangkat lunak pemetaan lainnya.\n\n%1$s</string>
+    <string name="share_track_share_file_body">Saya rasa Anda mungkin tertarik dengan lintasan ini.
+\n
+\n%1$s</string>
     <string name="share_track_subject">Saya ingin berbagi lintasan dengan Anda</string>
     <string name="stats_average_moving_pace">Tempo gerak rata-rata</string>
     <string name="stats_average_moving_speed">Kecepatan gerak rata-rata</string>
@@ -219,7 +221,7 @@
     <string name="stats_gain">Perolehan</string>
     <string name="stats_latitude">Lintang</string>
     <string name="stats_longitude">Bujur</string>
-    <string name="stats_max_speed">Kecepatan maks.</string>
+    <string name="stats_max_speed">Kecepatan maks</string>
     <string name="stats_moving_time">Waktu pergerakan</string>
     <string name="stats_pace">Laju</string>
     <string name="stats_speed">Kecepatan</string>
@@ -243,7 +245,7 @@
     <string name="unit_kilometer_per_hour">km/j</string>
     <string name="unit_meter">m</string>
     <string name="unit_mile">mil</string>
-    <string name="unit_mile_per_hour">mil/jam</string>
+    <string name="unit_mile_per_hour">mph</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">mnt/mil</string>
     <string name="value_adapt_accuracy">Sesuaikan dengan akurasi</string>
@@ -346,14 +348,34 @@
     <string name="open_track_as_KML">Buka sebagai KML</string>
     <string name="import_error_list_dialog_title">Berkas tidak diimpor</string>
     <string name="import_file_imported">Berkas %1$s telah diimpor</string>
-    <string name="settings_night_mode_option_day">Siang</string>
+    <string name="settings_night_mode_option_day">Hari</string>
     <string name="help_support_title">Bagaimana mendukung OpenTracks\?</string>
     <string name="import_progress_summary_errors_msg">Kesalahan</string>
     <string name="open_track_as_GPX">Buka sebagai GPX</string>
-    <string name="settings_error_initial_values_restored">Maaf, kesalahan terjadi. Semua setelan telah dikembalikan ke nilai default</string>
+    <string name="settings_error_initial_values_restored">Maaf, tapi terjadi kesalahan. Semua pengaturan telah dikembalikan ke nilai baku.</string>
     <string name="track_speed_notification">Kecepatan: %1$s</string>
     <string name="import_unable_to_import_file">Tidak bisa mengimpor berkas: %1$s</string>
     <string name="open_track_as_trackfileformat">Buka sebagai %1$s</string>
     <string name="track_distance_notification">Jarak: %1$s</string>
-    <string name="settings_recording_show_on_lockscreen_while_recording_summary">Selama perekaman,</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">Ketika merekam, Tampilkan statistik tanpa membuka perangkat.</string>
+    <string name="about_libraries">Pustaka</string>
+    <string name="help_feature_title">OpenTracks memiliki fitur-fitur berikut:</string>
+    <string name="about_version_name">Nama Versi: %1$s</string>
+    <string name="help_track_map_content">" Gunakan ikon peta kecil.
+\n a) (pembaruan langsung) Instal &lt;a href=\"https://github.com/OpenTracksApp/OSMDashboard\"&gt;OSMDashboard&lt;/a&gt;. Ini menyediakan peta online atau offline melalui &lt;a href=\"https://www.openstreetmap.org\"&gt;OpenStreetMap&lt;/a&gt;.
+\n  Sebenarnya, OSMDashboard adalah aplikasi terpisah yang hanya dapat mengakses (sementara) data trek yang akan ditampilkan.
+\n b) Melalui aplikasi peta biasa (misalnya, &lt;a href=\"http://osmand.net/\"&gt;OsmAnd&lt;/a&gt; dan &lt;a href=\"https://maps.me/\"&gt;MAPS.ME&lt; /a&gt;). Aplikasi ini harus mendukung format file KMZ (hanya lokasi dan stempel waktu). Bahkan, aplikasi perlu mendukung &lt;i&gt;ACTION_VIEW&lt;/i&gt; dengan MIME &lt;i&gt;application/vnd.google-earth.kmz&lt;/i&gt;. "</string>
+    <string name="help_feature_content">* Buat trek GPS
+\n* Gunakan sensor denyut jantung (satu-satunya le Bluetooth)
+\n* suara pengumuman (oleh waktu atau jarak)
+\n* membuat penanda (lncl. gambar)
+\n* bekerja sepenuhnya luring
+\n* Tampilkan trek pada peta (lihat di bawah)</string>
+    <string name="about_third_party_data">Data pihak ketiga</string>
+    <string name="help_track_map_title">Bagaimana untuk menunjukkan trek di peta\?</string>
+    <string name="about_history">OpenTracks adalah garpu dari <a href="https://code.google.com/archive/p/mytracks/"><i>Google Mytrack</i></a> (terputus pada tahun 2016).</string>
+    <string name="about_version_code">Kode Versi: %1$d</string>
+    <string name="about_preference_title">Tentang OpenTracks</string>
+    <string name="about_url">Halaman web projek: <a href="%1$s">%1$s</a></string>
+    <string name="about_description"><i>OpenTracks</i> adalah aplikasi pelacakan olahraga yang benar-benar menghormati privasi Anda.</string>
 </resources>
