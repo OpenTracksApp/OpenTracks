@@ -159,12 +159,13 @@ public class TestDataUtil {
     }
 
     public static List<TrackPoint> getTrackPoints(ContentProviderUtils contentProviderUtils, Track.Id trackId) {
-        TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, null);
-        ArrayList<TrackPoint> trackPoints = new ArrayList<>();
-        while (trackPointIterator.hasNext()) {
-            trackPoints.add(trackPointIterator.next());
+        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, null)) {
+            ArrayList<TrackPoint> trackPoints = new ArrayList<>();
+            while (trackPointIterator.hasNext()) {
+                trackPoints.add(trackPointIterator.next());
+            }
+            return trackPoints;
         }
-        return trackPoints;
     }
 
     public static Pair<Track.Id, TrackStatistics> buildTrackWithTrackPoints(ContentProviderUtils contentProviderUtils, int numberOfPoints) {
