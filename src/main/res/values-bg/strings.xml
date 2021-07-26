@@ -542,4 +542,6 @@ limitations under the License.
     <string name="settings_error_initial_values_restored">Съжаляваме, но възникна грешка. Всички настройки са възстановени до стойностите по подразбиране.</string>
     <string name="import_parser_error">Грешка при парсера: %1$s</string>
     <string name="instant_export_enabled_summary">Експортиране на запис в хранилището след приключване на записа</string>
+    <string name="settings_sensor_cycling_cadence">Колоездене: каданс</string>
+    <string name="settings_sensor_cycling_distance_speed">Колоездене: дължина и скорост</string>
 </resources>
