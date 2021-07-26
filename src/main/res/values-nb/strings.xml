@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">fly</string>
     <string name="activity_type_atv">ATV</string>
@@ -340,7 +340,7 @@ limitations under the License.
         <item quantity="one">1 engelsk mil i timen</item>
         <item quantity="other">%1$.1f engelske mil i timen</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s per kilometer</string>
+    <string name="voice_pace_per_kilometer">%1$s pr kilometer</string>
     <string name="voice_pace_per_mile">%1$s per engelsk mil</string>
     <string name="voice_template">%1$s på %2$s med %3$s</string>
     <plurals name="voiceTotalDistanceKilometers">
@@ -355,7 +355,7 @@ limitations under the License.
     <string name="waypoint_type_atm">Minibank</string>
     <string name="waypoint_type_bank">bank</string>
     <string name="waypoint_type_bar">bar</string>
-    <string name="waypoint_type_barbecue">grillmat</string>
+    <string name="waypoint_type_barbecue">grill</string>
     <string name="waypoint_type_building">bygning</string>
     <string name="waypoint_type_bus_stop">busstopp</string>
     <string name="waypoint_type_cafe">kafé</string>
@@ -542,4 +542,6 @@ limitations under the License.
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="menu_voice_rate">Talehastighet</string>
     <string name="track_delete_not_recording">Dette sporet kan ikke slettes da det tas opp nå.</string>
+    <string name="settings_sensor_cycling_cadence">Sykling: cadence</string>
+    <string name="settings_sensor_cycling_distance_speed">Sykling: avstand og hastighet</string>
 </resources>
