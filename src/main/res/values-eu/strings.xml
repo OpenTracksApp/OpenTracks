@@ -548,4 +548,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="menu_voice_rate">Ahots abiadura</string>
     <string name="track_delete_not_recording">Pista hau ezin da ezabatu da gaur egun grabatzen.</string>
+    <string name="settings_sensor_cycling_cadence">Txirrindularitza: kadentzia</string>
+    <string name="settings_sensor_cycling_distance_speed">Txirrindularitza: distantzia eta abiadura</string>
 </resources>
