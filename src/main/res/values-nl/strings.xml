@@ -547,4 +547,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="delete_service">Dienst verwijdering</string>
     <string name="menu_voice_rate">Spraak snelheid</string>
     <string name="track_delete_not_recording">Dit fragment kan niet worden gewist omdat het momenteel is opgenomen.</string>
+    <string name="settings_sensor_cycling_cadence">Fietsen: cadans</string>
+    <string name="settings_sensor_cycling_distance_speed">Fietsen: afstand en snelheid</string>
 </resources>
