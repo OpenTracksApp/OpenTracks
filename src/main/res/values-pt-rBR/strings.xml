@@ -493,4 +493,6 @@
         <item quantity="one">1 milha por hora</item>
         <item quantity="other">%1$.1f milhas por hora</item>
     </plurals>
+    <string name="settings_sensor_cycling_cadence">Ciclismo: cadência</string>
+    <string name="settings_sensor_cycling_distance_speed">Ciclismo: distância e velocidade</string>
 </resources>
