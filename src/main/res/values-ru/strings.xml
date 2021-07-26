@@ -559,4 +559,6 @@ limitations under the License.
         <item quantity="many">Завершено с %1$d ошибок</item>
         <item quantity="other">Завершено с %1$d ошибок</item>
     </plurals>
+    <string name="settings_sensor_cycling_cadence">Велоспорт: каденс</string>
+    <string name="settings_sensor_cycling_distance_speed">Велоспорт: расстояние и скорость</string>
 </resources>
