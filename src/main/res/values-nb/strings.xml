@@ -352,7 +352,7 @@ limitations under the License.
         <item quantity="other">total distanse %1$.2f engelske mil</item>
     </plurals>
     <!-- Waypoint Type -->
-    <string name="waypoint_type_atm">Minibank</string>
+    <string name="waypoint_type_atm">minibank</string>
     <string name="waypoint_type_bank">bank</string>
     <string name="waypoint_type_bar">bar</string>
     <string name="waypoint_type_barbecue">grill</string>
