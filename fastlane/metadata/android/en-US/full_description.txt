@@ -7,5 +7,5 @@ Features:
 * Altitude shown in EGM2008 (above mean sea level); exported as WGS84
 * Voice announcements
 * Supports Bluetooth LE sensors: heart rate, speed and distance (cycling), cadence (cycling), and power meter (cycling)
-* Export data: export tracks either as KMZ (incl. photos), KML,  or GPX
+* Export data: export tracks either as KMZ (incl. photos), KML, or GPX
 * No Internet access: Internet is not used

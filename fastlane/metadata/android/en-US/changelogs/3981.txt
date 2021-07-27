@@ -15,4 +15,3 @@ Developer:
 - Replaced communication via SharedPreferences 
 - Use non-static service binder
 - Use altitude in the code base (instead of elevation)
-

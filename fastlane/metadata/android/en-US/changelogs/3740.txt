@@ -2,4 +2,3 @@ v3.13.2: OpenTracks
 
 Bugfix:
 - Crash in landscape mode
-

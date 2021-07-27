@@ -8,4 +8,3 @@ Bugfix:
 - Crash if using pace for voice announcements (introduced in v3.17.0)
 - Statistics showed pace initially (introduced in v3.17.0)
 - Rare crash when deleting tracks
-
