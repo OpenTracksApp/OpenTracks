@@ -1,0 +1,16 @@
+v3.18.6: „OpenTracks“
+
+Pakeitimai:
+- „Rodyti žemėlapyje“ funkcionalumas per KML, o ne KMZ
+- Pranešime balsu nėra programos pavadinimo
+- Įrašant: aukščio padidėjimas / praradimas atnaujinamas kas sekundę
+- Išversti parduotuvės aprašymai
+
+Bufiksai:
+- Ištaisyti neteisingi balso pranešimų vertimai
+
+Programuotojas:
+- „Android12“ leidimai (BLUETOOTH_SCAN)
+- „Android12“ leidimai (ACCESS_COARSE_LOCATION)
+- Tvirtinimas „TrackPoints“ (testavimas)
+- Pašalinti nepanaudoti vertimai

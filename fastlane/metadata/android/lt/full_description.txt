@@ -1,0 +1,11 @@
+„OpenTracks“ yra sporto stebėjimo programa, visiškai gerbianti jūsų privatumą.
+
+Funkcijos:
+* Sporto sekimas: stebėkite savo sportinę ir lauko veiklą
+* Nuotraukos ir žymekliai: stebėdami stebėkite įdomias vietas
+* Aukščio padidėjimas ir praradimas: per barometrinį jutiklį
+* EGM2008 nurodytas aukštis (virš vidutinio jūros lygio); eksportuota kaip WGS84
+* Balso pranešimai
+* Palaiko „Bluetooth LE“ jutiklius: širdies ritmą, greitį ir atstumą (važiuojant dviračiu), ritmą (dviračiu) ir galios matuoklį (važiuojant dviračiu)
+* Eksportuoti duomenis: eksportuoti takelius kaip KMZ (įskaitant nuotraukas), KML arba GPX
+* Nėra interneto prieigos: internetas nenaudojamas
