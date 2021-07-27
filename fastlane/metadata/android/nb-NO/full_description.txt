@@ -1,0 +1,9 @@
+Funksjoner:
+* Sportssoring: Spor dine sports- og utendørsaktiviteter
+* Bilder og markører: Marker interessante steder under sporing
+* Høydeendringer: via barometer
+* Høyde vist i EGM2008 (over havnivå); eksportert som WGS84
+* Stemmekunngjøringer
+* Støtter Blåtann LE-sensorer: pulse, hastighet og distanse (sykling), takt (sykling), og effektmeter (sykling)
+* Eksport av data: Enten som KMZ (inkl. bilder), KML, eller GPX
+* Ingen tilgang til Internett: Ingenting lastes opp noensteds hen

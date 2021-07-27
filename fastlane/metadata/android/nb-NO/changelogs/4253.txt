@@ -1,0 +1,16 @@
+v3.18.6: OpenTracks
+
+Endringer:
+- «Vis på kart»-funksjonalitet via KML istedenfor KMZ
+- Stemmekunngjøringer inkluderer ikke programnavn
+- Under opptak: Høydeendringer registrert hvert sekund
+- Butikk-oversettelser oversatt
+
+Feilfikser:
+- Fikset ugyldige stemmekunngjøringsoversettelser
+
+Utviklere:
+- Android12-tilganger (Blåtannsskanning)
+- Android12-tilganger (tilgang til grovposisjon)
+- Fastsetting for TrackPoints (testing)
+- Fjernet ubrukte oversettelser
