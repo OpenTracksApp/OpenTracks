@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <string name="about_preference_title">Über OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> ist eine Sport-Tracking-Anwendung, die Ihre Privatsphäre vollständig respektiert.</string>
     <string name="about_url">Projekt-Website: <a href="%1$s">%1$s</a></string>
@@ -45,10 +45,7 @@ limitations under the License.
 OpenTracks verwendet den GPS-Sensor des Geräts, um den Standort kontinuierlich aufzuzeichnen.
 Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), kann OpenTracks nichts dagegen unternehmen.</string>
     <string name="help_data_storage_title">Wie speichert OpenTracks Sensordaten?</string>
-    <string name="help_data_storage_content">
-Sensordaten werden pro aufgezeichneter Stelle gespeichert.
-Bezogen auf einen Herzfrequenzsensor bedeutet dies, dass nur <i>eine</i>Herzfrequenzmessung pro Ort gespeichert wird.
-Wenn Du still stehst oder du dich in geschlossenen Räumen aufhälst, werden keine Sensordaten aufgezeichnet (aber angezeigt).</string>
+    <string name="help_data_storage_content"> Sensordaten werden pro aufgezeichneter Stelle gespeichert. Bezogen auf einen Herzfrequenzsensor bedeutet dies, dass nur <i>eine</i>Herzfrequenzmessung pro Ort gespeichert wird. Wenn Du still stehst oder du dich in geschlossenen Räumen aufhälst, werden keine Sensordaten aufgezeichnet (aber angezeigt) </string>
     <string name="help_gps_troubleshooting_title">OpenTracks zeichnet keine Standorte auf?</string>
     <string name="help_gps_troubleshooting_content"> Was Du tun kannst:
 \n a) prüfen, ob GPS aktiviert ist,
@@ -58,15 +55,14 @@ Wenn Du still stehst oder du dich in geschlossenen Räumen aufhälst, werden kei
 \n
 \n Wenn das alles nicht hilft, melde bitte einen Fehler. </string>
     <string name="help_support_title">Wie kann ich OpenTracks unterstützen?</string>
-    <string name="help_support_content">
-Du kannst:\n
-a) über OpenTracks reden,\n
-b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">Merkmale vorschlagen</a>,\n
-c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">Fehler melden</a>,\n
-d) Hilfe bei der Software-Entwicklung,\n
-e) kaufen in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,\n
-f) spenden, und\n
-g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
+    <string name="help_support_content"> Du kannst:
+\n a) über OpenTracks reden,
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">Merkmale vorschlagen</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">Fehler melden</a>,
+\n d) Hilfe bei der Software-Entwicklung,
+\n e) kaufen in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\n f) spenden, und
+\n g) das tun, was Deiner Meinung nach OpenTracks hilft </string>
     <string name="open_track_using_dashboard">Öffne mithilfe des OpenTracks-Dashboard</string>
     <string name="open_track_as_KML">Als KML öffnen</string>
     <string name="open_track_as_GPX">Als GPX öffnen</string>
@@ -211,7 +207,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="image_track">Strecke</string>
     <!-- Import -->
     <string name="import_error">%1$d von %2$s aus %3$s importiert</string>
-    <string name="import_no_directory">%1$s ist nicht vorhanden.</string>
+    <string name="import_no_directory">%1$s ist nicht vorhanden</string>
     <string name="import_no_file">Es waren keine Dateien zum Importieren vorhanden. Schließen Sie Ihr Gerät an Ihren Computer an und legen Sie die zu importierenden Dateien in %1$s.</string>
     <string name="import_no_file_title">Dateien importieren</string>
     <string name="import_progress_message">Dateien werden aus %1$s importiert…</string>
@@ -220,12 +216,12 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="import_success">%1$s aus %2$s importiert</string>
     <!-- Marker -->
     <string name="marker_add_error">Es kann keine Markierung eingefügt werden, da kein GPS-Signal verfügbar ist. Bitte versuchen Sie es erneut.</string>
-    <string name="marker_add_success">Markierung wurde eingefügt.</string>
-    <string name="marker_add_canceled">Abgebrochen. Es wurde keine Markierung hinzugefügt.</string>
+    <string name="marker_add_success">Markierung wurde eingefügt</string>
+    <string name="marker_add_canceled">Abgebrochen. Es wurde keine Markierung hinzugefügt</string>
     <string name="marker_add_photo_canceled">Abgebrochen, keine Fotomarkierung hinzugefügt</string>
-    <string name="marker_delete_one_confirm_message">Die Markierung wird endgültig vom Gerät gelöscht.</string>
+    <string name="marker_delete_one_confirm_message">Die Markierung wird endgültig vom Gerät gelöscht</string>
     <string name="marker_delete_one_confirm_title">Markierung löschen?</string>
-    <string name="marker_delete_multiple_confirm_message">Die ausgewählten Markierungen werden endgültig vom Gerät gelöscht.</string>
+    <string name="marker_delete_multiple_confirm_message">Die ausgewählten Markierungen werden endgültig vom Gerät gelöscht</string>
     <string name="marker_label_end">%1$s (Ende)</string>
     <string name="marker_label_start">%1$s (Start)</string>
     <string name="marker_name_format">%1$d. Markierung</string>
@@ -235,7 +231,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="marker_edit_marker_type">Art der Markierung, z. B. Wasserfall</string>
     <string name="marker_edit_marker_type_hint">Art der Markierung</string>
     <!-- Marker List -->
-    <string name="marker_list_empty_message">Sie haben noch keine Markierungen.</string>
+    <string name="marker_list_empty_message">Sie haben noch keine Markierungen</string>
     <!-- Menu -->
     <string name="menu_aggregated_statistics">Gesammelte Statistiken</string>
     <string name="menu_delete">Löschen</string>
@@ -294,11 +290,11 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="settings_recording_auto_resume_track_timeout_title">Automat. Fortsetzung</string>
     <string name="settings_recording_default_activity_title">Standardaktivität</string>
     <string name="settings_recording_location_frequency_summary">Entfernungs-/Zeitintervall %1$s zwischen zwei Standortaufzeichnungen</string>
-    <string name="settings_recording_max_recording_distance_summary">Ein neues Segment wird erstellt, wenn die Entfernung zwischen zwei Standorten mehr als %1$s beträgt.</string>
+    <string name="settings_recording_max_recording_distance_summary">Ein neues Segment wird erstellt, wenn die Entfernung zwischen zwei Standorten mehr als %1$s beträgt</string>
     <string name="settings_recording_max_recording_distance_title">Max. Entfernung</string>
-    <string name="settings_recording_min_recording_distance_title">Entfernungsintervall aufz.</string>
-    <string name="settings_recording_min_recording_interval_title">Zeitintervall aufz.</string>
-    <string name="settings_recording_min_required_accuracy_summary">Der Standort wird ignoriert, wenn die Genauigkeit weniger als %1$s beträgt.</string>
+    <string name="settings_recording_min_recording_distance_title">Aufzeichnungsintervall</string>
+    <string name="settings_recording_min_recording_interval_title">Zeitintervall aufz</string>
+    <string name="settings_recording_min_required_accuracy_summary">Der Standort wird ignoriert, wenn die Genauigkeit weniger als %1$s beträgt</string>
     <string name="settings_recording_min_required_accuracy_title">GPS-Genauigkeit</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Datum (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Datum (lokal)</string>
@@ -308,7 +304,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="settings_reset">Zurücksetzen</string>
     <string name="settings_reset_confirm_message">Alle Einstellungen werden auf die Standardwerte zurückgesetzt.</string>
     <string name="settings_reset_confirm_title">Jetzt zurücksetzen?</string>
-    <string name="settings_reset_done">Alle Einstellungen wurden auf ihre Standardwerte zurückgesetzt.</string>
+    <string name="settings_reset_done">Alle Einstellungen wurden auf ihre Standardwerte zurückgesetzt</string>
     <string name="settings_error_initial_values_restored">Entschuldigung, es ist ein Fehler aufgetreten. Alle Einstellungen wurden auf die Standardwerte zurückgesetzt.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
@@ -323,7 +319,9 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="settings_stats_units_title">Bevorzugte Einheiten</string>
     <!-- Share Track -->
     <string name="share_track_share_file">Track-Datei teilen</string>
-    <string name="share_track_share_file_body">Dieser Track könnte dich interessieren.\n\nDu kannst ihn dir mit Google Earth oder einer anderen Kartierungssoftware ansehen.\n\n%1$s</string>
+    <string name="share_track_share_file_body">Dieser Track könnte dich interessieren.
+\n
+\n%1$s</string>
     <string name="share_track_subject">Ich möchte einen Track mit dir teilen</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Durchschnitt\n(Bewegung)</string>
@@ -360,7 +358,7 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="track_edit_activity_type_hint">Art der Aktivität</string>
     <string name="track_edit_new_track_title">Neuer Track</string>
     <!-- Track List -->
-    <string name="track_list_empty_message">Zeichnen Sie Ihr nächstes Abenteuer hier auf.</string>
+    <string name="track_list_empty_message">Zeichnen Sie Ihr nächstes Abenteuer hier auf</string>
     <!-- Aggregated Statistics -->
     <string name="aggregated_stats_empty_message">Zeichnen Sie Ihren ersten Track auf um aggregierte Statistiken zu sehen</string>
     <!-- Track Widget -->
@@ -552,4 +550,6 @@ g) das tun, was Deiner Meinung nach OpenTracks hilft.</string>
     <string name="import_thread_interrupted">Thread unterbrochen</string>
     <string name="import_unable_to_import_file">Importieren der Datei gescheitert: %1$s</string>
     <string name="delete_service">Löschdienst</string>
+    <string name="settings_sensor_cycling_cadence">Radfahren: Trittfrequenz</string>
+    <string name="settings_sensor_cycling_distance_speed">Radfahren: Entfernung und Geschwindigkeit</string>
 </resources>
