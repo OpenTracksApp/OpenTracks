@@ -1,0 +1,16 @@
+v3.18.6: OpenTracks
+
+Förändring:
+- "Visa på kartan" - funktionalitet via KML istället för KMZ
+- Röstmeddelande inkluderar inte appnamn
+- Under inspelning: höjd vinst / förlust uppdateras varje sekund
+- Store beskrivningar översatt
+
+Bufixar:
+- Fast ogiltig röst tillkännagivande översättningar
+
+Utvecklare:
+- Android12 behörigheter (BLUETOOTH_SCAN)
+- Android12 behörigheter (ACCESS_COARSE_LOCATION)
+- Bedömning av spårpunkter (provning)
+- Bort oanvända översättningar
