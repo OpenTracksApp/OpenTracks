@@ -27,7 +27,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -393,24 +392,22 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     }
 
     private void requestGPSPermissions() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             return;
         }
 
         ActivityResultLauncher<String[]> locationPermissionRequest = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
                     Boolean fineLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false);
-                    if (fineLocationGranted == null || !fineLocationGranted) {
+                    Boolean coarseLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false);
+                    if (fineLocationGranted == null || !fineLocationGranted
+                            || coarseLocationGranted == null || !coarseLocationGranted) {
                         Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }
         );
-        String[] permissions;
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
-            permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
-        } else {
-            permissions = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
-        }
+        String[] permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
         locationPermissionRequest.launch(permissions);
     }
 

@@ -113,7 +113,7 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
                         Uri directoryUri = resultData.getData();
 
                         PreferencesUtils.setDefaultExportDirectoryUri(sharedPreferences, this, directoryUri);
-                        IntentUtils.persistDirectoryAccessPermission(getApplicationContext(), resultData, directoryUri);
+                        IntentUtils.persistDirectoryAccessPermission(getApplicationContext(), directoryUri);
                         break;
                     case RESULT_CANCELED:
                         PreferencesUtils.setDefaultExportDirectoryUri(sharedPreferences, this, null);
