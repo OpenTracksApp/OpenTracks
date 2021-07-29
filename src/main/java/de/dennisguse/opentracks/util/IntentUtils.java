@@ -200,10 +200,8 @@ public class IntentUtils {
         return new Pair<>(intent, photoUri);
     }
 
-    public static void persistDirectoryAccessPermission(Context context, Intent resultData, Uri directoryUri) {
-        final int takeFlags = resultData.getFlags()
-                & (Intent.FLAG_GRANT_READ_URI_PERMISSION
-                | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        context.getContentResolver().takePersistableUriPermission(directoryUri, takeFlags);
+    public static void persistDirectoryAccessPermission(Context context, Uri directoryUri) {
+        int flags = Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
+        context.getContentResolver().takePersistableUriPermission(directoryUri, flags);
     }
 }

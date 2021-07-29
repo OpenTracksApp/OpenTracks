@@ -44,6 +44,8 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
         gpsStatus.start();
     }
 
+    @SuppressWarnings({"MissingPermission"})
+    //TODO upgrade to AGP7.0.0/API31 started complaining about removeUpdates.
     public void onStop() {
         lastTrackPoint = null;
         if (locationManager != null) {
