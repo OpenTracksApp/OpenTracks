@@ -44,12 +44,34 @@ public class PreferencesUtils {
 
     private final static String TAG = PreferencesUtils.class.getSimpleName();
 
+    private static final int PREFERENCES_VERSION = 1;
+
     private PreferencesUtils() {
     }
 
     @Deprecated //Should only be used to get a sharedPreference for more than one interaction!
     public static SharedPreferences getSharedPreferences(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        int lastVersion = getInt(sharedPreferences, context, R.string.prefs_last_version_key, 0);
+        if (PREFERENCES_VERSION > lastVersion) {
+            onUpgrade(sharedPreferences, context, PREFERENCES_VERSION);
+            setInt(sharedPreferences, context, R.string.prefs_last_version_key, PREFERENCES_VERSION);
+        }
+        return sharedPreferences;
+    }
+
+    private static void onUpgrade(SharedPreferences sharedPreferences, Context context, int toVersion) {
+        switch (toVersion) {
+            case 1:
+                upgradeFrom0to1(sharedPreferences, context);
+                break;
+            default:
+                throw new RuntimeException("Not implemented: upgrade preferences to " + toVersion);
+        }
+    }
+
+    private static void upgradeFrom0to1(SharedPreferences sharedPreferences, Context context) {
+        setString(sharedPreferences, context, R.string.stats_custom_layout_fields_key, buildDefaultLayout(context));
     }
 
     public static String getDefaultActivity(SharedPreferences sharedPreferences, Context context) {

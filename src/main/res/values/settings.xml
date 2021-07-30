@@ -285,7 +285,7 @@
     <!--
     Stats layout customization: default fields.
     CSV values:
-    <stat name>,<visible (1) or hidden (0)>, <primary (1) or secondary (0)>,<complete row (1) or not (0)>
+    <stat name>,<visible (1) or hidden (0)>,<primary (1) or secondary (0)>,<complete row (1) or not (0)>
     -->
     <string-array name="stats_custom_layout_fields_default_value">
         <item>distance,1,1,0</item>
@@ -313,5 +313,7 @@
     <string name="stats_empty_value_float" translatable="false">0.0</string>
     <string name="stats_empty_value_time" translatable="false">00:00</string>
     <string name="stats_empty_coordinates" translatable="false">0.0, 0.0</string>
+
+    <string name="prefs_last_version_key">lastVersionKey</string>
 
 </resources>
