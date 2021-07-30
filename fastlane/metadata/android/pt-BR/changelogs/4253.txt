@@ -1,0 +1,16 @@
+v3.18.6: OpenTracks
+
+Mudanças:
+- Funcionalidade "Mostrar no mapa" via KML em vez de KMZ
+- O anúncio de voz não inclui o nome do aplicativo
+- Durante a gravação: o ganho / perda de elevação é atualizado a cada segundo
+- Descrições da loja traduzidas
+
+Correções:
+- Correções de traduções inválidas no anúncios de voz
+
+Desenvolvedores:
+- Permissões Android12 (BLUETOOTH_SCAN)
+- Permissões Android12 (ACCESS_COARSE_LOCATION)
+- Confirmação de TrackPoints (em teste)
+- Removidas as traduções não utilizadas
