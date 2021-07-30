@@ -412,7 +412,13 @@ limitations under the License.
 \n * fungerar helt offline
 \n * visa spår på en karta (se nedan)</string>
     <string name="help_recording_content">OpenTracks använder GPS-sensorn på enheten för att spela in platsen kontinuerligt. Om GPS-enheten rapporterar felaktiga data (t.ex. plats, hastighet, höjd) kan OpenTracks inte göra något åt det.</string>
-    <string name="help_gps_troubleshooting_content"></string>
+    <string name="help_gps_troubleshooting_content"> Vad du kan göra:
+\n a) kontrollera om GPS är aktiverad,
+\n b) förbättra GPS-mottagningen (t.ex. genom att gå utomhus),
+\n c) kontrollera med appen <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, och
+\n d) inaktivera energisparande.
+\n
+\n Om allt inte hjälper, rapportera ett fel. </string>
     <string name="description_altitude_loss">Höjdförlust: %1$d m (%2$d ft)</string>
     <string name="export_progress_summary_new_msg">Nya spår exporteras</string>
     <string name="export_progress_summary_errors_msg">Fel</string>
@@ -523,4 +529,18 @@ limitations under the License.
     <string name="gps_fixed_and_ready">GPS fast och klar</string>
     <string name="export_track_already_exists_msg">Spåret %1$s finns redan i målkatalogen.</string>
     <string name="export_progress_summary_skip_msg">Spår hoppade över</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Slutfördes med ett fel</item>
+        <item quantity="other">Slutförs med %1$d fel</item>
+    </plurals>
+    <string name="help_support_content"> Det kan du göra:
+\n a) sprida ordet om OpenTracks,
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">föreslå funktioner</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">rapportera fel</a>,
+\n d) hjälpa till med programvaruutveckling,
+\n e) köpa i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
+\n f) donera, och
+\n g) göra vad du än tror hjälper OpenTracks. </string>
+    <string name="activity_type_escooter">skoter</string>
+    <string name="stats_split_interval">Delat intervall</string>
 </resources>
