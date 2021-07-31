@@ -305,9 +305,9 @@ limitations under the License.
         <item quantity="other">%1$.1f километара на сат</item>
     </plurals>
     <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">укупна раздаљина %1$.2f километар</item>
-        <item quantity="few">укупна раздаљина %1$.2f километра</item>
-        <item quantity="other">укупна раздаљина %1$.2f километара</item>
+        <item quantity="one">укупна раздаљина %1$.1f километар</item>
+        <item quantity="few">укупна раздаљина %1$.1f километра</item>
+        <item quantity="other">укупна раздаљина %1$.1f километара</item>
     </plurals>
     <plurals name="voiceTotalDistanceMiles">
         <item quantity="one">укупна раздаљина %1$.2f миља</item>
