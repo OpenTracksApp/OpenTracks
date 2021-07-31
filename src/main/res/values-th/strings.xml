@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">เครื่องบิน</string>
     <string name="activity_type_atv">รถ ATV</string>
@@ -217,7 +217,6 @@ limitations under the License.
     <string name="settings_stats_units_imperial">หน่วยอังกฤษ (ไมล์, ฟุต)</string>
     <string name="settings_stats_units_metric">หน่วยเมตริก (กม., เมตร)</string>
     <string name="settings_stats_units_title">หน่วยที่ต้องการ</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file_body">ฉันคิดว่าคุณอาจจะสนใจในเส้นการเดินทางนี้\n\nเมื่อต้องการดูเส้นการเดินทางนี้ ให้ใช้ Google Earth หรือซอฟแวร์แผนที่อื่นๆ\n\n%1$s</string>
     <string name="share_track_subject">ฉันต้องการแบ่งปันเส้นทางกับคุณ</string>
@@ -290,7 +289,7 @@ limitations under the License.
         <item quantity="other">%1$d นาท</item>
     </plurals>
     <plurals name="voiceSeconds">
-        <item quantity="other">%1$s ต่อไมล</item>
+        <item quantity="other">%1$d ต่อไมล</item>
     </plurals>
     <plurals name="voiceSpeedKilometersPerHour">
         <item quantity="other">%1$.1f กิโลเมตรต่อชั่วโมง</item>
