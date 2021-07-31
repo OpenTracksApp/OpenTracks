@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">Jumlah jarak: %1$.2f km (%2$.1f bt)</string>
     <string name="description_total_time">Jumlah masa: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Semua sebagai %1$s</string>
-    <string name="export_all_title">Eksport ke storan luaran</string>
-    <string name="export_error">%1$d daripada %2$s dieksport ke %3$s</string>
-    <string name="export_option">sebagai %1$s ke %2$s</string>
     <string name="export_progress_message">Mengeksport ke %1$s…</string>
-    <string name="export_success">%1$s dieksport ke %2$s</string>
-    <string name="export_title">Eksport ke…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -126,21 +120,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">Padamkan yang dipilih?</string>
     <string name="generic_description">Keterangan</string>
     <string name="generic_description_line">Keterangan: %1$s</string>
-    <string name="generic_error_title">Ralat</string>
     <string name="generic_name">Nama</string>
     <string name="generic_name_line">Nama: %1$s</string>
-    <string name="generic_no">Tidak</string>
     <string name="generic_paused">Dijeda</string>
     <string name="generic_recording">Merakam…</string>
     <string name="generic_save">Simpan</string>
-    <string name="generic_success_title">Berjaya</string>
     <string name="generic_tracks">Lagu</string>
     <!-- Gps -->
     <string name="gps_starting">Memulakan GPS</string>
     <string name="gps_wait_for_better_signal">Menunggu isyarat GPS yang lebih baik</string>
     <string name="gps_wait_for_signal">Menunggu isyarat GPS</string>
     <!-- Image -->
-    <string name="image_application">Aplikasi</string>
     <string name="image_arrow">Anak panah</string>
     <string name="image_marker">Penanda</string>
     <string name="image_marker_count">Kiraan penanda</string>
@@ -150,15 +140,7 @@ limitations under the License.
     <string name="image_stop">Berhenti</string>
     <string name="image_track">Lagu</string>
     <!-- Import -->
-    <string name="import_error">%1$d daripada %2$s diimport dari %3$s</string>
-    <string name="import_no_directory">%1$s tidak wujud</string>
-    <string name="import_no_file">Tiada fail untuk diimport. Sambungkan peranti anda ke komputer dan letakkan fail untuk
-    diimport dalam %1$s.</string>
-    <string name="import_no_file_title">Import fail</string>
     <string name="import_progress_message">Mengimport dari %1$s…</string>
-    <string name="import_selection_option">Semua %1$s</string>
-    <string name="import_selection_title">Import dari storan luaran</string>
-    <string name="import_success">%1$s daripada %2$s diimport</string>
     <!-- Marker -->
     <string name="marker_add_error">Tidak dapat menyisipkan penanda. Tiada isyarat GPS. Cuba lagi.</string>
     <string name="marker_add_success">Penanda telah disisipkan</string>
@@ -166,8 +148,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">Penanda akan dipadamkan terus dari peranti</string>
     <string name="marker_delete_one_confirm_title">Padamkan penanda?</string>
     <string name="marker_delete_multiple_confirm_message">Penanda yang dipilih akan dipadamkan terus dari peranti</string>
-    <string name="marker_label_end">%1$s (Akhir)</string>
-    <string name="marker_label_start">%1$s (Mula)</string>
     <string name="marker_name_format">Penanda %1$d</string>
     <string name="marker_title">%1$d daripada %2$d</string>
     <!-- Marker Detail -->
@@ -193,13 +173,10 @@ limitations under the License.
     <string name="menu_show_on_map">Tunjukkan pada peta</string>
     <string name="menu_start_gps">Mulakan GPS</string>
     <string name="menu_stop_gps">Hentikan GPS</string>
-    <string name="menu_view_photo">Lihat foto</string>
     <string name="menu_voice_frequency">Kekerapan suara</string>
     <!-- OpenTracks -->
     <string name="recording_service">Khidmat rakaman</string>
     <!-- Search -->
-    <string name="search_global_description">Laluan dan penanda</string>
-    <string name="search_list_empty_message">Tiada laluan atau penanda yang sepadan dengan carian anda</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Aras bateri</string>
     <string name="sensor_state_cadence">Rentak</string>
@@ -216,10 +193,6 @@ limitations under the License.
     <string name="settings_chart_by_distance">Mengikut jarak</string>
     <string name="settings_chart_by_time">Mengikut masa</string>
     <string name="settings_recording">Rakaman</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Sentiasa sambung semula rakaman setelah but semula</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Jangan sambung semula rakaman setelah but semula</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Sambung semula rakaman setelah but semula jika lokasi rakaman terakhir dalam %1$s lepas</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Sambung semula auto</string>
     <string name="settings_recording_default_activity_title">Jenis aktiviti tetapan asal</string>
     <string name="settings_recording_location_frequency_summary">%1$s antara lokasi rakaman</string>
     <string name="settings_recording_max_recording_distance_summary">Segmen baharu dibuat jika jarak di antara dua lokasi melebihi %1$s</string>
@@ -239,7 +212,6 @@ limitations under the License.
     <string name="settings_reset_done">Semua tetapan telah dikembalikan kepada nilai tetapan asal</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Sensor Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Latitud/Longitud</string>
     <string name="settings_stats_rate_title">Kadar pilihan</string>
@@ -248,7 +220,6 @@ limitations under the License.
     <string name="settings_stats_units_title">Unit pilihan</string>
 
     <!-- Share Track -->
-    <string name="share_track_share_file">Kongsi fail laluan</string>
     <string name="share_track_share_file_body">Saya fikir anda mungkin berminat dengan laluan ini.\n\nUntuk melihat laluan, gunakan Google Earth atau perisian
     pemetaan lain.\n\n%1$s</string>
     <string name="share_track_subject">Saya mahu berkongsi jejak dengan awak</string>
@@ -270,7 +241,6 @@ limitations under the License.
     <string name="stats_total_time">Jumlah masa</string>
     <!-- Track -->
     <string name="track_name_format">Jejak %1$d</string>
-    <string name="track_record_notification">Merakamkan laluan anda…</string>
     <string name="track_markers">Penanda %1$s</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Laluan dan penandanya akan dipadamkan secara kekal dari peranti.</string>
@@ -278,12 +248,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">Laluan yang dipilih dan penandanya akan dipadamkan secara kekal dari peranti.</string>
     <string name="track_delete_progress_message">Memadamkan…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Carta</string>
     <string name="track_detail_stats_tab">Statistik</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Jenis aktiviti (mis. mengembara berjalan kaki)</string>
     <string name="track_edit_activity_type_hint">Jenis aktiviti</string>
-    <string name="track_edit_new_track_title">Laluan Baharu</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Mula merakam pengembaraan anda yang seterusnya di sini</string>
     <!-- Track Widget -->
@@ -300,7 +268,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">Sesuaikan untuk ketepatan</string>
     <string name="value_adapt_battery_life">Sesuaikan untuk hayat bateri</string>
-    <string name="value_always">Sentiasa</string>
     <string name="value_integer_feet">%1$d kaki</string>
     <string name="value_integer_feet_excellent_gps">%1$d kaki (GPS bagus)</string>
     <string name="value_integer_feet_recommended">%1$d kaki (disyorkan)</string>
@@ -313,11 +280,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d bt</string>
     <string name="value_integer_mile_hour">%1$d bt/j</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">Tiada</string>
     <string name="value_off">Dimatikan</string>
-    <string name="value_smallest">Paling kecil</string>
     <string name="value_smallest_recommended">Terkecil (disyorkan)</string>
     <!-- Voice -->
     <plurals name="voiceHours">

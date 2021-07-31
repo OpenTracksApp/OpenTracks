@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">Загальна відстань: %1$.2f км (%2$.1f мл)</string>
     <string name="description_total_time">Загальний час: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Усе як %1$s</string>
-    <string name="export_all_title">Експортувати в зовнішню пам’ять</string>
-    <string name="export_error">Файли експортовано в папку %3$s: %1$d з %2$s</string>
-    <string name="export_option">як %1$s в %2$s</string>
     <string name="export_progress_message">Триває експорт у %1$s…</string>
-    <string name="export_success">Експортовано в папку %2$s: %1$s</string>
-    <string name="export_title">Експорт у…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -128,21 +122,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">Видалити вибрані?</string>
     <string name="generic_description">Опис</string>
     <string name="generic_description_line">Опис: %1$s</string>
-    <string name="generic_error_title">Помилка</string>
     <string name="generic_name">Назва</string>
     <string name="generic_name_line">Назва: %1$s</string>
-    <string name="generic_no">Ні</string>
     <string name="generic_paused">Призупинено</string>
     <string name="generic_recording">Записування…</string>
     <string name="generic_save">Зберегти</string>
-    <string name="generic_success_title">Виконано</string>
     <string name="generic_tracks">Шляхи</string>
     <!-- Gps -->
     <string name="gps_starting">Запуск GPS</string>
     <string name="gps_wait_for_better_signal">Очікується кращий GPS-сигналу</string>
     <string name="gps_wait_for_signal">Очікується GPS-сигнал</string>
     <!-- Image -->
-    <string name="image_application">Програма</string>
     <string name="image_arrow">Стрілка</string>
     <string name="image_marker">Маркер</string>
     <string name="image_marker_count">Кількість маркерів</string>
@@ -152,15 +142,7 @@ limitations under the License.
     <string name="image_stop">Зупинити</string>
     <string name="image_track">Трек</string>
     <!-- Import -->
-    <string name="import_error">Імпортовано %1$d - %2$s з %3$s</string>
-    <string name="import_no_directory">Каталог %1$s не існує</string>
-    <string name="import_no_file">Немає файлів для імпорту. Підключіть пристрій до комп’ютера та скопіюйте файли
-    в папку %1$s.</string>
-    <string name="import_no_file_title">Імпорт файлів</string>
     <string name="import_progress_message">Імпорт із каталогу %1$s…</string>
-    <string name="import_selection_option">Усі %1$s</string>
-    <string name="import_selection_title">Імпортувати із зовнішньої пам’яті</string>
-    <string name="import_success">Імпортовано %1$s з каталогу %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">Неможливо вставити маркер, оскільки відсутній сигнал GPS. Повторіть спробу.</string>
     <string name="marker_add_success">Маркер вставлено</string>
@@ -168,8 +150,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">Маркер буде назавжди видалено з пам’яті пристрою</string>
     <string name="marker_delete_one_confirm_title">Видалити маркер?</string>
     <string name="marker_delete_multiple_confirm_message">Вибрані маркери буде назавжди видалено з пам’яті пристрою</string>
-    <string name="marker_label_end">%1$s (кінець)</string>
-    <string name="marker_label_start">%1$s (початок)</string>
     <string name="marker_name_format">Маркер %1$d</string>
     <string name="marker_title">%1$d із %2$d</string>
     <!-- Marker Detail -->
@@ -195,13 +175,10 @@ limitations under the License.
     <string name="menu_show_on_map">Показати на карті</string>
     <string name="menu_start_gps">Увімкнути GPS</string>
     <string name="menu_stop_gps">Вимкнути GPS</string>
-    <string name="menu_view_photo">Переглянути фото</string>
     <string name="menu_voice_frequency">Голосові сповіщення</string>
     <!-- OpenTracks -->
     <string name="recording_service">Служба запису</string>
     <!-- Search -->
-    <string name="search_global_description">Шляхи та маркери</string>
-    <string name="search_list_empty_message">За вашим запитом не знайдено жодних шляхів і маркерів</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Рівень заряду батареї</string>
     <string name="sensor_state_cadence">Темп</string>
@@ -218,10 +195,6 @@ limitations under the License.
     <string name="settings_chart_by_distance">Дистанція</string>
     <string name="settings_chart_by_time">Час</string>
     <string name="settings_recording">Записування</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Завжди продовжувати запис після перезавантаження</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Не продовжувати запис після перезавантаження</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Продовжувати запис після перезавантаження, якщо його було припинено не пізніше ніж %1$s тому</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Автовідновлення</string>
     <string name="settings_recording_default_activity_title">Тип за умовчанням</string>
     <string name="settings_recording_location_frequency_summary">Записувати відрізок через кожні %1$s</string>
     <string name="settings_recording_max_recording_distance_summary">Кожні %1$s шляху відміряється новий відрізок</string>
@@ -241,7 +214,6 @@ limitations under the License.
     <string name="settings_reset_done">Для всіх налаштувань відновлено значення за умовчанням</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Датчик Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Широта/довгота</string>
     <string name="settings_stats_rate_title">Система вимірювання</string>
@@ -249,7 +221,6 @@ limitations under the License.
     <string name="settings_stats_units_metric">Метрична (км, м)</string>
     <string name="settings_stats_units_title">Одиниці вимірювання</string>
     <!-- Share Track -->
-    <string name="share_track_share_file">Надати доступ до файлу шляху</string>
     <string name="share_track_share_file_body">Цей шлях може вас зацікавити.
 \n
 \n%1$s</string>
@@ -272,7 +243,6 @@ limitations under the License.
     <string name="stats_total_time">Загальний час</string>
     <!-- Track -->
     <string name="track_name_format">Шлях %1$d</string>
-    <string name="track_record_notification">Записування шляху…</string>
     <string name="track_markers">Маркери шляху \"%1$s\"</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Шлях і його маркери буде остаточно видалено з пристрою.</string>
@@ -280,12 +250,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">Вибрані шляхи та їх маркери буде остаточно видалено з пристрою.</string>
     <string name="track_delete_progress_message">Видалення…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Діаграма</string>
     <string name="track_detail_stats_tab">Статистика</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Тип активного відпочинку (наприклад, піший туризм)</string>
     <string name="track_edit_activity_type_hint">Тип треку</string>
-    <string name="track_edit_new_track_title">Новий шлях</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Запишіть свою наступну пригоду тут</string>
     <!-- Track Widget -->
@@ -302,7 +270,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">Адаптувати для точності</string>
     <string name="value_adapt_battery_life">Адаптувати до часу роботи батареї</string>
-    <string name="value_always">Завжди</string>
     <string name="value_integer_feet">%1$d фут</string>
     <string name="value_integer_feet_excellent_gps">%1$d фут. (відмінний сигнал GPS)</string>
     <string name="value_integer_feet_recommended">%1$d фут. (рекомендовано)</string>
@@ -315,11 +282,9 @@ limitations under the License.
     <string name="value_integer_mile">Миль: %1$d</string>
     <string name="value_integer_mile_hour">%1$d миль/год</string>
     <string name="value_integer_minute">%1$d хв</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d сек</string>
     <string name="value_none">Немає</string>
     <string name="value_off">Вимк.</string>
-    <string name="value_smallest">Найменше</string>
     <string name="value_smallest_recommended">Найменше (рекомендовано)</string>
     <!-- Voice -->
     <plurals name="voiceHours">
@@ -460,7 +425,6 @@ limitations under the License.
     <string name="settings_night_mode_title">Тема додатка</string>
     <string name="help_gps_troubleshooting_title">OpenTracks не записує моє місцеположення\?</string>
     <string name="help_support_title">Як я можу підтримати OpenTracks\?</string>
-    <string name="open_track_using_dashboard">Відкрити за допомогою OpenTracks-Dashboard</string>
     <string name="open_track_as_KML">Відкрити як KML</string>
     <string name="open_track_as_GPX">Відкрити як GPX</string>
     <string name="open_track_as_trackfileformat">Відкрити яка %1$s</string>
@@ -531,9 +495,7 @@ limitations under the License.
     <string name="settings_default_trackfileformat">Формат файла експорту/обміну</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Під час запису показувати статистику без розблокування пристрою.</string>
     <string name="stats_loss">Втрачено</string>
-    <string name="stats_intervals">Інтервали</string>
     <string name="share_image_subject">Я хотів би поділитися з вами зображенням</string>
-    <string name="toast_message_instant_track_was_exported">Останній трек експортовано</string>
     <string name="settings_default_export_uri_title">Каталог експорту треків</string>
     <string name="help_track_map_content"> Натисніть іконку мапи.
 \na) (оновлення в реальному часі) Встановіть додаток <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Він дозволить подивитися мапу онлайн й оффлайн завдяки <a href="https://www.openstreetmap.org">OpenStreetMap</a>.

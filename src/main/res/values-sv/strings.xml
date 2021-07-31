@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">Total sträcka: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Total tid: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Alla som %1$s</string>
-    <string name="export_all_title">Exportera till extern lagringsenhet</string>
-    <string name="export_error">Exporterade %1$d av %2$s till %3$s</string>
-    <string name="export_option">som %1$s till %2$s</string>
     <string name="export_progress_message">Exporterar till %1$s …</string>
-    <string name="export_success">Exporterade %1$s till %2$s</string>
-    <string name="export_title">Exportera till …</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -126,21 +120,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">Ta bort markerade?</string>
     <string name="generic_description">Beskrivning</string>
     <string name="generic_description_line">Beskrivning: %1$s</string>
-    <string name="generic_error_title">Fel</string>
     <string name="generic_name">Namn</string>
     <string name="generic_name_line">Namn: %1$s</string>
-    <string name="generic_no">Nej</string>
     <string name="generic_paused">Pausat</string>
     <string name="generic_recording">Spelar in…</string>
     <string name="generic_save">Spara</string>
-    <string name="generic_success_title">Klart</string>
     <string name="generic_tracks">Spår</string>
     <!-- Gps -->
     <string name="gps_starting">Startar GPS</string>
     <string name="gps_wait_for_better_signal">Väntar på en bättre GPS-signal</string>
     <string name="gps_wait_for_signal">Väntar på GPS-signal</string>
     <!-- Image -->
-    <string name="image_application">App</string>
     <string name="image_arrow">Pil</string>
     <string name="image_marker">Markör</string>
     <string name="image_marker_count">Antal markörer</string>
@@ -150,14 +140,7 @@ limitations under the License.
     <string name="image_stop">Stopp</string>
     <string name="image_track">Spåra</string>
     <!-- Import -->
-    <string name="import_error">Importerade %1$d av %2$s från %3$s</string>
-    <string name="import_no_directory">%1$s finns inte</string>
-    <string name="import_no_file">Det fanns inga filer att importera. Anslut enheten till datorn och lägg filerna som ska importeras i %1$s.</string>
-    <string name="import_no_file_title">Importera filer</string>
     <string name="import_progress_message">Importerar från %1$s…</string>
-    <string name="import_selection_option">Alla %1$s</string>
-    <string name="import_selection_title">Importera från extern lagringsenhet</string>
-    <string name="import_success">Importerade %1$s från %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">Det går inte att infoga en markör. Ingen GPS-signal. Försök igen.</string>
     <string name="marker_add_success">En markör infogades</string>
@@ -165,8 +148,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">Markören tas permanent bort från enheten</string>
     <string name="marker_delete_one_confirm_title">Ta bort markör?</string>
     <string name="marker_delete_multiple_confirm_message">Markerade markörer tas bort permanent från enheten</string>
-    <string name="marker_label_end">%1$s (Slut)</string>
-    <string name="marker_label_start">%1$s (Start)</string>
     <string name="marker_name_format">Markör %1$d</string>
     <string name="marker_title">%1$d av %2$d</string>
     <!-- Marker Detail -->
@@ -192,13 +173,10 @@ limitations under the License.
     <string name="menu_show_on_map">Visa på karta</string>
     <string name="menu_start_gps">Starta GPS</string>
     <string name="menu_stop_gps">Stoppa GPS</string>
-    <string name="menu_view_photo">Visa foto</string>
     <string name="menu_voice_frequency">Röstfrekvens</string>
     <!-- OpenTracks -->
     <string name="recording_service">Inspelningstjänst</string>
     <!-- Search -->
-    <string name="search_global_description">Spår och markörer</string>
-    <string name="search_list_empty_message">Inga spår eller markörer matchade sökningen</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Batterinivå</string>
     <string name="sensor_state_cadence">Kadens</string>
@@ -215,10 +193,6 @@ limitations under the License.
     <string name="settings_chart_by_distance">Efter avstånd</string>
     <string name="settings_chart_by_time">Efter tid</string>
     <string name="settings_recording">Inspelning</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Återuppta alltid en inspelning efter omstart</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Återuppta aldrig en inspelning efter omstart</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Återuppta en inspelning efter omstart om den sista inspelade platsen var inom de(n) senaste %1$s</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Automatisk omstart</string>
     <string name="settings_recording_default_activity_title">Standardaktivitetstyp</string>
     <string name="settings_recording_location_frequency_summary">%1$s mellan inspelade platser</string>
     <string name="settings_recording_max_recording_distance_summary">En nytt segment skapas om avståndet mellan två platser är längre än %1$s</string>
@@ -238,7 +212,6 @@ limitations under the License.
     <string name="settings_reset_done">Alla inställningar har återställts till standardvärdena</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Bluetooth-sensor</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Latitud/longitud</string>
     <string name="settings_stats_rate_title">Föredragen mätning</string>
@@ -246,7 +219,6 @@ limitations under the License.
     <string name="settings_stats_units_metric">Metrisk (km, m)</string>
     <string name="settings_stats_units_title">Föredragna enheter</string>
     <!-- Share Track -->
-    <string name="share_track_share_file">Dela spårfil</string>
     <string name="share_track_share_file_body">Du kanske är intresserad av det här spåret.
 \n
 \n%1$s</string>
@@ -269,7 +241,6 @@ limitations under the License.
     <string name="stats_total_time">Total tid</string>
     <!-- Track -->
     <string name="track_name_format">Spår %1$d</string>
-    <string name="track_record_notification">Spelar in ditt spår…</string>
     <string name="track_markers">%1$s markörer</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Spåret och dess markörer tas bort permanent från enheten.</string>
@@ -277,12 +248,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">De valda spåren och deras markörer tas permanent bort från enheten.</string>
     <string name="track_delete_progress_message">Tar bort …</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Diagram</string>
     <string name="track_detail_stats_tab">Statistik</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Aktivitetstyp (t.ex. vandring)</string>
     <string name="track_edit_activity_type_hint">Aktivitetstyp</string>
-    <string name="track_edit_new_track_title">Nytt spår</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Börja spela in ditt nästa äventyr här</string>
     <!-- Track Widget -->
@@ -299,7 +268,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">Anpassa för noggrannhet</string>
     <string name="value_adapt_battery_life">Anpassa för batterilivslängd</string>
-    <string name="value_always">Alltid</string>
     <string name="value_integer_feet">%1$d fot</string>
     <string name="value_integer_feet_excellent_gps">%1$d fot (utmärkt GPS-mottagning)</string>
     <string name="value_integer_feet_recommended">%1$d fot (rekommenderas)</string>
@@ -312,11 +280,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d mile</string>
     <string name="value_integer_mile_hour">%1$d mi/tim</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">Inga</string>
     <string name="value_off">Av</string>
-    <string name="value_smallest">Lägsta</string>
     <string name="value_smallest_recommended">Minsta (rekommenderas)</string>
     <!-- Voice -->
     <plurals name="voiceHours">
@@ -444,7 +410,6 @@ limitations under the License.
     <string name="permission_gps_failed">OpenTracks kräver tillstånd att använda GPS.</string>
     <string name="sensor_state_cadence_avg">Avg Kadens</string>
     <string name="settings_sensor_disconnected">Frånkopplad från %1$s</string>
-    <string name="toast_message_instant_track_was_exported">Sista spåret exporterat</string>
     <string name="generic_open_track">Öppna Spår</string>
     <string name="track_distance_notification">Avstånd: %1$s</string>
     <string name="about_libraries">Bibliotek</string>
@@ -463,7 +428,6 @@ limitations under the License.
     <string name="bluetooth_disabled">Vänligen aktivera Bluetooth.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Håll skärmen på</string>
     <string name="track_speed_notification">Hastighet: %1$s</string>
-    <string name="open_track_using_dashboard">Öppna med OpenTracks-instrumentpanel</string>
     <string name="settings_prevent_reimport_tracks_title">Förhindra återimport av spår</string>
     <string name="open_track_as_GPX">Öppna som GPX</string>
     <string name="track_recording_notification_accuracy">Plats noggrannhet: %1$s</string>
@@ -516,7 +480,6 @@ limitations under the License.
     <string name="import_prevent_reimport">Du har angett förhindra åter importera spår</string>
     <string name="menu_resume_track">Återuppta spår</string>
     <string name="import_unsupported_format">Filformat som inte stöds</string>
-    <string name="stats_intervals">Intervall</string>
     <string name="instant_export_enabled_title">Omedelbar efter träning export</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">När du spelar in, visa statistik utan att låsa upp enheten.</string>
     <string name="settings_sensor_wheel_circumference">Hjulomkrets (mm)</string>

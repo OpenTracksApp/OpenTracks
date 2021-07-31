@@ -63,7 +63,6 @@ limitations under the License.
 \ne) osta <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore"> Google Play -kaupasta </a>,
 \nf) lahjoittaa ja
 \ng) tee mitä tahansa mielestäsi auttaa OpenTracksia. </string>
-    <string name="open_track_using_dashboard">Avaa OpenTracks-Dashboardilla</string>
     <string name="open_track_as_KML">Avaa KML-muodossa</string>
     <string name="open_track_as_GPX">Avaa GPX-muodossa</string>
     <string name="open_track_as_trackfileformat">Avaa %1$s-muodossa</string>
@@ -162,15 +161,9 @@ limitations under the License.
     <string name="description_total_distance">Kokonaismatka: %1$.2f km (%2$.1f mailia)</string>
     <string name="description_total_time">Kokonaisaika: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Kaikki %1$s-tiedostot</string>
-    <string name="export_all_title">Vie ulkoiseen tallennustilaan</string>
     <string name="export_with_photos">valokuvilla</string>
     <string name="export_without_photos">ilman valokuvia</string>
-    <string name="export_error">Viety %1$d/%2$s kohteeseen %3$s</string>
-    <string name="export_option">%1$s-tiedostona kohteeseen %2$s</string>
     <string name="export_progress_message">Viedään kohteeseen %1$s…</string>
-    <string name="export_success">%1$s vietiin kohteeseen %2$s</string>
-    <string name="export_title">Vie kohteeseen…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -182,21 +175,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">Poistetaanko valitut?</string>
     <string name="generic_description">Kuvaus</string>
     <string name="generic_description_line">Kuvaus: %1$s</string>
-    <string name="generic_error_title">Virhe</string>
     <string name="generic_name">Nimi</string>
     <string name="generic_name_line">Nimi: %1$s</string>
-    <string name="generic_no">Ei</string>
     <string name="generic_paused">Keskeytetty</string>
     <string name="generic_recording">Tallennetaan…</string>
     <string name="generic_save">Tallenna</string>
-    <string name="generic_success_title">Onnistui</string>
     <string name="generic_tracks">Reitit</string>
     <!-- Gps -->
     <string name="gps_starting">Käynnistetään GPS</string>
     <string name="gps_wait_for_better_signal">Odotetaan parempaa GPS-signaalia</string>
     <string name="gps_wait_for_signal">Odotetaan GPS-signaalia</string>
     <!-- Image -->
-    <string name="image_application">Sovellus</string>
     <string name="image_arrow">Nuoli</string>
     <string name="image_marker">Merkki</string>
     <string name="image_marker_count">Merkkien määrä</string>
@@ -206,15 +195,7 @@ limitations under the License.
     <string name="image_stop">Lopeta</string>
     <string name="image_track">Reitti</string>
     <!-- Import -->
-    <string name="import_error">Tuotu %1$d/%2$s kohteesta %3$s</string>
-    <string name="import_no_directory">Kohdetta %1$s ei ole</string>
-    <string name="import_no_file">Ei tuotavia tiedostoja. Kytke laite tietokoneeseen ja siirrä tiedostot laitteeseen,
-jotta ne voidaan tuoda kohteeseen %1$s.</string>
-    <string name="import_no_file_title">Tuo tiedostot</string>
     <string name="import_progress_message">Tuodaan kohteesta %1$s…</string>
-    <string name="import_selection_option">Kaikki %1$s-tiedostot</string>
-    <string name="import_selection_title">Tuo ulkoisesta laitteesta</string>
-    <string name="import_success">%1$s tuotiin kohteesta %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">Merkkiä ei voitu lisätä. Ei GPS-signaalia. Yritä uudelleen.</string>
     <string name="marker_add_success">Merkki lisättiin</string>
@@ -223,8 +204,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="marker_delete_one_confirm_message">Merkki poistetaan laitteesta pysyvästi</string>
     <string name="marker_delete_one_confirm_title">Poistetaanko merkki?</string>
     <string name="marker_delete_multiple_confirm_message">Valitut merkit poistetaan laitteesta pysyvästi</string>
-    <string name="marker_label_end">%1$s (loppu)</string>
-    <string name="marker_label_start">%1$s (alku)</string>
     <string name="marker_name_format">Merkki %1$d</string>
     <string name="marker_title">%1$d/%2$d</string>
     <!-- Marker Detail -->
@@ -251,7 +230,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="menu_show_on_map">Näytä kartalta</string>
     <string name="menu_start_gps">Käynnistä GPS</string>
     <string name="menu_stop_gps">Pysäytä GPS</string>
-    <string name="menu_view_photo">Näytä kuva</string>
     <string name="menu_voice_frequency">Ilmoitustiheys</string>
     <string name="menu_resume_track">Jatka reittiä</string>
     <!-- OpenTracks -->
@@ -259,8 +237,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks tarvitsee luvan käyttää satelliittipaikannusta.</string>
     <!-- Search -->
-    <string name="search_global_description">Reitit ja merkit</string>
-    <string name="search_list_empty_message">Yksikään reitti tai merkki ei vastannut hakuasi</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Akun taso</string>
     <string name="sensor_state_cadence">Kierrosluku</string>
@@ -285,10 +261,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Pidä näyttö päällä</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Pidä näyttö päällä tallentaessa.</string>
     <string name="settings_recording">Tallennus</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Jatka tallennusta aina uudelleenkäynnistyksen jälkeen</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Älä jatka tallennusta uudelleenkäynnistyksen jälkeen</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Jatka tallennusta aina uudelleenkäynnistyksen jälkeen, jos viimeisin sijainti on tallennettu %1$s kuluessa</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Automaattinen tallennus</string>
     <string name="settings_recording_default_activity_title">Toiminnan oletustyyppi</string>
     <string name="settings_recording_location_frequency_summary">%1$s tallennettujen sijaintien välillä</string>
     <string name="settings_recording_max_recording_distance_summary">Uusi segmentti luodaan, jos kahden sijainnin etäisyys on suurempi kuin %1$s</string>
@@ -309,7 +281,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="settings_error_initial_values_restored">Pahoittelut, mutta virhe tapahtui. Kaikki asetukset on palautettu oletuksiinsa.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Bluetooth-anturi</string>
     <string name="settings_sensor_connecting">Yhdistetty: %1$s</string>
     <string name="settings_sensor_disconnected">Yhteys katkaistu: %1$s</string>
     <!-- Settings Stats -->
@@ -320,7 +291,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="settings_stats_units_metric">Metrijärjestelmä (km, m)</string>
     <string name="settings_stats_units_title">Halutut yksiköt</string>
     <!-- Share Track -->
-    <string name="share_track_share_file">Jaa reittitiedosto</string>
     <string name="share_track_share_file_body">Luulen, että saatat olla kiinnostunut tästä kappaleesta.
 \n
 \n%1$s</string>
@@ -343,7 +313,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="stats_total_time">Kokonaisaika</string>
     <!-- Track -->
     <string name="track_name_format">Reitti %1$d</string>
-    <string name="track_record_notification">Reittiä tallennetaan…</string>
     <string name="track_recording_notification_accuracy">Sijainnin tarkkuus: %1$s</string>
     <string name="track_markers">Reitin %1$s merkit</string>
     <!-- Track Delete -->
@@ -352,12 +321,10 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="track_delete_multiple_confirm_message">Valitut reitit ja niiden merkitsimet poistetaan laitteesta pysyvästi.</string>
     <string name="track_delete_progress_message">Poistetaan…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Kaavio</string>
     <string name="track_detail_stats_tab">Tilastot</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Toiminnan tyyppi (esim. vaellus)</string>
     <string name="track_edit_activity_type_hint">Toiminnan tyyppi</string>
-    <string name="track_edit_new_track_title">Uusi reitti</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Aloita seuraavan seikkailusi tallennus tästä</string>
     <!-- Aggregated Statistics -->
@@ -376,7 +343,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <!-- Value -->
     <string name="value_adapt_accuracy">Säädä tarkkuutta</string>
     <string name="value_adapt_battery_life">Sovita akun kestoon</string>
-    <string name="value_always">Aina</string>
     <string name="value_integer_feet">%1$d jalkaa</string>
     <string name="value_integer_feet_excellent_gps">%1$d jalkaa (erinomainen GPS)</string>
     <string name="value_integer_feet_recommended">%1$d jalkaa (suositus)</string>
@@ -389,11 +355,9 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="value_integer_mile">%1$d mailia</string>
     <string name="value_integer_mile_hour">%1$d mailia/h</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">Ei mitään</string>
     <string name="value_off">Pois käytöstä</string>
-    <string name="value_smallest">Pienin</string>
     <string name="value_smallest_recommended">Pienin (suositus)</string>
     <!-- Voice -->
     <plurals name="voiceHours">
@@ -487,7 +451,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="track_detail_intervals_tab">Välein</string>
     <string name="voice_pace_lap">Kierrosaika %1$s</string>
     <string name="instant_export_enabled_title">Instant post-workout vienti</string>
-    <string name="toast_message_instant_track_was_exported">Viimeinen kappale viety</string>
     <string name="hold_to_pause">Pidä tauko</string>
     <string name="hold_to_stop">Pidä lopettaa</string>
     <string name="gps_fixed_and_ready">GPS kiinteä ja valmis</string>
@@ -496,7 +459,6 @@ jotta ne voidaan tuoda kohteeseen %1$s.</string>
     <string name="instant_export_enabled_summary">Vie raita varastoon tallennuksen jälkeen on valmis</string>
     <string name="voice_speed_lap">Kierrosnopeus %1$s</string>
     <string name="settings_sensor_wheel_circumference">Pyörän ympärysmitta (mm)</string>
-    <string name="stats_intervals">Välein</string>
     <string name="import_thread_interrupted">Lanka keskeytetty</string>
     <string name="import_unsupported_format">Tukematon tiedostomuoto</string>
     <string name="settings_prevent_reimport_tracks_title">Estä kappaleiden uudelleen tuonti</string>

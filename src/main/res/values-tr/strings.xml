@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">Toplam mesafe: %1$.2f km (%2$.1f mil)</string>
     <string name="description_total_time">Toplam süre: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Tümünü %1$s biçiminde</string>
-    <string name="export_all_title">Harici depolama ortamına aktar</string>
-    <string name="export_error">%1$d/%2$s %3$s hedefine dışa aktarıldı</string>
-    <string name="export_option">%1$s biçiminde %2$s dizinine</string>
     <string name="export_progress_message">%1$s dizinine aktarılıyor…</string>
-    <string name="export_success">%1$s %2$s hedefine dışa aktarıldı</string>
-    <string name="export_title">Şuraya aktar…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -126,21 +120,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">Seçilenler silinsin mi?</string>
     <string name="generic_description">Açıklama</string>
     <string name="generic_description_line">Açıklama: %1$s</string>
-    <string name="generic_error_title">Hata</string>
     <string name="generic_name">Adı</string>
     <string name="generic_name_line">Adı: %1$s</string>
-    <string name="generic_no">Hayır</string>
     <string name="generic_paused">Duraklatıldı</string>
     <string name="generic_recording">Kaydediliyor…</string>
     <string name="generic_save">Kaydet</string>
-    <string name="generic_success_title">Başarılı</string>
     <string name="generic_tracks">Parkurlar</string>
     <!-- Gps -->
     <string name="gps_starting">GPS başlatılıyor</string>
     <string name="gps_wait_for_better_signal">Daha iyi bir GPS sinyali bekleniyor</string>
     <string name="gps_wait_for_signal">GPS sinyali bekleniyor</string>
     <!-- Image -->
-    <string name="image_application">Uygulama</string>
     <string name="image_arrow">Ok</string>
     <string name="image_marker">İşaretçi</string>
     <string name="image_marker_count">İşaretçi sayısı</string>
@@ -150,15 +140,7 @@ limitations under the License.
     <string name="image_stop">Durdur</string>
     <string name="image_track">Parkur</string>
     <!-- Import -->
-    <string name="import_error">%1$d/%2$s %3$s kaynağından içe aktarıldı</string>
-    <string name="import_no_directory">%1$s mevcut değil</string>
-    <string name="import_no_file">İçe aktarılacak dosya bulunamadı. Cihazınızı bilgisayarınıza bağlayın ve içe aktaracağınız
-    dosyaları %1$s dizinine yerleştirin.</string>
-    <string name="import_no_file_title">Dosyaları içe aktar</string>
     <string name="import_progress_message">%1$s dizininden içe aktarılıyor…</string>
-    <string name="import_selection_option">%1$s biçimindeki tüm dosyalar</string>
-    <string name="import_selection_title">Harici depolama ortamından aktar</string>
-    <string name="import_success">%1$s %2$s kaynağından içe aktarıldı</string>
     <!-- Marker -->
     <string name="marker_add_error">İşaretçi eklenemiyor. GPS sinyali yok. Tekrar deneyin.</string>
     <string name="marker_add_success">Bir işaretçi eklendi</string>
@@ -166,8 +148,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">İşaretçi cihazdan kalıcı olarak silinecek</string>
     <string name="marker_delete_one_confirm_title">İşaretçi silinsin mi?</string>
     <string name="marker_delete_multiple_confirm_message">Seçilen işaretçiler cihazdan kalıcı olarak silinecek</string>
-    <string name="marker_label_end">%1$s (Bitiş)</string>
-    <string name="marker_label_start">%1$s (Başlangıç)</string>
     <string name="marker_name_format">İşaretçi %1$d</string>
     <string name="marker_title">%1$d/%2$d</string>
     <!-- Marker Detail -->
@@ -193,13 +173,10 @@ limitations under the License.
     <string name="menu_show_on_map">Haritada göster</string>
     <string name="menu_start_gps">GPS\'i aç</string>
     <string name="menu_stop_gps">GPS\'i kapat</string>
-    <string name="menu_view_photo">Fotoğraf görüntüle</string>
     <string name="menu_voice_frequency">Ses sıklığı</string>
     <!-- OpenTracks -->
     <string name="recording_service">Kayıt hizmeti</string>
     <!-- Search -->
-    <string name="search_global_description">Parkurlar ve işaretçiler</string>
-    <string name="search_list_empty_message">Aramanızla eşleşen parkur veya işaretçi yok</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Pil seviyesi</string>
     <string name="sensor_state_cadence">Ritim</string>
@@ -216,10 +193,6 @@ limitations under the License.
     <string name="settings_chart_by_distance">Mesafeye göre</string>
     <string name="settings_chart_by_time">Zamana göre</string>
     <string name="settings_recording">Kayıt</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Yeniden başlatma sonrasında daima kaydı devam ettir</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Yeniden başlatma sonrasında hiçbir zaman kaydı devam ettirme</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Son %1$s içinde konum kaydedildiyse, yeniden başlatma sonrasında kaydı devam ettir</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Otomatik devam ettirme</string>
     <string name="settings_recording_default_activity_title">Varsayılan aktivite türü</string>
     <string name="settings_recording_location_frequency_summary">Kaydedilen konumlar arası %1$s</string>
     <string name="settings_recording_max_recording_distance_summary">İki konum arasındaki mesafe şundan fazlaysa yeni segment oluşturulur: %1$s</string>
@@ -239,7 +212,6 @@ limitations under the License.
     <string name="settings_reset_done">Tüm ayarlar varsayılan değerlere döndürüldü</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Bluetooth sensörü</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Enlem/Boylam</string>
     <string name="settings_stats_rate_title">Tercih edilen oran</string>
@@ -248,7 +220,6 @@ limitations under the License.
     <string name="settings_stats_units_title">Not sure.</string>
 
     <!-- Share Track -->
-    <string name="share_track_share_file">Parkur dosyasını paylaş</string>
     <string name="share_track_share_file_body">Bu parkurun ilgini çekebileceğini düşünüyorum.\n\nBu parkuru görüntülemek için Google Earth\'ü veya başka bir harita yazılımını kullanabilirsin.\n\n%1$s</string>
     <string name="share_track_subject">Seninle bir parkur paylaşmak istiyorum</string>
     <!-- Stats -->
@@ -269,7 +240,6 @@ limitations under the License.
     <string name="stats_total_time">Toplam süre</string>
     <!-- Track -->
     <string name="track_name_format">Parkur %1$d</string>
-    <string name="track_record_notification">Parkurunuz kaydediliyor…</string>
     <string name="track_markers">%1$s İşaretçileri</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Parkur ve işaretçileri cihazdan kalıcı olarak silinecek.</string>
@@ -277,12 +247,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">Seçilen parkurlar ve işaretçileri cihazdan kalıcı olarak silinecek.</string>
     <string name="track_delete_progress_message">Siliniyor…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Grafik</string>
     <string name="track_detail_stats_tab">İstatistikler</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Aktivite türü (ör. yürüyüş)</string>
     <string name="track_edit_activity_type_hint">Aktivite türü</string>
-    <string name="track_edit_new_track_title">Yeni Parkur</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Bir sonraki maceranızı kaydetmeye buradan başlayın</string>
     <!-- Track Widget -->
@@ -299,7 +267,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">Doğruluk için uyarla</string>
     <string name="value_adapt_battery_life">Pil ömrü için uyarla</string>
-    <string name="value_always">Her zaman</string>
     <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (mükemmel GPS)</string>
     <string name="value_integer_feet_recommended">%1$d ft (önerilir)</string>
@@ -312,11 +279,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d mil</string>
     <string name="value_integer_mile_hour">%1$d mil/sa.</string>
     <string name="value_integer_minute">%1$d dk.</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d sn.</string>
     <string name="value_none">Hiç</string>
     <string name="value_off">Kapalı</string>
-    <string name="value_smallest">En küçük</string>
     <string name="value_smallest_recommended">En küçük (önerilir)</string>
     <!-- Voice -->
     <plurals name="voiceHours">

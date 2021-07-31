@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">Συνολική απόσταση: %1$.2f χλμ (%2$.1f μίλια)</string>
     <string name="description_total_time">Συνολικός χρόνος: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Όλα σε μορφή %1$s</string>
-    <string name="export_all_title">Εξαγωγή σε εξωτερικό αποθηκευτικό χώρο</string>
-    <string name="export_error">Έγινε εξαγωγή %1$d από %2$s διαδρομών στον κατάλογο %3$s</string>
-    <string name="export_option">σε μορφή %1$s στο %2$s</string>
     <string name="export_progress_message">Εξαγωγή στο %1$s…</string>
-    <string name="export_success">Έγινε εξαγωγή %1$s διαδρομών στον κατάλογο %2$s</string>
-    <string name="export_title">Εξαγωγή σε…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -126,21 +120,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">Διαγραφή επιλεγμένων;</string>
     <string name="generic_description">Περιγραφή</string>
     <string name="generic_description_line">Περιγραφή: %1$s</string>
-    <string name="generic_error_title">Σφάλμα</string>
     <string name="generic_name">Όνομα</string>
     <string name="generic_name_line">Όνομα: %1$s</string>
-    <string name="generic_no">Όχι</string>
     <string name="generic_paused">Σε παύση</string>
     <string name="generic_recording">Καταγραφή…</string>
     <string name="generic_save">αποθήκευση</string>
-    <string name="generic_success_title">Επιτυχώς</string>
     <string name="generic_tracks">Διαδρομές</string>
     <!-- Gps -->
     <string name="gps_starting">Εκκίνηση GPS</string>
     <string name="gps_wait_for_better_signal">Αναμονή για καλύτερο σήμα GPS</string>
     <string name="gps_wait_for_signal">Αναμονή για σήμα GPS</string>
     <!-- Image -->
-    <string name="image_application">Εφαρμογή</string>
     <string name="image_arrow">Βέλος</string>
     <string name="image_marker">Δείκτης</string>
     <string name="image_marker_count">Αριθμός δείκτη</string>
@@ -150,15 +140,7 @@ limitations under the License.
     <string name="image_stop">Στοπ</string>
     <string name="image_track">Διαδρομή</string>
     <!-- Import -->
-    <string name="import_error">Έγινε εισαγωγή %1$d από %2$s αρχείων από τον κατάλογο %3$s</string>
-    <string name="import_no_directory">Ο κατάλογος %1$s δεν υπάρχει</string>
-    <string name="import_no_file">Δεν υπάρχουν αρχεία για εισαγωγή. Συνδέστε τη συσκευή σας στον υπολογιστή σας και τοποθετήστε τα αρχεία που θέλετε
-    να εισαχθούν στο %1$s.</string>
-    <string name="import_no_file_title">Εισαγωγή αρχείων</string>
     <string name="import_progress_message">Εισαγωγή από %1$s…</string>
-    <string name="import_selection_option">Και τα %1$s</string>
-    <string name="import_selection_title">Εισαγωγή από εξωτερικό αποθηκευτικό χώρο</string>
-    <string name="import_success">Έγινε εισαγωγή %1$s αρχείων από τον κατάλογο %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">Δεν είναι δυνατή η εισαγωγή σήμανσης. Δεν υπάρχει σήμα GPS. Δοκιμάστε ξανά.</string>
     <string name="marker_add_success">Έγινε εισαγωγή δείκτη</string>
@@ -166,8 +148,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">Ο δείκτης θα διαγραφεί οριστικά από τη συσκευή</string>
     <string name="marker_delete_one_confirm_title">Διαγραφή δείκτη;</string>
     <string name="marker_delete_multiple_confirm_message">Οι επιλεγμένοι δείκτες θα διαγραφούν οριστικά από τη συσκευή</string>
-    <string name="marker_label_end">%1$s (Τέλος)</string>
-    <string name="marker_label_start">%1$s (Αρχή)</string>
     <string name="marker_name_format">Σήμανση %1$d</string>
     <string name="marker_title">%1$d από %2$d</string>
     <!-- Marker Detail -->
@@ -193,13 +173,10 @@ limitations under the License.
     <string name="menu_show_on_map">Εμφάνιση στον χάρτη</string>
     <string name="menu_start_gps">Έναρξη GPS</string>
     <string name="menu_stop_gps">Διακοπή GPS</string>
-    <string name="menu_view_photo">Προβολή φωτογραφίας</string>
     <string name="menu_voice_frequency">Συχνότητα ανακοινώσεων</string>
     <!-- OpenTracks -->
     <string name="recording_service">Υπηρεσία καταγραφής</string>
     <!-- Search -->
-    <string name="search_global_description">Ίχνη και σημάνσεις</string>
-    <string name="search_list_empty_message">Δεν υπάρχουν διαδρομές ή δείκτες που να ταιριάζουν στην αναζήτησή σας</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Στάθμη μπαταρίας</string>
     <string name="sensor_state_cadence">Ρυθμός</string>
@@ -216,10 +193,6 @@ limitations under the License.
     <string name="settings_chart_by_distance">Κατά απόσταση</string>
     <string name="settings_chart_by_time">Κατά χρόνο</string>
     <string name="settings_recording">Εγγραφή</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Να συνεχίζεται πάντα η εγγραφή μετά την επανεκκίνηση</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Να μην συνεχίζεται ποτέ η εγγραφή μετά την επανεκκίνηση</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Να συνεχίζεται η εγγραφή μετά την επανεκκίνηση, εάν η τελευταία καταγραφή θέσης έγινε μέσα στα τελευταία %1$s</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Αυτόματη συνέχιση</string>
     <string name="settings_recording_default_activity_title">Προεπιλεγμένος τύπος δραστηριότητας</string>
     <string name="settings_recording_location_frequency_summary">%1$s μεταξύ καταγεγραμμένων θέσεων</string>
     <string name="settings_recording_max_recording_distance_summary">Δημιουργείται ένα νέο τμήμα εάν η απόσταση ανάμεσα σε δύο θέσεις είναι μεγαλύτερη από %1$s</string>
@@ -239,7 +212,6 @@ limitations under the License.
     <string name="settings_reset_done">Όλες οι ρυθμίσεις έχουν επανέλθει στις προεπιλεγμένες τιμές</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Αισθητήρας Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Πλάτος/Μήκος</string>
     <string name="settings_stats_rate_title">Προτιμώμενος ρυθμός</string>
@@ -248,7 +220,6 @@ limitations under the License.
     <string name="settings_stats_units_title">Προτιμώμενες μονάδες</string>
 
     <!-- Share Track -->
-    <string name="share_track_share_file">Κοινή χρήση αρχείου ίχνους</string>
     <string name="share_track_share_file_body">Νομίζω ότι μπορεί να σε ενδιαφέρει αυτό το ίχνος.\n\nΓια να δεις αυτό το ίχνος, χρησιμοποίησε το Google Earth ή άλλο λογισμικό χαρτογράφησης.\n\n%1$s</string>
     <string name="share_track_subject">Θα ήθελα να μοιραστώ μία διαδρομή μαζί σου</string>
     <!-- Stats -->
@@ -269,7 +240,6 @@ limitations under the License.
     <string name="stats_total_time">Συνολικός χρόνος</string>
     <!-- Track -->
     <string name="track_name_format">Διαδρομή %1$d</string>
-    <string name="track_record_notification">Καταγραφή του ίχνους σας…</string>
     <string name="track_markers">%1$s Δείκτες</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Η διαδρομή και οι δείκτες της θα διαγραφούν οριστικά από τη συσκευή.</string>
@@ -277,12 +247,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">Οι επιλεγμένες διαδρομές και οι δείκτες τους θα διαγραφούν οριστικά από τη συσκευή.</string>
     <string name="track_delete_progress_message">Διαγραφή…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Γράφημα</string>
     <string name="track_detail_stats_tab">Στατιστικά</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Τύπος δραστηριότητας (π.χ. πεζοπορία)</string>
     <string name="track_edit_activity_type_hint">Τύπος δραστηριότητας</string>
-    <string name="track_edit_new_track_title">Νέο ίχνος</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Ξεκινήστε την εγγραφή της επόμενης περιπέτειάς σας εδώ</string>
     <!-- Track Widget -->
@@ -299,7 +267,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">Προσαρμογή για ακρίβεια</string>
     <string name="value_adapt_battery_life">Καλύτερο για μπατ.</string>
-    <string name="value_always">Πάντα</string>
     <string name="value_integer_feet">%1$d πόδια</string>
     <string name="value_integer_feet_excellent_gps">%1$d πόδια (τέλειο σήμα GPS)</string>
     <string name="value_integer_feet_recommended">%1$d ft (συνιστάται)</string>
@@ -312,11 +279,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d μίλια</string>
     <string name="value_integer_mile_hour">%1$d μίλια/ώρα</string>
     <string name="value_integer_minute">%1$d λεπ.</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d δευτ</string>
     <string name="value_none">Καμία</string>
     <string name="value_off">Απενεργοποιημένο</string>
-    <string name="value_smallest">Μικρότερη</string>
     <string name="value_smallest_recommended">Μικρότερη (συνιστάται)</string>
     <!-- Voice -->
     <plurals name="voiceHours">

@@ -157,15 +157,9 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="description_total_distance">Celková vzdálenost: %1$.2f km (%2$.1f mil)</string>
     <string name="description_total_time">Celková doba: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Vše ve formátu %1$s</string>
-    <string name="export_all_title">Export do externího úložiště</string>
     <string name="export_with_photos">s fotkami</string>
     <string name="export_without_photos">bez fotografií</string>
-    <string name="export_error">Exportováno %1$d z %2$s do %3$s</string>
-    <string name="export_option">jako %1$s do složky %2$s</string>
     <string name="export_progress_message">Exportování do složky %1$s…</string>
-    <string name="export_success">Exportováno %1$s do %2$s</string>
-    <string name="export_title">Export do…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -178,21 +172,17 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="generic_delete_selected_confirm_title">Smazat vybrané?</string>
     <string name="generic_description">Popis</string>
     <string name="generic_description_line">Popis: %1$s</string>
-    <string name="generic_error_title">Chyba</string>
     <string name="generic_name">Název</string>
     <string name="generic_name_line">Název: %1$s</string>
-    <string name="generic_no">Ne</string>
     <string name="generic_paused">Pozastaveno</string>
     <string name="generic_recording">Nahrávání…</string>
     <string name="generic_save">Uložit</string>
-    <string name="generic_success_title">Úspěch</string>
     <string name="generic_tracks">Trasy</string>
     <!-- Gps -->
     <string name="gps_starting">Spouštění GPS</string>
     <string name="gps_wait_for_better_signal">Čekání na lepší signál GPS</string>
     <string name="gps_wait_for_signal">Čekání na signál GPS</string>
     <!-- Image -->
-    <string name="image_application">Aplikace</string>
     <string name="image_arrow">Šipka</string>
     <string name="image_marker">Značka</string>
     <string name="image_marker_count">Počet značek</string>
@@ -202,14 +192,7 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="image_stop">Ukončit</string>
     <string name="image_track">Trasa</string>
     <!-- Import -->
-    <string name="import_error">Importováno %1$d z %2$s ze %3$s</string>
-    <string name="import_no_directory">%1$s neexistuje</string>
-    <string name="import_no_file">Nebyly nalezeny žádné soubory pro import. Připojte zařízení k počítači a umístěte soubory, které chcete importovat, do složky %1$s.</string>
-    <string name="import_no_file_title">Import souborů</string>
     <string name="import_progress_message">Import z %1$s…</string>
-    <string name="import_selection_option">Všechny soubory %1$s</string>
-    <string name="import_selection_title">Import z externího úložiště</string>
-    <string name="import_success">Importováno %1$s z %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">Značku nelze vložit. Signál GPS není dostupný. Zkuste to znovu.</string>
     <string name="marker_add_success">Značka byla vložena</string>
@@ -218,8 +201,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="marker_delete_one_confirm_message">Značka bude trvale smazána ze zařízení</string>
     <string name="marker_delete_one_confirm_title">Smazat značku?</string>
     <string name="marker_delete_multiple_confirm_message">Vybrané značky budou trvale smazány ze zařízení</string>
-    <string name="marker_label_end">%1$s (konec)</string>
-    <string name="marker_label_start">%1$s (začátek)</string>
     <string name="marker_name_format">Značka %1$d</string>
     <string name="marker_title">%1$d z %2$d</string>
     <!-- Marker Detail -->
@@ -246,7 +227,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="menu_show_on_map">Zobrazit na mapě</string>
     <string name="menu_start_gps">Spustit GPS</string>
     <string name="menu_stop_gps">Ukončit GPS</string>
-    <string name="menu_view_photo">Zobrazit fotku</string>
     <string name="menu_voice_frequency">Frekvence hlasových oznámení</string>
     <string name="menu_resume_track">Obnovit měření</string>
     <!-- OpenTracks -->
@@ -254,8 +234,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks vyžaduje povolení k používání GPS.</string>
     <!-- Search -->
-    <string name="search_global_description">Trasy a značky</string>
-    <string name="search_list_empty_message">Vyhledávacímu dotazu neodpovídají žádné trasy ani značky</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Stav baterie</string>
     <string name="sensor_state_cadence">Frekvence chůze</string>
@@ -279,10 +257,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="settings_recording_keep_screen_on_while_recording_title">Nechte obrazovku zapnutou</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Během nahrávání udržovat obrazovku zapnutou.</string>
     <string name="settings_recording">Záznam</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Po restartu vždy pokračovat v záznamu</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Po restartu nikdy nepokračovat v záznamu</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Po restartu pokračovat v záznamu, pokud byla poslední poloha zaznamenána během posledních %1$s</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Automatické spuštění</string>
     <string name="settings_recording_default_activity_title">Výchozí typ aktivity</string>
     <string name="settings_recording_location_frequency_summary">%1$s mezi zaznamenanými polohami</string>
     <string name="settings_recording_max_recording_distance_summary">Vytvořit nový segment pokud je vzdálenost mezi dvěma polohami větší než %1$s</string>
@@ -303,7 +277,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="settings_error_initial_values_restored">Litujeme, ale došlo k chybě. Všechna nastavení byla vrácena na výchozí hodnoty.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Senzor Bluetooth</string>
     <string name="settings_sensor_connecting">Připojeno k senzoru %1$s</string>
     <string name="settings_sensor_disconnected">Odpojeno od %1$s</string>
     <!-- Settings Stats -->
@@ -313,7 +286,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="settings_stats_units_metric">Metrické jednotky (km, m)</string>
     <string name="settings_stats_units_title">Preferované jednotky</string>
     <!-- Share Track -->
-    <string name="share_track_share_file">Sdílet soubor trasy</string>
     <string name="share_track_share_file_body">Možná by vás mohla zajímat tato trasa.
 \n
 \n%1$s</string>
@@ -336,7 +308,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="stats_total_time">Celková doba</string>
     <!-- Track -->
     <string name="track_name_format">Trasa %1$d</string>
-    <string name="track_record_notification">Záznam trasy…</string>
     <string name="track_recording_notification_accuracy">Přesnost polohy: %1$s</string>
     <string name="track_markers">Značky na trase %1$s</string>
     <!-- Track Delete -->
@@ -345,12 +316,10 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="track_delete_multiple_confirm_message">Vybrané trasy a jejich značky budou trvale smazány ze zařízení.</string>
     <string name="track_delete_progress_message">Mazání…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Graf</string>
     <string name="track_detail_stats_tab">Statistika</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Typ aktivity (např. chůze)</string>
     <string name="track_edit_activity_type_hint">Typ aktivity</string>
-    <string name="track_edit_new_track_title">Nová trasa</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Spustit záznam trasy</string>
     <!-- Track Widget -->
@@ -367,7 +336,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <!-- Value -->
     <string name="value_adapt_accuracy">Upřednostnit přesnost</string>
     <string name="value_adapt_battery_life">Upřednostnit výdrži baterie</string>
-    <string name="value_always">Vždy</string>
     <string name="value_integer_feet">%1$d stop</string>
     <string name="value_integer_feet_excellent_gps">%1$d stop (vynikající signál GPS)</string>
     <string name="value_integer_feet_recommended">%1$d stop (doporučeno)</string>
@@ -380,11 +348,9 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="value_integer_mile">%1$d mil</string>
     <string name="value_integer_mile_hour">%1$d mil/h</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">Žádné</string>
     <string name="value_off">Vypnuto</string>
-    <string name="value_smallest">Nejmenší</string>
     <string name="value_smallest_recommended">Nejnižší hodnota (doporučeno)</string>
     <!-- Voice -->
     <plurals name="voiceHours">
@@ -497,12 +463,10 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="settings_night_mode_option_day">Světlý</string>
     <string name="settings_night_mode_option_night">Tmavý</string>
     <string name="settings_sensor_wheel_circumference">Obvod kola (mm)</string>
-    <string name="stats_intervals">Intervaly</string>
     <string name="stats_split_interval">Rozdělit interval</string>
     <string name="track_detail_intervals_tab">Intervaly</string>
     <string name="voice_pace_lap">Čas na kolo %1$s</string>
     <string name="hold_to_pause">Podržet pro pozastavení</string>
-    <string name="toast_message_instant_track_was_exported">Poslední trasa exportována</string>
     <string name="instant_export_enabled_title">Instantní export po tréninku</string>
     <string name="settings_default_export_uri_title">Adresář pro export tras</string>
     <string name="import_thread_interrupted">Vlákno přerušeno</string>
@@ -513,7 +477,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="import_file_imported">Soubor %1$s importován</string>
     <string name="generic_skip">Přeskočit</string>
     <string name="activity_type_escooter">elektroskůtr</string>
-    <string name="open_track_using_dashboard">Otevřít pomocí OpenTracks-Dashboard</string>
     <string name="description_altitude_loss">Převýšení: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Export po ukončení aktivity selhal, zkontrolujte prosím adresář pro export.</string>
     <string name="stats_loss">Ztráta</string>

@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">总距离：%1$.2f 公里（%2$.1f 英里）</string>
     <string name="description_total_time">总时间：%1$s</string>
     <!-- Export -->
-    <string name="export_all_option">以 %1$s 格式导出全部</string>
-    <string name="export_all_title">导出到外部存储设备</string>
-    <string name="export_error">已将%1$d条路线（共%2$s条）导出到%3$s</string>
-    <string name="export_option">以 %1$s 格式导出到 %2$s</string>
     <string name="export_progress_message">正在导出到 %1$s…</string>
-    <string name="export_success">已将%1$s导出到%2$s</string>
-    <string name="export_title">导出到…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -125,21 +119,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">删除所选项？</string>
     <string name="generic_description">说明</string>
     <string name="generic_description_line">说明：%1$s</string>
-    <string name="generic_error_title">错误</string>
     <string name="generic_name">名称</string>
     <string name="generic_name_line">名称：%1$s</string>
-    <string name="generic_no">否</string>
     <string name="generic_paused">已暂停</string>
     <string name="generic_recording">正在记录…</string>
     <string name="generic_save">保存</string>
-    <string name="generic_success_title">成功</string>
     <string name="generic_tracks">路线</string>
     <!-- Gps -->
     <string name="gps_starting">正在启动GPS</string>
     <string name="gps_wait_for_better_signal">正在等待更好的GPS信号</string>
     <string name="gps_wait_for_signal">正在等待GPS信号</string>
     <!-- Image -->
-    <string name="image_application">应用</string>
     <string name="image_arrow">箭头</string>
     <string name="image_marker">标记</string>
     <string name="image_marker_count">标记数</string>
@@ -149,15 +139,7 @@ limitations under the License.
     <string name="image_stop">停止</string>
     <string name="image_track">跟踪</string>
     <!-- Import -->
-    <string name="import_error">从%3$s导入了%2$s中的%1$d个</string>
-    <string name="import_no_directory">%1$s不存在</string>
-    <string name="import_no_file">没有可以导入的文件。请将设备连接到计算机，然后将要导入的文件
-    放入 %1$s。</string>
-    <string name="import_no_file_title">导入文件</string>
     <string name="import_progress_message">正在从 %1$s 导入…</string>
-    <string name="import_selection_option">所有 %1$s</string>
-    <string name="import_selection_title">从外部存储设备导入</string>
-    <string name="import_success">已从%2$s导入%1$s</string>
     <!-- Marker -->
     <string name="marker_add_error">无法插入标记，无 GPS 信号。请重试。</string>
     <string name="marker_add_success">已插入标记</string>
@@ -165,8 +147,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">标记将永久地从设备中删除</string>
     <string name="marker_delete_one_confirm_title">删除标记？</string>
     <string name="marker_delete_multiple_confirm_message">所选标记将永久地从设备中删除</string>
-    <string name="marker_label_end">%1$s（终点）</string>
-    <string name="marker_label_start">%1$s（起点）</string>
     <string name="marker_name_format">标记 %1$d</string>
     <string name="marker_title">第%1$d个（共%2$d个）</string>
     <!-- Marker Detail -->
@@ -192,15 +172,12 @@ limitations under the License.
     <string name="menu_show_on_map">在地图上显示</string>
     <string name="menu_start_gps">启动 GPS</string>
     <string name="menu_stop_gps">关闭 GPS</string>
-    <string name="menu_view_photo">查看照片</string>
     <string name="menu_voice_frequency">语音提示频率</string>
     <string name="menu_voice_rate">语音提示速率</string>
     <string name="menu_resume_track">继续</string>
     <!-- OpenTracks -->
     <string name="recording_service">记录服务</string>
     <!-- Search -->
-    <string name="search_global_description">路线和标记</string>
-    <string name="search_list_empty_message">没有与您的搜索相符的路线或标记</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">电池电量</string>
     <string name="sensor_state_cadence">蹬车频率</string>
@@ -225,10 +202,6 @@ limitations under the License.
     <string name="settings_recording_fullscreen_on_while_recording_title">全屏显示</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">记录时，全屏幕显示。</string>
     <string name="settings_recording">记录</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">重启后一律继续记录</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">重启后一律不再继续记录</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">如果最后的位置记录发生在距离现在%1$s的范围内，则在重启后继续记录</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">自动继续</string>
     <string name="settings_recording_default_activity_title">默认活动类型</string>
     <string name="settings_recording_location_frequency_summary">每隔%1$s记录一次位置</string>
     <string name="settings_recording_max_recording_distance_summary">如果两个位置之间的距离超过%1$s，则创建新的路段</string>
@@ -252,7 +225,6 @@ limitations under the License.
     <string name="settings_reset_done">所有设置都已恢复为默认值</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">蓝牙</string>
-    <string name="settings_sensor_bluetooth_sensor">蓝牙传感器</string>
     <string name="settings_sensor_wheel_circumference">车轮周长 (mm)</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">纬度/经度</string>
@@ -262,7 +234,6 @@ limitations under the License.
     <string name="settings_stats_units_title">首选单位</string>
     <string name="settings_prevent_reimport_tracks_title">禁止导出重复数据</string>
     <!-- Share Track -->
-    <string name="share_track_share_file">分享路线文件</string>
     <string name="share_track_share_file_body">我想您可能会对此路线感兴趣。
 \n
 \n%1$s</string>
@@ -283,11 +254,9 @@ limitations under the License.
     <string name="stats_speed">速度</string>
     <string name="stats_distance">距离</string>
     <string name="stats_total_time">总时间</string>
-    <string name="stats_intervals">分段信息</string>
     <string name="stats_split_interval">分段间隔</string>
     <!-- Track -->
     <string name="track_name_format">路线 %1$d</string>
-    <string name="track_record_notification">正在记录路线…</string>
     <string name="track_markers">%1$s标记</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">系统将从设备中永久删除路线及其标记。</string>
@@ -295,12 +264,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">系统将从设备中永久删除选定的路线及其标记。</string>
     <string name="track_delete_progress_message">正在删除…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">图表</string>
     <string name="track_detail_stats_tab">统计信息</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">活动类型（如徒步）</string>
     <string name="track_edit_activity_type_hint">活动类型</string>
-    <string name="track_edit_new_track_title">新路线</string>
     <!-- Track List -->
     <string name="track_list_empty_message">在这里开始记录您的新冒险</string>
     <!-- Track Widget -->
@@ -317,7 +284,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">适应精度</string>
     <string name="value_adapt_battery_life">视电池电量而定</string>
-    <string name="value_always">一律启用</string>
     <string name="value_integer_feet">%1$d 英尺</string>
     <string name="value_integer_feet_excellent_gps">%1$d 英尺（GPS 信号极佳）</string>
     <string name="value_integer_feet_recommended">%1$d 英尺（推荐）</string>
@@ -330,11 +296,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d 英里</string>
     <string name="value_integer_mile_hour">%1$d 英里/小时</string>
     <string name="value_integer_minute">%1$d 分钟</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d 秒</string>
     <string name="value_none">无</string>
     <string name="value_off">关闭</string>
-    <string name="value_smallest">最小</string>
     <string name="value_smallest_recommended">最小（建议）</string>
     <!-- Voice -->
     <plurals name="voiceHours">
@@ -428,7 +392,6 @@ limitations under the License.
     <!-- Share image -->
     <string name="hold_to_stop">长按停止</string>
     <string name="hold_to_pause">长按暂停</string>
-    <string name="toast_message_instant_track_was_exported">导出最近一次活动数据</string>
 
     <string name="instant_export_enabled_summary">活动结束后，自动导出数据</string>
     <string name="instant_export_enabled_title">自动导出</string>

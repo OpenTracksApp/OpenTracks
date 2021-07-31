@@ -67,7 +67,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
 \n e) mercar a app na <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) facer unha doazón, e
 \n g) calquera cousa que estimes axuda a OpenTracks. </string>
-    <string name="open_track_using_dashboard">Abrir usando OpenTracks-Dashboard</string>
     <string name="open_track_as_KML">Abrir como KML</string>
     <string name="open_track_as_GPX">Abrir como GPX</string>
     <string name="open_track_as_trackfileformat">Abrir como %1$s</string>
@@ -167,15 +166,9 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="description_total_distance">Distancia total: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Tempo total: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Todas como %1$s</string>
-    <string name="export_all_title">Exportar a almacenamento externo</string>
     <string name="export_with_photos">con fotos</string>
     <string name="export_without_photos">sen fotos</string>
-    <string name="export_error">Exportados: %1$d de %2$s a %3$s</string>
-    <string name="export_option">como %1$s a %2$s</string>
     <string name="export_progress_message">Exportando a %1$s…</string>
-    <string name="export_success">Exportados: %1$s a %2$s</string>
-    <string name="export_title">Exportar a…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -187,14 +180,11 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="generic_delete_selected_confirm_title">Eliminar a selección?</string>
     <string name="generic_description">Descrición</string>
     <string name="generic_description_line">Descrición: %1$s</string>
-    <string name="generic_error_title">Erro</string>
     <string name="generic_name">Nome</string>
     <string name="generic_name_line">Nome: %1$s</string>
-    <string name="generic_no">Non</string>
     <string name="generic_paused">En pausa</string>
     <string name="generic_recording">Gravando…</string>
     <string name="generic_save">Gardar</string>
-    <string name="generic_success_title">Correcto</string>
     <string name="generic_tracks">Traxectos</string>
     <!-- Gps -->
     <string name="gps_starting">Iniciando o GPS</string>
@@ -203,7 +193,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="gps_disabled_msg">GPS desactivado</string>
     <string name="gps_fixed_and_ready">GPS fixado e preparado</string>
     <!-- Image -->
-    <string name="image_application">Aplicación</string>
     <string name="image_arrow">Frecha</string>
     <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Reconto de marcadores</string>
@@ -213,14 +202,7 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="image_stop">Deter</string>
     <string name="image_track">Traxecto</string>
     <!-- Import -->
-    <string name="import_error">Importados: %1$d de %2$s desde %3$s</string>
-    <string name="import_no_directory">%1$s non existe</string>
-    <string name="import_no_file">Non hai ficheiros para importar. Conecta o teu dispositivo ao ordenador e coloca os ficheiros para importar en %1$s.</string>
-    <string name="import_no_file_title">Importar ficheiros</string>
     <string name="import_progress_message">Importando de %1$s…</string>
-    <string name="import_selection_option">Todos os %1$s</string>
-    <string name="import_selection_title">Importar desde almacenamento externo</string>
-    <string name="import_success">Importados: %1$s de %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">Non se pode inserir un marcador. Non hai sinal de GPS. Téntao de novo.</string>
     <string name="marker_add_success">Inseriuse un marcador</string>
@@ -229,8 +211,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="marker_delete_one_confirm_message">O marcador eliminarase permanentemente do dispositivo</string>
     <string name="marker_delete_one_confirm_title">Eliminar o marcador?</string>
     <string name="marker_delete_multiple_confirm_message">Os marcadores seleccionados eliminaranse permanentemente do dispositivo</string>
-    <string name="marker_label_end">%1$s (Fin)</string>
-    <string name="marker_label_start">%1$s (Inicio)</string>
     <string name="marker_name_format">Marcador %1$d</string>
     <string name="marker_title">%1$d de %2$d</string>
     <!-- Marker Detail -->
@@ -257,7 +237,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="menu_show_on_map">Amosar no mapa</string>
     <string name="menu_start_gps">Iniciar GPS</string>
     <string name="menu_stop_gps">Desactivar GPS</string>
-    <string name="menu_view_photo">Ver foto</string>
     <string name="menu_voice_frequency">Frecuencia da voz</string>
     <string name="menu_resume_track">Retomar gravación</string>
     <!-- OpenTracks -->
@@ -265,8 +244,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks precisa permiso para usar o GPS.</string>
     <!-- Search -->
-    <string name="search_global_description">Traxectos e marcadores</string>
-    <string name="search_list_empty_message">Non hai traxectos ou marcadores que coincidan coa túa busca</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Nivel da batería</string>
     <string name="sensor_state_cadence">Cadencia</string>
@@ -293,10 +270,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_recording_fullscreen_on_while_recording_title">Pantalla completa</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Mentras grava, mostrar a pantalla completa.</string>
     <string name="settings_recording">Gravación</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Retomar sempre unha gravación ao reiniciar o sistema</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Non retomar nunca unha gravación ao reiniciar o sistema</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Retomar unha gravación ao reiniciar o sistema se a situación gravada se realizou dentro dos últimos %1$s</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Continuar automaticamente</string>
     <string name="settings_recording_default_activity_title">Tipo de actividade predeterminada</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre as situacións gravadas</string>
     <string name="settings_recording_max_recording_distance_summary">Créase un novo segmento se a distancia entre as situacións é superior a %1$s</string>
@@ -317,7 +290,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_error_initial_values_restored">Sentímolo, pero algo fallou. Os axustes foron restablecidos aos valores por omisión.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Sensor de Bluetooth</string>
     <string name="settings_sensor_connecting">Conectado a %1$s</string>
     <string name="settings_sensor_disconnected">Desconectado de %1$s</string>
     <string name="settings_sensor_wheel_circumference">Circunferencia da roda (mm)</string>
@@ -328,7 +300,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_stats_units_metric">Métricas (km, m)</string>
     <string name="settings_stats_units_title">Unidades preferidas</string>
     <!-- Share Track -->
-    <string name="share_track_share_file">Compartir ficheiro de traxecto</string>
     <string name="share_track_share_file_body">Creo que che pode interesar esta ruta.
 \n
 \n%1$s</string>
@@ -351,7 +322,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="stats_total_time">Tempo total</string>
     <!-- Track -->
     <string name="track_name_format">Pista %1$d</string>
-    <string name="track_record_notification">Gravando o teu traxecto…</string>
     <string name="track_recording_notification_accuracy">Precisión da localización: %1$s</string>
     <string name="track_markers">Marcadores de %1$s</string>
     <!-- Track Delete -->
@@ -360,12 +330,10 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="track_delete_multiple_confirm_message">As rutas seleccionadas e os seus marcadores eliminaranse permanentemente do dispositivo.</string>
     <string name="track_delete_progress_message">Eliminando…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Táboa</string>
     <string name="track_detail_stats_tab">Estatísticas</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Tipo de actividade (por exemplo, sendeirismo)</string>
     <string name="track_edit_activity_type_hint">Tipo de actividade</string>
-    <string name="track_edit_new_track_title">Novo traxecto</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Empeza a gravar aquí a túa próxima aventura</string>
     <!-- Aggregated Statistics -->
@@ -384,7 +352,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <!-- Value -->
     <string name="value_adapt_accuracy">Adaptar para obter precisión</string>
     <string name="value_adapt_battery_life">Adaptar á duración restante da batería</string>
-    <string name="value_always">Sempre</string>
     <string name="value_integer_feet">%1$d m</string>
     <string name="value_integer_feet_excellent_gps">%1$d m (GPS excelente)</string>
     <string name="value_integer_feet_recommended">%1$d m (recomendado)</string>
@@ -397,11 +364,9 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="value_integer_mile">%1$d km</string>
     <string name="value_integer_mile_hour">%1$d mi/h</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">Ningunha</string>
     <string name="value_off">Desactivar</string>
-    <string name="value_smallest">Máis pequeno</string>
     <string name="value_smallest_recommended">O máis pequeno (recomendado)</string>
     <!-- Voice -->
     <plurals name="voiceHours">
@@ -520,10 +485,8 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     </plurals>
     <string name="settings_night_mode_title">Decorado IU</string>
     <string name="settings_night_mode_option_system">Sistema</string>
-    <string name="stats_intervals">Intervalos</string>
     <string name="interval_list_empty_message">Aínda non hai intervalos</string>
     <string name="voice_speed_lap">Velocidade da volta de %1$s</string>
-    <string name="toast_message_instant_track_was_exported">Última ruta exportada</string>
     <string name="instant_export_enabled_summary">Rematou a exportación da ruta á almacenaxe tras a gravación</string>
     <string name="import_thread_interrupted">Fío interrumpido</string>
     <string name="export_progress_summary_new_msg">Exportadas as novas rutas</string>

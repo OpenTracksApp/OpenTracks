@@ -96,7 +96,6 @@ limitations under the License.
         g) do whatever you think helps OpenTracks.
     </string>
 
-    <string name="open_track_using_dashboard">Open using OpenTracks-Dashboard</string>
     <string name="open_track_as_KML">Open as KML</string>
     <string name="open_track_as_GPX">Open as GPX</string>
     <string name="open_track_as_trackfileformat">Open as %1$s</string>
@@ -198,16 +197,10 @@ limitations under the License.
     <string name="description_total_distance">Total distance: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Total time: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">All as %1$s</string>
-    <string name="export_all_title">Export to external storage</string>
     <string name="export_with_photos">with photos</string>
     <string name="export_without_photos">without photos</string>
-    <string name="export_error">Exported %1$d of %2$s to %3$s</string>
     <string name="export_error_post_workout">Post-workout export failed, please check the export directory.</string>
-    <string name="export_option">as %1$s to %2$s</string>
     <string name="export_progress_message">Exporting to %1$s&#8230;</string>
-    <string name="export_success">Exported %1$s to %2$s</string>
-    <string name="export_title">Export to&#8230;</string>
     <string name="export_track_already_exists_msg">The track %1$s already exists at the destination directory.</string>
     <string name="export_all_do_it_for_all">do it for all conflicts</string>
     <string name="export_track_errors">Tracks not exported</string>
@@ -226,15 +219,12 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">Delete selected?</string>
     <string name="generic_description">Description</string>
     <string name="generic_description_line">Description: %1$s</string>
-    <string name="generic_error_title">Error</string>
     <string name="generic_name">Name</string>
     <string name="generic_name_line">Name: %1$s</string>
-    <string name="generic_no">No</string>
     <string name="generic_open_track">Open Track</string>
     <string name="generic_paused">Paused</string>
     <string name="generic_recording">Recording&#8230;</string>
     <string name="generic_save">Save</string>
-    <string name="generic_success_title">Success</string>
     <string name="generic_tracks">Tracks</string>
     <string name="generic_overwrite">Overwrite</string>
     <string name="generic_skip">Skip</string>
@@ -253,7 +243,6 @@ limitations under the License.
     <string name="gps_disabled_msg">GPS disabled</string>
     <string name="gps_fixed_and_ready">GPS fixed and ready</string>
     <!-- Image -->
-    <string name="image_application">Application</string>
     <string name="image_arrow">Arrow</string>
     <string name="image_marker">Marker</string>
     <string name="image_marker_count">Marker count</string>
@@ -271,15 +260,8 @@ limitations under the License.
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="import_error_list_dialog_title">Files not imported</string>
     <string name="import_file_imported">File %1$s imported</string>
-    <string name="import_error">Imported %1$d of %2$s from %3$s</string>
     <string name="import_prevent_reimport">You have set prevent re-import track</string>
-    <string name="import_no_directory">%1$s does not exist</string>
-    <string name="import_no_file">There were no files to import. Connect your device to your computer and place the files to import in %1$s.</string>
-    <string name="import_no_file_title">Import files</string>
     <string name="import_progress_message">Importing from %1$s&#8230;</string>
-    <string name="import_selection_option">All %1$s</string>
-    <string name="import_selection_title">Import from external storage</string>
-    <string name="import_success">Imported %1$s from %2$s</string>
     <string name="import_progress_summary_ok_msg">Files imported</string>
     <string name="import_progress_summary_exists_msg">Already exists</string>
     <string name="import_progress_summary_errors_msg">Errors</string>
@@ -291,8 +273,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">The marker will be permanently deleted from the device</string>
     <string name="marker_delete_one_confirm_title">Delete marker?</string>
     <string name="marker_delete_multiple_confirm_message">The selected markers will be permanently deleted from the device</string>
-    <string name="marker_label_end">%1$s (End)</string>
-    <string name="marker_label_start">%1$s (Start)</string>
     <string name="marker_name_format">Marker %1$d</string>
     <string name="marker_title">%1$d of %2$d</string>
     <!-- Marker Detail -->
@@ -319,7 +299,6 @@ limitations under the License.
     <string name="menu_show_on_map">Show on map</string>
     <string name="menu_start_gps">Start GPS</string>
     <string name="menu_stop_gps">Stop GPS</string>
-    <string name="menu_view_photo">View photo</string>
     <string name="menu_voice_frequency">Voice frequency</string>
     <string name="menu_voice_rate">Voice speed</string>
     <string name="menu_resume_track">Resume track</string>
@@ -329,8 +308,6 @@ limitations under the License.
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks requires permission to use GPS.</string>
     <!-- Search -->
-    <string name="search_global_description">Tracks and markers</string>
-    <string name="search_list_empty_message">No tracks or markers matched your search</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Battery level</string>
     <string name="sensor_state_cadence">Cadence</string>
@@ -362,10 +339,6 @@ limitations under the License.
     <string name="settings_recording_fullscreen_on_while_recording_title">Fullscreen</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">While recording, present in fullscreen.</string>
     <string name="settings_recording">Recording</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Always resume a recording after reboot</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Never resume a recording after reboot</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Resume a recording after reboot if the last recorded location was within the last %1$s</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Auto-resume</string>
     <string name="settings_recording_default_activity_title">Default activity type</string>
     <string name="settings_recording_location_frequency_summary">%1$s between recorded locations</string>
     <string name="settings_recording_max_recording_distance_summary">A new segment is created if the distance between two locations is greater than %1$s</string>
@@ -391,7 +364,6 @@ limitations under the License.
     <string name="settings_error_initial_values_restored">Sorry, but an error occurred. All settings have been reverted to the default values.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Bluetooth sensor</string>
     <string name="settings_sensor_connecting">Connected to %1$s</string>
     <string name="settings_sensor_disconnected">Disconnected from %1$s</string>
 
@@ -408,7 +380,6 @@ limitations under the License.
 
     <string name="settings_prevent_reimport_tracks_title">Prevent re-import of tracks</string>
     <!-- Share Track -->
-    <string name="share_track_share_file">Share track file</string>
     <string name="share_track_share_file_body">I think you might be interested in this track.\n\n%1$s</string>
     <string name="share_track_subject">I would like to share a track with you</string>
     <!-- Stats -->
@@ -428,11 +399,9 @@ limitations under the License.
     <string name="stats_speed">Speed</string>
     <string name="stats_distance">Distance</string>
     <string name="stats_total_time">Total time</string>
-    <string name="stats_intervals">Intervals</string>
     <string name="stats_split_interval">Split interval</string>
     <!-- Track -->
     <string name="track_name_format">Track %1$d</string>
-    <string name="track_record_notification">Recording your track&#8230;</string>
     <string name="track_recording_notification_accuracy">Location accuracy: %1$s</string>
     <string name="track_distance_notification">Distance: %1$s</string>
     <string name="track_speed_notification">Speed: %1$s</string>
@@ -446,13 +415,11 @@ limitations under the License.
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="track_delete_not_recording">This track cannot be deleted as it is currently recorded.</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Chart</string>
     <string name="track_detail_stats_tab">Stats</string>
     <string name="track_detail_intervals_tab">Intervals</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Activity type (e.g. hiking)</string>
     <string name="track_edit_activity_type_hint">Activity type</string>
-    <string name="track_edit_new_track_title">New Track</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Start recording your next adventure here</string>
     <!-- Aggregated Statistics -->
@@ -471,7 +438,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">Adapt for accuracy</string>
     <string name="value_adapt_battery_life">Adapt for battery life</string>
-    <string name="value_always">Always</string>
 
     <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (excellent GPS)</string>
@@ -485,11 +451,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d mi</string>
     <string name="value_integer_mile_hour">%1$d mi/h</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">None</string>
     <string name="value_off">Off</string>
-    <string name="value_smallest">Smallest</string>
     <string name="value_smallest_recommended">Smallest (recommended)</string>
     <!-- Voice -->
     <plurals name="voiceHours">
@@ -583,7 +547,6 @@ limitations under the License.
 
     <string name="hold_to_stop">Hold to stop</string>
     <string name="hold_to_pause">Hold to pause</string>
-    <string name="toast_message_instant_track_was_exported">Last track exported</string>
 
     <string name="instant_export_enabled_summary">Export track to storage after recording is finished</string>
     <string name="instant_export_enabled_title">Instant post-workout export</string>

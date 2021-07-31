@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">Distância total: %1$.2f km (%2$.1f milhas)</string>
     <string name="description_total_time">Tempo total: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Todas como %1$s</string>
-    <string name="export_all_title">Exportar para o armazenamento externo</string>
-    <string name="export_error">Exportação: %1$d de %2$s para %3$s</string>
-    <string name="export_option">como %1$s em %2$s</string>
     <string name="export_progress_message">Exportando para %1$s…</string>
-    <string name="export_success">Exportação: %1$s para %2$s</string>
-    <string name="export_title">Exportar para…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -126,21 +120,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">Excluir selecionados?</string>
     <string name="generic_description">Descrição</string>
     <string name="generic_description_line">Descrição: %1$s</string>
-    <string name="generic_error_title">Erro</string>
     <string name="generic_name">Nome</string>
     <string name="generic_name_line">Nome: %1$s</string>
-    <string name="generic_no">Não</string>
     <string name="generic_paused">Pausada</string>
     <string name="generic_recording">Gravando…</string>
     <string name="generic_save">Salvar</string>
-    <string name="generic_success_title">Sucesso</string>
     <string name="generic_tracks">Rotas</string>
     <!-- Gps -->
     <string name="gps_starting">Iniciando GPS</string>
     <string name="gps_wait_for_better_signal">Aguardando sinal de GPS melhor</string>
     <string name="gps_wait_for_signal">Aguardando sinal de GPS</string>
     <!-- Image -->
-    <string name="image_application">Aplicativo</string>
     <string name="image_arrow">Seta</string>
     <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Contagem do marcador</string>
@@ -150,15 +140,7 @@ limitations under the License.
     <string name="image_stop">Parar</string>
     <string name="image_track">Rota</string>
     <!-- Import -->
-    <string name="import_error">importados %1$d de %2$s desde %3$s</string>
-    <string name="import_no_directory">%1$s não existe</string>
-    <string name="import_no_file">Nenhum arquivo para importar. Conecte o dispositivo ao computador e coloque os
-    arquivos para importação em %1$s.</string>
-    <string name="import_no_file_title">Importar arquivos</string>
     <string name="import_progress_message">Importando de %1$s…</string>
-    <string name="import_selection_option">Todos os %1$s</string>
-    <string name="import_selection_title">Importar do armazenamento externo</string>
-    <string name="import_success">Importação: %1$s de %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">Não foi possível inserir um marcador. Não há sinal de GPS. Tente novamente.</string>
     <string name="marker_add_success">Um marcador foi inserido</string>
@@ -166,8 +148,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">O marcador será excluído permanentemente do dispositivo</string>
     <string name="marker_delete_one_confirm_title">Excluir marcador?</string>
     <string name="marker_delete_multiple_confirm_message">Os marcadores selecionados serão permanentemente excluídos do dispositivo</string>
-    <string name="marker_label_end">%1$s (Fim)</string>
-    <string name="marker_label_start">%1$s (Início)</string>
     <string name="marker_name_format">Marcador %1$d</string>
     <string name="marker_title">%1$d de %2$d</string>
     <!-- Marker Detail -->
@@ -193,13 +173,10 @@ limitations under the License.
     <string name="menu_show_on_map">Mostrar no mapa</string>
     <string name="menu_start_gps">Iniciar GPS</string>
     <string name="menu_stop_gps">Parar GPS</string>
-    <string name="menu_view_photo">Ver foto</string>
     <string name="menu_voice_frequency">Frequência da voz</string>
     <!-- OpenTracks -->
     <string name="recording_service">Serviço de gravação</string>
     <!-- Search -->
-    <string name="search_global_description">Trilhas e marcadores</string>
-    <string name="search_list_empty_message">Nenhuma rota ou marcador corresponde à pesquisa</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Nível da bateria</string>
     <string name="sensor_state_cadence">Cadência</string>
@@ -216,10 +193,6 @@ limitations under the License.
     <string name="settings_chart_by_distance">Por distância</string>
     <string name="settings_chart_by_time">Por tempo</string>
     <string name="settings_recording">Gravação</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Sempre retomar uma gravação após a reinicialização</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Nunca retomar uma gravação após a reinicialização</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Retomar uma gravação após a reinicialização se o último local registrado ocorreu nos últimos %1$s</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Retomar automaticamente</string>
     <string name="settings_recording_default_activity_title">Tipo de atividade padrão</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre os locais gravados</string>
     <string name="settings_recording_max_recording_distance_summary">Um novo segmento será criado se a distância entre os dois locais for maior que %1$s</string>
@@ -239,7 +212,6 @@ limitations under the License.
     <string name="settings_reset_done">Todas as configurações foram revertidas para os valores padrão</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Sensor Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Latitude/longitude</string>
     <string name="settings_stats_rate_title">Taxa preferencial</string>
@@ -247,7 +219,6 @@ limitations under the License.
     <string name="settings_stats_units_metric">Métrica (km, m)</string>
     <string name="settings_stats_units_title">Unidades preferenciais</string>
     <!-- Share Track -->
-    <string name="share_track_share_file">Compartilhar arquivo da trilha</string>
     <string name="share_track_share_file_body">Achei que você pudesse se interessar por essa trilha.
 \n
 \n%1$s</string>
@@ -270,7 +241,6 @@ limitations under the License.
     <string name="stats_total_time">Tempo total</string>
     <!-- Track -->
     <string name="track_name_format">Trilha %1$d</string>
-    <string name="track_record_notification">Gravando sua trilha…</string>
     <string name="track_markers">Marcadores de %1$s</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">A trilha e seus marcadores serão excluídos permanentemente do dispositivo.</string>
@@ -278,12 +248,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">As trilhas selecionadas e seus respectivos marcadores serão excluídos permanentemente do dispositivo.</string>
     <string name="track_delete_progress_message">Excluindo…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Gráfico</string>
     <string name="track_detail_stats_tab">Estatísticas</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Tipo de atividade (por exemplo, caminhada)</string>
     <string name="track_edit_activity_type_hint">Tipo de atividade</string>
-    <string name="track_edit_new_track_title">Trilha nova</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Comece a gravar sua próxima aventura aqui</string>
     <!-- Track Widget -->
@@ -300,7 +268,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">Adaptar para fins de precisão</string>
     <string name="value_adapt_battery_life">Adaptar à vida da bateria</string>
-    <string name="value_always">Sempre</string>
     <string name="value_integer_feet">%1$d pés</string>
     <string name="value_integer_feet_excellent_gps">%1$d pés (GPS excelente)</string>
     <string name="value_integer_feet_recommended">%1$d pés (recomendado)</string>
@@ -313,11 +280,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d milhas</string>
     <string name="value_integer_mile_hour">%1$d milhas/h</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">Nenhuma</string>
     <string name="value_off">Desativar</string>
-    <string name="value_smallest">Menor</string>
     <string name="value_smallest_recommended">Menor (recomendado)</string>
     <!-- Voice -->
     <plurals name="voiceHours">

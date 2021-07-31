@@ -63,7 +63,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
 \n e) kaufen in <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) spenden, und
 \n g) das tun, was Deiner Meinung nach OpenTracks hilft </string>
-    <string name="open_track_using_dashboard">Öffne mithilfe des OpenTracks-Dashboard</string>
     <string name="open_track_as_KML">Als KML öffnen</string>
     <string name="open_track_as_GPX">Als GPX öffnen</string>
     <string name="open_track_as_trackfileformat">Als %1$s öffnen</string>
@@ -162,15 +161,9 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="description_total_distance">Gesamtstrecke: %1$.2f km (%2$.1f Meile/n)</string>
     <string name="description_total_time">Gesamtzeit: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Alle als %1$s</string>
-    <string name="export_all_title">In externen Speicher exportieren</string>
     <string name="export_with_photos">mit Fotos</string>
     <string name="export_without_photos">ohne Fotos</string>
-    <string name="export_error">%1$d von %2$s in %3$s exportiert</string>
-    <string name="export_option">als %1$s in %2$s</string>
     <string name="export_progress_message">In %1$s exportieren…</string>
-    <string name="export_success">%1$s in %2$s exportiert</string>
-    <string name="export_title">Exportieren in…</string>
     <!-- External Storage -->
     <!-- Files -->=
     <plurals name="files">
@@ -182,21 +175,17 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="generic_delete_selected_confirm_title">Ausgewählte Elemente löschen?</string>
     <string name="generic_description">Beschreibung</string>
     <string name="generic_description_line">Beschreibung: %1$s</string>
-    <string name="generic_error_title">Fehler</string>
     <string name="generic_name">Name</string>
     <string name="generic_name_line">Name: %1$s</string>
-    <string name="generic_no">Nein</string>
     <string name="generic_paused">Pausiert</string>
     <string name="generic_recording">Aufzeichnung…</string>
     <string name="generic_save">Speichern</string>
-    <string name="generic_success_title">Erfolgreich</string>
     <string name="generic_tracks">Strecken</string>
     <!-- Gps -->
     <string name="gps_starting">GPS wird gestartet</string>
     <string name="gps_wait_for_better_signal">Warten auf besseres GPS-Signal</string>
     <string name="gps_wait_for_signal">Warten auf GPS-Signal</string>
     <!-- Image -->
-    <string name="image_application">App</string>
     <string name="image_arrow">Pfeil</string>
     <string name="image_marker">Markierung</string>
     <string name="image_marker_count">Anzahl der Markierungen</string>
@@ -206,14 +195,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="image_stop">Beenden</string>
     <string name="image_track">Strecke</string>
     <!-- Import -->
-    <string name="import_error">%1$d von %2$s aus %3$s importiert</string>
-    <string name="import_no_directory">%1$s ist nicht vorhanden</string>
-    <string name="import_no_file">Es waren keine Dateien zum Importieren vorhanden. Schließen Sie Ihr Gerät an Ihren Computer an und legen Sie die zu importierenden Dateien in %1$s.</string>
-    <string name="import_no_file_title">Dateien importieren</string>
     <string name="import_progress_message">Dateien werden aus %1$s importiert…</string>
-    <string name="import_selection_option">Alle %1$s-Dateien</string>
-    <string name="import_selection_title">Aus externem Speicher importieren</string>
-    <string name="import_success">%1$s aus %2$s importiert</string>
     <!-- Marker -->
     <string name="marker_add_error">Es kann keine Markierung eingefügt werden, da kein GPS-Signal verfügbar ist. Bitte versuchen Sie es erneut.</string>
     <string name="marker_add_success">Markierung wurde eingefügt</string>
@@ -222,8 +204,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="marker_delete_one_confirm_message">Die Markierung wird endgültig vom Gerät gelöscht</string>
     <string name="marker_delete_one_confirm_title">Markierung löschen?</string>
     <string name="marker_delete_multiple_confirm_message">Die ausgewählten Markierungen werden endgültig vom Gerät gelöscht</string>
-    <string name="marker_label_end">%1$s (Ende)</string>
-    <string name="marker_label_start">%1$s (Start)</string>
     <string name="marker_name_format">%1$d. Markierung</string>
     <string name="marker_title">%1$d von %2$d</string>
     <!-- Marker Detail -->
@@ -250,7 +230,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="menu_show_on_map">Auf Karte anzeigen</string>
     <string name="menu_start_gps">GPS aktivieren</string>
     <string name="menu_stop_gps">GPS deaktivieren</string>
-    <string name="menu_view_photo">Foto ansehen</string>
     <string name="menu_voice_frequency">Ansagehäufigkeit</string>
     <string name="menu_resume_track">Track fortsetzen</string>
     <!-- OpenTracks -->
@@ -258,8 +237,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks benötigt eine Berechtigung zur Nutzung von GPS.</string>
     <!-- Search -->
-    <string name="search_global_description">Tracks und Markierungen</string>
-    <string name="search_list_empty_message">Keine Tracks oder Markierungen gefunden, die Ihrer Suchanfrage entsprechen</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Akkustatus</string>
     <string name="sensor_state_cadence">Trittfrequenz</string>
@@ -284,10 +261,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_recording_keep_screen_on_while_recording_title">Bildschirm eingeschaltet lassen</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Lasse während der Aufnahme den Bildschirm eingeschaltet.</string>
     <string name="settings_recording">Aufzeichnung</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Eine Aufzeichnung nach dem Neustart immer fortsetzen</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Eine Aufzeichnung nach dem Neustart nie fortsetzen</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Eine Aufzeichnung nach dem Neustart fortsetzen, wenn der letzte Standort innerhalb der letzten %1$s aufgezeichnet wurde</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Automat. Fortsetzung</string>
     <string name="settings_recording_default_activity_title">Standardaktivität</string>
     <string name="settings_recording_location_frequency_summary">Entfernungs-/Zeitintervall %1$s zwischen zwei Standortaufzeichnungen</string>
     <string name="settings_recording_max_recording_distance_summary">Ein neues Segment wird erstellt, wenn die Entfernung zwischen zwei Standorten mehr als %1$s beträgt</string>
@@ -308,7 +281,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_error_initial_values_restored">Entschuldigung, es ist ein Fehler aufgetreten. Alle Einstellungen wurden auf die Standardwerte zurückgesetzt.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Bluetooth-Sensor</string>
     <string name="settings_sensor_connecting">Verbunden mit %1$s</string>
     <string name="settings_sensor_disconnected">Verbindung getrennt von %1$s</string>
     <!-- Settings Stats -->
@@ -318,7 +290,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_stats_units_metric">Metrisch (km, m)</string>
     <string name="settings_stats_units_title">Bevorzugte Einheiten</string>
     <!-- Share Track -->
-    <string name="share_track_share_file">Track-Datei teilen</string>
     <string name="share_track_share_file_body">Dieser Track könnte dich interessieren.
 \n
 \n%1$s</string>
@@ -342,7 +313,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="stats_total_time">Gesamtzeit</string>
     <!-- Track -->
     <string name="track_name_format">Strecke %1$d</string>
-    <string name="track_record_notification">Der Track wird aufgezeichnet…</string>
     <string name="track_recording_notification_accuracy">Standortgenauigkeit: %1$s</string>
     <string name="track_markers">Markierungen für %1$s</string>
     <!-- Track Delete -->
@@ -351,12 +321,10 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="track_delete_multiple_confirm_message">Die ausgewählten Tracks und ihre Markierungen werden endgültig aus dem Gerät gelöscht.</string>
     <string name="track_delete_progress_message">Löschen…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Diagramm</string>
     <string name="track_detail_stats_tab">Statistik</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Art der Aktivität, z. B. Wandern</string>
     <string name="track_edit_activity_type_hint">Art der Aktivität</string>
-    <string name="track_edit_new_track_title">Neuer Track</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Zeichnen Sie Ihr nächstes Abenteuer hier auf</string>
     <!-- Aggregated Statistics -->
@@ -375,7 +343,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <!-- Value -->
     <string name="value_adapt_accuracy">Genauigkeit anpassen</string>
     <string name="value_adapt_battery_life">An Akkulaufzeit anpassen</string>
-    <string name="value_always">Immer</string>
     <string name="value_integer_feet">%1$d Fuß</string>
     <string name="value_integer_feet_excellent_gps">%1$d Fuß (ausgezeichnetes GPS-Signal)</string>
     <string name="value_integer_feet_recommended">%1$d Fuß (empfohlen)</string>
@@ -388,11 +355,9 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="value_integer_mile">%1$d mi</string>
     <string name="value_integer_mile_hour">%1$d Meile/h</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">Keine</string>
     <string name="value_off">Aus</string>
-    <string name="value_smallest">Kleinster</string>
     <string name="value_smallest_recommended">Kleinster (empfohlen)</string>
     <!-- Voice -->
     <plurals name="voiceHours">
@@ -507,7 +472,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="description_altitude_loss">Höhenverlust: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Der Datenexport im Anschluss an die Übung ist fehlgeschlagen. Bitte prüfe den Exportordner.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Vollbild</string>
-    <string name="stats_intervals">Intervalle</string>
     <string name="track_detail_intervals_tab">Intervalle</string>
     <string name="generic_overwrite">Überschreiben</string>
     <string name="generic_skip">Überspringen</string>
@@ -522,7 +486,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="import_error_list_dialog_title">Dateien wurden nicht importiert</string>
     <string name="voice_speed_lap">Rundengeschwindigkeit %1$s</string>
     <string name="voice_pace_lap">Rundenzeit %1$s</string>
-    <string name="toast_message_instant_track_was_exported">Letzte Aufzeichnung exportiert</string>
     <string name="export_track_already_exists_msg">Die Streckenaufzeichung %1$s existiert bereits im Zielverzeichnis.</string>
     <string name="gps_fixed_and_ready">GPS-Position bestimmt und bereit</string>
     <string name="instant_export_enabled_title">Sofortiger Export im Anschluss an die Übung</string>

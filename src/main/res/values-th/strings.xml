@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">รวมระยะทาง: %1$.2f กม. (%2$.1f ไมล์)</string>
     <string name="description_total_time">เวลาทั้งหมด: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">ทั้งหมดเป็น %1$s</string>
-    <string name="export_all_title">ส่งออกไปยังที่จัดเก็บข้อมูลภายนอก</string>
-    <string name="export_error">ส่งออกแล้ว %1$d จาก %2$s ไปยัง %3$s</string>
-    <string name="export_option">เป็น %1$s ลงใน %2$s</string>
     <string name="export_progress_message">ส่งออกลงใน %1$s…</string>
-    <string name="export_success">ส่งออก %1$s ไปยัง %2$s แล้ว</string>
-    <string name="export_title">ส่งออกลงใน…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -125,21 +119,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">ลบรายการที่เลือกใช่ไหม</string>
     <string name="generic_description">รายละเอียด</string>
     <string name="generic_description_line">รายละเอียด: %1$s</string>
-    <string name="generic_error_title">ข้อผิดพลาด</string>
     <string name="generic_name">ชื่อ</string>
     <string name="generic_name_line">ชื่อ: %1$s</string>
-    <string name="generic_no">ไม่</string>
     <string name="generic_paused">หยุดชั่วคราว</string>
     <string name="generic_recording">กำลังบันทึก…</string>
     <string name="generic_save">บันทึก</string>
-    <string name="generic_success_title">สำเร็จ</string>
     <string name="generic_tracks">เส้นการเดินทาง</string>
     <!-- Gps -->
     <string name="gps_starting">กำลังเริ่ม GPS</string>
     <string name="gps_wait_for_better_signal">กำลังรอสัญญาณ GPS ที่ดีกว่านี้</string>
     <string name="gps_wait_for_signal">กำลังรอสัญญาณ GPS</string>
     <!-- Image -->
-    <string name="image_application">แอปพลิเคชัน</string>
     <string name="image_arrow">ลูกศร</string>
     <string name="image_marker">เครื่องหมาย</string>
     <string name="image_marker_count">จำนวนเครื่องหมาย</string>
@@ -149,14 +139,7 @@ limitations under the License.
     <string name="image_stop">หยุด</string>
     <string name="image_track">เส้นการเดินทาง</string>
     <!-- Import -->
-    <string name="import_error">นำเข้าแล้ว %1$d จากทั้งหมด %2$s จาก %3$s</string>
-    <string name="import_no_directory">ไม่มี %1$s</string>
-    <string name="import_no_file">ไม่มีไฟล์ให้นำเข้า โปรดเชื่อมต่ออุปกรณ์เข้ากับคอมพิวเตอร์ และวางไฟล์ที่จะนำเข้าลงใน %1$s</string>
-    <string name="import_no_file_title">นำเข้าไฟล์</string>
     <string name="import_progress_message">กำลังนำเข้าจาก %1$s…</string>
-    <string name="import_selection_option">ทั้งหมด %1$s</string>
-    <string name="import_selection_title">นำเข้าจากที่จัดเก็บข้อมูลภายนอก</string>
-    <string name="import_success">นำเข้าแล้ว %1$s จาก %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">ไม่สามารถใส่เครื่องหมายได้ เนื่องจากไม่มีสัญญาณ GPS โปรดลองอีกครั้ง</string>
     <string name="marker_add_success">ใส่เครื่องหมายแล้ว</string>
@@ -164,8 +147,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">เครื่องหมายจะถูกลบออกจากอุปกรณ์อย่างถาวร</string>
     <string name="marker_delete_one_confirm_title">ลบเครื่องหมายไหม</string>
     <string name="marker_delete_multiple_confirm_message">เครื่องหมายที่เลือกจะถูกลบออกจากอุปกรณ์อย่างถาวร</string>
-    <string name="marker_label_end">%1$s (สิ้นสุด)</string>
-    <string name="marker_label_start">%1$s (เริ่ม)</string>
     <string name="marker_name_format">เครื่องหมาย %1$d</string>
     <string name="marker_title">%1$d จาก %2$d</string>
     <!-- Marker Detail -->
@@ -191,13 +172,10 @@ limitations under the License.
     <string name="menu_show_on_map">แสดงบนแผนที่</string>
     <string name="menu_start_gps">เริ่ม GPS</string>
     <string name="menu_stop_gps">หยุด GPS</string>
-    <string name="menu_view_photo">ดูรูปภาพ</string>
     <string name="menu_voice_frequency">ความถี่เสียง</string>
     <!-- OpenTracks -->
     <string name="recording_service">บริการการบันทึก</string>
     <!-- Search -->
-    <string name="search_global_description">เส้นการเดินทางและเครื่องหมาย</string>
-    <string name="search_list_empty_message">ไม่มีเส้นการเดินทางหรือเครื่องหมายที่ตรงกับการค้นหาของคุณ</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">ระดับแบตเตอรี่</string>
     <string name="sensor_state_cadence">รอบขา</string>
@@ -214,10 +192,6 @@ limitations under the License.
     <string name="settings_chart_by_distance">ตามระยะทาง</string>
     <string name="settings_chart_by_time">ตามเวลา</string>
     <string name="settings_recording">การบันทึก</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">บันทึกต่อหลังจากรีบูตเสมอ</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">ไม่บันทึกต่อหลังจากรีบูต</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">บันทึกต่อหลังจากรีบูตถ้าตำแหน่งล่าสุดที่บันทึกอยู่ใน %1$s ก่อน</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">บันทึกต่ออัตโนมัติ</string>
     <string name="settings_recording_default_activity_title">ประเภทกิจกรรมเริ่มต้น</string>
     <string name="settings_recording_location_frequency_summary">บันทึกตำแหน่งทุก %1$s</string>
     <string name="settings_recording_max_recording_distance_summary">เซ็กเมนต์ใหม่จะถูกสร้างขึ้นถ้าระยะห่างระหว่างสองตำแหน่งมีค่ามากกว่า %1$s</string>
@@ -237,7 +211,6 @@ limitations under the License.
     <string name="settings_reset_done">การตั้งค่าทั้งหมดถูกเปลี่ยนกลับไปเป็นค่าเริ่มต้นแล้ว</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">บลูทูธ</string>
-    <string name="settings_sensor_bluetooth_sensor">เซ็นเซอร์บลูทูธ</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">ละติจูด/ลองจิจูด</string>
     <string name="settings_stats_rate_title">อัตราที่ต้องการ</string>
@@ -246,7 +219,6 @@ limitations under the License.
     <string name="settings_stats_units_title">หน่วยที่ต้องการ</string>
 
     <!-- Share Track -->
-    <string name="share_track_share_file">แบ่งปันไฟล์เส้นการเดินทาง</string>
     <string name="share_track_share_file_body">ฉันคิดว่าคุณอาจจะสนใจในเส้นการเดินทางนี้\n\nเมื่อต้องการดูเส้นการเดินทางนี้ ให้ใช้ Google Earth หรือซอฟแวร์แผนที่อื่นๆ\n\n%1$s</string>
     <string name="share_track_subject">ฉันต้องการแบ่งปันเส้นทางกับคุณ</string>
     <!-- Stats -->
@@ -267,7 +239,6 @@ limitations under the License.
     <string name="stats_total_time">เวลารวม</string>
     <!-- Track -->
     <string name="track_name_format">เส้นทาง %1$d</string>
-    <string name="track_record_notification">กำลังบันทึกเส้นการเดินทางของคุณ…</string>
     <string name="track_markers">%1$s เครื่องหมาย</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">ส้นการเดินทางและเครื่องหมายจะถูกลบออกจากอุปกรณ์อย่างถาวร</string>
@@ -275,12 +246,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">ส้นการเดินทางและเครื่องหมายที่เลือกจะถูกลบออกจากอุปกรณ์อย่างถาวร</string>
     <string name="track_delete_progress_message">กำลังลบ…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">แผนภูมิ</string>
     <string name="track_detail_stats_tab">สถิติ</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">ประเภทกิจกรรม (เช่น เดินป่า)</string>
     <string name="track_edit_activity_type_hint">ประเภทกิจกรรม</string>
-    <string name="track_edit_new_track_title">เส้นการเดินทางใหม่</string>
     <!-- Track List -->
     <string name="track_list_empty_message">เริ่มบันทึกผจญภัยต่อไปของคุณที่นี่</string>
     <!-- Track Widget -->
@@ -297,7 +266,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">ปรับความแม่นยำ</string>
     <string name="value_adapt_battery_life">ปรับเพื่อแบตเตอรี่</string>
-    <string name="value_always">เปิดใช้งานเสมอ</string>
     <string name="value_integer_feet">%1$d ฟุต</string>
     <string name="value_integer_feet_excellent_gps">%1$d ฟุต (สัญญาณ GPS ดี)</string>
     <string name="value_integer_feet_recommended">%1$d ฟุต (แนะนำ)</string>
@@ -310,11 +278,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d ไมล์</string>
     <string name="value_integer_mile_hour">%1$d ไมล์/ชม.</string>
     <string name="value_integer_minute">%1$d นาที</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d วินาที</string>
     <string name="value_none">ไม่มี</string>
     <string name="value_off">ปิด</string>
-    <string name="value_smallest">น้อยที่สุด</string>
     <string name="value_smallest_recommended">น้อยที่สุด (แนะนำ)</string>
     <!-- Voice -->
     <plurals name="voiceHours">

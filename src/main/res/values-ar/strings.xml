@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">المسافة الإجمالية: %1$.2f كم (%2$.1f ميل)</string>
     <string name="description_total_time">الوقت الإجمالي: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">الكل كـ ‏%1$s‏</string>
-    <string name="export_all_title">تصدير إلى وحدة التخزين الخارجية</string>
-    <string name="export_error">تم تصدير %1$d‏ من %2$s‏ إلى %3$s</string>
-    <string name="export_option">كـ ‏%1$s‏ إلى‏ %2$s</string>
     <string name="export_progress_message">جارٍ التصدير إلى‏ %1$s‏…</string>
-    <string name="export_success">تم تصدير‏ %1$s‏ إلى‏ %2$s</string>
-    <string name="export_title">تصدير إلى…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -130,21 +124,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">حذف ما تم تحديده؟</string>
     <string name="generic_description">الوصف</string>
     <string name="generic_description_line">الوصف: %1$s</string>
-    <string name="generic_error_title">خطأ</string>
     <string name="generic_name">الاسم</string>
     <string name="generic_name_line">الاسم: %1$s</string>
-    <string name="generic_no">لا</string>
     <string name="generic_paused">متوقف مؤقتًا</string>
     <string name="generic_recording">جارٍ التسجيل…</string>
     <string name="generic_save">حفظ</string>
-    <string name="generic_success_title">تم بنجاح</string>
     <string name="generic_tracks">المسارات</string>
     <!-- Gps -->
     <string name="gps_starting">بدء نظام تحديد المواقع العالمي (GPS)</string>
     <string name="gps_wait_for_better_signal">في انتظار إشارة أفضل ‏‫لنظام تحديد المواقع العالمي (GPS)‬</string>
     <string name="gps_wait_for_signal">في انتظار إشارة نظام تحديد المواقع العالمي (GPS)‬</string>
     <!-- Image -->
-    <string name="image_application">تطبيق</string>
     <string name="image_arrow">سهم</string>
     <string name="image_marker">علامة</string>
     <string name="image_marker_count">عدد العلامات</string>
@@ -154,14 +144,7 @@ limitations under the License.
     <string name="image_stop">إيقاف</string>
     <string name="image_track">مسار</string>
     <!-- Import -->
-    <string name="import_error">تم استيراد‏ %1$d‏ من‏ %2$s‏ من‏ %3$s</string>
-    <string name="import_no_directory">%1$s‏ غير موجود</string>
-    <string name="import_no_file">لا توجد ملفات للاستيراد. وصّل جهازك إلى جهاز الكمبيوتر واحفظ الملفات للاستيراد في %1$s.</string>
-    <string name="import_no_file_title">استيراد الملفات</string>
     <string name="import_progress_message">جارٍ الاستيراد من %1$s…</string>
-    <string name="import_selection_option">كل‏ %1$s‏</string>
-    <string name="import_selection_title">استيراد من وحدة التخزين الخارجية</string>
-    <string name="import_success">تم استيراد‏ %1$s‏ من‏ %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">يتعذر إدراج مُحدد. ليس هناك إشارة لنظام تحديد المواقع العالمي (GPS). حاول مرة أخرى.</string>
     <string name="marker_add_success">تم إدراج علامة</string>
@@ -169,8 +152,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">سيتم حذف العلامة من الجهاز نهائيًا</string>
     <string name="marker_delete_one_confirm_title">حذف العلامة؟</string>
     <string name="marker_delete_multiple_confirm_message">سيتم حذف العلامات التي تم تحديدها نهائيًا من الجهاز</string>
-    <string name="marker_label_end">%1$s (النهاية)</string>
-    <string name="marker_label_start">%1$s (البداية)</string>
     <string name="marker_name_format">مُحدد %1$d</string>
     <string name="marker_title">%1$d‏ من‏ %2$d</string>
     <!-- Marker Detail -->
@@ -196,13 +177,10 @@ limitations under the License.
     <string name="menu_show_on_map">إظهار على الخريطة</string>
     <string name="menu_start_gps">بدء GPS</string>
     <string name="menu_stop_gps">إيقاف GPS</string>
-    <string name="menu_view_photo">عرض الصورة</string>
     <string name="menu_voice_frequency">معدل الصوت</string>
     <!-- OpenTracks -->
     <string name="recording_service">خدمة التسجيل</string>
     <!-- Search -->
-    <string name="search_global_description">المسارات والمحددات</string>
-    <string name="search_list_empty_message">لم يطابق بحثك أي مسارات أو علامات</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">مستوى شحن البطارية</string>
     <string name="sensor_state_cadence">الإيقاع</string>
@@ -219,10 +197,6 @@ limitations under the License.
     <string name="settings_chart_by_distance">بحسب المسافة</string>
     <string name="settings_chart_by_time">بحسب الوقت</string>
     <string name="settings_recording">التسجيل</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">استئناف التسجيل دائمًا بعد إعادة التشغيل</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">عدم استئناف التسجيل مطلقًا بعد إعادة التشغيل</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">استئناف التسجيل بعد إعادة التشغيل إذا كان الموقع الأخير الذي تم تسجيله خلال آخر %1$s</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">الاستئناف التلقائي</string>
     <string name="settings_recording_default_activity_title">نوع النشاط الافتراضي</string>
     <string name="settings_recording_location_frequency_summary">%1$s‏ بين المواقع المسجلة</string>
     <string name="settings_recording_max_recording_distance_summary">يتم إنشاء جزء جديد إذا كانت المسافة بين موقعين أكبر من %1$s</string>
@@ -242,7 +216,6 @@ limitations under the License.
     <string name="settings_reset_done">لقد تمت إعادة جميع الإعدادات إلى القيم الافتراضية</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">البلوتوث</string>
-    <string name="settings_sensor_bluetooth_sensor">مستشعر بلوتوث</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">خط العرض/خط الطول</string>
     <string name="settings_stats_rate_title">المعدل المفضل</string>
@@ -251,7 +224,6 @@ limitations under the License.
     <string name="settings_stats_units_title">الوحدات المفضلة</string>
 
     <!-- Share Track -->
-    <string name="share_track_share_file">مشاركة ملف مسار</string>
     <string name="share_track_share_file_body">أعتقد أنك قد تكون مهتمًا بهذا المسار.\n\nلعرض هذا المسار، استخدام برنامج Google Earth أو غيره من البرامج تصميم الخرائط.\n\n%1$s</string>
     <string name="share_track_subject">أريد مشاركة مسار معك</string>
     <!-- Stats -->
@@ -272,7 +244,6 @@ limitations under the License.
     <string name="stats_total_time">الوقت الإجمالي</string>
     <!-- Track -->
     <string name="track_name_format">المسار %1$d</string>
-    <string name="track_record_notification">جارٍ تسجيل مسارك…</string>
     <string name="track_markers">%1$s علامات</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">سيتم حذف المسار والعلامات نهائيًا من الجهاز.</string>
@@ -280,12 +251,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">سيتم حذف المسارات المحددة وعلاماتها نهائيًا من الجهاز.</string>
     <string name="track_delete_progress_message">جارٍ الحذف…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">الرسم البياني</string>
     <string name="track_detail_stats_tab">الإحصاءات</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">نوع النشاط (على سبيل المثال المشي)</string>
     <string name="track_edit_activity_type_hint">نوع النشاط</string>
-    <string name="track_edit_new_track_title">مسار جديد</string>
     <!-- Track List -->
     <string name="track_list_empty_message">بدء تسجيل مغامرتك التالية هنا</string>
     <!-- Track Widget -->
@@ -302,7 +271,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">تكييف من أجل الدقة</string>
     <string name="value_adapt_battery_life">التكيف بحسب عمر البطارية</string>
-    <string name="value_always">دائمًا</string>
     <string name="value_integer_feet">%1$d قدم</string>
     <string name="value_integer_feet_excellent_gps">%1$d قدم (إشارة نظام تحديد المواقع ممتازة)</string>
     <string name="value_integer_feet_recommended">%1$d قدم (موصى به)</string>
@@ -315,11 +283,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d ميل</string>
     <string name="value_integer_mile_hour">%1$d‏‏ ميل/ساعة</string>
     <string name="value_integer_minute">%1$d دقيقة</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d ث</string>
     <string name="value_none">لا شيء</string>
     <string name="value_off">إيقاف</string>
-    <string name="value_smallest">الأصغر</string>
     <string name="value_smallest_recommended">الأصغر (موصى به)</string>
     <!-- Voice -->
     <plurals name="voiceHours">

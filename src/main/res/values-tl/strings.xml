@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">Kabuuang distansya: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Kabuuang oras: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Lahat bilang %1$s</string>
-    <string name="export_all_title">I-export sa external storage</string>
-    <string name="export_error">In-export ang %1$d ng %2$s patungo sa %3$s.</string>
-    <string name="export_option">bilang %1$s patungo sa %2$s</string>
     <string name="export_progress_message">Ine-export sa %1$s…</string>
-    <string name="export_success">In-export ang %1$s patungo sa %2$s</string>
-    <string name="export_title">I-export sa…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -126,21 +120,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">Tanggalin ang pinili?</string>
     <string name="generic_description">Paglalarawan</string>
     <string name="generic_description_line">Paglalarawan: %1$s</string>
-    <string name="generic_error_title">Error</string>
     <string name="generic_name">Pangalan</string>
     <string name="generic_name_line">Pangalan: %1$s</string>
-    <string name="generic_no">Hindi</string>
     <string name="generic_paused">Naka-pause</string>
     <string name="generic_recording">Nagre-record…</string>
     <string name="generic_save">I-save</string>
-    <string name="generic_success_title">Tagumpay</string>
     <string name="generic_tracks">Mga Track</string>
     <!-- Gps -->
     <string name="gps_starting">Sinisimulan ang GPS</string>
     <string name="gps_wait_for_better_signal">Naghihintay para sa isang mas mahusay na signal ng GPS</string>
     <string name="gps_wait_for_signal">Naghihintay para sa signal ng GPS</string>
     <!-- Image -->
-    <string name="image_application">Application</string>
     <string name="image_arrow">Arrow</string>
     <string name="image_marker">Marker</string>
     <string name="image_marker_count">Bilang ng marker</string>
@@ -150,14 +140,7 @@ limitations under the License.
     <string name="image_stop">Huminto</string>
     <string name="image_track">Track</string>
     <!-- Import -->
-    <string name="import_error">In-import ang %1$d ng %2$s mula sa %3$s</string>
-    <string name="import_no_directory">Hindi umiiral ang %1$s</string>
-    <string name="import_no_file">Walang mga file na ii-import. Ikonekta ang iyong device sa iyong computer at ilagay ang mga ii-import na file sa %1$s.</string>
-    <string name="import_no_file_title">Mag-import ng mga file</string>
     <string name="import_progress_message">Ini-import mula sa %1$s…</string>
-    <string name="import_selection_option">Lahat ng %1$ss</string>
-    <string name="import_selection_title">Mag-import mula sa panlabas na storage</string>
-    <string name="import_success">In-import ang %1$s mula sa %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">Hindi makapaglagay ng marker. Walang signal ng GPS. Subukang muli.</string>
     <string name="marker_add_success">Ipinasok ang isang marker</string>
@@ -165,8 +148,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">Permanenteng tatanggalin ang marker mula sa device</string>
     <string name="marker_delete_one_confirm_title">Tanggalin ang marker?</string>
     <string name="marker_delete_multiple_confirm_message">Permanenteng tatanggalin ang mga piling marker mula sa device</string>
-    <string name="marker_label_end">%1$s (End)</string>
-    <string name="marker_label_start">%1$s (Start)</string>
     <string name="marker_name_format">Marker %1$d</string>
     <string name="marker_title">%1$d ng %2$d</string>
     <!-- Marker Detail -->
@@ -192,13 +173,10 @@ limitations under the License.
     <string name="menu_show_on_map">Ipakita sa mapa</string>
     <string name="menu_start_gps">Simulan ang GPS</string>
     <string name="menu_stop_gps">Itigil ang GPS</string>
-    <string name="menu_view_photo">Tingnan ang larawan</string>
     <string name="menu_voice_frequency">Dalas ng voice</string>
     <!-- OpenTracks -->
     <string name="recording_service">Serbisyo ng pagrerekord</string>
     <!-- Search -->
-    <string name="search_global_description">Mga track at marker</string>
-    <string name="search_list_empty_message">Walang mga track o marker na tumugma sa iyong paghahanap</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Antas ng baterya</string>
     <string name="sensor_state_cadence">Cadence</string>
@@ -215,10 +193,6 @@ limitations under the License.
     <string name="settings_chart_by_distance">Ayon sa distansya</string>
     <string name="settings_chart_by_time">Ayon sa oras</string>
     <string name="settings_recording">Pagre-rekord</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Palaging ipagpatuloy ang isang pag-record pagkatapos mag-reboot</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Huwag ipagpatuloy ang isang pag-record pagkatapos i-reboot</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Ipagpatuloy ang isang pag-record pagkatapos i-reboot kung ang nasa loob ng huling %1$s ang huling naitalang lokasyon</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Mag-auto-resume</string>
     <string name="settings_recording_default_activity_title">Dafault na uri ng gawain</string>
     <string name="settings_recording_location_frequency_summary">%1$s sa pagitan ng mga nakatalang lokasyon</string>
     <string name="settings_recording_max_recording_distance_summary">Nilikha ang isang bagong segment kung mas malaki sa %1$s ang distansya sa pagitan ng dalawang lokasyon</string>
@@ -238,7 +212,6 @@ limitations under the License.
     <string name="settings_reset_done">Ibinalik ang lahat ng setting sa mga default na value</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Bluetooth sensor</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Latitude/Longtitude</string>
     <string name="settings_stats_rate_title">Gustong rate</string>
@@ -247,7 +220,6 @@ limitations under the License.
     <string name="settings_stats_units_title">Gustong mga unit</string>
 
     <!-- Share Track -->
-    <string name="share_track_share_file">Ibahagi ang track file</string>
     <string name="share_track_share_file_body">Tingin ko maaari kang maging interesado sa track na ito. \n\nUpang tingnan ang track na ito, gamitin ang Google Earth o iba pang software ng pagmamapa. \n\n%1$s</string>
     <string name="share_track_subject">Gusto kong magbahagi ng track sa iyo</string>
     <!-- Stats -->
@@ -268,7 +240,6 @@ limitations under the License.
     <string name="stats_total_time">Kabuuang oras</string>
     <!-- Track -->
     <string name="track_name_format">Track bilang %1$d</string>
-    <string name="track_record_notification">Nire-rekord ang iyong track…</string>
     <string name="track_markers">%1$s Mga Marker</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Ang track at ang mga marker nito ay permanenteng tatanggalin mula sa device.</string>
@@ -276,12 +247,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">Ang mga napiling track at mga marker nito ay permanenteng matatanggal mula sa device.</string>
     <string name="track_delete_progress_message">Tinatanggal…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Chart</string>
     <string name="track_detail_stats_tab">Mga Istatistika</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Uri ng gawain (hal. hiking)</string>
     <string name="track_edit_activity_type_hint">Uri ng gawain</string>
-    <string name="track_edit_new_track_title">Bagong Track</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Simulan ang pag-record ng iyong susunod na pakikipagsapalaran dito</string>
     <!-- Track Widget -->
@@ -298,7 +267,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">Iangkop para sa katumpakan</string>
     <string name="value_adapt_battery_life">Iangkop para sa antas ng baterya</string>
-    <string name="value_always">Palagi</string>
     <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (malinaw na GPS)</string>
     <string name="value_integer_feet_recommended">%1$d ft (inirerekomenda)</string>
@@ -311,11 +279,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d mi</string>
     <string name="value_integer_mile_hour">%1$d mi/h</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">Wala</string>
     <string name="value_off">I-off</string>
-    <string name="value_smallest">Pinakamaliit</string>
     <string name="value_smallest_recommended">Pinakamaliit (inirerekomenda)</string>
     <!-- Voice -->
     <plurals name="voiceHours">

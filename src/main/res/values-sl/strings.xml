@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">Skupna dolžina: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Skupni čas: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Vse kot %1$s</string>
-    <string name="export_all_title">Izvozi v zunanji pomnilnik</string>
-    <string name="export_error">Izvoženih %1$d od %2$s v %3$s</string>
-    <string name="export_option">kot %1$s v %2$s</string>
     <string name="export_progress_message">Izvažanje v %1$s …</string>
-    <string name="export_success">Izvoženih %1$s v %2$s</string>
-    <string name="export_title">Izvozi v …</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -128,21 +122,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">Izbriši izbrano?</string>
     <string name="generic_description">Opis</string>
     <string name="generic_description_line">Opis: %1$s</string>
-    <string name="generic_error_title">Napaka</string>
     <string name="generic_name">Ime</string>
     <string name="generic_name_line">Ime: %1$s</string>
-    <string name="generic_no">Ne</string>
     <string name="generic_paused">Začasno zaustavljeno</string>
     <string name="generic_recording">Poteka snemanje …</string>
     <string name="generic_save">Shrani</string>
-    <string name="generic_success_title">Uspešno</string>
     <string name="generic_tracks">Poti</string>
     <!-- Gps -->
     <string name="gps_starting">Zagon GPS-a</string>
     <string name="gps_wait_for_better_signal">Čakanje na boljši signal GPS</string>
     <string name="gps_wait_for_signal">Čakanje na signal GPS</string>
     <!-- Image -->
-    <string name="image_application">Aplikacija</string>
     <string name="image_arrow">Puščica</string>
     <string name="image_marker">Oznaka</string>
     <string name="image_marker_count">Število oznak</string>
@@ -152,14 +142,7 @@ limitations under the License.
     <string name="image_stop">Ustavi</string>
     <string name="image_track">Pot</string>
     <!-- Import -->
-    <string name="import_error">Uvoženih %1$d od %2$s iz %3$s</string>
-    <string name="import_no_directory">%1$s ne obstaja</string>
-    <string name="import_no_file">Ni datotek za uvoz. Povežite napravo z računalnikom in postavite datoteke za uvoz v %1$s.</string>
-    <string name="import_no_file_title">Uvozi datoteke</string>
     <string name="import_progress_message">Uvažanje iz imenika %1$s …</string>
-    <string name="import_selection_option">Vse %1$s</string>
-    <string name="import_selection_title">Uvozi iz zunanjega pomnilnika</string>
-    <string name="import_success">Uvoženih %1$s iz %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">Oznake ni mogoče vstaviti. Ni signala GPS. Poskusite znova.</string>
     <string name="marker_add_success">Oznaka je bila vstavljena</string>
@@ -167,8 +150,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">Oznaka bo trajno izbrisana iz naprave</string>
     <string name="marker_delete_one_confirm_title">Izbriši oznako?</string>
     <string name="marker_delete_multiple_confirm_message">Izbrane oznake bodo trajno izbrisane iz naprave</string>
-    <string name="marker_label_end">%1$s (konec)</string>
-    <string name="marker_label_start">%1$s (začetek)</string>
     <string name="marker_name_format">Oznaka %1$d</string>
     <string name="marker_title">%1$d od %2$d</string>
     <!-- Marker Detail -->
@@ -194,13 +175,10 @@ limitations under the License.
     <string name="menu_show_on_map">Pokaži na zemljevidu</string>
     <string name="menu_start_gps">Zaženi GPS</string>
     <string name="menu_stop_gps">Ustavi GPS</string>
-    <string name="menu_view_photo">Prikaži fotografijo</string>
     <string name="menu_voice_frequency">Pogostost glas. obv.</string>
     <!-- OpenTracks -->
     <string name="recording_service">Storitev snemanja</string>
     <!-- Search -->
-    <string name="search_global_description">Poti in oznake</string>
-    <string name="search_list_empty_message">Nobena pot ali oznaka ne ustreza iskalni poizvedbi</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Raven napolnjenosti baterije</string>
     <string name="sensor_state_cadence">Ritem</string>
@@ -217,10 +195,6 @@ limitations under the License.
     <string name="settings_chart_by_distance">Po razdalji</string>
     <string name="settings_chart_by_time">Po času</string>
     <string name="settings_recording">Snemanje</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Po vnovičnem zagonu naj se snemanje vedno nadaljuje</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Po vnovičnem zagonu naj se snemanje nikoli ne nadaljuje</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Po vnovičnem zagonu naj se snemanje nadaljuje, če je bila zadnja lokacija zabeležena v zadnjih %1$s</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Samodejno nadaljevanje</string>
     <string name="settings_recording_default_activity_title">Privzeta vrsta dejavnosti</string>
     <string name="settings_recording_location_frequency_summary">Beleženje lokacije vsakih %1$s</string>
     <string name="settings_recording_max_recording_distance_summary">Ustvarjen bo nov odsek, če je razdalja med lokacijama večja od %1$s</string>
@@ -240,7 +214,6 @@ limitations under the License.
     <string name="settings_reset_done">Vse nastavitve so bile povrnjene na privzete vrednosti</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Senzor Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Zemlj. širina/dolžina</string>
     <string name="settings_stats_rate_title">Pred. enot. za hitr.</string>
@@ -249,7 +222,6 @@ limitations under the License.
     <string name="settings_stats_units_title">Prednostne enote</string>
 
     <!-- Share Track -->
-    <string name="share_track_share_file">Datoteko poti dajte v skupno rabo</string>
     <string name="share_track_share_file_body">Zdi se mi, da bi te ta pot utegnila zanimati.\n\nPot si lahko ogledaš v storitvi Google Earth ali drugi
     programski opremi za zemljevide.\n\n%1$s</string>
     <string name="share_track_subject">V skupno rabo z vami želim dati progo</string>
@@ -271,7 +243,6 @@ limitations under the License.
     <string name="stats_total_time">Skupni čas</string>
     <!-- Track -->
     <string name="track_name_format">Proga %1$d</string>
-    <string name="track_record_notification">Snemanje vaše poti …</string>
     <string name="track_markers">Oznake %1$s</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Pot in njene oznake bodo trajno izbrisane iz naprave.</string>
@@ -279,12 +250,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">Izbrane poti in njihove oznake bodo trajno izbrisane iz naprave.</string>
     <string name="track_delete_progress_message">Brisanje …</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Grafikon</string>
     <string name="track_detail_stats_tab">Statistika</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Vrsta dejavnosti (npr. pohodništvo)</string>
     <string name="track_edit_activity_type_hint">Vrsta dejavnosti</string>
-    <string name="track_edit_new_track_title">Nova pot</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Tukaj začnite snemati svojo naslednjo pustolovščino</string>
     <!-- Track Widget -->
@@ -301,7 +270,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">Prilagodi za natančnost</string>
     <string name="value_adapt_battery_life">Prilagodi za življenjsko dobo baterije</string>
-    <string name="value_always">Vedno</string>
     <string name="value_integer_feet">%1$d čevljev</string>
     <string name="value_integer_feet_excellent_gps">%1$d čevljev (odličen signal GPS)</string>
     <string name="value_integer_feet_recommended">%1$d čevljev (priporočeno)</string>
@@ -314,11 +282,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d mi</string>
     <string name="value_integer_mile_hour">%1$d mi/h</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">Nobena</string>
     <string name="value_off">Izklopi</string>
-    <string name="value_smallest">Najmanjša</string>
     <string name="value_smallest_recommended">Najmanjše (priporočeno)</string>
     <!-- Voice -->
     <plurals name="voiceHours">

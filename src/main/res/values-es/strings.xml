@@ -157,15 +157,9 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="description_total_distance">Distancia total: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Tiempo total: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Todo como %1$s</string>
-    <string name="export_all_title">Exportar a unidad de almacenamiento externa</string>
     <string name="export_with_photos">con fotos</string>
     <string name="export_without_photos">sin fotos</string>
-    <string name="export_error">Se exportaron %1$d de %2$s a %3$s</string>
-    <string name="export_option">como %1$s a %2$s</string>
     <string name="export_progress_message">Exportando a %1$s…</string>
-    <string name="export_success">Se exportaron %1$s a %2$s</string>
-    <string name="export_title">Exportar a…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -177,21 +171,17 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="generic_delete_selected_confirm_title">¿Eliminar elementos seleccionados?</string>
     <string name="generic_description">Descripción</string>
     <string name="generic_description_line">Descripción: %1$s</string>
-    <string name="generic_error_title">Error</string>
     <string name="generic_name">Nombre</string>
     <string name="generic_name_line">Nombre: %1$s</string>
-    <string name="generic_no">No</string>
     <string name="generic_paused">En pausa</string>
     <string name="generic_recording">Grabando…</string>
     <string name="generic_save">Guardar</string>
-    <string name="generic_success_title">Correcto</string>
     <string name="generic_tracks">Rutas</string>
     <!-- Gps -->
     <string name="gps_starting">Iniciando GPS</string>
     <string name="gps_wait_for_better_signal">Esperando una mejor señal de GPS</string>
     <string name="gps_wait_for_signal">Esperando señal de GPS</string>
     <!-- Image -->
-    <string name="image_application">Aplicación</string>
     <string name="image_arrow">Flecha</string>
     <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Recuento de marcadores</string>
@@ -201,15 +191,7 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="image_stop">Detener</string>
     <string name="image_track">Ruta</string>
     <!-- Import -->
-    <string name="import_error">Se importaron %1$d de %2$s desde %3$s</string>
-    <string name="import_no_directory">%1$s no existe</string>
-    <string name="import_no_file">No hay archivos que importar. Conecta tu dispositivo al ordenador y coloca los archivos que quieras
-    importar en %1$s.</string>
-    <string name="import_no_file_title">Importar archivos</string>
     <string name="import_progress_message">Importando desde %1$s…</string>
-    <string name="import_selection_option">Todos los archivos %1$s</string>
-    <string name="import_selection_title">Importar desde la unidad de almacenamiento externa</string>
-    <string name="import_success">Se importaron %1$s desde %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">No se puede insertar el marcador. No se recibe señal de GPS. Inténtalo de nuevo.</string>
     <string name="marker_add_success">Se ha insertado un marcador</string>
@@ -218,8 +200,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="marker_delete_one_confirm_message">El marcador se eliminará del dispositivo de forma permanente</string>
     <string name="marker_delete_one_confirm_title">¿Eliminar marcador?</string>
     <string name="marker_delete_multiple_confirm_message">Los marcadores seleccionados se eliminarán del dispositivo de forma permanente</string>
-    <string name="marker_label_end">%1$s (fin)</string>
-    <string name="marker_label_start">%1$s (inicio)</string>
     <string name="marker_name_format">Marcador %1$d</string>
     <string name="marker_title">%1$d de %2$d</string>
     <!-- Marker Detail -->
@@ -246,7 +226,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="menu_show_on_map">Mostrar en el mapa</string>
     <string name="menu_start_gps">Iniciar GPS</string>
     <string name="menu_stop_gps">Detener GPS</string>
-    <string name="menu_view_photo">Ver foto</string>
     <string name="menu_voice_frequency">Frecuencia de voz</string>
     <string name="menu_resume_track">Reanudar ruta</string>
     <!-- OpenTracks -->
@@ -254,8 +233,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks requiere permiso para usar el GPS.</string>
     <!-- Search -->
-    <string name="search_global_description">Recorridos y marcadores</string>
-    <string name="search_list_empty_message">No hay rutas ni marcadores que coincidan con tu búsqueda</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Nivel de batería</string>
     <string name="sensor_state_cadence">Cadencia</string>
@@ -279,10 +256,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="settings_recording_keep_screen_on_while_recording_title">Mantén la pantalla encendida</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Mientras graba, mantenga la pantalla encendida.</string>
     <string name="settings_recording">Grabación</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Reanudar siempre una grabación después de reiniciar</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">No reanudar nunca una grabación después de reiniciar</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Esta opción permite reanudar una grabación después de reiniciar si la última ubicación grabada se encuentra dentro de los últimos %1$s</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Reanudación automática</string>
     <string name="settings_recording_default_activity_title">Actividad predeterminada</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre ubicaciones grabadas</string>
     <string name="settings_recording_max_recording_distance_summary">Esta opción permite crear un nuevo segmento si la distancia entre dos ubicaciones es superior a %1$s</string>
@@ -303,7 +276,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="settings_error_initial_values_restored">Lo siento, pero ha habido un error. Todos los ajustes se han vuelto a los valores predeterminados.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Sensor Bluetooth</string>
     <string name="settings_sensor_connecting">Conectado a %1$s</string>
     <string name="settings_sensor_disconnected">Desconectado de %1$s</string>
     <!-- Settings Stats -->
@@ -313,7 +285,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="settings_stats_units_metric">Métrica (km, m)</string>
     <string name="settings_stats_units_title">Unidades preferidas</string>
     <!-- Share Track -->
-    <string name="share_track_share_file">Compartir el archivo de la ruta</string>
     <string name="share_track_share_file_body">Creo que esta ruta te podría interesar.
 \n
 \n%1$s</string>
@@ -336,7 +307,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="stats_total_time">Tiempo total</string>
     <!-- Track -->
     <string name="track_name_format">Ruta %1$d</string>
-    <string name="track_record_notification">Grabando tu ruta…</string>
     <string name="track_recording_notification_accuracy">Precisión de la localización: %1$s</string>
     <string name="track_markers">Marcadores de %1$s</string>
     <!-- Track Delete -->
@@ -345,12 +315,10 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="track_delete_multiple_confirm_message">Las rutas seleccionadas y sus marcadores se eliminarán de forma permanente del dispositivo.</string>
     <string name="track_delete_progress_message">Eliminando…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Gráfico</string>
     <string name="track_detail_stats_tab">Estadísticas</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Tipo de actividad (p. ej., senderismo…)</string>
     <string name="track_edit_activity_type_hint">Tipo de actividad</string>
-    <string name="track_edit_new_track_title">Nueva pista</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Empieza a grabar aquí tu próxima aventura</string>
     <!-- Track Widget -->
@@ -367,7 +335,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <!-- Value -->
     <string name="value_adapt_accuracy">Adaptar para obtener valores exactos</string>
     <string name="value_adapt_battery_life">Adaptar a la duración de la batería</string>
-    <string name="value_always">Siempre</string>
     <string name="value_integer_feet">%1$d pies</string>
     <string name="value_integer_feet_excellent_gps">%1$d pies (señal de GPS excelente)</string>
     <string name="value_integer_feet_recommended">%1$d pies (recomendado)</string>
@@ -380,11 +347,9 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="value_integer_mile">%1$d millas</string>
     <string name="value_integer_mile_hour">%1$d mi/h</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">Ninguna</string>
     <string name="value_off">No</string>
-    <string name="value_smallest">Menor</string>
     <string name="value_smallest_recommended">Mínimo (recomendado)</string>
     <!-- Voice -->
     <plurals name="voiceHours">
@@ -496,7 +461,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="settings_night_mode_option_night">Oscuro</string>
     <string name="settings_night_mode_title">Elegir un tema</string>
     <string name="settings_sensor_wheel_circumference">Perímetro de la rueda (mm)</string>
-    <string name="stats_intervals">Intervalos</string>
     <string name="stats_split_interval">Intervalo</string>
     <string name="track_detail_intervals_tab">Intervalos</string>
     <string name="aggregated_stats_empty_message">Graba tu primera pista para ver estadísticas agregadas</string>
@@ -504,7 +468,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="hold_to_pause">Mantener en pausa</string>
     <string name="instant_export_enabled_title">Exportación automática tras grabación</string>
     <string name="settings_default_export_uri_title">Carpeta de pistas exportadas</string>
-    <string name="open_track_using_dashboard">Abrir con OpenTracks-Dashboard</string>
     <string name="export_track_already_exists_msg">La pista %1$s ya existe en la carpeta de destino.</string>
     <string name="generic_overwrite">Sobreescribe</string>
     <string name="generic_click_twice_cancel">Clic otra vez para cancelar</string>
@@ -518,7 +481,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="interval_list_empty_message">No hay intervalos todavía</string>
     <string name="voice_speed_lap">Velocidad de la vuelta %1$s</string>
     <string name="hold_to_stop">Mantener para parar</string>
-    <string name="toast_message_instant_track_was_exported">Última pista exportada</string>
     <string name="instant_export_enabled_summary">Exportar pista después de terminar la grabación</string>
     <string name="stats_loss">Pérdida</string>
     <string name="settings_prevent_reimport_tracks_title">Impedir la reimportación de pistas</string>

@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">Общее расстояние: %1$.2f км (%2$.1f мил.)</string>
     <string name="description_total_time">Общее время: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Все как %1$s-файлы</string>
-    <string name="export_all_title">Экспортировать на внешний накопитель</string>
-    <string name="export_error">Экспортировано: %1$d из %2$s (в %3$s)</string>
-    <string name="export_option">как %1$s-файлы в %2$s</string>
     <string name="export_progress_message">Экспорт в папку %1$s…</string>
-    <string name="export_success">Экспортировано: %1$s (в %2$s)</string>
-    <string name="export_title">Экспорт в…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -128,21 +122,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">Удалить выбранное?</string>
     <string name="generic_description">Описание</string>
     <string name="generic_description_line">Описание: %1$s</string>
-    <string name="generic_error_title">Ошибка</string>
     <string name="generic_name">Название</string>
     <string name="generic_name_line">Название: %1$s</string>
-    <string name="generic_no">Нет</string>
     <string name="generic_paused">Пауза</string>
     <string name="generic_recording">Запись…</string>
     <string name="generic_save">Сохранить</string>
-    <string name="generic_success_title">Готово</string>
     <string name="generic_tracks">Треки</string>
     <!-- Gps -->
     <string name="gps_starting">Включение GPS-модуля</string>
     <string name="gps_wait_for_better_signal">Поиск спутников GPS</string>
     <string name="gps_wait_for_signal">Ожидание сигнала GPS</string>
     <!-- Image -->
-    <string name="image_application">Приложение</string>
     <string name="image_arrow">Стрелка</string>
     <string name="image_marker">Маркер</string>
     <string name="image_marker_count">Количество маркеров</string>
@@ -152,14 +142,7 @@ limitations under the License.
     <string name="image_stop">Стоп</string>
     <string name="image_track">Трек</string>
     <!-- Import -->
-    <string name="import_error">Импортировано: %1$d из %2$s (от %3$s)</string>
-    <string name="import_no_directory">%1$s не существует</string>
-    <string name="import_no_file">Нет файлов для импорта. Подсоедините устройство к компьютеру и укажите путь к файлам, которые нужно импортировать в %1$s.</string>
-    <string name="import_no_file_title">Импорт файлов</string>
     <string name="import_progress_message">Импорт из папки %1$s…</string>
-    <string name="import_selection_option">Все %1$s-файлы</string>
-    <string name="import_selection_title">Импорт с накопителя</string>
-    <string name="import_success">Импортировано: %1$s (из %2$s)</string>
     <!-- Marker -->
     <string name="marker_add_error">Невозможно добавить маркер. Нет сигнала GPS. Повторите попытку.</string>
     <string name="marker_add_success">Маркер добавлен</string>
@@ -167,8 +150,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">Маркер будет удален без возможности восстановления</string>
     <string name="marker_delete_one_confirm_title">Удалить маркер?</string>
     <string name="marker_delete_multiple_confirm_message">Выбранные маркеры будут удалены без возможности восстановления</string>
-    <string name="marker_label_end">%1$s (Б)</string>
-    <string name="marker_label_start">%1$s (А)</string>
     <string name="marker_name_format">Маркер %1$d</string>
     <string name="marker_title">%1$d из %2$d</string>
     <!-- Marker Detail -->
@@ -194,13 +175,10 @@ limitations under the License.
     <string name="menu_show_on_map">Показать на карте</string>
     <string name="menu_start_gps">Включить GPS</string>
     <string name="menu_stop_gps">Отключить GPS</string>
-    <string name="menu_view_photo">Открыть фото</string>
     <string name="menu_voice_frequency">Голосовые оповещения</string>
     <!-- OpenTracks -->
     <string name="recording_service">Служба записи треков</string>
     <!-- Search -->
-    <string name="search_global_description">Треки и маркеры</string>
-    <string name="search_list_empty_message">По вашему запросу ничего не найдено</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Уровень заряда батареи</string>
     <string name="sensor_state_cadence">Вращение педалей</string>
@@ -217,10 +195,6 @@ limitations under the License.
     <string name="settings_chart_by_distance">Расстояние</string>
     <string name="settings_chart_by_time">Время</string>
     <string name="settings_recording">Запись</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Всегда возобновлять запись после перезагрузки</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Никогда не возобновлять запись после перезагрузки</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">После перезагрузки приложения запись будет возобновляться, если не прошло указанное время: %1$s</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Тайм-аут</string>
     <string name="settings_recording_default_activity_title">Вид активности</string>
     <string name="settings_recording_location_frequency_summary">Записывать точки с интервалом %1$s</string>
     <string name="settings_recording_max_recording_distance_summary">Макс. расстояние между точками в одном сегменте: %1$s</string>
@@ -240,7 +214,6 @@ limitations under the License.
     <string name="settings_reset_done">Настройки по умолчанию восстановлены</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Датчик Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Широта/долгота</string>
     <string name="settings_stats_rate_title">Предпочтение</string>
@@ -248,7 +221,6 @@ limitations under the License.
     <string name="settings_stats_units_metric">Метрическая (км, м)</string>
     <string name="settings_stats_units_title">Система измерений</string>
     <!-- Share Track -->
-    <string name="share_track_share_file">Опубликовать трек</string>
     <string name="share_track_share_file_body">Я думаю этот маршрут покажется вам интересным.
 \n
 \n%1$s</string>
@@ -271,7 +243,6 @@ limitations under the License.
     <string name="stats_total_time">Общее время</string>
     <!-- Track -->
     <string name="track_name_format">Трек %1$d</string>
-    <string name="track_record_notification">Запись трека…</string>
     <string name="track_markers">%1$s – маркеры</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Трек и связанные с ним маркеры будут удалены без возможности восстановления.</string>
@@ -279,12 +250,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">Треки и связанные с ними маркеры будут удалены без возможности восстановления.</string>
     <string name="track_delete_progress_message">Удаление…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">График</string>
     <string name="track_detail_stats_tab">Статистика</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Вид активности (например, пеший туризм)</string>
     <string name="track_edit_activity_type_hint">Вид активности</string>
-    <string name="track_edit_new_track_title">Новый трек</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Запишите свой первый трек здесь</string>
     <!-- Track Widget -->
@@ -301,7 +270,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">Макс. точность</string>
     <string name="value_adapt_battery_life">Мин. расход батареи</string>
-    <string name="value_always">Всегда</string>
     <string name="value_integer_feet">%1$d фт</string>
     <string name="value_integer_feet_excellent_gps">%1$d фт (отличный сигнал)</string>
     <string name="value_integer_feet_recommended">%1$d фт (рекомендуется)</string>
@@ -314,11 +282,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d мил</string>
     <string name="value_integer_mile_hour">%1$d миль/ч</string>
     <string name="value_integer_minute">%1$d мин</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d сек</string>
     <string name="value_none">Нет</string>
     <string name="value_off">Выкл.</string>
-    <string name="value_smallest">Мин. время</string>
     <string name="value_smallest_recommended">Мин. время (рекомендуется)</string>
     <!-- Voice -->
     <plurals name="voiceHours">
@@ -478,7 +444,6 @@ limitations under the License.
     <string name="open_track_as_trackfileformat">Открыть как %1$s</string>
     <string name="open_track_as_GPX">Открыть как GPX</string>
     <string name="open_track_as_KML">Открыть как KML</string>
-    <string name="open_track_using_dashboard">Открыть с помощью OpenTracks-Dashboard</string>
     <string name="help_support_title">Как поддержать OpenTracks\?</string>
     <string name="help_gps_troubleshooting_title">OpenTracks не регистрирует местоположения\?</string>
     <string name="activity_type_escooter">эскулап</string>
@@ -497,7 +462,6 @@ limitations under the License.
     <string name="sensor_state_power_avg">Средняя мощность</string>
     <string name="track_recording_notification_accuracy">Точность расположения: %1$s</string>
     <string name="stats_split_interval">Раздельный интервал</string>
-    <string name="stats_intervals">Интервалы</string>
     <string name="settings_sensor_wheel_circumference">Окружность колеса (мм)</string>
     <string name="settings_sensor_disconnected">Отключен от %1$s</string>
     <string name="settings_sensor_connecting">Подключен к %1$s</string>
@@ -527,7 +491,6 @@ limitations under the License.
     <string name="voice_pace_lap">Время круга %1$s</string>
     <string name="voice_speed_lap">Скорость круга %1$s</string>
     <string name="instant_export_enabled_title">Мгновенный экспорт после тренировки</string>
-    <string name="toast_message_instant_track_was_exported">Последний экспортированный трек</string>
     <string name="hold_to_pause">Удерживайте для паузы</string>
     <string name="hold_to_stop">Удерживать для остановки</string>
     <string name="share_image_body">Я думаю, вас может заинтересовать это изображение.</string>

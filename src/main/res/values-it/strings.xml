@@ -53,7 +53,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="help_data_storage_title">In che modo OpenTracks memorizza i dati dei sensori?</string>
     <string name="help_gps_troubleshooting_title">OpenTracks non registra i luoghi?</string>
     <string name="help_support_title">Come posso supportare OpenTracks?</string>
-    <string name="open_track_using_dashboard">Apri utilizzando OpenTracks-Dashboard</string>
     <string name="open_track_as_KML">Apri come KML</string>
     <string name="open_track_as_GPX">Apri come GPX</string>
     <string name="open_track_as_trackfileformat">Apri come %1$s</string>
@@ -151,13 +150,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="description_total_distance">Distanza totale: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Tempo totale: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Tutto come %1$s</string>
-    <string name="export_all_title">Esporta nella memoria esterna</string>
-    <string name="export_error">Esportati %1$d di %2$s in %3$s</string>
-    <string name="export_option">come %1$s su %2$s</string>
     <string name="export_progress_message">Esportazioni su %1$s…</string>
-    <string name="export_success">Esportati %1$s su %2$s</string>
-    <string name="export_title">Esporta in…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -169,21 +162,17 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="generic_delete_selected_confirm_title">Eliminare selezione?</string>
     <string name="generic_description">Descrizione</string>
     <string name="generic_description_line">Descrizione: %1$s</string>
-    <string name="generic_error_title">Errore</string>
     <string name="generic_name">Nome</string>
     <string name="generic_name_line">Nome: %1$s</string>
-    <string name="generic_no">No</string>
     <string name="generic_paused">In pausa</string>
     <string name="generic_recording">Registrazione…</string>
     <string name="generic_save">Salva</string>
-    <string name="generic_success_title">Riuscito</string>
     <string name="generic_tracks">Percorsi</string>
     <!-- Gps -->
     <string name="gps_starting">Avvio GPS in corso</string>
     <string name="gps_wait_for_better_signal">In attesa di un miglior segnale GPS</string>
     <string name="gps_wait_for_signal">In attesa del segnale GPS</string>
     <!-- Image -->
-    <string name="image_application">Applicazione</string>
     <string name="image_arrow">Freccia</string>
     <string name="image_marker">Indicatore</string>
     <string name="image_marker_count">Contatore indicatori</string>
@@ -193,15 +182,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="image_stop">Interrompi</string>
     <string name="image_track">Percorso</string>
     <!-- Import -->
-    <string name="import_error">Importati %1$d su %2$s da %3$s</string>
-    <string name="import_no_directory">%1$s non esiste</string>
-    <string name="import_no_file">Nessun file da importare. Collega il dispositivo al computer e metti i file da
-    importare in %1$s.</string>
-    <string name="import_no_file_title">Importa file</string>
     <string name="import_progress_message">Importazione da %1$s in corso…</string>
-    <string name="import_selection_option">Tutti i %1$s</string>
-    <string name="import_selection_title">Importa da memoria esterna</string>
-    <string name="import_success">Importati %1$s da %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">Impossibile inserire un indicatore. Nessun segnale GPS.</string>
     <string name="marker_add_success">È stato inserito un indicatore</string>
@@ -209,8 +190,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="marker_delete_one_confirm_message">L\'indicatore verrà eliminato definitivamente dal dispositivo</string>
     <string name="marker_delete_one_confirm_title">Eliminare indicatore?</string>
     <string name="marker_delete_multiple_confirm_message">Gli indicatori selezionati verranno eliminati definitivamente dal dispositivo</string>
-    <string name="marker_label_end">%1$s (Fine)</string>
-    <string name="marker_label_start">%1$s (Inizio)</string>
     <string name="marker_name_format">Indicatore %1$d</string>
     <string name="marker_title">%1$d di %2$d</string>
     <!-- Marker Detail -->
@@ -236,13 +215,10 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="menu_show_on_map">Visualizza su mappa</string>
     <string name="menu_start_gps">Accendi GPS</string>
     <string name="menu_stop_gps">Spegni GPS</string>
-    <string name="menu_view_photo">Visualizza foto</string>
     <string name="menu_voice_frequency">Frequenza voce</string>
     <!-- OpenTracks -->
     <string name="recording_service">Servizio di registrazione</string>
     <!-- Search -->
-    <string name="search_global_description">Percorsi e indicatori</string>
-    <string name="search_list_empty_message">Non ci sono percorsi o indicatori corrispondenti alla tua ricerca</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Livello batteria</string>
     <string name="sensor_state_cadence">Cadenza</string>
@@ -259,10 +235,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_chart_by_distance">Per distanza</string>
     <string name="settings_chart_by_time">Per durata</string>
     <string name="settings_recording">Registrazione</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Riprendi sempre una registrazione dopo il riavvio</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Non riprendere mai una registrazione dopo il riavvio</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Riprendi una registrazione dopo il riavvio se l\'ultima posizione registrata è stata negli ultimi %1$s</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Autoripristino</string>
     <string name="settings_recording_default_activity_title">Tipo di attività predefinita</string>
     <string name="settings_recording_location_frequency_summary">%1$s tra posizioni registrate</string>
     <string name="settings_recording_max_recording_distance_summary">Viene creato un nuovo segmento se la distanza tra due punti è maggiore di %1$s</string>
@@ -282,7 +254,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_reset_done">Tutte le impostazioni sono ripristinate sui valori predefiniti</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Sensore bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Latitudine/longitudine</string>
     <string name="settings_stats_rate_title">Velocità preferita</string>
@@ -290,7 +261,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_stats_units_metric">Metrico (km, m)</string>
     <string name="settings_stats_units_title">Unità di misura preferite</string>
     <!-- Share Track -->
-    <string name="share_track_share_file">Condividi file di percorso</string>
     <string name="share_track_share_file_body">Penso che potrebbe essere interessato a questa pista.
 \n
 \n%1$s</string>
@@ -313,7 +283,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="stats_total_time">Tempo totale</string>
     <!-- Track -->
     <string name="track_name_format">Percorso %1$d</string>
-    <string name="track_record_notification">Registrazione del percorso…</string>
     <string name="track_markers">Indicatori %1$s</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Questo percorso e i suoi marcatori verranno eliminati definitivamente dal dispositivo.</string>
@@ -321,12 +290,10 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="track_delete_multiple_confirm_message">I percorsi selezionati e i loro marcatori verranno eliminati definitivamente dal dispositivo.</string>
     <string name="track_delete_progress_message">Eliminazione in corso…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Grafico</string>
     <string name="track_detail_stats_tab">Statistiche</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Tipo di attività (ad es. escursionismo)</string>
     <string name="track_edit_activity_type_hint">Tipo attività</string>
-    <string name="track_edit_new_track_title">Nuovo percorso</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Inizia a registrare la tua prossima avventura qui</string>
     <!-- Track Widget -->
@@ -343,7 +310,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <!-- Value -->
     <string name="value_adapt_accuracy">Adatta per la precisione</string>
     <string name="value_adapt_battery_life">Adatta per la massima durata della batteria</string>
-    <string name="value_always">Sempre</string>
     <string name="value_integer_feet">%1$d pd</string>
     <string name="value_integer_feet_excellent_gps">%1$d pd (GPS forte)</string>
     <string name="value_integer_feet_recommended">%1$d pd (consigliato)</string>
@@ -356,11 +322,9 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="value_integer_mile">%1$d mi</string>
     <string name="value_integer_mile_hour">%1$d mi/h</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">Nessuno</string>
     <string name="value_off">Disattivato</string>
-    <string name="value_smallest">Il più piccolo</string>
     <string name="value_smallest_recommended">Il più piccolo (consigliato)</string>
     <!-- Voice -->
     <plurals name="voiceHours">
@@ -448,12 +412,10 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="waypoint_type_waypoint">tappa</string>
     <string name="settings_night_mode_title">Tema dell\' interfaccia grafica</string>
     <string name="settings_error_initial_values_restored">Mi dispiace, ma si è verificato un errore. Tutte le impostazioni sono state riportate ai valori predefiniti.</string>
-    <string name="stats_intervals">Intervalli</string>
     <string name="stats_split_interval">Intervallo di divisione</string>
     <string name="aggregated_stats_empty_message">Registra il tuo primo percorso per vedere le statistiche aggregate</string>
     <string name="voice_speed_lap">Velocità per giro di %1$s</string>
     <string name="share_image_subject">Vorrei condividere un\'immagine con te</string>
-    <string name="toast_message_instant_track_was_exported">L\' ultimo percorso è stato esportato</string>
     <string name="settings_default_export_uri_title">Cartella di esportazione dei percorsi</string>
     <string name="help_track_export_content"> Le tracce possono essere esportate dalle Impostazioni con formato KMZ, KML o GPX. KMZ/KML contiene tutti i dati; GPX contiene solo le posizioni. Le tracce condivise tramite l\'icona <i>condividi</i> sono esportate come KMZ. </string>
     <string name="help_recording_content">OpenTracks utilizza il sensore GPS del dispositivo per registrare continuativamente la posizione. Se il sensore GPS riporta dati imprecisi (ad es. posizione, velocità, altitudine), OpenTracks non può fare nulla.</string>

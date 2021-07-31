@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">Distància total: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Temps total: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Totes com a %1$s</string>
-    <string name="export_all_title">Exporta a la unitat d\'emmagatzematge extern</string>
-    <string name="export_error">S\'han exportat %1$d de %2$s a %3$s.</string>
-    <string name="export_option">com a %1$s a %2$s</string>
     <string name="export_progress_message">S\'està exportant a %1$s…</string>
-    <string name="export_success">S\'han exportat %1$s a %2$s.</string>
-    <string name="export_title">Exportació a…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -126,21 +120,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">Voleu esborrar els elements seleccionats?</string>
     <string name="generic_description">Descripció</string>
     <string name="generic_description_line">Descripció: %1$s</string>
-    <string name="generic_error_title">Error</string>
     <string name="generic_name">Nom</string>
     <string name="generic_name_line">Nom: %1$s</string>
-    <string name="generic_no">No</string>
     <string name="generic_paused">En pausa</string>
     <string name="generic_recording">S\'està enregistrant…</string>
     <string name="generic_save">Desa</string>
-    <string name="generic_success_title">Correcte</string>
     <string name="generic_tracks">Rutes</string>
     <!-- Gps -->
     <string name="gps_starting">El GPS s\'està iniciant.</string>
     <string name="gps_wait_for_better_signal">S\'està esperant un senyal GPS de millor qualitat.</string>
     <string name="gps_wait_for_signal">S\'està esperant el senyal GPS.</string>
     <!-- Image -->
-    <string name="image_application">Aplicació</string>
     <string name="image_arrow">Fletxa</string>
     <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Recompte de marcadors</string>
@@ -150,15 +140,7 @@ limitations under the License.
     <string name="image_stop">Atura</string>
     <string name="image_track">Ruta</string>
     <!-- Import -->
-    <string name="import_error">S\'han importat %1$d de %2$s del directori %3$s.</string>
-    <string name="import_no_directory">%1$s no existeix.</string>
-    <string name="import_no_file">No s\'ha trobat cap fitxer per importar. Connecteu el dispositiu a l\'ordinador i col·loqueu a %1$s
-    els fitxers que vulgueu importar.</string>
-    <string name="import_no_file_title">Importació de fitxers</string>
     <string name="import_progress_message">S\'està important des de %1$s…</string>
-    <string name="import_selection_option">Tots els %1$s</string>
-    <string name="import_selection_title">Importació de la unitat d\'emmagatzematge extern</string>
-    <string name="import_success">S\'han importat %1$s del directori %2$s.</string>
     <!-- Marker -->
     <string name="marker_add_error">No es pot inserir un marcador. No hi ha senyal del GPS. Torneu-ho a provar.</string>
     <string name="marker_add_success">S\'ha inserit un marcador.</string>
@@ -166,8 +148,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">El marcador se suprimirà definitivament del dispositiu.</string>
     <string name="marker_delete_one_confirm_title">Voleu suprimir el marcador?</string>
     <string name="marker_delete_multiple_confirm_message">Els marcadors seleccionats se suprimiran definitivament del dispositiu.</string>
-    <string name="marker_label_end">%1$s (Fi)</string>
-    <string name="marker_label_start">%1$s (Inici)</string>
     <string name="marker_name_format">Marcador %1$d</string>
     <string name="marker_title">%1$d de %2$d</string>
     <!-- Marker Detail -->
@@ -193,13 +173,10 @@ limitations under the License.
     <string name="menu_show_on_map">Mostra-ho al mapa</string>
     <string name="menu_start_gps">Activa el GPS</string>
     <string name="menu_stop_gps">Desactiva el GPS</string>
-    <string name="menu_view_photo">Mostra la foto</string>
     <string name="menu_voice_frequency">Freqüència de veu</string>
     <!-- OpenTracks -->
     <string name="recording_service">Servei d\'enregistrament</string>
     <!-- Search -->
-    <string name="search_global_description">Pistes i marcadors</string>
-    <string name="search_list_empty_message">No hi ha cap ruta ni marcador que coincideixi amb els criteris de cerca.</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Nivell de la bateria</string>
     <string name="sensor_state_cadence">Cadència</string>
@@ -216,10 +193,6 @@ limitations under the License.
     <string name="settings_chart_by_distance">Per distància</string>
     <string name="settings_chart_by_time">Per temps</string>
     <string name="settings_recording">Enregistrament</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Reactiva sempre l\'enregistrament després de reiniciar el sistema.</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">No reactiva mai l\'enregistrament després de reiniciar el sistema.</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Reactiva els enregistraments després de reiniciar el sistema si la darrera ubicació registrada s\'ha realitzat dins dels darrers %1$s.</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Represa automàtica</string>
     <string name="settings_recording_default_activity_title">Activitat predeterminada</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre ubicacions registrades</string>
     <string name="settings_recording_max_recording_distance_summary">Es crea un tram si la distància entre dues ubicacions és superior a %1$s.</string>
@@ -239,7 +212,6 @@ limitations under the License.
     <string name="settings_reset_done">S\'ha recuperat la configuració predeterminada.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Sensor de Bluetooth</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Latitud/Longitud:</string>
     <string name="settings_stats_rate_title">Mesura preferida</string>
@@ -248,7 +220,6 @@ limitations under the License.
     <string name="settings_stats_units_title">Unitats preferides</string>
 
     <!-- Share Track -->
-    <string name="share_track_share_file">Comparteix el fitxer de la pista</string>
     <string name="share_track_share_file_body">Crec que aquesta ruta et podria interessar.\n\nLa pots veure amb Google Earth o qualsevol altre programari de mapatge.\n\n%1$s</string>
     <string name="share_track_subject">Vull compartir una ruta amb tu</string>
     <!-- Stats -->
@@ -269,7 +240,6 @@ limitations under the License.
     <string name="stats_total_time">Temps total</string>
     <!-- Track -->
     <string name="track_name_format">Ruta %1$d</string>
-    <string name="track_record_notification">S\'està enregistrant la ruta…</string>
     <string name="track_markers">Marcadors de %1$s</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">La ruta i els seus marcadors se suprimiran definitivament del dispositiu.</string>
@@ -277,12 +247,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">Les rutes seleccionades i els seus marcadors se suprimiran definitivament del dispositiu.</string>
     <string name="track_delete_progress_message">S\'està suprimint…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Diagrama</string>
     <string name="track_detail_stats_tab">Estadístiques</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Tipus d\'activitat (p. ex. senderisme)</string>
     <string name="track_edit_activity_type_hint">Tipus d\'activitat</string>
-    <string name="track_edit_new_track_title">Nova ruta</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Comenceu a enregistrar aquí la vostra pròxima aventura.</string>
     <!-- Track Widget -->
@@ -299,7 +267,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">Adapta\'n la precisió</string>
     <string name="value_adapt_battery_life">Adapta a la durada de la bateria</string>
-    <string name="value_always">Sempre</string>
     <string name="value_integer_feet">%1$d peus</string>
     <string name="value_integer_feet_excellent_gps">%1$d peus (senyal de GPS excel·lent)</string>
     <string name="value_integer_feet_recommended">%1$d peus (recomanat)</string>
@@ -312,11 +279,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d milles</string>
     <string name="value_integer_mile_hour">%1$d mi/h</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">Cap</string>
     <string name="value_off">Desactivat</string>
-    <string name="value_smallest">Més petit</string>
     <string name="value_smallest_recommended">Més petit (recomanat)</string>
     <!-- Voice -->
     <plurals name="voiceHours">

@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">कुल दूरी: %1$.2f किमी (%2$.1f मील)</string>
     <string name="description_total_time">कुल समय: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">%1$s के रूप वाले सभी को</string>
-    <string name="export_all_title">बाह्य संग्रहण पर निर्यात करें</string>
-    <string name="export_error">%2$s में से %1$d को %3$s पर निर्यात गया</string>
-    <string name="export_option">%1$s के रूप वालों को %2$s पर</string>
     <string name="export_progress_message">%1$s पर निर्यात किया जा रहा है…</string>
-    <string name="export_success">%1$s को %2$s पर निर्यात किया गया</string>
-    <string name="export_title">यहां निर्यात करें…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -126,21 +120,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">चयनित हटाएं?</string>
     <string name="generic_description">विवरण</string>
     <string name="generic_description_line">विवरण: %1$s</string>
-    <string name="generic_error_title">त्रुटि</string>
     <string name="generic_name">नाम</string>
     <string name="generic_name_line">नाम: %1$s</string>
-    <string name="generic_no">नहीं</string>
     <string name="generic_paused">पॉज़ किया गया</string>
     <string name="generic_recording">रेकॉर्ड हो रहा है…</string>
     <string name="generic_save">सहेजें</string>
-    <string name="generic_success_title">सफलता</string>
     <string name="generic_tracks">ट्रैक</string>
     <!-- Gps -->
     <string name="gps_starting">GPS को प्रारंभ किया जा रहा है</string>
     <string name="gps_wait_for_better_signal">बेहतर GPS सिग्नल की प्रतीक्षा की जा रही है</string>
     <string name="gps_wait_for_signal">GPS सिग्नल की प्रतीक्षा की जा रही है</string>
     <!-- Image -->
-    <string name="image_application">एप्लिकेशन</string>
     <string name="image_arrow">तीर</string>
     <string name="image_marker">मार्कर</string>
     <string name="image_marker_count">मार्कर गणना</string>
@@ -150,14 +140,7 @@ limitations under the License.
     <string name="image_stop">रोकें</string>
     <string name="image_track">ट्रैक</string>
     <!-- Import -->
-    <string name="import_error">%3$s से %2$s में से %1$d आयातित</string>
-    <string name="import_no_directory">%1$s मौजूद नहीं है</string>
-    <string name="import_no_file">आयात करने के लिए कोई फ़ाइल नहीं थी. अपने उपकरण को अपने कंप्यूटर से कनेक्ट करें और आयात की जाने वाली फ़ाइलों को %1$s में रखें.</string>
-    <string name="import_no_file_title">फ़ाइलें आयात करें</string>
     <string name="import_progress_message">%1$s से आयात किया जा रहा है…</string>
-    <string name="import_selection_option">सभी %1$s</string>
-    <string name="import_selection_title">बाह्य संग्रहण से आयात करें</string>
-    <string name="import_success">%2$s से %1$s आयातित</string>
     <!-- Marker -->
     <string name="marker_add_error">मार्कर नहीं डाल सके. कोई GPS सिग्नल नहीं है. फिर से कोशिश करें.</string>
     <string name="marker_add_success">एक मार्कर सम्मिलित किया गया</string>
@@ -165,8 +148,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">मार्कर को उपकरण से स्थायी रूप से हटा दिया जाएगा</string>
     <string name="marker_delete_one_confirm_title">मार्कर हटाएं?</string>
     <string name="marker_delete_multiple_confirm_message">चयनित मार्कर उपकरण से स्थायी रूप से हटा दिए जाएंगे</string>
-    <string name="marker_label_end">%1$s (अंत)</string>
-    <string name="marker_label_start">%1$s (प्रारंभ)</string>
     <string name="marker_name_format">मार्कर %1$d</string>
     <string name="marker_title">%2$d में से %1$d</string>
     <!-- Marker Detail -->
@@ -192,13 +173,10 @@ limitations under the License.
     <string name="menu_show_on_map">नक्शे पर दिखाएं</string>
     <string name="menu_start_gps">GPS प्रारंभ करें</string>
     <string name="menu_stop_gps">GPS बंद करें</string>
-    <string name="menu_view_photo">फ़ोटो देखें</string>
     <string name="menu_voice_frequency">ध्वनि आवृत्ति</string>
     <!-- OpenTracks -->
     <string name="recording_service">रिकॉर्डिंग सेवा</string>
     <!-- Search -->
-    <string name="search_global_description">ट्रैक और मार्कर</string>
-    <string name="search_list_empty_message">किसी भी ट्रैक या मार्कर का आपकी खोज से मिलान नहीं हुआ</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">बैटरी स्‍तर</string>
     <string name="sensor_state_cadence">केडेंस</string>
@@ -215,10 +193,6 @@ limitations under the License.
     <string name="settings_chart_by_distance">दूरी के अनुसार</string>
     <string name="settings_chart_by_time">समय के अनुसार</string>
     <string name="settings_recording">रिकॉर्डिंग</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">रीबूट करने के बाद हमेशा रिकॉर्डिंग फिर से शुरू करें</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">रीबूट करने के बाद कभी रिकॉर्डिंग फिर से शुरू न करें</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">यदि रिकॉर्ड किया गया पिछला स्थान पिछले %1$s में हो तो रीबूट के बाद रिकॉर्डिंग फिर से शुरू करें</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">स्वतः फिर से शुरू करें</string>
     <string name="settings_recording_default_activity_title">डिफ़ॉल्ट गतिविधि प्रकार</string>
     <string name="settings_recording_location_frequency_summary">रिकॉर्ड किए गए स्थानों के बीच %1$s</string>
     <string name="settings_recording_max_recording_distance_summary">यदि रिकॉर्ड किए गए दो स्थानों के बीच दूरी %1$s से अधिक हो तो एक नया खंड बनाया जाता है</string>
@@ -238,7 +212,6 @@ limitations under the License.
     <string name="settings_reset_done">सभी सेटिंग को सामान्य मानों में उलट दिया गया है</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Bluetooth सेंसर</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">अक्षांश/देशांतर</string>
     <string name="settings_stats_rate_title">पसंदीदा दर</string>
@@ -247,7 +220,6 @@ limitations under the License.
     <string name="settings_stats_units_title">पसंदीदा इकाइयां</string>
 
     <!-- Share Track -->
-    <string name="share_track_share_file">ट्रैक फ़ाइल को साझा करें</string>
     <string name="share_track_share_file_body">मेरा विचार है कि आपको इस ट्रैक में रुचि हो सकती है.\n\nइस ट्रैक को देखने के लिए Google Earth या अन्य मानचित्रन सॉफ्टवेयर का उपयोग करें.\n\n%1$s</string>
     <string name="share_track_subject">मैं आपके साथ एक ट्रैक साझा करना चाहता/चाहती हूं</string>
     <!-- Stats -->
@@ -268,7 +240,6 @@ limitations under the License.
     <string name="stats_total_time">कुल समय</string>
     <!-- Track -->
     <string name="track_name_format">ट्रैक %1$d</string>
-    <string name="track_record_notification">आपका ट्रैक रिकॉर्ड कर रहा है…</string>
     <string name="track_markers">%1$s मार्कर</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">ट्रैक और इसके मार्कर को उपकरण से स्थायी रूप से हटा दिया जाएगा.</string>
@@ -276,12 +247,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">चयनित ट्रैक और उनके मार्कर को उपकरण से स्थायी रूप से हटा दिया जाएगा.</string>
     <string name="track_delete_progress_message">हटा रहा है…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">चार्ट</string>
     <string name="track_detail_stats_tab">आंकड़े</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">गतिविधि प्रकार (उदा. हाइकिंग)</string>
     <string name="track_edit_activity_type_hint">गतिविधि प्रकार</string>
-    <string name="track_edit_new_track_title">नया ट्रैक</string>
     <!-- Track List -->
     <string name="track_list_empty_message">अपनी अगली साहसिक यात्रा यहां रिकॉर्ड करना शुरू करें</string>
     <!-- Track Widget -->
@@ -298,7 +267,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">सटीकता के लिए ग्रहण करें</string>
     <string name="value_adapt_battery_life">बैटरी जीवन के लिए ग्रहण करें</string>
-    <string name="value_always">हमेशा</string>
     <string name="value_integer_feet">%1$d फुट</string>
     <string name="value_integer_feet_excellent_gps">%1$d फुट (उत्कृष्ट GPS)</string>
     <string name="value_integer_feet_recommended">%1$d फ़ुट (अनुशंसित)</string>
@@ -311,11 +279,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d मील</string>
     <string name="value_integer_mile_hour">%1$d मील/घं</string>
     <string name="value_integer_minute">%1$d मि</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d</string>
     <string name="value_none">कोई नहीं</string>
     <string name="value_off">बंद करें</string>
-    <string name="value_smallest">सबसे छोटा</string>
     <string name="value_smallest_recommended">सबसे छोटा (अनुशंसित)</string>
     <!-- Voice -->
     <plurals name="voiceHours">

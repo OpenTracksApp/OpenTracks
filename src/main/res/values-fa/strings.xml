@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">مجموع فاصله: %1$.2f کیلومتر (%2$.1f مایل)</string>
     <string name="description_total_time">کل زمان: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">همه به عنوان %1$s</string>
-    <string name="export_all_title">صادر کردن به حافظه خارجی</string>
-    <string name="export_error">%1$d مسیر از %2$s مسیر به %3$s صادر شد</string>
-    <string name="export_option">به عنوان %1$s به %2$s</string>
     <string name="export_progress_message">در حال صادر کردن به %1$s…</string>
-    <string name="export_success">%1$s مسیر به %2$s صادر شد</string>
-    <string name="export_title">صادر کردن به…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -126,21 +120,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">موارد انتخابی حذف شود؟</string>
     <string name="generic_description">شرح</string>
     <string name="generic_description_line">شرح: %1$s</string>
-    <string name="generic_error_title">خطا</string>
     <string name="generic_name">نام</string>
     <string name="generic_name_line">نام: %1$s</string>
-    <string name="generic_no">نه</string>
     <string name="generic_paused">در حال مکث</string>
     <string name="generic_recording">در حال ضبط…</string>
     <string name="generic_save">ذخیره</string>
-    <string name="generic_success_title">موفقیت‌آمیز بود</string>
     <string name="generic_tracks">مسیرها</string>
     <!-- Gps -->
     <string name="gps_starting">در حال راه‌اندازی GPS</string>
     <string name="gps_wait_for_better_signal">در انتظار سیگنال GPS بهتر</string>
     <string name="gps_wait_for_signal">در انتظار سیگنال GPS</string>
     <!-- Image -->
-    <string name="image_application">برنامه کاربردی</string>
     <string name="image_arrow">پیکان</string>
     <string name="image_marker">نشانگر</string>
     <string name="image_marker_count">تعداد نشانگر</string>
@@ -150,14 +140,7 @@ limitations under the License.
     <string name="image_stop">توقف</string>
     <string name="image_track">مسیر</string>
     <!-- Import -->
-    <string name="import_error">%1$d فایل از %2$s فایل از %3$s وارد شد</string>
-    <string name="import_no_directory">%1$s وجود ندارد</string>
-    <string name="import_no_file">هیچ فایلی برای وارد کردن وجود نداشت. دستگاه‌تان را به رایانه‌تان وصل کنید و فایل‌هایی که می خواهید وارد کنید در %1$s قرار دهید.</string>
-    <string name="import_no_file_title">وارد کردن فایل‌ها</string>
     <string name="import_progress_message">در حال وارد کردن از %1$s…</string>
-    <string name="import_selection_option">همه %1$s</string>
-    <string name="import_selection_title">وارد کردن از حافظه خارجی</string>
-    <string name="import_success">%1$s فایل از %2$s وارد شد</string>
     <!-- Marker -->
     <string name="marker_add_error">درج نشانگر امکان‌پذیر نیست. سیگنال GPS وجود ندارد. دوباره امتحان کنید.</string>
     <string name="marker_add_success">نشانگر درج شد</string>
@@ -165,8 +148,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">نشانگر برای همیشه از دستگاه حذف خواهد شد</string>
     <string name="marker_delete_one_confirm_title">نشانگر حذف شود؟</string>
     <string name="marker_delete_multiple_confirm_message">نشانگرهای انتخاب شده برای همیشه از دستگاه حذف خواهد شد</string>
-    <string name="marker_label_end">%1$s (پایان)</string>
-    <string name="marker_label_start">%1$s (شروع)</string>
     <string name="marker_name_format">نشانگر %1$d</string>
     <string name="marker_title">%1$d از %2$d</string>
     <!-- Marker Detail -->
@@ -192,13 +173,10 @@ limitations under the License.
     <string name="menu_show_on_map">نمایش روی نقشه</string>
     <string name="menu_start_gps">شروع GPS</string>
     <string name="menu_stop_gps">توقف GPS</string>
-    <string name="menu_view_photo">مشاهده عکس</string>
     <string name="menu_voice_frequency">بسامد اعلان صوتی</string>
     <!-- OpenTracks -->
     <string name="recording_service">خدمات ضبط</string>
     <!-- Search -->
-    <string name="search_global_description">گذرها و نشانگرها</string>
-    <string name="search_list_empty_message">هیچ مسیر یا نشانگری با جستجوی شما مطابقت نداشت</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">مقدار شارژ باتری</string>
     <string name="sensor_state_cadence">سرعت دورانی</string>
@@ -215,10 +193,6 @@ limitations under the License.
     <string name="settings_chart_by_distance">بر حسب مسافت</string>
     <string name="settings_chart_by_time">بر حسب زمان</string>
     <string name="settings_recording">در حال ضبط</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">پس از راه‌اندازی مجدد همیشه ضبط از سر گرفته شود</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">پس از راه‌اندازی مجدد هیچ وقت ضبط از سر گرفته نشود</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">چنانچه آخرین موقعیت مکانی ضبط شده در %1$s گذشته بود،‌ ضبط پس از راه‌اندازی مجدد از سر گرفته شود</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">از سر گیری خودکار</string>
     <string name="settings_recording_default_activity_title">نوع فعالیت پیش‌فرض</string>
     <string name="settings_recording_location_frequency_summary">%1$s بین موقعیت‌های مکانی ضبط شده</string>
     <string name="settings_recording_max_recording_distance_summary">چنانچه فاصله بین دو موقعیت مکانی بیشتر از %1$s باشد، یک قطعه جدید ایجاد شود</string>
@@ -238,7 +212,6 @@ limitations under the License.
     <string name="settings_reset_done">تمام تنظیمات به مقادیر پیش‌فرض برگردانده شدند</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">بلوتوث</string>
-    <string name="settings_sensor_bluetooth_sensor">حسگر بلوتوث</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">عرض جغرافیایی/ طول جغرافیایی</string>
     <string name="settings_stats_rate_title">اولویت سنجه سرعت</string>
@@ -247,7 +220,6 @@ limitations under the License.
     <string name="settings_stats_units_title">اولویت سیستم اندازه‌گیری</string>
 
     <!-- Share Track -->
-    <string name="share_track_share_file">اشتراک‌گذاری فایل گذر</string>
     <string name="share_track_share_file_body">فکر می‌کنم به این گذر علاقه‌مند باشید.\n\nبرای مشاهدهٔ این گذر، از Google Earth یا دیگر نرم‌افزارهای نقشه‌برداری استفاده کنید.\n\n‏%1$s</string>
     <string name="share_track_subject">می‌خواهم یک گذر با شما به اشتراک بگذارم</string>
     <!-- Stats -->
@@ -268,7 +240,6 @@ limitations under the License.
     <string name="stats_total_time">کل زمان</string>
     <!-- Track -->
     <string name="track_name_format">گذر %1$d</string>
-    <string name="track_record_notification">ضبط گذر شما…</string>
     <string name="track_markers">نشانگرهای %1$s</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">گذر و نشانگرهایش برای همیشه از روی دستگاه حذف خواهند شد.</string>
@@ -276,12 +247,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">گذرهای انتخاب شده و نشانگرهایشان برای همیشه از دستگاه حذف خواهند شد.</string>
     <string name="track_delete_progress_message">در حال حذف…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">نمودار</string>
     <string name="track_detail_stats_tab">آمار</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">نوع فعالیت (برای مثال پیاده‌روی)</string>
     <string name="track_edit_activity_type_hint">نوع فعالیت</string>
-    <string name="track_edit_new_track_title">گذر جدید</string>
     <!-- Track List -->
     <string name="track_list_empty_message">ضبط ماجراجویی بعدی خودتان را از اینجا شروع کنید</string>
     <!-- Track Widget -->
@@ -298,7 +267,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">تعدیل به خاطر دقت</string>
     <string name="value_adapt_battery_life">تعدیل به خاطر عمر باتری</string>
-    <string name="value_always">همیشه</string>
     <string name="value_integer_feet">%1$d فوت</string>
     <string name="value_integer_feet_excellent_gps">%1$d فوت (GPS عالی)</string>
     <string name="value_integer_feet_recommended">%1$d فوت (توصیه می‌شود)</string>
@@ -311,11 +279,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d مایل</string>
     <string name="value_integer_mile_hour">%1$d مایل در ساعت</string>
     <string name="value_integer_minute">%1$d دقیقه</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d ثانیه</string>
     <string name="value_none">هیچ</string>
     <string name="value_off">خاموش</string>
-    <string name="value_smallest">کوچکترین</string>
     <string name="value_smallest_recommended">کوچکترین (توصیه می‌شود)</string>
     <!-- Voice -->
     <plurals name="voiceHours">

@@ -63,7 +63,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
 \n e) køb i <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore"> Google Play Store </a>,
 \n f) donere, og
 \n g) gør hvad du synes hjælper OpenTracks. </string>
-    <string name="open_track_using_dashboard">Åben med OpenTracks-Dashboard</string>
     <string name="open_track_as_KML">Åben som KML</string>
     <string name="open_track_as_GPX">Åben som GPX</string>
     <!-- Activity Type -->
@@ -161,15 +160,9 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="description_total_distance">Samlet afstand: %1$.2f km (%2$.1f mil)</string>
     <string name="description_total_time">Samlet tid: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Alle som %1$s</string>
-    <string name="export_all_title">Eksportér til eksternt lager</string>
     <string name="export_with_photos">med fotos</string>
     <string name="export_without_photos">uden fotos</string>
-    <string name="export_error">%1$d af %2$s blev eksporteret til %3$s</string>
-    <string name="export_option">som %1$s til %2$s</string>
     <string name="export_progress_message">Eksporterer til %1$s…</string>
-    <string name="export_success">%1$s blev eksporteret til %2$s</string>
-    <string name="export_title">Eksportér til…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -181,21 +174,17 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="generic_delete_selected_confirm_title">Skal de valgte slettes?</string>
     <string name="generic_description">Beskrivelse</string>
     <string name="generic_description_line">Beskrivelse: %1$s</string>
-    <string name="generic_error_title">Fejl</string>
     <string name="generic_name">Navn</string>
     <string name="generic_name_line">Navn: %1$s</string>
-    <string name="generic_no">Nej</string>
     <string name="generic_paused">Midlertidigt afbrudt</string>
     <string name="generic_recording">Registrerer…</string>
     <string name="generic_save">Gem</string>
-    <string name="generic_success_title">Gennemført</string>
     <string name="generic_tracks">Ruter</string>
     <!-- Gps -->
     <string name="gps_starting">Starter GPS</string>
     <string name="gps_wait_for_better_signal">Venter på et bedre GPS-signal</string>
     <string name="gps_wait_for_signal">Venter på GPS-signal</string>
     <!-- Image -->
-    <string name="image_application">Applikation</string>
     <string name="image_arrow">Pil</string>
     <string name="image_marker">Markør</string>
     <string name="image_marker_count">Antal markører</string>
@@ -205,15 +194,7 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="image_stop">Stop</string>
     <string name="image_track">Rute</string>
     <!-- Import -->
-    <string name="import_error">%1$d af %2$s er importeret fra %3$s</string>
-    <string name="import_no_directory">%1$s findes ikke</string>
-    <string name="import_no_file">Der var ingen filer at importere. Slut din enhed til din computer, og placer filer, der skal
-    importeres, i %1$s.</string>
-    <string name="import_no_file_title">Importér filer</string>
     <string name="import_progress_message">Importerer fra %1$s…</string>
-    <string name="import_selection_option">Alle %1$s</string>
-    <string name="import_selection_title">Importér fra eksternt lager</string>
-    <string name="import_success">%1$s er importeret fra %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">En markør kan ikke indsættes. Intet GPS-signal. Prøv igen.</string>
     <string name="marker_add_success">Der blev indsat en markør</string>
@@ -222,8 +203,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="marker_delete_one_confirm_message">Markøren slettes permanent fra enheden</string>
     <string name="marker_delete_one_confirm_title">Vil du slette markøren?</string>
     <string name="marker_delete_multiple_confirm_message">De valgte markører slettes permanent fra enheden</string>
-    <string name="marker_label_end">%1$s (slut)</string>
-    <string name="marker_label_start">%1$s (start)</string>
     <string name="marker_name_format">Markør %1$d</string>
     <string name="marker_title">%1$d af %2$d</string>
     <!-- Marker Detail -->
@@ -250,7 +229,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="menu_show_on_map">Vis på kort</string>
     <string name="menu_start_gps">Start GPS</string>
     <string name="menu_stop_gps">Stop GPS</string>
-    <string name="menu_view_photo">Se billede</string>
     <string name="menu_voice_frequency">Stemmefrekvens</string>
     <string name="menu_resume_track">Genoptag sporet</string>
     <!-- OpenTracks -->
@@ -258,8 +236,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks kræver tilladelse til at bruge GPS.</string>
     <!-- Search -->
-    <string name="search_global_description">Ruter og markører</string>
-    <string name="search_list_empty_message">Ingen ruter eller markører matchede din søgning</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Batteriniveau</string>
     <string name="sensor_state_cadence">Kadence</string>
@@ -283,10 +259,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="settings_recording_keep_screen_on_while_recording_title">Hold skærmen tændt</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Hold skærmen tændt, mens du optager.</string>
     <string name="settings_recording">Registrering</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Genoptag altid en registrering efter en genstart</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Genoptag altid en registrering efter en genstart</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Genoptag en optagelse efter en genstart, hvis den seneste registrerede placering var inden for de sidste %1$s</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Automatisk genoptagelse</string>
     <string name="settings_recording_default_activity_title">Standardaktivitetstype</string>
     <string name="settings_recording_location_frequency_summary">%1$s mellem registrerede placeringer</string>
     <string name="settings_recording_max_recording_distance_summary">Et nyt segment oprettes, hvis afstanden mellem to placeringer er større end %1$s</string>
@@ -307,7 +279,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="settings_error_initial_values_restored">Beklager, men der opstod en fejl. Alle indstillinger er vendt tilbage til standardværdierne.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Bluetooth-sensor</string>
     <string name="settings_sensor_connecting">Tilsluttet %1$s</string>
     <string name="settings_sensor_disconnected">Frakoblet %1$s</string>
     <!-- Settings Stats -->
@@ -317,7 +288,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="settings_stats_units_metric">Metrisk (km, m)</string>
     <string name="settings_stats_units_title">Foretrukne enheder</string>
     <!-- Share Track -->
-    <string name="share_track_share_file">Del rutefil</string>
     <string name="share_track_share_file_body">Jeg tror, du måske er interesseret i dette nummer.
 \n
 \n%1$s</string>
@@ -340,7 +310,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="stats_total_time">Samlet tid</string>
     <!-- Track -->
     <string name="track_name_format">Rute %1$d</string>
-    <string name="track_record_notification">Registrerer din rute…</string>
     <string name="track_recording_notification_accuracy">Placeringsnøjagtighed: %1$s</string>
     <string name="track_markers">Markører på %1$s</string>
     <!-- Track Delete -->
@@ -349,12 +318,10 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="track_delete_multiple_confirm_message">De valgte ruter og tilhørende markører slettes permanent fra enheden.</string>
     <string name="track_delete_progress_message">Sletter…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Diagram</string>
     <string name="track_detail_stats_tab">Statistik</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Aktivitetstype (f.eks. vandretur)</string>
     <string name="track_edit_activity_type_hint">Aktivitetstype</string>
-    <string name="track_edit_new_track_title">Ny rute</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Her kan du gå i gang med at registrere dit næste eventyr</string>
     <!-- Track Widget -->
@@ -371,7 +338,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <!-- Value -->
     <string name="value_adapt_accuracy">Juster nøjagtighed</string>
     <string name="value_adapt_battery_life">Tilpas til batterilevetid</string>
-    <string name="value_always">Altid</string>
     <string name="value_integer_feet">%1$d fod</string>
     <string name="value_integer_feet_excellent_gps">%1$d fod (fremragende GPS)</string>
     <string name="value_integer_feet_recommended">%1$d fod (anbefales)</string>
@@ -384,11 +350,9 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="value_integer_mile">%1$d mil</string>
     <string name="value_integer_mile_hour">%1$d mil/t</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d sek</string>
     <string name="value_none">Ingen</string>
     <string name="value_off">Fra</string>
-    <string name="value_smallest">Mindste</string>
     <string name="value_smallest_recommended">Mindst (anbefalet)</string>
     <!-- Voice -->
     <plurals name="voiceHours">
@@ -486,7 +450,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="instant_export_enabled_summary">Eksporter spor til lagring, når optagelsen er færdig</string>
     <string name="export_progress_summary_new_msg">Nye spor eksporteret</string>
     <string name="instant_export_enabled_title">Øjeblikkelig eksport efter træning</string>
-    <string name="toast_message_instant_track_was_exported">Sidste spor eksporteret</string>
     <string name="generic_separator_done_total">/</string>
     <string name="generic_skip">Springe</string>
     <string name="description_altitude_loss">Højdetab: %1$d m (%2$d ft)</string>
@@ -511,7 +474,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="settings_night_mode_option_night">Nat</string>
     <string name="settings_sensor_wheel_circumference">Hjulets omkreds (mm)</string>
     <string name="stats_split_interval">Split, divide</string>
-    <string name="stats_intervals">divides</string>
     <string name="interval_list_empty_message">Der er ikke noget interval endnu</string>
     <string name="aggregated_stats_empty_message">Optag dit første spor for at se aggregerede statistikker</string>
     <string name="track_detail_intervals_tab">Intervaller</string>

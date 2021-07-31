@@ -108,14 +108,8 @@ limitations under the License.
     <string name="description_total_distance">Całkowity dystans: %1$.2f km (mil: %2$.1f)</string>
     <string name="description_total_time">Łączny czas: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Wszystko jako pliki %1$s</string>
-    <string name="export_all_title">Eksport do pamięci zewnętrznej</string>
-    <string name="export_error">Wyeksportowano %1$d z %2$s do folderu %3$s</string>
     <string name="export_error_post_workout">Eksport po treningu się nie powiódł, sprawdź katalog eksportu.</string>
-    <string name="export_option">jako pliki %1$s do folderu %2$s</string>
     <string name="export_progress_message">Eksportuję do %1$s…</string>
-    <string name="export_success">Wyeksportowano %1$s do folderu %2$s</string>
-    <string name="export_title">Wyeksportuj do…</string>
     <string name="export_track_already_exists_msg">Trasa %1$s już istnieje w katalogu docelowym.</string>
     <string name="export_all_do_it_for_all">zrób to dla wszystkich konfliktów</string>
     <string name="export_track_errors">Trasa nie została wyeksportowana z powodu błędów</string>
@@ -136,14 +130,11 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">Usunąć wybrane?</string>
     <string name="generic_description">Opis</string>
     <string name="generic_description_line">Opis: %1$s</string>
-    <string name="generic_error_title">Błąd</string>
     <string name="generic_name">Nazwa</string>
     <string name="generic_name_line">Nazwa: %1$s</string>
-    <string name="generic_no">Nie</string>
     <string name="generic_paused">Wstrzymano</string>
     <string name="generic_recording">Rejestrowanie…</string>
     <string name="generic_save">Zapisz</string>
-    <string name="generic_success_title">Udało się</string>
     <string name="generic_tracks">Trasy</string>
     <!-- Gps -->
     <string name="gps_starting">Uruchamiam GPS</string>
@@ -152,7 +143,6 @@ limitations under the License.
     <string name="gps_disabled_msg">GPS niedostępny</string>
     <string name="gps_fixed_and_ready">Pozycja GPS ustalona</string>
     <!-- Image -->
-    <string name="image_application">Aplikacja</string>
     <string name="image_arrow">Strzałka</string>
     <string name="image_marker">Znacznik</string>
     <string name="image_marker_count">Liczba znaczników</string>
@@ -162,15 +152,7 @@ limitations under the License.
     <string name="image_stop">Zatrzymaj</string>
     <string name="image_track">Trasa</string>
     <!-- Import -->
-    <string name="import_error">Zaimportowano %1$d z %2$s z katalogu %3$s</string>
-    <string name="import_no_directory">Katalog %1$s nie istnieje</string>
-    <string name="import_no_file">Brak plików do zaimportowania. Połącz urządzenie z komputerem i umieść pliki, które chcesz
-    zaimportować, w folderze %1$s.</string>
-    <string name="import_no_file_title">Import plików</string>
     <string name="import_progress_message">Importuję z katalogu %1$s…</string>
-    <string name="import_selection_option">Wszystkie pliki %1$s</string>
-    <string name="import_selection_title">Import z pamięci zewnętrznej</string>
-    <string name="import_success">Zaimportowano %1$s z katalogu %2$s</string>
     <!-- Marker -->
     <string name="marker_add_error">Nie można wstawić znacznika. Brak sygnału GPS. Spróbuj ponownie.</string>
     <string name="marker_add_success">Wstawiono znacznik</string>
@@ -178,8 +160,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">Znacznik zostanie trwale usunięty z tego urządzenia</string>
     <string name="marker_delete_one_confirm_title">Usunąć znacznik?</string>
     <string name="marker_delete_multiple_confirm_message">Wybrane znaczniki zostaną trwale usunięte z tego urządzenia</string>
-    <string name="marker_label_end">%1$s (koniec)</string>
-    <string name="marker_label_start">%1$s (początek)</string>
     <string name="marker_name_format">Znacznik %1$d</string>
     <string name="marker_title">%1$d z %2$d</string>
     <!-- Marker Detail -->
@@ -206,14 +186,11 @@ limitations under the License.
     <string name="menu_show_on_map">Pokaż na mapie</string>
     <string name="menu_start_gps">Uruchom GPS</string>
     <string name="menu_stop_gps">Zatrzymaj GPS</string>
-    <string name="menu_view_photo">Wyświetl zdjęcie</string>
     <string name="menu_voice_frequency">Częstość powiadomień</string>
     <string name="menu_resume_track">Kontynuuj trasę</string>
     <!-- OpenTracks -->
     <string name="recording_service">Usługa rejestrowania</string>
     <!-- Search -->
-    <string name="search_global_description">Trasy i znaczniki</string>
-    <string name="search_list_empty_message">Brak tras lub znaczników pasujących do wyszukiwania</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Poziom naładowania baterii</string>
     <string name="sensor_state_cadence">Prędkość obrotowa</string>
@@ -238,10 +215,6 @@ limitations under the License.
     <string name="settings_recording_fullscreen_on_while_recording_title">Pełny ekran</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Podczas nagrywania, zajmuj cały ekran.</string>
     <string name="settings_recording">Rejestrowanie</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Zawsze wznawiaj rejestrowanie po ponownym uruchomieniu</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Nigdy nie wznawiaj rejestrowania po ponownym uruchomieniu</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Wznawiaj rejestrowanie po ponownym uruchomieniu, jeśli od ostatniej rejestrowanej lokalizacji nie minęło %1$s</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Autowznawianie</string>
     <string name="settings_recording_default_activity_title">Domyślny typ aktywności</string>
     <string name="settings_recording_location_frequency_summary">%1$s między rejestrowanymi lokalizacjami</string>
     <string name="settings_recording_max_recording_distance_summary">Nowy segment jest tworzony, jeśli odległość między dwiema lokalizacjami jest większa niż %1$s</string>
@@ -265,7 +238,6 @@ limitations under the License.
     <string name="settings_reset_done">Wszystkie ustawienia wróciły do wartości domyślnych</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Czujnik Bluetooth</string>
     <string name="settings_sensor_connecting">Podłączony do %1$s</string>
     <string name="settings_sensor_disconnected">Rozłaczony z %1$s</string>
     <string name="settings_sensor_wheel_circumference">Obwód koła (mm)</string>
@@ -277,7 +249,6 @@ limitations under the License.
     <string name="settings_stats_units_title">Preferowane jednostki</string>
     <string name="settings_prevent_reimport_tracks_title">Zapobiegaj powtórynym importom ścieżek</string>
     <!-- Share Track -->
-    <string name="share_track_share_file">Udostępnij plik z trasą</string>
     <string name="share_track_share_file_body">Myślę, że ta trasa może Cię zainteresować.
 \n
 \n%1$s</string>
@@ -300,11 +271,9 @@ limitations under the License.
     <string name="stats_speed">Prędkość</string>
     <string name="stats_distance">Odległość</string>
     <string name="stats_total_time">Łączny czas</string>
-    <string name="stats_intervals">Interwał</string>
     <string name="stats_split_interval">Rozmiar interwału</string>
     <!-- Track -->
     <string name="track_name_format">Trasa %1$d</string>
-    <string name="track_record_notification">Rejestrowanie Twojej trasy…</string>
     <string name="track_markers">Znaczniki: %1$s</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Trasa wraz ze znacznikami zostanie trwale usunięta z urządzenia.</string>
@@ -312,13 +281,11 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">Wybrane trasy wraz ze znacznikami zostaną trwale usunięte z urządzenia.</string>
     <string name="track_delete_progress_message">Usuwam…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Wykres</string>
     <string name="track_detail_stats_tab">Statystyki</string>
     <string name="track_detail_intervals_tab">Interwały</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Typ aktywności (np. turystyka piesza)</string>
     <string name="track_edit_activity_type_hint">Typ aktywności</string>
-    <string name="track_edit_new_track_title">Nowa trasa</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Rozpocznij rejestrowanie swojej następnej przygody</string>
     <!-- Aggregated Statistics -->
@@ -339,7 +306,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">Dostosuj pod kątem dokładności</string>
     <string name="value_adapt_battery_life">Dostosuj pod kątem żywotności baterii</string>
-    <string name="value_always">Zawsze</string>
     <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (doskonały sygnał GPS)</string>
     <string name="value_integer_feet_recommended">%1$d ft (zalecane)</string>
@@ -352,11 +318,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d mi</string>
     <string name="value_integer_mile_hour">%1$d mil/h</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">Brak</string>
     <string name="value_off">Wyłącz</string>
-    <string name="value_smallest">Najniższa</string>
     <string name="value_smallest_recommended">Najmniejsza (zalecane)</string>
     <!-- Voice -->
     <plurals name="voiceHours">
@@ -463,7 +427,6 @@ limitations under the License.
     <string name="about_libraries">Biblioteki</string>
     <string name="help_feature_title">OpenTracks posiada następujące funkcje:</string>
     <string name="help_track_map_title">Jak pokazywać trasę na mapie\?</string>
-    <string name="open_track_using_dashboard">Otwórz używając OpenTracks-Dashboard</string>
     <string name="open_track_as_KML">Otwórz jako KML</string>
     <string name="open_track_as_GPX">Otwórz jako GPX</string>
     <string name="open_track_as_trackfileformat">Otwórz jako %1$s</string>
@@ -472,7 +435,6 @@ limitations under the License.
     <string name="instant_export_enabled_title">Automatyczny eksport po ćwiczeniu</string>
     <string name="share_image_body">Myślę że możesz być zainteresowany tym obrazem.</string>
     <string name="share_image_subject">Chcę udostępnić Ci obrazek</string>
-    <string name="toast_message_instant_track_was_exported">Ostatni ślad wyeksportowany</string>
     <string name="about_url">Strona projektu <a href="%1$s">%1$s</a></string>
     <string name="about_preference_title">O OpenTracks</string>
     <string name="hold_to_pause">Przytrzymaj, aby wstrzymać</string>

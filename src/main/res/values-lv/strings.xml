@@ -108,13 +108,7 @@ limitations under the License.
     <string name="description_total_distance">Kopējais attālums: %1$.2f km (%2$.1f jūdze(-es))</string>
     <string name="description_total_time">Kopējais laiks: %1$s</string>
     <!-- Export -->
-    <string name="export_all_option">Visus kā %1$s</string>
-    <string name="export_all_title">Eksportēšana uz ārējo krātuvi</string>
-    <string name="export_error">Mapē %3$s eksportēts(-i) %1$d maršruts(-i) no %2$s</string>
-    <string name="export_option">kā %1$s uz %2$s</string>
     <string name="export_progress_message">Notiek eksportēšana uz %1$s…</string>
-    <string name="export_success">Mapē %2$s eksportēts(-i) %1$s maršruts(-i)</string>
-    <string name="export_title">Eksportēšana uz…</string>
     <!-- External Storage -->
     <!-- Files -->
     <plurals name="files">
@@ -127,21 +121,17 @@ limitations under the License.
     <string name="generic_delete_selected_confirm_title">Vai dzēst atlasītos vienumus?</string>
     <string name="generic_description">Apraksts</string>
     <string name="generic_description_line">Apraksts: %1$s</string>
-    <string name="generic_error_title">Kļūda</string>
     <string name="generic_name">Nosaukums</string>
     <string name="generic_name_line">Nosaukums: %1$s</string>
-    <string name="generic_no">Nē</string>
     <string name="generic_paused">Apturēts</string>
     <string name="generic_recording">Notiek ierakstīšana…</string>
     <string name="generic_save">Saglabāt</string>
-    <string name="generic_success_title">Paveikts</string>
     <string name="generic_tracks">Maršruti</string>
     <!-- Gps -->
     <string name="gps_starting">Notiek GPS navigācijas aktivizēšana</string>
     <string name="gps_wait_for_better_signal">Gaida spēcīgāku GPS signālu</string>
     <string name="gps_wait_for_signal">Gaida GPS signālu</string>
     <!-- Image -->
-    <string name="image_application">Lietotne</string>
     <string name="image_arrow">Bultiņa</string>
     <string name="image_marker">Atzīme</string>
     <string name="image_marker_count">Atzīmju numerācija</string>
@@ -151,14 +141,7 @@ limitations under the License.
     <string name="image_stop">Apturēt</string>
     <string name="image_track">Maršruts</string>
     <!-- Import -->
-    <string name="import_error">No mapes %3$s importēts(-i) %1$d no %2$s faila(-iem)</string>
-    <string name="import_no_directory">Mape %1$s neeksistē</string>
-    <string name="import_no_file">Nav failu, ko importēt. Savienojiet ierīci ar datoru un importējamos failus ievietojiet mapē %1$s.</string>
-    <string name="import_no_file_title">Failu importēšana</string>
     <string name="import_progress_message">Notiek importēšana no %1$s…</string>
-    <string name="import_selection_option">Visus %1$s failus</string>
-    <string name="import_selection_title">Importēšana no ārējās krātuves</string>
-    <string name="import_success">No mapes %2$s importēts(-i) %1$s fails(-i)</string>
     <!-- Marker -->
     <string name="marker_add_error">Nav iespējams ievietot marķieri. Nav GPS signāla. Mēģiniet vēlreiz.</string>
     <string name="marker_add_success">Atzīme ievietota</string>
@@ -166,8 +149,6 @@ limitations under the License.
     <string name="marker_delete_one_confirm_message">Atzīme tiks neatgriezeniski dzēsta no ierīces</string>
     <string name="marker_delete_one_confirm_title">Vai dzēst atzīmi?</string>
     <string name="marker_delete_multiple_confirm_message">Atlasītās atzīmes tiks neatgriezeniski dzēstas no ierīces</string>
-    <string name="marker_label_end">%1$s (beigas)</string>
-    <string name="marker_label_start">%1$s (sākums)</string>
     <string name="marker_name_format">Marķieris %1$d</string>
     <string name="marker_title">%1$d no %2$d atzīmes(-ēm)</string>
     <!-- Marker Detail -->
@@ -193,13 +174,10 @@ limitations under the License.
     <string name="menu_show_on_map">Rādīt kartē</string>
     <string name="menu_start_gps">Palaist GPS</string>
     <string name="menu_stop_gps">Apturēt GPS</string>
-    <string name="menu_view_photo">Skatīt fotoattēlu</string>
     <string name="menu_voice_frequency">Balss ziņas</string>
     <!-- OpenTracks -->
     <string name="recording_service">Ierakstīšanas pakalpojums</string>
     <!-- Search -->
-    <string name="search_global_description">Maršruti un marķieri</string>
-    <string name="search_list_empty_message">Jūsu vaicājumam neatbilst neviens maršruts vai atzīme</string>
     <!-- Sensor State -->
     <string name="sensor_state_battery">Akumulatora uzlādes līmenis</string>
     <string name="sensor_state_cadence">Kadence</string>
@@ -216,10 +194,6 @@ limitations under the License.
     <string name="settings_chart_by_distance">Pēc attāluma</string>
     <string name="settings_chart_by_time">Pēc laika</string>
     <string name="settings_recording">Notiek ierakstīšana</string>
-    <string name="settings_recording_auto_resume_track_timeout_always_summary">Vienmēr atsāk ierakstīšanu pēc atsāknēšanas</string>
-    <string name="settings_recording_auto_resume_track_timeout_never_summary">Nekad neatsāk ierakstīšanu pēc atsāknēšanas</string>
-    <string name="settings_recording_auto_resume_track_timeout_summary">Atsāk ierakstīšanu pēc atsāknēšanas, ja pēdējā atrašanās vieta ir ierakstīta pēdējās %1$s</string>
-    <string name="settings_recording_auto_resume_track_timeout_title">Atsākt automātiski</string>
     <string name="settings_recording_default_activity_title">Noklusējuma aktivitātes veids</string>
     <string name="settings_recording_location_frequency_summary">%1$s starp ierakstītajām atrašanās vietām</string>
     <string name="settings_recording_max_recording_distance_summary">Ja attālums starp divām atrašanās vietām ir lielāks par %1$s, tiek izveidots jauns atzars.</string>
@@ -239,7 +213,6 @@ limitations under the License.
     <string name="settings_reset_done">Visos iestatījumos atjaunotas to noklusējuma vērtības</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_bluetooth_sensor">Bluetooth sensors</string>
     <!-- Settings Stats -->
     <string name="settings_stats_coordinate">Platums/garums</string>
     <string name="settings_stats_rate_title">Vēlamais rādītājs</string>
@@ -248,7 +221,6 @@ limitations under the License.
     <string name="settings_stats_units_title">Vēlamās mērvienības</string>
 
     <!-- Share Track -->
-    <string name="share_track_share_file">Kopīgot maršruta failu</string>
     <string name="share_track_share_file_body">Manuprāt, jūs varētu interesēt šis maršruts.\n\nLai to aplūkotu, izmantojiet pakalpojumu Google Earth vai citu
     kartēšanas programmatūru.\n\n%1$s</string>
     <string name="share_track_subject">Vēlos ar jums koplietot maršrutu</string>
@@ -270,7 +242,6 @@ limitations under the License.
     <string name="stats_total_time">Kopējais laiks</string>
     <!-- Track -->
     <string name="track_name_format">%1$d. maršruts</string>
-    <string name="track_record_notification">Notiek maršruta ierakstīšana…</string>
     <string name="track_markers">Maršruta %1$s atzīmes</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">Maršruts un tā marķieri tiks neatgriezeniski dzēsti no ierīces.</string>
@@ -278,12 +249,10 @@ limitations under the License.
     <string name="track_delete_multiple_confirm_message">Atlasītie maršruti un to marķieri tiks neatgriezeniski dzēsti no ierīces.</string>
     <string name="track_delete_progress_message">Notiek dzēšana…</string>
     <!-- Track Detail -->
-    <string name="track_detail_chart_tab">Diagramma</string>
     <string name="track_detail_stats_tab">Statistika</string>
     <!-- Track Edit -->
     <string name="track_edit_activity_type">Aktivitātes veids (piemēram, došanās pārgājienā)</string>
     <string name="track_edit_activity_type_hint">Aktivitātes veids</string>
-    <string name="track_edit_new_track_title">Jauns maršruts</string>
     <!-- Track List -->
     <string name="track_list_empty_message">Sāciet ierakstīt savu nākamo piedzīvojumu šeit</string>
     <!-- Track Widget -->
@@ -300,7 +269,6 @@ limitations under the License.
     <!-- Value -->
     <string name="value_adapt_accuracy">Pielāgot precizitātei</string>
     <string name="value_adapt_battery_life">Pielāgot akumulatora darbības ilgumam</string>
-    <string name="value_always">Vienmēr</string>
     <string name="value_integer_feet">%1$d pēda(-as)</string>
     <string name="value_integer_feet_excellent_gps">%1$d pēda(-as) (izcilas kvalitātes GPS)</string>
     <string name="value_integer_feet_recommended">%1$d pēdas (ieteicams)</string>
@@ -313,11 +281,9 @@ limitations under the License.
     <string name="value_integer_mile">%1$d jūdze(-es)</string>
     <string name="value_integer_mile_hour">%1$d jūdze(-es)/h</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_percent">%1$d %%</string>
     <string name="value_integer_second">%1$d sek.</string>
     <string name="value_none">Nav</string>
     <string name="value_off">Izslēgts</string>
-    <string name="value_smallest">Mazākais</string>
     <string name="value_smallest_recommended">Mazākais (ieteicams)</string>
     <!-- Voice -->
     <plurals name="voiceHours">
