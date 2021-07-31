@@ -15,6 +15,13 @@
  */
 package de.dennisguse.opentracks.services;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
@@ -60,13 +67,6 @@ import de.dennisguse.opentracks.services.handlers.HandlerServer;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests for the track recording service.
@@ -115,7 +115,7 @@ public class TrackRecordingServiceTest {
     };
 
     @Before
-    public void setUp() throws TimeoutException {
+    public void setUp() {
         // Set up the mock content resolver
         ContentProvider customContentProvider = new CustomContentProvider() {
         };
@@ -276,7 +276,7 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
-    public void testRecording_resumeStoppedTrack() throws TimeoutException, InterruptedException {
+    public void testRecording_resumeStoppedTrack() throws TimeoutException {
         // given
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
@@ -400,7 +400,7 @@ public class TrackRecordingServiceTest {
 
     @MediumTest
     @Test
-    public void testInsertWaypointMarker_validWaypoint() throws TimeoutException, InterruptedException {
+    public void testInsertWaypointMarker_validWaypoint() throws TimeoutException {
         // given
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
@@ -452,7 +452,7 @@ public class TrackRecordingServiceTest {
         addTrack(dummyTrack);
     }
 
-    static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed) throws InterruptedException {
+    static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed) {
         newTrackPoint(trackRecordingService, latitude, longitude, accuracy, speed, System.currentTimeMillis());
     }
 
