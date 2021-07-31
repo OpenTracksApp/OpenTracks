@@ -18,10 +18,12 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import java.time.Duration;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.services.TrackRecordingService;
@@ -172,6 +174,38 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
                 //Use same value for not set as Androidx ListPreference and EditTextPreference
                 return directory != null ? directory.getName() : getString(R.string.not_set);
             });
+
+            findPreference(getString(R.string.recording_distance_interval_key))
+                    .setSummaryProvider(
+                            preference -> {
+                                boolean metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getActivity());
+                                Distance distance = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, getContext());
+                                return getString(R.string.settings_recording_location_frequency_summary, StringUtils.formatDistance(getContext(), distance, metricUnits));
+                            }
+                    );
+            findPreference(getString(R.string.max_recording_distance_key))
+                    .setSummaryProvider(
+                            preference -> {
+                                boolean metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getActivity());
+                                Distance distance = PreferencesUtils.getMaxRecordingDistance(sharedPreferences, getContext());
+                                return getString(R.string.settings_recording_max_recording_distance_summary, StringUtils.formatDistance(getContext(), distance, metricUnits));
+                            }
+                    );
+            findPreference(getString(R.string.recording_gps_accuracy_key))
+                    .setSummaryProvider(
+                            preference -> {
+                                boolean metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getActivity());
+                                Distance distance = PreferencesUtils.getThresholdHorizontalAccuracy(sharedPreferences, getContext());
+                                return getString(R.string.settings_recording_min_required_accuracy_summary, StringUtils.formatDistance(getContext(), distance, metricUnits));
+                            }
+                    );
+            findPreference(getString(R.string.min_recording_interval_key))
+                    .setSummaryProvider(
+                            preference -> {
+                                Duration interval = Duration.ofSeconds(PreferencesUtils.getMinRecordingInterval(sharedPreferences, getContext()));
+                                return getString(R.string.settings_recording_location_frequency_summary, getString(R.string.value_integer_second, interval.getSeconds()));
+                            }
+                    );
 
             announcementsFrequency = findPreference(getString(R.string.voice_frequency_key));
             announcementsSpeed = findPreference(getString(R.string.voice_speed_rate_key));
