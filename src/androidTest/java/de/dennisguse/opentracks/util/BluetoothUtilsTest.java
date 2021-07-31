@@ -1,5 +1,8 @@
 package de.dennisguse.opentracks.util;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import org.junit.Test;
@@ -8,9 +11,6 @@ import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataRunning;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 public class BluetoothUtilsTest {
 
@@ -102,6 +102,6 @@ public class BluetoothUtilsTest {
         // then
         assertEquals(Speed.of(5), sensor.getSpeed());
         assertEquals(80, sensor.getCadence(), 0.01);
-        assertEquals(Distance.of(268), sensor.getTotalDistance());
+        assertEquals(Distance.of(26.8), sensor.getTotalDistance());
     }
 }
