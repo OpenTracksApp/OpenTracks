@@ -21,7 +21,6 @@ import android.util.Log;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.time.Instant;
@@ -122,7 +121,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
     }
 
     @Override
-    public void startElement(String uri, String localName, String tag, Attributes attributes) throws SAXException {
+    public void startElement(String uri, String localName, String tag, Attributes attributes) {
         switch (tag) {
             case TAG_MARKER:
                 onMarkerStart(attributes);

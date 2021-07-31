@@ -273,7 +273,7 @@
             android:id="@+id/stats_altitude_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="stats_altitude_horizontal_line,stats_altitude_gain_label,@+id/stats_altitude_gain_value,@+id/stats_altitude_gain_unit,stats_altitude_loss_label,@+id/stats_altitude_loss_value,@+id/stats_altitude_loss_unit" />
+            app:constraint_referenced_ids="stats_altitude_horizontal_line,stats_altitude_gain_label,stats_altitude_gain_value,stats_altitude_gain_unit,stats_altitude_loss_label,stats_altitude_loss_value,stats_altitude_loss_unit" />
 
         <TextView
             android:id="@+id/stats_altitude_gain_label"
