@@ -486,11 +486,11 @@
     <string name="menu_voice_rate">Velocidade da voz</string>
     <string name="track_delete_not_recording">Esta trilha não pode ser excluída porque está gravada no momento.</string>
     <plurals name="voiceSpeedKilometersPerHour">
-        <item quantity="one">1 quilômetro por hora</item>
+        <item quantity="one">%1$.1f quilômetro por hora</item>
         <item quantity="other">%1$.1f quilômetros por hora</item>
     </plurals>
     <plurals name="voiceSpeedMilesPerHour">
-        <item quantity="one">1 milha por hora</item>
+        <item quantity="one">%1$.1f milha por hora</item>
         <item quantity="other">%1$.1f milhas por hora</item>
     </plurals>
     <string name="settings_sensor_cycling_cadence">Ciclismo: cadência</string>

@@ -554,8 +554,8 @@ limitations under the License.
     <string name="menu_voice_rate">Скорость голоса</string>
     <string name="track_delete_not_recording">Эта дорожка не может быть удалена, поскольку она записана в данный момент.</string>
     <plurals name="generic_completed_with_errors">
-        <item quantity="one">Завершена с одной ошибкой</item>
-        <item quantity="few">Завершено с ошибками</item>
+        <item quantity="one">Завершена с %1$d  ошибкой</item>
+        <item quantity="few">Завершено с %1$d ошибками</item>
         <item quantity="many">Завершено с %1$d ошибок</item>
         <item quantity="other">Завершено с %1$d ошибок</item>
     </plurals>
