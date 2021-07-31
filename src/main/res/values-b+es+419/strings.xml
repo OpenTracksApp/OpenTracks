@@ -240,7 +240,7 @@
     <string name="value_smallest_recommended">Mínimo (recomendado)</string>
     <plurals name="voiceHours">
         <item quantity="one">1 hora</item>
-        <item quantity="other">1$d horas</item>
+        <item quantity="other">%1$d horas</item>
     </plurals>
     <plurals name="voiceMinutes">
         <item quantity="one">1 minuto</item>
