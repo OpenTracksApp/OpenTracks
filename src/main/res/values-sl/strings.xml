@@ -222,8 +222,9 @@ limitations under the License.
     <string name="settings_stats_units_title">Prednostne enote</string>
 
     <!-- Share Track -->
-    <string name="share_track_share_file_body">Zdi se mi, da bi te ta pot utegnila zanimati.\n\nPot si lahko ogledaš v storitvi Google Earth ali drugi
-    programski opremi za zemljevide.\n\n%1$s</string>
+    <string name="share_track_share_file_body">Zdi se mi, da bi te ta pot utegnila zanimati.
+\n
+\n%1$s</string>
     <string name="share_track_subject">V skupno rabo z vami želim dati progo</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Povprečni tempo gibanja</string>

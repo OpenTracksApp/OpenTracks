@@ -1,0 +1,16 @@
+v3.18.6: OpenTracks
+
+Spremembe:
+
+- "Prikaži na zemljevidu"-funkcionalnost prek KML namesto KMZ
+- Glasovno obvestilo ne vključuje imena aplikacije
+- Med snemanjem: pridobitev/izguba nadmorske višine se posodobi vsako sekundo
+- Prevedeni opisi trgovin
+
+Bufiksi:
+- Vključene so bile naslednje možnosti: popravljeni neveljavni prevodi glasovnih napovedi
+
+Razvijalec:
+- Android12 (BLUETOOTH_SCAN)
+- Android12 dovoljenja (ACCESS_COARSE_LOCATION)
+- Zagotavljanje za TrackPoints (testiranje)
