@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">avió</string>
     <string name="activity_type_atv">Vehicles tot terreny</string>
@@ -213,12 +213,11 @@ limitations under the License.
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <!-- Settings Stats -->
-    <string name="settings_stats_coordinate">Latitud/Longitud:</string>
+    <string name="settings_stats_coordinate">Latitud/Longitud</string>
     <string name="settings_stats_rate_title">Mesura preferida</string>
     <string name="settings_stats_units_imperial">Sistema anglosaxó (milles, peus)</string>
     <string name="settings_stats_units_metric">Sistema mètric (km, m)</string>
     <string name="settings_stats_units_title">Unitats preferides</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file_body">Crec que aquesta ruta et podria interessar.\n\nLa pots veure amb Google Earth o qualsevol altre programari de mapatge.\n\n%1$s</string>
     <string name="share_track_subject">Vull compartir una ruta amb tu</string>
@@ -370,5 +369,4 @@ limitations under the License.
     <!-- Share image -->
     <string name="share_image_subject">Vull compartir una imatge amb tu</string>
     <string name="share_image_body">Crec que aquesta imatge et podria interessar.</string>
-
 </resources>
