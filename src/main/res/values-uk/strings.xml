@@ -504,7 +504,7 @@ limitations under the License.
     <string name="settings_prevent_reimport_tracks_title">Заборонити повторний імпорт треків</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Завершено з %1$d однією помилкою</item>
-        <item quantity="few">Заповнено з деякими помилками</item>
+        <item quantity="few">Заповнено з %1$d помилками</item>
         <item quantity="many">Завершено з %1$d помилками</item>
         <item quantity="other">Завершено з %1$d помилками</item>
     </plurals>
