@@ -524,4 +524,5 @@ limitations under the License.
     <string name="menu_voice_rate">Швидкість передачі голосу</string>
     <string name="settings_sensor_cycling_cadence">Велоспорт: частота обертання педалей</string>
     <string name="settings_sensor_cycling_distance_speed">Їзда на велосипеді: відстань і швидкість</string>
+    <string name="settings_sensor_running_speed_and_cadence">БІГ: дистанція, швидкість і частота</string>
 </resources>
