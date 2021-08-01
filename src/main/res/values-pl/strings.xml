@@ -528,4 +528,5 @@ limitations under the License.
     <string name="track_delete_not_recording">Tej ścieżki nie można usunąć, ponieważ jest ona aktualnie nagrywana.</string>
     <string name="settings_sensor_cycling_distance_speed">Kolarstwo: dystans i prędkość</string>
     <string name="settings_sensor_cycling_cadence">Jazda na rowerze: kadencja</string>
+    <string name="settings_sensor_running_speed_and_cadence">Bieganie: dystans, prędkość i kadencja</string>
 </resources>
