@@ -512,4 +512,5 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="track_delete_not_recording">Seda pala ei saa kustutada, kuna see on praegu salvestatud.</string>
     <string name="settings_sensor_cycling_cadence">Jalgrattasport: cadence</string>
     <string name="settings_sensor_cycling_distance_speed">Jalgrattasport: kaugus ja kiirus</string>
+    <string name="settings_sensor_running_speed_and_cadence">Running: kaugus, kiirus ja kadents</string>
 </resources>
