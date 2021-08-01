@@ -521,4 +521,5 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="track_delete_not_recording">Není možno vymazat aktuálně zaznamenávanou trasu.</string>
     <string name="settings_sensor_cycling_distance_speed">Jízda na kole: vzdálenost a rychlost</string>
     <string name="settings_sensor_cycling_cadence">Cyklistika: kadence</string>
+    <string name="settings_sensor_running_speed_and_cadence">Běh: vzdálenost, rychlost a kadence</string>
 </resources>
