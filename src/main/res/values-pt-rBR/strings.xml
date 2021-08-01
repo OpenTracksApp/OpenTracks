@@ -457,4 +457,5 @@
     </plurals>
     <string name="settings_sensor_cycling_cadence">Ciclismo: cadência</string>
     <string name="settings_sensor_cycling_distance_speed">Ciclismo: distância e velocidade</string>
+    <string name="settings_sensor_running_speed_and_cadence">Corrida: distância, velocidade e cadência</string>
 </resources>
