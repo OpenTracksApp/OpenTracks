@@ -506,4 +506,5 @@ limitations under the License.
     <string name="track_delete_not_recording">Ez a sáv nem törölhető, mivel jelenleg is rögzítve van.</string>
     <string name="settings_sensor_cycling_cadence">Kerékpározás: lépésszám</string>
     <string name="settings_sensor_cycling_distance_speed">Kerékpározás: táv és sebesség</string>
+    <string name="settings_sensor_running_speed_and_cadence">Futás: távolság, sebesség és ritmus</string>
 </resources>
