@@ -510,4 +510,7 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="menu_voice_rate">Velocidad de voz</string>
     <string name="track_delete_not_recording">Esta pista no se puede borrar, ya que está grabada.</string>
+    <string name="settings_sensor_running_speed_and_cadence">Correr: distancia, velocidad y cadencia</string>
+    <string name="settings_sensor_cycling_distance_speed">Ciclismo: distancia y velocidad</string>
+    <string name="settings_sensor_cycling_cadence">Ciclismo: cadencia</string>
 </resources>
