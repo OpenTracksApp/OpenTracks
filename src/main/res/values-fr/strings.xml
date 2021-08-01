@@ -512,4 +512,5 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="track_delete_not_recording">Cette piste ne peut pas être supprimée car elle est en cours d\'enregistrement.</string>
     <string name="settings_sensor_cycling_distance_speed">Cyclisme : distance et vitesse</string>
     <string name="settings_sensor_cycling_cadence">Vélo : cadence</string>
+    <string name="settings_sensor_running_speed_and_cadence">Course à pied : distance, vitesse et cadence</string>
 </resources>
