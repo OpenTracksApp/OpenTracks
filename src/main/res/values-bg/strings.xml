@@ -506,4 +506,5 @@ limitations under the License.
     <string name="instant_export_enabled_summary">Експортиране на запис в хранилището след приключване на записа</string>
     <string name="settings_sensor_cycling_cadence">Колоездене: каданс</string>
     <string name="settings_sensor_cycling_distance_speed">Колоездене: дължина и скорост</string>
+    <string name="settings_sensor_running_speed_and_cadence">Бягане: разстояние, скорост и каданс</string>
 </resources>
