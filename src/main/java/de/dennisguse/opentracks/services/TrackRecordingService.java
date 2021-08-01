@@ -48,7 +48,7 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.exporter.ExportServiceResultReceiver;
 import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
-import de.dennisguse.opentracks.services.handlers.HandlerServer;
+import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTask;
 import de.dennisguse.opentracks.services.tasks.PeriodicTask;
 import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
@@ -65,7 +65,7 @@ import de.dennisguse.opentracks.util.SystemUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackRecordingService extends Service implements HandlerServer.HandlerServerInterface, ExportServiceResultReceiver.Receiver {
+public class TrackRecordingService extends Service implements TrackPointCreator.Callback, ExportServiceResultReceiver.Receiver {
 
     private static final String TAG = TrackRecordingService.class.getSimpleName();
 
@@ -124,7 +124,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     private final Binder binder = new Binder();
 
-    private HandlerServer handlerServer; //TODO Move to TrackRecordingManager?
+    private TrackPointCreator handlerServer; //TODO Move to TrackRecordingManager?
 
     private RecordingStatus recordingStatus;
     private MutableLiveData<RecordingStatus> recordingStatusObservable;
@@ -143,7 +143,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
         recordingDataObservable = new MutableLiveData<>(NOT_RECORDING);
 
         trackRecordingManager = new TrackRecordingManager(this);
-        handlerServer = new HandlerServer(this);
+        handlerServer = new TrackPointCreator(this);
 
         voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTask.Factory());
 
@@ -422,7 +422,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
     @Deprecated
     @VisibleForTesting
-    public HandlerServer getHandlerServer() {
+    public TrackPointCreator getHandlerServer() {
         return handlerServer;
     }
 
@@ -442,7 +442,7 @@ public class TrackRecordingService extends Service implements HandlerServer.Hand
 
         // Compute temporary track statistics using sensorData and update time.
 
-        HandlerServer localHandlerServer = this.handlerServer;
+        TrackPointCreator localHandlerServer = this.handlerServer;
         if (localHandlerServer == null) {
             // when this happens, no recording is running and we should not send any notifications.
             //TODO This implementation is not a good idea; rather solve the issue for this properly

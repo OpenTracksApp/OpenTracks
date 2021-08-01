@@ -63,7 +63,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.io.file.importer.TrackPointAssert;
-import de.dennisguse.opentracks.services.handlers.HandlerServer;
+import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -212,7 +212,7 @@ public class TrackRecordingServiceTest {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
 
-        HandlerServer handlerServer = service.getHandlerServer();
+        TrackPointCreator handlerServer = service.getHandlerServer();
 
         handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
@@ -242,7 +242,7 @@ public class TrackRecordingServiceTest {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
 
-        HandlerServer handlerServer = service.getHandlerServer();
+        TrackPointCreator handlerServer = service.getHandlerServer();
 
         handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
@@ -281,7 +281,7 @@ public class TrackRecordingServiceTest {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
 
-        HandlerServer handlerServer = service.getHandlerServer();
+        TrackPointCreator handlerServer = service.getHandlerServer();
 
         handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
@@ -323,7 +323,7 @@ public class TrackRecordingServiceTest {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
 
-        HandlerServer handlerServer = service.getHandlerServer();
+        TrackPointCreator handlerServer = service.getHandlerServer();
 
         handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
@@ -405,7 +405,7 @@ public class TrackRecordingServiceTest {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
 
-        HandlerServer handlerServer = service.getHandlerServer();
+        TrackPointCreator handlerServer = service.getHandlerServer();
         handlerServer.stopGPS();
 
         handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));

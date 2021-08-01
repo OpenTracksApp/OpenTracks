@@ -19,13 +19,16 @@ import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
-public class HandlerServer {
+/**
+ * Creates TrackPoints while recording by fusing data from different sensors (e.g., GNSS, barometer, BLE sensors).
+ */
+public class TrackPointCreator {
 
-    private static final String TAG = HandlerServer.class.getSimpleName();
+    private static final String TAG = TrackPointCreator.class.getSimpleName();
 
     private Context context;
 
-    private final HandlerServerInterface service;
+    private final Callback service;
 // Disabled to simplify testing and implementation of #822
 //    private ExecutorService serviceExecutor;
 
@@ -36,13 +39,13 @@ public class HandlerServer {
     private BluetoothRemoteSensorManager remoteSensorManager;
     private AltitudeSumManager altitudeSumManager;
 
-    public HandlerServer(HandlerServerInterface service) {
+    public TrackPointCreator(Callback service) {
         this.service = service;
         this.locationHandler = new LocationHandler(this);
     }
 
     @VisibleForTesting
-    HandlerServer(LocationHandler locationHandler, HandlerServerInterface service) {
+    TrackPointCreator(LocationHandler locationHandler, Callback service) {
         this.service = service;
         this.locationHandler = locationHandler;
     }
@@ -183,7 +186,7 @@ public class HandlerServer {
         service.newGpsStatus(gpsStatusValue);
     }
 
-    public interface HandlerServerInterface {
+    public interface Callback {
         void newTrackPoint(TrackPoint trackPoint, Distance thresholdHorizontalAccuracy);
 
         void newGpsStatus(GpsStatusValue gpsStatusValue);

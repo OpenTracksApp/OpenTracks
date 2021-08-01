@@ -25,14 +25,14 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
     private final String TAG = LocationHandler.class.getSimpleName();
 
     private LocationManager locationManager;
-    private final HandlerServer handlerServer;
+    private final TrackPointCreator handlerServer;
     private GpsStatus gpsStatus;
     private LocationListenerPolicy locationListenerPolicy;
     private Duration currentRecordingInterval;
     private Distance thresholdHorizontalAccuracy;
     private TrackPoint lastTrackPoint;
 
-    public LocationHandler(HandlerServer handlerServer) {
+    public LocationHandler(TrackPointCreator handlerServer) {
         this.handlerServer = handlerServer;
     }
 

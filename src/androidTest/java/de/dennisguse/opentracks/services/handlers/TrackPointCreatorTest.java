@@ -1,5 +1,7 @@
 package de.dennisguse.opentracks.services.handlers;
 
+import static org.mockito.Mockito.verify;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -14,16 +16,14 @@ import org.mockito.junit.MockitoJUnitRunner;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 
-import static org.mockito.Mockito.verify;
-
 @RunWith(MockitoJUnitRunner.class)
-public class HandlerServerTest {
+public class TrackPointCreatorTest {
 
     @Mock
     private Context context;
 
     @Mock
-    private HandlerServer.HandlerServerInterface server;
+    private TrackPointCreator.Callback server;
 
     @Mock
     private LocationHandler locationHandler;
@@ -31,11 +31,11 @@ public class HandlerServerTest {
     @Mock
     private SharedPreferences sharedPreferences;
 
-    private HandlerServer subject;
+    private TrackPointCreator subject;
 
     @Before
     public void setUp() {
-        subject = new HandlerServer(locationHandler, server);
+        subject = new TrackPointCreator(locationHandler, server);
         subject.start(context);
     }
 

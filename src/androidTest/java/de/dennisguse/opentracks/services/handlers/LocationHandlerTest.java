@@ -1,5 +1,9 @@
 package de.dennisguse.opentracks.services.handlers;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
@@ -22,10 +26,6 @@ import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 @RunWith(MockitoJUnitRunner.class)
 public class LocationHandlerTest {
 
@@ -33,7 +33,7 @@ public class LocationHandlerTest {
     private final SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
 
     @Mock
-    private HandlerServer handlerServer;
+    private TrackPointCreator handlerServer;
 
     @InjectMocks
     private LocationHandler locationHandler;

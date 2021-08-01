@@ -17,7 +17,7 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.services.handlers.HandlerServer;
+import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.PreferencesUtils;
@@ -79,14 +79,14 @@ class TrackRecordingManager {
         insertTrackPoint(track, segmentStartTrackPoint);
     }
 
-    void pause(HandlerServer handlerServer) {
+    void pause(TrackPointCreator handlerServer) {
         if (lastTrackPoint != null) {
             insertTrackPointIfNewer(track, lastTrackPoint);
         }
         insertTrackPoint(track, handlerServer.createSegmentEnd());
     }
 
-    void end(HandlerServer handlerServer) {
+    void end(TrackPointCreator handlerServer) {
         if (lastTrackPoint != null) {
             insertTrackPointIfNewer(track, lastTrackPoint);
         }
@@ -101,7 +101,7 @@ class TrackRecordingManager {
         isIdle = false;
     }
 
-    Pair<Track, Pair<TrackPoint, SensorDataSet>> get(HandlerServer handlerServer) {
+    Pair<Track, Pair<TrackPoint, SensorDataSet>> get(TrackPointCreator handlerServer) {
         if (handlerServer == null) {
             return null;
         }

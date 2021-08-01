@@ -1,5 +1,9 @@
 package de.dennisguse.opentracks.io.file.importer;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -51,14 +55,10 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.services.TrackRecordingService;
-import de.dennisguse.opentracks.services.handlers.HandlerServer;
+import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.stats.TrackStatistics;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 /**
  * Export a track to {@link TrackFileFormat} and verify that the import is identical.
@@ -119,7 +119,7 @@ public class ExportImportTest {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
                 .getService();
 
-        HandlerServer handlerServer = service.getHandlerServer();
+        TrackPointCreator handlerServer = service.getHandlerServer();
 
         handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         trackId = service.startNewTrack();
@@ -380,7 +380,7 @@ public class ExportImportTest {
         }
     }
 
-    private void sendLocation(HandlerServer handlerServer, Instant time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, Distance distance) {
+    private void sendLocation(TrackPointCreator handlerServer, Instant time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, Distance distance) {
         Location location = new Location("mock");
         location.setLatitude(latitude);
         location.setLongitude(longitude);
