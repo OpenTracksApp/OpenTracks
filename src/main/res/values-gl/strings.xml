@@ -518,4 +518,5 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="track_delete_not_recording">Esta pista non se pode eliminar porque está a funcionar a gravación.</string>
     <string name="settings_sensor_cycling_distance_speed">Ciclismo: distancia e velocidade</string>
     <string name="settings_sensor_cycling_cadence">Ciclismo: cadencia</string>
+    <string name="settings_sensor_running_speed_and_cadence">Execución: distancia, velocidade, e cadencia</string>
 </resources>
