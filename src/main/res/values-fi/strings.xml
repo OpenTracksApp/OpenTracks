@@ -30,7 +30,7 @@ limitations under the License.
         * luo merkkejä (mukaan lukien kuvia)\n
         * toimii täysin ilman verkkoyhteyttä\n
         * näytä jäljet kartalla (ks. alla)</string>
-    <string name="help_track_map_title">Miten radan voi näyttää kartalla\?</string>
+    <string name="help_track_map_title">Miten näyttää rata kartalla\?</string>
     <string name="help_track_map_content"> Käytä pientä karttakuvaketta.
 \n a) (live-päivityksiä) Asenna <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Se tarjoaa online-tai offline-karttoja kautta <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n OSMDashboard on erillinen sovellus, joka voi lukea väliaikaisesti reittien dataa näyttääkseen ne.
@@ -515,4 +515,5 @@ limitations under the License.
     <string name="track_delete_not_recording">Tätä raitaa ei voi poistaa, koska se on parhaillaan tallennettuna.</string>
     <string name="settings_sensor_cycling_cadence">Pyöräily: tahtiaika</string>
     <string name="settings_sensor_cycling_distance_speed">Pyöräily: etäisyys ja nopeus</string>
+    <string name="settings_sensor_running_speed_and_cadence">Juoksu: etäisyys, nopeus ja askeltiheys</string>
 </resources>
