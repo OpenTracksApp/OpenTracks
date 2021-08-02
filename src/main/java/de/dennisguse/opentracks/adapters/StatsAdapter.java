@@ -53,7 +53,7 @@ public class StatsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        return statsDataList.get(position).isLong() ? VIEW_TYPE_LONG : VIEW_TYPE_SHORT;
+        return statsDataList.get(position).isWide() ? VIEW_TYPE_LONG : VIEW_TYPE_SHORT;
     }
 
     public List<StatsData> swapData(List<StatsData> data) {

@@ -44,6 +44,7 @@ public class Layout {
             this.isLong = isLong;
         }
 
+        //TODO Rename as is some kind of identifier / key
         public String getTitle() {
             return title;
         }
