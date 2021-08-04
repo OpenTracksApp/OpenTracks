@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">zbor</string>
     <string name="activity_type_atv">ATV-uri</string>
@@ -30,7 +30,7 @@ limitations under the License.
     <string name="activity_type_driving_bus">conducerea unui autobuz</string>
     <string name="activity_type_driving_car">şofat</string>
     <string name="activity_type_ferry">feribot</string>
-    <string name="activity_type_frisbee">frisbee</string>
+    <string name="activity_type_frisbee">frizbee</string>
     <string name="activity_type_gliding">planorism</string>
     <string name="activity_type_hang_gliding">deltaplanorism</string>
     <string name="activity_type_helicopter">elicopter</string>
@@ -40,7 +40,7 @@ limitations under the License.
     <string name="activity_type_ice_sailing">navigare pe gheaţă</string>
     <string name="activity_type_inline_skating">patinaj pe role</string>
     <string name="activity_type_kayaking">caiac</string>
-    <string name="activity_type_kite_surfing">kite surfing</string>
+    <string name="activity_type_kite_surfing">zmeu surfing</string>
     <string name="activity_type_land_sailing">navigare pe uscat</string>
     <string name="activity_type_mixed_type">tip mixt</string>
     <string name="activity_type_motor_bike">motoretă</string>
@@ -66,7 +66,7 @@ limitations under the License.
     <string name="activity_type_sky_jumping">sărituri cu schiurile</string>
     <string name="activity_type_sled">sanie</string>
     <string name="activity_type_snow_boarding">snow-board</string>
-    <string name="activity_type_snow_shoeing">snow shoeing</string>
+    <string name="activity_type_snow_shoeing">rachete de zăpadă</string>
     <string name="activity_type_speed_walking">mers forţat</string>
     <string name="activity_type_street_running">alergare pe stradă</string>
     <string name="activity_type_surfing">surfing</string>
@@ -75,9 +75,9 @@ limitations under the License.
     <string name="activity_type_trail_hiking">drumeţii montane</string>
     <string name="activity_type_trail_running">alergare montană</string>
     <string name="activity_type_train">antrenament</string>
-    <string name="activity_type_ultimate_frisbee">ultimate frisbee</string>
+    <string name="activity_type_ultimate_frisbee">ultimul frizbee</string>
     <string name="activity_type_unknown">necunoscută</string>
-    <string name="activity_type_wakeboarding">wakeboarding</string>
+    <string name="activity_type_wakeboarding">wakboarding</string>
     <string name="activity_type_walking">mers pe jos</string>
     <string name="activity_type_water_skiing">schi nautic</string>
     <string name="activity_type_wind_surfing">windsurfing</string>
@@ -181,12 +181,12 @@ limitations under the License.
     <!-- Sensor State -->
     <string name="sensor_state_battery">Nivelul bateriei</string>
     <string name="sensor_state_cadence">Cadenţă</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
+    <string name="sensor_state_cadence_value">%1$d RPM</string>
     <string name="sensor_state_heart_rate">Ritm cardiac</string>
-    <string name="sensor_state_heart_rate_value">%1$d bpm</string>
+    <string name="sensor_state_heart_rate_value">%1$d Bpm</string>
     <string name="sensor_state_power">Putere</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="settings_not_while_recording">Indisponibilă în timp ce înregistrați un traseu.</string>
+    <string name="settings_not_while_recording">Indisponibilă în timp ce înregistrați un traseu</string>
     <string name="settings_show">Afișați</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avansate</string>
@@ -196,7 +196,7 @@ limitations under the License.
     <string name="settings_recording">Înregistrare</string>
     <string name="settings_recording_default_activity_title">Tip activitate standard</string>
     <string name="settings_recording_location_frequency_summary">%1$s între locațiile înregistrate</string>
-    <string name="settings_recording_max_recording_distance_summary">Este creat un segment nou dacă distanța dintre două locații este mai mare decât %1$s.</string>
+    <string name="settings_recording_max_recording_distance_summary">Este creat un segment nou dacă distanța dintre două locații este mai mare decât %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Distanța maximă</string>
     <string name="settings_recording_min_recording_distance_title">Înreg. interval de distanță</string>
     <string name="settings_recording_min_recording_interval_title">Înreg. interval de timp</string>
@@ -217,12 +217,13 @@ limitations under the License.
     <string name="settings_stats_coordinate">Latitudine/longitudine</string>
     <string name="settings_stats_rate_title">Rata de preferat</string>
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
-    <string name="settings_stats_units_metric">Metric (km, m)</string>
+    <string name="settings_stats_units_metric">Metrică (km, m)</string>
     <string name="settings_stats_units_title">Unități preferate</string>
-
     <!-- Share Track -->
-    <string name="share_track_share_file_body">Cred că te-ar putea interesa acest traseu.\n\nPentru a vizualiza acest traseu, utilizați Google Earth sau alt software de cartografiere.\n\n%1$s</string>
-    <string name="share_track_subject">Aş vrea să-ţi trimit un traseu.</string>
+    <string name="share_track_share_file_body">Cred că te-ar putea interesa acest traseu.
+\n
+\n%1$s</string>
+    <string name="share_track_subject">Aş vrea să-ţi trimit un traseu</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Ritmul mediu de mișcare</string>
     <string name="stats_average_moving_speed">Viteza medie de mișcare</string>
@@ -262,7 +263,7 @@ limitations under the License.
     <string name="unit_kilometer_per_hour">km/h</string>
     <string name="unit_meter">m</string>
     <string name="unit_mile">mile</string>
-    <string name="unit_mile_per_hour">mi/h</string>
+    <string name="unit_mile_per_hour">Mph</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/mi</string>
     <!-- Value -->
@@ -374,4 +375,57 @@ limitations under the License.
     <string name="waypoint_type_waterfall">cascadă</string>
     <string name="waypoint_type_water_fountain">fântână arteziană</string>
     <string name="waypoint_type_waypoint">punct de traseu</string>
+    <string name="export_all_do_it_for_all">faceți-o pentru toate conflictele</string>
+    <string name="open_track_as_KML">Deschideți ca KML</string>
+    <string name="about_libraries">Biblioteci</string>
+    <string name="help_recording_content">OpenTracks utilizează senzorul GPS al dispozitivului pentru a înregistra permanent locația. În cazul în care dispozitivul GPS raportează date inexacte (de exemplu, locația, viteza, altitudinea), OpenTracks nu poate face nimic în acest sens.</string>
+    <string name="help_data_storage_content"> Datele senzorilor sunt stocate pentru fiecare locație înregistrată. În ceea ce privește un senzor de ritm cardiac, acest lucru înseamnă că este stocată doar <i>o singură măsurătoare a ritmului cardiac</i> pe locație. Dacă stați nemișcat sau sunteți în interior, nu vor fi înregistrate date ale senzorului (dar vor fi afișate). </string>
+    <string name="help_gps_troubleshooting_title">OpenTracks nu înregistrează locații\?</string>
+    <string name="activity_type_escooter">escuter</string>
+    <string name="description_altitude_loss">Pierdere de înălțime: %1$d m (%2$d ft)</string>
+    <string name="export_track_already_exists_msg">Piesa %1$s există deja în directorul de destinație.</string>
+    <string name="about_description"><i>OpenTracks</i> este o aplicație de urmărire sportivă care vă respectă în totalitate intimitatea.</string>
+    <string name="about_version_code">Codul versiunii: %1$d</string>
+    <string name="about_third_party_data">Date terță parte</string>
+    <string name="help_feature_title">OpenTracks are următoarele caracteristici:</string>
+    <string name="about_history">OpenTracks este o bifurcație a <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (întreruptă în 2016).</string>
+    <string name="help_track_export_content"> Urmele pot fi exportate din Setări ca KMZ, KML sau GPX. KMZ/KML toate datele; GPX numai locațiile. Piesele partajate prin intermediul pictogramei <i>share icon</i> sunt partajate ca KMZ. </string>
+    <string name="export_track_errors">Piesele nu sunt exportate</string>
+    <string name="generic_show_errors">Afișați erorile</string>
+    <string name="generic_completed">Completată</string>
+    <string name="gps_disabled_msg">GPS dezactivat</string>
+    <string name="gps_fixed_and_ready">GPS fixat și pregătit</string>
+    <string name="export_progress_summary_errors_msg">Erori</string>
+    <string name="help_feature_content">* creați urme GPS
+\n * utilizați un senzor de ritm cardiac (numai Bluetooth LE)
+\n * anunțuri vocale (în funcție de timp sau distanță)
+\n * creați marcaje (inclusiv imagini)
+\n * funcționează complet offline
+\n * afișați trasee pe o hartă (a se vedea mai jos)</string>
+    <string name="help_data_storage_title">Cum stochează OpenTracks datele senzorilor\?</string>
+    <string name="help_support_title">Cum pot sprijini OpenTracks\?</string>
+    <string name="open_track_as_trackfileformat">Deschideți ca %1$s</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="generic_open_track">Pista deschisă</string>
+    <string name="about_url">Pagina web a proiectului: <a href="%1$s">%1$s</a></string>
+    <string name="export_progress_summary_new_msg">Piese noi exportate</string>
+    <string name="about_version_name">Nume versiune: %1$s</string>
+    <string name="export_with_photos">cu fotografii</string>
+    <string name="description_default_speed_or_pace">După tipul de activitate</string>
+    <string name="help_storage_pictures_content">Acestea sunt stocate în memoria internă a aplicației (adică sunt accesibile numai în cadrul OpenTracks).</string>
+    <string name="help_data_google_play_services_title">OpenTracks necesită/folosește serviciul Google Play\?</string>
+    <string name="import_thread_interrupted">Firul a fost întrerupt</string>
+    <string name="export_progress_summary_skip_msg">Piese sărite</string>
+    <string name="generic_skip">Sari</string>
+    <string name="generic_overwrite">Suprascrieți</string>
+    <string name="export_without_photos">fără fotografii</string>
+    <string name="generic_click_twice_cancel">Faceți clic din nou pentru a anula</string>
+    <string name="help_track_export_title">Cum pot exporta/partaja piesele înregistrate\?</string>
+    <string name="help_track_map_title">Cum se poate afișa o pistă pe o hartă\?</string>
+    <string name="open_track_as_GPX">Deschideți ca GPX</string>
+    <string name="help_storage_pictures_title">Cum stochează OpenTracks imaginile care au fost făcute ca marcaje\?</string>
+    <string name="export_error_post_workout">Exportul post-antrenament a eșuat, vă rugăm să verificați directorul de export.</string>
+    <string name="export_progress_summary_overwrite_msg">Piese suprascrise</string>
+    <string name="about_preference_title">Despre OpenTracks</string>
+    <string name="help_recording_title">Cum înregistrează OpenTracks datele\?</string>
 </resources>
