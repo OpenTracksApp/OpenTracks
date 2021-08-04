@@ -28,9 +28,10 @@ Requirement: `gem install fastlane`
    (requires keystore)
 2. Upload signed apk to [Google Play Console](https://play.google.com/apps/publish)
 3. Update store meta data (e.g., description and screenshots)
-   `fastlane supply --version_code VERSION_CODE --skip_upload_apk`
-   (use the version code from the manifest)
-   (requires API key)
+   `fastlane metadata`
+   (requires API key configured in `Appfile`)
+
+Supported languages: https://support.google.com/googleplay/android-developer/table/4419860
 
 ## Translations (localization)
 
