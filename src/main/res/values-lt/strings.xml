@@ -396,7 +396,7 @@ limitations under the License.
 \n * sukurti žymeklius (su paveikslėliais)
 \n * veikia visiškai neprisijungus
 \n * rodyti takelius žemėlapyje (žiūrėti žemiau)</string>
-    <string name="help_gps_troubleshooting_content"></string>
+    <string name="help_gps_troubleshooting_content"/>
     <string name="export_all_do_it_for_all">darykite tai dėl visų konfliktų</string>
     <string name="sensor_state_power_avg">Vidutinė galia</string>
     <string name="track_distance_notification">Atstumas: %1$s</string>
@@ -458,4 +458,9 @@ limitations under the License.
     <string name="generic_show_errors">Rodyti klaidas</string>
     <string name="gps_fixed_and_ready">GPS fiksuotas ir paruoštas</string>
     <string name="help_feature_title">OpenTracks turi šias funkcijas:</string>
+    <string name="import_unable_to_import_file">Nepavyksta importuoti failo: %1$s</string>
+    <string name="settings_sensor_running_speed_and_cadence">Bėgimas: atstumas, greitis ir dažnis</string>
+    <string name="settings_night_mode_title">UI tema</string>
+    <string name="import_file_imported">Importuotas failas %1$s</string>
+    <string name="import_parser_error">Parserio klaida: %1$s</string>
 </resources>
