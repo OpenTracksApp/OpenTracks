@@ -37,6 +37,7 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.databinding.ExportActivityBinding;
+import de.dennisguse.opentracks.databinding.ToolbarBinding;
 import de.dennisguse.opentracks.io.file.ErrorListDialog;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.ExportUtils;
@@ -134,6 +135,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewBinding = ExportActivityBinding.inflate(getLayoutInflater());
+        ToolbarBinding mergedBinding = ToolbarBinding.bind(viewBinding.getRoot());
         setContentView(viewBinding.getRoot());
 
         directoryUri = getIntent().getParcelableExtra(EXTRA_DIRECTORY_URI_KEY);
@@ -144,7 +146,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
         DocumentFile documentFile = DocumentFile.fromTreeUri(this, directoryUri);
         String directoryDisplayName = FileUtils.getPath(documentFile);
 
-        viewBinding.toolbar.toolbar.setTitle(getString(R.string.export_progress_message, directoryDisplayName));
+        mergedBinding.toolbar.setTitle(getString(R.string.export_progress_message, directoryDisplayName));
 
         resultReceiver = new ExportServiceResultReceiver(new Handler(), this);
 
