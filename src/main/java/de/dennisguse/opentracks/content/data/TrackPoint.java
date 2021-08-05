@@ -310,11 +310,11 @@ public class TrackPoint {
     }
 
     @Nullable
-    public Distance distanceToPrevious(@NonNull TrackPoint previous) {
+    public Distance distanceToPrevious(TrackPoint previous) {
         if (hasSensorDistance()) {
             return getSensorDistance();
         }
-        if (!(hasLocation() && previous.hasLocation())) {
+        if (previous == null || !(hasLocation() && previous.hasLocation())) {
             return null;
         }
 

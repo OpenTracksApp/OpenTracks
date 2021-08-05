@@ -72,6 +72,10 @@ public class TrackPointCreator {
     }
 
     public void resetSensorData() {
+        if (remoteSensorManager == null || altitudeSumManager == null) {
+            Log.d(TAG, "No recording running and no reset necessary.");
+            return;
+        }
         remoteSensorManager.reset();
         altitudeSumManager.reset();
     }
@@ -100,6 +104,16 @@ public class TrackPointCreator {
 //            serviceExecutor.shutdownNow();
 //        }
 //        serviceExecutor = null;
+
+        if (remoteSensorManager != null) {
+            remoteSensorManager.stop();
+            remoteSensorManager = null;
+        }
+
+        if (altitudeSumManager != null) {
+            altitudeSumManager.stop(context);
+            altitudeSumManager = null;
+        }
 
         this.context = null;
     }
@@ -156,6 +170,7 @@ public class TrackPointCreator {
     }
 
     //TODO Limit visibility
+    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public Instant createNow() {
         return Instant.now(clock);
     }
