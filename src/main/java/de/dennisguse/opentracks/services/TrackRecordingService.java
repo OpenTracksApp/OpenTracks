@@ -450,6 +450,10 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
 
         Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.get(handlerServer);
+        if (data == null) {
+            Log.w(TAG, "Requesting data if not recording is taking place, should not be done.");
+            return;
+        }
         TrackPoint trackPoint = data.second.first;
         egm2008CorrectionManager.correctAltitude(this, trackPoint);
 

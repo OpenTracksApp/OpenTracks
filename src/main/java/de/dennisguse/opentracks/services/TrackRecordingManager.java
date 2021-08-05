@@ -111,6 +111,11 @@ class TrackRecordingManager {
         tmpTrackStatisticsUpdater.addTrackPoint(current.first, recordingDistanceInterval);
 
         Track track = getTrack(); //Get copy
+        if (track == null) {
+            Log.w(TAG, "Requesting data if not recording is taking place, should not be done.");
+            return null;
+        }
+
         track.setTrackStatistics(tmpTrackStatisticsUpdater.getTrackStatistics());
 
         return new Pair<>(track, current);
@@ -157,26 +162,28 @@ class TrackRecordingManager {
         }
 
         Distance distanceToLastTrackLocation = trackPoint.distanceToPrevious(lastValidTrackPoint);
-        if (distanceToLastTrackLocation.greaterThan(maxRecordingDistance)) {
-            insertTrackPointIfNewer(track, lastTrackPoint);
+        if (distanceToLastTrackLocation != null) {
+            if (distanceToLastTrackLocation.greaterThan(maxRecordingDistance)) {
+                insertTrackPointIfNewer(track, lastTrackPoint);
 
-            trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
-            insertTrackPoint(track, trackPoint);
+                trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
+                insertTrackPoint(track, trackPoint);
 
-            isIdle = false;
-            lastTrackPoint = trackPoint;
-            return;
-        }
+                isIdle = false;
+                lastTrackPoint = trackPoint;
+                return;
+            }
 
-        if (trackPoint.hasSensorData() || distanceToLastTrackLocation.greaterOrEqualThan(recordingDistanceInterval)) {
-            insertTrackPointIfNewer(track, lastTrackPoint);
+            if (trackPoint.hasSensorData() || distanceToLastTrackLocation.greaterOrEqualThan(recordingDistanceInterval)) {
+                insertTrackPointIfNewer(track, lastTrackPoint);
 
-            insertTrackPoint(track, trackPoint);
+                insertTrackPoint(track, trackPoint);
 
-            isIdle = false;
+                isIdle = false;
 
-            lastTrackPoint = trackPoint;
-            return;
+                lastTrackPoint = trackPoint;
+                return;
+            }
         }
 
         if (!isIdle && !trackPoint.isMoving()) {
