@@ -51,16 +51,16 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
 
 ## Screenshots
 <div>
-    <img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot1.png">
-    <img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot2.png">
-    <img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot3.png">
-    <img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot4.png">
+    <img width="23%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screenshot1.png">
+    <img width="23%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screenshot2.png">
+    <img width="23%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screenshot3.png">
+    <img width="23%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screenshot4.png">
 </div>
 <div>
-	<img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot5.png">
-    <img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot6.png">
-	<img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot7.png">
-	<img width="23%" src="fastlane/metadata/android/en-US/phoneScreenshots/screenshot8.png">
+	<img width="23%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screenshot5.png">
+    <img width="23%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screenshot6.png">
+	<img width="23%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screenshot7.png">
+	<img width="23%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screenshot8.png">
 </div>
 
 ## Features
