@@ -396,7 +396,13 @@ limitations under the License.
 \n * sukurti žymeklius (su paveikslėliais)
 \n * veikia visiškai neprisijungus
 \n * rodyti takelius žemėlapyje (žiūrėti žemiau)</string>
-    <string name="help_gps_troubleshooting_content"/>
+    <string name="help_gps_troubleshooting_content"> Ką galite padaryti:
+\n Patikrinkite, ar įjungtas GPS,
+\n b) pagerinti GPS priėmimą (pvz., išeiti į lauką),
+\n c) patikrinkite naudodami <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> programą ir
+\n d) išjungti energijos taupymą.
+\n
+\n Jei viskas nepadeda, praneškite apie klaidą. </string>
     <string name="export_all_do_it_for_all">darykite tai dėl visų konfliktų</string>
     <string name="sensor_state_power_avg">Vidutinė galia</string>
     <string name="track_distance_notification">Atstumas: %1$s</string>
@@ -463,4 +469,21 @@ limitations under the License.
     <string name="settings_night_mode_title">UI tema</string>
     <string name="import_file_imported">Importuotas failas %1$s</string>
     <string name="import_parser_error">Parserio klaida: %1$s</string>
+    <plurals name="voiceTotalDistanceMiles">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="help_track_map_content"> Naudokite mažą žemėlapio piktogramą.
+\n a) (tiesioginiai atnaujinimai) Įdiekite <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Joje pateikiami internetiniai arba neprisijungusieji žemėlapiai per <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
+\n Iš tikrųjų OSMDashboard yra atskira programa, kuri gali tik pasiekti (laikinai) kelio (-ų), kuris (-ie) bus rodomas (-i), duomenis.
+\n b) Per įprastą žemėlapių programą (pvz., <a href="http://osmand.net/">OsmAnd</a> ir <a href="https://maps.me/">MAPS.ME</a>). Šios programos turi palaikyti KMZ failo formatą (tik vietovių ir laiko žymas). Tiesą sakant, programa turi palaikyti <i>AKCIJŲ_VADOVĄ</i> su MIME <i>application/vnd.google-earth.kmz</i>. </string>
+    <string name="help_support_content"> Galite:
+\n a) skleisti žinią apie \"OpenTracks\",
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">pasiūlyti funkcijas</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">pranešti apie klaidas</a>,
+\n d) padėti kurti programinę įrangą,
+\n e) pirkti <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">\"Google Play\" parduotuvėje</a>,
+\n f) aukoti ir
+\n g) darykite viską, kas, jūsų manymu, padeda \"OpenTracks\". </string>
 </resources>
