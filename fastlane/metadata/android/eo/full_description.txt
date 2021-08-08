@@ -4,8 +4,8 @@ Eblaĵoj:
 • registri vian sportan kaj alian aktivecon eksterdome
 • fotoj kaj markoj: marki interesajn lokojn dum registri aktivecon
 • registri ŝanĝon de altitudo uzante barometron
-• montri altitudon en EGM2008 ()super averaĝa marnivelo); elporti ilin kiel WGS84
+• montri altitudon en EGM2008 (super averaĝa marnivelo); elporti ilin kiel WGS84
 • voĉaj anoncoj
-• subteno por sentiloj BLE por registri vian pulson; rapidon, veturigitan distancon, pedal-rapidon, povumon (biciklado)
+• subteno por sentiloj BLE por registri vian pulson, rapidon, veturigitan distancon, pedal-rapidon, povumon (biciklado)
 • elporti datumojn al dosieroj KMZ (kun fotoj), KML aŭ GPX
 • funkcias malkonekte: interreta permeso ne estas uzata
