@@ -183,7 +183,7 @@ limitations under the License.
     <string name="sensor_state_cadence_value">%1$d o/min</string>
     <string name="sensor_state_heart_rate">Puls</string>
     <string name="sensor_state_heart_rate_value">%1$d slag/min</string>
-    <string name="sensor_state_power">Strøm</string>
+    <string name="sensor_state_power">Effekt</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Ikke tilgjengelig mens du tar opp et spor</string>
     <string name="settings_show">Vis</string>
