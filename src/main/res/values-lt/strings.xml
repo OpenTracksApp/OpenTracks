@@ -469,11 +469,6 @@ limitations under the License.
     <string name="settings_night_mode_title">UI tema</string>
     <string name="import_file_imported">Importuotas failas %1$s</string>
     <string name="import_parser_error">Parserio klaida: %1$s</string>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one"></item>
-        <item quantity="few"></item>
-        <item quantity="other"></item>
-    </plurals>
     <string name="help_track_map_content"> Naudokite mažą žemėlapio piktogramą.
 \n a) (tiesioginiai atnaujinimai) Įdiekite <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Joje pateikiami internetiniai arba neprisijungusieji žemėlapiai per <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n Iš tikrųjų OSMDashboard yra atskira programa, kuri gali tik pasiekti (laikinai) kelio (-ų), kuris (-ie) bus rodomas (-i), duomenis.

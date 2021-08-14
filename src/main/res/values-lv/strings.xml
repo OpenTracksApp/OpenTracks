@@ -477,11 +477,6 @@ limitations under the License.
     <string name="open_track_as_GPX">Atvērts kā GPX</string>
     <string name="description_altitude_loss">Augstuma zudums: %1$d m (%2$d ft)</string>
     <string name="sensor_state_cadence_avg">Vidējā kadence</string>
-    <plurals name="generic_completed_with_errors">
-        <item quantity="zero"></item>
-        <item quantity="one"></item>
-        <item quantity="other"></item>
-    </plurals>
     <string name="settings_night_mode_option_system">Sistēmas</string>
     <string name="help_track_map_title">Kā attēlot trasi kartē\?</string>
     <string name="voice_speed_lap">Klēpes ātrums %1$s</string>
