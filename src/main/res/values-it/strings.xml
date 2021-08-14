@@ -518,4 +518,5 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="track_delete_not_recording">Questa traccia non può essere cancellata perché è attualmente registrata.</string>
     <string name="settings_sensor_cycling_cadence">Ciclismo: cadenza</string>
     <string name="settings_sensor_cycling_distance_speed">Ciclismo: distanza e velocità</string>
+    <string name="settings_sensor_running_speed_and_cadence">Come mostrare una traccia su una mappa</string>
 </resources>

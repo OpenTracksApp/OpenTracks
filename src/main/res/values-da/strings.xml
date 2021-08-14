@@ -513,4 +513,5 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="track_delete_not_recording">Dette spor kan ikke slettes, da det er optaget i øjeblikket.</string>
     <string name="settings_sensor_cycling_distance_speed">Cykling: afstand og hastighed</string>
     <string name="settings_sensor_cycling_cadence">Cykling: kadance</string>
+    <string name="settings_sensor_running_speed_and_cadence">Løb: distance, hastighed og kadence</string>
 </resources>

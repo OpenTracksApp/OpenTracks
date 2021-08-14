@@ -506,4 +506,5 @@ limitations under the License.
 \n g) göra vad du än tror hjälper OpenTracks. </string>
     <string name="activity_type_escooter">skoter</string>
     <string name="stats_split_interval">Delat intervall</string>
+    <string name="settings_sensor_running_speed_and_cadence">Löpning: distans, hastighet och kadens</string>
 </resources>

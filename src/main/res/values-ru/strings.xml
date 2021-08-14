@@ -524,4 +524,5 @@ limitations under the License.
     </plurals>
     <string name="settings_sensor_cycling_cadence">Велоспорт: каденс</string>
     <string name="settings_sensor_cycling_distance_speed">Велоспорт: расстояние и скорость</string>
+    <string name="settings_sensor_running_speed_and_cadence">Бег: дистанция, скорость и каденция</string>
 </resources>

@@ -186,7 +186,7 @@ limitations under the License.
     <string name="sensor_state_heart_rate_value">%1$d sit./min</string>
     <string name="sensor_state_power">Jauda</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="settings_not_while_recording">Nav pieejams maršruta ierakstīšanas laikā.</string>
+    <string name="settings_not_while_recording">Nav pieejams maršruta ierakstīšanas laikā</string>
     <string name="settings_show">Rādīt</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Papildu iestatījumi</string>
@@ -196,7 +196,7 @@ limitations under the License.
     <string name="settings_recording">Notiek ierakstīšana</string>
     <string name="settings_recording_default_activity_title">Noklusējuma aktivitātes veids</string>
     <string name="settings_recording_location_frequency_summary">%1$s starp ierakstītajām atrašanās vietām</string>
-    <string name="settings_recording_max_recording_distance_summary">Ja attālums starp divām atrašanās vietām ir lielāks par %1$s, tiek izveidots jauns atzars.</string>
+    <string name="settings_recording_max_recording_distance_summary">Ja attālums starp divām atrašanās vietām ir lielāks par %1$s, tiek izveidots jauns atzars</string>
     <string name="settings_recording_max_recording_distance_title">Maksimālais attālums</string>
     <string name="settings_recording_min_recording_distance_title">Attāluma intervāla ierakstīšana</string>
     <string name="settings_recording_min_recording_interval_title">Laika intervāla ierakstīšana</string>
@@ -220,8 +220,9 @@ limitations under the License.
     <string name="settings_stats_units_metric">Metriskās (km, m)</string>
     <string name="settings_stats_units_title">Vēlamās mērvienības</string>
     <!-- Share Track -->
-    <string name="share_track_share_file_body">Manuprāt, jūs varētu interesēt šis maršruts.\n\nLai to aplūkotu, izmantojiet pakalpojumu Google Earth vai citu
-    kartēšanas programmatūru.\n\n%1$s</string>
+    <string name="share_track_share_file_body">Manuprāt, jūs varētu interesēt šis maršruts.
+\n
+\n%1$s</string>
     <string name="share_track_subject">Vēlos ar jums koplietot maršrutu</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Vidējais pārvietošanās temps</string>
@@ -262,7 +263,7 @@ limitations under the License.
     <string name="unit_kilometer_per_hour">km/h</string>
     <string name="unit_meter">m</string>
     <string name="unit_mile">jūdzes</string>
-    <string name="unit_mile_per_hour">jūdzes/stundā</string>
+    <string name="unit_mile_per_hour">jūdzes</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/jūdzē</string>
     <!-- Value -->
@@ -280,7 +281,7 @@ limitations under the License.
     <string name="value_integer_mile">%1$d jūdze(-es)</string>
     <string name="value_integer_mile_hour">%1$d jūdze(-es)/h</string>
     <string name="value_integer_minute">%1$d min</string>
-    <string name="value_integer_second">%1$d sek.</string>
+    <string name="value_integer_second">%1$d sek</string>
     <string name="value_none">Nav</string>
     <string name="value_off">Izslēgts</string>
     <string name="value_smallest_recommended">Mazākais (ieteicams)</string>
@@ -367,4 +368,130 @@ limitations under the License.
     <string name="waypoint_type_waterfall">ūdenskritums</string>
     <string name="waypoint_type_water_fountain">ūdens strūklaka</string>
     <string name="waypoint_type_waypoint">atrašanās vietas punkts</string>
+    <string name="export_progress_summary_new_msg">Eksportēti jauni celiņi</string>
+    <string name="export_all_do_it_for_all">darīt to visos konfliktos</string>
+    <string name="import_unable_to_import_file">Nevar importēt failu: %1$s</string>
+    <string name="menu_voice_rate">Balsošanas ātrums</string>
+    <string name="track_delete_not_recording">Šo ierakstu nevar dzēst, jo tas pašlaik ir ierakstīts.</string>
+    <string name="about_url">Projekta tīmekļa vietne: <a href="%1$s">%1$s</a></string>
+    <string name="about_version_code">Versijas kods: %1$d</string>
+    <string name="about_preference_title">Par OpenTracks</string>
+    <string name="export_error_post_workout">Pēc treniņa eksportēšana neizdevās, lūdzu, pārbaudiet eksporta direktoriju.</string>
+    <string name="settings_sensor_running_speed_and_cadence">Skriešana: distance, ātrums un kadence</string>
+    <string name="help_support_title">Kā atbalstīt OpenTracks\?</string>
+    <string name="open_track_as_KML">Atvērts kā KML</string>
+    <string name="import_parser_error">Kļūda parserī: %1$s</string>
+    <string name="export_progress_summary_skip_msg">Izlaistie celiņi</string>
+    <string name="help_storage_pictures_title">Kā OpenTracks saglabā attēlus, kas uzņemti kā marķieri\?</string>
+    <string name="generic_click_twice_cancel">Vēlreiz noklikšķiniet atpakaļ, lai atceltu</string>
+    <string name="import_error_info">%1$s: %2$s</string>
+    <string name="settings_sensor_cycling_distance_speed">Riteņbraukšana: distance un ātrums</string>
+    <string name="track_detail_intervals_tab">Intervāli</string>
+    <string name="track_distance_notification">Atstatums: %1$s</string>
+    <string name="about_description"><i>OpenTracks</i> ir sporta izsekošanas programma, kas pilnībā ievēro jūsu konfidencialitāti.</string>
+    <string name="stats_loss">Zaudējums</string>
+    <string name="about_history">OpenTracks ir atvasinājums no <a href="https://code.google.com/archive/p/mytracks/"><i>Google MyTracks</i></a> (pārtraukta 2016. gadā).</string>
+    <string name="settings_prevent_reimport_tracks_title">Dziesmu atkārtotas importēšanas novēršana</string>
+    <string name="about_third_party_data">Trešo pušu dati</string>
+    <string name="settings_sensor_wheel_circumference">Riteņa apkārtmērs (mm)</string>
+    <string name="help_feature_title">OpenTracks ir šādas iespējas:</string>
+    <string name="settings_sensor_cycling_cadence">Riteņbraukšana: cadence</string>
+    <string name="help_feature_content">* izveidot GPS trases
+\n * izmantot sirdsdarbības sensoru (tikai Bluetooth LE)
+\n * balss paziņojumi (pēc laika vai attāluma)
+\n * izveidot marķierus (tostarp attēlus)
+\n * darbojas pilnībā bezsaistē
+\n * rādīt trases kartē (skatiet tālāk)</string>
+    <string name="sensor_state_heart_rate_max">Maksimālais pulss</string>
+    <string name="help_storage_pictures_content">Tie tiek glabāti lietotnes iekšējā atmiņā (t. i., pieejami tikai OpenTracks ietvaros).</string>
+    <string name="sensor_state_cadence_max">Maks. kadence</string>
+    <string name="help_gps_troubleshooting_title">OpenTracks nereģistrē vietas\?</string>
+    <string name="menu_resume_track">Atkārtot dziesmu</string>
+    <string name="help_track_export_content"> Trases var eksportēt no iestatījumiem kā KMZ, KML vai GPX. KMZ/KML visi dati; GPX tikai vietas. Trases, kas kopīgotas, izmantojot <i>kopīgošanas ikonu</i>, tiek kopīgotas kā KMZ. </string>
+    <string name="import_progress_summary_errors_msg">Kļūdas</string>
+    <string name="help_gps_troubleshooting_content"> Ko jūs varat darīt:
+\n a) pārbaudīt, vai ir ieslēgts GPS,
+\n b) uzlabot GPS uztveršanu (piemēram, doties ārā),
+\n c) pārbaudīt, izmantojot lietotni <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a>, un
+\n d) atslēgt enerģijas taupīšanu.
+\n
+\n Ja viss nepalīdz, lūdzu, ziņojiet par kļūdu. </string>
+    <string name="import_progress_summary_ok_msg">Importēti faili</string>
+    <string name="export_track_errors">Neeksportētie celiņi</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="generic_show_errors">Rādīt kļūmes</string>
+    <string name="generic_completed">Pabeigti</string>
+    <string name="gps_disabled_msg">GPS izslēgts</string>
+    <string name="import_no_kml_file_found">KMZ nav atrasts dok.kml fails</string>
+    <string name="settings_default_trackfileformat">Eksporta/ koplietošanas faila formāts</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Rādīt statistiku bloķēšanas ekrānā</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Ierakstīšanas laikā ir pilnekrāna režīmā.</string>
+    <string name="settings_error_initial_values_restored">Atvainojiet, bet ir notikusi kļūda. Visi iestatījumi ir atjaunoti līdz noklusējuma vērtībām.</string>
+    <string name="settings_default_export_uri_title">Dziesmu eksporta direktorija</string>
+    <string name="instant_export_enabled_title">Tūlītējs eksports pēc treniņa</string>
+    <string name="voice_pace_per_kilometer">%1$s par kilometru</string>
+    <string name="interval_list_empty_message">Pagaidām nav intervālu</string>
+    <string name="settings_night_mode_option_night">Nakts</string>
+    <string name="import_thread_interrupted">Vītne pārtraukts</string>
+    <string name="track_speed_notification">Ātrums: %1$s</string>
+    <string name="permission_gps_failed">Programmai OpenTracks ir nepieciešama atļauja izmantot GPS.</string>
+    <string name="help_recording_content">OpenTracks izmanto ierīces GPS sensoru, lai nepārtraukti reģistrētu atrašanās vietu. Ja GPS ierīce ziņo neprecīzus datus (piemēram, atrašanās vietas, ātruma, augstuma), OpenTracks nevar neko darīt.</string>
+    <string name="sensor_could_not_scan">Nebija iespējams skenēt Bluetooth ierīces (kļūda %1$i).</string>
+    <string name="export_without_photos">bez fotogrāfijām</string>
+    <string name="import_prevent_reimport">Jūs esat iestatījis novērst atkārtotas importēšanas dziesmu</string>
+    <string name="hold_to_pause">Turiet, lai pauzē</string>
+    <string name="gps_fixed_and_ready">GPS ir fiksēts un gatavs</string>
+    <string name="settings_night_mode_title">UI tēma</string>
+    <string name="stats_split_interval">Sadalītais intervāls</string>
+    <string name="hold_to_stop">Turēt, lai apturētu</string>
+    <string name="export_track_already_exists_msg">Dziesma %1$s jau eksistē galamērķa direktorijā.</string>
+    <string name="marker_add_photo_canceled">Atcelts, foto zīme nav pievienota</string>
+    <string name="help_track_export_title">Kā es varu eksportēt/ kopīgot ierakstītos ierakstus\?</string>
+    <string name="voice_pace_lap">Klēpes laiks %1$s</string>
+    <string name="instant_export_enabled_summary">Dziesmas eksportēšana uz krātuvi pēc ierakstīšanas pabeigšanas</string>
+    <string name="activity_type_escooter">eScooter</string>
+    <string name="track_delete_progress">%1$d/%2$d</string>
+    <string name="sensor_state_power_avg">Vidējā jauda</string>
+    <string name="voice_template">%1$s in %2$s pie %3$s</string>
+    <string name="about_libraries">Bibliotēkas</string>
+    <string name="description_default_speed_or_pace">Pēc aktivitātes veida</string>
+    <string name="import_progress_summary_exists_msg">Jau eksistē</string>
+    <string name="delete_service">Dzēšanas pakalpojuma</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_summary">Ierakstīšanas laikā rādiet statistiku, neatbloķējot ierīci.</string>
+    <string name="import_file_imported">Failu %1$s importēšana</string>
+    <string name="settings_sensor_connecting">Saistīts ar %1$s</string>
+    <string name="track_recording_notification_accuracy">Atrašanās vietas precizitāte: %1$s</string>
+    <string name="share_image_subject">Vēlos dalīties ar jums kādā attēlā</string>
+    <string name="import_error_list_dialog_title">Faili nav importēti</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">Pilna ekrāna</string>
+    <string name="generic_skip">Izlaist .</string>
+    <string name="open_track_as_trackfileformat">Atvērts kā %1$s</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">Ekrāna ieslēgšana</string>
+    <string name="share_image_body">Domāju, ka jūs varētu ieinteresēt šis attēls.</string>
+    <string name="export_progress_summary_overwrite_msg">Pārrakstītās dziesmas</string>
+    <string name="help_data_google_play_services_title">Vai OpenTracks ir nepieciešams/izmantots Google Play pakalpojums\?</string>
+    <string name="menu_insert_gallery_img">Galerijas attēlu ievietošana</string>
+    <string name="help_data_storage_content"> Sensoru dati tiek saglabāti katrai reģistrētajai vietai. Runājot par sirdsdarbības sensoru, tas nozīmē, ka tikai <i>viens</i> sirdsdarbības frekvences mērījums tiek saglabāts katrā atrašanās vietā. Ja stāvat nekustīgi vai atrodaties iekštelpās, sensora dati netiks ierakstīti (bet tie tiks parādīti). </string>
+    <string name="export_progress_summary_errors_msg">Kļūdas</string>
+    <string name="settings_night_mode_option_day">Diena</string>
+    <string name="open_track_as_GPX">Atvērts kā GPX</string>
+    <string name="description_altitude_loss">Augstuma zudums: %1$d m (%2$d ft)</string>
+    <string name="sensor_state_cadence_avg">Vidējā kadence</string>
+    <string name="settings_night_mode_option_system">Sistēmas</string>
+    <string name="help_track_map_title">Kā attēlot trasi kartē\?</string>
+    <string name="voice_speed_lap">Klēpes ātrums %1$s</string>
+    <string name="generic_overwrite">Pārraksti</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">Ierakstīšanas laikā ekrāns ir ieslēgts.</string>
+    <string name="import_unsupported_format">Neatbalstīts faila formāts</string>
+    <string name="track_pace_notification">Temps: %1$s</string>
+    <string name="about_version_name">Versijas vārds: %1$s</string>
+    <string name="help_data_storage_title">Kā OpenTracks glabā sensoru datus\?</string>
+    <string name="help_recording_title">Kā OpenTracks ieraksta datus\?</string>
+    <string name="voice_pace_per_mile">%1$s par jūdzi</string>
+    <string name="export_with_photos">ar fotogrāfijām</string>
+    <string name="sensor_state_heart_rate_avg">Vidējais sirdsdarbība</string>
+    <string name="generic_open_track">Atvērtā trase</string>
+    <string name="aggregated_stats_empty_message">Ierakstiet savu pirmo dziesmu, lai redzētu apkopoto statistiku</string>
+    <string name="settings_sensor_disconnected">Atslēgts no %1$s</string>
+    <string name="bluetooth_disabled">Lūdzu, iespējojiet Bluetooth.</string>
 </resources>

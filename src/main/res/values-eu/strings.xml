@@ -513,4 +513,5 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="track_delete_not_recording">Pista hau ezin da ezabatu da gaur egun grabatzen.</string>
     <string name="settings_sensor_cycling_cadence">Txirrindularitza: kadentzia</string>
     <string name="settings_sensor_cycling_distance_speed">Txirrindularitza: distantzia eta abiadura</string>
+    <string name="settings_sensor_running_speed_and_cadence">Korrika: distantzia, abiadura, eta kadentzia</string>
 </resources>

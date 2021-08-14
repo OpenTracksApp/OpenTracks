@@ -1,9 +1,11 @@
+OpenTracks er en sportsporingsapp som respekterer ditt personvern.
+
 Funksjoner:
-* Sportssoring: Spor dine sports- og utendørsaktiviteter
+* Sportsporing: Registrer dine sports- og utendørsaktiviteter
 * Bilder og markører: Marker interessante steder under sporing
-* Høydeendringer: via barometer
+* Total stigning og nedstigning: via barometersensor
 * Høyde vist i EGM2008 (over havnivå); eksportert som WGS84
-* Stemmekunngjøringer
-* Støtter Blåtann LE-sensorer: pulse, hastighet og distanse (sykling), takt (sykling), og effektmeter (sykling)
-* Eksport av data: Enten som KMZ (inkl. bilder), KML, eller GPX
-* Ingen tilgang til Internett: Ingenting lastes opp noensteds hen
+* Talemeldinger
+* Støtter Blåtann LE-sensorer: puls, hastighet og distanse (sykling), kadens (sykling) og wattmåler (sykling)
+* Eksport av data: Enten som KMZ (inkl. bilder), KML eller GPX
+* Ingen internettilgang: Internett brukes ikke
