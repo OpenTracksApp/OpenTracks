@@ -44,6 +44,10 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
         gpsStatus.start();
     }
 
+    private boolean isStarted() {
+        return locationManager != null;
+    }
+
     @SuppressWarnings({"MissingPermission"})
     //TODO upgrade to AGP7.0.0/API31 started complaining about removeUpdates.
     public void onStop() {
@@ -96,6 +100,11 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
      */
     @Override
     public void onLocationChanged(@NonNull Location location) {
+        if (!isStarted()) {
+            Log.w(TAG, "Location is ignored; not started.");
+            return;
+        }
+
         TrackPoint trackPoint = new TrackPoint(location, handlerServer.createNow());
         boolean isAccurate = trackPoint.fulfillsAccuracy(thresholdHorizontalAccuracy);
         boolean isValid = LocationUtils.isValidLocation(location);
