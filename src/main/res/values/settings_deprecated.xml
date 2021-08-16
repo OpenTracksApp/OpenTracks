@@ -61,4 +61,6 @@
     <!--        <item>15</item>-->
     <!--        <item>@string/auto_resume_track_timeout_always</item>-->
     <!--    </string-array>-->
+
+    <string name="min_recording_interval_key_v1" translatable="false">minRecordingInterval</string>
 </resources>

@@ -217,8 +217,6 @@
     <string name="unit_mile_per_hour">מייל/שעה</string>
     <string name="unit_minute_per_kilometer">דקות/ק\"מ</string>
     <string name="unit_minute_per_mile">דקות/מייל</string>
-    <string name="value_adapt_accuracy">התאם למען הדיוק</string>
-    <string name="value_adapt_battery_life">התאם לחיי הסוללה</string>
     <string name="value_integer_feet">%1$d רגל</string>
     <string name="value_integer_feet_excellent_gps">%1$d רגל (GPS מעולה)</string>
     <string name="value_integer_feet_recommended">%1$d רגל (מומלץ)</string>

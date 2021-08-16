@@ -332,8 +332,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/milla</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Adaptar para obtener valores exactos</string>
-    <string name="value_adapt_battery_life">Adaptar a la duración de la batería</string>
     <string name="value_integer_feet">%1$d pies</string>
     <string name="value_integer_feet_excellent_gps">%1$d pies (señal de GPS excelente)</string>
     <string name="value_integer_feet_recommended">%1$d pies (recomendado)</string>

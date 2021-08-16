@@ -265,8 +265,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/mi</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Tilpass for nøyaktighet</string>
-    <string name="value_adapt_battery_life">Tilpass for batterilevetid</string>
     <string name="value_integer_feet">%1$d fot</string>
     <string name="value_integer_feet_excellent_gps">%1$d fot (utmerket GPS)</string>
     <string name="value_integer_feet_recommended">%1$d fot (anbefales)</string>

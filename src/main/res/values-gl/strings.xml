@@ -349,8 +349,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/km</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Adaptar para obter precisión</string>
-    <string name="value_adapt_battery_life">Adaptar á duración restante da batería</string>
     <string name="value_integer_feet">%1$d m</string>
     <string name="value_integer_feet_excellent_gps">%1$d m (GPS excelente)</string>
     <string name="value_integer_feet_recommended">%1$d m (recomendado)</string>

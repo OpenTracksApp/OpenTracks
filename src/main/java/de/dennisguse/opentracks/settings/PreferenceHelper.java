@@ -14,11 +14,7 @@ final class PreferenceHelper {
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);
 
-            if (value == PreferencesUtils.getMinRecordingIntervalAdaptAccuracy(context)) {
-                entries[i] = context.getString(R.string.value_adapt_accuracy);
-            } else if (value == PreferencesUtils.getMinRecordingIntervalAdaptBatteryLife(context)) {
-                entries[i] = context.getString(R.string.value_adapt_battery_life);
-            } else if (value == PreferencesUtils.getMinRecordingIntervalDefault(context)) {
+            if (value == PreferencesUtils.getMinRecordingIntervalDefault(context).getSeconds()) {
                 entries[i] = context.getString(R.string.value_smallest_recommended);
             } else {
                 entries[i] = value < 60 ? context.getString(R.string.value_integer_second, value) : context.getString(R.string.value_integer_minute, value / 60);

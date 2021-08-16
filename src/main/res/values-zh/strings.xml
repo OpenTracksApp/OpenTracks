@@ -281,8 +281,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">分钟/公里</string>
     <string name="unit_minute_per_mile">分钟/英里</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">适应精度</string>
-    <string name="value_adapt_battery_life">视电池电量而定</string>
     <string name="value_integer_feet">%1$d 英尺</string>
     <string name="value_integer_feet_excellent_gps">%1$d 英尺（GPS 信号极佳）</string>
     <string name="value_integer_feet_recommended">%1$d 英尺（推荐）</string>

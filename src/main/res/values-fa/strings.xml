@@ -264,8 +264,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">دقیقه در کیلومتر</string>
     <string name="unit_minute_per_mile">دقیقه در مایل</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">تعدیل به خاطر دقت</string>
-    <string name="value_adapt_battery_life">تعدیل به خاطر عمر باتری</string>
     <string name="value_integer_feet">%1$d فوت</string>
     <string name="value_integer_feet_excellent_gps">%1$d فوت (GPS عالی)</string>
     <string name="value_integer_feet_recommended">%1$d فوت (توصیه می‌شود)</string>

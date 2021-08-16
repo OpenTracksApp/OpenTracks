@@ -267,8 +267,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">хв/км</string>
     <string name="unit_minute_per_mile">хв./милю</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Адаптувати для точності</string>
-    <string name="value_adapt_battery_life">Адаптувати до часу роботи батареї</string>
     <string name="value_integer_feet">%1$d фут</string>
     <string name="value_integer_feet_excellent_gps">%1$d фут. (відмінний сигнал GPS)</string>
     <string name="value_integer_feet_recommended">%1$d фут. (рекомендовано)</string>

@@ -263,8 +263,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/milles</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Adapta\'n la precisió</string>
-    <string name="value_adapt_battery_life">Adapta a la durada de la bateria</string>
     <string name="value_integer_feet">%1$d peus</string>
     <string name="value_integer_feet_excellent_gps">%1$d peus (senyal de GPS excel·lent)</string>
     <string name="value_integer_feet_recommended">%1$d peus (recomanat)</string>

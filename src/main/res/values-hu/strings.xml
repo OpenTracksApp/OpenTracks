@@ -265,8 +265,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">perc/km</string>
     <string name="unit_minute_per_mile">perc/mérföld</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Beállítás pontossághoz</string>
-    <string name="value_adapt_battery_life">Akkumulátor élettartama szerint</string>
     <string name="value_integer_feet">%1$d láb</string>
     <string name="value_integer_feet_excellent_gps">%1$d láb (kiváló GPS-jel)</string>
     <string name="value_integer_feet_recommended">%1$d láb (ajánlott)</string>

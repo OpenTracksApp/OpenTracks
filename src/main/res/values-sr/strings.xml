@@ -264,8 +264,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">мин/км</string>
     <string name="unit_minute_per_mile">мин/ми</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Прилагоди за прецизност</string>
-    <string name="value_adapt_battery_life">Прилагоди трајању батерије</string>
     <string name="value_integer_feet">%1$d ст</string>
     <string name="value_integer_feet_excellent_gps">%1$d ст (одличан GPS)</string>
     <string name="value_integer_feet_recommended">%1$d ст (препоручено)</string>

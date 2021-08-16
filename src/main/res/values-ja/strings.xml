@@ -263,8 +263,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">分/km</string>
     <string name="unit_minute_per_mile">分/マイル</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">精度を重視</string>
-    <string name="value_adapt_battery_life">電池残量を重視</string>
     <string name="value_integer_feet">%1$dft</string>
     <string name="value_integer_feet_excellent_gps">%1$dft（GPS信号: 強）</string>
     <string name="value_integer_feet_recommended">%1$dft（推奨）</string>

@@ -264,8 +264,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">dk./km</string>
     <string name="unit_minute_per_mile">dk./mil</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Doğruluk için uyarla</string>
-    <string name="value_adapt_battery_life">Pil ömrü için uyarla</string>
     <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (mükemmel GPS)</string>
     <string name="value_integer_feet_recommended">%1$d ft (önerilir)</string>

@@ -264,8 +264,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">phút/km</string>
     <string name="unit_minute_per_mile">phút/dặm</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Thích ứng với độ chính xác</string>
-    <string name="value_adapt_battery_life">Thích ứng với tuổi thọ pin</string>
     <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (tín hiệu GPS tốt)</string>
     <string name="value_integer_feet_recommended">%1$d ft (được đề nghị)</string>

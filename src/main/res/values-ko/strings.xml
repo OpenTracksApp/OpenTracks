@@ -263,8 +263,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/mi</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">정확도를 위해 조정</string>
-    <string name="value_adapt_battery_life">배터리 수명을 위해 조정</string>
     <string name="value_integer_feet">%1$d피트</string>
     <string name="value_integer_feet_excellent_gps">%1$d피트(GPS 수신 원활)</string>
     <string name="value_integer_feet_recommended">%1$d피트(권장)</string>

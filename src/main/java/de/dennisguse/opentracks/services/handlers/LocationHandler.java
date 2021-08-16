@@ -19,7 +19,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PreferencesUtils;
 
-@VisibleForTesting(otherwise = 3)
+@VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
 public class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
 
     private final String TAG = LocationHandler.class.getSimpleName();
@@ -27,8 +27,7 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
     private LocationManager locationManager;
     private final TrackPointCreator handlerServer;
     private GpsStatus gpsStatus;
-    private LocationListenerPolicy locationListenerPolicy;
-    private Duration currentRecordingInterval;
+    private Duration gpsInterval;
     private Distance thresholdHorizontalAccuracy;
     private TrackPoint lastTrackPoint;
 
@@ -64,32 +63,31 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
     }
 
     public void onSharedPreferenceChanged(@NonNull Context context, @NonNull SharedPreferences sharedPreferences, String key) {
-        if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
-            int minRecordingInterval = PreferencesUtils.getMinRecordingInterval(sharedPreferences, context);
-            if (minRecordingInterval == PreferencesUtils.getMinRecordingIntervalAdaptBatteryLife(context)) {
-                // Choose battery life over moving time accuracy.
-                locationListenerPolicy = new AdaptiveLocationListenerPolicy(Duration.ofSeconds(30), Duration.ofSeconds(5), 5);
-            } else if (minRecordingInterval == PreferencesUtils.getMinRecordingIntervalAdaptAccuracy(context)) {
-                // Get all the updates.
-                locationListenerPolicy = new AdaptiveLocationListenerPolicy(Duration.ofSeconds(1), Duration.ofSeconds(30), 0);
-            } else {
-                locationListenerPolicy = new AbsoluteLocationListenerPolicy(Duration.ofSeconds(minRecordingInterval));
-            }
+        boolean registerListener = false;
 
-            registerLocationListener();
+        if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
+            registerListener = true;
+
+            gpsInterval = PreferencesUtils.getMinRecordingInterval(sharedPreferences, context);
+
+            if (gpsStatus != null) {
+                gpsStatus.onMinRecordingIntervalChanged(gpsInterval);
+            }
         }
         if (PreferencesUtils.isKey(context, R.string.recording_gps_accuracy_key, key)) {
             thresholdHorizontalAccuracy = PreferencesUtils.getThresholdHorizontalAccuracy(sharedPreferences, context);
         }
-        if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
+        if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
+            registerListener = true;
+
             if (gpsStatus != null) {
-                gpsStatus.onMinRecordingIntervalChanged(PreferencesUtils.getMinRecordingInterval(sharedPreferences, context));
+                Distance gpsMinDistance = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
+                gpsStatus.onRecordingDistanceChanged(gpsMinDistance);
             }
         }
-        if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
-            if (gpsStatus != null) {
-                gpsStatus.onRecordingDistanceChanged(PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context));
-            }
+
+        if (registerListener) {
+            registerLocationListener();
         }
     }
 
@@ -123,16 +121,6 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
             return;
         }
 
-        Duration idleTime = Duration.ofSeconds(0);
-        if (lastTrackPoint != null && trackPoint.getTime().isAfter(lastTrackPoint.getTime())) {
-            idleTime = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
-        }
-
-        locationListenerPolicy.updateIdleTime(idleTime);
-        if (currentRecordingInterval != locationListenerPolicy.getDesiredPollingInterval()) {
-            registerLocationListener();
-        }
-
         lastTrackPoint = trackPoint;
         handlerServer.onNewTrackPoint(trackPoint, thresholdHorizontalAccuracy);
     }
@@ -161,9 +149,7 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
             return;
         }
         try {
-            Duration interval = locationListenerPolicy.getDesiredPollingInterval();
-            currentRecordingInterval = interval;
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, interval.toMillis(), locationListenerPolicy.getMinDistance_m(), this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsInterval.toMillis(), 0, this);
         } catch (SecurityException e) {
             Log.e(TAG, "Could not register location listener; permissions not granted.", e);
         }
