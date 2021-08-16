@@ -216,8 +216,6 @@
     <string name="unit_mile_per_hour">mph</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">mnt/mil</string>
-    <string name="value_adapt_accuracy">Sesuaikan dengan akurasi</string>
-    <string name="value_adapt_battery_life">Sesuaikan untuk masa pakai baterai</string>
     <string name="value_integer_feet">%1$d kaki</string>
     <string name="value_integer_feet_excellent_gps">%1$d kaki (GPS sangat baik)</string>
     <string name="value_integer_feet_recommended">%1$d kaki (direkomendasikan)</string>

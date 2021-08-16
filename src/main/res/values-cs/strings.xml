@@ -333,8 +333,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/míle</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Upřednostnit přesnost</string>
-    <string name="value_adapt_battery_life">Upřednostnit výdrži baterie</string>
     <string name="value_integer_feet">%1$d stop</string>
     <string name="value_integer_feet_excellent_gps">%1$d stop (vynikající signál GPS)</string>
     <string name="value_integer_feet_recommended">%1$d stop (doporučeno)</string>

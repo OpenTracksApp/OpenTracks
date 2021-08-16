@@ -335,8 +335,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="unit_minute_per_kilometer">min./km</string>
     <string name="unit_minute_per_mile">min./mil</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Juster nøjagtighed</string>
-    <string name="value_adapt_battery_life">Tilpas til batterilevetid</string>
     <string name="value_integer_feet">%1$d fod</string>
     <string name="value_integer_feet_excellent_gps">%1$d fod (fremragende GPS)</string>
     <string name="value_integer_feet_recommended">%1$d fod (anbefales)</string>

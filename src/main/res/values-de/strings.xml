@@ -340,8 +340,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">Min./Meile</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Genauigkeit anpassen</string>
-    <string name="value_adapt_battery_life">An Akkulaufzeit anpassen</string>
     <string name="value_integer_feet">%1$d Fuß</string>
     <string name="value_integer_feet_excellent_gps">%1$d Fuß (ausgezeichnetes GPS-Signal)</string>
     <string name="value_integer_feet_recommended">%1$d Fuß (empfohlen)</string>

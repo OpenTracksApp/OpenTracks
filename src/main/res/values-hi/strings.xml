@@ -264,8 +264,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">मि/किमी</string>
     <string name="unit_minute_per_mile">मि/मील</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">सटीकता के लिए ग्रहण करें</string>
-    <string name="value_adapt_battery_life">बैटरी जीवन के लिए ग्रहण करें</string>
     <string name="value_integer_feet">%1$d फुट</string>
     <string name="value_integer_feet_excellent_gps">%1$d फुट (उत्कृष्ट GPS)</string>
     <string name="value_integer_feet_recommended">%1$d फ़ुट (अनुशंसित)</string>

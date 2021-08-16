@@ -215,8 +215,6 @@
     <string name="unit_mile_per_hour">mi/h</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/mi</string>
-    <string name="value_adapt_accuracy">Adapter pour la précision</string>
-    <string name="value_adapt_battery_life">Optimiser pour économiser la pile</string>
     <string name="value_integer_feet">%1$d pi</string>
     <string name="value_integer_feet_excellent_gps">%1$d pi(s) (réception GPS excellente)</string>
     <string name="value_integer_feet_recommended">%1$d pi (recommandé)</string>

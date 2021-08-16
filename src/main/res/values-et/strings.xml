@@ -332,8 +332,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/miilis</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Täpsuse kohandamine</string>
-    <string name="value_adapt_battery_life">Kohandage aku elueale</string>
     <string name="value_integer_feet">%1$d jalga</string>
     <string name="value_integer_feet_excellent_gps">%1$d jalga (tugev GPS-signaal)</string>
     <string name="value_integer_feet_recommended">%1$d jalga (soovitatav)</string>

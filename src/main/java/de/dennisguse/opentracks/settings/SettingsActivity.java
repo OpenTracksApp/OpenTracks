@@ -203,7 +203,7 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
             findPreference(getString(R.string.min_recording_interval_key))
                     .setSummaryProvider(
                             preference -> {
-                                Duration interval = Duration.ofSeconds(PreferencesUtils.getMinRecordingInterval(sharedPreferences, getContext()));
+                                Duration interval = PreferencesUtils.getMinRecordingInterval(sharedPreferences, getContext());
                                 return getString(R.string.settings_recording_location_frequency_summary, getString(R.string.value_integer_second, interval.getSeconds()));
                             }
                     );

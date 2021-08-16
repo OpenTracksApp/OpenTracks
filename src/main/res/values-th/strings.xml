@@ -262,8 +262,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">นาที/กม.</string>
     <string name="unit_minute_per_mile">นาที/ไมล์</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">ปรับความแม่นยำ</string>
-    <string name="value_adapt_battery_life">ปรับเพื่อแบตเตอรี่</string>
     <string name="value_integer_feet">%1$d ฟุต</string>
     <string name="value_integer_feet_excellent_gps">%1$d ฟุต (สัญญาณ GPS ดี)</string>
     <string name="value_integer_feet_recommended">%1$d ฟุต (แนะนำ)</string>

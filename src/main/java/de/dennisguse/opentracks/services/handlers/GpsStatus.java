@@ -71,8 +71,8 @@ class GpsStatus {
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         thresholdHorizontalAccuracy = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
 
-        Duration minRecordingInterval = Duration.ofSeconds(PreferencesUtils.getMinRecordingInterval(sharedPreferences, context));
-        signalLostThreshold = !minRecordingInterval.isNegative() ? SIGNAL_LOST_THRESHOLD.plus(minRecordingInterval) : SIGNAL_LOST_THRESHOLD;
+        Duration minRecordingInterval = PreferencesUtils.getMinRecordingInterval(sharedPreferences, context);
+        signalLostThreshold = SIGNAL_LOST_THRESHOLD.plus(minRecordingInterval);
 
         gpsStatusHandler = new Handler();
     }
@@ -102,13 +102,8 @@ class GpsStatus {
         thresholdHorizontalAccuracy = value;
     }
 
-    /**
-     * Method to change the lost threshold from outside.
-     *
-     * @param value Minimal recording interval preference value in seconds or an special value: -1, -2, 0.
-     */
-    public void onMinRecordingIntervalChanged(int value) {
-        signalLostThreshold = value > 0 ? SIGNAL_LOST_THRESHOLD.plus(Duration.ofSeconds(value)) : SIGNAL_LOST_THRESHOLD;
+    public void onMinRecordingIntervalChanged(Duration value) {
+        signalLostThreshold = SIGNAL_LOST_THRESHOLD.plus(value);
     }
 
     /**

@@ -266,8 +266,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/jūdzē</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Pielāgot precizitātei</string>
-    <string name="value_adapt_battery_life">Pielāgot akumulatora darbības ilgumam</string>
     <string name="value_integer_feet">%1$d pēda(-as)</string>
     <string name="value_integer_feet_excellent_gps">%1$d pēda(-as) (izcilas kvalitātes GPS)</string>
     <string name="value_integer_feet_recommended">%1$d pēdas (ieteicams)</string>

@@ -265,8 +265,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/mile</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Anpassa för noggrannhet</string>
-    <string name="value_adapt_battery_life">Anpassa för batterilivslängd</string>
     <string name="value_integer_feet">%1$d fot</string>
     <string name="value_integer_feet_excellent_gps">%1$d fot (utmärkt GPS-mottagning)</string>
     <string name="value_integer_feet_recommended">%1$d fot (rekommenderas)</string>

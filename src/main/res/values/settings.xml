@@ -125,13 +125,9 @@
         <item>5000</item>
     </string-array>
 
-    <string name="min_recording_interval_key" translatable="false">minRecordingInterval</string>
+    <string name="min_recording_interval_key" translatable="false">minRecordingIntervalV2</string>
     <string name="min_recording_interval_default" translatable="false">0</string>
-    <string name="min_recording_interval_adapt_accuracy" translatable="false">-1</string>
-    <string name="min_recording_interval_adapt_battery_life" translatable="false">-2</string>
     <string-array name="min_recording_interval_values">
-        <item>@string/min_recording_interval_adapt_battery_life</item>
-        <item>@string/min_recording_interval_adapt_accuracy</item>
         <item>@string/min_recording_interval_default</item>
         <item>2</item>
         <item>3</item>

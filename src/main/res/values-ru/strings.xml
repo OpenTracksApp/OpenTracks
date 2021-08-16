@@ -267,8 +267,6 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">мин/км</string>
     <string name="unit_minute_per_mile">мин/мил</string>
     <!-- Value -->
-    <string name="value_adapt_accuracy">Макс. точность</string>
-    <string name="value_adapt_battery_life">Мин. расход батареи</string>
     <string name="value_integer_feet">%1$d фт</string>
     <string name="value_integer_feet_excellent_gps">%1$d фт (отличный сигнал)</string>
     <string name="value_integer_feet_recommended">%1$d фт (рекомендуется)</string>

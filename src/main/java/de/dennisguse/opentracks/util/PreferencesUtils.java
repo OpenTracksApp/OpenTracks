@@ -28,6 +28,8 @@ import androidx.annotation.VisibleForTesting;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.preference.PreferenceManager;
 
+import java.time.Duration;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -241,22 +243,19 @@ public class PreferencesUtils {
         return Distance.of(getInt(sharedPreferences, context, R.string.max_recording_distance_key, MAX_RECORDING_DISTANCE));
     }
 
-    //TODO Duration
-    public static int getMinRecordingInterval(SharedPreferences sharedPreferences, Context context) {
-        final int MIN_RECORDING_INTERVAL = Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default));
-        return getInt(sharedPreferences, context, R.string.min_recording_interval_key, MIN_RECORDING_INTERVAL);
+    public static Duration getMinRecordingInterval(SharedPreferences sharedPreferences, Context context) {
+        final Duration MIN_RECORDING_INTERVAL = getMinRecordingIntervalDefault(context);
+        Duration interval = Duration.ofSeconds(getInt(sharedPreferences, context, R.string.min_recording_interval_key, (int) MIN_RECORDING_INTERVAL.getSeconds()));
+
+        if (interval.isNegative()) {
+            // Due to removal of adaptive listener policy; used -1, and -2
+            interval = getMinRecordingIntervalDefault(context);
+        }
+        return interval;
     }
 
-    public static int getMinRecordingIntervalAdaptAccuracy(Context context) {
-        return Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_adapt_accuracy));
-    }
-
-    public static int getMinRecordingIntervalAdaptBatteryLife(Context context) {
-        return Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_adapt_battery_life));
-    }
-
-    public static int getMinRecordingIntervalDefault(Context context) {
-        return Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default));
+    public static Duration getMinRecordingIntervalDefault(Context context) {
+        return Duration.ofSeconds(Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default)));
     }
 
     public static Distance getThresholdHorizontalAccuracy(SharedPreferences sharedPreferences, Context context) {
