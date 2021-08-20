@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">eroplano</string>
     <string name="activity_type_atv">ATV</string>
@@ -184,7 +184,7 @@ limitations under the License.
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Power</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="settings_not_while_recording">Hindi available habang inire-rekord ang isang track.</string>
+    <string name="settings_not_while_recording">Hindi available habang inire-rekord ang isang track</string>
     <string name="settings_show">Ipakita</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Advanced</string>
@@ -216,9 +216,10 @@ limitations under the License.
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
     <string name="settings_stats_units_metric">Metric (km, m)</string>
     <string name="settings_stats_units_title">Gustong mga unit</string>
-
     <!-- Share Track -->
-    <string name="share_track_share_file_body">Tingin ko maaari kang maging interesado sa track na ito. \n\nUpang tingnan ang track na ito, gamitin ang Google Earth o iba pang software ng pagmamapa. \n\n%1$s</string>
+    <string name="share_track_share_file_body">Tingin ko maaari kang maging interesado sa track na ito.
+\n
+\n%1$s</string>
     <string name="share_track_subject">Gusto kong magbahagi ng track sa iyo</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Avg na nakatakdang bilis ng pagkilos</string>
@@ -363,4 +364,9 @@ limitations under the License.
     <string name="waypoint_type_waterfall">waterfall</string>
     <string name="waypoint_type_water_fountain">water fountain</string>
     <string name="waypoint_type_waypoint">waypoint</string>
+    <string name="about_description"><i> OpenTracks</i> ay isang sport tracking application na ganap na nirerespeto ang iyong privacy.</string>
+    <string name="about_url">Web page ng Proyekto: <a href="%1$s "> %1$s</a></string>
+    <string name="about_version_code">Code ng bersyon: %1$d</string>
+    <string name="about_version_name">Pangalan ng bersyon: %1$s</string>
+    <string name="about_preference_title">Tungkol Sa OpenTracks</string>
 </resources>
