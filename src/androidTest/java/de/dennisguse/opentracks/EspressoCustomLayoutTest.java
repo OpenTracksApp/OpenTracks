@@ -4,8 +4,11 @@ package de.dennisguse.opentracks;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.action.MotionEvents;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.rule.GrantPermissionRule;
@@ -13,6 +16,7 @@ import androidx.test.runner.AndroidJUnit4;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -33,7 +37,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -51,21 +54,19 @@ public class EspressoCustomLayoutTest {
 
     @Test
     public void customLayoutTest() {
-        ViewInteraction appCompatImageButton = onView(
-                allOf(withId(R.id.controller_record), withContentDescription("Record"),
-                        childAtPosition(
-                                allOf(withId(R.id.controller_container),
-                                        childAtPosition(
-                                                withId(R.id.controller_fragment),
-                                                0)),
-                                0),
-                        isDisplayed()));
-        appCompatImageButton.perform(click());
+        // TrackListActivity: start recording
+        ViewInteraction trackControllerRecordButton = onView(withId(R.id.controller_record));
+        trackControllerRecordButton.perform(click());
 
+        // Get custom layout preferences and check all data fields are showed.
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         Layout layout = PreferencesUtils.getCustomLayout(sharedPreferences, context);
 
         onView(withId(R.id.stats_recycler_view)).check(new RecyclerViewItemCountAssertion((int) layout.getFields().stream().filter(DataField::isVisible).count()));
+
+        // stop recording
+        ViewInteraction trackControllerStopButton = onView(withId(R.id.controller_stop));
+        trackControllerStopButton.perform(veryLongTouch(1600));
     }
 
     private static class RecyclerViewItemCountAssertion implements ViewAssertion {
@@ -102,6 +103,35 @@ public class EspressoCustomLayoutTest {
                 ViewParent parent = view.getParent();
                 return parent instanceof ViewGroup && parentMatcher.matches(parent)
                         && view.equals(((ViewGroup) parent).getChildAt(position));
+            }
+        };
+    }
+
+    private static ViewAction veryLongTouch(final int duration_ms) {
+        return new ViewAction() {
+            @Override
+            public String getDescription() {
+                return "Perform long touch.";
+            }
+
+            @Override
+            public Matcher<View> getConstraints() {
+                return isDisplayed();
+            }
+
+            @Override
+            public void perform(UiController uiController, final View view) {
+                // Get view absolute position
+                int[] location = new int[2];
+                view.getLocationOnScreen(location);
+
+                // Offset coordinates by view position
+                float[] coordinates = new float[]{location[0] + 1, location[1] + 1};
+
+                // Send down event, pause, and send up
+                MotionEvent down = MotionEvents.sendDown(uiController, coordinates, new float[]{1f, 1f}).down;
+                uiController.loopMainThreadForAtLeast(duration_ms);
+                MotionEvents.sendUp(uiController, down, coordinates);
             }
         };
     }

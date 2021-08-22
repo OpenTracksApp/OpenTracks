@@ -274,7 +274,7 @@ class TrackRecordingManager {
             trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
             track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
 
-            contentProviderUtils.updateTrack(track);
+            contentProviderUtils.updateTrackStatistics(track.getId(), track.getTrackStatistics());
         } catch (SQLiteException e) {
             /*
              * Insert failed, most likely because of SqlLite error code 5 (SQLite_BUSY).
