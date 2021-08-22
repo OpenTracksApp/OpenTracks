@@ -101,7 +101,7 @@ limitations under the License.
     <string name="description_speed_ms">Hastighet (m/s)</string>
     <string name="description_sensor_cadence">Kadens (o/min)</string>
     <string name="description_sensor_heart_rate">Puls (slag/min)</string>
-    <string name="description_sensor_power">Styrke (W)</string>
+    <string name="description_sensor_power">Effekt (W)</string>
     <string name="description_speed_imperial">Hastighet (mi/hr)</string>
     <string name="description_speed_metric">Hastighet (km/t)</string>
     <string name="description_time">Tid</string>
@@ -503,4 +503,24 @@ limitations under the License.
     <string name="settings_sensor_cycling_cadence">Sykling: kadens</string>
     <string name="settings_sensor_cycling_distance_speed">Sykling: distanse og hastighet</string>
     <string name="settings_sensor_running_speed_and_cadence">Løping: distanse, hastighet og kadens</string>
+    <string name="description_speed_source_sensor">Sensor: %1$s</string>
+    <string name="settings_recording_customize_layout_title">Tilpass opptakslayouten</string>
+    <string name="settings_layout_reset_confirm_message">Alle layoutinnstillinger blir tilbakestilt til standardverdiene. Dette vil ikke slette spor på enheten.</string>
+    <string name="stats_coordinates">Breddegrad/Lengdegrad</string>
+    <string name="stats_sensors_heart_rate">Puls</string>
+    <string name="description_speed_source_gps">GPS</string>
+    <string name="generic_choose_an_option">Velg et alternativ</string>
+    <string name="settings_recording_customize_layout_select_columns">Datafelter per rekke</string>
+    <string name="settings_layout_reset">Tilbakestill tilpasset layout</string>
+    <string name="settings_layout_reset_confirm_title">Tilbakestille layoutene dine\?</string>
+    <string name="settings_layout_reset_done">Alle layoutinnstillinger er tilbakestilt til standardverdiene</string>
+    <string name="settings_all_reset">Tilbakestill alle innstillinger</string>
+    <string name="stats_sensors_cadence">Kadens</string>
+    <string name="stats_sensors_power">Effekt</string>
+    <string name="location_coordinate">%1$s°</string>
+    <string name="location_latitude_longitude">%1$s, %2$s</string>
+    <string name="title_activity_settings_custom_layout">Tilpass opptakslayouten</string>
+    <string name="field_set_primary">Primær</string>
+    <string name="field_set_secondary">Sekundær</string>
+    <string name="field_remove_from_layout">Fjern</string>
 </resources>
