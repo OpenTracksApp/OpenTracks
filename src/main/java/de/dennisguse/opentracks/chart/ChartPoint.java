@@ -77,6 +77,7 @@ public class ChartPoint {
         return power;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "ChartPoint{" + "timeOrDistance=" + timeOrDistance + '}';

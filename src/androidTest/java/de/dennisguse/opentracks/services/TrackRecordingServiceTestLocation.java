@@ -107,7 +107,7 @@ public class TrackRecordingServiceTestLocation {
 
     @MediumTest
     @Test
-    public void testOnLocationChangedAsync_movingAccurate() throws Exception {
+    public void testOnLocationChangedAsync_movingAccurate() {
         // given
         Track.Id trackId = service.startNewTrack();
         service.getHandlerServer().setAltitudeSumManager(altitudeSumManager);
@@ -180,7 +180,7 @@ public class TrackRecordingServiceTestLocation {
 
     @MediumTest
     @Test
-    public void testOnLocationChangedAsync_slowMovingAccurate() throws Exception {
+    public void testOnLocationChangedAsync_slowMovingAccurate() {
         // given
         Track.Id trackId = service.startNewTrack();
         service.getHandlerServer().setAltitudeSumManager(altitudeSumManager);
@@ -225,7 +225,7 @@ public class TrackRecordingServiceTestLocation {
 
     @MediumTest
     @Test
-    public void testOnLocationChangedAsync_idle() throws Exception {
+    public void testOnLocationChangedAsync_idle() {
         // given
         Track.Id trackId = service.startNewTrack();
         service.getHandlerServer().setAltitudeSumManager(altitudeSumManager);
@@ -277,7 +277,7 @@ public class TrackRecordingServiceTestLocation {
 
     @MediumTest
     @Test
-    public void testOnLocationChangedAsync_idle_withMovement() throws Exception {
+    public void testOnLocationChangedAsync_idle_withMovement() {
         // given
         Track.Id trackId = service.startNewTrack();
         service.getHandlerServer().setAltitudeSumManager(altitudeSumManager);
@@ -337,7 +337,7 @@ public class TrackRecordingServiceTestLocation {
 
     @MediumTest
     @Test
-    public void testOnLocationChangedAsync_idle_withSensorData() throws Exception {
+    public void testOnLocationChangedAsync_idle_withSensorData() {
         // given
         Track.Id trackId = service.startNewTrack();
         service.getHandlerServer().setAltitudeSumManager(altitudeSumManager);
@@ -432,7 +432,7 @@ public class TrackRecordingServiceTestLocation {
 
     @MediumTest
     @Test
-    public void testOnLocationChangedAsync_segment() throws Exception {
+    public void testOnLocationChangedAsync_segment() {
         // given
         Track.Id trackId = service.startNewTrack();
         service.getHandlerServer().setAltitudeSumManager(altitudeSumManager);

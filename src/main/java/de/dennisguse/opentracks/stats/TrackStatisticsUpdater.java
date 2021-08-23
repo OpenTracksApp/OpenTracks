@@ -271,6 +271,7 @@ public class TrackStatisticsUpdater {
         return true;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "TrackStatisticsUpdater{" +

@@ -1,5 +1,6 @@
 package de.dennisguse.opentracks.content.sensor;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
@@ -92,10 +93,12 @@ public final class SensorDataRunning extends SensorData<SensorDataRunning.Data> 
             return cadence;
         }
 
+        @Nullable
         public Distance getDistance() {
             return distance;
         }
 
+        @NonNull
         @Override
         public String toString() {
             return "Data{" +

@@ -123,6 +123,7 @@ public class Distance {
         return Objects.hash(distance_m);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Distance{" +
