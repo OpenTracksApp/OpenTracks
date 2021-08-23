@@ -515,4 +515,24 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_sensor_cycling_distance_speed">Ciclismo: distancia e velocidade</string>
     <string name="settings_sensor_cycling_cadence">Ciclismo: cadencia</string>
     <string name="settings_sensor_running_speed_and_cadence">Execución: distancia, velocidade, e cadencia</string>
+    <string name="description_speed_source_sensor">Sensor: %1$s</string>
+    <string name="settings_recording_customize_layout_title">Personaliza a disposición da gravación</string>
+    <string name="settings_layout_reset_confirm_message">Os axustes da disposición volverán aos valores por defecto. Esto non eliminará as rutas no dispositivo.</string>
+    <string name="stats_coordinates">Latitude/Lonxitude</string>
+    <string name="stats_sensors_power">Potencia</string>
+    <string name="description_speed_source_gps">GPS</string>
+    <string name="generic_choose_an_option">Elixe unha opción</string>
+    <string name="settings_recording_customize_layout_select_columns">Campos de datos por fila</string>
+    <string name="settings_layout_reset">Restablecer disposición</string>
+    <string name="settings_layout_reset_confirm_title">Restablecer disposición\?</string>
+    <string name="settings_layout_reset_done">Os axustes da disposición volveron aos seus valores por defecto</string>
+    <string name="settings_all_reset">Restablecer tódolos Axustes</string>
+    <string name="stats_sensors_heart_rate">Pulso cardíaco</string>
+    <string name="stats_sensors_cadence">Cadencia</string>
+    <string name="location_coordinate">%1$sº</string>
+    <string name="location_latitude_longitude">%1$s, %2$s</string>
+    <string name="title_activity_settings_custom_layout">Personaliza a disposición ao gravar</string>
+    <string name="field_remove_from_layout">Eliminar</string>
+    <string name="field_set_primary">Primario</string>
+    <string name="field_set_secondary">Secundario</string>
 </resources>
