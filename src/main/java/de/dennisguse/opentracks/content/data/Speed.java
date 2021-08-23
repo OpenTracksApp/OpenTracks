@@ -1,5 +1,7 @@
 package de.dennisguse.opentracks.content.data;
 
+import androidx.annotation.NonNull;
+
 import java.time.Duration;
 import java.util.Objects;
 
@@ -132,6 +134,7 @@ public class Speed {
         return Objects.hash(speed_mps);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Speed{" +

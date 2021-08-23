@@ -191,6 +191,7 @@ public final class SensorDataCycling {
                 return speed;
             }
 
+            @NonNull
             @Override
             public String toString() {
                 return "Data{" +

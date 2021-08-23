@@ -144,7 +144,7 @@ public class EspressoEditTrackRecordingTest {
             // check track's name is "New Name"
             ViewInteraction textView = onView(
                     allOf(withId(R.id.stats_name_value),
-                            withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
+                            withParent(withParent(IsInstanceOf.instanceOf(android.widget.ScrollView.class))),
                             isDisplayed()));
             textView.check(matches(withText("New Name")));
         }
@@ -153,7 +153,7 @@ public class EspressoEditTrackRecordingTest {
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
 
-        return new TypeSafeMatcher<View>() {
+        return new TypeSafeMatcher<>() {
             @Override
             public void describeTo(Description description) {
                 description.appendText("Child at position " + position + " in parent ");

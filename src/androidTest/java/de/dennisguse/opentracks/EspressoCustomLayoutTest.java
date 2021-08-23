@@ -9,10 +9,10 @@ import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewAssertion;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.action.MotionEvents;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.rule.GrantPermissionRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -83,7 +83,7 @@ public class EspressoCustomLayoutTest {
             }
 
             RecyclerView recyclerView = (RecyclerView) view;
-            RecyclerView.Adapter adapter = recyclerView.getAdapter();
+            RecyclerView.Adapter<?> adapter = recyclerView.getAdapter();
             assertThat(adapter.getItemCount(), is(expectedCount));
         }
     }
