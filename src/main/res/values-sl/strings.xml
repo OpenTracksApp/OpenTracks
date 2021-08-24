@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,7 +12,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
---><resources>
+-->
+<resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">letalo</string>
     <string name="activity_type_atv">štirikolesniki</string>
@@ -219,6 +219,7 @@ limitations under the License.
     <string name="settings_stats_units_imperial">Imperialni sistem (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrični sistem (km, m)</string>
     <string name="settings_stats_units_title">Prednostne enote</string>
+
     <!-- Share Track -->
     <string name="share_track_share_file_body">Zdi se mi, da bi te ta pot utegnila zanimati.
 \n
@@ -380,115 +381,4 @@ limitations under the License.
     <string name="waypoint_type_waterfall">slap</string>
     <string name="waypoint_type_water_fountain">fontana</string>
     <string name="waypoint_type_waypoint">smerna točka</string>
-    <string name="help_track_map_title"></string>
-    <string name="export_without_photos"></string>
-    <string name="settings_default_trackfileformat"></string>
-    <string name="sensor_state_heart_rate_avg"></string>
-    <string name="track_delete_not_recording"></string>
-    <string name="track_detail_intervals_tab"></string>
-    <string name="generic_separator_done_total"></string>
-    <string name="settings_night_mode_option_day"></string>
-    <string name="settings_sensor_cycling_distance_speed"></string>
-    <string name="settings_sensor_wheel_circumference"></string>
-    <string name="stats_loss"></string>
-    <string name="gps_disabled_msg"></string>
-    <string name="track_distance_notification"></string>
-    <string name="about_history"></string>
-    <string name="settings_sensor_cycling_cadence"></string>
-    <string name="voice_speed_lap"></string>
-    <string name="export_error_post_workout"></string>
-    <string name="menu_insert_gallery_img"></string>
-    <string name="export_progress_summary_overwrite_msg"></string>
-    <string name="export_with_photos"></string>
-    <string name="sensor_state_cadence_max"></string>
-    <string name="settings_sensor_connecting"></string>
-    <string name="track_speed_notification"></string>
-    <string name="description_default_speed_or_pace"></string>
-    <string name="import_parser_error"></string>
-    <string name="generic_show_errors"></string>
-    <string name="stats_split_interval"></string>
-    <string name="generic_completed"></string>
-    <string name="bluetooth_disabled"></string>
-    <string name="track_recording_notification_accuracy"></string>
-    <string name="export_progress_summary_new_msg"></string>
-    <string name="export_progress_summary_skip_msg"></string>
-    <string name="hold_to_pause"></string>
-    <string name="settings_recording_fullscreen_on_while_recording_summary"></string>
-    <string name="help_gps_troubleshooting_title"></string>
-    <string name="hold_to_stop"></string>
-    <string name="menu_voice_rate"></string>
-    <string name="import_progress_summary_errors_msg"></string>
-    <string name="settings_night_mode_option_night"></string>
-    <string name="help_data_google_play_services_title"></string>
-    <string name="help_recording_content"></string>
-    <string name="interval_list_empty_message"></string>
-    <string name="share_image_subject"></string>
-    <string name="help_data_storage_title"></string>
-    <string name="help_data_storage_content"></string>
-    <string name="instant_export_enabled_title"></string>
-    <string name="import_progress_summary_exists_msg"></string>
-    <string name="import_file_imported"></string>
-    <string name="settings_night_mode_title"></string>
-    <string name="gps_fixed_and_ready"></string>
-    <string name="permission_gps_failed"></string>
-    <string name="about_libraries"></string>
-    <string name="open_track_as_KML"></string>
-    <string name="voice_pace_per_mile"></string>
-    <string name="about_preference_title"></string>
-    <string name="import_unsupported_format"></string>
-    <string name="settings_sensor_disconnected"></string>
-    <string name="track_pace_notification"></string>
-    <string name="help_feature_title"></string>
-    <string name="sensor_state_power_avg"></string>
-    <string name="about_description"></string>
-    <string name="help_storage_pictures_title"></string>
-    <string name="settings_recording_show_on_lockscreen_while_recording_summary"></string>
-    <string name="settings_recording_keep_screen_on_while_recording_summary"></string>
-    <string name="export_track_already_exists_msg"></string>
-    <string name="about_version_code"></string>
-    <string name="menu_resume_track"></string>
-    <string name="open_track_as_GPX"></string>
-    <string name="instant_export_enabled_summary"></string>
-    <string name="import_progress_summary_ok_msg"></string>
-    <string name="settings_night_mode_option_system"></string>
-    <string name="activity_type_escooter"></string>
-    <string name="help_recording_title"></string>
-    <string name="settings_default_export_uri_title"></string>
-    <string name="generic_skip"></string>
-    <string name="help_track_export_content"></string>
-    <string name="open_track_as_trackfileformat"></string>
-    <string name="track_delete_progress"></string>
-    <string name="generic_click_twice_cancel"></string>
-    <string name="share_image_body"></string>
-    <string name="help_storage_pictures_content"></string>
-    <string name="import_prevent_reimport"></string>
-    <string name="delete_service"></string>
-    <string name="aggregated_stats_empty_message"></string>
-    <string name="import_thread_interrupted"></string>
-    <string name="settings_recording_fullscreen_on_while_recording_title"></string>
-    <string name="import_no_kml_file_found"></string>
-    <string name="settings_recording_keep_screen_on_while_recording_title"></string>
-    <string name="import_error_info"></string>
-    <string name="settings_prevent_reimport_tracks_title"></string>
-    <string name="sensor_state_cadence_avg"></string>
-    <string name="marker_add_photo_canceled"></string>
-    <string name="voice_pace_lap"></string>
-    <string name="settings_recording_show_on_lockscreen_while_recording_title"></string>
-    <string name="export_progress_summary_errors_msg"></string>
-    <string name="sensor_could_not_scan"></string>
-    <string name="about_url"></string>
-    <string name="description_altitude_loss"></string>
-    <string name="generic_overwrite"></string>
-    <string name="about_version_name"></string>
-    <string name="help_feature_content"></string>
-    <string name="export_all_do_it_for_all"></string>
-    <string name="settings_error_initial_values_restored"></string>
-    <string name="sensor_state_heart_rate_max"></string>
-    <string name="help_track_export_title"></string>
-    <string name="import_error_list_dialog_title"></string>
-    <string name="export_track_errors"></string>
-    <string name="about_third_party_data"></string>
-    <string name="import_unable_to_import_file"></string>
-    <string name="generic_open_track"></string>
-    <string name="help_support_title"></string>
 </resources>
