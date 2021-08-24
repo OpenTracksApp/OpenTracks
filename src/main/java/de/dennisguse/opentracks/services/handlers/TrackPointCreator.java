@@ -29,8 +29,6 @@ public class TrackPointCreator {
     private Context context;
 
     private final Callback service;
-// Disabled to simplify testing and implementation of #822
-//    private ExecutorService serviceExecutor;
 
     @NonNull
     private Clock clock = Clock.systemUTC();
@@ -52,7 +50,6 @@ public class TrackPointCreator {
 
     public void start(@NonNull Context context) {
         this.context = context;
-//        serviceExecutor = Executors.newSingleThreadExecutor();
 
         SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
         locationHandler.onStart(context, sharedPreferences);
@@ -100,11 +97,6 @@ public class TrackPointCreator {
     public void stop() {
         locationHandler.onStop();
 
-//        if (serviceExecutor != null) {
-//            serviceExecutor.shutdownNow();
-//        }
-//        serviceExecutor = null;
-
         if (remoteSensorManager != null) {
             remoteSensorManager.stop();
             remoteSensorManager = null;
@@ -128,13 +120,8 @@ public class TrackPointCreator {
     }
 
     public void onNewTrackPoint(TrackPoint trackPoint, Distance thresholdHorizontalAccuracy) {
-//        if (serviceExecutor == null || serviceExecutor.isTerminated() || serviceExecutor.isShutdown()) {
-//            return;
-//        }
-
         fillAndReset(trackPoint);
 
-//        serviceExecutor.execute(() -> service.newTrackPoint(trackPoint, thresholdHorizontalAccuracy));
         service.newTrackPoint(trackPoint, thresholdHorizontalAccuracy);
     }
 

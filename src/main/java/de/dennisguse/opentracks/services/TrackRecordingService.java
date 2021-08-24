@@ -50,8 +50,8 @@ import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTask;
-import de.dennisguse.opentracks.services.tasks.PeriodicTask;
 import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
+import de.dennisguse.opentracks.services.tasks.PeriodicTaskFactory;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.ExportUtils;
@@ -209,7 +209,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         return trackRecordingManager.insertMarker(name, category, description, photoUrl);
     }
 
-    public void run(@NonNull PeriodicTask periodicTask) {
+    public void run(@NonNull PeriodicTaskFactory.Task periodicTask) {
         periodicTask.run(recordingStatus.getTrackId(), trackRecordingManager.getTrackStatistics());
     }
 

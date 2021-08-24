@@ -49,7 +49,7 @@ public class PeriodicTaskExecutor {
      */
     private int taskFrequency;
 
-    private PeriodicTask periodicTask;
+    private PeriodicTaskFactory.Task periodicTask;
 
     // Time periodic task executor
     private TimerTaskExecutor timerTaskExecutor = null;
