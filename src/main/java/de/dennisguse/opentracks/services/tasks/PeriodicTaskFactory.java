@@ -20,18 +20,40 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.stats.TrackStatistics;
+
 /**
- * An interface for classes that can create {@link PeriodicTask}.
+ * An interface for classes that can create {@link Task}.
  *
  * @author Sandor Dornbush
  */
-interface PeriodicTaskFactory {
+public interface PeriodicTaskFactory {
+
+    @NonNull
+    Task create(Context context);
 
     /**
-     * Creates a {@link PeriodicTask}.
+     * This is interface for a task that will be executed on some schedule.
      *
-     * @return the task, or null if the task is not supported
+     * @author Sandor Dornbush
      */
-    @NonNull
-    PeriodicTask create(Context context);
+    interface Task {
+
+        /**
+         * Sets up this task for subsequent calls to the run method.
+         */
+        void start();
+
+        /**
+         * This method will be called periodically.
+         */
+        @Deprecated
+        void run(@NonNull Track.Id trackId, @NonNull TrackStatistics trackStatistics);
+
+        /**
+         * Shuts down this task and clean up resources.
+         */
+        void shutdown();
+    }
 }

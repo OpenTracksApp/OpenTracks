@@ -42,7 +42,7 @@ import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
  *
  * @author Sandor Dornbush
  */
-public class AnnouncementPeriodicTask implements PeriodicTask {
+public class AnnouncementPeriodicTask implements PeriodicTaskFactory.Task {
 
     private static final String TAG = AnnouncementPeriodicTask.class.getSimpleName();
 
@@ -209,7 +209,7 @@ public class AnnouncementPeriodicTask implements PeriodicTask {
 
         @Override
         @NonNull
-        public PeriodicTask create(Context context) {
+        public Task create(Context context) {
             return new AnnouncementPeriodicTask(context);
         }
     }

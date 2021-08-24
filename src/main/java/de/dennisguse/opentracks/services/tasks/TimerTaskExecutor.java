@@ -30,13 +30,13 @@ import de.dennisguse.opentracks.services.TrackRecordingService;
  */
 class TimerTaskExecutor {
 
-    private final PeriodicTask periodicTask;
+    private final PeriodicTaskFactory.Task periodicTask;
     private final TrackRecordingService trackRecordingService;
 
     private TimerTask timerTask;
     private Timer timer;
 
-    public TimerTaskExecutor(PeriodicTask periodicTask, TrackRecordingService trackRecordingService) {
+    public TimerTaskExecutor(PeriodicTaskFactory.Task periodicTask, TrackRecordingService trackRecordingService) {
         this.periodicTask = periodicTask;
         this.trackRecordingService = trackRecordingService;
     }
