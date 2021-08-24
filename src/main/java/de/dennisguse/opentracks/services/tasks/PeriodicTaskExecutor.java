@@ -15,6 +15,7 @@
  */
 package de.dennisguse.opentracks.services.tasks;
 
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -51,13 +52,22 @@ public class PeriodicTaskExecutor {
 
     private PeriodicTaskFactory.Task periodicTask;
 
-    // Time periodic task executor
-    private TimerTaskExecutor timerTaskExecutor = null;
+    private Handler handler;
 
     private boolean metricUnits;
 
     private TrackStatistics trackStatistics;
     private Distance nextTaskDistance = Distance.of(Double.MAX_VALUE);
+
+    private final Runnable timer = new Runnable() {
+        @Override
+        public void run() {
+            if (trackRecordingService != null && periodicTask != null) {
+                trackRecordingService.run(periodicTask);
+                handler.postDelayed(this, getNextDuration());
+            }
+        }
+    };
 
     public PeriodicTaskExecutor(@NonNull TrackRecordingService trackRecordingService, PeriodicTaskFactory periodicTaskFactory) {
         this.trackRecordingService = trackRecordingService;
@@ -67,18 +77,15 @@ public class PeriodicTaskExecutor {
         taskFrequency = TASK_FREQUENCY_OFF;
     }
 
-    /**
-     * Restores the executor.
-     */
     public void restore() {
         if (!trackRecordingService.isRecording() || trackRecordingService.isPaused()) {
             Log.d(TAG, "Not recording or paused.");
             return;
         }
 
-        if (!isTimeFrequency() && timerTaskExecutor != null) {
-            timerTaskExecutor.shutdown();
-            timerTaskExecutor = null;
+        if (!isTimeFrequency() && handler != null) {
+            handler.removeCallbacks(timer);
+            handler = null;
         }
         if (taskFrequency == TASK_FREQUENCY_OFF) {
             Log.d(TAG, "Task frequency is off.");
@@ -89,33 +96,27 @@ public class PeriodicTaskExecutor {
         periodicTask.start();
 
         if (isTimeFrequency()) {
-            if (timerTaskExecutor == null) {
-                timerTaskExecutor = new TimerTaskExecutor(periodicTask, trackRecordingService);
+            if (handler == null) {
+                handler = new Handler();
             }
-            timerTaskExecutor.scheduleTask(Duration.ofMinutes(taskFrequency));
+            handler.postDelayed(timer, getNextDuration());
         } else {
             // For distance periodic task
             updateNextTaskDistance();
         }
     }
 
-    /**
-     * Shuts down the executor.
-     */
     public void shutdown() {
         if (periodicTask != null) {
             periodicTask.shutdown();
             periodicTask = null;
         }
-        if (timerTaskExecutor != null) {
-            timerTaskExecutor.shutdown();
-            timerTaskExecutor = null;
+        if (handler != null) {
+            handler.removeCallbacks(timer);
+            handler = null;
         }
     }
 
-    /**
-     * Updates the executor.
-     */
     public void update(@NonNull Track.Id trackId, @NonNull TrackStatistics trackStatistics) {
         if (!isDistanceFrequency() || periodicTask == null) {
             return;
@@ -165,17 +166,19 @@ public class PeriodicTaskExecutor {
         return announcementInterval.multipliedBy(index + 1);
     }
 
-    /**
-     * True if time frequency.
-     */
     private boolean isTimeFrequency() {
         return taskFrequency > 0;
     }
 
-    /**
-     * True if distance frequency.
-     */
     private boolean isDistanceFrequency() {
         return taskFrequency < 0;
+    }
+
+    private long getNextDuration() {
+        if (!isTimeFrequency()) {
+            throw new RuntimeException("Using distance frequency as time frequency is impossible.");
+        }
+        Duration interval = Duration.ofMinutes(taskFrequency);
+        return interval.toMillis() - (trackRecordingService.getTotalTime().toMillis() % interval.toMillis());
     }
 }
