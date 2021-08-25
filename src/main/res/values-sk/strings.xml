@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">lietadlo</string>
     <string name="activity_type_atv">Všetky terénne vozidlá</string>
@@ -217,7 +217,6 @@ limitations under the License.
     <string name="settings_stats_units_imperial">Imperiálne jednotky (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrické jednotky (km, m)</string>
     <string name="settings_stats_units_title">Preferované jednotky</string>
-
     <!-- Share Track -->
     <string name="share_track_share_file_body">Táto trasa by ťa mohla zaujímať.\n\nPre zobrazenie tejto trasy použi aplikáciu Google zem alebo iný mapový softvér.\n\n%1$s</string>
     <string name="share_track_subject">Chcem s vami zdieľať trasu</string>
@@ -371,4 +370,7 @@ limitations under the License.
     <string name="waypoint_type_waterfall">vodopád</string>
     <string name="waypoint_type_water_fountain">fontána</string>
     <string name="waypoint_type_waypoint">navigačný bod</string>
+    <string name="settings_recording_customize_layout_select_columns">Počet polí na riadok</string>
+    <string name="settings_recording_fullscreen_on_while_recording_title">Na celú obrazovku</string>
+    <string name="settings_recording_customize_layout_title">Prispôsobiť vzhľad meranie</string>
 </resources>
