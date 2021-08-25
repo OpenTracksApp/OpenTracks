@@ -520,4 +520,8 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="settings_sensor_running_speed_and_cadence">Běh: vzdálenost, rychlost a kadence</string>
     <string name="settings_recording_customize_layout_title">Přizpůsobit vzhled měření</string>
     <string name="settings_recording_customize_layout_select_columns">Počet polí na řádek</string>
+    <string name="title_activity_settings_custom_layout">Přizpůsobit vzhled měření</string>
+    <string name="field_set_primary">První</string>
+    <string name="field_set_secondary">Druhý</string>
+    <string name="field_remove_from_layout">Odstranit</string>
 </resources>
