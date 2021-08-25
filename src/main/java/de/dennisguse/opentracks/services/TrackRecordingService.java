@@ -71,7 +71,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     private static final Duration RECORDING_DATA_UPDATE_INTERVAL = Duration.ofSeconds(1);
 
-    public static final RecordingStatus STATUS_DEFAULT = new RecordingStatus(null, false);
+    public static final RecordingStatus STATUS_DEFAULT = RecordingStatus.notRecording();
     public static final RecordingData NOT_RECORDING = new RecordingData(null, null, null);
     public static final GpsStatusValue STATUS_GPS_DEFAULT = GpsStatusValue.GPS_NONE;
 
@@ -226,7 +226,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
         // Set recording status
         Track.Id trackId = trackRecordingManager.start(handlerServer.createSegmentStartManual());
-        updateRecordingStatus(new RecordingStatus(trackId, false));
+        updateRecordingStatus(RecordingStatus.record(trackId));
 
         startRecording();
         return trackId;
@@ -243,7 +243,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         trackRecordingManager.resume(trackId, handlerServer.createSegmentStartManual());
 
         // Set recording status
-        updateRecordingStatus(new RecordingStatus(trackId, false));
+        updateRecordingStatus(RecordingStatus.record(trackId));
 
         startRecording();
     }
@@ -314,7 +314,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
 
         // Set recording status
-        updateRecordingStatus(new RecordingStatus(recordingStatus.getTrackId(), true));
+        updateRecordingStatus(recordingStatus.pause());
 
         trackRecordingManager.pause(handlerServer);
 
@@ -497,7 +497,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         private final Track.Id trackId;
         private final boolean paused;
 
-        public RecordingStatus(Track.Id trackId, boolean paused) {
+        private RecordingStatus(Track.Id trackId, boolean paused) {
             this.trackId = trackId;
             this.paused = paused;
         }
@@ -518,20 +518,23 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             return isRecording() && !isPaused();
         }
 
-//      TODO Use
-//        public RecordingStatus pause() {
-//            return new RecordingStatus(getTrackId(), true);
-//        }
-//
-//        public RecordingStatus record(@NonNull Track.Id trackId) {
-//            return new RecordingStatus(trackId, false);
-//        }
+        private static RecordingStatus notRecording() {
+            return new RecordingStatus(null, false);
+        }
+
+        private static RecordingStatus record(@NonNull Track.Id trackId) {
+            return new RecordingStatus(trackId, false);
+        }
+
+        private RecordingStatus pause() {
+            return new RecordingStatus(getTrackId(), true);
+        }
 
         public RecordingStatus stop() {
             return STATUS_DEFAULT;
         }
 
-
+        @NonNull
         @Override
         public String toString() {
             return "RecordingStatus{" +
