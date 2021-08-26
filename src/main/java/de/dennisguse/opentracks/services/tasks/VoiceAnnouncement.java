@@ -38,13 +38,13 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 
 /**
- * This class will periodically announce the user's {@link TrackStatistics}.
+ * This class will announce the user's {@link TrackStatistics}.
  *
  * @author Sandor Dornbush
  */
-public class AnnouncementPeriodicTask implements PeriodicTaskFactory.Task {
+public class VoiceAnnouncement {
 
-    private static final String TAG = AnnouncementPeriodicTask.class.getSimpleName();
+    private static final String TAG = VoiceAnnouncement.class.getSimpleName();
 
     private final Context context;
 
@@ -107,14 +107,13 @@ public class AnnouncementPeriodicTask implements PeriodicTaskFactory.Task {
 
     private boolean ttsReady = false;
 
-    AnnouncementPeriodicTask(Context context) {
+    VoiceAnnouncement(Context context) {
         this.context = context;
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         contentProviderUtils = new ContentProviderUtils(context);
 
     }
 
-    @Override
     public void start() {
         Log.d(TAG, "Start");
 
@@ -128,8 +127,7 @@ public class AnnouncementPeriodicTask implements PeriodicTaskFactory.Task {
         }
     }
 
-    @Override
-    public void run(@NonNull Track.Id trackId, @NonNull TrackStatistics trackStatistics) {
+    public void announce(@NonNull Track track) {
         synchronized (this) {
             if (!ttsReady) {
                 ttsReady = ttsInitStatus == TextToSpeech.SUCCESS;
@@ -149,27 +147,20 @@ public class AnnouncementPeriodicTask implements PeriodicTaskFactory.Task {
             return;
         }
 
-        Track track = contentProviderUtils.getTrack(trackId);
-        if (track == null) {
-            Log.i(TAG, "It doesn't exists a track with trackid = " + track);
-            return;
-        }
-        String category = track.getCategory();
-
         boolean isMetricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
-        boolean isReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, context, category);
+        boolean isReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, context, track.getCategory());
         Distance minGPSDistance = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
 
+        //TODO Do not load all trackpoints for every announcement
         TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null);
         IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.one(isMetricUnits), minGPSDistance);
         intervalStatistics.addTrackPoints(trackPointIterator);
         IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
 
-        String announcement = AnnouncementUtils.getAnnouncement(context, trackStatistics, isMetricUnits, isReportSpeed, lastInterval);
+        String announcement = AnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), isMetricUnits, isReportSpeed, lastInterval);
         speakAnnouncement(announcement);
     }
 
-    @Override
     public void shutdown() {
         if (tts != null) {
             tts.shutdown();
@@ -198,19 +189,5 @@ public class AnnouncementPeriodicTask implements PeriodicTaskFactory.Task {
     private void speakAnnouncement(String announcement) {
         // We don't care about the utterance id. It is supplied here to force onUtteranceCompleted to be called.
         tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null, "not used");
-    }
-
-    /**
-     * A {@link PeriodicTaskFactory} for text-to-speech announcement periodic task.
-     *
-     * @author Rodrigo Damazio
-     */
-    public static class Factory implements PeriodicTaskFactory {
-
-        @Override
-        @NonNull
-        public Task create(Context context) {
-            return new AnnouncementPeriodicTask(context);
-        }
     }
 }

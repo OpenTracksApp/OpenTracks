@@ -49,9 +49,7 @@ import de.dennisguse.opentracks.io.file.exporter.ExportServiceResultReceiver;
 import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
-import de.dennisguse.opentracks.services.tasks.AnnouncementPeriodicTask;
-import de.dennisguse.opentracks.services.tasks.PeriodicTaskExecutor;
-import de.dennisguse.opentracks.services.tasks.PeriodicTaskFactory;
+import de.dennisguse.opentracks.services.tasks.VoiceAnnouncementManager;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.ExportUtils;
@@ -76,7 +74,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     public static final GpsStatusValue STATUS_GPS_DEFAULT = GpsStatusValue.GPS_NONE;
 
     // The following variables are set in onCreate:
-    private PeriodicTaskExecutor voiceExecutor;
+    private VoiceAnnouncementManager voiceAnnouncementManager;
     private TrackRecordingServiceNotificationManager notificationManager;
 
     private TrackRecordingManager trackRecordingManager;
@@ -106,11 +104,11 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             Context context = TrackRecordingService.this;
             if (PreferencesUtils.isKey(context, R.string.stats_units_key, key)) {
                 boolean metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
-                voiceExecutor.setMetricUnits(metricUnits);
+                voiceAnnouncementManager.setMetricUnits(metricUnits);
                 notificationManager.setMetricUnits(metricUnits);
             }
             if (PreferencesUtils.isKey(context, R.string.voice_frequency_key, key)) {
-                voiceExecutor.setTaskFrequency(PreferencesUtils.getVoiceFrequency(sharedPreferences, context));
+                voiceAnnouncementManager.setTaskFrequency(PreferencesUtils.getVoiceFrequency(sharedPreferences, context));
             }
 
 
@@ -145,7 +143,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         trackRecordingManager = new TrackRecordingManager(this);
         handlerServer = new TrackPointCreator(this);
 
-        voiceExecutor = new PeriodicTaskExecutor(this, new AnnouncementPeriodicTask.Factory());
+        voiceAnnouncementManager = new VoiceAnnouncementManager(this);
 
         notificationManager = new TrackRecordingServiceNotificationManager(this);
 
@@ -178,9 +176,9 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         sharedPreferences = null;
 
         try {
-            voiceExecutor.shutdown();
+            voiceAnnouncementManager.shutdown();
         } finally {
-            voiceExecutor = null;
+            voiceAnnouncementManager = null;
         }
 
         // This should be the next to last operation
@@ -207,10 +205,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
 
         return trackRecordingManager.insertMarker(name, category, description, photoUrl);
-    }
-
-    public void run(@NonNull PeriodicTaskFactory.Task periodicTask) {
-        periodicTask.run(recordingStatus.getTrackId(), trackRecordingManager.getTrackStatistics());
     }
 
     /**
@@ -267,8 +261,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
         startGps();
 
-        // Restore periodic tasks
-        voiceExecutor.restore();
+        voiceAnnouncementManager.restore(trackRecordingManager.getTrackStatistics());
     }
 
     public void tryStartGps() {
@@ -337,7 +330,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
 
         // Shutdown periodic tasks
-        voiceExecutor.shutdown();
+        voiceAnnouncementManager.shutdown();
 
         // Update instance variables
         handlerServer.stop();
@@ -374,7 +367,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
         trackRecordingManager.onNewTrackPoint(trackPoint, thresholdHorizontalAccuracy);
         notificationManager.updateTrackPoint(this, trackRecordingManager.getTrackStatistics(), trackPoint, thresholdHorizontalAccuracy);
-        voiceExecutor.update(recordingStatus.getTrackId(), trackRecordingManager.getTrackStatistics());
     }
 
     @Override
@@ -416,10 +408,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
     }
 
-    public Duration getTotalTime() {
-        return trackRecordingManager.getTrackStatistics().getTotalTime();
-    }
-
     @Deprecated
     @VisibleForTesting
     public TrackPointCreator getHandlerServer() {
@@ -430,7 +418,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         return gpsStatusObservable;
     }
 
-    public MutableLiveData<RecordingData> getRecordingDataObservable() {
+    public LiveData<RecordingData> getRecordingDataObservable() {
         return recordingDataObservable;
     }
 
@@ -456,6 +444,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
         TrackPoint trackPoint = data.second.first;
         egm2008CorrectionManager.correctAltitude(this, trackPoint);
+
+        voiceAnnouncementManager.update(data.first);
 
         recordingDataObservable.postValue(new RecordingData(data.first, trackPoint, data.second.second));
     }
