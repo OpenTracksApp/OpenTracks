@@ -25,7 +25,7 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
-public class PeriodicTaskExecutorTest {
+public class VoiceAnnouncementManagerTest {
 
     @Rule
     public final ServiceTestRule mServiceRule = ServiceTestRule.withTimeout(5, TimeUnit.SECONDS);
@@ -53,17 +53,17 @@ public class PeriodicTaskExecutorTest {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
                 .getService();
 
-        PeriodicTaskExecutor periodicTaskExecutor = new PeriodicTaskExecutor(service, new AnnouncementPeriodicTask.Factory());
-        periodicTaskExecutor.setMetricUnits(true);
-        periodicTaskExecutor.setTaskFrequency(-5);
+        VoiceAnnouncementManager voiceAnnouncementManager = new VoiceAnnouncementManager(service);
+        voiceAnnouncementManager.setMetricUnits(true);
+        voiceAnnouncementManager.setTaskFrequency(-5);
 
         // when
         TrackStatistics statistics = new TrackStatistics();
         statistics.setTotalDistance(Distance.of(13000));
-        assertEquals(Distance.of(15000), periodicTaskExecutor.calculateNextTaskDistance(statistics));
+        assertEquals(Distance.of(15000), voiceAnnouncementManager.calculateNextTaskDistance(statistics));
 
         statistics.setTotalDistance(Distance.of(15100));
-        assertEquals(Distance.of(20000), periodicTaskExecutor.calculateNextTaskDistance(statistics));
+        assertEquals(Distance.of(20000), voiceAnnouncementManager.calculateNextTaskDistance(statistics));
     }
 
 }
