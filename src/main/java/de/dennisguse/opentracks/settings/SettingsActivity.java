@@ -98,9 +98,6 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
 
     public static class PrefsFragment extends PreferenceFragmentCompat {
 
-        private TextToSpeech tts;
-        private int ttsInitStatus;
-
         private SharedPreferences sharedPreferences;
 
         private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
@@ -132,23 +129,6 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
 
         // Used to forward update from ChooseActivityTypeDialogFragment; TODO Could be replaced with LiveData.
         private ActivityTypePreference.ActivityPreferenceDialog activityPreferenceDialog;
-
-        private Preference announcementsFrequency;
-        private Preference announcementsSpeed;
-
-        @Override
-        public void onCreate(@Nullable Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            ttsInitStatus = TextToSpeech.ERROR;
-            tts = new TextToSpeech(getContext(), status -> {
-                ttsInitStatus = status;
-                Log.i(TAG, "TextToSpeech initialized with status " + status);
-
-                if (announcementsFrequency != null && announcementsSpeed != null) {
-                    updateVoiceAnnouncements();
-                }
-            });
-        }
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -214,10 +194,6 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
                 startActivity(intent);
                 return true;
             });
-
-            announcementsFrequency = findPreference(getString(R.string.voice_frequency_key));
-            announcementsSpeed = findPreference(getString(R.string.voice_speed_rate_key));
-            updateVoiceAnnouncements();
         }
 
         @Override
@@ -278,9 +254,6 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
             super.onDestroy();
             trackRecordingServiceConnection.unbind(getContext());
             sharedPreferences = null;
-            announcementsFrequency = null;
-            announcementsSpeed = null;
-            tts = null;
         }
 
         public void setDefaultActivity(String iconValue) {
@@ -372,12 +345,6 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
                 }
                 return false;
             });
-        }
-
-        private void updateVoiceAnnouncements() {
-            boolean enabled = ttsInitStatus == TextToSpeech.SUCCESS;
-            announcementsFrequency.setEnabled(enabled);
-            announcementsSpeed.setEnabled(enabled);
         }
 
         private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {

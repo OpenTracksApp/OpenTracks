@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.services.tasks;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.util.Log;
@@ -28,6 +29,7 @@ import androidx.annotation.NonNull;
 import java.util.Arrays;
 import java.util.Locale;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
@@ -43,6 +45,8 @@ import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
  * @author Sandor Dornbush
  */
 public class VoiceAnnouncement {
+
+    public final static int AUDIO_STREAM = TextToSpeech.Engine.DEFAULT_STREAM;
 
     private static final String TAG = VoiceAnnouncement.class.getSimpleName();
 
@@ -79,7 +83,7 @@ public class VoiceAnnouncement {
     private final UtteranceProgressListener utteranceListener = new UtteranceProgressListener() {
         @Override
         public void onStart(String utteranceId) {
-            int result = audioManager.requestAudioFocus(audioFocusChangeListener, TextToSpeech.Engine.DEFAULT_STREAM, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
+            int result = audioManager.requestAudioFocus(audioFocusChangeListener, AUDIO_STREAM, AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK);
             if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
                 Log.w(TAG, "Failed to request audio focus.");
             }
@@ -107,11 +111,12 @@ public class VoiceAnnouncement {
 
     private boolean ttsReady = false;
 
+    private MediaPlayer ttsFallback;
+
     VoiceAnnouncement(Context context) {
         this.context = context;
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         contentProviderUtils = new ContentProviderUtils(context);
-
     }
 
     public void start() {
@@ -125,6 +130,11 @@ public class VoiceAnnouncement {
                 ttsInitStatus = status;
             });
         }
+        if (ttsFallback == null) {
+            ttsFallback = MediaPlayer.create(context, R.raw.tts_fallback);
+            ttsFallback.setAudioStreamType(AUDIO_STREAM);
+            ttsFallback.setLooping(false);
+        }
     }
 
     public void announce(@NonNull Track track) {
@@ -135,17 +145,21 @@ public class VoiceAnnouncement {
                     onTtsReady();
                 }
             }
-            if (!ttsReady) {
-                Log.i(TAG, "TTS not ready.");
-                return;
-            }
         }
 
         if (Arrays.asList(AudioManager.MODE_IN_CALL, AudioManager.MODE_IN_COMMUNICATION)
                 .contains(audioManager.getMode())) {
-            Log.i(TAG, "Speech is not allowed at this time.");
+            Log.i(TAG, "Announcement is not allowed at this time.");
             return;
         }
+
+        if (!ttsReady) {
+            Log.i(TAG, "TTS not ready/available, just generating a tone.");
+            ttsFallback.seekTo(0);
+            ttsFallback.start();
+            return;
+        }
+
 
         boolean isMetricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
         boolean isReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, context, track.getCategory());
@@ -158,13 +172,20 @@ public class VoiceAnnouncement {
         IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
 
         String announcement = AnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), isMetricUnits, isReportSpeed, lastInterval);
-        speakAnnouncement(announcement);
+
+        // We don't care about the utterance id. It is supplied here to force onUtteranceCompleted to be called.
+        tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null, "not used");
     }
 
     public void shutdown() {
         if (tts != null) {
             tts.shutdown();
             tts = null;
+        }
+
+        if (ttsFallback != null) {
+            ttsFallback.release();
+            ttsFallback = null;
         }
 
         sharedPreferences = null;
@@ -184,10 +205,5 @@ public class VoiceAnnouncement {
         tts.setLanguage(locale);
         tts.setSpeechRate(PreferencesUtils.getVoiceSpeedRate(PreferencesUtils.getSharedPreferences(context), context));
         tts.setOnUtteranceProgressListener(utteranceListener);
-    }
-
-    private void speakAnnouncement(String announcement) {
-        // We don't care about the utterance id. It is supplied here to force onUtteranceCompleted to be called.
-        tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null, "not used");
     }
 }

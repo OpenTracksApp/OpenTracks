@@ -431,7 +431,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         // Compute temporary track statistics using sensorData and update time.
 
         TrackPointCreator localHandlerServer = this.handlerServer;
-        if (localHandlerServer == null) {
+        VoiceAnnouncementManager localVoiceAnnouncementManager = this.voiceAnnouncementManager;
+        if (localHandlerServer == null || localVoiceAnnouncementManager == null) {
             // when this happens, no recording is running and we should not send any notifications.
             //TODO This implementation is not a good idea; rather solve the issue for this properly
             return;
@@ -445,7 +446,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         TrackPoint trackPoint = data.second.first;
         egm2008CorrectionManager.correctAltitude(this, trackPoint);
 
-        voiceAnnouncementManager.update(data.first);
+        localVoiceAnnouncementManager.update(data.first);
 
         recordingDataObservable.postValue(new RecordingData(data.first, trackPoint, data.second.second));
     }

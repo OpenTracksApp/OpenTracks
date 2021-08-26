@@ -18,6 +18,7 @@ package de.dennisguse.opentracks.services.tasks;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
@@ -53,8 +54,12 @@ public class VoiceAnnouncementManager {
     private boolean metricUnits;
 
     private TrackStatistics trackStatistics;
-    private Distance nextTotalDistance = Distance.of(Double.MAX_VALUE);
-    private Duration nextTotalTime = Duration.ofSeconds(Long.MAX_VALUE);
+
+    private static final Distance DISTANCE_OFF = Distance.of(Double.MAX_VALUE);
+    private Distance nextTotalDistance = DISTANCE_OFF;
+
+    private static final Duration TOTALTIME_OFF = Duration.ofMillis(Long.MAX_VALUE);
+    private Duration nextTotalTime = TOTALTIME_OFF;
 
     public VoiceAnnouncementManager(@NonNull TrackRecordingService trackRecordingService) {
         this.trackRecordingService = trackRecordingService;
@@ -63,7 +68,7 @@ public class VoiceAnnouncementManager {
         taskFrequency = TASK_FREQUENCY_OFF;
     }
 
-    public void restore(TrackStatistics trackStatistics) {
+    public void restore(@Nullable TrackStatistics trackStatistics) {
         if (taskFrequency == TASK_FREQUENCY_OFF) {
             Log.d(TAG, "Task frequency is off.");
             return;
@@ -73,7 +78,7 @@ public class VoiceAnnouncementManager {
         voiceAnnouncement.start();
 
         if (isTimeFrequency()) {
-            nextTotalTime = calculateNextDuration(trackStatistics);
+            nextTotalTime = trackStatistics != null ? calculateNextDuration(trackStatistics) : TOTALTIME_OFF;
         } else {
             // For distance periodic task
             updateNextTaskDistance(trackStatistics);
@@ -81,6 +86,10 @@ public class VoiceAnnouncementManager {
     }
 
     public void update(@NonNull Track track) {
+        if (voiceAnnouncement == null) {
+            Log.e(TAG, "Cannot update when in status shutdown.");
+            return;
+        }
         boolean announce = false;
         this.trackStatistics = track.getTrackStatistics();
         if (trackStatistics.getTotalDistance().greaterThan(nextTotalDistance)) {
@@ -93,7 +102,6 @@ public class VoiceAnnouncementManager {
         }
 
         if (announce) {
-            this.trackStatistics = track.getTrackStatistics();
             voiceAnnouncement.announce(track);
         }
     }
@@ -117,7 +125,7 @@ public class VoiceAnnouncementManager {
 
     private void updateNextTaskDistance(TrackStatistics trackStatistics) {
         if (!isDistanceFrequency()) {
-            nextTotalDistance = Distance.of(Double.MAX_VALUE);
+            nextTotalDistance = DISTANCE_OFF;
             Log.d(TAG, "SplitManager: Distance splits disabled.");
             return;
         }
@@ -138,12 +146,19 @@ public class VoiceAnnouncementManager {
         return announcementInterval.multipliedBy(index + 1);
     }
 
-    private Duration calculateNextDuration(@NonNull TrackStatistics trackStatistics) {
+    private Duration calculateNextDuration(@Nullable TrackStatistics trackStatistics) {
+        if (trackStatistics == null) {
+            return null;
+        }
+
         if (!isTimeFrequency()) {
             throw new RuntimeException("Using distance frequency as time frequency is impossible.");
         }
+        Duration totalTime = trackStatistics.getTotalTime();
         Duration interval = Duration.ofMinutes(taskFrequency);
-        return interval.minus(Duration.ofMillis(trackStatistics.getTotalTime().toMillis() % interval.toMillis()));
+        Duration intervalMod = Duration.ofMillis(trackStatistics.getTotalTime().toMillis() % interval.toMillis());
+
+        return totalTime.plus(interval.minus(intervalMod));
     }
 
     private boolean isTimeFrequency() {
