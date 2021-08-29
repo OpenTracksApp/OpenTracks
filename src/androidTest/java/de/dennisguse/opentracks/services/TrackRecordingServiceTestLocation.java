@@ -96,7 +96,7 @@ public class TrackRecordingServiceTestLocation {
 
         service = ((TrackRecordingService.Binder) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)))
                 .getService();
-        service.getHandlerServer().stopGPS();
+        service.getTrackPointCreator().stopGPS();
     }
 
     @After
@@ -110,7 +110,7 @@ public class TrackRecordingServiceTestLocation {
     public void testOnLocationChangedAsync_movingAccurate() {
         // given
         Track.Id trackId = service.startNewTrack();
-        service.getHandlerServer().setAltitudeSumManager(altitudeSumManager);
+        service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
 
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 15);
@@ -183,7 +183,7 @@ public class TrackRecordingServiceTestLocation {
     public void testOnLocationChangedAsync_slowMovingAccurate() {
         // given
         Track.Id trackId = service.startNewTrack();
-        service.getHandlerServer().setAltitudeSumManager(altitudeSumManager);
+        service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
 
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 15);
@@ -228,7 +228,7 @@ public class TrackRecordingServiceTestLocation {
     public void testOnLocationChangedAsync_idle() {
         // given
         Track.Id trackId = service.startNewTrack();
-        service.getHandlerServer().setAltitudeSumManager(altitudeSumManager);
+        service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
 
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 0);
@@ -280,8 +280,8 @@ public class TrackRecordingServiceTestLocation {
     public void testOnLocationChangedAsync_idle_withMovement() {
         // given
         Track.Id trackId = service.startNewTrack();
-        service.getHandlerServer().setAltitudeSumManager(altitudeSumManager);
-        service.getHandlerServer().stopGPS();
+        service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
+        service.getTrackPointCreator().stopGPS();
 
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 15);
@@ -340,8 +340,8 @@ public class TrackRecordingServiceTestLocation {
     public void testOnLocationChangedAsync_idle_withSensorData() {
         // given
         Track.Id trackId = service.startNewTrack();
-        service.getHandlerServer().setAltitudeSumManager(altitudeSumManager);
-        service.getHandlerServer().setRemoteSensorManager(new BluetoothRemoteSensorManager(context) {
+        service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
+        service.getTrackPointCreator().setRemoteSensorManager(new BluetoothRemoteSensorManager(context) {
 
             @Override
             public boolean isEnabled() {
@@ -435,7 +435,7 @@ public class TrackRecordingServiceTestLocation {
     public void testOnLocationChangedAsync_segment() {
         // given
         Track.Id trackId = service.startNewTrack();
-        service.getHandlerServer().setAltitudeSumManager(altitudeSumManager);
+        service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
 
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 0);

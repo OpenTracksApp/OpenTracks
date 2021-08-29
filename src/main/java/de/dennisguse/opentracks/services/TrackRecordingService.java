@@ -112,7 +112,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             }
 
 
-            handlerServer.onSharedPreferenceChanged(sharedPreferences, key);
+            trackPointCreator.onSharedPreferenceChanged(sharedPreferences, key);
             trackRecordingManager.onSharedPreferenceChanged(sharedPreferences, key);
         }
     };
@@ -122,7 +122,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     private final Binder binder = new Binder();
 
-    private TrackPointCreator handlerServer; //TODO Move to TrackRecordingManager?
+    private TrackPointCreator trackPointCreator; //TODO Move to TrackRecordingManager?
 
     private RecordingStatus recordingStatus;
     private MutableLiveData<RecordingStatus> recordingStatusObservable;
@@ -141,7 +141,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         recordingDataObservable = new MutableLiveData<>(NOT_RECORDING);
 
         trackRecordingManager = new TrackRecordingManager(this);
-        handlerServer = new TrackPointCreator(this);
+        trackPointCreator = new TrackPointCreator(this);
 
         voiceAnnouncementManager = new VoiceAnnouncementManager(this);
 
@@ -166,8 +166,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     public void onDestroy() {
         handler = null;
 
-        handlerServer.stop();
-        handlerServer = null;
+        trackPointCreator.stop();
+        trackPointCreator = null;
 
         // Reverse order from onCreate
         showNotification(false); //TODO Why?
@@ -219,7 +219,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
 
         // Set recording status
-        Track.Id trackId = trackRecordingManager.start(handlerServer.createSegmentStartManual());
+        Track.Id trackId = trackRecordingManager.start(trackPointCreator.createSegmentStartManual());
         updateRecordingStatus(RecordingStatus.record(trackId));
 
         startRecording();
@@ -233,8 +233,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
      * @param trackId the id of the track to be resumed.
      */
     public void resumeTrack(Track.Id trackId) {
-        handlerServer.resetSensorData();
-        trackRecordingManager.resume(trackId, handlerServer.createSegmentStartManual());
+        trackPointCreator.resetSensorData();
+        trackRecordingManager.resume(trackId, trackPointCreator.createSegmentStartManual());
 
         // Set recording status
         updateRecordingStatus(RecordingStatus.record(trackId));
@@ -272,7 +272,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     private void startGps() {
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
-        handlerServer.start(this);
+        trackPointCreator.start(this);
         showNotification(true);
     }
 
@@ -291,7 +291,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         updateRecordingStatus(STATUS_DEFAULT);
 
         if (!wasPause) {
-            trackRecordingManager.end(handlerServer);
+            trackRecordingManager.end(trackPointCreator);
         }
 
         ExportUtils.postWorkoutExport(this, trackId, new ExportServiceResultReceiver(new Handler(), this));
@@ -309,7 +309,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         // Set recording status
         updateRecordingStatus(recordingStatus.pause());
 
-        trackRecordingManager.pause(handlerServer);
+        trackRecordingManager.pause(trackPointCreator);
 
         endRecording(false);
 
@@ -333,7 +333,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         voiceAnnouncementManager.shutdown();
 
         // Update instance variables
-        handlerServer.stop();
+        trackPointCreator.stop();
 
         stopGps(trackStopped);
     }
@@ -350,7 +350,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     void stopGps(boolean shutdown) {
         if (!isRecording()) return;
 
-        handlerServer.stop();
+        trackPointCreator.stop();
         showNotification(false);
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
         if (shutdown) {
@@ -410,8 +410,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     @Deprecated
     @VisibleForTesting
-    public TrackPointCreator getHandlerServer() {
-        return handlerServer;
+    public TrackPointCreator getTrackPointCreator() {
+        return trackPointCreator;
     }
 
     public LiveData<GpsStatusValue> getGpsStatusObservable() {
@@ -430,15 +430,15 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
         // Compute temporary track statistics using sensorData and update time.
 
-        TrackPointCreator localHandlerServer = this.handlerServer;
+        TrackPointCreator localTrackPointCreator = this.trackPointCreator;
         VoiceAnnouncementManager localVoiceAnnouncementManager = this.voiceAnnouncementManager;
-        if (localHandlerServer == null || localVoiceAnnouncementManager == null) {
+        if (localTrackPointCreator == null || localVoiceAnnouncementManager == null) {
             // when this happens, no recording is running and we should not send any notifications.
             //TODO This implementation is not a good idea; rather solve the issue for this properly
             return;
         }
 
-        Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.get(handlerServer);
+        Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.get(trackPointCreator);
         if (data == null) {
             Log.w(TAG, "Requesting data if not recording is taking place, should not be done.");
             return;

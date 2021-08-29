@@ -81,19 +81,19 @@ class TrackRecordingManager {
         insertTrackPoint(trackId, segmentStartTrackPoint);
     }
 
-    void pause(TrackPointCreator handlerServer) {
+    void pause(TrackPointCreator trackPointCreator) {
         if (lastTrackPoint != null) {
             insertTrackPointIfNewer(trackId, lastTrackPoint);
         }
-        insertTrackPoint(trackId, handlerServer.createSegmentEnd());
+        insertTrackPoint(trackId, trackPointCreator.createSegmentEnd());
     }
 
-    void end(TrackPointCreator handlerServer) {
+    void end(TrackPointCreator trackPointCreator) {
         if (lastTrackPoint != null) {
             insertTrackPointIfNewer(trackId, lastTrackPoint);
         }
 
-        TrackPoint segmentEnd = handlerServer.createSegmentEnd();
+        TrackPoint segmentEnd = trackPointCreator.createSegmentEnd();
         insertTrackPoint(trackId, segmentEnd);
 
         trackId = null;
@@ -103,12 +103,12 @@ class TrackRecordingManager {
         isIdle = false;
     }
 
-    Pair<Track, Pair<TrackPoint, SensorDataSet>> get(TrackPointCreator handlerServer) {
-        if (handlerServer == null) {
+    Pair<Track, Pair<TrackPoint, SensorDataSet>> get(TrackPointCreator trackPointCreator) {
+        if (trackPointCreator == null) {
             return null;
         }
         TrackStatisticsUpdater tmpTrackStatisticsUpdater = getTrackStatisticsUpdater();
-        Pair<TrackPoint, SensorDataSet> current = handlerServer.createCurrentTrackPoint(lastTrackPoint);
+        Pair<TrackPoint, SensorDataSet> current = trackPointCreator.createCurrentTrackPoint(lastTrackPoint);
 
         tmpTrackStatisticsUpdater.addTrackPoint(current.first, recordingDistanceInterval);
 

@@ -33,7 +33,7 @@ public class LocationHandlerTest {
     private final SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
 
     @Mock
-    private TrackPointCreator handlerServer;
+    private TrackPointCreator trackPointCreator;
 
     @InjectMocks
     private LocationHandler locationHandler;
@@ -49,7 +49,7 @@ public class LocationHandlerTest {
         // Let's use default values.
         sharedPreferences.edit().clear().commit();
 
-        Mockito.when(handlerServer.createNow())
+        Mockito.when(trackPointCreator.createNow())
                 .thenReturn(Instant.now());
 
         //TODO REMOVE
@@ -67,7 +67,7 @@ public class LocationHandlerTest {
         locationHandler.onLocationChanged(createLocation(45f, 35f, 3, 5, System.currentTimeMillis()));
 
         // then
-        verify(handlerServer, times(1)).onNewTrackPoint(any(TrackPoint.class), any(Distance.class));
+        verify(trackPointCreator, times(1)).onNewTrackPoint(any(TrackPoint.class), any(Distance.class));
     }
 
     /**
@@ -83,7 +83,7 @@ public class LocationHandlerTest {
         locationHandler.onLocationChanged(createLocation(latitude, 35f, 3, 5, System.currentTimeMillis()));
 
         // then
-        verify(handlerServer, times(0)).onNewTrackPoint(any(TrackPoint.class), any(Distance.class));
+        verify(trackPointCreator, times(0)).onNewTrackPoint(any(TrackPoint.class), any(Distance.class));
     }
 
     /**
@@ -99,7 +99,7 @@ public class LocationHandlerTest {
 
         // then
         // no newTrackPoint called
-        verify(handlerServer, times(0)).onNewTrackPoint(any(TrackPoint.class), any(Distance.class));
+        verify(trackPointCreator, times(0)).onNewTrackPoint(any(TrackPoint.class), any(Distance.class));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class LocationHandlerTest {
         locationHandler.onLocationChanged(createLocation(99.0, 35.0, Long.MAX_VALUE, 15, System.currentTimeMillis()));
 
         // then
-        verify(handlerServer, times(1)).onNewTrackPoint(any(TrackPoint.class), any(Distance.class));
+        verify(trackPointCreator, times(1)).onNewTrackPoint(any(TrackPoint.class), any(Distance.class));
     }
 
     /**

@@ -138,7 +138,7 @@ public class TrackRecordingServiceTest {
         if (service.isRecording() || service.isPaused()) {
             service.endCurrentTrack();
         }
-        service.getHandlerServer().setClock(Clock.systemUTC());
+        service.getTrackPointCreator().setClock(Clock.systemUTC());
 
         // Ensure that the database is empty after every test
         contentProviderUtils.deleteAllTracks(context);
@@ -212,15 +212,15 @@ public class TrackRecordingServiceTest {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
 
-        TrackPointCreator handlerServer = service.getHandlerServer();
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
 
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
-        handlerServer.stopGPS();
-        handlerServer.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.stopGPS();
+        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
         // when
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
         service.endCurrentTrack();
 
         // then
@@ -242,22 +242,22 @@ public class TrackRecordingServiceTest {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
 
-        TrackPointCreator handlerServer = service.getHandlerServer();
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
 
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
-        handlerServer.stopGPS();
-        handlerServer.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.stopGPS();
+        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
         // when
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
         service.pauseCurrentTrack();
 
         // then
         assertEquals(2, contentProviderUtils.getTrackPointCursor(trackId, null).getCount());
 
         //when
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:04Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:04Z"), ZoneId.of("CET")));
         service.resumeTrack(trackId);
 
         // then
@@ -281,23 +281,23 @@ public class TrackRecordingServiceTest {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
 
-        TrackPointCreator handlerServer = service.getHandlerServer();
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
 
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
-        handlerServer.stopGPS();
-        handlerServer.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.stopGPS();
+        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
         service.endCurrentTrack();
 
         // when
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:04Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:04Z"), ZoneId.of("CET")));
         service.resumeTrack(trackId);
-        handlerServer.stopGPS();
-        handlerServer.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.stopGPS();
+        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
-        handlerServer.onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:05Z")), Distance.of(50));
+        trackPointCreator.onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:05Z")), Distance.of(50));
 
         // then
         assertTrue(service.isRecording());
@@ -323,18 +323,18 @@ public class TrackRecordingServiceTest {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
 
-        TrackPointCreator handlerServer = service.getHandlerServer();
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
 
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
-        handlerServer.stopGPS();
-        handlerServer.setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.stopGPS();
+        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
         service.pauseCurrentTrack();
 
         // when
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:04Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:04Z"), ZoneId.of("CET")));
         service.endCurrentTrack();
 
         // then
@@ -405,14 +405,14 @@ public class TrackRecordingServiceTest {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
 
-        TrackPointCreator handlerServer = service.getHandlerServer();
-        handlerServer.stopGPS();
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
+        trackPointCreator.stopGPS();
 
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
 
         assertTrue(service.isRecording());
-        handlerServer.onNewTrackPoint(
+        trackPointCreator.onNewTrackPoint(
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:03Z"))
                         .setLatitude(10)
                         .setLongitude(10)
@@ -467,6 +467,6 @@ public class TrackRecordingServiceTest {
                 .setSpeed(Speed.of(speed))
                 .setBearing(3.0f);
 
-        trackRecordingService.getHandlerServer().onNewTrackPoint(trackPoint, Distance.of(50));
+        trackRecordingService.getTrackPointCreator().onNewTrackPoint(trackPoint, Distance.of(50));
     }
 }

@@ -112,41 +112,41 @@ public class ExportImportTest {
 
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
                 .getService();
-        service.getHandlerServer().setClock(Clock.systemUTC());
+        service.getTrackPointCreator().setClock(Clock.systemUTC());
     }
 
     public void setUp(boolean hasSensorDistance) throws TimeoutException {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
                 .getService();
 
-        TrackPointCreator handlerServer = service.getHandlerServer();
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
 
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         trackId = service.startNewTrack();
 
         Distance sensorDistance = hasSensorDistance ? Distance.of(5) : null;
 
-        sendLocation(handlerServer, Instant.parse("2020-02-02T02:02:03Z"), 3, 14, 10, 15, 10, 1, 66, 3, 50, sensorDistance);
+        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:03Z"), 3, 14, 10, 15, 10, 1, 66, 3, 50, sensorDistance);
         service.insertMarker("Marker 1", "Marker 1 category", "Marker 1 desc", null);
-        sendLocation(handlerServer, Instant.parse("2020-02-02T02:02:04Z"), 3, 14.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
-        sendLocation(handlerServer, Instant.parse("2020-02-02T02:02:05Z"), 3, 14.002, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
+        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:04Z"), 3, 14.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
+        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:05Z"), 3, 14.002, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
         service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
 
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:06Z"), ZoneId.of("CET")));
-        handlerServer.setRemoteSensorManager(new BluetoothRemoteSensorManager(context));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:06Z"), ZoneId.of("CET")));
+        trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context));
         service.pauseCurrentTrack();
 
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:20Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:20Z"), ZoneId.of("CET")));
         service.resumeCurrentTrack();
 
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:21Z"), ZoneId.of("CET")));
-        sendLocation(handlerServer, Instant.parse("2020-02-02T02:02:21Z"), 3, 14.003, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:21Z"), ZoneId.of("CET")));
+        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:21Z"), 3, 14.003, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
 
-        sendLocation(handlerServer, Instant.parse("2020-02-02T02:02:22Z"), 3, 16, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
-        sendLocation(handlerServer, Instant.parse("2020-02-02T02:02:23Z"), 3, 16.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
+        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:22Z"), 3, 16, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
+        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:23Z"), 3, 16.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
 
-        handlerServer.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:24Z"), ZoneId.of("CET")));
-        handlerServer.setRemoteSensorManager(new BluetoothRemoteSensorManager(context));
+        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:24Z"), ZoneId.of("CET")));
+        trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context));
         service.endCurrentTrack();
 
         Track track = contentProviderUtils.getTrack(trackId);
@@ -380,7 +380,7 @@ public class ExportImportTest {
         }
     }
 
-    private void sendLocation(TrackPointCreator handlerServer, Instant time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, Distance distance) {
+    private void sendLocation(TrackPointCreator trackPointCreator, Instant time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, Distance distance) {
         Location location = new Location("mock");
         location.setLatitude(latitude);
         location.setLongitude(longitude);
@@ -388,7 +388,7 @@ public class ExportImportTest {
         location.setSpeed(speed);
         location.setAltitude(altitude);
 
-        handlerServer.setAltitudeSumManager(new AltitudeSumManager() {
+        trackPointCreator.setAltitudeSumManager(new AltitudeSumManager() {
             @Override
             public void fill(@NonNull TrackPoint trackPoint) {
                 trackPoint.setAltitudeGain(altitudeGain);
@@ -396,7 +396,7 @@ public class ExportImportTest {
             }
         });
 
-        handlerServer.setRemoteSensorManager(new BluetoothRemoteSensorManager(context) {
+        trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context) {
             @Override
             public SensorDataSet fill(@NonNull TrackPoint trackPoint) {
                 SensorDataSet sensorDataSet = new SensorDataSet();
@@ -422,7 +422,7 @@ public class ExportImportTest {
             }
         });
 
-        handlerServer.setClock(Clock.fixed(time, ZoneId.of("CET")));
-        handlerServer.getLocationHandler().onLocationChanged(location);
+        trackPointCreator.setClock(Clock.fixed(time, ZoneId.of("CET")));
+        trackPointCreator.getLocationHandler().onLocationChanged(location);
     }
 }
