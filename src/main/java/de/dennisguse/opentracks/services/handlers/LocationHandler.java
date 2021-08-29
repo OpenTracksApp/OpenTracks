@@ -25,14 +25,14 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
     private final String TAG = LocationHandler.class.getSimpleName();
 
     private LocationManager locationManager;
-    private final TrackPointCreator handlerServer;
+    private final TrackPointCreator trackPointCreator;
     private GpsStatus gpsStatus;
     private Duration gpsInterval;
     private Distance thresholdHorizontalAccuracy;
     private TrackPoint lastTrackPoint;
 
-    public LocationHandler(TrackPointCreator handlerServer) {
-        this.handlerServer = handlerServer;
+    public LocationHandler(TrackPointCreator trackPointCreator) {
+        this.trackPointCreator = trackPointCreator;
     }
 
     public void onStart(@NonNull Context context, SharedPreferences sharedPreferences) {
@@ -92,7 +92,7 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
     }
 
     /**
-     * Checks if location is valid and builds a track point that will be send through HandlerServer.
+     * Checks if location is valid and builds a track point that will be send through TrackPointCreator.
      *
      * @param location {@link Location} object.
      */
@@ -103,7 +103,7 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
             return;
         }
 
-        TrackPoint trackPoint = new TrackPoint(location, handlerServer.createNow());
+        TrackPoint trackPoint = new TrackPoint(location, trackPointCreator.createNow());
         boolean isAccurate = trackPoint.fulfillsAccuracy(thresholdHorizontalAccuracy);
         boolean isValid = LocationUtils.isValidLocation(location);
 
@@ -122,7 +122,7 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
         }
 
         lastTrackPoint = trackPoint;
-        handlerServer.onNewTrackPoint(trackPoint, thresholdHorizontalAccuracy);
+        trackPointCreator.onNewTrackPoint(trackPoint, thresholdHorizontalAccuracy);
     }
 
     @Override
@@ -167,6 +167,6 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
      */
     @Override
     public void onGpsStatusChanged(GpsStatusValue prevStatus, GpsStatusValue currentStatus) {
-        handlerServer.sendGpsStatus(currentStatus);
+        trackPointCreator.sendGpsStatus(currentStatus);
     }
 }

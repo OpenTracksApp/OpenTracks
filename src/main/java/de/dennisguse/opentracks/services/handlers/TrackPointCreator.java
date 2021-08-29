@@ -77,7 +77,7 @@ public class TrackPointCreator {
         altitudeSumManager.reset();
     }
 
-    //TODO TrackPoint should be created by HandlerServer; instead of in the TrackRecordingService.
+    //TODO TrackPoint should be created by TrackPointCreator; instead of in the TrackRecordingService.
     @Deprecated
     public SensorDataSet fill(TrackPoint trackPoint) {
         SensorDataSet sensorDataSet = remoteSensorManager.fill(trackPoint);
