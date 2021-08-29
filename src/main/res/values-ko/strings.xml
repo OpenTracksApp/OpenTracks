@@ -172,7 +172,6 @@ limitations under the License.
     <string name="menu_show_on_map">지도에 표시</string>
     <string name="menu_start_gps">GPS 시작</string>
     <string name="menu_stop_gps">GPS 중지</string>
-    <string name="menu_voice_frequency">음성 안내 빈도</string>
     <!-- OpenTracks -->
     <string name="recording_service">기록 서비스</string>
     <!-- Search -->

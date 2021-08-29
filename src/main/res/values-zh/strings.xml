@@ -172,7 +172,6 @@ limitations under the License.
     <string name="menu_show_on_map">在地图上显示</string>
     <string name="menu_start_gps">启动 GPS</string>
     <string name="menu_stop_gps">关闭 GPS</string>
-    <string name="menu_voice_frequency">语音提示频率</string>
     <string name="menu_voice_rate">语音提示速率</string>
     <string name="menu_resume_track">继续</string>
     <!-- OpenTracks -->

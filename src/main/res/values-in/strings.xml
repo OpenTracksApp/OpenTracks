@@ -143,7 +143,6 @@
     <string name="menu_show_on_map">Tampilkan di peta</string>
     <string name="menu_start_gps">Nyalakan GPS</string>
     <string name="menu_stop_gps">Matikan GPS</string>
-    <string name="menu_voice_frequency">Kerapatan suara</string>
     <string name="recording_service">Layanan perekaman</string>
     <string name="sensor_state_battery">Level baterai</string>
     <string name="sensor_state_cadence">Tempo</string>

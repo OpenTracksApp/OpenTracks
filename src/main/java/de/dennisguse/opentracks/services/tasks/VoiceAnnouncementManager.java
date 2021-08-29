@@ -40,48 +40,35 @@ public class VoiceAnnouncementManager {
 
     private final TrackRecordingService trackRecordingService;
 
-    private final int TASK_FREQUENCY_OFF;
-    /**
-     * The task frequency.
-     * A positive value is a time frequency (minutes).
-     * A negative value is a distance frequency (km or mi).
-     * A zero value is to turn off periodic task.
-     */
-    private int taskFrequency;
-
     private VoiceAnnouncement voiceAnnouncement;
-
-    private boolean metricUnits;
 
     private TrackStatistics trackStatistics;
 
     private static final Distance DISTANCE_OFF = Distance.of(Double.MAX_VALUE);
+    private Distance distanceFrequency = DISTANCE_OFF;
+    @NonNull
     private Distance nextTotalDistance = DISTANCE_OFF;
 
     private static final Duration TOTALTIME_OFF = Duration.ofMillis(Long.MAX_VALUE);
+    private Duration totalTimeFrequency = TOTALTIME_OFF;
+    @NonNull
     private Duration nextTotalTime = TOTALTIME_OFF;
 
     public VoiceAnnouncementManager(@NonNull TrackRecordingService trackRecordingService) {
         this.trackRecordingService = trackRecordingService;
-
-        TASK_FREQUENCY_OFF = Integer.parseInt(trackRecordingService.getString(R.string.frequency_off));
-        taskFrequency = TASK_FREQUENCY_OFF;
     }
 
     public void restore(@Nullable TrackStatistics trackStatistics) {
-        if (taskFrequency == TASK_FREQUENCY_OFF) {
-            Log.d(TAG, "Task frequency is off.");
-            return;
-        }
-
         voiceAnnouncement = new VoiceAnnouncement(trackRecordingService);
         voiceAnnouncement.start();
 
-        if (isTimeFrequency()) {
-            nextTotalTime = trackStatistics != null ? calculateNextDuration(trackStatistics) : TOTALTIME_OFF;
-        } else {
-            // For distance periodic task
-            updateNextTaskDistance(trackStatistics);
+        this.trackStatistics = trackStatistics;
+
+        if (!totalTimeFrequency.isZero()) {
+            nextTotalTime = calculateNextDuration();
+        }
+        if (!distanceFrequency.isZero()) {
+            nextTotalDistance = calculateNextTaskDistance();
         }
     }
 
@@ -90,14 +77,15 @@ public class VoiceAnnouncementManager {
             Log.e(TAG, "Cannot update when in status shutdown.");
             return;
         }
+
         boolean announce = false;
         this.trackStatistics = track.getTrackStatistics();
         if (trackStatistics.getTotalDistance().greaterThan(nextTotalDistance)) {
-            updateNextTaskDistance(trackStatistics);
+            nextTotalDistance = calculateNextTaskDistance();
             announce = true;
         }
         if (!trackStatistics.getTotalTime().minus(nextTotalTime).isNegative()) {
-            nextTotalTime = calculateNextDuration(trackStatistics);
+            nextTotalTime = calculateNextDuration();
             announce = true;
         }
 
@@ -113,59 +101,48 @@ public class VoiceAnnouncementManager {
         }
     }
 
-    public void setTaskFrequency(int taskFrequency) {
-        this.taskFrequency = taskFrequency;
+    public void setFrequency(Duration frequency) {
+        this.totalTimeFrequency = frequency;
         restore(this.trackStatistics);
     }
 
-    public void setMetricUnits(boolean metricUnits) {
-        this.metricUnits = metricUnits;
-        updateNextTaskDistance(this.trackStatistics);
-    }
-
-    private void updateNextTaskDistance(TrackStatistics trackStatistics) {
-        if (!isDistanceFrequency()) {
-            nextTotalDistance = DISTANCE_OFF;
-            Log.d(TAG, "SplitManager: Distance splits disabled.");
-            return;
-        }
-
-        if (trackStatistics == null) {
-            return;
-        }
-
-        nextTotalDistance = calculateNextTaskDistance(trackStatistics);
+    public void setFrequency(Distance frequency) {
+        this.distanceFrequency = frequency;
+        restore(this.trackStatistics);
     }
 
     @VisibleForTesting
-    public Distance calculateNextTaskDistance(@NonNull TrackStatistics trackStatistics) {
+    public Distance calculateNextTaskDistance() {
+        if (trackStatistics == null) {
+            return DISTANCE_OFF;
+        }
+
         Distance distance = trackStatistics.getTotalDistance();
 
-        Distance announcementInterval = Distance.one(metricUnits).multipliedBy(Math.abs(taskFrequency));
-        int index = (int) (distance.dividedBy(announcementInterval));
-        return announcementInterval.multipliedBy(index + 1);
+        int index = (int) (distance.dividedBy(distanceFrequency));
+        return distanceFrequency.multipliedBy(index + 1);
     }
 
-    private Duration calculateNextDuration(@Nullable TrackStatistics trackStatistics) {
+    private Duration calculateNextDuration() {
         if (trackStatistics == null) {
-            return null;
+            return TOTALTIME_OFF;
         }
 
-        if (!isTimeFrequency()) {
-            throw new RuntimeException("Using distance frequency as time frequency is impossible.");
-        }
         Duration totalTime = trackStatistics.getTotalTime();
-        Duration interval = Duration.ofMinutes(taskFrequency);
-        Duration intervalMod = Duration.ofMillis(trackStatistics.getTotalTime().toMillis() % interval.toMillis());
+        Duration intervalMod = Duration.ofMillis(trackStatistics.getTotalTime().toMillis() % totalTimeFrequency.toMillis());
 
-        return totalTime.plus(interval.minus(intervalMod));
+        return totalTime.plus(totalTimeFrequency.minus(intervalMod));
     }
 
-    private boolean isTimeFrequency() {
-        return taskFrequency > 0;
+    @VisibleForTesting
+    @NonNull
+    public Duration getNextTotalTime() {
+        return nextTotalTime;
     }
 
-    private boolean isDistanceFrequency() {
-        return taskFrequency < 0;
+    @VisibleForTesting
+    @NonNull
+    public Distance getNextTotalDistance() {
+        return nextTotalDistance;
     }
 }

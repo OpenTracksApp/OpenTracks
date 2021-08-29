@@ -173,7 +173,6 @@ limitations under the License.
     <string name="menu_show_on_map">Ipakita sa mapa</string>
     <string name="menu_start_gps">Simulan ang GPS</string>
     <string name="menu_stop_gps">Itigil ang GPS</string>
-    <string name="menu_voice_frequency">Dalas ng voice</string>
     <!-- OpenTracks -->
     <string name="recording_service">Serbisyo ng pagrerekord</string>
     <!-- Search -->

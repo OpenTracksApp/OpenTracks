@@ -302,7 +302,6 @@ limitations under the License.
     <string name="menu_show_on_map">Show on map</string>
     <string name="menu_start_gps">Start GPS</string>
     <string name="menu_stop_gps">Stop GPS</string>
-    <string name="menu_voice_frequency">Voice frequency</string>
     <string name="menu_voice_rate">Voice speed</string>
     <string name="menu_resume_track">Resume track</string>
     <!-- OpenTracks -->
@@ -361,7 +360,10 @@ limitations under the License.
     <string name="settings_night_mode_option_day">Day</string>
     <string name="settings_night_mode_option_night">Night</string>
 
-    <!-- Reset -->
+    <string name="settings_announcements">Announcements</string>
+    <string name="settings_announcements_totaltime_frequency">Time interval</string>
+    <string name="settings_announcements_distance_frequency">Distance interval</string>
+
     <string name="settings_reset">Reset</string>
     <!-- Custom Layout Reset -->
     <string name="settings_layout_reset">Reset Custom Layout</string>

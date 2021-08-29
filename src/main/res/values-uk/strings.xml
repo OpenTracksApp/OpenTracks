@@ -175,7 +175,6 @@ limitations under the License.
     <string name="menu_show_on_map">Показати на карті</string>
     <string name="menu_start_gps">Увімкнути GPS</string>
     <string name="menu_stop_gps">Вимкнути GPS</string>
-    <string name="menu_voice_frequency">Голосові сповіщення</string>
     <!-- OpenTracks -->
     <string name="recording_service">Служба запису</string>
     <!-- Search -->

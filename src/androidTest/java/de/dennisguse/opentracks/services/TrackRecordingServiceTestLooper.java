@@ -109,34 +109,6 @@ public class TrackRecordingServiceTestLooper {
 
     @MediumTest
     @Test
-    public void testWithProperties_voiceFrequencyDefault() throws TimeoutException {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        editor.putInt(context.getString(R.string.voice_frequency_key), Integer.parseInt(context.getResources().getString(R.string.voice_frequency_default)));
-        editor.commit();
-        fullRecordingSession();
-    }
-
-    @MediumTest
-    @Test
-    public void testWithProperties_voiceFrequencyByDistance() throws TimeoutException {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        editor.putInt(context.getString(R.string.voice_frequency_key), -1);
-        editor.commit();
-        fullRecordingSession();
-    }
-
-    @MediumTest
-    @Test
-    public void testWithProperties_voiceFrequencyByTime() throws TimeoutException {
-        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        editor.putInt(context.getString(R.string.voice_frequency_key), 1);
-        editor.commit();
-        fullRecordingSession();
-    }
-
-
-    @MediumTest
-    @Test
     public void testWithProperties_maxRecordingDistanceDefault() throws TimeoutException {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putInt(context.getString(R.string.max_recording_distance_key), Integer.parseInt(context.getResources().getString(R.string.max_recording_distance_default)));

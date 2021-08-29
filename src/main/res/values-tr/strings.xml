@@ -173,7 +173,6 @@ limitations under the License.
     <string name="menu_show_on_map">Haritada göster</string>
     <string name="menu_start_gps">GPS\'i aç</string>
     <string name="menu_stop_gps">GPS\'i kapat</string>
-    <string name="menu_voice_frequency">Ses sıklığı</string>
     <!-- OpenTracks -->
     <string name="recording_service">Kayıt hizmeti</string>
     <!-- Search -->

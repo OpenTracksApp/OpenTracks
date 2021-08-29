@@ -237,7 +237,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="menu_show_on_map">Amosar no mapa</string>
     <string name="menu_start_gps">Iniciar GPS</string>
     <string name="menu_stop_gps">Desactivar GPS</string>
-    <string name="menu_voice_frequency">Frecuencia da voz</string>
     <string name="menu_resume_track">Retomar gravación</string>
     <!-- OpenTracks -->
     <string name="recording_service">Servizo de gravación</string>

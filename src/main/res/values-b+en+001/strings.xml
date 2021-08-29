@@ -144,7 +144,6 @@
     <string name="menu_show_on_map">Show on map</string>
     <string name="menu_start_gps">Start GPS</string>
     <string name="menu_stop_gps">Stop GPS</string>
-    <string name="menu_voice_frequency">Voice frequency</string>
     <string name="recording_service">Recording service</string>
     <string name="sensor_state_battery">Battery level</string>
     <string name="sensor_state_cadence">Cadence</string>

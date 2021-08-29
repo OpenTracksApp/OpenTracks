@@ -292,23 +292,29 @@ public class StringUtils {
         }
     }
 
-    /**
-     * Gets the frequency display options.
-     *
-     * @param context     the context
-     * @param metricUnits true to display in metric units
-     */
-    public static String[] getFrequencyOptions(Context context, boolean metricUnits) {
-        String[] values = context.getResources().getStringArray(R.array.frequency_values);
+    public static String[] getAnnouncementFrequency(Context context) {
+        String[] values = context.getResources().getStringArray(R.array.voice_announcement_frequency_values);
         String[] options = new String[values.length];
         for (int i = 0; i < values.length; i++) {
-            int value = Integer.parseInt(values[i]);
-            if (context.getString(R.string.frequency_off).equals(values[i])) {
+            if (context.getString(R.string.announcement_off).equals(values[i])) {
                 options[i] = context.getString(R.string.value_off);
-            } else if (value < 0) {
-                options[i] = context.getString(metricUnits ? R.string.value_integer_kilometer : R.string.value_integer_mile, Math.abs(value));
             } else {
+                int value = Integer.parseInt(values[i]);
                 options[i] = context.getString(R.string.value_integer_minute, value);
+            }
+        }
+        return options;
+    }
+
+    public static String[] getAnnouncementDistance(Context context, boolean metricUnits) {
+        String[] values = context.getResources().getStringArray(R.array.voice_announcement_distance_values);
+        String[] options = new String[values.length];
+        for (int i = 0; i < values.length; i++) {
+            if (context.getString(R.string.announcement_off).equals(values[i])) {
+                options[i] = context.getString(R.string.value_off);
+            } else {
+                int value = Integer.parseInt(values[i]);
+                options[i] = context.getString(metricUnits ? R.string.value_integer_kilometer : R.string.value_integer_mile, value);
             }
         }
         return options;

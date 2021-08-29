@@ -215,7 +215,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="menu_show_on_map">Visualizza su mappa</string>
     <string name="menu_start_gps">Accendi GPS</string>
     <string name="menu_stop_gps">Spegni GPS</string>
-    <string name="menu_voice_frequency">Frequenza voce</string>
     <!-- OpenTracks -->
     <string name="recording_service">Servizio di registrazione</string>
     <!-- Search -->

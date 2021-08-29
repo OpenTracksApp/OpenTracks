@@ -229,7 +229,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="menu_show_on_map">Vis på kort</string>
     <string name="menu_start_gps">Start GPS</string>
     <string name="menu_stop_gps">Stop GPS</string>
-    <string name="menu_voice_frequency">Stemmefrekvens</string>
     <string name="menu_resume_track">Genoptag sporet</string>
     <!-- OpenTracks -->
     <string name="recording_service">Registreringstjeneste</string>

@@ -174,7 +174,6 @@ limitations under the License.
     <string name="menu_show_on_map">Afișați pe hartă</string>
     <string name="menu_start_gps">Porniți GPS</string>
     <string name="menu_stop_gps">Opriți GPS</string>
-    <string name="menu_voice_frequency">Frecvența vocii</string>
     <!-- OpenTracks -->
     <string name="recording_service">Serviciu de înregistrare</string>
     <!-- Search -->

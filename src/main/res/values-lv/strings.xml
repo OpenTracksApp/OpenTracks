@@ -174,7 +174,6 @@ limitations under the License.
     <string name="menu_show_on_map">Rādīt kartē</string>
     <string name="menu_start_gps">Palaist GPS</string>
     <string name="menu_stop_gps">Apturēt GPS</string>
-    <string name="menu_voice_frequency">Balss ziņas</string>
     <!-- OpenTracks -->
     <string name="recording_service">Ierakstīšanas pakalpojums</string>
     <!-- Search -->

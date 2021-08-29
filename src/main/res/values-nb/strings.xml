@@ -173,7 +173,6 @@ limitations under the License.
     <string name="menu_show_on_map">Vis på kart</string>
     <string name="menu_start_gps">Start GPS</string>
     <string name="menu_stop_gps">Stopp GPS</string>
-    <string name="menu_voice_frequency">Talefrekvens</string>
     <!-- OpenTracks -->
     <string name="recording_service">Opptakstjeneste</string>
     <!-- Search -->

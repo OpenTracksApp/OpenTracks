@@ -174,7 +174,6 @@ limitations under the License.
     <string name="menu_show_on_map">Prikaži na karti</string>
     <string name="menu_start_gps">Pokreni GPS</string>
     <string name="menu_stop_gps">Zaustavi GPS</string>
-    <string name="menu_voice_frequency">Učest. glas. objava</string>
     <!-- OpenTracks -->
     <string name="recording_service">Usluga snimanja</string>
     <!-- Search -->

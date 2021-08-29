@@ -146,7 +146,6 @@
     <string name="menu_show_on_map">הצג במפה</string>
     <string name="menu_start_gps">הפעל GPS</string>
     <string name="menu_stop_gps">עצור GPS</string>
-    <string name="menu_voice_frequency">תדירות הודעות קוליות</string>
     <string name="recording_service">שירות הקלטה</string>
     <string name="sensor_state_battery">טעינת סוללה</string>
     <string name="sensor_state_cadence">קצב</string>

@@ -173,7 +173,6 @@ limitations under the License.
     <string name="menu_show_on_map">नक्शे पर दिखाएं</string>
     <string name="menu_start_gps">GPS प्रारंभ करें</string>
     <string name="menu_stop_gps">GPS बंद करें</string>
-    <string name="menu_voice_frequency">ध्वनि आवृत्ति</string>
     <!-- OpenTracks -->
     <string name="recording_service">रिकॉर्डिंग सेवा</string>
     <!-- Search -->

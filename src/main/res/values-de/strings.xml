@@ -230,7 +230,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="menu_show_on_map">Auf Karte anzeigen</string>
     <string name="menu_start_gps">GPS aktivieren</string>
     <string name="menu_stop_gps">GPS deaktivieren</string>
-    <string name="menu_voice_frequency">Ansagehäufigkeit</string>
     <string name="menu_resume_track">Track fortsetzen</string>
     <!-- OpenTracks -->
     <string name="recording_service">Dienst für Aufzeichnung</string>

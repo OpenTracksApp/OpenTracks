@@ -174,7 +174,6 @@ limitations under the License.
     <string name="menu_show_on_map">Zobraziť na mape</string>
     <string name="menu_start_gps">Aktivovať GPS</string>
     <string name="menu_stop_gps">Deaktivovať GPS</string>
-    <string name="menu_voice_frequency">Hlasová frekvencia</string>
     <!-- OpenTracks -->
     <string name="recording_service">Služba na záznam</string>
     <!-- Search -->

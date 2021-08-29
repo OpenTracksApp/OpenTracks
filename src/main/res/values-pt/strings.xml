@@ -173,7 +173,6 @@ limitations under the License.
     <string name="menu_show_on_map">Mostrar no mapa</string>
     <string name="menu_start_gps">Iniciar GPS</string>
     <string name="menu_stop_gps">Parar GPS</string>
-    <string name="menu_voice_frequency">Frequência da voz</string>
     <!-- OpenTracks -->
     <string name="recording_service">Serviço de gravação</string>
     <!-- Search -->

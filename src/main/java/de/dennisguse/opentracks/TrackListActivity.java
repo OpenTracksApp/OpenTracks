@@ -77,7 +77,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
     private static final String TAG = TrackListActivity.class.getSimpleName();
 
-    // The following are set in onCreate
+    // The following are setFrequency in onCreate
     private SharedPreferences sharedPreferences;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private ResourceCursorAdapter resourceCursorAdapter;

@@ -226,7 +226,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="menu_show_on_map">Kuva kaardil</string>
     <string name="menu_start_gps">Käivita GPS</string>
     <string name="menu_stop_gps">Peata GPS</string>
-    <string name="menu_voice_frequency">Häälteadete sagedus</string>
     <string name="menu_resume_track">Jätka pala</string>
     <!-- OpenTracks -->
     <string name="recording_service">Salvestamisteenus</string>

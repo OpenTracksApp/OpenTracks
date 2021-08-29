@@ -227,7 +227,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="menu_show_on_map">Erakutsi mapan</string>
     <string name="menu_start_gps">Hasi GPSa</string>
     <string name="menu_stop_gps">Gelditu GPSa</string>
-    <string name="menu_voice_frequency">Ahotsaren frekuentzia</string>
     <string name="menu_resume_track">Jarraitu pista</string>
     <!-- OpenTracks -->
     <string name="recording_service">Grabaketa-zerbitzua</string>

@@ -226,7 +226,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="menu_show_on_map">Afficher sur la carte</string>
     <string name="menu_start_gps">Démarrer le GPS</string>
     <string name="menu_stop_gps">Arrêter le GPS</string>
-    <string name="menu_voice_frequency">Fréquence vocale</string>
     <string name="menu_resume_track">Reprendre la trace</string>
     <!-- OpenTracks -->
     <string name="recording_service">Service enregistrement</string>

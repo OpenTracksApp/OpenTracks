@@ -15,6 +15,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -54,16 +55,37 @@ public class VoiceAnnouncementManagerTest {
                 .getService();
 
         VoiceAnnouncementManager voiceAnnouncementManager = new VoiceAnnouncementManager(service);
-        voiceAnnouncementManager.setMetricUnits(true);
-        voiceAnnouncementManager.setTaskFrequency(-5);
+        voiceAnnouncementManager.setFrequency(Distance.ofKilometer(5));
 
         // when
         TrackStatistics statistics = new TrackStatistics();
-        statistics.setTotalDistance(Distance.of(13000));
-        assertEquals(Distance.of(15000), voiceAnnouncementManager.calculateNextTaskDistance(statistics));
+        statistics.setTotalDistance(Distance.ofKilometer(13));
+        voiceAnnouncementManager.restore(statistics);
+        assertEquals(Distance.of(15000), voiceAnnouncementManager.getNextTotalDistance());
 
         statistics.setTotalDistance(Distance.of(15100));
-        assertEquals(Distance.of(20000), voiceAnnouncementManager.calculateNextTaskDistance(statistics));
+        voiceAnnouncementManager.restore(statistics);
+        assertEquals(Distance.of(20000), voiceAnnouncementManager.getNextTotalDistance());
+    }
+
+    @Test
+    public void calculateNextTotalTime() throws TimeoutException {
+        // given
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
+                .getService();
+
+        VoiceAnnouncementManager voiceAnnouncementManager = new VoiceAnnouncementManager(service);
+        voiceAnnouncementManager.setFrequency(Duration.ofSeconds(5));
+
+        // when
+        TrackStatistics statistics = new TrackStatistics();
+        statistics.setTotalTime(Duration.ofSeconds(91));
+        voiceAnnouncementManager.restore(statistics);
+        assertEquals(Duration.ofSeconds(95), voiceAnnouncementManager.getNextTotalTime());
+
+        statistics.setTotalTime(Duration.ofSeconds(95));
+        voiceAnnouncementManager.restore(statistics);
+        assertEquals(Duration.ofSeconds(100), voiceAnnouncementManager.getNextTotalTime());
     }
 
 }

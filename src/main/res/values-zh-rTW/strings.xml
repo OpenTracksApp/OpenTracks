@@ -143,7 +143,6 @@
     <string name="menu_show_on_map">在地圖上顯示</string>
     <string name="menu_start_gps">啟動 GPS</string>
     <string name="menu_stop_gps">關閉 GPS</string>
-    <string name="menu_voice_frequency">語音播報頻率</string>
     <string name="recording_service">記錄服務</string>
     <string name="sensor_state_battery">電池電量</string>
     <string name="sensor_state_cadence">轉速</string>

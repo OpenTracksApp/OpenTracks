@@ -172,7 +172,6 @@ limitations under the License.
     <string name="menu_show_on_map">Hiển thị trên bản đồ</string>
     <string name="menu_start_gps">Bắt đầu GPS</string>
     <string name="menu_stop_gps">Dừng GPS</string>
-    <string name="menu_voice_frequency">Tần suất giọng nói</string>
     <!-- OpenTracks -->
     <string name="recording_service">Dịch vụ ghi</string>
     <!-- Search -->
