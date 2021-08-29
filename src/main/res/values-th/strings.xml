@@ -172,7 +172,6 @@ limitations under the License.
     <string name="menu_show_on_map">แสดงบนแผนที่</string>
     <string name="menu_start_gps">เริ่ม GPS</string>
     <string name="menu_stop_gps">หยุด GPS</string>
-    <string name="menu_voice_frequency">ความถี่เสียง</string>
     <!-- OpenTracks -->
     <string name="recording_service">บริการการบันทึก</string>
     <!-- Search -->

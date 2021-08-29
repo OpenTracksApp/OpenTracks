@@ -172,7 +172,6 @@ limitations under the License.
     <string name="menu_show_on_map">Tunjukkan pada peta</string>
     <string name="menu_start_gps">Mulakan GPS</string>
     <string name="menu_stop_gps">Hentikan GPS</string>
-    <string name="menu_voice_frequency">Kekerapan suara</string>
     <!-- OpenTracks -->
     <string name="recording_service">Khidmat rakaman</string>
     <!-- Search -->

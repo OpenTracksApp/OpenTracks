@@ -3,12 +3,10 @@ package de.dennisguse.opentracks.settings;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.documentfile.provider.DocumentFile;
@@ -286,8 +284,11 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         private void updateUnits() {
             boolean metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getActivity());
 
-            ListPreference voiceFrequency = findPreference(getString(R.string.voice_frequency_key));
-            voiceFrequency.setEntries(StringUtils.getFrequencyOptions(getActivity(), metricUnits));
+            ListPreference voiceFrequency = findPreference(getString(R.string.voice_announcement_frequency_key));
+            voiceFrequency.setEntries(StringUtils.getAnnouncementFrequency(getActivity()));
+
+            ListPreference voiceDistance = findPreference(getString(R.string.voice_announcement_distance_key));
+            voiceDistance.setEntries(StringUtils.getAnnouncementDistance(getActivity(), metricUnits));
 
             ListPreference minRecordingInterval = findPreference(getString(R.string.min_recording_interval_key));
             minRecordingInterval.setEntries(PreferenceHelper.getMinRecordingIntervalEntries(getActivity()));

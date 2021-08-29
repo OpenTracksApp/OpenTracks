@@ -90,6 +90,15 @@ public class PreferencesUtils {
         return key == null || key.equals(getKey(context, keyId));
     }
 
+    public static boolean isKey(Context context, int[] keyIds, String key) {
+        for(int keyId : keyIds) {
+            if (isKey(context, keyId, key)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private static boolean getBoolean(SharedPreferences sharedPreferences, Context context, int keyId, boolean defaultValue) {
         return sharedPreferences.getBoolean(getKey(context, keyId), defaultValue);
     }
@@ -216,13 +225,23 @@ public class PreferencesUtils {
         return getBoolean(sharedPreferences, context, R.string.stats_fullscreen_while_recording_key, DEFAULT);
     }
 
-    public static int getVoiceFrequency(SharedPreferences sharedPreferences, Context context) {
-        final int VOICE_FREQUENCY_DEFAULT = Integer.parseInt(context.getResources().getString(R.string.voice_frequency_default));
-        return getInt(sharedPreferences, context, R.string.voice_frequency_key, VOICE_FREQUENCY_DEFAULT);
+    public static Duration getVoiceAnnouncementFrequency(SharedPreferences sharedPreferences, Context context) {
+        final int DEFAULT = Integer.parseInt(context.getResources().getString(R.string.voice_announcement_frequency_default));
+        int value = getInt(sharedPreferences, context, R.string.voice_announcement_frequency_key, DEFAULT);
+        return Duration.ofSeconds(value);
+    }
+
+    /**
+     * @return Result depends on isMetricUnits
+     */
+    public static Distance getVoiceAnnouncementDistance(SharedPreferences sharedPreferences, Context context) {
+        final float DEFAULT = Integer.parseInt(context.getResources().getString(R.string.voice_announcement_distance_default));
+        float value = getFloat(sharedPreferences, context, R.string.voice_announcement_distance_key, DEFAULT);
+        return Distance.one(isMetricUnits(sharedPreferences, context)).multipliedBy(value);
     }
 
     public static float getVoiceSpeedRate(SharedPreferences sharedPreferences, Context context) {
-        final float DEFAULT = Float.parseFloat(context.getResources().getString(R.string.voice_frequency_default));
+        final float DEFAULT = Float.parseFloat(context.getResources().getString(R.string.voice_speed_rate_default));
         return getFloat(sharedPreferences, context, R.string.voice_speed_rate_key, DEFAULT);
     }
 

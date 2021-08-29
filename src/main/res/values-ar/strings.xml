@@ -177,7 +177,6 @@ limitations under the License.
     <string name="menu_show_on_map">إظهار على الخريطة</string>
     <string name="menu_start_gps">بدء GPS</string>
     <string name="menu_stop_gps">إيقاف GPS</string>
-    <string name="menu_voice_frequency">معدل الصوت</string>
     <!-- OpenTracks -->
     <string name="recording_service">خدمة التسجيل</string>
     <!-- Search -->

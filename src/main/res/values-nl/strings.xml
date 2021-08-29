@@ -226,7 +226,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="menu_show_on_map">Weergeven op kaart</string>
     <string name="menu_start_gps">GPS starten</string>
     <string name="menu_stop_gps">GPS stoppen</string>
-    <string name="menu_voice_frequency">Frequentie voor gesproken berichten</string>
     <string name="menu_resume_track">Hervat spoor</string>
     <!-- OpenTracks -->
     <string name="recording_service">Opnameservice</string>

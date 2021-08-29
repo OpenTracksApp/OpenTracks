@@ -73,7 +73,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     public static final RecordingData NOT_RECORDING = new RecordingData(null, null, null);
     public static final GpsStatusValue STATUS_GPS_DEFAULT = GpsStatusValue.GPS_NONE;
 
-    // The following variables are set in onCreate:
+    // The following variables are setFrequency in onCreate:
     private VoiceAnnouncementManager voiceAnnouncementManager;
     private TrackRecordingServiceNotificationManager notificationManager;
 
@@ -104,20 +104,21 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             Context context = TrackRecordingService.this;
             if (PreferencesUtils.isKey(context, R.string.stats_units_key, key)) {
                 boolean metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
-                voiceAnnouncementManager.setMetricUnits(metricUnits);
                 notificationManager.setMetricUnits(metricUnits);
             }
-            if (PreferencesUtils.isKey(context, R.string.voice_frequency_key, key)) {
-                voiceAnnouncementManager.setTaskFrequency(PreferencesUtils.getVoiceFrequency(sharedPreferences, context));
+            if (PreferencesUtils.isKey(context, R.string.voice_announcement_frequency_key, key)) {
+                voiceAnnouncementManager.setFrequency(PreferencesUtils.getVoiceAnnouncementFrequency(sharedPreferences, context));
             }
-
+            if (PreferencesUtils.isKey(context, new int[]{R.string.voice_announcement_distance_key, R.string.stats_units_key}, key)) {
+                voiceAnnouncementManager.setFrequency(PreferencesUtils.getVoiceAnnouncementDistance(sharedPreferences, context));
+            }
 
             trackPointCreator.onSharedPreferenceChanged(sharedPreferences, key);
             trackRecordingManager.onSharedPreferenceChanged(sharedPreferences, key);
         }
     };
 
-    // The following variables are set when recording:
+    // The following variables are setFrequency when recording:
     private WakeLock wakeLock;
 
     private final Binder binder = new Binder();

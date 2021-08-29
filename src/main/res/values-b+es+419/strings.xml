@@ -145,7 +145,6 @@
     <string name="menu_show_on_map">Mostrar en el mapa</string>
     <string name="menu_start_gps">Iniciar GPS</string>
     <string name="menu_stop_gps">Detener GPS</string>
-    <string name="menu_voice_frequency">Frecuencia de voz</string>
     <string name="menu_resume_track">Reanudar ruta</string>
     <string name="recording_service">Servicio de grabación</string>
     <string name="sensor_state_battery">Nivel de la batería</string>

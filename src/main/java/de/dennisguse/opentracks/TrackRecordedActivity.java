@@ -66,7 +66,7 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
 
     private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
 
-    // The following are set in onCreate.
+    // The following are setFrequency in onCreate.
     private ContentProviderUtils contentProviderUtils;
     private SharedPreferences sharedPreferences;
     private TrackDataHub trackDataHub;

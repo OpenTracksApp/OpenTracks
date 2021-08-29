@@ -108,7 +108,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     };
 
     /**
-     * A runnable that will set the orange pointer as appropriate and redraw.
+     * A runnable that will setFrequency the orange pointer as appropriate and redraw.
      */
     private final Runnable updateChart = new Runnable() {
         @Override

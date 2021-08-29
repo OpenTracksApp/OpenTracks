@@ -144,7 +144,6 @@
     <string name="menu_show_on_map">Afficher sur une carte</string>
     <string name="menu_start_gps">Démarrer le GPS</string>
     <string name="menu_stop_gps">Arrêter le GPS</string>
-    <string name="menu_voice_frequency">Fréquence vocale</string>
     <string name="recording_service">Service d\'enregistrement</string>
     <string name="sensor_state_battery">Niveau de charge de la pile</string>
     <string name="sensor_state_cadence">Cadence</string>

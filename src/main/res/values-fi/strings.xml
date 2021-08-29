@@ -230,7 +230,6 @@ limitations under the License.
     <string name="menu_show_on_map">Näytä kartalta</string>
     <string name="menu_start_gps">Käynnistä GPS</string>
     <string name="menu_stop_gps">Pysäytä GPS</string>
-    <string name="menu_voice_frequency">Ilmoitustiheys</string>
     <string name="menu_resume_track">Jatka reittiä</string>
     <!-- OpenTracks -->
     <string name="recording_service">Tallennuspalvelu</string>

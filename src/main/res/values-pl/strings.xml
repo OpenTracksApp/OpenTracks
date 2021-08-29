@@ -186,7 +186,6 @@ limitations under the License.
     <string name="menu_show_on_map">Pokaż na mapie</string>
     <string name="menu_start_gps">Uruchom GPS</string>
     <string name="menu_stop_gps">Zatrzymaj GPS</string>
-    <string name="menu_voice_frequency">Częstość powiadomień</string>
     <string name="menu_resume_track">Kontynuuj trasę</string>
     <!-- OpenTracks -->
     <string name="recording_service">Usługa rejestrowania</string>

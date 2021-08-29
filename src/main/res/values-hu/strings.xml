@@ -173,7 +173,6 @@ limitations under the License.
     <string name="menu_show_on_map">Megjelenítés a térképen</string>
     <string name="menu_start_gps">GPS indítása</string>
     <string name="menu_stop_gps">GPS leállítása</string>
-    <string name="menu_voice_frequency">Utasítások gyakorisága</string>
     <!-- OpenTracks -->
     <string name="recording_service">Rögzítőszolgáltatás</string>
     <!-- Search -->

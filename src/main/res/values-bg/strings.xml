@@ -173,7 +173,6 @@ limitations under the License.
     <string name="menu_show_on_map">Показване на картата</string>
     <string name="menu_start_gps">Стартиране на GPS</string>
     <string name="menu_stop_gps">Спиране на GPS</string>
-    <string name="menu_voice_frequency">Честота на гласа</string>
     <!-- OpenTracks -->
     <string name="recording_service">Услуга за запис</string>
     <!-- Search -->

@@ -17,7 +17,6 @@
     </string-array>
 
     <string name="split_frequency_key" translatable="false" tools:keep="@string/split_frequency_key">splitFrequency</string>
-    <string name="split_frequency_default" translatable="false" tools:keep="@string/split_frequency_default">@string/frequency_off</string>
 
     <string name="chart_show_cadence_key" translatable="false" tools:keep="@string/chart_show_cadence_key">chartShowCadence</string>
     <bool name="chart_show_cadence_default" translatable="false" tools:keep="@bool/chart_show_cadence_default">

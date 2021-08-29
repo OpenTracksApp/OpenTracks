@@ -227,7 +227,6 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="menu_show_on_map">Zobrazit na mapě</string>
     <string name="menu_start_gps">Spustit GPS</string>
     <string name="menu_stop_gps">Ukončit GPS</string>
-    <string name="menu_voice_frequency">Frekvence hlasových oznámení</string>
     <string name="menu_resume_track">Obnovit měření</string>
     <!-- OpenTracks -->
     <string name="recording_service">Služba pro záznam</string>
