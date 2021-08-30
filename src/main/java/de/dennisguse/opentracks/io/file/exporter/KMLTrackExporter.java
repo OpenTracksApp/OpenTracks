@@ -26,10 +26,12 @@ import androidx.annotation.VisibleForTesting;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.text.NumberFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import de.dennisguse.opentracks.R;
@@ -66,6 +68,13 @@ public class KMLTrackExporter implements TrackExporter {
 
     private static final String MARKER_ICON = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png";
     private static final String TRACK_ICON = "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
+
+    private static final NumberFormat SENSOR_DATA_FORMAT = NumberFormat.getInstance(Locale.US);
+
+    static {
+        SENSOR_DATA_FORMAT.setMaximumFractionDigits(1);
+        SENSOR_DATA_FORMAT.setGroupingUsed(false);
+    }
 
     private final Context context;
     private final boolean exportPhotos;
@@ -394,7 +403,7 @@ public class KMLTrackExporter implements TrackExporter {
             if (value == null) {
                 printWriter.println("<gx:value />");
             } else {
-                printWriter.println("<gx:value>" + list.get(i) + "</gx:value>");
+                printWriter.println("<gx:value>" + SENSOR_DATA_FORMAT.format(value) + "</gx:value>");
             }
         }
         printWriter.println("</gx:SimpleArrayData>");
