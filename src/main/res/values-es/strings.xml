@@ -509,4 +509,27 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="settings_sensor_running_speed_and_cadence">Correr: distancia, velocidad y cadencia</string>
     <string name="settings_sensor_cycling_distance_speed">Ciclismo: distancia y velocidad</string>
     <string name="settings_sensor_cycling_cadence">Ciclismo: cadencia</string>
+    <string name="settings_announcements">Avisos</string>
+    <string name="settings_announcements_totaltime_frequency">Intervalo de tiempo</string>
+    <string name="settings_announcements_distance_frequency">Intervalo de distancia</string>
+    <string name="stats_sensors_heart_rate">Ritmo cardíaco</string>
+    <string name="stats_sensors_cadence">Cadencia</string>
+    <string name="stats_sensors_power">Poder</string>
+    <string name="field_set_primary">Primario</string>
+    <string name="description_speed_source_gps">GPS</string>
+    <string name="settings_recording_customize_layout_title">Personalizar la distribución de grabación</string>
+    <string name="settings_recording_customize_layout_select_columns">Datos por columna</string>
+    <string name="settings_layout_reset_confirm_message">Todas los ajustes de distribución se revertirán a los valores por defecto. Esto no eliminará ningún recorrido en el dispositivo.</string>
+    <string name="settings_layout_reset_confirm_title">¿Restablecer todas las disposiciones\?</string>
+    <string name="settings_layout_reset_done">Todos los ajustes de disposición se han revertido a los valores por defecto</string>
+    <string name="settings_all_reset">Restablecer todos los ajustes</string>
+    <string name="location_coordinate">%1$s°</string>
+    <string name="location_latitude_longitude">%1$s, %2$s</string>
+    <string name="field_remove_from_layout">Remover</string>
+    <string name="description_speed_source_sensor">Sensor: %1$s</string>
+    <string name="generic_choose_an_option">Seleccione una opción</string>
+    <string name="settings_layout_reset">Restabecer distribución personalizada</string>
+    <string name="stats_coordinates">Latitud/Longitud</string>
+    <string name="title_activity_settings_custom_layout">Personalizar la pantalla de grabación</string>
+    <string name="field_set_secondary">Secundario</string>
 </resources>
