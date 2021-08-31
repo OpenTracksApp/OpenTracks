@@ -523,4 +523,7 @@ limitations under the License.
     <string name="field_set_primary">Primær</string>
     <string name="field_set_secondary">Sekundær</string>
     <string name="field_remove_from_layout">Fjern</string>
+    <string name="settings_announcements">Meldinger</string>
+    <string name="settings_announcements_totaltime_frequency">Tidsintervall</string>
+    <string name="settings_announcements_distance_frequency">Distanseintervall</string>
 </resources>
