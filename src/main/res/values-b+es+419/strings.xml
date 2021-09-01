@@ -477,4 +477,5 @@
     <string name="generic_choose_an_option">Selecciona una opción</string>
     <string name="settings_sensor_cycling_distance_speed">Ciclismo: Distancia y velocidad</string>
     <string name="settings_sensor_cycling_cadence">Ciclismo: Cadencia</string>
+    <string name="track_delete_not_recording">Este recorrido no puede ser eliminado porque se está grabando actualmente.</string>
 </resources>
