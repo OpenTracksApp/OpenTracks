@@ -494,7 +494,7 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
         <item quantity="other">Ukončeno s %1$d chybami</item>
     </plurals>
     <string name="import_progress_summary_errors_msg">Chyba</string>
-    <string name="settings_prevent_reimport_tracks_title">Zabraňte opětovnému importu Stop</string>
+    <string name="settings_prevent_reimport_tracks_title">Zabraňte opětovnému importu aktivit</string>
     <string name="export_progress_summary_errors_msg">Chyba</string>
     <string name="export_progress_summary_skip_msg">Stopy přeskočeny</string>
     <string name="export_progress_summary_overwrite_msg">Skladby přepsány</string>
@@ -515,7 +515,7 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="delete_service">Služba mazání</string>
     <string name="menu_voice_rate">Rychlost hlasových oznámení</string>
     <string name="track_delete_not_recording">Není možno vymazat aktuálně zaznamenávanou trasu.</string>
-    <string name="settings_sensor_cycling_distance_speed">Jízda na kole: vzdálenost a rychlost</string>
+    <string name="settings_sensor_cycling_distance_speed">Cyklistika: vzdálenost a rychlost</string>
     <string name="settings_sensor_cycling_cadence">Cyklistika: kadence</string>
     <string name="settings_sensor_running_speed_and_cadence">Běh: vzdálenost, rychlost a kadence</string>
     <string name="settings_recording_customize_layout_title">Přizpůsobit vzhled měření</string>
@@ -524,4 +524,12 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="field_set_primary">První</string>
     <string name="field_set_secondary">Druhý</string>
     <string name="field_remove_from_layout">Odstranit</string>
+    <string name="settings_announcements_totaltime_frequency">Časový interval</string>
+    <string name="settings_announcements_distance_frequency">Interval vzdálenosti</string>
+    <string name="settings_all_reset">Resetovat všechna nastavení</string>
+    <string name="settings_announcements">Oznámení</string>
+    <string name="settings_layout_reset">Nastavit výchozí vzhled</string>
+    <string name="settings_layout_reset_confirm_message">Všechna nastavení vzhledu se vrátí na výchozí hodnoty. Nebudou tím odstraněny žádné zaznamenané aktivity v zařízení.</string>
+    <string name="settings_layout_reset_confirm_title">Výchozí vzhled\?</string>
+    <string name="settings_layout_reset_done">Všechna nastavení vzhledu byla vrácena na výchozí hodnoty</string>
 </resources>
