@@ -373,4 +373,19 @@ limitations under the License.
     <string name="settings_recording_customize_layout_select_columns">Počet polí na riadok</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Na celú obrazovku</string>
     <string name="settings_recording_customize_layout_title">Prispôsobiť vzhľad meranie</string>
+    <string name="settings_announcements">Oznámenia</string>
+    <string name="settings_announcements_totaltime_frequency">Časový interval</string>
+    <string name="settings_announcements_distance_frequency">Interval vzdialenosti</string>
+    <string name="settings_layout_reset">Nastaviť predvolený vzhľad</string>
+    <string name="settings_layout_reset_confirm_message">Všetky nastavenia vzhľadu sa vrátia na predvolené hodnoty. Nebudú tým odstránené žiadne zaznamenané aktivity v zariadení.</string>
+    <string name="settings_layout_reset_confirm_title">Predvolený vzhľad\?</string>
+    <string name="settings_layout_reset_done">Všetky nastavenia vzhľadu bola vrátená na predvolené hodnoty</string>
+    <string name="settings_all_reset">Resetovať všetky nastavenia</string>
+    <string name="settings_error_initial_values_restored">Ľutujeme, ale došlo k chybe. Všetky nastavenia bola vrátená na predvolené hodnoty.</string>
+    <string name="settings_sensor_connecting">Pripojené k senzoru %1$s</string>
+    <string name="settings_sensor_disconnected">Odpojené od %1$s</string>
+    <string name="settings_sensor_cycling_distance_speed">Cyklistika: vzdialenosť a rýchlosť</string>
+    <string name="settings_sensor_running_speed_and_cadence">Beh: vzdialenosť, rýchlosť a kadencia</string>
+    <string name="settings_sensor_cycling_cadence">Cyklistika: kadencia</string>
+    <string name="settings_prevent_reimport_tracks_title">Zabráňte opätovnému importu aktivít</string>
 </resources>
