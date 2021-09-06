@@ -18,4 +18,10 @@ public class SensorDataHeartRate extends SensorData<Float> {
     public String toString() {
         return super.toString() + " heart=" + value;
     }
+
+    @NonNull
+    @Override
+    protected Float getNoneValue() {
+        return 0f;
+    }
 }

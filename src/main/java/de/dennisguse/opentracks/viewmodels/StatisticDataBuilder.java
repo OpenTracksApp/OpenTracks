@@ -53,7 +53,7 @@ public class StatisticDataBuilder {
             boolean reportSpeed = fieldKey.equals("speed");
             title = fieldKey.equals("speed") ? context.getString(R.string.stats_speed) : context.getString(R.string.stats_pace);
             Speed speed = latestTrackPoint != null && latestTrackPoint.hasSpeed() ? latestTrackPoint.getSpeed() : null;
-            if (sensorDataSet != null && sensorDataSet.getCyclingDistanceSpeed() != null && sensorDataSet.getCyclingDistanceSpeed().hasValue() && sensorDataSet.getCyclingDistanceSpeed().isRecent()) {
+            if (sensorDataSet != null && sensorDataSet.getCyclingDistanceSpeed() != null && sensorDataSet.getCyclingDistanceSpeed().hasValue()) {
                 valueAndUnit = StringUtils.getSpeedParts(context, sensorDataSet.getCyclingDistanceSpeed().getValue().getSpeed(), metricUnits, reportSpeed);
                 description = context.getString(R.string.description_speed_source_sensor, sensorDataSet.getCyclingDistanceSpeed().getSensorNameOrAddress());
             } else {
@@ -99,7 +99,7 @@ public class StatisticDataBuilder {
             }
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_heart_rate_key))) {
             title = context.getString(R.string.stats_sensors_heart_rate);
-            if (sensorDataSet != null && sensorDataSet.getHeartRate() != null && sensorDataSet.getHeartRate().hasValue() && sensorDataSet.getHeartRate().isRecent()) {
+            if (sensorDataSet != null && sensorDataSet.getHeartRate() != null && sensorDataSet.getHeartRate().hasValue()) {
                 valueAndUnit = StringUtils.getHeartRateParts(context, sensorDataSet.getHeartRate().getValue());
                 description = sensorDataSet.getHeartRate().getSensorNameOrAddress();
             } else {
@@ -108,7 +108,7 @@ public class StatisticDataBuilder {
             }
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_cadence_key))) {
             title = context.getString(R.string.stats_sensors_cadence);
-            if (sensorDataSet != null && sensorDataSet.getCyclingCadence() != null && sensorDataSet.getCyclingCadence().hasValue() && sensorDataSet.getCyclingCadence().isRecent()) {
+            if (sensorDataSet != null && sensorDataSet.getCyclingCadence() != null && sensorDataSet.getCyclingCadence().hasValue()) {
                 valueAndUnit = StringUtils.getCadenceParts(context, sensorDataSet.getCyclingCadence().getValue());
                 description = sensorDataSet.getCyclingCadence().getSensorNameOrAddress();
             } else {
@@ -117,7 +117,7 @@ public class StatisticDataBuilder {
             }
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_power_key))) {
             title = context.getString(R.string.stats_sensors_power);
-            if (sensorDataSet != null && sensorDataSet.getCyclingPower() != null && sensorDataSet.getCyclingPower().hasValue() && sensorDataSet.getCyclingPower().isRecent()) {
+            if (sensorDataSet != null && sensorDataSet.getCyclingPower() != null && sensorDataSet.getCyclingPower().hasValue()) {
                 valueAndUnit = StringUtils.getPowerParts(context, sensorDataSet.getCyclingPower().getValue());
                 description = sensorDataSet.getCyclingPower().getSensorNameOrAddress();
             } else {
@@ -142,13 +142,13 @@ public class StatisticDataBuilder {
         if (sensorDataSet == null) {
             return sensorDataList;
         }
-        if (statisticDataList.stream().noneMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_sensors_heart_rate))) && sensorDataSet.getHeartRate() != null && sensorDataSet.getHeartRate().hasValue() && sensorDataSet.getHeartRate().isRecent()) {
+        if (statisticDataList.stream().noneMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_sensors_heart_rate))) && sensorDataSet.getHeartRate() != null && sensorDataSet.getHeartRate().hasValue()) {
             sensorDataList.add(build(context, recordingData, "heart_rate", true, metricUnits));
         }
-        if (statisticDataList.stream().noneMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_sensors_cadence))) && sensorDataSet.getCyclingCadence() != null && sensorDataSet.getCyclingCadence().hasValue() && sensorDataSet.getCyclingCadence().isRecent()) {
+        if (statisticDataList.stream().noneMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_sensors_cadence))) && sensorDataSet.getCyclingCadence() != null && sensorDataSet.getCyclingCadence().hasValue()) {
             sensorDataList.add(build(context, recordingData, "cadence", true, metricUnits));
         }
-        if (statisticDataList.stream().noneMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_sensors_power))) && sensorDataSet.getCyclingPower() != null && sensorDataSet.getCyclingPower().hasValue() && sensorDataSet.getCyclingPower().isRecent()) {
+        if (statisticDataList.stream().noneMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_sensors_power))) && sensorDataSet.getCyclingPower() != null && sensorDataSet.getCyclingPower().hasValue()) {
             sensorDataList.add(build(context, recordingData, "power", true, metricUnits));
         }
 
