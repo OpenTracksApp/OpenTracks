@@ -300,7 +300,7 @@ public class StringUtils {
                 options[i] = context.getString(R.string.value_off);
             } else {
                 int value = Integer.parseInt(values[i]);
-                options[i] = context.getString(R.string.value_integer_minute, value);
+                options[i] = context.getString(R.string.value_integer_minute, Duration.ofSeconds(value).toMinutes());
             }
         }
         return options;
