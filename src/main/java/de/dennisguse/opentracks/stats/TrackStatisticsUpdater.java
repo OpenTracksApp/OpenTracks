@@ -178,7 +178,9 @@ public class TrackStatisticsUpdater {
         }
 
         // Update moving time
-        currentSegment.addMovingTime(movingTime);
+        if (lastTrackPoint.isMoving()) {
+            currentSegment.addMovingTime(movingTime);
+        }
 
         // Update max speed
         if (trackPoint.hasSpeed() && lastTrackPoint.hasSpeed()) {

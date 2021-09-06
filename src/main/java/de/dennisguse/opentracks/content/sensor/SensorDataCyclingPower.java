@@ -18,4 +18,10 @@ public class SensorDataCyclingPower extends SensorData<Float> {
     public String toString() {
         return super.toString() + " power=" + value;
     }
+
+    @NonNull
+    @Override
+    protected Float getNoneValue() {
+        return 0f;
+    }
 }

@@ -53,6 +53,16 @@ public final class SensorDataRunning extends SensorData<SensorDataRunning.Data> 
         return totalDistance;
     }
 
+    @NonNull
+    @Override
+    protected Data getNoneValue() {
+        if (value != null) {
+            return new Data(Speed.zero(), 0f, ((Data) value).distance);
+        } else {
+            return new Data(Speed.zero(), 0f, Distance.of(0));
+        }
+    }
+
     public void compute(SensorDataRunning previous) {
         Distance overallDistance = null;
         if (hasTotalDistance() && previous != null && previous.hasTotalDistance()) {

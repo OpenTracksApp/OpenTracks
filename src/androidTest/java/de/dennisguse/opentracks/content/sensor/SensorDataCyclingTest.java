@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.content.sensor;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -11,6 +12,7 @@ import de.dennisguse.opentracks.util.UintUtils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 public class SensorDataCyclingTest {
@@ -81,7 +83,9 @@ public class SensorDataCyclingTest {
         assertEquals(60, current.getValue(), 0.01);
     }
 
+    @Ignore("Disabled from #953")
     @Test
+    @Deprecated
     public void compute_cadence_rollOverCount() {
         // given
         SensorDataCycling.Cadence previous = new SensorDataCycling.Cadence("sensorAddress", "sensorName", UintUtils.UINT32_MAX - 1, 1024);
@@ -92,6 +96,19 @@ public class SensorDataCyclingTest {
 
         // then
         assertEquals(60, current.getValue(), 0.01);
+    }
+
+    @Test
+    public void compute_cadence_overflow() {
+        // given
+        SensorDataCycling.Cadence previous = new SensorDataCycling.Cadence("sensorAddress", "sensorName", UintUtils.UINT32_MAX - 1, 1024);
+        SensorDataCycling.Cadence current = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 0, 2048);
+
+        // when
+        current.compute(previous);
+
+        // then
+        assertNull(current.getValue());
     }
 
     @Test
@@ -108,7 +125,9 @@ public class SensorDataCyclingTest {
         assertEquals(1.20, current.getValue().getSpeed().toMPS(), 0.01);
     }
 
+    @Ignore("Disabled from #953")
     @Test
+    @Deprecated
     public void compute_speed_rollOverCount() {
         // given
         SensorDataCycling.DistanceSpeed previous = new SensorDataCycling.DistanceSpeed("sensorAddress", "sensorName", UintUtils.UINT32_MAX - 1, 1024);
@@ -120,6 +139,19 @@ public class SensorDataCyclingTest {
         // then
         assertEquals(2, current.getValue().getDistance().toM(), 0.01);
         assertEquals(2, current.getValue().getSpeed().toMPS(), 0.01);
+    }
+
+    @Test
+    public void compute_speed_overflow() {
+        // given
+        SensorDataCycling.DistanceSpeed previous = new SensorDataCycling.DistanceSpeed("sensorAddress", "sensorName", UintUtils.UINT32_MAX - 1, 1024);
+        SensorDataCycling.DistanceSpeed current = new SensorDataCycling.DistanceSpeed("sensorAddress", "sensorName", 0, 2048);
+
+        // when
+        current.compute(previous, Distance.ofMM(2000));
+
+        // then
+        assertNull(current.getValue());
     }
 
     @Test

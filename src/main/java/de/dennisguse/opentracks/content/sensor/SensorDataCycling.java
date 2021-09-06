@@ -59,17 +59,30 @@ public final class SensorDataCycling {
             return crankRevolutionsTime;
         }
 
+        @NonNull
+        @Override
+        protected Float getNoneValue() {
+            return 0f;
+        }
+
         public void compute(Cadence previous) {
             if (hasData() && previous != null && previous.hasData()) {
                 float timeDiff_ms = UintUtils.diff(crankRevolutionsTime, previous.crankRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * UnitConversions.S_TO_MS;
                 if (timeDiff_ms <= 0) {
                     Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
                     value = null;
-                } else {
-                    long crankDiff = UintUtils.diff(crankRevolutionsCount, previous.crankRevolutionsCount, UintUtils.UINT32_MAX);
-                    float cadence_ms = crankDiff / timeDiff_ms;
-                    value = (float) (cadence_ms / UnitConversions.MS_TO_S / UnitConversions.S_TO_MIN);
+                    return;
                 }
+
+                // TODO We have to treat with overflow according to the documentation: read https://github.com/OpenTracksApp/OpenTracks/pull/953#discussion_r711625268
+                if (crankRevolutionsCount < previous.crankRevolutionsCount) {
+                    Log.e(TAG, "Crank revolutions count difference is invalid: cannot compute cadence.");
+                    return;
+                }
+
+                long crankDiff = UintUtils.diff(crankRevolutionsCount, previous.crankRevolutionsCount, UintUtils.UINT32_MAX);
+                float cadence_ms = crankDiff / timeDiff_ms;
+                value = (float) (cadence_ms / UnitConversions.MS_TO_S / UnitConversions.S_TO_MIN);
             }
         }
 
@@ -121,6 +134,16 @@ public final class SensorDataCycling {
             return wheelRevolutionsTime;
         }
 
+        @NonNull
+        @Override
+        protected Data getNoneValue() {
+            if (value != null) {
+                return new Data(value.distance, value.distanceOverall, Speed.zero());
+            } else {
+                return new Data(Distance.of(0), Distance.of(0), Speed.zero());
+            }
+        }
+
         public void compute(DistanceSpeed previous, Distance wheelCircumference) {
             if (hasData() && previous != null && previous.hasData()) {
                 float timeDiff_ms = UintUtils.diff(wheelRevolutionsTime, previous.wheelRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * UnitConversions.S_TO_MS;
@@ -131,6 +154,10 @@ public final class SensorDataCycling {
                     return;
                 }
 
+                if (wheelRevolutionsCount < previous.wheelRevolutionsCount) {
+                    Log.e(TAG, "Wheel revolutions count difference is invalid: cannot compute speed.");
+                    return;
+                }
                 long wheelDiff = UintUtils.diff(wheelRevolutionsCount, previous.wheelRevolutionsCount, UintUtils.UINT32_MAX);
 
                 Distance distance = wheelCircumference.multipliedBy(wheelDiff);
@@ -216,6 +243,12 @@ public final class SensorDataCycling {
 
         public DistanceSpeed getDistanceSpeed() {
             return this.value != null ? this.value.second : null;
+        }
+
+        @NonNull
+        @Override
+        protected Pair<Cadence, DistanceSpeed> getNoneValue() {
+            return new Pair<>(null, null);
         }
     }
 }

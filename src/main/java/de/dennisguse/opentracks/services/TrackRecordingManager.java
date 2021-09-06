@@ -172,6 +172,7 @@ class TrackRecordingManager {
                 insertTrackPoint(trackId, trackPoint);
 
                 isIdle = false;
+
                 lastTrackPoint = trackPoint;
                 return;
             }
