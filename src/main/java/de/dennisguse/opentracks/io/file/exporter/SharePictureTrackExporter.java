@@ -66,7 +66,7 @@ public class SharePictureTrackExporter implements TrackExporter {
 
         viewBinding.sharePictureTotalTime.setText(StringUtils.formatElapsedTimeWithHour(track.getTrackStatistics().getTotalTime()));
         viewBinding.sharePictureTotalDistance.setText(StringUtils.formatDistance(context, track.getTrackStatistics().getTotalDistance(), metricUnits));
-        viewBinding.sharePictureGain.setText(StringUtils.formatAltitude(context, trackStatistics.getTotalAltitudeGain(), metricUnits));
+        viewBinding.sharePictureGain.setText(StringUtils.formatAltitudeChange(context, trackStatistics.getTotalAltitudeGain(), metricUnits));
 
         // prepare rendering
         View view = viewBinding.getRoot();
