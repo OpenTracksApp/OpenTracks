@@ -84,10 +84,10 @@ public class StatisticDataBuilder {
             description = latestTrackPoint != null && latestTrackPoint.hasAltitude() ? context.getString(latestTrackPoint.getAltitude().getLabelId()) : null;
             valueAndUnit = StringUtils.getAltitudeParts(context, altitude, metricUnits);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_gain_key))) {
-            valueAndUnit = StringUtils.getAltitudeParts(context, recordingData.getTrackStatistics().getTotalAltitudeGain(), metricUnits);
+            valueAndUnit = StringUtils.getAltitudeChangeParts(context, recordingData.getTrackStatistics().getTotalAltitudeGain(), metricUnits);
             title = context.getString(R.string.stats_gain);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_loss_key))) {
-            valueAndUnit = StringUtils.getAltitudeParts(context, recordingData.getTrackStatistics().getTotalAltitudeLoss(), metricUnits);
+            valueAndUnit = StringUtils.getAltitudeChangeParts(context, recordingData.getTrackStatistics().getTotalAltitudeLoss(), metricUnits);
             title = context.getString(R.string.stats_loss);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_coordinates_key))) {
             title = context.getString(R.string.stats_coordinates);

@@ -341,6 +341,21 @@ public class StringUtils {
         return context.getString(R.string.altitude_with_unit, distanceParts.first, distanceParts.second);
     }
 
+    /**
+     * @return the formatted altitudeDifference_m (or null) and it's unit as {@link Pair}
+     */
+    public static Pair<String, String> getAltitudeChangeParts(Context context, Float altitudeDifference_m, boolean metricUnits) {
+        String formattedValue = altitudeDifference_m != null ? String.valueOf((int) Distance.of(altitudeDifference_m).toM_FT(metricUnits)) : context.getString(R.string.value_unknown);
+        String unit = context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet);
+        return new Pair<>(formattedValue, unit);
+    }
+
+    public static String formatAltitudeChange(Context context, Float altitude_m, boolean metricUnits) {
+        Pair<String, String> distanceParts = getAltitudeChangeParts(context, altitude_m, metricUnits);
+
+        return context.getString(R.string.altitude_with_unit, distanceParts.first, distanceParts.second);
+    }
+
     public static String valueInParentheses(String text) {
         return "(" + text + ")";
     }
