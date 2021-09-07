@@ -309,6 +309,8 @@ limitations under the License.
     <string name="delete_service">Deletion service</string>
     <!-- Permission -->
     <string name="permission_gps_failed">OpenTracks requires permission to use GPS.</string>
+    <string name="permission_bluetooth_failed">OpenTracks requires permission to use Bluetooth.</string>
+    <string name="permission_bluetooth_failed_rejected">You manually need to grant OpenTracks access to Nearby Devices in system settings.</string>
     <!-- Search -->
     <!-- Sensor State -->
     <string name="sensor_state_battery">Battery level</string>
