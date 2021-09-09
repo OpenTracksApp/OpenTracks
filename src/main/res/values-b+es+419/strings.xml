@@ -454,7 +454,7 @@
     <string name="settings_recording_customize_layout_select_columns">Datos por columna</string>
     <string name="settings_announcements_totaltime_frequency">Intervalo de tiempo</string>
     <string name="settings_announcements_distance_frequency">Intervalo de distancia</string>
-    <string name="settings_layout_reset">Restablecer disposición personalizada</string>
+    <string name="settings_layout_reset">Restablecer pantalla personalizada</string>
     <string name="settings_announcements">Anuncios</string>
     <string name="settings_layout_reset_confirm_title">¿Restablecer todas las disposiciones\?</string>
     <string name="settings_layout_reset_done">Todas las disposiciones se han revertido a los valores por defecto</string>
