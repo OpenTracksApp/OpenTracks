@@ -517,7 +517,7 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="stats_sensors_power">Poder</string>
     <string name="field_set_primary">Primario</string>
     <string name="description_speed_source_gps">GPS</string>
-    <string name="settings_recording_customize_layout_title">Personalizar la distribución de grabación</string>
+    <string name="settings_recording_customize_layout_title">Personalizar la pantalla de grabación</string>
     <string name="settings_recording_customize_layout_select_columns">Datos por columna</string>
     <string name="settings_layout_reset_confirm_message">Todas los ajustes de distribución se revertirán a los valores por defecto. Esto no eliminará ningún recorrido en el dispositivo.</string>
     <string name="settings_layout_reset_confirm_title">¿Restablecer todas las disposiciones\?</string>
@@ -528,7 +528,7 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="field_remove_from_layout">Remover</string>
     <string name="description_speed_source_sensor">Sensor: %1$s</string>
     <string name="generic_choose_an_option">Seleccione una opción</string>
-    <string name="settings_layout_reset">Restabecer distribución personalizada</string>
+    <string name="settings_layout_reset">Restabecer pantalla personalizada</string>
     <string name="stats_coordinates">Latitud/Longitud</string>
     <string name="title_activity_settings_custom_layout">Personalizar la pantalla de grabación</string>
     <string name="field_set_secondary">Secundario</string>
