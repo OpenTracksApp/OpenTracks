@@ -336,9 +336,9 @@ public class StringUtils {
     }
 
     public static String formatAltitude(Context context, Float altitude_m, boolean metricUnits) {
-        Pair<String, String> distanceParts = getAltitudeParts(context, altitude_m, metricUnits);
+        Pair<String, String> altitudeParts = getAltitudeParts(context, altitude_m, metricUnits);
 
-        return context.getString(R.string.altitude_with_unit, distanceParts.first, distanceParts.second);
+        return context.getString(R.string.altitude_with_unit, altitudeParts.first, altitudeParts.second);
     }
 
     /**
@@ -351,9 +351,9 @@ public class StringUtils {
     }
 
     public static String formatAltitudeChange(Context context, Float altitude_m, boolean metricUnits) {
-        Pair<String, String> distanceParts = getAltitudeChangeParts(context, altitude_m, metricUnits);
+        Pair<String, String> altitudeParts = getAltitudeChangeParts(context, altitude_m, metricUnits);
 
-        return context.getString(R.string.altitude_with_unit, distanceParts.first, distanceParts.second);
+        return context.getString(R.string.altitude_with_unit, altitudeParts.first, altitudeParts.second);
     }
 
     public static String valueInParentheses(String text) {
