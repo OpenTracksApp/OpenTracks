@@ -56,3 +56,19 @@ Also the distance is not computed.
 We do not support type of movement (i.e., walking vs running).
 
 * Polar Stride
+
+## Tested Barometric Sensor Smartphones
+
+There are smartphones that have a barometric sensor that OpenTracks uses to compute altitude gain and loss.
+
+In our tests there are smartphones whose barometric sensor works well and others don't. Here is a list of the smartphones tested:
+
+|Brand|Model|Android Version|Tests|
+|-----|-----|---------------|-----------|
+|Google|Pixel|LineageOS 17.1|Ok|
+|Google|Pixel 2 XL|LineageOS 17.1|Ok on the bike handlebars but it fails when I carry it in a pocket or backpack|
+|Google|Pixel 3|Android 11|Failure|
+|Google|Pixel 3a|Android 11|Ok|
+|Google|Pixel 3a|Lineage 18.1|Ok|
+|Google|Pixel 4a|Android 11|Ok|
+|Sony|Xperia XZ1 Compact|LineageOS 16.1|Failure|
