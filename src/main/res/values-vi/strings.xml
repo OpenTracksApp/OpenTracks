@@ -517,4 +517,6 @@ limitations under the License.
     <string name="sensor_state_heart_rate_max">Nhịp tim tối đa</string>
     <string name="sensor_could_not_scan">Không thể quét tìm thiết bị Bluetooth (lỗi %1$i).</string>
     <string name="description_speed_source_gps">GPS</string>
+    <string name="permission_bluetooth_failed">OpenTracks yêu cầu quyền để sử dụng Bluetooth.</string>
+    <string name="permission_bluetooth_failed_rejected">Bạn cần phải cấp quyền truy cập Thiết bị lân cận cho OpenTracks theo cách thủ công trong cài đặt hệ thống.</string>
 </resources>
