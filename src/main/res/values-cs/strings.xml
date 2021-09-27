@@ -36,23 +36,21 @@ limitations under the License.
 \n b) Prostřednictvím „normální“ mapové aplikace (např. <a href="http://osmand.net/">OsmAnd</a> a <a href="https://maps.me/">MAPS.ME</a>). Tyto aplikace musí podporovat formát souboru KMZ (pouze umístění a časová razítka). Ve skutečnosti musí aplikace podporovat <i>ACTION_VIEW</i> pomocí MIME <i>application/vnd.google-earth.kmz</i>. </string>
     <string name="help_storage_pictures_title">Jak ukládá OpenTracks obrázky pořízené jako značky?</string>
     <string name="help_storage_pictures_content">Jsou uloženy v interním úložišti aplikace (tj. přístupné pouze v rámci OpenTracks).</string>
-    <string name="help_track_export_title">Jak mohu exportovat / sdílet zaznamenané stopy?</string>
-    <string name="help_track_export_content"> Trasy lze exportovat z Nastavení jako KMZ, KML nebo GPX. KMZ / KML všechna data; Pouze umístění GPX. Trasy sdílené pomocí ikony sdílení <i> </i> jsou sdíleny jako KMZ. </string>
+    <string name="help_track_export_title">Jak mohu exportovat/sdílet zaznamenané stopy\?</string>
+    <string name="help_track_export_content"> Trasy lze exportovat z Nastavení jako KMZ, KML nebo GPX. KMZ a KML obsahuje všechna data, GPX pouze umístění. Trasy sdílené pomocí <i>ikony sdílení</i> jsou sdíleny jako KMZ. </string>
     <string name="help_data_google_play_services_title">Vyžaduje/používá OpenTracks službu Google Play\?</string>
     <string name="help_recording_title">Jak OpenTracks zaznamenává data?</string>
-    <string name="help_recording_content">
-OpenTracks používá GPS senzor zařízení k nepřetržitému zaznamenávání polohy.
-Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořskou výšku), OpenTracks s tím nemůže nic udělat.</string>
+    <string name="help_recording_content">OpenTracks používá GPS senzor zařízení k nepřetržitému zaznamenávání polohy. Pokud zařízení GPS hlásí nepřesná data (např. polohu, rychlost, nadmořskou výšku), OpenTracks s tím nemůže nic udělat.</string>
     <string name="help_data_storage_title">Jak OpenTracks ukládá data senzorů?</string>
     <string name="help_data_storage_content"> Data senzoru se ukládají na zaznamenané místo. Pokud jde o snímač srdeční frekvence, znamená to, že na každé místo je uloženo pouze <i> jedno </i> měření srdeční frekvence. Pokud stojíte v klidu nebo jste uvnitř, nebudou zaznamenána žádná data ze senzorů (ale budou zobrazena). </string>
     <string name="help_gps_troubleshooting_title">OpenTracks nezaznamenává místa?</string>
     <string name="help_gps_troubleshooting_content"> Co můžete udělat:
-\n a) zkontrolujte zda je zapnuto GPS,
+\n a) zkontrolujte zda je zapnuta GPS,
 \n b) zkuste zlepšit příjem GPS (např. vyjít ven),
 \n c) zkontrolujte, zda používáte aplikaci <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest </a> a
 \n d) deaktivujte úsporu energie.
 \n
-\n Pokud nic nepomůže, nahlašte jako chybu. </string>
+\n Pokud nic nepomůže, nahlaste to jako chybu. </string>
     <string name="help_support_title">Jak mohu podpořit OpenTracks\?</string>
     <string name="help_support_content"> Můžete:
 \n a) dát vědět ostatním o OpenTracks
@@ -532,4 +530,11 @@ Pokud zařízení GPS hlásí nepřesná data (např. Polohu, rychlost, nadmořs
     <string name="settings_layout_reset_confirm_message">Všechna nastavení vzhledu se vrátí na výchozí hodnoty. Nebudou tím odstraněny žádné zaznamenané aktivity v zařízení.</string>
     <string name="settings_layout_reset_confirm_title">Výchozí vzhled\?</string>
     <string name="settings_layout_reset_done">Všechna nastavení vzhledu byla vrácena na výchozí hodnoty</string>
+    <string name="stats_coordinates">Zeměpisná šířka a délka</string>
+    <string name="stats_sensors_cadence">Kadence</string>
+    <string name="description_speed_source_sensor">Senzor: %1$s</string>
+    <string name="description_speed_source_gps">GPS</string>
+    <string name="generic_choose_an_option">Zvolit možnost</string>
+    <string name="permission_bluetooth_failed">OpenTracks vyžaduje povolení k používání Bluetoothu.</string>
+    <string name="stats_sensors_heart_rate">Tep</string>
 </resources>
