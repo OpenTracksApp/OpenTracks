@@ -58,7 +58,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        if (TrackIconUtils.isSpeedIcon(context, aggregatedStatistic.getCategory())) {
+        if (TrackIconUtils.isSpeedIcon(context.getResources(), aggregatedStatistic.getCategory())) {
             viewHolder.setSpeed(aggregatedStatistic);
         } else {
             viewHolder.setPace(aggregatedStatistic);
@@ -139,9 +139,8 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         private void setCommonValues(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
             String category = aggregatedStatistic.getCategory();
 
-            SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
-            reportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, context, category);
-            metricsUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
+            reportSpeed = PreferencesUtils.isReportSpeed(category);
+            metricsUnits = PreferencesUtils.isMetricUnits();
 
             sportIcon.setImageResource(getIcon(aggregatedStatistic));
             typeLabel.setText(category);

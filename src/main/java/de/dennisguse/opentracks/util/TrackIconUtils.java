@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks.util;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
@@ -155,55 +156,56 @@ public class TrackIconUtils {
      */
     @NonNull
     public static String getIconValue(Context context, String activityType) {
+        Resources resources = context.getResources();
         if (activityType == null || activityType.equals("")) {
             return UNKNOWN;
         }
-        if (inList(context, activityType, AIRPLANE_LIST)) {
+        if (inList(resources, activityType, AIRPLANE_LIST)) {
             return AIRPLANE;
         }
-        if (inList(context, activityType, BIKE_LIST)) {
+        if (inList(resources, activityType, BIKE_LIST)) {
             return BIKE;
         }
-        if (inList(context, activityType, MOUNTAIN_BIKE_LIST)) {
+        if (inList(resources, activityType, MOUNTAIN_BIKE_LIST)) {
             return MOUNTAIN_BIKE;
         }
-        if (inList(context, activityType, CLIMBING_LIST)) {
+        if (inList(resources, activityType, CLIMBING_LIST)) {
             return CLIMBING;
         }
-        if (inList(context, activityType, MOTOR_BIKE_LIST)) {
+        if (inList(resources, activityType, MOTOR_BIKE_LIST)) {
             return MOTOR_BIKE;
         }
-        if (inList(context, activityType, KAYAKING_LIST)) {
+        if (inList(resources, activityType, KAYAKING_LIST)) {
             return KAYAK;
         }
-        if (inList(context, activityType, BOAT_LIST)) {
+        if (inList(resources, activityType, BOAT_LIST)) {
             return BOAT;
         }
-        if (inList(context, activityType, SAILING_LIST)) {
+        if (inList(resources, activityType, SAILING_LIST)) {
             return SAILING;
         }
-        if (inList(context, activityType, DRIVE_LIST)) {
+        if (inList(resources, activityType, DRIVE_LIST)) {
             return DRIVE;
         }
-        if (inList(context, activityType, INLINE_SKATING_LIST)) {
+        if (inList(resources, activityType, INLINE_SKATING_LIST)) {
             return INLINE_SKATING;
         }
-        if (inList(context, activityType, ESCOOTER_LIST)) {
+        if (inList(resources, activityType, ESCOOTER_LIST)) {
             return ESCOOTER;
         }
-        if (inList(context, activityType, RUN_LIST)) {
+        if (inList(resources, activityType, RUN_LIST)) {
             return RUN;
         }
-        if (inList(context, activityType, SKI_LIST)) {
+        if (inList(resources, activityType, SKI_LIST)) {
             return SKI;
         }
-        if (inList(context, activityType, SNOW_BOARDING_LIST)) {
+        if (inList(resources, activityType, SNOW_BOARDING_LIST)) {
             return SNOW_BOARDING;
         }
-        if (inList(context, activityType, SKATE_BOARDING_LIST)) {
+        if (inList(resources, activityType, SKATE_BOARDING_LIST)) {
             return SKATE_BOARDING;
         }
-        if (inList(context, activityType, WALK_LIST)) {
+        if (inList(resources, activityType, WALK_LIST)) {
             return WALK;
         }
         return UNKNOWN;
@@ -216,7 +218,7 @@ public class TrackIconUtils {
      * @param activityType the activity type
      * @param list         the list
      */
-    private static boolean inList(Context context, String activityType, int[] list) {
+    private static boolean inList(Resources context, String activityType, int[] list) {
         for (int i : list) {
             if (context.getString(i).equals(activityType)) {
                 return true;
@@ -228,10 +230,9 @@ public class TrackIconUtils {
     /**
      * Returns true if category is in the SPEED_ICON array. Otherwise returns false.
      *
-     * @param context  the context.
      * @param category the name of the category, activity type.
      */
-    public static boolean isSpeedIcon(Context context, String category) {
-        return inList(context, category, SPEED_ICON);
+    public static boolean isSpeedIcon(Resources resources, String category) {
+        return inList(resources, category, SPEED_ICON);
     }
 }

@@ -51,8 +51,7 @@ public class TrackPointCreator {
     public void start(@NonNull Context context) {
         this.context = context;
 
-        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
-        locationHandler.onStart(context, sharedPreferences);
+        locationHandler.onStart(context);
 
         remoteSensorManager = new BluetoothRemoteSensorManager(context);
         remoteSensorManager.start();
@@ -110,13 +109,8 @@ public class TrackPointCreator {
         this.context = null;
     }
 
-    public void onSharedPreferenceChanged(@NonNull SharedPreferences preferences, String key) {
-        if (context == null) {
-            Log.w(TAG, "not started yet.");
-            return;
-        }
-
-        locationHandler.onSharedPreferenceChanged(context, preferences, key);
+    public void onSharedPreferenceChanged(String key) {
+        locationHandler.onSharedPreferenceChanged(key);
     }
 
     public void onNewTrackPoint(TrackPoint trackPoint, Distance thresholdHorizontalAccuracy) {

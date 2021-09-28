@@ -34,20 +34,18 @@ public class SettingsCustomLayoutActivity extends AbstractActivity implements Se
     private SettingsCustomLayoutAdapter adapterFieldsHidden;
     private Layout layoutFieldsVisible;
     private Layout layoutFieldsHidden;
-    private SharedPreferences sharedPreferences;
     private int numColumns;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         // Recycler view with visible stats.
-        layoutFieldsVisible = StatisticsUtils.filterVisible(PreferencesUtils.getCustomLayout(sharedPreferences, this), true);
+        layoutFieldsVisible = StatisticsUtils.filterVisible(PreferencesUtils.getCustomLayout(), true);
         adapterFieldsVisible = new SettingsCustomLayoutAdapter(this, this, layoutFieldsVisible);
 
-        numColumns = PreferencesUtils.getLayoutColumns(sharedPreferences, this);
+        numColumns = PreferencesUtils.getLayoutColumns();
         RecyclerView recyclerViewVisible = viewBinding.recyclerViewVisible;
         gridLayoutManager = new GridLayoutManager(this, numColumns);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -90,7 +88,7 @@ public class SettingsCustomLayoutActivity extends AbstractActivity implements Se
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 numColumns = position + 1;
                 gridLayoutManager.setSpanCount(numColumns);
-                PreferencesUtils.setLayoutColumns(sharedPreferences, SettingsCustomLayoutActivity.this, position + 1);
+                PreferencesUtils.setLayoutColumns(position + 1);
             }
 
             @Override
@@ -98,10 +96,10 @@ public class SettingsCustomLayoutActivity extends AbstractActivity implements Se
 
             }
         });
-        viewBinding.spinnerOptions.setSelection(PreferencesUtils.getLayoutColumns(sharedPreferences, SettingsCustomLayoutActivity.this) - 1);
+        viewBinding.spinnerOptions.setSelection(PreferencesUtils.getLayoutColumns() - 1);
 
         // Recycler view with not visible stats.
-        layoutFieldsHidden = StatisticsUtils.filterVisible(PreferencesUtils.getCustomLayout(sharedPreferences, this), false);
+        layoutFieldsHidden = StatisticsUtils.filterVisible(PreferencesUtils.getCustomLayout(), false);
         adapterFieldsHidden = new SettingsCustomLayoutAdapter(this, this, layoutFieldsHidden);
         RecyclerView recyclerViewNotVisible = viewBinding.recyclerViewNotVisible;
         recyclerViewNotVisible.setLayoutManager(new LinearLayoutManager(this));
@@ -115,14 +113,13 @@ public class SettingsCustomLayoutActivity extends AbstractActivity implements Se
             Layout newLayout = new Layout(layoutFieldsVisible.getProfile());
             newLayout.addFields(layoutFieldsVisible.getFields());
             newLayout.addFields(layoutFieldsHidden.getFields());
-            PreferencesUtils.setCustomLayout(sharedPreferences, this, newLayout);
+            PreferencesUtils.setCustomLayout(newLayout);
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sharedPreferences = null;
         layoutFieldsVisible = null;
     }
 

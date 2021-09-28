@@ -64,8 +64,6 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         return chartFragment;
     }
 
-    private SharedPreferences sharedPreferences;
-
     private TrackDataHub trackDataHub;
 
     // Stats gathered from the received data
@@ -80,8 +78,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key)) {
-                boolean metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getContext());
+            if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
+                boolean metricUnits = PreferencesUtils.isMetricUnits();
                 if (metricUnits != viewBinding.chartView.getMetricUnits()) {
                     viewBinding.chartView.setMetricUnits(metricUnits);
                     runOnUiThread(() -> {
@@ -91,8 +89,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
                     });
                 }
             }
-            if (PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
-                boolean reportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), category);
+            if (PreferencesUtils.isKey(R.string.stats_rate_key, key)) {
+                boolean reportSpeed = PreferencesUtils.isReportSpeed(category);
                 if (reportSpeed != viewBinding.chartView.getReportSpeed()) {
                     viewBinding.chartView.setReportSpeed(reportSpeed);
                     viewBinding.chartView.applyReportSpeed();
@@ -141,9 +139,8 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     public void onResume() {
         super.onResume();
         resumeTrackDataHub();
-        sharedPreferences = PreferencesUtils.getSharedPreferences(getContext());
-        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
+
+        PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
         checkChartSettings();
         getActivity().runOnUiThread(updateChart);
@@ -153,19 +150,13 @@ public class ChartFragment extends Fragment implements TrackDataListener {
     public void onPause() {
         super.onPause();
         pauseTrackDataHub();
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         viewBinding = null;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        sharedPreferences = null;
     }
 
     @Override
@@ -177,7 +168,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
             }
 
             category = track.getCategory();
-            boolean reportSpeed = PreferencesUtils.isReportSpeed(PreferencesUtils.getSharedPreferences(getContext()), getContext(), category);
+            boolean reportSpeed = PreferencesUtils.isReportSpeed(category);
             if (reportSpeed != viewBinding.chartView.getReportSpeed()) {
                 viewBinding.chartView.setReportSpeed(reportSpeed);
                 viewBinding.chartView.applyReportSpeed();

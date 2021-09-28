@@ -43,7 +43,7 @@ public class TrackNameUtils {
 
     //TODO Should not access sharedPreferences; trackName should be an ENUM.
     public static String getTrackName(Context context, Track.Id trackId, Instant startTime) {
-        String trackName = PreferencesUtils.getString(PreferencesUtils.getSharedPreferences(context), context, R.string.track_name_key, context.getString(R.string.track_name_default));
+        String trackName = PreferencesUtils.getString(R.string.track_name_key, context.getString(R.string.track_name_default));
 
         if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_local_value))) {
             return StringUtils.formatDateTime(context, startTime);

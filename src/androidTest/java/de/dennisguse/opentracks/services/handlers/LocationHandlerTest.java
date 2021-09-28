@@ -30,7 +30,6 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
 public class LocationHandlerTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
-    private final SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
 
     @Mock
     private TrackPointCreator trackPointCreator;
@@ -47,15 +46,12 @@ public class LocationHandlerTest {
     @Before
     public void setUp() {
         // Let's use default values.
-        sharedPreferences.edit().clear().commit();
+        PreferencesUtils.clear();
 
         Mockito.when(trackPointCreator.createNow())
                 .thenReturn(Instant.now());
 
-        //TODO REMOVE
-//        locationHandler.onSharedPreferenceChanged(context, sharedPreferences, context.getString(R.string.recording_gps_accuracy_key));
-//        locationHandler.onSharedPreferenceChanged(context, sharedPreferences, context.getString(R.string.min_recording_interval_key));
-        locationHandler.onStart(context, sharedPreferences);
+        locationHandler.onStart(context);
     }
 
     /**
@@ -92,7 +88,7 @@ public class LocationHandlerTest {
     @Test
     public void testOnLocationChanged_poorAccuracy() {
         // given
-        Distance prefAccuracy = PreferencesUtils.getThresholdHorizontalAccuracy(sharedPreferences, context);
+        Distance prefAccuracy = PreferencesUtils.getThresholdHorizontalAccuracy();
 
         // when
         locationHandler.onLocationChanged(createLocation(45f, 35f, (float) (prefAccuracy.toM() + 1), 5, System.currentTimeMillis()));

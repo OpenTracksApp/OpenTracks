@@ -96,25 +96,23 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
     };
 
-    private SharedPreferences sharedPreferences;
-
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             Context context = TrackRecordingService.this;
-            if (PreferencesUtils.isKey(context, R.string.stats_units_key, key)) {
-                boolean metricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
+            if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
+                boolean metricUnits = PreferencesUtils.isMetricUnits();
                 notificationManager.setMetricUnits(metricUnits);
             }
-            if (PreferencesUtils.isKey(context, R.string.voice_announcement_frequency_key, key)) {
-                voiceAnnouncementManager.setFrequency(PreferencesUtils.getVoiceAnnouncementFrequency(sharedPreferences, context));
+            if (PreferencesUtils.isKey(R.string.voice_announcement_frequency_key, key)) {
+                voiceAnnouncementManager.setFrequency(PreferencesUtils.getVoiceAnnouncementFrequency());
             }
-            if (PreferencesUtils.isKey(context, new int[]{R.string.voice_announcement_distance_key, R.string.stats_units_key}, key)) {
-                voiceAnnouncementManager.setFrequency(PreferencesUtils.getVoiceAnnouncementDistance(sharedPreferences, context));
+            if (PreferencesUtils.isKey(new int[]{R.string.voice_announcement_distance_key, R.string.stats_units_key}, key)) {
+                voiceAnnouncementManager.setFrequency(PreferencesUtils.getVoiceAnnouncementDistance());
             }
 
-            trackPointCreator.onSharedPreferenceChanged(sharedPreferences, key);
-            trackRecordingManager.onSharedPreferenceChanged(sharedPreferences, key);
+            trackPointCreator.onSharedPreferenceChanged(key);
+            trackRecordingManager.onSharedPreferenceChanged(key);
         }
     };
 
@@ -148,9 +146,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
         notificationManager = new TrackRecordingServiceNotificationManager(this);
 
-        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
-        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
+        PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
     @Override
@@ -173,8 +169,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         // Reverse order from onCreate
         showNotification(false); //TODO Why?
 
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        sharedPreferences = null;
+        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
         try {
             voiceAnnouncementManager.shutdown();

@@ -29,10 +29,9 @@ public class ExportUtils {
     private static final String TAG = ExportUtils.class.getSimpleName();
 
     public static void postWorkoutExport(Context context, Track.Id trackId, ExportServiceResultReceiver resultReceiver) {
-        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
-        if (PreferencesUtils.shouldInstantExportAfterWorkout(sharedPreferences, context)) {
-            TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat(sharedPreferences, context);
-            DocumentFile directory = PreferencesUtils.getDefaultExportDirectoryUri(sharedPreferences, context);
+        if (PreferencesUtils.shouldInstantExportAfterWorkout(context)) {
+            TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat();
+            DocumentFile directory = PreferencesUtils.getDefaultExportDirectoryUri(context);
 
             ExportService.enqueue(context, resultReceiver, trackId, trackFileFormat, directory.getUri());
         }

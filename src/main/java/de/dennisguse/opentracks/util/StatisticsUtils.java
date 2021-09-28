@@ -12,11 +12,11 @@ import de.dennisguse.opentracks.content.data.Layout;
 public class StatisticsUtils {
 
     public static String emptyValue(@NonNull Context context, @NonNull String statTitle) {
-        if (PreferencesUtils.isKey(context, R.string.stats_custom_layout_total_time_key, statTitle) || PreferencesUtils.isKey(context, R.string.stats_custom_layout_moving_time_key, statTitle) || PreferencesUtils.isKey(context, R.string.stats_custom_layout_pace_key, statTitle) || PreferencesUtils.isKey(context, R.string.stats_custom_layout_average_moving_pace_key, statTitle) || PreferencesUtils.isKey(context, R.string.stats_custom_layout_average_pace_key, statTitle) || PreferencesUtils.isKey(context, R.string.stats_custom_layout_fastest_pace_key, statTitle)) {
+        if (PreferencesUtils.isKey(R.string.stats_custom_layout_total_time_key, statTitle) || PreferencesUtils.isKey(R.string.stats_custom_layout_moving_time_key, statTitle) || PreferencesUtils.isKey(R.string.stats_custom_layout_pace_key, statTitle) || PreferencesUtils.isKey(R.string.stats_custom_layout_average_moving_pace_key, statTitle) || PreferencesUtils.isKey(R.string.stats_custom_layout_average_pace_key, statTitle) || PreferencesUtils.isKey(R.string.stats_custom_layout_fastest_pace_key, statTitle)) {
             return context.getString(R.string.stats_empty_value_time);
-        } else if (PreferencesUtils.isKey(context, R.string.stats_custom_layout_distance_key, statTitle) || PreferencesUtils.isKey(context, R.string.stats_custom_layout_speed_key, statTitle) || PreferencesUtils.isKey(context, R.string.stats_custom_layout_average_speed_key, statTitle) || PreferencesUtils.isKey(context, R.string.stats_custom_layout_max_speed_key, statTitle) || PreferencesUtils.isKey(context, R.string.stats_custom_layout_average_moving_speed_key, statTitle)) {
+        } else if (PreferencesUtils.isKey(R.string.stats_custom_layout_distance_key, statTitle) || PreferencesUtils.isKey(R.string.stats_custom_layout_speed_key, statTitle) || PreferencesUtils.isKey(R.string.stats_custom_layout_average_speed_key, statTitle) || PreferencesUtils.isKey(R.string.stats_custom_layout_max_speed_key, statTitle) || PreferencesUtils.isKey(R.string.stats_custom_layout_average_moving_speed_key, statTitle)) {
             return context.getString(R.string.stats_empty_value_float);
-        } else if (PreferencesUtils.isKey(context, R.string.stats_custom_layout_coordinates_key, statTitle)) {
+        } else if (PreferencesUtils.isKey(R.string.stats_custom_layout_coordinates_key, statTitle)) {
             return context.getString(R.string.stats_empty_value_coordinates);
         } else {
             return context.getString(R.string.stats_empty_value_integer);

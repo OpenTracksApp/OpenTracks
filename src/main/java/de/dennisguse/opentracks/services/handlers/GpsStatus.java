@@ -68,10 +68,9 @@ class GpsStatus {
         this.client = client;
         this.context = context;
 
-        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
-        thresholdHorizontalAccuracy = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
+        thresholdHorizontalAccuracy = PreferencesUtils.getRecordingDistanceInterval();
 
-        Duration minRecordingInterval = PreferencesUtils.getMinRecordingInterval(sharedPreferences, context);
+        Duration minRecordingInterval = PreferencesUtils.getMinRecordingInterval();
         signalLostThreshold = SIGNAL_LOST_THRESHOLD.plus(minRecordingInterval);
 
         gpsStatusHandler = new Handler();

@@ -14,7 +14,7 @@ final class PreferenceHelper {
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);
 
-            if (value == PreferencesUtils.getMinRecordingIntervalDefault(context).getSeconds()) {
+            if (value == PreferencesUtils.getMinRecordingIntervalDefault().getSeconds()) {
                 entries[i] = context.getString(R.string.value_smallest_recommended);
             } else {
                 entries[i] = value < 60 ? context.getString(R.string.value_integer_second, value) : context.getString(R.string.value_integer_minute, value / 60);
@@ -28,7 +28,7 @@ final class PreferenceHelper {
         String[] entryValues = context.getResources().getStringArray(R.array.recording_distance_interval_values);
         String[] entries = new String[entryValues.length];
 
-        final int recordingDistanceIntervalDefault = (int) PreferencesUtils.getRecordingDistanceIntervalDefault(context).toM();
+        final int recordingDistanceIntervalDefault = (int) PreferencesUtils.getRecordingDistanceIntervalDefault().toM();
 
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);

@@ -46,7 +46,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
 
     public IntervalStatisticsModel(@NonNull Application application) {
         super(application);
-        minGPSDistance = PreferencesUtils.getRecordingDistanceInterval(PreferencesUtils.getSharedPreferences(application), application);
+        minGPSDistance = PreferencesUtils.getRecordingDistanceInterval();
         contentResolver = getApplication().getContentResolver();
         handlerThread = new HandlerThread(TAG);
         handlerThread.start();

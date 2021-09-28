@@ -107,8 +107,4 @@ public class ActivityUtils {
             vibrator.vibrate(milliseconds);
         }
     }
-
-    public static void applyNightMode(SharedPreferences sharedPreferences, Context context) {
-        AppCompatDelegate.setDefaultNightMode(PreferencesUtils.getDefaultNightMode(sharedPreferences, context));
-    }
 }

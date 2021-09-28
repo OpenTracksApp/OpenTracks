@@ -91,8 +91,7 @@ public class TrackRecordingServiceTestLocation {
         tearDown();
 
         // Let's use default values.
-        SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
-        sharedPreferences.edit().clear().commit();
+        PreferencesUtils.clear();
 
         service = ((TrackRecordingService.Binder) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)))
                 .getService();

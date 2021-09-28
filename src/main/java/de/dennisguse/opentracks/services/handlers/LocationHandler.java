@@ -35,8 +35,8 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
         this.trackPointCreator = trackPointCreator;
     }
 
-    public void onStart(@NonNull Context context, SharedPreferences sharedPreferences) {
-        onSharedPreferenceChanged(context, sharedPreferences, null);
+    public void onStart(@NonNull Context context) {
+        onSharedPreferenceChanged(null);
         gpsStatus = new GpsStatus(context, this);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         registerLocationListener();
@@ -62,26 +62,26 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
         }
     }
 
-    public void onSharedPreferenceChanged(@NonNull Context context, @NonNull SharedPreferences sharedPreferences, String key) {
+    public void onSharedPreferenceChanged(String key) {
         boolean registerListener = false;
 
-        if (PreferencesUtils.isKey(context, R.string.min_recording_interval_key, key)) {
+        if (PreferencesUtils.isKey(R.string.min_recording_interval_key, key)) {
             registerListener = true;
 
-            gpsInterval = PreferencesUtils.getMinRecordingInterval(sharedPreferences, context);
+            gpsInterval = PreferencesUtils.getMinRecordingInterval();
 
             if (gpsStatus != null) {
                 gpsStatus.onMinRecordingIntervalChanged(gpsInterval);
             }
         }
-        if (PreferencesUtils.isKey(context, R.string.recording_gps_accuracy_key, key)) {
-            thresholdHorizontalAccuracy = PreferencesUtils.getThresholdHorizontalAccuracy(sharedPreferences, context);
+        if (PreferencesUtils.isKey(R.string.recording_gps_accuracy_key, key)) {
+            thresholdHorizontalAccuracy = PreferencesUtils.getThresholdHorizontalAccuracy();
         }
-        if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
+        if (PreferencesUtils.isKey(R.string.recording_distance_interval_key, key)) {
             registerListener = true;
 
             if (gpsStatus != null) {
-                Distance gpsMinDistance = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
+                Distance gpsMinDistance = PreferencesUtils.getRecordingDistanceInterval();
                 gpsStatus.onRecordingDistanceChanged(gpsMinDistance);
             }
         }

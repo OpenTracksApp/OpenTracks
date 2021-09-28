@@ -59,7 +59,7 @@ class TrackRecordingManager {
         //TODO Pass TrackPoint
         track.setName(TrackNameUtils.getTrackName(context, trackId, segmentStartTrackPoint.getTime()));
 
-        String category = PreferencesUtils.getDefaultActivity(PreferencesUtils.getSharedPreferences(context), context); //TODO Re-use sharedpreferences
+        String category = PreferencesUtils.getDefaultActivity();
         track.setCategory(category);
         track.setIcon(TrackIconUtils.getIconValue(context, category));
         track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
@@ -277,12 +277,12 @@ class TrackRecordingManager {
         }
     }
 
-    public void onSharedPreferenceChanged(@NonNull SharedPreferences sharedPreferences, String key) {
-        if (PreferencesUtils.isKey(context, R.string.recording_distance_interval_key, key)) {
-            recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, context);
+    public void onSharedPreferenceChanged(String key) {
+        if (PreferencesUtils.isKey(R.string.recording_distance_interval_key, key)) {
+            recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval();
         }
-        if (PreferencesUtils.isKey(context, R.string.max_recording_distance_key, key)) {
-            maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(sharedPreferences, context);
+        if (PreferencesUtils.isKey(R.string.max_recording_distance_key, key)) {
+            maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance();
         }
     }
 }
