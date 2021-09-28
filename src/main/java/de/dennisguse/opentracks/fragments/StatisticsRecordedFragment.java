@@ -79,21 +79,20 @@ public class StatisticsRecordedFragment extends Fragment {
 
     private StatisticsRecordedBinding viewBinding;
 
-    private SharedPreferences sharedPreferences;
     private boolean preferenceMetricUnits;
     private boolean preferenceReportSpeed;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         boolean updateUInecessary = false;
 
-        if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key)) {
+        if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
             updateUInecessary = true;
-            preferenceMetricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getContext());
+            preferenceMetricUnits = PreferencesUtils.isMetricUnits();
         }
 
-        if (PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key) && track != null) {
+        if (PreferencesUtils.isKey(R.string.stats_rate_key, key) && track != null) {
             updateUInecessary = true;
-            preferenceReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), track.getCategory());
+            preferenceReportSpeed = PreferencesUtils.isReportSpeed(track.getCategory());
         }
 
         if (key != null && updateUInecessary && isResumed()) {
@@ -111,8 +110,6 @@ public class StatisticsRecordedFragment extends Fragment {
 
         trackId = getArguments().getParcelable(TRACK_ID_KEY);
         contentProviderUtils = new ContentProviderUtils(getContext());
-
-        sharedPreferences = PreferencesUtils.getSharedPreferences(getContext());
 
         sensorsAdapter = new StatisticsAdapter.WithRecordedLayout(getContext());
     }
@@ -132,24 +129,22 @@ public class StatisticsRecordedFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
+        PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
         loadStatistics();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         viewBinding = null;
-
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        sharedPreferences = null;
     }
 
     public void loadStatistics() {
@@ -168,7 +163,7 @@ public class StatisticsRecordedFragment extends Fragment {
                     boolean prefsChanged = this.track == null || (!this.track.getCategory().equals(track.getCategory()));
                     this.track = track;
                     if (prefsChanged) {
-                        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, getString(R.string.stats_rate_key));
+                        sharedPreferenceChangeListener.onSharedPreferenceChanged(null, getString(R.string.stats_rate_key));
                     }
 
                     loadTrackDescription(track);

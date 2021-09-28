@@ -55,24 +55,23 @@ public class StatisticsRecordingFragment extends Fragment {
     private StatisticsDataModel viewModel;
     private LiveData<List<StatisticData>> statisticsLiveData;
 
-    private SharedPreferences sharedPreferences;
     private boolean preferenceMetricUnits;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         boolean updateUInecessary = false;
 
-        if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key)) {
+        if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
             updateUInecessary = true;
-            preferenceMetricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, getContext());
+            preferenceMetricUnits = PreferencesUtils.isMetricUnits();
         }
 
-        if (PreferencesUtils.isKey(getContext(), R.string.stats_custom_layout_fields_key, key)) {
+        if (PreferencesUtils.isKey(R.string.stats_custom_layout_fields_key, key)) {
             updateUInecessary = true;
-            layout = PreferencesUtils.getCustomLayout(sharedPreferences, getContext());
+            layout = PreferencesUtils.getCustomLayout();
         }
 
-        if (PreferencesUtils.isKey(getContext(), R.string.stats_custom_layout_columns_key, key)) {
-            gridLayoutManager.setSpanCount(PreferencesUtils.getLayoutColumns(sharedPreferences, getContext()));
+        if (PreferencesUtils.isKey(R.string.stats_custom_layout_columns_key, key)) {
+            gridLayoutManager.setSpanCount(PreferencesUtils.getLayoutColumns());
         }
 
         if (key != null && updateUInecessary && isResumed()) {
@@ -97,7 +96,6 @@ public class StatisticsRecordingFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sharedPreferences = PreferencesUtils.getSharedPreferences(getContext());
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
 
         statisticsAdapter = new StatisticsAdapter(getContext());
@@ -109,7 +107,7 @@ public class StatisticsRecordingFragment extends Fragment {
 
         RecyclerView recyclerView = viewBinding.statsRecyclerView;
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), RecyclerView.VERTICAL));
-        final int numColumns = PreferencesUtils.getLayoutColumns(sharedPreferences, getContext());
+        final int numColumns = PreferencesUtils.getLayoutColumns();
         gridLayoutManager = new GridLayoutManager(getContext(), numColumns);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -130,8 +128,7 @@ public class StatisticsRecordingFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
+        PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
         viewModel = new ViewModelProvider(getActivity()).get(StatisticsDataModel.class);
         statisticsLiveData = viewModel.getStatsData();
@@ -143,7 +140,7 @@ public class StatisticsRecordingFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
     @Override
@@ -162,7 +159,6 @@ public class StatisticsRecordingFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         trackRecordingServiceConnection = null;
-        sharedPreferences = null;
         viewModel = null;
         statisticsLiveData.removeObservers(getActivity());
     }
@@ -179,7 +175,7 @@ public class StatisticsRecordingFragment extends Fragment {
         this.recordingData = recordingData;
 
         if (!oldCategory.equals(newCategory)) {
-            sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, getString(R.string.stats_rate_key));
+            sharedPreferenceChangeListener.onSharedPreferenceChanged(null, getString(R.string.stats_rate_key));
         }
 
         latestTrackPoint = recordingData.getLatestTrackPoint();

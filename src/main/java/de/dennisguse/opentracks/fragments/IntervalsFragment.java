@@ -46,15 +46,13 @@ public class IntervalsFragment extends Fragment {
     private IntervalStatisticsAdapter adapter;
     private ArrayAdapter<IntervalStatisticsModel.IntervalOption> spinnerAdapter;
 
-    private SharedPreferences sharedPreferences;
-
     private boolean isReportSpeed;
 
     private IntervalListViewBinding viewBinding;
 
     protected final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
-        if (PreferencesUtils.isKey(getContext(), R.string.stats_units_key, key) || PreferencesUtils.isKey(getContext(), R.string.stats_rate_key, key)) {
-            updateIntervals(PreferencesUtils.isMetricUnits(sharedPreferences, getContext()), selectedInterval);
+        if (PreferencesUtils.isKey(R.string.stats_units_key, key) || PreferencesUtils.isKey(R.string.stats_rate_key, key)) {
+            updateIntervals(PreferencesUtils.isMetricUnits(), selectedInterval);
             if (spinnerAdapter != null) {
                 spinnerAdapter.notifyDataSetChanged();
             }
@@ -92,8 +90,6 @@ public class IntervalsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        sharedPreferences = PreferencesUtils.getSharedPreferences(getContext());
 
         adapter = new IntervalStatisticsAdapter(getContext(), stackModeListView, metricUnits, isReportSpeed);
         viewBinding.intervalList.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -136,13 +132,12 @@ public class IntervalsFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
+        PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(getContext());
         Track track = contentProviderUtils.getTrack(trackId);
         if (track != null) {
-            isReportSpeed = PreferencesUtils.isReportSpeed(sharedPreferences, getContext(), track.getCategory());
+            isReportSpeed = PreferencesUtils.isReportSpeed(track.getCategory());
         }
 
         viewModel = new ViewModelProvider(getActivity()).get(IntervalStatisticsModel.class);
@@ -152,7 +147,9 @@ public class IntervalsFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+
+        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+
         if (viewModel != null) {
             viewModel.onPause();
         }
@@ -167,8 +164,6 @@ public class IntervalsFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
-        sharedPreferences = null;
 
         adapter = null;
         viewModel = null;

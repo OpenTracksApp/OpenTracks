@@ -25,14 +25,13 @@ public class PreferenceMetricUnitRule implements TestRule {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
-                final boolean previousMetricUnits = PreferencesUtils.isMetricUnits(sharedPreferences, context);
+                final boolean previousMetricUnits = PreferencesUtils.isMetricUnits();
 
                 try {
-                    PreferencesUtils.setMetricUnits(sharedPreferences, context, metricUnits);
+                    PreferencesUtils.setMetricUnits(metricUnits);
                     base.evaluate();
                 } finally {
-                    PreferencesUtils.setMetricUnits(sharedPreferences, context, previousMetricUnits);
+                    PreferencesUtils.setMetricUnits(previousMetricUnits);
                 }
             }
         };

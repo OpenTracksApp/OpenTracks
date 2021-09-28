@@ -54,10 +54,9 @@ public class ImportService extends JobIntentService {
 
         String fileExtension = FileUtils.getExtension(file);
         try {
-            SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(this);
-            Distance maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance(sharedPreferences, this);
-            Distance recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, this);
-            boolean preventReimport = PreferencesUtils.getPreventReimportTracks(sharedPreferences, this);
+            Distance maxRecordingDistance = PreferencesUtils.getMaxRecordingDistance();
+            Distance recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval();
+            boolean preventReimport = PreferencesUtils.getPreventReimportTracks();
 
             TrackImporter trackImporter = new TrackImporter(this, new ContentProviderUtils(this), recordingDistanceInterval, maxRecordingDistance, preventReimport);
 

@@ -19,13 +19,9 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
 
     private static final int DIRECTORY_PICKER_REQUEST_CODE = 6;
 
-    protected SharedPreferences sharedPreferences;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
         DocumentFile directoryUri = configureDirectoryChooserIntent(intent);
@@ -46,7 +42,6 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sharedPreferences = null;
     }
 
     protected void onActivityResultCustom(int requestCode, int resultCode, @Nullable Intent resultData) {
@@ -91,14 +86,14 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
             super.configureDirectoryChooserIntent(intent);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
 
-            return PreferencesUtils.getDefaultExportDirectoryUri(sharedPreferences, this);
+            return PreferencesUtils.getDefaultExportDirectoryUri(this);
         }
 
         @Override
         protected Intent createNextActivityIntent(Uri directoryUri) {
             Intent intent = IntentUtils.newIntent(this, ExportActivity.class);
             intent.putExtra(ExportActivity.EXTRA_DIRECTORY_URI_KEY, directoryUri);
-            intent.putExtra(ExportActivity.EXTRA_TRACKFILEFORMAT_KEY, PreferencesUtils.getExportTrackFileFormat(sharedPreferences, this));
+            intent.putExtra(ExportActivity.EXTRA_TRACKFILEFORMAT_KEY, PreferencesUtils.getExportTrackFileFormat());
             return intent;
         }
     }
@@ -112,11 +107,11 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
                     case RESULT_OK:
                         Uri directoryUri = resultData.getData();
 
-                        PreferencesUtils.setDefaultExportDirectoryUri(sharedPreferences, this, directoryUri);
+                        PreferencesUtils.setDefaultExportDirectoryUri(directoryUri);
                         IntentUtils.persistDirectoryAccessPermission(getApplicationContext(), directoryUri);
                         break;
                     case RESULT_CANCELED:
-                        PreferencesUtils.setDefaultExportDirectoryUri(sharedPreferences, this, null);
+                        PreferencesUtils.setDefaultExportDirectoryUri(null);
                         //TODO Remove stored permission contentResolver.releasePersistableUriPermission
                         break;
                 }
@@ -129,8 +124,8 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
         protected DocumentFile configureDirectoryChooserIntent(Intent intent) {
             super.configureDirectoryChooserIntent(intent);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-            if (PreferencesUtils.isDefaultExportDirectoryUri(sharedPreferences, this)) {
-                intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, PreferencesUtils.getDefaultExportDirectoryUri(sharedPreferences, this).getUri());
+            if (PreferencesUtils.isDefaultExportDirectoryUri(this)) {
+                intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, PreferencesUtils.getDefaultExportDirectoryUri(this).getUri());
             }
             return null;
         }

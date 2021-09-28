@@ -68,7 +68,6 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
 
     // The following are setFrequency in onCreate.
     private ContentProviderUtils contentProviderUtils;
-    private SharedPreferences sharedPreferences;
     private TrackDataHub trackDataHub;
 
     private TrackRecordedBinding viewBinding;
@@ -96,8 +95,8 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (PreferencesUtils.isKey(TrackRecordedActivity.this, R.string.recording_distance_interval_key, key)) {
-                trackDataHub.setRecordingDistanceInterval(PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, TrackRecordedActivity.this));
+            if (PreferencesUtils.isKey(R.string.recording_distance_interval_key, key)) {
+                trackDataHub.setRecordingDistanceInterval(PreferencesUtils.getRecordingDistanceInterval());
             }
         }
     };
@@ -107,7 +106,6 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
         super.onCreate(savedInstanceState);
 
         contentProviderUtils = new ContentProviderUtils(this);
-        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
 
         handleIntent(getIntent());
 
@@ -130,8 +128,7 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     protected void onStart() {
         super.onStart();
 
-        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
+        PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
         trackDataHub.start();
     }
@@ -155,7 +152,7 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
         super.onStop();
         trackRecordingServiceConnection.unbind(this);
         trackDataHub.stop();
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
     @Override

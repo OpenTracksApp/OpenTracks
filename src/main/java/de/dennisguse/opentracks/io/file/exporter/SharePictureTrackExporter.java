@@ -61,7 +61,7 @@ public class SharePictureTrackExporter implements TrackExporter {
         TrackSharePictureBinding viewBinding = TrackSharePictureBinding.inflate(LayoutInflater.from(context));
         viewBinding.sharePictureCategory.setText(track.getCategory());
 
-        boolean metricUnits = PreferencesUtils.isMetricUnits(PreferencesUtils.getSharedPreferences(context), context);
+        boolean metricUnits = PreferencesUtils.isMetricUnits();
         TrackStatistics trackStatistics = track.getTrackStatistics();
 
         viewBinding.sharePictureTotalTime.setText(StringUtils.formatElapsedTimeWithHour(track.getTrackStatistics().getTotalTime()));

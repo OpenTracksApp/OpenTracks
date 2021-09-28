@@ -46,7 +46,7 @@ public class ResetDialogPreference extends DialogPreference {
                 PreferencesUtils.resetPreferences(activity, true);
                 Toast.makeText(activity, R.string.settings_reset_done, Toast.LENGTH_SHORT).show();
             } else if (preferenceKey.equals(getString(R.string.settings_layout_reset_key))) {
-                PreferencesUtils.resetCustomLayoutPreferences(activity);
+                PreferencesUtils.resetCustomLayoutPreferences();
                 Toast.makeText(activity, R.string.settings_layout_reset_done, Toast.LENGTH_SHORT).show();
             }
 

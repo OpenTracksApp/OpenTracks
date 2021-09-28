@@ -91,7 +91,7 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
 
     @Override
     public CharSequence getSummary() {
-        if (getValue() == null || PreferencesUtils.isBluetoothSensorAddressNone(getContext(), getValue())) {
+        if (getValue() == null || PreferencesUtils.isBluetoothSensorAddressNone(getValue())) {
             return getContext().getString(DEVICE_NONE_RESOURCEID);
         }
 

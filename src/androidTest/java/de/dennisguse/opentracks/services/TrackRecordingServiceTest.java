@@ -97,7 +97,6 @@ public class TrackRecordingServiceTest {
     }
 
     private final Context context = ApplicationProvider.getApplicationContext();
-    private final SharedPreferences sharedPreferences = PreferencesUtils.getSharedPreferences(context);
     private ContentProviderUtils contentProviderUtils;
 
     private final Track.Id trackId = new Track.Id(Math.abs(new Random().nextLong()));
@@ -124,7 +123,7 @@ public class TrackRecordingServiceTest {
         contentProviderUtils = new ContentProviderUtils(context);
 
         // Let's use default values.
-        sharedPreferences.edit().clear().commit();
+        PreferencesUtils.clear();
 
         // Ensure that the database is empty before every test
         contentProviderUtils.deleteAllTracks(context);

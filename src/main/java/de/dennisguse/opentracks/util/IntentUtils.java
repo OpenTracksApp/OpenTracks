@@ -91,7 +91,7 @@ public class IntentUtils {
                 continue;
             }
 
-            Pair<Uri, String> uriTrackFile = ShareContentProvider.createURI(trackId, track.getName(), PreferencesUtils.getExportTrackFileFormat(PreferencesUtils.getSharedPreferences(context), context));
+            Pair<Uri, String> uriTrackFile = ShareContentProvider.createURI(trackId, track.getName(), PreferencesUtils.getExportTrackFileFormat());
             Pair<Uri, String> uriSharePicture = ShareContentProvider.createURI(trackId, track.getName(), TrackFileFormat.SHARE_PICTURE_PNG);
 
             uris.addAll(Arrays.asList(uriSharePicture.first, uriTrackFile.first));

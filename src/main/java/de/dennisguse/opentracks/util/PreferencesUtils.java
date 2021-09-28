@@ -20,11 +20,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.preference.PreferenceManager;
 
@@ -54,29 +56,44 @@ public class PreferencesUtils {
     private PreferencesUtils() {
     }
 
-    @Deprecated //Should only be used to get a sharedPreference for more than one interaction!
-    public static SharedPreferences getSharedPreferences(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        PreferencesOpenHelper.newInstance(context, sharedPreferences).checkForUpgrade();
-        return sharedPreferences;
+    private static SharedPreferences sharedPreferences;
+
+    private static Resources resources;
+
+    /**
+     * Must be called during application startup.
+     */
+    public static void initPreferences(final Context context, final Resources resources) {
+        PreferencesUtils.resources = resources;
+        PreferencesUtils.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        PreferencesOpenHelper.newInstance().checkForUpgrade();
     }
 
-    public static String getDefaultActivity(SharedPreferences sharedPreferences, Context context) {
-        return getString(sharedPreferences, context, R.string.default_activity_key, context.getString(R.string.default_activity_default));
+    public static void registerOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener changeListener) {
+        sharedPreferences.registerOnSharedPreferenceChangeListener(changeListener);
+        changeListener.onSharedPreferenceChanged(sharedPreferences, null);
     }
 
-    public static void setDefaultActivity(SharedPreferences sharedPreferences, Context context, String newDefaultActivity) {
-        setString(sharedPreferences, context, R.string.default_activity_key, newDefaultActivity);
+    public static void unregisterOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener changeListener) {
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(changeListener);
+    }
+
+    public static String getDefaultActivity() {
+        return getString(R.string.default_activity_key, resources.getString(R.string.default_activity_default));
+    }
+
+    public static void setDefaultActivity(String newDefaultActivity) {
+        setString(R.string.default_activity_key, newDefaultActivity);
     }
 
     /**
      * Gets a preference key
      *
-     * @param context the context
      * @param keyId   the key id
      */
-    private static String getKey(Context context, int keyId) {
-        return context.getString(keyId);
+    private static String getKey(int keyId) {
+        return resources.getString(keyId);
     }
 
     /**
@@ -86,210 +103,210 @@ public class PreferencesUtils {
      * @param key   The key of the preference
      * @return true if key == null or key belongs to keyId
      */
-    public static boolean isKey(Context context, int keyId, String key) {
-        return key == null || key.equals(getKey(context, keyId));
+    public static boolean isKey(int keyId, String key) {
+        return key == null || key.equals(getKey(keyId));
     }
 
-    public static boolean isKey(Context context, int[] keyIds, String key) {
+    public static boolean isKey(int[] keyIds, String key) {
         for(int keyId : keyIds) {
-            if (isKey(context, keyId, key)) {
+            if (isKey(keyId, key)) {
                 return true;
             }
         }
         return false;
     }
 
-    private static boolean getBoolean(SharedPreferences sharedPreferences, Context context, int keyId, boolean defaultValue) {
-        return sharedPreferences.getBoolean(getKey(context, keyId), defaultValue);
+    private static boolean getBoolean(int keyId, boolean defaultValue) {
+        return sharedPreferences.getBoolean(getKey(keyId), defaultValue);
     }
 
-    static int getInt(SharedPreferences sharedPreferences, Context context, int keyId, int defaultValue) {
+    static int getInt(int keyId, int defaultValue) {
         try {
-            return sharedPreferences.getInt(getKey(context, keyId), defaultValue);
+            return sharedPreferences.getInt(getKey(keyId), defaultValue);
         } catch (ClassCastException e) {
             //Ignore
         }
 
         //NOTE: We assume that the data was stored as String due to use of ListPreference.
         try {
-            String stringValue = sharedPreferences.getString(getKey(context, keyId), null);
+            String stringValue = sharedPreferences.getString(getKey(keyId), null);
             return Integer.parseInt(stringValue);
         } catch (NumberFormatException e) {
             return defaultValue;
         }
     }
 
-    private static float getFloat(SharedPreferences sharedPreferences, Context context, int keyId, float defaultValue) {
+    private static float getFloat(int keyId, float defaultValue) {
         try {
-            return sharedPreferences.getFloat(getKey(context, keyId), defaultValue);
+            return sharedPreferences.getFloat(getKey(keyId), defaultValue);
         } catch (ClassCastException e) {
             //Ignore
         }
 
         //NOTE: We assume that the data was stored as String due to use of ListPreference.
         try {
-            String stringValue = sharedPreferences.getString(getKey(context, keyId), null);
+            String stringValue = sharedPreferences.getString(getKey(keyId), null);
             return Float.parseFloat(stringValue);
         } catch (NumberFormatException e) {
             return defaultValue;
         }
     }
 
-    public static String getString(SharedPreferences sharedPreferences, Context context, int keyId, String defaultValue) {
-        return sharedPreferences.getString(getKey(context, keyId), defaultValue);
+    public static String getString(int keyId, String defaultValue) {
+        return sharedPreferences.getString(getKey(keyId), defaultValue);
     }
 
     @VisibleForTesting
-    public static void setString(SharedPreferences sharedPreferences, Context context, int keyId, String value) {
+    public static void setString(int keyId, String value) {
         Editor editor = sharedPreferences.edit();
-        editor.putString(getKey(context, keyId), value);
+        editor.putString(getKey(keyId), value);
         editor.apply();
     }
 
-    static void setInt(SharedPreferences sharedPreferences, Context context, int keyId, int value) {
+    static void setInt(int keyId, int value) {
         Editor editor = sharedPreferences.edit();
-        editor.putInt(getKey(context, keyId), value);
+        editor.putInt(getKey(keyId), value);
         editor.apply();
     }
 
-    public static boolean isMetricUnits(SharedPreferences sharedPreferences, Context context) {
-        final String STATS_UNIT = context.getString(R.string.stats_units_default);
-        return STATS_UNIT.equals(getString(sharedPreferences, context, R.string.stats_units_key, STATS_UNIT));
+    public static boolean isMetricUnits() {
+        final String STATS_UNIT = resources.getString(R.string.stats_units_default);
+        return STATS_UNIT.equals(getString(R.string.stats_units_key, STATS_UNIT));
     }
 
-    public static void setMetricUnits(SharedPreferences sharedPreferences, Context context, boolean metricUnits) {
+    public static void setMetricUnits(boolean metricUnits) {
         String unit;
         if (metricUnits) {
-            unit = context.getString(R.string.stats_units_metric);
+            unit = resources.getString(R.string.stats_units_metric);
         } else {
-            unit = context.getString(R.string.stats_units_imperial);
+            unit = resources.getString(R.string.stats_units_imperial);
         }
-        setString(sharedPreferences, context, R.string.stats_units_key, unit);
+        setString( R.string.stats_units_key, unit);
     }
 
-    public static boolean isReportSpeed(SharedPreferences sharedPreferences, Context context, String category) {
-        final String STATS_RATE_DEFAULT = context.getString(R.string.stats_rate_default);
-        String currentStatsRate = getString(sharedPreferences, context, R.string.stats_rate_key, STATS_RATE_DEFAULT);
-        if (currentStatsRate.equals(getString(sharedPreferences, context, R.string.stats_rate_speed_or_pace_default, STATS_RATE_DEFAULT))) {
-            return TrackIconUtils.isSpeedIcon(context, category);
+    public static boolean isReportSpeed(String category) {
+        final String STATS_RATE_DEFAULT = resources.getString(R.string.stats_rate_default);
+        String currentStatsRate = getString(R.string.stats_rate_key, STATS_RATE_DEFAULT);
+        if (currentStatsRate.equals(getString(R.string.stats_rate_speed_or_pace_default, STATS_RATE_DEFAULT))) {
+            return TrackIconUtils.isSpeedIcon(resources, category);
         }
 
-        return currentStatsRate.equals(context.getString(R.string.stats_rate_speed));
+        return currentStatsRate.equals(resources.getString(R.string.stats_rate_speed));
     }
 
-    private static String getBluetoothSensorAddressNone(Context context) {
-        return context.getString(R.string.sensor_type_value_none);
+    private static String getBluetoothSensorAddressNone() {
+        return resources.getString(R.string.sensor_type_value_none);
     }
 
-    public static boolean isBluetoothSensorAddressNone(Context context, String currentValue) {
-        return getBluetoothSensorAddressNone(context).equals(currentValue);
+    public static boolean isBluetoothSensorAddressNone(String currentValue) {
+        return getBluetoothSensorAddressNone().equals(currentValue);
     }
 
-    public static String getBluetoothHeartRateSensorAddress(SharedPreferences sharedPreferences, Context context) {
-        return getString(sharedPreferences, context, R.string.settings_sensor_bluetooth_heart_rate_key, getBluetoothSensorAddressNone(context));
+    public static String getBluetoothHeartRateSensorAddress() {
+        return getString(R.string.settings_sensor_bluetooth_heart_rate_key, getBluetoothSensorAddressNone());
     }
 
-    public static String getBluetoothCyclingCadenceSensorAddress(SharedPreferences sharedPreferences, Context context) {
-        return getString(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_cadence_key, getBluetoothSensorAddressNone(context));
+    public static String getBluetoothCyclingCadenceSensorAddress() {
+        return getString(R.string.settings_sensor_bluetooth_cycling_cadence_key, getBluetoothSensorAddressNone());
     }
 
-    public static String getBluetoothCyclingSpeedSensorAddress(SharedPreferences sharedPreferences, Context context) {
-        return getString(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_speed_key, getBluetoothSensorAddressNone(context));
+    public static String getBluetoothCyclingSpeedSensorAddress() {
+        return getString(R.string.settings_sensor_bluetooth_cycling_speed_key, getBluetoothSensorAddressNone());
     }
 
-    public static Distance getWheelCircumference(SharedPreferences sharedPreferences, Context context) {
-        final int DEFAULT = Integer.parseInt(context.getResources().getString(R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_default));
-        return Distance.ofMM(getInt(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key, DEFAULT));
+    public static Distance getWheelCircumference() {
+        final int DEFAULT = Integer.parseInt(resources.getString(R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_default));
+        return Distance.ofMM(getInt(R.string.settings_sensor_bluetooth_cycling_speed_wheel_circumference_key, DEFAULT));
     }
 
-    public static String getBluetoothCyclingPowerSensorAddress(SharedPreferences sharedPreferences, Context context) {
-        return getString(sharedPreferences, context, R.string.settings_sensor_bluetooth_cycling_power_key, getBluetoothSensorAddressNone(context));
+    public static String getBluetoothCyclingPowerSensorAddress() {
+        return getString(R.string.settings_sensor_bluetooth_cycling_power_key, getBluetoothSensorAddressNone());
     }
 
-    public static String getBluetoothRunningSpeedAndCadenceAddress(SharedPreferences sharedPreferences, Context context) {
-        return getString(sharedPreferences, context, R.string.settings_sensor_bluetooth_running_speed_and_cadence_key, getBluetoothSensorAddressNone(context));
+    public static String getBluetoothRunningSpeedAndCadenceAddress() {
+        return getString(R.string.settings_sensor_bluetooth_running_speed_and_cadence_key, getBluetoothSensorAddressNone());
     }
 
-    public static boolean shouldShowStatsOnLockscreen(SharedPreferences sharedPreferences, Context context) {
-        final boolean STATS_SHOW_ON_LOCKSCREEN_DEFAULT = context.getResources().getBoolean(R.bool.stats_show_on_lockscreen_while_recording_default);
-        return getBoolean(sharedPreferences, context, R.string.stats_show_on_lockscreen_while_recording_key, STATS_SHOW_ON_LOCKSCREEN_DEFAULT);
+    public static boolean shouldShowStatsOnLockscreen() {
+        final boolean STATS_SHOW_ON_LOCKSCREEN_DEFAULT = resources.getBoolean(R.bool.stats_show_on_lockscreen_while_recording_default);
+        return getBoolean(R.string.stats_show_on_lockscreen_while_recording_key, STATS_SHOW_ON_LOCKSCREEN_DEFAULT);
     }
 
-    public static boolean shouldKeepScreenOn(SharedPreferences sharedPreferences, Context context) {
-        final boolean DEFAULT = context.getResources().getBoolean(R.bool.stats_keep_screen_on_while_recording_default);
-        return getBoolean(sharedPreferences, context, R.string.stats_keep_screen_on_while_recording_key, DEFAULT);
+    public static boolean shouldKeepScreenOn() {
+        final boolean DEFAULT = resources.getBoolean(R.bool.stats_keep_screen_on_while_recording_default);
+        return getBoolean(R.string.stats_keep_screen_on_while_recording_key, DEFAULT);
     }
 
-    public static boolean shouldUseFullscreen(SharedPreferences sharedPreferences, Context context) {
-        final boolean DEFAULT = context.getResources().getBoolean(R.bool.stats_fullscreen_while_recording_default);
-        return getBoolean(sharedPreferences, context, R.string.stats_fullscreen_while_recording_key, DEFAULT);
+    public static boolean shouldUseFullscreen() {
+        final boolean DEFAULT = resources.getBoolean(R.bool.stats_fullscreen_while_recording_default);
+        return getBoolean(R.string.stats_fullscreen_while_recording_key, DEFAULT);
     }
 
-    public static Duration getVoiceAnnouncementFrequency(SharedPreferences sharedPreferences, Context context) {
-        final int DEFAULT = Integer.parseInt(context.getResources().getString(R.string.voice_announcement_frequency_default));
-        int value = getInt(sharedPreferences, context, R.string.voice_announcement_frequency_key, DEFAULT);
+    public static Duration getVoiceAnnouncementFrequency() {
+        final int DEFAULT = Integer.parseInt(resources.getString(R.string.voice_announcement_frequency_default));
+        int value = getInt(R.string.voice_announcement_frequency_key, DEFAULT);
         return Duration.ofSeconds(value);
     }
 
     /**
      * @return Result depends on isMetricUnits
      */
-    public static Distance getVoiceAnnouncementDistance(SharedPreferences sharedPreferences, Context context) {
-        final float DEFAULT = Integer.parseInt(context.getResources().getString(R.string.voice_announcement_distance_default));
-        float value = getFloat(sharedPreferences, context, R.string.voice_announcement_distance_key, DEFAULT);
-        return Distance.one(isMetricUnits(sharedPreferences, context)).multipliedBy(value);
+    public static Distance getVoiceAnnouncementDistance() {
+        final float DEFAULT = Integer.parseInt(resources.getString(R.string.voice_announcement_distance_default));
+        float value = getFloat(R.string.voice_announcement_distance_key, DEFAULT);
+        return Distance.one(isMetricUnits()).multipliedBy(value);
     }
 
-    public static float getVoiceSpeedRate(SharedPreferences sharedPreferences, Context context) {
-        final float DEFAULT = Float.parseFloat(context.getResources().getString(R.string.voice_speed_rate_default));
-        return getFloat(sharedPreferences, context, R.string.voice_speed_rate_key, DEFAULT);
+    public static float getVoiceSpeedRate() {
+        final float DEFAULT = Float.parseFloat(resources.getString(R.string.voice_speed_rate_default));
+        return getFloat(R.string.voice_speed_rate_key, DEFAULT);
     }
 
-    public static Distance getRecordingDistanceInterval(SharedPreferences sharedPreferences, Context context) {
-        return Distance.of(getInt(sharedPreferences, context, R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefaultInternal(context)));
+    public static Distance getRecordingDistanceInterval() {
+        return Distance.of(getInt(R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefaultInternal()));
     }
 
-    public static Distance getRecordingDistanceIntervalDefault(Context context) {
-        return Distance.of(getRecordingDistanceIntervalDefaultInternal(context));
+    public static Distance getRecordingDistanceIntervalDefault() {
+        return Distance.of(getRecordingDistanceIntervalDefaultInternal());
     }
 
-    private static int getRecordingDistanceIntervalDefaultInternal(Context context) {
-        return Integer.parseInt(context.getResources().getString(R.string.recording_distance_interval_default));
+    private static int getRecordingDistanceIntervalDefaultInternal() {
+        return Integer.parseInt(resources.getString(R.string.recording_distance_interval_default));
     }
 
-    public static Distance getMaxRecordingDistance(SharedPreferences sharedPreferences, Context context) {
-        final int MAX_RECORDING_DISTANCE = Integer.parseInt(context.getResources().getString(R.string.max_recording_distance_default));
-        return Distance.of(getInt(sharedPreferences, context, R.string.max_recording_distance_key, MAX_RECORDING_DISTANCE));
+    public static Distance getMaxRecordingDistance() {
+        final int MAX_RECORDING_DISTANCE = Integer.parseInt(resources.getString(R.string.max_recording_distance_default));
+        return Distance.of(getInt(R.string.max_recording_distance_key, MAX_RECORDING_DISTANCE));
     }
 
-    public static Duration getMinRecordingInterval(SharedPreferences sharedPreferences, Context context) {
-        final Duration MIN_RECORDING_INTERVAL = getMinRecordingIntervalDefault(context);
-        Duration interval = Duration.ofSeconds(getInt(sharedPreferences, context, R.string.min_recording_interval_key, (int) MIN_RECORDING_INTERVAL.getSeconds()));
+    public static Duration getMinRecordingInterval() {
+        final Duration MIN_RECORDING_INTERVAL = getMinRecordingIntervalDefault();
+        Duration interval = Duration.ofSeconds(getInt(R.string.min_recording_interval_key, (int) MIN_RECORDING_INTERVAL.getSeconds()));
 
         if (interval.isNegative()) {
             // Due to removal of adaptive listener policy; used -1, and -2
-            interval = getMinRecordingIntervalDefault(context);
+            interval = getMinRecordingIntervalDefault();
         }
         return interval;
     }
 
-    public static Duration getMinRecordingIntervalDefault(Context context) {
-        return Duration.ofSeconds(Integer.parseInt(context.getResources().getString(R.string.min_recording_interval_default)));
+    public static Duration getMinRecordingIntervalDefault() {
+        return Duration.ofSeconds(Integer.parseInt(resources.getString(R.string.min_recording_interval_default)));
     }
 
-    public static Distance getThresholdHorizontalAccuracy(SharedPreferences sharedPreferences, Context context) {
-        final int RECORDING_GPS_ACCURACY = Integer.parseInt(context.getResources().getString(R.string.recording_gps_accuracy_default));
-        return Distance.of(getInt(sharedPreferences, context, R.string.recording_gps_accuracy_key, RECORDING_GPS_ACCURACY));
+    public static Distance getThresholdHorizontalAccuracy() {
+        final int RECORDING_GPS_ACCURACY = Integer.parseInt(resources.getString(R.string.recording_gps_accuracy_default));
+        return Distance.of(getInt(R.string.recording_gps_accuracy_key, RECORDING_GPS_ACCURACY));
     }
 
-    public static boolean shouldInstantExportAfterWorkout(SharedPreferences sharedPreferences, Context context) {
-        final boolean INSTANT_POST_WORKOUT_EXPORT_DEFAULT = context.getResources().getBoolean(R.bool.post_workout_export_enabled_default);
-        return getBoolean(sharedPreferences, context, R.string.post_workout_export_enabled_key, INSTANT_POST_WORKOUT_EXPORT_DEFAULT) && isDefaultExportDirectoryUri(sharedPreferences, context);
+    public static boolean shouldInstantExportAfterWorkout(Context context) {
+        final boolean INSTANT_POST_WORKOUT_EXPORT_DEFAULT = resources.getBoolean(R.bool.post_workout_export_enabled_default);
+        return getBoolean(R.string.post_workout_export_enabled_key, INSTANT_POST_WORKOUT_EXPORT_DEFAULT) && isDefaultExportDirectoryUri(context);
     }
 
-    public static TrackFileFormat getExportTrackFileFormat(SharedPreferences sharedPreferences, Context context) {
-        final String TRACKFILEFORMAT_NAME_DEFAULT = getString(sharedPreferences, context, R.string.export_trackfileformat_default, null);
-        String trackFileFormatName = getString(sharedPreferences, context, R.string.export_trackfileformat_key, TRACKFILEFORMAT_NAME_DEFAULT);
+    public static TrackFileFormat getExportTrackFileFormat() {
+        final String TRACKFILEFORMAT_NAME_DEFAULT = getString(R.string.export_trackfileformat_default, null);
+        String trackFileFormatName = getString(R.string.export_trackfileformat_key, TRACKFILEFORMAT_NAME_DEFAULT);
         try {
             return TrackFileFormat.valueOf(trackFileFormatName);
         } catch (Exception e) {
@@ -297,34 +314,31 @@ public class PreferencesUtils {
         }
     }
 
-    public static boolean getPreventReimportTracks(SharedPreferences sharedPreferences, Context context) {
-        final boolean defaultValue = getBoolean(sharedPreferences, context, R.bool.import_prevent_reimport_default, false);
-        return getBoolean(sharedPreferences, context, R.string.import_prevent_reimport_key, defaultValue);
+    public static boolean getPreventReimportTracks() {
+        final boolean defaultValue = getBoolean(R.bool.import_prevent_reimport_default, false);
+        return getBoolean(R.string.import_prevent_reimport_key, defaultValue);
     }
 
     /**
      * @return {@link androidx.appcompat.app.AppCompatDelegate}.MODE_*
      */
-    public static int getDefaultNightMode(SharedPreferences sharedPreferences, Context context) {
-        final String defaultValue = getKey(context, R.string.night_mode_default);
-        final String value = getString(sharedPreferences, context, R.string.night_mode_key, defaultValue);
+    public static int getDefaultNightMode() {
+        final String defaultValue = getKey(R.string.night_mode_default);
+        final String value = getString(R.string.night_mode_key, defaultValue);
 
         return Integer.parseInt(value);
     }
 
-    public static SharedPreferences resetPreferences(Context context, boolean readAgain) {
-        SharedPreferences sharedPreferences = getSharedPreferences(context);
+    public static void resetPreferences(Context context, boolean readAgain) {
         if (readAgain) {
             // We want to really clear settings now.
             sharedPreferences.edit().clear().commit();
         }
         PreferenceManager.setDefaultValues(context, R.xml.settings, readAgain);
-
-        return sharedPreferences;
     }
 
-    public static DocumentFile getDefaultExportDirectoryUri(SharedPreferences sharedPreferences, Context context) {
-        String singleExportDirectorySettingsKey = getString(sharedPreferences, context, R.string.settings_default_export_directory_key, null);
+    public static DocumentFile getDefaultExportDirectoryUri(Context context) {
+        String singleExportDirectorySettingsKey = getString(R.string.settings_default_export_directory_key, null);
         if (singleExportDirectorySettingsKey == null) {
             return null;
         }
@@ -336,24 +350,24 @@ public class PreferencesUtils {
         return null;
     }
 
-    public static void setDefaultExportDirectoryUri(SharedPreferences sharedPreferences, Context context, Uri directoryUri) {
+    public static void setDefaultExportDirectoryUri(Uri directoryUri) {
         String value = directoryUri != null ? directoryUri.toString() : null;
-        setString(sharedPreferences, context, R.string.settings_default_export_directory_key, value);
+        setString(R.string.settings_default_export_directory_key, value);
     }
 
-    public static boolean isDefaultExportDirectoryUri(SharedPreferences sharedPreferences, Context context) {
-        return getDefaultExportDirectoryUri(sharedPreferences, context) != null;
+    public static boolean isDefaultExportDirectoryUri(Context context) {
+        return getDefaultExportDirectoryUri(context) != null;
     }
 
-    public static int getLayoutColumns(SharedPreferences sharedPreferences, Context context) {
-        return getInt(sharedPreferences, context, R.string.stats_custom_layout_columns_key, context.getResources().getInteger(R.integer.stats_custom_layout_columns_default));
+    public static int getLayoutColumns() {
+        return getInt(R.string.stats_custom_layout_columns_key, resources.getInteger(R.integer.stats_custom_layout_columns_default));
     }
 
-    public static void setLayoutColumns(SharedPreferences sharedPreferences, Context context, int columns) {
-        setInt(sharedPreferences, context, R.string.stats_custom_layout_columns_key, columns);
+    public static void setLayoutColumns(int columns) {
+        setInt(R.string.stats_custom_layout_columns_key, columns);
     }
 
-    private static List<TypedArray> getMultiTypedArray(Context context, String key) {
+    private static List<TypedArray> getMultiTypedArray(String key) {
         List<TypedArray> typedArrays = new ArrayList<>();
 
         try {
@@ -362,10 +376,10 @@ public class PreferencesUtils {
             int i = 0;
 
             do {
-                field = resource.getField(key + context.getString(R.string.stats_custom_layout_fields_default_value_separator) + i);
-                typedArrays.add(context.getResources().obtainTypedArray(field.getInt(null)));
+                field = resource.getField(key + resources.getString(R.string.stats_custom_layout_fields_default_value_separator) + i);
+                typedArrays.add(resources.obtainTypedArray(field.getInt(null)));
                 i++;
-            } while (field != null);
+            } while (field != null); //TODO Catch no such field exception instead of using an endless loop.
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, e.getMessage());
@@ -375,47 +389,58 @@ public class PreferencesUtils {
     }
 
     @SuppressLint("ResourceType")
-    static String buildDefaultLayout(Context context) {
-        List<TypedArray> fieldsArrays = getMultiTypedArray(context, "stats_custom_layout_fields_default_value");
-        return context.getString(R.string.default_activity_default) + CsvConstants.LINE_SEPARATOR
+    static String buildDefaultLayout() {
+        List<TypedArray> fieldsArrays = getMultiTypedArray("stats_custom_layout_fields_default_value");
+        return resources.getString(R.string.default_activity_default) + CsvConstants.LINE_SEPARATOR
                 + fieldsArrays.stream().map(i -> i.getString(0) + CsvConstants.ITEM_SEPARATOR + i.getString(1)).collect(Collectors.joining(CsvConstants.LINE_SEPARATOR))
                 + CsvConstants.LINE_SEPARATOR;
     }
 
-    public static Layout getCustomLayout(SharedPreferences sharedPreferences, Context context) {
-        String csvCustomLayout = getString(sharedPreferences, context, R.string.stats_custom_layout_fields_key, buildDefaultLayout(context));
+    public static Layout getCustomLayout() {
+        String csvCustomLayout = getString(R.string.stats_custom_layout_fields_key, buildDefaultLayout());
         List<String> csvParts = Arrays.asList(csvCustomLayout.split(CsvConstants.LINE_SEPARATOR));
         Layout layout = new Layout(csvParts.get(0));
         for (int i = 1; i < csvParts.size(); i++) {
             String[] fieldParts = csvParts.get(i).split(CsvConstants.ITEM_SEPARATOR);
-            layout.addField(fieldParts[0], DataField.getTitleByKey(context, fieldParts[0]), fieldParts[1].equals(DataField.YES_VALUE), fieldParts[2].equals(DataField.YES_VALUE), fieldParts[0].equals(context.getString(R.string.stats_custom_layout_coordinates_key)));
+            layout.addField(fieldParts[0], DataField.getTitleByKey(resources, fieldParts[0]), fieldParts[1].equals(DataField.YES_VALUE), fieldParts[2].equals(DataField.YES_VALUE), fieldParts[0].equals(resources.getString(R.string.stats_custom_layout_coordinates_key)));
         }
 
         return layout;
     }
 
-    public static void setCustomLayout(SharedPreferences sharedPreferences, Context context, Layout layout) {
+    public static void setCustomLayout(Layout layout) {
         List<DataField> fields = layout.getFields();
         if (fields.isEmpty()) {
             return;
         }
 
         String csv = layout.getProfile() + CsvConstants.LINE_SEPARATOR
-                + fields.stream().map(DataField::toCsv).collect(Collectors.joining(CsvConstants.LINE_SEPARATOR)) + CsvConstants.LINE_SEPARATOR;
-        setString(sharedPreferences, context, R.string.stats_custom_layout_fields_key, csv);
+                + fields.stream().map(DataField::toCsv).collect(Collectors.joining(CsvConstants.LINE_SEPARATOR))
+                + CsvConstants.LINE_SEPARATOR;
+        setString(R.string.stats_custom_layout_fields_key, csv);
     }
 
-    public static void resetCustomLayoutPreferences(Context context) {
-        SharedPreferences settings = getSharedPreferences(context);
-        if (settings.contains(context.getString(R.string.stats_custom_layout_fields_key))) {
-            SharedPreferences.Editor editor = settings.edit();
-            editor.remove(context.getString(R.string.stats_custom_layout_fields_key));
+    public static void resetCustomLayoutPreferences() {
+        if (sharedPreferences.contains(resources.getString(R.string.stats_custom_layout_fields_key))) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove(resources.getString(R.string.stats_custom_layout_fields_key));
             editor.commit();
         }
-        if (settings.contains(context.getString(R.string.stats_custom_layout_columns_key))) {
-            SharedPreferences.Editor editor = settings.edit();
-            editor.remove(context.getString(R.string.stats_custom_layout_columns_key));
+        if (sharedPreferences.contains(resources.getString(R.string.stats_custom_layout_columns_key))) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove(resources.getString(R.string.stats_custom_layout_columns_key));
             editor.commit();
         }
+    }
+
+    public static void applyNightMode() {
+        AppCompatDelegate.setDefaultNightMode(PreferencesUtils.getDefaultNightMode());
+    }
+
+    //TODO Check if resetPreferences can be used instead.
+    @Deprecated
+    @VisibleForTesting
+    public static void clear() {
+        sharedPreferences.edit().clear().commit();
     }
 }

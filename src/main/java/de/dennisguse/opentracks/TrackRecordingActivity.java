@@ -53,7 +53,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
     // The following are setFrequency in onCreate
     private ContentProviderUtils contentProviderUtils;
-    private SharedPreferences sharedPreferences;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private TrackDataHub trackDataHub;
 
@@ -96,17 +95,17 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.stats_show_on_lockscreen_while_recording_key, key)) {
+            if (PreferencesUtils.isKey(R.string.stats_show_on_lockscreen_while_recording_key, key)) {
                 setLockscreenPolicy();
             }
-            if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.stats_keep_screen_on_while_recording_key, key)) {
+            if (PreferencesUtils.isKey(R.string.stats_keep_screen_on_while_recording_key, key)) {
                 setScreenOnPolicy();
             }
-            if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.stats_fullscreen_while_recording_key, key)) {
+            if (PreferencesUtils.isKey(R.string.stats_fullscreen_while_recording_key, key)) {
                 setFullscreenPolicy();
             }
-            if (PreferencesUtils.isKey(TrackRecordingActivity.this, R.string.recording_distance_interval_key, key)) {
-                trackDataHub.setRecordingDistanceInterval(PreferencesUtils.getRecordingDistanceInterval(sharedPreferences, TrackRecordingActivity.this));
+            if (PreferencesUtils.isKey(R.string.recording_distance_interval_key, key)) {
+                trackDataHub.setRecordingDistanceInterval(PreferencesUtils.getRecordingDistanceInterval());
             }
             if (key == null) return;
 
@@ -121,7 +120,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contentProviderUtils = new ContentProviderUtils(this);
-        sharedPreferences = PreferencesUtils.getSharedPreferences(this);
         trackId = null;
         if (savedInstanceState != null) {
             //Activity was recreated.
@@ -156,7 +154,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     }
 
     private void setLockscreenPolicy() {
-        boolean showOnLockScreen = PreferencesUtils.shouldShowStatsOnLockscreen(sharedPreferences, TrackRecordingActivity.this);
+        boolean showOnLockScreen = PreferencesUtils.shouldShowStatsOnLockscreen();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(showOnLockScreen);
@@ -168,7 +166,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     }
 
     private void setScreenOnPolicy() {
-        boolean keepScreenOn = PreferencesUtils.shouldKeepScreenOn(sharedPreferences, TrackRecordingActivity.this);
+        boolean keepScreenOn = PreferencesUtils.shouldKeepScreenOn();
 
         if (keepScreenOn) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -178,7 +176,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     }
 
     private void setFullscreenPolicy() {
-        boolean keepScreenOn = PreferencesUtils.shouldUseFullscreen(sharedPreferences, TrackRecordingActivity.this);
+        boolean keepScreenOn = PreferencesUtils.shouldUseFullscreen();
 
         if (keepScreenOn) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -191,8 +189,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     protected void onStart() {
         super.onStart();
 
-        sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-        sharedPreferenceChangeListener.onSharedPreferenceChanged(sharedPreferences, null);
+        PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
         trackRecordingServiceConnection.startConnection(this);
         trackDataHub.start();
@@ -230,7 +227,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     @Override
     protected void onStop() {
         super.onStop();
-        sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
+        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
         trackRecordingServiceConnection.unbind(this);
         trackDataHub.stop();
     }
