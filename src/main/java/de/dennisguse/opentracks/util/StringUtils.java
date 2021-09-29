@@ -292,34 +292,6 @@ public class StringUtils {
         }
     }
 
-    public static String[] getAnnouncementFrequency(Context context) {
-        String[] values = context.getResources().getStringArray(R.array.voice_announcement_frequency_values);
-        String[] options = new String[values.length];
-        for (int i = 0; i < values.length; i++) {
-            if (context.getString(R.string.announcement_off).equals(values[i])) {
-                options[i] = context.getString(R.string.value_off);
-            } else {
-                int value = Integer.parseInt(values[i]);
-                options[i] = context.getString(R.string.value_integer_minute, Duration.ofSeconds(value).toMinutes());
-            }
-        }
-        return options;
-    }
-
-    public static String[] getAnnouncementDistance(Context context, boolean metricUnits) {
-        String[] values = context.getResources().getStringArray(R.array.voice_announcement_distance_values);
-        String[] options = new String[values.length];
-        for (int i = 0; i < values.length; i++) {
-            if (context.getString(R.string.announcement_off).equals(values[i])) {
-                options[i] = context.getString(R.string.value_off);
-            } else {
-                int value = Integer.parseInt(values[i]);
-                options[i] = context.getString(metricUnits ? R.string.value_integer_kilometer : R.string.value_integer_mile, value);
-            }
-        }
-        return options;
-    }
-
     /**
      * @return the formatted altitude_m (or null) and it's unit as {@link Pair}
      */

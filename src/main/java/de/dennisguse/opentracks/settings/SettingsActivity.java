@@ -279,22 +279,22 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
             boolean metricUnits = PreferencesUtils.isMetricUnits();
 
             ListPreference voiceFrequency = findPreference(getString(R.string.voice_announcement_frequency_key));
-            voiceFrequency.setEntries(StringUtils.getAnnouncementFrequency(getActivity()));
+            voiceFrequency.setEntries(PreferenceHelper.getAnnouncementFrequency(getActivity().getResources()));
 
             ListPreference voiceDistance = findPreference(getString(R.string.voice_announcement_distance_key));
-            voiceDistance.setEntries(StringUtils.getAnnouncementDistance(getActivity(), metricUnits));
+            voiceDistance.setEntries(PreferenceHelper.getAnnouncementDistance(getActivity().getResources(), metricUnits));
 
             ListPreference minRecordingInterval = findPreference(getString(R.string.min_recording_interval_key));
-            minRecordingInterval.setEntries(PreferenceHelper.getMinRecordingIntervalEntries(getActivity()));
+            minRecordingInterval.setEntries(PreferenceHelper.getMinRecordingIntervalEntries(getActivity().getResources()));
 
             ListPreference recordingDistanceInterval = findPreference(getString(R.string.recording_distance_interval_key));
-            recordingDistanceInterval.setEntries(PreferenceHelper.getRecordingDistanceIntervalEntries(getActivity(), metricUnits));
+            recordingDistanceInterval.setEntries(PreferenceHelper.getRecordingDistanceIntervalEntries(getActivity().getResources(), metricUnits));
 
             ListPreference maxRecordingDistance = findPreference(getString(R.string.max_recording_distance_key));
-            maxRecordingDistance.setEntries(PreferenceHelper.getMaxRecordingDistanceEntries(getActivity(), metricUnits));
+            maxRecordingDistance.setEntries(PreferenceHelper.getMaxRecordingDistanceEntries(getActivity().getResources(), metricUnits));
 
             ListPreference recordingGpsAccuracy = findPreference(getString(R.string.recording_gps_accuracy_key));
-            recordingGpsAccuracy.setEntries(PreferenceHelper.getRecordingGpsAccuracyEntries(getActivity(), metricUnits));
+            recordingGpsAccuracy.setEntries(PreferenceHelper.getRecordingGpsAccuracyEntries(getActivity().getResources(), metricUnits));
 
             ListPreference statsRatePreferences = findPreference(getString(R.string.stats_rate_key));
             String[] entries = getResources().getStringArray(metricUnits ? R.array.stats_rate_metric_options : R.array.stats_rate_imperial_options);
