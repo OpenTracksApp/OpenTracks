@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.util;
+package de.dennisguse.opentracks.services.tasks;
 
 import android.content.Context;
 import android.util.Pair;
@@ -6,6 +6,7 @@ import android.util.Pair;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +19,9 @@ import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
+import de.dennisguse.opentracks.services.tasks.AnnouncementUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
+import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 
 import static org.junit.Assert.assertEquals;
@@ -68,7 +71,7 @@ public class AnnouncementUtilsTest {
         String announcement = AnnouncementUtils.getAnnouncement(context, stats, true, true, lastInterval);
 
         // then
-        assertEquals(
+        Assert.assertEquals(
                 "total distance " +
                         StringUtils.getDistanceParts(context, stats.getTotalDistance(), true).first +
                         " kilometers in " + buildAndGetTimeText(stats.getTotalTime(), false) + " at " +

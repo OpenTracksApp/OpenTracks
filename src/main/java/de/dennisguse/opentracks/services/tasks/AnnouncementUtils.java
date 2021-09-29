@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.util;
+package de.dennisguse.opentracks.services.tasks;
 
 import android.content.Context;
 
@@ -12,12 +12,12 @@ import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 
-public class AnnouncementUtils {
+class AnnouncementUtils {
 
     private AnnouncementUtils() {
     }
 
-    public static String getAnnouncement(Context context, TrackStatistics trackStatistics, boolean isMetricUnits, boolean isReportSpeed, @Nullable IntervalStatistics.Interval currentInterval) {
+    static String getAnnouncement(Context context, TrackStatistics trackStatistics, boolean isMetricUnits, boolean isReportSpeed, @Nullable IntervalStatistics.Interval currentInterval) {
         Distance distance = trackStatistics.getTotalDistance();
         Speed distancePerTime = trackStatistics.getAverageMovingSpeed();
         Speed currentDistancePerTime = currentInterval != null ? currentInterval.getSpeed() : null;
