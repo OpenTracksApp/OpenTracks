@@ -39,6 +39,7 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.ShareContentProvider;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * Utilities for creating intents.

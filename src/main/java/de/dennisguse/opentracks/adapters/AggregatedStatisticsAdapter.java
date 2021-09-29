@@ -1,7 +1,6 @@
 package de.dennisguse.opentracks.adapters;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.viewmodels.AggregatedStatistics;

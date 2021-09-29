@@ -42,7 +42,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.databinding.ChartBinding;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
-import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * A fragment to display track chart to the user.

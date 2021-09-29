@@ -26,7 +26,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.databinding.StatisticsRecordingBinding;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.viewmodels.StatisticData;
 import de.dennisguse.opentracks.viewmodels.StatisticsDataModel;
 

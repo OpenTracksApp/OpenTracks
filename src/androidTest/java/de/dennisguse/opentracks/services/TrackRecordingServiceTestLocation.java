@@ -2,7 +2,6 @@ package de.dennisguse.opentracks.services;
 
 import android.content.ContentProvider;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
@@ -36,7 +35,7 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.importer.TrackPointAssert;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
-import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 import static org.junit.Assert.assertFalse;
 

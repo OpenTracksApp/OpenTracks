@@ -2,7 +2,6 @@ package de.dennisguse.opentracks.io.file.importer;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
@@ -13,7 +12,7 @@ import androidx.documentfile.provider.DocumentFile;
 
 import de.dennisguse.opentracks.io.file.exporter.ExportActivity;
 import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 public abstract class DirectoryChooserActivity extends AppCompatActivity {
 

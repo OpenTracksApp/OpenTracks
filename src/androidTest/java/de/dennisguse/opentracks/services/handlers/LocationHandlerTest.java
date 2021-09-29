@@ -5,7 +5,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Looper;
 
@@ -24,7 +23,7 @@ import java.time.Instant;
 
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LocationHandlerTest {

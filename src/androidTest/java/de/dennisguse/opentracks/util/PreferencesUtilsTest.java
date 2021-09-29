@@ -14,6 +14,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.DataField;
 import de.dennisguse.opentracks.content.data.Layout;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

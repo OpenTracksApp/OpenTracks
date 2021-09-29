@@ -1,7 +1,6 @@
 package de.dennisguse.opentracks.services.handlers;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -17,7 +16,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.util.LocationUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
 public class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {

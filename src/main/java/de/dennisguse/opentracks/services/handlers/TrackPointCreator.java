@@ -1,7 +1,6 @@
 package de.dennisguse.opentracks.services.handlers;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.util.Pair;
 
@@ -17,7 +16,6 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 
 /**
  * Creates TrackPoints while recording by fusing data from different sensors (e.g., GNSS, barometer, BLE sensors).

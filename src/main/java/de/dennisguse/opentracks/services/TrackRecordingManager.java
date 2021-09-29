@@ -2,7 +2,6 @@ package de.dennisguse.opentracks.services;
 
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.util.Log;
@@ -20,7 +19,7 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
-import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackNameUtils;
 

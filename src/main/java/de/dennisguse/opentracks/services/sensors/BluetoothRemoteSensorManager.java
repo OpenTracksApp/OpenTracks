@@ -34,7 +34,7 @@ import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataRunning;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.util.BluetoothUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * Bluetooth LE sensor manager: manages connections to Bluetooth LE sensors.

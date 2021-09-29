@@ -26,6 +26,7 @@ import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * Utilities for track name.

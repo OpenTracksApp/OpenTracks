@@ -3,7 +3,6 @@ package de.dennisguse.opentracks.util;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
@@ -17,6 +16,7 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
 import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * Create an {@link Intent} to request showing a Dashboard.
