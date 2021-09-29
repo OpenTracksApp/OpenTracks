@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.settings.BluetoothLeAdapter;
 import de.dennisguse.opentracks.util.BluetoothUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * Preference to select a discoverable Bluetooth LE device.

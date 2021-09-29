@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks.util;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -31,6 +30,7 @@ import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 import static org.junit.Assert.assertEquals;
 

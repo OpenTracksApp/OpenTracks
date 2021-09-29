@@ -1,14 +1,12 @@
 package de.dennisguse.opentracks;
 
 import android.app.Application;
-import android.content.SharedPreferences;
 import android.os.StrictMode;
 import android.util.Log;
 
 import java.util.Locale;
 
-import de.dennisguse.opentracks.util.ActivityUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * Code that is executed when the application starts.

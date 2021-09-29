@@ -15,7 +15,6 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.rule.GrantPermissionRule;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.*;
 
 import de.dennisguse.opentracks.content.data.DataField;
 import de.dennisguse.opentracks.content.data.Layout;
-import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

@@ -10,7 +10,6 @@ import androidx.preference.DialogPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 
 public class ResetDialogPreference extends DialogPreference {
 

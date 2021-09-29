@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Layout;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 public class StatisticsUtils {
 

@@ -1,6 +1,5 @@
 package de.dennisguse.opentracks.settings;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,7 +22,6 @@ import de.dennisguse.opentracks.adapters.SettingsCustomLayoutAdapter;
 import de.dennisguse.opentracks.content.data.Layout;
 import de.dennisguse.opentracks.content.data.DataField;
 import de.dennisguse.opentracks.databinding.ActivitySettingsCustomLayoutBinding;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StatisticsUtils;
 
 public class SettingsCustomLayoutActivity extends AbstractActivity implements SettingsCustomLayoutAdapter.SettingsCustomLayoutItemClickListener {

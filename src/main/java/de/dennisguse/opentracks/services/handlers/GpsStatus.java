@@ -1,7 +1,6 @@
 package de.dennisguse.opentracks.services.handlers;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Handler;
 
@@ -13,7 +12,7 @@ import java.time.Instant;
 
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.util.PreferencesUtils;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * This class handle GPS status according to received locations` and some thresholds.

@@ -31,10 +31,8 @@ import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingPowerPrefer
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeHeartRatePreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeRunningSpeedAndCadencePreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeSensorPreference;
-import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.BluetoothUtils;
 import de.dennisguse.opentracks.util.HackUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
 public class SettingsActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, ResetDialogPreference.ResetCallback {
@@ -279,22 +277,22 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
             boolean metricUnits = PreferencesUtils.isMetricUnits();
 
             ListPreference voiceFrequency = findPreference(getString(R.string.voice_announcement_frequency_key));
-            voiceFrequency.setEntries(PreferenceHelper.getAnnouncementFrequency(getActivity().getResources()));
+            voiceFrequency.setEntries(PreferencesUtils.getVoiceAnnouncementFrequencyEntries());
 
             ListPreference voiceDistance = findPreference(getString(R.string.voice_announcement_distance_key));
-            voiceDistance.setEntries(PreferenceHelper.getAnnouncementDistance(getActivity().getResources(), metricUnits));
+            voiceDistance.setEntries(PreferencesUtils.getVoiceAnnouncementDistanceEntries());
 
             ListPreference minRecordingInterval = findPreference(getString(R.string.min_recording_interval_key));
-            minRecordingInterval.setEntries(PreferenceHelper.getMinRecordingIntervalEntries(getActivity().getResources()));
+            minRecordingInterval.setEntries(PreferencesUtils.getMinRecordingIntervalEntries());
 
             ListPreference recordingDistanceInterval = findPreference(getString(R.string.recording_distance_interval_key));
-            recordingDistanceInterval.setEntries(PreferenceHelper.getRecordingDistanceIntervalEntries(getActivity().getResources(), metricUnits));
+            recordingDistanceInterval.setEntries(PreferencesUtils.getRecordingDistanceIntervalEntries());
 
             ListPreference maxRecordingDistance = findPreference(getString(R.string.max_recording_distance_key));
-            maxRecordingDistance.setEntries(PreferenceHelper.getMaxRecordingDistanceEntries(getActivity().getResources(), metricUnits));
+            maxRecordingDistance.setEntries(PreferencesUtils.getMaxRecordingDistanceEntries());
 
             ListPreference recordingGpsAccuracy = findPreference(getString(R.string.recording_gps_accuracy_key));
-            recordingGpsAccuracy.setEntries(PreferenceHelper.getRecordingGpsAccuracyEntries(getActivity().getResources(), metricUnits));
+            recordingGpsAccuracy.setEntries(PreferencesUtils.getThresholdHorizontalAccuracyEntries());
 
             ListPreference statsRatePreferences = findPreference(getString(R.string.stats_rate_key));
             String[] entries = getResources().getStringArray(metricUnits ? R.array.stats_rate_metric_options : R.array.stats_rate_imperial_options);

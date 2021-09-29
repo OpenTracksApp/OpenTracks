@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks.settings;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
@@ -31,7 +30,6 @@ import androidx.preference.PreferenceDialogFragmentCompat;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.util.HackUtils;
-import de.dennisguse.opentracks.util.PreferencesUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
