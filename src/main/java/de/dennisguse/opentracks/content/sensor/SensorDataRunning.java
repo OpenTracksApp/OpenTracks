@@ -57,22 +57,24 @@ public final class SensorDataRunning extends SensorData<SensorDataRunning.Data> 
     @Override
     protected Data getNoneValue() {
         if (value != null) {
-            return new Data(Speed.zero(), 0f, ((Data) value).distance);
+            return new Data(Speed.zero(), 0f, value.distance);
         } else {
             return new Data(Speed.zero(), 0f, Distance.of(0));
         }
     }
 
     public void compute(SensorDataRunning previous) {
-        Distance overallDistance = null;
-        if (hasTotalDistance() && previous != null && previous.hasTotalDistance()) {
-            overallDistance = this.totalDistance.minus(previous.totalDistance);
-            if (previous.hasValue() && previous.getValue().getDistance() != null) {
-                overallDistance = overallDistance.plus(previous.getValue().getDistance());
+        if (speed != null && hasTotalDistance()) {
+            Distance overallDistance = null;
+            if (previous != null && previous.hasTotalDistance()) {
+                overallDistance = this.totalDistance.minus(previous.totalDistance);
+                if (previous.hasValue() && previous.getValue().getDistance() != null) {
+                    overallDistance = overallDistance.plus(previous.getValue().getDistance());
+                }
             }
-        }
 
-        value = new Data(speed, cadence, overallDistance);
+            value = new Data(speed, cadence, overallDistance);
+        }
     }
 
     @Override
