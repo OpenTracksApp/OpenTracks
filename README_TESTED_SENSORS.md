@@ -1,6 +1,6 @@
 # Overview of tested Bluetooth LE sensors
 
-## HRS: Heartrate Service
+## 0x180D: Heartrate Service
 
 * Decathlon|Geonaute|Kalenji Dual HRM Belt
 * moofit heart rate monitor
@@ -13,7 +13,7 @@
 * Amazfit Neo. But first you have to enable "Discoverable" and "Activity heart rate sharing" in the official Zepp app. (after pairing with OpenTracks you can disable them again)
 * Garmin HRM-Dual (Reference: 010-12883-00)
 
-## CSCP: Cycling Cadence and Speed Service
+## 0x1816: Cycling Cadence and Speed Service
 
 Please note that the according to the specification these sensors _may_ provide speed as well as cadence.
 However, often only one value is provided.
@@ -36,7 +36,7 @@ However, often only one value is provided.
   This sensor reports cadence data as speed.
   A workaround is in place.
 
-## Cycling Power Measurement
+## 0x1818: Power Measurement
 
 We only support _Instantaneous Power_.
 
@@ -44,6 +44,7 @@ _WARNING_: we only support physically movements with valid GPS coordinates.
 Using a device indoors (no GPS available) will only show the current power values, but won't store anything.
 Also the distance is not computed.
 
+For cycling:
 * Assioma Duo Powermeter
 * Elite drivo II
 * QUARQ Red DZero Powermeter
@@ -51,11 +52,15 @@ Also the distance is not computed.
 * Wahoo Kickr v4.0
 * Rotor 2INpower DM Road (only supports power measurement, cadence measurement is propietary @ firmware v1.061)
 
-## RSC: running cadence and speed
+For running:
+* Stryd
+
+## 0x1814: running cadence and speed
 
 We do not support type of movement (i.e., walking vs running).
 
 * Polar Stride
+* Stryd (incl. power)
 
 ## Tested Barometric Sensor Smartphones
 
