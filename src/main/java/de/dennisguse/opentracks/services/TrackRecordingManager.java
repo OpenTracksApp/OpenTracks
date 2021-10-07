@@ -8,6 +8,7 @@ import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
@@ -36,6 +37,7 @@ class TrackRecordingManager {
     private Track.Id trackId;
     private TrackStatisticsUpdater trackStatisticsUpdater;
 
+    private boolean currentSegmentHasTrackPoint;
     private TrackPoint lastTrackPoint;
     private TrackPoint lastValidTrackPoint;
     private boolean isIdle;
@@ -64,6 +66,8 @@ class TrackRecordingManager {
         track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
         contentProviderUtils.updateTrack(track);
 
+        currentSegmentHasTrackPoint = false;
+
         return trackId;
     }
 
@@ -78,6 +82,7 @@ class TrackRecordingManager {
 
         trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics());
         insertTrackPoint(trackId, segmentStartTrackPoint);
+        currentSegmentHasTrackPoint = false;
     }
 
     void pause(TrackPointCreator trackPointCreator) {
@@ -85,6 +90,7 @@ class TrackRecordingManager {
             insertTrackPointIfNewer(trackId, lastTrackPoint);
         }
         insertTrackPoint(trackId, trackPointCreator.createSegmentEnd());
+        currentSegmentHasTrackPoint = false;
     }
 
     void end(TrackPointCreator trackPointCreator) {
@@ -98,6 +104,7 @@ class TrackRecordingManager {
         trackId = null;
         trackStatisticsUpdater = null;
         lastTrackPoint = null;
+        currentSegmentHasTrackPoint = false;
         lastValidTrackPoint = null;
         isIdle = false;
     }
@@ -153,12 +160,14 @@ class TrackRecordingManager {
         //TODO Figure out how to avoid loading the lastValidTrackPoint from the database
         TrackPoint lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(trackId);
 
+
         //Storing trackPoint
 
         // Always insert the first segment location
-        if (!currentSegmentHasTrackPoint()) {
+        if (!currentSegmentHasTrackPoint) {
             insertTrackPoint(trackId, trackPoint);
-            lastTrackPoint = trackPoint;
+            currentSegmentHasTrackPoint = true;
+            lastTrackPoint = null;
             return true;
         }
 
@@ -171,8 +180,8 @@ class TrackRecordingManager {
                 insertTrackPoint(trackId, trackPoint);
 
                 isIdle = false;
+                lastTrackPoint = null;
 
-                lastTrackPoint = trackPoint;
                 return true;
             }
 
@@ -182,8 +191,8 @@ class TrackRecordingManager {
                 insertTrackPoint(trackId, trackPoint);
 
                 isIdle = false;
+                lastTrackPoint = null;
 
-                lastTrackPoint = trackPoint;
                 return true;
             }
         }
@@ -194,8 +203,8 @@ class TrackRecordingManager {
             insertTrackPoint(trackId, trackPoint);
 
             isIdle = true;
+            lastTrackPoint = null;
 
-            lastTrackPoint = trackPoint;
             return true;
         }
 
@@ -205,8 +214,8 @@ class TrackRecordingManager {
             insertTrackPoint(trackId, trackPoint);
 
             isIdle = false;
+            lastTrackPoint = null;
 
-            lastTrackPoint = trackPoint;
             return true;
         }
 
@@ -238,20 +247,18 @@ class TrackRecordingManager {
     @Deprecated
     //Use lastValidTrackPoint
     private TrackPoint getLastValidTrackPointInCurrentSegment(Track.Id trackId) {
-        if (!currentSegmentHasTrackPoint()) {
+        if (!currentSegmentHasTrackPoint) {
             return null;
         }
         return contentProviderUtils.getLastValidTrackPoint(trackId);
     }
 
-    private boolean currentSegmentHasTrackPoint() {
-        return lastTrackPoint != null;
-    }
-
     /**
      * Inserts a trackPoint if this trackPoint is different than lastValidTrackPoint.
      */
-    private void insertTrackPointIfNewer(@NonNull Track.Id trackId, @NonNull TrackPoint trackPoint) {
+    private void insertTrackPointIfNewer(@NonNull Track.Id trackId, @Nullable TrackPoint trackPoint) {
+        if (trackPoint == null) return;
+
         TrackPoint lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(trackId);
         if (lastValidTrackPoint != null && trackPoint.getTime().equals(lastValidTrackPoint.getTime())) {
             // Do not insert if inserted already
@@ -268,6 +275,7 @@ class TrackRecordingManager {
             trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
 
             contentProviderUtils.updateTrackStatistics(trackId, trackStatisticsUpdater.getTrackStatistics());
+            lastValidTrackPoint = trackPoint;
         } catch (SQLiteException e) {
             /*
              * Insert failed, most likely because of SqlLite error code 5 (SQLite_BUSY).
