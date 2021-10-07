@@ -400,11 +400,14 @@ public class TrackPoint {
             return result;
         }
         result += ": lat=" + getLatitude() + " lng=" + getLongitude();
-        if (!hasHorizontalAccuracy()) {
-            return result;
+        if (hasHorizontalAccuracy()) {
+            result += " acc=" + getHorizontalAccuracy();
+        }
+        if (hasSensorDistance()) {
+            result += " distance=" + getSensorDistance();
         }
 
-        return result + " acc=" + getHorizontalAccuracy();
+        return result;
     }
 
     public static class Id {

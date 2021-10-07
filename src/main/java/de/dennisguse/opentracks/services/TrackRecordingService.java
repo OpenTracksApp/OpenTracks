@@ -355,14 +355,14 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     }
 
     @Override
-    public void newTrackPoint(TrackPoint trackPoint, Distance thresholdHorizontalAccuracy) {
+    public boolean newTrackPoint(TrackPoint trackPoint, Distance thresholdHorizontalAccuracy) {
         if (!isRecording() || isPaused()) {
             Log.w(TAG, "Ignore newTrackPoint. Not recording or paused.");
-            return;
+            return false;
         }
 
-        trackRecordingManager.onNewTrackPoint(trackPoint, thresholdHorizontalAccuracy);
         notificationManager.updateTrackPoint(this, trackRecordingManager.getTrackStatistics(), trackPoint, thresholdHorizontalAccuracy);
+        return trackRecordingManager.onNewTrackPoint(trackPoint, thresholdHorizontalAccuracy);
     }
 
     @Override

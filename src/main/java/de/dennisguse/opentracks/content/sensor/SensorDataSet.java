@@ -93,7 +93,6 @@ public final class SensorDataSet {
         if (cyclingCadence != null) cyclingCadence.reset();
         if (cyclingDistanceSpeed != null) cyclingDistanceSpeed.reset();
         if (cyclingPower != null) cyclingPower.reset();
-
         if (runningDistanceSpeedCadence != null) runningDistanceSpeedCadence.reset();
     }
 
