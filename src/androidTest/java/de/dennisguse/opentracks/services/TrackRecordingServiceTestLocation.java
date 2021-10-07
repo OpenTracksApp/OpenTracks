@@ -252,13 +252,6 @@ public class TrackRecordingServiceTestLocation {
                         .setSpeed(Speed.of(0))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null) //TODO Why is this added? Systems is idle and not moving at all.
-                        .setLatitude(45)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(2))
-                        .setSpeed(Speed.of(0))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
                         .setLatitude(45)
                         .setLongitude(35)
@@ -303,20 +296,6 @@ public class TrackRecordingServiceTestLocation {
                         .setLongitude(35)
                         .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(15))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null) //TODO Check why this trackPoint is inserted.
-                        .setLatitude(45)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(2))
-                        .setSpeed(Speed.of(0))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null) //TODO Check why this trackPoint is inserted.
-                        .setLatitude(45)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(5))
-                        .setSpeed(Speed.of(0))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
@@ -427,6 +406,7 @@ public class TrackRecordingServiceTestLocation {
         ), trackPoints);
     }
 
+    @Deprecated // Will be superseded when fixing #500
     @MediumTest
     @Test
     public void testOnLocationChangedAsync_idle_withSensorDistance() {
