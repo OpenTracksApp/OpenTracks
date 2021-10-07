@@ -492,6 +492,7 @@ public class TrackRecordingServiceTestLocation {
                         .setSensorDistance(Distance.of(2)),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, null)
                         .setSensorDistance(Distance.of(11))
+                        .setSpeed(Speed.of(5))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f)
                         .setSensorDistance(Distance.of(2))

@@ -207,6 +207,8 @@ class TrackRecordingManager {
                 Log.w(TAG, "Ignore insertTrackPoint. trackPoint time same as last valid trackId point time.");
             } else {
                 insertTrackPointHelper(trackId, lastTrackPoint);
+                // Remove the sensorDistance from trackPoint that is already going  be stored with lastTrackPoint.
+                trackPoint.minusSensorDistance(lastTrackPoint);
             }
             lastTrackPoint = null;
         }
