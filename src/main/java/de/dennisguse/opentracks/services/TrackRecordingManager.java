@@ -149,7 +149,7 @@ class TrackRecordingManager {
         return new Marker.Id(ContentUris.parseId(uri));
     }
 
-    void onNewTrackPoint(TrackPoint trackPoint, Distance thresholdHorizontalAccuracy) {
+    boolean onNewTrackPoint(TrackPoint trackPoint, Distance thresholdHorizontalAccuracy) {
         //TODO Figure out how to avoid loading the lastValidTrackPoint from the database
         TrackPoint lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(trackId);
 
@@ -159,7 +159,7 @@ class TrackRecordingManager {
         if (!currentSegmentHasTrackPoint()) {
             insertTrackPoint(trackId, trackPoint);
             lastTrackPoint = trackPoint;
-            return;
+            return true;
         }
 
         Distance distanceToLastTrackLocation = trackPoint.distanceToPrevious(lastValidTrackPoint);
@@ -173,7 +173,7 @@ class TrackRecordingManager {
                 isIdle = false;
 
                 lastTrackPoint = trackPoint;
-                return;
+                return true;
             }
 
             if (trackPoint.hasSensorData() || distanceToLastTrackLocation.greaterOrEqualThan(recordingDistanceInterval)) {
@@ -184,7 +184,7 @@ class TrackRecordingManager {
                 isIdle = false;
 
                 lastTrackPoint = trackPoint;
-                return;
+                return true;
             }
         }
 
@@ -196,7 +196,7 @@ class TrackRecordingManager {
             isIdle = true;
 
             lastTrackPoint = trackPoint;
-            return;
+            return true;
         }
 
         if (isIdle && trackPoint.isMoving()) {
@@ -207,11 +207,12 @@ class TrackRecordingManager {
             isIdle = false;
 
             lastTrackPoint = trackPoint;
-            return;
+            return true;
         }
 
         Log.d(TAG, "Not recording TrackPoint, idle");
         lastTrackPoint = trackPoint;
+        return false;
     }
 
     Track getTrack() {
