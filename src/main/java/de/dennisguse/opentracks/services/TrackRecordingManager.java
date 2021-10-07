@@ -38,8 +38,6 @@ class TrackRecordingManager {
     private TrackStatisticsUpdater trackStatisticsUpdater;
 
     private TrackPoint lastTrackPoint;
-    private TrackPoint lastValidTrackPoint;
-    private boolean isIdle;
 
     TrackRecordingManager(Context context) {
         this.context = context;
@@ -99,8 +97,6 @@ class TrackRecordingManager {
         trackId = null;
         trackStatisticsUpdater = null;
         lastTrackPoint = null;
-        lastValidTrackPoint = null;
-        isIdle = false;
     }
 
     Pair<Track, Pair<TrackPoint, SensorDataSet>> get(TrackPointCreator trackPointCreator) {
@@ -154,8 +150,6 @@ class TrackRecordingManager {
         //TODO Figure out how to avoid loading the lastValidTrackPoint from the database
         TrackPoint lastValidTrackPoint = getLastValidTrackPointInCurrentSegment(trackId);
 
-        //Storing trackPoint
-
         // Always insert the first segment location
         if (!currentSegmentHasTrackPoint()) {
             insertTrackPoint(trackId, trackPoint);
@@ -171,44 +165,18 @@ class TrackRecordingManager {
                 trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
                 insertTrackPoint(trackId, trackPoint);
 
-                isIdle = false;
-
                 lastTrackPoint = trackPoint;
                 return;
             }
 
-            if (trackPoint.hasSensorData() || distanceToLastTrackLocation.greaterOrEqualThan(recordingDistanceInterval)) {
+            if (trackPoint.hasSensorData() || (distanceToLastTrackLocation.greaterOrEqualThan(recordingDistanceInterval) && trackPoint.isMoving())) {
                 insertTrackPointIfNewer(trackId, lastTrackPoint);
 
                 insertTrackPoint(trackId, trackPoint);
 
-                isIdle = false;
-
                 lastTrackPoint = trackPoint;
                 return;
             }
-        }
-
-        if (!isIdle && !trackPoint.isMoving()) {
-            insertTrackPointIfNewer(trackId, lastTrackPoint);
-
-            insertTrackPoint(trackId, trackPoint);
-
-            isIdle = true;
-
-            lastTrackPoint = trackPoint;
-            return;
-        }
-
-        if (isIdle && trackPoint.isMoving()) {
-            insertTrackPointIfNewer(trackId, lastTrackPoint);
-
-            insertTrackPoint(trackId, trackPoint);
-
-            isIdle = false;
-
-            lastTrackPoint = trackPoint;
-            return;
         }
 
         Log.d(TAG, "Not recording TrackPoint, idle");
