@@ -362,7 +362,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
 
         notificationManager.updateTrackPoint(this, trackRecordingManager.getTrackStatistics(), trackPoint, thresholdHorizontalAccuracy);
-        return trackRecordingManager.onNewTrackPoint(trackPoint, thresholdHorizontalAccuracy);
+        return trackRecordingManager.onNewTrackPoint(trackPoint);
     }
 
     @Override
