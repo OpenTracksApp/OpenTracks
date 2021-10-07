@@ -349,6 +349,13 @@ public class TrackPoint {
         return this;
     }
 
+    public TrackPoint minusSensorDistance(@NonNull TrackPoint lastTrackPoint) {
+        if (hasSensorDistance() && lastTrackPoint.hasSensorDistance()) {
+            setSensorDistance(getSensorDistance().minus(lastTrackPoint.getSensorDistance()));
+        }
+        return this;
+    }
+
     public boolean hasSensorData() {
         return hasHeartRate() || hasCyclingCadence() || hasPower();
     }
@@ -396,10 +403,9 @@ public class TrackPoint {
     @Override
     public String toString() {
         String result = "time=" + getTime() + " (type=" + getType() + ")";
-        if (!hasLocation()) {
-            return result;
+        if (hasLocation()) {
+            result += ": lat=" + getLatitude() + " lng=" + getLongitude();
         }
-        result += ": lat=" + getLatitude() + " lng=" + getLongitude();
         if (hasHorizontalAccuracy()) {
             result += " acc=" + getHorizontalAccuracy();
         }
