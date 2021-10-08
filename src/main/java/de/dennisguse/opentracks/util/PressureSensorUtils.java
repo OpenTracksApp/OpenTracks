@@ -77,7 +77,8 @@ public class PressureSensorUtils {
      * https://de.wikipedia.org/wiki/Barometrische_H%C3%B6henformel#Internationale_H%C3%B6henformel
      * {\color{White} p(h)} = p_0 \cdot \left( 1 - \frac{0{,}0065 \frac{\mathrm K}{\mathrm m} \cdot h}{T_0\ } \right)^{5{,}255}
      */
-    private static float getBarometricPressure(float altitude_m) {
+    @VisibleForTesting
+    public static float getBarometricPressure(float altitude_m) {
         return (float) (p0 * Math.pow(1.0 - 0.0065 * altitude_m / 288.15, 5.255f));
     }
 }
