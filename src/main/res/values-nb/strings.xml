@@ -526,4 +526,6 @@ limitations under the License.
     <string name="settings_announcements">Meldinger</string>
     <string name="settings_announcements_totaltime_frequency">Tidsintervall</string>
     <string name="settings_announcements_distance_frequency">Distanseintervall</string>
+    <string name="permission_bluetooth_failed">OpenTracks krever tillatelse til å bruke Bluetooth.</string>
+    <string name="permission_bluetooth_failed_rejected">Du må manuelt gi OpenTracks tilgang til enheter i nærheten i systeminnstillinger.</string>
 </resources>
