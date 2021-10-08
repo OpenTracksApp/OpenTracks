@@ -208,7 +208,7 @@ class TrackRecordingManager {
             } else {
                 insertTrackPointHelper(trackId, lastTrackPoint);
                 // Remove the sensorDistance from trackPoint that is already going  be stored with lastTrackPoint.
-                trackPoint.minusSensorDistance(lastTrackPoint);
+                trackPoint.minusCumulativeSensorData(lastTrackPoint);
             }
             lastTrackPoint = null;
         }

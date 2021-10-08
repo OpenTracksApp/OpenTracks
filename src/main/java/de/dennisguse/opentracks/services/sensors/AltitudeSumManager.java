@@ -70,6 +70,19 @@ public class AltitudeSumManager implements SensorEventListener {
         return isConnected ? altitudeGain_m : null;
     }
 
+
+    @VisibleForTesting
+    public void addAltitudeGain_m(float altitudeGain_m) {
+        this.altitudeGain_m = this.altitudeGain_m == null ? 0f : this.altitudeGain_m;
+        this.altitudeGain_m += altitudeGain_m ;
+    }
+
+    @VisibleForTesting
+    public void addAltitudeLoss_m(Float altitudeLoss_m) {
+        this.altitudeLoss_m = this.altitudeLoss_m == null ? 0f : this.altitudeLoss_m;
+        this.altitudeLoss_m += altitudeLoss_m ;
+    }
+
     public @Nullable
     Float getAltitudeLoss_m() {
         return isConnected ? altitudeLoss_m : null;
