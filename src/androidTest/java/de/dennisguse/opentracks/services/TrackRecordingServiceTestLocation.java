@@ -41,9 +41,6 @@ import static org.junit.Assert.assertFalse;
 
 /**
  * Tests insert location.
- * <p>
- * //TODO ATTENTION: This tests deletes all stored tracks in the database.
- * So, if it is executed on a real device, data might be lost.
  */
 @RunWith(AndroidJUnit4.class)
 //TODO Implement as mock test; no need to store data in database

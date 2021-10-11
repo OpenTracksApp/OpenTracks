@@ -59,7 +59,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 31
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "de.dennisguse.opentracks.TestRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
     }
     signingConfigs {

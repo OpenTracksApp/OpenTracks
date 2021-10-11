@@ -43,9 +43,6 @@ import static org.junit.Assert.assertTrue;
  * Tests for the track recording service, which require a {@link Looper}.
  *
  * @author Bartlomiej Niechwiej
- * <p>
- * ATTENTION: This tests deletes all stored tracks in the database.
- * So, if it is executed on a real device, data might be lost.
  */
 @RunWith(AndroidJUnit4.class)
 public class TrackRecordingServiceTestLooper {
