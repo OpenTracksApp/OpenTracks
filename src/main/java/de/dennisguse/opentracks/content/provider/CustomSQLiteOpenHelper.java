@@ -11,6 +11,7 @@ import androidx.annotation.VisibleForTesting;
 
 import java.util.UUID;
 
+import de.dennisguse.opentracks.AppConfig;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPointsColumns;
@@ -27,11 +28,8 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 31;
 
-    @VisibleForTesting
-    public static final String DATABASE_NAME = "database.db";
-
     public CustomSQLiteOpenHelper(Context context) {
-        this(context, DATABASE_NAME);
+        this(context, ((AppConfig) context.getApplicationContext()).getDatabaseName());
     }
 
     @VisibleForTesting

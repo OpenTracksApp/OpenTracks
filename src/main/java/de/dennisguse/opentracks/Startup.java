@@ -16,7 +16,7 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  * NOTE: How often actual application startup happens depends on the OS.
  * Not every start of an activity will trigger this.
  */
-public class Startup extends Application {
+public class Startup extends Application implements AppConfig {
 
     private static final String TAG = Startup.class.getSimpleName();
 
@@ -40,5 +40,10 @@ public class Startup extends Application {
             Log.d(TAG, "Enabling strict mode");
             StrictMode.enableDefaults();
         }
+    }
+
+    @Override
+    public String getDatabaseName() {
+        return "database.db";
     }
 }

@@ -72,9 +72,6 @@ import de.dennisguse.opentracks.util.PreferencesUtils;
  * Tests for the track recording service.
  *
  * @author Bartlomiej Niechwiej
- * <p>
- * //TODO ATTENTION: This tests deletes all stored tracks in the database.
- * So, if it is executed on a real device, data might be lost.
  */
 @RunWith(AndroidJUnit4.class)
 public class TrackRecordingServiceTest {
