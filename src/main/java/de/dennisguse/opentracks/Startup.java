@@ -14,7 +14,7 @@ import de.dennisguse.opentracks.settings.PreferencesUtils;
  * NOTE: How often actual application startup happens depends on the OS.
  * Not every start of an activity will trigger this.
  */
-public class Startup extends Application implements AppConfig {
+public class Startup extends Application {
 
     private static final String TAG = Startup.class.getSimpleName();
 
@@ -41,7 +41,11 @@ public class Startup extends Application implements AppConfig {
         }
     }
 
-    @Override
+    /**
+     * Returns the name of the database used by SQLiteOpenHelper.
+     * See {@link android.database.sqlite.SQLiteOpenHelper} for details.
+     * @return SQLite database name.
+     */
     public String getDatabaseName() {
         return "database.db";
     }
