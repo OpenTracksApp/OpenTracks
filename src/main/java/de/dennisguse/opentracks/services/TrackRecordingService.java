@@ -377,16 +377,15 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     private void showNotification(boolean isGpsStarted) {
         if (isRecording()) {
-            Intent intent = IntentUtils.newIntent(this, TrackRecordingActivity.class)
-                    .putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, recordingStatus.getTrackId());
+            Intent intent = IntentUtils.newIntent(this, TrackRecordingActivity.class);
 
             int pendingIntentFlags = PendingIntent.FLAG_UPDATE_CURRENT;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
                 pendingIntentFlags |= PendingIntent.FLAG_IMMUTABLE;
             }
+
             PendingIntent pendingIntent = TaskStackBuilder.create(this)
-                    .addParentStack(TrackRecordingActivity.class)
-                    .addNextIntent(intent)
+                    .addNextIntentWithParentStack(intent)
                     .getPendingIntent(0, pendingIntentFlags);
 
             notificationManager.updatePendingIntent(pendingIntent);
@@ -398,9 +397,10 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
             int pendingIntentFlags = 0;
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                pendingIntentFlags = PendingIntent.FLAG_IMMUTABLE;
+                pendingIntentFlags = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
             }
             PendingIntent pendingIntent = TaskStackBuilder.create(this)
+                    .addParentStack(TrackListActivity.class)
                     .addNextIntent(intent)
                     .getPendingIntent(0, pendingIntentFlags);
 
