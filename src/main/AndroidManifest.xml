@@ -308,7 +308,11 @@ limitations under the License.
 
         <activity android:name=".TrackRecordedActivity" />
 
-        <activity android:name=".TrackRecordingActivity" />
+        <activity android:name=".TrackRecordingActivity" android:parentActivityName=".TrackListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".TrackListActivity" />
+        </activity>
 
         <activity android:name=".TrackEditActivity" />
 
