@@ -373,26 +373,34 @@ limitations under the License.
     <string name="settings_layout_reset_confirm_title">Reset your layouts?</string>
     <string name="settings_layout_reset_done">All layout settings have been reverted to the default values</string>
     <!-- Settings Reset -->
-    <string name="settings_all_reset">Reset All Settings</string>
+    <string name="settings_all_reset">Reset</string>
     <string name="settings_reset_confirm_message">All settings will be reverted to the default values. This will not delete any tracks on the device.</string>
     <string name="settings_reset_confirm_title">Reset now?</string>
     <string name="settings_reset_done">All settings have been reverted to the default values</string>
     <string name="settings_error_initial_values_restored">Sorry, but an error occurred. All settings have been reverted to the default values.</string>
     <!-- Settings Sensor -->
+    <string name="settings_generic_sensor">Generic</string>
+    <string name="settings_cycling_sensor">Cycling</string>
+    <string name="settings_running_sensor">Running</string>
+
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_connecting">Connected to %1$s</string>
     <string name="settings_sensor_disconnected">Disconnected from %1$s</string>
 
-    <string name="settings_sensor_cycling_distance_speed">Cycling: distance and speed</string>
-    <string name="settings_sensor_cycling_cadence">Cycling: cadence</string>
-    <string name="settings_sensor_running_speed_and_cadence">Running: distance, speed, and cadence</string>
-    <string name="settings_sensor_wheel_circumference">Wheel circumference (mm)</string>
+    <string name="settings_sensor_cycling_distance_speed">Distance and Speed</string>
+    <string name="settings_sensor_cycling_cadence">Cadence</string>
+    <string name="settings_sensor_running_speed_and_cadence">Distance, Speed, and Cadence</string>
+    <string name="settings_sensor_wheel_circumference">Wheel Circumference (mm)</string>
 
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Preferred rate</string>
     <string name="settings_stats_units_imperial">Imperial (mi, ft)</string>
     <string name="settings_stats_units_metric">Metric (km, m)</string>
     <string name="settings_stats_units_title">Preferred units</string>
+
+    <!-- Settings import/export -->
+    <string name="settings_import_section">Import</string>
+    <string name="settings_export_section">Export</string>
 
     <string name="settings_prevent_reimport_tracks_title">Prevent re-import of tracks</string>
     <!-- Share Track -->

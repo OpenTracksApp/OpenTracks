@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/settings_import_export_title">
+
+    <PreferenceCategory android:title="@string/settings_import_section">
+        <Preference
+            android:key="@string/settings_import"
+            android:title="@string/menu_import_all">
+            <intent
+                android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$ImportDirectoryChooserActivity"
+                android:targetPackage="@string/applicationId" />
+        </Preference>
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/import_prevent_reimport_default"
+            android:key="@string/import_prevent_reimport_key"
+            android:title="@string/settings_prevent_reimport_tracks_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_export_section">
+        <Preference
+            android:key="@string/settings_export"
+            android:title="@string/menu_export_all">
+            <intent
+                android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$ExportDirectoryChooserActivity"
+                android:targetPackage="@string/applicationId" />
+        </Preference>
+        <Preference
+            android:key="@string/settings_default_export_directory_key"
+            android:title="@string/settings_default_export_uri_title">
+            <intent
+                android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$DefaultTrackExportDirectoryChooserActivity"
+                android:targetPackage="@string/applicationId" />
+        </Preference>
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/post_workout_export_enabled_default"
+            android:key="@string/post_workout_export_enabled_key"
+            android:summary="@string/instant_export_enabled_summary"
+            android:title="@string/instant_export_enabled_title" />
+        <ListPreference
+            android:defaultValue="@string/export_trackfileformat_default"
+            android:key="@string/export_trackfileformat_key"
+            android:title="@string/settings_default_trackfileformat"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/settings_defaults_title">
+
+    <PreferenceCategory android:title="@string/settings_units_category">
+        <ListPreference
+            android:defaultValue="@string/stats_units_default"
+            android:entries="@array/stats_units_options"
+            android:entryValues="@array/stats_units_values"
+            android:key="@string/stats_units_key"
+            android:title="@string/settings_stats_units_title"
+            app:useSimpleSummaryProvider="true" />
+        <ListPreference
+            android:defaultValue="@string/stats_rate_default"
+            android:entries="@array/stats_rate_metric_options"
+            android:entryValues="@array/stats_rate_values"
+            android:key="@string/stats_rate_key"
+            android:title="@string/settings_stats_rate_title"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/settings_activity_defaults_category">
+        <de.dennisguse.opentracks.settings.ActivityTypePreference
+            android:defaultValue="@string/default_activity_default"
+            android:key="@string/default_activity_key"
+            android:title="@string/settings_recording_default_activity_title" />
+        <ListPreference
+            android:defaultValue="@string/track_name_default"
+            android:entries="@array/track_name_options"
+            android:entryValues="@array/track_name_values"
+            android:key="@string/track_name_key"
+            android:title="@string/settings_recording_track_name_title"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
