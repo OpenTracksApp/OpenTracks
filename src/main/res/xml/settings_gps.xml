@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/settings_gps_title">
+
+    <ListPreference
+        android:defaultValue="@string/min_recording_interval_default"
+        android:entryValues="@array/min_recording_interval_values"
+        android:key="@string/min_recording_interval_key"
+        android:title="@string/settings_recording_min_recording_interval_title" />
+
+    <ListPreference
+        android:defaultValue="@string/recording_distance_interval_default"
+        android:entryValues="@array/recording_distance_interval_values"
+        android:key="@string/recording_distance_interval_key"
+        android:title="@string/settings_recording_min_recording_distance_title" />
+
+    <ListPreference
+        android:defaultValue="@string/max_recording_distance_default"
+        android:entryValues="@array/max_recording_distance_values"
+        android:key="@string/max_recording_distance_key"
+        android:title="@string/settings_recording_max_recording_distance_title" />
+
+    <ListPreference
+        android:defaultValue="@string/recording_gps_accuracy_default"
+        android:entryValues="@array/recording_gps_accuracy_values"
+        android:key="@string/recording_gps_accuracy_key"
+        android:title="@string/settings_recording_min_required_accuracy_title" />
+
+</PreferenceScreen>

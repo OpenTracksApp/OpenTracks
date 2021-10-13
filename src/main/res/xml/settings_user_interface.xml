@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:title="@string/settings_ui_title">
+
+    <ListPreference
+        android:defaultValue="@string/night_mode_default"
+        android:entries="@array/night_mode_options"
+        android:entryValues="@array/night_mode_values"
+        android:key="@string/night_mode_key"
+        android:title="@string/settings_night_mode_title"
+        app:useSimpleSummaryProvider="true" />
+
+    <Preference
+        app:key="@string/stats_custom_layout_key"
+        app:title="@string/settings_recording_customize_layout_title" />
+
+    <de.dennisguse.opentracks.settings.ResetDialogPreference
+        android:dialogMessage="@string/settings_layout_reset_confirm_message"
+        android:dialogTitle="@string/settings_layout_reset_confirm_title"
+        android:key="@string/settings_layout_reset_key"
+        android:negativeButtonText="@android:string/cancel"
+        android:persistent="false"
+        android:positiveButtonText="@android:string/ok"
+        android:title="@string/settings_layout_reset" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/stats_show_on_lockscreen_while_recording_default"
+        android:key="@string/stats_show_on_lockscreen_while_recording_key"
+        android:summary="@string/settings_recording_show_on_lockscreen_while_recording_summary"
+        android:title="@string/settings_recording_show_on_lockscreen_while_recording_title" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/stats_keep_screen_on_while_recording_default"
+        android:key="@string/stats_keep_screen_on_while_recording_key"
+        android:summary="@string/settings_recording_keep_screen_on_while_recording_summary"
+        android:title="@string/settings_recording_keep_screen_on_while_recording_title" />
+
+    <SwitchPreferenceCompat
+        android:defaultValue="@bool/stats_fullscreen_while_recording_default"
+        android:key="@string/stats_fullscreen_while_recording_key"
+        android:summary="@string/settings_recording_fullscreen_on_while_recording_summary"
+        android:title="@string/settings_recording_fullscreen_on_while_recording_title" />
+
+</PreferenceScreen>

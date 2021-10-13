@@ -1,226 +1,59 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-Copyright 2010 Google Inc.
+<?xml version="1.0" encoding="utf-8"?>
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-     http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
--->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/menu_settings">
 
-    <PreferenceCategory android:title="@string/menu_help">
-        <Preference android:title="@string/menu_help">
-            <intent
-                android:targetClass="de.dennisguse.opentracks.HelpActivity"
-                android:targetPackage="@string/applicationId" />
-        </Preference>
-    </PreferenceCategory>
+    <Preference
+        android:key="@string/settings_defaults_key"
+        android:title="@string/settings_defaults_title"
+        android:summary="@string/settings_defaults_summary"
+        android:icon="@drawable/ic_units" />
 
-    <PreferenceCategory android:title="@string/track_detail_stats_tab">
-        <ListPreference
-            android:defaultValue="@string/stats_units_default"
-            android:entries="@array/stats_units_options"
-            android:entryValues="@array/stats_units_values"
-            android:key="@string/stats_units_key"
-            android:title="@string/settings_stats_units_title"
-            app:useSimpleSummaryProvider="true" />
-        <ListPreference
-            android:defaultValue="@string/stats_rate_default"
-            android:entries="@array/stats_rate_metric_options"
-            android:entryValues="@array/stats_rate_values"
-            android:key="@string/stats_rate_key"
-            android:title="@string/settings_stats_rate_title"
-            app:useSimpleSummaryProvider="true" />
-    </PreferenceCategory>
+    <Preference
+        android:key="@string/settings_ui_key"
+        android:title="@string/settings_ui_title"
+        android:summary="@string/settings_ui_summary"
+        android:icon="@drawable/ic_ui" />
 
-    <PreferenceCategory android:title="@string/settings_show">
-        <Preference
-            app:key="@string/stats_custom_layout_key"
-            app:title="@string/settings_recording_customize_layout_title" />
-        <ListPreference
-            android:defaultValue="@string/night_mode_default"
-            android:entries="@array/night_mode_options"
-            android:entryValues="@array/night_mode_values"
-            android:key="@string/night_mode_key"
-            android:title="@string/settings_night_mode_title"
-            app:useSimpleSummaryProvider="true" />
-    </PreferenceCategory>
+    <Preference
+        android:key="@string/settings_gps_key"
+        android:title="@string/settings_gps_title"
+        android:summary="@string/settings_gps_summary"
+        android:icon="@drawable/ic_baseline_satellite_alt_24" />
 
-    <PreferenceCategory
-        android:key="@string/settings_recording_key"
-        android:title="@string/settings_recording"
-        app:initialExpandedChildrenCount="4">
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/stats_show_on_lockscreen_while_recording_default"
-            android:key="@string/stats_show_on_lockscreen_while_recording_key"
-            android:summary="@string/settings_recording_show_on_lockscreen_while_recording_summary"
-            android:title="@string/settings_recording_show_on_lockscreen_while_recording_title" />
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/stats_keep_screen_on_while_recording_default"
-            android:key="@string/stats_keep_screen_on_while_recording_key"
-            android:summary="@string/settings_recording_keep_screen_on_while_recording_summary"
-            android:title="@string/settings_recording_keep_screen_on_while_recording_title" />
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/stats_fullscreen_while_recording_default"
-            android:key="@string/stats_fullscreen_while_recording_key"
-            android:summary="@string/settings_recording_fullscreen_on_while_recording_summary"
-            android:title="@string/settings_recording_fullscreen_on_while_recording_title" />
-        <de.dennisguse.opentracks.settings.ActivityTypePreference
-            android:defaultValue="@string/default_activity_default"
-            android:key="@string/default_activity_key"
-            android:title="@string/settings_recording_default_activity_title" />
-        <ListPreference
-            android:defaultValue="@string/track_name_default"
-            android:entries="@array/track_name_options"
-            android:entryValues="@array/track_name_values"
-            android:key="@string/track_name_key"
-            android:title="@string/settings_recording_track_name_title"
-            app:useSimpleSummaryProvider="true" />
-        <ListPreference
-            android:defaultValue="@string/min_recording_interval_default"
-            android:entryValues="@array/min_recording_interval_values"
-            android:key="@string/min_recording_interval_key"
-            android:title="@string/settings_recording_min_recording_interval_title" />
-        <ListPreference
-            android:defaultValue="@string/recording_distance_interval_default"
-            android:entryValues="@array/recording_distance_interval_values"
-            android:key="@string/recording_distance_interval_key"
-            android:title="@string/settings_recording_min_recording_distance_title" />
-        <ListPreference
-            android:defaultValue="@string/max_recording_distance_default"
-            android:entryValues="@array/max_recording_distance_values"
-            android:key="@string/max_recording_distance_key"
-            android:title="@string/settings_recording_max_recording_distance_title" />
-        <ListPreference
-            android:defaultValue="@string/recording_gps_accuracy_default"
-            android:entryValues="@array/recording_gps_accuracy_values"
-            android:key="@string/recording_gps_accuracy_key"
-            android:title="@string/settings_recording_min_required_accuracy_title" />
-    </PreferenceCategory>
+    <Preference
+        android:key="@string/settings_sensors_key"
+        android:title="@string/settings_sensors_title"
+        android:summary="@string/settings_sensors_summary"
+        android:icon="@drawable/ic_baseline_sensors_24" />
 
-    <PreferenceCategory android:title="@string/settings_sensor_bluetooth">
-        <de.dennisguse.opentracks.settings.bluetooth.BluetoothLeHeartRatePreference
-            android:defaultValue="@string/sensor_type_value_none"
-            android:key="@string/settings_sensor_bluetooth_heart_rate_key"
-            android:title="@string/sensor_state_heart_rate" />
-        <de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingCadenceAndSpeedPreference
-            android:defaultValue="@string/sensor_type_value_none"
-            android:key="@string/settings_sensor_bluetooth_cycling_cadence_key"
-            android:title="@string/settings_sensor_cycling_cadence" />
-        <de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingPowerPreference
-            android:defaultValue="@string/sensor_type_value_none"
-            android:key="@string/settings_sensor_bluetooth_cycling_power_key"
-            android:title="@string/sensor_state_power" />
-        <de.dennisguse.opentracks.settings.bluetooth.BluetoothLeRunningSpeedAndCadencePreference
-            android:defaultValue="@string/sensor_type_value_none"
-            android:key="@string/settings_sensor_bluetooth_running_speed_and_cadence_key"
-            android:title="@string/settings_sensor_running_speed_and_cadence" />
-        <de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingCadenceAndSpeedPreference
-            android:defaultValue="@string/sensor_type_value_none"
-            android:key="@string/settings_sensor_bluetooth_cycling_speed_key"
-            android:title="@string/settings_sensor_cycling_distance_speed" />
-        <EditTextPreference
-            android:defaultValue="@string/settings_sensor_bluetooth_cycling_speed_wheel_circumference_default"
-            android:inputType="number"
-            android:key="@string/settings_sensor_bluetooth_cycling_speed_wheel_circumference_key"
-            android:title="@string/settings_sensor_wheel_circumference"
-            app:useSimpleSummaryProvider="true" />
-    </PreferenceCategory>
+    <Preference
+        android:key="@string/settings_announcements_key"
+        android:title="@string/settings_announcements_title"
+        android:summary="@string/settings_announcements_summary"
+        android:icon="@drawable/ic_baseline_volume_up_24" />
 
-    <PreferenceCategory
-        android:title="@string/settings_announcements">
-        <ListPreference
-            android:defaultValue="@string/voice_announcement_frequency_default"
-            android:entryValues="@array/voice_announcement_frequency_values"
-            android:key="@string/voice_announcement_frequency_key"
-            android:title="@string/settings_announcements_totaltime_frequency"
-            app:useSimpleSummaryProvider="true" />
-        <ListPreference
-            android:defaultValue="@string/voice_announcement_distance_default"
-            android:entryValues="@array/voice_announcement_distance_values"
-            android:key="@string/voice_announcement_distance_key"
-            android:title="@string/settings_announcements_distance_frequency"
-            app:useSimpleSummaryProvider="true" />
-        <ListPreference
-            android:defaultValue="@string/voice_speed_rate_default"
-            android:entryValues="@array/voice_speed_rate_values"
-            android:entries="@array/voice_speed_rate_values"
-            android:key="@string/voice_speed_rate_key"
-            android:title="@string/menu_voice_rate"
-            app:useSimpleSummaryProvider="true" />
-    </PreferenceCategory>
+    <Preference
+        android:key="@string/settings_import_export_key"
+        android:title="@string/settings_import_export_title"
+        android:summary="@string/settings_import_export_summary"
+        android:icon="@drawable/ic_baseline_import_export_24" />
 
-    <PreferenceCategory android:title="@string/generic_tracks">
-        <Preference
-            android:key="@string/settings_import"
-            android:title="@string/menu_import_all">
-            <intent
-                android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$ImportDirectoryChooserActivity"
-                android:targetPackage="@string/applicationId" />
-        </Preference>
-        <Preference
-            android:key="@string/settings_export"
-            android:title="@string/menu_export_all">
-            <intent
-                android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$ExportDirectoryChooserActivity"
-                android:targetPackage="@string/applicationId" />
-        </Preference>
-        <Preference
-            android:key="@string/settings_default_export_directory_key"
-            android:title="@string/settings_default_export_uri_title">
-            <intent
-                android:targetClass="de.dennisguse.opentracks.io.file.importer.DirectoryChooserActivity$DefaultTrackExportDirectoryChooserActivity"
-                android:targetPackage="@string/applicationId" />
-        </Preference>
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/post_workout_export_enabled_default"
-            android:key="@string/post_workout_export_enabled_key"
-            android:summary="@string/instant_export_enabled_summary"
-            android:title="@string/instant_export_enabled_title" />
-        <ListPreference
-            android:defaultValue="@string/export_trackfileformat_default"
-            android:key="@string/export_trackfileformat_key"
-            android:title="@string/settings_default_trackfileformat"
-            app:useSimpleSummaryProvider="true" />
-        <SwitchPreferenceCompat
-            android:defaultValue="@bool/import_prevent_reimport_default"
-            android:key="@string/import_prevent_reimport_key"
-            android:title="@string/settings_prevent_reimport_tracks_title" />
-    </PreferenceCategory>
+    <de.dennisguse.opentracks.settings.ResetDialogPreference
+        android:dialogMessage="@string/settings_reset_confirm_message"
+        android:dialogTitle="@string/settings_reset_confirm_title"
+        android:key="@string/settings_reset_key"
+        android:negativeButtonText="@android:string/cancel"
+        android:persistent="false"
+        android:positiveButtonText="@android:string/ok"
+        android:title="@string/settings_all_reset"
+        android:summary="@string/settings_reset_summary"
+        android:icon="@drawable/ic_baseline_autorenew_24"/>
 
-    <PreferenceCategory android:title="@string/settings_reset">
-        <de.dennisguse.opentracks.settings.ResetDialogPreference
-            android:dialogMessage="@string/settings_layout_reset_confirm_message"
-            android:dialogTitle="@string/settings_layout_reset_confirm_title"
-            android:key="@string/settings_layout_reset_key"
-            android:negativeButtonText="@android:string/cancel"
-            android:persistent="false"
-            android:positiveButtonText="@android:string/ok"
-            android:title="@string/settings_layout_reset" />
-        <de.dennisguse.opentracks.settings.ResetDialogPreference
-            android:dialogMessage="@string/settings_reset_confirm_message"
-            android:dialogTitle="@string/settings_reset_confirm_title"
-            android:key="@string/settings_reset_key"
-            android:negativeButtonText="@android:string/cancel"
-            android:persistent="false"
-            android:positiveButtonText="@android:string/ok"
-            android:title="@string/settings_all_reset" />
-    </PreferenceCategory>
+    <Preference
+        android:key="@string/settings_open_tracks_key"
+        android:title="@string/settings_open_tracks_title"
+        android:summary="@string/settings_open_tracks_summary"
+        android:icon="@drawable/ic_baseline_info_24" />
 
-    <PreferenceCategory android:title="@string/about_preference_title">
-        <Preference android:title="@string/about_preference_title">
-            <intent
-                android:targetClass="de.dennisguse.opentracks.AboutActivity"
-                android:targetPackage="@string/applicationId" />
-        </Preference>
-    </PreferenceCategory>
 </PreferenceScreen>
