@@ -295,7 +295,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
 
         if (cadence != null) {
             try {
-                trackPoint.setCyclingCadence_rpm(Float.parseFloat(cadence));
+                trackPoint.setCadence_rpm(Float.parseFloat(cadence));
             } catch (Exception e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse cadence: %s", cadence)), e);
             }

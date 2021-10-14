@@ -835,7 +835,7 @@ public class CustomContentProviderUtilsTest {
 
         TrackPoint trackPoint = TestDataUtil.createTrackPoint(5);
         trackPoint.setHeartRate_bpm(1F);
-        trackPoint.setCyclingCadence_rpm(2F);
+        trackPoint.setCadence_rpm(2F);
         trackPoint.setPower(3F);
 
         // when
@@ -845,7 +845,7 @@ public class CustomContentProviderUtilsTest {
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         assertTrue(trackPoints.get(10).hasHeartRate());
         assertEquals(trackPoint.getHeartRate_bpm(), trackPoints.get(10).getHeartRate_bpm(), 0.01);
-        assertEquals(trackPoint.getCyclingCadence_rpm(), trackPoints.get(10).getCyclingCadence_rpm(), 0.01);
+        assertEquals(trackPoint.getCadence_rpm(), trackPoints.get(10).getCadence_rpm(), 0.01);
         assertEquals(trackPoint.getPower(), trackPoints.get(10).getPower(), 0.01);
     }
 
@@ -934,7 +934,7 @@ public class CustomContentProviderUtilsTest {
         TrackPoint trackPoint = TestDataUtil.createTrackPoint(1);
         trackPoint.setType(TrackPoint.Type.TRACKPOINT);
         trackPoint.setPower(null);
-        trackPoint.setCyclingCadence_rpm(null);
+        trackPoint.setCadence_rpm(null);
         trackPoint.setHeartRate_bpm(null);
         trackPointList.add(trackPoint);
         Track.Id trackId = new Track.Id(System.currentTimeMillis());

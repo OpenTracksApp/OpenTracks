@@ -316,7 +316,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 trackPoint.setHeartRate_bpm(sensorHeartRateList.get(i));
             }
             if (i < sensorCadenceList.size()) {
-                trackPoint.setCyclingCadence_rpm(sensorCadenceList.get(i));
+                trackPoint.setCadence_rpm(sensorCadenceList.get(i));
             }
             if (i < sensorPowerList.size()) {
                 trackPoint.setPower(sensorPowerList.get(i));
