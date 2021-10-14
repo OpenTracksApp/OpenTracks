@@ -91,7 +91,7 @@ public class TrackPoint {
     private Type type;
 
     private Float heartRate_bpm = null;
-    private Float cyclingCadence_rpm = null;
+    private Float cadence_rpm = null;
     private Float power = null;
     private Float altitudeGain_m = null;
     private Float altitudeLoss_m = null;
@@ -363,7 +363,7 @@ public class TrackPoint {
     }
 
     public boolean hasSensorData() {
-        return hasHeartRate() || hasCyclingCadence() || hasPower();
+        return hasHeartRate() || hasCadence() || hasPower();
     }
 
     public boolean hasHeartRate() {
@@ -379,16 +379,16 @@ public class TrackPoint {
         return this;
     }
 
-    public boolean hasCyclingCadence() {
-        return cyclingCadence_rpm != null;
+    public boolean hasCadence() {
+        return cadence_rpm != null;
     }
 
-    public float getCyclingCadence_rpm() {
-        return cyclingCadence_rpm;
+    public float getCadence_rpm() {
+        return cadence_rpm;
     }
 
-    public TrackPoint setCyclingCadence_rpm(Float cyclingCadence_rpm) {
-        this.cyclingCadence_rpm = cyclingCadence_rpm;
+    public TrackPoint setCadence_rpm(Float cadence_rpm) {
+        this.cadence_rpm = cadence_rpm;
         return this;
     }
 

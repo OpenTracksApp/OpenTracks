@@ -558,7 +558,7 @@ public class ContentProviderUtils {
             trackPoint.setHeartRate_bpm(cursor.getFloat(indexes.sensorHeartRateIndex));
         }
         if (!cursor.isNull(indexes.sensorCadenceIndex)) {
-            trackPoint.setCyclingCadence_rpm(cursor.getFloat(indexes.sensorCadenceIndex));
+            trackPoint.setCadence_rpm(cursor.getFloat(indexes.sensorCadenceIndex));
         }
         if (!cursor.isNull(indexes.sensorDistanceIndex)) {
             trackPoint.setSensorDistance(Distance.of(cursor.getFloat(indexes.sensorDistanceIndex)));
@@ -719,8 +719,8 @@ public class ContentProviderUtils {
         if (trackPoint.hasHeartRate()) {
             values.put(TrackPointsColumns.SENSOR_HEARTRATE, trackPoint.getHeartRate_bpm());
         }
-        if (trackPoint.hasCyclingCadence()) {
-            values.put(TrackPointsColumns.SENSOR_CADENCE, trackPoint.getCyclingCadence_rpm());
+        if (trackPoint.hasCadence()) {
+            values.put(TrackPointsColumns.SENSOR_CADENCE, trackPoint.getCadence_rpm());
         }
         if (trackPoint.hasSensorDistance()) {
             values.put(TrackPointsColumns.SENSOR_DISTANCE, trackPoint.getSensorDistance().toM());

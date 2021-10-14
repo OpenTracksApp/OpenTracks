@@ -382,7 +382,7 @@ public class KMLTrackExporter implements TrackExporter {
 
             distanceList.add(trackPoint.hasSensorDistance() ? (float) trackPoint.getSensorDistance().toM() : null);
             heartRateList.add(trackPoint.hasHeartRate() ? trackPoint.getHeartRate_bpm() : null);
-            cadenceList.add(trackPoint.hasCyclingCadence() ? trackPoint.getCyclingCadence_rpm() : null);
+            cadenceList.add(trackPoint.hasCadence() ? trackPoint.getCadence_rpm() : null);
             powerList.add(trackPoint.hasPower() ? trackPoint.getPower() : null);
 
             altitudeGainList.add(trackPoint.hasAltitudeGain() ? trackPoint.getAltitudeGain() : null);

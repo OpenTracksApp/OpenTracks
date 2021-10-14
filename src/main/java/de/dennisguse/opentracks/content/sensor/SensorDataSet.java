@@ -69,7 +69,7 @@ public final class SensorDataSet {
         }
 
         if (cyclingCadence != null && cyclingCadence.hasValue()) {
-            trackPoint.setCyclingCadence_rpm(cyclingCadence.getValue());
+            trackPoint.setCadence_rpm(cyclingCadence.getValue());
         }
 
         if (cyclingDistanceSpeed != null && cyclingDistanceSpeed.hasValue()) {
@@ -84,7 +84,7 @@ public final class SensorDataSet {
         if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasValue()) {
             trackPoint.setSensorDistance(runningDistanceSpeedCadence.getValue().getDistance())
                     .setSpeed(runningDistanceSpeedCadence.getValue().getSpeed())
-                    .setCyclingCadence_rpm(runningDistanceSpeedCadence.getValue().getCadence());
+                    .setCadence_rpm(runningDistanceSpeedCadence.getValue().getCadence());
         }
     }
 

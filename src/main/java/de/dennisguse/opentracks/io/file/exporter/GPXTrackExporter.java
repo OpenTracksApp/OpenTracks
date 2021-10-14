@@ -285,7 +285,7 @@ public class GPXTrackExporter implements TrackExporter {
 
             printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(trackPoint.getTime()) + "</time>");
 
-            if (trackPoint.hasSpeed() || trackPoint.hasHeartRate() || trackPoint.hasCyclingCadence() || trackPoint.hasAltitudeGain() || trackPoint.hasAltitudeLoss()) {
+            if (trackPoint.hasSpeed() || trackPoint.hasHeartRate() || trackPoint.hasCadence() || trackPoint.hasAltitudeGain() || trackPoint.hasAltitudeLoss()) {
                 printWriter.println("<extensions><gpxtpx:TrackPointExtension>");
 
                 if (trackPoint.hasSpeed()) {
@@ -296,8 +296,8 @@ public class GPXTrackExporter implements TrackExporter {
                     printWriter.println("<gpxtpx:hr>" + HEARTRATE_FORMAT.format(trackPoint.getHeartRate_bpm()) + "</gpxtpx:hr>");
                 }
 
-                if (trackPoint.hasCyclingCadence()) {
-                    printWriter.println("<gpxtpx:cad>" + CADENCE_FORMAT.format(trackPoint.getCyclingCadence_rpm()) + "</gpxtpx:cad>");
+                if (trackPoint.hasCadence()) {
+                    printWriter.println("<gpxtpx:cad>" + CADENCE_FORMAT.format(trackPoint.getCadence_rpm()) + "</gpxtpx:cad>");
                 }
 
                 if (trackPoint.hasPower()) {

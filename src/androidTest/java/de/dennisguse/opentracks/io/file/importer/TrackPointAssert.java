@@ -73,9 +73,9 @@ public class TrackPointAssert {
             Assert.assertEquals(expected.getPower(), actual.getPower(), delta);
         }
 
-        Assert.assertEquals(expected.hasCyclingCadence(), actual.hasCyclingCadence());
-        if (expected.hasCyclingCadence()) {
-            Assert.assertEquals(expected.getCyclingCadence_rpm(), actual.getCyclingCadence_rpm(), delta);
+        Assert.assertEquals(expected.hasCadence(), actual.hasCadence());
+        if (expected.hasCadence()) {
+            Assert.assertEquals(expected.getCadence_rpm(), actual.getCadence_rpm(), delta);
         }
     }
 

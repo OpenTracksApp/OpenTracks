@@ -41,8 +41,8 @@ public class ChartPoint {
         if (trackPoint.hasHeartRate()) {
             heartRate = (double) trackPoint.getHeartRate_bpm();
         }
-        if (trackPoint.hasCyclingCadence()) {
-            cadence = (double) trackPoint.getCyclingCadence_rpm();
+        if (trackPoint.hasCadence()) {
+            cadence = (double) trackPoint.getCadence_rpm();
         }
         if (trackPoint.hasPower()) {
             power = (double) trackPoint.getPower();
