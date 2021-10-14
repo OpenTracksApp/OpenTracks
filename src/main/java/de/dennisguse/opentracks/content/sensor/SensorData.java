@@ -54,6 +54,9 @@ public abstract class SensorData<T> {
     protected abstract T getNoneValue();
 
     public T getValue() {
+        if (!hasValue()) {
+            return null;
+        }
         if (isRecent()) {
             return value;
         }

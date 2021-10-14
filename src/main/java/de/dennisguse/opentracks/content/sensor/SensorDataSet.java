@@ -1,7 +1,10 @@
 package de.dennisguse.opentracks.content.sensor;
 
+import android.util.Pair;
+
 import androidx.annotation.NonNull;
 
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 
 public final class SensorDataSet {
@@ -27,8 +30,36 @@ public final class SensorDataSet {
         this.runningDistanceSpeedCadence = toCopy.runningDistanceSpeedCadence;
     }
 
-    public SensorDataHeartRate getHeartRate() {
-        return heartRate;
+    public Pair<Float, String> getHeartRate() {
+        if (heartRate != null) {
+            return new Pair<>(heartRate.getValue(), heartRate.getSensorNameOrAddress());
+        }
+
+        return null;
+    }
+
+    public Pair<Float, String> getCadence() {
+        if (cyclingCadence != null) {
+            return new Pair<>(cyclingCadence.getValue(), cyclingCadence.getSensorNameOrAddress());
+        }
+
+        if (runningDistanceSpeedCadence != null) {
+            return new Pair<>(runningDistanceSpeedCadence.getCadence(), runningDistanceSpeedCadence.getSensorNameOrAddress());
+        }
+
+        return null;
+    }
+
+    public Pair<Speed, String> getSpeed() {
+        if (cyclingDistanceSpeed != null && cyclingDistanceSpeed.hasValue() && cyclingDistanceSpeed.getValue().getSpeed() != null) {
+            return new Pair<>(cyclingDistanceSpeed.getValue().getSpeed(), cyclingCadence.getSensorNameOrAddress());
+        }
+
+        if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasValue() && runningDistanceSpeedCadence.getValue().getSpeed() != null) {
+            return new Pair<>(runningDistanceSpeedCadence.getSpeed(), runningDistanceSpeedCadence.getSensorNameOrAddress());
+        }
+
+        return null;
     }
 
     public SensorDataCycling.Cadence getCyclingCadence() {
@@ -64,17 +95,20 @@ public final class SensorDataSet {
     }
 
     public void fillTrackPoint(TrackPoint trackPoint) {
-        if (heartRate != null) {
-            trackPoint.setHeartRate_bpm(heartRate.getValue());
+        if (getHeartRate() != null) {
+            trackPoint.setHeartRate_bpm(getHeartRate().first);
         }
 
-        if (cyclingCadence != null && cyclingCadence.hasValue()) {
-            trackPoint.setCadence_rpm(cyclingCadence.getValue());
+        if (getCadence() != null) {
+            trackPoint.setCadence_rpm(getCadence().first);
+        }
+
+        if (getSpeed() != null) {
+            trackPoint.setSpeed(getSpeed().first);
         }
 
         if (cyclingDistanceSpeed != null && cyclingDistanceSpeed.hasValue()) {
-            trackPoint.setSensorDistance(cyclingDistanceSpeed.getValue().getDistanceOverall())
-                    .setSpeed(cyclingDistanceSpeed.getValue().getSpeed());
+            trackPoint.setSensorDistance(cyclingDistanceSpeed.getValue().getDistanceOverall());
         }
 
         if (cyclingPower != null && cyclingPower.hasValue()) {
@@ -82,9 +116,7 @@ public final class SensorDataSet {
         }
 
         if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasValue()) {
-            trackPoint.setSensorDistance(runningDistanceSpeedCadence.getValue().getDistance())
-                    .setSpeed(runningDistanceSpeedCadence.getValue().getSpeed())
-                    .setCadence_rpm(runningDistanceSpeedCadence.getValue().getCadence());
+            trackPoint.setSensorDistance(runningDistanceSpeedCadence.getValue().getDistance());
         }
     }
 

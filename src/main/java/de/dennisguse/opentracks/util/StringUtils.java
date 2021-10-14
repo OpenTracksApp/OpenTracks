@@ -204,7 +204,7 @@ public class StringUtils {
     }
 
     public static Pair<String, String> getHeartRateParts(Context context, Float heartrate_bpm) {
-        String value = context.getString(R.string.value_none);
+        String value = context.getString(R.string.value_unknown);
         if (heartrate_bpm != null) {
             value = StringUtils.formatDecimal(heartrate_bpm, 0);
         }
@@ -213,7 +213,7 @@ public class StringUtils {
     }
 
     public static Pair<String, String> getCadenceParts(Context context, Float cadence_rpm) {
-        String value = context.getString(R.string.value_none);
+        String value = context.getString(R.string.value_unknown);
         if (cadence_rpm != null) {
             value = StringUtils.formatDecimal(cadence_rpm, 0);
         }
@@ -222,7 +222,7 @@ public class StringUtils {
     }
 
     public static Pair<String, String> getPowerParts(Context context, Float power_w) {
-        String value = context.getString(R.string.value_none);
+        String value = context.getString(R.string.value_unknown);
         if (power_w != null) {
             value = StringUtils.formatDecimal(power_w, 0);
         }
