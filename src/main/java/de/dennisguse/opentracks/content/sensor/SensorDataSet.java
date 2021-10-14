@@ -131,11 +131,11 @@ public final class SensorDataSet {
     @NonNull
     @Override
     public String toString() {
-        return (getHeartRate() != null ? "" + getHeartRate() : "")
-                + (getCyclingCadence() != null ? " " + getCyclingCadence() : "")
-                + (getCyclingDistanceSpeed() != null ? " " + getCyclingDistanceSpeed() : "")
-                + (getCyclingPower() != null ? " " + getCyclingPower() : "")
-                + (getRunningDistanceSpeedCadence() != null ? " " + getRunningDistanceSpeedCadence() : "");
+        return (heartRate != null ? "" + heartRate : "")
+                + (cyclingCadence != null ? " " + cyclingCadence : "")
+                + (cyclingDistanceSpeed != null ? " " + cyclingDistanceSpeed : "")
+                + (cyclingPower != null ? " " + cyclingPower : "")
+                + (runningDistanceSpeedCadence != null ? " " + runningDistanceSpeedCadence : "");
     }
 
     private void set(@NonNull SensorData<?> type, SensorData<?> data) {
