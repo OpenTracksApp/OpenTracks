@@ -18,6 +18,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.SensorStatistics;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
 
 public class StatisticDataBuilder {
@@ -35,6 +36,7 @@ public class StatisticDataBuilder {
     private static StatisticData build(@NonNull Context context, @NonNull TrackRecordingService.RecordingData recordingData, @NonNull String fieldKey, boolean isPrimary, boolean metricUnits) {
         final TrackPoint latestTrackPoint = recordingData.getLatestTrackPoint();
         final SensorDataSet sensorDataSet = recordingData.getSensorDataSet();
+        final TrackStatistics trackStatistics = recordingData.getTrackStatistics();
 
         String title = null;
         String description = null;
@@ -44,13 +46,13 @@ public class StatisticDataBuilder {
         final String sensorUnknown = context.getString(R.string.value_unknown);
 
         if (fieldKey.equals(context.getString(R.string.stats_custom_layout_total_time_key))) {
-            valueAndUnit = new Pair<>(StringUtils.formatElapsedTime(recordingData.getTrackStatistics().getTotalTime()), null);
+            valueAndUnit = new Pair<>(StringUtils.formatElapsedTime(trackStatistics.getTotalTime()), null);
             title = context.getString(R.string.stats_total_time);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_moving_time_key))) {
-            valueAndUnit = new Pair<>(StringUtils.formatElapsedTime(recordingData.getTrackStatistics().getMovingTime()), null);
+            valueAndUnit = new Pair<>(StringUtils.formatElapsedTime(trackStatistics.getMovingTime()), null);
             title = context.getString(R.string.stats_moving_time);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_distance_key))) {
-            valueAndUnit = StringUtils.getDistanceParts(context, recordingData.getTrackStatistics().getTotalDistance(), metricUnits);
+            valueAndUnit = StringUtils.getDistanceParts(context, trackStatistics.getTotalDistance(), metricUnits);
             title = context.getString(R.string.stats_distance);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_speed_key)) || fieldKey.equals(context.getString(R.string.stats_custom_layout_pace_key))) {
             boolean reportSpeed = fieldKey.equals("speed");
@@ -65,22 +67,22 @@ public class StatisticDataBuilder {
                 description = context.getString(R.string.description_speed_source_gps);
             }
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_average_moving_speed_key))) {
-            valueAndUnit = StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getAverageMovingSpeed(), metricUnits, true);
+            valueAndUnit = StringUtils.getSpeedParts(context, trackStatistics.getAverageMovingSpeed(), metricUnits, true);
             title = context.getString(R.string.stats_average_moving_speed);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_average_speed_key))) {
-            valueAndUnit = StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getAverageSpeed(), metricUnits, true);
+            valueAndUnit = StringUtils.getSpeedParts(context, trackStatistics.getAverageSpeed(), metricUnits, true);
             title = context.getString(R.string.stats_average_speed);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_max_speed_key))) {
-            valueAndUnit = StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getMaxSpeed(), metricUnits, true);
+            valueAndUnit = StringUtils.getSpeedParts(context, trackStatistics.getMaxSpeed(), metricUnits, true);
             title = context.getString(R.string.stats_max_speed);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_average_moving_pace_key))) {
-            valueAndUnit = StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getAverageMovingSpeed(), metricUnits, false);
+            valueAndUnit = StringUtils.getSpeedParts(context, trackStatistics.getAverageMovingSpeed(), metricUnits, false);
             title = context.getString(R.string.stats_average_moving_pace);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_average_pace_key))) {
-            valueAndUnit = StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getAverageSpeed(), metricUnits, false);
+            valueAndUnit = StringUtils.getSpeedParts(context, trackStatistics.getAverageSpeed(), metricUnits, false);
             title = context.getString(R.string.stats_average_pace);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_fastest_pace_key))) {
-            valueAndUnit = StringUtils.getSpeedParts(context, recordingData.getTrackStatistics().getMaxSpeed(), metricUnits, true);
+            valueAndUnit = StringUtils.getSpeedParts(context, trackStatistics.getMaxSpeed(), metricUnits, true);
             title = context.getString(R.string.stats_fastest_pace);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_altitude_key))) {
             Float altitude = latestTrackPoint != null && latestTrackPoint.hasAltitude() ? (float) latestTrackPoint.getAltitude().toM() : null;
@@ -88,10 +90,10 @@ public class StatisticDataBuilder {
             description = latestTrackPoint != null && latestTrackPoint.hasAltitude() ? context.getString(latestTrackPoint.getAltitude().getLabelId()) : null;
             valueAndUnit = StringUtils.getAltitudeParts(context, altitude, metricUnits);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_gain_key))) {
-            valueAndUnit = StringUtils.getAltitudeChangeParts(context, recordingData.getTrackStatistics().getTotalAltitudeGain(), metricUnits);
+            valueAndUnit = StringUtils.getAltitudeChangeParts(context, trackStatistics.getTotalAltitudeGain(), metricUnits);
             title = context.getString(R.string.stats_gain);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_loss_key))) {
-            valueAndUnit = StringUtils.getAltitudeChangeParts(context, recordingData.getTrackStatistics().getTotalAltitudeLoss(), metricUnits);
+            valueAndUnit = StringUtils.getAltitudeChangeParts(context, trackStatistics.getTotalAltitudeLoss(), metricUnits);
             title = context.getString(R.string.stats_loss);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_coordinates_key))) {
             title = context.getString(R.string.stats_coordinates);
