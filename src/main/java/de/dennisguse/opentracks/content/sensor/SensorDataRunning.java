@@ -43,7 +43,6 @@ public final class SensorDataRunning extends SensorData<SensorDataRunning.Data> 
         return cadence;
     }
 
-    @VisibleForTesting
     public Speed getSpeed() {
         return speed;
     }
