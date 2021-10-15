@@ -116,6 +116,7 @@ public class ActivityTypePreference extends DialogPreference {
         }
 
         public void updateUI(String iconValue) {
+            updateIcon(iconValue);
             textView.setText(getActivity().getString(TrackIconUtils.getIconActivityType(iconValue)));
             textView.clearFocus();
         }
