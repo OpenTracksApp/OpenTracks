@@ -14,6 +14,7 @@ import org.junit.runners.JUnit4;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -67,13 +69,15 @@ public class GPXImportTest {
         importTrackId = importer.importFile(inputStream).get(0);
 
         // then
-        // 1. track
+        // 2. track
         Track importedTrack = contentProviderUtils.getTrack(importTrackId);
         assertNotNull(importedTrack);
         assertEquals("the category", importedTrack.getCategory());
         assertEquals("the description", importedTrack.getDescription());
         assertEquals("2021-01-07 22:51", importedTrack.getName());
         assertEquals("UNKNOWN", importedTrack.getIcon());
+
+        //TODO Check trackstatistics
 
         // 3. trackpoints
         List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
@@ -104,6 +108,54 @@ public class GPXImportTest {
                         .setLatitude(3)
                         .setLongitude(14.003)
                         .setAltitude(10)
+        ), importedTrackPoints);
+    }
+
+    @LargeTest
+    @Test
+    public void gpx_without_speed() throws IOException {
+        // given
+        XMLImporter importer = new XMLImporter(new GpxTrackImporter(context, trackImporter));
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.gpx11_without_speed);
+
+        // when
+        // 1. import
+        importTrackId = importer.importFile(inputStream).get(0);
+
+        // then
+        // 2. track
+        Track importedTrack = contentProviderUtils.getTrack(importTrackId);
+        assertNotNull(importedTrack);
+        assertEquals("", importedTrack.getCategory());
+        assertEquals("", importedTrack.getDescription());
+        assertEquals("20210907_213924.gpx", importedTrack.getName());
+        assertEquals("", importedTrack.getIcon());
+
+        // 3. trackstatistics
+        TrackStatistics trackStatistics = importedTrack.getTrackStatistics();
+        assertEquals(1.44, trackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(Duration.ofSeconds(53), trackStatistics.getMovingTime());
+
+        // 4. trackpoints
+        List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
+        assertEquals(3, importedTrackPoints.size());
+
+        TrackPointAssert a = new TrackPointAssert();
+        a.assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2021-09-07T22:10:19Z"))
+                        .setLatitude(30.14185982)
+                        .setLongitude(-40.3863038)
+                        .setAltitude(-5),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-09-07T22:11:07Z"))
+                        .setLatitude(30.14184657)
+                        .setLongitude(-40.38670089)
+                        .setAltitude(-5)
+                        .setSpeed(Speed.of(0.7976524233818054)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-09-07T22:12:00Z"))
+                        .setLatitude(30.14185982)
+                        .setLongitude(-40.3863038)
+                        .setAltitude(-5)
+                        .setSpeed(Speed.of(0.7224021553993225))
         ), importedTrackPoints);
     }
 }

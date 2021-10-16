@@ -144,6 +144,8 @@ public class TrackImporter {
             return 0;
         });
 
+        adjustTrackPoints();
+
         TrackStatisticsUpdater updater = new TrackStatisticsUpdater();
         updater.addTrackPoints(trackPoints, recordingDistanceInterval);
         track.setTrackStatistics(updater.getTrackStatistics());
@@ -151,7 +153,6 @@ public class TrackImporter {
         Track.Id trackId = contentProviderUtils.insertTrack(track);
 
         // Store TrackPoints
-        adjustTrackPoints();
         contentProviderUtils.bulkInsertTrackPoint(trackPoints, trackId);
 
         // Store Markers
