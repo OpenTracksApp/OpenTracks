@@ -500,9 +500,9 @@ limitations under the License.
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="menu_voice_rate">Talehastighet</string>
     <string name="track_delete_not_recording">Dette sporet kan ikke slettes da det tas opp nå.</string>
-    <string name="settings_sensor_cycling_cadence">Sykling: kadens</string>
-    <string name="settings_sensor_cycling_distance_speed">Sykling: distanse og hastighet</string>
-    <string name="settings_sensor_running_speed_and_cadence">Løping: distanse, hastighet og kadens</string>
+    <string name="settings_sensor_cycling_cadence">Kadens</string>
+    <string name="settings_sensor_cycling_distance_speed">Distanse og hastighet</string>
+    <string name="settings_sensor_running_speed_and_cadence">Distanse, hastighet og kadens</string>
     <string name="description_speed_source_sensor">Sensor: %1$s</string>
     <string name="settings_recording_customize_layout_title">Tilpass opptakslayouten</string>
     <string name="settings_layout_reset_confirm_message">Alle layoutinnstillinger blir tilbakestilt til standardverdiene. Dette vil ikke slette spor på enheten.</string>
@@ -514,7 +514,7 @@ limitations under the License.
     <string name="settings_layout_reset">Tilbakestill tilpasset layout</string>
     <string name="settings_layout_reset_confirm_title">Tilbakestille layoutene dine\?</string>
     <string name="settings_layout_reset_done">Alle layoutinnstillinger er tilbakestilt til standardverdiene</string>
-    <string name="settings_all_reset">Tilbakestill alle innstillinger</string>
+    <string name="settings_all_reset">Tilbakestill</string>
     <string name="stats_sensors_cadence">Kadens</string>
     <string name="stats_sensors_power">Effekt</string>
     <string name="location_coordinate">%1$s°</string>
@@ -528,4 +528,9 @@ limitations under the License.
     <string name="settings_announcements_distance_frequency">Distanseintervall</string>
     <string name="permission_bluetooth_failed">OpenTracks krever tillatelse til å bruke Bluetooth.</string>
     <string name="permission_bluetooth_failed_rejected">Du må manuelt gi OpenTracks tilgang til enheter i nærheten i systeminnstillinger.</string>
+    <string name="settings_generic_sensor">Generell</string>
+    <string name="settings_cycling_sensor">Sykling</string>
+    <string name="settings_running_sensor">Løping</string>
+    <string name="settings_import_section">Import</string>
+    <string name="settings_export_section">Eksport</string>
 </resources>
