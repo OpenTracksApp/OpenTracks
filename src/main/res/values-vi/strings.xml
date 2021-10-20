@@ -448,7 +448,7 @@ limitations under the License.
         <item quantity="other">Đã hoàn tất với %1$d lỗi</item>
     </plurals>
     <string name="import_file_imported">Đã nhập tệp %1$s</string>
-    <string name="settings_sensor_wheel_circumference">Bánh xe chu vi (mm)</string>
+    <string name="settings_sensor_wheel_circumference">Chu vi bánh xe (mm)</string>
     <string name="track_recording_notification_accuracy">Vị trí chính xác: %1$s</string>
     <string name="field_set_secondary">Thứ</string>
     <string name="instant_export_enabled_title">Ngay lập tức sau tập luyện khẩu</string>
@@ -476,13 +476,13 @@ limitations under the License.
     <string name="settings_layout_reset_confirm_message">Tất cả bố trí cài đặt sẽ trở lại là việc định giá trị. Điều này sẽ không xóa bất kỳ bài hát trên thiết bị.</string>
     <string name="settings_layout_reset_confirm_title">Thiết lập lại bố trí của bạn\?</string>
     <string name="settings_layout_reset_done">Tất cả bố trí cài đặt đã trở lại là việc định giá trị</string>
-    <string name="settings_all_reset">Đặt Lại Mọi</string>
+    <string name="settings_all_reset">Đặt lại</string>
     <string name="settings_error_initial_values_restored">Xin lỗi, nhưng đã xảy ra lỗi. Tất cả các thiết lập đã trở lại là việc định giá trị.</string>
     <string name="settings_sensor_connecting">Kết nối với %1$s</string>
     <string name="settings_sensor_disconnected">Ngắt kết nối từ %1$s</string>
-    <string name="settings_sensor_cycling_distance_speed">Đi xe đạp: khoảng cách và tốc độ</string>
-    <string name="settings_sensor_cycling_cadence">Đi xe đạp: nhịp</string>
-    <string name="settings_sensor_running_speed_and_cadence">Chạy: khoảng cách, tốc độ và nhịp</string>
+    <string name="settings_sensor_cycling_distance_speed">Khoảng cách và tốc độ</string>
+    <string name="settings_sensor_cycling_cadence">Nhịp</string>
+    <string name="settings_sensor_running_speed_and_cadence">Khoảng cách, tốc độ và nhịp</string>
     <string name="settings_prevent_reimport_tracks_title">Ngăn chặn lại nhập của bài hát</string>
     <string name="stats_loss">Mất</string>
     <string name="stats_coordinates">Vĩ Độ Và Kinh Độ</string>
@@ -519,4 +519,9 @@ limitations under the License.
     <string name="description_speed_source_gps">GPS</string>
     <string name="permission_bluetooth_failed">OpenTracks yêu cầu quyền để sử dụng Bluetooth.</string>
     <string name="permission_bluetooth_failed_rejected">Bạn cần phải cấp quyền truy cập Thiết bị lân cận cho OpenTracks theo cách thủ công trong cài đặt hệ thống.</string>
+    <string name="settings_cycling_sensor">Đạp xe</string>
+    <string name="settings_running_sensor">Chạy</string>
+    <string name="settings_import_section">Nhập</string>
+    <string name="settings_export_section">Xuất</string>
+    <string name="settings_generic_sensor">Chung chung</string>
 </resources>
