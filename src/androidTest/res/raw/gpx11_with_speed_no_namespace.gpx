@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<gpx version="1.1" creator="Cruiser" xmlns="http://www.topografix.com/GPX/1/1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+  <trk>
+    <name>20210907_213924.gpx</name>
+    <trkseg>
+      <trkpt lat="30.14185982" lon="-40.3863038">
+        <ele>-5</ele>
+        <time>2021-09-07T22:10:19Z</time>
+        <hdop>4</hdop>
+        <speed>5</speed>
+      </trkpt>
+      <trkpt lat="30.14184657" lon="-40.38670089">
+        <ele>-5</ele>
+        <time>2021-09-07T22:11:07Z</time>
+        <hdop>4</hdop>
+        <speed>4</speed>
+      </trkpt>
+      <trkpt lat="30.14185982" lon="-40.3863038">
+        <ele>-5</ele>
+        <time>2021-09-07T22:12:00Z</time>
+        <hdop>4</hdop>
+        <speed>3</speed>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

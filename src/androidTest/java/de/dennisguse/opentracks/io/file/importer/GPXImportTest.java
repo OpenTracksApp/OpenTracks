@@ -158,4 +158,54 @@ public class GPXImportTest {
                         .setSpeed(Speed.of(0.7224021553993225))
         ), importedTrackPoints);
     }
+
+    @LargeTest
+    @Test
+    public void gpx_speed_no_namespace() throws IOException {
+        // given
+        XMLImporter importer = new XMLImporter(new GpxTrackImporter(context, trackImporter));
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.gpx11_with_speed_no_namespace);
+
+        // when
+        // 1. import
+        importTrackId = importer.importFile(inputStream).get(0);
+
+        // then
+        // 2. track
+        Track importedTrack = contentProviderUtils.getTrack(importTrackId);
+        assertNotNull(importedTrack);
+        assertEquals("", importedTrack.getCategory());
+        assertEquals("", importedTrack.getDescription());
+        assertEquals("20210907_213924.gpx", importedTrack.getName());
+        assertEquals("", importedTrack.getIcon());
+
+        // 3. trackstatistics
+        TrackStatistics trackStatistics = importedTrack.getTrackStatistics();
+        assertEquals(4, trackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(Duration.ofSeconds(101), trackStatistics.getMovingTime());
+
+        // 4. trackpoints
+        List<TrackPoint> importedTrackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
+        assertEquals(3, importedTrackPoints.size());
+
+        TrackPointAssert a = new TrackPointAssert();
+        a.assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2021-09-07T22:10:19Z"))
+                        .setLatitude(30.14185982)
+                        .setLongitude(-40.3863038)
+                        .setAltitude(-5)
+                        .setSpeed(Speed.of(5)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-09-07T22:11:07Z"))
+                        .setLatitude(30.14184657)
+                        .setLongitude(-40.38670089)
+                        .setAltitude(-5)
+                        .setSpeed(Speed.of(0.7976524233818054))
+                        .setSpeed(Speed.of(4)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2021-09-07T22:12:00Z"))
+                        .setLatitude(30.14185982)
+                        .setLongitude(-40.3863038)
+                        .setAltitude(-5)
+                        .setSpeed(Speed.of(3))
+        ), importedTrackPoints);
+    }
 }
