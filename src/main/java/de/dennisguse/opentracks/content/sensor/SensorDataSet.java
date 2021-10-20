@@ -52,7 +52,7 @@ public final class SensorDataSet {
 
     public Pair<Speed, String> getSpeed() {
         if (cyclingDistanceSpeed != null && cyclingDistanceSpeed.hasValue() && cyclingDistanceSpeed.getValue().getSpeed() != null) {
-            return new Pair<>(cyclingDistanceSpeed.getValue().getSpeed(), cyclingCadence.getSensorNameOrAddress());
+            return new Pair<>(cyclingDistanceSpeed.getValue().getSpeed(), cyclingDistanceSpeed.getSensorNameOrAddress());
         }
 
         if (runningDistanceSpeedCadence != null && runningDistanceSpeedCadence.hasValue() && runningDistanceSpeedCadence.getValue().getSpeed() != null) {
