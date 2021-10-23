@@ -18,18 +18,20 @@ import java.util.stream.IntStream;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.adapters.SettingsCustomLayoutAdapter;
+import de.dennisguse.opentracks.adapters.SettingsCustomLayoutEditAdapter;
 import de.dennisguse.opentracks.content.data.Layout;
 import de.dennisguse.opentracks.content.data.DataField;
 import de.dennisguse.opentracks.databinding.ActivitySettingsCustomLayoutBinding;
 import de.dennisguse.opentracks.util.StatisticsUtils;
 
-public class SettingsCustomLayoutActivity extends AbstractActivity implements SettingsCustomLayoutAdapter.SettingsCustomLayoutItemClickListener {
+public class SettingsCustomLayoutEditActivity extends AbstractActivity implements SettingsCustomLayoutEditAdapter.SettingsCustomLayoutItemClickListener {
 
+    public static final String EXTRA_LAYOUT = "extraLayout";
     private ActivitySettingsCustomLayoutBinding viewBinding;
     private GridLayoutManager gridLayoutManager;
-    private SettingsCustomLayoutAdapter adapterFieldsVisible;
-    private SettingsCustomLayoutAdapter adapterFieldsHidden;
+    private SettingsCustomLayoutEditAdapter adapterFieldsVisible;
+    private SettingsCustomLayoutEditAdapter adapterFieldsHidden;
+    private String profile;
     private Layout layoutFieldsVisible;
     private Layout layoutFieldsHidden;
     private int numColumns;
@@ -38,12 +40,13 @@ public class SettingsCustomLayoutActivity extends AbstractActivity implements Se
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         // Recycler view with visible stats.
-        layoutFieldsVisible = StatisticsUtils.filterVisible(PreferencesUtils.getCustomLayout(), true);
-        adapterFieldsVisible = new SettingsCustomLayoutAdapter(this, this, layoutFieldsVisible);
+        Layout layout = getIntent().getParcelableExtra(EXTRA_LAYOUT);
+        profile = layout.getName();
+        layoutFieldsVisible = StatisticsUtils.filterVisible(layout, true);
+        adapterFieldsVisible = new SettingsCustomLayoutEditAdapter(this, this, layoutFieldsVisible);
 
-        numColumns = PreferencesUtils.getLayoutColumns();
+        numColumns = layout.getColumnsPerRow();
         RecyclerView recyclerViewVisible = viewBinding.recyclerViewVisible;
         gridLayoutManager = new GridLayoutManager(this, numColumns);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -86,7 +89,6 @@ public class SettingsCustomLayoutActivity extends AbstractActivity implements Se
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 numColumns = position + 1;
                 gridLayoutManager.setSpanCount(numColumns);
-                PreferencesUtils.setLayoutColumns(position + 1);
             }
 
             @Override
@@ -94,24 +96,26 @@ public class SettingsCustomLayoutActivity extends AbstractActivity implements Se
 
             }
         });
-        viewBinding.spinnerOptions.setSelection(PreferencesUtils.getLayoutColumns() - 1);
+        viewBinding.spinnerOptions.setSelection(numColumns - 1);
 
         // Recycler view with not visible stats.
-        layoutFieldsHidden = StatisticsUtils.filterVisible(PreferencesUtils.getCustomLayout(), false);
-        adapterFieldsHidden = new SettingsCustomLayoutAdapter(this, this, layoutFieldsHidden);
+        layoutFieldsHidden = StatisticsUtils.filterVisible(layout, false);
+        adapterFieldsHidden = new SettingsCustomLayoutEditAdapter(this, this, layoutFieldsHidden);
         RecyclerView recyclerViewNotVisible = viewBinding.recyclerViewNotVisible;
         recyclerViewNotVisible.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewNotVisible.setAdapter(adapterFieldsHidden);
+
+        setTitle(profile);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         if (!layoutFieldsVisible.getFields().isEmpty() || !layoutFieldsHidden.getFields().isEmpty()) {
-            Layout newLayout = new Layout(layoutFieldsVisible.getProfile());
-            newLayout.addFields(layoutFieldsVisible.getFields());
-            newLayout.addFields(layoutFieldsHidden.getFields());
-            PreferencesUtils.setCustomLayout(newLayout);
+            Layout layout = new Layout(profile, numColumns);
+            layout.addFields(layoutFieldsVisible.getFields());
+            layout.addFields(layoutFieldsHidden.getFields());
+            PreferencesUtils.updateCustomLayout(layout);
         }
     }
 

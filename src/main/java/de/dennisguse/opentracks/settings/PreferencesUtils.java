@@ -25,6 +25,7 @@ import android.content.res.TypedArray;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.documentfile.provider.DocumentFile;
@@ -34,17 +35,16 @@ import java.time.Duration;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.DataField;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Layout;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
-import de.dennisguse.opentracks.util.CsvConstants;
+import de.dennisguse.opentracks.util.CsvLayoutUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
@@ -56,6 +56,8 @@ import de.dennisguse.opentracks.util.UnitConversions;
 public class PreferencesUtils {
 
     private final static String TAG = PreferencesUtils.class.getSimpleName();
+
+    private static final int PREFERENCES_VERSION = 2;
 
     private PreferencesUtils() {
     }
@@ -71,7 +73,7 @@ public class PreferencesUtils {
         PreferencesUtils.resources = resources;
         PreferencesUtils.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-        PreferencesOpenHelper.newInstance().checkForUpgrade();
+        PreferencesOpenHelper.newInstance(PREFERENCES_VERSION).check();
     }
 
     public static void registerOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener changeListener) {
@@ -546,12 +548,8 @@ public class PreferencesUtils {
         return getDefaultExportDirectoryUri(context) != null;
     }
 
-    public static int getLayoutColumns() {
-        return getInt(R.string.stats_custom_layout_columns_key, resources.getInteger(R.integer.stats_custom_layout_columns_default));
-    }
-
-    public static void setLayoutColumns(int columns) {
-        setInt(R.string.stats_custom_layout_columns_key, columns);
+    public static int getLayoutColumnsByDefault() {
+        return resources.getInteger(R.integer.stats_custom_layout_columns_default);
     }
 
     private static List<TypedArray> getMultiTypedArray(String key) {
@@ -576,46 +574,84 @@ public class PreferencesUtils {
     }
 
     @SuppressLint("ResourceType")
-    static String buildDefaultLayout() {
+    private static String buildDefaultFields() {
         List<TypedArray> fieldsArrays = getMultiTypedArray("stats_custom_layout_fields_default_value");
-        return resources.getString(R.string.default_activity_default) + CsvConstants.LINE_SEPARATOR
-                + fieldsArrays.stream().map(i -> i.getString(0) + CsvConstants.ITEM_SEPARATOR + i.getString(1)).collect(Collectors.joining(CsvConstants.LINE_SEPARATOR))
-                + CsvConstants.LINE_SEPARATOR;
+        return fieldsArrays.stream().map(i -> i.getString(0) + CsvLayoutUtils.PROPERTY_SEPARATOR + i.getString(1)).collect(Collectors.joining(CsvLayoutUtils.ITEM_SEPARATOR))
+                + CsvLayoutUtils.ITEM_SEPARATOR;
     }
 
+    static String buildDefaultLayout() {
+        return resources.getString(R.string.stats_custom_layout_default_layout) + CsvLayoutUtils.ITEM_SEPARATOR + getLayoutColumnsByDefault() + CsvLayoutUtils.ITEM_SEPARATOR + buildDefaultFields();
+    }
+
+    public static String getDefaultLayoutName() {
+        return resources.getString(R.string.stats_custom_layout_default_layout);
+    }
+
+    /**
+     * @return custom layout selected or the first one if any has been selected or the one selected is not exists anymore.
+     */
     public static Layout getCustomLayout() {
-        String csvCustomLayout = getString(R.string.stats_custom_layout_fields_key, buildDefaultLayout());
-        List<String> csvParts = Arrays.asList(csvCustomLayout.split(CsvConstants.LINE_SEPARATOR));
-        Layout layout = new Layout(csvParts.get(0));
-        for (int i = 1; i < csvParts.size(); i++) {
-            String[] fieldParts = csvParts.get(i).split(CsvConstants.ITEM_SEPARATOR);
-            layout.addField(fieldParts[0], DataField.getTitleByKey(resources, fieldParts[0]), fieldParts[1].equals(DataField.YES_VALUE), fieldParts[2].equals(DataField.YES_VALUE), fieldParts[0].equals(resources.getString(R.string.stats_custom_layout_coordinates_key)));
+        String csvCustomLayouts = getString(R.string.stats_custom_layouts_key, buildDefaultLayout());
+        String[] csvLines = csvCustomLayouts.split(CsvLayoutUtils.LINE_SEPARATOR);
+        String layoutSelected = getString(R.string.stats_custom_layout_selected_layout_key, null);
+        if (layoutSelected == null) {
+            return Layout.fromCsv(csvLines[0], resources);
         }
 
-        return layout;
+        for (String line : csvLines) {
+            Layout layout = Layout.fromCsv(line, resources);
+            if (layout.sameName(layoutSelected)) {
+                return layout;
+            }
+        }
+
+        return Layout.fromCsv(csvLines[0], resources);
     }
 
-    public static void setCustomLayout(Layout layout) {
-        List<DataField> fields = layout.getFields();
-        if (fields.isEmpty()) {
-            return;
+    public static void updateCustomLayouts(@NonNull List<Layout> layouts) {
+        setString(R.string.stats_custom_layouts_key, layouts.stream().map(Layout::toCsv).collect(Collectors.joining(CsvLayoutUtils.LINE_SEPARATOR)));
+    }
+
+    public static void updateCustomLayout(@NonNull Layout layout) {
+        List<Layout> preferenceLayouts = PreferencesUtils.getAllCustomLayouts();
+        Optional<Layout> layoutToBeUpdated = preferenceLayouts.stream().filter(l -> l.sameName(layout)).findFirst();
+        if (layoutToBeUpdated.isPresent()) {
+            layoutToBeUpdated.get().replaceAllFields(layout.getFields());
+            layoutToBeUpdated.get().setColumnsPerRow(layout.getColumnsPerRow());
+            PreferencesUtils.updateCustomLayouts(preferenceLayouts);
+        }
+    }
+
+    public static void addCustomLayout(@NonNull String layoutName) {
+        String newLayoutCsv = layoutName + CsvLayoutUtils.ITEM_SEPARATOR + getLayoutColumnsByDefault() + CsvLayoutUtils.ITEM_SEPARATOR + buildDefaultFields();
+        String customLayoutCsv = getString(R.string.stats_custom_layouts_key, buildDefaultLayout()) + CsvLayoutUtils.LINE_SEPARATOR + newLayoutCsv;
+        setString(R.string.stats_custom_layouts_key, customLayoutCsv);
+    }
+
+    public static void setDefaultLayout(String layoutName) {
+        setString(R.string.stats_custom_layout_selected_layout_key, layoutName);
+    }
+
+    public static List<Layout> getAllCustomLayouts() {
+        List<Layout> layouts = new ArrayList<>();
+        String csvCustomLayout = getString(R.string.stats_custom_layouts_key, buildDefaultLayout());
+        String[] csvLines = csvCustomLayout.split(CsvLayoutUtils.LINE_SEPARATOR);
+        for (String line : csvLines) {
+            layouts.add(Layout.fromCsv(line, resources));
         }
 
-        String csv = layout.getProfile() + CsvConstants.LINE_SEPARATOR
-                + fields.stream().map(DataField::toCsv).collect(Collectors.joining(CsvConstants.LINE_SEPARATOR))
-                + CsvConstants.LINE_SEPARATOR;
-        setString(R.string.stats_custom_layout_fields_key, csv);
+        return layouts;
+    }
+
+    public static List<String> getAllCustomLayoutNames() {
+        return getAllCustomLayouts().stream().map(Layout::getName).collect(Collectors.toList());
     }
 
     public static void resetCustomLayoutPreferences() {
-        if (sharedPreferences.contains(resources.getString(R.string.stats_custom_layout_fields_key))) {
+        if (sharedPreferences.contains(resources.getString(R.string.stats_custom_layouts_key))) {
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.remove(resources.getString(R.string.stats_custom_layout_fields_key));
-            editor.commit();
-        }
-        if (sharedPreferences.contains(resources.getString(R.string.stats_custom_layout_columns_key))) {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.remove(resources.getString(R.string.stats_custom_layout_columns_key));
+            editor.remove(resources.getString(R.string.stats_custom_layouts_key));
             editor.commit();
         }
     }

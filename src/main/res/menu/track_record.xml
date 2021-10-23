@@ -16,16 +16,22 @@ limitations under the License.
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/track_detail_menu_show_on_map"
+        android:icon="@drawable/ic_map_24dp"
+        app:showAsAction="ifRoom"
+        android:title="@string/menu_show_on_map" />
+    <item
         android:id="@+id/track_detail_insert_marker"
         android:icon="@drawable/ic_marker_add_24dp"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"
         android:title="@string/menu_insert_marker" />
     <item
-        android:id="@+id/track_detail_menu_show_on_map"
-        android:icon="@drawable/ic_map_24dp"
+        android:id="@+id/track_detail_menu_select_layout"
+        android:icon="@drawable/ic_ui"
+        android:orderInCategory="2"
         app:showAsAction="ifRoom"
-        android:title="@string/menu_show_on_map" />
+        android:title="@string/menu_select_layout" />
     <item
         android:id="@+id/track_detail_markers"
         android:icon="@drawable/ic_marker_show_24dp"

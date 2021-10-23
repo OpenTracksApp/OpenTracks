@@ -238,6 +238,7 @@ limitations under the License.
     <string name="generic_completed">Completed</string>
     <string name="generic_click_twice_cancel">Click back again to cancel</string>
     <string name="generic_choose_an_option">Choose an option</string>
+    <string name="generic_undo">Undo</string>
     <!-- Gps -->
     <string name="gps_starting">Starting GPS</string>
     <string name="gps_wait_for_better_signal">Waiting for a better GPS signal</string>
@@ -298,11 +299,13 @@ limitations under the License.
     <string name="menu_select_all">Select all</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_share">Share</string>
+    <string name="menu_select_layout">Select Layout</string>
     <string name="menu_show_on_map">Show on map</string>
     <string name="menu_start_gps">Start GPS</string>
     <string name="menu_stop_gps">Stop GPS</string>
     <string name="menu_voice_rate">Voice speed</string>
     <string name="menu_resume_track">Resume track</string>
+    <string name="menu_add_custom_layout">New Layout</string>
     <!-- OpenTracks -->
     <string name="recording_service">Recording service</string>
     <string name="delete_service">Deletion service</string>
@@ -395,6 +398,13 @@ limitations under the License.
     <string name="settings_announcements_distance_frequency">Distance interval</string>
 
     <string name="settings_reset">Reset</string>
+    <!-- Custom Layout -->
+    <string name="custom_layout_list_title">Layouts</string>
+    <string name="custom_layout_list_edit_name">Type layout\'s name to add</string>
+    <string name="custom_layout_list_edit_already_exists">Layout\'s name already exists</string>
+    <string name="custom_layout_list_layout_removed">Layout was removed</string>
+    <string name="custom_layout_select_layout">Select Layout</string>
+    <string name="stats_custom_layout_default_layout">Default Layout</string>
     <!-- Custom Layout Reset -->
     <string name="settings_layout_reset">Reset Custom Layout</string>
     <string name="settings_layout_reset_confirm_message">All layout settings will be reverted to the default values. This will not delete any tracks on the device.</string>
