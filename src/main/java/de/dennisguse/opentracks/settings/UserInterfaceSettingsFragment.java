@@ -24,7 +24,7 @@ public class UserInterfaceSettingsFragment extends PreferenceFragmentCompat {
 
         Preference customLayoutPreference = findPreference(getString(R.string.stats_custom_layout_key));
         customLayoutPreference.setOnPreferenceClickListener((preference) -> {
-            Intent intent = new Intent(getContext(), SettingsCustomLayoutActivity.class);
+            Intent intent = new Intent(getContext(), SettingsCustomLayoutListActivity.class);
             startActivity(intent);
             return true;
         });

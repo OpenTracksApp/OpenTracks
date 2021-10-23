@@ -18,13 +18,13 @@ import de.dennisguse.opentracks.content.data.DataField;
 import de.dennisguse.opentracks.content.data.Layout;
 import de.dennisguse.opentracks.util.StatisticsUtils;
 
-public class SettingsCustomLayoutAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Layout layout;
     private final Context context;
     private final SettingsCustomLayoutItemClickListener itemClickListener;
 
-    public SettingsCustomLayoutAdapter(Context context, SettingsCustomLayoutItemClickListener itemClickListener, Layout layout) {
+    public SettingsCustomLayoutEditAdapter(Context context, SettingsCustomLayoutItemClickListener itemClickListener, Layout layout) {
         this.context = context;
         this.itemClickListener = itemClickListener;
         this.layout = layout;
@@ -34,12 +34,12 @@ public class SettingsCustomLayoutAdapter extends RecyclerView.Adapter<RecyclerVi
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.custom_stats_item, parent, false);
-        return new SettingsCustomLayoutAdapter.ViewHolder(view);
+        return new SettingsCustomLayoutEditAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        SettingsCustomLayoutAdapter.ViewHolder viewHolder = (SettingsCustomLayoutAdapter.ViewHolder) holder;
+        SettingsCustomLayoutEditAdapter.ViewHolder viewHolder = (SettingsCustomLayoutEditAdapter.ViewHolder) holder;
         DataField field = layout.getFields().get(position);
         viewHolder.itemView.setTag(field.getKey());
         viewHolder.title.setText(field.getTitle());

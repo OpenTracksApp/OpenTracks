@@ -2,11 +2,13 @@ package de.dennisguse.opentracks.content.data;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.util.CsvConstants;
+import de.dennisguse.opentracks.util.CsvLayoutUtils;
 
-public class DataField {
+public class DataField implements Parcelable {
     public static final String YES_VALUE = "1";
     public static final String NOT_VALUE = "0";
 
@@ -23,6 +25,26 @@ public class DataField {
         this.isPrimary = isPrimary;
         this.isWide = isWide;
     }
+
+    protected DataField(Parcel in) {
+        key = in.readString();
+        title = in.readString();
+        isVisible = in.readByte() != 0;
+        isPrimary = in.readByte() != 0;
+        isWide = in.readByte() != 0;
+    }
+
+    public static final Creator<DataField> CREATOR = new Creator<DataField>() {
+        @Override
+        public DataField createFromParcel(Parcel in) {
+            return new DataField(in);
+        }
+
+        @Override
+        public DataField[] newArray(int size) {
+            return new DataField[size];
+        }
+    };
 
     public String getKey() {
         return key;
@@ -63,7 +85,8 @@ public class DataField {
     public String toCsv() {
         String visible = this.isVisible ? YES_VALUE : NOT_VALUE;
         String primary = this.isPrimary ? YES_VALUE : NOT_VALUE;
-        return key + CsvConstants.ITEM_SEPARATOR + visible + CsvConstants.ITEM_SEPARATOR + primary;
+        String wide = this.isWide ? YES_VALUE : NOT_VALUE;
+        return key + CsvLayoutUtils.PROPERTY_SEPARATOR + visible + CsvLayoutUtils.PROPERTY_SEPARATOR + primary + CsvLayoutUtils.PROPERTY_SEPARATOR + wide;
     }
 
     public static String getTitleByKey(Resources resources, String key) {
@@ -108,5 +131,19 @@ public class DataField {
         } else {
             throw new RuntimeException("It doesn't exists a field with key: " + key);
         }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(key);
+        parcel.writeString(title);
+        parcel.writeByte((byte) (isVisible ? 1 : 0));
+        parcel.writeByte((byte) (isPrimary ? 1 : 0));
+        parcel.writeByte((byte) (isWide ? 1 : 0));
     }
 }

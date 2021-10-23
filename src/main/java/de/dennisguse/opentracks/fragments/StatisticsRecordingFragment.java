@@ -65,13 +65,10 @@ public class StatisticsRecordingFragment extends Fragment {
             preferenceMetricUnits = PreferencesUtils.isMetricUnits();
         }
 
-        if (PreferencesUtils.isKey(R.string.stats_custom_layout_fields_key, key)) {
+        if (PreferencesUtils.isKey(R.string.stats_custom_layouts_key, key) || PreferencesUtils.isKey(R.string.stats_custom_layout_selected_layout_key, key)) {
             updateUInecessary = true;
             layout = PreferencesUtils.getCustomLayout();
-        }
-
-        if (PreferencesUtils.isKey(R.string.stats_custom_layout_columns_key, key)) {
-            gridLayoutManager.setSpanCount(PreferencesUtils.getLayoutColumns());
+            gridLayoutManager.setSpanCount(layout.getColumnsPerRow());
         }
 
         if (key != null && updateUInecessary && isResumed()) {
@@ -107,13 +104,13 @@ public class StatisticsRecordingFragment extends Fragment {
 
         RecyclerView recyclerView = viewBinding.statsRecyclerView;
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), RecyclerView.VERTICAL));
-        final int numColumns = PreferencesUtils.getLayoutColumns();
-        gridLayoutManager = new GridLayoutManager(getContext(), numColumns);
+        layout = PreferencesUtils.getCustomLayout();
+        gridLayoutManager = new GridLayoutManager(getContext(), layout.getColumnsPerRow());
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
                 if (statisticsAdapter.isItemWide(position)) {
-                    return numColumns;
+                    return layout.getColumnsPerRow();
                 }
                 return 1;
             }

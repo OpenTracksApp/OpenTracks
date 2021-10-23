@@ -1,5 +1,6 @@
 package de.dennisguse.opentracks;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -17,6 +18,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.List;
 
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.data.Track;
@@ -256,6 +259,11 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.track_detail_menu_show_on_map) {
+            IntentDashboardUtils.startDashboard(this, true, trackId);
+            return true;
+        }
+
         if (item.getItemId() == R.id.track_detail_insert_marker) {
             Intent intent = IntentUtils
                     .newIntent(this, MarkerEditActivity.class)
@@ -264,8 +272,11 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             return true;
         }
 
-        if (item.getItemId() == R.id.track_detail_menu_show_on_map) {
-            IntentDashboardUtils.startDashboard(this, true, trackId);
+        if (item.getItemId() == R.id.track_detail_menu_select_layout) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            List<String> layoutNames = PreferencesUtils.getAllCustomLayoutNames();
+            builder.setTitle(getString(R.string.custom_layout_select_layout)).setItems(layoutNames.toArray(new String[0]), (dialog, which) -> PreferencesUtils.setDefaultLayout(layoutNames.get(which)));
+            builder.create().show();
             return true;
         }
 

@@ -25,7 +25,7 @@ public class StatisticsUtils {
     }
 
     public static Layout filterVisible(Layout layout, boolean visible) {
-        Layout result = new Layout(layout.getProfile());
+        Layout result = new Layout(layout.getName());
         result.addFields(layout.getFields().stream().filter(f -> f.isVisible() == visible).collect(Collectors.toList()));
         return result;
     }

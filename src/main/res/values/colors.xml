@@ -30,6 +30,9 @@ limitations under the License.
     <color name="colorAccent">@android:color/holo_orange_dark</color>
     <color name="colorAccentTransparent">#55FF8800</color>
 
+    <color name="colorBackgroundDelete">#F44336</color>
+    <color name="colorForegroundDelete">#FEFEFE</color>
+
     <color name="recording_text">#FFBE161B</color> <!-- red -->
     <color name="stats_separator">#99999999</color> <!-- light gray -->
     <color name="text_gradient_center">#B2000000</color> <!-- black 70% opacity -->

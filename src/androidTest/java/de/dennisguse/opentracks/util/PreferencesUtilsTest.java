@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 
 import androidx.preference.PreferenceManager;
 import androidx.test.core.app.ApplicationProvider;
@@ -21,10 +22,14 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RunWith(AndroidJUnit4.class)
 public class PreferencesUtilsTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
+    private final Resources resources = ApplicationProvider.getApplicationContext().getResources();
 
     @Test
     public void ExportTrackFileFormat_ok() {
@@ -73,6 +78,24 @@ public class PreferencesUtilsTest {
     }
 
     @Test
+    public void testGetAllCustomLayouts_default() {
+        // given
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+
+        // when
+        List<Layout> layouts = PreferencesUtils.getAllCustomLayouts();
+
+        // then
+        assertEquals(layouts.size(), 1);
+        assertTrue(layouts.get(0).getFields().size() > 0);
+        assertEquals(layouts.get(0).getName(), context.getString(R.string.stats_custom_layout_default_layout));
+        assertTrue(layouts.get(0).getFields().stream().anyMatch(DataField::isVisible));
+    }
+
+    @Test
     public void testGetCustomLayout_default() {
         // given
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
@@ -85,7 +108,7 @@ public class PreferencesUtilsTest {
 
         // then
         assertTrue(layout.getFields().size() > 0);
-        assertEquals(layout.getProfile(), context.getString(R.string.default_activity_default));
+        assertEquals(layout.getName(), context.getString(R.string.stats_custom_layout_default_layout));
         assertTrue(layout.getFields().stream().anyMatch(DataField::isVisible));
     }
 
@@ -95,8 +118,8 @@ public class PreferencesUtilsTest {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(
-                context.getString(R.string.stats_custom_layout_fields_key),
-                "run;"
+                context.getString(R.string.stats_custom_layouts_key),
+                "run;2;"
                         + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
                         + context.getString(R.string.stats_custom_layout_distance_key) + ",1,0;"
                         + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",0,1;"
@@ -108,7 +131,8 @@ public class PreferencesUtilsTest {
 
         // then
         assertEquals(layout.getFields().size(), 4);
-        assertEquals(layout.getProfile(), "run");
+        assertEquals(layout.getName(), "run");
+        assertEquals(layout.getColumnsPerRow(), 2);
 
         assertEquals(layout.getFields().get(0).getKey(), context.getString(R.string.stats_custom_layout_moving_time_key));
         assertTrue(layout.getFields().get(0).isVisible());
@@ -133,8 +157,8 @@ public class PreferencesUtilsTest {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(
-                context.getString(R.string.stats_custom_layout_fields_key),
-                "walking;"
+                context.getString(R.string.stats_custom_layouts_key),
+                "walking;2;"
                         + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
                         + context.getString(R.string.stats_custom_layout_distance_key) + ",1,0;"
                         + context.getString(R.string.stats_custom_layout_coordinates_key) + ",0,1;"
@@ -146,7 +170,8 @@ public class PreferencesUtilsTest {
 
         // then
         assertEquals(layout.getFields().size(), 4);
-        assertEquals(layout.getProfile(), "walking");
+        assertEquals(layout.getName(), "walking");
+        assertEquals(layout.getColumnsPerRow(), 2);
 
         assertEquals(layout.getFields().get(0).getKey(), context.getString(R.string.stats_custom_layout_moving_time_key));
         assertTrue(layout.getFields().get(0).isVisible());
@@ -177,25 +202,145 @@ public class PreferencesUtilsTest {
         layoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_speed_key), context.getString(R.string.stats_speed), false, false, false));
 
         // when
-        PreferencesUtils.setCustomLayout(layoutSrc);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(context.getString(R.string.stats_custom_layouts_key), layoutSrc.toCsv());
+        editor.commit();
 
         // then
-        String csv = sharedPreferences.getString(context.getString(R.string.stats_custom_layout_fields_key), null);
+        String csv = sharedPreferences.getString(context.getString(R.string.stats_custom_layouts_key), null);
         assertNotNull(csv);
         assertEquals(csv,
-                "road cycling;"
-                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
-                + context.getString(R.string.stats_custom_layout_distance_key) + ",1,0;"
-                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",0,1;"
-                + context.getString(R.string.stats_custom_layout_speed_key) + ",0,0;");
+                "road cycling;" + PreferencesUtils.getLayoutColumnsByDefault() + ";"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1,0;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",1,0,0;"
+                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",0,1,0;"
+                + context.getString(R.string.stats_custom_layout_speed_key) + ",0,0,0;");
 
         Layout layoutDst = PreferencesUtils.getCustomLayout();
-        assertEquals(layoutSrc.getProfile(), layoutDst.getProfile());
+        assertEquals(layoutSrc.getName(), layoutDst.getName());
         assertEquals(layoutSrc.getFields().size(), layoutDst.getFields().size());
         for (int i = 0; i < layoutSrc.getFields().size(); i++) {
             assertEquals(layoutSrc.getFields().get(i).getKey(), layoutDst.getFields().get(i).getKey());
             assertEquals(layoutSrc.getFields().get(i).isVisible(), layoutDst.getFields().get(i).isVisible());
             assertEquals(layoutSrc.getFields().get(i).isPrimary(), layoutDst.getFields().get(i).isPrimary());
         }
+    }
+
+    @Test
+    public void testEditCustomLayouts() {
+        // update all custom layouts
+
+        // given a custom layout with two profiles
+        String cyclingProfile = "cycling;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_speed_key) + ",1,1;";
+
+        String runningProfile = "running;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_average_pace_key) + ",0,0;"
+                + context.getString(R.string.stats_custom_layout_pace_key) + ",0,0;";
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(context.getString(R.string.stats_custom_layouts_key), cyclingProfile + "\n" + runningProfile);
+        editor.apply();
+
+        List<Layout> layoutsBefore = PreferencesUtils.getAllCustomLayouts();
+
+        // when cyling profile is updated
+        String cyclingProfileUpdated = "cycling;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",0,0;"
+                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",0,0;"
+                + context.getString(R.string.stats_custom_layout_speed_key) + ",0,0;";
+
+        List<Layout> layoutsToBeUpdated = new ArrayList<>();
+        layoutsToBeUpdated.add(Layout.fromCsv(cyclingProfileUpdated, resources));
+        layoutsToBeUpdated.add(Layout.fromCsv(runningProfile, resources));
+
+        PreferencesUtils.updateCustomLayouts(layoutsToBeUpdated);
+
+        // then only updated profile is modified in the custom layouts
+        List<Layout> layoutsAfter = PreferencesUtils.getAllCustomLayouts();
+
+        assertEquals(layoutsBefore.size(), 2);
+        assertEquals(layoutsAfter.size(), 2);
+
+        assertEquals(layoutsBefore.get(0).getFields().stream().filter(DataField::isVisible).count(), 4);
+        assertEquals(layoutsAfter.get(0).getFields().stream().filter(DataField::isVisible).count(), 1);
+    }
+
+    @Test
+    public void testEditCustomLayout() {
+        // Update only one custom layout
+
+        // given a custom layout with two profiles
+        String cyclingProfile = "cycling;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_speed_key) + ",1,1;";
+
+        String runningProfile = "running;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_average_pace_key) + ",0,0;"
+                + context.getString(R.string.stats_custom_layout_pace_key) + ",0,0;";
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(context.getString(R.string.stats_custom_layouts_key), cyclingProfile + "\n" + runningProfile);
+        editor.apply();
+
+        List<Layout> layoutsBefore = PreferencesUtils.getAllCustomLayouts();
+
+        // when cyling profile is updated
+        String cyclingProfileUpdated = "cycling;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",0,0;"
+                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",0,0;"
+                + context.getString(R.string.stats_custom_layout_speed_key) + ",0,0;";
+        Layout layoutToBeUpdated = Layout.fromCsv(cyclingProfileUpdated, resources);
+        PreferencesUtils.updateCustomLayout(layoutToBeUpdated);
+
+        // then only updated profile is modified in the custom layouts
+        List<Layout> layoutsAfter = PreferencesUtils.getAllCustomLayouts();
+
+        assertEquals(layoutsBefore.size(), 2);
+        assertEquals(layoutsAfter.size(), 2);
+
+        assertEquals(layoutsBefore.get(0).getFields().stream().filter(DataField::isVisible).count(), 4);
+        assertEquals(layoutsAfter.get(0).getFields().stream().filter(DataField::isVisible).count(), 1);
+    }
+
+    @Test
+    public void testGetCustomLayout_whenSelectedOneNotExists() {
+        // given a custom layout with two profiles and not existing custom layout selected
+        String cyclingProfile = "cycling;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_speed_key) + ",1,1;";
+
+        String runningProfile = "running;2;"
+                + context.getString(R.string.stats_custom_layout_moving_time_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_distance_key) + ",1,1;"
+                + context.getString(R.string.stats_custom_layout_average_pace_key) + ",0,0;"
+                + context.getString(R.string.stats_custom_layout_pace_key) + ",0,0;";
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(context.getString(R.string.stats_custom_layouts_key), cyclingProfile + "\n" + runningProfile);
+        editor.putString(context.getString(R.string.stats_custom_layout_selected_layout_key), "Not Exists");
+        editor.apply();
+
+        // when it gets the custom layout
+        Layout layout = PreferencesUtils.getCustomLayout();
+
+        // then the first one was returned
+        assertEquals(layout.getName(), "cycling");
     }
 }
