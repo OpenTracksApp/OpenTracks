@@ -160,7 +160,11 @@ public class StatisticsRecordingFragment extends Fragment {
         super.onDestroy();
         trackRecordingServiceConnection = null;
         viewModel = null;
-        statisticsLiveData.removeObservers(getActivity());
+
+        if (statisticsLiveData != null) {
+            statisticsLiveData.removeObservers(getActivity());
+        }
+        statisticsLiveData = null;
     }
 
     private void updateUI() {
