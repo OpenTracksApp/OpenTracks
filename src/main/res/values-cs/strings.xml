@@ -537,4 +537,13 @@ limitations under the License.
     <string name="generic_choose_an_option">Zvolit možnost</string>
     <string name="permission_bluetooth_failed">OpenTracks vyžaduje povolení k používání Bluetoothu.</string>
     <string name="stats_sensors_heart_rate">Tep</string>
+    <string name="location_coordinate">%1$s°</string>
+    <string name="location_latitude_longitude">%1$s, %2$s</string>
+    <string name="settings_generic_sensor">Generické</string>
+    <string name="settings_cycling_sensor">Cyklistika</string>
+    <string name="settings_running_sensor">Běh</string>
+    <string name="settings_import_section">Importovat</string>
+    <string name="settings_export_section">Exportovat</string>
+    <string name="stats_sensors_power">Napájení</string>
+    <string name="permission_bluetooth_failed_rejected">V nastavení systému je třeba ručně povolit aplikaci OpenTracks přístup k blízkým zařízením.</string>
 </resources>
