@@ -23,6 +23,8 @@ import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(JUnit4.class)
 public class IntervalStatisticsTest {
@@ -115,9 +117,40 @@ public class IntervalStatisticsTest {
         whenAndThen(10000, distanceInterval);
     }
 
+    @Test
+    public void testWithNoLossTrackPoints() {
+        // TrackPoints with elevation gain but without elevation loss.
+
+        // given
+        float distanceInterval = 1000f;
+        int numberOfPoints = 10000;
+        Track dummyTrack = new Track();
+        dummyTrack.setId(new Track.Id(System.currentTimeMillis()));
+        dummyTrack.setName("Dummy Track Without Elevation Loss");
+        contentProviderUtils.insertTrack(dummyTrack);
+        TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater();
+        for (int i = 0; i < numberOfPoints; i++) {
+            TrackPoint tp = TestDataUtil.createTrackPoint(i);
+            tp.setAltitudeLoss(null);
+            contentProviderUtils.insertTrackPoint(tp, dummyTrack.getId());
+            trackStatisticsUpdater.addTrackPoint(tp, Distance.of(0));
+        }
+        dummyTrack.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
+        contentProviderUtils.updateTrack(dummyTrack);
+        Pair<Track.Id, TrackStatistics> trackWithStats = new Pair<>(dummyTrack.getId(), trackStatisticsUpdater.getTrackStatistics());
+
+        // when and then
+        whenAndThen(trackWithStats, numberOfPoints, distanceInterval);
+    }
+
     private void whenAndThen(int numberOfPoints, float distanceInterval) {
-        IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.of(distanceInterval), Distance.of(0));
         Pair<Track.Id, TrackStatistics> trackWithStats = TestDataUtil.buildTrackWithTrackPoints(contentProviderUtils, numberOfPoints);
+        whenAndThen(trackWithStats, numberOfPoints, distanceInterval);
+
+    }
+
+    private void whenAndThen(Pair<Track.Id, TrackStatistics> trackWithStats, int numberOfPoints, float distanceInterval) {
+        IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.of(distanceInterval), Distance.of(0));
         Track.Id trackId = trackWithStats.first;
         TrackStatistics trackStatistics = trackWithStats.second;
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, null)) {
@@ -127,18 +160,39 @@ public class IntervalStatisticsTest {
         List<IntervalStatistics.Interval> intervalList = intervalStatistics.getIntervalList();
         Distance totalDistance = Distance.of(0);
         float totalTime = 0L;
-        float totalGain = 0f;
+        Float totalGain = null;
+        Float totalLoss = null;
         for (IntervalStatistics.Interval i : intervalList) {
             totalDistance = totalDistance.plus(i.getDistance());
             totalTime += i.getDistance().toM() / i.getSpeed().toMPS();
-            totalGain += i.getGain_m();
+
+            if (totalGain == null) {
+                totalGain = i.getGain_m();
+            } else if (i.getGain_m() != null) {
+                totalGain += i.getGain_m();
+            }
+
+            if (totalLoss == null) {
+                totalLoss = i.getLoss_m();
+            } else if (i.getLoss_m() != null) {
+                totalLoss += i.getLoss_m();
+            }
         }
 
         // then
         assertEquals(trackStatistics.getTotalDistance().toM(), totalDistance.toM(), 0.01);
         assertEquals(trackStatistics.getTotalTime().toMillis(), totalTime * UnitConversions.S_TO_MS, 1);
         assertEquals(intervalList.size(), (int) Math.ceil(trackStatistics.getTotalDistance().toM() / distanceInterval));
-        assertEquals(totalGain, numberOfPoints * TestDataUtil.ALTITUDE_GAIN, 0.1);
+        if (totalGain != null) {
+            assertEquals(totalGain, numberOfPoints * TestDataUtil.ALTITUDE_GAIN, 0.1);
+        } else {
+            assertTrue(intervalStatistics.getIntervalList().stream().noneMatch(IntervalStatistics.Interval::hasGain));
+        }
+        if (totalLoss != null) {
+            assertEquals(totalLoss, numberOfPoints * TestDataUtil.ALTITUDE_LOSS, 0.1);
+        } else {
+            assertTrue(intervalStatistics.getIntervalList().stream().noneMatch(IntervalStatistics.Interval::hasLoss));
+        }
 
         for (int i = 0; i < intervalList.size() - 1; i++) {
             assertEquals(intervalList.get(i).getDistance().toM(), distanceInterval, 0.001);
