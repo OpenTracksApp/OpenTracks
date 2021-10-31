@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import java.time.Duration;
 import java.util.Objects;
 
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.UnitConversions;
 
 public class Speed {
@@ -25,6 +26,10 @@ public class Speed {
         return of(Float.parseFloat(speed_mps));
     }
 
+    public static Speed ofKMH(double speed_kmh) {
+        return of(Distance.ofKilometer(speed_kmh), Duration.ofHours(1));
+    }
+
     public static Speed zero() {
         return of(0.0);
     }
@@ -41,10 +46,6 @@ public class Speed {
         //TODO Why Math.abs? Seems to be a leftover.
         return Speed.of(Math.abs(speed1.speed_mps - speed2.speed_mps));
     }
-
-
-    // Anything faster than that (in meters per second) will be considered moving.
-    private static final double MAX_NO_MOVEMENT_SPEED = 0.224;
 
     private final double speed_mps;
 
@@ -65,7 +66,7 @@ public class Speed {
     }
 
     public boolean isMoving() {
-        return !isInvalid() && speed_mps >= MAX_NO_MOVEMENT_SPEED;
+        return !isInvalid() && greaterThan(PreferencesUtils.getIdleSpeed());
     }
 
     public boolean lessThan(Speed speed) {

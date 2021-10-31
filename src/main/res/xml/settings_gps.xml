@@ -27,4 +27,10 @@
         android:key="@string/recording_gps_accuracy_key"
         android:title="@string/settings_recording_min_required_accuracy_title" />
 
+    <ListPreference
+        android:defaultValue="@string/idle_speed_default"
+        android:entryValues="@array/idle_speed_values"
+        android:key="@string/idle_speed_key"
+        android:title="@string/settings_recording_idle_speed_title" />
+
 </PreferenceScreen>

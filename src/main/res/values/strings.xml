@@ -357,6 +357,7 @@ limitations under the License.
     <string name="settings_recording_track_name_date_local_option">Date (local)</string>
     <string name="settings_recording_track_name_number_option">Number</string>
     <string name="settings_recording_track_name_title">Default track name</string>
+    <string name="settings_recording_idle_speed_title">Idle speed threshold</string>
     <string name="settings_night_mode_title">UI Theme</string>
     <string name="settings_night_mode_option_system">System</string>
     <string name="settings_night_mode_option_day">Day</string>
@@ -473,12 +474,16 @@ limitations under the License.
     <string name="value_integer_feet_recommended">%1$d ft (recommended)</string>
     <string name="value_integer_kilometer">%1$d km</string>
     <string name="value_integer_kilometer_hour">%1$d km/h</string>
+    <string name="value_float_kilometer_hour">%1$.1f km/h</string>
+    <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (recommended)</string>
     <string name="value_integer_meter">%1$d m</string>
     <string name="value_integer_meter_excellent_gps">%1$d m (excellent GPS)</string>
     <string name="value_integer_meter_poor_gps">%1$d m (poor GPS)</string>
     <string name="value_integer_meter_recommended">%1$d m (recommended)</string>
     <string name="value_integer_mile">%1$d mi</string>
     <string name="value_integer_mile_hour">%1$d mi/h</string>
+    <string name="value_float_mile_hour">%1$.1f mi/h</string>
+    <string name="value_float_mile_hour_recommended">%1$.1f mi/h (recommended)</string>
     <string name="value_integer_minute">%1$d min</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">None</string>

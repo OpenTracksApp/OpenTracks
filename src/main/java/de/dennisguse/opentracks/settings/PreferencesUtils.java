@@ -42,6 +42,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.DataField;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Layout;
+import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.CsvConstants;
 import de.dennisguse.opentracks.util.TrackIconUtils;
@@ -440,6 +441,43 @@ public class PreferencesUtils {
                     entries[i] = resources.getString(R.string.value_integer_feet_excellent_gps, feet);
                 } else {
                     entries[i] = displayValue;
+                }
+            }
+        }
+
+        return entries;
+    }
+
+
+    public static Speed getIdleSpeed() {
+        final float DEFAULT = Float.parseFloat(resources.getString(R.string.idle_speed_default));
+        float value = getFloat(R.string.idle_speed_key, DEFAULT);
+        return Speed.ofKMH(value);
+    }
+
+    static String[] getIdleSpeedEntries() {
+        String[] entryValues = resources.getStringArray(R.array.idle_speed_values);
+        String[] entries = new String[entryValues.length];
+
+        final float idleSpeedDefault = Float.parseFloat(resources.getString(R.string.idle_speed_default));
+
+        boolean metricUnits = isMetricUnits();
+
+        for (int i = 0; i < entryValues.length; i++) {
+            float value = Float.parseFloat(entryValues[i]);
+            if (metricUnits) {
+                if (value == idleSpeedDefault) {
+                    entries[i] = resources.getString(R.string.value_float_kilometer_hour_recommended, value);
+                } else {
+                    entries[i] = resources.getString(R.string.value_float_kilometer_hour, value);
+                }
+            } else {
+                double valueMPH = Speed.ofKMH(value).toMPH();
+
+                if (value == idleSpeedDefault) {
+                    entries[i] = resources.getString(R.string.value_float_mile_hour_recommended, valueMPH);
+                } else {
+                    entries[i] = resources.getString(R.string.value_float_mile_hour, valueMPH);
                 }
             }
         }

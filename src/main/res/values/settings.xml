@@ -194,6 +194,21 @@
         <item>@string/recording_gps_accuracy_poor</item>
     </string-array>
 
+    <string name="idle_speed_key" translatable="false">idleSpeed</string>
+    <string name="idle_speed_default" translatable="false">0.5</string>
+    <string-array name="idle_speed_values">
+        <item>0.3</item>
+        <item>@string/idle_speed_default</item>
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+        <item>2.5</item>
+        <item>3</item>
+        <item>3.5</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
     <string name="stats_rate_key" translatable="false">statsRate</string>
     <string name="stats_rate_default" translatable="false">@string/stats_rate_speed_or_pace_default</string>
     <string-array name="stats_rate_imperial_options">
