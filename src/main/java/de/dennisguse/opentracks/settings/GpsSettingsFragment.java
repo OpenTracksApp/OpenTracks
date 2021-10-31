@@ -74,5 +74,8 @@ public class GpsSettingsFragment extends PreferenceFragmentCompat {
 
         ListPreference recordingGpsAccuracy = findPreference(getString(R.string.recording_gps_accuracy_key));
         recordingGpsAccuracy.setEntries(PreferencesUtils.getThresholdHorizontalAccuracyEntries());
+
+        ListPreference idleSpeed = findPreference(getString(R.string.idle_speed_key));
+        idleSpeed.setEntries(PreferencesUtils.getIdleSpeedEntries());
     }
 }
