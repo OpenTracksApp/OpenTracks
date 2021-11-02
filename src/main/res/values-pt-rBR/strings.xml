@@ -434,7 +434,7 @@
     <string name="sensor_state_heart_rate_avg">Ritmo cardíaco Avg</string>
     <string name="sensor_state_cadence_max">Ritmo cardíaco médio</string>
     <string name="sensor_state_cadence_avg">Avg Cadência</string>
-    <string name="settings_sensor_wheel_circumference">Circunferência da roda (mm)</string>
+    <string name="settings_sensor_wheel_circumference">Circunferência da Roda (mm)</string>
     <string name="track_distance_notification">Distância: %1$s</string>
     <string name="track_speed_notification">Velocidade: %1$s</string>
     <string name="track_pace_notification">Parcela: %1$s</string>
@@ -451,9 +451,9 @@
         <item quantity="one">%1$.1f milha por hora</item>
         <item quantity="other">%1$.1f milhas por hora</item>
     </plurals>
-    <string name="settings_sensor_cycling_cadence">Ciclismo: cadência</string>
-    <string name="settings_sensor_cycling_distance_speed">Ciclismo: distância e velocidade</string>
-    <string name="settings_sensor_running_speed_and_cadence">Corrida: distância, velocidade e cadência</string>
+    <string name="settings_sensor_cycling_cadence">Cadência</string>
+    <string name="settings_sensor_cycling_distance_speed">Distância e velocidade</string>
+    <string name="settings_sensor_running_speed_and_cadence">Distância, velocidade e cadência</string>
     <string name="stats_sensors_cadence">Cadência</string>
     <string name="description_speed_source_sensor">Sensor: %1$s</string>
     <string name="description_speed_source_gps">GPS</string>
@@ -464,7 +464,7 @@
     <string name="settings_announcements_distance_frequency">Intervalo de distância</string>
     <string name="settings_layout_reset_confirm_title">Redefinir seus layouts\?</string>
     <string name="settings_layout_reset_done">Todas as configurações de layout foram revertidas para os valores padrão</string>
-    <string name="settings_all_reset">Redefinir todas as configurações</string>
+    <string name="settings_all_reset">Redefinir</string>
     <string name="stats_coordinates">Latitude/Longitude</string>
     <string name="stats_sensors_power">Poder</string>
     <string name="location_coordinate">%1$s°</string>
@@ -479,4 +479,13 @@
     <string name="settings_layout_reset">Redefinir layout personalizado</string>
     <string name="settings_layout_reset_confirm_message">Todas as configurações de layout serão revertidas para os valores padrão. Isso não excluirá nenhuma trilha do dispositivo.</string>
     <string name="stats_sensors_heart_rate">Frequência cardíaca</string>
+    <string name="value_float_mile_hour">%1$.1f mi/h</string>
+    <string name="value_float_mile_hour_recommended">%1$.1f mi/h (Recomendado)</string>
+    <string name="settings_generic_sensor">Genérico</string>
+    <string name="settings_cycling_sensor">Ciclismo</string>
+    <string name="settings_running_sensor">Correndo</string>
+    <string name="settings_import_section">Importar</string>
+    <string name="settings_export_section">Exportar</string>
+    <string name="value_float_kilometer_hour">%1$.1f km/h</string>
+    <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (Recomendado)</string>
 </resources>
