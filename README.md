@@ -47,6 +47,15 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
         </td>
         <td></td>
     </tr>
+    <tr>
+        <td></td>
+        <td align="center">
+            <a href="https://www.amazon.de/dp/B09K2KNQ7X/">
+                <img alt="Get it on Amazon App Store" src="https://images-na.ssl-images-amazon.com/images/G/01/mobile-apps/devportal2/res/images/amazon-appstore-badge-english-white.png" height="40" align="middle">
+            </a>
+        </td>
+        <td></td>
+    </tr>
 </table>
 
 ## Screenshots
