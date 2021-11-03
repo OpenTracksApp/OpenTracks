@@ -186,9 +186,16 @@ class TrackRecordingManager {
                 // Do not insert if inserted already
                 Log.w(TAG, "Ignore insertTrackPoint. trackPoint time same as last valid trackId point time.");
             } else {
-                insertTrackPointHelper(trackId, lastTrackPoint);
-                // Remove the sensorDistance from trackPoint that is already going  be stored with lastTrackPoint.
-                trackPoint.minusCumulativeSensorData(lastTrackPoint);
+
+// The next line appears to be the cause of the extra points recorded
+// I don't know what this is necessary for. If it is related to the existence of SensorData, 
+// it would be necessary to check if the function was called for it
+
+                if trackPoint.hasSensorData() {
+                  insertTrackPointHelper(trackId, lastTrackPoint);
+                  // Remove the sensorDistance from trackPoint that is already going  be stored with lastTrackPoint.
+                  trackPoint.minusCumulativeSensorData(lastTrackPoint)
+                };
             }
             lastTrackPoint = null;
         }
