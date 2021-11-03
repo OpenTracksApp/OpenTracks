@@ -456,7 +456,7 @@ limitations under the License.
     <string name="settings_night_mode_title">Vzhled</string>
     <string name="settings_night_mode_option_day">Světlý</string>
     <string name="settings_night_mode_option_night">Tmavý</string>
-    <string name="settings_sensor_wheel_circumference">Obvod kola (mm)</string>
+    <string name="settings_sensor_wheel_circumference">Obvod kolečka (mm)</string>
     <string name="stats_split_interval">Rozdělit interval</string>
     <string name="track_detail_intervals_tab">Intervaly</string>
     <string name="voice_pace_lap">Čas na kolo %1$s</string>
@@ -513,9 +513,9 @@ limitations under the License.
     <string name="delete_service">Služba mazání</string>
     <string name="menu_voice_rate">Rychlost hlasových oznámení</string>
     <string name="track_delete_not_recording">Není možno vymazat aktuálně zaznamenávanou trasu.</string>
-    <string name="settings_sensor_cycling_distance_speed">Cyklistika: vzdálenost a rychlost</string>
-    <string name="settings_sensor_cycling_cadence">Cyklistika: kadence</string>
-    <string name="settings_sensor_running_speed_and_cadence">Běh: vzdálenost, rychlost a kadence</string>
+    <string name="settings_sensor_cycling_distance_speed">Vzdálenost a rychlost</string>
+    <string name="settings_sensor_cycling_cadence">Kadence</string>
+    <string name="settings_sensor_running_speed_and_cadence">Vzdálenost, rychlost a kadence</string>
     <string name="settings_recording_customize_layout_title">Přizpůsobit vzhled měření</string>
     <string name="settings_recording_customize_layout_select_columns">Počet polí na řádek</string>
     <string name="title_activity_settings_custom_layout">Přizpůsobit vzhled měření</string>
@@ -524,7 +524,7 @@ limitations under the License.
     <string name="field_remove_from_layout">Odstranit</string>
     <string name="settings_announcements_totaltime_frequency">Časový interval</string>
     <string name="settings_announcements_distance_frequency">Interval vzdálenosti</string>
-    <string name="settings_all_reset">Resetovat všechna nastavení</string>
+    <string name="settings_all_reset">Obnovení</string>
     <string name="settings_announcements">Oznámení</string>
     <string name="settings_layout_reset">Nastavit výchozí vzhled</string>
     <string name="settings_layout_reset_confirm_message">Všechna nastavení vzhledu se vrátí na výchozí hodnoty. Nebudou tím odstraněny žádné zaznamenané aktivity v zařízení.</string>
@@ -546,4 +546,9 @@ limitations under the License.
     <string name="settings_export_section">Exportovat</string>
     <string name="stats_sensors_power">Napájení</string>
     <string name="permission_bluetooth_failed_rejected">V nastavení systému je třeba ručně povolit aplikaci OpenTracks přístup k blízkým zařízením.</string>
+    <string name="value_float_mile_hour">%1$.1f mi/h</string>
+    <string name="value_float_mile_hour_recommended">%1$.1f mil/h (doporučeno)</string>
+    <string name="settings_recording_idle_speed_title">Prahová hodnota volnoběhu</string>
+    <string name="value_float_kilometer_hour">%1$.1f km/h</string>
+    <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (doporučeno)</string>
 </resources>
