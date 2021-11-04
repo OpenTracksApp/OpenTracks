@@ -191,10 +191,10 @@ class TrackRecordingManager {
 // I don't know what this is necessary for. If it is related to the existence of SensorData, 
 // it would be necessary to check if the function was called for it
 
-                if trackPoint.hasSensorData() {
+                if (trackPoint.hasSensorData()) {
                   insertTrackPointHelper(trackId, lastTrackPoint);
                   // Remove the sensorDistance from trackPoint that is already going  be stored with lastTrackPoint.
-                  trackPoint.minusCumulativeSensorData(lastTrackPoint)
+                  trackPoint.minusCumulativeSensorData(lastTrackPoint);
                 }
             }
             lastTrackPoint = null;
