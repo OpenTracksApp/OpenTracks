@@ -1,4 +1,4 @@
-OpenTracks er en sportsporingsapp som respekterer ditt personvern.
+OpenTracks er en app for opptak av sportsaktivitet som respekterer ditt personvern.
 
 Funksjoner:
 * Sportsporing: Registrer dine sports- og utendørsaktiviteter
