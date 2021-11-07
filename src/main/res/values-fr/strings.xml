@@ -514,7 +514,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="stats_coordinates">Latitude/Longitude</string>
     <string name="field_set_secondary">Secondaire</string>
     <string name="field_remove_from_layout">Retirer</string>
-    <string name="description_speed_source_sensor">Capteur : %1$s</string>
     <string name="description_speed_source_gps">GPS</string>
     <string name="generic_choose_an_option">Choisissez une option</string>
     <string name="stats_sensors_heart_rate">Fréquence cardiaque</string>

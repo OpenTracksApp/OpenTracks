@@ -510,7 +510,6 @@ limitations under the License.
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Giữ trên màn hình</string>
     <string name="bluetooth_disabled">Xin vui lòng cho phép Bluetooth.</string>
-    <string name="description_speed_source_sensor">Cảm biến: %1$s</string>
     <string name="sensor_state_cadence_avg">Nhịp trung bình</string>
     <string name="sensor_state_cadence_max">Nhịp tối đa</string>
     <string name="sensor_state_heart_rate_avg">Nhịp tim trung bình</string>

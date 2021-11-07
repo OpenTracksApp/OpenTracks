@@ -472,7 +472,6 @@
     <string name="settings_sensor_running_speed_and_cadence">Correr: Distancia, velocidad y cadencia</string>
     <string name="stats_coordinates">Latitud/Longitud</string>
     <string name="location_coordinate">%1$s°</string>
-    <string name="description_speed_source_sensor">Sensor: %1$s</string>
     <string name="title_activity_settings_custom_layout">Personalizar distribución de grabación</string>
     <string name="generic_choose_an_option">Selecciona una opción</string>
     <string name="settings_sensor_cycling_distance_speed">Ciclismo: Distancia y velocidad</string>
