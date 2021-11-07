@@ -60,7 +60,7 @@ public class StatisticDataBuilder {
 
             if (sensorDataSet != null && sensorDataSet.getSpeed() != null) {
                 valueAndUnit = StringUtils.getSpeedParts(context, sensorDataSet.getSpeed().first, metricUnits, reportSpeed);
-                description = context.getString(R.string.description_speed_source_sensor, sensorDataSet.getSpeed().second);
+                description = sensorDataSet.getSpeed().second;
             } else {
                 Speed speed = latestTrackPoint != null && latestTrackPoint.hasSpeed() ? latestTrackPoint.getSpeed() : null;
                 valueAndUnit = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);

@@ -503,7 +503,6 @@ limitations under the License.
     <string name="settings_sensor_cycling_cadence">Kadens</string>
     <string name="settings_sensor_cycling_distance_speed">Distanse og hastighet</string>
     <string name="settings_sensor_running_speed_and_cadence">Distanse, hastighet og kadens</string>
-    <string name="description_speed_source_sensor">Sensor: %1$s</string>
     <string name="settings_recording_customize_layout_title">Tilpass opptakslayouten</string>
     <string name="settings_layout_reset_confirm_message">Alle layoutinnstillinger blir tilbakestilt til standardverdiene. Dette vil ikke slette spor på enheten.</string>
     <string name="stats_coordinates">Breddegrad/Lengdegrad</string>

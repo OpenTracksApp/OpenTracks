@@ -515,7 +515,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_sensor_cycling_distance_speed">Distancia e Velocidade</string>
     <string name="settings_sensor_cycling_cadence">Cadencia</string>
     <string name="settings_sensor_running_speed_and_cadence">Distancia, Velocidade e Cadencia</string>
-    <string name="description_speed_source_sensor">Sensor: %1$s</string>
     <string name="settings_recording_customize_layout_title">Personaliza a disposición da gravación</string>
     <string name="settings_layout_reset_confirm_message">Os axustes da disposición volverán aos valores por defecto. Esto non eliminará as rutas no dispositivo.</string>
     <string name="stats_coordinates">Latitude/Lonxitude</string>

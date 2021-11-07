@@ -526,7 +526,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="location_coordinate">%1$s°</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="field_remove_from_layout">Remover</string>
-    <string name="description_speed_source_sensor">Sensor: %1$s</string>
     <string name="generic_choose_an_option">Seleccione una opción</string>
     <string name="settings_layout_reset">Restabecer pantalla personalizada</string>
     <string name="stats_coordinates">Latitud/Longitud</string>

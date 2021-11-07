@@ -455,7 +455,6 @@
     <string name="settings_sensor_cycling_distance_speed">Distância e velocidade</string>
     <string name="settings_sensor_running_speed_and_cadence">Distância, velocidade e cadência</string>
     <string name="stats_sensors_cadence">Cadência</string>
-    <string name="description_speed_source_sensor">Sensores: %1$s</string>
     <string name="description_speed_source_gps">GPS</string>
     <string name="settings_recording_customize_layout_title">Personalize seu layout de gravação</string>
     <string name="settings_recording_customize_layout_select_columns">Campos de dados por linha</string>

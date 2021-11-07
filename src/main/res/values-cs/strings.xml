@@ -532,7 +532,6 @@ limitations under the License.
     <string name="settings_layout_reset_done">Všechna nastavení vzhledu byla vrácena na výchozí hodnoty</string>
     <string name="stats_coordinates">Zeměpisná šířka a délka</string>
     <string name="stats_sensors_cadence">Kadence</string>
-    <string name="description_speed_source_sensor">Senzor: %1$s</string>
     <string name="description_speed_source_gps">GPS</string>
     <string name="generic_choose_an_option">Zvolit možnost</string>
     <string name="permission_bluetooth_failed">OpenTracks vyžaduje povolení k používání Bluetoothu.</string>
