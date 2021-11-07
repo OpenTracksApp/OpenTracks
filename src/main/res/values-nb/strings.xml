@@ -533,8 +533,8 @@ limitations under the License.
     <string name="settings_import_section">Import</string>
     <string name="settings_export_section">Eksport</string>
     <string name="value_float_kilometer_hour">%1$.1f km/t</string>
-    <string name="value_float_kilometer_hour_recommended">%1$.1f km/t (anbefalt)</string>
-    <string name="settings_recording_idle_speed_title">Idle hastighet terskel</string>
+    <string name="value_float_kilometer_hour_recommended">%1$.1f km/t (anbefales)</string>
+    <string name="settings_recording_idle_speed_title">Terskel for tomgangshastighet</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
-    <string name="value_float_mile_hour_recommended">%1$.1f mi/h (anbefalt)</string>
+    <string name="value_float_mile_hour_recommended">%1$.1f mi/h (anbefales)</string>
 </resources>
