@@ -1,6 +1,5 @@
 package de.dennisguse.opentracks.content.data;
 
-import android.content.Context;
 import android.content.res.Resources;
 
 import de.dennisguse.opentracks.R;

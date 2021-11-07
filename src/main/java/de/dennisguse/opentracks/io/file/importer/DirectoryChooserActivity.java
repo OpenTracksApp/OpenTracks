@@ -38,11 +38,6 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
         onActivityResultCustom(requestCode, resultCode, resultData);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     protected void onActivityResultCustom(int requestCode, int resultCode, @Nullable Intent resultData) {
         if (requestCode == DIRECTORY_PICKER_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
