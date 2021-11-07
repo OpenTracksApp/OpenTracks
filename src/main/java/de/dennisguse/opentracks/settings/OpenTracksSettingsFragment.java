@@ -1,10 +1,7 @@
 package de.dennisguse.opentracks.settings;
 
 import android.os.Bundle;
-import android.util.Log;
 
-import androidx.fragment.app.DialogFragment;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import de.dennisguse.opentracks.R;

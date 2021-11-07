@@ -25,12 +25,6 @@ limitations under the License.
         <item name="windowActionModeOverlay">true</item>
     </style>
 
-    <style name="TrackDeleteActivity" parent="ThemeCustom">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowIsFloating">true</item>
-    </style>
-
     <style name="SplashTheme" parent="ThemeCustom">
         <item name="android:statusBarColor">@color/splashscreen_background</item>
         <item name="android:navigationBarColor">@color/splashscreen_background</item>

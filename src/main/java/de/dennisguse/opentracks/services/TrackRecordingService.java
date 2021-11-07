@@ -99,7 +99,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            Context context = TrackRecordingService.this;
             if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
                 boolean metricUnits = PreferencesUtils.isMetricUnits();
                 notificationManager.setMetricUnits(metricUnits);

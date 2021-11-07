@@ -3,7 +3,6 @@ package de.dennisguse.opentracks;
 import android.app.Application;
 import android.content.Context;
 
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.runner.AndroidJUnitRunner;
 
 public class TestRunner extends AndroidJUnitRunner {
