@@ -349,19 +349,6 @@ public class TrackPoint {
         return this;
     }
 
-    public TrackPoint minusCumulativeSensorData(@NonNull TrackPoint lastTrackPoint) {
-        if (hasSensorDistance() && lastTrackPoint.hasSensorDistance()) {
-            sensorDistance = sensorDistance.minus(lastTrackPoint.getSensorDistance());
-        }
-        if (hasAltitudeGain() && lastTrackPoint.hasAltitudeGain()) {
-            altitudeGain_m -= lastTrackPoint.altitudeGain_m;
-        }
-        if (hasAltitudeLoss() && lastTrackPoint.hasAltitudeLoss()) {
-            altitudeLoss_m -= lastTrackPoint.altitudeLoss_m;
-        }
-        return this;
-    }
-
     public boolean hasSensorData() {
         return hasHeartRate() || hasCadence() || hasPower();
     }
