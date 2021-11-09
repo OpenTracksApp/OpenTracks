@@ -30,6 +30,12 @@ def getVersionName = { ->
     }
 }
 
+def versionCodeFromDate = { ->
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMdd')
+    return Integer.valueOf(formattedDate)
+}
+
 android {
     compileOptions {
         coreLibraryDesugaringEnabled true
@@ -41,7 +47,7 @@ android {
     compileSdkVersion 31
 
     buildFeatures {
-        viewBinding = true
+        viewBinding true
     }
 
     aaptOptions {
@@ -82,7 +88,6 @@ android {
         nightly {
             signingConfig signingConfigs.nightly
             applicationIdSuffix ".nightly"
-            versionNameSuffix "-nightly"
         }
 
         release {
@@ -97,6 +102,14 @@ android {
 
     applicationVariants.all { variant ->
         variant.resValue "string", "applicationId", variant.applicationId
+
+        if (variant.buildType.name == 'nightly') {
+            variant.outputs.all {
+                setVersionCodeOverride(versionCodeFromDate())
+                setVersionNameOverride(getVersionName())
+                outputFileName = "${applicationId}_${variant.versionCode}.apk"
+            }
+        }
     }
 }
 
