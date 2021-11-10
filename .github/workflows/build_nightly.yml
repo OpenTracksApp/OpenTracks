@@ -29,6 +29,6 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: OpenTracks-nightly.apk
-          path: ./build/outputs/apk/nightly/OpenTracks-nightly.apk
+          path: ./build/outputs/apk/nightly/*.apk
           retention-days: 7
 
