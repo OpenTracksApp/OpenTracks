@@ -175,8 +175,8 @@ public class BluetoothUtils {
             index += 2;
         }
 
-        if (hasTotalDistance && valueLength - index >= 2) {
-            totalDistance = Distance.ofDM(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index));
+        if (hasTotalDistance && valueLength - index >= 4) {
+            totalDistance = Distance.ofDM(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, index));
         }
 
         return new SensorDataRunning(address, sensorName, speed, cadence, totalDistance);

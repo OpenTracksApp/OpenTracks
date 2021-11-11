@@ -93,8 +93,8 @@ public class BluetoothUtilsTest {
 
     @Test
     public void parseRunningSpeedAndCadence_with_distance() {
-        BluetoothGattCharacteristic characteristic = new BluetoothGattCharacteristic(BluetoothUtils.CYCLING_SPEED_CADENCE_MEASUREMENT_CHAR_UUID, 0, 0);
-        characteristic.setValue(new byte[]{2, 0, 5, 80, 12, 1});
+        BluetoothGattCharacteristic characteristic = new BluetoothGattCharacteristic(BluetoothUtils.RUNNING_RUNNING_SPEED_CADENCE_CHAR_UUID, 0, 0);
+        characteristic.setValue(new byte[]{2, 0, 5, 80, (byte) 0xFF, (byte) 0xFF, 0, 1});
 
         // when
         SensorDataRunning sensor = BluetoothUtils.parseRunningSpeedAndCadence("address", "sensorName", characteristic);
@@ -102,6 +102,6 @@ public class BluetoothUtilsTest {
         // then
         assertEquals(Speed.of(5), sensor.getSpeed());
         assertEquals(80, sensor.getCadence(), 0.01);
-        assertEquals(Distance.of(26.8), sensor.getTotalDistance());
+        assertEquals(Distance.of(6553.5 + 1677721.6), sensor.getTotalDistance());
     }
 }
