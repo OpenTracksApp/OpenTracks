@@ -354,6 +354,7 @@
     <string name="stats_custom_layout_cadence_key" translatable="false">cadence</string>
     <string name="stats_custom_layout_average_cadence_key" translatable="false">average_cadence</string>
     <string name="stats_custom_layout_power_key" translatable="false">power</string>
+    <string name="stats_custom_layout_clock_key" translatable="false">time</string>
     <!--
     Default dataFields for stats layout customization in a set of arrays.
     Every array has two items:
@@ -431,6 +432,10 @@
     </string-array>
     <string-array name="stats_custom_layout_fields_default_value_17">
         <item>@string/stats_custom_layout_power_key</item>
+        <item>0,0,0</item>
+    </string-array>
+    <string-array name="stats_custom_layout_fields_default_value_18">
+        <item>@string/stats_custom_layout_clock_key</item>
         <item>0,0,0</item>
     </string-array>
 

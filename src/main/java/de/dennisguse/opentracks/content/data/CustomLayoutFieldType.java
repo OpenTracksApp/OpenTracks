@@ -1,8 +1,8 @@
-package de.dennisguse.opentracks.adapters;
+package de.dennisguse.opentracks.content.data;
 
-enum CustomLayoutFieldType {
-    SHORT(0),
-    WIDE(1);
+public enum CustomLayoutFieldType {
+    GENERIC(1),
+    CLOCK(2);
 
     private final int value;
 

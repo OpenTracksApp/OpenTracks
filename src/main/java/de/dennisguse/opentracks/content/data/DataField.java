@@ -1,5 +1,6 @@
 package de.dennisguse.opentracks.content.data;
 
+import android.content.Context;
 import android.content.res.Resources;
 
 import de.dennisguse.opentracks.R;
@@ -51,6 +52,14 @@ public class DataField {
         return isWide;
     }
 
+    public CustomLayoutFieldType getType(Context context) {
+        if (key.equals(context.getString(R.string.stats_custom_layout_clock_key))) {
+            return CustomLayoutFieldType.CLOCK;
+        } else {
+            return CustomLayoutFieldType.GENERIC;
+        }
+    }
+
     public String toCsv() {
         String visible = this.isVisible ? YES_VALUE : NOT_VALUE;
         String primary = this.isPrimary ? YES_VALUE : NOT_VALUE;
@@ -94,6 +103,8 @@ public class DataField {
             return resources.getString(R.string.stats_sensors_cadence);
         } else if (key.equals(resources.getString(R.string.stats_custom_layout_power_key))) {
             return resources.getString(R.string.stats_sensors_power);
+        } else if (key.equals(resources.getString(R.string.stats_custom_layout_clock_key))) {
+            return resources.getString(R.string.stats_clock);
         } else {
             throw new RuntimeException("It doesn't exists a field with key: " + key);
         }

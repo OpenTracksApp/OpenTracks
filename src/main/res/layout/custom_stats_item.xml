@@ -26,7 +26,7 @@
             android:id="@+id/stats_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            layout="@layout/stats_item"
+            layout="@layout/stats_generic_item"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toEndOf="@id/stats_iv_drag_indicator"
             app:layout_constraintEnd_toStartOf="@id/stats_icon_show_status"

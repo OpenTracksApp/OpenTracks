@@ -61,13 +61,8 @@ public class SettingsCustomLayoutAdapter extends RecyclerView.Adapter<RecyclerVi
         }
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return layout.getFields().get(position).isWide() ? CustomLayoutFieldType.WIDE.value() : CustomLayoutFieldType.SHORT.value();
-    }
-
     public boolean isItemWide(int position) {
-        return getItemViewType(position) == CustomLayoutFieldType.WIDE.value();
+        return layout.getFields().get(position).isWide();
     }
 
     public DataField getItem(int position) {
