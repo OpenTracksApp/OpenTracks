@@ -62,13 +62,8 @@ public class VoiceAnnouncementManager {
         voiceAnnouncement.start();
 
         this.trackStatistics = trackStatistics;
-
-        if (!totalTimeFrequency.isZero()) {
-            nextTotalTime = calculateNextDuration();
-        }
-        if (!distanceFrequency.isZero()) {
-            nextTotalDistance = calculateNextTaskDistance();
-        }
+        updateNextDuration();
+        updateNextTaskDistance();
     }
 
     public void update(@NonNull Track track) {
@@ -80,11 +75,11 @@ public class VoiceAnnouncementManager {
         boolean announce = false;
         this.trackStatistics = track.getTrackStatistics();
         if (trackStatistics.getTotalDistance().greaterThan(nextTotalDistance)) {
-            nextTotalDistance = calculateNextTaskDistance();
+            updateNextTaskDistance();
             announce = true;
         }
         if (!trackStatistics.getTotalTime().minus(nextTotalTime).isNegative()) {
-            nextTotalTime = calculateNextDuration();
+            updateNextDuration();
             announce = true;
         }
 
@@ -110,27 +105,29 @@ public class VoiceAnnouncementManager {
         restore(this.trackStatistics);
     }
 
-    @VisibleForTesting
-    public Distance calculateNextTaskDistance() {
-        if (trackStatistics == null) {
-            return DISTANCE_OFF;
+    public void updateNextTaskDistance() {
+        if (trackStatistics == null || distanceFrequency.isZero()) {
+            nextTotalDistance = DISTANCE_OFF;
+        } else {
+
+            Distance distance = trackStatistics.getTotalDistance();
+
+            int index = (int) (distance.dividedBy(distanceFrequency));
+            nextTotalDistance = distanceFrequency.multipliedBy(index + 1);
         }
 
-        Distance distance = trackStatistics.getTotalDistance();
-
-        int index = (int) (distance.dividedBy(distanceFrequency));
-        return distanceFrequency.multipliedBy(index + 1);
     }
 
-    private Duration calculateNextDuration() {
-        if (trackStatistics == null) {
-            return TOTALTIME_OFF;
+    private void updateNextDuration() {
+        if (trackStatistics == null || totalTimeFrequency.isZero()) {
+            nextTotalTime = TOTALTIME_OFF;
+        } else {
+
+            Duration totalTime = trackStatistics.getTotalTime();
+            Duration intervalMod = Duration.ofMillis(trackStatistics.getTotalTime().toMillis() % totalTimeFrequency.toMillis());
+
+            nextTotalTime = totalTime.plus(totalTimeFrequency.minus(intervalMod));
         }
-
-        Duration totalTime = trackStatistics.getTotalTime();
-        Duration intervalMod = Duration.ofMillis(trackStatistics.getTotalTime().toMillis() % totalTimeFrequency.toMillis());
-
-        return totalTime.plus(totalTimeFrequency.minus(intervalMod));
     }
 
     @VisibleForTesting
