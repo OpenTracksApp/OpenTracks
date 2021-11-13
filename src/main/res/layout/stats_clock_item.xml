@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp">
+
+    <TextClock
+        android:id="@+id/stats_clock"
+        style="@style/StatsPrimaryValue"
+        android:value="@string/value_unknown"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="00:00" />
+
+    <TextView
+        android:id="@+id/stats_description_main"
+        style="@style/StatsPrimaryLabel"
+        android:text="@string/stats_clock"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stats_clock" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

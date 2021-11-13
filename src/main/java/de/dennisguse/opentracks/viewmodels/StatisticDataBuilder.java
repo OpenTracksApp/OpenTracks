@@ -137,6 +137,9 @@ public class StatisticDataBuilder {
                 valueAndUnit = StringUtils.getPowerParts(context, null);
                 description = sensorUnknown;
             }
+        } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_clock_key))) {
+            title = context.getString(R.string.stats_clock);
+            valueAndUnit = new Pair<>(null, null);
         }
 
         if (valueAndUnit == null) {

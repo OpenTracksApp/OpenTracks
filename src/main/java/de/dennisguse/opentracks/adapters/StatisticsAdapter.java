@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.content.data.CustomLayoutFieldType;
 import de.dennisguse.opentracks.viewmodels.StatisticData;
 
 public class StatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -28,15 +30,26 @@ public class StatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stats_item, parent, false);
-        return new StatisticsAdapter.ViewHolder(view);
+        View view;
+        if (viewType == CustomLayoutFieldType.CLOCK.value()) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stats_clock_item, parent, false);
+            return new StatisticsAdapter.ViewClockHolder(view);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stats_generic_item, parent, false);
+            return new StatisticsAdapter.ViewHolder(view);
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        StatisticsAdapter.ViewHolder viewHolder = (StatisticsAdapter.ViewHolder) holder;
         StatisticData statisticData = statisticDataList.get(position);
-        viewHolder.setData(statisticData);
+        if (getItemViewType(position) == CustomLayoutFieldType.CLOCK.value()) {
+            StatisticsAdapter.ViewClockHolder viewHolder = (StatisticsAdapter.ViewClockHolder) holder;
+            viewHolder.setData(statisticData);
+        } else {
+            StatisticsAdapter.ViewHolder viewHolder = (StatisticsAdapter.ViewHolder) holder;
+            viewHolder.setData(statisticData);
+        }
     }
 
     @Override
@@ -50,11 +63,15 @@ public class StatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemViewType(int position) {
-        return statisticDataList.get(position).getField().isWide() ? CustomLayoutFieldType.WIDE.value() : CustomLayoutFieldType.SHORT.value();
+        if (statisticDataList.get(position).getField().getType(context) == CustomLayoutFieldType.CLOCK) {
+            return CustomLayoutFieldType.CLOCK.value();
+        } else {
+            return CustomLayoutFieldType.GENERIC.value();
+        }
     }
 
     public boolean isItemWide(int position) {
-        return getItemViewType(position) == CustomLayoutFieldType.WIDE.value();
+        return statisticDataList.get(position).getField().isWide();
     }
 
     public List<StatisticData> swapData(List<StatisticData> data) {
@@ -113,6 +130,25 @@ public class StatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             } else {
                 this.descSecondary.setVisibility(View.GONE);
             }
+        }
+    }
+
+    private class ViewClockHolder extends RecyclerView.ViewHolder {
+        final TextClock value;
+        final TextView descMain;
+
+        public ViewClockHolder(@NonNull View itemView) {
+            super(itemView);
+            value = itemView.findViewById(R.id.stats_clock);
+            descMain = itemView.findViewById(R.id.stats_description_main);
+        }
+
+        public void setData(StatisticData statisticData) {
+            if (statisticData == null) {
+                return;
+            }
+            this.value.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.StatsPrimaryValue : R.style.StatsSecondaryValue);
+            this.descMain.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.StatsPrimaryLabel : R.style.StatsSecondaryLabel);
         }
     }
 
