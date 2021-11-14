@@ -549,4 +549,5 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="value_float_mile_hour">%1$.1f km/h</string>
     <string name="value_float_mile_hour_recommended">%1$.1f km/h (recomendado)</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (recomendado)</string>
+    <string name="stats_clock">Reloxo</string>
 </resources>
