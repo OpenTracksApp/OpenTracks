@@ -488,4 +488,5 @@
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (Recomendado)</string>
     <string name="settings_recording_idle_speed_title">Limite de velocidade de marcha lenta</string>
+    <string name="stats_clock">Relógio</string>
 </resources>
