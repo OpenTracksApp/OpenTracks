@@ -550,4 +550,5 @@ limitations under the License.
     <string name="settings_recording_idle_speed_title">Prahová hodnota volnoběhu</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (doporučeno)</string>
+    <string name="stats_clock">Hodiny</string>
 </resources>
