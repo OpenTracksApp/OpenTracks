@@ -456,7 +456,7 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="settings_night_mode_option_day">Claro</string>
     <string name="settings_night_mode_option_night">Oscuro</string>
     <string name="settings_night_mode_title">Elegir un tema</string>
-    <string name="settings_sensor_wheel_circumference">Perímetro de la rueda (mm)</string>
+    <string name="settings_sensor_wheel_circumference">Circunferencia de la rueda (mm)</string>
     <string name="stats_split_interval">Intervalo</string>
     <string name="track_detail_intervals_tab">Intervalos</string>
     <string name="aggregated_stats_empty_message">Graba tu primera pista para ver estadísticas agregadas</string>
@@ -506,9 +506,9 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="menu_voice_rate">Velocidad de voz</string>
     <string name="track_delete_not_recording">Esta pista no se puede borrar, ya que está grabada.</string>
-    <string name="settings_sensor_running_speed_and_cadence">Correr: distancia, velocidad y cadencia</string>
-    <string name="settings_sensor_cycling_distance_speed">Ciclismo: distancia y velocidad</string>
-    <string name="settings_sensor_cycling_cadence">Ciclismo: cadencia</string>
+    <string name="settings_sensor_running_speed_and_cadence">Distancia, velocidad y cadencia</string>
+    <string name="settings_sensor_cycling_distance_speed">Distancia y velocidad</string>
+    <string name="settings_sensor_cycling_cadence">Cadencia</string>
     <string name="settings_announcements">Avisos</string>
     <string name="settings_announcements_totaltime_frequency">Intervalo de tiempo</string>
     <string name="settings_announcements_distance_frequency">Intervalo de distancia</string>
@@ -522,7 +522,7 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="settings_layout_reset_confirm_message">Todas los ajustes de distribución se revertirán a los valores por defecto. Esto no eliminará ningún recorrido en el dispositivo.</string>
     <string name="settings_layout_reset_confirm_title">¿Restablecer todas las disposiciones\?</string>
     <string name="settings_layout_reset_done">Todos los ajustes de disposición se han revertido a los valores por defecto</string>
-    <string name="settings_all_reset">Restablecer todos los ajustes</string>
+    <string name="settings_all_reset">Reiniciar</string>
     <string name="location_coordinate">%1$s°</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="field_remove_from_layout">Remover</string>
@@ -531,4 +531,17 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="stats_coordinates">Latitud/Longitud</string>
     <string name="title_activity_settings_custom_layout">Personalizar la pantalla de grabación</string>
     <string name="field_set_secondary">Secundario</string>
+    <string name="value_float_kilometer_hour">%1$.1f km/h</string>
+    <string name="value_float_mile_hour">%1$.1f mi/h</string>
+    <string name="value_float_mile_hour_recommended">%1$.1f mi/h (recomendado)</string>
+    <string name="settings_recording_idle_speed_title">Umbral de velocidad de ralentí</string>
+    <string name="stats_clock">Reloj</string>
+    <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (recomendado)</string>
+    <string name="settings_generic_sensor">Genérico</string>
+    <string name="settings_cycling_sensor">Ciclismo</string>
+    <string name="permission_bluetooth_failed">OpenTracks requiere un permiso para utilizar el Bluetooth.</string>
+    <string name="permission_bluetooth_failed_rejected">Es necesario conceder manualmente a OpenTracks el acceso a los Dispositivos Cercanos en la configuración del sistema.</string>
+    <string name="settings_running_sensor">Corriendo</string>
+    <string name="settings_import_section">Importar</string>
+    <string name="settings_export_section">Exportar</string>
 </resources>
