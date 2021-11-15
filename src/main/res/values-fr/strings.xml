@@ -457,7 +457,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="open_track_as_GPX">Ouvert en tant que GPX</string>
     <string name="open_track_as_trackfileformat">Ouvrir comme %1$s</string>
     <string name="activity_type_escooter">éscooter</string>
-    <string name="settings_sensor_wheel_circumference">Circonférence de roue (millimètre)</string>
+    <string name="settings_sensor_wheel_circumference">Circonférence de la roue (mm)</string>
     <string name="export_error_post_workout">L\'exportation du post-travail a échoué, veuillez vérifier le répertoire d\'exportation.</string>
     <string name="export_all_do_it_for_all">le faire pour tous les conflits</string>
     <string name="export_track_errors">Traces non exportées</string>
@@ -506,9 +506,9 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="delete_service">Service de suppression</string>
     <string name="menu_voice_rate">Vitesse vocale</string>
     <string name="track_delete_not_recording">Cette piste ne peut pas être supprimée car elle est en cours d\'enregistrement.</string>
-    <string name="settings_sensor_cycling_distance_speed">Cyclisme : distance et vitesse</string>
-    <string name="settings_sensor_cycling_cadence">Vélo : cadence</string>
-    <string name="settings_sensor_running_speed_and_cadence">Course à pied : distance, vitesse et cadence</string>
+    <string name="settings_sensor_cycling_distance_speed">Distance et vitesse</string>
+    <string name="settings_sensor_cycling_cadence">Cadre</string>
+    <string name="settings_sensor_running_speed_and_cadence">Distance, vitesse et cadence</string>
     <string name="settings_layout_reset">Réinitialiser la disposition personnalisée</string>
     <string name="settings_layout_reset_confirm_message">Tous les paramètres de disposition reviendront à leur valeur par défaut. Ceci ne supprimera aucun parcours de l\'appareil.</string>
     <string name="stats_coordinates">Latitude/Longitude</string>
@@ -526,11 +526,22 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_announcements_distance_frequency">Intervalle de distance</string>
     <string name="settings_layout_reset_confirm_title">Réinitialiser vos dispositions \?</string>
     <string name="settings_layout_reset_done">Tous les paramètres pas défaut sont revenus à leur valeur par défaut</string>
-    <string name="settings_all_reset">Réinitialiser tous les paramètres</string>
+    <string name="settings_all_reset">Réinitialiser</string>
     <string name="location_coordinate">%1$s°</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="title_activity_settings_custom_layout">Personnaliser la disposition d\'enregistrement</string>
     <string name="permission_bluetooth_failed">OpenTracks a besoin de la permission d\'utiliser le Bluetooth.</string>
     <string name="settings_recording_customize_layout_select_columns">Champs de données pas rangée</string>
     <string name="field_set_primary">Principal</string>
+    <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (recommandé)</string>
+    <string name="value_float_mile_hour">%1$.1f mi/h</string>
+    <string name="value_float_mile_hour_recommended">%1$.1f mi/h (recommandé)</string>
+    <string name="settings_recording_idle_speed_title">Seuil de vitesse au ralenti</string>
+    <string name="stats_clock">Horloge</string>
+    <string name="value_float_kilometer_hour">%1$.1f km/h</string>
+    <string name="settings_generic_sensor">Générique</string>
+    <string name="settings_cycling_sensor">Cyclisme</string>
+    <string name="settings_running_sensor">Courant</string>
+    <string name="settings_import_section">Importer</string>
+    <string name="settings_export_section">Exporter</string>
 </resources>
