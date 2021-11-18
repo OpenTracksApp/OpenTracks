@@ -20,14 +20,11 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.internal.debugging.LocationImpl;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
@@ -346,46 +343,6 @@ public class TrackRecordingServiceTestLocation {
                         .setLatitude(45)
                         .setLongitude(35)
                         .setHorizontalAccuracy(Distance.of(1))
-                        .setSpeed(Speed.of(0))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f)
-                        .setHeartRate_bpm(5f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(2))
-                        .setSpeed(Speed.of(0))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f)
-                        .setHeartRate_bpm(5f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(3))
-                        .setSpeed(Speed.of(0))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f)
-                        .setHeartRate_bpm(5f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(4))
-                        .setSpeed(Speed.of(0))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f)
-                        .setHeartRate_bpm(5f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(5))
-                        .setSpeed(Speed.of(0))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f)
-                        .setHeartRate_bpm(5f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(6))
                         .setSpeed(Speed.of(0))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f)
