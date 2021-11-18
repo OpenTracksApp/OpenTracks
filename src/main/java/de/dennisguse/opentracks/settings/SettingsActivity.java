@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -31,7 +32,8 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
 
         if (savedInstanceState != null) {
             fragment = (PreferenceFragmentCompat) getSupportFragmentManager().getFragment(savedInstanceState, FRAGMENT_KEY);
-        } else {
+        }
+        if (fragment == null) {
             fragment = new MainSettingsFragment();
         }
 
@@ -55,9 +57,11 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        getSupportFragmentManager().putFragment(outState, FRAGMENT_KEY, fragment);
+        if (fragment != null && fragment.isAdded()) {
+            getSupportFragmentManager().putFragment(outState, FRAGMENT_KEY, fragment);
+        }
     }
 
     @Override
