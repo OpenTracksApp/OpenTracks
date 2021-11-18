@@ -62,7 +62,7 @@ public class TrackStatisticsUpdater {
     private final TrackStatistics trackStatistics;
 
     private final DoubleRingBuffer altitudeBuffer_m;
-    private final DoubleRingBuffer speedBuffer_mps;
+    // private final DoubleRingBuffer speedBuffer_mps;
 
     // The current segment's statistics
     private final TrackStatistics currentSegment;
