@@ -69,6 +69,8 @@ public abstract class BluetoothConnectionManager<DataType> {
 
                 case BluetoothProfile.STATE_DISCONNECTED:
                     Log.d(TAG, "Disconnected from sensor: " + gatt.getDevice());
+
+                    clearData();
                     break;
             }
         }
@@ -130,14 +132,18 @@ public abstract class BluetoothConnectionManager<DataType> {
         observer.onChanged(sensorData);
     }
 
+    private synchronized void clearData() {
+        observer.onDisconnecting(createEmptySensorData(bluetoothGatt.getDevice().getAddress()));
+    }
+
+
     synchronized void disconnect() {
         if (bluetoothGatt == null) {
             Log.w(TAG, "Cannot disconnect if not connected.");
             return;
         }
         bluetoothGatt.close();
-        observer.onDisconnecting(createEmptySensorData(bluetoothGatt.getDevice().getAddress()));
-
+        clearData();
         bluetoothGatt = null;
     }
 
