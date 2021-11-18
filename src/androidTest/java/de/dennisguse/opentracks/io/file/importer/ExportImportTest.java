@@ -124,7 +124,7 @@ public class ExportImportTest {
         trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         trackId = service.startNewTrack();
 
-        Distance sensorDistance = hasSensorDistance ? Distance.of(5) : null;
+        Distance sensorDistance = hasSensorDistance ? Distance.of(10) : null; // recording distance interval
 
         sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:03Z"), 3, 14, 10, 15, 10, 1, 66, 3, 50, sensorDistance);
         service.insertMarker("Marker 1", "Marker 1 category", "Marker 1 desc", null);
@@ -218,12 +218,12 @@ public class ExportImportTest {
         assertEquals(Duration.ofSeconds(4), importedTrackStatistics.getMovingTime());
 
         // Distance
-        assertEquals(Distance.of(30), importedTrackStatistics.getTotalDistance());
+        assertEquals(Distance.of(60), importedTrackStatistics.getTotalDistance());
 
         // Speed
         assertEquals(Speed.of(15), importedTrackStatistics.getMaxSpeed());
-        assertEquals(Speed.of(3.75), importedTrackStatistics.getAverageSpeed());
-        assertEquals(Speed.of(7.5), importedTrackStatistics.getAverageMovingSpeed());
+        assertEquals(Speed.of(7.5), importedTrackStatistics.getAverageSpeed());
+        assertEquals(Speed.of(15), importedTrackStatistics.getAverageMovingSpeed());
 
         // Altitude
         assertEquals(10, importedTrackStatistics.getMinAltitude(), 0.01);
@@ -316,12 +316,12 @@ public class ExportImportTest {
         assertEquals(Duration.ofSeconds(19), importedTrackStatistics.getMovingTime());
 
         // Distance
-        assertEquals(Distance.of(30), importedTrackStatistics.getTotalDistance());
+        assertEquals(Distance.of(60), importedTrackStatistics.getTotalDistance());
 
         // Speed
         assertEquals(Speed.of(15), importedTrackStatistics.getMaxSpeed());
-        assertEquals(Speed.of(1.5), importedTrackStatistics.getAverageSpeed());
-        assertEquals(Speed.of(1.5789473684210527), importedTrackStatistics.getAverageMovingSpeed());
+        assertEquals(Speed.of(3.0), importedTrackStatistics.getAverageSpeed());
+        assertEquals(Speed.of(3.1578947368421053), importedTrackStatistics.getAverageMovingSpeed());
 
         // Altitude
         assertEquals(10, importedTrackStatistics.getMinAltitude(), 0.01);

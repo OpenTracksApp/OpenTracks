@@ -17,9 +17,9 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
-import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackNameUtils;
 
@@ -161,7 +161,7 @@ class TrackRecordingManager {
                 return true;
             }
 
-            if (trackPoint.hasSensorData() || (distanceToLastTrackLocation.greaterOrEqualThan(recordingDistanceInterval) && trackPoint.isMoving())) {
+            if (distanceToLastTrackLocation.greaterOrEqualThan(recordingDistanceInterval) && trackPoint.isMoving()) {
                 insertTrackPoint(trackId, trackPoint);
                 return true;
             }
