@@ -537,5 +537,5 @@ limitations under the License.
     <string name="settings_recording_idle_speed_title">Terskel for tomgangshastighet</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (anbefales)</string>
-    <string name="stats_clock">Døgnet</string>
+    <string name="stats_clock">Klokke</string>
 </resources>
