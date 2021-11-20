@@ -224,7 +224,7 @@
 
     <string name="stats_rate_speed_or_pace_default" translatable="false">ACTIVITY_TYPE</string>
     <string name="stats_rate_pace" translatable="false">Pace</string>
-    <string name="stats_rate_speed" translatable="false">Spped</string>
+    <string name="stats_rate_speed" translatable="false">Speed</string>
     <string-array name="stats_rate_values">
         <item>@string/stats_rate_speed_or_pace_default</item>
         <item>@string/stats_rate_speed</item>
