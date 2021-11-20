@@ -198,7 +198,7 @@ limitations under the License.
     <!-- Export -->
     <string name="export_with_photos">with photos</string>
     <string name="export_without_photos">without photos</string>
-    <string name="export_error_post_workout">Could not export track following newly finished workout . Check the export folder.</string>
+    <string name="export_error_post_workout">Could not export track following newly finished workout. Check the export folder.</string>
     <string name="export_progress_message">Exporting to %1$s…</string>
     <string name="export_track_already_exists_msg">The \"%1$s\" track already exists there.</string>
     <string name="export_all_do_it_for_all">do it for all conflicts</string>
