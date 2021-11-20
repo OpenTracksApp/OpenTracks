@@ -12,39 +12,39 @@
 
     <!-- Main settings -->
     <string name="settings_open_tracks_key" translatable="false">settingsOpenTracks</string>
-    <string name="settings_open_tracks_title" translatable="false">Open Tracks</string>
-    <string name="settings_open_tracks_summary">All About OpenTracks Project</string>
+    <string name="settings_open_tracks_title">About</string>
+    <string name="settings_open_tracks_summary">All about the OpenTracks project</string>
 
     <string name="settings_defaults_key" translatable="false">settingsDefaults</string>
-    <string name="settings_defaults_title">Default Units and Activity</string>
-    <string name="settings_defaults_summary">Preferred Units, Default Activity, Track Default Name</string>
+    <string name="settings_defaults_title">Default units and activity</string>
+    <string name="settings_defaults_summary">Preferred units, default activity, track default name</string>
 
     <string name="settings_ui_key" translatable="false">settingsUI</string>
-    <string name="settings_ui_title">User Interface</string>
-    <string name="settings_ui_summary">Appearance, Recording Layout, Theme</string>
+    <string name="settings_ui_title">Interface</string>
+    <string name="settings_ui_summary">Appearance, recording layout, theme</string>
 
     <string name="settings_gps_key" translatable="false">settingsGps</string>
     <string name="settings_gps_title">GPS</string>
-    <string name="settings_gps_summary">Time interval, Distance interval, Max Distance, Accuracy</string>
+    <string name="settings_gps_summary">Time interval, distance interval, max. distance, accuracy</string>
 
     <string name="settings_sensors_key" translatable="false">settingsSensorsGps</string>
     <string name="settings_sensors_title">Bluetooth Sensors</string>
-    <string name="settings_sensors_summary">Cycling Sensors, Wheel Circumference, Running Sensors</string>
+    <string name="settings_sensors_summary">Cycling sensors, wheel circumference, running sensors</string>
 
     <string name="settings_announcements_key" translatable="false">settingsAnnouncements</string>
     <string name="settings_announcements_title">Voice Announcements</string>
-    <string name="settings_announcements_summary">Time, Distance, Voice Speed</string>
+    <string name="settings_announcements_summary">Time, distance, voice speed</string>
 
     <string name="settings_import_export_key" translatable="false">settingsImportExport</string>
     <string name="settings_import_export_title">Import/Export</string>
-    <string name="settings_import_export_summary">Import, Export, Auto Export</string>
+    <string name="settings_import_export_summary">Import, export, auto-export</string>
 
     <!-- Setting's categories -->
     <string name="settings_units_category">Units</string>
-    <string name="settings_activity_defaults_category">Activity\'s Defaults</string>
+    <string name="settings_activity_defaults_category">Activity defaults</string>
 
     <string name="settings_reset_key" translatable="false">settingsReset</string>
-    <string name="settings_reset_summary">Reset Settings to Default Values</string>
+    <string name="settings_reset_summary">Reset settings to defaults</string>
     <string name="settings_layout_reset_key" translatable="false">settingsLayoutReset</string>
 
     <string name="settings_sensor_bluetooth_heart_rate_key" translatable="false">bluetoothSensor</string>
@@ -52,7 +52,7 @@
     <string name="settings_sensor_bluetooth_cycling_speed_key" translatable="false">bluetoothCyclingSpeedSensor</string>
     <string name="settings_sensor_bluetooth_cycling_power_key" translatable="false">bluetoothCyclingPowerSensor</string>
     <string name="settings_sensor_bluetooth_running_speed_and_cadence_key" translatable="false">bluetoothRunningSpeedAndCadenceSensor</string>
-    <string name="sensor_type_value_none" translatable="false">NONE</string>
+    <string name="sensor_type_value_none">None</string>
 
     <string name="settings_sensor_bluetooth_cycling_speed_wheel_circumference_key" translatable="false">bluetoothCyclingSpeedWheelCircumference</string>
     <string name="settings_sensor_bluetooth_cycling_speed_wheel_circumference_default" translatable="false">2135</string>
@@ -223,8 +223,8 @@
     </string-array>
 
     <string name="stats_rate_speed_or_pace_default" translatable="false">ACTIVITY_TYPE</string>
-    <string name="stats_rate_pace" translatable="false">PACE</string>
-    <string name="stats_rate_speed" translatable="false">SPEED</string>
+    <string name="stats_rate_pace" translatable="false">Pace</string>
+    <string name="stats_rate_speed" translatable="false">Spped</string>
     <string-array name="stats_rate_values">
         <item>@string/stats_rate_speed_or_pace_default</item>
         <item>@string/stats_rate_speed</item>
@@ -237,8 +237,8 @@
         <item>@string/stats_units_metric</item>
         <item>@string/stats_units_imperial</item>
     </string-array>
-    <string name="stats_units_metric" translatable="false">METRIC</string>
-    <string name="stats_units_imperial" translatable="false">IMPERIAL</string>
+    <string name="stats_units_metric" translatable="false">Metric</string>
+    <string name="stats_units_imperial" translatable="false">Imperial</string>
     <string-array name="stats_units_options">
         <item>@string/settings_stats_units_metric</item>
         <item>@string/settings_stats_units_imperial</item>
@@ -248,7 +248,7 @@
     <string name="track_name_default" translatable="false">@string/settings_recording_track_name_date_iso_8601_value</string>
     <string name="settings_recording_track_name_date_iso_8601_value" translatable="false">DATE_ISO_8601</string>
     <string name="settings_recording_track_name_date_local_value" translatable="false">DATE_LOCAL</string>
-    <string name="settings_recording_track_name_number_value" translatable="false">NUMBER</string>
+    <string name="settings_recording_track_name_number_value" translatable="false">Number</string>
     <string-array name="track_name_values">
         <item>@string/settings_recording_track_name_date_local_value</item>
         <item>@string/settings_recording_track_name_date_iso_8601_value</item>
