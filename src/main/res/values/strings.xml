@@ -328,6 +328,34 @@ limitations under the License.
     <string name="bluetooth_disabled">Please enable Bluetooth.</string>
     <string name="settings_not_while_recording">Not available while recording a track</string>
     <string name="settings_show">Show</string>
+
+    <string name="settings_open_tracks_title">Open Tracks</string>
+    <string name="settings_open_tracks_summary">All About OpenTracks Project</string>
+
+    <string name="settings_defaults_title">Default Units and Activity</string>
+    <string name="settings_defaults_summary">Preferred Units, Default Activity, Track Default Name</string>
+
+    <string name="settings_ui_title">User Interface</string>
+    <string name="settings_ui_summary">Appearance, Recording Layout, Theme</string>
+
+    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_summary">Time interval, Distance interval, Max Distance, Accuracy</string>
+
+    <string name="settings_sensors_title">Bluetooth Sensors</string>
+    <string name="settings_sensors_summary">Cycling Sensors, Wheel Circumference, Running Sensors</string>
+
+    <string name="settings_announcements_title">Voice Announcements</string>
+    <string name="settings_announcements_summary">Time, Distance, Voice Speed</string>
+
+    <string name="settings_import_export_title">Import/Export</string>
+    <string name="settings_import_export_summary">Import, Export, Auto Export</string>
+
+    <string name="settings_units_category">Units</string>
+    <string name="settings_activity_defaults_category">Activity\'s Defaults</string>
+
+    <string name="settings_reset_summary">Reset Settings to Default Values</string>
+    <string name="settings_layout_reset_key" translatable="false">settingsLayoutReset</string>
+
     <!-- Settings Advanced -->
     <string name="settings_advanced">Advanced</string>
     <string name="settings_default_trackfileformat">Export/sharing file format</string>
