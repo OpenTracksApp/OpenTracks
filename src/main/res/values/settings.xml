@@ -12,41 +12,22 @@
 
     <!-- Main settings -->
     <string name="settings_open_tracks_key" translatable="false">settingsOpenTracks</string>
-    <string name="settings_open_tracks_title">About</string>
-    <string name="settings_open_tracks_summary">All about the OpenTracks project</string>
 
     <string name="settings_defaults_key" translatable="false">settingsDefaults</string>
-    <string name="settings_defaults_title">Default units and activity</string>
-    <string name="settings_defaults_summary">Preferred units, default activity, track default name</string>
 
     <string name="settings_ui_key" translatable="false">settingsUI</string>
-    <string name="settings_ui_title">Interface</string>
-    <string name="settings_ui_summary">Appearance, recording layout, theme</string>
 
     <string name="settings_gps_key" translatable="false">settingsGps</string>
-    <string name="settings_gps_title">GPS</string>
-    <string name="settings_gps_summary">Time interval, distance interval, max. distance, accuracy</string>
 
     <string name="settings_sensors_key" translatable="false">settingsSensorsGps</string>
-    <string name="settings_sensors_title">Bluetooth Sensors</string>
-    <string name="settings_sensors_summary">Cycling sensors, wheel circumference, running sensors</string>
 
     <string name="settings_announcements_key" translatable="false">settingsAnnouncements</string>
-    <string name="settings_announcements_title">Voice Announcements</string>
-    <string name="settings_announcements_summary">Time, distance, voice speed</string>
 
     <string name="settings_import_export_key" translatable="false">settingsImportExport</string>
-    <string name="settings_import_export_title">Import/Export</string>
-    <string name="settings_import_export_summary">Import, export, auto-export</string>
 
     <!-- Setting's categories -->
-    <string name="settings_units_category">Units</string>
-    <string name="settings_activity_defaults_category">Activity defaults</string>
 
     <string name="settings_reset_key" translatable="false">settingsReset</string>
-    <string name="settings_reset_summary">Reset settings to defaults</string>
-    <string name="settings_layout_reset_key" translatable="false">settingsLayoutReset</string>
-
     <string name="settings_sensor_bluetooth_heart_rate_key" translatable="false">bluetoothSensor</string>
     <string name="settings_sensor_bluetooth_cycling_cadence_key" translatable="false">bluetoothCyclingCadenceSensor</string>
     <string name="settings_sensor_bluetooth_cycling_speed_key" translatable="false">bluetoothCyclingSpeedSensor</string>
