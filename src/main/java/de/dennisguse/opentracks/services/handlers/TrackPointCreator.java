@@ -101,13 +101,17 @@ public class TrackPointCreator {
         gpsHandler.onSharedPreferenceChanged(key);
     }
 
-    public void onNewTrackPoint(TrackPoint trackPoint, Distance thresholdHorizontalAccuracy) {
+    public synchronized void onNewTrackPoint(@NonNull TrackPoint trackPoint, @NonNull Distance thresholdHorizontalAccuracy) {
         fill(trackPoint);
 
         boolean stored = service.newTrackPoint(trackPoint, thresholdHorizontalAccuracy);
         if (stored) {
             resetSensorData();
         }
+    }
+
+    public void onNewTrackPointWithoutGPS() {
+        onNewTrackPoint(new TrackPoint(TrackPoint.Type.SENSORPOINT, createNow()), gpsHandler.getThresholdHorizontalAccuracy());
     }
 
     public TrackPoint createSegmentStartManual() {

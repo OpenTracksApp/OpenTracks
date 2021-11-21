@@ -158,6 +158,10 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
         return lastTrackPoint;
     }
 
+    Distance getThresholdHorizontalAccuracy() {
+        return thresholdHorizontalAccuracy;
+    }
+
     /**
      * Called from {@link GpsStatus} to inform that GPS status has changed from prevStatus to currentStatus.
      *

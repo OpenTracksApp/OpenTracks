@@ -142,7 +142,7 @@ class TrackRecordingManager {
         photoUrl = photoUrl != null ? photoUrl : "";
 
         // Insert marker
-        Marker marker = new Marker(name, description, category, icon, trackId, getTrackStatistics(), lastStoredTrackPoint, photoUrl);
+        Marker marker = new Marker(name, description, category, icon, trackId, getTrackStatistics(), lastStoredTrackPointWithLocation, photoUrl);
         Uri uri = contentProviderUtils.insertMarker(marker);
         return new Marker.Id(ContentUris.parseId(uri));
     }

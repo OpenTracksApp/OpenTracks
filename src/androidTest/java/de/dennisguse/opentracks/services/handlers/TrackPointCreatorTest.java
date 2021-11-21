@@ -3,7 +3,6 @@ package de.dennisguse.opentracks.services.handlers;
 import static org.mockito.Mockito.verify;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import org.junit.After;
 import org.junit.Before;
@@ -27,9 +26,6 @@ public class TrackPointCreatorTest {
 
     @Mock
     private GPSHandler locationHandler;
-
-    @Mock
-    private SharedPreferences sharedPreferences;
 
     private TrackPointCreator subject;
 

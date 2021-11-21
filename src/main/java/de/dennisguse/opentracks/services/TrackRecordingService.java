@@ -87,6 +87,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         @Override
         public void run() {
             updateRecordingDataWhileRecording();
+            trackPointCreator.onNewTrackPointWithoutGPS(); //TODO Should not be called every second, right? + with do some duplicate computation with updateRecordingDataWhileRecording().
+
             Handler localHandler = TrackRecordingService.this.handler;
             if (localHandler == null) {
                 // when this happens, no recording is running and we should not send any notifications.
