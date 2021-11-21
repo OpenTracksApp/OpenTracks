@@ -70,7 +70,7 @@
         <item>@string/activity_type_hang_gliding</item>
         <item>@string/activity_type_helicopter</item>
         <item>@string/activity_type_hiking</item>
-        <item>@string/activity_type_horse_back_riding</item>
+        <item>@string/activity_type_horseback_riding</item>
         <item>@string/activity_type_hot_air_balloon</item>
         <item>@string/activity_type_ice_sailing</item>
         <item>@string/activity_type_inline_skating</item>
@@ -84,7 +84,7 @@
         <item>@string/activity_type_off_trail_hiking</item>
         <item>@string/activity_type_other</item>
         <item>@string/activity_type_paddling</item>
-        <item>@string/activity_type_para_gliding</item>
+        <item>@string/activity_type_paragliding</item>
         <item>@string/activity_type_rc_airplane</item>
         <item>@string/activity_type_rc_boat</item>
         <item>@string/activity_type_rc_helicopter</item>
@@ -95,13 +95,13 @@
         <item>@string/activity_type_running</item>
         <item>@string/activity_type_sailing</item>
         <item>@string/activity_type_seaplane</item>
-        <item>@string/activity_type_skate_boarding</item>
+        <item>@string/activity_type_skateboarding</item>
         <item>@string/activity_type_skating</item>
         <item>@string/activity_type_skiing</item>
         <item>@string/activity_type_sky_jumping</item>
         <item>@string/activity_type_sled</item>
-        <item>@string/activity_type_snow_boarding</item>
-        <item>@string/activity_type_snow_shoeing</item>
+        <item>@string/activity_type_snowboarding</item>
+        <item>@string/activity_type_snowshoeing</item>
         <item>@string/activity_type_speed_walking</item>
         <item>@string/activity_type_street_running</item>
         <item>@string/activity_type_surfing</item>
@@ -113,8 +113,8 @@
         <item>@string/activity_type_ultimate_frisbee</item>
         <item>@string/activity_type_wakeboarding</item>
         <item>@string/activity_type_walking</item>
-        <item>@string/activity_type_water_skiing</item>
-        <item>@string/activity_type_wind_surfing</item>
+        <item>@string/activity_type_waterskiing</item>
+        <item>@string/activity_type_windsurfing</item>
     </string-array>
 
     <string name="recording_distance_interval_key" translatable="false">recordingDistanceInterval</string>
