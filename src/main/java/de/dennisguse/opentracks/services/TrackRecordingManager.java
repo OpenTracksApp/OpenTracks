@@ -147,6 +147,9 @@ class TrackRecordingManager {
         return new Marker.Id(ContentUris.parseId(uri));
     }
 
+    /**
+     * @return TrackPoint was stored?
+     */
     boolean onNewTrackPoint(TrackPoint trackPoint) {
         //Storing trackPoint
 

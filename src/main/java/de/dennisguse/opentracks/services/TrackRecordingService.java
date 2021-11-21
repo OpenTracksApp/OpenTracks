@@ -18,7 +18,6 @@ package de.dennisguse.opentracks.services;
 
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -50,11 +49,11 @@ import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.services.tasks.VoiceAnnouncementManager;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
 
 /**
@@ -360,8 +359,9 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             return false;
         }
 
+        boolean stored = trackRecordingManager.onNewTrackPoint(trackPoint);
         notificationManager.updateTrackPoint(this, trackRecordingManager.getTrackStatistics(), trackPoint, thresholdHorizontalAccuracy);
-        return trackRecordingManager.onNewTrackPoint(trackPoint);
+        return stored;
     }
 
     @Override
