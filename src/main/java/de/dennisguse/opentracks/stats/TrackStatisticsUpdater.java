@@ -85,7 +85,6 @@ public class TrackStatisticsUpdater {
         this.currentSegment = new TrackStatistics();
 
         altitudeBuffer_m = new DoubleRingBuffer(ALTITUDE_SMOOTHING_FACTOR);
-        speedBuffer_mps = new DoubleRingBuffer(SPEED_SMOOTHING_FACTOR);
     }
 
     public TrackStatisticsUpdater(TrackStatisticsUpdater toCopy) {
@@ -93,7 +92,6 @@ public class TrackStatisticsUpdater {
         this.trackStatistics = new TrackStatistics(toCopy.trackStatistics);
 
         this.altitudeBuffer_m = new DoubleRingBuffer(toCopy.altitudeBuffer_m);
-        this.speedBuffer_mps = new DoubleRingBuffer(toCopy.speedBuffer_mps);
 
         this.lastTrackPoint = toCopy.lastTrackPoint;
         this.lastMovingTrackPoint = toCopy.lastMovingTrackPoint;
@@ -163,7 +161,6 @@ public class TrackStatisticsUpdater {
             // GPS-based distance/speed
             Distance movingDistance = trackPoint.distanceToPrevious(lastMovingTrackPoint);
             if (movingDistance != null && movingDistance.lessThan(minGPSDistance) && !trackPoint.isMoving()) {
-                speedBuffer_mps.reset();
                 lastTrackPoint = trackPoint;
                 return; //TOOD Why? Is there nothing to be done afterwards?
             }
@@ -205,7 +202,6 @@ public class TrackStatisticsUpdater {
         lastTrackPoint = null;
         lastMovingTrackPoint = null;
         altitudeBuffer_m.reset();
-        speedBuffer_mps.reset();
     }
 
     /**
@@ -216,22 +212,16 @@ public class TrackStatisticsUpdater {
         return altitudeBuffer_m.getAverage();
     }
 
-    public Speed getSmoothedSpeed() {
-        return Speed.of(speedBuffer_mps.getAverage());
-    }
-
     /**
      * Updates a speed reading while assuming the user is moving.
      */
     @VisibleForTesting
     private void updateSpeed(@NonNull TrackPoint trackPoint, @NonNull TrackPoint lastTrackPoint) {
         if (!trackPoint.isMoving()) {
-            speedBuffer_mps.reset();
+            Log.d(TAG, "Not moving");
         } else if (isValidSpeed(trackPoint, lastTrackPoint)) {
-            speedBuffer_mps.setNext(trackPoint.getSpeed().toMPS());
-            Speed average = Speed.of(speedBuffer_mps.getAverage());
-            if (average.greaterThan(currentSegment.getMaxSpeed())) {
-                currentSegment.setMaxSpeed(average);
+            if (trackPoint.getSpeed().greaterThan(currentSegment.getMaxSpeed())) {
+                currentSegment.setMaxSpeed(trackPoint.getSpeed());
             }
         } else {
             Log.d(TAG, "Invalid speed. speed: " + trackPoint.getSpeed() + " lastLocationSpeed: " + lastTrackPoint.getSpeed());
@@ -257,20 +247,8 @@ public class TrackStatisticsUpdater {
         {
             // See if the speed seems physically likely. Ignore any speeds that imply acceleration greater than 2g.
             Speed speedDifference = Speed.absDiff(lastTrackPoint.getSpeed(), trackPoint.getSpeed());
-            if (speedDifference.greaterThan(maxAcceleration)) {
-                return false;
-            }
+            return !speedDifference.greaterThan(maxAcceleration);
         }
-
-        // Only check if the speed buffer is full. Check that the speed is less than 10X the smoothed average and the speed difference doesn't imply 2g acceleration.
-        if (speedBuffer_mps.isFull()) {
-            Speed average = Speed.of(speedBuffer_mps.getAverage());
-            Speed speedDifference = Speed.absDiff(average, trackPoint.getSpeed());
-
-            return trackPoint.getSpeed().lessThan(average.mul(10)) && speedDifference.lessThan(maxAcceleration);
-        }
-
-        return true;
     }
 
     @NonNull
