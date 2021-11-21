@@ -15,11 +15,10 @@ limitations under the License.
 -->
 <resources>
     <string name="about_preference_title">About</string>
-    <string name="about_description">A sport tracking buddy that respects your privacy.</string>
+    <string name="about_description"><i>OpenTracks</i> is a sport tracking application that completely respects your privacy.</string>
     <string name="about_url">Project website\n<a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Version name, %1$s</string>
-    <string name="about_version_code">Version %1$d</string>
-    <string name="about_history">OpenTracks is a fork of <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (discontinued in 2016).</string>
+    <string name="about_history">A fork of\n<a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (discontinued in 2016).</string>
     <string name="about_third_party_data">Third-party data</string>
     <string name="about_libraries">Libre Libraries</string>
     <!-- Help -->
@@ -45,7 +44,7 @@ limitations under the License.
         b)
         Via a "normal" map app (e.g., <a href="http://osmand.net/">OsmAnd</a> and <a href="https://maps.me/">MAPS.ME</a>).
         Support for locations and timestamps in the KMZ file format is needed,
-        along with <i>ACTION_VIEW</i> with the media type <i>application/vnd.google-earth.kmz</i>.
+        along with <i>ACTION_VIEW</i> with the media type (MIME) <i>application/vnd.google-earth.kmz</i>.
     </string>
 
     <string name="help_storage_pictures_title">How are pictures taken as markers stored?</string>
@@ -150,7 +149,7 @@ limitations under the License.
     <string name="activity_type_skiing">skiing</string>
     <string name="activity_type_sky_jumping">sky jumping</string>
     <string name="activity_type_sled">sled</string>
-    <string name="activity_type_snow_boarding">snow boarding</string>
+    <string name="activity_type_snow_boarding">snowboarding</string>
     <string name="activity_type_snow_shoeing">snowshoeing</string>
     <string name="activity_type_speed_walking">speed walking</string>
     <string name="activity_type_street_running">street running</string>
@@ -327,31 +326,31 @@ limitations under the License.
     <string name="settings_not_while_recording">Not available while recording a track</string>
     <string name="settings_show">Show</string>
 
-    <string name="settings_open_tracks_title">Open Tracks</string>
-    <string name="settings_open_tracks_summary">All About OpenTracks Project</string>
+    <string name="settings_open_tracks_title">OpenTracks</string>
+    <string name="settings_open_tracks_summary">All about the OpenTracks project</string>
 
     <string name="settings_defaults_title">Default Units and Activity</string>
-    <string name="settings_defaults_summary">Preferred Units, Default Activity, Track Default Name</string>
+    <string name="settings_defaults_summary">Preferred units, default activity and track name</string>
 
     <string name="settings_ui_title">User Interface</string>
-    <string name="settings_ui_summary">Appearance, Recording Layout, Theme</string>
+    <string name="settings_ui_summary">Appearance, recording layout, theme</string>
 
     <string name="settings_gps_title">GPS</string>
-    <string name="settings_gps_summary">Time interval, Distance interval, Max Distance, Accuracy</string>
+    <string name="settings_gps_summary">Time and distance interval, max. distance, accuracy</string>
 
     <string name="settings_sensors_title">Bluetooth Sensors</string>
-    <string name="settings_sensors_summary">Cycling Sensors, Wheel Circumference, Running Sensors</string>
+    <string name="settings_sensors_summary">Cycling sensors, wheel circumference, running sensors</string>
 
     <string name="settings_announcements_title">Voice Announcements</string>
-    <string name="settings_announcements_summary">Time, Distance, Voice Speed</string>
+    <string name="settings_announcements_summary">Time, distance, voice speed</string>
 
     <string name="settings_import_export_title">Import/Export</string>
-    <string name="settings_import_export_summary">Import, Export, Auto Export</string>
+    <string name="settings_import_export_summary">Import, export, auto export</string>
 
     <string name="settings_units_category">Units</string>
-    <string name="settings_activity_defaults_category">Activity\'s Defaults</string>
+    <string name="settings_activity_defaults_category">Activity defaults</string>
 
-    <string name="settings_reset_summary">Reset Settings to Default Values</string>
+    <string name="settings_reset_summary">Reset settings to defaults</string>
     <string name="settings_layout_reset_key" translatable="false">settingsLayoutReset</string>
 
     <!-- Settings Advanced -->
