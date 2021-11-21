@@ -15,13 +15,13 @@ import java.time.Duration;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.util.LocationUtils;
 
 @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-public class LocationHandler implements LocationListener, GpsStatus.GpsStatusListener {
+public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener {
 
-    private final String TAG = LocationHandler.class.getSimpleName();
+    private final String TAG = GPSHandler.class.getSimpleName();
 
     private LocationManager locationManager;
     private final TrackPointCreator trackPointCreator;
@@ -30,7 +30,7 @@ public class LocationHandler implements LocationListener, GpsStatus.GpsStatusLis
     private Distance thresholdHorizontalAccuracy;
     private TrackPoint lastTrackPoint;
 
-    public LocationHandler(TrackPointCreator trackPointCreator) {
+    public GPSHandler(TrackPointCreator trackPointCreator) {
         this.trackPointCreator = trackPointCreator;
     }
 

@@ -423,6 +423,6 @@ public class ExportImportTest {
         });
 
         trackPointCreator.setClock(Clock.fixed(time, ZoneId.of("CET")));
-        trackPointCreator.getLocationHandler().onLocationChanged(location);
+        trackPointCreator.getGpsHandler().onLocationChanged(location);
     }
 }

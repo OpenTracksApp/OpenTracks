@@ -72,6 +72,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     public static final RecordingData NOT_RECORDING = new RecordingData(null, null, null);
     public static final GpsStatusValue STATUS_GPS_DEFAULT = GpsStatusValue.GPS_NONE;
 
+    private final Binder binder = new Binder();
+
     // The following variables are setFrequency in onCreate:
     private VoiceAnnouncementManager voiceAnnouncementManager;
     private TrackRecordingServiceNotificationManager notificationManager;
@@ -114,10 +116,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
     };
 
-    // The following variables are setFrequency when recording:
+    // The following variables are set when recording:
     private WakeLock wakeLock;
-
-    private final Binder binder = new Binder();
 
     private TrackPointCreator trackPointCreator; //TODO Move to TrackRecordingManager?
 
