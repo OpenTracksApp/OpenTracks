@@ -538,4 +538,21 @@ limitations under the License.
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (anbefales)</string>
     <string name="stats_clock">Klokke</string>
+    <string name="settings_open_tracks_title">OpenTracks</string>
+    <string name="settings_defaults_summary">Foretrukne enheter, Standardaktivitet, Standard-spornavn</string>
+    <string name="settings_sensors_summary">Sykkelsensorer, Hjulomkrets, Løpesensorer</string>
+    <string name="settings_open_tracks_summary">Alt om prosjektet OpenTracks</string>
+    <string name="settings_defaults_title">Standardenheter og aktivitet</string>
+    <string name="settings_ui_title">Brukerflate</string>
+    <string name="settings_ui_summary">Utseende, Opptakslayout, Tema</string>
+    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_summary">Tidsintervall, Distanseintervall, Maks distanse, Nøyaktighet</string>
+    <string name="settings_sensors_title">Bluetooth-sensorer</string>
+    <string name="settings_announcements_title">Talemeldinger</string>
+    <string name="settings_announcements_summary">Tid, Distanse, Talehastighet</string>
+    <string name="settings_import_export_title">Import/Eksport</string>
+    <string name="settings_import_export_summary">Import, Eksport, Auto-eksport</string>
+    <string name="settings_units_category">Enheter</string>
+    <string name="settings_activity_defaults_category">Aktiviteters standardvalg</string>
+    <string name="settings_reset_summary">Tilbakestill innstillinger til standardverdier</string>
 </resources>
