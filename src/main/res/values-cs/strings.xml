@@ -551,4 +551,21 @@ limitations under the License.
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (doporučeno)</string>
     <string name="stats_clock">Hodiny</string>
+    <string name="settings_sensors_summary">Cyklistické snímače, obvod kola, snímače běhu</string>
+    <string name="settings_defaults_summary">Preferované jednotky, Výchozí aktivita, Výchozí název stopy</string>
+    <string name="settings_reset_summary">Obnovení výchozích nastavení</string>
+    <string name="settings_activity_defaults_category">Výchozí nastavení aktivity</string>
+    <string name="settings_units_category">Jednotky</string>
+    <string name="settings_import_export_summary">Import, export, automatický export</string>
+    <string name="settings_import_export_title">Dovoz/vývoz</string>
+    <string name="settings_announcements_summary">Čas, vzdálenost, rychlost hlasu</string>
+    <string name="settings_announcements_title">Hlasová oznámení</string>
+    <string name="settings_sensors_title">Bluetooth senzory</string>
+    <string name="settings_gps_summary">Časový interval, Interval vzdálenosti, Maximální vzdálenost, Přesnost</string>
+    <string name="settings_ui_summary">Vzhled, Rozložení záznamu, Téma</string>
+    <string name="settings_open_tracks_title">Open Tracks</string>
+    <string name="settings_open_tracks_summary">Vše o projektu OpenTracks</string>
+    <string name="settings_defaults_title">Výchozí jednotky a aktivity</string>
+    <string name="settings_ui_title">Uživatelské rozhraní</string>
+    <string name="settings_gps_title">GPS</string>
 </resources>
