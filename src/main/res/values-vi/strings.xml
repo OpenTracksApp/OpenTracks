@@ -384,7 +384,7 @@ limitations under the License.
     <string name="generic_overwrite">Ghi đè</string>
     <string name="menu_voice_rate">Tốc độ giọng nói</string>
     <string name="open_track_as_GPX">Mở dưới dạng GPX</string>
-    <string name="help_recording_content">OpenTracks sử dụng cảm biến GPS của thiết bị để ghi lại vị trí liên tục. Nếu thiết bị GPS báo cáo dữ liệu không chính xác (ví dụ: vị trí, tốc độ, độ cao), OpenTracks không thể làm gì với điều đó.</string>
+    <string name="help_recording_content">OpenTracks sử dụng các bộ cảm biến GPS của điện thoại để ghi lại vị trí liên tục. Nếu các thiết bị GPS báo cáo dữ liệu không chính xác (ví dụ như, vị trí, tốc độ, độ cao), OpenTracks không thể làm bất cứ điều gì về nó.</string>
     <string name="gps_fixed_and_ready">GPS đã xác định và sẵn sàng</string>
     <string name="generic_skip">Bỏ qua</string>
     <string name="import_unsupported_format">Định dạng tệp không được hỗ trợ</string>
@@ -529,4 +529,8 @@ limitations under the License.
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (khuyến khích)</string>
     <string name="stats_clock">Cái đồng hồ</string>
+    <string name="settings_open_tracks_title">Open Tracks</string>
+    <string name="settings_reset_summary">Thiết lập lại các thiết Lập để mặc Định giá Trị</string>
+    <string name="settings_activity_defaults_category">Hoạt động của Mặc định</string>
+    <string name="settings_units_category">Đơn vị</string>
 </resources>
