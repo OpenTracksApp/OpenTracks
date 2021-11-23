@@ -517,7 +517,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="description_speed_source_gps">GPS</string>
     <string name="generic_choose_an_option">Choisissez une option</string>
     <string name="stats_sensors_heart_rate">Fréquence cardiaque</string>
-    <string name="stats_sensors_cadence">Cadence</string>
+    <string name="stats_sensors_cadence">Cadences</string>
     <string name="stats_sensors_power">Énergie</string>
     <string name="permission_bluetooth_failed_rejected">Vous devez accorder manuellement l\'accès aux appareils à proximité à OpenTracks dans les paramètres système.</string>
     <string name="settings_recording_customize_layout_title">Personnalisez votre disposition d\'enregistrement</string>
@@ -544,4 +544,21 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_running_sensor">Courant</string>
     <string name="settings_import_section">Importer</string>
     <string name="settings_export_section">Exporter</string>
+    <string name="settings_reset_summary">Réinitialiser les paramètres aux valeurs par défaut</string>
+    <string name="settings_activity_defaults_category">Défauts de l\'activité</string>
+    <string name="settings_sensors_summary">Capteurs de cyclisme, Circonférence de roue, Capteurs de course à pied</string>
+    <string name="settings_ui_summary">Apparence, Mise en page de l\'enregistrement, Thème</string>
+    <string name="settings_units_category">Unités</string>
+    <string name="settings_import_export_summary">Importez, Exportez, Auto Export</string>
+    <string name="settings_import_export_title">Importez/Exportez</string>
+    <string name="settings_announcements_summary">Temps, distance, vitesse de la voix</string>
+    <string name="settings_announcements_title">Annonces vocales</string>
+    <string name="settings_sensors_title">Intervalle de temps, Intervalle de distance, Distance maximale, Précision</string>
+    <string name="settings_gps_summary">Intervalle de temps, Intervalle de distance, Distance maximale, Précision</string>
+    <string name="settings_gps_title">GPS</string>
+    <string name="settings_ui_title">Interface utilisateur</string>
+    <string name="settings_defaults_summary">Unités préférées, Activité par défaut, Suivi du nom par défaut</string>
+    <string name="settings_defaults_title">Unités et activité par défaut</string>
+    <string name="settings_open_tracks_summary">A propos du projet OpenTracks</string>
+    <string name="settings_open_tracks_title">Open Tracks</string>
 </resources>
