@@ -1,0 +1,6 @@
+v3.20.1 : OpenTracks
+
+Changements :
+- Les annonces peuvent maintenant être utilisées à la fois par distance et par temps.
+- Les annonces émettent un bip si aucun logiciel de synthèse vocale n'est installé.
+- Suppression de la fréquence de localisation GPS adaptative

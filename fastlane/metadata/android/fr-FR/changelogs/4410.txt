@@ -1,0 +1,7 @@
+v3.20.0 : OpenTracks
+
+Changements :
+- Pendant l'enregistrement : l'interface des statistiques est maintenant configurable
+
+Correction d'un bug :
+- Le changement de nom de piste/catégorie pendant l'enregistrement était ignoré (introduit dans la v3.19.0)
