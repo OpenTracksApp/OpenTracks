@@ -494,13 +494,13 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="export_progress_summary_overwrite_msg">Rutas sobrescritas</string>
     <string name="export_progress_summary_skip_msg">Rutas omitidas</string>
     <string name="export_progress_summary_errors_msg">Erros</string>
-    <string name="generic_open_track">Open Track</string>
+    <string name="generic_open_track">Aberto O Control</string>
     <string name="import_prevent_reimport">Estableceches previr a reimportación da ruta</string>
     <string name="import_progress_summary_ok_msg">Ficheiros importados</string>
     <string name="import_progress_summary_exists_msg">Xa existe</string>
     <string name="import_progress_summary_errors_msg">Erros</string>
     <string name="sensor_state_cadence_avg">Cadencia media</string>
-    <string name="sensor_state_cadence_max">Cadencia máx.</string>
+    <string name="sensor_state_cadence_max">Max Cadencia</string>
     <string name="sensor_state_heart_rate_avg">Pulso medio</string>
     <string name="sensor_state_heart_rate_max">Pulso máximo</string>
     <string name="sensor_state_power_avg">Potencia media</string>
@@ -550,4 +550,21 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="value_float_mile_hour_recommended">%1$.1f km/h (recomendado)</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (recomendado)</string>
     <string name="stats_clock">Reloxo</string>
+    <string name="settings_open_tracks_title">Open Tracks</string>
+    <string name="settings_defaults_summary">O Preferido Unidades, Por Defecto Actividade, Controlar O Nome Por Defecto</string>
+    <string name="settings_announcements_summary">A Distancia, Tempo, Voz Velocidade</string>
+    <string name="settings_open_tracks_summary">Todo Sobre OpenTracks Proxecto</string>
+    <string name="settings_defaults_title">Por defecto Unidades e Actividade</string>
+    <string name="settings_ui_title">Interface De Usuario</string>
+    <string name="settings_ui_summary">Aparencia, Gravación, Deseño, Tema</string>
+    <string name="settings_gps_title">GPS</string>
+    <string name="settings_gps_summary">Intervalo de tempo, Distancia intervalo, Max Distancia, Precisión</string>
+    <string name="settings_sensors_title">Bluetooth Sensores</string>
+    <string name="settings_sensors_summary">Ciclismo Sensores, Roda Circunferencia, Execución De Sensores</string>
+    <string name="settings_announcements_title">Voz Anuncios</string>
+    <string name="settings_import_export_title">Importación/Exportación</string>
+    <string name="settings_import_export_summary">Importación, Exportación, Auto Exportación</string>
+    <string name="settings_units_category">Unidades</string>
+    <string name="settings_activity_defaults_category">Actividade de Inadimplência</string>
+    <string name="settings_reset_summary">Axustar a Configuración de Valores por Defecto</string>
 </resources>
