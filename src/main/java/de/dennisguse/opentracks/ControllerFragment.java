@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -97,7 +98,10 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
                 return;
             }
 
-            getCallback().recordStart();
+            Callback callback = (Callback) getContext();
+            if (callback != null) {
+                callback.recordStart();
+            }
         });
 
         viewBinding.controllerStop.setOnTouchListener(this);
@@ -112,6 +116,12 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
     public void onResume() {
         super.onResume();
         trackRecordingServiceConnection.startConnection(getContext());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handlerUpdateTotalTime.removeCallbacksAndMessages(null);
     }
 
     @Override
@@ -175,7 +185,10 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
             buttonDelay = () -> {
                 view.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_CLICKED);
                 view.performClick();
-                getCallback().recordPause();
+                Callback callback = (Callback) getContext();
+                if (callback != null) {
+                    callback.recordPause();
+                }
 
                 transition.resetTransition();
 
@@ -198,8 +211,12 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
 
             buttonDelay = () -> {
                 view.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_CLICKED);
-                getCallback().recordStop();
-                ActivityUtils.vibrate(getContext(), 1000);
+                Context context = getContext();
+                Callback callback = (Callback) context;
+                if (callback != null) {
+                    callback.recordStop();
+                    ActivityUtils.vibrate(context, 1000);
+                }
 
                 transition.resetTransition();
             };
@@ -220,10 +237,6 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
 
     private void showStatusSetDefaultText() {
         viewBinding.controllerStatus.setText(recordingStatus.isPaused() ? R.string.generic_paused : R.string.generic_recording);
-    }
-
-    private Callback getCallback() {
-        return (Callback) getActivity();
     }
 
     public interface Callback {
