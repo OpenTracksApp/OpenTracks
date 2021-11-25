@@ -149,7 +149,6 @@ public class FileUtils {
      *
      * @param name name
      */
-    // TODO Check if this function is still needed.
     public static String sanitizeFileName(String name) {
         StringBuilder builder = new StringBuilder(name.length());
         for (int i = 0; i < name.length(); i++) {
