@@ -529,8 +529,21 @@ limitations under the License.
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (khuyến khích)</string>
     <string name="stats_clock">Cái đồng hồ</string>
-    <string name="settings_open_tracks_title">Open Tracks</string>
+    <string name="settings_open_tracks_title">Mở Bài Hát</string>
     <string name="settings_reset_summary">Thiết lập lại các thiết Lập để mặc Định giá Trị</string>
     <string name="settings_activity_defaults_category">Hoạt động của Mặc định</string>
     <string name="settings_units_category">Đơn vị</string>
+    <string name="settings_gps_summary">Khoảng thời gian, khoảng Cách, Max khoảng Cách, chính Xác</string>
+    <string name="settings_import_export_summary">Nhập Khẩu, Xuất Khẩu, Xuất Khẩu Tự Động</string>
+    <string name="settings_open_tracks_summary">Tất Cả Về Dự Án OpenTracks</string>
+    <string name="settings_defaults_title">Định Vị và các Hoạt động</string>
+    <string name="settings_defaults_summary">Các Đơn Vị Ưa Thích Định Hoạt Động Theo Dõi Tên Mặc Định</string>
+    <string name="settings_ui_title">Dùng Diện</string>
+    <string name="settings_ui_summary">Xuất Hiện, Ghi Lại Bố Trí Chủ Đề</string>
+    <string name="settings_gps_title">GPS</string>
+    <string name="settings_sensors_title">Cảm Biến Bluetooth</string>
+    <string name="settings_sensors_summary">Đi Xe Đạp Cảm Biến, Bánh Vòng, Chạy Bộ Cảm Biến</string>
+    <string name="settings_announcements_title">Giọng Nói Thông Báo</string>
+    <string name="settings_announcements_summary">Thời Gian, Khoảng Cách, Tốc Độ Giọng Nói</string>
+    <string name="settings_import_export_title">Xuất Nhập Khẩu</string>
 </resources>
