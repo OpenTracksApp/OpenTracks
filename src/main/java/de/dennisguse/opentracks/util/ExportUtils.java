@@ -100,7 +100,7 @@ public class ExportUtils {
     }
 
     private static String getExportFileNameForTrack(Track track, String trackFileFormatExtension) {
-        return track.getUuid().toString().substring(0, 8) + "_" + track.getName() + "." + trackFileFormatExtension;
+        return track.getUuid().toString().substring(0, 8) + "_" + FileUtils.sanitizeFileName(track.getName()) + "." + trackFileFormatExtension;
     }
 
     private static Uri findFile(Context context, Uri directoryUri, String exportFileName) {

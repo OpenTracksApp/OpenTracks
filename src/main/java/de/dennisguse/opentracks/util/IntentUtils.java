@@ -92,8 +92,9 @@ public class IntentUtils {
                 continue;
             }
 
-            Pair<Uri, String> uriTrackFile = ShareContentProvider.createURI(trackId, track.getName(), PreferencesUtils.getExportTrackFileFormat());
-            Pair<Uri, String> uriSharePicture = ShareContentProvider.createURI(trackId, track.getName(), TrackFileFormat.SHARE_PICTURE_PNG);
+            String trackName = FileUtils.sanitizeFileName(track.getName());
+            Pair<Uri, String> uriTrackFile = ShareContentProvider.createURI(trackId, trackName, PreferencesUtils.getExportTrackFileFormat());
+            Pair<Uri, String> uriSharePicture = ShareContentProvider.createURI(trackId, trackName, TrackFileFormat.SHARE_PICTURE_PNG);
 
             uris.addAll(Arrays.asList(uriSharePicture.first, uriTrackFile.first));
         }
@@ -203,8 +204,8 @@ public class IntentUtils {
         return new Pair<>(intent, photoUri);
     }
 
-    public static void persistDirectoryAccessPermission(Context context, Uri directoryUri) {
-        int flags = Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
-        context.getContentResolver().takePersistableUriPermission(directoryUri, flags);
+    public static void persistDirectoryAccessPermission(Context context, Uri directoryUri, int existingFlags) {
+        int newFlags = existingFlags | (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        context.getContentResolver().takePersistableUriPermission(directoryUri, newFlags);
     }
 }
