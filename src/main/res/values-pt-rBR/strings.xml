@@ -489,4 +489,21 @@
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (Recomendado)</string>
     <string name="settings_recording_idle_speed_title">Limite de velocidade de marcha lenta</string>
     <string name="stats_clock">Relógio</string>
+    <string name="settings_announcements_title">Anúncios de voz</string>
+    <string name="settings_sensors_summary">Voice announcements</string>
+    <string name="settings_sensors_title">Sensores Bluetooth</string>
+    <string name="settings_gps_summary">Intervalo de tempo, Intervalo de distância, Distância máxima, Precisão</string>
+    <string name="settings_ui_summary">Aparência, Layout de gravação, Tema</string>
+    <string name="settings_ui_title">Interface do usuário</string>
+    <string name="settings_defaults_title">Unidades e Atividade Default</string>
+    <string name="settings_defaults_summary">Unidades Preferidas, Atividade Padrão, Nome Padrão da Pista</string>
+    <string name="settings_open_tracks_title">Trilhas abertas</string>
+    <string name="settings_gps_title">GPS</string>
+    <string name="settings_reset_summary">Redefinir configurações para valores padrão</string>
+    <string name="settings_activity_defaults_category">Defaults da atividade</string>
+    <string name="settings_units_category">Unidades</string>
+    <string name="settings_import_export_summary">Importar, Exportar, Auto Export</string>
+    <string name="settings_import_export_title">Importar/Exportar</string>
+    <string name="settings_announcements_summary">Tempo, distância, velocidade da voz</string>
+    <string name="settings_open_tracks_summary">Tudo sobre o Projeto OpenTracks</string>
 </resources>
