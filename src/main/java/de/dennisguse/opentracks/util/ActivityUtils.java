@@ -76,11 +76,7 @@ public class ActivityUtils {
                         arrayList.add(key);
                     }
                 }
-                int[] result = new int[arrayList.size()];
-                for (int i = 0; i < arrayList.size(); i++) {
-                    result[i] = arrayList.get(i);
-                }
-                return result;
+                return arrayList.stream().mapToInt(i -> i).toArray();
             }
         });
     }
