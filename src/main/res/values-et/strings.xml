@@ -469,7 +469,7 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="sensor_state_heart_rate_avg">Keskmine pulsisagedus</string>
     <string name="sensor_state_cadence_max">Max kadentsus</string>
     <string name="sensor_state_cadence_avg">Keskmine kadentsus</string>
-    <string name="settings_sensor_wheel_circumference">Ratta ümbermõõt (mm)</string>
+    <string name="settings_sensor_wheel_circumference">Velje ümbermõõt (mm)</string>
     <string name="stats_loss">Kahjum</string>
     <string name="track_detail_intervals_tab">Intervallid</string>
     <string name="stats_split_interval">Jagatud intervall</string>
@@ -506,9 +506,9 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="menu_voice_rate">Hääle kiirus</string>
     <string name="track_delete_not_recording">Seda pala ei saa kustutada, kuna see on praegu salvestatud.</string>
-    <string name="settings_sensor_cycling_cadence">Jalgrattasport: cadence</string>
-    <string name="settings_sensor_cycling_distance_speed">Jalgrattasport: kaugus ja kiirus</string>
-    <string name="settings_sensor_running_speed_and_cadence">Running: kaugus, kiirus ja kadents</string>
+    <string name="settings_sensor_cycling_cadence">Rütm</string>
+    <string name="settings_sensor_cycling_distance_speed">Kaugus ja kiirus</string>
+    <string name="settings_sensor_running_speed_and_cadence">Kaugus, kiirus ja kadents</string>
     <string name="stats_clock">Kell</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (soovitatav)</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
