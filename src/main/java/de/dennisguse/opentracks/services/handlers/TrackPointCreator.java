@@ -152,6 +152,11 @@ public class TrackPointCreator {
         return Instant.now(clock);
     }
 
+    @VisibleForTesting
+    public AltitudeSumManager getAltitudeSumManager() {
+        return altitudeSumManager;
+    }
+
     @Deprecated
     @VisibleForTesting
     public void setAltitudeSumManager(AltitudeSumManager altitudeSumManager) {

@@ -65,27 +65,36 @@ public class AltitudeSumManager implements SensorEventListener {
         trackPoint.setAltitudeLoss(altitudeLoss_m);
     }
 
-    public @Nullable
-    Float getAltitudeGain_m() {
+    @Nullable
+    public Float getAltitudeGain_m() {
         return isConnected ? altitudeGain_m : null;
     }
 
+    @VisibleForTesting
+    public void setAltitudeGain_m(float altitudeGain_m) {
+        this.altitudeGain_m = altitudeGain_m;
+    }
 
     @VisibleForTesting
     public void addAltitudeGain_m(float altitudeGain_m) {
         this.altitudeGain_m = this.altitudeGain_m == null ? 0f : this.altitudeGain_m;
-        this.altitudeGain_m += altitudeGain_m ;
+        this.altitudeGain_m += altitudeGain_m;
     }
 
     @VisibleForTesting
     public void addAltitudeLoss_m(Float altitudeLoss_m) {
         this.altitudeLoss_m = this.altitudeLoss_m == null ? 0f : this.altitudeLoss_m;
-        this.altitudeLoss_m += altitudeLoss_m ;
+        this.altitudeLoss_m += altitudeLoss_m;
     }
 
-    public @Nullable
-    Float getAltitudeLoss_m() {
+    @Nullable
+    public Float getAltitudeLoss_m() {
         return isConnected ? altitudeLoss_m : null;
+    }
+
+    @VisibleForTesting
+    public void setAltitudeLoss_m(float altitudeLoss_m) {
+        this.altitudeLoss_m = altitudeLoss_m;
     }
 
     public void reset() {

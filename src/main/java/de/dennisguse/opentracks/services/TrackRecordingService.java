@@ -318,7 +318,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
      * @param trackStopped true if track is stopped, false if track is paused
      */
     private void endRecording(boolean trackStopped) {
-        handler.removeCallbacks(updateRecordingData);
+        stopUpdateRecordingData();
         if (!trackStopped) {
             updateRecordingDataWhileRecording();
         } else {
@@ -456,6 +456,11 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         localVoiceAnnouncementManager.update(data.first);
 
         recordingDataObservable.postValue(new RecordingData(data.first, trackPoint, data.second.second));
+    }
+
+    @VisibleForTesting
+    public void stopUpdateRecordingData() {
+        handler.removeCallbacks(updateRecordingData);
     }
 
     public LiveData<RecordingStatus> getRecordingStatusObservable() {

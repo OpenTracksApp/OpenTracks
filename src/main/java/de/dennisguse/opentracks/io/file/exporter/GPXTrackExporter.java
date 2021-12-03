@@ -151,6 +151,9 @@ public class GPXTrackExporter implements TrackExporter {
                         wroteSegment = true;
                         writeTrackPoint(trackPoint);
                         break;
+                    case SENSORPOINT:
+                        //TODO We need somehow to compute the sensor data (mainly sensorDistance if present) and add it to the TRACKPOINT (if no segment followed in between)?
+                        break;
                     case TRACKPOINT:
                         if (!wroteSegment) {
                             // Might happen for older data (pre v3.15.0)
@@ -159,6 +162,8 @@ public class GPXTrackExporter implements TrackExporter {
                         }
                         writeTrackPoint(trackPoint);
                         break;
+                    default:
+                        throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
                 }
             }
 

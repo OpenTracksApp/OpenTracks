@@ -311,7 +311,7 @@ public class TrackPoint {
     }
 
     @Nullable
-    public Distance distanceToPrevious(TrackPoint previous) {
+    public Distance distanceToPrevious(@Nullable TrackPoint previous) {
         if (hasSensorDistance()) {
             return getSensorDistance();
         }

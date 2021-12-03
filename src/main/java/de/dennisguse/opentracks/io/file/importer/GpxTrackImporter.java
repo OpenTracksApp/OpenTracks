@@ -243,7 +243,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
 
     private void onTrackSegmentEnd() {
         if (currentSegment.isEmpty()) {
-            Log.w(TAG, "No locations in current segment.");
+            Log.w(TAG, "No TrackPoints in current segment.");
             return;
         }
 
@@ -256,7 +256,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
 
 
     private TrackPoint createTrackPoint() throws ParsingException {
-        Instant parsedTime = null;
+        Instant parsedTime;
         try {
             parsedTime = StringUtils.parseTime(time);
         } catch (Exception e) {
