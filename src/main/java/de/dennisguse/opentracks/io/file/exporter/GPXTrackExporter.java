@@ -31,6 +31,7 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
@@ -205,6 +206,7 @@ public class GPXTrackExporter implements TrackExporter {
             printWriter.println("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
             printWriter.println("xmlns:opentracks=\"http://opentracksapp.com/xmlschemas/v1\"");
             printWriter.println("xmlns:gpxtpx=\"http://www.garmin.com/xmlschemas/TrackPointExtension/v2\"");
+            printWriter.println("xmlns:gpxtrkx=\"http://www.garmin.com/xmlschemas/TrackStatsExtension/v1\"");
             printWriter.println("xmlns:pwr=\"http://www.garmin.com/xmlschemas/PowerExtension/v1\"");
             printWriter.println("xsi:schemaLocation=" +
                     "\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
@@ -261,6 +263,18 @@ public class GPXTrackExporter implements TrackExporter {
             printWriter.println("<extensions>");
             printWriter.println("<topografix:color>c0c0c0</topografix:color>");
             printWriter.println("<opentracks:trackid>" + track.getUuid() + "</opentracks:trackid>");
+
+            TrackStatistics trackStatistics = track.getTrackStatistics();
+            printWriter.println("<gpxtrkx:TrackStatsExtension>");
+            printWriter.println("<gpxtrkx:Distance>" + trackStatistics.getTotalDistance().toM() + "</gpxtrkx:Distance>");
+            printWriter.println("<gpxtrkx:TimerTime>" + trackStatistics.getTotalTime().getSeconds() + "</gpxtrkx:TimerTime>");
+            printWriter.println("<gpxtrkx:MovingTime>" + trackStatistics.getMovingTime().getSeconds() + "</gpxtrkx:MovingTime>");
+            printWriter.println("<gpxtrkx:StoppedTime>" + trackStatistics.getStoppedTime().getSeconds() + "</gpxtrkx:StoppedTime>");
+            printWriter.println("<gpxtrkx:MaxSpeed>" + trackStatistics.getMaxSpeed().toMPS() + "</gpxtrkx:MaxSpeed>");
+            printWriter.println("<gpxtrkx:Ascent>" + trackStatistics.getTotalAltitudeGain() + "</gpxtrkx:Ascent>");
+            printWriter.println("<gpxtrkx:Descent>" + trackStatistics.getTotalAltitudeLoss() + "</gpxtrkx:Descent>");
+            printWriter.println("</gpxtrkx:TrackStatsExtension>");
+
             printWriter.println("</extensions>");
         }
     }
