@@ -205,6 +205,26 @@ public class ContentProviderUtils {
         return tracks;
     }
 
+    public List<Track> getTracks(List<Track.Id> trackIds) {
+        if (trackIds == null || trackIds.isEmpty()) {
+            return getTracks();
+        }
+
+        String selection = String.format(TracksColumns._ID + " IN (%s)", TextUtils.join(",", Collections.nCopies(trackIds.size(), "?")));
+        String[] selectionArgs = trackIds.stream().map(id -> Long.toString(id.getId())).toArray(String[]::new);
+        ArrayList<Track> tracks = new ArrayList<>();
+        try (Cursor cursor = getTrackCursor(selection, selectionArgs, TracksColumns._ID)) {
+            if (cursor != null && cursor.moveToFirst()) {
+                tracks.ensureCapacity(cursor.getCount());
+                do {
+                    tracks.add(createTrack(cursor));
+                } while (cursor.moveToNext());
+            }
+        }
+
+        return tracks;
+    }
+
     public Track getTrack(@NonNull Track.Id trackId) {
         try (Cursor cursor = getTrackCursor(TracksColumns._ID + "=?", new String[]{Long.toString(trackId.getId())}, null)) {
             if (cursor != null && cursor.moveToNext()) {
