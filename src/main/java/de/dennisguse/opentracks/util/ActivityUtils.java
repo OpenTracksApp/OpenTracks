@@ -1,5 +1,7 @@
 package de.dennisguse.opentracks.util;
 
+import static android.content.Context.VIBRATOR_SERVICE;
+
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
@@ -14,14 +16,13 @@ import android.view.MenuItem;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 
 import java.util.ArrayList;
 
 import de.dennisguse.opentracks.ContextualActionModeCallback;
 import de.dennisguse.opentracks.R;
-
-import static android.content.Context.VIBRATOR_SERVICE;
 
 public class ActivityUtils {
 
@@ -75,11 +76,7 @@ public class ActivityUtils {
                         arrayList.add(key);
                     }
                 }
-                int[] result = new int[arrayList.size()];
-                for (int i = 0; i < arrayList.size(); i++) {
-                    result[i] = arrayList.get(i);
-                }
-                return result;
+                return arrayList.stream().mapToInt(i -> i).toArray();
             }
         });
     }
@@ -97,7 +94,7 @@ public class ActivityUtils {
         return searchView;
     }
 
-    public static void vibrate(Context context, int milliseconds) {
+    public static void vibrate(@NonNull Context context, int milliseconds) {
         final Vibrator vibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             vibrator.vibrate(VibrationEffect.createOneShot(milliseconds, VibrationEffect.DEFAULT_AMPLITUDE));
