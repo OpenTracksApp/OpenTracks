@@ -133,6 +133,7 @@ public class ExportImportTest {
 
         // A sensor-only TrackPoint
         mockBLESensorData(trackPointCreator, 15f, sensorDistance, 66f, 3f, 50f);
+        mockAltitudeChange(trackPointCreator, 1);
         sendSensor(trackPointCreator, Instant.parse("2020-02-02T02:02:04Z"));
 
         mockBLESensorData(trackPointCreator, 15f, sensorDistance, 66f, 3f, 50f);
@@ -255,10 +256,10 @@ public class ExportImportTest {
         assertEquals(10, importedTrackStatistics.getMaxAltitude(), 0.01);
 
         assertEquals(originalTrackStatistics.getTotalAltitudeGain(), importedTrackStatistics.getTotalAltitudeGain(), 0.01);
-        assertEquals(1, importedTrackStatistics.getTotalAltitudeGain(), 0.01);
+        assertEquals(2, importedTrackStatistics.getTotalAltitudeGain(), 0.01);
 
         assertEquals(originalTrackStatistics.getTotalAltitudeLoss(), importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
-        assertEquals(1, importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
+        assertEquals(2, importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
 
         // 4. markers
         assertMarkers();
@@ -326,6 +327,9 @@ public class ExportImportTest {
         // Therefore, the track segmentation is changes.
         List<TrackPoint> trackPointsWithCoordinates = trackPoints.stream().filter(it -> TrackPoint.Type.SEGMENT_START_AUTOMATIC.equals(it.getType()) || TrackPoint.Type.TRACKPOINT.equals(it.getType())).collect(Collectors.toList());
         trackPointsWithCoordinates.get(0).setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
+        trackPointsWithCoordinates.get(1).setSensorDistance(Distance.of(20));
+        trackPointsWithCoordinates.get(1).setAltitudeGain(1f);
+        trackPointsWithCoordinates.get(1).setAltitudeLoss(1f);
         trackPointsWithCoordinates.get(2).setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
 
         TrackPointAssert a = new TrackPointAssert()
@@ -345,18 +349,18 @@ public class ExportImportTest {
         assertEquals(Duration.ofSeconds(4), importedTrackStatistics.getMovingTime());
 
         // Distance
-        assertEquals(Distance.of(50), importedTrackStatistics.getTotalDistance()); //TODO Should be 60 due to SensorPoint
+        assertEquals(Distance.of(60), importedTrackStatistics.getTotalDistance());
 
         // Speed
         assertEquals(Speed.of(15), importedTrackStatistics.getMaxSpeed());
-        assertEquals(Speed.of(12.5), importedTrackStatistics.getAverageSpeed());
-        assertEquals(Speed.of(12.5), importedTrackStatistics.getAverageMovingSpeed());
+        assertEquals(Speed.of(15), importedTrackStatistics.getAverageSpeed());
+        assertEquals(Speed.of(15), importedTrackStatistics.getAverageMovingSpeed());
 
         // Altitude
         assertEquals(10, importedTrackStatistics.getMinAltitude(), 0.01);
         assertEquals(10, importedTrackStatistics.getMaxAltitude(), 0.01);
-        assertEquals(1, importedTrackStatistics.getTotalAltitudeGain(), 0.01);
-        assertEquals(1, importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
+        assertEquals(2, importedTrackStatistics.getTotalAltitudeGain(), 0.01);
+        assertEquals(2, importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
 
         // 4. markers
         assertMarkers();
@@ -437,6 +441,12 @@ public class ExportImportTest {
         });
     }
 
+    private void mockAltitudeChange(TrackPointCreator trackPointCreator, float altitudeGain) {
+        AltitudeSumManager altitudeSumManager = trackPointCreator.getAltitudeSumManager();
+        altitudeSumManager.setAltitudeGain_m(altitudeGain);
+        altitudeSumManager.setAltitudeLoss_m(altitudeGain);
+    }
+
     private void sendSensor(TrackPointCreator trackPointCreator, Instant time) {
         trackPointCreator.setClock(Clock.fixed(time, ZoneId.of("CET")));
         trackPointCreator.onNewTrackPointWithoutGPS();
@@ -450,9 +460,7 @@ public class ExportImportTest {
         location.setSpeed(speed);
         location.setAltitude(altitude);
 
-        AltitudeSumManager altitudeSumManager = trackPointCreator.getAltitudeSumManager();
-        altitudeSumManager.setAltitudeGain_m(altitudeGain);
-        altitudeSumManager.setAltitudeLoss_m(altitudeGain);
+        mockAltitudeChange(trackPointCreator, altitudeGain);
 
         trackPointCreator.setClock(Clock.fixed(time, ZoneId.of("CET")));
         trackPointCreator.getGpsHandler().onLocationChanged(location);
