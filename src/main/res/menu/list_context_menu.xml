@@ -36,6 +36,11 @@ limitations under the License.
         android:title="@string/menu_delete"
         app:showAsAction="ifRoom" />
     <item
+        android:id="@+id/list_context_menu_aggregated_stats"
+        android:icon="@drawable/ic_statistics_24dp"
+        android:title="@string/menu_aggregated_statistics"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/list_context_menu_select_all"
         android:icon="@drawable/ic_select_all_24dp"
         android:title="@string/menu_select_all"

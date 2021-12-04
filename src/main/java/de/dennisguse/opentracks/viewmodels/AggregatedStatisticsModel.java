@@ -3,6 +3,7 @@ package de.dennisguse.opentracks.viewmodels;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -20,18 +21,18 @@ public class AggregatedStatisticsModel extends AndroidViewModel {
         super(application);
     }
 
-    public LiveData<AggregatedStatistics> getAggregatedStats() {
+    public LiveData<AggregatedStatistics> getAggregatedStats(@Nullable List<Track.Id> trackIds) {
         if (aggregatedStats == null) {
             aggregatedStats = new MutableLiveData<>();
-            loadAggregatedStats();
+            loadAggregatedStats(trackIds);
         }
         return aggregatedStats;
     }
 
-    private void loadAggregatedStats() {
+    private void loadAggregatedStats(@Nullable List<Track.Id> trackIds) {
         new Thread(() -> {
             ContentProviderUtils contentProviderUtils = new ContentProviderUtils(getApplication().getApplicationContext());
-            List<Track> tracks = contentProviderUtils.getTracks();
+            List<Track> tracks = contentProviderUtils.getTracks(trackIds);
 
             AggregatedStatistics aggregatedStatistics = new AggregatedStatistics(tracks);
 
