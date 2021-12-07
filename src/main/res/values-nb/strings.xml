@@ -555,4 +555,13 @@ limitations under the License.
     <string name="settings_units_category">Enheter</string>
     <string name="settings_activity_defaults_category">Aktiviteters standardvalg</string>
     <string name="settings_reset_summary">Tilbakestill innstillinger til standardverdier</string>
+    <string name="generic_undo">Angre</string>
+    <string name="menu_select_layout">Velg layout</string>
+    <string name="menu_add_custom_layout">Ny layout</string>
+    <string name="custom_layout_list_title">Layouter</string>
+    <string name="custom_layout_list_edit_name">Skriv inn navn på layout for å legge til</string>
+    <string name="custom_layout_list_edit_already_exists">Layoutens navn finnes allerede</string>
+    <string name="custom_layout_list_layout_removed">Layout ble fjernet</string>
+    <string name="custom_layout_select_layout">Velg layout</string>
+    <string name="stats_custom_layout_default_layout">Standard layout</string>
 </resources>
