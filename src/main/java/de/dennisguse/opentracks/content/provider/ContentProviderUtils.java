@@ -32,6 +32,7 @@ import androidx.annotation.VisibleForTesting;
 import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -98,6 +99,7 @@ public class ContentProviderUtils {
         int descriptionIndex = cursor.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
         int categoryIndex = cursor.getColumnIndexOrThrow(TracksColumns.CATEGORY);
         int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
+        int startTimeOffsetIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME_OFFSET);
         int stopTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STOPTIME);
         int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
         int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
@@ -109,7 +111,7 @@ public class ContentProviderUtils {
         int altitudeLossIndex = cursor.getColumnIndexOrThrow(TracksColumns.ALTITUDE_LOSS);
         int iconIndex = cursor.getColumnIndexOrThrow(TracksColumns.ICON);
 
-        Track track = new Track();
+        Track track = new Track(ZoneOffset.ofTotalSeconds(cursor.getInt(startTimeOffsetIndex)));
         TrackStatistics trackStatistics = track.getTrackStatistics();
         if (!cursor.isNull(idIndex)) {
             track.setId(new Track.Id(cursor.getLong(idIndex)));
@@ -126,6 +128,7 @@ public class ContentProviderUtils {
         if (!cursor.isNull(categoryIndex)) {
             track.setCategory(cursor.getString(categoryIndex));
         }
+
         if (!cursor.isNull(startTimeIndex)) {
             trackStatistics.setStartTime(Instant.ofEpochMilli(cursor.getLong(startTimeIndex)));
         }
@@ -288,6 +291,7 @@ public class ContentProviderUtils {
         values.put(TracksColumns.NAME, track.getName());
         values.put(TracksColumns.DESCRIPTION, track.getDescription());
         values.put(TracksColumns.CATEGORY, track.getCategory());
+        values.put(TracksColumns.STARTTIME_OFFSET, track.getZoneOffset().getTotalSeconds());
         if (trackStatistics.getStartTime() != null) {
             values.put(TracksColumns.STARTTIME, trackStatistics.getStartTime().toEpochMilli());
         }

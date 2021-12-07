@@ -27,8 +27,8 @@ import androidx.annotation.VisibleForTesting;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
-import java.time.Duration;
 import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -110,10 +110,7 @@ public class KMLTrackExporter implements TrackExporter {
             if (hasMultipleTracks) {
                 writeMultiTrackBegin();
             }
-            //TODO Why use startTime of first track for the others?
-            Instant startTime = tracks[0].getTrackStatistics().getStartTime();
             for (Track track : tracks) {
-                Duration offset = Duration.between(track.getTrackStatistics().getStartTime(), startTime);
                 writeLocations(track);
             }
             if (hasMultipleTracks) {
@@ -142,7 +139,7 @@ public class KMLTrackExporter implements TrackExporter {
                         hasMarkers = true;
                     }
                     Marker marker = contentProviderUtils.createMarker(cursor);
-                    writeMarker(marker);
+                    writeMarker(marker, track.getZoneOffset());
 
                     cursor.moveToNext();
                 }
@@ -172,12 +169,12 @@ public class KMLTrackExporter implements TrackExporter {
                     case SEGMENT_START_AUTOMATIC:
                         if (wroteSegment) writeCloseSegment();
                         writeOpenSegment();
-                        writeTrackPoint(trackPoint);
+                        writeTrackPoint(track.getZoneOffset(), trackPoint);
                         wroteSegment = true;
                         break;
                     case SEGMENT_END_MANUAL:
                         if (!wroteSegment) writeOpenSegment();
-                        writeTrackPoint(trackPoint);
+                        writeTrackPoint(track.getZoneOffset(), trackPoint);
                         writeCloseSegment();
                         wroteSegment = false;
                         break;
@@ -188,7 +185,7 @@ public class KMLTrackExporter implements TrackExporter {
                             writeOpenSegment();
                             wroteSegment = true;
                         }
-                        writeTrackPoint(trackPoint);
+                        writeTrackPoint(track.getZoneOffset(), trackPoint);
                         break;
                     default:
                         throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
@@ -268,14 +265,14 @@ public class KMLTrackExporter implements TrackExporter {
         }
     }
 
-    private void writeMarker(Marker marker) {
+    private void writeMarker(Marker marker, ZoneOffset zoneOffset) {
         if (printWriter != null) {
             boolean existsPhoto = FileUtils.buildInternalPhotoFile(context, marker.getTrackId(), marker.getPhotoURI()) != null;
             if (marker.hasPhoto() && exportPhotos && existsPhoto) {
                 float heading = getHeading(marker.getTrackId(), marker.getLocation());
-                writePhotoOverlay(marker, heading);
+                writePhotoOverlay(marker, heading, zoneOffset);
             } else {
-                writePlacemark(marker.getName(), marker.getCategory(), marker.getDescription(), marker.getLocation());
+                writePlacemark(marker.getName(), marker.getCategory(), marker.getDescription(), marker.getLocation(), zoneOffset);
             }
         }
     }
@@ -372,12 +369,12 @@ public class KMLTrackExporter implements TrackExporter {
     }
 
     @VisibleForTesting
-    void writeTrackPoint(TrackPoint trackPoint) {
+    void writeTrackPoint(ZoneOffset zoneOffset, TrackPoint trackPoint) {
         if (printWriter != null) {
-            printWriter.println("<when>" + getTime(trackPoint.getLocation()) + "</when>");
+            printWriter.println("<when>" + getTime(zoneOffset, trackPoint.getLocation()) + "</when>");
 
             if (trackPoint.hasLocation()) {
-                printWriter.println("<gx:coord>" + (trackPoint.hasLocation() ? getCoordinates(trackPoint.getLocation(), " ") : "") + "</gx:coord>");
+                printWriter.println("<gx:coord>" + getCoordinates(trackPoint.getLocation(), " ") + "</gx:coord>");
             } else {
                 printWriter.println("<gx:coord/>");
             }
@@ -420,12 +417,12 @@ public class KMLTrackExporter implements TrackExporter {
      * @param description the description
      * @param location    the location
      */
-    private void writePlacemark(String name, String category, String description, Location location) {
+    private void writePlacemark(String name, String category, String description, Location location, ZoneOffset zoneOffset) {
         if (location != null) {
             printWriter.println("<Placemark>");
             printWriter.println("<name>" + StringUtils.formatCData(name) + "</name>");
             printWriter.println("<description>" + StringUtils.formatCData(description) + "</description>");
-            printWriter.println("<TimeStamp><when>" + getTime(location) + "</when></TimeStamp>");
+            printWriter.println("<TimeStamp><when>" + getTime(zoneOffset, location) + "</when></TimeStamp>");
             printWriter.println("<styleUrl>#" + KMLTrackExporter.MARKER_STYLE + "</styleUrl>");
             writeCategory(category);
             printWriter.println("<Point>");
@@ -435,7 +432,7 @@ public class KMLTrackExporter implements TrackExporter {
         }
     }
 
-    private void writePhotoOverlay(Marker marker, float heading) {
+    private void writePhotoOverlay(Marker marker, float heading, ZoneOffset zoneOffset) {
         printWriter.println("<PhotoOverlay>");
         printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
         printWriter.println("<description>" + StringUtils.formatCData(marker.getDescription()) + "</description>");
@@ -446,7 +443,7 @@ public class KMLTrackExporter implements TrackExporter {
         printWriter.print("<heading>" + heading + "</heading>");
         printWriter.print("<tilt>90</tilt>");
         printWriter.println("</Camera>");
-        printWriter.println("<TimeStamp><when>" + getTime(marker.getLocation()) + "</when></TimeStamp>");
+        printWriter.println("<TimeStamp><when>" + getTime(zoneOffset, marker.getLocation()) + "</when></TimeStamp>");
         printWriter.println("<styleUrl>#" + MARKER_STYLE + "</styleUrl>");
         writeCategory(marker.getCategory());
 
@@ -472,8 +469,8 @@ public class KMLTrackExporter implements TrackExporter {
      *
      * @param location the location
      */
-    private String getTime(Location location) {
-        return StringUtils.formatDateTimeIso8601(Instant.ofEpochMilli(location.getTime()));
+    private String getTime(ZoneOffset zoneOffset, Location location) {
+        return StringUtils.formatDateTimeIso8601(Instant.ofEpochMilli(location.getTime()), zoneOffset);
     }
 
     /**

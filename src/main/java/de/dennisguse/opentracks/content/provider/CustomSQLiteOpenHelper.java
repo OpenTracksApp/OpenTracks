@@ -9,6 +9,9 @@ import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
 
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.zone.ZoneRules;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.Startup;
@@ -26,7 +29,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final String TAG = CustomSQLiteOpenHelper.class.getSimpleName();
 
-    private static final int DATABASE_VERSION = 32;
+    private static final int DATABASE_VERSION = 33;
 
     public CustomSQLiteOpenHelper(Context context) {
         this(context, ((Startup) context.getApplicationContext()).getDatabaseName());
@@ -86,6 +89,9 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                 case 32:
                     upgradeFrom31to32(db);
                     break;
+                case 33:
+                    upgradeFrom32to33(db);
+                    break;
 
                 default:
                     throw new RuntimeException("Not implemented: upgrade to " + toVersion);
@@ -124,6 +130,9 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                     break;
                 case 31:
                     downgradeFrom32to31(db);
+                    break;
+                case 32:
+                    downgradeFrom33to32(db);
                     break;
                 default:
                     throw new RuntimeException("Not implemented: downgrade to " + toVersion);
@@ -458,6 +467,52 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE trackpoints_old");
 
         db.execSQL("CREATE INDEX trackpoints_trackid_index ON trackpoints(trackid)");
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    /**
+     * Add timezone to Track.
+     */
+    private void upgradeFrom32to33(SQLiteDatabase db) {
+        db.beginTransaction();
+
+        db.execSQL("ALTER TABLE tracks ADD COLUMN starttime_offset INTEGER");
+
+        ZoneRules zoneRules = ZoneOffset.systemDefault().getRules();
+
+        try (Cursor cursor = db.query("tracks", new String[]{"_id", "starttime"}, null, null, null, null, null)) {
+            if (cursor.moveToFirst()) {
+                int trackIdIndex = cursor.getColumnIndexOrThrow("_id");
+                int startTimeIndex = cursor.getColumnIndexOrThrow("starttime");
+                do {
+                    Track.Id trackId = new Track.Id(cursor.getLong(trackIdIndex));
+                    long startTime = cursor.getLong(startTimeIndex);
+
+                    ContentValues cv = new ContentValues();
+                    cv.put("starttime_offset", zoneRules.getOffset(Instant.ofEpochMilli(startTime)).getTotalSeconds());
+                    db.update("tracks", cv, "_id = ?", new String[]{String.valueOf(trackId.getId())});
+                } while (cursor.moveToNext());
+            }
+        }
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    private void downgradeFrom33to32(SQLiteDatabase db) {
+        db.beginTransaction();
+
+        db.execSQL("DROP INDEX tracks_uuid_index");
+
+        db.execSQL("ALTER TABLE tracks RENAME TO tracks_old");
+        db.execSQL("CREATE TABLE tracks (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT, category TEXT, starttime INTEGER, stoptime INTEGER, numpoints INTEGER, totaldistance FLOAT, totaltime INTEGER, movingtime INTEGER, avgspeed FLOAT, avgmovingspeed FLOAT, maxspeed FLOAT, minelevation FLOAT, maxelevation FLOAT, elevationgain FLOAT, icon TEXT, uuid BLOB, elevationloss FLOAT)");
+        db.execSQL("INSERT INTO tracks SELECT _id, name, description, category, starttime, stoptime, numpoints, totaldistance, totaltime, movingtime, avgspeed, avgmovingspeed, maxspeed, minelevation, maxelevation, elevationgain, icon, uuid, elevationloss FROM tracks_old");
+        db.execSQL("DROP TABLE tracks_old");
+
+        db.execSQL("CREATE UNIQUE INDEX tracks_uuid_index ON tracks(uuid)");
+
 
         db.setTransactionSuccessful();
         db.endTransaction();

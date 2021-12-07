@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
+import java.time.ZoneOffset;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -158,7 +159,7 @@ public class GPXTrackExporter implements TrackExporter {
                         writeOpenSegment();
                         wroteSegment = true;
 
-                        writeTrackPoint(trackPoint, sensorPoints);
+                        writeTrackPoint(track.getZoneOffset(), trackPoint, sensorPoints);
                         sensorPoints.clear();
                         break;
                     case SENSORPOINT:
@@ -171,7 +172,7 @@ public class GPXTrackExporter implements TrackExporter {
                             wroteSegment = true;
                         }
 
-                        writeTrackPoint(trackPoint, sensorPoints);
+                        writeTrackPoint(track.getZoneOffset(), trackPoint, sensorPoints);
                         sensorPoints.clear();
                         break;
                     default:
@@ -230,6 +231,7 @@ public class GPXTrackExporter implements TrackExporter {
                     + " http://www.topografix.com/GPX/Private/TopoGrafix/0/1 http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd"
                     + " http://www.garmin.com/xmlschemas/TrackPointExtension/v2 https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd"
                     + " http://www.garmin.com/xmlschemas/PowerExtension/v1 https://www8.garmin.com/xmlschemas/PowerExtensionv1.xsd"
+                    + " http://www.garmin.com/xmlschemas/TrackStatsExtension/v1"
                     + " http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd\">");
         }
     }
@@ -248,7 +250,7 @@ public class GPXTrackExporter implements TrackExporter {
                         throw new InterruptedException();
                     }
                     Marker marker = contentProviderUtils.createMarker(cursor);
-                    writeMarker(marker);
+                    writeMarker(track.getZoneOffset(), marker);
 
                     cursor.moveToNext();
                 }
@@ -256,13 +258,13 @@ public class GPXTrackExporter implements TrackExporter {
         }
     }
 
-    public void writeMarker(Marker marker) {
+    public void writeMarker(ZoneOffset zoneOffset, Marker marker) {
         if (printWriter != null) {
             printWriter.println("<wpt " + formatLocation(marker.getLatitude(), marker.getLongitude()) + ">");
             if (marker.hasAltitude()) {
                 printWriter.println("<ele>" + ALTITUDE_FORMAT.format(marker.getAltitude().toM()) + "</ele>");
             }
-            printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(marker.getTime()) + "</time>");
+            printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(marker.getTime(), zoneOffset) + "</time>");
             printWriter.println("<name>" + StringUtils.formatCData(marker.getName()) + "</name>");
             printWriter.println("<desc>" + StringUtils.formatCData(marker.getDescription()) + "</desc>");
             printWriter.println("<type>" + StringUtils.formatCData(marker.getCategory()) + "</type>");
@@ -310,7 +312,7 @@ public class GPXTrackExporter implements TrackExporter {
         printWriter.println("</trkseg>");
     }
 
-    public void writeTrackPoint(TrackPoint trackPoint, List<TrackPoint> sensorPoints) {
+    public void writeTrackPoint(ZoneOffset zoneOffset, TrackPoint trackPoint, List<TrackPoint> sensorPoints) {
         if (printWriter != null) {
 
             printWriter.println("<trkpt " + formatLocation(trackPoint.getLatitude(), trackPoint.getLongitude()) + ">");
@@ -319,7 +321,7 @@ public class GPXTrackExporter implements TrackExporter {
                 printWriter.println("<ele>" + ALTITUDE_FORMAT.format(trackPoint.getAltitude().toM()) + "</ele>");
             }
 
-            printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(trackPoint.getTime()) + "</time>");
+            printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(trackPoint.getTime(), zoneOffset) + "</time>");
 
             {
                 String trackPointExtensionContent = "";

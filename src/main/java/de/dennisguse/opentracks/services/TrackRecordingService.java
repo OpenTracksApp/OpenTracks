@@ -34,6 +34,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.time.Duration;
+import java.time.ZoneOffset;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
@@ -222,7 +223,9 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
 
         // Set recording status
-        Track.Id trackId = trackRecordingManager.start(trackPointCreator.createSegmentStartManual());
+        TrackPoint segmentStartManual = trackPointCreator.createSegmentStartManual();
+        ZoneOffset zoneOffset = ZoneOffset.systemDefault().getRules().getOffset(segmentStartManual.getTime());
+        Track.Id trackId = trackRecordingManager.start(segmentStartManual, zoneOffset);
         updateRecordingStatus(RecordingStatus.record(trackId));
 
         startRecording();

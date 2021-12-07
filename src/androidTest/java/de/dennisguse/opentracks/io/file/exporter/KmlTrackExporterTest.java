@@ -1,5 +1,7 @@
 package de.dennisguse.opentracks.io.file.exporter;
 
+import static org.junit.Assert.assertEquals;
+
 import android.content.Context;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -10,11 +12,10 @@ import org.junit.runners.JUnit4;
 
 import java.io.ByteArrayOutputStream;
 import java.time.Instant;
+import java.time.ZoneOffset;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnit4.class)
 public class KmlTrackExporterTest {
@@ -27,6 +28,8 @@ public class KmlTrackExporterTest {
     @Test
     public void writeCloseSegment_only_write_sensordata_if_present() {
         String expected = "<when>1970-01-01T00:00:00Z</when>\n" +
+                "<gx:coord/>\n" +
+                "<when>1970-01-01T01:00:00+01:00</when>\n" +
                 "<gx:coord/>\n" +
                 "<ExtendedData>\n" +
                 "<SchemaData schemaUrl=\"#schema\">\n" +
@@ -41,7 +44,8 @@ public class KmlTrackExporterTest {
         KMLTrackExporter kmlTrackWriter = (KMLTrackExporter) TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.createTrackExporter(context);
         kmlTrackWriter.prepare(outputStream);
 
-        kmlTrackWriter.writeTrackPoint(trackPoint);
+        kmlTrackWriter.writeTrackPoint(ZoneOffset.UTC, trackPoint);
+        kmlTrackWriter.writeTrackPoint(ZoneOffset.ofTotalSeconds(3600), trackPoint);
 
         // when
         kmlTrackWriter.writeCloseSegment();

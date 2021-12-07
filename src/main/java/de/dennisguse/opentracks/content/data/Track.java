@@ -21,7 +21,10 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -45,7 +48,18 @@ public class Track {
 
     private String icon = "";
 
+    private final ZoneOffset zoneOffset;
+
     private TrackStatistics trackStatistics = new TrackStatistics();
+
+    @VisibleForTesting
+    public Track() {
+        this.zoneOffset = ZoneOffset.UTC;
+    }
+
+    public Track(@NonNull ZoneOffset zoneOffset) {
+        this.zoneOffset = zoneOffset;
+    }
 
     /**
      * May be null if the track was not loaded from the database.
@@ -97,6 +111,14 @@ public class Track {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    public ZoneOffset getZoneOffset() {
+        return zoneOffset;
+    }
+
+    public OffsetDateTime getStartTime() {
+        return trackStatistics.getStartTime().atOffset(zoneOffset);
     }
 
     @NonNull
