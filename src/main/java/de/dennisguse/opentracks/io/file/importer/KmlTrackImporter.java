@@ -26,6 +26,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -74,6 +76,8 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private final Context context;
 
     // Belongs to the current track
+    private ZoneOffset zoneOffset;
+
     private final ArrayList<Instant> whenList = new ArrayList<>();
     private final ArrayList<Location> locationList = new ArrayList<>();
 
@@ -157,7 +161,8 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 onMarkerLocationEnd();
                 break;
             case TAG_GX_MULTI_TRACK:
-                trackImporter.setTrack(context, name, uuid, description, category, icon);
+                trackImporter.setTrack(context, name, uuid, description, category, icon, zoneOffset);
+                zoneOffset = null;
                 break;
             case TAG_GX_TRACK:
                 onTrackSegmentEnd();
@@ -195,7 +200,15 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 break;
             case TAG_WHEN:
                 if (content != null) {
-                    whenList.add(StringUtils.parseTime(content.trim()));
+                    try {
+                        OffsetDateTime time = StringUtils.parseTime(content.trim());
+                        if (zoneOffset == null) {
+                            zoneOffset = time.getOffset();
+                        }
+                        whenList.add(time.toInstant());
+                    } catch (Exception e) {
+                        throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse time: %s", content.trim())), e);
+                    }
                 }
 
                 break;

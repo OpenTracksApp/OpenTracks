@@ -41,6 +41,7 @@ public interface TracksColumns extends BaseColumns {
     String DESCRIPTION = "description"; // track description
     String CATEGORY = "category"; // track activity type
     String STARTTIME = "starttime"; // track start time
+    String STARTTIME_OFFSET = "starttime_offset"; // in plus/minus in seconds
     String STOPTIME = "stoptime"; // track stop time
     String MARKER_COUNT = "markerCount"; // the numbers of markers (virtual column)
     @Deprecated
@@ -77,7 +78,8 @@ public interface TracksColumns extends BaseColumns {
             + ALTITUDE_GAIN + " FLOAT, "
             + ICON + " TEXT, "
             + UUID + " BLOB, "
-            + ALTITUDE_LOSS + " FLOAT)";
+            + ALTITUDE_LOSS + " FLOAT, "
+            + STARTTIME_OFFSET + " INTEGER)";
 
     String CREATE_TABLE_INDEX = "CREATE UNIQUE INDEX " + TABLE_NAME + "_" + UUID + "_index ON " + TABLE_NAME + "(" + UUID + ")";
 

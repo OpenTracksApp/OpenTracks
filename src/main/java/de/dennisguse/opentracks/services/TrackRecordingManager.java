@@ -9,6 +9,8 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
+import java.time.ZoneOffset;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Marker;
@@ -47,9 +49,9 @@ class TrackRecordingManager {
         contentProviderUtils = new ContentProviderUtils(context);
     }
 
-    Track.Id start(TrackPoint segmentStartTrackPoint) {
+    Track.Id start(TrackPoint segmentStartTrackPoint, ZoneOffset zoneOffset) {
         // Create new track
-        Track track = new Track();
+        Track track = new Track(zoneOffset);
         trackId = contentProviderUtils.insertTrack(track);
         track.setId(trackId);
 

@@ -30,6 +30,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -48,8 +49,6 @@ import de.dennisguse.opentracks.content.data.Speed;
 public class StringUtils {
 
     private static final String TAG = StringUtils.class.getSimpleName();
-
-    private static final String COORDINATE_DEGREE = "\u00B0";
 
     private StringUtils() {
     }
@@ -70,10 +69,12 @@ public class StringUtils {
     }
 
     /**
-     * Formats the time using the ISO 8601 date time format with fractional seconds in UTC time zone.
+     * Formats the time using the ISO 8601 date time format with fractional seconds.
      */
-    public static String formatDateTimeIso8601(@NonNull Instant time) {
-        return time.toString();
+    public static String formatDateTimeIso8601(@NonNull Instant time, ZoneOffset zoneOffset) {
+        return time
+                .atOffset(zoneOffset)
+                .format(DateTimeFormatter.ISO_OFFSET_DATE_TIME);
     }
 
     /**
@@ -286,14 +287,14 @@ public class StringUtils {
      *
      * @param xmlDateTime the XML date time string
      */
-    public static Instant parseTime(String xmlDateTime) {
+    public static OffsetDateTime parseTime(String xmlDateTime) {
         try {
             TemporalAccessor t = DateTimeFormatter.ISO_DATE_TIME.parseBest(xmlDateTime, ZonedDateTime::from, LocalDateTime::from);
             if (t instanceof LocalDateTime) {
                 Log.w(TAG, "Date does not contain timezone information: using UTC.");
                 t = ((LocalDateTime) t).atZone(ZoneOffset.UTC);
             }
-            return Instant.from(t);
+            return OffsetDateTime.from(t);
         } catch (Exception e) {
             Log.e(TAG, "Invalid XML dateTime value");
             throw e;

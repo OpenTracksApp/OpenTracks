@@ -23,7 +23,8 @@ import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -85,6 +86,8 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private Locator locator;
 
     private final Context context;
+
+    private ZoneOffset zoneOffset;
 
     // Belongs to the current track
     private final ArrayList<Marker> markers = new ArrayList<>();
@@ -157,7 +160,8 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 onMarkerEnd();
                 break;
             case TAG_TRACK:
-                trackImporter.setTrack(context, name, uuid, description, category, null);
+                trackImporter.setTrack(context, name, uuid, description, category, null, zoneOffset);
+                zoneOffset = null;
                 break;
             case TAG_TRACK_SEGMENT:
                 onTrackSegmentEnd();
@@ -256,14 +260,17 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
 
 
     private TrackPoint createTrackPoint() throws ParsingException {
-        Instant parsedTime;
+        OffsetDateTime parsedTime;
         try {
             parsedTime = StringUtils.parseTime(time);
+            if (zoneOffset == null) {
+                zoneOffset = parsedTime.getOffset();
+            }
         } catch (Exception e) {
             throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse time: %s", time)), e);
         }
 
-        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, parsedTime);
+        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, parsedTime.toInstant());
         if (latitude == null || longitude == null) {
             return trackPoint;
         }

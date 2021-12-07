@@ -219,6 +219,7 @@ public class ExportImportTest {
         TrackStatistics importedTrackStatistics = importedTrack.getTrackStatistics();
 
         // Time
+        assertEquals(track.getZoneOffset(), importedTrack.getZoneOffset());
         assertEquals(Instant.parse("2020-02-02T02:02:02Z"), importedTrackStatistics.getStartTime());
         assertEquals(Instant.parse("2020-02-02T02:02:24Z"), importedTrackStatistics.getStopTime());
 
@@ -338,6 +339,7 @@ public class ExportImportTest {
         TrackStatistics importedTrackStatistics = importedTrack.getTrackStatistics();
 
         // Time
+        assertEquals(track.getZoneOffset(), importedTrack.getZoneOffset());
         assertEquals(Instant.parse("2020-02-02T02:02:03Z"), importedTrackStatistics.getStartTime());
         assertEquals(Instant.parse("2020-02-02T02:02:23Z"), importedTrackStatistics.getStopTime());
 

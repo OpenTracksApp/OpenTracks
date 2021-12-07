@@ -5,10 +5,12 @@ import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -89,8 +91,8 @@ public class TrackImporter {
         this.markers.addAll(markers);
     }
 
-    void setTrack(Context context, String name, String uuid, String description, String category, String icon) {
-        track = new Track();
+    void setTrack(Context context, String name, String uuid, String description, String category, String icon, @Nullable ZoneOffset zoneOffset) {
+        track = new Track(zoneOffset != null ? zoneOffset : ZoneOffset.UTC);
         track.setName(name != null ? name : "");
 
         try {
