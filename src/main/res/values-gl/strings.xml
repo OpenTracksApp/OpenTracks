@@ -567,4 +567,13 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_units_category">Unidades</string>
     <string name="settings_activity_defaults_category">Actividade de Inadimplência</string>
     <string name="settings_reset_summary">Axustar a Configuración de Valores por Defecto</string>
+    <string name="menu_select_layout">Elixe disposición</string>
+    <string name="custom_layout_list_title">Disposicións</string>
+    <string name="custom_layout_list_edit_name">Escribe o nome da nova disposición</string>
+    <string name="custom_layout_list_edit_already_exists">Xa existe unha con ese nome</string>
+    <string name="custom_layout_list_layout_removed">Disposición eliminada</string>
+    <string name="generic_undo">Desfacer</string>
+    <string name="menu_add_custom_layout">Nova disposición</string>
+    <string name="custom_layout_select_layout">Elixe disposición</string>
+    <string name="stats_custom_layout_default_layout">Disposición por defecto</string>
 </resources>
