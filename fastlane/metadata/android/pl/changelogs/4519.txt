@@ -1,0 +1,11 @@
+v3.22.0: OpenTracks
+
+Zmiany:
+- Lokalizacja zapisywana tylko wtedy gdy pokonany dystans jest większy od minimalnego przedziału śledzenia dystansu
+  (usunięto funkcjonalność z wykrywania bezczynności)
+- UI może zostać skonfigurowane do wyświetlania zegara
+- Prędkość ruchu bez oporu (prędkość jałowa) jest teraz konfigurowalna
+
+Poprawki:
+- Przedziały: awaria, gdy zapisano zwiększenie wysokości, ale nie spadek
+- Podczas nagrywania: zapobieganie awariom podczas wyłączania komunikatów głosowych

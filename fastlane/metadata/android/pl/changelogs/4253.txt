@@ -1,0 +1,16 @@
+v3.18.6: OpenTracks
+
+Zmiany:
+- "Pokaż na mapie"- Funkcjonalość wraz z  KML zamiast KMZ
+- Komunikaty głosowe nie podają nazwy aplikacji
+- Podczas śledzenia: Zmiana wysokości aktualizowana co sekundę
+- Przetłumaczone opisy w sklepach aplikacji
+
+Naprawione błędy:
+- Naprawiono nieprawidłowe tłumaczenia wiadomości głosowych
+
+Developer:
+- Uprawnienia Android12 (BLUETOOTH_SCAN)
+- Uprawnienia Android12 (ACCESS_COARSE_LOCATION)
+- Zastosowanie TrackPoints (testowane)
+- Usunięcie niepotrzebnych tłumaczeń
