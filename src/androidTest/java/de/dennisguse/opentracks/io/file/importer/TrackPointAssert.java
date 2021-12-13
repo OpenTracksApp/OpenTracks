@@ -83,7 +83,7 @@ public class TrackPointAssert {
         try {
             Assert.assertEquals(expected.size(), actual.size());
         } catch (AssertionError e) {
-            throw new AssertionError("Expected: " + expected + "\n actual: " + actual);
+            throw new AssertionError("Size difference: " + expected.size() + " vs. " + actual.size() + "\nExpected: " + expected + "\n actual: " + actual);
         }
 
         for (int i = 0; i < expected.size(); i++) {

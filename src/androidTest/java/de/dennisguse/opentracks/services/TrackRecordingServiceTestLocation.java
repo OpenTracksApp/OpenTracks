@@ -358,6 +358,14 @@ public class TrackRecordingServiceTestLocation {
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f)
                         .setHeartRate_bpm(5f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setHorizontalAccuracy(Distance.of(6))
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+                        .setHeartRate_bpm(5f),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, null)
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f)
