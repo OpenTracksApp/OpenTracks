@@ -312,16 +312,16 @@ public class ExportImportTest {
         assertEquals(Instant.parse("2020-02-02T02:02:03Z"), importedTrackStatistics.getStartTime());
         assertEquals(Instant.parse("2020-02-02T02:02:23Z"), importedTrackStatistics.getStopTime());
 
-        assertEquals(Duration.ofSeconds(20), importedTrackStatistics.getTotalTime());
-        assertEquals(Duration.ofSeconds(19), importedTrackStatistics.getMovingTime());
+        assertEquals(Duration.ofSeconds(4), importedTrackStatistics.getTotalTime());
+        assertEquals(Duration.ofSeconds(4), importedTrackStatistics.getMovingTime());
 
         // Distance
         assertEquals(Distance.of(60), importedTrackStatistics.getTotalDistance());
 
         // Speed
         assertEquals(Speed.of(15), importedTrackStatistics.getMaxSpeed());
-        assertEquals(Speed.of(3.0), importedTrackStatistics.getAverageSpeed());
-        assertEquals(Speed.of(3.1578947368421053), importedTrackStatistics.getAverageMovingSpeed());
+        assertEquals(Speed.of(15), importedTrackStatistics.getAverageSpeed());
+        assertEquals(Speed.of(15), importedTrackStatistics.getAverageMovingSpeed());
 
         // Altitude
         assertEquals(10, importedTrackStatistics.getMinAltitude(), 0.01);

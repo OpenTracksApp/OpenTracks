@@ -275,8 +275,8 @@ public class TrackRecordingServiceTestLocation {
         // when
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 15);
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 2, 0);
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 3, 0);
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 4, 0);
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 3, 0); // will be ignored
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 4, 0); // will be ignored
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 5, 0);
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 6, 15);
 
@@ -295,6 +295,20 @@ public class TrackRecordingServiceTestLocation {
                         .setLongitude(35)
                         .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(15))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setHorizontalAccuracy(Distance.of(2))
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setHorizontalAccuracy(Distance.of(5))
+                        .setSpeed(Speed.of(0))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, null)

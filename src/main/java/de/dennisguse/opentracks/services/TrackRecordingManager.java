@@ -171,7 +171,13 @@ class TrackRecordingManager {
             }
         }
 
-        Log.d(TAG, "Not recording TrackPoint, idle");
+        if (lastStoredTrackPoint != null && trackPoint.isMoving() != lastStoredTrackPoint.isMoving()) {
+            // Moving from non-moving to moving or vice versa; required to compute moving time correctly.
+            insertTrackPoint(trackId, trackPoint);
+            return true;
+        }
+
+        Log.d(TAG, "Not recording TrackPoint");
         lastTrackPoint = trackPoint;
         return false;
     }

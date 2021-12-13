@@ -68,8 +68,6 @@ public class TrackStatisticsUpdater {
     private final TrackStatistics currentSegment;
     // Current segment's last trackPoint
     private TrackPoint lastTrackPoint;
-    // Current segment's last moving trackPoint
-    private TrackPoint lastMovingTrackPoint;
 
     public TrackStatisticsUpdater() {
         this(new TrackStatistics());
@@ -96,7 +94,6 @@ public class TrackStatisticsUpdater {
         this.speedBuffer_mps = new DoubleRingBuffer(toCopy.speedBuffer_mps);
 
         this.lastTrackPoint = toCopy.lastTrackPoint;
-        this.lastMovingTrackPoint = toCopy.lastMovingTrackPoint;
     }
 
     public TrackStatistics getTrackStatistics() {
@@ -116,9 +113,8 @@ public class TrackStatisticsUpdater {
      * @param minGPSDistance the min recording distance
      */
     public void addTrackPoint(TrackPoint trackPoint, Distance minGPSDistance) {
-        if (trackPoint.getType() == TrackPoint.Type.SEGMENT_START_MANUAL) {
+        if (trackPoint.isSegmentStart()) {
             reset(trackPoint);
-            return;
         }
 
         if (!currentSegment.isInitialized()) {
@@ -129,7 +125,7 @@ public class TrackStatisticsUpdater {
         currentSegment.setStopTime(trackPoint.getTime());
         currentSegment.setTotalTime(Duration.between(currentSegment.getStartTime(), trackPoint.getTime()));
 
-        // Process sensor data
+        // Process sensor data: barometer
         if (trackPoint.hasAltitudeGain()) {
             currentSegment.addTotalAltitudeGain(trackPoint.getAltitudeGain());
         }
@@ -138,62 +134,46 @@ public class TrackStatisticsUpdater {
             currentSegment.addTotalAltitudeLoss(trackPoint.getAltitudeLoss());
         }
 
-        if (trackPoint.hasSensorDistance()) {
-            currentSegment.addTotalDistance(trackPoint.getSensorDistance());
+        //Update absolute (GPS-based) altitude
+        if (trackPoint.hasAltitude()) {
+            updateAbsoluteAltitude(trackPoint.getAltitude().toM());
         }
+
+        // Update total distance
+        if (trackPoint.hasSensorDistance()) {
+            // Sensor-based distance/speed
+            currentSegment.addTotalDistance(trackPoint.getSensorDistance());
+        } else if (lastTrackPoint != null && trackPoint.isMoving()) {
+            // GPS-based distance/speed
+            // Assumption: we ignore TrackPoints that are not moving as those are likely imprecise GPS measurements
+            Distance movingDistance = trackPoint.distanceToPrevious(lastTrackPoint);
+            if (movingDistance != null) {
+                currentSegment.addTotalDistance(movingDistance);
+            }
+        }
+
+
+        // Update moving time
+        if (trackPoint.isMoving() && lastTrackPoint != null && lastTrackPoint.isMoving()) {
+            Duration movingTime = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
+            if (movingTime.isNegative()) {
+                throw new RuntimeException("Moving time cannot be negative");
+            }
+            currentSegment.addMovingTime(movingTime);
+
+            // Update max speed
+            updateSpeed(trackPoint, lastTrackPoint);
+        } else {
+            speedBuffer_mps.reset();
+        }
+
 
         if (trackPoint.isSegmentEnd()) {
             reset(trackPoint);
             return;
         }
 
-        //Update absolute (GPS-based) altitude
-        if (trackPoint.hasAltitude()) {
-            updateAbsoluteAltitude(trackPoint.getAltitude().toM());
-        }
-
-        if (lastTrackPoint == null || lastMovingTrackPoint == null) {
-            lastTrackPoint = trackPoint;
-            lastMovingTrackPoint = trackPoint;
-            return;
-        }
-
-        if (!trackPoint.hasSensorDistance()
-                && trackPoint.hasLocation() && lastMovingTrackPoint.hasLocation()) {
-            // GPS-based distance/speed
-            Distance movingDistance = trackPoint.distanceToPrevious(lastMovingTrackPoint);
-            if (movingDistance != null && movingDistance.lessThan(minGPSDistance) && !trackPoint.isMoving()) {
-                speedBuffer_mps.reset();
-                lastTrackPoint = trackPoint;
-                return; //TOOD Why? Is there nothing to be done afterwards?
-            }
-            // Update total distance
-            currentSegment.addTotalDistance(movingDistance);
-        }
-
-        Duration movingTime = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
-        if (movingTime.isNegative()) {
-            lastTrackPoint = trackPoint;
-            return;
-        }
-
-        // Update moving time
-        if (lastTrackPoint.isMoving()) {
-            currentSegment.addMovingTime(movingTime);
-        }
-
-        // Update max speed
-        if (trackPoint.hasSpeed() && lastTrackPoint.hasSpeed()) {
-            updateSpeed(trackPoint, lastTrackPoint);
-        }
-
-        if (trackPoint.getType() == TrackPoint.Type.SEGMENT_START_AUTOMATIC) {
-            reset(trackPoint);
-            return;
-        }
-
         lastTrackPoint = trackPoint;
-        lastMovingTrackPoint = trackPoint;
     }
 
     private void reset(TrackPoint trackPoint) {
@@ -203,7 +183,6 @@ public class TrackStatisticsUpdater {
         currentSegment.reset(trackPoint.getTime());
 
         lastTrackPoint = null;
-        lastMovingTrackPoint = null;
         altitudeBuffer_m.reset();
         speedBuffer_mps.reset();
     }
