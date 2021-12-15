@@ -546,4 +546,13 @@ limitations under the License.
     <string name="settings_announcements_title">Giọng Nói Thông Báo</string>
     <string name="settings_announcements_summary">Thời Gian, Khoảng Cách, Tốc Độ Giọng Nói</string>
     <string name="settings_import_export_title">Xuất Nhập Khẩu</string>
+    <string name="generic_undo">Hoàn tác</string>
+    <string name="menu_select_layout">Chọn bố cục</string>
+    <string name="menu_add_custom_layout">Bố cục mới</string>
+    <string name="custom_layout_list_title">Bố cục</string>
+    <string name="custom_layout_list_edit_name">Nhập tên bố cục để thêm</string>
+    <string name="custom_layout_list_edit_already_exists">Tên bố cục đã tồn tại</string>
+    <string name="custom_layout_list_layout_removed">Bố cục đã bị xoá</string>
+    <string name="custom_layout_select_layout">Chọn bố cục</string>
+    <string name="stats_custom_layout_default_layout">Bố cục mặc định</string>
 </resources>
