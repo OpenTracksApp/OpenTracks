@@ -16,6 +16,7 @@
         style="@style/TextLarge"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="16dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/aggregated_stats_empty_message" />
 

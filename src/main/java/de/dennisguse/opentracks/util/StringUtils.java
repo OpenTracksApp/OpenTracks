@@ -29,6 +29,7 @@ import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -59,6 +60,13 @@ public class StringUtils {
     public static String formatDateTime(Context context, Instant time) {
         return DateUtils.formatDateTime(context, time.toEpochMilli(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE)
                 + " " + DateUtils.formatDateTime(context, time.toEpochMilli(), DateUtils.FORMAT_SHOW_TIME);
+    }
+
+    /**
+     * Formats the date and time based on user's phone date/time preferences.
+     */
+    public static String formatDate(Context context, LocalDateTime localDateTime) {
+        return DateUtils.formatDateTime(context, localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(), DateUtils.FORMAT_SHOW_DATE);
     }
 
     /**
