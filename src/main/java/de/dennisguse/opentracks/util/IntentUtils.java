@@ -18,6 +18,7 @@ package de.dennisguse.opentracks.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.UriPermission;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -25,12 +26,14 @@ import android.util.Pair;
 
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
+import androidx.documentfile.provider.DocumentFile;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.DescriptionGenerator;
@@ -205,7 +208,22 @@ public class IntentUtils {
     }
 
     public static void persistDirectoryAccessPermission(Context context, Uri directoryUri, int existingFlags) {
-        int newFlags = existingFlags | (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        int newFlags = existingFlags & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         context.getContentResolver().takePersistableUriPermission(directoryUri, newFlags);
     }
+
+    public static void releaseDirectoryAccessPermission(Context context, final DocumentFile documentFile) {
+        if (documentFile == null) {
+            return;
+        }
+        final Uri documentUri = documentFile.getUri();
+        final List<UriPermission> persistedUriPermissions = context.getContentResolver().getPersistedUriPermissions();
+        for (final UriPermission permission : persistedUriPermissions) {
+            final Uri uri = permission.getUri();
+            if (uri.equals(documentUri)) {
+                context.getContentResolver().releasePersistableUriPermission(uri, 0);
+            }
+        }
+    }
+
 }

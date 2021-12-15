@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.provider.DocumentsContract;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.documentfile.provider.DocumentFile;
 
@@ -110,14 +109,15 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
             if (requestCode == DIRECTORY_PICKER_REQUEST_CODE) {
                 switch (resultCode) {
                     case RESULT_OK:
-                        Uri directoryUri = resultData.getData();
+                        IntentUtils.releaseDirectoryAccessPermission(getApplicationContext(), PreferencesUtils.getDefaultExportDirectoryUri(this));
 
+                        Uri directoryUri = resultData.getData();
                         PreferencesUtils.setDefaultExportDirectoryUri(directoryUri);
                         IntentUtils.persistDirectoryAccessPermission(getApplicationContext(), directoryUri, resultData.getFlags());
                         break;
                     case RESULT_CANCELED:
+                        IntentUtils.releaseDirectoryAccessPermission(getApplicationContext(), PreferencesUtils.getDefaultExportDirectoryUri(this));
                         PreferencesUtils.setDefaultExportDirectoryUri(null);
-                        //TODO Remove stored permission contentResolver.releasePersistableUriPermission
                         break;
                 }
 
