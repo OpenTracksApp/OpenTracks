@@ -73,6 +73,10 @@ public class ContentProviderUtils {
 
     private final ContentResolver contentResolver;
 
+    public interface ContentProviderSelectionInterface {
+        SelectionData buildSelection();
+    }
+
     public ContentProviderUtils(Context context) {
         contentResolver = context.getContentResolver();
     }
@@ -205,15 +209,10 @@ public class ContentProviderUtils {
         return tracks;
     }
 
-    public List<Track> getTracks(List<Track.Id> trackIds) {
-        if (trackIds == null || trackIds.isEmpty()) {
-            return getTracks();
-        }
-
-        String selection = String.format(TracksColumns._ID + " IN (%s)", TextUtils.join(",", Collections.nCopies(trackIds.size(), "?")));
-        String[] selectionArgs = trackIds.stream().map(id -> Long.toString(id.getId())).toArray(String[]::new);
+    public List<Track> getTracks(ContentProviderSelectionInterface selection) {
+        SelectionData selectionData = selection.buildSelection();
         ArrayList<Track> tracks = new ArrayList<>();
-        try (Cursor cursor = getTrackCursor(selection, selectionArgs, TracksColumns._ID)) {
+        try (Cursor cursor = getTrackCursor(selectionData.getSelection(), selectionData.getSelectionArgs(), TracksColumns._ID)) {
             if (cursor != null && cursor.moveToFirst()) {
                 tracks.ensureCapacity(cursor.getCount());
                 do {

@@ -239,6 +239,9 @@ limitations under the License.
     <string name="generic_click_twice_cancel">Click back again to cancel</string>
     <string name="generic_choose_an_option">Choose an option</string>
     <string name="generic_undo">Undo</string>
+    <string name="generic_filter">Filter</string>
+    <string name="generic_from">From</string>
+    <string name="generic_to">To</string>
     <!-- Gps -->
     <string name="gps_starting">Starting GPS</string>
     <string name="gps_wait_for_better_signal">Waiting for a better GPS signal</string>
@@ -306,6 +309,7 @@ limitations under the License.
     <string name="menu_voice_rate">Voice speed</string>
     <string name="menu_resume_track">Resume track</string>
     <string name="menu_add_custom_layout">New Layout</string>
+    <string name="menu_filter">Filter</string>
     <!-- OpenTracks -->
     <string name="recording_service">Recording service</string>
     <string name="delete_service">Deletion service</string>
@@ -491,6 +495,7 @@ limitations under the License.
     <string name="track_list_empty_message">Start recording your next adventure here</string>
     <!-- Aggregated Statistics -->
     <string name="aggregated_stats_empty_message">Record your first track to see aggregated statistics</string>
+    <string name="aggregated_stats_filter_no_results">There are not activities for the specified filter</string>
     <!-- Interval List -->
     <string name="interval_list_empty_message">There are not any interval yet</string>
     <!-- Unit -->

@@ -9,6 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -17,7 +20,7 @@ import de.dennisguse.opentracks.viewmodels.AggregatedStatistics;
 
 public class AggregatedStatisticsAdapter extends BaseAdapter {
 
-    private final AggregatedStatistics aggregatedStatistics;
+    private AggregatedStatistics aggregatedStatistics;
     private final Context context;
 
     public AggregatedStatisticsAdapter(Context context, AggregatedStatistics aggregatedStatistics) {
@@ -64,6 +67,20 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         }
 
         return convertView;
+    }
+
+    public AggregatedStatistics swapData(AggregatedStatistics aggregatedStatistics) {
+        this.aggregatedStatistics = aggregatedStatistics;
+        this.notifyDataSetChanged();
+        return aggregatedStatistics;
+    }
+
+    public List<String> getCategories() {
+        List<String> categories = new ArrayList<>();
+        for (int i = 0; i < aggregatedStatistics.getCount(); i++) {
+            categories.add(aggregatedStatistics.getItem(i).getCategory());
+        }
+        return categories;
     }
 
     private class ViewHolder {
