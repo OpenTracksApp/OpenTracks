@@ -7,8 +7,9 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        api-level: [ 23, 26 ] #TODO Re-enable 29
+        api-level: [ 23, 30 ]
         target: [ default ]
+      fail-fast: false
     steps:
       - name: checkout
         uses: actions/checkout@v2.4.0
