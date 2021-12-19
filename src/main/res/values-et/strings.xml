@@ -561,4 +561,13 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="settings_layout_reset_confirm_message">Kõik paigutuse seaded tagastatakse vaikeväärtustele. See ei kustuta seadmes olevaid lugusid.</string>
     <string name="settings_running_sensor">Töötama</string>
     <string name="settings_generic_sensor">Geneeriline</string>
+    <string name="custom_layout_list_layout_removed">Paigutus eemaldati</string>
+    <string name="menu_add_custom_layout">Uus kujundus</string>
+    <string name="generic_undo">Tagasi</string>
+    <string name="menu_select_layout">Valige paigutus</string>
+    <string name="stats_custom_layout_default_layout">Vaikimisi paigutus</string>
+    <string name="custom_layout_select_layout">Valige paigutus</string>
+    <string name="custom_layout_list_edit_already_exists">Paigutuse nimi on juba olemas</string>
+    <string name="custom_layout_list_edit_name">Sisestage paigutuse nimi, et lisada</string>
+    <string name="custom_layout_list_title">Plaanid</string>
 </resources>
