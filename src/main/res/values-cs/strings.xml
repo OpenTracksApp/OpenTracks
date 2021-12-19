@@ -568,4 +568,13 @@ limitations under the License.
     <string name="settings_defaults_title">Výchozí jednotky a aktivity</string>
     <string name="settings_ui_title">Uživatelské rozhraní</string>
     <string name="settings_gps_title">GPS</string>
+    <string name="generic_undo">Zrušit</string>
+    <string name="menu_select_layout">Vyberte rozvržení</string>
+    <string name="custom_layout_list_title">Rozložení</string>
+    <string name="custom_layout_select_layout">Vyberte rozvržení</string>
+    <string name="menu_add_custom_layout">Nové rozvržení</string>
+    <string name="custom_layout_list_edit_name">Zadejte název rozvržení, které chcete přidat</string>
+    <string name="custom_layout_list_edit_already_exists">Název rozvržení již existuje</string>
+    <string name="custom_layout_list_layout_removed">Rozložení bylo odstraněno</string>
+    <string name="stats_custom_layout_default_layout">Výchozí rozložení</string>
 </resources>
