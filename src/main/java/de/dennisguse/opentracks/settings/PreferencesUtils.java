@@ -32,12 +32,11 @@ import androidx.documentfile.provider.DocumentFile;
 import androidx.preference.PreferenceManager;
 
 import java.time.Duration;
-
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
@@ -96,7 +95,7 @@ public class PreferencesUtils {
     /**
      * Gets a preference key
      *
-     * @param keyId   the key id
+     * @param keyId the key id
      */
     private static String getKey(int keyId) {
         return resources.getString(keyId);
@@ -114,7 +113,7 @@ public class PreferencesUtils {
     }
 
     public static boolean isKey(int[] keyIds, String key) {
-        for(int keyId : keyIds) {
+        for (int keyId : keyIds) {
             if (isKey(keyId, key)) {
                 return true;
             }
@@ -187,7 +186,7 @@ public class PreferencesUtils {
         } else {
             unit = resources.getString(R.string.stats_units_imperial);
         }
-        setString( R.string.stats_units_key, unit);
+        setString(R.string.stats_units_key, unit);
     }
 
     public static boolean isReportSpeed(String category) {
@@ -552,30 +551,33 @@ public class PreferencesUtils {
         return resources.getInteger(R.integer.stats_custom_layout_columns_default);
     }
 
-    private static List<TypedArray> getMultiTypedArray(String key) {
-        List<TypedArray> typedArrays = new ArrayList<>();
-
-        try {
-            Class<R.array> resource = R.array.class;
-            Field field;
-            int i = 0;
-
-            do {
-                field = resource.getField(key + resources.getString(R.string.stats_custom_layout_fields_default_value_separator) + i);
-                typedArrays.add(resources.obtainTypedArray(field.getInt(null)));
-                i++;
-            } while (field != null); //TODO Catch no such field exception instead of using an endless loop.
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(TAG, e.getMessage());
-        }
-
-        return typedArrays;
+    private static List<TypedArray> getMultiTypedArray() {
+        return Stream.of(
+                R.array.stats_custom_layout_fields_default_value_0,
+                R.array.stats_custom_layout_fields_default_value_1,
+                R.array.stats_custom_layout_fields_default_value_2,
+                R.array.stats_custom_layout_fields_default_value_3,
+                R.array.stats_custom_layout_fields_default_value_4,
+                R.array.stats_custom_layout_fields_default_value_5,
+                R.array.stats_custom_layout_fields_default_value_6,
+                R.array.stats_custom_layout_fields_default_value_7,
+                R.array.stats_custom_layout_fields_default_value_8,
+                R.array.stats_custom_layout_fields_default_value_9,
+                R.array.stats_custom_layout_fields_default_value_10,
+                R.array.stats_custom_layout_fields_default_value_11,
+                R.array.stats_custom_layout_fields_default_value_12,
+                R.array.stats_custom_layout_fields_default_value_13,
+                R.array.stats_custom_layout_fields_default_value_14,
+                R.array.stats_custom_layout_fields_default_value_15,
+                R.array.stats_custom_layout_fields_default_value_16,
+                R.array.stats_custom_layout_fields_default_value_17,
+                R.array.stats_custom_layout_fields_default_value_18
+        ).map(id -> resources.obtainTypedArray(id)).collect(Collectors.toList());
     }
 
     @SuppressLint("ResourceType")
     private static String buildDefaultFields() {
-        List<TypedArray> fieldsArrays = getMultiTypedArray("stats_custom_layout_fields_default_value");
+        List<TypedArray> fieldsArrays = getMultiTypedArray();
         return fieldsArrays.stream().map(i -> i.getString(0) + CsvLayoutUtils.PROPERTY_SEPARATOR + i.getString(1)).collect(Collectors.joining(CsvLayoutUtils.ITEM_SEPARATOR))
                 + CsvLayoutUtils.ITEM_SEPARATOR;
     }
