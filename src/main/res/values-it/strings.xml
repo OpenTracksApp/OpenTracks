@@ -565,4 +565,13 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_all_reset">Reimposta</string>
     <string name="stats_sensors_heart_rate">Frequenza Cardiaca</string>
     <string name="stats_sensors_power">Potenza</string>
+    <string name="custom_layout_list_title">Disegni</string>
+    <string name="custom_layout_list_edit_name">Digitare il nome del layout da aggiungere</string>
+    <string name="generic_undo">Annulla</string>
+    <string name="menu_select_layout">Seleziona il layout</string>
+    <string name="menu_add_custom_layout">Nuovo layout</string>
+    <string name="custom_layout_list_edit_already_exists">Il nome del layout già esiste</string>
+    <string name="custom_layout_list_layout_removed">Il layout è stato rimosso</string>
+    <string name="custom_layout_select_layout">Seleziona il layout</string>
+    <string name="stats_custom_layout_default_layout">Layout predefinito</string>
 </resources>
