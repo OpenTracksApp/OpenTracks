@@ -64,8 +64,8 @@ import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.io.file.importer.TrackPointAssert;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
-import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
  * Tests for the track recording service.
@@ -451,10 +451,7 @@ public class TrackRecordingServiceTest {
         newTrackPoint(trackRecordingService, latitude, longitude, accuracy, speed, System.currentTimeMillis());
     }
 
-    /**
-     * Inserts a location and waits for 200ms.
-     */
-    private static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) {
+    static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) {
         TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(time))
                 .setLongitude(longitude)
                 .setLatitude(latitude)

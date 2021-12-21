@@ -83,14 +83,14 @@ public class TrackPointAssert {
         try {
             Assert.assertEquals(expected.size(), actual.size());
         } catch (AssertionError e) {
-            throw new AssertionError("Expected: " + expected + "\n actual: " + actual);
+            throw new AssertionError("Size difference; expected: " + expected.size() + "; actual: " + actual.size() + "\nExpected: " + expected + "\n actual: " + actual);
         }
 
         for (int i = 0; i < expected.size(); i++) {
             try {
                 assertEquals(expected.get(i), actual.get(i));
             } catch (AssertionError e) {
-                throw new AssertionError("Expected: " + expected.get(i) + "\n actual: " + actual.get(i), e);
+                throw new AssertionError("Expected: " + i + " to be " + expected.get(i) + "\n actual: " + actual.get(i), e);
             }
         }
         Assert.assertEquals(expected.size(), actual.size());
