@@ -203,11 +203,6 @@ public abstract class BluetoothConnectionManager<DataType> {
                 return cadenceAndSpeed.getCadence();
             }
 
-            //Workaround for Wahoo CADENCE: this sensor reports speed (instead of cadence)
-            if (cadenceAndSpeed.getDistanceSpeed() != null) {
-                return new SensorDataCycling.Cadence(cadenceAndSpeed.getDistanceSpeed());
-            }
-
             return null;
         }
     }
@@ -226,15 +221,14 @@ public abstract class BluetoothConnectionManager<DataType> {
         @Override
         protected SensorDataCycling.DistanceSpeed parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
             SensorDataCycling.CadenceAndSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);
-            if (cadenceAndSpeed != null) {
-                // Workaround for Garmin Speed Sensor 2: provides cadence instead of speed
-                SensorDataCycling.DistanceSpeed result = cadenceAndSpeed.getDistanceSpeed();
-                if (result == null && cadenceAndSpeed.getCadence() != null) {
-                    result = new SensorDataCycling.DistanceSpeed(cadenceAndSpeed.getSensorAddress(), cadenceAndSpeed.getSensorName(), (int) cadenceAndSpeed.getCadence().getCrankRevolutionsCount(), cadenceAndSpeed.getCadence().getCrankRevolutionsTime());
-                }
-
-                return result;
+            if (cadenceAndSpeed == null) {
+                return null;
             }
+
+            if (cadenceAndSpeed.getDistanceSpeed() != null) {
+                return cadenceAndSpeed.getDistanceSpeed();
+            }
+
             return null;
         }
     }
