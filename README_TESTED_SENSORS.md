@@ -18,14 +18,18 @@
 Please note that the according to the specification these sensors _may_ provide speed as well as cadence.
 However, often only one value is provided.
 
-### Speed
+### Speed & Cadence
+
+* Wahoo Blue SC
+
+### Speed only
 
 * Garmin Speed Sensor 2
   * Has updatable firmware that requires an account for garmin.com
 * Wahoo Speed (Model: WFRPMSPD)
 * CooSpo cadence and speed sensor (model: BK467)
 
-### Cadence
+### Cadence only
 
 * Garmin Cadence Sensor 2
 * Wahoo Cadence (Model: WFPODCAD2)
