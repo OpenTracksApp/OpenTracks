@@ -211,6 +211,7 @@ public class TrackRecordingServiceTest {
 
         trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
+        service.stopUpdateRecordingData();
         trackPointCreator.stopGPS();
         trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
@@ -241,6 +242,7 @@ public class TrackRecordingServiceTest {
 
         trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
+        service.stopUpdateRecordingData();
         trackPointCreator.stopGPS();
         trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
@@ -280,6 +282,7 @@ public class TrackRecordingServiceTest {
 
         trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
+        service.stopUpdateRecordingData();
         trackPointCreator.stopGPS();
         trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
@@ -322,6 +325,7 @@ public class TrackRecordingServiceTest {
 
         trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
+        service.stopUpdateRecordingData();
         trackPointCreator.stopGPS();
         trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
@@ -352,10 +356,13 @@ public class TrackRecordingServiceTest {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
                 .getService();
         Track.Id trackId = service.startNewTrack();
+        service.stopUpdateRecordingData();
+
         assertTrue(service.isRecording());
 
         // when
         Track.Id newTrackId = service.startNewTrack();
+        service.stopUpdateRecordingData();
 
         // then
         assertNotNull(trackId);
@@ -405,6 +412,7 @@ public class TrackRecordingServiceTest {
 
         trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         Track.Id trackId = service.startNewTrack();
+        service.stopUpdateRecordingData();
 
         assertTrue(service.isRecording());
         trackPointCreator.onNewTrackPoint(

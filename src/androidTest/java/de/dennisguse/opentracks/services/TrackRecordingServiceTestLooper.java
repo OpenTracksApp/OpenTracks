@@ -1,5 +1,10 @@
 package de.dennisguse.opentracks.services;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import android.content.ContentProvider;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -31,13 +36,8 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.CustomContentProvider;
-import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
  * Tests for the track recording service, which require a {@link Looper}.
@@ -195,6 +195,7 @@ public class TrackRecordingServiceTestLooper {
 
         // Start a track.
         Track.Id trackId = service.startNewTrack();
+        service.stopUpdateRecordingData();
         assertNotNull(trackId);
         assertTrue(service.isRecording());
         Track track = contentProviderUtils.getTrack(trackId);

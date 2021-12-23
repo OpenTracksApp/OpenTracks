@@ -118,6 +118,7 @@ public class TrackRecordingServiceTestStatistics {
         // given
         service.getTrackPointCreator().setClock(Clock.fixed(Instant.ofEpochMilli(0), ZoneId.systemDefault()));
         Track.Id trackId = service.startNewTrack();
+        service.stopUpdateRecordingData();
         service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
 
         Function<Integer, Void> assertMovingTime = expected -> {
