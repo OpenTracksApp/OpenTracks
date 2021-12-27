@@ -22,7 +22,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import android.content.ContentProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
@@ -60,7 +59,6 @@ import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.io.file.importer.TrackPointAssert;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
@@ -110,25 +108,15 @@ public class TrackRecordingServiceTest {
     };
 
     @Before
-    public void setUp() {
+    public void setUp() throws TimeoutException {
         contentProviderUtils = new ContentProviderUtils(context);
 
-        // Let's use default values.
-        PreferencesUtils.clear();
-
-        // Ensure that the database is empty before every test
-        contentProviderUtils.deleteAllTracks(context);
+        tearDown();
     }
 
     @After
     public void tearDown() throws TimeoutException {
-        // Reset service (if some previous test failed)
-        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
-                .getService();
-        if (service.isRecording() || service.isPaused()) {
-            service.endCurrentTrack();
-        }
-        service.getTrackPointCreator().setClock(Clock.systemUTC());
+        TrackRecordingServiceTest.resetService(mServiceRule, context);
 
         // Ensure that the database is empty after every test
         contentProviderUtils.deleteAllTracks(context);
@@ -465,5 +453,20 @@ public class TrackRecordingServiceTest {
                 .setBearing(3.0f);
 
         trackRecordingService.getTrackPointCreator().onNewTrackPoint(trackPoint, Distance.of(50));
+    }
+
+    //TODO Workaround as service is not stopped on API23; thus sharedpreferences are not reset between tests.
+    //TODO Anyhow, the service should re-create all it's resources if a recording starts and makes sure that there is no leftovers from previous recordings.
+    @Deprecated
+    public static void resetService(ServiceTestRule mServiceRule, Context context) throws TimeoutException {
+        // Let's use default values.
+        PreferencesUtils.clear();
+
+        // Reset service (if some previous test failed)
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
+                .getService();
+        service.endCurrentTrack();
+        service.getTrackPointCreator().setClock(Clock.systemUTC());
+        service.sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
     }
 }

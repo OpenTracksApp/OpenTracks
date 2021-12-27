@@ -55,6 +55,7 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.services.TrackRecordingService;
+import de.dennisguse.opentracks.services.TrackRecordingServiceTest;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
@@ -98,21 +99,26 @@ public class ExportImportTest {
     private TrackImporter trackImporter;
 
     @Before
-    public void fileSetup() throws IOException {
+    public void fileSetup() throws IOException, TimeoutException {
+        TrackRecordingServiceTest.resetService(mServiceRule, context);
+
         tmpFile = File.createTempFile("test", "test", context.getFilesDir());
         tmpFileUri = Uri.fromFile(tmpFile);
 
         trackImporter = new TrackImporter(context, contentProviderUtils, Distance.of(10), Distance.of(200), true);
+
+        TrackRecordingServiceTest.resetService(mServiceRule, context);
     }
 
     @After
-    public void FileTearDown() throws TimeoutException {
+    public void tearDown() throws TimeoutException {
         tmpFile.deleteOnExit();
         tmpFileUri = null;
 
-        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
-                .getService();
-        service.getTrackPointCreator().setClock(Clock.systemUTC());
+        // Ensure that the database is empty after every test
+        contentProviderUtils.deleteAllTracks(context);
+
+        TrackRecordingServiceTest.resetService(mServiceRule, context);
     }
 
     public void setUp() throws TimeoutException {
@@ -173,16 +179,6 @@ public class ExportImportTest {
         markers = contentProviderUtils.getMarkers(trackId);
         assertEquals(10, trackPoints.size());
         assertEquals(2, markers.size());
-    }
-
-    @After
-    public void tearDown() {
-        if (trackId != null) {
-            contentProviderUtils.deleteTrack(context, trackId);
-        }
-        if (importTrackId != null) {
-            contentProviderUtils.deleteTrack(context, importTrackId);
-        }
     }
 
     //TODO Does not test images

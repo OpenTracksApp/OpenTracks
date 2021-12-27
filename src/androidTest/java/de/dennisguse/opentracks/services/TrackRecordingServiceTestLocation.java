@@ -36,7 +36,6 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.importer.TrackPointAssert;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
-import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * Tests insert location.
@@ -80,16 +79,14 @@ public class TrackRecordingServiceTestLocation {
         contentProviderUtils = new ContentProviderUtils(context);
         tearDown();
 
-        // Let's use default values.
-        PreferencesUtils.clear();
-
         service = ((TrackRecordingService.Binder) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)))
                 .getService();
         service.getTrackPointCreator().stopGPS();
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws TimeoutException {
+        TrackRecordingServiceTest.resetService(mServiceRule, context);
         // Ensure that the database is empty after every test
         contentProviderUtils.deleteAllTracks(context);
     }

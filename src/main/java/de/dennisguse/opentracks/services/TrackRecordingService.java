@@ -99,7 +99,10 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
     };
 
-    private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
+    @Deprecated
+    //TODO Workaround as service is not stopped on API23; thus sharedpreferences are not reset between tests.
+    @VisibleForTesting
+    final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
@@ -150,19 +153,11 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_STICKY;
-    }
-
-    @Override
-    public Binder onBind(Intent intent) {
-        return binder;
-    }
-
-    @Override
     public void onDestroy() {
         handler.removeCallbacksAndMessages(null); //Some tests do not finish the recording completely
         handler = null;
+
+        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
         trackPointCreator.stop();
         trackPointCreator = null;
@@ -171,8 +166,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         // Reverse order from onCreate
         showNotification(false); //TODO Why?
         notificationManager = null;
-
-        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
         try {
             voiceAnnouncementManager.shutdown();
@@ -433,6 +426,12 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     @VisibleForTesting
     public TrackPointCreator getTrackPointCreator() {
         return trackPointCreator;
+    }
+
+    @Deprecated
+    @VisibleForTesting
+    public TrackRecordingManager getTrackRecordingManager() {
+        return trackRecordingManager;
     }
 
     public LiveData<GpsStatusValue> getGpsStatusObservable() {
