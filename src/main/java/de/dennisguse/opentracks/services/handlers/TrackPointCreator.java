@@ -58,6 +58,10 @@ public class TrackPointCreator {
         altitudeSumManager.start(context);
     }
 
+    private boolean isStarted() {
+        return context != null;
+    }
+
     @Deprecated
     //There should be a cooler way to do this; we want to send fake locations without getting affected by real GPS data.
     @VisibleForTesting
@@ -75,6 +79,10 @@ public class TrackPointCreator {
     }
 
     private SensorDataSet fill(TrackPoint trackPoint) {
+        if (!isStarted()) {
+            Log.w(TAG, "Not started, should not be called.");
+            return null;
+        }
         SensorDataSet sensorDataSet = remoteSensorManager.fill(trackPoint);
         altitudeSumManager.fill(trackPoint);
 
