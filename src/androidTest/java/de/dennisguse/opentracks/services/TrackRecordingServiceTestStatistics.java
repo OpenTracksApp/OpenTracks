@@ -81,11 +81,6 @@ public class TrackRecordingServiceTestStatistics {
 
     @Before
     public void setUp() throws TimeoutException {
-        // Set up the mock content resolver
-        ContentProvider customContentProvider = new CustomContentProvider() {
-        };
-        customContentProvider.attachInfo(context, null);
-
         contentProviderUtils = new ContentProviderUtils(context);
         tearDown();
 

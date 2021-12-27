@@ -111,11 +111,6 @@ public class TrackRecordingServiceTest {
 
     @Before
     public void setUp() {
-        // Set up the mock content resolver
-        ContentProvider customContentProvider = new CustomContentProvider() {
-        };
-        customContentProvider.attachInfo(context, null);
-
         contentProviderUtils = new ContentProviderUtils(context);
 
         // Let's use default values.
@@ -249,6 +244,7 @@ public class TrackRecordingServiceTest {
         // when
         trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
         service.pauseCurrentTrack();
+        service.stopUpdateRecordingData();
 
         // then
         assertEquals(2, contentProviderUtils.getTrackPointCursor(trackId, null).getCount());
@@ -256,6 +252,7 @@ public class TrackRecordingServiceTest {
         //when
         trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:04Z"), ZoneId.of("CET")));
         service.resumeTrack(trackId);
+        service.stopUpdateRecordingData();
 
         // then
         assertTrue(service.isRecording());

@@ -44,6 +44,7 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
  *
  * @author Bartlomiej Niechwiej
  */
+//TODO Check that those tests are really testing something!
 @RunWith(AndroidJUnit4.class)
 public class TrackRecordingServiceTestLooper {
 
@@ -67,11 +68,6 @@ public class TrackRecordingServiceTestLooper {
 
     @Before
     public void setUp() {
-        // Set up the mock content resolver
-        ContentProvider customContentProvider = new CustomContentProvider() {
-        };
-        customContentProvider.attachInfo(context, null);
-
         contentProviderUtils = new ContentProviderUtils(context);
 
         // Let's use default values.

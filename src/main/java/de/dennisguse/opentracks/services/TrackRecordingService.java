@@ -161,13 +161,16 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     @Override
     public void onDestroy() {
+        handler.removeCallbacksAndMessages(null); //Some tests do not finish the recording completely
         handler = null;
 
         trackPointCreator.stop();
         trackPointCreator = null;
+        trackRecordingManager = null;
 
         // Reverse order from onCreate
         showNotification(false); //TODO Why?
+        notificationManager = null;
 
         PreferencesUtils.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
@@ -180,11 +183,22 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         // This should be the next to last operation
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
 
+        updateRecordingStatus(STATUS_DEFAULT);
         recordingStatusObservable = null;
         gpsStatusObservable = null;
         recordingDataObservable = null;
 
         super.onDestroy();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return START_STICKY;
+    }
+
+    @Override
+    public Binder onBind(Intent intent) {
+        return binder;
     }
 
     public boolean isRecording() {

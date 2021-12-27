@@ -2,7 +2,6 @@ package de.dennisguse.opentracks.services;
 
 import static org.junit.Assert.assertFalse;
 
-import android.content.ContentProvider;
 import android.content.Context;
 import android.os.Looper;
 
@@ -31,7 +30,6 @@ import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
 import de.dennisguse.opentracks.content.sensor.SensorDataRunning;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
@@ -79,11 +77,6 @@ public class TrackRecordingServiceTestLocation {
 
     @Before
     public void setUp() throws TimeoutException {
-        // Set up the mock content resolver
-        ContentProvider customContentProvider = new CustomContentProvider() {
-        };
-        customContentProvider.attachInfo(context, null);
-
         contentProviderUtils = new ContentProviderUtils(context);
         tearDown();
 
