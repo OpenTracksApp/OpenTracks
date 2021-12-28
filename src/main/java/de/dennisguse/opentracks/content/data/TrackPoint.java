@@ -63,7 +63,8 @@ public class TrackPoint {
         SEGMENT_START_MANUAL(-2), //Start of a segment due to user interaction (start, resume)
 
         SEGMENT_START_AUTOMATIC(-1), //Start of a segment due to too much distance from previous TrackPoint
-        TRACKPOINT(0), //Just GPS data.
+        TRACKPOINT(0), //Just GPS data and may contain BLE sensor data
+        SENSORPOINT(2), //Just BLE sensor data
 
         SEGMENT_END_MANUAL(1); //End of a segment
 
@@ -310,7 +311,7 @@ public class TrackPoint {
     }
 
     @Nullable
-    public Distance distanceToPrevious(TrackPoint previous) {
+    public Distance distanceToPrevious(@Nullable TrackPoint previous) {
         if (hasSensorDistance()) {
             return getSensorDistance();
         }

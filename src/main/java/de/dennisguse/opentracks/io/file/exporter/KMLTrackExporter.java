@@ -181,6 +181,7 @@ public class KMLTrackExporter implements TrackExporter {
                         writeCloseSegment();
                         wroteSegment = false;
                         break;
+                    case SENSORPOINT:
                     case TRACKPOINT:
                         if (!wroteSegment) {
                             // Might happen for older data (pre v3.15.0)
@@ -189,6 +190,8 @@ public class KMLTrackExporter implements TrackExporter {
                         }
                         writeTrackPoint(trackPoint);
                         break;
+                    default:
+                        throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
                 }
             }
 

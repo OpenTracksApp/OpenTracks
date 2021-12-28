@@ -295,15 +295,21 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
 
             TrackPoint trackPoint;
             if (i == 0) {
+                //first
                 if (location == null) {
                     trackPoint = TrackPoint.createSegmentStartManualWithTime(time);
                 } else {
                     trackPoint = new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, location, time);
                 }
             } else if (i == locationList.size() - 1 && location == null) {
+                //last
                 trackPoint = TrackPoint.createSegmentEndWithTime(time);
             } else {
-                trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, location, time);
+                if (location == null) {
+                    trackPoint = new TrackPoint(TrackPoint.Type.SENSORPOINT, time);
+                } else {
+                    trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, location, time);
+                }
             }
 
             if (i < sensorSpeedList.size() && sensorSpeedList.get(i) != null) {

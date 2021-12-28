@@ -31,25 +31,25 @@ public class TrackPointCreator {
     @NonNull
     private Clock clock = Clock.systemUTC();
 
-    private final LocationHandler locationHandler;
+    private final GPSHandler gpsHandler;
     private BluetoothRemoteSensorManager remoteSensorManager;
     private AltitudeSumManager altitudeSumManager;
 
     public TrackPointCreator(Callback service) {
         this.service = service;
-        this.locationHandler = new LocationHandler(this);
+        this.gpsHandler = new GPSHandler(this);
     }
 
     @VisibleForTesting
-    TrackPointCreator(LocationHandler locationHandler, Callback service) {
+    TrackPointCreator(GPSHandler gpsHandler, Callback service) {
         this.service = service;
-        this.locationHandler = locationHandler;
+        this.gpsHandler = gpsHandler;
     }
 
     public void start(@NonNull Context context) {
         this.context = context;
 
-        locationHandler.onStart(context);
+        gpsHandler.onStart(context);
 
         remoteSensorManager = new BluetoothRemoteSensorManager(context);
         remoteSensorManager.start();
@@ -58,11 +58,15 @@ public class TrackPointCreator {
         altitudeSumManager.start(context);
     }
 
+    private boolean isStarted() {
+        return context != null;
+    }
+
     @Deprecated
     //There should be a cooler way to do this; we want to send fake locations without getting affected by real GPS data.
     @VisibleForTesting
     public void stopGPS() {
-        locationHandler.onStop();
+        gpsHandler.onStop();
     }
 
     public void resetSensorData() {
@@ -75,6 +79,10 @@ public class TrackPointCreator {
     }
 
     private SensorDataSet fill(TrackPoint trackPoint) {
+        if (!isStarted()) {
+            Log.w(TAG, "Not started, should not be called.");
+            return null;
+        }
         SensorDataSet sensorDataSet = remoteSensorManager.fill(trackPoint);
         altitudeSumManager.fill(trackPoint);
 
@@ -82,7 +90,7 @@ public class TrackPointCreator {
     }
 
     public void stop() {
-        locationHandler.onStop();
+        gpsHandler.onStop();
 
         if (remoteSensorManager != null) {
             remoteSensorManager.stop();
@@ -98,16 +106,20 @@ public class TrackPointCreator {
     }
 
     public void onSharedPreferenceChanged(String key) {
-        locationHandler.onSharedPreferenceChanged(key);
+        gpsHandler.onSharedPreferenceChanged(key);
     }
 
-    public void onNewTrackPoint(TrackPoint trackPoint, Distance thresholdHorizontalAccuracy) {
+    public synchronized void onNewTrackPoint(@NonNull TrackPoint trackPoint, @NonNull Distance thresholdHorizontalAccuracy) {
         fill(trackPoint);
 
         boolean stored = service.newTrackPoint(trackPoint, thresholdHorizontalAccuracy);
         if (stored) {
             resetSensorData();
         }
+    }
+
+    public void onNewTrackPointWithoutGPS() {
+        onNewTrackPoint(new TrackPoint(TrackPoint.Type.SENSORPOINT, createNow()), gpsHandler.getThresholdHorizontalAccuracy());
     }
 
     public TrackPoint createSegmentStartManual() {
@@ -123,7 +135,7 @@ public class TrackPointCreator {
 
     public Pair<TrackPoint, SensorDataSet> createCurrentTrackPoint(@Nullable TrackPoint lastValidTrackPoint) {
         TrackPoint currentTrackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, createNow());
-        TrackPoint lastTrackPoint = locationHandler.getLastTrackPoint();
+        TrackPoint lastTrackPoint = gpsHandler.getLastTrackPoint();
 
         if (lastTrackPoint != null && lastTrackPoint.hasLocation()) {
             currentTrackPoint.setSpeed(lastTrackPoint.getSpeed());
@@ -148,6 +160,11 @@ public class TrackPointCreator {
         return Instant.now(clock);
     }
 
+    @VisibleForTesting
+    public AltitudeSumManager getAltitudeSumManager() {
+        return altitudeSumManager;
+    }
+
     @Deprecated
     @VisibleForTesting
     public void setAltitudeSumManager(AltitudeSumManager altitudeSumManager) {
@@ -166,8 +183,8 @@ public class TrackPointCreator {
     }
 
     @VisibleForTesting
-    public LocationHandler getLocationHandler() {
-        return locationHandler;
+    public GPSHandler getGpsHandler() {
+        return gpsHandler;
     }
 
     void sendGpsStatus(GpsStatusValue gpsStatusValue) {

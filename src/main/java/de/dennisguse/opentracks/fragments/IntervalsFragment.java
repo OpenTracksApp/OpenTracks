@@ -182,7 +182,9 @@ public class IntervalsFragment extends Fragment {
     }
 
     private synchronized void updateIntervals(boolean metricUnits, IntervalStatisticsModel.IntervalOption selectedInterval) {
-        boolean update = metricUnits != this.metricUnits || !selectedInterval.sameMultiplier(this.selectedInterval);
+        boolean update = metricUnits != this.metricUnits
+                || selectedInterval == null
+                || !selectedInterval.sameMultiplier(this.selectedInterval);
         this.metricUnits = metricUnits;
         this.selectedInterval = selectedInterval;
 

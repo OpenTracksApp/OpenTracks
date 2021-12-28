@@ -36,9 +36,11 @@ class TrackRecordingManager {
     private Track.Id trackId;
     private TrackStatisticsUpdater trackStatisticsUpdater;
 
+    //TDOO use lastStoredTrackPoint?
     private boolean currentSegmentHasTrackPoint;
     private TrackPoint lastTrackPoint;
     private TrackPoint lastStoredTrackPoint;
+    private TrackPoint lastStoredTrackPointWithLocation;
 
     TrackRecordingManager(Context context) {
         this.context = context;
@@ -80,15 +82,20 @@ class TrackRecordingManager {
 
         trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics());
         insertTrackPoint(trackId, segmentStartTrackPoint);
-        currentSegmentHasTrackPoint = false;
-        lastTrackPoint = null;
-        lastStoredTrackPoint = null;    }
 
-    void pause(TrackPointCreator trackPointCreator) {
-        insertTrackPoint(trackId, trackPointCreator.createSegmentEnd());
         currentSegmentHasTrackPoint = false;
         lastTrackPoint = null;
         lastStoredTrackPoint = null;
+        lastStoredTrackPointWithLocation = null;
+    }
+
+    void pause(TrackPointCreator trackPointCreator) {
+        insertTrackPoint(trackId, trackPointCreator.createSegmentEnd());
+
+        currentSegmentHasTrackPoint = false;
+        lastTrackPoint = null;
+        lastStoredTrackPoint = null;
+        lastStoredTrackPointWithLocation = null;
     }
 
     void end(TrackPointCreator trackPointCreator) {
@@ -97,9 +104,11 @@ class TrackRecordingManager {
 
         trackId = null;
         trackStatisticsUpdater = null;
+
+        currentSegmentHasTrackPoint = false;
         lastTrackPoint = null;
         lastStoredTrackPoint = null;
-        currentSegmentHasTrackPoint = false;
+        lastStoredTrackPointWithLocation = null;
     }
 
     Pair<Track, Pair<TrackPoint, SensorDataSet>> get(TrackPointCreator trackPointCreator) {
@@ -131,7 +140,7 @@ class TrackRecordingManager {
             name = context.getString(R.string.marker_name_format, nextMarkerNumber + 1);
         }
 
-        if (lastStoredTrackPoint == null) {
+        if (lastStoredTrackPointWithLocation == null) {
             Log.i(TAG, "Could not create a marker as trackPoint is unknown.");
             return null;
         }
@@ -142,11 +151,14 @@ class TrackRecordingManager {
         photoUrl = photoUrl != null ? photoUrl : "";
 
         // Insert marker
-        Marker marker = new Marker(name, description, category, icon, trackId, getTrackStatistics(), lastStoredTrackPoint, photoUrl);
+        Marker marker = new Marker(name, description, category, icon, trackId, getTrackStatistics(), lastStoredTrackPointWithLocation, photoUrl);
         Uri uri = contentProviderUtils.insertMarker(marker);
         return new Marker.Id(ContentUris.parseId(uri));
     }
 
+    /**
+     * @return TrackPoint was stored?
+     */
     boolean onNewTrackPoint(TrackPoint trackPoint) {
         //Storing trackPoint
 
@@ -157,17 +169,30 @@ class TrackRecordingManager {
             return true;
         }
 
-        Distance distanceToLastTrackLocation = trackPoint.distanceToPrevious(lastStoredTrackPoint);
-        if (distanceToLastTrackLocation != null) {
-            if (distanceToLastTrackLocation.greaterThan(maxRecordingDistance)) {
+        Distance distanceToLastStoredTrackPoint = trackPoint.distanceToPrevious(lastStoredTrackPoint);
+        if (distanceToLastStoredTrackPoint != null) {
+            if (distanceToLastStoredTrackPoint.greaterThan(maxRecordingDistance)) {
                 trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
                 insertTrackPoint(trackId, trackPoint);
                 return true;
             }
 
-            if (distanceToLastTrackLocation.greaterOrEqualThan(recordingDistanceInterval) && trackPoint.isMoving()) {
+            if (distanceToLastStoredTrackPoint.greaterOrEqualThan(recordingDistanceInterval) && trackPoint.isMoving()) {
                 insertTrackPoint(trackId, trackPoint);
                 return true;
+            }
+
+            if (trackPoint.hasLocation()) {
+                if (lastStoredTrackPointWithLocation == null) {
+                    insertTrackPoint(trackId, trackPoint);
+                    return true;
+                }
+
+                Distance distanceToLastStoredTrackPointWithLocation = trackPoint.distanceToPrevious(lastStoredTrackPointWithLocation);
+                if (distanceToLastStoredTrackPointWithLocation != null && distanceToLastStoredTrackPointWithLocation.greaterOrEqualThan(recordingDistanceInterval)) {
+                    insertTrackPoint(trackId, trackPoint);
+                    return true;
+                }
             }
         }
 
@@ -209,6 +234,9 @@ class TrackRecordingManager {
 
             contentProviderUtils.updateTrackStatistics(trackId, trackStatisticsUpdater.getTrackStatistics());
             lastStoredTrackPoint = trackPoint;
+            if (trackPoint.hasLocation()) {
+                lastStoredTrackPointWithLocation = lastStoredTrackPoint;
+            }
         } catch (SQLiteException e) {
             /*
              * Insert failed, most likely because of SqlLite error code 5 (SQLite_BUSY).

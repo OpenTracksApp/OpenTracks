@@ -3,10 +3,7 @@ package de.dennisguse.opentracks.services;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-import android.content.ContentProvider;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
@@ -18,7 +15,6 @@ import androidx.test.rule.ServiceTestRule;
 
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -38,9 +34,7 @@ import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.content.provider.CustomContentProvider;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
-import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
@@ -81,27 +75,15 @@ public class TrackRecordingServiceTestStatistics {
 
     @Before
     public void setUp() throws TimeoutException {
-        // Set up the mock content resolver
-        ContentProvider customContentProvider = new CustomContentProvider() {
-        };
-        customContentProvider.attachInfo(context, null);
-
         contentProviderUtils = new ContentProviderUtils(context);
+
         tearDown();
-
-        // Let's use default values.
-        PreferencesUtils.clear();
-
-        service = ((TrackRecordingService.Binder) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)))
-                .getService();
-        service.getTrackPointCreator().stopGPS();
     }
 
     @After
     public void tearDown() throws TimeoutException {
-        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
-                .getService();
-        service.getTrackPointCreator().setClock(Clock.systemUTC());
+        TrackRecordingServiceTest.resetService(mServiceRule, context);
+        contentProviderUtils.deleteAllTracks(context);
     }
 
     /**
@@ -109,15 +91,15 @@ public class TrackRecordingServiceTestStatistics {
      */
     @MediumTest
     @Test
-    public void movingtime_with_pauses() {
-        Assume.assumeTrue(
-                "Test fails on API23; reproducible on CI and some machines.",
-                Build.VERSION.SDK_INT > 23
-        );
-
+    public void movingtime_with_pauses() throws TimeoutException {
         // given
+        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)))
+                .getService();
+        service.getTrackPointCreator().stopGPS();
+
         service.getTrackPointCreator().setClock(Clock.fixed(Instant.ofEpochMilli(0), ZoneId.systemDefault()));
         Track.Id trackId = service.startNewTrack();
+        service.stopUpdateRecordingData();
         service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
 
         Function<Integer, Void> assertMovingTime = expected -> {

@@ -55,6 +55,7 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.services.TrackRecordingService;
+import de.dennisguse.opentracks.services.TrackRecordingServiceTest;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
@@ -98,24 +99,29 @@ public class ExportImportTest {
     private TrackImporter trackImporter;
 
     @Before
-    public void fileSetup() throws IOException {
+    public void fileSetup() throws IOException, TimeoutException {
+        TrackRecordingServiceTest.resetService(mServiceRule, context);
+
         tmpFile = File.createTempFile("test", "test", context.getFilesDir());
         tmpFileUri = Uri.fromFile(tmpFile);
 
         trackImporter = new TrackImporter(context, contentProviderUtils, Distance.of(10), Distance.of(200), true);
+
+        TrackRecordingServiceTest.resetService(mServiceRule, context);
     }
 
     @After
-    public void FileTearDown() throws TimeoutException {
+    public void tearDown() throws TimeoutException {
         tmpFile.deleteOnExit();
         tmpFileUri = null;
 
-        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
-                .getService();
-        service.getTrackPointCreator().setClock(Clock.systemUTC());
+        // Ensure that the database is empty after every test
+        contentProviderUtils.deleteAllTracks(context);
+
+        TrackRecordingServiceTest.resetService(mServiceRule, context);
     }
 
-    public void setUp(boolean hasSensorDistance) throws TimeoutException {
+    public void setUp() throws TimeoutException {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
                 .getService();
 
@@ -123,13 +129,21 @@ public class ExportImportTest {
 
         trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
         trackId = service.startNewTrack();
+        service.stopUpdateRecordingData();
 
-        Distance sensorDistance = hasSensorDistance ? Distance.of(10) : null; // recording distance interval
+        Distance sensorDistance = Distance.of(10); // recording distance interval
 
-        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:03Z"), 3, 14, 10, 15, 10, 1, 66, 3, 50, sensorDistance);
+        mockBLESensorData(trackPointCreator, 15f, sensorDistance, 66f, 3f, 50f);
+        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:03Z"), 3, 14, 10, 15, 10, 1);
         service.insertMarker("Marker 1", "Marker 1 category", "Marker 1 desc", null);
-        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:04Z"), 3, 14.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
-        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:05Z"), 3, 14.002, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
+
+        // A sensor-only TrackPoint
+        mockBLESensorData(trackPointCreator, 15f, sensorDistance, 66f, 3f, 50f);
+        mockAltitudeChange(trackPointCreator, 1);
+        sendSensor(trackPointCreator, Instant.parse("2020-02-02T02:02:04Z"));
+
+        mockBLESensorData(trackPointCreator, 15f, sensorDistance, 66f, 3f, 50f);
+        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:05Z"), 3, 14.002, 10, 15, 10, 0);
         service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
 
         trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:06Z"), ZoneId.of("CET")));
@@ -138,12 +152,17 @@ public class ExportImportTest {
 
         trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:20Z"), ZoneId.of("CET")));
         service.resumeCurrentTrack();
+        service.stopUpdateRecordingData();
 
         trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:21Z"), ZoneId.of("CET")));
-        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:21Z"), 3, 14.003, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
+        mockBLESensorData(trackPointCreator, 15f, sensorDistance, 66f, 3f, 50f);
+        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:21Z"), 3, 14.003, 10, 15, 10, 0);
 
-        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:22Z"), 3, 16, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
-        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:23Z"), 3, 16.001, 10, 15, 10, 0, 66, 3, 50, sensorDistance);
+        mockBLESensorData(trackPointCreator, 15f, sensorDistance, 66f, 3f, 50f);
+        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:22Z"), 3, 16, 10, 15, 10, 0);
+
+        mockBLESensorData(trackPointCreator, 15f, sensorDistance, 66f, 3f, 50f);
+        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:23Z"), 3, 16.001, 10, 15, 10, 0);
 
         trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:24Z"), ZoneId.of("CET")));
         trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context));
@@ -162,21 +181,11 @@ public class ExportImportTest {
         assertEquals(2, markers.size());
     }
 
-    @After
-    public void tearDown() {
-        if (trackId != null) {
-            contentProviderUtils.deleteTrack(context, trackId);
-        }
-        if (importTrackId != null) {
-            contentProviderUtils.deleteTrack(context, importTrackId);
-        }
-    }
-
     //TODO Does not test images
     @LargeTest
     @Test
     public void kmz_with_trackdetail_and_sensordata() throws TimeoutException, IOException {
-        setUp(true);
+        setUp();
 
         // given
         Track track = contentProviderUtils.getTrack(trackId);
@@ -213,23 +222,40 @@ public class ExportImportTest {
         assertEquals(Instant.parse("2020-02-02T02:02:02Z"), importedTrackStatistics.getStartTime());
         assertEquals(Instant.parse("2020-02-02T02:02:24Z"), importedTrackStatistics.getStopTime());
 
-        assertEquals(track.getTrackStatistics().getTotalTime(), importedTrackStatistics.getTotalTime());
+        TrackStatistics originalTrackStatistics = track.getTrackStatistics();
+
+        assertEquals(originalTrackStatistics.getTotalTime(), importedTrackStatistics.getTotalTime());
         assertEquals(Duration.ofSeconds(8), importedTrackStatistics.getTotalTime());
+
+        assertEquals(originalTrackStatistics.getMovingTime(), importedTrackStatistics.getMovingTime());
         assertEquals(Duration.ofSeconds(4), importedTrackStatistics.getMovingTime());
 
         // Distance
+        assertEquals(originalTrackStatistics.getTotalDistance(), importedTrackStatistics.getTotalDistance());
         assertEquals(Distance.of(60), importedTrackStatistics.getTotalDistance());
 
         // Speed
+        assertEquals(originalTrackStatistics.getMaxSpeed(), importedTrackStatistics.getMaxSpeed());
         assertEquals(Speed.of(15), importedTrackStatistics.getMaxSpeed());
+
+        assertEquals(originalTrackStatistics.getAverageSpeed(), importedTrackStatistics.getAverageSpeed());
         assertEquals(Speed.of(7.5), importedTrackStatistics.getAverageSpeed());
+
+        assertEquals(originalTrackStatistics.getAverageMovingSpeed(), importedTrackStatistics.getAverageMovingSpeed());
         assertEquals(Speed.of(15), importedTrackStatistics.getAverageMovingSpeed());
 
         // Altitude
+        assertEquals(originalTrackStatistics.getMinAltitude(), importedTrackStatistics.getMinAltitude(), 0.01);
         assertEquals(10, importedTrackStatistics.getMinAltitude(), 0.01);
+
+        assertEquals(originalTrackStatistics.getMaxAltitude(), importedTrackStatistics.getMaxAltitude(), 0.01);
         assertEquals(10, importedTrackStatistics.getMaxAltitude(), 0.01);
-        assertEquals(1, importedTrackStatistics.getTotalAltitudeGain(), 0.01);
-        assertEquals(1, importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
+
+        assertEquals(originalTrackStatistics.getTotalAltitudeGain(), importedTrackStatistics.getTotalAltitudeGain(), 0.01);
+        assertEquals(2, importedTrackStatistics.getTotalAltitudeGain(), 0.01);
+
+        assertEquals(originalTrackStatistics.getTotalAltitudeLoss(), importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
+        assertEquals(2, importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
 
         // 4. markers
         assertMarkers();
@@ -238,7 +264,7 @@ public class ExportImportTest {
     @LargeTest
     @Test(expected = ImportAlreadyExistsException.class)
     public void kml_with_trackdetail_and_sensordata_duplicate_trackUUID() throws TimeoutException, IOException {
-        setUp(false);
+        setUp();
 
         // given
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
@@ -264,7 +290,7 @@ public class ExportImportTest {
     @LargeTest
     @Test
     public void gpx() throws TimeoutException, IOException {
-        setUp(true);
+        setUp();
 
         // given
         Track track = contentProviderUtils.getTrack(trackId);
@@ -297,7 +323,10 @@ public class ExportImportTest {
         // Therefore, the track segmentation is changes.
         List<TrackPoint> trackPointsWithCoordinates = trackPoints.stream().filter(it -> TrackPoint.Type.SEGMENT_START_AUTOMATIC.equals(it.getType()) || TrackPoint.Type.TRACKPOINT.equals(it.getType())).collect(Collectors.toList());
         trackPointsWithCoordinates.get(0).setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
-        trackPointsWithCoordinates.get(3).setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
+        trackPointsWithCoordinates.get(1).setSensorDistance(Distance.of(20));
+        trackPointsWithCoordinates.get(1).setAltitudeGain(1f);
+        trackPointsWithCoordinates.get(1).setAltitudeLoss(1f);
+        trackPointsWithCoordinates.get(2).setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
 
         TrackPointAssert a = new TrackPointAssert()
                 .setDelta(0.05)
@@ -326,8 +355,8 @@ public class ExportImportTest {
         // Altitude
         assertEquals(10, importedTrackStatistics.getMinAltitude(), 0.01);
         assertEquals(10, importedTrackStatistics.getMaxAltitude(), 0.01);
-        assertEquals(1, importedTrackStatistics.getTotalAltitudeGain(), 0.01);
-        assertEquals(1, importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
+        assertEquals(2, importedTrackStatistics.getTotalAltitudeGain(), 0.01);
+        assertEquals(2, importedTrackStatistics.getTotalAltitudeLoss(), 0.01);
 
         // 4. markers
         assertMarkers();
@@ -336,7 +365,7 @@ public class ExportImportTest {
     @LargeTest
     @Test(expected = ImportAlreadyExistsException.class)
     public void gpx_duplicate_trackUUID() throws TimeoutException, IOException {
-        setUp(false);
+        setUp();
 
         // given
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
@@ -380,22 +409,7 @@ public class ExportImportTest {
         }
     }
 
-    private void sendLocation(TrackPointCreator trackPointCreator, Instant time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain, float heartRate, float cyclingCadence, float power, Distance distance) {
-        Location location = new Location("mock");
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        location.setAccuracy(accuracy);
-        location.setSpeed(speed);
-        location.setAltitude(altitude);
-
-        trackPointCreator.setAltitudeSumManager(new AltitudeSumManager() {
-            @Override
-            public void fill(@NonNull TrackPoint trackPoint) {
-                trackPoint.setAltitudeGain(altitudeGain);
-                trackPoint.setAltitudeLoss(altitudeGain);
-            }
-        });
-
+    private void mockBLESensorData(TrackPointCreator trackPointCreator, Float speed, Distance distance, Float heartRate, Float cyclingCadence, Float power) {
         trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context) {
             @Override
             public SensorDataSet fill(@NonNull TrackPoint trackPoint) {
@@ -421,8 +435,30 @@ public class ExportImportTest {
                 return sensorDataSet;
             }
         });
+    }
+
+    private void mockAltitudeChange(TrackPointCreator trackPointCreator, float altitudeGain) {
+        AltitudeSumManager altitudeSumManager = trackPointCreator.getAltitudeSumManager();
+        altitudeSumManager.setAltitudeGain_m(altitudeGain);
+        altitudeSumManager.setAltitudeLoss_m(altitudeGain);
+    }
+
+    private void sendSensor(TrackPointCreator trackPointCreator, Instant time) {
+        trackPointCreator.setClock(Clock.fixed(time, ZoneId.of("CET")));
+        trackPointCreator.onNewTrackPointWithoutGPS();
+    }
+
+    private void sendLocation(TrackPointCreator trackPointCreator, Instant time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain) {
+        Location location = new Location("mock");
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+        location.setAccuracy(accuracy);
+        location.setSpeed(speed);
+        location.setAltitude(altitude);
+
+        mockAltitudeChange(trackPointCreator, altitudeGain);
 
         trackPointCreator.setClock(Clock.fixed(time, ZoneId.of("CET")));
-        trackPointCreator.getLocationHandler().onLocationChanged(location);
+        trackPointCreator.getGpsHandler().onLocationChanged(location);
     }
 }

@@ -203,6 +203,10 @@ public class TrackStatistics {
         movingTime = movingTime.plus(time);
     }
 
+    public Duration getStoppedTime() {
+        return totalTime.minus(movingTime);
+    }
+
     /**
      * Gets the average speed.
      * This calculation only takes into account the displacement until the last point that was accounted for in statistics.

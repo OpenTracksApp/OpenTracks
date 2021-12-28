@@ -78,7 +78,7 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
 * __Photos and Markers:__ mark interesting locations while tracking
 * __Export:__
   * export tracks either as KMZ (incl. photos), KML, or GPX
-  * export automatically after each recording (e.g., to sync)
+  * export automatically after each recording (e.g., to sync via [Nextcloud](https://nextcloud.com/))
   * avoid duplication: each exported file contain a random unique identifier (i.e., `opentracks:trackid`)
 * __Altitude:__
   * gain/loss via barometric sensor (if present)
@@ -89,6 +89,8 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
   * cycling: cadence
   * cycling: power meter
   * running: speed and cadence
+  * support for BLE sensor training only (i.e., without GPS) for indoor training
+
   An overview of tested sensors: [README_TESTED_SENSORS.md](README_TESTED_SENSORS.md)
 
 ### Gadgetbridge integration

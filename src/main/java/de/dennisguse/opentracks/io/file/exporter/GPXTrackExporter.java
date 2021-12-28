@@ -24,13 +24,19 @@ import androidx.annotation.NonNull;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.NumberFormat;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
@@ -122,6 +128,8 @@ public class GPXTrackExporter implements TrackExporter {
         boolean wroteTrack = false;
         boolean wroteSegment = false;
 
+        LinkedList<TrackPoint> sensorPoints = new LinkedList<>();
+
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null)) {
             while (trackPointIterator.hasNext()) {
                 if (Thread.interrupted()) throw new InterruptedException();
@@ -149,7 +157,12 @@ public class GPXTrackExporter implements TrackExporter {
                         if (wroteSegment) writeCloseSegment();
                         writeOpenSegment();
                         wroteSegment = true;
-                        writeTrackPoint(trackPoint);
+
+                        writeTrackPoint(trackPoint, sensorPoints);
+                        sensorPoints.clear();
+                        break;
+                    case SENSORPOINT:
+                        sensorPoints.add(trackPoint);
                         break;
                     case TRACKPOINT:
                         if (!wroteSegment) {
@@ -157,9 +170,19 @@ public class GPXTrackExporter implements TrackExporter {
                             writeOpenSegment();
                             wroteSegment = true;
                         }
-                        writeTrackPoint(trackPoint);
+
+                        writeTrackPoint(trackPoint, sensorPoints);
+                        sensorPoints.clear();
                         break;
+                    default:
+                        throw new RuntimeException("Exporting this TrackPoint type is not implemented: " + trackPoint.getType());
                 }
+            }
+
+            if (!sensorPoints.isEmpty()) {
+                //TODO We might miss to export data; this happens if there are SENSORPOINTs after the final TRACKPOINT of a track.
+                //For segments the data is added to the next segment.
+                Log.d(TAG, "SENSORPOINTs after final TRACKPOINT; this data is not exported.");
             }
 
             if (wroteSegment) {
@@ -200,6 +223,7 @@ public class GPXTrackExporter implements TrackExporter {
             printWriter.println("xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
             printWriter.println("xmlns:opentracks=\"http://opentracksapp.com/xmlschemas/v1\"");
             printWriter.println("xmlns:gpxtpx=\"http://www.garmin.com/xmlschemas/TrackPointExtension/v2\"");
+            printWriter.println("xmlns:gpxtrkx=\"http://www.garmin.com/xmlschemas/TrackStatsExtension/v1\"");
             printWriter.println("xmlns:pwr=\"http://www.garmin.com/xmlschemas/PowerExtension/v1\"");
             printWriter.println("xsi:schemaLocation=" +
                     "\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
@@ -256,6 +280,18 @@ public class GPXTrackExporter implements TrackExporter {
             printWriter.println("<extensions>");
             printWriter.println("<topografix:color>c0c0c0</topografix:color>");
             printWriter.println("<opentracks:trackid>" + track.getUuid() + "</opentracks:trackid>");
+
+            TrackStatistics trackStatistics = track.getTrackStatistics();
+            printWriter.println("<gpxtrkx:TrackStatsExtension>");
+            printWriter.println("<gpxtrkx:Distance>" + trackStatistics.getTotalDistance().toM() + "</gpxtrkx:Distance>");
+            printWriter.println("<gpxtrkx:TimerTime>" + trackStatistics.getTotalTime().getSeconds() + "</gpxtrkx:TimerTime>");
+            printWriter.println("<gpxtrkx:MovingTime>" + trackStatistics.getMovingTime().getSeconds() + "</gpxtrkx:MovingTime>");
+            printWriter.println("<gpxtrkx:StoppedTime>" + trackStatistics.getStoppedTime().getSeconds() + "</gpxtrkx:StoppedTime>");
+            printWriter.println("<gpxtrkx:MaxSpeed>" + trackStatistics.getMaxSpeed().toMPS() + "</gpxtrkx:MaxSpeed>");
+            printWriter.println("<gpxtrkx:Ascent>" + trackStatistics.getTotalAltitudeGain() + "</gpxtrkx:Ascent>");
+            printWriter.println("<gpxtrkx:Descent>" + trackStatistics.getTotalAltitudeLoss() + "</gpxtrkx:Descent>");
+            printWriter.println("</gpxtrkx:TrackStatsExtension>");
+
             printWriter.println("</extensions>");
         }
     }
@@ -274,7 +310,7 @@ public class GPXTrackExporter implements TrackExporter {
         printWriter.println("</trkseg>");
     }
 
-    public void writeTrackPoint(TrackPoint trackPoint) {
+    public void writeTrackPoint(TrackPoint trackPoint, List<TrackPoint> sensorPoints) {
         if (printWriter != null) {
 
             printWriter.println("<trkpt " + formatLocation(trackPoint.getLatitude(), trackPoint.getLongitude()) + ">");
@@ -285,42 +321,57 @@ public class GPXTrackExporter implements TrackExporter {
 
             printWriter.println("<time>" + StringUtils.formatDateTimeIso8601(trackPoint.getTime()) + "</time>");
 
-            if (trackPoint.hasSpeed() || trackPoint.hasHeartRate() || trackPoint.hasCadence() || trackPoint.hasAltitudeGain() || trackPoint.hasAltitudeLoss()) {
-                printWriter.println("<extensions><gpxtpx:TrackPointExtension>");
+            {
+                String trackPointExtensionContent = "";
 
                 if (trackPoint.hasSpeed()) {
-                    printWriter.println("<gpxtpx:speed>" + SPEED_FORMAT.format(trackPoint.getSpeed().toMPS()) + "</gpxtpx:speed>");
+                    trackPointExtensionContent += "<gpxtpx:speed>" + SPEED_FORMAT.format(trackPoint.getSpeed().toMPS()) + "</gpxtpx:speed>\n";
                 }
 
                 if (trackPoint.hasHeartRate()) {
-                    printWriter.println("<gpxtpx:hr>" + HEARTRATE_FORMAT.format(trackPoint.getHeartRate_bpm()) + "</gpxtpx:hr>");
+                    trackPointExtensionContent += "<gpxtpx:hr>" + HEARTRATE_FORMAT.format(trackPoint.getHeartRate_bpm()) + "</gpxtpx:hr>\n";
                 }
 
                 if (trackPoint.hasCadence()) {
-                    printWriter.println("<gpxtpx:cad>" + CADENCE_FORMAT.format(trackPoint.getCadence_rpm()) + "</gpxtpx:cad>");
+                    trackPointExtensionContent += "<gpxtpx:cad>" + CADENCE_FORMAT.format(trackPoint.getCadence_rpm()) + "</gpxtpx:cad>\n";
                 }
 
                 if (trackPoint.hasPower()) {
-                    printWriter.println("<pwr:PowerInWatts>" + POWER_FORMAT.format(trackPoint.getPower()) + "</pwr:PowerInWatts>");
+                    trackPointExtensionContent += "<pwr:PowerInWatts>" + POWER_FORMAT.format(trackPoint.getPower()) + "</pwr:PowerInWatts>\n";
                 }
 
-                if (trackPoint.hasAltitudeGain()) {
-                    printWriter.println("<opentracks:gain>" + ALTITUDE_FORMAT.format(trackPoint.getAltitudeGain()) + "</opentracks:gain>");
+                Double cumulativeGain = cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasAltitudeGain() ? (double) tp.getAltitudeGain() : null);
+                if (cumulativeGain != null) {
+                    trackPointExtensionContent += ("<opentracks:gain>" + ALTITUDE_FORMAT.format(cumulativeGain) + "</opentracks:gain>\n");
                 }
 
-                if (trackPoint.hasAltitudeLoss()) {
-                    printWriter.println("<opentracks:loss>" + ALTITUDE_FORMAT.format(trackPoint.getAltitudeLoss()) + "</opentracks:loss>");
+                Double cumulativeLoss = cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasAltitudeLoss() ? (double) tp.getAltitudeLoss() : null);
+                if (cumulativeLoss != null) {
+                    trackPointExtensionContent += ("<opentracks:loss>" + ALTITUDE_FORMAT.format(cumulativeLoss) + "</opentracks:loss>\n");
                 }
 
-                if (trackPoint.hasSensorDistance()) {
-                    printWriter.println("<opentracks:distance>" + DISTANCE_FORMAT.format(trackPoint.getSensorDistance().toM()) + "</opentracks:distance>");
+                Double cumulativeDistance = cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasSensorDistance() ? tp.getSensorDistance().toM() : null);
+                if (cumulativeDistance != null) {
+                    trackPointExtensionContent += ("<opentracks:distance>" + ALTITUDE_FORMAT.format(cumulativeDistance) + "</opentracks:distance>\n");
                 }
 
-                printWriter.println("</gpxtpx:TrackPointExtension></extensions>");
+                if (!trackPointExtensionContent.isEmpty()) {
+                    printWriter.println("<extensions><gpxtpx:TrackPointExtension>");
+                    printWriter.print(trackPointExtensionContent);
+                    printWriter.println("</gpxtpx:TrackPointExtension></extensions>");
+                }
             }
 
             printWriter.println("</trkpt>");
         }
+    }
+
+    private Double cumulateSensorData(TrackPoint trackPoint, List<TrackPoint> sensorPoints, Function<TrackPoint, Double> map) {
+        return Stream.concat(sensorPoints.stream(), Stream.of(trackPoint))
+                .map(map)
+                .filter(Objects::nonNull)
+                .reduce((gain, next) -> gain + next)
+                .orElse(null);
     }
 
     private String formatLocation(double latitude, double longitude) {

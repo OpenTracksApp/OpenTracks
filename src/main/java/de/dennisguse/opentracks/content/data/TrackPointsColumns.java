@@ -77,7 +77,7 @@ public interface TrackPointsColumns extends BaseColumns {
             + SENSOR_POWER + " FLOAT, "
             + ALTITUDE_GAIN + " FLOAT, "
             + ALTITUDE_LOSS + " FLOAT, "
-            + TYPE + " TEXT CHECK(type IN (-2, -1, 0, 1)), "
+            + TYPE + " TEXT CHECK(type IN (-2, -1, 0, 1, 2)), "
             + SENSOR_DISTANCE + " FLOAT, "
             + "FOREIGN KEY (" + TRACKID + ") REFERENCES " + TracksColumns.TABLE_NAME + "(" + TracksColumns._ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
             + ")";
