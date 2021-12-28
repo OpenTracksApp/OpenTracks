@@ -39,4 +39,11 @@
             android:title="@string/settings_sensor_running_speed_and_cadence" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/settings_advanced">
+        <SwitchPreferenceCompat
+            android:defaultValue="@bool/settings_sensor_bluetooth_service_filter_enabled_default"
+            android:key="@string/settings_sensor_bluetooth_service_filter_enabled_key"
+            android:title="@string/settings_sensor_bluetooth_service_filter_enabled" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
