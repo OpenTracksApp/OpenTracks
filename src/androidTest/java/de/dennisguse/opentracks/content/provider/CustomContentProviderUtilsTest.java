@@ -192,6 +192,19 @@ public class CustomContentProviderUtilsTest {
         assertEquals(name, track.getName());
     }
 
+    private void assertCount(int trackCount, int trackPointCount, int markerCount) {
+        ContentResolver contentResolver = context.getContentResolver();
+        try (Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID)) {
+            assertEquals(trackCount, tracksCursor.getCount());
+        }
+        try (Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID)) {
+            assertEquals(trackPointCount, tracksPointsCursor.getCount());
+        }
+        try (Cursor markerCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID)) {
+            assertEquals(markerCount, markerCursor.getCount());
+        }
+    }
+
     /**
      * Tests the method {@link ContentProviderUtils#deleteAllTracks(Context)}
      */
@@ -204,24 +217,13 @@ public class CustomContentProviderUtilsTest {
         Marker marker = new Marker(trackId, contentProviderUtils.getLastValidTrackPoint(trackId));
         contentProviderUtils.insertMarker(marker);
 
-        ContentResolver contentResolver = context.getContentResolver();
-        Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        assertEquals(1, tracksCursor.getCount());
-        Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        assertEquals(10, tracksPointsCursor.getCount());
-        Cursor markerCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
-        assertEquals(1, markerCursor.getCount());
-        // Delete all.
-        contentProviderUtils.deleteAllTracks(context);
-        // Check whether all have been deleted.
-        tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        assertEquals(0, tracksCursor.getCount());
-        tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        assertEquals(0, tracksPointsCursor.getCount());
-        markerCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
-        assertEquals(0, markerCursor.getCount());
+        assertCount(1, 10, 1);
 
-        //TODO Close all cursors
+        // when
+        contentProviderUtils.deleteAllTracks(context);
+
+        // then
+        assertCount(0, 0, 0);
     }
 
     /**
@@ -237,28 +239,18 @@ public class CustomContentProviderUtilsTest {
         Marker marker = TestDataUtil.createMarkerWithPhoto(context, trackId, trackPoint);
         contentProviderUtils.insertMarker(marker);
 
-        ContentResolver contentResolver = context.getContentResolver();
-        Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        assertEquals(1, tracksCursor.getCount());
-        Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        assertEquals(10, tracksPointsCursor.getCount());
-        Cursor markerCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
-        assertEquals(1, markerCursor.getCount());
-        // Check marker has photo and it's in the external storage.
+        assertCount(1, 10, 1);
         assertTrue(marker.hasPhoto());
         File dir = FileUtils.getPhotoDir(context, trackId);
         assertTrue(dir.isDirectory());
         assertEquals(1, dir.list().length);
         assertTrue(dir.exists());
-        // Delete all.
+
+        // when
         contentProviderUtils.deleteAllTracks(context);
-        // Check whether all have been deleted.
-        tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        assertEquals(0, tracksCursor.getCount());
-        tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        assertEquals(0, tracksPointsCursor.getCount());
-        markerCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
-        assertEquals(0, markerCursor.getCount());
+
+        // then
+        assertCount(0, 0, 0);
         assertFalse(dir.exists());
     }
 
@@ -281,22 +273,13 @@ public class CustomContentProviderUtilsTest {
         Marker marker = new Marker(trackId1, contentProviderUtils.getLastValidTrackPoint(trackId2));
         contentProviderUtils.insertMarker(marker);
 
-        ContentResolver contentResolver = context.getContentResolver();
-        Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        assertEquals(3, tracksCursor.getCount());
-        Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        assertEquals(30, tracksPointsCursor.getCount());
-        Cursor markerCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
-        assertEquals(1, markerCursor.getCount());
-        // Delete one track.
+        assertCount(3, 30, 1);
+
+        // when
         contentProviderUtils.deleteTrack(context, trackId1);
-        // Check whether all data of a track has been deleted.
-        tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        assertEquals(2, tracksCursor.getCount());
-        tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        assertEquals(20, tracksPointsCursor.getCount());
-        markerCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
-        assertEquals(0, markerCursor.getCount());
+
+        // then
+        assertCount(2, 20, 0);
     }
 
     /**
@@ -326,13 +309,7 @@ public class CustomContentProviderUtilsTest {
         File dir2 = FileUtils.getPhotoDir(context, trackId2);
 
         // Check.
-        ContentResolver contentResolver = context.getContentResolver();
-        Cursor tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        assertEquals(3, tracksCursor.getCount());
-        Cursor tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        assertEquals(30, tracksPointsCursor.getCount());
-        Cursor markerCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
-        assertEquals(2, markerCursor.getCount());
+        assertCount(3, 30, 2);
         assertTrue(marker1.hasPhoto());
         assertTrue(dir1.isDirectory());
         assertEquals(1, dir1.list().length);
@@ -340,15 +317,12 @@ public class CustomContentProviderUtilsTest {
         assertTrue(dir2.isDirectory());
         assertEquals(1, dir2.list().length);
         assertTrue(dir2.exists());
-        // Delete one track.
+
+        // when
         contentProviderUtils.deleteTrack(context, trackId1);
-        // Check whether all data of a track has been deleted.
-        tracksCursor = contentResolver.query(TracksColumns.CONTENT_URI, null, null, null, TracksColumns._ID);
-        assertEquals(2, tracksCursor.getCount());
-        tracksPointsCursor = contentResolver.query(TrackPointsColumns.CONTENT_URI_BY_ID, null, null, null, TrackPointsColumns._ID);
-        assertEquals(20, tracksPointsCursor.getCount());
-        markerCursor = contentResolver.query(MarkerColumns.CONTENT_URI, null, null, null, MarkerColumns._ID);
-        assertEquals(1, markerCursor.getCount());
+
+        // then
+        assertCount(2, 20, 1);
         assertFalse(dir1.exists());
         assertTrue(dir2.exists());
     }
