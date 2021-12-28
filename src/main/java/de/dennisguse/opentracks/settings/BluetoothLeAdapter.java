@@ -45,7 +45,7 @@ public class BluetoothLeAdapter extends BaseAdapter {
 
         Device device = devices.get(position);
         TextView textView = currentView.findViewById(android.R.id.text1);
-        textView.setText(device.getName());
+        textView.setText(device.getNameOrAddress());
 
         return currentView;
     }
@@ -81,8 +81,8 @@ public class BluetoothLeAdapter extends BaseAdapter {
             this.address = address;
         }
 
-        public String getName() {
-            return name;
+        public String getNameOrAddress() {
+            return name != null ? name : getAddress();
         }
 
         public void setName(String name) {

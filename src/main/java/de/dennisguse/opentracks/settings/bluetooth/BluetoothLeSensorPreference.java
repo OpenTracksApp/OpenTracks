@@ -34,8 +34,8 @@ import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.settings.BluetoothLeAdapter;
-import de.dennisguse.opentracks.util.BluetoothUtils;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.util.BluetoothUtils;
 
 /**
  * Preference to select a discoverable Bluetooth LE device.
@@ -109,17 +109,14 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
         private final ScanCallback scanCallback = new ScanCallback() {
             @Override
             public void onScanResult(int callbackType, ScanResult result) {
-                super.onScanResult(callbackType, result);
                 Log.d(TAG, "Found device " + result.getDevice().getName() + " " + result);
-
                 listAdapter.add(result.getDevice());
             }
 
             @Override
             public void onBatchScanResults(List<ScanResult> results) {
                 for (ScanResult result : results) {
-                    Log.d(TAG, "Found device " + result.getDevice().getName() + " " + result);
-                    listAdapter.add(result.getDevice());
+                    onScanResult(-1, result);
                 }
             }
 
@@ -213,7 +210,12 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
                 selectedEntryIndex = 1;
             }
 
-            List<ScanFilter> scanFilter = serviceUUIDs.stream().map(it -> new ScanFilter.Builder().setServiceUuid(it).build()).collect(Collectors.toList());
+            List<ScanFilter> scanFilter = null;
+            if (PreferencesUtils.getBluetoothFilterEnabled()) {
+                scanFilter = serviceUUIDs.stream()
+                        .map(it -> new ScanFilter.Builder().setServiceUuid(it).build())
+                        .collect(Collectors.toList());
+            }
 
             ScanSettings.Builder scanSettingsBuilder = new ScanSettings.Builder();
             scanSettingsBuilder.setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY);
