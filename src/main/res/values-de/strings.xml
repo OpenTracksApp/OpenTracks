@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <string name="about_preference_title">Über OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> ist eine Sport-Tracking-Anwendung, die Ihre Privatsphäre vollständig respektiert.</string>
     <string name="about_url">Projekt-Website: <a href="%1$s">%1$s</a></string>
@@ -513,4 +513,25 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="delete_service">Löschdienst</string>
     <string name="settings_sensor_cycling_cadence">Radfahren: Trittfrequenz</string>
     <string name="settings_sensor_cycling_distance_speed">Radfahren: Entfernung und Geschwindigkeit</string>
+    <string name="generic_filter">Filter</string>
+    <string name="generic_from">Von</string>
+    <string name="generic_to">Bis</string>
+    <string name="menu_add_custom_layout">Neues Layout</string>
+    <string name="menu_filter">Filter</string>
+    <string name="settings_units_category">Einheiten</string>
+    <string name="settings_reset_summary">Einstellungen zurücksetzen</string>
+    <string name="settings_recording_customize_layout_title">Layout anpassen</string>
+    <string name="settings_recording_customize_layout_select_columns">Felder pro Zeile</string>
+    <string name="settings_announcements">Sprachansagen</string>
+    <string name="custom_layout_list_title">Layouts</string>
+    <string name="description_speed_source_gps">GPS</string>
+    <string name="menu_select_layout">Wähle Layout</string>
+    <string name="generic_choose_an_option">Wähle eine Option</string>
+    <string name="settings_recording_idle_speed_title">Inaktivitätsgeschwindigkeit</string>
+    <string name="settings_gps_title">GPS</string>
+    <string name="settings_import_export_title">Import/Export</string>
+    <string name="settings_sensors_title">Bluetooth Sensoren</string>
+    <string name="settings_sensors_summary">Fahrradsensoren, Radumfang und Lauf-Sensoren</string>
+    <string name="settings_announcements_title">Sprachansagen</string>
+    <string name="generic_undo">Rückgängig</string>
 </resources>
