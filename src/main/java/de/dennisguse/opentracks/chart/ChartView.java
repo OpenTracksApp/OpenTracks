@@ -41,7 +41,6 @@ import androidx.core.view.GestureDetectorCompat;
 import java.text.NumberFormat;
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import de.dennisguse.opentracks.MarkerDetailActivity;
@@ -873,9 +872,9 @@ public class ChartView extends View {
         boolean drawFirstPoint = false;
         path.rewind();
 
-        Iterator<ChartPoint> iterator = chartPoints.iterator();
-        while (iterator.hasNext()) {
-            ChartPoint point = iterator.next();
+        Integer finalX = null;
+
+        for (ChartPoint point : chartPoints) {
             if (!series.isChartPointValid(point)) {
                 continue;
             }
@@ -893,10 +892,12 @@ public class ChartView extends View {
             // draw graph
             path.lineTo(x, y);
 
-            // last point: move to lower right
-            if (!iterator.hasNext()) {
-                path.lineTo(x, yCorner);
-            }
+            finalX = x;
+        }
+
+        // last point: move to lower right
+        if (finalX != null) {
+            path.lineTo(finalX, yCorner);
         }
 
         // back to lower left corner

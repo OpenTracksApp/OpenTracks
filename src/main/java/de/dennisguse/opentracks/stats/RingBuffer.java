@@ -17,8 +17,9 @@
 package de.dennisguse.opentracks.stats;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
 /**
  * This class maintains a ring buffer of doubles.
@@ -27,10 +28,9 @@ import java.util.Arrays;
  *
  * @author Sandor Dornbush
  */
-class DoubleRingBuffer {
+abstract class RingBuffer<T> {
 
-    // The sliding buffer of doubles.
-    private final double[] buffer;
+    private final ArrayList<T> buffer;
 
     // The location that the next write will occur at.
     private int index;
@@ -43,16 +43,17 @@ class DoubleRingBuffer {
      *
      * @param size the size
      */
-    DoubleRingBuffer(int size) {
+    RingBuffer(int size) {
         if (size < 1) {
             throw new IllegalArgumentException("The buffer size must be greater than 1.");
         }
-        buffer = new double[size];
+
+        buffer = new ArrayList<T>(size);
         reset();
     }
 
-    DoubleRingBuffer(DoubleRingBuffer toCopy) {
-        this.buffer = Arrays.copyOf(toCopy.buffer, toCopy.buffer.length);
+    RingBuffer(RingBuffer<T> toCopy) {
+        this.buffer = new ArrayList<>(toCopy.buffer);
         this.index = toCopy.index;
         this.isFull = toCopy.isFull;
     }
@@ -75,17 +76,34 @@ class DoubleRingBuffer {
     /**
      * Gets the average of the buffer.
      */
-    public double getAverage() {
-        int numberOfEntries = isFull ? buffer.length : index;
+    public T getAverage() {
+        int numberOfEntries = isFull ? buffer.size() : index;
         if (numberOfEntries == 0) {
-            return 0;
+            return null;
         }
-        double sum = 0;
+        Double sum = null;
+        int numberOfUsedEntries = 0;
         for (int i = 0; i < numberOfEntries; i++) {
-            sum += buffer[i];
+            Number value = from(buffer.get(i));
+            if (value != null) {
+                if (sum == null) {
+                    sum = 0.0;
+                }
+                sum += value.doubleValue();
+                numberOfUsedEntries++;
+            }
         }
-        return sum / numberOfEntries;
+        if (sum == null) {
+            return null;
+        } else {
+            return to(sum / numberOfUsedEntries);
+        }
     }
+
+    @Nullable
+    protected abstract Number from(T object);
+
+    protected abstract T to(double object);
 
     /**
      * Adds a double to the buffer.
@@ -93,13 +111,13 @@ class DoubleRingBuffer {
      *
      * @param value the double to add
      */
-    public void setNext(double value) {
-        if (index == buffer.length) {
+    public void setNext(T value) {
+        if (index == buffer.size()) {
             index = 0;
         }
-        buffer[index] = value;
+        buffer.add(index, value);
         index++;
-        if (index == buffer.length) {
+        if (index == buffer.size()) {
             isFull = true;
         }
     }
@@ -110,9 +128,9 @@ class DoubleRingBuffer {
         StringBuilder builder = new StringBuilder("Full: ");
         builder.append(isFull);
         builder.append("\n");
-        for (int i = 0; i < buffer.length; i++) {
+        for (int i = 0; i < buffer.size(); i++) {
             builder.append((i == index) ? "<<" : "[");
-            builder.append(buffer[i]);
+            builder.append(buffer.get(i));
             builder.append((i == index) ? ">> " : "] ");
         }
         return builder.toString();

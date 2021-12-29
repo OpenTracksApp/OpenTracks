@@ -35,14 +35,15 @@ import de.dennisguse.opentracks.TrackActivityDataHubInterface;
 import de.dennisguse.opentracks.chart.ChartPoint;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
+import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.databinding.ChartBinding;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
-import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * A fragment to display track chart to the user.
@@ -189,9 +190,9 @@ public class ChartFragment extends Fragment implements TrackDataListener {
         }
     }
 
-    public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, Speed smoothedSpeed, double smoothedAltitude_m) {
+    public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, Speed smoothedSpeed, Altitude smoothedAltitude) {
         if (isResumed()) {
-            ChartPoint point = new ChartPoint(trackStatistics, trackPoint, smoothedSpeed, smoothedAltitude_m, chartByDistance, viewBinding.chartView.getMetricUnits());
+            ChartPoint point = new ChartPoint(trackStatistics, trackPoint, smoothedSpeed, smoothedAltitude, chartByDistance, viewBinding.chartView.getMetricUnits());
             pendingPoints.add(point);
         }
     }

@@ -24,6 +24,7 @@ import androidx.annotation.VisibleForTesting;
 import java.time.Duration;
 import java.util.List;
 
+import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -61,8 +62,8 @@ public class TrackStatisticsUpdater {
 
     private final TrackStatistics trackStatistics;
 
-    private final DoubleRingBuffer altitudeBuffer_m;
-    private final DoubleRingBuffer speedBuffer_mps;
+    private final AltitudeRingBuffer altitudeBuffer;
+    private final SpeedRingBuffer speedBuffer;
 
     // The current segment's statistics
     private final TrackStatistics currentSegment;
@@ -82,16 +83,16 @@ public class TrackStatisticsUpdater {
         this.trackStatistics = trackStatistics;
         this.currentSegment = new TrackStatistics();
 
-        altitudeBuffer_m = new DoubleRingBuffer(ALTITUDE_SMOOTHING_FACTOR);
-        speedBuffer_mps = new DoubleRingBuffer(SPEED_SMOOTHING_FACTOR);
+        altitudeBuffer = new AltitudeRingBuffer(ALTITUDE_SMOOTHING_FACTOR);
+        speedBuffer = new SpeedRingBuffer(SPEED_SMOOTHING_FACTOR);
     }
 
     public TrackStatisticsUpdater(TrackStatisticsUpdater toCopy) {
         this.currentSegment = new TrackStatistics(toCopy.currentSegment);
         this.trackStatistics = new TrackStatistics(toCopy.trackStatistics);
 
-        this.altitudeBuffer_m = new DoubleRingBuffer(toCopy.altitudeBuffer_m);
-        this.speedBuffer_mps = new DoubleRingBuffer(toCopy.speedBuffer_mps);
+        this.altitudeBuffer = new AltitudeRingBuffer(toCopy.altitudeBuffer);
+        this.speedBuffer = new SpeedRingBuffer(toCopy.speedBuffer);
 
         this.lastTrackPoint = toCopy.lastTrackPoint;
     }
@@ -136,7 +137,11 @@ public class TrackStatisticsUpdater {
 
         //Update absolute (GPS-based) altitude
         if (trackPoint.hasAltitude()) {
-            updateAbsoluteAltitude(trackPoint.getAltitude().toM());
+            // Update altitude using the smoothed average
+            altitudeBuffer.setNext(trackPoint.getAltitude());
+            Altitude newAverage = altitudeBuffer.getAverage();
+
+            currentSegment.updateAltitudeExtremities(newAverage);
         }
 
         // Update total distance
@@ -164,7 +169,7 @@ public class TrackStatisticsUpdater {
             // Update max speed
             updateSpeed(trackPoint, lastTrackPoint);
         } else {
-            speedBuffer_mps.reset();
+            speedBuffer.reset();
         }
 
 
@@ -183,20 +188,20 @@ public class TrackStatisticsUpdater {
         currentSegment.reset(trackPoint.getTime());
 
         lastTrackPoint = null;
-        altitudeBuffer_m.reset();
-        speedBuffer_mps.reset();
+        altitudeBuffer.reset();
+        speedBuffer.reset();
     }
 
     /**
      * Gets the smoothed altitude over several readings.
      * The altitude readings is noisy so the smoothed altitude is better than the raw altitude for many tasks.
      */
-    public double getSmoothedAltitude() {
-        return altitudeBuffer_m.getAverage();
+    public Altitude getSmoothedAltitude() {
+        return altitudeBuffer.getAverage();
     }
 
     public Speed getSmoothedSpeed() {
-        return Speed.of(speedBuffer_mps.getAverage());
+        return speedBuffer.getAverage();
     }
 
     /**
@@ -205,24 +210,16 @@ public class TrackStatisticsUpdater {
     @VisibleForTesting
     private void updateSpeed(@NonNull TrackPoint trackPoint, @NonNull TrackPoint lastTrackPoint) {
         if (!trackPoint.isMoving()) {
-            speedBuffer_mps.reset();
+            speedBuffer.reset();
         } else if (isValidSpeed(trackPoint, lastTrackPoint)) {
-            speedBuffer_mps.setNext(trackPoint.getSpeed().toMPS());
-            Speed average = Speed.of(speedBuffer_mps.getAverage());
+            speedBuffer.setNext(trackPoint.getSpeed());
+            Speed average = speedBuffer.getAverage();
             if (average.greaterThan(currentSegment.getMaxSpeed())) {
                 currentSegment.setMaxSpeed(average);
             }
         } else {
             Log.d(TAG, "Invalid speed. speed: " + trackPoint.getSpeed() + " lastLocationSpeed: " + lastTrackPoint.getSpeed());
         }
-    }
-
-    private void updateAbsoluteAltitude(double altitude) {
-        // Update altitude using the smoothed average
-        altitudeBuffer_m.setNext(altitude);
-        double newAverage = altitudeBuffer_m.getAverage();
-
-        currentSegment.updateAltitudeExtremities(newAverage);
     }
 
     private boolean isValidSpeed(@NonNull TrackPoint trackPoint, @NonNull TrackPoint lastTrackPoint) {
@@ -242,8 +239,8 @@ public class TrackStatisticsUpdater {
         }
 
         // Only check if the speed buffer is full. Check that the speed is less than 10X the smoothed average and the speed difference doesn't imply 2g acceleration.
-        if (speedBuffer_mps.isFull()) {
-            Speed average = Speed.of(speedBuffer_mps.getAverage());
+        if (speedBuffer.isFull()) {
+            Speed average = speedBuffer.getAverage();
             Speed speedDifference = Speed.absDiff(average, trackPoint.getSpeed());
 
             return trackPoint.getSpeed().lessThan(average.mul(10)) && speedDifference.lessThan(maxAcceleration);
