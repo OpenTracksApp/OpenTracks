@@ -3,6 +3,7 @@ package de.dennisguse.opentracks.chart;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
+import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -14,7 +15,7 @@ public class ChartPoint {
     private double timeOrDistance;
 
     //Y-axis
-    private final double altitude;
+    private Double altitude;
     private Double speed;
     private Double pace;
     private Double heartRate;
@@ -27,17 +28,21 @@ public class ChartPoint {
         this.altitude = altitude;
     }
 
-    public ChartPoint(@NonNull TrackStatistics trackStatistics, @NonNull TrackPoint trackPoint, Speed smoothedSpeed, double smoothedAltitude_m, boolean chartByDistance, boolean metricUnits) {
+    public ChartPoint(@NonNull TrackStatistics trackStatistics, @NonNull TrackPoint trackPoint, Speed smoothedSpeed, Altitude smoothedAltitude, boolean chartByDistance, boolean metricUnits) {
         if (chartByDistance) {
             timeOrDistance = trackStatistics.getTotalDistance().toKM_Miles(metricUnits);
         } else {
             timeOrDistance = trackStatistics.getTotalTime().toMillis();
         }
 
-        altitude = Distance.of(smoothedAltitude_m).toM_FT(metricUnits);
+        if (smoothedAltitude != null) {
+            altitude = Distance.of(smoothedAltitude.toM()).toM_FT(metricUnits);
+        }
 
-        speed = smoothedSpeed.to(metricUnits);
-        pace = smoothedSpeed.toPace(metricUnits).toMillis() * UnitConversions.MS_TO_S * UnitConversions.S_TO_MIN;
+        if (smoothedSpeed != null) {
+            speed = smoothedSpeed.to(metricUnits);
+            pace = smoothedSpeed.toPace(metricUnits).toMillis() * UnitConversions.MS_TO_S * UnitConversions.S_TO_MIN;
+        }
         if (trackPoint.hasHeartRate()) {
             heartRate = (double) trackPoint.getHeartRate_bpm();
         }

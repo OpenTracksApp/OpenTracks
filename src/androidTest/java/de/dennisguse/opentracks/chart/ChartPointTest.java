@@ -1,5 +1,8 @@
 package de.dennisguse.opentracks.chart;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.Test;
@@ -7,14 +10,12 @@ import org.junit.runner.RunWith;
 
 import java.time.Duration;
 
+import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.fragments.TrackStubUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 public class ChartPointTest {
@@ -26,7 +27,7 @@ public class ChartPointTest {
         statistics.setTotalTime(Duration.ofSeconds(1000));
 
         // when
-        ChartPoint point = new ChartPoint(statistics, TrackStubUtils.createDefaultTrackPoint(), Speed.of(0), 0, false, false);
+        ChartPoint point = new ChartPoint(statistics, TrackStubUtils.createDefaultTrackPoint(), Speed.of(0), Altitude.EGM2008.of(0), false, false);
 
         // then
         assertEquals(1000000, (long) point.getTimeOrDistance());
@@ -39,7 +40,7 @@ public class ChartPointTest {
         statistics.setTotalDistance(Distance.of(1000));
 
         // when
-        ChartPoint point = new ChartPoint(statistics, TrackStubUtils.createDefaultTrackPoint(), Speed.of(0), 0, true, true);
+        ChartPoint point = new ChartPoint(statistics, TrackStubUtils.createDefaultTrackPoint(), Speed.of(0), Altitude.EGM2008.of(0), true, true);
 
         // then
         assertEquals(1, (long) point.getTimeOrDistance());
@@ -51,7 +52,7 @@ public class ChartPointTest {
         TrackStatistics statistics = new TrackStatistics();
 
         // when
-        ChartPoint point = new ChartPoint(statistics, TrackStubUtils.createDefaultTrackPoint(), Speed.of(10), 50, false, true);
+        ChartPoint point = new ChartPoint(statistics, TrackStubUtils.createDefaultTrackPoint(), Speed.of(10), Altitude.EGM2008.of(50), false, true);
 
         // then
         assertEquals(50, point.getAltitude(), 0.01);
@@ -65,7 +66,7 @@ public class ChartPointTest {
         TrackStatistics statistics = new TrackStatistics();
 
         // when
-        ChartPoint point = new ChartPoint(statistics, TrackStubUtils.createDefaultTrackPoint(), Speed.of(10), 50, false, true);
+        ChartPoint point = new ChartPoint(statistics, TrackStubUtils.createDefaultTrackPoint(), Speed.of(10), Altitude.EGM2008.of(50), false, true);
 
         // then
         assertNull(point.getHeartRate());
@@ -84,7 +85,7 @@ public class ChartPointTest {
         TrackStatistics statistics = new TrackStatistics();
 
         // when
-        ChartPoint point = new ChartPoint(statistics, trackPoint, Speed.of(10), 50, false, true);
+        ChartPoint point = new ChartPoint(statistics, trackPoint, Speed.of(10), Altitude.EGM2008.of(50), false, true);
 
         // then
         assertEquals(100.0, point.getHeartRate(), 0.01);

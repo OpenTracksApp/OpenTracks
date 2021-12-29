@@ -17,7 +17,9 @@
 package de.dennisguse.opentracks.content;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
@@ -49,7 +51,7 @@ public interface TrackDataListener {
      *
      * @param trackPoint the trackPoint
      */
-    default void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, Speed smoothedSpeed, double smoothedAltitude_m) {
+    default void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, Speed smoothedSpeed, @Nullable Altitude smoothedAltitude_m) {
     }
 
     /**

@@ -23,6 +23,7 @@ import androidx.annotation.VisibleForTesting;
 import java.time.Duration;
 import java.time.Instant;
 
+import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
 
@@ -258,8 +259,10 @@ public class TrackStatistics {
         altitudeExtremities.setMax(altitude_m);
     }
 
-    public void updateAltitudeExtremities(double altitude_m) {
-        altitudeExtremities.update(altitude_m);
+    public void updateAltitudeExtremities(Altitude altitude) {
+        if (altitude != null) {
+            altitudeExtremities.update(altitude.toM());
+        }
     }
 
     public boolean hasTotalAltitudeGain() {
