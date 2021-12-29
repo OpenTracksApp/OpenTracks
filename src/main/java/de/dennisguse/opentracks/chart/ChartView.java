@@ -213,7 +213,7 @@ public class ChartView extends View {
 
             @Override
             protected boolean drawIfChartPointHasNoData() {
-                return true;
+                return false;
             }
         });
 
