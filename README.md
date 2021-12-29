@@ -6,7 +6,8 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
 
 <table>
     <tr>
-        <th>Free</th>
+        <th>Free (F-Droid)</th>
+        <th>Free (Nightly for F-Droid)</th>
         <th>Donations</th>
         <th>Translations</th>
     </tr>
@@ -14,6 +15,11 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
         <td align="center">
             <a href="https://f-droid.org/packages/de.dennisguse.opentracks">
                 <img alt="Get it on F-Droid" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="60" align="middle">
+            </a>
+        </td>
+        <td align="center">
+            <a href="https://fdroid.storchp.de/fdroid/repo?fingerprint=99985A7E73DCB0B16C9BDDCE7A0B4996F88068AE7C771ED53E217E69CD1FF196">
+                <img alt="Nightly builds (for F-Droid client)" src="https://opentracksapp.com/static/img/fdroid.storchp.de.png" height="90" align="middle">
             </a>
         </td>
         <td align="center">
@@ -31,14 +37,16 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
         <td align="center">
             <img alt="OpenTracks version published on F-Droid" src="https://img.shields.io/f-droid/v/de.dennisguse.opentracks.svg" align="middle" >
         </td>
+        <td></td>
         <td align="center">
             <a href="bitcoin:bc1qckpls3lpjlcpyxzm66hcy65hnesas9zgacy6yc">
                 <img alt="bitcoin:bc1qckpls3lpjlcpyxzm66hcy65hnesas9zgacy6yc" src="promotion/donations-bitcoin.png" height="90" align="middle">
             </a>
-        </td align="center">
+        </td>
         <td></td>
     </tr>
     <tr>
+        <td></td>
         <td></td>
         <td align="center">
             <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">
@@ -48,6 +56,7 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
         <td></td>
     </tr>
     <tr>
+        <td></td>
         <td></td>
         <td align="center">
             <a href="https://www.amazon.de/dp/B09K2KNQ7X/">
