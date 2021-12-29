@@ -82,10 +82,10 @@ public class FilterDialogFragment extends DialogFragment {
         TextInputEditText dateTo = layout.findViewById(R.id.filter_date_edit_text_to);
 
         LocalDateTime firstDayThisWeek = LocalDate.now().with(WeekFields.of(Locale.getDefault()).getFirstDayOfWeek()).atStartOfDay();
-        dateFrom.setText(StringUtils.formatDate(getActivity(), firstDayThisWeek));
+        dateFrom.setText(StringUtils.formatLocalDateTime(firstDayThisWeek));
         datePickerFrom.init(firstDayThisWeek.getYear(), firstDayThisWeek.getMonthValue() - 1, firstDayThisWeek.getDayOfMonth(), (view, year, monthOfYear, dayOfMonth) -> {
             LocalDateTime localDateTime = LocalDateTime.of(year, monthOfYear + 1, dayOfMonth, 0, 0, 0);
-            dateFrom.setText(StringUtils.formatDate(getActivity(), localDateTime));
+            dateFrom.setText(StringUtils.formatLocalDateTime(localDateTime));
             datePickerFrom.setVisibility(View.GONE);
             datePickerTo.setMinDate(localDateTime.toInstant(ZoneOffset.ofTotalSeconds(0)).toEpochMilli());
             if (localDateTime.isAfter(LocalDateTime.of(datePickerTo.getYear(), datePickerTo.getMonth() + 1, datePickerTo.getDayOfMonth(), 23, 59, 59))) {
@@ -94,10 +94,10 @@ public class FilterDialogFragment extends DialogFragment {
         });
 
         LocalDateTime lastDayThisWeek = firstDayThisWeek.plusDays(6).withHour(23).withMinute(59).withSecond(59);
-        dateTo.setText(StringUtils.formatDate(getActivity(), lastDayThisWeek));
+        dateTo.setText(StringUtils.formatLocalDateTime(lastDayThisWeek));
         datePickerTo.init(lastDayThisWeek.getYear(), lastDayThisWeek.getMonthValue() - 1, lastDayThisWeek.getDayOfMonth(), (view, year, monthOfYear, dayOfMonth) -> {
             LocalDateTime localDateTime = LocalDateTime.of(year, monthOfYear + 1, dayOfMonth, 23, 59, 59);
-            dateTo.setText(StringUtils.formatDate(getActivity(), localDateTime));
+            dateTo.setText(StringUtils.formatLocalDateTime(localDateTime));
             datePickerTo.setVisibility(View.GONE);
         });
 

@@ -242,6 +242,8 @@ limitations under the License.
     <string name="generic_filter">Filter</string>
     <string name="generic_from">From</string>
     <string name="generic_to">To</string>
+    <string name="generic_today">Today</string>
+    <string name="generic_yesterday">Yesterday</string>
     <!-- Gps -->
     <string name="gps_starting">Starting GPS</string>
     <string name="gps_wait_for_better_signal">Waiting for a better GPS signal</string>

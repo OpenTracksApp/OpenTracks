@@ -326,7 +326,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
             final String[] PROJECTION = new String[]{MarkerColumns._ID,
                     MarkerColumns.NAME, MarkerColumns.DESCRIPTION, MarkerColumns.CATEGORY,
-                    MarkerColumns.TIME, MarkerColumns.PHOTOURL};
+                    MarkerColumns.TIME, MarkerColumns.PHOTOURL, MarkerColumns.TRACKID};
 
             if (searchQuery == null) {
                 if (track != null) {

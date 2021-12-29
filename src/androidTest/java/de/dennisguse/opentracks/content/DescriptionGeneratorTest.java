@@ -27,6 +27,8 @@ import org.junit.runner.RunWith;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
@@ -91,7 +93,7 @@ public class DescriptionGeneratorTest {
                 + "Min elevation: -500 m (-1640 ft)<br>"
                 + "Elevation gain: 6000 m (19685 ft)<br>"
                 + "Elevation loss: 6000 m (19685 ft)<br>"
-                + "Recorded: " + StringUtils.formatDateTime(context, START_TIME) + "<br>";
+                + "Recorded: " + StringUtils.formatDateTime(OffsetDateTime.ofInstant(START_TIME, ZoneId.systemDefault())) + "<br>";
 
         assertEquals(expected, descriptionGenerator.generateTrackDescription(track, true));
     }
@@ -127,7 +129,7 @@ public class DescriptionGeneratorTest {
                         + "Fastest pace: 0:10 min/km (0:16 min/mi)<br>"
                         + "Elevation gain: 6000 m (19685 ft)<br>"
                         + "Elevation loss: 6000 m (19685 ft)<br>"
-                        + "Recorded: " + StringUtils.formatDateTime(context, START_TIME) + "<br>";
+                        + "Recorded: " + StringUtils.formatDateTime(OffsetDateTime.ofInstant(START_TIME, ZoneId.systemDefault())) + "<br>";
 
         assertEquals(expected, descriptionGenerator.generateTrackDescription(track, true));
     }

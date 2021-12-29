@@ -19,9 +19,15 @@ import androidx.cursoradapter.widget.ResourceCursorAdapter;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
+import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.MarkerUtils;
 
@@ -66,6 +72,7 @@ public class MarkerResourceCursorAdapter extends ResourceCursorAdapter implement
         int categoryIndex = cursor.getColumnIndex(MarkerColumns.CATEGORY);
         int descriptionIndex = cursor.getColumnIndex(MarkerColumns.DESCRIPTION);
         int photoUrlIndex = cursor.getColumnIndex(MarkerColumns.PHOTOURL);
+        int trackIdIndex = cursor.getColumnIndex(MarkerColumns.TRACKID);
 
         long id = cursor.getLong(idIndex);
         int iconId = MarkerUtils.ICON_ID;
@@ -74,6 +81,7 @@ public class MarkerResourceCursorAdapter extends ResourceCursorAdapter implement
         String category = cursor.getString(categoryIndex);
         String description = cursor.getString(descriptionIndex);
         String photoUrl = cursor.getString(photoUrlIndex);
+        long trackId = cursor.getLong(trackIdIndex);
 
         view.setTag(String.valueOf(id));
 
@@ -96,7 +104,10 @@ public class MarkerResourceCursorAdapter extends ResourceCursorAdapter implement
             }
         }
 
-        ListItemUtils.setListItem(activity, view, false, true, iconId, R.string.image_marker, name, null, null, 0, time, false, category, description, hasPhoto);
+        ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
+        Track track = contentProviderUtils.getTrack(new Track.Id(trackId));
+        ListItemUtils.setListItem(activity, view, false, true, iconId, R.string.image_marker, name, null, null, 0,
+                OffsetDateTime.ofInstant(Instant.ofEpochMilli(time), track.getZoneOffset()), category, description, hasPhoto);
     }
 
     public void clear() {

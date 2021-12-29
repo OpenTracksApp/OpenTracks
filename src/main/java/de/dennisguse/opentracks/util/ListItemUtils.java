@@ -17,14 +17,15 @@
 package de.dennisguse.opentracks.util;
 
 import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.text.format.DateUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 
 import de.dennisguse.opentracks.R;
 
@@ -51,13 +52,12 @@ public class ListItemUtils {
      * @param totalTime                the total time value
      * @param totalDistance            the total distance value
      * @param markerCount              the marker count
-     * @param startTime                the start time value
-     * @param useRelativeTime          true to display relative time if appropriate
+     * @param offsetDateTime           the start time with offset
      * @param category                 the category value
      * @param description              the description value
      * @param hasPhoto                 true if this list item has photo
      */
-    public static void setListItem(Context context, View view, boolean isRecording, boolean isPaused, int iconId, int iconContentDescriptionId, String name, String totalTime, String totalDistance, int markerCount, long startTime, boolean useRelativeTime, String category, String description, boolean hasPhoto) {
+    public static void setListItem(Context context, View view, boolean isRecording, boolean isPaused, int iconId, int iconContentDescriptionId, String name, String totalTime, String totalDistance, int markerCount, OffsetDateTime offsetDateTime, String category, String description, boolean hasPhoto) {
         // Set icon
         if (isRecording) {
             iconId = isPaused ? R.drawable.ic_track_paused : R.drawable.ic_track_recording;
@@ -104,12 +104,16 @@ public class ListItemUtils {
         setTextView(context, markerCountTextView, markerCountValue, hasPhoto);
 
         // Set date/time
-        String[] dateTime = getDateTime(isRecording, context, startTime, useRelativeTime);
         TextView dateTextView = view.findViewById(R.id.list_item_date);
-        setTextView(context, dateTextView, dateTime[0], hasPhoto);
-
         TextView timeTextView = view.findViewById(R.id.list_item_time);
-        setTextView(context, timeTextView, dateTime[1], hasPhoto);
+        String dateValue = null;
+        String timeValue = null;
+        if (!isRecording) {
+            dateValue = StringUtils.formatDateTodayRelative(context, offsetDateTime);
+            timeValue = offsetDateTime.format(DateTimeFormatter.ofPattern("hh:mm"));
+        }
+        setTextView(context, dateTextView, dateValue, hasPhoto);
+        setTextView(context, timeTextView, timeValue, hasPhoto);
 
         // Set category and description
         TextView categoryDescriptionTextView = view.findViewById(R.id.list_item_category_description);
@@ -133,27 +137,6 @@ public class ListItemUtils {
         params.gravity = timeDistanceTextView.getVisibility() == View.GONE && markerCountIcon.getVisibility() == View.GONE ? Gravity.TOP : Gravity.CENTER_VERTICAL;
     }
 
-    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) >= reqHeight
-                    && (halfWidth / inSampleSize) >= reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
-    }
-
     /**
      * Gets a string for share owner, total time, and total distance.
      *
@@ -175,30 +158,6 @@ public class ListItemUtils {
             builder.append("(").append(totalDistance).append(")");
         }
         return builder.toString();
-    }
-
-    /**
-     * Gets the date and time as an array of two strings.
-     *
-     * @param isRecording true if recording
-     * @param context     the context
-     * @param time        the start time
-     */
-    private static String[] getDateTime(boolean isRecording, Context context, long time, boolean useRelativeTime) {
-        if (isRecording || time == 0L) {
-            return new String[]{null, null};
-        }
-
-        boolean isToday = DateUtils.isToday(time);
-        int timeFlags = DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_ABBREV_ALL;
-
-        if (isToday && useRelativeTime) {
-            return new String[]{DateUtils.getRelativeTimeSpanString(time, System.currentTimeMillis(), DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString(), null};
-        } else if (isToday) {
-            return new String[]{DateUtils.formatDateTime(context, time, timeFlags), null};
-        }
-
-        return new String[]{DateUtils.formatDateTime(context, time, DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL), DateUtils.formatDateTime(context, time, timeFlags)};
     }
 
     /**

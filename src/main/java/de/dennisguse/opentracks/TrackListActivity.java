@@ -49,10 +49,11 @@ import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
 import java.time.Duration;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Stream;
 
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Track;
@@ -192,6 +193,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 int totalTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALTIME);
                 int totalDistanceIndex = cursor.getColumnIndexOrThrow(TracksColumns.TOTALDISTANCE);
                 int startTimeIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME);
+                int startTimeOffsetIndex = cursor.getColumnIndexOrThrow(TracksColumns.STARTTIME_OFFSET);
                 int categoryIndex = cursor.getColumnIndexOrThrow(TracksColumns.CATEGORY);
                 int descriptionIndex = cursor.getColumnIndexOrThrow(TracksColumns.DESCRIPTION);
                 int markerCountIndex = cursor.getColumnIndexOrThrow(TracksColumns.MARKER_COUNT);
@@ -205,12 +207,14 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 String totalDistance = StringUtils.formatDistance(TrackListActivity.this, Distance.of(cursor.getDouble(totalDistanceIndex)), metricUnits);
                 int markerCount = cursor.getInt(markerCountIndex);
                 long startTime = cursor.getLong(startTimeIndex);
+                int startTimeOffset = cursor.getInt(startTimeOffsetIndex);
                 String category = icon != null && !icon.equals("") ? null : cursor.getString(categoryIndex);
                 String description = cursor.getString(descriptionIndex);
 
                 ListItemUtils.setListItem(TrackListActivity.this, view, isRecording, recordingStatus.isPaused(),
                         iconId, R.string.image_track, name, totalTime, totalDistance, markerCount,
-                        startTime, true, category, description, false);
+                        OffsetDateTime.ofInstant(Instant.ofEpochMilli(startTime), ZoneOffset.ofTotalSeconds(startTimeOffset)),
+                        category, description, false);
             }
         };
         viewBinding.trackList.setAdapter(resourceCursorAdapter);
@@ -517,7 +521,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         @Override
         public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
             final String[] PROJECTION = new String[]{TracksColumns._ID, TracksColumns.NAME,
-                    TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME,
+                    TracksColumns.DESCRIPTION, TracksColumns.CATEGORY, TracksColumns.STARTTIME, TracksColumns.STARTTIME_OFFSET,
                     TracksColumns.TOTALDISTANCE, TracksColumns.TOTALTIME, TracksColumns.ICON, TracksColumns.MARKER_COUNT};
 
             final String sortOrder = TracksColumns.STARTTIME + " DESC";

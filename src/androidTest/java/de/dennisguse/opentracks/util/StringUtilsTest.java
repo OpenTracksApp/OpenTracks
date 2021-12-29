@@ -20,6 +20,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -27,9 +29,23 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.time.DayOfWeek;
 import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.TextStyle;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
@@ -183,5 +199,83 @@ public class StringUtilsTest {
 
         assertEquals("12.0 km/h", StringUtils.formatSpeed(context, Speed.of(3.34), true, true));
         assertEquals("7.5 mph", StringUtils.formatSpeed(context, Speed.of(3.34), false, true));
+    }
+
+    @Test
+    public void testFormatDateTime() {
+        LocalDateTime localDateTime = LocalDateTime.parse("2022-01-02T10:15:30");
+
+        setLocale("en", "US");
+        testFormatDateTime(localDateTime, localDateTime.getMonth().getDisplayName(TextStyle.SHORT, Locale.getDefault()) + " " + localDateTime.getDayOfMonth() + ", " + localDateTime.getYear() + " 10:15:30");
+
+        setLocale("es", "ES");
+        testFormatDateTime(localDateTime, localDateTime.getDayOfMonth() + " " + localDateTime.getMonth().getDisplayName(TextStyle.SHORT, Locale.getDefault()) + " " + localDateTime.getYear() + " 10:15:30");
+
+        setLocale("de", "DE");
+        testFormatDateTime(localDateTime, String.format("%02d", localDateTime.getDayOfMonth()) + "." + String.format("%02d", localDateTime.getMonthValue()) + "." + String.format("%04d", localDateTime.getYear()) + " 10:15:30");
+    }
+
+    private void testFormatDateTime(LocalDateTime localDateTime, String expectedFormat) {
+        // given
+        int offsetFromLocale = OffsetDateTime.now().getOffset().getTotalSeconds() - 28800; // -08:00
+        OffsetDateTime localOffsetDateTime = OffsetDateTime.of(localDateTime, ZoneOffset.systemDefault().getRules().getOffset(Instant.now()));
+        OffsetDateTime outOffsetDateTime = OffsetDateTime.of(localDateTime, ZoneOffset.ofTotalSeconds(offsetFromLocale));
+
+        // when
+        String formatDate = StringUtils.formatDateTime(outOffsetDateTime);
+
+        // then
+        assertEquals(localOffsetDateTime.getOffset().getTotalSeconds(), outOffsetDateTime.getOffset().getTotalSeconds() + 28800);
+        assertEquals(formatDate, expectedFormat);
+    }
+
+    @Test
+    public void testFormatDateTodayRelative() {
+        // given
+        ArrayList<String> shortDays = Arrays.stream(DayOfWeek.values()).map(d -> d.getDisplayName(TextStyle.FULL, Locale.getDefault())).collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<String> shortMonths = Arrays.stream(Month.values()).map(m -> m.getDisplayName(TextStyle.SHORT, Locale.getDefault())).collect(Collectors.toCollection(ArrayList::new));
+
+        LocalDate today = LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()).toLocalDate();
+        LocalDate yesterday = today.minus(1, ChronoUnit.DAYS);
+        LocalDate dayName = today.minus(2, ChronoUnit.DAYS);
+        LocalDate thisYear = today.minus(15, ChronoUnit.DAYS);
+        LocalDate aYearAgo = today.minus(400, ChronoUnit.DAYS);
+
+        int offsetFromLocale = OffsetDateTime.now().getOffset().getTotalSeconds() - 28800; // -08:00
+
+        OffsetDateTime todayRecordedOdt = OffsetDateTime.of(LocalDateTime.of(today.getYear(), today.getMonth(), today.getDayOfMonth(), 20, 0, 0), ZoneOffset.ofTotalSeconds(offsetFromLocale));
+        OffsetDateTime yesterdayRecordedOdt = OffsetDateTime.of(LocalDateTime.of(yesterday.getYear(), yesterday.getMonth(), yesterday.getDayOfMonth(), 1, 0, 0), ZoneOffset.ofTotalSeconds(offsetFromLocale));
+        OffsetDateTime dayNameRecordedOdt = OffsetDateTime.of(LocalDateTime.of(dayName.getYear(), dayName.getMonth(), dayName.getDayOfMonth(), 7, 0, 0), ZoneOffset.ofTotalSeconds(offsetFromLocale));
+        OffsetDateTime thisYearRecordedOdt = OffsetDateTime.of(LocalDateTime.of(thisYear.getYear(), thisYear.getMonth(), thisYear.getDayOfMonth(), 12, 0, 0), ZoneOffset.ofTotalSeconds(offsetFromLocale));
+        OffsetDateTime aYearAgoRecordedOdt = OffsetDateTime.of(LocalDateTime.of(aYearAgo.getYear(), aYearAgo.getMonth(), aYearAgo.getDayOfMonth(), 17, 0, 0), ZoneOffset.ofTotalSeconds(offsetFromLocale));
+
+        // when
+        String formatToday = StringUtils.formatDateTodayRelative(context, todayRecordedOdt);
+        String formatYesterday = StringUtils.formatDateTodayRelative(context, yesterdayRecordedOdt);
+        String formatDayName = StringUtils.formatDateTodayRelative(context, dayNameRecordedOdt);
+        String formatThisYear = StringUtils.formatDateTodayRelative(context, thisYearRecordedOdt);
+        String formatAYearAgo = StringUtils.formatDateTodayRelative(context, aYearAgoRecordedOdt);
+
+        // then
+        assertEquals("Today", formatToday);
+        assertEquals("Yesterday", formatYesterday);
+        assertTrue(shortDays.contains(formatDayName)); // Something like Friday
+        if (today.getYear() != thisYear.getYear()) {
+            assertTrue(shortMonths.stream().anyMatch(fty -> formatThisYear.matches("\\d+ " + fty + " \\d{4}"))); // Something like 14 Dec 2021
+        } else {
+            assertTrue(shortMonths.stream().anyMatch(fty -> formatThisYear.matches("\\d+ " + fty))); // Something like 14 Dec
+        }
+        assertTrue(shortMonths.stream().anyMatch(fty -> formatAYearAgo.matches("\\d+ " + fty + " \\d{4}"))); // Something like 14 Dec 2021
+    }
+
+    private void setLocale(String language, String country) {
+        Locale locale = new Locale(language, country);
+        // here we update locale for date formatters
+        Locale.setDefault(locale);
+        // here we update locale for app resources
+        Resources res = context.getResources();
+        Configuration config = res.getConfiguration();
+        config.locale = locale;
+        res.updateConfiguration(config, res.getDisplayMetrics());
     }
 }
