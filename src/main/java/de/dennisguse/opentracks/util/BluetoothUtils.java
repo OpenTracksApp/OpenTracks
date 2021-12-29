@@ -48,7 +48,8 @@ public class BluetoothUtils {
     public static final List<UUID> HEART_RATE_SUPPORTING_DEVICES = Collections.unmodifiableList(Arrays.asList(
             BluetoothUtils.HEART_RATE_SERVICE_UUID,
             //Devices that support HEART_RATE_SERVICE_UUID, but do not announce HEART_RATE_SERVICE_UUID in there BLE announcement messages (during device discovery).
-            UUID.fromString("0000fee0-0000-1000-8000-00805f9b34fb") //Miband3
+            UUID.fromString("0000fee0-0000-1000-8000-00805f9b34fb"), //Miband3
+            UUID.fromString("23d1bcea-5f78-2315-deef-121230150000") //PineTime with InfiniTime; https://github.com/InfiniTimeOrg/InfiniTime/blob/3b0b48020d96353fc6cd114aa80fc2fec98363a3/src/components/ble/NimbleController.h#L123
     ));
 
     public static final UUID CYCLING_POWER_UUID = new UUID(0x181800001000L, 0x800000805f9b34fbL);
