@@ -15,6 +15,8 @@
  */
 package de.dennisguse.opentracks.util;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 import android.content.Context;
 import android.location.Location;
 import android.text.TextUtils;
@@ -28,12 +30,14 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.time.temporal.TemporalAccessor;
 
 import de.dennisguse.opentracks.R;
@@ -54,18 +58,47 @@ public class StringUtils {
     }
 
     /**
-     * Formats the date and time based on user's phone date/time preferences.
+     * Formats the date and time of the OffsetDateTime (using default Locale format)
      */
-    public static String formatDateTime(Context context, Instant time) {
-        return DateUtils.formatDateTime(context, time.toEpochMilli(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_NUMERIC_DATE)
-                + " " + DateUtils.formatDateTime(context, time.toEpochMilli(), DateUtils.FORMAT_SHOW_TIME);
+    public static String formatDateTime(OffsetDateTime odt) {
+        return odt.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
     }
 
     /**
-     * Formats the date and time based on user's phone date/time preferences.
+     * Formats the date and time with the offset (using default Locale format).
      */
-    public static String formatDate(Context context, LocalDateTime localDateTime) {
-        return DateUtils.formatDateTime(context, localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli(), DateUtils.FORMAT_SHOW_DATE);
+    public static String formatDateTimeWithOffset(OffsetDateTime odt) {
+        return odt.toZonedDateTime().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL));
+    }
+
+    public static String formatLocalDateTime(LocalDateTime localDateTime) {
+        return localDateTime.format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL));
+    }
+
+    /**
+     * Formats the date relative to today date.
+     */
+    public static String formatDateTodayRelative(Context context, OffsetDateTime odt) {
+        LocalDate today = LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()).toLocalDate();
+        LocalDate ld = odt.toLocalDate();
+        long daysBetween = DAYS.between(ld, today);
+
+        if (daysBetween == 0) {
+            // Today
+            return context.getString(R.string.generic_today);
+        } else if (daysBetween == 1) {
+            // Yesterday
+            return context.getString(R.string.generic_yesterday);
+        } else if (daysBetween < 7) {
+            // Name of the week day
+            return ld.format(DateTimeFormatter.ofPattern("EEEE"));
+        } else if (today.getYear() == ld.getYear()) {
+            // Short date without year
+            return ld.format(DateTimeFormatter.ofPattern("d MMM"));
+        } else {
+            // Short date with year
+            return ld.format(DateTimeFormatter.ofPattern("d MMM y"));
+        }
     }
 
     /**

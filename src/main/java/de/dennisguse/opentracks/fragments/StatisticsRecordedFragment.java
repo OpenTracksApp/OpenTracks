@@ -179,7 +179,7 @@ public class StatisticsRecordedFragment extends Fragment {
     private void loadTrackDescription(@NonNull Track track) {
         viewBinding.statsNameValue.setText(track.getName());
         viewBinding.statsDescriptionValue.setText(track.getDescription());
-        viewBinding.statsStartDatetimeValue.setText(StringUtils.formatDateTime(getContext(), track.getTrackStatistics().getStartTime()));
+        viewBinding.statsStartDatetimeValue.setText(StringUtils.formatDateTime(track.getStartTime()));
     }
 
     private void updateUI() {

@@ -18,11 +18,7 @@ package de.dennisguse.opentracks.util;
 
 import android.content.Context;
 
-import androidx.annotation.VisibleForTesting;
-
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Locale;
+import java.time.OffsetDateTime;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
@@ -35,21 +31,17 @@ import de.dennisguse.opentracks.settings.PreferencesUtils;
  */
 public class TrackNameUtils {
 
-    //TODO Could be available in java.time?
-    @VisibleForTesting
-    static final String ISO_8601_FORMAT = "yyyy-MM-dd HH:mm";
-
     private TrackNameUtils() {
     }
 
     //TODO Should not access sharedPreferences; trackName should be an ENUM.
-    public static String getTrackName(Context context, Track.Id trackId, Instant startTime) {
+    public static String getTrackName(Context context, Track.Id trackId, OffsetDateTime startTime) {
         String trackName = PreferencesUtils.getString(R.string.track_name_key, context.getString(R.string.track_name_default));
 
         if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_local_value))) {
-            return StringUtils.formatDateTime(context, startTime);
+            return StringUtils.formatDateTimeWithOffset(startTime);
         } else if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_iso_8601_value))) {
-            return new SimpleDateFormat(ISO_8601_FORMAT, Locale.US).format(startTime.toEpochMilli());
+            return StringUtils.formatDateTimeIso8601(startTime.toInstant(), startTime.getOffset());
         } else {
             return context.getString(R.string.track_name_format, trackId.getId());
         }

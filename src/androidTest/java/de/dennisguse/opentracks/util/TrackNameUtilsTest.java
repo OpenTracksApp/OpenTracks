@@ -16,6 +16,8 @@
 
 package de.dennisguse.opentracks.util;
 
+import static org.junit.Assert.assertEquals;
+
 import android.content.Context;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -24,15 +26,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Locale;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Tests {@link TrackNameUtils}.
@@ -43,7 +42,7 @@ import static org.junit.Assert.assertEquals;
 public class TrackNameUtilsTest {
 
     private static final Track.Id TRACK_ID = new Track.Id(1L);
-    private static final Instant START_TIME = Instant.ofEpochMilli(1288213406000L);
+    private static final OffsetDateTime START_TIME = OffsetDateTime.parse("2022-01-02T10:15:30+01:00");
 
     private static final Context CONTEXT = ApplicationProvider.getApplicationContext();
 
@@ -53,7 +52,7 @@ public class TrackNameUtilsTest {
     @Test
     public void testTrackName_date_local() {
         PreferencesUtils.setString(R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_local_value));
-        assertEquals(StringUtils.formatDateTime(CONTEXT, START_TIME), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
+        assertEquals(StringUtils.formatDateTimeWithOffset(START_TIME), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
     }
 
     /**
@@ -62,8 +61,7 @@ public class TrackNameUtilsTest {
     @Test
     public void testTrackName_date_iso_8601() {
         PreferencesUtils.setString(R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_iso_8601_value));
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(TrackNameUtils.ISO_8601_FORMAT, Locale.US);
-        assertEquals(simpleDateFormat.format(START_TIME.toEpochMilli()), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
+        assertEquals(StringUtils.formatDateTimeIso8601(START_TIME.toInstant(), START_TIME.getOffset()), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
     }
 
     /**

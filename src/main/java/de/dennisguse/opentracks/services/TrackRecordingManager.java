@@ -9,6 +9,7 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
+import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 
 import de.dennisguse.opentracks.R;
@@ -59,13 +60,12 @@ class TrackRecordingManager {
 
         insertTrackPoint(trackId, segmentStartTrackPoint);
 
-        //TODO Pass TrackPoint
-        track.setName(TrackNameUtils.getTrackName(context, trackId, segmentStartTrackPoint.getTime()));
-
         String category = PreferencesUtils.getDefaultActivity();
         track.setCategory(category);
         track.setIcon(TrackIconUtils.getIconValue(context, category));
         track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
+        //TODO Pass TrackPoint
+        track.setName(TrackNameUtils.getTrackName(context, trackId, track.getStartTime()));
         contentProviderUtils.updateTrack(track);
 
         currentSegmentHasTrackPoint = false;
