@@ -576,4 +576,10 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="menu_add_custom_layout">Nova disposición</string>
     <string name="custom_layout_select_layout">Elixe disposición</string>
     <string name="stats_custom_layout_default_layout">Disposición por defecto</string>
+    <string name="generic_filter">Filtro</string>
+    <string name="generic_from">Desde</string>
+    <string name="generic_to">Ata</string>
+    <string name="menu_filter">Filtro</string>
+    <string name="aggregated_stats_filter_no_results">Non hai actividades para o filtro proporcionado</string>
+    <string name="settings_sensor_bluetooth_service_filter_enabled">Só mostrar dispositivos Bluetooth que anuncien os servizos requeridos</string>
 </resources>
