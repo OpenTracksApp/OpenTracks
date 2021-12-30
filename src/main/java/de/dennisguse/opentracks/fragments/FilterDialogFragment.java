@@ -111,13 +111,11 @@ public class FilterDialogFragment extends DialogFragment {
             datePickerTo.setVisibility(View.VISIBLE);
         });
 
-        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> {
-            filterDialogListener.onFilterDone(
-                    filterItems,
-                    LocalDateTime.of(datePickerFrom.getYear(), datePickerFrom.getMonth() + 1, datePickerFrom.getDayOfMonth(), 0, 0, 0),
-                    LocalDateTime.of(datePickerTo.getYear(), datePickerTo.getMonth() + 1, datePickerTo.getDayOfMonth(), 23, 59, 59)
-            );
-        });
+        builder.setPositiveButton(android.R.string.ok, (dialog, which) -> filterDialogListener.onFilterDone(
+                filterItems,
+                LocalDateTime.of(datePickerFrom.getYear(), datePickerFrom.getMonth() + 1, datePickerFrom.getDayOfMonth(), 0, 0, 0),
+                LocalDateTime.of(datePickerTo.getYear(), datePickerTo.getMonth() + 1, datePickerTo.getDayOfMonth(), 23, 59, 59)
+        ));
 
         builder.setNegativeButton(android.R.string.cancel, null);
 
@@ -161,7 +159,7 @@ public class FilterDialogFragment extends DialogFragment {
             isChecked = in.readByte() != 0;
         }
 
-        public static final Creator<FilterItem> CREATOR = new Creator<FilterItem>() {
+        public static final Creator<FilterItem> CREATOR = new Creator<>() {
             @Override
             public FilterItem createFromParcel(Parcel in) {
                 return new FilterItem(in);

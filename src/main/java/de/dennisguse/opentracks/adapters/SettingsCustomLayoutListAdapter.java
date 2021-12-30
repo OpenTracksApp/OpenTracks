@@ -20,7 +20,7 @@ public class SettingsCustomLayoutListAdapter extends RecyclerView.Adapter<Recycl
 
     private List<Layout> layoutList;
     private final Context context;
-    private SettingsCustomLayoutProfileClickListener itemClickListener;
+    private final SettingsCustomLayoutProfileClickListener itemClickListener;
 
     public SettingsCustomLayoutListAdapter(Context context, SettingsCustomLayoutProfileClickListener itemClickListener) {
         this.context = context;

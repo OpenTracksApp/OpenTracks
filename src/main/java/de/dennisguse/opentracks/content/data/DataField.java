@@ -34,7 +34,7 @@ public class DataField implements Parcelable {
         isWide = in.readByte() != 0;
     }
 
-    public static final Creator<DataField> CREATOR = new Creator<DataField>() {
+    public static final Creator<DataField> CREATOR = new Creator<>() {
         @Override
         public DataField createFromParcel(Parcel in) {
             return new DataField(in);
