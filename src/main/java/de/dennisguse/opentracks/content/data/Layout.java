@@ -58,7 +58,7 @@ public class Layout implements Parcelable {
         in.readList(dataFields, DataField.class.getClassLoader());
     }
 
-    public static final Creator<Layout> CREATOR = new Creator<Layout>() {
+    public static final Creator<Layout> CREATOR = new Creator<>() {
         @Override
         public Layout createFromParcel(Parcel in) {
             return new Layout(in);

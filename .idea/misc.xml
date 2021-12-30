@@ -3,7 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="src/main/res/layout/aggregated_stats.xml" value="0.17147922998986828" />
+        <entry key="src/main/res/menu/aggregated_statistics.xml" value="0.10208333333333333" />
+        <entry key="src/main/res/xml/settings_sensors.xml" value="0.2101851851851852" />
       </map>
     </option>
   </component>

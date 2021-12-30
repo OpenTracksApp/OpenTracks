@@ -2,8 +2,6 @@ package de.dennisguse.opentracks.util;
 
 import androidx.annotation.Nullable;
 
-import com.google.android.material.navigation.NavigationBarView;
-
 import java.util.Arrays;
 import java.util.List;
 

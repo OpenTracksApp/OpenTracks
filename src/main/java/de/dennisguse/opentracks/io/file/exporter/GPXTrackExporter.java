@@ -372,7 +372,7 @@ public class GPXTrackExporter implements TrackExporter {
         return Stream.concat(sensorPoints.stream(), Stream.of(trackPoint))
                 .map(map)
                 .filter(Objects::nonNull)
-                .reduce((gain, next) -> gain + next)
+                .reduce(Double::sum)
                 .orElse(null);
     }
 
