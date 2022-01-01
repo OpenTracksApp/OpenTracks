@@ -531,12 +531,12 @@ public class PreferencesUtils {
     }
 
     public static DocumentFile getDefaultExportDirectoryUri(Context context) {
-        String singleExportDirectorySettingsKey = getString(R.string.settings_default_export_directory_key, null);
-        if (singleExportDirectorySettingsKey == null) {
+        String singleExportDirectory = getString(R.string.settings_default_export_directory_key, null);
+        if (singleExportDirectory == null) {
             return null;
         }
         try {
-            return DocumentFile.fromTreeUri(context, Uri.parse(singleExportDirectorySettingsKey));
+            return DocumentFile.fromTreeUri(context, Uri.parse(singleExportDirectory));
         } catch (Exception e) {
             Log.w(TAG, "Could not decode default export directory: " + e.getMessage());
         }

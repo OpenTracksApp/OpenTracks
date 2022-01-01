@@ -45,7 +45,7 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
 
     protected void onActivityResultCustom(int requestCode, int resultCode, @Nullable Intent resultData) {
         if (requestCode == DIRECTORY_PICKER_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK && resultData != null) {
                 Uri directoryUri = resultData.getData();
 
                 int takeFlags = resultData.getFlags();
@@ -107,16 +107,21 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
         @Override
         protected void onActivityResultCustom(int requestCode, int resultCode, @Nullable Intent resultData) {
             if (requestCode == DIRECTORY_PICKER_REQUEST_CODE) {
+                DocumentFile oldDirectoryUri = PreferencesUtils.getDefaultExportDirectoryUri(this);
                 switch (resultCode) {
                     case RESULT_OK:
-                        IntentUtils.releaseDirectoryAccessPermission(getApplicationContext(), PreferencesUtils.getDefaultExportDirectoryUri(this));
+                        if (resultData != null) {
+                            Uri newDirectoryUri = resultData.getData();
+                            if (oldDirectoryUri != null && !newDirectoryUri.equals(oldDirectoryUri.getUri())) {
+                                IntentUtils.releaseDirectoryAccessPermission(getApplicationContext(), oldDirectoryUri);
+                            }
 
-                        Uri directoryUri = resultData.getData();
-                        PreferencesUtils.setDefaultExportDirectoryUri(directoryUri);
-                        IntentUtils.persistDirectoryAccessPermission(getApplicationContext(), directoryUri, resultData.getFlags());
+                            PreferencesUtils.setDefaultExportDirectoryUri(newDirectoryUri);
+                            IntentUtils.persistDirectoryAccessPermission(getApplicationContext(), newDirectoryUri, resultData.getFlags());
+                        }
                         break;
                     case RESULT_CANCELED:
-                        IntentUtils.releaseDirectoryAccessPermission(getApplicationContext(), PreferencesUtils.getDefaultExportDirectoryUri(this));
+                        IntentUtils.releaseDirectoryAccessPermission(getApplicationContext(), oldDirectoryUri);
                         PreferencesUtils.setDefaultExportDirectoryUri(null);
                         break;
                 }

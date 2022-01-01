@@ -300,9 +300,9 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             trackRecordingManager.end(trackPointCreator);
         }
 
-        ExportUtils.postWorkoutExport(this, trackId, new ExportServiceResultReceiver(new Handler(), this));
-
         endRecording(true);
+
+        ExportUtils.postWorkoutExport(this, trackId, new ExportServiceResultReceiver(new Handler(), this));
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)

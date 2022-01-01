@@ -201,6 +201,8 @@ limitations under the License.
     <string name="export_with_photos">with photos</string>
     <string name="export_without_photos">without photos</string>
     <string name="export_error_post_workout">Post-workout export failed, please check the export directory.</string>
+    <string name="export_cannot_write_to_dir">Cannot write to export directory.</string>
+    <string name="export_dir_not_writable">" (not writable!)"</string>
     <string name="export_progress_message">Exporting to %1$s&#8230;</string>
     <string name="export_track_already_exists_msg">The track %1$s already exists at the destination directory.</string>
     <string name="export_all_do_it_for_all">do it for all conflicts</string>

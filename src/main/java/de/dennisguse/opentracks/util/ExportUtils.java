@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.DocumentsContract;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.documentfile.provider.DocumentFile;
 
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.ExportService;
@@ -32,6 +34,11 @@ public class ExportUtils {
         if (PreferencesUtils.shouldInstantExportAfterWorkout(context)) {
             TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat();
             DocumentFile directory = PreferencesUtils.getDefaultExportDirectoryUri(context);
+
+            if (directory == null || !directory.canWrite()) {
+                Toast.makeText(context, R.string.export_cannot_write_to_dir, Toast.LENGTH_LONG).show();
+                return;
+            }
 
             ExportService.enqueue(context, resultReceiver, trackId, trackFileFormat, directory.getUri());
         }
