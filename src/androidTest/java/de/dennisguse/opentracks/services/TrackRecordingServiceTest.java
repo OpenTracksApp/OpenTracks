@@ -280,7 +280,7 @@ public class TrackRecordingServiceTest {
         trackPointCreator.stopGPS();
         trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
-        trackPointCreator.onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:05Z")), Distance.of(50));
+        trackPointCreator.onNewTrackPoint(new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:05Z")));
 
         // then
         assertTrue(service.isRecording());
@@ -404,7 +404,7 @@ public class TrackRecordingServiceTest {
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:03Z"))
                         .setLatitude(10)
                         .setLongitude(10)
-                , Distance.of(50));
+        );
 
         // when
         Marker.Id markerId = service.insertMarker(null, null, null, null);
@@ -452,7 +452,7 @@ public class TrackRecordingServiceTest {
                 .setSpeed(Speed.of(speed))
                 .setBearing(3.0f);
 
-        trackRecordingService.getTrackPointCreator().onNewTrackPoint(trackPoint, Distance.of(50));
+        trackRecordingService.getTrackPointCreator().onNewTrackPoint(trackPoint);
     }
 
     //TODO Workaround as service is not stopped on API23; thus sharedpreferences are not reset between tests.

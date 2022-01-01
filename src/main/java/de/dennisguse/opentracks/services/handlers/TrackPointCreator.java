@@ -20,7 +20,7 @@ import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 /**
  * Creates TrackPoints while recording by fusing data from different sensors (e.g., GNSS, barometer, BLE sensors).
  */
-public class TrackPointCreator {
+public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDataSetChangeObserver {
 
     private static final String TAG = TrackPointCreator.class.getSimpleName();
 
@@ -51,10 +51,10 @@ public class TrackPointCreator {
 
         gpsHandler.onStart(context);
 
-        remoteSensorManager = new BluetoothRemoteSensorManager(context);
-        remoteSensorManager.start();
-
+        remoteSensorManager = new BluetoothRemoteSensorManager(context, this);
         altitudeSumManager = new AltitudeSumManager();
+
+        remoteSensorManager.start();
         altitudeSumManager.start(context);
     }
 
@@ -109,17 +109,23 @@ public class TrackPointCreator {
         gpsHandler.onSharedPreferenceChanged(key);
     }
 
-    public synchronized void onNewTrackPoint(@NonNull TrackPoint trackPoint, @NonNull Distance thresholdHorizontalAccuracy) {
+    /**
+     * Got a new TrackPoint from Bluetooth only; contains no GPS location.
+     *
+     * @param sensorDataSet
+     */
+    @Override
+    public void onChange(SensorDataSet sensorDataSet) {
+        onNewTrackPoint(new TrackPoint(TrackPoint.Type.SENSORPOINT, createNow()));
+    }
+
+    public synchronized void onNewTrackPoint(@NonNull TrackPoint trackPoint) {
         fill(trackPoint);
 
-        boolean stored = service.newTrackPoint(trackPoint, thresholdHorizontalAccuracy);
+        boolean stored = service.newTrackPoint(trackPoint, gpsHandler.getThresholdHorizontalAccuracy());
         if (stored) {
             resetSensorData();
         }
-    }
-
-    public void onNewTrackPointWithoutGPS() {
-        onNewTrackPoint(new TrackPoint(TrackPoint.Type.SENSORPOINT, createNow()), gpsHandler.getThresholdHorizontalAccuracy());
     }
 
     public TrackPoint createSegmentStartManual() {

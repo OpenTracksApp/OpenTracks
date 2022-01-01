@@ -48,7 +48,7 @@ public class TrackPointCreatorTest {
         Distance horizontalAccuracyThreshold = Distance.of(50);
 
         // when
-        subject.onNewTrackPoint(trackPoint, horizontalAccuracyThreshold);
+        subject.onNewTrackPoint(trackPoint);
 
         // then
         Thread.sleep(10); // Wait for executor service
