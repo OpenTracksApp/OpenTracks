@@ -570,4 +570,10 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="custom_layout_list_edit_already_exists">Paigutuse nimi on juba olemas</string>
     <string name="custom_layout_list_edit_name">Sisestage paigutuse nimi, et lisada</string>
     <string name="custom_layout_list_title">Plaanid</string>
+    <string name="generic_filter">Filtri</string>
+    <string name="generic_from">Alates</string>
+    <string name="generic_to">Et</string>
+    <string name="menu_filter">Filtri</string>
+    <string name="settings_sensor_bluetooth_service_filter_enabled">Näitab ainult neid Bluetooth-seadmeid, mis teatavad nõutavatest teenustest</string>
+    <string name="aggregated_stats_filter_no_results">Määratud filtri jaoks ei ole tegevusi</string>
 </resources>
