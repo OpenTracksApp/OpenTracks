@@ -544,7 +544,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_generic_sensor">Generico</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="title_activity_settings_custom_layout">Personalizza Layout di Registrazione</string>
-    <string name="settings_open_tracks_title">Open Tracks</string>
+    <string name="settings_open_tracks_title">Binari aperti</string>
     <string name="settings_open_tracks_summary">Tutto a proposito del progetto OpenTracks</string>
     <string name="settings_ui_title">Interfaccia Utente</string>
     <string name="settings_ui_summary">Aspetto, Layout durante la registrazione, Tema</string>
@@ -574,4 +574,10 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="custom_layout_list_layout_removed">Il layout è stato rimosso</string>
     <string name="custom_layout_select_layout">Seleziona il layout</string>
     <string name="stats_custom_layout_default_layout">Layout predefinito</string>
+    <string name="generic_filter">Filtro</string>
+    <string name="generic_to">A</string>
+    <string name="generic_from">Da</string>
+    <string name="menu_filter">Filtro</string>
+    <string name="aggregated_stats_filter_no_results">Non ci sono attività per il filtro specificato</string>
+    <string name="settings_sensor_bluetooth_service_filter_enabled">Mostra solo i dispositivi Bluetooth che annunciano i servizi richiesti</string>
 </resources>
