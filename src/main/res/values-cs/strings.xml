@@ -563,7 +563,7 @@ limitations under the License.
     <string name="settings_sensors_title">Bluetooth senzory</string>
     <string name="settings_gps_summary">Časový interval, Interval vzdálenosti, Maximální vzdálenost, Přesnost</string>
     <string name="settings_ui_summary">Vzhled, Rozložení záznamu, Téma</string>
-    <string name="settings_open_tracks_title">Open Tracks</string>
+    <string name="settings_open_tracks_title">Otevřené stopy</string>
     <string name="settings_open_tracks_summary">Vše o projektu OpenTracks</string>
     <string name="settings_defaults_title">Výchozí jednotky a aktivity</string>
     <string name="settings_ui_title">Uživatelské rozhraní</string>
@@ -577,4 +577,10 @@ limitations under the License.
     <string name="custom_layout_list_edit_already_exists">Název rozvržení již existuje</string>
     <string name="custom_layout_list_layout_removed">Rozložení bylo odstraněno</string>
     <string name="stats_custom_layout_default_layout">Výchozí rozložení</string>
+    <string name="generic_filter">Filtr</string>
+    <string name="generic_from">Z</string>
+    <string name="generic_to">Na</string>
+    <string name="menu_filter">Filtr</string>
+    <string name="settings_sensor_bluetooth_service_filter_enabled">Zobrazit pouze zařízení Bluetooth, která oznamují požadované služby</string>
+    <string name="aggregated_stats_filter_no_results">Pro zadaný filtr neexistují žádné aktivity</string>
 </resources>
