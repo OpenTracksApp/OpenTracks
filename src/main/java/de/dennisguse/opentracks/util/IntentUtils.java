@@ -217,13 +217,10 @@ public class IntentUtils {
             return;
         }
         final Uri documentUri = documentFile.getUri();
-        final List<UriPermission> persistedUriPermissions = context.getContentResolver().getPersistedUriPermissions();
-        for (final UriPermission permission : persistedUriPermissions) {
-            final Uri uri = permission.getUri();
-            if (uri.equals(documentUri)) {
-                context.getContentResolver().releasePersistableUriPermission(uri, 0);
-            }
-        }
+        context.getContentResolver().getPersistedUriPermissions().stream()
+                .map(UriPermission::getUri)
+                .filter(documentUri::equals)
+                .forEach(u -> context.getContentResolver().releasePersistableUriPermission(u, 0));
     }
 
 }

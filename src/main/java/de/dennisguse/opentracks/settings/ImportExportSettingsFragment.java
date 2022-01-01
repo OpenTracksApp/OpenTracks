@@ -66,7 +66,11 @@ public class ImportExportSettingsFragment extends PreferenceFragmentCompat {
         instantExportDirectoryPreference.setSummaryProvider(preference -> {
             DocumentFile directory = PreferencesUtils.getDefaultExportDirectoryUri(getContext());
             //Use same value for not set as Androidx ListPreference and EditTextPreference
-            return directory != null ? directory.getName() : getString(R.string.not_set);
+            if (directory == null) {
+                return getString(R.string.not_set);
+            }
+
+            return directory.getUri().toString() + (directory.canWrite() ? "" : getString(R.string.export_dir_not_writable));
         });
     }
 }
