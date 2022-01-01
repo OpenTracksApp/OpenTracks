@@ -33,8 +33,8 @@ import de.dennisguse.opentracks.content.sensor.SensorData;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataRunning;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.util.BluetoothUtils;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.util.BluetoothUtils;
 
 /**
  * Bluetooth LE sensor manager: manages connections to Bluetooth LE sensors.
@@ -70,6 +70,8 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
     private final BluetoothConnectionManager.RunningSpeedAndCadence runningSpeedAndCadence = new BluetoothConnectionManager.RunningSpeedAndCadence(this);
 
     private final SensorDataSet sensorDataSet = new SensorDataSet();
+
+    private final SensorDataSetChangeObserver observer;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
@@ -110,8 +112,9 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         }
     };
 
-    public BluetoothRemoteSensorManager(Context context) {
+    public BluetoothRemoteSensorManager(@NonNull Context context, @NonNull SensorDataSetChangeObserver observer) {
         this.context = context;
+        this.observer = observer;
         bluetoothAdapter = BluetoothUtils.getAdapter(context);
     }
 
@@ -208,10 +211,15 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         }
 
         sensorDataSet.set(sensorData);
+        observer.onChange(new SensorDataSet(sensorDataSet));
     }
 
     @Override
     public void onDisconnecting(SensorData<?> sensorData) {
         sensorDataSet.remove(sensorData);
+    }
+
+    public interface SensorDataSetChangeObserver {
+        void onChange(SensorDataSet sensorDataSet);
     }
 }

@@ -121,7 +121,7 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
         }
 
         lastTrackPoint = trackPoint;
-        trackPointCreator.onNewTrackPoint(trackPoint, thresholdHorizontalAccuracy);
+        trackPointCreator.onNewTrackPoint(trackPoint);
     }
 
     @Override

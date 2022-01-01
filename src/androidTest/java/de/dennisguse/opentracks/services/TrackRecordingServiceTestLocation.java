@@ -325,7 +325,7 @@ public class TrackRecordingServiceTestLocation {
         Track.Id trackId = service.startNewTrack();
         service.stopUpdateRecordingData();
         service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
-        service.getTrackPointCreator().setRemoteSensorManager(new BluetoothRemoteSensorManager(context) {
+        service.getTrackPointCreator().setRemoteSensorManager(new BluetoothRemoteSensorManager(context, service.getTrackPointCreator()) {
 
             @Override
             public boolean isEnabled() {
@@ -386,7 +386,7 @@ public class TrackRecordingServiceTestLocation {
     @MediumTest
     @Test
     public void testOnLocationChangedAsync_idle_withSensorDistance() {
-        BluetoothRemoteSensorManager remoteSensorManager = new BluetoothRemoteSensorManager(context) {
+        BluetoothRemoteSensorManager remoteSensorManager = new BluetoothRemoteSensorManager(context, service.getTrackPointCreator()) {
 
             @Override
             public boolean isEnabled() {
