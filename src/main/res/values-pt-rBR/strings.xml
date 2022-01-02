@@ -515,4 +515,10 @@
     <string name="custom_layout_list_title">Estrutura</string>
     <string name="custom_layout_select_layout">Selecionar layout</string>
     <string name="custom_layout_list_layout_removed">Layout foi removido</string>
+    <string name="generic_from">De</string>
+    <string name="generic_to">Para</string>
+    <string name="generic_filter">Filtro</string>
+    <string name="menu_filter">Filtro</string>
+    <string name="aggregated_stats_filter_no_results">Não há atividades para o filtro especificado</string>
+    <string name="settings_sensor_bluetooth_service_filter_enabled">Mostrar apenas dispositivos Bluetooth que anunciam os serviços necessários</string>
 </resources>
