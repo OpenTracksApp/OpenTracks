@@ -567,7 +567,7 @@ limitations under the License.
     <string name="generic_filter">Filter</string>
     <string name="menu_filter">Filter</string>
     <string name="generic_from">Fra</string>
-    <string name="generic_to">Å</string>
+    <string name="generic_to">Til</string>
     <string name="aggregated_stats_filter_no_results">Det er ikke aktiviteter for det angitte filteret</string>
-    <string name="settings_sensor_bluetooth_service_filter_enabled">Vis Bare Bluetooth enheter som annonserer nødvendige tjenester</string>
+    <string name="settings_sensor_bluetooth_service_filter_enabled">Bare vis Bluetooth-enheter som melder om nødvendige tjenester</string>
 </resources>
