@@ -148,23 +148,19 @@ public class TrackStatisticsUpdater {
         if (trackPoint.hasSensorDistance()) {
             // Sensor-based distance/speed
             currentSegment.addTotalDistance(trackPoint.getSensorDistance());
-        } else if (lastTrackPoint != null && trackPoint.isMoving()) {
+        } else if (lastTrackPoint != null
+                && lastTrackPoint.hasLocation()
+                && trackPoint.hasLocation() && trackPoint.isMoving()) {
             // GPS-based distance/speed
             // Assumption: we ignore TrackPoints that are not moving as those are likely imprecise GPS measurements
             Distance movingDistance = trackPoint.distanceToPrevious(lastTrackPoint);
-            if (movingDistance != null) {
-                currentSegment.addTotalDistance(movingDistance);
-            }
+            currentSegment.addTotalDistance(movingDistance);
         }
 
 
         // Update moving time
         if (trackPoint.isMoving() && lastTrackPoint != null && lastTrackPoint.isMoving()) {
-            Duration movingTime = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
-            if (movingTime.isNegative()) {
-                throw new RuntimeException("Moving time cannot be negative");
-            }
-            currentSegment.addMovingTime(movingTime);
+            currentSegment.addMovingTime(trackPoint, lastTrackPoint);
 
             // Update max speed
             updateSpeed(trackPoint, lastTrackPoint);

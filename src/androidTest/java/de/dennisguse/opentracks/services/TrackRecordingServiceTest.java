@@ -62,6 +62,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.importer.TrackPointAssert;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
+import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
@@ -465,8 +466,10 @@ public class TrackRecordingServiceTest {
         // Reset service (if some previous test failed)
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
                 .getService();
-        service.endCurrentTrack();
+
+        service.getTrackPointCreator().setRemoteSensorManager(new BluetoothRemoteSensorManager(context, service.getTrackPointCreator()));
         service.getTrackPointCreator().setClock(Clock.systemUTC());
+        service.endCurrentTrack();
         service.sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
     }
 }

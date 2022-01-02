@@ -198,8 +198,8 @@ public class TrackImporter {
             TrackPoint previous = trackPoints.get(i - 1);
             TrackPoint current = trackPoints.get(i);
 
-            Distance distanceToPrevious = current.distanceToPrevious(previous);
-            if (distanceToPrevious != null) {
+            if (current.hasSensorDistance() || (previous.hasLocation() && current.hasLocation())) {
+                Distance distanceToPrevious = current.distanceToPrevious(previous);
                 if (!current.hasSpeed()) {
                     Duration timeDifference = Duration.between(previous.getTime(), current.getTime());
                     current.setSpeed(Speed.of(distanceToPrevious, timeDifference));

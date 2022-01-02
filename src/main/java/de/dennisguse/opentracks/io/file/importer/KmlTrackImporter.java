@@ -306,23 +306,10 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
             Instant time = whenList.get(i);
             Location location = locationList.get(i);
 
-            TrackPoint trackPoint;
-            if (i == 0) {
-                //first
-                if (location == null) {
-                    trackPoint = TrackPoint.createSegmentStartManualWithTime(time);
-                } else {
-                    trackPoint = new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, location, time);
-                }
-            } else if (i == locationList.size() - 1 && location == null) {
-                //last
-                trackPoint = TrackPoint.createSegmentEndWithTime(time);
-            } else {
-                if (location == null) {
-                    trackPoint = new TrackPoint(TrackPoint.Type.SENSORPOINT, time);
-                } else {
-                    trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, location, time);
-                }
+            TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.SENSORPOINT, time);
+            if (location != null) {
+                trackPoint.setType(TrackPoint.Type.TRACKPOINT);
+                trackPoint.setLocation(location);
             }
 
             if (i < sensorSpeedList.size() && sensorSpeedList.get(i) != null) {
@@ -346,6 +333,21 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
             if (i < altitudeLossList.size()) {
                 trackPoint.setAltitudeLoss(altitudeLossList.get(i));
             }
+
+            // Update TrackPoint type for START / STOP.
+            TrackPoint.Type type = trackPoint.getType();
+            if (i == 0) {
+                //first
+                if (!trackPoint.wasCreatedManually()) {
+                    type = TrackPoint.Type.SEGMENT_START_MANUAL;
+                } else {
+                    type = TrackPoint.Type.SEGMENT_START_AUTOMATIC;
+                }
+            } else if (i == locationList.size() - 1 && !trackPoint.wasCreatedManually()) {
+                //last
+                type = TrackPoint.Type.SEGMENT_END_MANUAL;
+            }
+            trackPoint.setType(type);
 
             trackImporter.addTrackPoint(trackPoint);
         }

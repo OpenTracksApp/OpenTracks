@@ -64,7 +64,7 @@ public class TrackPoint {
 
         SEGMENT_START_AUTOMATIC(-1), //Start of a segment due to too much distance from previous TrackPoint
         TRACKPOINT(0), //Just GPS data and may contain BLE sensor data
-        SENSORPOINT(2), //Just BLE sensor data
+        SENSORPOINT(2), //Just BLE sensor data; required to have speed and sensorDistance
 
         SEGMENT_END_MANUAL(1); //End of a segment
 
@@ -109,13 +109,7 @@ public class TrackPoint {
     public TrackPoint(@NonNull Type type, @NonNull Location location, @NonNull Instant time) {
         this(type, time);
 
-        this.latitude = location.getLatitude();
-        this.longitude = location.getLongitude();
-        this.altitude = location.hasAltitude() ? Altitude.WGS84.of(location.getAltitude()) : null;
-        this.speed = location.hasSpeed() ? Speed.of(location.getSpeed()) : null;
-        this.horizontalAccuracy = location.hasAccuracy() ? Distance.of(location.getAccuracy()) : null;
-
-        //TODO Should we copy the bearing?
+        setLocation(location);
     }
 
     @VisibleForTesting
@@ -150,6 +144,10 @@ public class TrackPoint {
 
     public boolean isSegmentEnd() {
         return type == Type.SEGMENT_END_MANUAL;
+    }
+
+    public boolean wasCreatedManually() {
+        return hasLocation() || hasSpeed();
     }
 
     /**
@@ -209,6 +207,17 @@ public class TrackPoint {
         }
 
         return location;
+    }
+
+    public TrackPoint setLocation(@NonNull Location location) {
+        this.latitude = location.getLatitude();
+        this.longitude = location.getLongitude();
+        this.altitude = location.hasAltitude() ? Altitude.WGS84.of(location.getAltitude()) : null;
+        this.speed = location.hasSpeed() ? Speed.of(location.getSpeed()) : null;
+        this.horizontalAccuracy = location.hasAccuracy() ? Distance.of(location.getAccuracy()) : null;
+
+        //TODO Should we copy the bearing?
+        return this;
     }
 
     public boolean hasAltitudeGain() {
@@ -310,13 +319,13 @@ public class TrackPoint {
         return this;
     }
 
-    @Nullable
-    public Distance distanceToPrevious(@Nullable TrackPoint previous) {
+    @NonNull
+    public Distance distanceToPrevious(@NonNull TrackPoint previous) {
         if (hasSensorDistance()) {
             return getSensorDistance();
         }
-        if (previous == null || !(hasLocation() && previous.hasLocation())) {
-            return null;
+        if (!hasLocation() || hasLocation() != previous.hasLocation()) {
+            throw new RuntimeException("Cannot compute distance.");
         }
 
         return Distance.of(getLocation().distanceTo(previous.getLocation()));
@@ -411,13 +420,19 @@ public class TrackPoint {
     public String toString() {
         String result = "time=" + getTime() + " (type=" + getType() + ")";
         if (hasLocation()) {
-            result += ": lat=" + getLatitude() + " lng=" + getLongitude();
+            result += ": lat=" + getLatitude() + " lng=" + getLongitude() + " alt=" + getAltitude();
         }
         if (hasHorizontalAccuracy()) {
             result += " acc=" + getHorizontalAccuracy();
         }
         if (hasSensorDistance()) {
             result += " distance=" + getSensorDistance();
+        }
+        if (hasAltitudeGain()) {
+            result += " altitudeGain= " + getAltitudeGain();
+        }
+        if (hasAltitudeLoss()) {
+            result += " altitudeLoss= " + getAltitudeLoss();
         }
 
         return result;
