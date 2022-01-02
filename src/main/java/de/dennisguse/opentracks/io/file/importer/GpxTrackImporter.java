@@ -111,7 +111,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
     protected String uuid;
     protected String gain;
     protected String loss;
-    protected String distance;
+    protected String sensorDistance;
 
     private final LinkedList<TrackPoint> currentSegment = new LinkedList<>();
 
@@ -237,7 +237,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 break;
             case TAG_EXTENSION_DISTANCE:
                 if (content != null) {
-                    distance = content.trim();
+                    sensorDistance = content.trim();
                 }
                 break;
         }
@@ -335,11 +335,11 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse altitude loss: %s", loss)), e);
             }
         }
-        if (distance != null) {
+        if (sensorDistance != null) {
             try {
-                trackPoint.setSensorDistance(Distance.of(distance));
+                trackPoint.setSensorDistance(Distance.of(sensorDistance));
             } catch (NumberFormatException e) {
-                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse distance: %s", distance)), e);
+                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse distance: %s", sensorDistance)), e);
             }
         }
 
@@ -352,9 +352,14 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
         altitude = null;
         time = null;
         speed = null;
-        power = null;
+
         gain = null;
         loss = null;
+
+        sensorDistance = null;
+        power = null;
+        heartrate = null;
+        cadence = null;
     }
 
     private void onMarkerStart(Attributes attributes) {
