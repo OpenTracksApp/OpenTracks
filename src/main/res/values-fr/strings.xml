@@ -560,5 +560,20 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_defaults_summary">Unités préférées, Activité par défaut, Suivi du nom par défaut</string>
     <string name="settings_defaults_title">Unités et activité par défaut</string>
     <string name="settings_open_tracks_summary">A propos du projet OpenTracks</string>
-    <string name="settings_open_tracks_title">Open Tracks</string>
+    <string name="settings_open_tracks_title">Traces ouvertes</string>
+    <string name="generic_undo">Annuler</string>
+    <string name="menu_add_custom_layout">Nouvelle présentation</string>
+    <string name="generic_filter">Filtre</string>
+    <string name="generic_to">A</string>
+    <string name="generic_from">Sur</string>
+    <string name="menu_select_layout">Sélectionner la mise en page</string>
+    <string name="menu_filter">Filtre</string>
+    <string name="custom_layout_list_edit_name">Tapez le nom du modèle à ajouter</string>
+    <string name="custom_layout_list_title">Maquettes</string>
+    <string name="custom_layout_list_edit_already_exists">Le nom du modèle existe déjà</string>
+    <string name="stats_custom_layout_default_layout">Disposition par défaut</string>
+    <string name="custom_layout_select_layout">Choisir la mise en page</string>
+    <string name="custom_layout_list_layout_removed">La mise en page a été retirée</string>
+    <string name="aggregated_stats_filter_no_results">Il n\'y a pas d\'activités pour le filtre spécifié</string>
+    <string name="settings_sensor_bluetooth_service_filter_enabled">Afficher uniquement les périphériques Bluetooth qui annoncent les services requis</string>
 </resources>
