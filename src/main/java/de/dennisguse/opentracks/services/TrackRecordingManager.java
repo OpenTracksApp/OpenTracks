@@ -38,8 +38,6 @@ class TrackRecordingManager {
     private Track.Id trackId;
     private TrackStatisticsUpdater trackStatisticsUpdater;
 
-    //TDOO use lastStoredTrackPoint?
-    private boolean currentSegmentHasTrackPoint;
     private TrackPoint lastTrackPoint;
     private TrackPoint lastStoredTrackPoint;
     private TrackPoint lastStoredTrackPointWithLocation;
@@ -68,8 +66,6 @@ class TrackRecordingManager {
         track.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
         contentProviderUtils.updateTrack(track);
 
-        currentSegmentHasTrackPoint = false;
-
         return trackId;
     }
 
@@ -85,7 +81,6 @@ class TrackRecordingManager {
         trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics());
         insertTrackPoint(trackId, segmentStartTrackPoint);
 
-        currentSegmentHasTrackPoint = false;
         lastTrackPoint = null;
         lastStoredTrackPoint = null;
         lastStoredTrackPointWithLocation = null;
@@ -94,7 +89,6 @@ class TrackRecordingManager {
     void pause(TrackPointCreator trackPointCreator) {
         insertTrackPoint(trackId, trackPointCreator.createSegmentEnd());
 
-        currentSegmentHasTrackPoint = false;
         lastTrackPoint = null;
         lastStoredTrackPoint = null;
         lastStoredTrackPointWithLocation = null;
@@ -107,7 +101,6 @@ class TrackRecordingManager {
         trackId = null;
         trackStatisticsUpdater = null;
 
-        currentSegmentHasTrackPoint = false;
         lastTrackPoint = null;
         lastStoredTrackPoint = null;
         lastStoredTrackPointWithLocation = null;
@@ -161,44 +154,43 @@ class TrackRecordingManager {
     /**
      * @return TrackPoint was stored?
      */
-    boolean onNewTrackPoint(TrackPoint trackPoint) {
+    boolean onNewTrackPoint(@NonNull TrackPoint trackPoint) {
         //Storing trackPoint
 
         // Always insert the first segment location
-        if (!currentSegmentHasTrackPoint) {
+        if (lastStoredTrackPoint == null) {
             insertTrackPoint(trackId, trackPoint);
-            currentSegmentHasTrackPoint = true;
             return true;
         }
 
-        Distance distanceToLastStoredTrackPoint = trackPoint.distanceToPrevious(lastStoredTrackPoint);
-        if (distanceToLastStoredTrackPoint != null) {
-            if (distanceToLastStoredTrackPoint.greaterThan(maxRecordingDistance)) {
-                trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
-                insertTrackPoint(trackId, trackPoint);
-                return true;
-            }
-
-            if (distanceToLastStoredTrackPoint.greaterOrEqualThan(recordingDistanceInterval) && trackPoint.isMoving()) {
-                insertTrackPoint(trackId, trackPoint);
-                return true;
-            }
-
-            if (trackPoint.hasLocation()) {
-                if (lastStoredTrackPointWithLocation == null) {
-                    insertTrackPoint(trackId, trackPoint);
-                    return true;
-                }
-
-                Distance distanceToLastStoredTrackPointWithLocation = trackPoint.distanceToPrevious(lastStoredTrackPointWithLocation);
-                if (distanceToLastStoredTrackPointWithLocation != null && distanceToLastStoredTrackPointWithLocation.greaterOrEqualThan(recordingDistanceInterval)) {
-                    insertTrackPoint(trackId, trackPoint);
-                    return true;
-                }
-            }
+        if (trackPoint.hasLocation() && lastStoredTrackPointWithLocation == null) {
+            insertTrackPoint(trackId, trackPoint);
+            return true;
         }
 
-        if (lastStoredTrackPoint != null && trackPoint.isMoving() != lastStoredTrackPoint.isMoving()) {
+        if (!trackPoint.hasLocation() && !trackPoint.hasSensorDistance()) {
+            Log.d(TAG, "Ignoring TrackPoint as it has no distance.");
+            return false;
+        }
+        TrackPoint distanceTo = lastStoredTrackPoint;
+        if (trackPoint.hasLocation() && !lastStoredTrackPoint.hasLocation()) {
+            distanceTo = lastStoredTrackPointWithLocation;
+        }
+
+        Distance distanceToLastStoredTrackPoint = trackPoint.distanceToPrevious(distanceTo);
+        if (distanceToLastStoredTrackPoint.greaterThan(maxRecordingDistance)) {
+            trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
+            insertTrackPoint(trackId, trackPoint);
+            return true;
+        }
+
+        if (distanceToLastStoredTrackPoint.greaterOrEqualThan(recordingDistanceInterval)
+                && trackPoint.isMoving()) {
+            insertTrackPoint(trackId, trackPoint);
+            return true;
+        }
+
+        if (trackPoint.isMoving() != lastStoredTrackPoint.isMoving()) {
             // Moving from non-moving to moving or vice versa; required to compute moving time correctly.
             insertTrackPoint(trackId, trackPoint);
             return true;
@@ -206,6 +198,7 @@ class TrackRecordingManager {
 
         Log.d(TAG, "Not recording TrackPoint");
         lastTrackPoint = trackPoint;
+
         return false;
     }
 
@@ -213,6 +206,7 @@ class TrackRecordingManager {
         return trackStatisticsUpdater.getTrackStatistics();
     }
 
+    //TODO Should be only be called from onNewTrackPoint().
     private void insertTrackPoint(@NonNull Track.Id trackId, @NonNull TrackPoint trackPoint) {
         if (lastTrackPoint != null) {
             if (lastStoredTrackPoint != null && lastTrackPoint.getTime().equals(lastStoredTrackPoint.getTime())) {

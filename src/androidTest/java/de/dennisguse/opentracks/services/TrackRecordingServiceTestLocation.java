@@ -382,7 +382,6 @@ public class TrackRecordingServiceTestLocation {
         ), trackPoints);
     }
 
-    @Deprecated // Will be superseded when fixing #500
     @MediumTest
     @Test
     public void testOnLocationChangedAsync_idle_withSensorDistance() {
@@ -407,23 +406,25 @@ public class TrackRecordingServiceTestLocation {
         // when
         altitudeSumManager.addAltitudeGain_m(6f);
         altitudeSumManager.addAltitudeLoss_m(6f);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(0)));
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(2)));
+        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(0))); //Should be ignored
+        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(2))); //TODO Should be ignored; distance will be added to TrackPoint
         TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 15);
 
         remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(12)));
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 2, 15);
 
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(13)));
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 3, 15);
+        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(13))); //Should be ignored
+
         altitudeSumManager.addAltitudeGain_m(6f);
         altitudeSumManager.addAltitudeLoss_m(6f);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(14)));
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 4, 15);
+        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(14))); //Should be ignored
+        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 4, 15); //Should be ignored
 
         altitudeSumManager.addAltitudeGain_m(6f);
         altitudeSumManager.addAltitudeLoss_m(6f);
         remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(16)));
+
+        altitudeSumManager.addAltitudeGain_m(7f);
+        altitudeSumManager.addAltitudeLoss_m(7f);
         service.endCurrentTrack();
 
         // then
@@ -434,34 +435,31 @@ public class TrackRecordingServiceTestLocation {
                 .ignoreTime();
         a.assertEquals(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, null),
+                new TrackPoint(TrackPoint.Type.SENSORPOINT, null) // TODO Should be ignored; is stored as it assumed to be first in current segment.
+                        .setAltitudeGain(6f)
+                        .setAltitudeLoss(6f)
+                        .setSpeed(Speed.of(5))
+                        .setSensorDistance(Distance.of(2)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
                         .setLatitude(45)
                         .setLongitude(35)
                         .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(5))
-                        .setAltitudeGain(6f)
-                        .setAltitudeLoss(6f)
-                        .setSensorDistance(Distance.of(2)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(2))
+                        .setSensorDistance(Distance.of(0)),
+                new TrackPoint(TrackPoint.Type.SENSORPOINT, null)
                         .setSpeed(Speed.of(5))
                         .setSensorDistance(Distance.of(10)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(4))
+                new TrackPoint(TrackPoint.Type.SENSORPOINT, null)
                         .setSpeed(Speed.of(5))
-                        .setAltitudeGain(6f)
-                        .setAltitudeLoss(6f)
-                        .setSensorDistance(Distance.of(2)),
+                        .setAltitudeGain(12f)
+                        .setAltitudeLoss(12f)
+                        .setSensorDistance(Distance.of(4)),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, null)
                         .setSensorDistance(Distance.of(11))
                         .setSpeed(Speed.of(5))
-                        .setAltitudeGain(6f)
-                        .setAltitudeLoss(6f)
-                        .setSensorDistance(Distance.of(2))
+                        .setAltitudeGain(7f)
+                        .setAltitudeLoss(7f)
+                        .setSensorDistance(Distance.of(0))
         ), trackPoints);
     }
 

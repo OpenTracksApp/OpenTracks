@@ -26,6 +26,7 @@ import java.time.Instant;
 import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
+import de.dennisguse.opentracks.content.data.TrackPoint;
 
 /**
  * Statistical data about a {@link de.dennisguse.opentracks.content.data.Track}.
@@ -161,6 +162,7 @@ public class TrackStatistics {
 
     public void setStopTime(Instant stopTime) {
         if (stopTime.isBefore(startTime)) {
+            // Time must be monotonically increasing, but we might have events at the same point in time (BLE and GPS)
             throw new RuntimeException("stopTime cannot be less than startTime: " + startTime + " " + stopTime);
         }
         this.stopTime = stopTime;
@@ -199,8 +201,15 @@ public class TrackStatistics {
         this.movingTime = movingTime;
     }
 
+    public void addMovingTime(TrackPoint trackPoint, TrackPoint lastTrackPoint) {
+        addMovingTime(Duration.between(lastTrackPoint.getTime(), trackPoint.getTime()));
+    }
+
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void addMovingTime(Duration time) {
+        if (time.isNegative()) {
+            throw new RuntimeException("Moving time cannot be negative");
+        }
         movingTime = movingTime.plus(time);
     }
 

@@ -59,5 +59,12 @@ public abstract class Altitude {
             return new EGM2008(altitude_m);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Altitude{" +
+                "altitude_m=" + altitude_m + this.getClass().getSimpleName() +
+                '}';
+    }
 }
 
