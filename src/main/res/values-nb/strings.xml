@@ -570,4 +570,8 @@ limitations under the License.
     <string name="generic_to">Til</string>
     <string name="aggregated_stats_filter_no_results">Det er ikke aktiviteter for det angitte filteret</string>
     <string name="settings_sensor_bluetooth_service_filter_enabled">Bare vis Bluetooth-enheter som melder om nødvendige tjenester</string>
+    <string name="generic_today">I dag</string>
+    <string name="generic_yesterday">I går</string>
+    <string name="export_dir_not_writable">" (ikke skrivbar!)"</string>
+    <string name="export_cannot_write_to_dir">Kan ikke skrive til eksportmappe.</string>
 </resources>
