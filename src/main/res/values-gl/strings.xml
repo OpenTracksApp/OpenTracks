@@ -582,4 +582,8 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="menu_filter">Filtro</string>
     <string name="aggregated_stats_filter_no_results">Non hai actividades para o filtro proporcionado</string>
     <string name="settings_sensor_bluetooth_service_filter_enabled">Só mostrar dispositivos Bluetooth que anuncien os servizos requeridos</string>
+    <string name="generic_today">Hoxe</string>
+    <string name="generic_yesterday">Onte</string>
+    <string name="export_cannot_write_to_dir">Non se pode escribir no directorio de exportación.</string>
+    <string name="export_dir_not_writable">" (non escribible!)"</string>
 </resources>
