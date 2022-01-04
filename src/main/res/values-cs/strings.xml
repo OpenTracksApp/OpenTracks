@@ -583,4 +583,8 @@ limitations under the License.
     <string name="menu_filter">Filtr</string>
     <string name="settings_sensor_bluetooth_service_filter_enabled">Zobrazit pouze zařízení Bluetooth, která oznamují požadované služby</string>
     <string name="aggregated_stats_filter_no_results">Pro zadaný filtr neexistují žádné aktivity</string>
+    <string name="generic_yesterday">Včera</string>
+    <string name="export_cannot_write_to_dir">Nelze zapisovat do adresáře pro export.</string>
+    <string name="export_dir_not_writable">" (nelze zapisovat!)"</string>
+    <string name="generic_today">Dnes</string>
 </resources>
