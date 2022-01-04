@@ -384,7 +384,7 @@ limitations under the License.
     <string name="generic_overwrite">Ghi đè</string>
     <string name="menu_voice_rate">Tốc độ giọng nói</string>
     <string name="open_track_as_GPX">Mở dưới dạng GPX</string>
-    <string name="help_recording_content">OpenTracks sử dụng cảm biến GPS của thiết bị để ghi lại vị trí liên tục. Nếu thiết bị GPS báo cáo dữ liệu không chính xác (ví dụ: vị trí, tốc độ, độ cao), OpenTracks không thể làm gì với điều đó.</string>
+    <string name="help_recording_content">OpenTracks sử dụng các bộ cảm biến GPS của điện thoại để ghi lại vị trí liên tục. Nếu các thiết bị GPS báo cáo dữ liệu không chính xác (ví dụ như, vị trí, tốc độ, độ cao), OpenTracks không thể làm bất cứ điều gì về nó.</string>
     <string name="gps_fixed_and_ready">GPS đã xác định và sẵn sàng</string>
     <string name="generic_skip">Bỏ qua</string>
     <string name="import_unsupported_format">Định dạng tệp không được hỗ trợ</string>
@@ -561,4 +561,8 @@ limitations under the License.
     <string name="menu_filter">Bộ lọc</string>
     <string name="aggregated_stats_filter_no_results">Không có hoạt động cho những quy định lọc</string>
     <string name="settings_sensor_bluetooth_service_filter_enabled">Chỉ cho Bluetooth thiết bị thông báo cần dịch vụ</string>
+    <string name="generic_yesterday">Ngày hôm qua</string>
+    <string name="generic_today">Ngày hôm nay</string>
+    <string name="export_dir_not_writable">" (không ghi được!)"</string>
+    <string name="export_cannot_write_to_dir">Không thể viết để xuất khẩu, xuất khẩu.</string>
 </resources>
