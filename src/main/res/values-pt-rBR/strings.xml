@@ -521,4 +521,8 @@
     <string name="menu_filter">Filtro</string>
     <string name="aggregated_stats_filter_no_results">Não há atividades para o filtro especificado</string>
     <string name="settings_sensor_bluetooth_service_filter_enabled">Mostrar apenas dispositivos Bluetooth que anunciam os serviços necessários</string>
+    <string name="generic_yesterday">Ontem</string>
+    <string name="generic_today">Hoje</string>
+    <string name="export_cannot_write_to_dir">Não é possível escrever para o diretório de exportação.</string>
+    <string name="export_dir_not_writable">" (não se escreve!)"</string>
 </resources>
