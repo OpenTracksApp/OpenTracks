@@ -592,4 +592,8 @@ limitations under the License.
     <string name="menu_filter">Filtr</string>
     <string name="settings_sensor_bluetooth_service_filter_enabled">Wyświetlaj tylko te urządzenia Bluetooth, które ogłaszają wymagane usługi</string>
     <string name="aggregated_stats_filter_no_results">Nie ma działań dla podanego filtra</string>
+    <string name="export_dir_not_writable">" (nie można zapisywać!)"</string>
+    <string name="export_cannot_write_to_dir">Nie można zapisać do katalogu eksportu.</string>
+    <string name="generic_yesterday">Wczoraj</string>
+    <string name="generic_today">Dzisiaj</string>
 </resources>
