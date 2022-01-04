@@ -576,4 +576,8 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="menu_filter">Filtri</string>
     <string name="settings_sensor_bluetooth_service_filter_enabled">Näitab ainult neid Bluetooth-seadmeid, mis teatavad nõutavatest teenustest</string>
     <string name="aggregated_stats_filter_no_results">Määratud filtri jaoks ei ole tegevusi</string>
+    <string name="generic_today">Täna</string>
+    <string name="export_dir_not_writable">" (mitte kirjutatav!)"</string>
+    <string name="export_cannot_write_to_dir">Ei saa kirjutada ekspordikataloogi.</string>
+    <string name="generic_yesterday">Eile</string>
 </resources>
