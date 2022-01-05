@@ -580,4 +580,8 @@ limitations under the License.
     <string name="settings_layout_reset_done">Всі налаштування макета були повернуті до значень за замовчуванням</string>
     <string name="settings_layout_reset_confirm_message">Всі налаштування макета будуть повернуті до значень за замовчуванням. Це не призведе до видалення будь-яких треків на пристрої.</string>
     <string name="custom_layout_list_title">Макет</string>
+    <string name="generic_today">Сьогодні</string>
+    <string name="generic_yesterday">Вчора</string>
+    <string name="export_cannot_write_to_dir">Не вдається виконати запис до каталогу експорту.</string>
+    <string name="export_dir_not_writable">" (недоступно для запису!)"</string>
 </resources>
