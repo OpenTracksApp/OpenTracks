@@ -1,0 +1,6 @@
+v3.20.1: OpenTracks
+
+Cambios:
+- Los anuncios ahora se pueden utilizar tanto por distancia como por tiempo
+- Los anuncios emiten un pitido si no se ha instalado un software de texto a voz
+- Se ha eliminado la frecuencia de localización GPS adaptativa

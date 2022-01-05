@@ -1,0 +1,10 @@
+v3.23.0: OpenTracks
+
+Cambios:
+- Añadido perfiles UI
+- Estadísticas agregadas para las pistas seleccionadas
+- Reimplementación de TrackPoints inactivos/no inactivos ya que el tiempo de movimiento dejó de funcionar (introducido en la v3.22.0)
+
+Corrección de errores:
+- Sensores BLE: borrado de datos al desconectarse
+- La exportación automática necesita persistir el permiso

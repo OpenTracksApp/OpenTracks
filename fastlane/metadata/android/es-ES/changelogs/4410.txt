@@ -1,0 +1,7 @@
+v3.20.0: OpenTracks
+
+Cambios:
+- Durante la grabación: la interfaz de usuario de las estadísticas es ahora configurable
+
+Corrección de errores:
+- Se ignoraba el cambio de nombre de pista/categoría durante la grabación (introducido en la v3.19.0)

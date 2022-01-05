@@ -1,0 +1,8 @@
+v3.19.1: OpenTracks
+
+Cambios:
+- Traducciones actualizadas.
+
+Corrección de errores:
+- Corregido el error de exportar todas las pistas.
+- Corregido el error de reanudar la pista.
