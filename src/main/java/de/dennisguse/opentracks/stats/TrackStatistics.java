@@ -220,9 +220,7 @@ public class TrackStatistics {
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void addMovingTime(Duration time) {
         if (time.isNegative()) {
-            // Needs implementation of a monotonic Clock #800
-            // throw new RuntimeException("Moving time cannot be negative");
-            return;
+            throw new RuntimeException("Moving time cannot be negative");
         }
         movingTime = movingTime.plus(time);
     }
