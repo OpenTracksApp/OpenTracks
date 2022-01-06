@@ -30,7 +30,7 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
     private final Callback service;
 
     @NonNull
-    private Clock clock = Clock.systemUTC();
+    private Clock clock = new MonotonicClock();
 
     private final GPSHandler gpsHandler;
     private BluetoothRemoteSensorManager remoteSensorManager;
