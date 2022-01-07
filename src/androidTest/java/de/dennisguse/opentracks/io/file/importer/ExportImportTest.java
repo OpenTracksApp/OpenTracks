@@ -54,7 +54,7 @@ import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.services.TrackRecordingService;
-import de.dennisguse.opentracks.services.TrackRecordingServiceTest;
+import de.dennisguse.opentracks.services.TrackRecordingServiceTestUtils;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
@@ -99,14 +99,14 @@ public class ExportImportTest {
 
     @Before
     public void fileSetup() throws IOException, TimeoutException {
-        TrackRecordingServiceTest.resetService(mServiceRule, context);
+        TrackRecordingServiceTestUtils.resetService(mServiceRule, context);
 
         tmpFile = File.createTempFile("test", "test", context.getFilesDir());
         tmpFileUri = Uri.fromFile(tmpFile);
 
         trackImporter = new TrackImporter(context, contentProviderUtils, Distance.of(10), Distance.of(200), true);
 
-        TrackRecordingServiceTest.resetService(mServiceRule, context);
+        TrackRecordingServiceTestUtils.resetService(mServiceRule, context);
     }
 
     @After
@@ -117,7 +117,7 @@ public class ExportImportTest {
         // Ensure that the database is empty after every test
         contentProviderUtils.deleteAllTracks(context);
 
-        TrackRecordingServiceTest.resetService(mServiceRule, context);
+        TrackRecordingServiceTestUtils.resetService(mServiceRule, context);
     }
 
     public void setUp() throws TimeoutException {

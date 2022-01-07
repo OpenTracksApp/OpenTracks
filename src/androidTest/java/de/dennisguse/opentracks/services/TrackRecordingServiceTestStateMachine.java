@@ -41,7 +41,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.time.Clock;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -49,8 +48,6 @@ import java.util.concurrent.TimeoutException;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
-import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
-import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * Testing the states of TrackRecordingService.
@@ -65,6 +62,11 @@ public class TrackRecordingServiceTestStateMachine {
     @Rule
     public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
 
+    private final Context context = ApplicationProvider.getApplicationContext();
+    private ContentProviderUtils contentProviderUtils;
+
+    private TrackRecordingService service;
+
     @BeforeClass
     public static void preSetUp() {
         // Prepare looper for Android's message queue
@@ -76,9 +78,6 @@ public class TrackRecordingServiceTestStateMachine {
         if (Looper.myLooper() != null) Looper.myLooper().quit();
     }
 
-    private TrackRecordingService service;
-    private final Context context = ApplicationProvider.getApplicationContext();
-    private ContentProviderUtils contentProviderUtils;
 
     private TrackRecordingService startService() throws TimeoutException {
         Intent startIntent = new Intent(context, TrackRecordingService.class);
@@ -95,7 +94,7 @@ public class TrackRecordingServiceTestStateMachine {
 
     @After
     public void tearDown() throws TimeoutException {
-        TrackRecordingServiceTestStateMachine.resetService(mServiceRule, context);
+        TrackRecordingServiceTestUtils.resetService(mServiceRule, context);
         // Ensure that the database is empty after every test
         contentProviderUtils.deleteAllTracks(context);
     }
@@ -279,22 +278,5 @@ public class TrackRecordingServiceTestStateMachine {
         // then
         assertNotNull(trackId);
         assertNull(newTrackId);
-    }
-
-    //TODO Workaround as service is not stopped on API23; thus sharedpreferences are not reset between tests.
-    //TODO Anyhow, the service should re-create all it's resources if a recording starts and makes sure that there is no leftovers from previous recordings.
-    @Deprecated
-    public static void resetService(ServiceTestRule mServiceRule, Context context) throws TimeoutException {
-        // Let's use default values.
-        PreferencesUtils.clear();
-
-        // Reset service (if some previous test failed)
-        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
-                .getService();
-
-        service.getTrackPointCreator().setRemoteSensorManager(new BluetoothRemoteSensorManager(context, service.getTrackPointCreator()));
-        service.getTrackPointCreator().setClock(Clock.systemUTC());
-        service.endCurrentTrack();
-        service.sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
     }
 }
