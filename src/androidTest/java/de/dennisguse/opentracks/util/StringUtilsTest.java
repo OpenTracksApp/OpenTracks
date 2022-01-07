@@ -20,8 +20,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -202,34 +200,6 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void testFormatDateTime() {
-        LocalDateTime localDateTime = LocalDateTime.parse("2022-01-02T10:15:30");
-
-        setLocale("en", "US");
-        testFormatDateTime(localDateTime, localDateTime.getMonth().getDisplayName(TextStyle.SHORT, Locale.getDefault()) + " " + localDateTime.getDayOfMonth() + ", " + localDateTime.getYear() + " 10:15:30");
-
-        setLocale("es", "ES");
-        testFormatDateTime(localDateTime, localDateTime.getDayOfMonth() + " " + localDateTime.getMonth().getDisplayName(TextStyle.SHORT, Locale.getDefault()) + " " + localDateTime.getYear() + " 10:15:30");
-
-        setLocale("de", "DE");
-        testFormatDateTime(localDateTime, String.format("%02d", localDateTime.getDayOfMonth()) + "." + String.format("%02d", localDateTime.getMonthValue()) + "." + String.format("%04d", localDateTime.getYear()) + " 10:15:30");
-    }
-
-    private void testFormatDateTime(LocalDateTime localDateTime, String expectedFormat) {
-        // given
-        int offsetFromLocale = OffsetDateTime.now().getOffset().getTotalSeconds() - 28800; // -08:00
-        OffsetDateTime localOffsetDateTime = OffsetDateTime.of(localDateTime, ZoneOffset.systemDefault().getRules().getOffset(Instant.now()));
-        OffsetDateTime outOffsetDateTime = OffsetDateTime.of(localDateTime, ZoneOffset.ofTotalSeconds(offsetFromLocale));
-
-        // when
-        String formatDate = StringUtils.formatDateTime(outOffsetDateTime);
-
-        // then
-        assertEquals(localOffsetDateTime.getOffset().getTotalSeconds(), outOffsetDateTime.getOffset().getTotalSeconds() + 28800);
-        assertEquals(formatDate, expectedFormat);
-    }
-
-    @Test
     public void testFormatDateTodayRelative() {
         // given
         ArrayList<String> shortDays = Arrays.stream(DayOfWeek.values()).map(d -> d.getDisplayName(TextStyle.FULL, Locale.getDefault())).collect(Collectors.toCollection(ArrayList::new));
@@ -266,16 +236,5 @@ public class StringUtilsTest {
             assertTrue(shortMonths.stream().anyMatch(fty -> formatThisYear.matches("\\d+ " + fty))); // Something like 14 Dec
         }
         assertTrue(shortMonths.stream().anyMatch(fty -> formatAYearAgo.matches("\\d+ " + fty + " \\d{4}"))); // Something like 14 Dec 2021
-    }
-
-    private void setLocale(String language, String country) {
-        Locale locale = new Locale(language, country);
-        // here we update locale for date formatters
-        Locale.setDefault(locale);
-        // here we update locale for app resources
-        Resources res = context.getResources();
-        Configuration config = res.getConfiguration();
-        config.locale = locale;
-        res.updateConfiguration(config, res.getDisplayMetrics());
     }
 }
