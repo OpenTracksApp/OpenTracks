@@ -23,9 +23,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.time.Clock;
 import java.time.Instant;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -108,14 +106,13 @@ public class TrackRecordingServiceTestRecording {
         // given
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
 
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:02Z");
         Track.Id trackId = service.startNewTrack();
-        service.stopUpdateRecordingData();
         trackPointCreator.stopGPS();
         trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
         // when
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:03Z");
         service.endCurrentTrack();
 
         // then
@@ -136,14 +133,14 @@ public class TrackRecordingServiceTestRecording {
         // given
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
 
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:02Z");
         Track.Id trackId = service.startNewTrack();
         service.stopUpdateRecordingData();
         trackPointCreator.stopGPS();
         trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
         // when
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:03Z");
         service.pauseCurrentTrack();
         service.stopUpdateRecordingData();
 
@@ -151,7 +148,7 @@ public class TrackRecordingServiceTestRecording {
         assertEquals(2, contentProviderUtils.getTrackPointCursor(trackId, null).getCount());
 
         //when
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:04Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:04Z");
         service.resumeTrack(trackId);
         service.stopUpdateRecordingData();
 
@@ -175,17 +172,17 @@ public class TrackRecordingServiceTestRecording {
         // given
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
 
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:02Z");
         Track.Id trackId = service.startNewTrack();
         service.stopUpdateRecordingData();
         trackPointCreator.stopGPS();
         trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:03Z");
         service.endCurrentTrack();
 
         // when
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:04Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:04Z");
         service.resumeTrack(trackId);
         trackPointCreator.stopGPS();
         trackPointCreator.setAltitudeSumManager(altitudeSumManager);
@@ -215,17 +212,17 @@ public class TrackRecordingServiceTestRecording {
         // given
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
 
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:02Z");
         Track.Id trackId = service.startNewTrack();
         service.stopUpdateRecordingData();
         trackPointCreator.stopGPS();
         trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:03Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:03Z");
         service.pauseCurrentTrack();
 
         // when
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:04Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:04Z");
         service.endCurrentTrack();
 
         // then

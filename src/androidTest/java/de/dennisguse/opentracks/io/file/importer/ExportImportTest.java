@@ -30,10 +30,8 @@ import org.mockito.Mockito;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -126,39 +124,39 @@ public class ExportImportTest {
 
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
 
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:02Z");
         trackId = service.startNewTrack();
 
         Distance sensorDistance = Distance.of(10); // recording distance interval
 
-        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:03Z"), 3, 14, 10, 15, 10, 1);
+        sendLocation(trackPointCreator, "2020-02-02T02:02:03Z", 3, 14, 10, 15, 10, 1);
         service.insertMarker("Marker 1", "Marker 1 category", "Marker 1 desc", null);
 
         // A sensor-only TrackPoint
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:04Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:04Z");
         mockAltitudeChange(trackPointCreator, 1);
         mockBLESensorData(trackPointCreator, 15f, sensorDistance, 66f, 3f, 50f);
 
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:05Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:05Z");
         mockBLESensorData(trackPointCreator, 5f, Distance.of(2), 66f, 3f, 50f); // Distance will be added to next TrackPoint
 
-        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:05Z"), 3, 14.001, 10, 15, 10, 0);
+        sendLocation(trackPointCreator, "2020-02-02T02:02:05Z", 3, 14.001, 10, 15, 10, 0);
         service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
 
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:06Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:06Z");
         trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context, trackPointCreator));
         service.pauseCurrentTrack();
 
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:20Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:20Z");
         service.resumeCurrentTrack();
 
-        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:21Z"), 3, 14.002, 10, 15, 10, 0);
+        sendLocation(trackPointCreator, "2020-02-02T02:02:21Z", 3, 14.002, 10, 15, 10, 0);
 
-        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:22Z"), 3, 16, 10, 15, 10, 0);
+        sendLocation(trackPointCreator, "2020-02-02T02:02:22Z", 3, 16, 10, 15, 10, 0);
 
-        sendLocation(trackPointCreator, Instant.parse("2020-02-02T02:02:23Z"), 3, 16.001, 10, 15, 10, 0);
+        sendLocation(trackPointCreator, "2020-02-02T02:02:23Z", 3, 16.001, 10, 15, 10, 0);
 
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:24Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:24Z");
         trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context, trackPointCreator));
         service.endCurrentTrack();
 
@@ -477,7 +475,7 @@ public class ExportImportTest {
         altitudeSumManager.setAltitudeLoss_m(altitudeGain);
     }
 
-    private void sendLocation(TrackPointCreator trackPointCreator, Instant time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain) {
+    private void sendLocation(TrackPointCreator trackPointCreator, String time, double latitude, double longitude, float accuracy, float speed, float altitude, float altitudeGain) {
         Location location = new Location("mock");
         location.setLatitude(latitude);
         location.setLongitude(longitude);
@@ -487,7 +485,7 @@ public class ExportImportTest {
 
         mockAltitudeChange(trackPointCreator, altitudeGain);
 
-        trackPointCreator.setClock(Clock.fixed(time, ZoneId.of("CET")));
+        trackPointCreator.setClock(time);
         trackPointCreator.getGpsHandler().onLocationChanged(location);
     }
 }

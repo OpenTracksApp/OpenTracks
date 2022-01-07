@@ -22,10 +22,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -103,7 +101,7 @@ public class TrackRecordingServiceTestStatistics {
         // given
         service.getTrackPointCreator().stopGPS();
 
-        service.getTrackPointCreator().setClock(Clock.fixed(Instant.ofEpochMilli(0), ZoneId.systemDefault()));
+        service.getTrackPointCreator().setClock(Instant.ofEpochMilli(0).toString());
         Track.Id trackId = service.startNewTrack();
         service.stopUpdateRecordingData();
         service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
@@ -157,18 +155,18 @@ public class TrackRecordingServiceTestStatistics {
         assertMovingTime.apply(movingtime_s);
         assertTotalTime.apply(19 * 60);
 
-        service.getTrackPointCreator().setClock(Clock.fixed(Instant.ofEpochSecond(40 * 60), ZoneId.systemDefault()));
+        service.getTrackPointCreator().setClock(Instant.ofEpochSecond(40 * 60).toString());
         assertMovingTime.apply(movingtime_s);
         service.pauseCurrentTrack();
         assertTotalTime.apply(40 * 60);
 
-        service.getTrackPointCreator().setClock(Clock.fixed(Instant.ofEpochSecond(41 * 60), ZoneId.systemDefault()));
+        service.getTrackPointCreator().setClock(Instant.ofEpochSecond(41 * 60).toString());
         service.resumeCurrentTrack();
         TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0016, 35.0, 2, 15, 42 * 60000);
         assertMovingTime.apply(movingtime_s);
         assertTotalTime.apply(41 * 60);
 
-        service.getTrackPointCreator().setClock(Clock.fixed(Instant.ofEpochSecond(50 * 60), ZoneId.systemDefault()));
+        service.getTrackPointCreator().setClock(Instant.ofEpochSecond(50 * 60).toString());
         service.endCurrentTrack();
         assertMovingTime.apply(movingtime_s);
         assertTotalTime.apply(49 * 60);

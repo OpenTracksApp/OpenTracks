@@ -10,6 +10,7 @@ import androidx.annotation.VisibleForTesting;
 
 import java.time.Clock;
 import java.time.Instant;
+import java.time.ZoneId;
 
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -181,6 +182,11 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
     @VisibleForTesting
     public void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager) {
         this.remoteSensorManager = remoteSensorManager;
+    }
+
+    @VisibleForTesting
+    public void setClock(@NonNull String time) {
+        this.clock = Clock.fixed(Instant.parse(time), ZoneId.of("CET"));
     }
 
     @VisibleForTesting

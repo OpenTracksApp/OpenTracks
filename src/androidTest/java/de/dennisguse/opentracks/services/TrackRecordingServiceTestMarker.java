@@ -40,9 +40,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.time.Clock;
 import java.time.Instant;
-import java.time.ZoneId;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -132,7 +130,7 @@ public class TrackRecordingServiceTestMarker {
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
         trackPointCreator.stopGPS();
 
-        trackPointCreator.setClock(Clock.fixed(Instant.parse("2020-02-02T02:02:02Z"), ZoneId.of("CET")));
+        trackPointCreator.setClock("2020-02-02T02:02:02Z");
         Track.Id trackId = service.startNewTrack();
         service.stopUpdateRecordingData();
 
