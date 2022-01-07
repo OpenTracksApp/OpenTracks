@@ -24,14 +24,12 @@ import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.MediumTest;
-import androidx.test.filters.SmallTest;
 import androidx.test.rule.GrantPermissionRule;
 import androidx.test.rule.ServiceTestRule;
 
@@ -121,67 +119,6 @@ public class TrackRecordingServiceTest {
 
         // Ensure that the database is empty after every test
         contentProviderUtils.deleteAllTracks(context);
-    }
-
-    @SmallTest
-    @Test
-    public void testStartable() throws TimeoutException {
-        mServiceRule.startService(createStartIntent(context));
-        assertNotNull(mServiceRule.bindService(createStartIntent(context)));
-    }
-
-    @MediumTest
-    @Test
-    public void testBindable() throws TimeoutException {
-        IBinder service = mServiceRule.bindService(createStartIntent(context));
-        assertNotNull(service);
-    }
-
-    @MediumTest
-    @Test
-    public void testRecording_noTracks() throws TimeoutException {
-        // given
-        List<Track> tracks = contentProviderUtils.getTracks();
-        assertTrue(tracks.isEmpty());
-
-        // when
-        Intent startIntent = createStartIntent(context);
-        mServiceRule.startService(startIntent);
-        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(startIntent))
-                .getService();
-
-        // then
-        // Test if we start in no-recording mode by default.
-        assertFalse(service.isRecording());
-    }
-
-    @MediumTest
-    @Test
-    public void testRecording_oldTracks() throws TimeoutException {
-        // given
-        createDummyTrack(trackId);
-
-        // when
-        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
-                .getService();
-
-        // then
-        assertFalse(service.isRecording());
-    }
-
-    @MediumTest
-    @Test
-    public void testRecording_serviceRestart_whileRecording() throws TimeoutException {
-        // given
-        createDummyTrack(trackId);
-
-        //when
-        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
-                .getService();
-        service.resumeTrack(trackId);
-
-        // then
-        assertTrue(service.isRecording());
     }
 
     @MediumTest
@@ -335,41 +272,6 @@ public class TrackRecordingServiceTest {
         ), trackPoints);
     }
 
-    @MediumTest
-    @Test
-    public void testStartNewTrack_alreadyRecording() throws TimeoutException {
-        // given
-        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
-                .getService();
-        Track.Id trackId = service.startNewTrack();
-        service.stopUpdateRecordingData();
-
-        assertTrue(service.isRecording());
-
-        // when
-        Track.Id newTrackId = service.startNewTrack();
-        service.stopUpdateRecordingData();
-
-        // then
-        assertNotNull(trackId);
-        assertNull(newTrackId);
-    }
-
-    @MediumTest
-    @Test
-    public void testEndCurrentTrack_noRecording() throws TimeoutException {
-        // given
-        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(createStartIntent(context)))
-                .getService();
-        assertFalse(service.isRecording());
-
-        // when
-        // Ending the current track when there is no recording should not result in any error.
-        service.endCurrentTrack();
-
-        // then
-        assertFalse(service.isRecording());
-    }
 
     @MediumTest
     @Test

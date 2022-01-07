@@ -100,6 +100,7 @@ public class TrackPointAssert {
         }
     }
 
+    @Deprecated //Try to mock time instead.
     public TrackPointAssert ignoreTime() {
         this.assertTime = false;
         return this;
