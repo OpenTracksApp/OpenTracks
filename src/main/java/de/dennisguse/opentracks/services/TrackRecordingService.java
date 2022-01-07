@@ -35,6 +35,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.time.Duration;
 import java.time.ZoneOffset;
+import java.util.Objects;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
@@ -515,7 +516,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         private final Track.Id trackId;
         private final boolean paused;
 
-        private RecordingStatus(Track.Id trackId, boolean paused) {
+        @VisibleForTesting
+        RecordingStatus(Track.Id trackId, boolean paused) {
             this.trackId = trackId;
             this.paused = paused;
         }
@@ -559,6 +561,19 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
                     "trackId=" + trackId +
                     ", paused=" + paused +
                     '}';
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            RecordingStatus that = (RecordingStatus) o;
+            return paused == that.paused && Objects.equals(trackId, that.trackId);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(trackId, paused);
         }
     }
 
@@ -605,6 +620,28 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
         public SensorDataSet getSensorDataSet() {
             return sensorDataSet;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            RecordingData that = (RecordingData) o;
+            return Objects.equals(track, that.track) && Objects.equals(latestTrackPoint, that.latestTrackPoint) && Objects.equals(sensorDataSet, that.sensorDataSet);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(track, latestTrackPoint, sensorDataSet);
+        }
+
+        @Override
+        public String toString() {
+            return "RecordingData{" +
+                    "track=" + track +
+                    ", latestTrackPoint=" + latestTrackPoint +
+                    ", sensorDataSet=" + sensorDataSet +
+                    '}';
         }
     }
 }

@@ -3,6 +3,7 @@ package de.dennisguse.opentracks.services;
 import static org.junit.Assert.assertFalse;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
@@ -41,8 +42,7 @@ import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
  * Tests insert location.
  */
 @RunWith(AndroidJUnit4.class)
-//TODO Implement as mock test; no need to store data in database
-public class TrackRecordingServiceTestLocation {
+public class TrackRecordingServiceTestRecording {
 
     @Rule
     public final ServiceTestRule mServiceRule = ServiceTestRule.withTimeout(5, TimeUnit.SECONDS);
@@ -74,13 +74,18 @@ public class TrackRecordingServiceTestLocation {
         if (Looper.myLooper() != null) Looper.myLooper().quit();
     }
 
+    private TrackRecordingService startService() throws TimeoutException {
+        Intent startIntent = new Intent(context, TrackRecordingService.class);
+        return ((TrackRecordingService.Binder) mServiceRule.bindService(startIntent))
+                .getService();
+    }
+
     @Before
     public void setUp() throws TimeoutException {
         contentProviderUtils = new ContentProviderUtils(context);
         tearDown();
 
-        service = ((TrackRecordingService.Binder) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)))
-                .getService();
+        service = startService();
         service.getTrackPointCreator().stopGPS();
     }
 
