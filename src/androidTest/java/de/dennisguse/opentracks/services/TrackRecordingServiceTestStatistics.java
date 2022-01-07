@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
@@ -73,16 +74,23 @@ public class TrackRecordingServiceTestStatistics {
         if (Looper.myLooper() != null) Looper.myLooper().quit();
     }
 
+    private TrackRecordingService startService() throws TimeoutException {
+        Intent startIntent = new Intent(context, TrackRecordingService.class);
+        return ((TrackRecordingService.Binder) mServiceRule.bindService(startIntent))
+                .getService();
+    }
+
     @Before
     public void setUp() throws TimeoutException {
         contentProviderUtils = new ContentProviderUtils(context);
 
+        service = startService();
         tearDown();
     }
 
     @After
     public void tearDown() throws TimeoutException {
-        TrackRecordingServiceTest.resetService(mServiceRule, context);
+        TrackRecordingServiceTestUtils.resetService(mServiceRule, context);
         contentProviderUtils.deleteAllTracks(context);
     }
 
@@ -93,8 +101,6 @@ public class TrackRecordingServiceTestStatistics {
     @Test
     public void movingtime_with_pauses() throws TimeoutException {
         // given
-        TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(TrackRecordingServiceTest.createStartIntent(context)))
-                .getService();
         service.getTrackPointCreator().stopGPS();
 
         service.getTrackPointCreator().setClock(Clock.fixed(Instant.ofEpochMilli(0), ZoneId.systemDefault()));
@@ -117,37 +123,37 @@ public class TrackRecordingServiceTestStatistics {
         // when / then
         int movingtime_s = 0;
 
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0, 35.0, 1, 15, 5 * 60000);
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 1, 15, 5 * 60000);
         assertMovingTime.apply(movingtime_s);
 
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0001, 35.0, 2, 15, 6 * 60000);
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0002, 35.0, 2, 15, (long) (6.5 * 60000));
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0003, 35.0, 2, 15, 7 * 60000);
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0004, 35.0, 2, 15, 8 * 60000);
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0001, 35.0, 2, 15, 6 * 60000);
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0002, 35.0, 2, 15, (long) (6.5 * 60000));
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0003, 35.0, 2, 15, 7 * 60000);
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0004, 35.0, 2, 15, 8 * 60000);
         movingtime_s += 3 * 60;
         assertMovingTime.apply(movingtime_s);
 
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0004, 35.0, 2, 0, 9 * 60000); //will be ignored
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0004, 35.0, 2, 0, 10 * 60000); //will be ignored
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0004, 35.0, 2, 0, 11 * 60000);
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0004, 35.0, 2, 0, 9 * 60000); //will be ignored
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0004, 35.0, 2, 0, 10 * 60000); //will be ignored
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0004, 35.0, 2, 0, 11 * 60000);
         assertMovingTime.apply(movingtime_s);
 
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0004, 35.0, 2, 15, 13 * 60000);
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0004, 35.0, 2, 15, (long) (13.5 * 60000)); //will be ignored
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0005, 35.0, 2, 15, 14 * 60000);
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0006, 35.0, 2, 15, 15 * 60000);
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0004, 35.0, 2, 15, 13 * 60000);
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0004, 35.0, 2, 15, (long) (13.5 * 60000)); //will be ignored
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0005, 35.0, 2, 15, 14 * 60000);
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0006, 35.0, 2, 15, 15 * 60000);
         movingtime_s += 2 * 60;
         assertMovingTime.apply(movingtime_s);
         assertTotalTime.apply(15 * 60);
 
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0006, 35.0, 2, 0, 16 * 60000); //will be ignored
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0006, 35.0, 2, 0, 16 * 60000); //will be ignored
         assertMovingTime.apply(movingtime_s);
 
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0015, 35.0, 2, 0, 17 * 60000);
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0016, 35.0, 2, 15, 18 * 60000);
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0015, 35.0, 2, 0, 17 * 60000);
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0016, 35.0, 2, 15, 18 * 60000);
         assertMovingTime.apply(movingtime_s);
 
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0016, 35.0, 2, 0, 19 * 60000); //TODO we could ignore this TrackPoint
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0016, 35.0, 2, 0, 19 * 60000); //TODO we could ignore this TrackPoint
         assertMovingTime.apply(movingtime_s);
         assertTotalTime.apply(19 * 60);
 
@@ -158,7 +164,7 @@ public class TrackRecordingServiceTestStatistics {
 
         service.getTrackPointCreator().setClock(Clock.fixed(Instant.ofEpochSecond(41 * 60), ZoneId.systemDefault()));
         service.resumeCurrentTrack();
-        TrackRecordingServiceTest.newTrackPoint(service, 45.0016, 35.0, 2, 15, 42 * 60000);
+        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0016, 35.0, 2, 15, 42 * 60000);
         assertMovingTime.apply(movingtime_s);
         assertTotalTime.apply(41 * 60);
 
