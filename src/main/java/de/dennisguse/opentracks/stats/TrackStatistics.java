@@ -77,6 +77,18 @@ public class TrackStatistics {
         totalAltitudeLoss_m = other.totalAltitudeLoss_m;
     }
 
+    @VisibleForTesting
+    public TrackStatistics(String startTime, String stopTime, int totalDistance_m, int totalTime_s, int movingTime_s, float maxSpeed_mps, Float totalAltitudeGain_m, Float totalAltitudeLoss_m) {
+        this.startTime = Instant.parse(startTime);
+        this.stopTime = Instant.parse(stopTime);
+        this.totalDistance = Distance.of(totalDistance_m);
+        this.totalTime = Duration.ofSeconds(totalTime_s);
+        this.movingTime = Duration.ofSeconds(movingTime_s);
+        this.maxSpeed = Speed.of(maxSpeed_mps);
+        this.totalAltitudeGain_m = totalAltitudeGain_m;
+        this.totalAltitudeLoss_m = totalAltitudeLoss_m;
+    }
+
     /**
      * Combines these statistics with those from another object.
      * This assumes that the time periods covered by each do not intersect.
@@ -316,6 +328,14 @@ public class TrackStatistics {
             totalAltitudeLoss_m = 0f;
         }
         totalAltitudeLoss_m += loss_m;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TrackStatistics)) return false;
+
+        return toString().equals(o.toString());
     }
 
     @NonNull

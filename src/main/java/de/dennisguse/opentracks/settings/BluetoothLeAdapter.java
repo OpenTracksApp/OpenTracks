@@ -93,9 +93,6 @@ public class BluetoothLeAdapter extends BaseAdapter {
             return address;
         }
 
-        /**
-         * Check if the address is identical.
-         */
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
