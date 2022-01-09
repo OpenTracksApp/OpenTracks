@@ -336,12 +336,12 @@ public class TrackDataHub {
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(selectedTrackId, next)) {
 
             while (trackPointIterator.hasNext()) {
-                if (!isStarted()) {
-                    break;
-                }
-
                 //Prevents a NPE if stop() is happening while notifyTrackPointsTableUpdate()
                 TrackStatisticsUpdater currentUpdater = trackStatisticsUpdater;
+
+                if (!isStarted()) {
+                    return;
+                }
 
                 trackPoint = trackPointIterator.next();
                 TrackPoint.Id trackPointId = trackPoint.getId();
