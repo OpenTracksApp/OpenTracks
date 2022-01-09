@@ -1,5 +1,8 @@
 package de.dennisguse.opentracks.settings;
 
+import android.content.Intent;
+import android.content.UriPermission;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.documentfile.provider.DocumentFile;
@@ -7,10 +10,12 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import java.util.List;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.util.IntentUtils;
 
 public class ImportExportSettingsFragment extends PreferenceFragmentCompat {
 
@@ -35,7 +40,7 @@ public class ImportExportSettingsFragment extends PreferenceFragmentCompat {
         setExportDirectorySummary();
 
         Preference instantExportEnabledPreference = findPreference(getString(R.string.post_workout_export_enabled_key));
-        instantExportEnabledPreference.setEnabled(PreferencesUtils.isDefaultExportDirectoryUri(getContext()));
+        instantExportEnabledPreference.setEnabled(PreferencesUtils.isDefaultExportDirectoryUri());
     }
 
     private void setExportTrackFileFormatOptions() {
@@ -64,13 +69,14 @@ public class ImportExportSettingsFragment extends PreferenceFragmentCompat {
     private void setExportDirectorySummary() {
         Preference instantExportDirectoryPreference = findPreference(getString(R.string.settings_default_export_directory_key));
         instantExportDirectoryPreference.setSummaryProvider(preference -> {
-            DocumentFile directory = PreferencesUtils.getDefaultExportDirectoryUri(getContext());
+            Uri directoryUri = PreferencesUtils.getDefaultExportDirectoryUri();
+            DocumentFile directory = IntentUtils.toDocumentFile(getContext(), directoryUri);
             //Use same value for not set as Androidx ListPreference and EditTextPreference
             if (directory == null) {
                 return getString(R.string.not_set);
             }
 
-            return directory.getUri().toString() + (directory.canWrite() ? "" : getString(R.string.export_dir_not_writable));
+            return directoryUri.toString() + (directory.canWrite() ? "" : getString(R.string.export_dir_not_writable));
         });
     }
 }

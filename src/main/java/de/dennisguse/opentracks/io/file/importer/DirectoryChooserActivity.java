@@ -1,23 +1,34 @@
 package de.dennisguse.opentracks.io.file.importer;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
+import android.widget.Toast;
 
-import androidx.annotation.Nullable;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.documentfile.provider.DocumentFile;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.io.file.exporter.ExportActivity;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 public abstract class DirectoryChooserActivity extends AppCompatActivity {
 
-    private static final int DIRECTORY_PICKER_REQUEST_CODE = 6;
+    protected final ActivityResultLauncher<Intent> directoryIntentLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    onActivityResultCustom(result.getData());
+                }
+                finish();
+            });
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,9 +37,13 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
         DocumentFile directoryUri = configureDirectoryChooserIntent(intent);
         if (!isDirectoryValid(directoryUri)) {
-            startActivityForResult(intent, DIRECTORY_PICKER_REQUEST_CODE);
+            try {
+                directoryIntentLauncher.launch(intent);
+            } catch (final ActivityNotFoundException exception) {
+                Toast.makeText(this, R.string.no_compatible_file_manager_installed, Toast.LENGTH_LONG).show();
+            }
         } else {
-            startActivity(createNextActivityIntent(directoryUri.getUri())); //TODO Refactor to DocumentFile
+            startActivity(createNextActivityIntent(directoryUri.getUri()));
             finish();
         }
     }
@@ -37,25 +52,13 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
         return directoryUri != null && directoryUri.isDirectory() && directoryUri.canRead();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent resultData) {
-        super.onActivityResult(requestCode, resultCode, resultData);
-        onActivityResultCustom(requestCode, resultCode, resultData);
-    }
+    protected void onActivityResultCustom(@NonNull Intent resultData) {
+        Uri directoryUri = resultData.getData();
+        int takeFlags = resultData.getFlags();
+        takeFlags &= (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        getContentResolver().takePersistableUriPermission(directoryUri, takeFlags);
 
-    protected void onActivityResultCustom(int requestCode, int resultCode, @Nullable Intent resultData) {
-        if (requestCode == DIRECTORY_PICKER_REQUEST_CODE) {
-            if (resultCode == Activity.RESULT_OK && resultData != null) {
-                Uri directoryUri = resultData.getData();
-
-                int takeFlags = resultData.getFlags();
-                takeFlags &= (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                getContentResolver().takePersistableUriPermission(directoryUri, takeFlags);
-
-                startActivity(createNextActivityIntent(directoryUri));
-            }
-        }
-        finish();
+        startActivity(createNextActivityIntent(directoryUri));
     }
 
     /**
@@ -84,8 +87,7 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
         protected DocumentFile configureDirectoryChooserIntent(Intent intent) {
             super.configureDirectoryChooserIntent(intent);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-
-            return PreferencesUtils.getDefaultExportDirectoryUri(this);
+            return IntentUtils.toDocumentFile(this, PreferencesUtils.getDefaultExportDirectoryUri());
         }
 
         @Override
@@ -105,29 +107,15 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
     public static class DefaultTrackExportDirectoryChooserActivity extends DirectoryChooserActivity {
 
         @Override
-        protected void onActivityResultCustom(int requestCode, int resultCode, @Nullable Intent resultData) {
-            if (requestCode == DIRECTORY_PICKER_REQUEST_CODE) {
-                DocumentFile oldDirectoryUri = PreferencesUtils.getDefaultExportDirectoryUri(this);
-                switch (resultCode) {
-                    case RESULT_OK:
-                        if (resultData != null) {
-                            Uri newDirectoryUri = resultData.getData();
-                            if (oldDirectoryUri != null && !newDirectoryUri.equals(oldDirectoryUri.getUri())) {
-                                IntentUtils.releaseDirectoryAccessPermission(getApplicationContext(), oldDirectoryUri);
-                            }
-
-                            PreferencesUtils.setDefaultExportDirectoryUri(newDirectoryUri);
-                            IntentUtils.persistDirectoryAccessPermission(getApplicationContext(), newDirectoryUri, resultData.getFlags());
-                        }
-                        break;
-                    case RESULT_CANCELED:
-                        IntentUtils.releaseDirectoryAccessPermission(getApplicationContext(), oldDirectoryUri);
-                        PreferencesUtils.setDefaultExportDirectoryUri(null);
-                        break;
-                }
-
+        protected void onActivityResultCustom(@NonNull Intent resultData) {
+            Uri oldDirectoryUri = PreferencesUtils.getDefaultExportDirectoryUri();
+            Uri newDirectoryUri = resultData.getData();
+            if (oldDirectoryUri != null && !newDirectoryUri.equals(oldDirectoryUri)) {
+                IntentUtils.releaseDirectoryAccessPermission(getApplicationContext(), oldDirectoryUri);
             }
-            finish();
+
+            PreferencesUtils.setDefaultExportDirectoryUri(newDirectoryUri);
+            IntentUtils.persistDirectoryAccessPermission(getApplicationContext(), newDirectoryUri, resultData.getFlags());
         }
 
         @Override
@@ -139,9 +127,9 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
         protected DocumentFile configureDirectoryChooserIntent(Intent intent) {
             super.configureDirectoryChooserIntent(intent);
             intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-            if (PreferencesUtils.isDefaultExportDirectoryUri(this)) {
+            if (PreferencesUtils.isDefaultExportDirectoryUri()) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, PreferencesUtils.getDefaultExportDirectoryUri(this).getUri());
+                    intent.putExtra(DocumentsContract.EXTRA_INITIAL_URI, PreferencesUtils.getDefaultExportDirectoryUri());
                 }
             }
             return null;
@@ -149,7 +137,6 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
 
         @Override
         protected Intent createNextActivityIntent(Uri directoryUri) {
-            finish();
             return null;
         }
     }
