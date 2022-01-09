@@ -324,6 +324,11 @@ public class TrackPoint {
         if (hasSensorDistance()) {
             return getSensorDistance();
         }
+        return distanceToPreviousFromLocation(previous);
+    }
+
+    @NonNull
+    public Distance distanceToPreviousFromLocation(@NonNull TrackPoint previous) {
         if (!hasLocation() || hasLocation() != previous.hasLocation()) {
             throw new RuntimeException("Cannot compute distance.");
         }

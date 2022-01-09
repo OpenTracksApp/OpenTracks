@@ -171,12 +171,14 @@ class TrackRecordingManager {
             Log.d(TAG, "Ignoring TrackPoint as it has no distance.");
             return false;
         }
-        TrackPoint distanceTo = lastStoredTrackPoint;
+
+        Distance distanceToLastStoredTrackPoint;
         if (trackPoint.hasLocation() && !lastStoredTrackPoint.hasLocation()) {
-            distanceTo = lastStoredTrackPointWithLocation;
+            distanceToLastStoredTrackPoint = trackPoint.distanceToPreviousFromLocation(lastStoredTrackPointWithLocation);
+        } else {
+            distanceToLastStoredTrackPoint = trackPoint.distanceToPrevious(lastStoredTrackPoint);
         }
 
-        Distance distanceToLastStoredTrackPoint = trackPoint.distanceToPrevious(distanceTo);
         if (distanceToLastStoredTrackPoint.greaterThan(maxRecordingDistance)) {
             trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
             insertTrackPoint(trackPoint);
