@@ -169,7 +169,7 @@ public class ExportImportTest {
         track = contentProviderUtils.getTrack(trackId);
         trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         markers = contentProviderUtils.getMarkers(trackId);
-        assertEquals(10, trackPoints.size());
+        assertEquals(11, trackPoints.size());
         assertEquals(2, markers.size());
     }
 

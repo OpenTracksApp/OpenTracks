@@ -742,7 +742,7 @@ public class TrackRecordingServiceTestRecording {
         // when
         String sensor2 = "2020-02-02T02:02:04Z";
         trackPointCreator.setClock(sensor2);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(2))); //TODO Should be ignored; distance should be added to the next TrackPoint
+        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(2)));
 
         // when
         String gps1 = "2020-02-02T02:02:05Z";
@@ -765,7 +765,7 @@ public class TrackRecordingServiceTestRecording {
         // when
         String sensor5 = "2020-02-02T02:02:10Z";
         trackPointCreator.setClock(sensor5);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(16)));
+        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(16))); //Should be ignored
 
         // when
         String gps3 = "2020-02-02T02:02:12Z";
@@ -784,7 +784,7 @@ public class TrackRecordingServiceTestRecording {
         // then
         new TrackPointAssert().assertEquals(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse(startTime)),
-                new TrackPoint(TrackPoint.Type.SENSORPOINT, Instant.parse(sensor2)) // TODO Should be ignored; is stored as it assumed to be first in current segment.
+                new TrackPoint(TrackPoint.Type.SENSORPOINT, Instant.parse(sensor2)) //First moving TrackPoint: store as the time might be interesting.
                         .setSpeed(Speed.of(5))
                         .setSensorDistance(Distance.of(2)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps1))
@@ -796,27 +796,21 @@ public class TrackRecordingServiceTestRecording {
                 new TrackPoint(TrackPoint.Type.SENSORPOINT, Instant.parse(sensor3))
                         .setSpeed(Speed.of(5))
                         .setSensorDistance(Distance.of(10)),
-/*
-//TODO BUG Should be stored, but sensorDistance is used instead of distance to previous TRACKPOINT.
+                new TrackPoint(TrackPoint.Type.SENSORPOINT, Instant.parse(sensor5)) //TODO No need to store this TrackPoint, data could be merged into the next one
+                        .setSpeed(Speed.of(5))
+                        .setSensorDistance(Distance.of(4)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps3))
                         .setLatitude(45.001)
                         .setLongitude(35)
                         .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(5))
-                        .setSensorDistance(Distance.of(2)),
+                        .setSensorDistance(Distance.of(0)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps4))
                         .setLatitude(45.001)
                         .setLongitude(35)
                         .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(5))
-                        .setSensorDistance(Distance.of(2)),
- */
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps4))
-                        .setLatitude(45.001)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(1))
-                        .setSpeed(Speed.of(5))
-                        .setSensorDistance(Distance.of(4)),
+                        .setSensorDistance(Distance.of(0)),
                 new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse(stopTime))
                         .setSensorDistance(Distance.of(11))
                         .setSpeed(Speed.of(5))
