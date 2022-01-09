@@ -1,0 +1,17 @@
+v3.24.0: OpenTracks
+
+Changes:
+- GPS is optional (also for indoor use): if using a BLE sensors that provide distance are used
+- Settings: option to disable BLE filtering of devices
+- Charts: altitude starts at minimal value instead of 0m.
+- UI supports showing stored timezone information
+
+Bugfix:
+- Re-added workaround for crash due to clock traveling back in time (workaround was removed in v3.23.0)
+- Removed unecessary workaround for BLE cycling sensor (RTFM)
+- GPX importer did not handle missing data properly
+
+Developer:
+- BLE sensors report data event-driven than pull-based
+- Reworked and added integration tests for recording
+
