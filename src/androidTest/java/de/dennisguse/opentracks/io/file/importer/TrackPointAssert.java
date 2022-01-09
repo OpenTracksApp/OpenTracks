@@ -8,7 +8,6 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
 
 public class TrackPointAssert {
 
-    private boolean assertTime = true;
     private boolean assertAccuracy = true;
 
     private double delta = 0.001;
@@ -17,10 +16,7 @@ public class TrackPointAssert {
     }
 
     public void assertEquals(TrackPoint expected, TrackPoint actual) {
-        Assert.assertNotNull(actual.getTime());
-        if (assertTime) {
-            Assert.assertEquals(expected.getTime(), actual.getTime());
-        }
+        Assert.assertEquals(expected.getTime(), actual.getTime());
 
         Assert.assertEquals(expected.getType(), actual.getType());
 
@@ -98,12 +94,6 @@ public class TrackPointAssert {
         for (int i = 0; i < expected.size(); i++) {
             assertEquals(expected.get(i), actual.get(i));
         }
-    }
-
-    @Deprecated //Try to mock time instead.
-    public TrackPointAssert ignoreTime() {
-        this.assertTime = false;
-        return this;
     }
 
     public TrackPointAssert noAccuracy() {

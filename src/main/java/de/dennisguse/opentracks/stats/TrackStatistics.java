@@ -78,7 +78,7 @@ public class TrackStatistics {
     }
 
     @VisibleForTesting
-    public TrackStatistics(String startTime, String stopTime, int totalDistance_m, int totalTime_s, int movingTime_s, float maxSpeed_mps, Float totalAltitudeGain_m, Float totalAltitudeLoss_m) {
+    public TrackStatistics(String startTime, String stopTime, double totalDistance_m, int totalTime_s, int movingTime_s, float maxSpeed_mps, Float totalAltitudeGain_m, Float totalAltitudeLoss_m) {
         this.startTime = Instant.parse(startTime);
         this.stopTime = Instant.parse(stopTime);
         this.totalDistance = Distance.of(totalDistance_m);
