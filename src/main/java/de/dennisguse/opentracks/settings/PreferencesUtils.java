@@ -497,9 +497,9 @@ public class PreferencesUtils {
     }
 
 
-    public static boolean shouldInstantExportAfterWorkout(Context context) {
+    public static boolean shouldInstantExportAfterWorkout() {
         final boolean INSTANT_POST_WORKOUT_EXPORT_DEFAULT = resources.getBoolean(R.bool.post_workout_export_enabled_default);
-        return getBoolean(R.string.post_workout_export_enabled_key, INSTANT_POST_WORKOUT_EXPORT_DEFAULT) && isDefaultExportDirectoryUri(context);
+        return getBoolean(R.string.post_workout_export_enabled_key, INSTANT_POST_WORKOUT_EXPORT_DEFAULT) && isDefaultExportDirectoryUri();
     }
 
     public static TrackFileFormat getExportTrackFileFormat() {
@@ -535,26 +535,29 @@ public class PreferencesUtils {
         PreferenceManager.setDefaultValues(context, R.xml.settings, readAgain);
     }
 
-    public static DocumentFile getDefaultExportDirectoryUri(Context context) {
+    public static Uri getDefaultExportDirectoryUri() {
         String singleExportDirectory = getString(R.string.settings_default_export_directory_key, null);
         if (singleExportDirectory == null) {
             return null;
         }
         try {
-            return DocumentFile.fromTreeUri(context, Uri.parse(singleExportDirectory));
+            Log.d(TAG, "DefaultExportDirectoryUri: " + singleExportDirectory);
+            return Uri.parse(singleExportDirectory);
         } catch (Exception e) {
-            Log.w(TAG, "Could not decode default export directory: " + e.getMessage());
+            Log.w(TAG, "Could not parse default export directory Uri: " + e.getMessage());
         }
         return null;
     }
 
     public static void setDefaultExportDirectoryUri(Uri directoryUri) {
         String value = directoryUri != null ? directoryUri.toString() : null;
+        Log.d(TAG, "Set ExportDirectoryUri: " + directoryUri);
+
         setString(R.string.settings_default_export_directory_key, value);
     }
 
-    public static boolean isDefaultExportDirectoryUri(Context context) {
-        return getDefaultExportDirectoryUri(context) != null;
+    public static boolean isDefaultExportDirectoryUri() {
+        return getDefaultExportDirectoryUri() != null;
     }
 
     public static int getLayoutColumnsByDefault() {

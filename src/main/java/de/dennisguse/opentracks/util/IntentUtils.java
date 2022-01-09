@@ -20,6 +20,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.UriPermission;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.documentfile.provider.DocumentFile;
 
@@ -79,15 +80,27 @@ public class IntentUtils {
         context.getContentResolver().takePersistableUriPermission(directoryUri, newFlags);
     }
 
-    public static void releaseDirectoryAccessPermission(Context context, final DocumentFile documentFile) {
-        if (documentFile == null) {
+    public static void releaseDirectoryAccessPermission(Context context, final Uri documentUri) {
+        if (documentUri == null) {
             return;
         }
-        final Uri documentUri = documentFile.getUri();
+
         context.getContentResolver().getPersistedUriPermissions().stream()
                 .map(UriPermission::getUri)
                 .filter(documentUri::equals)
                 .forEach(u -> context.getContentResolver().releasePersistableUriPermission(u, 0));
+    }
+
+    public static DocumentFile toDocumentFile(Context context, Uri directoryUri) {
+        if (directoryUri == null) {
+            return null;
+        }
+        try {
+            return DocumentFile.fromTreeUri(context, directoryUri);
+        } catch (Exception e) {
+            Log.w(TAG, "Could not decode directory: " + e.getMessage());
+        }
+        return null;
     }
 
 }

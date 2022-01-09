@@ -31,9 +31,9 @@ public class ExportUtils {
     private static final String TAG = ExportUtils.class.getSimpleName();
 
     public static void postWorkoutExport(Context context, Track.Id trackId, ExportServiceResultReceiver resultReceiver) {
-        if (PreferencesUtils.shouldInstantExportAfterWorkout(context)) {
+        if (PreferencesUtils.shouldInstantExportAfterWorkout()) {
             TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat();
-            DocumentFile directory = PreferencesUtils.getDefaultExportDirectoryUri(context);
+            DocumentFile directory = IntentUtils.toDocumentFile(context, PreferencesUtils.getDefaultExportDirectoryUri());
 
             if (directory == null || !directory.canWrite()) {
                 Toast.makeText(context, R.string.export_cannot_write_to_dir, Toast.LENGTH_LONG).show();
