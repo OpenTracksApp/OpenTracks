@@ -2,16 +2,14 @@ package de.dennisguse.opentracks.services;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 
 import androidx.test.rule.ServiceTestRule;
 
 import java.time.Clock;
-import java.time.Instant;
 import java.util.concurrent.TimeoutException;
 
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Speed;
-import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
@@ -35,18 +33,15 @@ public class TrackRecordingServiceTestUtils {
         service.sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
     }
 
-    static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed) {
-        newTrackPoint(trackRecordingService, latitude, longitude, accuracy, speed, System.currentTimeMillis());
-    }
+    static void sendGPSLocation(TrackPointCreator trackPointCreator, String time, double latitude, double longitude, float accuracy, long speed) {
+        Location location = new Location("mock");
+        location.setTime(1L); // Should be ignored anyhow.
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+        location.setAccuracy(accuracy);
+        location.setSpeed(speed);
 
-    static void newTrackPoint(TrackRecordingService trackRecordingService, double latitude, double longitude, float accuracy, long speed, long time) {
-        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(time))
-                .setLongitude(longitude)
-                .setLatitude(latitude)
-                .setHorizontalAccuracy(Distance.of(accuracy))
-                .setSpeed(Speed.of(speed))
-                .setBearing(3.0f);
-
-        trackRecordingService.getTrackPointCreator().onNewTrackPoint(trackPoint);
+        trackPointCreator.setClock(time);
+        trackPointCreator.getGpsHandler().onLocationChanged(location);
     }
 }

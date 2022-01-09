@@ -168,6 +168,11 @@ public class PreferencesUtils {
         editor.apply();
     }
 
+    @VisibleForTesting
+    public static void setString(int keyId, int valueId) {
+        setString(keyId, resources.getString(valueId));
+    }
+
     static void setInt(int keyId, int value) {
         Editor editor = sharedPreferences.edit();
         editor.putInt(getKey(keyId), value);

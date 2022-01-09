@@ -415,27 +415,25 @@ public class TrackPoint {
         return this;
     }
 
-    @NonNull
     @Override
     public String toString() {
-        String result = "time=" + getTime() + " (type=" + getType() + ")";
-        if (hasLocation()) {
-            result += ": lat=" + getLatitude() + " lng=" + getLongitude() + " alt=" + getAltitude();
-        }
-        if (hasHorizontalAccuracy()) {
-            result += " acc=" + getHorizontalAccuracy();
-        }
-        if (hasSensorDistance()) {
-            result += " distance=" + getSensorDistance();
-        }
-        if (hasAltitudeGain()) {
-            result += " altitudeGain= " + getAltitudeGain();
-        }
-        if (hasAltitudeLoss()) {
-            result += " altitudeLoss= " + getAltitudeLoss();
-        }
-
-        return result;
+        return "TrackPoint{" +
+                "id=" + id +
+                ", time=" + time +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                ", horizontalAccuracy=" + horizontalAccuracy +
+                ", altitude=" + altitude +
+                ", speed=" + speed +
+                ", bearing=" + bearing +
+                ", sensorDistance=" + sensorDistance +
+                ", type=" + type +
+                ", heartRate_bpm=" + heartRate_bpm +
+                ", cadence_rpm=" + cadence_rpm +
+                ", power=" + power +
+                ", altitudeGain_m=" + altitudeGain_m +
+                ", altitudeLoss_m=" + altitudeLoss_m +
+                '}';
     }
 
     public static class Id {

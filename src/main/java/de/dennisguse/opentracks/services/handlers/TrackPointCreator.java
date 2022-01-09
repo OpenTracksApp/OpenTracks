@@ -180,6 +180,12 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
 
     @Deprecated
     @VisibleForTesting
+    public BluetoothRemoteSensorManager getRemoteSensorManager() {
+        return remoteSensorManager;
+    }
+
+    @Deprecated
+    @VisibleForTesting
     public void setRemoteSensorManager(BluetoothRemoteSensorManager remoteSensorManager) {
         this.remoteSensorManager = remoteSensorManager;
     }

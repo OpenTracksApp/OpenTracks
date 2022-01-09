@@ -22,26 +22,24 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.function.Function;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
 import de.dennisguse.opentracks.content.sensor.SensorDataRunning;
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.io.file.importer.TrackPointAssert;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
@@ -90,6 +88,9 @@ public class TrackRecordingServiceTestRecording {
     public void setUp() throws TimeoutException {
         contentProviderUtils = new ContentProviderUtils(context);
         tearDown();
+
+        PreferencesUtils.setString(R.string.recording_distance_interval_key, R.string.recording_distance_interval_default);
+        PreferencesUtils.setString(R.string.idle_speed_key, R.string.idle_speed_default);
 
         service = startService();
         service.getTrackPointCreator().stopGPS();
@@ -225,7 +226,7 @@ public class TrackRecordingServiceTestRecording {
 
     @MediumTest
     @Test
-    public void testRecording_startStopResumeStopped() {
+    public void testRecording_startStopResumeStop() {
         // given
         String startTime = "2020-02-02T02:02:02Z";
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
@@ -258,533 +259,568 @@ public class TrackRecordingServiceTestRecording {
 
     @MediumTest
     @Test
-    public void testOnLocationChangedAsync_movingAccurate() {
+    public void testRecording_gpsOnly_recordingDistance_above() {
         // given
+        String startTime = "2020-02-02T02:02:02Z";
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
+        trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        service.stopUpdateRecordingData();
-        service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+
 
         // when
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 1, 15);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0001, 35.0, 2, 15);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0002, 35.0, 3, 15);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0003, 35.0, 4, 15);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0004, 35.0, 5, 15);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0005, 35.0, 6, 15);
+        String gps1 = "2020-02-02T02:02:03Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps1, 45.0, 35.0, 1, 15);
 
+        // then
+        assertEquals(new TrackStatistics(startTime, gps1, 0, 1, 0, 0, 0f, 0f)
+                , contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+        // when
+        String gps2 = "2020-02-02T02:02:06Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps2, 45.0001, 35.0, 1, 15);
+
+        // then
+        assertEquals(new TrackStatistics(startTime, gps2, 11.113178253173828f, 4, 3, 15, 0f, 0f)
+                , contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+        // when
+        String gps3 = "2020-02-02T02:02:08Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps3, 45.0002, 35.0, 1, 15);
+
+        // then
+        assertEquals(new TrackStatistics(startTime, gps3, 22.226356506347656, 6, 5, 15, 0f, 0f)
+                , contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+
+        // when
+        String stopTime = "2020-02-02T02:02:12Z";
+        trackPointCreator.setClock(stopTime);
         service.endCurrentTrack();
 
         // then
-        assertFalse(service.isRecording());
+        assertEquals(new TrackStatistics(startTime, stopTime, 22.226356506347656, 10, 5, 15, 0f, 0f)
+                , contentProviderUtils.getTrack(trackId).getTrackStatistics());
 
-        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        TrackPointAssert a = new TrackPointAssert()
-                .ignoreTime();
-        a.assertEquals(List.of(
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
+        new TrackPointAssert().assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse(startTime)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps1))
                         .setLatitude(45)
                         .setLongitude(35)
                         .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(15))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps2))
                         .setLatitude(45.0001)
                         .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(2))
+                        .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(15))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps3))
                         .setLatitude(45.0001)
                         .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(3))
-                        .setSpeed(Speed.of(15))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45.0002)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(4))
-                        .setSpeed(Speed.of(15))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45.0003)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(5))
-                        .setSpeed(Speed.of(15))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45.0004)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(6))
-                        .setSpeed(Speed.of(15))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, null)
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f)
-        ), trackPoints);
-    }
-
-    @MediumTest
-    @Test
-    public void testOnLocationChangedAsync_slowMovingAccurate() {
-        // given
-        Track.Id trackId = service.startNewTrack();
-        service.stopUpdateRecordingData();
-        service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
-
-        // when
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 1, 15);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.000001, 35.0, 2, 15);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.000002, 35.0, 3, 15);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.000003, 35.0, 4, 15);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.000004, 35.0, 5, 15);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.000005, 35.0, 6, 15);
-
-        service.endCurrentTrack();
-
-        // then
-        assertFalse(service.isRecording());
-
-        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        TrackPointAssert a = new TrackPointAssert()
-                .ignoreTime();
-        a.assertEquals(List.of(
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45)
-                        .setLongitude(35)
                         .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(15))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45.0005)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(6))
-                        .setSpeed(Speed.of(15))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse(stopTime))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f)
-        ), trackPoints);
+        ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
     }
 
     @MediumTest
     @Test
-    public void testOnLocationChangedAsync_idle() {
+    public void testRecording_gpsOnly_recordingDistance_above_speed_0() {
         // given
+        String startTime = "2020-02-02T02:02:02Z";
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
+        trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        service.stopUpdateRecordingData();
-        service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
+        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
         // when
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 1, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 2, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 3, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 4, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 5, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 6, 0);
-
-        service.endCurrentTrack();
+        String gps1 = "2020-02-02T02:02:03Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps1, 45.0, 35.0, 1, 0);
 
         // then
-        assertFalse(service.isRecording());
+        TrackStatistics gps1statistics = new TrackStatistics(startTime, gps1, 0, 1, 0, 0, 0f, 0f);
+        assertEquals(gps1statistics, contentProviderUtils.getTrack(trackId).getTrackStatistics());
 
-        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        TrackPointAssert a = new TrackPointAssert()
-                .ignoreTime();
-        a.assertEquals(List.of(
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
+        // when
+        String gps2 = "2020-02-02T02:02:06Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps2, 45.0001, 35.0, 1, 0);
+
+        // then
+        assertEquals(gps1statistics, contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+        // when
+        String gps3 = "2020-02-02T02:02:08Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps3, 45.0002, 35.0, 1, 0);
+
+
+        // then
+        assertEquals(gps1statistics, contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+        // when
+        String stopTime = "2020-02-02T02:02:12Z";
+        trackPointCreator.setClock(stopTime);
+        service.endCurrentTrack();
+
+
+        // then
+        assertEquals(new TrackStatistics(startTime, stopTime, 0, 10, 0, 0, 0f, 0f)
+                , contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+        new TrackPointAssert().assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse(startTime)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps1))
                         .setLatitude(45)
                         .setLongitude(35)
                         .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(0))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps3))
+                        .setLatitude(45.0001)
                         .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(6))
+                        .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(0))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse(stopTime))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f)
-        ), trackPoints);
+        ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
     }
 
     @MediumTest
     @Test
-    public void testOnLocationChangedAsync_idle_withMovement() {
+    public void testRecording_gpsOnly_recordingDistance_below() {
         // given
+        String startTime = "2020-02-02T02:02:02Z";
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
+        trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        service.stopUpdateRecordingData();
-        service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
-        service.getTrackPointCreator().stopGPS();
+        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
         // when
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 1, 15);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 2, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 3, 0); // will be ignored
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 4, 0); // will be ignored
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 5, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 6, 15);
+        String gps1 = "2020-02-02T02:02:03Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps1, 45.0, 35.0, 1, 15);
 
+        // then
+        TrackStatistics gps1Statistics = new TrackStatistics(startTime, gps1, 0, 1, 0, 0, 0f, 0f);
+        assertEquals(gps1Statistics, contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+        // when
+        String gps2 = "2020-02-02T02:02:06Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps2, 45.00001, 35.0, 1, 15);
+
+        // then
+        assertEquals(gps1Statistics, contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+        // when
+        String gps3 = "2020-02-02T02:02:08Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps3, 45.00002, 35.0, 1, 15);
+
+        // then
+        assertEquals(gps1Statistics, contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+
+        // when
+        String stopTime = "2020-02-02T02:02:12Z";
+        trackPointCreator.setClock(stopTime);
         service.endCurrentTrack();
 
         // then
-        assertFalse(service.isRecording());
+        assertEquals(new TrackStatistics(startTime, stopTime, 2.222635507583618, 10, 5, 15, 0f, 0f)
+                , contentProviderUtils.getTrack(trackId).getTrackStatistics());
 
-        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        TrackPointAssert a = new TrackPointAssert()
-                .ignoreTime();
-        a.assertEquals(List.of(
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
+        new TrackPointAssert().assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse(startTime)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps1))
                         .setLatitude(45)
                         .setLongitude(35)
                         .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(15))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps3))
+                        .setLatitude(45.00002)
                         .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(2))
-                        .setSpeed(Speed.of(0))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(5))
-                        .setSpeed(Speed.of(0))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(6))
+                        .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(15))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse(stopTime))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f)
-        ), trackPoints);
+        ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
     }
 
     @MediumTest
     @Test
-    public void testOnLocationChangedAsync_idle_withSensorData() {
+    public void testRecording_gpsOnly_recordingDistance_idle() {
         // given
+        String startTime = "2020-02-02T02:02:02Z";
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
+        trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        service.stopUpdateRecordingData();
-        service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
-        service.getTrackPointCreator().setRemoteSensorManager(new BluetoothRemoteSensorManager(context, service.getTrackPointCreator()) {
-
-            @Override
-            public boolean isEnabled() {
-                return true;
-            }
-
-            @Override
-            public SensorDataSet fill(@NonNull TrackPoint trackPoint) {
-                SensorDataSet sensorDataSet = new SensorDataSet();
-                sensorDataSet.set(new SensorDataHeartRate("sensorName", "sensorAddress", 5f));
-                sensorDataSet.fillTrackPoint(trackPoint);
-                return sensorDataSet;
-            }
-        });
+        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
         // when
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 1, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 2, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 3, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 4, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 5, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 6, 0);
+        String gps1 = "2020-02-02T02:02:03Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps1, 45.0, 35.0, 1, 0);
 
+        // then
+        TrackStatistics gps1Statistics = new TrackStatistics(startTime, gps1, 0, 1, 0, 0, 0f, 0f);
+        assertEquals(gps1Statistics, contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+        // when
+        String gps2 = "2020-02-02T02:02:06Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps2, 45.0, 35.0, 1, 0);
+
+        // then
+        assertEquals(gps1Statistics, contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+        // when
+        String gps3 = "2020-02-02T02:02:08Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps3, 45.0, 35.0, 1, 0);
+
+        // then
+        assertEquals(gps1Statistics, contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+
+        // when
+        String stopTime = "2020-02-02T02:02:12Z";
+        trackPointCreator.setClock(stopTime);
         service.endCurrentTrack();
 
         // then
-        assertFalse(service.isRecording());
+        assertEquals(new TrackStatistics(startTime, stopTime, 0, 10, 0, 0, 0f, 0f)
+                , contentProviderUtils.getTrack(trackId).getTrackStatistics());
 
-        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        TrackPointAssert a = new TrackPointAssert()
-                .ignoreTime();
-        a.assertEquals(List.of(
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
+        new TrackPointAssert().assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse(startTime)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps1))
                         .setLatitude(45)
                         .setLongitude(35)
                         .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(0))
                         .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f)
-                        .setHeartRate_bpm(5f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps3))
+                        .setLatitude(45.00002)
                         .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(6))
+                        .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(0))
                         .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f)
-                        .setHeartRate_bpm(5f),
-                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, null)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse(stopTime))
                         .setAltitudeGain(0f)
                         .setAltitudeLoss(0f)
-                        .setHeartRate_bpm(5f)
-        ), trackPoints);
+        ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
     }
 
     @MediumTest
     @Test
-    public void testOnLocationChangedAsync_idle_withSensorDistance() {
-        BluetoothRemoteSensorManager remoteSensorManager = new BluetoothRemoteSensorManager(context, service.getTrackPointCreator()) {
+    public void testRecording_gpsOnly_recordingDistance_idle_movement() {
+        // given
+        String startTime = "2020-02-02T02:02:02Z";
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
+        trackPointCreator.setClock(startTime);
+        Track.Id trackId = service.startNewTrack();
+        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
 
-            @Override
-            public boolean isEnabled() {
-                return true;
-            }
-        };
+        // when
+        String gps1 = "2020-02-02T02:02:03Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps1, 45.0, 35.0, 1, 15);
 
+        // then
+        assertEquals(new TrackStatistics(startTime, gps1, 0, 1, 0, 0, 0f, 0f)
+                , contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+        // when
+        String gps2 = "2020-02-02T02:02:06Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps2, 45.0, 35.0, 1, 0);
+
+        // then
+        final TrackStatistics gps2statistics = new TrackStatistics(startTime, gps2, 0, 4, 0, 0, 0f, 0f);
+        assertEquals(gps2statistics
+                , contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+        // when
+        String gps3 = "2020-02-02T02:02:08Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps3, 45.0, 35.0, 1, 0);
+
+        // then
+        assertEquals(gps2statistics, contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+
+        // when
+        String gps4 = "2020-02-02T02:02:10Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps4, 45.0, 35.0, 1, 15);
+
+        // then
+        assertEquals(new TrackStatistics(startTime, gps4, 0, 8, 0, 0, 0f, 0f)
+                , contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+        // when
+        String stopTime = "2020-02-02T02:02:12Z";
+        trackPointCreator.setClock(stopTime);
+        service.endCurrentTrack();
+
+        // then
+        assertEquals(new TrackStatistics(startTime, stopTime, 0, 10, 0, 0, 0f, 0f)
+                , contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+        new TrackPointAssert().assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse(startTime)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps1))
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setHorizontalAccuracy(Distance.of(1))
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps2))
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setHorizontalAccuracy(Distance.of(1))
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps3))
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setHorizontalAccuracy(Distance.of(1))
+                        .setSpeed(Speed.of(0))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps4))
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setHorizontalAccuracy(Distance.of(1))
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse(stopTime))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+        ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
+    }
+
+
+    @MediumTest
+    @Test
+    public void testRecording_gpsOnly_ignore_inaccurate() {
+        // given
+        String startTime = "2020-02-02T02:02:02Z";
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
+        trackPointCreator.setClock(startTime);
+        Track.Id trackId = service.startNewTrack();
+        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+
+        // when
+        String gps1 = "2020-02-02T02:02:03Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps1, 45.0, 35.0, 100, 15);
+
+        // then
+        TrackStatistics startStatistics = new TrackStatistics(startTime, startTime, 0, 0, 0, 0, null, null);
+        assertEquals(startStatistics, contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+
+        // when
+        String gps2 = "2020-02-02T02:02:06Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps2, 45.1, 35.0, 100, 15);
+
+        // then
+        assertEquals(startStatistics, contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+
+        // when
+        String stopTime = "2020-02-02T02:02:12Z";
+        trackPointCreator.setClock(stopTime);
+        service.endCurrentTrack();
+
+        // then
+        assertEquals(new TrackStatistics(startTime, stopTime, 0, 10, 0, 0, 0f, 0f)
+                , contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+
+        // then
+        new TrackPointAssert().assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse(startTime)),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse(stopTime))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+        ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
+    }
+
+    @MediumTest
+    @Test
+    public void testRecording_gpsOnly_segment() {
+        // given
+        String startTime = "2020-02-02T02:02:02Z";
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
+        trackPointCreator.setClock(startTime);
+        Track.Id trackId = service.startNewTrack();
+        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+
+        // when
+        String gps1 = "2020-02-02T02:02:03Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps1, 45.0, 35.0, 1, 15);
+
+        // then
+        assertEquals(new TrackStatistics(startTime, gps1, 0, 1, 0, 0, 0f, 0f), contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+        // when
+        String gps2 = "2020-02-02T02:02:06Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps2, 45.1, 35.0, 1, 15);
+
+        // then
+        assertEquals(new TrackStatistics(startTime, gps2, 0, 1, 0, 0, 0f, 0f), contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+
+        // when
+        String stopTime = "2020-02-02T02:02:12Z";
+        trackPointCreator.setClock(stopTime);
+        service.endCurrentTrack();
+
+        // then
+        assertEquals(new TrackStatistics(startTime, stopTime, 0, 7, 0, 0, 0f, 0f)
+                , contentProviderUtils.getTrack(trackId).getTrackStatistics());
+
+
+        // then
+        new TrackPointAssert().assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse(startTime)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps1))
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setHorizontalAccuracy(Distance.of(1))
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse(gps2))
+                        .setLatitude(45.1)
+                        .setLongitude(35)
+                        .setHorizontalAccuracy(Distance.of(1))
+                        .setSpeed(Speed.of(15))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse(stopTime))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+        ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
+    }
+
+    /**
+     * Make sure that GPS-based TrackPoints are stored, if the distance to the previous GPS-based TrackPoint is greater than recordingDistanceInterval.
+     */
+    @MediumTest
+    @Test
+    public void testRecording_gpsAndSensor_gpsIdleMoving_sensorMoving() {
+        // TODO Check TrackStatistics
         AltitudeSumManager altitudeSumManager = new AltitudeSumManager();
 
         // given
+        String startTime = "2020-02-02T02:02:02Z";
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
+        trackPointCreator.setClock(startTime);
         Track.Id trackId = service.startNewTrack();
-        service.stopUpdateRecordingData();
-        service.getTrackPointCreator().setRemoteSensorManager(remoteSensorManager);
-        service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
-        altitudeSumManager.stop(service);
-        altitudeSumManager.setConnected(true);
+        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+        BluetoothRemoteSensorManager remoteSensorManager = trackPointCreator.getRemoteSensorManager();
 
         // when
-        altitudeSumManager.addAltitudeGain_m(6f);
-        altitudeSumManager.addAltitudeLoss_m(6f);
+        String sensor1 = "2020-02-02T02:02:03Z";
+        trackPointCreator.setClock(sensor1);
         remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(0))); //Should be ignored
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(2))); //TODO Should be ignored; distance will be added to TrackPoint
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 1, 15);
 
+        // when
+        String sensor2 = "2020-02-02T02:02:04Z";
+        trackPointCreator.setClock(sensor2);
+        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(2))); //TODO Should be ignored; distance should be added to the next TrackPoint
+
+        // when
+        String gps1 = "2020-02-02T02:02:05Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps1, 45.0, 35.0, 1, 15);
+
+        // when
+        String sensor3 = "2020-02-02T02:02:06Z";
+        trackPointCreator.setClock(sensor3);
         remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(12)));
 
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(13))); //Should be ignored
-
-        altitudeSumManager.addAltitudeGain_m(6f);
-        altitudeSumManager.addAltitudeLoss_m(6f);
+        // when
+        String sensor4 = "2020-02-02T02:02:07Z";
+        trackPointCreator.setClock(sensor4);
         remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(14))); //Should be ignored
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 4, 15); //Should be ignored
 
-        altitudeSumManager.addAltitudeGain_m(6f);
-        altitudeSumManager.addAltitudeLoss_m(6f);
+        // when
+        String gps2 = "2020-02-02T02:02:08Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps2, 45.0, 35.0, 4, 15); //Should be ignored
+
+        // when
+        String sensor5 = "2020-02-02T02:02:10Z";
+        trackPointCreator.setClock(sensor5);
         remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(16)));
 
-        altitudeSumManager.addAltitudeGain_m(7f);
-        altitudeSumManager.addAltitudeLoss_m(7f);
+        // when
+        String gps3 = "2020-02-02T02:02:12Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps3, 45.001, 35.0, 1, 15);
+
+        // when
+        String gps4 = "2020-02-02T02:02:14Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps4, 45.001, 35.0, 1, 15);
+
+
+        // when
+        String stopTime = "2020-02-02T02:02:16Z";
+        trackPointCreator.setClock(stopTime);
         service.endCurrentTrack();
 
         // then
-        assertFalse(service.isRecording());
-
-        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        TrackPointAssert a = new TrackPointAssert()
-                .ignoreTime();
-        a.assertEquals(List.of(
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new TrackPoint(TrackPoint.Type.SENSORPOINT, null) // TODO Should be ignored; is stored as it assumed to be first in current segment.
-                        .setAltitudeGain(6f)
-                        .setAltitudeLoss(6f)
+        new TrackPointAssert().assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse(startTime)),
+                new TrackPoint(TrackPoint.Type.SENSORPOINT, Instant.parse(sensor2)) // TODO Should be ignored; is stored as it assumed to be first in current segment.
                         .setSpeed(Speed.of(5))
                         .setSensorDistance(Distance.of(2)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps1))
                         .setLatitude(45)
                         .setLongitude(35)
                         .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(5))
                         .setSensorDistance(Distance.of(0)),
-                new TrackPoint(TrackPoint.Type.SENSORPOINT, null)
+                new TrackPoint(TrackPoint.Type.SENSORPOINT, Instant.parse(sensor3))
                         .setSpeed(Speed.of(5))
                         .setSensorDistance(Distance.of(10)),
-                new TrackPoint(TrackPoint.Type.SENSORPOINT, null)
-                        .setSpeed(Speed.of(5))
-                        .setAltitudeGain(12f)
-                        .setAltitudeLoss(12f)
-                        .setSensorDistance(Distance.of(4)),
-                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, null)
-                        .setSensorDistance(Distance.of(11))
-                        .setSpeed(Speed.of(5))
-                        .setAltitudeGain(7f)
-                        .setAltitudeLoss(7f)
-                        .setSensorDistance(Distance.of(0))
-        ), trackPoints);
-    }
-
-    @MediumTest
-    @Test
-    public void testOnLocationChangedAsync_segment() {
-        // given
-        Track.Id trackId = service.startNewTrack();
-        service.stopUpdateRecordingData();
-        service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
-
-        // when
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 1, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.1, 35.0, 2, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.1, 35.0, 3, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.2, 35.0, 4, 0);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.2, 35.0, 5, 0);
-
-        service.endCurrentTrack();
-
-        // then
-        assertFalse(service.isRecording());
-
-        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-
-        TrackPointAssert a = new TrackPointAssert()
-                .ignoreTime();
-        a.assertEquals(List.of(
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, null),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45)
+/*
+//TODO BUG Should be stored, but sensorDistance is used instead of distance to previous TRACKPOINT.
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps3))
+                        .setLatitude(45.001)
                         .setLongitude(35)
                         .setHorizontalAccuracy(Distance.of(1))
-                        .setSpeed(Speed.of(0))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f),
-
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, null)
-                        .setLatitude(45.1)
+                        .setSpeed(Speed.of(5))
+                        .setSensorDistance(Distance.of(2)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps4))
+                        .setLatitude(45.001)
                         .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(2))
-                        .setSpeed(Speed.of(0))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45.1)
+                        .setHorizontalAccuracy(Distance.of(1))
+                        .setSpeed(Speed.of(5))
+                        .setSensorDistance(Distance.of(2)),
+ */
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps4))
+                        .setLatitude(45.001)
                         .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(3))
-                        .setSpeed(Speed.of(0))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f),
-
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, null)
-                        .setLatitude(45.2)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(4))
-                        .setSpeed(Speed.of(0))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, null)
-                        .setLatitude(45.2)
-                        .setLongitude(35)
-                        .setHorizontalAccuracy(Distance.of(5))
-                        .setSpeed(Speed.of(0))
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f),
-                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, null)
-                        .setAltitudeGain(0f)
-                        .setAltitudeLoss(0f)
-        ), trackPoints);
-    }
-
-
-    /**
-     * Moving time should increase if the previous and current TrackPoint have speed > threshold by the timeDiff(previousTrackPoint, currentTrackPoint).
-     */
-    @MediumTest
-    @Test
-    public void movingtime_with_pauses() throws TimeoutException {
-        // given
-        service.getTrackPointCreator().stopGPS();
-
-        service.getTrackPointCreator().setClock(Instant.ofEpochMilli(0).toString());
-        Track.Id trackId = service.startNewTrack();
-        service.stopUpdateRecordingData();
-        service.getTrackPointCreator().setAltitudeSumManager(altitudeSumManager);
-
-        Function<Integer, Void> assertMovingTime = expected -> {
-            Duration actual = contentProviderUtils.getTrack(trackId).getTrackStatistics().getMovingTime();
-            assertEquals(Duration.ofSeconds(expected), actual);
-            return null;
-        };
-
-        Function<Integer, Void> assertTotalTime = expected -> {
-            Duration actual = contentProviderUtils.getTrack(trackId).getTrackStatistics().getTotalTime();
-            assertEquals(Duration.ofSeconds(expected), actual);
-            return null;
-        };
-
-        // when / then
-        int movingtime_s = 0;
-
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0, 35.0, 1, 15, 5 * 60000);
-        assertMovingTime.apply(movingtime_s);
-
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0001, 35.0, 2, 15, 6 * 60000);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0002, 35.0, 2, 15, (long) (6.5 * 60000));
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0003, 35.0, 2, 15, 7 * 60000);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0004, 35.0, 2, 15, 8 * 60000);
-        movingtime_s += 3 * 60;
-        assertMovingTime.apply(movingtime_s);
-
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0004, 35.0, 2, 0, 9 * 60000); //will be ignored
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0004, 35.0, 2, 0, 10 * 60000); //will be ignored
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0004, 35.0, 2, 0, 11 * 60000);
-        assertMovingTime.apply(movingtime_s);
-
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0004, 35.0, 2, 15, 13 * 60000);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0004, 35.0, 2, 15, (long) (13.5 * 60000)); //will be ignored
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0005, 35.0, 2, 15, 14 * 60000);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0006, 35.0, 2, 15, 15 * 60000);
-        movingtime_s += 2 * 60;
-        assertMovingTime.apply(movingtime_s);
-        assertTotalTime.apply(15 * 60);
-
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0006, 35.0, 2, 0, 16 * 60000); //will be ignored
-        assertMovingTime.apply(movingtime_s);
-
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0015, 35.0, 2, 0, 17 * 60000);
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0016, 35.0, 2, 15, 18 * 60000);
-        assertMovingTime.apply(movingtime_s);
-
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0016, 35.0, 2, 0, 19 * 60000); //TODO we could ignore this TrackPoint
-        assertMovingTime.apply(movingtime_s);
-        assertTotalTime.apply(19 * 60);
-
-        service.getTrackPointCreator().setClock(Instant.ofEpochSecond(40 * 60).toString());
-        assertMovingTime.apply(movingtime_s);
-        service.pauseCurrentTrack();
-        assertTotalTime.apply(40 * 60);
-
-        service.getTrackPointCreator().setClock(Instant.ofEpochSecond(41 * 60).toString());
-        service.resumeCurrentTrack();
-        TrackRecordingServiceTestUtils.newTrackPoint(service, 45.0016, 35.0, 2, 15, 42 * 60000);
-        assertMovingTime.apply(movingtime_s);
-        assertTotalTime.apply(41 * 60);
-
-        service.getTrackPointCreator().setClock(Instant.ofEpochSecond(50 * 60).toString());
-        service.endCurrentTrack();
-        assertMovingTime.apply(movingtime_s);
-        assertTotalTime.apply(49 * 60);
-
-        // then
-        assertFalse(service.isRecording());
-
-        TrackStatistics trackStatistics = contentProviderUtils.getTrack(trackId).getTrackStatistics();
-
-        List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
-        assertEquals(20, trackPoints.size());
-
-        assertEquals(Duration.ofMinutes(49), trackStatistics.getTotalTime());
+                        .setHorizontalAccuracy(Distance.of(1))
+                        .setSpeed(Speed.of(5))
+                        .setSensorDistance(Distance.of(4)),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse(stopTime))
+                        .setSensorDistance(Distance.of(11))
+                        .setSpeed(Speed.of(5))
+                        .setSensorDistance(Distance.of(0))
+        ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
     }
 }
