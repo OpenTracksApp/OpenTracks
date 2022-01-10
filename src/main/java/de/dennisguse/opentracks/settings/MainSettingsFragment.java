@@ -1,7 +1,6 @@
 package de.dennisguse.opentracks.settings;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.Preference;
@@ -17,20 +16,9 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
 
     private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
-    private final Runnable bindServiceCallback = new Runnable() {
-        @Override
-        public void run() {
-            TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
-            if (service == null) {
-                Log.w(TAG, "could not get TrackRecordingService");
-                return;
-            }
-
-            service.getRecordingStatusObservable()
-                    .observe(MainSettingsFragment.this, status -> onRecordingStatusChanged(status));
-
-        }
-    };
+    private final TrackRecordingServiceConnection.Callback bindServiceCallback =
+            service -> service.getRecordingStatusObservable()
+                    .observe(MainSettingsFragment.this, this::onRecordingStatusChanged);
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

@@ -77,20 +77,8 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
 
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
 
-    private final Runnable bindCallback = new Runnable() {
-        @Override
-        public void run() {
-            TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
-            if (service == null) {
-                Log.w(TAG, "could not get TrackRecordingService");
-                return;
-            }
-
-            service.getRecordingStatusObservable()
-                    .observe(TrackRecordedActivity.this, status -> onRecordingStatusChanged(status));
-
-        }
-    };
+    private final TrackRecordingServiceConnection.Callback bindCallback = service -> service.getRecordingStatusObservable()
+            .observe(TrackRecordedActivity.this, this::onRecordingStatusChanged);
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override

@@ -27,6 +27,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.R;
@@ -44,8 +45,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
 
     private static final String TAG = TrackRecordingServiceConnection.class.getSimpleName();
 
-    @Deprecated //TODO Implement proper interface that passes the current TrackRecordingService
-    private final Runnable callback;
+    private final Callback callback;
 
     private TrackRecordingService trackRecordingService;
 
@@ -53,10 +53,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         callback = null;
     }
 
-    /**
-     * @param callback the callback to invoke when the service binding changes
-     */
-    public TrackRecordingServiceConnection(@NonNull Runnable callback) {
+    public TrackRecordingServiceConnection(@NonNull Callback callback) {
         this.callback = callback;
     }
 
@@ -80,6 +77,23 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         context.startService(new Intent(context, TrackRecordingService.class));
 
         startConnection(context);
+    }
+
+    //TODO There should be a better way to implement this.
+
+    /**
+     * Triggers the onConnected() callback even if already connected.
+     */
+    //TODO Check if this is actually needed as it is used to re-connect from Activities in onResume by using a LiveData; might be obsolete. If not, there should be a better way to implement this.
+    @Deprecated
+    public void startAndBindWithCallback(Context context) {
+        if (trackRecordingService == null) {
+            startAndBind(context);
+            return;
+        }
+        if (callback != null) {
+            callback.onConnected(trackRecordingService);
+        }
     }
 
     /**
@@ -118,22 +132,19 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         context.stopService(new Intent(context, TrackRecordingService.class));
     }
 
-    /**
-     * Gets the track recording service if bound. Returns null otherwise
-     */
+    @Nullable
     public TrackRecordingService getServiceIfBound() {
         return trackRecordingService;
     }
 
-    /**
-     * Sets the trackRecordingService.
-     *
-     * @param value the value
-     */
     private void setTrackRecordingService(TrackRecordingService value) {
         trackRecordingService = value;
         if (callback != null) {
-            callback.run();
+            if (value != null) {
+                callback.onConnected(value);
+            } else {
+                callback.onDisconnected();
+            }
         }
     }
 
@@ -160,31 +171,18 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         setTrackRecordingService(null);
     }
 
-    /**
-     * Resumes the recording track.
-     */
     public void resumeTrack() {
-        TrackRecordingService service = getServiceIfBound();
-        if (service != null) {
-            service.resumeCurrentTrack();
+        if (trackRecordingService != null) {
+            trackRecordingService.resumeCurrentTrack();
         }
     }
-
-    /**
-     * Pauses the recording track.
-     */
     public void pauseTrack() {
-        TrackRecordingService service = getServiceIfBound();
-        if (service != null) {
-            service.pauseCurrentTrack();
+        if (trackRecordingService != null) {
+            trackRecordingService.pauseCurrentTrack();
         }
     }
 
-    /**
-     * Adds a marker.
-     *
-     * @return the id of the marker or null if none could be created.
-     */
+    @Nullable
     public Marker.Id addMarker(Context context, String name, String category, String description, String photoUrl) {
         TrackRecordingService trackRecordingService = getServiceIfBound();
         if (trackRecordingService == null) {
@@ -213,5 +211,12 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
             trackRecordingService.endCurrentTrack();
         }
         unbindAndStop(context);
+    }
+
+    public interface Callback {
+        void onConnected(TrackRecordingService service);
+
+        default void onDisconnected() {
+        }
     }
 }

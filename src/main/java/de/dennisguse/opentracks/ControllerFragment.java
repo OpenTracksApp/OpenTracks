@@ -60,21 +60,11 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
     private TrackRecordingService.RecordingStatus recordingStatus;
     private TrackRecordingService.RecordingData recordingData;
 
-    private final Runnable bindChangedCallback = new Runnable() {
-        @Override
-        public void run() {
-            TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
-            if (service == null) {
-                Log.w(TAG, "could not get TrackRecordingService");
-                return;
-            }
-
-            service.getRecordingStatusObservable()
-                    .observe(ControllerFragment.this, status -> onRecordingStatusChanged(status));
-
-            service.getRecordingDataObservable()
-                    .observe(ControllerFragment.this, recordingData -> onTotalTimeChanged(recordingData));
-        }
+    private final TrackRecordingServiceConnection.Callback bindChangedCallback = service -> {
+        service.getRecordingStatusObservable()
+                .observe(ControllerFragment.this, this::onRecordingStatusChanged);
+        service.getRecordingDataObservable()
+                .observe(ControllerFragment.this, this::onTotalTimeChanged);
     };
 
     @Override

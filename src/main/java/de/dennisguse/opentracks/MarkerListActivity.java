@@ -20,7 +20,6 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -70,19 +69,8 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
 
-    private final Runnable bindCallback = new Runnable() {
-        @Override
-        public void run() {
-            TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
-            if (service == null) {
-                Log.w(TAG, "could not get TrackRecordingService");
-                return;
-            }
-
-            service.getRecordingStatusObservable()
-                    .observe(MarkerListActivity.this, status -> onRecordingStatusChanged(status));
-        }
-    };
+    private final TrackRecordingServiceConnection.Callback bindCallback = service -> service.getRecordingStatusObservable()
+            .observe(MarkerListActivity.this, this::onRecordingStatusChanged);
 
     // Callback when an item is selected in the contextual action mode
     private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {

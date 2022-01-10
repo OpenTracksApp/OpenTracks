@@ -67,14 +67,9 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
     private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
-    private final Runnable bindChangedCallback = new Runnable() {
+    private final TrackRecordingServiceConnection.Callback bindChangedCallback = new TrackRecordingServiceConnection.Callback() {
         @Override
-        public void run() {
-            TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
-            if (service == null) {
-                Log.w(TAG, "could not get TrackRecordingService");
-                return;
-            }
+        public void onConnected(TrackRecordingService service) {
 
             service.getRecordingStatusObservable()
                     .observe(TrackRecordingActivity.this, status -> onRecordingStatusChanged(status));
@@ -211,13 +206,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             trackDataHub.setRecordingStatus(recordingStatus);
         }
 
-        /*
-         * If the binding has happened, then invoke the callback to start a new recording.
-         * If the binding hasn't happened, then invoking the callback will have no effect.
-         * But when the binding occurs, the callback will get invoked.
-         */
-        trackRecordingServiceConnection.startAndBind(this);
-        bindChangedCallback.run();
+        trackRecordingServiceConnection.startAndBindWithCallback(this);
     }
 
     @Override

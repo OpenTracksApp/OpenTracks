@@ -28,7 +28,6 @@ import android.graphics.drawable.AnimatedVectorDrawable;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -128,32 +127,21 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     private MenuItem searchMenuItem;
     private MenuItem startGpsMenuItem;
 
-    // Callback when the trackRecordingServiceConnection binding changes.
-    private final Runnable bindChangedCallback = new Runnable() {
-        @Override
-        public void run() {
-            TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
-            if (service == null) {
-                Log.e(TAG, "service not available to start gps or a new recording");
-                return;
-            }
+    private final TrackRecordingServiceConnection.Callback bindChangedCallback = service -> {
+        service.getRecordingStatusObservable()
+                .observe(TrackListActivity.this, this::onRecordingStatusChanged);
 
-            service.getRecordingStatusObservable()
-                    .observe(TrackListActivity.this, status -> onRecordingStatusChanged(status));
+        service.getGpsStatusObservable()
+                .observe(TrackListActivity.this, this::onGpsStatusChanged);
 
-            // Get GPS status and listen GPS status changes.
-            service.getGpsStatusObservable()
-                    .observe(TrackListActivity.this, status -> onGpsStatusChanged(status));
+        updateGpsMenuItem(true, recordingStatus.isRecording());
 
-            updateGpsMenuItem(true, recordingStatus.isRecording());
-
-            if (service.getGpsStatusObservable().getValue().isGpsStarted()) {
-                return;
-            }
-
-            //TODO Not cool to do this in a callback that might be called more than once!
-            service.tryStartGps();
+        if (service.getGpsStatusObservable().getValue().isGpsStarted()) {
+            return;
         }
+
+        //TODO Not cool to do this in a callback that might be called more than once!
+        service.tryStartGps();
     };
 
     @Override
@@ -305,12 +293,11 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
             } else {
                 // Invoke trackRecordingService
                 if (!gpsStatusValue.isGpsStarted()) {
-                    trackRecordingServiceConnection.startAndBind(this);
-                    bindChangedCallback.run();
+                    trackRecordingServiceConnection.startAndBindWithCallback(this);
                 } else {
                     TrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
                     if (trackRecordingService != null) {
-                        trackRecordingService.stopGpsAndShutdown();
+                        trackRecordingService.stopGpsAndShutdown(); //TODO Handle this in TrackRecordingServiceConnection
                     }
                     trackRecordingServiceConnection.unbindAndStop(this);
                 }

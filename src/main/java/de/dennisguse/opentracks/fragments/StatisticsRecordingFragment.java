@@ -2,7 +2,6 @@ package de.dennisguse.opentracks.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,19 +75,8 @@ public class StatisticsRecordingFragment extends Fragment {
         }
     };
 
-    private final Runnable bindChangedCallback = new Runnable() {
-        @Override
-        public void run() {
-            TrackRecordingService service = trackRecordingServiceConnection.getServiceIfBound();
-            if (service == null) {
-                Log.w(TAG, "could not get TrackRecordingService");
-                return;
-            }
-
-            service.getRecordingDataObservable()
-                    .observe(StatisticsRecordingFragment.this, recordingData -> onRecordingDataChanged(recordingData));
-        }
-    };
+    private final TrackRecordingServiceConnection.Callback bindChangedCallback = service -> service.getRecordingDataObservable()
+            .observe(StatisticsRecordingFragment.this, this::onRecordingDataChanged);
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
