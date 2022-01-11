@@ -30,7 +30,7 @@ limitations under the License.
     <string name="activity_type_driving_bus">jazda autobusom</string>
     <string name="activity_type_driving_car">jazda autom</string>
     <string name="activity_type_ferry">trajekt</string>
-    <string name="activity_type_frisbee">frisbee</string>
+    <string name="activity_type_frisbee">frizbi</string>
     <string name="activity_type_gliding">lietanie</string>
     <string name="activity_type_hang_gliding">lietanie na rogale</string>
     <string name="activity_type_helicopter">vrtuľník</string>
@@ -75,9 +75,9 @@ limitations under the License.
     <string name="activity_type_trail_hiking">turistika</string>
     <string name="activity_type_trail_running">beh v teréne</string>
     <string name="activity_type_train">vlak</string>
-    <string name="activity_type_ultimate_frisbee">ultimate frisbee</string>
+    <string name="activity_type_ultimate_frisbee">ultimate frizbi</string>
     <string name="activity_type_unknown">neznáme</string>
-    <string name="activity_type_wakeboarding">wakeboarding</string>
+    <string name="activity_type_wakeboarding">wakeboardovanie</string>
     <string name="activity_type_walking">chôdza</string>
     <string name="activity_type_water_skiing">vodné lyžovanie</string>
     <string name="activity_type_wind_surfing">windsurfing</string>
@@ -180,9 +180,9 @@ limitations under the License.
     <!-- Sensor State -->
     <string name="sensor_state_battery">Stav batérie</string>
     <string name="sensor_state_cadence">Kadencia</string>
-    <string name="sensor_state_cadence_value">%1$d otáčok/min.</string>
+    <string name="sensor_state_cadence_value">%1$d otáčok/min</string>
     <string name="sensor_state_heart_rate">Srdcová frekvencia</string>
-    <string name="sensor_state_heart_rate_value">%1$d úderov/min.</string>
+    <string name="sensor_state_heart_rate_value">%1$d úderov/min</string>
     <string name="sensor_state_power">Výkon</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Počas záznamu trasy nie je k dispozícii</string>
@@ -218,7 +218,9 @@ limitations under the License.
     <string name="settings_stats_units_metric">Metrické jednotky (km, m)</string>
     <string name="settings_stats_units_title">Preferované jednotky</string>
     <!-- Share Track -->
-    <string name="share_track_share_file_body">Táto trasa by ťa mohla zaujímať.\n\nPre zobrazenie tejto trasy použi aplikáciu Google zem alebo iný mapový softvér.\n\n%1$s</string>
+    <string name="share_track_share_file_body">Táto trasa by ťa mohla zaujímať.
+\n
+\n%1$s</string>
     <string name="share_track_subject">Chcem s vami zdieľať trasu</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Priem. tempo pohybu</string>
@@ -261,9 +263,9 @@ limitations under the License.
     <string name="unit_mile">mi.</string>
     <string name="unit_mile_per_hour">mi./h</string>
     <string name="unit_minute_per_kilometer">min./km</string>
-    <string name="unit_minute_per_mile">min./mi.</string>
+    <string name="unit_minute_per_mile">min./mi</string>
     <!-- Value -->
-    <string name="value_integer_feet">%1$d st.</string>
+    <string name="value_integer_feet">%1$d st</string>
     <string name="value_integer_feet_excellent_gps">%1$d st. (výborný signál GPS)</string>
     <string name="value_integer_feet_recommended">%1$d st. (odporúčané)</string>
     <string name="value_integer_kilometer">%1$d km</string>
@@ -272,9 +274,9 @@ limitations under the License.
     <string name="value_integer_meter_excellent_gps">%1$d m (výborný signál GPS)</string>
     <string name="value_integer_meter_poor_gps">%1$d m (slabý signál GPS)</string>
     <string name="value_integer_meter_recommended">%1$d m (odporúčané)</string>
-    <string name="value_integer_mile">%1$d mi.</string>
+    <string name="value_integer_mile">%1$d mi</string>
     <string name="value_integer_mile_hour">%1$d mi/h</string>
-    <string name="value_integer_minute">%1$d min.</string>
+    <string name="value_integer_minute">%1$d min</string>
     <string name="value_integer_second">%1$d s</string>
     <string name="value_none">Žiadne</string>
     <string name="value_off">Vypnúť</string>
@@ -380,12 +382,18 @@ limitations under the License.
     <string name="settings_layout_reset_confirm_message">Všetky nastavenia vzhľadu sa vrátia na predvolené hodnoty. Nebudú tým odstránené žiadne zaznamenané aktivity v zariadení.</string>
     <string name="settings_layout_reset_confirm_title">Predvolený vzhľad\?</string>
     <string name="settings_layout_reset_done">Všetky nastavenia vzhľadu bola vrátená na predvolené hodnoty</string>
-    <string name="settings_all_reset">Resetovať všetky nastavenia</string>
+    <string name="settings_all_reset">Obnovenie</string>
     <string name="settings_error_initial_values_restored">Ľutujeme, ale došlo k chybe. Všetky nastavenia bola vrátená na predvolené hodnoty.</string>
     <string name="settings_sensor_connecting">Pripojené k senzoru %1$s</string>
     <string name="settings_sensor_disconnected">Odpojené od %1$s</string>
-    <string name="settings_sensor_cycling_distance_speed">Cyklistika: vzdialenosť a rýchlosť</string>
-    <string name="settings_sensor_running_speed_and_cadence">Beh: vzdialenosť, rýchlosť a kadencia</string>
-    <string name="settings_sensor_cycling_cadence">Cyklistika: kadencia</string>
+    <string name="settings_sensor_cycling_distance_speed">Vzdialenosť a rýchlosť</string>
+    <string name="settings_sensor_running_speed_and_cadence">Vzdialenosť, rýchlosť a kadencia</string>
+    <string name="settings_sensor_cycling_cadence">Kadencia</string>
     <string name="settings_prevent_reimport_tracks_title">Zabráňte opätovnému importu aktivít</string>
+    <string name="about_version_name">Názov verzie: %1$s</string>
+    <string name="about_history"></string>
+    <string name="about_version_code">Kód verzie: %1$d</string>
+    <string name="about_description"><i>OpenTracks</i> je aplikácia na sledovanie športu, ktorá úplne rešpektuje vaše súkromie.</string>
+    <string name="about_url">Project web page: <a href="%1$s">%1$s</a></string>
+    <string name="about_preference_title">O OpenTracks</string>
 </resources>
