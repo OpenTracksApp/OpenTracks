@@ -41,6 +41,7 @@ import androidx.core.view.GestureDetectorCompat;
 import java.text.NumberFormat;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import de.dennisguse.opentracks.MarkerDetailActivity;
@@ -82,12 +83,12 @@ public class ChartView extends View {
         X_FRACTION_FORMAT.setMinimumFractionDigits(1);
     }
 
-    private final List<ChartValueSeries> seriesList = new ArrayList<>();
+    private final List<ChartValueSeries> seriesList = new LinkedList<>();
     private final ChartValueSeries speedSeries;
     private final ChartValueSeries paceSeries;
 
-    private final List<ChartPoint> chartPoints = new ArrayList<>();
-    private final List<Marker> markers = new ArrayList<>();
+    private final LinkedList<ChartPoint> chartPoints = new LinkedList<>();
+    private final List<Marker> markers = new LinkedList<>();
     private final ExtremityMonitor xExtremityMonitor = new ExtremityMonitor();
     private final int backgroundColor;
     private final Paint axisPaint;
@@ -834,22 +835,22 @@ public class ChartView extends View {
         return paint.measureText(marker);
     }
 
-    /**
-     * Draws the current pointer.
-     *
-     * @param canvas the canvas
-     */
     private void drawPointer(Canvas canvas) {
+        if (chartPoints.isEmpty()) {
+            return;
+        }
+        ChartPoint last = chartPoints.getLast();
+
         ChartValueSeries firstChartValueSeries = null;
         for (ChartValueSeries chartValueSeries : seriesList) {
-            if (chartValueSeries.isEnabled() && chartValueSeries.hasData()) {
+            if (chartValueSeries.isEnabled() && chartValueSeries.hasData() && chartValueSeries.isChartPointValid(last)) {
                 firstChartValueSeries = chartValueSeries;
                 break;
             }
         }
         if (firstChartValueSeries != null && chartPoints.size() > 0) {
             int dx = getX(maxX) - pointer.getIntrinsicWidth() / 2;
-            double value = firstChartValueSeries.extractDataFromChartPoint(chartPoints.get(chartPoints.size() - 1));
+            double value = firstChartValueSeries.extractDataFromChartPoint(last);
             int dy = getY(firstChartValueSeries, value) - pointer.getIntrinsicHeight();
             canvas.translate(dx, dy);
             pointer.draw(canvas);
