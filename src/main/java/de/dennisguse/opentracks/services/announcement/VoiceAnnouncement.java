@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.services.tasks;
+package de.dennisguse.opentracks.services.announcement;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -33,8 +33,8 @@ import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
-import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 
 /**
@@ -165,7 +165,7 @@ public class VoiceAnnouncement {
         intervalStatistics.addTrackPoints(trackPointIterator);
         IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
 
-        String announcement = AnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), isMetricUnits, isReportSpeed, lastInterval);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), isMetricUnits, isReportSpeed, lastInterval);
 
         // We don't care about the utterance id. It is supplied here to force onUtteranceCompleted to be called.
         tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null, "not used");

@@ -22,7 +22,8 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import de.dennisguse.opentracks.services.tasks.VoiceAnnouncement;
+
+import de.dennisguse.opentracks.services.announcement.VoiceAnnouncement;
 
 /**
  * @author Jimmy Shih

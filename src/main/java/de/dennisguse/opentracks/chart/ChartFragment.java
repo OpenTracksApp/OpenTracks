@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.fragments;
+package de.dennisguse.opentracks.chart;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -32,7 +32,6 @@ import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackActivityDataHubInterface;
-import de.dennisguse.opentracks.chart.ChartPoint;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.data.Altitude;

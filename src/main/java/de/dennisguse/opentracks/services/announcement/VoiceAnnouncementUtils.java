@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.services.tasks;
+package de.dennisguse.opentracks.services.announcement;
 
 import android.content.Context;
 
@@ -12,9 +12,9 @@ import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 
-class AnnouncementUtils {
+class VoiceAnnouncementUtils {
 
-    private AnnouncementUtils() {
+    private VoiceAnnouncementUtils() {
     }
 
     static String getAnnouncement(Context context, TrackStatistics trackStatistics, boolean isMetricUnits, boolean isReportSpeed, @Nullable IntervalStatistics.Interval currentInterval) {

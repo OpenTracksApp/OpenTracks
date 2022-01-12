@@ -1,4 +1,6 @@
-package de.dennisguse.opentracks.services.tasks;
+package de.dennisguse.opentracks.services.announcement;
+
+import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,8 +24,6 @@ import java.util.concurrent.TimeoutException;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TrackStatistics;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class VoiceAnnouncementManagerTest {

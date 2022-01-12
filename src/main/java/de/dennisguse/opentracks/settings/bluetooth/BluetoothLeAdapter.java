@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.settings;
+package de.dennisguse.opentracks.settings.bluetooth;
 
 import android.bluetooth.BluetoothDevice;
 import android.view.LayoutInflater;

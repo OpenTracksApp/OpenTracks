@@ -1,4 +1,9 @@
-package de.dennisguse.opentracks.util;
+package de.dennisguse.opentracks.settings;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,19 +16,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.DataField;
 import de.dennisguse.opentracks.content.data.Layout;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
-import de.dennisguse.opentracks.settings.PreferencesUtils;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RunWith(AndroidJUnit4.class)
 public class PreferencesUtilsTest {
