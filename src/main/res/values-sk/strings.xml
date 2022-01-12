@@ -391,9 +391,49 @@ limitations under the License.
     <string name="settings_sensor_cycling_cadence">Kadencia</string>
     <string name="settings_prevent_reimport_tracks_title">Zabráňte opätovnému importu aktivít</string>
     <string name="about_version_name">Názov verzie: %1$s</string>
-    <string name="about_history"></string>
+    <string name="about_history">OpenTracks je vilica sistema <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (ukinjeno leta 2016).</string>
     <string name="about_version_code">Kód verzie: %1$d</string>
     <string name="about_description"><i>OpenTracks</i> je aplikácia na sledovanie športu, ktorá úplne rešpektuje vaše súkromie.</string>
     <string name="about_url">Project web page: <a href="%1$s">%1$s</a></string>
     <string name="about_preference_title">O OpenTracks</string>
+    <string name="help_track_export_title">Ako môžem exportovať/zdieľať nahrané skladby\?</string>
+    <string name="export_with_photos">s fotografiami</string>
+    <string name="export_without_photos">bez fotografií</string>
+    <string name="help_gps_troubleshooting_content"> Čo môžete urobiť:
+\n a) skontrolujte, či je zapnutá funkcia GPS,
+\n b) zlepšiť príjem GPS (napríklad ísť vonku),
+\n c) skontrolujte pomocou <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">aplikácia GPSTest</a> a
+\n d) zakázať úsporu energie.
+\n
+\n Ak všetko nepomôže, Nahláste chybu. </string>
+    <string name="help_data_google_play_services_title">Vyžaduje/využíva služba OpenTracks službu Google Play\?</string>
+    <string name="description_altitude_loss">Strata nadmorskej výšky: %1$d m (%2$d ft)</string>
+    <string name="description_default_speed_or_pace">Podľa typu činnosti</string>
+    <string name="export_error_post_workout">Export po tréningu zlyhal, skontrolujte prosím adresár pre export.</string>
+    <string name="help_data_storage_content"> Údaje snímača sa ukladajú na zaznamenané miesto. Pokiaľ ide o snímač srdcovej frekvencie, znamená to, že na jedno miesto je uložené iba <i>jedno meranie srdcovej frekvencie</i>. Ak stojíte alebo ste vo vnútri, nezaznamenajú sa žiadne údaje zo senzorov(ale zobrazia sa). </string>
+    <string name="help_feature_title">OpenTracks má tieto funkcie:</string>
+    <string name="help_recording_title">Ako služba OpenTracks zaznamenáva údaje\?</string>
+    <string name="help_recording_content">Služba OpenTracks využíva snímač GPS zariadenia na nepretržité zaznamenávanie polohy. Ak zariadenie GPS nahlási nepresné údaje (napr. polohu, rýchlosť, nadmorskú výšku), OpenTracks s tým nemôže nič urobiť.</string>
+    <string name="about_libraries">Knižnice</string>
+    <string name="help_storage_pictures_content">Tie sú uložené v internom úložisku aplikácie (t. j. prístupné len v rámci OpenTracks).</string>
+    <string name="help_data_storage_title">Ako služba OpenTracks ukladá údaje zo senzorov\?</string>
+    <string name="open_track_as_KML">Otvoriť ako KML</string>
+    <string name="help_track_map_title">Ako zobraziť trať na mape\?</string>
+    <string name="open_track_as_GPX">Otvoriť ako GPX</string>
+    <string name="about_third_party_data">Údaje tretích strán</string>
+    <string name="help_feature_content">* vytvárať stopy GPS
+\n * používať snímač srdcového tepu (iba Bluetooth LE)
+\n * hlasové oznámenia (podľa času alebo vzdialenosti)
+\n * vytvárať značky (vrátane obrázkov)
+\n * funguje úplne offline
+\n * zobrazenie tratí na mape (pozri nižšie)</string>
+    <string name="open_track_as_trackfileformat">Otvoriť ako %1$s</string>
+    <string name="help_track_export_content"> Skladby je možné exportovať z nastavení ako KMZ, KML alebo GPX. KMZ / KML všetky dáta; GPX iba miesta. Skladby zdieľané prostredníctvom <i>Ikona zdieľania</i>sa zdieľajú ako KMZ. </string>
+    <string name="help_support_title">Ako môžem podporiť OpenTracks\?</string>
+    <string name="activity_type_escooter">skúter</string>
+    <string name="help_storage_pictures_title">Ako služba OpenTracks ukladá obrázky, ktoré boli nasnímané ako značky\?</string>
+    <string name="help_gps_troubleshooting_title">OpenTracks nezaznamenáva miesta\?</string>
+    <string name="export_cannot_write_to_dir">Nemožno zapisovať do exportného adresára.</string>
+    <string name="export_dir_not_writable">" (nemožno zapísať!)"</string>
+    <string name="export_track_already_exists_msg">Stopa %1$s už existuje v cieľovom adresári.</string>
 </resources>
