@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 
 import java.util.Objects;
 
-import de.dennisguse.opentracks.util.UnitConversions;
-
 public class Distance {
 
     public static Distance of(double distance_m) {

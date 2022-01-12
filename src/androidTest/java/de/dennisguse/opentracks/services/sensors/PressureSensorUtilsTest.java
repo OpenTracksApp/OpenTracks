@@ -1,9 +1,9 @@
-package de.dennisguse.opentracks.util;
-
-import org.junit.Test;
+package de.dennisguse.opentracks.services.sensors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+
+import org.junit.Test;
 
 public class PressureSensorUtilsTest {
 

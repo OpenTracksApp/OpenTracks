@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.util.PressureSensorUtils;
 
 /**
  * Estimates the altitude gain and altitude loss using the device's pressure sensor (i.e., barometer).

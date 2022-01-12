@@ -35,7 +35,6 @@ import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataCyclingPower;
 import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
 import de.dennisguse.opentracks.content.sensor.SensorDataRunning;
-import de.dennisguse.opentracks.util.BluetoothUtils;
 
 /**
  * Manages connection to a Bluetooth LE sensor and subscribes for onChange-notifications.

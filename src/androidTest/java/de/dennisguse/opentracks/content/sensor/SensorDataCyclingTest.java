@@ -1,5 +1,10 @@
 package de.dennisguse.opentracks.content.sensor;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.Ignore;
@@ -7,12 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.util.UintUtils;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
+import de.dennisguse.opentracks.services.sensors.UintUtils;
 
 @RunWith(AndroidJUnit4.class)
 public class SensorDataCyclingTest {

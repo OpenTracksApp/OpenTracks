@@ -10,8 +10,8 @@ import java.time.Duration;
 
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
-import de.dennisguse.opentracks.util.UintUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
+import de.dennisguse.opentracks.content.data.UnitConversions;
+import de.dennisguse.opentracks.services.sensors.UintUtils;
 
 /**
  * Provides cadence in rpm and speed in milliseconds from Bluetooth LE Cycling Cadence and Speed sensors.

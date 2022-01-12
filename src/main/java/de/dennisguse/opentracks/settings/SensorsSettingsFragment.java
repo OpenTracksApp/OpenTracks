@@ -9,12 +9,12 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.services.sensors.BluetoothUtils;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingCadenceAndSpeedPreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingPowerPreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeHeartRatePreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeRunningSpeedAndCadencePreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeSensorPreference;
-import de.dennisguse.opentracks.util.BluetoothUtils;
 
 public class SensorsSettingsFragment extends PreferenceFragmentCompat {
 

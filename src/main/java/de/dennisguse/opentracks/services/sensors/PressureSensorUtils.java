@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.util;
+package de.dennisguse.opentracks.services.sensors;
 
 import android.hardware.SensorManager;
 

@@ -6,7 +6,6 @@ import java.time.Duration;
 import java.util.Objects;
 
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-import de.dennisguse.opentracks.util.UnitConversions;
 
 public class Speed {
 
