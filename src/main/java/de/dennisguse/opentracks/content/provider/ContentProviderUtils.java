@@ -52,7 +52,6 @@ import de.dennisguse.opentracks.content.data.TracksColumns;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.FileUtils;
-import de.dennisguse.opentracks.util.UUIDUtils;
 
 /**
  * {@link ContentProviderUtils} implementation.
