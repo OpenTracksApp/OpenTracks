@@ -512,4 +512,12 @@ limitations under the License.
     <string name="settings_sensor_cycling_cadence">Pyöräily: tahtiaika</string>
     <string name="settings_sensor_cycling_distance_speed">Pyöräily: etäisyys ja nopeus</string>
     <string name="settings_sensor_running_speed_and_cadence">Juoksu: etäisyys, nopeus ja askeltiheys</string>
+    <string name="export_cannot_write_to_dir">Ei voi kirjoittaa vientihakemistoon.</string>
+    <string name="export_dir_not_writable">" (ei kirjoitettavissa!)"</string>
+    <string name="generic_from">Osoitteesta</string>
+    <string name="generic_filter">Suodatin</string>
+    <string name="generic_to">Osoite</string>
+    <string name="description_speed_source_gps">GPS</string>
+    <string name="generic_choose_an_option">Valitse vaihtoehto</string>
+    <string name="generic_undo">Kumoa</string>
 </resources>
