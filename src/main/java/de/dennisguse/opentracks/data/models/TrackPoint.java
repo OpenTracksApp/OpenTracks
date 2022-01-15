@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.dennisguse.opentracks.content.data;
+package de.dennisguse.opentracks.data.models;
 
 import android.location.Location;
 import android.os.Parcel;

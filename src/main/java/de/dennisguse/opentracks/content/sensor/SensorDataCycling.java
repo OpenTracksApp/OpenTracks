@@ -8,9 +8,9 @@ import androidx.core.util.Pair;
 
 import java.time.Duration;
 
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Speed;
-import de.dennisguse.opentracks.content.data.UnitConversions;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.UnitConversions;
 import de.dennisguse.opentracks.services.sensors.UintUtils;
 
 /**

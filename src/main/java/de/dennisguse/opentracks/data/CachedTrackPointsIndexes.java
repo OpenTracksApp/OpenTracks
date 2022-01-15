@@ -1,8 +1,8 @@
-package de.dennisguse.opentracks.content.provider;
+package de.dennisguse.opentracks.data;
 
 import android.database.Cursor;
 
-import de.dennisguse.opentracks.content.data.TrackPointsColumns;
+import de.dennisguse.opentracks.data.tables.TrackPointsColumns;
 
 /**
  * A cache of track points indexes.

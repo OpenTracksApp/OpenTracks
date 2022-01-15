@@ -15,12 +15,12 @@ import org.junit.runner.RunWith;
 
 import java.time.Duration;
 
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.content.provider.TrackPointIterator;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.TrackPointIterator;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
 import de.dennisguse.opentracks.util.StringUtils;

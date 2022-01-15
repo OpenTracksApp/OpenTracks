@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.exporter.GPXTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.KMLTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;

@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.content;
+package de.dennisguse.opentracks.data;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -25,28 +25,30 @@ import android.os.HandlerThread;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Marker;
-import de.dennisguse.opentracks.content.data.MarkerColumns;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.TrackPointsColumns;
-import de.dennisguse.opentracks.content.data.TracksColumns;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.content.provider.TrackPointIterator;
+import de.dennisguse.opentracks.data.models.Altitude;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.data.tables.MarkerColumns;
+import de.dennisguse.opentracks.data.tables.TrackPointsColumns;
+import de.dennisguse.opentracks.data.tables.TracksColumns;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 
 /**
  * Track data hub.
- * Receives data from {@link de.dennisguse.opentracks.content.provider.CustomContentProvider} and distributes it to {@link TrackDataListener} after some processing.
+ * Receives data from {@link CustomContentProvider} and distributes it to {@link Listener} after some processing.
  * <p>
  * {@link TrackPoint}s are filtered/downsampled with a dynamic sampling frequency.
  *
@@ -70,7 +72,7 @@ public class TrackDataHub {
     private static final String TAG = TrackDataHub.class.getSimpleName();
 
     private final Context context;
-    private final Set<TrackDataListener> listeners;
+    private final Set<Listener> listeners;
     private final ContentProviderUtils contentProviderUtils;
     private final int targetNumPoints;
 
@@ -178,11 +180,11 @@ public class TrackDataHub {
     }
 
     /**
-     * Registers a {@link TrackDataListener}.
+     * Registers a {@link Listener}.
      *
      * @param trackDataListener the track data listener
      */
-    public void registerTrackDataListener(final TrackDataListener trackDataListener) {
+    public void registerTrackDataListener(final Listener trackDataListener) {
         handler.post(() -> {
             listeners.add(trackDataListener);
             if (isStarted()) {
@@ -192,11 +194,11 @@ public class TrackDataHub {
     }
 
     /**
-     * Unregisters a {@link TrackDataListener}.
+     * Unregisters a {@link Listener}.
      *
      * @param trackDataListener the track data listener
      */
-    public void unregisterTrackDataListener(final TrackDataListener trackDataListener) {
+    public void unregisterTrackDataListener(final Listener trackDataListener) {
         handler.post(() -> listeners.remove(trackDataListener));
     }
 
@@ -218,7 +220,7 @@ public class TrackDataHub {
 
         notifyTracksTableUpdate(listeners);
 
-        for (TrackDataListener listener : listeners) {
+        for (Listener listener : listeners) {
             listener.clearTrackPoints();
         }
         notifyTrackPointsTableUpdate(true, listeners);
@@ -230,8 +232,8 @@ public class TrackDataHub {
      *
      * @param trackDataListener the track data listener.
      */
-    private void loadDataForListener(TrackDataListener trackDataListener) {
-        Set<TrackDataListener> trackDataListeners = Collections.singleton(trackDataListener);
+    private void loadDataForListener(Listener trackDataListener) {
+        Set<Listener> trackDataListeners = Collections.singleton(trackDataListener);
 
         //Track
         notifyTracksTableUpdate(trackDataListeners);
@@ -253,12 +255,12 @@ public class TrackDataHub {
      *
      * @param trackDataListeners the track data listeners to notify
      */
-    private void notifyTracksTableUpdate(Set<TrackDataListener> trackDataListeners) {
+    private void notifyTracksTableUpdate(Set<Listener> trackDataListeners) {
         if (trackDataListeners.isEmpty()) {
             return;
         }
         Track track = contentProviderUtils.getTrack(selectedTrackId);
-        for (TrackDataListener trackDataListener : trackDataListeners) {
+        for (Listener trackDataListener : trackDataListeners) {
             trackDataListener.onTrackUpdated(track);
         }
     }
@@ -269,12 +271,12 @@ public class TrackDataHub {
      *
      * @param trackDataListeners the track data listeners to notify
      */
-    private void notifyMarkersTableUpdate(Set<TrackDataListener> trackDataListeners) {
+    private void notifyMarkersTableUpdate(Set<Listener> trackDataListeners) {
         if (trackDataListeners.isEmpty()) {
             return;
         }
 
-        for (TrackDataListener trackDataListener : trackDataListeners) {
+        for (Listener trackDataListener : trackDataListeners) {
             trackDataListener.clearMarkers();
         }
 
@@ -282,14 +284,14 @@ public class TrackDataHub {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     Marker marker = contentProviderUtils.createMarker(cursor);
-                    for (TrackDataListener trackDataListener : trackDataListeners) {
+                    for (Listener trackDataListener : trackDataListeners) {
                         trackDataListener.onNewMarker(marker);
                     }
                 } while (cursor.moveToNext());
             }
         }
 
-        for (TrackDataListener trackDataListener : trackDataListeners) {
+        for (Listener trackDataListener : trackDataListeners) {
             trackDataListener.onNewMarkersDone();
         }
     }
@@ -299,7 +301,7 @@ public class TrackDataHub {
      *
      * @param updateSamplingState true to update the sampling state
      */
-    private void notifyTrackPointsTableUpdate(boolean updateSamplingState, Set<TrackDataListener> listeners) {
+    private void notifyTrackPointsTableUpdate(boolean updateSamplingState, Set<Listener> listeners) {
         if (listeners.isEmpty()) {
             return;
         }
@@ -308,7 +310,7 @@ public class TrackDataHub {
             // Reload and resample the track at a lower frequency.
             Log.i(TAG, "Resampling track after " + numLoadedPoints + " points.");
             resetSamplingState();
-            for (TrackDataListener listener : listeners) {
+            for (Listener listener : listeners) {
                 listener.clearTrackPoints();
             }
         }
@@ -366,11 +368,11 @@ public class TrackDataHub {
 
                 // Also include the last point if the selected track is not recording.
                 if ((localNumLoadedTrackPoints % samplingFrequency == 0) || (trackPointId == lastTrackPointId && !isSelectedTrackRecording())) {
-                    for (TrackDataListener trackDataListener : listeners) {
+                    for (Listener trackDataListener : listeners) {
                         trackDataListener.onSampledInTrackPoint(trackPoint, currentUpdater.getTrackStatistics(), currentUpdater.getSmoothedSpeed(), currentUpdater.getSmoothedAltitude());
                     }
                 } else {
-                    for (TrackDataListener trackDataListener : listeners) {
+                    for (Listener trackDataListener : listeners) {
                         trackDataListener.onSampledOutTrackPoint(trackPoint, currentUpdater.getTrackStatistics());
                     }
                 }
@@ -389,7 +391,7 @@ public class TrackDataHub {
             lastSeenTrackPointId = localLastSeenTrackPointIdId;
         }
 
-        listeners.stream().forEach(TrackDataListener::onNewTrackPointsDone);
+        listeners.stream().forEach(Listener::onNewTrackPointsDone);
     }
 
 
@@ -414,5 +416,64 @@ public class TrackDataHub {
 
     public void setRecordingDistanceInterval(Distance recordingDistanceInterval) {
         this.recordingDistanceInterval = recordingDistanceInterval;
+    }
+
+    public interface Listener {
+
+        /**
+         * Called when the track or its statistics has been updated.
+         *
+         * @param track the track
+         */
+        //TODO Could be @NonNull
+        void onTrackUpdated(Track track);
+
+        /**
+         * Called to clear previously-sent track points.
+         */
+        void clearTrackPoints();
+
+        /**
+         * Called when a sampled in track point is read.
+         *
+         * @param trackPoint the trackPoint
+         */
+        default void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, Speed smoothedSpeed, @Nullable Altitude smoothedAltitude_m) {
+        }
+
+        /**
+         * Called when a sampled out track point is read.
+         *
+         * @param trackPoint the trackPoint
+         */
+        default void onSampledOutTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics) {
+        }
+
+        /**
+         * Called when finish sending new track points.
+         */
+        default void onNewTrackPointsDone() {
+        }
+
+        /**
+         * Called to clear previously sent markers.
+         */
+        default void clearMarkers() {
+        }
+
+        /**
+         * Called when a new marker is read.
+         *
+         * @param marker the marker
+         */
+        default void onNewMarker(@NonNull Marker marker) {
+        }
+
+        /**
+         * Called when finish sending new markers.
+         * This gets called after every batch of calls to {@link #clearMarkers()} and {@link #onNewMarker(Marker)}.
+         */
+        default void onNewMarkersDone() {
+        }
     }
 }

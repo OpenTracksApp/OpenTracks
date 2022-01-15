@@ -7,10 +7,10 @@ import android.bluetooth.BluetoothGattCharacteristic;
 
 import org.junit.Test;
 
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataRunning;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Speed;
 
 public class BluetoothUtilsTest {
 

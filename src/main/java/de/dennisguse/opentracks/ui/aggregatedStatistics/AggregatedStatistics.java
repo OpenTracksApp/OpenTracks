@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 public class AggregatedStatistics {

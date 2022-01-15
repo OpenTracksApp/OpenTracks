@@ -345,7 +345,7 @@ limitations under the License.
         </activity>
 
         <provider
-            android:name=".content.provider.ShareContentProvider"
+            android:name=".data.ShareContentProvider"
             android:authorities="${applicationId}.content"
             android:exported="false"
             android:grantUriPermissions="true" />

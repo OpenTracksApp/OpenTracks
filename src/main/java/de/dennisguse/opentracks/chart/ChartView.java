@@ -45,7 +45,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.stats.ExtremityMonitor;
 import de.dennisguse.opentracks.ui.markers.MarkerDetailActivity;
 import de.dennisguse.opentracks.ui.markers.MarkerUtils;

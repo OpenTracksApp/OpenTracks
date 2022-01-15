@@ -2,7 +2,7 @@ package de.dennisguse.opentracks.stats;
 
 import androidx.annotation.Nullable;
 
-import de.dennisguse.opentracks.content.data.Speed;
+import de.dennisguse.opentracks.data.models.Speed;
 
 public class SpeedRingBuffer extends RingBuffer<Speed> {
 

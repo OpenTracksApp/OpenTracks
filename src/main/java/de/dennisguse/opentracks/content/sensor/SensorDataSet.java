@@ -4,8 +4,8 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
-import de.dennisguse.opentracks.content.data.Speed;
-import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 
 public final class SensorDataSet {
 

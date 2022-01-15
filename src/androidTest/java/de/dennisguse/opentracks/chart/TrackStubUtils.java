@@ -18,9 +18,9 @@ package de.dennisguse.opentracks.chart;
 
 import java.time.Instant;
 
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Speed;
-import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 
 /**
  * Commons utilities for creating stubs of track, location.

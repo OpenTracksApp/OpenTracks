@@ -4,7 +4,7 @@ import org.junit.Assert;
 
 import java.util.List;
 
-import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 
 public class TrackPointAssert {
 

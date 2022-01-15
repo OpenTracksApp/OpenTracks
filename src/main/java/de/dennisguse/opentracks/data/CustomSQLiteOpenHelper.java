@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.content.provider;
+package de.dennisguse.opentracks.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -15,10 +15,10 @@ import java.time.zone.ZoneRules;
 import java.util.UUID;
 
 import de.dennisguse.opentracks.Startup;
-import de.dennisguse.opentracks.content.data.MarkerColumns;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPointsColumns;
-import de.dennisguse.opentracks.content.data.TracksColumns;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.tables.MarkerColumns;
+import de.dennisguse.opentracks.data.tables.TrackPointsColumns;
+import de.dennisguse.opentracks.data.tables.TracksColumns;
 
 /**
  * Database helper for creating and upgrading the database.

@@ -23,8 +23,8 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackEditBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;

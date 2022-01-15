@@ -14,12 +14,12 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.content.data;
+package de.dennisguse.opentracks.data.tables;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
 
 /**
  * Constants for the track points table.

@@ -23,9 +23,9 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.MarkerColumns;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.tables.MarkerColumns;
 import de.dennisguse.opentracks.ui.util.ExecutorListViewService;
 import de.dennisguse.opentracks.ui.util.ScrollVisibleViews;
 import de.dennisguse.opentracks.util.ListItemUtils;

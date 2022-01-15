@@ -5,8 +5,8 @@ import android.util.Log;
 
 import java.io.IOException;
 
-import de.dennisguse.opentracks.content.data.Altitude;
-import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.data.models.Altitude;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.util.EGM2008Utils;
 
 public class EGM2008CorrectionManager {

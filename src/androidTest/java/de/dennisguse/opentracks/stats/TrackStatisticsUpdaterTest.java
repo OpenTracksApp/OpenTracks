@@ -12,12 +12,12 @@ import org.junit.runner.RunWith;
 import java.time.Duration;
 import java.time.Instant;
 
-import de.dennisguse.opentracks.content.data.Altitude;
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.data.models.Altitude;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 
 @RunWith(AndroidJUnit4.class)
 public class TrackStatisticsUpdaterTest {

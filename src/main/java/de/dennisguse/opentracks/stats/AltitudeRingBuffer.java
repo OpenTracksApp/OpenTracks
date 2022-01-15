@@ -2,7 +2,7 @@ package de.dennisguse.opentracks.stats;
 
 import androidx.annotation.Nullable;
 
-import de.dennisguse.opentracks.content.data.Altitude;
+import de.dennisguse.opentracks.data.models.Altitude;
 
 public class AltitudeRingBuffer extends RingBuffer<Altitude> {
 

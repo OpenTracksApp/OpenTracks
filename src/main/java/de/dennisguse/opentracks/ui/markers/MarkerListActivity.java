@@ -33,10 +33,10 @@ import androidx.loader.content.Loader;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Marker;
-import de.dennisguse.opentracks.content.data.MarkerColumns;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.tables.MarkerColumns;
 import de.dennisguse.opentracks.databinding.MarkerListBinding;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;

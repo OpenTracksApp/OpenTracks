@@ -37,8 +37,8 @@ import androidx.fragment.app.FragmentActivity;
 import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Marker;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.databinding.MarkerDetailFragmentBinding;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;

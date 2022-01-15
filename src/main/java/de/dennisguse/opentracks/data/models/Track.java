@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.content.data;
+package de.dennisguse.opentracks.data.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

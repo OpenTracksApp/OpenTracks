@@ -15,8 +15,8 @@ import java.util.List;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackSelection;
+import de.dennisguse.opentracks.data.TrackSelection;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.AggregatedStatsBinding;
 
 public class AggregatedStatisticsActivity extends AbstractActivity implements FilterDialogFragment.FilterDialogListener {

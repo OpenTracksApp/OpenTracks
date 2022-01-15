@@ -10,9 +10,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackSelection;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.TrackSelection;
+import de.dennisguse.opentracks.data.models.Track;
 
 public class AggregatedStatisticsModel extends AndroidViewModel {
 

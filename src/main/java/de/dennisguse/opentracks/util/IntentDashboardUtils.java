@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.dennisguse.opentracks.content.data.MarkerColumns;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPointsColumns;
-import de.dennisguse.opentracks.content.data.TracksColumns;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.tables.MarkerColumns;
+import de.dennisguse.opentracks.data.tables.TrackPointsColumns;
+import de.dennisguse.opentracks.data.tables.TracksColumns;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**

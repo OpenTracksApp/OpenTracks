@@ -27,12 +27,12 @@ import androidx.annotation.NonNull;
 import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.TrackPoint;
 import de.dennisguse.opentracks.content.sensor.SensorData;
 import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
 import de.dennisguse.opentracks.content.sensor.SensorDataRunning;
 import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**

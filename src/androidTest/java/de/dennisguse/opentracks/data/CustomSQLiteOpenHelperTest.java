@@ -1,4 +1,8 @@
-package de.dennisguse.opentracks.content.provider;
+package de.dennisguse.opentracks.data;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -20,13 +24,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.dennisguse.opentracks.content.data.MarkerColumns;
-import de.dennisguse.opentracks.content.data.TrackPointsColumns;
-import de.dennisguse.opentracks.content.data.TracksColumns;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import de.dennisguse.opentracks.data.tables.MarkerColumns;
+import de.dennisguse.opentracks.data.tables.TrackPointsColumns;
+import de.dennisguse.opentracks.data.tables.TracksColumns;
 
 @RunWith(AndroidJUnit4.class)
 public class CustomSQLiteOpenHelperTest {

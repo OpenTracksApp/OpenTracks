@@ -32,9 +32,9 @@ import java.util.List;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)

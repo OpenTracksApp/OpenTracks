@@ -16,12 +16,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
-import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.util.FileUtils;
 
 public class ImportService extends JobIntentService {
 

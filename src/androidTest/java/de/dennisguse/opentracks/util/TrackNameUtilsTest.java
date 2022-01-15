@@ -26,11 +26,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**

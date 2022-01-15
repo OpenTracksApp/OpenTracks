@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Set;
 
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.provider.ShareContentProvider;
+import de.dennisguse.opentracks.data.ShareContentProvider;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 

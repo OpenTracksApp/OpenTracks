@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.content.data;
+package de.dennisguse.opentracks.data.models;
 
 import androidx.annotation.NonNull;
 

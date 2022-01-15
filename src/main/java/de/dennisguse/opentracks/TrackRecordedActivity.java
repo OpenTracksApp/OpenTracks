@@ -35,9 +35,9 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import de.dennisguse.opentracks.chart.ChartFragment;
 import de.dennisguse.opentracks.chart.TrackDataHubInterface;
-import de.dennisguse.opentracks.content.TrackDataHub;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.TrackDataHub;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackRecordedBinding;
 import de.dennisguse.opentracks.fragments.StatisticsRecordedFragment;
 import de.dennisguse.opentracks.services.TrackDeleteService;

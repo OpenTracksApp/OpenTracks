@@ -14,7 +14,10 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.content.provider;
+package de.dennisguse.opentracks.data;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import android.content.ContentUris;
 import android.content.Context;
@@ -25,12 +28,9 @@ import androidx.test.core.app.ApplicationProvider;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.dennisguse.opentracks.content.data.MarkerColumns;
-import de.dennisguse.opentracks.content.data.TrackPointsColumns;
-import de.dennisguse.opentracks.content.data.TracksColumns;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import de.dennisguse.opentracks.data.tables.MarkerColumns;
+import de.dennisguse.opentracks.data.tables.TrackPointsColumns;
+import de.dennisguse.opentracks.data.tables.TracksColumns;
 
 /**
  * Tests {@link CustomContentProvider}.

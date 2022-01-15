@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.content.provider;
+package de.dennisguse.opentracks.data;
 
 import android.content.Context;
 import android.content.UriMatcher;
@@ -25,8 +25,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TracksColumns;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.tables.TracksColumns;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 

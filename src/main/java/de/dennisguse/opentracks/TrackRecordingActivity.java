@@ -23,9 +23,9 @@ import java.util.List;
 
 import de.dennisguse.opentracks.chart.ChartFragment;
 import de.dennisguse.opentracks.chart.TrackDataHubInterface;
-import de.dennisguse.opentracks.content.TrackDataHub;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.TrackDataHub;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackRecordingBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordingFragment;

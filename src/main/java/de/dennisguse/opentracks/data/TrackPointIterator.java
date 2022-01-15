@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.content.provider;
+package de.dennisguse.opentracks.data;
 
 import android.database.Cursor;
 
@@ -8,8 +8,8 @@ import androidx.annotation.VisibleForTesting;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 
 /**
  * A lightweight wrapper around the original {@link Cursor}.

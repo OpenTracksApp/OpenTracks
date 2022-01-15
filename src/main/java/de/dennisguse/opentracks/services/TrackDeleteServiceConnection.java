@@ -1,5 +1,7 @@
 package de.dennisguse.opentracks.services;
 
+import static de.dennisguse.opentracks.services.TrackDeleteService.EXTRA_TRACK_IDS;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +13,7 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 
 import de.dennisguse.opentracks.BuildConfig;
-import de.dennisguse.opentracks.content.data.Track;
-
-import static de.dennisguse.opentracks.services.TrackDeleteService.EXTRA_TRACK_IDS;
+import de.dennisguse.opentracks.data.models.Track;
 
 public class TrackDeleteServiceConnection implements ServiceConnection {
 

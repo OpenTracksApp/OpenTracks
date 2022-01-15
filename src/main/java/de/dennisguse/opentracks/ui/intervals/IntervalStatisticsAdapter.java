@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.util.StringUtils;
 
 public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

@@ -16,6 +16,8 @@
 
 package de.dennisguse.opentracks.content;
 
+import static org.junit.Assert.assertEquals;
+
 import android.content.Context;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -31,13 +33,11 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Speed;
-import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for {@link DescriptionGenerator}.

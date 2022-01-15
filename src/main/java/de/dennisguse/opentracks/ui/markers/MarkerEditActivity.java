@@ -40,8 +40,8 @@ import java.io.IOException;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Marker;
-import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.MarkerEditBinding;
 import de.dennisguse.opentracks.util.IntentUtils;
 

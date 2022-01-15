@@ -21,7 +21,7 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 

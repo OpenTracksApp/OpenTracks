@@ -1,4 +1,6 @@
-package de.dennisguse.opentracks.content.provider;
+package de.dennisguse.opentracks.data;
+
+import static org.junit.Assert.assertEquals;
 
 import android.net.Uri;
 import android.util.Pair;
@@ -8,10 +10,8 @@ import org.junit.Test;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
-
-import static org.junit.Assert.assertEquals;
 
 public class ShareContentProviderTest {
 

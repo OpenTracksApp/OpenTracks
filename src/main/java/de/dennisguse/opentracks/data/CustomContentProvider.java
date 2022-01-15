@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.content.provider;
+package de.dennisguse.opentracks.data;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -35,10 +35,10 @@ import androidx.annotation.VisibleForTesting;
 
 import java.util.Arrays;
 
-import de.dennisguse.opentracks.content.data.MarkerColumns;
-import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.TrackPointsColumns;
-import de.dennisguse.opentracks.content.data.TracksColumns;
+import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.data.tables.MarkerColumns;
+import de.dennisguse.opentracks.data.tables.TrackPointsColumns;
+import de.dennisguse.opentracks.data.tables.TracksColumns;
 
 /**
  * A {@link ContentProvider} that handles access to track points, tracks, and markers tables.

@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.content.data;
+package de.dennisguse.opentracks.data;
 
 import android.text.TextUtils;
 
@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.content.provider.SelectionData;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.tables.TracksColumns;
 
 public class TrackSelection implements ContentProviderUtils.ContentProviderSelectionInterface {
     private final List<Track.Id> trackIds = new ArrayList<>();

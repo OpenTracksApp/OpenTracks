@@ -31,13 +31,12 @@ import java.util.Collections;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.TrackDataHub;
-import de.dennisguse.opentracks.content.TrackDataListener;
-import de.dennisguse.opentracks.content.data.Altitude;
-import de.dennisguse.opentracks.content.data.Marker;
-import de.dennisguse.opentracks.content.data.Speed;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.data.TrackDataHub;
+import de.dennisguse.opentracks.data.models.Altitude;
+import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.databinding.ChartBinding;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -50,7 +49,7 @@ import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
  */
-public class ChartFragment extends Fragment implements TrackDataListener {
+public class ChartFragment extends Fragment implements TrackDataHub.Listener {
 
     private static final String KEY_CHART_VIEW_BY_DISTANCE_KEY = "chartViewByDistance";
 

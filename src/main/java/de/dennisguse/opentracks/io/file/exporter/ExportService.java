@@ -12,8 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.core.app.JobIntentService;
 import androidx.documentfile.provider.DocumentFile;
 
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.ExportUtils;
 

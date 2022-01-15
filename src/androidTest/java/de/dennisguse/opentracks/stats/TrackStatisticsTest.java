@@ -15,6 +15,9 @@
  */
 package de.dennisguse.opentracks.stats;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.Before;
@@ -24,11 +27,8 @@ import org.junit.runner.RunWith;
 import java.time.Duration;
 import java.time.Instant;
 
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Speed;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Speed;
 
 /**
  * Tests for {@link TrackStatistics}.

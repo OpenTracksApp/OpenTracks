@@ -11,7 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.services.sensors.UintUtils;
 
 @RunWith(AndroidJUnit4.class)

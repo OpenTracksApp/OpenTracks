@@ -1,5 +1,8 @@
 package de.dennisguse.opentracks.util;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 import android.content.Context;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -16,10 +19,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 
-import de.dennisguse.opentracks.content.data.TrackPoint;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 
 @RunWith(JUnit4.class)
 public class EGM2008UtilsTest {
