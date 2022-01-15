@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks;
+package de.dennisguse.opentracks.ui.markers;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -38,11 +38,12 @@ import androidx.lifecycle.ViewModelProvider;
 import java.io.FileDescriptor;
 import java.io.IOException;
 
+import de.dennisguse.opentracks.AbstractActivity;
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.databinding.MarkerEditBinding;
 import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.viewmodels.MarkerEditViewModel;
 
 /**
  * An activity to add/edit a marker.

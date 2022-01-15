@@ -12,7 +12,7 @@ import java.util.concurrent.Future;
  *
  * @param <T> the type of the object that will be used to identified the Runnable.
  */
-class ExecutorListViewService<T> {
+public class ExecutorListViewService<T> {
 
     private final List<T> enqueueObjects = new ArrayList<>();
     private final ExecutorService executorService;

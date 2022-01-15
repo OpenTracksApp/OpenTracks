@@ -267,7 +267,7 @@ limitations under the License.
         </activity>
 
         <activity
-            android:name=".MarkerDetailActivity"
+            android:name=".ui.markers.MarkerDetailActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="de.dennisguse.opentracks.MarkerDetails" />
@@ -275,10 +275,10 @@ limitations under the License.
             </intent-filter>
         </activity>
 
-        <activity android:name=".MarkerEditActivity" />
+        <activity android:name=".ui.markers.MarkerEditActivity" />
 
         <activity
-            android:name=".MarkerListActivity"
+            android:name=".ui.markers.MarkerListActivity"
             android:exported="true"
             android:label="@string/menu_markers"
             android:launchMode="singleTop">

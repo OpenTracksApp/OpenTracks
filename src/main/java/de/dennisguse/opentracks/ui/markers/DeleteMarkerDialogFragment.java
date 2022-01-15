@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.fragments;
+package de.dennisguse.opentracks.ui.markers;
 
 import android.app.Dialog;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.util;
+package de.dennisguse.opentracks.ui.markers;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

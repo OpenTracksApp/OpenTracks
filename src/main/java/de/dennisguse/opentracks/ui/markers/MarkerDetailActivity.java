@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks;
+package de.dennisguse.opentracks.ui.markers;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -31,11 +31,12 @@ import androidx.viewpager.widget.ViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.dennisguse.opentracks.AbstractActivity;
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.databinding.MarkerDetailActivityBinding;
-import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
-import de.dennisguse.opentracks.fragments.MarkerDetailFragment;
+import de.dennisguse.opentracks.ui.markers.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 
 /**
  * An activity to display marker detail info.

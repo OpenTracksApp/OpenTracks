@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.fragments;
+package de.dennisguse.opentracks.ui.markers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,14 +36,12 @@ import androidx.fragment.app.FragmentActivity;
 
 import java.time.Duration;
 
-import de.dennisguse.opentracks.MarkerEditActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.databinding.MarkerDetailFragmentBinding;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
-import de.dennisguse.opentracks.util.MarkerUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**

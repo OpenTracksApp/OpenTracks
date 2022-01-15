@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks;
+package de.dennisguse.opentracks.ui.markers;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -31,17 +31,18 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
-import de.dennisguse.opentracks.adapters.MarkerResourceCursorAdapter;
+import de.dennisguse.opentracks.AbstractActivity;
+import de.dennisguse.opentracks.ContextualActionModeCallback;
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.adapters.ScrollVisibleViews;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.databinding.MarkerListBinding;
-import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment;
-import de.dennisguse.opentracks.fragments.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.ui.markers.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 

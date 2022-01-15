@@ -36,7 +36,7 @@ public class ScrollVisibleViews implements AbsListView.OnScrollListener {
         to = firstVisibleItem + visibleItemCount;
     }
 
-    interface VisibleViewsListener {
+    public interface VisibleViewsListener {
         void onViewVisible(View view, int position);
     }
 }

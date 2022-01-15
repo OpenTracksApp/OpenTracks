@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.adapters;
+package de.dennisguse.opentracks.ui.markers;
 
 import android.app.Activity;
 import android.content.Context;
@@ -21,15 +21,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.Instant;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.adapters.ExecutorListViewService;
+import de.dennisguse.opentracks.adapters.ScrollVisibleViews;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
-import de.dennisguse.opentracks.util.MarkerUtils;
 
 public class MarkerResourceCursorAdapter extends ResourceCursorAdapter implements ScrollVisibleViews.VisibleViewsListener {
 
