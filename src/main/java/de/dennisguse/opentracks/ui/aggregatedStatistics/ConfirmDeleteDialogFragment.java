@@ -26,7 +26,7 @@ import androidx.fragment.app.FragmentManager;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Track;
-import de.dennisguse.opentracks.util.DialogUtils;
+import de.dennisguse.opentracks.ui.util.DialogUtils;
 
 /**
  * A DialogFragment to confirm delete.

@@ -27,7 +27,7 @@ import androidx.core.content.ContextCompat;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.util.ResourceUtils;
+import de.dennisguse.opentracks.ui.util.ResourceUtils;
 
 /**
  * Image adapter for choosing an activity type.

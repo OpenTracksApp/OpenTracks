@@ -35,7 +35,7 @@ import androidx.fragment.app.Fragment;
 import de.dennisguse.opentracks.databinding.ControllerFragmentBinding;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.util.ActivityUtils;
+import de.dennisguse.opentracks.ui.util.ActivityUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**

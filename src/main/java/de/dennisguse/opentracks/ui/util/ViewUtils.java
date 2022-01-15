@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.util;
+package de.dennisguse.opentracks.ui.util;
 
 import android.text.method.LinkMovementMethod;
 import android.view.View;

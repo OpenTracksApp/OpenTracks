@@ -25,7 +25,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.databinding.ActivitySettingsCustomLayoutListBinding;
 import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
 import de.dennisguse.opentracks.ui.customRecordingLayout.SettingsCustomLayoutListAdapter;
-import de.dennisguse.opentracks.util.RecyclerViewSwipeDeleteCallback;
+import de.dennisguse.opentracks.ui.util.RecyclerViewSwipeDeleteCallback;
 
 public class SettingsCustomLayoutListActivity extends AbstractActivity implements SettingsCustomLayoutListAdapter.SettingsCustomLayoutProfileClickListener {
 

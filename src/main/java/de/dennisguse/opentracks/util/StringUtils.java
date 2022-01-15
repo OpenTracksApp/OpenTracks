@@ -290,7 +290,7 @@ public class StringUtils {
      * @param category    the category
      * @param description the description
      */
-    static String getCategoryDescription(String category, String description) {
+    public static String getCategoryDescription(String category, String description) {
         if (category == null || category.length() == 0) {
             return description;
         }

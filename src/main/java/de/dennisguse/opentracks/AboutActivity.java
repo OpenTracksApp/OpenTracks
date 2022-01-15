@@ -6,8 +6,8 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import de.dennisguse.opentracks.databinding.AboutBinding;
+import de.dennisguse.opentracks.ui.util.ViewUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
-import de.dennisguse.opentracks.util.ViewUtils;
 
 public class AboutActivity extends AbstractActivity {
 

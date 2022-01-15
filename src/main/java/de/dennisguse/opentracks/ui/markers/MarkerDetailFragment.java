@@ -41,8 +41,8 @@ import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.databinding.MarkerDetailFragmentBinding;
 import de.dennisguse.opentracks.share.ShareUtils;
+import de.dennisguse.opentracks.ui.util.ListItemUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**

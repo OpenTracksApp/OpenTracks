@@ -28,7 +28,7 @@ import androidx.fragment.app.FragmentManager;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Marker;
-import de.dennisguse.opentracks.util.DialogUtils;
+import de.dennisguse.opentracks.ui.util.DialogUtils;
 
 /**
  * A DialogFragment to delete marker.

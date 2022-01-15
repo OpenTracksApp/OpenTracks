@@ -27,8 +27,8 @@ import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.tables.MarkerColumns;
 import de.dennisguse.opentracks.ui.util.ExecutorListViewService;
+import de.dennisguse.opentracks.ui.util.ListItemUtils;
 import de.dennisguse.opentracks.ui.util.ScrollVisibleViews;
-import de.dennisguse.opentracks.util.ListItemUtils;
 
 public class MarkerResourceCursorAdapter extends ResourceCursorAdapter implements ScrollVisibleViews.VisibleViewsListener {
 

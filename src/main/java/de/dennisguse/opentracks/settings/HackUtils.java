@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.util;
+package de.dennisguse.opentracks.settings;
 
 import androidx.annotation.NonNull;
 import androidx.preference.Preference;

@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.util;
+package de.dennisguse.opentracks.ui.util;
 
 import android.app.Dialog;
 import android.content.Context;

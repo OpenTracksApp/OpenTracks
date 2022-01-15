@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.util;
+package de.dennisguse.opentracks.ui.util;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -28,6 +28,7 @@ import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.util.StringUtils;
 
 /**
  * Utilities to display a list item.

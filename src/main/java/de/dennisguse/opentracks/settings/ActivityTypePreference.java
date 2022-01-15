@@ -29,7 +29,6 @@ import androidx.preference.PreferenceDialogFragmentCompat;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
-import de.dennisguse.opentracks.util.HackUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
