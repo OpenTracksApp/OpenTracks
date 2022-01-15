@@ -31,7 +31,6 @@ import java.util.Collections;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.TrackActivityDataHubInterface;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.TrackDataListener;
 import de.dennisguse.opentracks.content.data.Altitude;
@@ -242,7 +241,7 @@ public class ChartFragment extends Fragment implements TrackDataListener {
      * Needs to be synchronized because trackDataHub can be accessed by multiple threads.
      */
     private synchronized void resumeTrackDataHub() {
-        trackDataHub = ((TrackActivityDataHubInterface) getActivity()).getTrackDataHub();
+        trackDataHub = ((TrackDataHubInterface) getActivity()).getTrackDataHub();
         trackDataHub.registerTrackDataListener(this);
     }
 

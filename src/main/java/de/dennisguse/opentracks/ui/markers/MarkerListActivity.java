@@ -32,7 +32,6 @@ import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
 import de.dennisguse.opentracks.AbstractActivity;
-import de.dennisguse.opentracks.ContextualActionModeCallback;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
@@ -74,7 +73,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
             .observe(MarkerListActivity.this, this::onRecordingStatusChanged);
 
     // Callback when an item is selected in the contextual action mode
-    private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
+    private final ActivityUtils.ContextualActionModeCallback contextualActionModeCallback = new ActivityUtils.ContextualActionModeCallback() {
         @Override
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
             boolean isSingleSelection = ids.length == 1;

@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.fragments;
+package de.dennisguse.opentracks.chart;
 
 import java.time.Instant;
 
@@ -27,7 +27,7 @@ import de.dennisguse.opentracks.content.data.TrackPoint;
  *
  * @author Youtao Liu
  */
-public class TrackStubUtils {
+class TrackStubUtils {
 
     public static final double INITIAL_ALTITUDE = 22;
     public static final long INITIAL_TIME = 1000L;

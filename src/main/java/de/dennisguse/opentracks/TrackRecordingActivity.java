@@ -22,6 +22,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import java.util.List;
 
 import de.dennisguse.opentracks.chart.ChartFragment;
+import de.dennisguse.opentracks.chart.TrackDataHubInterface;
 import de.dennisguse.opentracks.content.TrackDataHub;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
@@ -48,7 +49,7 @@ import de.dennisguse.opentracks.util.TrackUtils;
  */
 //NOTE: This activity does NOT react to preference changes of R.string.recording_track_id_key.
 //This mode of communication should be removed anyhow.
-public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackActivityDataHubInterface, ControllerFragment.Callback {
+public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackDataHubInterface, ControllerFragment.Callback {
 
     public static final String EXTRA_TRACK_ID = "track_id";
 

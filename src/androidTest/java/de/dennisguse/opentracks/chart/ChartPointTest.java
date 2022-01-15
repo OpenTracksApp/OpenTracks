@@ -14,7 +14,6 @@ import de.dennisguse.opentracks.content.data.Altitude;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.fragments.TrackStubUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 @RunWith(AndroidJUnit4.class)

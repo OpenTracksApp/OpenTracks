@@ -21,7 +21,6 @@ import androidx.appcompat.widget.SearchView;
 
 import java.util.ArrayList;
 
-import de.dennisguse.opentracks.ContextualActionModeCallback;
 import de.dennisguse.opentracks.R;
 
 public class ActivityUtils {
@@ -101,5 +100,32 @@ public class ActivityUtils {
         } else {
             vibrator.vibrate(milliseconds);
         }
+    }
+
+    /**
+     * Callback when items in the contextual action mode are selected.
+     *
+     * @author Jimmy Shih
+     */
+    public interface ContextualActionModeCallback {
+
+        /**
+         * Invoked to prepare the menu for the selected items.
+         *
+         * @param menu          the menu
+         * @param positions     the selected items' positions
+         * @param ids           the selected items' ids, if available
+         * @param showSelectAll true to show select all
+         */
+        void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll);
+
+        /**
+         * Invoked when items are selected.
+         *
+         * @param itemId    the context menu item id
+         * @param positions the selected items' positions
+         * @param ids       the selected items' ids, if available
+         */
+        boolean onClick(int itemId, int[] positions, long[] ids);
     }
 }

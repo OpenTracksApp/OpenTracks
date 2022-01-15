@@ -97,7 +97,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
     // Callback when an item is selected in the contextual action mode
-    private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
+    private final ActivityUtils.ContextualActionModeCallback contextualActionModeCallback = new ActivityUtils.ContextualActionModeCallback() {
 
         @Override
         public void onPrepare(Menu menu, int[] positions, long[] trackIds, boolean showSelectAll) {
