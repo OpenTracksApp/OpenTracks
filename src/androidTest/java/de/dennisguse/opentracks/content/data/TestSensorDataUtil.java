@@ -5,6 +5,10 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.TrackPoint;
+
 public class TestSensorDataUtil {
 
     private final List<TrackPoint> trackPointList = new ArrayList<>();

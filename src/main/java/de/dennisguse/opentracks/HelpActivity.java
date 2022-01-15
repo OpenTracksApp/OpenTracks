@@ -6,7 +6,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 
 import de.dennisguse.opentracks.databinding.HelpBinding;
-import de.dennisguse.opentracks.util.ViewUtils;
+import de.dennisguse.opentracks.ui.util.ViewUtils;
 
 public class HelpActivity extends AbstractActivity {
 

@@ -38,24 +38,24 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Marker;
-import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
-import de.dennisguse.opentracks.content.sensor.SensorDataCyclingPower;
-import de.dennisguse.opentracks.content.sensor.SensorDataHeartRate;
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
+import de.dennisguse.opentracks.sensors.AltitudeSumManager;
+import de.dennisguse.opentracks.sensors.BluetoothRemoteSensorManager;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCycling;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceTestUtils;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
-import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
-import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**

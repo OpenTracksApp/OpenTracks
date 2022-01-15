@@ -14,7 +14,7 @@ import java.io.ByteArrayOutputStream;
 import java.time.Instant;
 import java.time.ZoneOffset;
 
-import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 
 @RunWith(JUnit4.class)

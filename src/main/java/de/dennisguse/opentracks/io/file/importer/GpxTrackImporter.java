@@ -30,12 +30,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import de.dennisguse.opentracks.content.data.Altitude;
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Marker;
-import de.dennisguse.opentracks.content.data.Speed;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.data.models.Altitude;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**

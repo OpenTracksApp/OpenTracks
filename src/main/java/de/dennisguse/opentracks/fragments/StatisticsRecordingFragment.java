@@ -19,13 +19,13 @@ import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.adapters.StatisticsAdapter;
-import de.dennisguse.opentracks.content.data.Layout;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.databinding.StatisticsRecordingBinding;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
 import de.dennisguse.opentracks.viewmodels.StatisticData;
 import de.dennisguse.opentracks.viewmodels.StatisticsDataModel;
 

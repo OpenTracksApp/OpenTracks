@@ -32,8 +32,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,8 +41,8 @@ import java.time.format.FormatStyle;
 import java.time.temporal.TemporalAccessor;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Speed;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Speed;
 
 /**
  * Various string manipulation methods.
@@ -290,7 +290,7 @@ public class StringUtils {
      * @param category    the category
      * @param description the description
      */
-    static String getCategoryDescription(String category, String description) {
+    public static String getCategoryDescription(String category, String description) {
         if (category == null || category.length() == 0) {
             return description;
         }

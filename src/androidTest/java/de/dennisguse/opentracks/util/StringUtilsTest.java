@@ -45,8 +45,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Speed;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Speed;
 
 /**
  * Tests for {@link StringUtils}.

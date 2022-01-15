@@ -44,14 +44,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.dennisguse.opentracks.MarkerDetailActivity;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.stats.ExtremityMonitor;
+import de.dennisguse.opentracks.ui.markers.MarkerDetailActivity;
+import de.dennisguse.opentracks.ui.markers.MarkerUtils;
+import de.dennisguse.opentracks.ui.util.ThemeUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.util.MarkerUtils;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.util.ThemeUtils;
 
 /**
  * Visualization of the chart.

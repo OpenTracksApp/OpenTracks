@@ -29,13 +29,13 @@ import java.util.Arrays;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-import de.dennisguse.opentracks.content.provider.TrackPointIterator;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.TrackPointIterator;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
-import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
+import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
 
 /**
  * This class will announce the user's {@link TrackStatistics}.

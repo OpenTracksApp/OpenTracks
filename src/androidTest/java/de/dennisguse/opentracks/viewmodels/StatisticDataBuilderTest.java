@@ -1,5 +1,7 @@
 package de.dennisguse.opentracks.viewmodels;
 
+import static org.mockito.Mockito.when;
+
 import android.content.Context;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -15,14 +17,12 @@ import java.time.Duration;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Layout;
-import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
-
-import static org.mockito.Mockito.when;
+import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StatisticDataBuilderTest extends TestCase {

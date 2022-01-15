@@ -19,12 +19,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Marker;
-import de.dennisguse.opentracks.content.data.Speed;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.FileUtils;

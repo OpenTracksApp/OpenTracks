@@ -1,5 +1,8 @@
 package de.dennisguse.opentracks.io.file.importer;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import android.content.Context;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -17,15 +20,12 @@ import java.io.InputStream;
 import java.time.Instant;
 import java.util.List;
 
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 
 /**
  * Test that legacy KML/GPX formats can still be imported.

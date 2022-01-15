@@ -31,7 +31,7 @@ import androidx.annotation.Nullable;
 
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Marker;
+import de.dennisguse.opentracks.data.models.Marker;
 
 /**
  * Wrapper for the track recording service.

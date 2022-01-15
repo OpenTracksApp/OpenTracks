@@ -54,20 +54,23 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TracksColumns;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.tables.TracksColumns;
 import de.dennisguse.opentracks.databinding.TrackListBinding;
-import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.SettingsActivity;
-import de.dennisguse.opentracks.util.ActivityUtils;
+import de.dennisguse.opentracks.share.ShareUtils;
+import de.dennisguse.opentracks.ui.aggregatedStatistics.AggregatedStatisticsActivity;
+import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragment;
+import de.dennisguse.opentracks.ui.markers.MarkerListActivity;
+import de.dennisguse.opentracks.ui.util.ActivityUtils;
+import de.dennisguse.opentracks.ui.util.ListItemUtils;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
@@ -95,7 +98,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
     // Callback when an item is selected in the contextual action mode
-    private final ContextualActionModeCallback contextualActionModeCallback = new ContextualActionModeCallback() {
+    private final ActivityUtils.ContextualActionModeCallback contextualActionModeCallback = new ActivityUtils.ContextualActionModeCallback() {
 
         @Override
         public void onPrepare(Menu menu, int[] positions, long[] trackIds, boolean showSelectAll) {
@@ -447,7 +450,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         }
 
         if (itemId == R.id.list_context_menu_share) {
-            Intent intent = IntentUtils.newShareFileIntent(this, trackIds);
+            Intent intent = ShareUtils.newShareFileIntent(this, trackIds);
             intent = Intent.createChooser(intent, null);
             startActivity(intent);
             return true;

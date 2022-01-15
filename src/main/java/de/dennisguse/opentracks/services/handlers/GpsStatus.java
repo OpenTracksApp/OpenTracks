@@ -10,8 +10,8 @@ import androidx.annotation.Nullable;
 import java.time.Duration;
 import java.time.Instant;
 
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**

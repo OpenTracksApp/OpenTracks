@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.CustomLayoutFieldType;
+import de.dennisguse.opentracks.ui.customRecordingLayout.CustomLayoutFieldType;
 import de.dennisguse.opentracks.viewmodels.StatisticData;
 
 public class StatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

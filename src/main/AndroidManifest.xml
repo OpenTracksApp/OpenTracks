@@ -267,7 +267,7 @@ limitations under the License.
         </activity>
 
         <activity
-            android:name=".MarkerDetailActivity"
+            android:name=".ui.markers.MarkerDetailActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="de.dennisguse.opentracks.MarkerDetails" />
@@ -275,10 +275,10 @@ limitations under the License.
             </intent-filter>
         </activity>
 
-        <activity android:name=".MarkerEditActivity" />
+        <activity android:name=".ui.markers.MarkerEditActivity" />
 
         <activity
-            android:name=".MarkerListActivity"
+            android:name=".ui.markers.MarkerListActivity"
             android:exported="true"
             android:label="@string/menu_markers"
             android:launchMode="singleTop">
@@ -316,7 +316,7 @@ limitations under the License.
 
         <activity android:name=".TrackEditActivity" />
 
-        <activity android:name=".AggregatedStatisticsActivity" />
+        <activity android:name=".ui.aggregatedStatistics.AggregatedStatisticsActivity" />
 
         <activity android:name=".io.file.importer.DirectoryChooserActivity$ExportDirectoryChooserActivity" />
         <activity android:name=".io.file.importer.DirectoryChooserActivity$DefaultTrackExportDirectoryChooserActivity" />
@@ -328,7 +328,7 @@ limitations under the License.
         <activity android:name=".settings.SettingsCustomLayoutEditActivity" />
 
         <activity
-            android:name=".ShowOnMapProxyActivity$KML"
+            android:name=".share.ShowOnMapProxyActivity$KML"
             android:exported="true">
             <intent-filter android:label="@string/open_track_as_KML">
                 <action android:name="Intent.OpenTracks-Dashboard" />
@@ -336,7 +336,7 @@ limitations under the License.
             </intent-filter>
         </activity>
         <activity
-            android:name=".ShowOnMapProxyActivity$GPX"
+            android:name=".share.ShowOnMapProxyActivity$GPX"
             android:exported="true">
             <intent-filter android:label="@string/open_track_as_GPX">
                 <action android:name="Intent.OpenTracks-Dashboard" />
@@ -345,7 +345,7 @@ limitations under the License.
         </activity>
 
         <provider
-            android:name=".content.provider.ShareContentProvider"
+            android:name=".data.ShareContentProvider"
             android:authorities="${applicationId}.content"
             android:exported="false"
             android:grantUriPermissions="true" />

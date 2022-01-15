@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import de.dennisguse.opentracks.BuildConfig;
-import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.data.models.Track;
 
 /**
  * Utilities for dealing with files.

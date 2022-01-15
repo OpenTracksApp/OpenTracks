@@ -3,11 +3,11 @@ package de.dennisguse.opentracks.chart;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
-import de.dennisguse.opentracks.content.data.Altitude;
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Speed;
-import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.data.UnitConversions;
+import de.dennisguse.opentracks.data.models.Altitude;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.data.models.UnitConversions;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 public class ChartPoint {

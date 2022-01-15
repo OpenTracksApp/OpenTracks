@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.util.FileUtils;
 
 public class ImportViewModel extends AndroidViewModel implements ImportServiceResultReceiver.Receiver {

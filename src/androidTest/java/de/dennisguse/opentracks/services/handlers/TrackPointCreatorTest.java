@@ -12,8 +12,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.TrackPoint;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TrackPointCreatorTest {

@@ -8,7 +8,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Distance;
+import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.util.StringUtils;
 
 public class GpsSettingsFragment extends PreferenceFragmentCompat {

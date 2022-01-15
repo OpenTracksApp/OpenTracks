@@ -17,7 +17,7 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
-import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.data.models.Track;
 
 /**
  * Uses SAX2 to parse XML files.

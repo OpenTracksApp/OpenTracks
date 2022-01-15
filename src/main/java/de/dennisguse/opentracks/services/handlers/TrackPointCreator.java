@@ -12,11 +12,11 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
 
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.TrackPoint;
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
-import de.dennisguse.opentracks.services.sensors.AltitudeSumManager;
-import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.sensors.AltitudeSumManager;
+import de.dennisguse.opentracks.sensors.BluetoothRemoteSensorManager;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 
 /**
  * Creates TrackPoints while recording by fusing data from different sensors (e.g., GNSS, barometer, BLE sensors).

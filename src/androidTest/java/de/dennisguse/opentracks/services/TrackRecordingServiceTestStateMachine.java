@@ -45,8 +45,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 
 /**

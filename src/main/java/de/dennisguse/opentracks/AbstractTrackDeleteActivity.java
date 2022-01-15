@@ -22,11 +22,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
-import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.services.TrackDeleteService;
 import de.dennisguse.opentracks.services.TrackDeleteServiceConnection;
+import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragment;
+import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragment.ConfirmDeleteCaller;
 
 /**
  * An abstract class for the following common tasks across

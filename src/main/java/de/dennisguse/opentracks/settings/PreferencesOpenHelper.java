@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.util.CsvLayoutUtils;
+import de.dennisguse.opentracks.ui.customRecordingLayout.CsvLayoutUtils;
 
 class PreferencesOpenHelper {
 

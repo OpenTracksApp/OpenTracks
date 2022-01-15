@@ -23,8 +23,8 @@ import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
 
-import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 

@@ -33,9 +33,9 @@ import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.data.TracksColumns;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.tables.TracksColumns;
 import de.dennisguse.opentracks.databinding.ExportActivityBinding;
 import de.dennisguse.opentracks.databinding.ToolbarBinding;
 import de.dennisguse.opentracks.io.file.ErrorListDialog;

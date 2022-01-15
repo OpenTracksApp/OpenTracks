@@ -11,10 +11,10 @@ import androidx.annotation.NonNull;
 
 import java.io.OutputStream;
 
-import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackSharePictureBinding;
-import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**

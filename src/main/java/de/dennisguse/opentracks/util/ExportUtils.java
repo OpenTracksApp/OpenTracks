@@ -19,7 +19,7 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Track;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.ExportService;
 import de.dennisguse.opentracks.io.file.exporter.ExportServiceResultReceiver;

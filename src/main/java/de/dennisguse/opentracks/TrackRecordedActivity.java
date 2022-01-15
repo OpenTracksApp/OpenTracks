@@ -34,18 +34,21 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import de.dennisguse.opentracks.chart.ChartFragment;
-import de.dennisguse.opentracks.content.TrackDataHub;
-import de.dennisguse.opentracks.content.data.Track;
-import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
+import de.dennisguse.opentracks.chart.TrackDataHubInterface;
+import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.TrackDataHub;
+import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackRecordedBinding;
-import de.dennisguse.opentracks.fragments.ConfirmDeleteDialogFragment;
-import de.dennisguse.opentracks.fragments.IntervalsFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordedFragment;
 import de.dennisguse.opentracks.services.TrackDeleteService;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.SettingsActivity;
+import de.dennisguse.opentracks.share.ShareUtils;
+import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragment;
+import de.dennisguse.opentracks.ui.intervals.IntervalsFragment;
+import de.dennisguse.opentracks.ui.markers.MarkerListActivity;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 
@@ -56,7 +59,7 @@ import de.dennisguse.opentracks.util.IntentUtils;
  * @author Rodrigo Damazio
  */
 //TODO Should not use TrackRecordingServiceConnection; only used to determine if there is NO current recording, to enable resume functionality.
-public class TrackRecordedActivity extends AbstractTrackDeleteActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackActivityDataHubInterface {
+public class TrackRecordedActivity extends AbstractTrackDeleteActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, TrackDataHubInterface {
 
     private static final String TAG = TrackRecordedActivity.class.getSimpleName();
 
@@ -180,7 +183,7 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.track_detail_share) {
-            Intent intent = Intent.createChooser(IntentUtils.newShareFileIntent(this, trackId), null);
+            Intent intent = Intent.createChooser(ShareUtils.newShareFileIntent(this, trackId), null);
             startActivity(intent);
             return true;
         }
