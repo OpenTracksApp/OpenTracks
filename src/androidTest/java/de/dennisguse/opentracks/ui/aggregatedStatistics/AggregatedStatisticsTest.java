@@ -1,4 +1,7 @@
-package de.dennisguse.opentracks.viewmodels;
+package de.dennisguse.opentracks.ui.aggregatedStatistics;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import android.content.Context;
 
@@ -18,9 +21,6 @@ import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(JUnit4.class)
 public class AggregatedStatisticsTest {

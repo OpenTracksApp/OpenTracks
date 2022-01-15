@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.adapters;
+package de.dennisguse.opentracks.ui.aggregatedStatistics;
 
 import android.content.Context;
 import android.util.Pair;
@@ -16,7 +16,6 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
-import de.dennisguse.opentracks.viewmodels.AggregatedStatistics;
 
 public class AggregatedStatisticsAdapter extends BaseAdapter {
 

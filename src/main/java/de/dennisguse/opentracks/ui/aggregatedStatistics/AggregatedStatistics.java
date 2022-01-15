@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.viewmodels;
+package de.dennisguse.opentracks.ui.aggregatedStatistics;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;

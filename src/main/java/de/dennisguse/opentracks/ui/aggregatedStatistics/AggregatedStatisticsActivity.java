@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks;
+package de.dennisguse.opentracks.ui.aggregatedStatistics;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,12 +13,11 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.dennisguse.opentracks.adapters.AggregatedStatisticsAdapter;
+import de.dennisguse.opentracks.AbstractActivity;
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackSelection;
 import de.dennisguse.opentracks.databinding.AggregatedStatsBinding;
-import de.dennisguse.opentracks.fragments.FilterDialogFragment;
-import de.dennisguse.opentracks.viewmodels.AggregatedStatisticsModel;
 
 public class AggregatedStatisticsActivity extends AbstractActivity implements FilterDialogFragment.FilterDialogListener {
 

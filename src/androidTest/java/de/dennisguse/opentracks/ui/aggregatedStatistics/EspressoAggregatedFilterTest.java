@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks;
+package de.dennisguse.opentracks.ui.aggregatedStatistics;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -15,6 +15,7 @@ import android.view.View;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.GrantPermissionRule;
@@ -28,6 +29,8 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
+import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.data.TrackPoint;
@@ -55,7 +58,7 @@ public class EspressoAggregatedFilterTest {
     @Test
     public void espressoAggregatedFilterTest() {
         // open AggregatedStatisticsActivity through toolbar's menu item
-        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
+        onView(ViewMatchers.withId(R.id.toolbar)).check(matches(isDisplayed()));
         onView(withId(R.id.toolbar)).check(matches(hasDescendant(withId(R.id.track_list_aggregated_stats))));
         onView(withId(R.id.track_list_aggregated_stats)).perform(click());
 
