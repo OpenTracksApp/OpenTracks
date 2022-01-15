@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Layout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
 
 @RunWith(AndroidJUnit4.class)
 public class PreferencesOpenHelperTest {

@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.content.data;
+package de.dennisguse.opentracks.ui.customRecordingLayout;
 
 import android.content.res.Resources;
 import android.os.Parcel;
@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-import de.dennisguse.opentracks.util.CsvLayoutUtils;
 
 public class Layout implements Parcelable {
     private static final String TAG = Layout.class.getSimpleName();

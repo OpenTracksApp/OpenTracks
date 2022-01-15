@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.content.data;
+package de.dennisguse.opentracks.ui.customRecordingLayout;
 
 import android.content.Context;
 import android.content.res.Resources;

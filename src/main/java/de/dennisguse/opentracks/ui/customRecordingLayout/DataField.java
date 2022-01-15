@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.content.data;
+package de.dennisguse.opentracks.ui.customRecordingLayout;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -6,7 +6,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.util.CsvLayoutUtils;
 
 public class DataField implements Parcelable {
     public static final String YES_VALUE = "1";

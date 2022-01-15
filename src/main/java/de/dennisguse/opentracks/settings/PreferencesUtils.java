@@ -40,11 +40,11 @@ import java.util.stream.Stream;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
-import de.dennisguse.opentracks.content.data.Layout;
 import de.dennisguse.opentracks.content.data.Speed;
 import de.dennisguse.opentracks.content.data.UnitConversions;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
-import de.dennisguse.opentracks.util.CsvLayoutUtils;
+import de.dennisguse.opentracks.ui.customRecordingLayout.CsvLayoutUtils;
+import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**

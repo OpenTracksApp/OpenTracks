@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.adapters;
+package de.dennisguse.opentracks.ui.customRecordingLayout;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Layout;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 public class SettingsCustomLayoutListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

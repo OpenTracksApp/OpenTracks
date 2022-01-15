@@ -22,9 +22,9 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.adapters.SettingsCustomLayoutListAdapter;
-import de.dennisguse.opentracks.content.data.Layout;
 import de.dennisguse.opentracks.databinding.ActivitySettingsCustomLayoutListBinding;
+import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.SettingsCustomLayoutListAdapter;
 import de.dennisguse.opentracks.util.RecyclerViewSwipeDeleteCallback;
 
 public class SettingsCustomLayoutListActivity extends AbstractActivity implements SettingsCustomLayoutListAdapter.SettingsCustomLayoutProfileClickListener {

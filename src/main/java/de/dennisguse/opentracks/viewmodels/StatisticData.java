@@ -4,7 +4,7 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
-import de.dennisguse.opentracks.content.data.DataField;
+import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
 
 public class StatisticData {
     private final DataField dataField;

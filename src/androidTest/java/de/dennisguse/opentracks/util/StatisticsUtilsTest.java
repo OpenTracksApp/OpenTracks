@@ -11,8 +11,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.DataField;
-import de.dennisguse.opentracks.content.data.Layout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
+import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
 
 @RunWith(AndroidJUnit4.class)
 public class StatisticsUtilsTest extends TestCase {

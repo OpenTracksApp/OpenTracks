@@ -7,8 +7,8 @@ import androidx.annotation.NonNull;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.data.Layout;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
 
 public class StatisticsUtils {
 

@@ -8,8 +8,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import de.dennisguse.opentracks.content.data.Layout;
 import de.dennisguse.opentracks.services.TrackRecordingService;
+import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
 
 public class StatisticsDataModel extends AndroidViewModel {
 

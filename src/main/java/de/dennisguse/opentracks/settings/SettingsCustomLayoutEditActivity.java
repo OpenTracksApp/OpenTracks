@@ -18,10 +18,10 @@ import java.util.stream.IntStream;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.adapters.SettingsCustomLayoutEditAdapter;
-import de.dennisguse.opentracks.content.data.Layout;
-import de.dennisguse.opentracks.content.data.DataField;
 import de.dennisguse.opentracks.databinding.ActivitySettingsCustomLayoutBinding;
+import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
+import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.SettingsCustomLayoutEditAdapter;
 import de.dennisguse.opentracks.util.StatisticsUtils;
 
 public class SettingsCustomLayoutEditActivity extends AbstractActivity implements SettingsCustomLayoutEditAdapter.SettingsCustomLayoutItemClickListener {
