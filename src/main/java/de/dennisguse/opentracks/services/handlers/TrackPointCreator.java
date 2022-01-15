@@ -112,8 +112,6 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
 
     /**
      * Got a new TrackPoint from Bluetooth only; contains no GPS location.
-     *
-     * @param sensorDataSet
      */
     @Override
     public void onChange(SensorDataSet sensorDataSet) {

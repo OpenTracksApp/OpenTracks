@@ -1,5 +1,7 @@
 package de.dennisguse.opentracks.data.models;
 
+import androidx.annotation.NonNull;
+
 import de.dennisguse.opentracks.R;
 
 public abstract class Altitude {
@@ -60,6 +62,7 @@ public abstract class Altitude {
         }
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Altitude{" +

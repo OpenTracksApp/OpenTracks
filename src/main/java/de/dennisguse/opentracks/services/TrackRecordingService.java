@@ -635,6 +635,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             return Objects.hash(track, latestTrackPoint, sensorDataSet);
         }
 
+        @NonNull
         @Override
         public String toString() {
             return "RecordingData{" +

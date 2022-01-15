@@ -420,6 +420,7 @@ public class TrackPoint {
         return this;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "TrackPoint{" +
