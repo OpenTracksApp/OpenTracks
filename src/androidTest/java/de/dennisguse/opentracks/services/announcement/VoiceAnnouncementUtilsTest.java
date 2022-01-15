@@ -22,8 +22,8 @@ import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.stats.TrackStatistics;
+import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 
 @RunWith(AndroidJUnit4.class)
 public class VoiceAnnouncementUtilsTest {

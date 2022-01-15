@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.adapters;
+package de.dennisguse.opentracks.ui.intervals;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -14,7 +14,6 @@ import java.util.List;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.Distance;
 import de.dennisguse.opentracks.util.StringUtils;
-import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
 
 public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

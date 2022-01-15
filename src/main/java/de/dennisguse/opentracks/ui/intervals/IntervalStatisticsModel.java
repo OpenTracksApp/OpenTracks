@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.viewmodels;
+package de.dennisguse.opentracks.ui.intervals;
 
 import android.app.Application;
 import android.content.ContentResolver;

@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.viewmodels;
+package de.dennisguse.opentracks.ui.intervals;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

@@ -35,7 +35,7 @@ import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.content.provider.TrackPointIterator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
-import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
+import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
 
 /**
  * This class will announce the user's {@link TrackStatistics}.

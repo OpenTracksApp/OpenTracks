@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.fragments;
+package de.dennisguse.opentracks.ui.intervals;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,13 +19,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.adapters.IntervalStatisticsAdapter;
 import de.dennisguse.opentracks.content.data.Track;
 import de.dennisguse.opentracks.content.provider.ContentProviderUtils;
 import de.dennisguse.opentracks.databinding.IntervalListViewBinding;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-import de.dennisguse.opentracks.viewmodels.IntervalStatistics;
-import de.dennisguse.opentracks.viewmodels.IntervalStatisticsModel;
 
 /**
  * A fragment to display the intervals from recorded track.
