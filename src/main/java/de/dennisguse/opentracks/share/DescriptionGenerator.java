@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.content;
+package de.dennisguse.opentracks.share;
 
 import android.content.Context;
 import android.util.Pair;
@@ -54,8 +54,8 @@ public class DescriptionGenerator {
     /**
      * Generates a track description.
      *
-     * @param track      the track
-     * @param html       true to output html, false to output plain text
+     * @param track the track
+     * @param html  true to output html, false to output plain text
      */
     public String generateTrackDescription(Track track, boolean html) {
         String paragraphSeparator = html ? HTML_PARAGRAPH_SEPARATOR : TEXT_PARAGRAPH_SEPARATOR;

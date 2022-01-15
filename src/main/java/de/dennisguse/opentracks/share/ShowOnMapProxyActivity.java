@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks;
+package de.dennisguse.opentracks.share;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Set;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ShareContentProvider;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;

@@ -14,7 +14,7 @@
  * the License.
  */
 
-package de.dennisguse.opentracks.content;
+package de.dennisguse.opentracks.share;
 
 import static org.junit.Assert.assertEquals;
 
@@ -82,18 +82,18 @@ public class DescriptionGeneratorTest {
                         + "Description: -<br>"
                         + "Total distance: 20.00 km (12.4 mi)<br>"
                         + "Total time: 10:00<br>"
-                + "Moving time: 05:00<br>"
-                + "Average speed: 120.00 km/h (74.6 mi/h)<br>"
-                + "Average moving speed: 240.00 km/h (149.1 mi/h)<br>"
-                + "Max speed: 360.00 km/h (223.7 mi/h)<br>"
-                + "Average pace: 0:30 min/km (0:48 min/mi)<br>"
-                + "Average moving pace: 0:15 min/km (0:24 min/mi)<br>"
-                + "Fastest pace: 0:10 min/km (0:16 min/mi)<br>"
-                + "Max elevation: 550 m (1804 ft)<br>"
-                + "Min elevation: -500 m (-1640 ft)<br>"
-                + "Elevation gain: 6000 m (19685 ft)<br>"
-                + "Elevation loss: 6000 m (19685 ft)<br>"
-                + "Recorded: " + StringUtils.formatDateTime(OffsetDateTime.ofInstant(START_TIME, ZoneId.systemDefault())) + "<br>";
+                        + "Moving time: 05:00<br>"
+                        + "Average speed: 120.00 km/h (74.6 mi/h)<br>"
+                        + "Average moving speed: 240.00 km/h (149.1 mi/h)<br>"
+                        + "Max speed: 360.00 km/h (223.7 mi/h)<br>"
+                        + "Average pace: 0:30 min/km (0:48 min/mi)<br>"
+                        + "Average moving pace: 0:15 min/km (0:24 min/mi)<br>"
+                        + "Fastest pace: 0:10 min/km (0:16 min/mi)<br>"
+                        + "Max elevation: 550 m (1804 ft)<br>"
+                        + "Min elevation: -500 m (-1640 ft)<br>"
+                        + "Elevation gain: 6000 m (19685 ft)<br>"
+                        + "Elevation loss: 6000 m (19685 ft)<br>"
+                        + "Recorded: " + StringUtils.formatDateTime(OffsetDateTime.ofInstant(START_TIME, ZoneId.systemDefault())) + "<br>";
 
         assertEquals(expected, descriptionGenerator.generateTrackDescription(track, true));
     }

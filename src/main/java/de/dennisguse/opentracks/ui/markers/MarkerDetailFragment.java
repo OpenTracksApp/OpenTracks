@@ -40,6 +40,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.databinding.MarkerDetailFragmentBinding;
+import de.dennisguse.opentracks.share.ShareUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.ListItemUtils;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -205,7 +206,7 @@ public class MarkerDetailFragment extends Fragment {
 
         if (item.getItemId() == R.id.marker_detail_share) {
             if (marker.hasPhoto()) {
-                Intent intent = IntentUtils.newShareFileIntent(getContext(), marker.getId());
+                Intent intent = ShareUtils.newShareFileIntent(getContext(), marker.getId());
                 intent = Intent.createChooser(intent, null);
                 startActivity(intent);
             }

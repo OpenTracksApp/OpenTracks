@@ -40,6 +40,7 @@ import de.dennisguse.opentracks.data.tables.MarkerColumns;
 import de.dennisguse.opentracks.databinding.MarkerListBinding;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.share.ShareUtils;
 import de.dennisguse.opentracks.ui.markers.DeleteMarkerDialogFragment.DeleteMarkerCaller;
 import de.dennisguse.opentracks.ui.util.ScrollVisibleViews;
 import de.dennisguse.opentracks.util.ActivityUtils;
@@ -206,7 +207,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         }
 
         if (itemId == R.id.list_context_menu_share) {
-            Intent intent = IntentUtils.newShareFileIntent(this, markerIds);
+            Intent intent = ShareUtils.newShareFileIntent(this, markerIds);
             if (intent != null) {
                 intent = Intent.createChooser(intent, null);
                 startActivity(intent);
