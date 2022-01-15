@@ -104,16 +104,14 @@ public class TrackStatisticsUpdater {
         return stats;
     }
 
-    public void addTrackPoints(List<TrackPoint> trackPoints, Distance minGPSDistance) {
-        for (TrackPoint tp : trackPoints) {
-            addTrackPoint(tp, minGPSDistance);
-        }
+    public void addTrackPoints(List<TrackPoint> trackPoints) {
+        trackPoints.stream().forEachOrdered(this::addTrackPoint);
     }
 
     /**
-     * @param minGPSDistance the min recording distance
+     *
      */
-    public void addTrackPoint(TrackPoint trackPoint, Distance minGPSDistance) {
+    public void addTrackPoint(TrackPoint trackPoint) {
         if (trackPoint.isSegmentStart()) {
             reset(trackPoint);
         }

@@ -112,7 +112,7 @@ class TrackRecordingManager {
         TrackStatisticsUpdater tmpTrackStatisticsUpdater = new TrackStatisticsUpdater(trackStatisticsUpdater);
         Pair<TrackPoint, SensorDataSet> current = trackPointCreator.createCurrentTrackPoint(lastTrackPoint);
 
-        tmpTrackStatisticsUpdater.addTrackPoint(current.first, recordingDistanceInterval);
+        tmpTrackStatisticsUpdater.addTrackPoint(current.first);
 
         Track track = contentProviderUtils.getTrack(trackId); //Get copy
         if (track == null) {
@@ -226,7 +226,7 @@ class TrackRecordingManager {
     private void insertTrackPointHelper(@NonNull TrackPoint trackPoint) {
         try {
             contentProviderUtils.insertTrackPoint(trackPoint, trackId);
-            trackStatisticsUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
+            trackStatisticsUpdater.addTrackPoint(trackPoint);
 
             contentProviderUtils.updateTrackStatistics(trackId, trackStatisticsUpdater.getTrackStatistics());
             lastStoredTrackPoint = trackPoint;

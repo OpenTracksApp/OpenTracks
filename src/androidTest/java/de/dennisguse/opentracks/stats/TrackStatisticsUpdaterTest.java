@@ -53,7 +53,7 @@ public class TrackStatisticsUpdaterTest {
         // when
         TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
 
-        subject.addTrackPoint(tp, GPS_DISTANCE);
+        subject.addTrackPoint(tp);
 
         // then
         TrackStatistics statistics = subject.getTrackStatistics();
@@ -77,7 +77,7 @@ public class TrackStatisticsUpdaterTest {
 
         // when
         TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
-        data.trackPoints.forEach(it -> subject.addTrackPoint(it, GPS_DISTANCE));
+        data.trackPoints.forEach(it -> subject.addTrackPoint(it));
 
         // then
         TrackStatistics statistics = subject.getTrackStatistics();
@@ -105,9 +105,9 @@ public class TrackStatisticsUpdaterTest {
         TrackPoint tp3 = new TrackPoint(0.00001, 0, Altitude.WGS84.of(5.0), Instant.ofEpochMilli(3000));
 
         // when
-        subject.addTrackPoint(tp1, GPS_DISTANCE);
-        subject.addTrackPoint(tp2, GPS_DISTANCE);
-        subject.addTrackPoint(tp3, GPS_DISTANCE);
+        subject.addTrackPoint(tp1);
+        subject.addTrackPoint(tp2);
+        subject.addTrackPoint(tp3);
 
         // then
         assertEquals(0, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
@@ -124,9 +124,9 @@ public class TrackStatisticsUpdaterTest {
         tp3.setSpeed(Speed.of(5f));
 
         // when
-        subject.addTrackPoint(tp1, GPS_DISTANCE);
-        subject.addTrackPoint(tp2, GPS_DISTANCE);
-        subject.addTrackPoint(tp3, GPS_DISTANCE);
+        subject.addTrackPoint(tp1);
+        subject.addTrackPoint(tp2);
+        subject.addTrackPoint(tp3);
 
         // then
         assertEquals(1.10, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
@@ -149,16 +149,16 @@ public class TrackStatisticsUpdaterTest {
         tp5.setSensorDistance(Distance.of(10f));
 
         // when
-        subject.addTrackPoint(tp1, GPS_DISTANCE);
-        subject.addTrackPoint(tp2, GPS_DISTANCE);
-        subject.addTrackPoint(tp3, GPS_DISTANCE);
+        subject.addTrackPoint(tp1);
+        subject.addTrackPoint(tp2);
+        subject.addTrackPoint(tp3);
 
         // then
         assertEquals(110.57, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
 
         // when
-        subject.addTrackPoint(tp4, GPS_DISTANCE);
-        subject.addTrackPoint(tp5, GPS_DISTANCE);
+        subject.addTrackPoint(tp4);
+        subject.addTrackPoint(tp5);
 
         // then
         assertEquals(125.57, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
@@ -178,16 +178,16 @@ public class TrackStatisticsUpdaterTest {
         tp5.setSensorDistance(Distance.of(10f));
 
         // when
-        subject.addTrackPoint(tp1, GPS_DISTANCE);
-        subject.addTrackPoint(tp2, GPS_DISTANCE);
-        subject.addTrackPoint(tp3, GPS_DISTANCE);
+        subject.addTrackPoint(tp1);
+        subject.addTrackPoint(tp2);
+        subject.addTrackPoint(tp3);
 
         // then
         assertEquals(0, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
 
         // when
-        subject.addTrackPoint(tp4, GPS_DISTANCE);
-        subject.addTrackPoint(tp5, GPS_DISTANCE);
+        subject.addTrackPoint(tp4);
+        subject.addTrackPoint(tp5);
 
         // then
         assertEquals(15, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
@@ -209,16 +209,16 @@ public class TrackStatisticsUpdaterTest {
         TrackPoint tp5 = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochMilli(5000));
 
         // when
-        subject.addTrackPoint(tp1, GPS_DISTANCE);
-        subject.addTrackPoint(tp2, GPS_DISTANCE);
-        subject.addTrackPoint(tp3, GPS_DISTANCE);
+        subject.addTrackPoint(tp1);
+        subject.addTrackPoint(tp2);
+        subject.addTrackPoint(tp3);
 
         // then
         assertEquals(5, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
 
         // when
-        subject.addTrackPoint(tp4, GPS_DISTANCE);
-        subject.addTrackPoint(tp5, GPS_DISTANCE);
+        subject.addTrackPoint(tp4);
+        subject.addTrackPoint(tp5);
 
         // then
         assertEquals(59.18, subject.getTrackStatistics().getTotalDistance().toM(), 0.01);
@@ -258,15 +258,15 @@ public class TrackStatisticsUpdaterTest {
         tp4.setSpeed(Speed.of(5f));
         TrackPoint tp5 = new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochMilli(5000));
 
-        subject.addTrackPoint(tp1, GPS_DISTANCE);
-        subject.addTrackPoint(tp2, GPS_DISTANCE);
-        subject.addTrackPoint(tp3, GPS_DISTANCE);
-        subject.addTrackPoint(tp4, GPS_DISTANCE);
+        subject.addTrackPoint(tp1);
+        subject.addTrackPoint(tp2);
+        subject.addTrackPoint(tp3);
+        subject.addTrackPoint(tp4);
 
         // when
         TrackStatisticsUpdater copy = new TrackStatisticsUpdater(subject);
-        subject.addTrackPoint(tp5, GPS_DISTANCE);
-        copy.addTrackPoint(tp5, GPS_DISTANCE);
+        subject.addTrackPoint(tp5);
+        copy.addTrackPoint(tp5);
 
 
         // then

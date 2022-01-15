@@ -41,7 +41,7 @@ public class IntervalStatisticsTest {
     private TrackStatistics buildTrackStatistics(List<TrackPoint> trackPoints) {
         TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater();
         for (TrackPoint tp : trackPoints) {
-            trackStatisticsUpdater.addTrackPoint(tp, Distance.of(0));
+            trackStatisticsUpdater.addTrackPoint(tp);
         }
         return trackStatisticsUpdater.getTrackStatistics();
     }
@@ -132,7 +132,7 @@ public class IntervalStatisticsTest {
             TrackPoint tp = TestDataUtil.createTrackPoint(i);
             tp.setAltitudeLoss(null);
             contentProviderUtils.insertTrackPoint(tp, dummyTrack.getId());
-            trackStatisticsUpdater.addTrackPoint(tp, Distance.of(0));
+            trackStatisticsUpdater.addTrackPoint(tp);
         }
         dummyTrack.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
         contentProviderUtils.updateTrack(dummyTrack);

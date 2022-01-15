@@ -182,7 +182,7 @@ public class TestDataUtil {
         for (int i = 0; i < numberOfPoints; i++) {
             TrackPoint tp = TestDataUtil.createTrackPoint(i);
             contentProviderUtils.insertTrackPoint(tp, dummyTrack.getId());
-            trackStatisticsUpdater.addTrackPoint(tp, Distance.of(0));
+            trackStatisticsUpdater.addTrackPoint(tp);
         }
         dummyTrack.setTrackStatistics(trackStatisticsUpdater.getTrackStatistics());
         contentProviderUtils.updateTrack(dummyTrack);
