@@ -149,7 +149,7 @@ public class TrackImporter {
         adjustTrackPoints();
 
         TrackStatisticsUpdater updater = new TrackStatisticsUpdater();
-        updater.addTrackPoints(trackPoints, recordingDistanceInterval);
+        updater.addTrackPoints(trackPoints);
         track.setTrackStatistics(updater.getTrackStatistics());
 
         Track.Id trackId = contentProviderUtils.insertTrack(track);
@@ -233,7 +233,7 @@ public class TrackImporter {
             }
 
             TrackStatisticsUpdater updater = new TrackStatisticsUpdater();
-            updater.addTrackPoint(trackPoint, recordingDistanceInterval);
+            updater.addTrackPoint(trackPoint);
 
             List<Marker> matchedMarkers = todoMarkers.stream()
                     .filter(it -> trackPoint.getLatitude() == it.getLatitude()

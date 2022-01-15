@@ -364,7 +364,7 @@ public class TrackDataHub {
                     samplingFrequency = 1 + (int) (numTotalPoints / targetNumPoints);
                 }
 
-                currentUpdater.addTrackPoint(trackPoint, recordingDistanceInterval);
+                currentUpdater.addTrackPoint(trackPoint);
 
                 // Also include the last point if the selected track is not recording.
                 if ((localNumLoadedTrackPoints % samplingFrequency == 0) || (trackPointId == lastTrackPointId && !isSelectedTrackRecording())) {
