@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.adapters;
+package de.dennisguse.opentracks.ui.util;
 
 import java.util.ArrayList;
 import java.util.List;

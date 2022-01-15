@@ -34,7 +34,6 @@ import androidx.loader.content.Loader;
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.ContextualActionModeCallback;
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.adapters.ScrollVisibleViews;
 import de.dennisguse.opentracks.content.data.Marker;
 import de.dennisguse.opentracks.content.data.MarkerColumns;
 import de.dennisguse.opentracks.content.data.Track;
@@ -43,6 +42,7 @@ import de.dennisguse.opentracks.databinding.MarkerListBinding;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.ui.markers.DeleteMarkerDialogFragment.DeleteMarkerCaller;
+import de.dennisguse.opentracks.ui.util.ScrollVisibleViews;
 import de.dennisguse.opentracks.util.ActivityUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 

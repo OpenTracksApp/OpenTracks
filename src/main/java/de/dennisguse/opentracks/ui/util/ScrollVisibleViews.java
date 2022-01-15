@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.adapters;
+package de.dennisguse.opentracks.ui.util;
 
 import android.view.View;
 import android.widget.AbsListView;
