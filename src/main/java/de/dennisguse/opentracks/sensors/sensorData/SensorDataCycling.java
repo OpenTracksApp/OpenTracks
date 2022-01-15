@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.content.sensor;
+package de.dennisguse.opentracks.sensors.sensorData;
 
 import android.util.Log;
 
@@ -11,7 +11,7 @@ import java.time.Duration;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.UnitConversions;
-import de.dennisguse.opentracks.services.sensors.UintUtils;
+import de.dennisguse.opentracks.sensors.UintUtils;
 
 /**
  * Provides cadence in rpm and speed in milliseconds from Bluetooth LE Cycling Cadence and Speed sensors.

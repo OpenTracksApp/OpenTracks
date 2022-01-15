@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.services.sensors;
+package de.dennisguse.opentracks.sensors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;

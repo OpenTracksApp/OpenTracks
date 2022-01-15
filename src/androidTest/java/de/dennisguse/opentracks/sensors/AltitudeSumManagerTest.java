@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.services.sensors;
+package de.dennisguse.opentracks.sensors;
 
 import org.junit.Assert;
 import org.junit.Before;

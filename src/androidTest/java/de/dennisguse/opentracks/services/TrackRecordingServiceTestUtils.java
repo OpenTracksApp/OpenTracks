@@ -9,8 +9,8 @@ import androidx.test.rule.ServiceTestRule;
 import java.time.Clock;
 import java.util.concurrent.TimeoutException;
 
+import de.dennisguse.opentracks.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
-import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 public class TrackRecordingServiceTestUtils {

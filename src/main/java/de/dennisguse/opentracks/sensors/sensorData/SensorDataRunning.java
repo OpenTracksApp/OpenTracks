@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.content.sensor;
+package de.dennisguse.opentracks.sensors.sensorData;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.services.sensors;
+package de.dennisguse.opentracks.sensors;
 
 public class UintUtils {
 

@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package de.dennisguse.opentracks.services.sensors;
+package de.dennisguse.opentracks.sensors;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -28,10 +28,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import de.dennisguse.opentracks.content.sensor.SensorDataCycling;
-import de.dennisguse.opentracks.content.sensor.SensorDataRunning;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCycling;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 
 /**
  * Utilities for dealing with bluetooth devices.

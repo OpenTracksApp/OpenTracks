@@ -9,7 +9,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.services.sensors.BluetoothUtils;
+import de.dennisguse.opentracks.sensors.BluetoothUtils;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingCadenceAndSpeedPreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeCyclingPowerPreference;
 import de.dennisguse.opentracks.settings.bluetooth.BluetoothLeHeartRatePreference;

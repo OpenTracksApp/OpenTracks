@@ -11,9 +11,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.content.sensor.SensorDataSet;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;

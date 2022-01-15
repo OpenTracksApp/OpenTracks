@@ -33,7 +33,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.services.sensors.BluetoothUtils;
+import de.dennisguse.opentracks.sensors.BluetoothUtils;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**

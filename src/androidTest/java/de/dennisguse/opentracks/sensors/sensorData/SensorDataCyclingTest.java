@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.content.sensor;
+package de.dennisguse.opentracks.sensors.sensorData;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -12,7 +12,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.dennisguse.opentracks.data.models.Distance;
-import de.dennisguse.opentracks.services.sensors.UintUtils;
+import de.dennisguse.opentracks.sensors.UintUtils;
 
 @RunWith(AndroidJUnit4.class)
 public class SensorDataCyclingTest {

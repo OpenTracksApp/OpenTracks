@@ -1,4 +1,4 @@
-package de.dennisguse.opentracks.content.sensor;
+package de.dennisguse.opentracks.sensors.sensorData;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,7 +6,7 @@ import androidx.annotation.VisibleForTesting;
 
 import java.time.Instant;
 
-import de.dennisguse.opentracks.services.sensors.BluetoothRemoteSensorManager;
+import de.dennisguse.opentracks.sensors.BluetoothRemoteSensorManager;
 
 public abstract class SensorData<T> {
 
