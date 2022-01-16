@@ -28,6 +28,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCycling;
@@ -128,13 +129,13 @@ public class BluetoothUtils {
             index += 2;
         }
 
-        SensorDataCycling.Cadence cadence = null;
+        SensorDataCycling.CyclingCadence cadence = null;
         if (hasCrank && valueLength - index >= 4) {
             long crankCount = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index);
             index += 2;
 
             int crankTime = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index); // 1/1024s
-            cadence = new SensorDataCycling.Cadence(address, sensorName, crankCount, crankTime);
+            cadence = new SensorDataCycling.CyclingCadence(address, sensorName, crankCount, crankTime);
         }
 
         return new SensorDataCycling.CadenceAndSpeed(address, sensorName, cadence, speed);
@@ -153,7 +154,7 @@ public class BluetoothUtils {
         boolean hasStatus = (flags & 0x03) > 0; // walking vs running
 
         Speed speed = null;
-        Float cadence = null;
+        Cadence cadence = null;
         Distance totalDistance = null;
 
         int index = 1;
@@ -163,7 +164,7 @@ public class BluetoothUtils {
 
         index = 3;
         if (valueLength - index >= 1) {
-            cadence = Float.valueOf(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, index));
+            cadence = Cadence.of(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, index));
         }
 
         index = 4;

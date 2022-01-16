@@ -124,8 +124,8 @@ public class TestDataUtil {
         trackPoint.setAltitude(i * ALTITUDE_INTERVAL);
         trackPoint.setSpeed(Speed.of(5f + (i / 10f)));
 
-        trackPoint.setHeartRate_bpm(100f + i);
-        trackPoint.setCadence_rpm(300f + i);
+        trackPoint.setHeartRate(100f + i);
+        trackPoint.setCadence(300f + i);
         trackPoint.setPower(400f + i);
         trackPoint.setAltitudeGain(ALTITUDE_GAIN);
         trackPoint.setAltitudeLoss(ALTITUDE_LOSS);

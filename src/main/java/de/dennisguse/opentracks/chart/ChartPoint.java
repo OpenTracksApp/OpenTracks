@@ -44,13 +44,13 @@ public class ChartPoint {
             pace = smoothedSpeed.toPace(metricUnits).toMillis() * UnitConversions.MS_TO_S * UnitConversions.S_TO_MIN;
         }
         if (trackPoint.hasHeartRate()) {
-            heartRate = (double) trackPoint.getHeartRate_bpm();
+            heartRate = (double) trackPoint.getHeartRate().getBPM();
         }
         if (trackPoint.hasCadence()) {
-            cadence = (double) trackPoint.getCadence_rpm();
+            cadence = (double) trackPoint.getCadence().getRPM();
         }
         if (trackPoint.hasPower()) {
-            power = (double) trackPoint.getPower();
+            power = (double) trackPoint.getPower().getW();
         }
     }
 

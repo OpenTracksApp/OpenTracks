@@ -91,9 +91,9 @@ public class TrackPoint {
     @NonNull
     private Type type;
 
-    private Float heartRate_bpm = null;
-    private Float cadence_rpm = null;
-    private Float power = null;
+    private HeartRate heartRate = null;
+    private Cadence cadence = null;
+    private Power power = null;
     private Float altitudeGain_m = null;
     private Float altitudeLoss_m = null;
 
@@ -382,42 +382,54 @@ public class TrackPoint {
     }
 
     public boolean hasHeartRate() {
-        return heartRate_bpm != null && heartRate_bpm > 0;
+        return heartRate != null;
     }
 
-    public float getHeartRate_bpm() {
-        return heartRate_bpm;
+    public HeartRate getHeartRate() {
+        return heartRate;
     }
 
-    public TrackPoint setHeartRate_bpm(Float heartRate_bpm) {
-        this.heartRate_bpm = heartRate_bpm;
+    public TrackPoint setHeartRate(HeartRate heartRate) {
+        this.heartRate = heartRate;
         return this;
+    }
+
+    public TrackPoint setHeartRate(float heartRate) {
+        return setHeartRate(HeartRate.of(heartRate));
     }
 
     public boolean hasCadence() {
-        return cadence_rpm != null;
+        return cadence != null;
     }
 
-    public float getCadence_rpm() {
-        return cadence_rpm;
+    public Cadence getCadence() {
+        return cadence;
     }
 
-    public TrackPoint setCadence_rpm(Float cadence_rpm) {
-        this.cadence_rpm = cadence_rpm;
+    public TrackPoint setCadence(Cadence cadence) {
+        this.cadence = cadence;
         return this;
+    }
+
+    public TrackPoint setCadence(float cadence) {
+        return setCadence(Cadence.of(cadence));
     }
 
     public boolean hasPower() {
         return power != null;
     }
 
-    public float getPower() {
+    public Power getPower() {
         return power;
     }
 
-    public TrackPoint setPower(Float power) {
+    public TrackPoint setPower(Power power) {
         this.power = power;
         return this;
+    }
+
+    public TrackPoint setPower(float power) {
+        return setPower(Power.of(power));
     }
 
     @NonNull
@@ -434,8 +446,8 @@ public class TrackPoint {
                 ", bearing=" + bearing +
                 ", sensorDistance=" + sensorDistance +
                 ", type=" + type +
-                ", heartRate_bpm=" + heartRate_bpm +
-                ", cadence_rpm=" + cadence_rpm +
+                ", heartRate_bpm=" + heartRate +
+                ", cadence_rpm=" + cadence +
                 ", power=" + power +
                 ", altitudeGain_m=" + altitudeGain_m +
                 ", altitudeLoss_m=" + altitudeLoss_m +

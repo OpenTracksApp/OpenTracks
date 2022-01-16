@@ -11,6 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.sensors.UintUtils;
 
@@ -20,48 +21,48 @@ public class SensorDataCyclingTest {
     @Test
     public void compute_cadence_1() {
         // given
-        SensorDataCycling.Cadence previous = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 1, 1024); // 1s
-        SensorDataCycling.Cadence current = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 2, 2048); // 2s
+        SensorDataCycling.CyclingCadence previous = new SensorDataCycling.CyclingCadence("sensorAddress", "sensorName", 1, 1024); // 1s
+        SensorDataCycling.CyclingCadence current = new SensorDataCycling.CyclingCadence("sensorAddress", "sensorName", 2, 2048); // 2s
 
         // when
         current.compute(previous);
 
         // then
-        assertEquals(60, current.getValue(), 0.01);
+        assertEquals(60, current.getValue().getRPM(), 0.01);
     }
 
     @Test
     public void compute_cadence_2() {
         // given
-        SensorDataCycling.Cadence previous = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 1, 6184);
-        SensorDataCycling.Cadence current = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 2, 8016);
+        SensorDataCycling.CyclingCadence previous = new SensorDataCycling.CyclingCadence("sensorAddress", "sensorName", 1, 6184);
+        SensorDataCycling.CyclingCadence current = new SensorDataCycling.CyclingCadence("sensorAddress", "sensorName", 2, 8016);
 
         // when
         current.compute(previous);
 
         // then
-        assertEquals(33.53, current.getValue(), 0.01);
+        assertEquals(33.53, current.getValue().getRPM(), 0.01);
     }
 
     @Test
     public void compute_cadence_sameCount() {
         // given
-        SensorDataCycling.Cadence previous = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 1, 1024);
-        SensorDataCycling.Cadence current = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 1, 2048);
+        SensorDataCycling.CyclingCadence previous = new SensorDataCycling.CyclingCadence("sensorAddress", "sensorName", 1, 1024);
+        SensorDataCycling.CyclingCadence current = new SensorDataCycling.CyclingCadence("sensorAddress", "sensorName", 1, 2048);
 
         // when
         current.compute(previous);
 
         // then
-        assertEquals(0, current.getValue(), 0.01);
+        assertEquals(Cadence.of(0), current.getValue());
     }
 
 
     @Test
     public void compute_cadence_sameTime() {
         // given
-        SensorDataCycling.Cadence previous = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 1, 1024);
-        SensorDataCycling.Cadence current = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 2, 1024);
+        SensorDataCycling.CyclingCadence previous = new SensorDataCycling.CyclingCadence("sensorAddress", "sensorName", 1, 1024);
+        SensorDataCycling.CyclingCadence current = new SensorDataCycling.CyclingCadence("sensorAddress", "sensorName", 2, 1024);
 
         // when
         current.compute(previous);
@@ -73,14 +74,14 @@ public class SensorDataCyclingTest {
     @Test
     public void compute_cadence_rollOverTime() {
         // given
-        SensorDataCycling.Cadence previous = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 1, UintUtils.UINT16_MAX - 1024);
-        SensorDataCycling.Cadence current = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 2, 0);
+        SensorDataCycling.CyclingCadence previous = new SensorDataCycling.CyclingCadence("sensorAddress", "sensorName", 1, UintUtils.UINT16_MAX - 1024);
+        SensorDataCycling.CyclingCadence current = new SensorDataCycling.CyclingCadence("sensorAddress", "sensorName", 2, 0);
 
         // when
         current.compute(previous);
 
         // then
-        assertEquals(60, current.getValue(), 0.01);
+        assertEquals(60, current.getValue().getRPM(), 0.01);
     }
 
     @Ignore("Disabled from #953")
@@ -88,21 +89,21 @@ public class SensorDataCyclingTest {
     @Deprecated
     public void compute_cadence_rollOverCount() {
         // given
-        SensorDataCycling.Cadence previous = new SensorDataCycling.Cadence("sensorAddress", "sensorName", UintUtils.UINT32_MAX - 1, 1024);
-        SensorDataCycling.Cadence current = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 0, 2048);
+        SensorDataCycling.CyclingCadence previous = new SensorDataCycling.CyclingCadence("sensorAddress", "sensorName", UintUtils.UINT32_MAX - 1, 1024);
+        SensorDataCycling.CyclingCadence current = new SensorDataCycling.CyclingCadence("sensorAddress", "sensorName", 0, 2048);
 
         // when
         current.compute(previous);
 
         // then
-        assertEquals(60, current.getValue(), 0.01);
+        assertEquals(60, current.getValue().getRPM(), 0.01);
     }
 
     @Test
     public void compute_cadence_overflow() {
         // given
-        SensorDataCycling.Cadence previous = new SensorDataCycling.Cadence("sensorAddress", "sensorName", UintUtils.UINT32_MAX - 1, 1024);
-        SensorDataCycling.Cadence current = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 0, 2048);
+        SensorDataCycling.CyclingCadence previous = new SensorDataCycling.CyclingCadence("sensorAddress", "sensorName", UintUtils.UINT32_MAX - 1, 1024);
+        SensorDataCycling.CyclingCadence current = new SensorDataCycling.CyclingCadence("sensorAddress", "sensorName", 0, 2048);
 
         // when
         current.compute(previous);
@@ -171,8 +172,8 @@ public class SensorDataCyclingTest {
     @Test
     public void equals_cadence_with_no_data() {
         // given
-        SensorDataCycling.Cadence previous = new SensorDataCycling.Cadence("sensorAddress");
-        SensorDataCycling.Cadence current = new SensorDataCycling.Cadence("sensorAddress", "sensorName", 0, 2048);
+        SensorDataCycling.CyclingCadence previous = new SensorDataCycling.CyclingCadence("sensorAddress");
+        SensorDataCycling.CyclingCadence current = new SensorDataCycling.CyclingCadence("sensorAddress", "sensorName", 0, 2048);
 
         // when
         previous.toString();

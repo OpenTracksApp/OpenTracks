@@ -2,15 +2,17 @@ package de.dennisguse.opentracks.sensors.sensorData;
 
 import androidx.annotation.NonNull;
 
-public class SensorDataHeartRate extends SensorData<Float> {
+import de.dennisguse.opentracks.data.models.HeartRate;
+
+public class SensorDataHeartRate extends SensorData<HeartRate> {
 
     public SensorDataHeartRate(String address) {
         super(address);
     }
 
-    public SensorDataHeartRate(String name, String address, float heartRate_bpm) {
+    public SensorDataHeartRate(String name, String address, @NonNull HeartRate heartRate) {
         super(name, address);
-        this.value = heartRate_bpm;
+        this.value = heartRate;
     }
 
     @NonNull
@@ -21,7 +23,7 @@ public class SensorDataHeartRate extends SensorData<Float> {
 
     @NonNull
     @Override
-    protected Float getNoneValue() {
-        return 0f;
+    protected HeartRate getNoneValue() {
+        return HeartRate.of(0);
     }
 }

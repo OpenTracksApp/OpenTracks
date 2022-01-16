@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
+import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
 
@@ -16,7 +17,7 @@ public final class SensorDataRunning extends SensorData<SensorDataRunning.Data> 
 
     private final Speed speed;
 
-    private final Float cadence;
+    private final Cadence cadence;
 
     private final Distance totalDistance;
 
@@ -27,7 +28,7 @@ public final class SensorDataRunning extends SensorData<SensorDataRunning.Data> 
         this.totalDistance = null;
     }
 
-    public SensorDataRunning(String sensorAddress, String sensorName, Speed speed, Float cadence, Distance totalDistance) {
+    public SensorDataRunning(String sensorAddress, String sensorName, Speed speed, Cadence cadence, Distance totalDistance) {
         super(sensorAddress, sensorName);
         this.speed = speed;
         this.cadence = cadence;
@@ -39,7 +40,7 @@ public final class SensorDataRunning extends SensorData<SensorDataRunning.Data> 
     }
 
 
-    public Float getCadence() {
+    public Cadence getCadence() {
         return cadence;
     }
 
@@ -56,9 +57,9 @@ public final class SensorDataRunning extends SensorData<SensorDataRunning.Data> 
     @Override
     protected Data getNoneValue() {
         if (value != null) {
-            return new Data(Speed.zero(), 0f, value.distance);
+            return new Data(Speed.zero(), Cadence.of(0f), value.distance);
         } else {
-            return new Data(Speed.zero(), 0f, Distance.of(0));
+            return new Data(Speed.zero(), Cadence.of(0f), Distance.of(0));
         }
     }
 
@@ -85,12 +86,12 @@ public final class SensorDataRunning extends SensorData<SensorDataRunning.Data> 
 
     public static class Data {
         private final Speed speed;
-        private final Float cadence;
+        private final Cadence cadence;
 
         @Nullable
         private final Distance distance;
 
-        public Data(Speed speed, Float cadence, @Nullable Distance distance) {
+        public Data(Speed speed, Cadence cadence, @Nullable Distance distance) {
             this.speed = speed;
             this.cadence = cadence;
             this.distance = distance;
@@ -100,7 +101,7 @@ public final class SensorDataRunning extends SensorData<SensorDataRunning.Data> 
             return speed;
         }
 
-        public Float getCadence() {
+        public Cadence getCadence() {
             return cadence;
         }
 

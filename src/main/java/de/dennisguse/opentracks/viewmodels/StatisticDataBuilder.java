@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
@@ -115,9 +116,9 @@ public class StatisticDataBuilder {
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_cadence_key))) {
             title = context.getString(R.string.stats_sensors_cadence);
 
-            Float cadence = null;
+            Cadence cadence = null;
             if (sensorDataSet != null) {
-                Pair<Float, String> cadenceData = sensorDataSet.getCadence();
+                Pair<Cadence, String> cadenceData = sensorDataSet.getCadence();
                 if (cadenceData != null) {
                     cadence = cadenceData.first;
                     description = cadenceData.second;

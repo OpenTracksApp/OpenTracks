@@ -8,6 +8,7 @@ import androidx.core.util.Pair;
 
 import java.time.Duration;
 
+import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.UnitConversions;
@@ -23,18 +24,18 @@ public final class SensorDataCycling {
     private SensorDataCycling() {
     }
 
-    public static class Cadence extends SensorData<Float> {
+    public static class CyclingCadence extends SensorData<Cadence> {
 
         private final Long crankRevolutionsCount; // UINT32
         private final Integer crankRevolutionsTime; // UINT16; 1/1024s
 
-        public Cadence(String sensorAddress) {
+        public CyclingCadence(String sensorAddress) {
             super(sensorAddress);
             this.crankRevolutionsCount = null;
             this.crankRevolutionsTime = null;
         }
 
-        public Cadence(String sensorAddress, String sensorName, long crankRevolutionsCount, int crankRevolutionsTime) {
+        public CyclingCadence(String sensorAddress, String sensorName, long crankRevolutionsCount, int crankRevolutionsTime) {
             super(sensorAddress, sensorName);
             this.crankRevolutionsCount = crankRevolutionsCount;
             this.crankRevolutionsTime = crankRevolutionsTime;
@@ -43,7 +44,7 @@ public final class SensorDataCycling {
         /**
          * Workaround for Wahoo CADENCE: provides speed instead of cadence
          */
-        public Cadence(@NonNull DistanceSpeed speed) {
+        public CyclingCadence(@NonNull DistanceSpeed speed) {
             this(speed.getSensorAddress(), speed.getSensorName(), speed.wheelRevolutionsCount, speed.wheelRevolutionsTime);
         }
 
@@ -61,11 +62,11 @@ public final class SensorDataCycling {
 
         @NonNull
         @Override
-        protected Float getNoneValue() {
-            return 0f;
+        protected Cadence getNoneValue() {
+            return Cadence.of(0);
         }
 
-        public void compute(Cadence previous) {
+        public void compute(CyclingCadence previous) {
             if (hasData() && previous != null && previous.hasData()) {
                 float timeDiff_ms = UintUtils.diff(crankRevolutionsTime, previous.crankRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * UnitConversions.S_TO_MS;
                 if (timeDiff_ms <= 0) {
@@ -82,7 +83,7 @@ public final class SensorDataCycling {
 
                 long crankDiff = UintUtils.diff(crankRevolutionsCount, previous.crankRevolutionsCount, UintUtils.UINT32_MAX);
                 float cadence_ms = crankDiff / timeDiff_ms;
-                value = (float) (cadence_ms / UnitConversions.MS_TO_S / UnitConversions.S_TO_MIN);
+                value = Cadence.of((float) (cadence_ms / UnitConversions.MS_TO_S / UnitConversions.S_TO_MIN));
             }
         }
 
@@ -94,9 +95,9 @@ public final class SensorDataCycling {
 
         @Override
         public boolean equals(@Nullable Object obj) {
-            if (!(obj instanceof Cadence)) return false;
+            if (!(obj instanceof CyclingCadence)) return false;
 
-            Cadence comp = (Cadence) obj;
+            CyclingCadence comp = (CyclingCadence) obj;
             if (hasData() && comp.hasData() == hasData()) {
                 return getCrankRevolutionsCount() == comp.getCrankRevolutionsCount() && getCrankRevolutionsTime() == comp.getCrankRevolutionsTime();
             } else {
@@ -230,14 +231,14 @@ public final class SensorDataCycling {
         }
     }
 
-    public static class CadenceAndSpeed extends SensorData<Pair<Cadence, DistanceSpeed>> {
+    public static class CadenceAndSpeed extends SensorData<Pair<CyclingCadence, DistanceSpeed>> {
 
-        public CadenceAndSpeed(String sensorAddress, String sensorName, @Nullable Cadence cadence, @Nullable DistanceSpeed distanceSpeed) {
+        public CadenceAndSpeed(String sensorAddress, String sensorName, @Nullable CyclingCadence cadence, @Nullable DistanceSpeed distanceSpeed) {
             super(sensorAddress, sensorName);
             this.value = new Pair<>(cadence, distanceSpeed);
         }
 
-        public Cadence getCadence() {
+        public CyclingCadence getCadence() {
             return this.value != null ? this.value.first : null;
         }
 
@@ -247,7 +248,7 @@ public final class SensorDataCycling {
 
         @NonNull
         @Override
-        protected Pair<Cadence, DistanceSpeed> getNoneValue() {
+        protected Pair<CyclingCadence, DistanceSpeed> getNoneValue() {
             return new Pair<>(null, null);
         }
     }

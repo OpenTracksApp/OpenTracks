@@ -30,6 +30,9 @@ import androidx.annotation.NonNull;
 
 import java.util.UUID;
 
+import de.dennisguse.opentracks.data.models.Cadence;
+import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.sensors.sensorData.SensorData;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCycling;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
@@ -161,9 +164,9 @@ public abstract class BluetoothConnectionManager<DataType> {
      */
     protected abstract SensorData<DataType> parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic);
 
-    public static class HeartRate extends BluetoothConnectionManager<Float> {
+    public static class HeartRateConnectionManager extends BluetoothConnectionManager<HeartRate> {
 
-        HeartRate(@NonNull SensorDataObserver observer) {
+        HeartRateConnectionManager(@NonNull SensorDataObserver observer) {
             super(BluetoothUtils.HEART_RATE_SERVICE_UUID, BluetoothUtils.HEART_RATE_MEASUREMENT_CHAR_UUID, observer);
         }
 
@@ -176,23 +179,23 @@ public abstract class BluetoothConnectionManager<DataType> {
         protected SensorDataHeartRate parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
             Integer heartRate = BluetoothUtils.parseHeartRate(characteristic);
 
-            return heartRate != null ? new SensorDataHeartRate(address, sensorName, heartRate) : null;
+            return heartRate != null ? new SensorDataHeartRate(address, sensorName, HeartRate.of(heartRate)) : null;
         }
     }
 
-    public static class CyclingCadence extends BluetoothConnectionManager<Float> {
+    public static class CyclingCadence extends BluetoothConnectionManager<Cadence> {
 
         CyclingCadence(SensorDataObserver observer) {
             super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPEED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
         }
 
         @Override
-        protected SensorDataCycling.Cadence createEmptySensorData(String address) {
-            return new SensorDataCycling.Cadence(address);
+        protected SensorDataCycling.CyclingCadence createEmptySensorData(String address) {
+            return new SensorDataCycling.CyclingCadence(address);
         }
 
         @Override
-        protected SensorDataCycling.Cadence parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
+        protected SensorDataCycling.CyclingCadence parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
             SensorDataCycling.CadenceAndSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);
             if (cadenceAndSpeed == null) {
                 return null;
@@ -232,7 +235,7 @@ public abstract class BluetoothConnectionManager<DataType> {
         }
     }
 
-    public static class CyclingPower extends BluetoothConnectionManager<Float> {
+    public static class CyclingPower extends BluetoothConnectionManager<Power> {
 
         CyclingPower(@NonNull SensorDataObserver observer) {
             super(BluetoothUtils.CYCLING_POWER_UUID, BluetoothUtils.CYCLING_POWER_MEASUREMENT_CHAR_UUID, observer);
@@ -247,7 +250,7 @@ public abstract class BluetoothConnectionManager<DataType> {
         protected SensorDataCyclingPower parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
             Integer cyclingPower = BluetoothUtils.parseCyclingPower(characteristic);
 
-            return cyclingPower != null ? new SensorDataCyclingPower(address, sensorName, cyclingPower) : null;
+            return cyclingPower != null ? new SensorDataCyclingPower(address, sensorName, Power.of(cyclingPower)) : null;
         }
     }
 

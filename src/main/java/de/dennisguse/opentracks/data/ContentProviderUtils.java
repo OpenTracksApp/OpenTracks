@@ -41,8 +41,11 @@ import java.util.UUID;
 
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.data.models.Altitude;
+import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -577,10 +580,10 @@ public class ContentProviderUtils {
         }
 
         if (!cursor.isNull(indexes.sensorHeartRateIndex)) {
-            trackPoint.setHeartRate_bpm(cursor.getFloat(indexes.sensorHeartRateIndex));
+            trackPoint.setHeartRate(cursor.getFloat(indexes.sensorHeartRateIndex));
         }
         if (!cursor.isNull(indexes.sensorCadenceIndex)) {
-            trackPoint.setCadence_rpm(cursor.getFloat(indexes.sensorCadenceIndex));
+            trackPoint.setCadence(cursor.getFloat(indexes.sensorCadenceIndex));
         }
         if (!cursor.isNull(indexes.sensorDistanceIndex)) {
             trackPoint.setSensorDistance(Distance.of(cursor.getFloat(indexes.sensorDistanceIndex)));
@@ -739,16 +742,16 @@ public class ContentProviderUtils {
         }
 
         if (trackPoint.hasHeartRate()) {
-            values.put(TrackPointsColumns.SENSOR_HEARTRATE, trackPoint.getHeartRate_bpm());
+            values.put(TrackPointsColumns.SENSOR_HEARTRATE, trackPoint.getHeartRate().getBPM());
         }
         if (trackPoint.hasCadence()) {
-            values.put(TrackPointsColumns.SENSOR_CADENCE, trackPoint.getCadence_rpm());
+            values.put(TrackPointsColumns.SENSOR_CADENCE, trackPoint.getCadence().getRPM());
         }
         if (trackPoint.hasSensorDistance()) {
             values.put(TrackPointsColumns.SENSOR_DISTANCE, trackPoint.getSensorDistance().toM());
         }
         if (trackPoint.hasPower()) {
-            values.put(TrackPointsColumns.SENSOR_POWER, trackPoint.getPower());
+            values.put(TrackPointsColumns.SENSOR_POWER, trackPoint.getPower().getW());
         }
 
         if (trackPoint.hasAltitudeGain()) {
@@ -831,12 +834,17 @@ public class ContentProviderUtils {
         SensorStatistics sensorStatistics = null;
         try (Cursor cursor = contentResolver.query(ContentUris.withAppendedId(TracksColumns.CONTENT_URI_SENSOR_STATS, trackId.getId()), null, null, null, null)) {
             if (cursor != null && cursor.moveToFirst()) {
+                final int MAX_HR_INDEX = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_MAX_HR);
+                final int AVG_HR_INDEX = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_AVG_HR);
+                final int MAX_CADENCE_INDEX = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_MAX_CADENCE);
+                final int AVG_CADENCE_INDEX = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_AVG_CADENCE);
+                final int AVG_POWER_INDEX = cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_AVG_POWER);
                 sensorStatistics = new SensorStatistics(
-                        !cursor.isNull(cursor.getColumnIndexOrThrow("max_hr")) ? cursor.getFloat(cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_MAX_HR)) : null,
-                        !cursor.isNull(cursor.getColumnIndexOrThrow("avg_hr")) ? cursor.getFloat(cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_AVG_HR)) : null,
-                        !cursor.isNull(cursor.getColumnIndexOrThrow("max_cadence")) ? cursor.getFloat(cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_MAX_CADENCE)) : null,
-                        !cursor.isNull(cursor.getColumnIndexOrThrow("avg_cadence")) ? cursor.getFloat(cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_AVG_CADENCE)) : null,
-                        !cursor.isNull(cursor.getColumnIndexOrThrow("avg_power")) ? cursor.getFloat(cursor.getColumnIndexOrThrow(TrackPointsColumns.ALIAS_AVG_POWER)) : null
+                        !cursor.isNull(MAX_HR_INDEX) ? HeartRate.of(cursor.getFloat(MAX_HR_INDEX)) : null,
+                        !cursor.isNull(AVG_HR_INDEX) ? HeartRate.of(cursor.getFloat(AVG_HR_INDEX)) : null,
+                        !cursor.isNull(MAX_CADENCE_INDEX) ? Cadence.of(cursor.getFloat(MAX_CADENCE_INDEX)) : null,
+                        !cursor.isNull(AVG_CADENCE_INDEX) ? Cadence.of(cursor.getFloat(AVG_CADENCE_INDEX)) : null,
+                        !cursor.isNull(AVG_POWER_INDEX) ? Power.of(cursor.getFloat(AVG_POWER_INDEX)) : null
                 );
             }
 

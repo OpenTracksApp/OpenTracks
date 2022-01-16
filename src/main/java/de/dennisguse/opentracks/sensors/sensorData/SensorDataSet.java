@@ -4,6 +4,8 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
+import de.dennisguse.opentracks.data.models.Cadence;
+import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 
@@ -11,7 +13,7 @@ public final class SensorDataSet {
 
     private SensorDataHeartRate heartRate;
 
-    private SensorDataCycling.Cadence cyclingCadence;
+    private SensorDataCycling.CyclingCadence cyclingCadence;
 
     private SensorDataCycling.DistanceSpeed cyclingDistanceSpeed;
 
@@ -30,7 +32,7 @@ public final class SensorDataSet {
         this.runningDistanceSpeedCadence = toCopy.runningDistanceSpeedCadence;
     }
 
-    public Pair<Float, String> getHeartRate() {
+    public Pair<HeartRate, String> getHeartRate() {
         if (heartRate != null) {
             return new Pair<>(heartRate.getValue(), heartRate.getSensorNameOrAddress());
         }
@@ -38,7 +40,7 @@ public final class SensorDataSet {
         return null;
     }
 
-    public Pair<Float, String> getCadence() {
+    public Pair<Cadence, String> getCadence() {
         if (cyclingCadence != null) {
             return new Pair<>(cyclingCadence.getValue(), cyclingCadence.getSensorNameOrAddress());
         }
@@ -62,7 +64,7 @@ public final class SensorDataSet {
         return null;
     }
 
-    public SensorDataCycling.Cadence getCyclingCadence() {
+    public SensorDataCycling.CyclingCadence getCyclingCadence() {
         return cyclingCadence;
     }
 
@@ -96,11 +98,11 @@ public final class SensorDataSet {
 
     public void fillTrackPoint(TrackPoint trackPoint) {
         if (getHeartRate() != null) {
-            trackPoint.setHeartRate_bpm(getHeartRate().first);
+            trackPoint.setHeartRate(getHeartRate().first);
         }
 
         if (getCadence() != null) {
-            trackPoint.setCadence_rpm(getCadence().first);
+            trackPoint.setCadence(getCadence().first);
         }
 
         if (getSpeed() != null) {
@@ -144,8 +146,8 @@ public final class SensorDataSet {
             return;
         }
 
-        if (type instanceof SensorDataCycling.Cadence) {
-            this.cyclingCadence = (SensorDataCycling.Cadence) data;
+        if (type instanceof SensorDataCycling.CyclingCadence) {
+            this.cyclingCadence = (SensorDataCycling.CyclingCadence) data;
             return;
         }
         if (type instanceof SensorDataCycling.DistanceSpeed) {

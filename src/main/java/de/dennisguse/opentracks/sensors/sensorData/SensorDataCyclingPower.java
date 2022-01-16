@@ -2,15 +2,17 @@ package de.dennisguse.opentracks.sensors.sensorData;
 
 import androidx.annotation.NonNull;
 
-public class SensorDataCyclingPower extends SensorData<Float> {
+import de.dennisguse.opentracks.data.models.Power;
+
+public class SensorDataCyclingPower extends SensorData<Power> {
 
     public SensorDataCyclingPower(String address) {
         super(address);
     }
 
-    public SensorDataCyclingPower(String name, String address, float power_w) {
+    public SensorDataCyclingPower(String name, String address, Power power) {
         super(name, address);
-        this.value = power_w;
+        this.value = power;
     }
 
     @NonNull
@@ -21,7 +23,7 @@ public class SensorDataCyclingPower extends SensorData<Float> {
 
     @NonNull
     @Override
-    protected Float getNoneValue() {
-        return 0f;
+    protected Power getNoneValue() {
+        return Power.of(0f);
     }
 }
