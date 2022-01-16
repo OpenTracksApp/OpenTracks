@@ -318,13 +318,13 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
             if (i < sensorDistanceList.size() && sensorDistanceList.get(i) != null) {
                 trackPoint.setSensorDistance(Distance.of(sensorDistanceList.get(i)));
             }
-            if (i < sensorHeartRateList.size()) {
-                trackPoint.setHeartRate_bpm(sensorHeartRateList.get(i));
+            if (i < sensorHeartRateList.size() && sensorHeartRateList.get(i) != null) {
+                trackPoint.setHeartRate(sensorHeartRateList.get(i));
             }
-            if (i < sensorCadenceList.size()) {
-                trackPoint.setCadence_rpm(sensorCadenceList.get(i));
+            if (i < sensorCadenceList.size() && sensorCadenceList.get(i) != null) {
+                trackPoint.setCadence(sensorCadenceList.get(i));
             }
-            if (i < sensorPowerList.size()) {
+            if (i < sensorPowerList.size() && sensorPowerList.get(i) != null) {
                 trackPoint.setPower(sensorPowerList.get(i));
             }
             if (i < altitudeGainList.size()) {

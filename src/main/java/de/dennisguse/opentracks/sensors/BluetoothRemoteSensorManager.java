@@ -62,7 +62,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
 
     private Distance preferenceWheelCircumference;
 
-    private final BluetoothConnectionManager.HeartRate heartRate = new BluetoothConnectionManager.HeartRate(this);
+    private final BluetoothConnectionManager.HeartRateConnectionManager heartRate = new BluetoothConnectionManager.HeartRateConnectionManager(this);
     private final BluetoothConnectionManager.CyclingCadence cyclingCadence = new BluetoothConnectionManager.CyclingCadence(this);
     private final BluetoothConnectionManager.CyclingDistanceSpeed cyclingSpeed = new BluetoothConnectionManager.CyclingDistanceSpeed(this);
     private final BluetoothConnectionManager.CyclingPower cyclingPower = new BluetoothConnectionManager.CyclingPower(this);
@@ -180,15 +180,15 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
 
     @Override
     public synchronized void onChanged(SensorData<?> sensorData) {
-        if (sensorData instanceof SensorDataCycling.Cadence) {
-            SensorDataCycling.Cadence previous = sensorDataSet.getCyclingCadence();
+        if (sensorData instanceof SensorDataCycling.CyclingCadence) {
+            SensorDataCycling.CyclingCadence previous = sensorDataSet.getCyclingCadence();
             Log.d(TAG, "Previous: " + previous + "; current: " + sensorData);
 
             if (sensorData.equals(previous)) {
                 Log.d(TAG, "onChanged: cadence data repeated.");
                 return;
             }
-            ((SensorDataCycling.Cadence) sensorData).compute(previous);
+            ((SensorDataCycling.CyclingCadence) sensorData).compute(previous);
         }
         if (sensorData instanceof SensorDataCycling.DistanceSpeed) {
             SensorDataCycling.DistanceSpeed previous = sensorDataSet.getCyclingDistanceSpeed();

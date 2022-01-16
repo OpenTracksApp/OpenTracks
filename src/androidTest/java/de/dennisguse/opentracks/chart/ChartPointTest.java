@@ -77,8 +77,8 @@ public class ChartPointTest {
     public void create_sensorAvailable() {
         // given
         TrackPoint trackPoint = TrackStubUtils.createDefaultTrackPoint();
-        trackPoint.setHeartRate_bpm(100f);
-        trackPoint.setCadence_rpm(101f);
+        trackPoint.setHeartRate(100f);
+        trackPoint.setCadence(101f);
         trackPoint.setPower(102f);
 
         TrackStatistics statistics = new TrackStatistics();

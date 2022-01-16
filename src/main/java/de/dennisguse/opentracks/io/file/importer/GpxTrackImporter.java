@@ -299,7 +299,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
         }
         if (heartrate != null) {
             try {
-                trackPoint.setHeartRate_bpm(Float.parseFloat(heartrate));
+                trackPoint.setHeartRate(Float.parseFloat(heartrate));
             } catch (NumberFormatException e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse heart rate: %s", heartrate)), e);
             }
@@ -307,7 +307,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
 
         if (cadence != null) {
             try {
-                trackPoint.setCadence_rpm(Float.parseFloat(cadence));
+                trackPoint.setCadence(Float.parseFloat(cadence));
             } catch (Exception e) {
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse cadence: %s", cadence)), e);
             }

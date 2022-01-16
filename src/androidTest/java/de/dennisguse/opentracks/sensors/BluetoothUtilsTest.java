@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothGattCharacteristic;
 
 import org.junit.Test;
 
+import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCycling;
@@ -101,7 +102,7 @@ public class BluetoothUtilsTest {
 
         // then
         assertEquals(Speed.of(5), sensor.getSpeed());
-        assertEquals(80, sensor.getCadence(), 0.01);
+        assertEquals(Cadence.of(80), sensor.getCadence());
         assertEquals(Distance.of(6553.5 + 1677721.6), sensor.getTotalDistance());
     }
 }

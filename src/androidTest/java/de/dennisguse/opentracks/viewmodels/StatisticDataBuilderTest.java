@@ -17,7 +17,10 @@ import java.time.Duration;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.stats.SensorStatistics;
@@ -124,8 +127,8 @@ public class StatisticDataBuilderTest extends TestCase {
     @Test
     public void testFromSensorStatistics_onlyHeartRate() {
         when(sensorStatisticsMock.hasHeartRate()).thenReturn(true);
-        when(sensorStatisticsMock.getMaxHeartRate()).thenReturn(200f);
-        when(sensorStatisticsMock.getAvgHeartRate()).thenReturn(150f);
+        when(sensorStatisticsMock.getMaxHeartRate()).thenReturn(HeartRate.of(200f));
+        when(sensorStatisticsMock.getAvgHeartRate()).thenReturn(HeartRate.of(150f));
         when(sensorStatisticsMock.hasCadence()).thenReturn(false);
         when(sensorStatisticsMock.hasPower()).thenReturn(false);
 
@@ -142,8 +145,8 @@ public class StatisticDataBuilderTest extends TestCase {
     public void testFromSensorStatistics_onlyCadence() {
         when(sensorStatisticsMock.hasHeartRate()).thenReturn(false);
         when(sensorStatisticsMock.hasCadence()).thenReturn(true);
-        when(sensorStatisticsMock.getAvgCadence()).thenReturn(90f);
-        when(sensorStatisticsMock.getMaxCadence()).thenReturn(110f);
+        when(sensorStatisticsMock.getAvgCadence()).thenReturn(Cadence.of(90f));
+        when(sensorStatisticsMock.getMaxCadence()).thenReturn(Cadence.of(110f));
         when(sensorStatisticsMock.hasPower()).thenReturn(false);
 
         // when
@@ -160,7 +163,7 @@ public class StatisticDataBuilderTest extends TestCase {
         when(sensorStatisticsMock.hasHeartRate()).thenReturn(false);
         when(sensorStatisticsMock.hasCadence()).thenReturn(false);
         when(sensorStatisticsMock.hasPower()).thenReturn(true);
-        when(sensorStatisticsMock.getAvgPower()).thenReturn(300f);
+        when(sensorStatisticsMock.getAvgPower()).thenReturn(Power.of(300f));
 
         // when
         List<StatisticData> statisticDataList = StatisticDataBuilder.fromSensorStatistics(context, sensorStatisticsMock);
@@ -173,13 +176,13 @@ public class StatisticDataBuilderTest extends TestCase {
     @Test
     public void testFromSensorStatistics() {
         when(sensorStatisticsMock.hasHeartRate()).thenReturn(true);
-        when(sensorStatisticsMock.getMaxHeartRate()).thenReturn(200f);
-        when(sensorStatisticsMock.getAvgHeartRate()).thenReturn(150f);
+        when(sensorStatisticsMock.getMaxHeartRate()).thenReturn(HeartRate.of(200f));
+        when(sensorStatisticsMock.getAvgHeartRate()).thenReturn(HeartRate.of(150f));
         when(sensorStatisticsMock.hasCadence()).thenReturn(true);
-        when(sensorStatisticsMock.getAvgCadence()).thenReturn(90f);
-        when(sensorStatisticsMock.getMaxCadence()).thenReturn(110f);
+        when(sensorStatisticsMock.getAvgCadence()).thenReturn(Cadence.of(90f));
+        when(sensorStatisticsMock.getMaxCadence()).thenReturn(Cadence.of(110f));
         when(sensorStatisticsMock.hasPower()).thenReturn(true);
-        when(sensorStatisticsMock.getAvgPower()).thenReturn(300f);
+        when(sensorStatisticsMock.getAvgPower()).thenReturn(Power.of(300f));
 
         // when
         List<StatisticData> statisticDataList = StatisticDataBuilder.fromSensorStatistics(context, sensorStatisticsMock);

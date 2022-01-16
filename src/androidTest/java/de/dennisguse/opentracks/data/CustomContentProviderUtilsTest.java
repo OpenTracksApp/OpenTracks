@@ -52,6 +52,7 @@ import java.util.stream.Collectors;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.content.data.TestSensorDataUtil;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
@@ -776,6 +777,7 @@ public class CustomContentProviderUtilsTest {
 
         when(cursorMock.getColumnIndexOrThrow(TrackPointsColumns.SENSOR_HEARTRATE)).thenReturn(6);
         when(cursorMock.isNull(6)).thenReturn(false);
+        when(cursorMock.getFloat(6)).thenReturn(75f);
 
         // when
         TrackPoint trackPoint = contentProviderUtils.createTrackPoint(cursorMock);
@@ -785,7 +787,7 @@ public class CustomContentProviderUtilsTest {
         assertEquals(latitude, trackPoint.getLatitude(), 0.01);
         assertEquals(time, trackPoint.getTime().toEpochMilli());
         assertEquals(speed, trackPoint.getSpeed().toMPS(), 0.01);
-        assertFalse(trackPoint.hasHeartRate());
+        assertEquals(HeartRate.of(75f), trackPoint.getHeartRate());
     }
 
     /**
@@ -809,8 +811,8 @@ public class CustomContentProviderUtilsTest {
         Track track = TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
         TrackPoint trackPoint = TestDataUtil.createTrackPoint(5);
-        trackPoint.setHeartRate_bpm(1F);
-        trackPoint.setCadence_rpm(2F);
+        trackPoint.setHeartRate(1F);
+        trackPoint.setCadence(2F);
         trackPoint.setPower(3F);
 
         // when
@@ -819,9 +821,9 @@ public class CustomContentProviderUtilsTest {
         // then
         List<TrackPoint> trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         assertTrue(trackPoints.get(10).hasHeartRate());
-        assertEquals(trackPoint.getHeartRate_bpm(), trackPoints.get(10).getHeartRate_bpm(), 0.01);
-        assertEquals(trackPoint.getCadence_rpm(), trackPoints.get(10).getCadence_rpm(), 0.01);
-        assertEquals(trackPoint.getPower(), trackPoints.get(10).getPower(), 0.01);
+        assertEquals(trackPoint.getHeartRate(), trackPoints.get(10).getHeartRate());
+        assertEquals(trackPoint.getCadence(), trackPoints.get(10).getCadence());
+        assertEquals(trackPoint.getPower(), trackPoints.get(10).getPower());
     }
 
     /**
@@ -909,8 +911,8 @@ public class CustomContentProviderUtilsTest {
         TrackPoint trackPoint = TestDataUtil.createTrackPoint(1);
         trackPoint.setType(TrackPoint.Type.TRACKPOINT);
         trackPoint.setPower(null);
-        trackPoint.setCadence_rpm(null);
-        trackPoint.setHeartRate_bpm(null);
+        trackPoint.setCadence(null);
+        trackPoint.setHeartRate(null);
         trackPointList.add(trackPoint);
         Track.Id trackId = new Track.Id(System.currentTimeMillis());
         Track track = TestDataUtil.createTrack(trackId);
@@ -972,13 +974,13 @@ public class CustomContentProviderUtilsTest {
 
         // then
         assertTrue(sensorStatistics.hasHeartRate());
-        assertEquals(sensorStatistics.getAvgHeartRate(), stats.avgHr, 0f);
-        assertEquals(sensorStatistics.getMaxHeartRate(), stats.maxHr, 0f);
+        assertEquals(sensorStatistics.getAvgHeartRate().getBPM(), stats.avgHr, 0f);
+        assertEquals(sensorStatistics.getMaxHeartRate().getBPM(), stats.maxHr, 0f);
         assertTrue(sensorStatistics.hasCadence());
-        assertEquals(sensorStatistics.getAvgCadence(), stats.avgCadence, 0f);
-        assertEquals(sensorStatistics.getMaxCadence(), stats.maxCadence, 0f);
+        assertEquals(sensorStatistics.getAvgCadence().getRPM(), stats.avgCadence, 0f);
+        assertEquals(sensorStatistics.getMaxCadence().getRPM(), stats.maxCadence, 0f);
         assertTrue(sensorStatistics.hasPower());
-        assertEquals(sensorStatistics.getAvgPower(), stats.avgPower, 0f);
+        assertEquals(sensorStatistics.getAvgPower().getW(), stats.avgPower, 0f);
     }
 
     @Test
@@ -1004,8 +1006,8 @@ public class CustomContentProviderUtilsTest {
 
         // then
         assertTrue(sensorStatistics.hasHeartRate());
-        assertEquals(sensorStatistics.getAvgHeartRate(), stats.avgHr, 0f);
-        assertEquals(sensorStatistics.getMaxHeartRate(), stats.maxHr, 0f);
+        assertEquals(sensorStatistics.getAvgHeartRate().getBPM(), stats.avgHr, 0f);
+        assertEquals(sensorStatistics.getMaxHeartRate().getBPM(), stats.maxHr, 0f);
         assertFalse(sensorStatistics.hasCadence());
         assertFalse(sensorStatistics.hasPower());
     }
@@ -1034,8 +1036,8 @@ public class CustomContentProviderUtilsTest {
         // then
         assertFalse(sensorStatistics.hasHeartRate());
         assertTrue(sensorStatistics.hasCadence());
-        assertEquals(sensorStatistics.getAvgCadence(), stats.avgCadence, 0f);
-        assertEquals(sensorStatistics.getMaxCadence(), stats.maxCadence, 0f);
+        assertEquals(sensorStatistics.getAvgCadence().getRPM(), stats.avgCadence, 0f);
+        assertEquals(sensorStatistics.getMaxCadence().getRPM(), stats.maxCadence, 0f);
         assertFalse(sensorStatistics.hasPower());
     }
 
@@ -1064,7 +1066,7 @@ public class CustomContentProviderUtilsTest {
         assertFalse(sensorStatistics.hasHeartRate());
         assertFalse(sensorStatistics.hasCadence());
         assertTrue(sensorStatistics.hasPower());
-        assertEquals(sensorStatistics.getAvgPower(), stats.avgPower, 0f);
+        assertEquals(sensorStatistics.getAvgPower().getW(), stats.avgPower, 0f);
     }
 
     @Test
@@ -1097,11 +1099,11 @@ public class CustomContentProviderUtilsTest {
         TestSensorDataUtil.SensorDataStats stats = sensorDataUtil.computeStats();
 
         // then
-        assertEquals(sensorStatistics.getAvgHeartRate(), stats.avgHr, 0f);
-        assertEquals(sensorStatistics.getMaxHeartRate(), stats.maxHr, 0f);
-        assertEquals(sensorStatistics.getAvgCadence(), stats.avgCadence, 0f);
-        assertEquals(sensorStatistics.getMaxCadence(), stats.maxCadence, 0f);
-        assertEquals(sensorStatistics.getAvgPower(), stats.avgPower, 0f);
+        assertEquals(sensorStatistics.getAvgHeartRate().getBPM(), stats.avgHr, 0f);
+        assertEquals(sensorStatistics.getMaxHeartRate().getBPM(), stats.maxHr, 0f);
+        assertEquals(sensorStatistics.getAvgCadence().getRPM(), stats.avgCadence, 0f);
+        assertEquals(sensorStatistics.getMaxCadence().getRPM(), stats.maxCadence, 0f);
+        assertEquals(sensorStatistics.getAvgPower().getW(), stats.avgPower, 0f);
     }
 
     @Test
@@ -1142,11 +1144,11 @@ public class CustomContentProviderUtilsTest {
         TestSensorDataUtil.SensorDataStats stats = sensorDataUtil.computeStats();
 
         // then
-        assertEquals(sensorStatistics.getAvgHeartRate(), stats.avgHr, 0f);
-        assertEquals(sensorStatistics.getMaxHeartRate(), stats.maxHr, 0f);
-        assertEquals(sensorStatistics.getAvgCadence(), stats.avgCadence, 0f);
-        assertEquals(sensorStatistics.getMaxCadence(), stats.maxCadence, 0f);
-        assertEquals(sensorStatistics.getAvgPower(), stats.avgPower, 0f);
+        assertEquals(sensorStatistics.getAvgHeartRate().getBPM(), stats.avgHr, 0f);
+        assertEquals(sensorStatistics.getMaxHeartRate().getBPM(), stats.maxHr, 0f);
+        assertEquals(sensorStatistics.getAvgCadence().getRPM(), stats.avgCadence, 0f);
+        assertEquals(sensorStatistics.getMaxCadence().getRPM(), stats.maxCadence, 0f);
+        assertEquals(sensorStatistics.getAvgPower().getW(), stats.avgPower, 0f);
     }
 
     @Test
@@ -1187,11 +1189,11 @@ public class CustomContentProviderUtilsTest {
         TestSensorDataUtil.SensorDataStats stats = sensorDataUtil.computeStats();
 
         // then
-        assertEquals(sensorStatistics.getAvgHeartRate(), stats.avgHr, 0f);
-        assertEquals(sensorStatistics.getMaxHeartRate(), stats.maxHr, 0f);
-        assertEquals(sensorStatistics.getAvgCadence(), stats.avgCadence, 0f);
-        assertEquals(sensorStatistics.getMaxCadence(), stats.maxCadence, 0f);
-        assertEquals(sensorStatistics.getAvgPower(), stats.avgPower, 0f);
+        assertEquals(sensorStatistics.getAvgHeartRate().getBPM(), stats.avgHr, 0f);
+        assertEquals(sensorStatistics.getMaxHeartRate().getBPM(), stats.maxHr, 0f);
+        assertEquals(sensorStatistics.getAvgCadence().getRPM(), stats.avgCadence, 0f);
+        assertEquals(sensorStatistics.getMaxCadence().getRPM(), stats.maxCadence, 0f);
+        assertEquals(sensorStatistics.getAvgPower().getW(), stats.avgPower, 0f);
     }
 
     private void testGetSensorStats_randomData(int totalPoints, boolean withStartSegments) {
@@ -1218,11 +1220,11 @@ public class CustomContentProviderUtilsTest {
         TestSensorDataUtil.SensorDataStats stats = sensorDataUtil.computeStats();
 
         // then
-        assertEquals(sensorStatistics.getAvgHeartRate(), stats.avgHr, 0.01f);
-        assertEquals(sensorStatistics.getMaxHeartRate(), stats.maxHr, 0.01f);
-        assertEquals(sensorStatistics.getAvgCadence(), stats.avgCadence, 0.01f);
-        assertEquals(sensorStatistics.getMaxCadence(), stats.maxCadence, 0.01f);
-        assertEquals(sensorStatistics.getAvgPower(), stats.avgPower, 0.01f);
+        assertEquals(sensorStatistics.getAvgHeartRate().getBPM(), stats.avgHr, 0.01f);
+        assertEquals(sensorStatistics.getMaxHeartRate().getBPM(), stats.maxHr, 0.01f);
+        assertEquals(sensorStatistics.getAvgCadence().getRPM(), stats.avgCadence, 0.01f);
+        assertEquals(sensorStatistics.getMaxCadence().getRPM(), stats.maxCadence, 0.01f);
+        assertEquals(sensorStatistics.getAvgPower().getW(), stats.avgPower, 0.01f);
     }
 
     @Test

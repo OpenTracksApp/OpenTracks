@@ -331,15 +331,15 @@ public class GPXTrackExporter implements TrackExporter {
                 }
 
                 if (trackPoint.hasHeartRate()) {
-                    trackPointExtensionContent += "<gpxtpx:hr>" + HEARTRATE_FORMAT.format(trackPoint.getHeartRate_bpm()) + "</gpxtpx:hr>\n";
+                    trackPointExtensionContent += "<gpxtpx:hr>" + HEARTRATE_FORMAT.format(trackPoint.getHeartRate().getBPM()) + "</gpxtpx:hr>\n";
                 }
 
                 if (trackPoint.hasCadence()) {
-                    trackPointExtensionContent += "<gpxtpx:cad>" + CADENCE_FORMAT.format(trackPoint.getCadence_rpm()) + "</gpxtpx:cad>\n";
+                    trackPointExtensionContent += "<gpxtpx:cad>" + CADENCE_FORMAT.format(trackPoint.getCadence().getRPM()) + "</gpxtpx:cad>\n";
                 }
 
                 if (trackPoint.hasPower()) {
-                    trackPointExtensionContent += "<pwr:PowerInWatts>" + POWER_FORMAT.format(trackPoint.getPower()) + "</pwr:PowerInWatts>\n";
+                    trackPointExtensionContent += "<pwr:PowerInWatts>" + POWER_FORMAT.format(trackPoint.getPower().getW()) + "</pwr:PowerInWatts>\n";
                 }
 
                 Double cumulativeGain = cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasAltitudeGain() ? (double) tp.getAltitudeGain() : null);

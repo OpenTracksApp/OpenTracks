@@ -40,8 +40,11 @@ import java.util.concurrent.TimeoutException;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -336,9 +339,9 @@ public class ExportImportTest {
                         .setAltitudeLoss(1f)
                         .setAltitudeGain(1f)
                         .setSensorDistance(Distance.of(12))
-                        .setHeartRate_bpm(66f)
+                        .setHeartRate(66f)
                         .setPower(50f)
-                        .setCadence_rpm(3f),
+                        .setCadence(3f),
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2020-02-02T02:02:21Z"))
                         .setLatitude(3)
                         .setLongitude(14.002)
@@ -439,18 +442,18 @@ public class ExportImportTest {
         }
     }
 
-    private void mockBLESensorData(TrackPointCreator trackPointCreator, Float speed, Distance distance, Float heartRate, Float cyclingCadence, Float power) {
+    private void mockBLESensorData(TrackPointCreator trackPointCreator, Float speed, Distance distance, float heartRate, float cadence, Float power) {
         trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context, trackPointCreator) {
             @Override
             public SensorDataSet fill(@NonNull TrackPoint trackPoint) {
                 SensorDataSet sensorDataSet = new SensorDataSet();
-                sensorDataSet.set(new SensorDataCyclingPower("power", "power", power));
-                sensorDataSet.set(new SensorDataHeartRate("heartRate", "heartRate", heartRate));
+                sensorDataSet.set(new SensorDataCyclingPower("power", "power", Power.of(power)));
+                sensorDataSet.set(new SensorDataHeartRate("heartRate", "heartRate", HeartRate.of(heartRate)));
 
-                SensorDataCycling.Cadence cadence = Mockito.mock(SensorDataCycling.Cadence.class);
-                Mockito.when(cadence.hasValue()).thenReturn(true);
-                Mockito.when(cadence.getValue()).thenReturn(cyclingCadence);
-                sensorDataSet.set(cadence);
+                SensorDataCycling.CyclingCadence cyclingCadence = Mockito.mock(SensorDataCycling.CyclingCadence.class);
+                Mockito.when(cyclingCadence.hasValue()).thenReturn(true);
+                Mockito.when(cyclingCadence.getValue()).thenReturn(Cadence.of(cadence));
+                sensorDataSet.set(cyclingCadence);
 
                 if (distance != null && speed != null) {
                     SensorDataCycling.DistanceSpeed.Data distanceSpeedData = Mockito.mock(SensorDataCycling.DistanceSpeed.Data.class);

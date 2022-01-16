@@ -1,13 +1,17 @@
 package de.dennisguse.opentracks.stats;
 
-public class SensorStatistics {
-    private final Float maxHr;
-    private final Float avgHr;
-    private final Float maxCadence;
-    private final Float avgCadence;
-    private final Float avgPower;
+import de.dennisguse.opentracks.data.models.Cadence;
+import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.data.models.Power;
 
-    public SensorStatistics(Float maxHr, Float avgHr, Float maxCadence, Float avgCadence, Float avgPower) {
+public class SensorStatistics {
+    private final HeartRate maxHr;
+    private final HeartRate avgHr;
+    private final Cadence maxCadence;
+    private final Cadence avgCadence;
+    private final Power avgPower;
+
+    public SensorStatistics(HeartRate maxHr, HeartRate avgHr, Cadence maxCadence, Cadence avgCadence, Power avgPower) {
         this.maxHr = maxHr;
         this.avgHr = avgHr;
         this.maxCadence = maxCadence;
@@ -19,11 +23,11 @@ public class SensorStatistics {
         return avgHr != null && maxHr != null;
     }
 
-    public float getMaxHeartRate() {
+    public HeartRate getMaxHeartRate() {
         return maxHr;
     }
 
-    public float getAvgHeartRate() {
+    public HeartRate getAvgHeartRate() {
         return avgHr;
     }
 
@@ -31,11 +35,11 @@ public class SensorStatistics {
         return avgCadence != null && maxCadence != null;
     }
 
-    public float getMaxCadence() {
+    public Cadence getMaxCadence() {
         return maxCadence;
     }
 
-    public float getAvgCadence() {
+    public Cadence getAvgCadence() {
         return avgCadence;
     }
 
@@ -43,7 +47,7 @@ public class SensorStatistics {
         return avgPower != null;
     }
 
-    public float getAvgPower() {
+    public Power getAvgPower() {
         return avgPower;
     }
 }

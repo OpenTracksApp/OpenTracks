@@ -20,9 +20,15 @@ public class TestSensorDataUtil {
         int i = trackPointList.size() + 1;
         tp.setLatitude(TestDataUtil.INITIAL_LATITUDE + (double) i / 10000.0);
         tp.setLongitude(TestDataUtil.INITIAL_LONGITUDE - (double) i / 10000.0);
-        tp.setHeartRate_bpm(hr);
-        tp.setCadence_rpm(cadence);
-        tp.setPower(power);
+        if (hr != null) {
+            tp.setHeartRate(hr);
+        }
+        if (cadence != null) {
+            tp.setCadence(cadence);
+        }
+        if (power != null) {
+            tp.setPower(power);
+        }
         tp.setHorizontalAccuracy(Distance.of(1f));
         tp.setAltitude(1f);
         tp.setSpeed(Speed.of(5f + (i / 10f)));

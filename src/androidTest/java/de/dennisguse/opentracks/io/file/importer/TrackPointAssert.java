@@ -61,17 +61,17 @@ public class TrackPointAssert {
 
         Assert.assertEquals(expected.hasHeartRate(), actual.hasHeartRate());
         if (expected.hasHeartRate()) {
-            Assert.assertEquals(expected.getHeartRate_bpm(), actual.getHeartRate_bpm(), delta);
+            Assert.assertEquals(expected.getHeartRate(), actual.getHeartRate());
         }
 
         Assert.assertEquals(expected.hasPower(), actual.hasPower());
         if (expected.hasPower()) {
-            Assert.assertEquals(expected.getPower(), actual.getPower(), delta);
+            Assert.assertEquals(expected.getPower(), actual.getPower());
         }
 
         Assert.assertEquals(expected.hasCadence(), actual.hasCadence());
         if (expected.hasCadence()) {
-            Assert.assertEquals(expected.getCadence_rpm(), actual.getCadence_rpm(), delta);
+            Assert.assertEquals(expected.getCadence(), actual.getCadence());
         }
     }
 

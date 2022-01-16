@@ -41,7 +41,10 @@ import java.time.format.FormatStyle;
 import java.time.temporal.TemporalAccessor;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.HeartRate;
+import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 
 /**
@@ -245,28 +248,28 @@ public class StringUtils {
         return new Pair<>(context.getString(R.string.time, minutes, seconds), unitString);
     }
 
-    public static Pair<String, String> getHeartRateParts(Context context, Float heartrate_bpm) {
+    public static Pair<String, String> getHeartRateParts(Context context, HeartRate heartrate) {
         String value = context.getString(R.string.value_unknown);
-        if (heartrate_bpm != null) {
-            value = StringUtils.formatDecimal(heartrate_bpm, 0);
+        if (heartrate != null) {
+            value = StringUtils.formatDecimal(heartrate.getBPM(), 0);
         }
 
         return new Pair<>(value, context.getString(R.string.sensor_unit_beats_per_minute));
     }
 
-    public static Pair<String, String> getCadenceParts(Context context, Float cadence_rpm) {
+    public static Pair<String, String> getCadenceParts(Context context, Cadence cadence) {
         String value = context.getString(R.string.value_unknown);
-        if (cadence_rpm != null) {
-            value = StringUtils.formatDecimal(cadence_rpm, 0);
+        if (cadence != null) {
+            value = StringUtils.formatDecimal(cadence.getRPM(), 0);
         }
 
         return new Pair<>(value, context.getString(R.string.sensor_unit_rounds_per_minute));
     }
 
-    public static Pair<String, String> getPowerParts(Context context, Float power_w) {
+    public static Pair<String, String> getPowerParts(Context context, Power power) {
         String value = context.getString(R.string.value_unknown);
-        if (power_w != null) {
-            value = StringUtils.formatDecimal(power_w, 0);
+        if (power != null) {
+            value = StringUtils.formatDecimal(power.getW(), 0);
         }
 
         return new Pair<>(value, context.getString(R.string.sensor_unit_power));
