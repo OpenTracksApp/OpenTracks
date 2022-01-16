@@ -23,7 +23,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
@@ -32,6 +31,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -55,9 +56,6 @@ public class MarkerEditActivity extends AbstractActivity {
     public static final String EXTRA_TRACK_ID = "track_id";
     public static final String EXTRA_MARKER_ID = "marker_id";
 
-    private static final int CAMERA_REQUEST_CODE = 5;
-    private static final int GALLERY_IMG_REQUEST_CODE = 7;
-
     private static final String TAG = MarkerEditActivity.class.getSimpleName();
     private Track.Id trackId;
     private Marker marker;
@@ -68,10 +66,19 @@ public class MarkerEditActivity extends AbstractActivity {
     private boolean hasCamera;
     private Uri cameraPhotoUri;
 
+    private ActivityResultLauncher<Intent> takePictureFromCamera;
+    private ActivityResultLauncher<Intent> takePictureFromGallery;
+
     private MarkerEditViewModel viewModel;
 
     // UI elements
     private MarkerEditBinding viewBinding;
+
+    @Override
+    protected View getRootView() {
+        viewBinding = MarkerEditBinding.inflate(getLayoutInflater());
+        return viewBinding.getRoot();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +106,8 @@ public class MarkerEditActivity extends AbstractActivity {
         viewBinding.markerEditDone.setText(isNewMarker ? R.string.generic_add : R.string.generic_save);
         viewBinding.markerEditDone.setOnClickListener(v -> {
             viewModel.onDone(viewBinding.markerEditName.getText().toString(),
-                        viewBinding.markerEditMarkerType.getText().toString(),
-                        viewBinding.markerEditDescription.getText().toString());
+                    viewBinding.markerEditMarkerType.getText().toString(),
+                    viewBinding.markerEditDescription.getText().toString());
             finish();
         });
 
@@ -118,12 +125,43 @@ public class MarkerEditActivity extends AbstractActivity {
 
             hideAndShowOptions();
         });
+
+        takePictureFromCamera = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_CANCELED) {
+                        Toast.makeText(this, R.string.marker_add_photo_canceled, Toast.LENGTH_LONG).show();
+                    } else if (result.getResultCode() == RESULT_OK) {
+                        viewModel.onNewCameraPhoto(cameraPhotoUri,
+                                viewBinding.markerEditName.getText().toString(),
+                                viewBinding.markerEditMarkerType.getText().toString(),
+                                viewBinding.markerEditDescription.getText().toString());
+                    }
+                });
+
+        takePictureFromGallery = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_CANCELED) {
+                        Toast.makeText(this, R.string.marker_add_photo_canceled, Toast.LENGTH_LONG).show();
+                    } else if (result.getResultCode() == RESULT_OK) {
+                        viewModel.onNewGalleryPhoto(result.getData().getData(),
+                                viewBinding.markerEditName.getText().toString(),
+                                viewBinding.markerEditMarkerType.getText().toString(),
+                                viewBinding.markerEditDescription.getText().toString());
+                    }
+                });
     }
 
     @Override
-    protected View getRootView() {
-        viewBinding = MarkerEditBinding.inflate(getLayoutInflater());
-        return viewBinding.getRoot();
+    protected void onDestroy() {
+        super.onDestroy();
+
+        trackId = null;
+        viewBinding = null;
+        viewModel = null;
+        takePictureFromGallery = null;
+        takePictureFromCamera = null;
     }
 
     @Override
@@ -151,32 +189,6 @@ public class MarkerEditActivity extends AbstractActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, R.string.marker_add_photo_canceled, Toast.LENGTH_LONG).show();
-                return;
-            } else if (resultCode == RESULT_OK) {
-                viewModel.onNewCameraPhoto(cameraPhotoUri,
-                        viewBinding.markerEditName.getText().toString(),
-                        viewBinding.markerEditMarkerType.getText().toString(),
-                        viewBinding.markerEditDescription.getText().toString());
-            }
-        } else if (requestCode == GALLERY_IMG_REQUEST_CODE) {
-            if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, R.string.marker_add_photo_canceled, Toast.LENGTH_LONG).show();
-                return;
-            } else if (resultCode == RESULT_OK) {
-                viewModel.onNewGalleryPhoto(data.getData(),
-                        viewBinding.markerEditName.getText().toString(),
-                        viewBinding.markerEditMarkerType.getText().toString(),
-                        viewBinding.markerEditDescription.getText().toString());
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
@@ -207,7 +219,7 @@ public class MarkerEditActivity extends AbstractActivity {
             viewBinding.markerEditPhoto.setImageBitmap(bitmap);
             hideAndShowOptions();
         } catch (IOException e) {
-            Log.e(TAG, e.getMessage());
+            Log.e(TAG, "" + e);
             Toast.makeText(this, R.string.marker_add_photo_canceled, Toast.LENGTH_LONG).show();
         }
     }
@@ -215,11 +227,12 @@ public class MarkerEditActivity extends AbstractActivity {
     private void createMarkerWithPicture() {
         Pair<Intent, Uri> intentAndPhotoUri = IntentUtils.createTakePictureIntent(this, getTrackId());
         cameraPhotoUri = intentAndPhotoUri.second;
-        startActivityForResult(intentAndPhotoUri.first, CAMERA_REQUEST_CODE);
+        takePictureFromCamera.launch(intentAndPhotoUri.first);
     }
 
     private void createMarkerWithGalleryImage() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, GALLERY_IMG_REQUEST_CODE);
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        takePictureFromGallery.launch(intent);
     }
 }
