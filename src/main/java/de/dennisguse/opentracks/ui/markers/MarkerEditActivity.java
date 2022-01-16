@@ -44,7 +44,6 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.MarkerEditBinding;
-import de.dennisguse.opentracks.util.IntentUtils;
 
 /**
  * An activity to add/edit a marker.
@@ -225,7 +224,7 @@ public class MarkerEditActivity extends AbstractActivity {
     }
 
     private void createMarkerWithPicture() {
-        Pair<Intent, Uri> intentAndPhotoUri = IntentUtils.createTakePictureIntent(this, getTrackId());
+        Pair<Intent, Uri> intentAndPhotoUri = MarkerUtils.createTakePictureIntent(this, getTrackId());
         cameraPhotoUri = intentAndPhotoUri.second;
         takePictureFromCamera.launch(intentAndPhotoUri.first);
     }

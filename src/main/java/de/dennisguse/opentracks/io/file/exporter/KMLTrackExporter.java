@@ -40,7 +40,7 @@ import de.dennisguse.opentracks.data.TrackPointIterator;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
-import de.dennisguse.opentracks.util.FileUtils;
+import de.dennisguse.opentracks.ui.markers.MarkerUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
@@ -267,7 +267,7 @@ public class KMLTrackExporter implements TrackExporter {
 
     private void writeMarker(Marker marker, ZoneOffset zoneOffset) {
         if (printWriter != null) {
-            boolean existsPhoto = FileUtils.buildInternalPhotoFile(context, marker.getTrackId(), marker.getPhotoURI()) != null;
+            boolean existsPhoto = MarkerUtils.buildInternalPhotoFile(context, marker.getTrackId(), marker.getPhotoURI()) != null;
             if (marker.hasPhoto() && exportPhotos && existsPhoto) {
                 float heading = getHeading(marker.getTrackId(), marker.getLocation());
                 writePhotoOverlay(marker, heading, zoneOffset);

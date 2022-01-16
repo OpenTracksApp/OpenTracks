@@ -54,6 +54,7 @@ import de.dennisguse.opentracks.data.tables.TrackPointsColumns;
 import de.dennisguse.opentracks.data.tables.TracksColumns;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
+import de.dennisguse.opentracks.ui.markers.MarkerUtils;
 import de.dennisguse.opentracks.util.FileUtils;
 
 /**
@@ -477,7 +478,7 @@ public class ContentProviderUtils {
     private void deleteMarkerPhoto(Context context, Marker marker) {
         if (marker != null && marker.hasPhoto()) {
             Uri uri = marker.getPhotoURI();
-            File file = FileUtils.buildInternalPhotoFile(context, marker.getTrackId(), uri);
+            File file = MarkerUtils.buildInternalPhotoFile(context, marker.getTrackId(), uri);
             if (file.exists()) {
                 File parent = file.getParentFile();
                 file.delete();

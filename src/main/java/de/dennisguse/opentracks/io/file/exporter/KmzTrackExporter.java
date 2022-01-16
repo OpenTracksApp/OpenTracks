@@ -34,6 +34,7 @@ import java.util.zip.ZipOutputStream;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.ui.markers.MarkerUtils;
 import de.dennisguse.opentracks.util.FileUtils;
 
 /**
@@ -101,7 +102,7 @@ public class KmzTrackExporter implements TrackExporter {
                         Marker marker = contentProviderUtils.createMarker(cursor);
                         if (marker.hasPhoto()) {
                             Uri uriPhoto = marker.getPhotoURI();
-                            boolean existsPhoto = FileUtils.buildInternalPhotoFile(context, track.getId(), uriPhoto) != null;
+                            boolean existsPhoto = MarkerUtils.buildInternalPhotoFile(context, track.getId(), uriPhoto) != null;
                             if (existsPhoto) {
                                 addImage(context, zipOutputStream, uriPhoto, marker);
                             }
