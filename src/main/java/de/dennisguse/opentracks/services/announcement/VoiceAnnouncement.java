@@ -126,8 +126,12 @@ public class VoiceAnnouncement {
         }
         if (ttsFallback == null) {
             ttsFallback = MediaPlayer.create(context, R.raw.tts_fallback);
-            ttsFallback.setAudioStreamType(AUDIO_STREAM);
-            ttsFallback.setLooping(false);
+            if (ttsFallback == null) {
+                Log.w(TAG, "MediaPlayer for ttsFallback could not be created.");
+            } else {
+                ttsFallback.setAudioStreamType(AUDIO_STREAM);
+                ttsFallback.setLooping(false);
+            }
         }
     }
 
@@ -148,9 +152,13 @@ public class VoiceAnnouncement {
         }
 
         if (!ttsReady) {
-            Log.i(TAG, "TTS not ready/available, just generating a tone.");
-            ttsFallback.seekTo(0);
-            ttsFallback.start();
+            if (ttsFallback == null) {
+                Log.w(TAG, "MediaPlayer for ttsFallback was not created.");
+            } else {
+                Log.i(TAG, "TTS not ready/available, just generating a tone.");
+                ttsFallback.seekTo(0);
+                ttsFallback.start();
+            }
             return;
         }
 
