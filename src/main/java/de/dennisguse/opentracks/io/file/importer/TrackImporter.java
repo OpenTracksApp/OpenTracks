@@ -27,6 +27,7 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
+import de.dennisguse.opentracks.ui.markers.MarkerUtils;
 import de.dennisguse.opentracks.util.FileUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
@@ -275,7 +276,7 @@ public class TrackImporter {
      */
     private String getInternalPhotoUrl(@NonNull Track.Id trackId, @NonNull String externalPhotoUrl) {
         String importFileName = KmzTrackImporter.importNameForFilename(externalPhotoUrl);
-        File file = FileUtils.buildInternalPhotoFile(context, trackId, Uri.parse(importFileName));
+        File file = MarkerUtils.buildInternalPhotoFile(context, trackId, Uri.parse(importFileName));
         if (file != null) {
             Uri photoUri = FileUtils.getUriForFile(context, file);
             return "" + photoUri;

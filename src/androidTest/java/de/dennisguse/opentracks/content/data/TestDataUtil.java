@@ -20,6 +20,7 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
+import de.dennisguse.opentracks.ui.markers.MarkerUtils;
 import de.dennisguse.opentracks.util.FileUtils;
 
 public class TestDataUtil {
@@ -150,7 +151,7 @@ public class TestDataUtil {
     }
 
     public static Marker createMarkerWithPhoto(Context context, Track.Id trackId, TrackPoint trackPoint) throws IOException {
-        File dstFile = new File(FileUtils.getImageUrl(context, trackId));
+        File dstFile = new File(MarkerUtils.getImageUrl(context, trackId));
         dstFile.createNewFile();
         Uri photoUri = FileUtils.getUriForFile(context, dstFile);
         String photoUrl = photoUri.toString();

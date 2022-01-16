@@ -20,19 +20,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.UriPermission;
 import android.net.Uri;
-import android.provider.MediaStore;
-import android.util.Log;
-import android.util.Pair;
 
-import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import de.dennisguse.opentracks.data.models.Marker;
-import de.dennisguse.opentracks.data.models.Track;
 
 /**
  * Utilities for creating intents.
@@ -81,27 +72,6 @@ public class IntentUtils {
 
 
         context.startActivity(Intent.createChooser(intent, null));
-    }
-
-
-    /**
-     * Sends a take picture request to the camera app.
-     * The picture is then stored in the track's folder.
-     *
-     * @param context the context
-     * @param trackId the track id
-     */
-    public static Pair<Intent, Uri> createTakePictureIntent(Context context, Track.Id trackId) {
-        File dir = FileUtils.getPhotoDir(context, trackId);
-
-        String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
-        File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, JPEG_EXTENSION));
-
-        Uri photoUri = FileProvider.getUriForFile(context, FileUtils.FILEPROVIDER, file);
-        Log.d(TAG, "Taking photo to URI: " + photoUri);
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                .putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-        return new Pair<>(intent, photoUri);
     }
 
     public static void persistDirectoryAccessPermission(Context context, Uri directoryUri, int existingFlags) {

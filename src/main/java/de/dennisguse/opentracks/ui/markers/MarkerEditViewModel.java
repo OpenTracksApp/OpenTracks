@@ -84,7 +84,7 @@ public class MarkerEditViewModel extends AndroidViewModel {
             return;
         }
 
-        File photoFile = FileUtils.getPhotoFileIfExists(getApplication(), markerData.getValue().getTrackId(), photoUri);
+        File photoFile = MarkerUtils.getPhotoFileIfExists(getApplication(), markerData.getValue().getTrackId(), photoUri);
         if (photoFile != null) {
             FileUtils.deleteDirectoryRecurse(photoFile);
         }
@@ -124,7 +124,7 @@ public class MarkerEditViewModel extends AndroidViewModel {
 
         try (ParcelFileDescriptor parcelFd = getApplication().getContentResolver().openFileDescriptor(srcUri, "r")) {
             FileDescriptor srcFd = parcelFd.getFileDescriptor();
-            File dstFile = new File(FileUtils.getImageUrl(getApplication(), marker.getTrackId()));
+            File dstFile = new File(MarkerUtils.getImageUrl(getApplication(), marker.getTrackId()));
             FileUtils.copy(srcFd, dstFile);
 
             Uri photoUri = FileUtils.getUriForFile(getApplication(), dstFile);

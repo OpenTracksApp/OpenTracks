@@ -20,7 +20,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 import androidx.documentfile.provider.DocumentFile;
 
@@ -29,9 +28,7 @@ import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.data.models.Track;
@@ -45,12 +42,7 @@ public class FileUtils {
 
     private static final String TAG = FileUtils.class.getSimpleName();
 
-    /**
-     * Used to transfer picture from the camera.
-     */
-    static final String FILEPROVIDER = BuildConfig.APPLICATION_ID + ".fileprovider";
-
-    private static final String JPEG_EXTENSION = "jpeg";
+    public static final String FILEPROVIDER = BuildConfig.APPLICATION_ID + ".fileprovider";
 
     /**
      * The maximum FAT32 path length. See the FAT32 spec at
@@ -219,21 +211,6 @@ public class FileUtils {
     }
 
     /**
-     * Returns the image's absolute path from a track identified by trackId.
-     *
-     * @param context the context.
-     * @param trackId the track id.
-     */
-    public static String getImageUrl(Context context, Track.Id trackId) {
-        File dir = FileUtils.getPhotoDir(context, trackId);
-
-        String fileName = SimpleDateFormat.getDateTimeInstance().format(new Date());
-        File file = new File(dir, FileUtils.buildUniqueFileName(dir, fileName, JPEG_EXTENSION));
-
-        return file.getAbsolutePath();
-    }
-
-    /**
      * Copy a File (src) to a File (dst).
      *
      * @param src source file.
@@ -257,60 +234,6 @@ public class FileUtils {
      */
     public static Uri getUriForFile(Context context, File file) {
         return FileProvider.getUriForFile(context, FileUtils.FILEPROVIDER, file);
-    }
-
-    /**
-     * Checks that there is a file inside track photo directory whose name is the same that uri file.
-     * If there is a file inside photo directory whose name is the same that uri then returns File. Otherwise returns null.
-     *
-     * @param context the Context.
-     * @param trackId the id of the Track.
-     * @param uri     the uri to check.
-     * @return File object or null.
-     */
-    public static File getPhotoFileIfExists(Context context, Track.Id trackId, Uri uri) {
-        if (uri == null) {
-            Log.w(TAG, "URI object is null.");
-            return null;
-        }
-
-        String filename = uri.getLastPathSegment();
-        if (filename == null) {
-            Log.w(TAG, "External photo contains no filename.");
-            return null;
-        }
-
-        File dir = FileUtils.getPhotoDir(context, trackId);
-        File file = new File(dir, filename);
-        if (!file.exists()) {
-            return null;
-        }
-
-        return file;
-    }
-
-    /**
-     * Builds interval photo file object for fileNameUri Uri.
-     *
-     * @param context     the Context.
-     * @param trackId     the id of the Track.
-     * @param fileNameUri the file name uri.
-     * @return            file object or null.
-     */
-    public static File buildInternalPhotoFile(Context context, Track.Id trackId, @NonNull Uri fileNameUri) {
-        if (fileNameUri == null) {
-            Log.w(TAG, "URI object is null.");
-            return null;
-        }
-
-        String filename = fileNameUri.getLastPathSegment();
-        if (filename == null) {
-            Log.w(TAG, "External photo contains no filename.");
-            return null;
-        }
-
-        File dir = FileUtils.getPhotoDir(context, trackId);
-        return new File(dir, filename);
     }
 
     /**
