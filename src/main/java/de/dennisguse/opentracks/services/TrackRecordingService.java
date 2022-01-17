@@ -239,7 +239,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
      * @param trackId the id of the track to be resumed.
      */
     public void resumeTrack(Track.Id trackId) {
-        trackPointCreator.resetSensorData();
+        trackPointCreator.reset();
         trackRecordingManager.resume(trackId, trackPointCreator.createSegmentStartManual());
 
         // Set recording status

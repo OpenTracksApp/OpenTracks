@@ -70,13 +70,14 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
         gpsHandler.onStop();
     }
 
-    public void resetSensorData() {
+    public void reset() {
         if (remoteSensorManager == null || altitudeSumManager == null) {
             Log.d(TAG, "No recording running and no reset necessary.");
             return;
         }
         remoteSensorManager.reset();
         altitudeSumManager.reset();
+        gpsHandler.reset();
     }
 
     private SensorDataSet fill(TrackPoint trackPoint) {
@@ -123,7 +124,7 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
 
         boolean stored = service.newTrackPoint(trackPoint, gpsHandler.getThresholdHorizontalAccuracy());
         if (stored) {
-            resetSensorData();
+            reset();
         }
     }
 
@@ -134,7 +135,7 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
     public TrackPoint createSegmentEnd() {
         TrackPoint segmentEnd = TrackPoint.createSegmentEndWithTime(createNow());
         fill(segmentEnd);
-        resetSensorData();
+        reset();
         return segmentEnd;
     }
 
