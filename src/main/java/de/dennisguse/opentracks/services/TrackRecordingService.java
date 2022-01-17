@@ -16,7 +16,6 @@
 
 package de.dennisguse.opentracks.services;
 
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,7 +28,6 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
-import androidx.core.app.TaskStackBuilder;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -38,8 +36,6 @@ import java.time.ZoneOffset;
 import java.util.Objects;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.TrackListActivity;
-import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.data.CustomContentProvider;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Marker;
@@ -55,7 +51,6 @@ import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.ExportUtils;
-import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
 
 /**
@@ -387,36 +382,10 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     private void showNotification(boolean isGpsStarted) {
         if (isRecording()) {
-            Intent intent = IntentUtils.newIntent(this, TrackRecordingActivity.class);
-
-            int pendingIntentFlags = PendingIntent.FLAG_UPDATE_CURRENT;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                pendingIntentFlags |= PendingIntent.FLAG_IMMUTABLE;
-            }
-
-            PendingIntent pendingIntent = TaskStackBuilder.create(this)
-                    .addNextIntentWithParentStack(intent)
-                    .getPendingIntent(0, pendingIntentFlags);
-
-            notificationManager.updatePendingIntent(pendingIntent);
-            notificationManager.updateContent(getString(R.string.gps_starting));
-            startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.getNotification());
+            startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setRecording(this));
         }
         if (!isRecording() && isGpsStarted) {
-            Intent intent = IntentUtils.newIntent(this, TrackListActivity.class);
-
-            int pendingIntentFlags = 0;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                pendingIntentFlags = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
-            }
-            PendingIntent pendingIntent = TaskStackBuilder.create(this)
-                    .addParentStack(TrackListActivity.class)
-                    .addNextIntent(intent)
-                    .getPendingIntent(0, pendingIntentFlags);
-
-            notificationManager.updatePendingIntent(pendingIntent);
-            notificationManager.updateContent(getString(R.string.gps_starting));
-            startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.getNotification());
+            startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this));
         }
         if (!isRecording() && !isGpsStarted) {
             stopForeground(true);

@@ -5,15 +5,20 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.TrackListActivity;
+import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.stats.TrackStatistics;
+import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
@@ -84,17 +89,48 @@ class TrackRecordingServiceNotificationManager {
         notificationBuilder.setOnlyAlertOnce(true);
     }
 
-    void updatePendingIntent(PendingIntent pendingIntent) {
+    Notification setRecording(Context context) {
+        Intent intent = IntentUtils.newIntent(context, TrackRecordingActivity.class);
+
+        int pendingIntentFlags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            pendingIntentFlags |= PendingIntent.FLAG_IMMUTABLE;
+        }
+
+        PendingIntent pendingIntent = TaskStackBuilder.create(context)
+                .addNextIntentWithParentStack(intent)
+                .getPendingIntent(0, pendingIntentFlags);
+
+        updateContent(context.getString(R.string.gps_starting));
+
         notificationBuilder.setContentIntent(pendingIntent);
         updateNotification();
+
+        return getNotification();
+    }
+
+    Notification setGPSonlyStarted(Context context) {
+        Intent intent = IntentUtils.newIntent(context, TrackListActivity.class);
+
+        int pendingIntentFlags = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            pendingIntentFlags = PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT;
+        }
+        PendingIntent pendingIntent = TaskStackBuilder.create(context)
+                .addParentStack(TrackListActivity.class)
+                .addNextIntent(intent)
+                .getPendingIntent(0, pendingIntentFlags);
+
+        updateContent(context.getString(R.string.gps_starting));
+
+        notificationBuilder.setContentIntent(pendingIntent);
+        updateNotification();
+
+        return getNotification();
     }
 
     void cancelNotification() {
         notificationManager.cancel(NOTIFICATION_ID);
-    }
-
-    Notification getNotification() {
-        return notificationBuilder.build();
     }
 
     void setMetricUnits(boolean metricUnits) {
@@ -103,5 +139,9 @@ class TrackRecordingServiceNotificationManager {
 
     private void updateNotification() {
         notificationManager.notify(NOTIFICATION_ID, getNotification());
+    }
+
+    private Notification getNotification() {
+        return notificationBuilder.build();
     }
 }
