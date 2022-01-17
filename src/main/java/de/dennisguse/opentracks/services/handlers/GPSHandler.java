@@ -162,14 +162,12 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
         return thresholdHorizontalAccuracy;
     }
 
-    /**
-     * Called from {@link GpsStatus} to inform that GPS status has changed from prevStatus to currentStatus.
-     *
-     * @param prevStatus    previous {@link GpsStatusValue}.
-     * @param currentStatus current {@link GpsStatusValue}.
-     */
     @Override
     public void onGpsStatusChanged(GpsStatusValue prevStatus, GpsStatusValue currentStatus) {
         trackPointCreator.sendGpsStatus(currentStatus);
+    }
+
+    void reset() {
+        lastTrackPoint = null;
     }
 }
