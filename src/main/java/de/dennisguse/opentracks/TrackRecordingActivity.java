@@ -1,7 +1,11 @@
 package de.dennisguse.opentracks;
 
 import android.app.AlertDialog;
+import android.app.KeyguardManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Build;
@@ -57,10 +61,12 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
     private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
 
-    // The following are setFrequency in onCreate
+    // The following are set in onCreate
     private ContentProviderUtils contentProviderUtils;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private TrackDataHub trackDataHub;
+
+    private BroadcastReceiver unlockListener;
 
     private TrackRecordingBinding viewBinding;
 
@@ -144,6 +150,17 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         if (savedInstanceState != null) {
             viewBinding.trackDetailActivityViewPager.setCurrentItem(savedInstanceState.getInt(CURRENT_TAB_TAG_KEY));
         }
+
+        unlockListener = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                hideTrackControllerWhileLocked();
+            }
+        };
+        final IntentFilter filter = new IntentFilter(Intent.ACTION_USER_UNLOCKED);
+        filter.addAction((Intent.ACTION_SCREEN_ON));
+        filter.addAction((Intent.ACTION_SCREEN_OFF));
+        registerReceiver(unlockListener, filter);
     }
 
     @Override
@@ -152,6 +169,15 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         setScreenOnPolicy();
         setFullscreenPolicy();
         super.onAttachedToWindow();
+    }
+
+    private void hideTrackControllerWhileLocked() {
+        KeyguardManager keyguardManager = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            if (keyguardManager.isDeviceLocked() && viewBinding != null) {
+                viewBinding.controllerFragment.setVisibility(View.INVISIBLE);
+            }
+        }
     }
 
     private void setLockscreenPolicy() {
@@ -189,7 +215,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     @Override
     protected void onStart() {
         super.onStart();
-
         PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
 
         trackRecordingServiceConnection.startConnection(this);
@@ -199,6 +224,8 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     @Override
     protected void onResume() {
         super.onResume();
+
+        hideTrackControllerWhileLocked();
 
         // Update UI
         invalidateOptionsMenu();
@@ -210,6 +237,11 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         }
 
         trackRecordingServiceConnection.startAndBindWithCallback(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override
@@ -232,6 +264,8 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         super.onDestroy();
         viewBinding = null;
         trackRecordingServiceConnection = null;
+        unregisterReceiver(unlockListener);
+        unlockListener = null;
     }
 
     @Override
