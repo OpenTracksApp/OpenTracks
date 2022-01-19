@@ -27,7 +27,7 @@ public class TrackDeleteServiceConnection implements ServiceConnection {
     @Override
     public void onServiceConnected(ComponentName name, IBinder service) {
         trackDeleteService = ((TrackDeleteService.Binder) service).getService();
-        listener.connected();
+        listener.connected(trackDeleteService);
     }
 
     @Override
@@ -60,11 +60,7 @@ public class TrackDeleteServiceConnection implements ServiceConnection {
         trackDeleteService = null;
     }
 
-    public TrackDeleteService getServiceIfBound() {
-        return trackDeleteService;
-    }
-
     public interface Listener {
-        void connected();
+        void connected(@NonNull TrackDeleteService service);
     }
 }

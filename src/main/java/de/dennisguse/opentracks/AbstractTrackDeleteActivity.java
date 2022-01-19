@@ -96,11 +96,7 @@ public abstract class AbstractTrackDeleteActivity extends AbstractActivity imple
     protected abstract Track.Id getRecordingTrackId();
 
     @Override
-    public void connected() {
-        TrackDeleteService service = trackDeleteServiceConnection.getServiceIfBound();
-        if (service == null) {
-            return;
-        }
+    public void connected(TrackDeleteService service) {
         service.getDeletingStatusObservable().observe(AbstractTrackDeleteActivity.this, this::onTrackDeleteStatus);
     }
 }
