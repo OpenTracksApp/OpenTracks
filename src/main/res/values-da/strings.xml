@@ -576,4 +576,5 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="custom_layout_list_edit_name">Skriv navnet på det layout, der skal tilføjes</string>
     <string name="settings_layout_reset_confirm_message">Alle layoutindstillinger vil blive tilbageført til standardværdierne. Dette vil ikke slette spor på enheden.</string>
     <string name="settings_all_reset">Nulstil</string>
+    <string name="no_compatible_file_manager_installed">Ingen kompatibel filhåndtering installeret</string>
 </resources>
