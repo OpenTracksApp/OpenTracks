@@ -581,4 +581,5 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="generic_yesterday">Onte</string>
     <string name="export_cannot_write_to_dir">Non se pode escribir no directorio de exportación.</string>
     <string name="export_dir_not_writable">" (non escribible!)"</string>
+    <string name="no_compatible_file_manager_installed">Non compatible xestor de ficheiros instalados</string>
 </resources>
