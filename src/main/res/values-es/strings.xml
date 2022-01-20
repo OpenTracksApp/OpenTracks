@@ -575,4 +575,5 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="settings_defaults_summary">Unidades preferidas, actividad por defecto, nombre por defecto de la pista</string>
     <string name="settings_open_tracks_title">Vías abiertas</string>
     <string name="generic_undo">Deshacer</string>
+    <string name="no_compatible_file_manager_installed">No hay un gestor de archivos compatible instalado</string>
 </resources>
