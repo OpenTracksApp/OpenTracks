@@ -576,4 +576,5 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="generic_yesterday">Hier</string>
     <string name="export_cannot_write_to_dir">Impossible d\'écrire dans le répertoire d\'exportation.</string>
     <string name="export_dir_not_writable">" (non inscriptible !)"</string>
+    <string name="no_compatible_file_manager_installed">Aucun gestionnaire de fichiers compatible n\'est installé</string>
 </resources>
