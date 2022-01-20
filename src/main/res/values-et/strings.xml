@@ -573,4 +573,5 @@ limitations under the License.
     <string name="export_dir_not_writable">" (pole kirjutatav!)"</string>
     <string name="export_cannot_write_to_dir">Ei saa kirjutada ekspordikataloogi.</string>
     <string name="generic_yesterday">Eile</string>
+    <string name="no_compatible_file_manager_installed">Ühilduv failihaldur ei ole paigaldatud</string>
 </resources>
