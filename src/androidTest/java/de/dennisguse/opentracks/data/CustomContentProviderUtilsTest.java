@@ -739,11 +739,19 @@ public class CustomContentProviderUtilsTest {
         Pair<Track, List<TrackPoint>> track = TestDataUtil.createTrack(trackId, 10);
         TestDataUtil.insertTrackWithLocations(contentProviderUtils, track.first, track.second);
 
-        // when / then
+        // when
         contentProviderUtils.bulkInsertTrackPoint(track.second, trackId);
-        assertEquals(20, contentProviderUtils.getTrackPointCursor(trackId, null).getCount());
+        try (Cursor cursor = contentProviderUtils.getTrackPointCursor(trackId, null)) {
+            // then
+            assertEquals(20, cursor.getCount());
+        }
+
+        // when
         contentProviderUtils.bulkInsertTrackPoint(track.second.subList(0, 8), trackId);
-        assertEquals(28, contentProviderUtils.getTrackPointCursor(trackId, null).getCount());
+        try (Cursor cursor = contentProviderUtils.getTrackPointCursor(trackId, null)) {
+            // then
+            assertEquals(28, cursor.getCount());
+        }
     }
 
     /**
@@ -801,7 +809,11 @@ public class CustomContentProviderUtilsTest {
         Track track = TestDataUtil.createTrackAndInsert(contentProviderUtils, trackId, 10);
 
         contentProviderUtils.insertTrackPoint(TestDataUtil.createTrackPoint(22), trackId);
-        assertEquals(11, contentProviderUtils.getTrackPointCursor(trackId, null).getCount());
+        // when
+        try (Cursor cursor = contentProviderUtils.getTrackPointCursor(trackId, null)) {
+            // then
+            assertEquals(11, cursor.getCount());
+        }
     }
 
     @Test
@@ -851,10 +863,10 @@ public class CustomContentProviderUtilsTest {
                 .map(TrackPoint.Id::new).collect(Collectors.toList());
 
         // when
-        Cursor cursor = contentProviderUtils.getTrackPointCursor(trackId, trackpointIds.get(8));
-
-        // then
-        assertEquals(2, cursor.getCount());
+        try (Cursor cursor = contentProviderUtils.getTrackPointCursor(trackId, trackpointIds.get(8))) {
+            // then
+            assertEquals(2, cursor.getCount());
+        }
     }
 
     @Test
