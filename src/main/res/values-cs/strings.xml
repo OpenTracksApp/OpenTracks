@@ -581,4 +581,5 @@ limitations under the License.
     <string name="export_cannot_write_to_dir">Nelze zapisovat do adresáře pro export.</string>
     <string name="export_dir_not_writable">" (nelze zapisovat!)"</string>
     <string name="generic_today">Dnes</string>
+    <string name="no_compatible_file_manager_installed">Není nainstalován kompatibilní správce souborů</string>
 </resources>
