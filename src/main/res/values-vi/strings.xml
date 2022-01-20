@@ -561,4 +561,5 @@ limitations under the License.
     <string name="generic_today">Ngày hôm nay</string>
     <string name="export_dir_not_writable">" (không ghi được!)"</string>
     <string name="export_cannot_write_to_dir">Không thể viết để xuất khẩu, xuất khẩu.</string>
+    <string name="no_compatible_file_manager_installed">Không có tương thích quản lý tập tin cài đặt</string>
 </resources>
