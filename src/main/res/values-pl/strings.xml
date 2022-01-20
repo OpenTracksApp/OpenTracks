@@ -589,4 +589,5 @@ limitations under the License.
     <string name="export_cannot_write_to_dir">Nie można zapisać do katalogu eksportu.</string>
     <string name="generic_yesterday">Wczoraj</string>
     <string name="generic_today">Dzisiaj</string>
+    <string name="no_compatible_file_manager_installed">Nie zainstalowano kompatybilnego menedżera plików</string>
 </resources>
