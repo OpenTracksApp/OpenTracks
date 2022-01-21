@@ -239,8 +239,8 @@
         <item quantity="other">%1$d minutes</item>
     </plurals>
     <plurals name="voiceSeconds">
-        <item quantity="one">%1$d minute</item>
-        <item quantity="other">%1$d minutes</item>
+        <item quantity="one">%1$d seconde</item>
+        <item quantity="other">%1$d secondes</item>
     </plurals>
     <plurals name="voiceSpeedKilometersPerHour">
         <item quantity="one">%1$.1f kilomètre à l\'heure</item>
