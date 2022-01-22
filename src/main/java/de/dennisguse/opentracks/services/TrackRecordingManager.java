@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.services;
 
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteException;
 import android.net.Uri;
 import android.util.Log;
@@ -25,7 +26,7 @@ import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackNameUtils;
 
-class TrackRecordingManager {
+class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = TrackRecordingManager.class.getSimpleName();
 
@@ -47,7 +48,15 @@ class TrackRecordingManager {
         contentProviderUtils = new ContentProviderUtils(context);
     }
 
-    Track.Id start(TrackPoint segmentStartTrackPoint, ZoneOffset zoneOffset) {
+    public void start() {
+        PreferencesUtils.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    public void stop() {
+        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    Track.Id startNewTrack(TrackPoint segmentStartTrackPoint, ZoneOffset zoneOffset) {
         // Create new track
         Track track = new Track(zoneOffset);
         trackId = contentProviderUtils.insertTrack(track);
@@ -69,7 +78,7 @@ class TrackRecordingManager {
     }
 
     //TODO Handle non-existing trackId? Start a new track or exception?
-    void resume(@NonNull Track.Id resumeTrackId, @NonNull TrackPoint segmentStartTrackPoint) {
+    void resumeExistingTrack(@NonNull Track.Id resumeTrackId, @NonNull TrackPoint segmentStartTrackPoint) {
         trackId = resumeTrackId;
         Track track = contentProviderUtils.getTrack(trackId);
         if (track == null) {
@@ -242,7 +251,8 @@ class TrackRecordingManager {
         }
     }
 
-    public void onSharedPreferenceChanged(String key) {
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (PreferencesUtils.isKey(R.string.recording_distance_interval_key, key)) {
             recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval();
         }

@@ -18,8 +18,6 @@ package de.dennisguse.opentracks.services;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager.WakeLock;
@@ -47,7 +45,6 @@ import de.dennisguse.opentracks.services.announcement.VoiceAnnouncementManager;
 import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
-import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.ExportUtils;
@@ -95,28 +92,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
     };
 
-    @Deprecated
-    //TODO Workaround as service is not stopped on API23; thus sharedpreferences are not reset between tests.
-    @VisibleForTesting
-    final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
-                boolean metricUnits = PreferencesUtils.isMetricUnits();
-                notificationManager.setMetricUnits(metricUnits);
-            }
-            if (PreferencesUtils.isKey(R.string.voice_announcement_frequency_key, key)) {
-                voiceAnnouncementManager.setFrequency(PreferencesUtils.getVoiceAnnouncementFrequency());
-            }
-            if (PreferencesUtils.isKey(new int[]{R.string.voice_announcement_distance_key, R.string.stats_units_key}, key)) {
-                voiceAnnouncementManager.setFrequency(PreferencesUtils.getVoiceAnnouncementDistance());
-            }
-
-            trackPointCreator.onSharedPreferenceChanged(key);
-            trackRecordingManager.onSharedPreferenceChanged(key);
-        }
-    };
-
     // The following variables are set when recording:
     private WakeLock wakeLock;
 
@@ -139,13 +114,12 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         recordingDataObservable = new MutableLiveData<>(NOT_RECORDING);
 
         trackRecordingManager = new TrackRecordingManager(this);
+        trackRecordingManager.start();
         trackPointCreator = new TrackPointCreator(this);
 
         voiceAnnouncementManager = new VoiceAnnouncementManager(this);
 
         notificationManager = new TrackRecordingServiceNotificationManager(this);
-
-        PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
     @Override
@@ -153,14 +127,14 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         handler.removeCallbacksAndMessages(null); //Some tests do not finish the recording completely
         handler = null;
 
-        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-
         trackPointCreator.stop();
         trackPointCreator = null;
+        trackRecordingManager.stop();
         trackRecordingManager = null;
 
         // Reverse order from onCreate
         showNotification(false); //TODO Why?
+        notificationManager.stop();
         notificationManager = null;
 
         try {
@@ -220,7 +194,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         // Set recording status
         TrackPoint segmentStartManual = trackPointCreator.createSegmentStartManual();
         ZoneOffset zoneOffset = ZoneOffset.systemDefault().getRules().getOffset(segmentStartManual.getTime());
-        Track.Id trackId = trackRecordingManager.start(segmentStartManual, zoneOffset);
+        Track.Id trackId = trackRecordingManager.startNewTrack(segmentStartManual, zoneOffset);
         updateRecordingStatus(RecordingStatus.record(trackId));
 
         startRecording();
@@ -235,7 +209,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
      */
     public void resumeTrack(Track.Id trackId) {
         trackPointCreator.reset();
-        trackRecordingManager.resume(trackId, trackPointCreator.createSegmentStartManual());
+        trackRecordingManager.resumeExistingTrack(trackId, trackPointCreator.createSegmentStartManual());
 
         // Set recording status
         updateRecordingStatus(RecordingStatus.record(trackId));

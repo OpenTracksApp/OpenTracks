@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.services.handlers;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -19,7 +20,7 @@ import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
 
 @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener {
+public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private final String TAG = GPSHandler.class.getSimpleName();
 
@@ -35,7 +36,7 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
     }
 
     public void onStart(@NonNull Context context) {
-        onSharedPreferenceChanged(null);
+        PreferencesUtils.registerOnSharedPreferenceChangeListener(this);
         gpsStatus = new GpsStatus(context, this);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         registerLocationListener();
@@ -59,9 +60,11 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
             gpsStatus.stop();
             gpsStatus = null;
         }
+        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    public void onSharedPreferenceChanged(String key) {
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         boolean registerListener = false;
 
         if (PreferencesUtils.isKey(R.string.min_recording_interval_key, key)) {
