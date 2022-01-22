@@ -569,5 +569,5 @@ limitations under the License.
     <string name="generic_yesterday">I går</string>
     <string name="export_dir_not_writable">" (ikke skrivbar!)"</string>
     <string name="export_cannot_write_to_dir">Kan ikke skrive til eksportmappe.</string>
-    <string name="no_compatible_file_manager_installed">Ingen kompatibel filbehandling installert</string>
+    <string name="no_compatible_file_manager_installed">Ingen kompatibel filbehandler installert</string>
 </resources>
