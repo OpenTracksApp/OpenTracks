@@ -30,7 +30,6 @@ public class TrackRecordingServiceTestUtils {
         service.getTrackPointCreator().setRemoteSensorManager(new BluetoothRemoteSensorManager(context, service.getTrackPointCreator()));
         service.getTrackPointCreator().setClock(Clock.systemUTC());
         service.endCurrentTrack();
-        service.sharedPreferenceChangeListener.onSharedPreferenceChanged(null, null);
     }
 
     static void sendGPSLocation(TrackPointCreator trackPointCreator, String time, double latitude, double longitude, float accuracy, long speed) {

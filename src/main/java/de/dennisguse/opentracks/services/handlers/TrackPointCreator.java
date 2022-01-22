@@ -57,6 +57,7 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
 
         remoteSensorManager.start();
         altitudeSumManager.start(context);
+
     }
 
     private boolean isStarted() {
@@ -105,10 +106,6 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
         }
 
         this.context = null;
-    }
-
-    public void onSharedPreferenceChanged(String key) {
-        gpsHandler.onSharedPreferenceChanged(key);
     }
 
     /**

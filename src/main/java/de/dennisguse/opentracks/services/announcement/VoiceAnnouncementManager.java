@@ -15,6 +15,7 @@
  */
 package de.dennisguse.opentracks.services.announcement;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -23,9 +24,11 @@ import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.services.TrackRecordingService;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
@@ -33,7 +36,7 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
  *
  * @author Sandor Dornbush
  */
-public class VoiceAnnouncementManager {
+public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = VoiceAnnouncementManager.class.getSimpleName();
 
@@ -55,6 +58,7 @@ public class VoiceAnnouncementManager {
 
     public VoiceAnnouncementManager(@NonNull TrackRecordingService trackRecordingService) {
         this.trackRecordingService = trackRecordingService;
+        PreferencesUtils.registerOnSharedPreferenceChangeListener(this);
     }
 
     public void restore(@Nullable TrackStatistics trackStatistics) {
@@ -89,6 +93,7 @@ public class VoiceAnnouncementManager {
     }
 
     public void shutdown() {
+        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(this);
         if (voiceAnnouncement != null) {
             voiceAnnouncement.shutdown();
             voiceAnnouncement = null;
@@ -140,5 +145,16 @@ public class VoiceAnnouncementManager {
     @NonNull
     public Distance getNextTotalDistance() {
         return nextTotalDistance;
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (PreferencesUtils.isKey(R.string.voice_announcement_frequency_key, key)) {
+            setFrequency(PreferencesUtils.getVoiceAnnouncementFrequency());
+        }
+
+        if (PreferencesUtils.isKey(new int[]{R.string.voice_announcement_distance_key, R.string.stats_units_key}, key)) {
+            setFrequency(PreferencesUtils.getVoiceAnnouncementDistance());
+        }
     }
 }
