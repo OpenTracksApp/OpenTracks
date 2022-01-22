@@ -33,7 +33,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import de.dennisguse.opentracks.data.models.Altitude;
-import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
@@ -83,8 +82,6 @@ public class TrackDataHub {
     private Handler handler;
 
     private Track.Id selectedTrackId;
-
-    private Distance recordingDistanceInterval;
 
     private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
@@ -412,10 +409,6 @@ public class TrackDataHub {
 
     public void setRecordingStatus(TrackRecordingService.RecordingStatus recordingStatus) {
         this.recordingStatus = recordingStatus;
-    }
-
-    public void setRecordingDistanceInterval(Distance recordingDistanceInterval) {
-        this.recordingDistanceInterval = recordingDistanceInterval;
     }
 
     public interface Listener {

@@ -105,12 +105,9 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             if (PreferencesUtils.isKey(R.string.stats_fullscreen_while_recording_key, key)) {
                 setFullscreenPolicy();
             }
-            if (PreferencesUtils.isKey(R.string.recording_distance_interval_key, key)) {
-                trackDataHub.setRecordingDistanceInterval(PreferencesUtils.getRecordingDistanceInterval());
-            }
             if (key == null) return;
 
-            runOnUiThread(TrackRecordingActivity.this::invalidateOptionsMenu);
+            runOnUiThread(TrackRecordingActivity.this::invalidateOptionsMenu); //TODO Should not be necessary
         }
     };
 

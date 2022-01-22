@@ -17,7 +17,6 @@
 package de.dennisguse.opentracks;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -43,7 +42,6 @@ import de.dennisguse.opentracks.fragments.StatisticsRecordedFragment;
 import de.dennisguse.opentracks.services.TrackDeleteService;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
-import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.share.ShareUtils;
 import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragment;
@@ -83,15 +81,6 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     private final TrackRecordingServiceConnection.Callback bindCallback = service -> service.getRecordingStatusObservable()
             .observe(TrackRecordedActivity.this, this::onRecordingStatusChanged);
 
-    private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (PreferencesUtils.isKey(R.string.recording_distance_interval_key, key)) {
-                trackDataHub.setRecordingDistanceInterval(PreferencesUtils.getRecordingDistanceInterval());
-            }
-        }
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,8 +108,6 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     protected void onStart() {
         super.onStart();
 
-        PreferencesUtils.registerOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
-
         trackDataHub.start();
     }
 
@@ -143,7 +130,6 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
         super.onStop();
         trackRecordingServiceConnection.unbind(this);
         trackDataHub.stop();
-        PreferencesUtils.unregisterOnSharedPreferenceChangeListener(sharedPreferenceChangeListener);
     }
 
     @Override
