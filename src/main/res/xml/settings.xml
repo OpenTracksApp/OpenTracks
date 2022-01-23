@@ -4,56 +4,63 @@
     android:title="@string/menu_settings">
 
     <Preference
+        android:icon="@drawable/ic_units"
         android:key="@string/settings_defaults_key"
-        android:title="@string/settings_defaults_title"
         android:summary="@string/settings_defaults_summary"
-        android:icon="@drawable/ic_units" />
+        android:title="@string/settings_defaults_title" />
 
     <Preference
+        android:icon="@drawable/ic_ui"
         android:key="@string/settings_ui_key"
-        android:title="@string/settings_ui_title"
         android:summary="@string/settings_ui_summary"
-        android:icon="@drawable/ic_ui" />
+        android:title="@string/settings_ui_title" />
 
     <Preference
+        android:icon="@drawable/ic_baseline_satellite_alt_24"
         android:key="@string/settings_gps_key"
-        android:title="@string/settings_gps_title"
         android:summary="@string/settings_gps_summary"
-        android:icon="@drawable/ic_baseline_satellite_alt_24" />
+        android:title="@string/settings_gps_title" />
 
     <Preference
+        android:icon="@drawable/ic_baseline_sensors_24"
         android:key="@string/settings_sensors_key"
-        android:title="@string/settings_sensors_title"
         android:summary="@string/settings_sensors_summary"
-        android:icon="@drawable/ic_baseline_sensors_24" />
+        android:title="@string/settings_sensors_title" />
 
     <Preference
+        android:icon="@drawable/ic_baseline_volume_up_24"
         android:key="@string/settings_announcements_key"
-        android:title="@string/settings_announcements_title"
         android:summary="@string/settings_announcements_summary"
-        android:icon="@drawable/ic_baseline_volume_up_24" />
+        android:title="@string/settings_announcements_title" />
 
     <Preference
+        android:icon="@drawable/ic_baseline_import_export_24"
         android:key="@string/settings_import_export_key"
-        android:title="@string/settings_import_export_title"
         android:summary="@string/settings_import_export_summary"
-        android:icon="@drawable/ic_baseline_import_export_24" />
+        android:title="@string/settings_import_export_title" />
 
     <de.dennisguse.opentracks.settings.ResetDialogPreference
         android:dialogMessage="@string/settings_reset_confirm_message"
         android:dialogTitle="@string/settings_reset_confirm_title"
+        android:icon="@drawable/ic_baseline_autorenew_24"
         android:key="@string/settings_reset_key"
         android:negativeButtonText="@android:string/cancel"
         android:persistent="false"
         android:positiveButtonText="@android:string/ok"
-        android:title="@string/settings_all_reset"
         android:summary="@string/settings_reset_summary"
-        android:icon="@drawable/ic_baseline_autorenew_24"/>
+        android:title="@string/settings_all_reset" />
+
+    <SwitchPreferenceCompat
+        android:title="@string/settings_public_api_enabled_title"
+        android:summaryOn="@string/settings_public_api_enabled_summary_on"
+        android:summaryOff="@string/settings_public_api_enabled_summary_off"
+        android:defaultValue="@bool/publicapi_enabled_default"
+        android:key="@string/publicapi_enabled_key" />
 
     <Preference
+        android:icon="@drawable/ic_baseline_info_24"
         android:key="@string/settings_open_tracks_key"
-        android:title="@string/settings_open_tracks_title"
         android:summary="@string/settings_open_tracks_summary"
-        android:icon="@drawable/ic_baseline_info_24" />
+        android:title="@string/settings_open_tracks_title" />
 
 </PreferenceScreen>

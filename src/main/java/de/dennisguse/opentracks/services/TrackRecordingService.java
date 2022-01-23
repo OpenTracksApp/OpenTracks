@@ -282,7 +282,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         showNotification(true);
     }
 
-    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void endCurrentTrack() {
         if (!isRecording()) {
             Log.w(TAG, "Ignore endCurrentTrack. Not recording.");

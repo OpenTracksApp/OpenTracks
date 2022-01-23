@@ -117,7 +117,19 @@ OpenTracks can be used with [Gadgetbridge](https://www.gadgetbridge.org/):
 __Only required permission:__
 * _ACCESS_FINE_LOCATION_: required to use the GPS.
 
-An overview of Bluetooth LE sensors that are known to work with OpenTracks is in [README_TESTED_SENSORS.md](README_TESTED_SENSORS.md).
+### API
+The following functionalities by sending from an external application (e.g., [Automate](https://llamalab.com/automate/), [Tasker](https://tasker.joaoapps.com), or [Easer](https://github.com/renyuneyun/Easer)).
+The API can be invoked by sending an Intent to start an activity.
+Package  (depends on the variant installed):
+* F-Droid: `de.dennisguse.opentracks`
+* GooglePlay: `de.dennisguse.opentracks.playStore`
+* Debug: `de.dennisguse.opentracks.debug`
+* Nightly: `de.dennisguse.opentracks.nightly`
+
+Activity:
+* **Start a recording:**  `de.dennisguse.opentracks.publicapi.StartRecording`
+
+* For testing via adb: `adb shell am start -n "package/activity"`
 
 ## Custom Dashboards (incl. map)
 As of v3.3.1, OpenTracks supports custom dashboards.
