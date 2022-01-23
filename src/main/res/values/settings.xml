@@ -291,6 +291,9 @@
     <string name="import_prevent_reimport_key" translatable="false">preventReimportTrackKey</string>
     <bool name="import_prevent_reimport_default">true</bool>
 
+    <string name="publicapi_enabled_key" translatable="false">apiEnabledKey</string>
+    <bool name="publicapi_enabled_default">false</bool>
+
     <integer name="buttonDelayMillis">1500</integer>
 
     <!-- androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode() -->

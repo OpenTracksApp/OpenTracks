@@ -445,6 +445,12 @@ limitations under the License.
     <string name="settings_stats_units_metric">Metric (km, m)</string>
     <string name="settings_stats_units_title">Preferred units</string>
 
+    <!-- Settings public api -->
+    <string name="settings_public_api_enabled_title">Public API</string>
+    <string name="settings_public_api_enabled_summary_on">Other installed applications can start or stop recordings.</string>
+    <string name="settings_public_api_enabled_summary_off">Only OpenTracks can start and stop recordings.</string>
+    <string name="settings_public_api_disabled_toast">OpenTracks Public API is disabled: it can be enabled in the settings.</string>
+
     <!-- Settings import/export -->
     <string name="settings_import_section">Import</string>
     <string name="settings_export_section">Export</string>

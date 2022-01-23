@@ -28,7 +28,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.documentfile.provider.DocumentFile;
 import androidx.preference.PreferenceManager;
 
 import java.time.Duration;
@@ -177,6 +176,10 @@ public class PreferencesUtils {
         Editor editor = sharedPreferences.edit();
         editor.putInt(getKey(keyId), value);
         editor.apply();
+    }
+
+    public static boolean isPublicAPIenabled() {
+        return getBoolean(R.string.publicapi_enabled_key, resources.getBoolean(R.bool.publicapi_enabled_default));
     }
 
     public static boolean isMetricUnits() {
