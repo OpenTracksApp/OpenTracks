@@ -41,7 +41,7 @@ import de.dennisguse.opentracks.settings.PreferencesUtils;
 public class TrackNameUtilsTest {
 
     private static final Track.Id TRACK_ID = new Track.Id(1L);
-    private static final OffsetDateTime START_TIME = OffsetDateTime.parse("2022-01-02T10:15:30+01:00");
+    private static final OffsetDateTime START_TIME = OffsetDateTime.parse("2022-01-02T10:15:30.1234+01:00");
 
     private static final Context CONTEXT = ApplicationProvider.getApplicationContext();
 
@@ -60,7 +60,7 @@ public class TrackNameUtilsTest {
     @Test
     public void testTrackName_date_iso_8601() {
         PreferencesUtils.setString(R.string.track_name_key, CONTEXT.getString(R.string.settings_recording_track_name_date_iso_8601_value));
-        assertEquals(StringUtils.formatDateTimeIso8601(START_TIME.toInstant(), START_TIME.getOffset()), TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
+        assertEquals("2022-01-02T10:15+01", TrackNameUtils.getTrackName(CONTEXT, TRACK_ID, START_TIME));
     }
 
     /**

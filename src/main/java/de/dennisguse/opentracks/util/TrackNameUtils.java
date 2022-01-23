@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.util;
 import android.content.Context;
 
 import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Track;
@@ -41,7 +42,7 @@ public class TrackNameUtils {
         if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_local_value))) {
             return StringUtils.formatDateTimeWithOffset(startTime);
         } else if (trackName.equals(context.getString(R.string.settings_recording_track_name_date_iso_8601_value))) {
-            return StringUtils.formatDateTimeIso8601(startTime.toInstant(), startTime.getOffset());
+            return startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mmX"));
         } else {
             return context.getString(R.string.track_name_format, trackId.getId());
         }
