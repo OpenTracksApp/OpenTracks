@@ -1,0 +1,16 @@
+v3.24.1: OpenTracks
+
+Changes:
+- Added API for starting recordings from other applications (disabled by default)
+- Shortened ISO8601 track names
+- BLE distance sensors: store GPS-locations based upon previous GPS-locations
+
+Bugfix:
+- While recording: fixed crash when opening charts
+- TrackDataHub should end processing after stop()
+- Prevent rare crash while deleting tracks
+
+Developer:
+- Refactored package structure
+- Monotonic clock
+- Value objects for heartrate, cadence, and power
