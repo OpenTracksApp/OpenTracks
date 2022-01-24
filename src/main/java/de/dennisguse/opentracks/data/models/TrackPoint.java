@@ -27,20 +27,10 @@ import java.time.Instant;
 import java.util.Objects;
 
 /**
- * This class extends the standard Android location with extra information.
+ * Sensor and/or location information for a specific point in time.
  * <p>
- * NOTE: default location will be latitude=0.0 and longitude=0.0.
- * For {@link TrackPoint}s with `type == null` this is not meaningful.
- * <p>
- * NOTE: For Locations provided by the GPS.
- * We are replacing the GPS-provided time using the system time.
- * Then we have the same timestamps for the user-driven events (aka start, pause, resume) and restore {@link de.dennisguse.opentracks.stats.TrackStatistics}.
- * Drawbacks:
- * * GPS-provided timestamp might be more precise (but also have GPS week rollover)
- * * System clock might be changed (and thus non-monotonic)
- * TODO: if these might be a problem, we need to store both timestamps.
- *
- * @author Sandor Dornbush
+ * Time is created using the {@link de.dennisguse.opentracks.services.handlers.MonotonicClock}, because system time jump backwards.
+ * GPS time is ignored as for non-GPS events, we could not create timestamps.
  */
 public class TrackPoint {
 
