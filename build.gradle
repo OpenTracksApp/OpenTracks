@@ -57,17 +57,12 @@ android {
         viewBinding true
     }
 
-    aaptOptions {
-        cruncherEnabled = false
-    }
-
     defaultConfig {
         applicationId "de.dennisguse.opentracks"
         versionCode 4692
         versionName "v3.24.1"
 
         buildConfigField "String", "VERSION_NAME_FULL", "\"${getVersionName()}\""
-
 
         minSdkVersion 21
         targetSdkVersion 31
@@ -98,6 +93,7 @@ android {
         }
 
         release {
+            crunchPngs false
             minifyEnabled false
         }
 
