@@ -3,7 +3,6 @@ package de.dennisguse.opentracks;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.List;
@@ -36,6 +36,7 @@ import de.dennisguse.opentracks.fragments.StatisticsRecordingFragment;
 import de.dennisguse.opentracks.services.RecordingStatus;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
+import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.ui.intervals.IntervalsFragment;
@@ -63,6 +64,8 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
     private static final String CURRENT_TAB_TAG_KEY = "current_tab_tag_key";
 
+    private Snackbar snackbar;
+
     // The following are setFrequency in onCreate
     private ContentProviderUtils contentProviderUtils;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
@@ -76,45 +79,41 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
     private RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
-    private final TrackRecordingServiceConnection.Callback bindChangedCallback = new TrackRecordingServiceConnection.Callback() {
-        @Override
-        public void onConnected(TrackRecordingService service) {
+    private final TrackRecordingServiceConnection.Callback bindChangedCallback = service -> {
+        service.getRecordingStatusObservable()
+                .observe(TrackRecordingActivity.this, this::onRecordingStatusChanged);
 
-            service.getRecordingStatusObservable()
-                    .observe(TrackRecordingActivity.this, status -> onRecordingStatusChanged(status));
+        service.getGpsStatusObservable()
+                .observe(TrackRecordingActivity.this, this::onGpsStatusChanged);
 
-            if (!service.isRecording()) {
-                if (trackId == null) {
-                    // trackId isn't initialized -> leads a new recording.
-                    trackId = service.startNewTrack();
-                } else {
-                    // trackId is initialized -> resumes the track.
-                    service.resumeTrack(trackId);
-                }
-
-                // A recording track is on.
-                trackDataHub.loadTrack(trackId);
-                trackDataHub.setRecordingStatus(recordingStatus);
+        if (!service.isRecording()) {
+            if (trackId == null) {
+                // trackId isn't initialized -> leads a new recording.
+                trackId = service.startNewTrack();
+            } else {
+                // trackId is initialized -> resumes the track.
+                service.resumeTrack(trackId);
             }
+
+            // A recording track is on.
+            trackDataHub.loadTrack(trackId);
+            trackDataHub.setRecordingStatus(recordingStatus);
         }
     };
 
-    private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = new OnSharedPreferenceChangeListener() {
-        @Override
-        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (PreferencesUtils.isKey(R.string.stats_show_on_lockscreen_while_recording_key, key)) {
-                setLockscreenPolicy();
-            }
-            if (PreferencesUtils.isKey(R.string.stats_keep_screen_on_while_recording_key, key)) {
-                setScreenOnPolicy();
-            }
-            if (PreferencesUtils.isKey(R.string.stats_fullscreen_while_recording_key, key)) {
-                setFullscreenPolicy();
-            }
-            if (key == null) return;
-
-            runOnUiThread(TrackRecordingActivity.this::invalidateOptionsMenu); //TODO Should not be necessary
+    private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
+        if (PreferencesUtils.isKey(R.string.stats_show_on_lockscreen_while_recording_key, key)) {
+            setLockscreenPolicy();
         }
+        if (PreferencesUtils.isKey(R.string.stats_keep_screen_on_while_recording_key, key)) {
+            setScreenOnPolicy();
+        }
+        if (PreferencesUtils.isKey(R.string.stats_fullscreen_while_recording_key, key)) {
+            setFullscreenPolicy();
+        }
+        if (key == null) return;
+
+        runOnUiThread(TrackRecordingActivity.this::invalidateOptionsMenu); //TODO Should not be necessary
     };
 
     private MenuItem insertMarkerMenuItem;
@@ -424,5 +423,21 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         );
         String[] permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
         locationPermissionRequest.launch(permissions);
+    }
+
+    private void onGpsStatusChanged(GpsStatusValue gpsStatusValue) {
+        if (gpsStatusValue.isGpsStarted() && snackbar != null && snackbar.isShown()) {
+            snackbar.dismiss();
+            return;
+        }
+        if (gpsStatusValue != GpsStatusValue.GPS_DISABLED) {
+            return;
+        }
+        snackbar = Snackbar
+                .make(viewBinding.trackRecordingCoordinatorLayout,
+                        getString(R.string.gps_recording_status, getString(gpsStatusValue.message), getString(R.string.gps_recording_without_signal)),
+                        Snackbar.LENGTH_INDEFINITE)
+                .setAction(getString(R.string.generic_dismiss), v -> {});
+        snackbar.show();
     }
 }

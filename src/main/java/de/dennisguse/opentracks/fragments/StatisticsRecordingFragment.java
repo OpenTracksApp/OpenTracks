@@ -20,7 +20,6 @@ import java.util.List;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.adapters.StatisticsAdapter;
 import de.dennisguse.opentracks.data.models.Track;
-import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.databinding.StatisticsRecordingBinding;
 import de.dennisguse.opentracks.services.RecordingData;
 import de.dennisguse.opentracks.services.TrackRecordingService;
@@ -45,8 +44,9 @@ public class StatisticsRecordingFragment extends Fragment {
     }
 
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
+
     private RecordingData recordingData = TrackRecordingService.NOT_RECORDING;
-    private TrackPoint latestTrackPoint;
+
     private Layout layout;
 
     private StatisticsRecordingBinding viewBinding;
@@ -76,8 +76,10 @@ public class StatisticsRecordingFragment extends Fragment {
         }
     };
 
-    private final TrackRecordingServiceConnection.Callback bindChangedCallback = service -> service.getRecordingDataObservable()
-            .observe(StatisticsRecordingFragment.this, this::onRecordingDataChanged);
+    private final TrackRecordingServiceConnection.Callback bindChangedCallback = service -> {
+        service.getRecordingDataObservable()
+                .observe(StatisticsRecordingFragment.this, this::onRecordingDataChanged);
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -166,11 +168,6 @@ public class StatisticsRecordingFragment extends Fragment {
 
         if (!oldCategory.equals(newCategory)) {
             sharedPreferenceChangeListener.onSharedPreferenceChanged(null, getString(R.string.stats_rate_key));
-        }
-
-        latestTrackPoint = recordingData.getLatestTrackPoint();
-        if (latestTrackPoint != null && latestTrackPoint.hasLocation() && !latestTrackPoint.isRecent()) {
-            latestTrackPoint = null;
         }
 
         updateUI();

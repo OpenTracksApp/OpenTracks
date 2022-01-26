@@ -56,7 +56,7 @@ class GpsStatus {
 
         public void stop() {
             stopped = true;
-            sendStatus(gpsStatus, GpsStatusValue.GPS_NONE);
+            sendStatus(gpsStatus, GpsStatusValue.GPS_DISABLED);
         }
     }
 
