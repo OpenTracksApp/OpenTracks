@@ -6,6 +6,8 @@
     <issue id="ExtraTranslation" severity="error" />
     <issue id="GifUsage" severity="error" />
     <issue id="InconsistentArrays" severity="error" />
+    <issue id="MissingQuantity"
+        severity="warning" />
     <issue id="MissingTranslation" severity="warning" />
     <issue id="Proguard" severity="warning" />
     <issue id="ScrollViewCount" severity="error" />
