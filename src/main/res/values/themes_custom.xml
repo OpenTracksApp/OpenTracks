@@ -23,6 +23,12 @@ limitations under the License.
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
 
         <item name="windowActionModeOverlay">true</item>
+
+        <!-- Snackbar -->
+        <item name="snackbarStyle">@style/MaterialSnackbarTheme</item>
+        <item name="snackbarButtonStyle">@style/MaterialSnackbarTextButtonTheme</item>
+        <item name="snackbarTextViewStyle">@style/MaterialSnackbarTextViewTheme</item>
+
     </style>
 
     <style name="SplashTheme" parent="ThemeCustom">

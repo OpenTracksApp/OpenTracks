@@ -244,12 +244,15 @@ limitations under the License.
     <string name="generic_to">To</string>
     <string name="generic_today">Today</string>
     <string name="generic_yesterday">Yesterday</string>
+    <string name="generic_dismiss">Dismiss</string>
     <!-- Gps -->
     <string name="gps_starting">Starting GPS</string>
     <string name="gps_wait_for_better_signal">Waiting for a better GPS signal</string>
     <string name="gps_wait_for_signal">Waiting for GPS signal</string>
     <string name="gps_disabled_msg">GPS disabled</string>
     <string name="gps_fixed_and_ready">GPS fixed and ready</string>
+    <string name="gps_recording_status">%1$s: %2$s</string>
+    <string name="gps_recording_without_signal">OpenTracks is recording without GPS data.</string>
     <!-- Image -->
     <string name="image_arrow">Arrow</string>
     <string name="image_marker">Marker</string>
