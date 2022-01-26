@@ -164,11 +164,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="export_without_photos">uden fotos</string>
     <string name="export_progress_message">Eksporterer til %1$s…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">1 fil</item>
-        <item quantity="other">%1$d filer</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Tilføj</string>
     <string name="generic_delete_selected_confirm_title">Skal de valgte slettes?</string>

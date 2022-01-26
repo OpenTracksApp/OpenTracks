@@ -91,9 +91,6 @@
     <string name="description_total_distance">總距離：%1$.2f 公里 (%2$.1f 英里)</string>
     <string name="description_total_time">總時間：%1$s</string>
     <string name="export_progress_message">正在匯出至 %1$s…</string>
-    <plurals name="files">
-        <item quantity="other">%1$d 個檔案</item>
-    </plurals>
     <string name="generic_add">新增</string>
     <string name="generic_delete_selected_confirm_title">確定要刪除所選項目？</string>
     <string name="generic_description">內容描述</string>

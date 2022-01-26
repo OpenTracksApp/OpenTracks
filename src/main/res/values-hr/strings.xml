@@ -110,12 +110,6 @@ limitations under the License.
     <!-- Export -->
     <string name="export_progress_message">Izvoz u direktorij %1$s…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">%1$d datoteka</item>
-        <item quantity="few">%1$d datoteke</item>
-        <item quantity="other">%1$d datoteka</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Dodaj</string>
     <string name="generic_delete_selected_confirm_title">Želite li izbrisati odabrano?</string>

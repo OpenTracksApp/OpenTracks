@@ -162,11 +162,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="export_without_photos">sans les photos</string>
     <string name="export_progress_message">Exportation vers le répertoire %1$s en cours…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">%1$d fichier</item>
-        <item quantity="other">%1$d fichiers</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Ajouter</string>
     <string name="generic_delete_selected_confirm_title">Supprimer les éléments sélectionnés ?</string>

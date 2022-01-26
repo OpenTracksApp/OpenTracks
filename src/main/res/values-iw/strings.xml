@@ -91,12 +91,6 @@
     <string name="description_total_distance">מרחק כולל: %1$.2f ק\"מ (%2$.1f מייל)</string>
     <string name="description_total_time">זמן כולל: %1$s</string>
     <string name="export_progress_message">מייצא אל %1$s…</string>
-    <plurals name="files">
-        <item quantity="one">קובץ אחד</item>
-        <item quantity="two">שני קבצים</item>
-        <item quantity="many">%1$d קבצים</item>
-        <item quantity="other">%1$d קבצים</item>
-    </plurals>
     <string name="generic_add">הוסף</string>
     <string name="generic_delete_selected_confirm_title">למחוק את הפריטים שנבחרו?</string>
     <string name="generic_description">תיאור</string>

@@ -162,11 +162,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="export_without_photos">argazkirik gabe</string>
     <string name="export_progress_message">%1$s karpetara esportatzen…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">1 fitxategi</item>
-        <item quantity="other">%1$d fitxategi</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Gehitu</string>
     <string name="generic_delete_selected_confirm_title">Hautatutakoak ezabatu nahi dituzu?</string>

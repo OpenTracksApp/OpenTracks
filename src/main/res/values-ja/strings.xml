@@ -110,10 +110,6 @@ limitations under the License.
     <!-- Export -->
     <string name="export_progress_message">%1$sにエクスポート中…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="other">%1$d個のファイル</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">追加</string>
     <string name="generic_delete_selected_confirm_title">選択したアイテムを削除しますか？</string>

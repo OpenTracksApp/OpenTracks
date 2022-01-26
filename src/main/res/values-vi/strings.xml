@@ -110,10 +110,6 @@ limitations under the License.
     <!-- Export -->
     <string name="export_progress_message">Đang xuất sang %1$s…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="other">%1$d tệp</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Thêm</string>
     <string name="generic_delete_selected_confirm_title">Xóa phần được chọn?</string>

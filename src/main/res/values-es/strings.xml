@@ -161,11 +161,6 @@ Si el dispositivo GPS reporta datos inexactos (por ejemplo, ubicación, velocida
     <string name="export_without_photos">sin fotos</string>
     <string name="export_progress_message">Exportando a %1$s…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">1 archivo</item>
-        <item quantity="other">%1$d archivos</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Añadir</string>
     <string name="generic_delete_selected_confirm_title">¿Eliminar elementos seleccionados?</string>

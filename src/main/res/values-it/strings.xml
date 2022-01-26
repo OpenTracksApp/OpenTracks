@@ -150,11 +150,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <!-- Export -->
     <string name="export_progress_message">Esportando su %1$s…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">1 file</item>
-        <item quantity="other">%1$d file</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Aggiungi</string>
     <string name="generic_delete_selected_confirm_title">Eliminare selezionati\?</string>

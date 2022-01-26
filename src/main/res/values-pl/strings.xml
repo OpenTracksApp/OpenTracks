@@ -118,13 +118,6 @@ limitations under the License.
     <string name="export_progress_summary_skip_msg">Ścieżki pominięte</string>
     <string name="export_progress_summary_errors_msg">Błędy</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">1 plik</item>
-        <item quantity="few">%1$d pliki</item>
-        <item quantity="many">%1$d plików</item>
-        <item quantity="other">%1$d pliku</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Dodaj</string>
     <string name="generic_delete_selected_confirm_title">Usunąć wybrane?</string>

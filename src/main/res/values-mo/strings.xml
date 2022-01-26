@@ -91,11 +91,6 @@
     <string name="description_total_distance">Distanţă totală: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Timp total: %1$s</string>
     <string name="export_progress_message">Se exportă în %1$s…</string>
-    <plurals name="files">
-        <item quantity="one">%1$d fișiere</item>
-        <item quantity="few">%1$d fișier</item>
-        <item quantity="other">%1$d fișiere</item>
-    </plurals>
     <string name="generic_add">Adăugați</string>
     <string name="generic_delete_selected_confirm_title">Ștergeți cele selectate?</string>
     <string name="generic_description">Descriere</string>
