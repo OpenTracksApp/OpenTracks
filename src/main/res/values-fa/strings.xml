@@ -110,11 +110,6 @@ limitations under the License.
     <!-- Export -->
     <string name="export_progress_message">در حال صادر کردن به %1$s…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">%1$d فایل</item>
-        <item quantity="other">%1$d فایل</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">افزودن</string>
     <string name="generic_delete_selected_confirm_title">موارد انتخابی حذف شود؟</string>

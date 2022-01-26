@@ -110,12 +110,6 @@ limitations under the License.
     <!-- Export -->
     <string name="export_progress_message">Eksportuojama į %1$s…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">%1$d failas</item>
-        <item quantity="few">%1$d failai</item>
-        <item quantity="other">%1$d failų</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Papildyti</string>
     <string name="generic_delete_selected_confirm_title">Ištrinti pasirinktus?</string>

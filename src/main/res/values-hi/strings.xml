@@ -110,11 +110,6 @@ limitations under the License.
     <!-- Export -->
     <string name="export_progress_message">%1$s पर निर्यात किया जा रहा है…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">%1$d फ़ाइलें</item>
-        <item quantity="other">%1$d फ़ाइलें</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">जोड़ें</string>
     <string name="generic_delete_selected_confirm_title">चयनित हटाएं?</string>

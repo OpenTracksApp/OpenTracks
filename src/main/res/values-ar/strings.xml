@@ -110,15 +110,6 @@ limitations under the License.
     <!-- Export -->
     <string name="export_progress_message">جارٍ التصدير إلى‏ %1$s‏…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="zero">0 ملفات</item>
-        <item quantity="one">1 ملف</item>
-        <item quantity="two">2 ملفان</item>
-        <item quantity="few">%1$d‏ ملفات</item>
-        <item quantity="many">%1$d‏ ملفًا</item>
-        <item quantity="other">%1$d‏ من الملفات</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">إضافة</string>
     <string name="generic_delete_selected_confirm_title">حذف ما تم تحديده؟</string>

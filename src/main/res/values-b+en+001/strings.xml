@@ -91,10 +91,6 @@
     <string name="description_total_distance">Total distance: %1$.2f km (%2$.1f mi)</string>
     <string name="description_total_time">Total time: %1$s</string>
     <string name="export_progress_message">Exporting to %1$s…</string>
-    <plurals name="files">
-        <item quantity="one">1 file</item>
-        <item quantity="other">%1$d files</item>
-    </plurals>
     <string name="generic_add">Add</string>
     <string name="generic_delete_selected_confirm_title">Delete selected?</string>
     <string name="generic_description">Description</string>

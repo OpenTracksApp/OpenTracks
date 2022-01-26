@@ -110,13 +110,6 @@ limitations under the License.
     <!-- Export -->
     <string name="export_progress_message">Триває експорт у %1$s…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">%1$d файл</item>
-        <item quantity="few">%1$d файли</item>
-        <item quantity="many">%1$d файлів</item>
-        <item quantity="other">%1$d файлу</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Додати</string>
     <string name="generic_delete_selected_confirm_title">Видалити вибрані?</string>

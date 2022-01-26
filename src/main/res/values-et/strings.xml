@@ -161,11 +161,6 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="export_without_photos">ilma fotodeta</string>
     <string name="export_progress_message">Eksportimine kataloogi %1$s…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">1 fail</item>
-        <item quantity="other">%1$d faili</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Lisa</string>
     <string name="generic_delete_selected_confirm_title">Kas kustutada valitud?</string>

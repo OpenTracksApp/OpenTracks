@@ -165,11 +165,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="export_without_photos">ohne Fotos</string>
     <string name="export_progress_message">In %1$s exportieren…</string>
     <!-- External Storage -->
-    <!-- Files -->=
-    <plurals name="files">
-        <item quantity="one">1 Datei</item>
-        <item quantity="other">%1$d Dateien</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Hinzufügen</string>
     <string name="generic_delete_selected_confirm_title">Ausgewählte Elemente löschen?</string>

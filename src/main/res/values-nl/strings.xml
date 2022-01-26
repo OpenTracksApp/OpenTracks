@@ -161,11 +161,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="export_without_photos">zonder fotos</string>
     <string name="export_progress_message">Exporteren naar %1$s…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">1 bestand</item>
-        <item quantity="other">%1$d bestanden</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Toevoegen</string>
     <string name="generic_delete_selected_confirm_title">Geselecteerde items verwijderen?</string>

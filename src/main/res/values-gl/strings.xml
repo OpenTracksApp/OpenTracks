@@ -170,11 +170,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="export_without_photos">sen fotos</string>
     <string name="export_progress_message">Exportando a %1$s…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">1 ficheiro</item>
-        <item quantity="other">%1$d ficheiros</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Engadir</string>
     <string name="generic_delete_selected_confirm_title">Eliminar a selección?</string>

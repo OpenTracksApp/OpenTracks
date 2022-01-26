@@ -110,11 +110,6 @@ limitations under the License.
     <!-- Export -->
     <string name="export_progress_message">Εξαγωγή στο %1$s…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">1 αρχείο</item>
-        <item quantity="other">%1$d αρχεία</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Προσθήκη</string>
     <string name="generic_delete_selected_confirm_title">Διαγραφή επιλεγμένων;</string>

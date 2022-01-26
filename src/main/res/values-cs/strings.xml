@@ -159,12 +159,6 @@ limitations under the License.
     <string name="export_without_photos">bez fotografií</string>
     <string name="export_progress_message">Exportování do složky %1$s…</string>
     <!-- External Storage -->
-    <!-- Files -->
-    <plurals name="files">
-        <item quantity="one">1 soubor</item>
-        <item quantity="few">%1$d soubory</item>
-        <item quantity="other">%1$d souborů</item>
-    </plurals>
     <!-- Generic -->
     <string name="generic_add">Přidat</string>
     <string name="generic_delete_selected_confirm_title">Smazat vybrané?</string>
