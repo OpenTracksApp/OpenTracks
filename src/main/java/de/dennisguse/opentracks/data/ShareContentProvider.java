@@ -96,7 +96,7 @@ public class ShareContentProvider extends CustomContentProvider {
         Uri uri = Uri.parse(TracksColumns.CONTENT_URI + "/" + trackFileFormat.getName() + "/" + trackIdBuilder + "/" + Uri.encode(trackName) + "." + trackFileFormat.getExtension());
         String mime = getTypeMime(uri);
 
-        Log.d(TAG, "Created uri " + uri.toString() + " with MIME " + mime);
+        Log.d(TAG, "Created uri " + uri + " with MIME " + mime);
 
         return new Pair<>(uri, mime);
     }

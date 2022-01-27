@@ -51,7 +51,6 @@ public class TrackImporter {
     private final Context context;
     private final ContentProviderUtils contentProviderUtils;
 
-    private final Distance recordingDistanceInterval;
     private final Distance maxRecordingDistance;
     private final boolean preventReimport;
 
@@ -62,10 +61,9 @@ public class TrackImporter {
     private final List<TrackPoint> trackPoints = new LinkedList<>();
     private final List<Marker> markers = new LinkedList<>();
 
-    public TrackImporter(Context context, ContentProviderUtils contentProviderUtils, Distance recordingDistanceInterval, Distance maxRecordingDistance, boolean preventReimport) {
+    public TrackImporter(Context context, ContentProviderUtils contentProviderUtils, Distance maxRecordingDistance, boolean preventReimport) {
         this.context = context;
         this.contentProviderUtils = contentProviderUtils;
-        this.recordingDistanceInterval = recordingDistanceInterval;
         this.maxRecordingDistance = maxRecordingDistance;
         this.preventReimport = preventReimport;
     }

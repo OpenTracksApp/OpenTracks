@@ -42,7 +42,7 @@ public class KMLImportTest {
 
     @Before
     public void setUp() {
-        trackImporter = new TrackImporter(context, contentProviderUtils, Distance.of(10), Distance.of(200), true);
+        trackImporter = new TrackImporter(context, contentProviderUtils, Distance.of(200), true);
     }
 
     @After
