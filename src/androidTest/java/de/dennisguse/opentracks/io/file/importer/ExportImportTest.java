@@ -105,7 +105,7 @@ public class ExportImportTest {
         tmpFile = File.createTempFile("test", "test", context.getFilesDir());
         tmpFileUri = Uri.fromFile(tmpFile);
 
-        trackImporter = new TrackImporter(context, contentProviderUtils, Distance.of(10), Distance.of(200), true);
+        trackImporter = new TrackImporter(context, contentProviderUtils, Distance.of(200), true);
 
         TrackRecordingServiceTestUtils.resetService(mServiceRule, context);
     }

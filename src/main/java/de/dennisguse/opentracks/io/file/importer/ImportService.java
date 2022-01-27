@@ -57,7 +57,7 @@ public class ImportService extends JobIntentService {
             Distance recordingDistanceInterval = PreferencesUtils.getRecordingDistanceInterval();
             boolean preventReimport = PreferencesUtils.getPreventReimportTracks();
 
-            TrackImporter trackImporter = new TrackImporter(this, new ContentProviderUtils(this), recordingDistanceInterval, maxRecordingDistance, preventReimport);
+            TrackImporter trackImporter = new TrackImporter(this, new ContentProviderUtils(this), maxRecordingDistance, preventReimport);
 
             if (TrackFileFormat.GPX.getExtension().equals(fileExtension)) {
                 trackIds.addAll(new XMLImporter(new GpxTrackImporter(this, trackImporter)).importFile(this, file.getUri()));

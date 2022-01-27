@@ -317,10 +317,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         setTitle(getString(isPaused ? R.string.generic_paused : R.string.generic_recording));
     }
 
-    public void chooseActivityType(String category) {
-        ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), category);
-    }
-
     @Override
     public void onChooseActivityTypeDone(String iconValue) {
         Track track = contentProviderUtils.getTrack(trackId);

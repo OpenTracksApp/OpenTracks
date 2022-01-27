@@ -22,8 +22,6 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
 @RunWith(AndroidJUnit4.class)
 public class TrackStatisticsUpdaterTest {
 
-    private static final Distance GPS_DISTANCE = Distance.of(50);
-
     @Test
     public void empty() {
         // when

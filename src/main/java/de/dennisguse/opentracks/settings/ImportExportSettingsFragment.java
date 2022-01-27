@@ -1,7 +1,5 @@
 package de.dennisguse.opentracks.settings;
 
-import android.content.Intent;
-import android.content.UriPermission;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,7 +8,6 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import java.util.List;
 import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
@@ -76,7 +73,7 @@ public class ImportExportSettingsFragment extends PreferenceFragmentCompat {
                 return getString(R.string.not_set);
             }
 
-            return directoryUri.toString() + (directory.canWrite() ? "" : getString(R.string.export_dir_not_writable));
+            return directoryUri + (directory.canWrite() ? "" : getString(R.string.export_dir_not_writable));
         });
     }
 }
