@@ -64,7 +64,10 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
     public void start(@Nullable TrackStatistics trackStatistics) {
         voiceAnnouncement = new VoiceAnnouncement(trackRecordingService);
         voiceAnnouncement.start();
+        update(trackStatistics);
+    }
 
+    void update(@Nullable TrackStatistics trackStatistics) {
         this.trackStatistics = trackStatistics;
         updateNextDuration();
         updateNextTaskDistance();
@@ -102,12 +105,12 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
 
     public void setFrequency(Duration frequency) {
         this.totalTimeFrequency = frequency;
-        start(this.trackStatistics);
+        update(this.trackStatistics);
     }
 
     public void setFrequency(Distance frequency) {
         this.distanceFrequency = frequency;
-        start(this.trackStatistics);
+        update(this.trackStatistics);
     }
 
     public void updateNextTaskDistance() {
