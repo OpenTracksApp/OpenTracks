@@ -15,7 +15,7 @@ import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
-import de.dennisguse.opentracks.services.TrackRecordingService;
+import de.dennisguse.opentracks.services.RecordingData;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
@@ -24,7 +24,7 @@ import de.dennisguse.opentracks.util.StringUtils;
 
 public class StatisticDataBuilder {
 
-    public static List<StatisticData> fromRecordingData(@NonNull Context context, @NonNull TrackRecordingService.RecordingData recordingData, @NonNull Layout layout, boolean metricUnits) {
+    public static List<StatisticData> fromRecordingData(@NonNull Context context, @NonNull RecordingData recordingData, @NonNull Layout layout, boolean metricUnits) {
         List<StatisticData> statisticDataList = layout.getFields().stream()
                 .filter(DataField::isVisible)
                 .map(field -> build(context, recordingData, field.getKey(), field.isPrimary(), metricUnits))
@@ -34,7 +34,7 @@ public class StatisticDataBuilder {
         return statisticDataList;
     }
 
-    private static StatisticData build(@NonNull Context context, @NonNull TrackRecordingService.RecordingData recordingData, @NonNull String fieldKey, boolean isPrimary, boolean metricUnits) {
+    private static StatisticData build(@NonNull Context context, @NonNull RecordingData recordingData, @NonNull String fieldKey, boolean isPrimary, boolean metricUnits) {
         final TrackPoint latestTrackPoint = recordingData.getLatestTrackPoint();
         final SensorDataSet sensorDataSet = recordingData.getSensorDataSet();
         final TrackStatistics trackStatistics = recordingData.getTrackStatistics();
@@ -153,7 +153,7 @@ public class StatisticDataBuilder {
     /**
      * Builds a list of StatisticData with sensors configured but not in statisticDataList.
      */
-    private static List<StatisticData> getSensorStatsDataIfNeeded(Context context, TrackRecordingService.RecordingData recordingData, List<StatisticData> statisticDataList, boolean metricUnits) {
+    private static List<StatisticData> getSensorStatsDataIfNeeded(Context context, RecordingData recordingData, List<StatisticData> statisticDataList, boolean metricUnits) {
         List<StatisticData> sensorDataList = new ArrayList<>();
         SensorDataSet sensorDataSet = recordingData.getSensorDataSet();
         if (sensorDataSet == null) {

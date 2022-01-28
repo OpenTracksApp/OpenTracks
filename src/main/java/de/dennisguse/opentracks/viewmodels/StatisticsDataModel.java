@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import de.dennisguse.opentracks.services.TrackRecordingService;
+import de.dennisguse.opentracks.services.RecordingData;
 import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
 
 public class StatisticsDataModel extends AndroidViewModel {
@@ -26,7 +26,7 @@ public class StatisticsDataModel extends AndroidViewModel {
         return statsData;
     }
 
-    public void update(TrackRecordingService.RecordingData recordingData, Layout layout, boolean metricUnit) {
+    public void update(RecordingData recordingData, Layout layout, boolean metricUnit) {
         new Thread(() -> {
             List<StatisticData> statisticDataList = StatisticDataBuilder.fromRecordingData(getApplication(), recordingData, layout, metricUnit);
             statsData.postValue(statisticDataList);

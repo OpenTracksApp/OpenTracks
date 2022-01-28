@@ -24,14 +24,12 @@ import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.util.Pair;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.time.Duration;
 import java.time.ZoneOffset;
-import java.util.Objects;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.CustomContentProvider;
@@ -46,7 +44,6 @@ import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.SettingsActivity;
-import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
 
@@ -66,9 +63,20 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     public static final RecordingData NOT_RECORDING = new RecordingData(null, null, null);
     public static final GpsStatusValue STATUS_GPS_DEFAULT = GpsStatusValue.GPS_NONE;
 
+    public class Binder extends android.os.Binder {
+
+        private Binder() {
+            super();
+        }
+
+        public TrackRecordingService getService() {
+            return TrackRecordingService.this;
+        }
+    }
+
     private final Binder binder = new Binder();
 
-    // The following variables are setFrequency in onCreate:
+    // The following variables are set in onCreate:
     private VoiceAnnouncementManager voiceAnnouncementManager;
     private TrackRecordingServiceNotificationManager notificationManager;
 
@@ -180,11 +188,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         return trackRecordingManager.insertMarker(name, category, description, photoUrl);
     }
 
-    /**
-     * Starts a new track.
-     *
-     * @return the track id
-     */
     public Track.Id startNewTrack() {
         if (isRecording()) {
             Log.w(TAG, "Ignore startNewTrack. Already recording.");
@@ -201,12 +204,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         return trackId;
     }
 
-    /**
-     * Resumes the track identified by trackId.
-     * It results in a pause/continue.
-     *
-     * @param trackId the id of the track to be resumed.
-     */
     public void resumeTrack(Track.Id trackId) {
         trackPointCreator.reset();
         trackRecordingManager.resumeExistingTrack(trackId, trackPointCreator.createSegmentStartManual());
@@ -234,18 +231,18 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         // Update instance variables
         handler.postDelayed(updateRecordingData, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
 
-        startGps();
+        startSensors();
 
         voiceAnnouncementManager.restore(trackRecordingManager.getTrackStatistics());
     }
 
-    public void tryStartGps() {
+    public void tryStartSensors() {
         if (isRecording()) return;
 
-        startGps();
+        startSensors();
     }
 
-    private void startGps() {
+    private void startSensors() {
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
         trackPointCreator.start(this);
         showNotification(true);
@@ -303,25 +300,19 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             recordingDataObservable.postValue(NOT_RECORDING);
         }
 
-        // Shutdown periodic tasks
         voiceAnnouncementManager.shutdown();
 
         // Update instance variables
         trackPointCreator.stop();
 
-        stopGps(trackStopped);
+        stopSensors(trackStopped);
     }
 
-    public void stopGpsAndShutdown() {
-        stopGps(true);
+    public void stopSensorsAndShutdown() {
+        stopSensors(true);
     }
 
-    /**
-     * Stops gps.
-     *
-     * @param shutdown true to shutdown self
-     */
-    void stopGps(boolean shutdown) {
+    void stopSensors(boolean shutdown) {
         if (!isRecording()) return;
 
         trackPointCreator.stop();
@@ -439,152 +430,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             intent.putExtra(SettingsActivity.EXTRAS_CHECK_EXPORT_DIRECTORY, true);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
-        }
-    }
-
-
-    public class Binder extends android.os.Binder {
-
-        private Binder() {
-            super();
-        }
-
-        public TrackRecordingService getService() {
-            return TrackRecordingService.this;
-        }
-    }
-
-    public static class RecordingStatus {
-        private final Track.Id trackId;
-        private final boolean paused;
-
-        @VisibleForTesting
-        RecordingStatus(Track.Id trackId, boolean paused) {
-            this.trackId = trackId;
-            this.paused = paused;
-        }
-
-        public Track.Id getTrackId() {
-            return trackId;
-        }
-
-        public boolean isRecording() {
-            return trackId != null;
-        }
-
-        public boolean isPaused() {
-            return paused;
-        }
-
-        public boolean isRecordingAndNotPaused() {
-            return isRecording() && !isPaused();
-        }
-
-        private static RecordingStatus notRecording() {
-            return new RecordingStatus(null, false);
-        }
-
-        private static RecordingStatus record(@NonNull Track.Id trackId) {
-            return new RecordingStatus(trackId, false);
-        }
-
-        private RecordingStatus pause() {
-            return new RecordingStatus(getTrackId(), true);
-        }
-
-        public RecordingStatus stop() {
-            return STATUS_DEFAULT;
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return "RecordingStatus{" +
-                    "trackId=" + trackId +
-                    ", paused=" + paused +
-                    '}';
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            RecordingStatus that = (RecordingStatus) o;
-            return paused == that.paused && Objects.equals(trackId, that.trackId);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(trackId, paused);
-        }
-    }
-
-    public static class RecordingData {
-
-        private final Track track;
-
-        private final TrackPoint latestTrackPoint;
-
-        private final SensorDataSet sensorDataSet;
-
-        /**
-         * {@link Track} and {@link TrackPoint} must be immutable (i.e., their content does not change).
-         */
-        public RecordingData(Track track, TrackPoint lastTrackPoint, SensorDataSet sensorDataSet) {
-            this.track = track;
-            this.latestTrackPoint = lastTrackPoint;
-            this.sensorDataSet = sensorDataSet;
-        }
-
-        public Track getTrack() {
-            return track;
-        }
-
-        public String getTrackCategory() {
-            if (track == null) {
-                return "";
-            }
-            return track.getCategory();
-        }
-
-        @NonNull
-        public TrackStatistics getTrackStatistics() {
-            if (track == null) {
-                return new TrackStatistics();
-            }
-
-            return track.getTrackStatistics();
-        }
-
-        public TrackPoint getLatestTrackPoint() {
-            return latestTrackPoint;
-        }
-
-        public SensorDataSet getSensorDataSet() {
-            return sensorDataSet;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            RecordingData that = (RecordingData) o;
-            return Objects.equals(track, that.track) && Objects.equals(latestTrackPoint, that.latestTrackPoint) && Objects.equals(sensorDataSet, that.sensorDataSet);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(track, latestTrackPoint, sensorDataSet);
-        }
-
-        @NonNull
-        @Override
-        public String toString() {
-            return "RecordingData{" +
-                    "track=" + track +
-                    ", latestTrackPoint=" + latestTrackPoint +
-                    ", sensorDataSet=" + sensorDataSet +
-                    '}';
         }
     }
 }

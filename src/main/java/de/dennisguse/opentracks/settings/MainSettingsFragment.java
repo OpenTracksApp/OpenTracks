@@ -7,6 +7,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.services.RecordingStatus;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 
@@ -14,7 +15,7 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
 
     private static final String TAG = MainSettingsFragment.class.getSimpleName();
 
-    private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
+    private RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private final TrackRecordingServiceConnection.Callback bindServiceCallback =
             service -> service.getRecordingStatusObservable()
@@ -98,7 +99,7 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
         super.onDisplayPreferenceDialog(preference);
     }
 
-    private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
+    private void onRecordingStatusChanged(RecordingStatus status) {
         this.recordingStatus = status;
         if (isAdded()) {
             updatePrefsDependOnRecording();

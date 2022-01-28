@@ -29,6 +29,7 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackRecordingBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.fragments.StatisticsRecordingFragment;
+import de.dennisguse.opentracks.services.RecordingStatus;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
@@ -68,7 +69,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     @Deprecated
     private Track.Id trackId;
 
-    private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
+    private RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
     private final TrackRecordingServiceConnection.Callback bindChangedCallback = new TrackRecordingServiceConnection.Callback() {
         @Override
@@ -391,7 +392,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         }
     }
 
-    private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
+    private void onRecordingStatusChanged(RecordingStatus status) {
         recordingStatus = status;
 
         trackDataHub.setRecordingStatus(recordingStatus);
