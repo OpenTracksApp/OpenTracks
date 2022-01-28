@@ -58,6 +58,7 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.tables.TracksColumns;
 import de.dennisguse.opentracks.databinding.TrackListBinding;
+import de.dennisguse.opentracks.services.RecordingStatus;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
@@ -95,7 +96,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     private boolean metricUnits = true;
 
     private GpsStatusValue gpsStatusValue = TrackRecordingService.STATUS_GPS_DEFAULT;
-    private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
+    private RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
     // Callback when an item is selected in the contextual action mode
     private final ActivityUtils.ContextualActionModeCallback contextualActionModeCallback = new ActivityUtils.ContextualActionModeCallback() {
@@ -144,7 +145,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         }
 
         //TODO Not cool to do this in a callback that might be called more than once!
-        service.tryStartGps();
+        service.tryStartSensors();
     };
 
     @Override
@@ -300,7 +301,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 } else {
                     TrackRecordingService trackRecordingService = trackRecordingServiceConnection.getServiceIfBound();
                     if (trackRecordingService != null) {
-                        trackRecordingService.stopGpsAndShutdown(); //TODO Handle this in TrackRecordingServiceConnection
+                        trackRecordingService.stopSensorsAndShutdown(); //TODO Handle this in TrackRecordingServiceConnection
                     }
                     trackRecordingServiceConnection.unbindAndStop(this);
                 }
@@ -569,7 +570,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         updateGpsMenuItem(true, recordingStatus.isRecording());
     }
 
-    private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
+    private void onRecordingStatusChanged(RecordingStatus status) {
         recordingStatus = status;
     }
 }

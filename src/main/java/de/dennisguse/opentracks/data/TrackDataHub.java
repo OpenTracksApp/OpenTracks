@@ -40,6 +40,7 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.data.tables.MarkerColumns;
 import de.dennisguse.opentracks.data.tables.TrackPointsColumns;
 import de.dennisguse.opentracks.data.tables.TracksColumns;
+import de.dennisguse.opentracks.services.RecordingStatus;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -83,7 +84,7 @@ public class TrackDataHub {
 
     private Track.Id selectedTrackId;
 
-    private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
+    private RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
     // Track points sampling state
     private int numLoadedPoints;
@@ -407,7 +408,7 @@ public class TrackDataHub {
         return handlerThread != null;
     }
 
-    public void setRecordingStatus(TrackRecordingService.RecordingStatus recordingStatus) {
+    public void setRecordingStatus(RecordingStatus recordingStatus) {
         this.recordingStatus = recordingStatus;
     }
 

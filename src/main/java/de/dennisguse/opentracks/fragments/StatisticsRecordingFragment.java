@@ -22,6 +22,7 @@ import de.dennisguse.opentracks.adapters.StatisticsAdapter;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.databinding.StatisticsRecordingBinding;
+import de.dennisguse.opentracks.services.RecordingData;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
@@ -44,7 +45,7 @@ public class StatisticsRecordingFragment extends Fragment {
     }
 
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
-    private TrackRecordingService.RecordingData recordingData = TrackRecordingService.NOT_RECORDING;
+    private RecordingData recordingData = TrackRecordingService.NOT_RECORDING;
     private TrackPoint latestTrackPoint;
     private Layout layout;
 
@@ -158,7 +159,7 @@ public class StatisticsRecordingFragment extends Fragment {
         }
     }
 
-    private void onRecordingDataChanged(TrackRecordingService.RecordingData recordingData) {
+    private void onRecordingDataChanged(RecordingData recordingData) {
         String oldCategory = this.recordingData.getTrackCategory();
         String newCategory = recordingData.getTrackCategory();
         this.recordingData = recordingData;

@@ -123,7 +123,7 @@ public class TrackRecordingServiceTestStateMachine {
         assertEquals(GpsStatusValue.GPS_NONE, service.getGpsStatusObservable().getValue());
 
         // when
-        service.tryStartGps();
+        service.tryStartSensors();
         Thread.sleep(1000);
 
         // then
@@ -132,7 +132,7 @@ public class TrackRecordingServiceTestStateMachine {
         assertEquals(GpsStatusValue.GPS_ENABLED, service.getGpsStatusObservable().getValue());
 
         // when
-        service.stopGps(true);
+        service.stopSensors(true);
         Thread.sleep(1000);
 
         // then
@@ -153,7 +153,7 @@ public class TrackRecordingServiceTestStateMachine {
 
         // then
         assertTrue(service.isRecording());
-        assertEquals(new TrackRecordingService.RecordingStatus(trackId, false), service.getRecordingStatusObservable().getValue());
+        assertEquals(new RecordingStatus(trackId, false), service.getRecordingStatusObservable().getValue());
         assertNotEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
         assertEquals(GpsStatusValue.GPS_ENABLED, service.getGpsStatusObservable().getValue());
 
@@ -165,7 +165,7 @@ public class TrackRecordingServiceTestStateMachine {
         // then
         assertTrue(service.isRecording());
         assertTrue(service.isPaused());
-        assertEquals(new TrackRecordingService.RecordingStatus(trackId, true), service.getRecordingStatusObservable().getValue());
+        assertEquals(new RecordingStatus(trackId, true), service.getRecordingStatusObservable().getValue());
         assertNotEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
         assertEquals(GpsStatusValue.GPS_NONE, service.getGpsStatusObservable().getValue()); //TODO The GPS is kept in pause, right? Might be a bug.
 
@@ -177,7 +177,7 @@ public class TrackRecordingServiceTestStateMachine {
         // then
         assertTrue(service.isRecording());
         assertFalse(service.isPaused());
-        assertEquals(new TrackRecordingService.RecordingStatus(trackId, false), service.getRecordingStatusObservable().getValue());
+        assertEquals(new RecordingStatus(trackId, false), service.getRecordingStatusObservable().getValue());
         assertNotEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
         assertEquals(GpsStatusValue.GPS_ENABLED, service.getGpsStatusObservable().getValue());
 
@@ -201,7 +201,7 @@ public class TrackRecordingServiceTestStateMachine {
         // then
         assertTrue(service.isRecording());
         assertFalse(service.isPaused());
-        assertEquals(new TrackRecordingService.RecordingStatus(trackId, false), service.getRecordingStatusObservable().getValue());
+        assertEquals(new RecordingStatus(trackId, false), service.getRecordingStatusObservable().getValue());
         Thread.sleep(1000); //TODO Figure out why we need to wait here until the update is happening
         assertNotEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
         assertEquals(GpsStatusValue.GPS_ENABLED, service.getGpsStatusObservable().getValue());
@@ -252,13 +252,13 @@ public class TrackRecordingServiceTestStateMachine {
         assertEquals(GpsStatusValue.GPS_ENABLED, service.getGpsStatusObservable().getValue());
 
         // when
-        service.stopGps(false); //TODO Should be ignored as service is recording
+        service.stopSensors(false); //TODO Should be ignored as service is recording
         Thread.sleep(1000);
 
         // then
         assertTrue(service.isRecording());
         assertFalse(service.isPaused());
-        assertEquals(new TrackRecordingService.RecordingStatus(trackId, false), service.getRecordingStatusObservable().getValue());
+        assertEquals(new RecordingStatus(trackId, false), service.getRecordingStatusObservable().getValue());
         Thread.sleep(1000); //TODO Figure out why we need to wait here until the update is happening
         assertNotEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
         assertEquals(GpsStatusValue.GPS_ENABLED, service.getGpsStatusObservable().getValue());

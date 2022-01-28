@@ -38,6 +38,7 @@ import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.tables.MarkerColumns;
 import de.dennisguse.opentracks.databinding.MarkerListBinding;
+import de.dennisguse.opentracks.services.RecordingStatus;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.share.ShareUtils;
@@ -59,7 +60,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
     private ContentProviderUtils contentProviderUtils;
 
-    private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
+    private RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
     private Track track;
     private MarkerResourceCursorAdapter resourceCursorAdapter;
@@ -284,7 +285,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         // Do nothing
     }
 
-    private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
+    private void onRecordingStatusChanged(RecordingStatus status) {
         recordingStatus = status;
     }
 

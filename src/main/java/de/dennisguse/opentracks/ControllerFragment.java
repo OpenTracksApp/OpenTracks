@@ -33,6 +33,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import de.dennisguse.opentracks.databinding.ControllerFragmentBinding;
+import de.dennisguse.opentracks.services.RecordingData;
+import de.dennisguse.opentracks.services.RecordingStatus;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.ui.util.ActivityUtils;
@@ -57,8 +59,8 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
     private TransitionDrawable transition;
 
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
-    private TrackRecordingService.RecordingStatus recordingStatus;
-    private TrackRecordingService.RecordingData recordingData;
+    private RecordingStatus recordingStatus;
+    private RecordingData recordingData;
 
     private final TrackRecordingServiceConnection.Callback bindChangedCallback = service -> {
         service.getRecordingStatusObservable()
@@ -237,7 +239,7 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
         void recordStop();
     }
 
-    private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
+    private void onRecordingStatusChanged(RecordingStatus status) {
         recordingStatus = status;
 
         viewBinding.controllerRecord.setImageResource(recordingStatus.isRecordingAndNotPaused() ? R.drawable.ic_button_pause : R.drawable.button_record);
@@ -254,7 +256,7 @@ public class ControllerFragment extends Fragment implements View.OnTouchListener
         viewBinding.controllerTotalTime.setVisibility(recordingStatus.isRecording() ? View.VISIBLE : View.INVISIBLE);
     }
 
-    private void onTotalTimeChanged(TrackRecordingService.RecordingData recordingData) {
+    private void onTotalTimeChanged(RecordingData recordingData) {
         this.recordingData = recordingData;
 
         viewBinding.controllerTotalTime.setText(StringUtils.formatElapsedTimeWithHour(this.recordingData.getTrackStatistics().getTotalTime()));

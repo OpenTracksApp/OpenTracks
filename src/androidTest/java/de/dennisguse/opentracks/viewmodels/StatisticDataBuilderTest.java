@@ -22,7 +22,7 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Track;
-import de.dennisguse.opentracks.services.TrackRecordingService;
+import de.dennisguse.opentracks.services.RecordingData;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
@@ -39,7 +39,7 @@ public class StatisticDataBuilderTest extends TestCase {
     private TrackStatistics trackStatisticsMock;
 
     @Mock
-    private TrackRecordingService.RecordingData recordingDataMock;
+    private RecordingData recordingDataMock;
 
     @Mock
     private SensorStatistics sensorStatisticsMock;

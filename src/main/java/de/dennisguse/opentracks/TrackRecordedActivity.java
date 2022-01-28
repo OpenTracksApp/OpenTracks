@@ -39,6 +39,7 @@ import de.dennisguse.opentracks.data.TrackDataHub;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackRecordedBinding;
 import de.dennisguse.opentracks.fragments.StatisticsRecordedFragment;
+import de.dennisguse.opentracks.services.RecordingStatus;
 import de.dennisguse.opentracks.services.TrackDeleteService;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
@@ -74,7 +75,7 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     private TrackRecordedBinding viewBinding;
 
     private Track.Id trackId;
-    private TrackRecordingService.RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
+    private RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
 
@@ -299,7 +300,7 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
         startPostponedEnterTransition();
     }
 
-    private void onRecordingStatusChanged(TrackRecordingService.RecordingStatus status) {
+    private void onRecordingStatusChanged(RecordingStatus status) {
         recordingStatus = status;
     }
 }
