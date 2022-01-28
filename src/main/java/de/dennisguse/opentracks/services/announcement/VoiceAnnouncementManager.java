@@ -61,7 +61,7 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
         PreferencesUtils.registerOnSharedPreferenceChangeListener(this);
     }
 
-    public void restore(@Nullable TrackStatistics trackStatistics) {
+    public void start(@Nullable TrackStatistics trackStatistics) {
         voiceAnnouncement = new VoiceAnnouncement(trackRecordingService);
         voiceAnnouncement.start();
 
@@ -92,22 +92,22 @@ public class VoiceAnnouncementManager implements SharedPreferences.OnSharedPrefe
         }
     }
 
-    public void shutdown() {
+    public void stop() {
         PreferencesUtils.unregisterOnSharedPreferenceChangeListener(this);
         if (voiceAnnouncement != null) {
-            voiceAnnouncement.shutdown();
+            voiceAnnouncement.stop();
             voiceAnnouncement = null;
         }
     }
 
     public void setFrequency(Duration frequency) {
         this.totalTimeFrequency = frequency;
-        restore(this.trackStatistics);
+        start(this.trackStatistics);
     }
 
     public void setFrequency(Distance frequency) {
         this.distanceFrequency = frequency;
-        restore(this.trackStatistics);
+        start(this.trackStatistics);
     }
 
     public void updateNextTaskDistance() {

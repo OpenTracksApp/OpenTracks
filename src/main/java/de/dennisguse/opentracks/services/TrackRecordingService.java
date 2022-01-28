@@ -135,7 +135,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
         egm2008CorrectionManager = null;
         try {
-            voiceAnnouncementManager.shutdown();
+            voiceAnnouncementManager.stop();
         } finally {
             voiceAnnouncementManager = null;
         }
@@ -194,16 +194,13 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         resumeTrack(recordingStatus.getTrackId());
     }
 
-    /**
-     * Common code for starting a new track or resuming a track.
-     */
     private void startRecording() {
         // Update instance variables
         handler.postDelayed(updateRecordingData, RECORDING_DATA_UPDATE_INTERVAL.toMillis());
 
         startSensors();
 
-        voiceAnnouncementManager.restore(trackRecordingManager.getTrackStatistics());
+        voiceAnnouncementManager.start(trackRecordingManager.getTrackStatistics());
     }
 
     public void tryStartSensors() {
@@ -267,7 +264,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             recordingDataObservable.postValue(NOT_RECORDING);
         }
 
-        voiceAnnouncementManager.shutdown();
+        voiceAnnouncementManager.stop();
 
         // Update instance variables
         trackPointCreator.stop();
