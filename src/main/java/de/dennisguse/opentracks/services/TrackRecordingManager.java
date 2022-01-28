@@ -56,8 +56,10 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         PreferencesUtils.unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    Track.Id startNewTrack(TrackPoint segmentStartTrackPoint, ZoneOffset zoneOffset) {
+    Track.Id startNewTrack(TrackPointCreator trackPointCreator) {
+        TrackPoint segmentStartTrackPoint = trackPointCreator.createSegmentStartManual();
         // Create new track
+        ZoneOffset zoneOffset = ZoneOffset.systemDefault().getRules().getOffset(segmentStartTrackPoint.getTime());
         Track track = new Track(zoneOffset);
         trackId = contentProviderUtils.insertTrack(track);
         track.setId(trackId);
@@ -78,7 +80,7 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
     }
 
     //TODO Handle non-existing trackId? Start a new track or exception?
-    void resumeExistingTrack(@NonNull Track.Id resumeTrackId, @NonNull TrackPoint segmentStartTrackPoint) {
+    void resumeExistingTrack(@NonNull Track.Id resumeTrackId, @NonNull TrackPointCreator trackPointCreator) {
         trackId = resumeTrackId;
         Track track = contentProviderUtils.getTrack(trackId);
         if (track == null) {
@@ -87,7 +89,7 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         }
 
         trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics());
-        onNewTrackPoint(segmentStartTrackPoint);
+        onNewTrackPoint(trackPointCreator.createSegmentStartManual());
 
         lastTrackPoint = null;
         lastStoredTrackPoint = null;
