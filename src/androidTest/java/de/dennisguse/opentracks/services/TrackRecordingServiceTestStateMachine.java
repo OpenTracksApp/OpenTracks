@@ -132,7 +132,7 @@ public class TrackRecordingServiceTestStateMachine {
         assertEquals(GpsStatusValue.GPS_ENABLED, service.getGpsStatusObservable().getValue());
 
         // when
-        service.stopSensors(true);
+        service.stopSensorsAndShutdown();
         Thread.sleep(1000);
 
         // then
@@ -252,7 +252,7 @@ public class TrackRecordingServiceTestStateMachine {
         assertEquals(GpsStatusValue.GPS_ENABLED, service.getGpsStatusObservable().getValue());
 
         // when
-        service.stopSensors(false); //TODO Should be ignored as service is recording
+        service.stopSensors(); //TODO Should be ignored as service is recording
         Thread.sleep(1000);
 
         // then

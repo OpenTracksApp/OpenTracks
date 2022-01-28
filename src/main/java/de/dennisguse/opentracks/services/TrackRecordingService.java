@@ -161,24 +161,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         return binder;
     }
 
-    @Deprecated //TODO Should be @VisibleForTesting
-    public boolean isRecording() {
-        return recordingStatus.isRecording();
-    }
-
-    @VisibleForTesting
-    public boolean isPaused() {
-        return recordingStatus.isPaused();
-    }
-
-    public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
-        if (!isRecording() || isPaused()) {
-            return null;
-        }
-
-        return trackRecordingManager.insertMarker(name, category, description, photoUrl);
-    }
-
     public Track.Id startNewTrack() {
         if (isRecording()) {
             Log.w(TAG, "Ignore startNewTrack. Already recording.");
@@ -256,6 +238,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         endRecording(true);
 
         ExportUtils.postWorkoutExport(this, trackId);
+
+        stopSelf();
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
@@ -275,11 +259,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         notificationManager.updateContent(getString(R.string.generic_paused));
     }
 
-    /**
-     * Common code for ending a track or pausing a track.
-     *
-     * @param trackStopped true if track is stopped, false if track is paused
-     */
     private void endRecording(boolean trackStopped) {
         stopUpdateRecordingData();
         if (!trackStopped) {
@@ -293,22 +272,23 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         // Update instance variables
         trackPointCreator.stop();
 
-        stopSensors(trackStopped);
+        stopSensors();
     }
 
     public void stopSensorsAndShutdown() {
-        stopSensors(true);
+        if (isRecording()) {
+            return;
+        }
+        stopSensors();
+        stopSelf();
     }
 
-    void stopSensors(boolean shutdown) {
+    void stopSensors() {
         if (!isRecording()) return;
 
         trackPointCreator.stop();
         showNotification(false);
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
-        if (shutdown) {
-            stopSelf();
-        }
     }
 
     @Override
@@ -344,6 +324,14 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             stopForeground(true);
             notificationManager.cancelNotification();
         }
+    }
+
+    public Marker.Id insertMarker(String name, String category, String description, String photoUrl) {
+        if (!isRecording() || isPaused()) {
+            return null;
+        }
+
+        return trackRecordingManager.insertMarker(name, category, description, photoUrl);
     }
 
     @Deprecated
@@ -408,5 +396,15 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         Log.i(TAG, "new status " + recordingStatus + " -> " + status);
         recordingStatus = status;
         recordingStatusObservable.postValue(recordingStatus);
+    }
+
+    @Deprecated //TODO Should be @VisibleForTesting
+    public boolean isRecording() {
+        return recordingStatus.isRecording();
+    }
+
+    @VisibleForTesting
+    public boolean isPaused() {
+        return recordingStatus.isPaused();
     }
 }
