@@ -65,15 +65,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     private final Binder binder = new Binder();
 
-    // The following variables are set in onCreate:
-    private VoiceAnnouncementManager voiceAnnouncementManager;
-    private TrackRecordingServiceNotificationManager notificationManager;
-
-    private TrackRecordingManager trackRecordingManager;
-
-    private final EGM2008CorrectionManager egm2008CorrectionManager = new EGM2008CorrectionManager();
-
-    private Handler handler;
     private final Runnable updateRecordingData = new Runnable() {
         @Override
         public void run() {
@@ -89,15 +80,23 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
     };
 
-    // The following variables are set when recording:
-    private WakeLock wakeLock;
-
-    private TrackPointCreator trackPointCreator; //TODO Move to TrackRecordingManager?
-
+    // The following variables are set in onCreate:
     private RecordingStatus recordingStatus;
     private MutableLiveData<RecordingStatus> recordingStatusObservable;
     private MutableLiveData<GpsStatusValue> gpsStatusObservable;
     private MutableLiveData<RecordingData> recordingDataObservable;
+
+    // The following variables are set when recording:
+    private WakeLock wakeLock;
+    private Handler handler;
+
+    private TrackPointCreator trackPointCreator;
+    private TrackRecordingManager trackRecordingManager;
+
+    private VoiceAnnouncementManager voiceAnnouncementManager;
+    private TrackRecordingServiceNotificationManager notificationManager;
+
+    private EGM2008CorrectionManager egm2008CorrectionManager;
 
     @Override
     public void onCreate() {
@@ -110,12 +109,12 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         gpsStatusObservable = new MutableLiveData<>(STATUS_GPS_DEFAULT);
         recordingDataObservable = new MutableLiveData<>(NOT_RECORDING);
 
+        egm2008CorrectionManager = new EGM2008CorrectionManager();
         trackRecordingManager = new TrackRecordingManager(this);
         trackRecordingManager.start();
         trackPointCreator = new TrackPointCreator(this);
 
         voiceAnnouncementManager = new VoiceAnnouncementManager(this);
-
         notificationManager = new TrackRecordingServiceNotificationManager(this);
     }
 
@@ -134,6 +133,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         notificationManager.stop();
         notificationManager = null;
 
+        egm2008CorrectionManager = null;
         try {
             voiceAnnouncementManager.shutdown();
         } finally {
