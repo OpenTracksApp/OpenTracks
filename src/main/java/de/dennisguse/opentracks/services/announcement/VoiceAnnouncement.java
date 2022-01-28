@@ -165,11 +165,10 @@ public class VoiceAnnouncement {
 
         boolean isMetricUnits = PreferencesUtils.isMetricUnits();
         boolean isReportSpeed = PreferencesUtils.isReportSpeed(track.getCategory());
-        Distance minGPSDistance = PreferencesUtils.getRecordingDistanceInterval();
 
         //TODO Do not load all trackpoints for every announcement
         TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null);
-        IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.one(isMetricUnits), minGPSDistance);
+        IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.one(isMetricUnits));
         intervalStatistics.addTrackPoints(trackPointIterator);
         IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
 

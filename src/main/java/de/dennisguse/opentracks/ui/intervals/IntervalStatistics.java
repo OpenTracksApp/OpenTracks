@@ -17,16 +17,13 @@ public class IntervalStatistics {
     private TrackStatisticsUpdater trackStatisticsUpdater = new TrackStatisticsUpdater();
     private final List<Interval> intervalList;
     private final Distance distanceInterval;
-    private final Distance minGPSDistance;
     private Interval interval, lastInterval;
 
     /**
      * @param distanceInterval distance of every interval.
-     * @param minGPSDistance   the setting value for GPS distance.
      */
-    public IntervalStatistics(Distance distanceInterval, Distance minGPSDistance) {
+    public IntervalStatistics(Distance distanceInterval) {
         this.distanceInterval = distanceInterval;
-        this.minGPSDistance = minGPSDistance;
 
         interval = new Interval();
         lastInterval = new Interval();

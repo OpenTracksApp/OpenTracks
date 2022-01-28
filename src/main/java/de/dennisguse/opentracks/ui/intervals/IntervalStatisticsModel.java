@@ -22,7 +22,6 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.data.tables.TrackPointsColumns;
-import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * This model is used to load intervals for a track.
@@ -35,7 +34,6 @@ public class IntervalStatisticsModel extends AndroidViewModel {
     private MutableLiveData<List<IntervalStatistics.Interval>> intervalsLiveData;
     private IntervalStatistics intervalStatistics;
     private Distance distanceInterval;
-    private final Distance minGPSDistance;
     private final ContentResolver contentResolver;
     private ContentObserver trackPointsTableObserver;
     private TrackPoint.Id lastTrackPointId;
@@ -46,7 +44,6 @@ public class IntervalStatisticsModel extends AndroidViewModel {
 
     public IntervalStatisticsModel(@NonNull Application application) {
         super(application);
-        minGPSDistance = PreferencesUtils.getRecordingDistanceInterval();
         contentResolver = getApplication().getContentResolver();
         handlerThread = new HandlerThread(TAG);
         handlerThread.start();
@@ -75,7 +72,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
 
             intervalsLiveData = new MutableLiveData<>();
             distanceInterval = interval.getDistance(metricUnits);
-            intervalStatistics = new IntervalStatistics(distanceInterval, minGPSDistance);
+            intervalStatistics = new IntervalStatistics(distanceInterval);
 
             loadIntervalStatistics(trackId);
         }
@@ -114,7 +111,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
 
         lastTrackPointId = null;
         distanceInterval = interval.getDistance(metricUnits);
-        intervalStatistics = new IntervalStatistics(distanceInterval, minGPSDistance);
+        intervalStatistics = new IntervalStatistics(distanceInterval);
         loadIntervalStatistics(trackId);
     }
 

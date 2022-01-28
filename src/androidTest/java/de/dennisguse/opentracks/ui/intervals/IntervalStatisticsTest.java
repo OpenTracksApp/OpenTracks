@@ -149,7 +149,7 @@ public class IntervalStatisticsTest {
     }
 
     private void whenAndThen(Pair<Track.Id, TrackStatistics> trackWithStats, int numberOfPoints, float distanceInterval) {
-        IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.of(distanceInterval), Distance.of(0));
+        IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.of(distanceInterval));
         Track.Id trackId = trackWithStats.first;
         TrackStatistics trackStatistics = trackWithStats.second;
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, null)) {
