@@ -157,9 +157,7 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
         return new Pair<>(currentTrackPoint, sensorDataSet);
     }
 
-    //TODO Limit visibility
-    @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-    public Instant createNow() {
+    Instant createNow() {
         return Instant.now(clock);
     }
 

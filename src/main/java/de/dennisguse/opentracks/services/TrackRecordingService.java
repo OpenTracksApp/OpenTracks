@@ -18,7 +18,6 @@ package de.dennisguse.opentracks.services;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
@@ -31,28 +30,19 @@ import androidx.lifecycle.MutableLiveData;
 import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.data.CustomContentProvider;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
-import de.dennisguse.opentracks.io.file.exporter.ExportServiceResultReceiver;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.announcement.VoiceAnnouncementManager;
 import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
-import de.dennisguse.opentracks.settings.SettingsActivity;
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
 
-/**
- * A background service that registers a location listener and records track points.
- * Track points are saved to the {@link CustomContentProvider}.
- *
- * @author Leif Hendrik Wilden
- */
-public class TrackRecordingService extends Service implements TrackPointCreator.Callback, ExportServiceResultReceiver.Receiver {
+public class TrackRecordingService extends Service implements TrackPointCreator.Callback {
 
     private static final String TAG = TrackRecordingService.class.getSimpleName();
 
@@ -265,7 +255,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
         endRecording(true);
 
-        ExportUtils.postWorkoutExport(this, trackId, new ExportServiceResultReceiver(new Handler(), this));
+        ExportUtils.postWorkoutExport(this, trackId);
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
@@ -418,16 +408,5 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         Log.i(TAG, "new status " + recordingStatus + " -> " + status);
         recordingStatus = status;
         recordingStatusObservable.postValue(recordingStatus);
-    }
-
-    @Override
-    public void onReceiveResult(final int resultCode, final Bundle resultData) {
-        Log.w(TAG, "onReceiveResult: " + resultCode);
-        if (resultCode != ExportServiceResultReceiver.RESULT_CODE_SUCCESS) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            intent.putExtra(SettingsActivity.EXTRAS_CHECK_EXPORT_DIRECTORY, true);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
     }
 }
