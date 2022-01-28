@@ -2,8 +2,10 @@ package de.dennisguse.opentracks.util;
 
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.DocumentsContract;
 import android.util.Log;
 import android.widget.Toast;
@@ -25,12 +27,13 @@ import de.dennisguse.opentracks.io.file.exporter.ExportService;
 import de.dennisguse.opentracks.io.file.exporter.ExportServiceResultReceiver;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.settings.SettingsActivity;
 
 public class ExportUtils {
 
     private static final String TAG = ExportUtils.class.getSimpleName();
 
-    public static void postWorkoutExport(Context context, Track.Id trackId, ExportServiceResultReceiver resultReceiver) {
+    public static void postWorkoutExport(Context context, Track.Id trackId) {
         if (PreferencesUtils.shouldInstantExportAfterWorkout()) {
             TrackFileFormat trackFileFormat = PreferencesUtils.getExportTrackFileFormat();
             DocumentFile directory = IntentUtils.toDocumentFile(context, PreferencesUtils.getDefaultExportDirectoryUri());
@@ -39,6 +42,16 @@ public class ExportUtils {
                 Toast.makeText(context, R.string.export_cannot_write_to_dir, Toast.LENGTH_LONG).show();
                 return;
             }
+
+            ExportServiceResultReceiver resultReceiver = new ExportServiceResultReceiver(new Handler(), new ExportServiceResultReceiver.Receiver() {
+                @Override
+                public void onExportError(Track.Id trackId) {
+                    Intent intent = new Intent(context, SettingsActivity.class);
+                    intent.putExtra(SettingsActivity.EXTRAS_CHECK_EXPORT_DIRECTORY, true);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
+            });
 
             ExportService.enqueue(context, resultReceiver, trackId, trackFileFormat, directory.getUri());
         }

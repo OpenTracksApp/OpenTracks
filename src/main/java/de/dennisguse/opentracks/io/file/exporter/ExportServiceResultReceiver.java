@@ -6,6 +6,8 @@ import android.os.ResultReceiver;
 
 import androidx.annotation.NonNull;
 
+import de.dennisguse.opentracks.data.models.Track;
+
 /**
  * Create a new ResultReceive to receive results.
  * Your {@link #onReceiveResult} method will be called from the thread running <var>handler</var> if given, or from an arbitrary thread if null.
@@ -26,10 +28,22 @@ public class ExportServiceResultReceiver extends ResultReceiver {
 
     @Override
     protected void onReceiveResult(int resultCode, Bundle resultData) {
-        receiver.onReceiveResult(resultCode, resultData);
+        Track.Id trackId = resultData.getParcelable(ExportServiceResultReceiver.RESULT_EXTRA_TRACK_ID);
+        switch (resultCode) {
+            case RESULT_CODE_SUCCESS:
+                receiver.onExportSuccess(trackId);
+            case RESULT_CODE_ERROR:
+                receiver.onExportError(trackId);
+            default:
+                throw new RuntimeException("Unknown resultCode.");
+        }
     }
 
     public interface Receiver {
-        void onReceiveResult(int resultCode, Bundle resultData);
+        default void onExportSuccess(Track.Id trackId) {
+        }
+
+        default void onExportError(Track.Id trackId) {
+        }
     }
 }

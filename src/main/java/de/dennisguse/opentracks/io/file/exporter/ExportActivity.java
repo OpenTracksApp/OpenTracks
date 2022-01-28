@@ -310,33 +310,27 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
             viewBinding.exportProgressAlertIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_dialog_success_24dp));
             viewBinding.exportProgressAlertMsg.setText(getString(R.string.generic_completed));
         }
-
     }
 
     @Override
-    public void onReceiveResult(int resultCode, Bundle resultData) {
-        if (resultData == null) {
-            throw new RuntimeException(TAG + ": onReceiveResult resultData NULL");
-        }
-
-        Track.Id trackId = resultData.getParcelable(ExportServiceResultReceiver.RESULT_EXTRA_TRACK_ID);
+    public void onExportSuccess(Track.Id trackId) {
         Track track = contentProviderUtils.getTrack(trackId);
 
-        switch (resultCode) {
-            case ExportServiceResultReceiver.RESULT_CODE_ERROR:
-                trackExportErrorCount++;
-                trackErrors.add(track.getName());
-                break;
-            case ExportServiceResultReceiver.RESULT_CODE_SUCCESS:
-                if (ExportUtils.isExportFileExists(track.getUuid(), trackFileFormat.getExtension(), directoryFiles)) {
-                    trackExportOverwrittenCount++;
-                } else {
-                    trackExportSuccessCount++;
-                }
-                break;
-            default:
-                throw new RuntimeException(TAG + ": export service result code invalid: " + resultCode);
+        if (ExportUtils.isExportFileExists(track.getUuid(), trackFileFormat.getExtension(), directoryFiles)) {
+            trackExportOverwrittenCount++;
+        } else {
+            trackExportSuccessCount++;
         }
+
+        onExportCompleted(track);
+    }
+
+    @Override
+    public void onExportError(Track.Id trackId) {
+        Track track = contentProviderUtils.getTrack(trackId);
+
+        trackExportErrorCount++;
+        trackErrors.add(track.getName());
 
         onExportCompleted(track);
     }
