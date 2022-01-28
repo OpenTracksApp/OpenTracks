@@ -29,7 +29,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.time.Duration;
-import java.time.ZoneOffset;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.CustomContentProvider;
@@ -172,10 +171,12 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         return binder;
     }
 
+    @Deprecated //TODO Should be @VisibleForTesting
     public boolean isRecording() {
         return recordingStatus.isRecording();
     }
 
+    @VisibleForTesting
     public boolean isPaused() {
         return recordingStatus.isPaused();
     }
@@ -195,9 +196,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
 
         // Set recording status
-        TrackPoint segmentStartManual = trackPointCreator.createSegmentStartManual();
-        ZoneOffset zoneOffset = ZoneOffset.systemDefault().getRules().getOffset(segmentStartManual.getTime());
-        Track.Id trackId = trackRecordingManager.startNewTrack(segmentStartManual, zoneOffset);
+        Track.Id trackId = trackRecordingManager.startNewTrack(trackPointCreator);
         updateRecordingStatus(RecordingStatus.record(trackId));
 
         startRecording();
@@ -206,9 +205,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     public void resumeTrack(Track.Id trackId) {
         trackPointCreator.reset();
-        trackRecordingManager.resumeExistingTrack(trackId, trackPointCreator.createSegmentStartManual());
+        trackRecordingManager.resumeExistingTrack(trackId, trackPointCreator);
 
-        // Set recording status
         updateRecordingStatus(RecordingStatus.record(trackId));
 
         startRecording();
