@@ -14,95 +14,93 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
-    <string name="about_preference_title">Umbes OpenTracks</string>
-    <string name="about_description"><i>OpenTracks</i> on spordi jälgimise rakendus, mis austab täielikult teie privaatsust.</string>
+    <string name="about_preference_title">Teave OpenTracks\'i kohta</string>
+    <string name="about_description"><i>OpenTracks</i> on spordi jälgimise rakendus, mis austab teie privaatsust.</string>
     <string name="about_url">Projekti veebileht: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Versiooni nimi: %1$s</string>
     <string name="about_version_code">Versiooni kood: %1$d</string>
-    <string name="about_history">OpenTracks on <a href="https://code.google.com/archive/p/mytracks/"> <i> Googlei MyTracks </i> </a> kahvel (lõpetatud 2016. aastal).</string>
-    <string name="about_libraries">Raamatukogud</string>
+    <string name="about_history">OpenTracks on <a href="https://code.google.com/archive/p/mytracks/"> <i>Google\'i MyTracks</i> </a> haru (seisatud 2016. aastal).</string>
+    <string name="about_libraries">Teegid</string>
     <!-- Help -->
-    <string name="help_feature_title">OpenTracks sellel on järgmised omadused:</string>
-    <string name="help_feature_content">* loo GPS rajad
-\n* kasutage südame löögisageduse andurit ( ainult Bluetooth LE)
+    <string name="help_feature_title">OpenTracks\'il on järgmised funktsioonid:</string>
+    <string name="help_feature_content">* loo GPS radu
+\n* kasutage pulsi andurit (ainult Bluetooth LE)
 \n* häälteated (aja või vahemaa järgi)
-\n* loo markerid (sh. digikuvat)
-\n* töötab täiesti offline
-\n* näita lugusid kaardil (vt allpool)</string>
-    <string name="help_track_map_title">Kuidas näidata pala kaardil?</string>
+\n* loo asukohapunkte (koos piltidega)
+\n* töötab ilma internetiühenduseta
+\n* näita radu kaardil (vt allapoole)</string>
+    <string name="help_track_map_title">Kuidas näidata rada kaardil\?</string>
     <string name="help_track_map_content"> Kasutage väikest kaardisümbolit.
-\n a) (reaalajas uuendused) Installige <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. See pakub online või offline-kaarte <a href="https://www.openstreetmap.org">OpenStreetMap</a> kaudu.
-\n Tegelikult on OSMDashboard eraldi rakendus, mis saab ainult (ajutiselt) juurdepääsu näidatavate rada(de) andmetele.
-\n b) Tavalise kaardirakenduse kaudu (nt <a href="http://osmand.net/">OsmAnd</a> ja <a href="https://maps.me/">MAPS.ME</a>). Need rakendused peavad toetama KMZ-failiformaati (ainult asukohad ja ajatemplid). Tegelikult peab rakendus toetama <i>ACTION_VIEW</i> koos MIME <i>application/vnd.google-earth.kmz</i>-ga. </string>
-    <string name="help_storage_pictures_title">Kuidas OpenTracks salvestab markeritena tehtud pilte?</string>
-    <string name="help_storage_pictures_content">Neid hoitakse rakenduse sisemises salvestusruumis (st pääseb juurde ainult OpenTracks is).</string>
-    <string name="help_track_export_title">Kuidas saab salvestatud lugusid eksportida / jagada?</string>
-    <string name="help_track_export_content"> Lugusid saab seadetest eksportida KMZ-, KML- või GPX-vormingus. KMZ / KML kõik andmed; Ainult GPX-i asukohad. Radasid, mis on jagatud <i> jagamise ikooni </i> kaudu, jagatakse KMZ-na. </string>
-    <string name="help_data_google_play_services_title">Kas OpenTracks nõuab / kasutab Google Play teenust?</string>
-    <string name="help_recording_title">Kuidas OpenTracks andmeid registreerib?</string>
-    <string name="help_recording_content">
-OpenTracks kasutab seadme GPS-andurit asukoha pidevaks registreerimiseks.
-Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei saa OpenTracks sellega midagi teha.</string>
+\n a) (reaalajas uuendused) Installige <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. See pakub online või offline kaarte <a href="https://www.openstreetmap.org">OpenStreetMap</a> kaudu.
+\n Tegelikult, OSMDashboard on eraldi rakendus, mis saab juurdepääsu (ajutiselt) ainult näidatavate rada(de) andmetele.
+\n b) Tavalise kaardirakenduse kaudu (nt <a href="http://osmand.net/">OsmAnd</a> ja <a href="https://maps.me/">MAPS.ME</a>). Need rakendused peavad toetama KMZ failivormingut (ainult asukohad ja ajatemplid). Tegelikult peab rakendus toetama <i>ACTION_VIEW</i>-d koos MIME <i>application/vnd.google-earth.kmz</i>-ga. </string>
+    <string name="help_storage_pictures_title">Kuidas salvestab OpenTracks asukohapunktitena tehtud pilte\?</string>
+    <string name="help_storage_pictures_content">Neid hoitakse rakenduse sisemises salvestusruumis (st ligipääsetav ainult Opentracks\'i siseselt).</string>
+    <string name="help_track_export_title">Kuidas saab salvestatud radu eksportida/jagada\?</string>
+    <string name="help_track_export_content"> Radu saab seadetest eksportida KMZ-, KML- või GPX-vormingus. KMZ/KML kõik andmed; GPX ainult asukohad. Radasid, mis on jagatud <i>jagamise ikooni</i> kaudu, jagatakse KMZ-na. </string>
+    <string name="help_data_google_play_services_title">Kas OpenTracks nõuab/kasutab Google Play teenust\?</string>
+    <string name="help_recording_title">Kuidas salvestab OpenTracks andmeid\?</string>
+    <string name="help_recording_content">OpenTracks kasutab seadme GPS-andurit pidevalt asukoha salvestamiseks. Kui GPS-seade tagastab ebatäpseid andmeid (nt asukoht, kiirus, tõus), ei saa OpenTracks sellega midagi teha.</string>
     <string name="help_data_storage_title">Kuidas OpenTracks sensori andmeid salvestab?</string>
-    <string name="help_data_storage_content"> Anduri andmed salvestatakse salvestatud asukoha kohta. Südame löögisageduse anduri puhul tähendab see, et asukoha kohta salvestatakse ainult <i>üks</i> südame löögisageduse mõõtmine. Kui seisate paigal või siseruumides, siis anduri andmeid ei registreerita (kuid need näidatakse). </string>
+    <string name="help_data_storage_content"> Sensori andmed salvestatakse iga asukoha kohta. Pulsi anduri puhul tähendab see, et iga asukoha kohta salvestatakse ainult <i>üks</i> pulsi mõõtmine. Kui seisate paigal või siseruumides, siis anduri andmeid ei salvestata (kuid neid näidatakse). </string>
     <string name="help_gps_troubleshooting_title">OpenTracks ei salvesta asukohti?</string>
     <string name="help_gps_troubleshooting_content"> Mida saate teha:
-\na) kontrollige, kas GPS on lubatud,
-\nb) parandada GPS vastuvõtt (NT minna õues),
-\nc) kontrollige <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid /">GPSTest</a> app ja
-\nd) keelata energiasäästu.
+\n a) kontrollige, kas GPS on sisse lülitatud,
+\n b) paranda GPS-i vastuvõttu (nt minge õue),
+\n c) testige <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> rakendusega ja
+\n d) lülita energiasäästu režiim välja.
 \n
-\nKui kõik ei aita, palun teatage veast. </string>
-    <string name="help_support_title">Kuidas OpenTracks it toetada?</string>
-    <string name="help_support_content"> Saate:
-\n a) levitada OpenTracks\'i kohta sõna,
+\n Kui mitte midagi ei aita, palun teatage meid veast. </string>
+    <string name="help_support_title">Kuidas ma saan OpenTracks\'i toetada\?</string>
+    <string name="help_support_content"> Te saate:
+\n a) levitada sõna OpenTracks\'i kohta,
 \n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">ettepanekuid teha</a>,
-\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">raportida vigadest</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">teatada vigadest</a>,
 \n d) aidata tarkvara arendamisel,
-\n e) osta <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store\'is</a>,
+\n e) osta rakendus <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play poest</a>,
 \n f) annetada ja
-\n g) teha kõike, mis teie arvates aitab OpenTracks\'ile kaasa. </string>
+\n g) teha midagi, mis teie arvates aitaks OpenTracks\'i. </string>
     <!-- Activity Type -->
     <string name="activity_type_airplane">lennuk</string>
     <string name="activity_type_atv">ATV</string>
-    <string name="activity_type_biking">rattasõit</string>
-    <string name="activity_type_blimp">lennumudelism</string>
+    <string name="activity_type_biking">jalgrattasõit</string>
+    <string name="activity_type_blimp">õhulaev</string>
     <string name="activity_type_boat">paat</string>
     <string name="activity_type_climbing">mägironimine</string>
     <string name="activity_type_commercial_airplane">kaubalennuk</string>
     <string name="activity_type_cross_country_skiing">murdmaasuusatamine</string>
-    <string name="activity_type_cycling">rattasõit</string>
+    <string name="activity_type_cycling">jalgrattasõit</string>
     <string name="activity_type_dirt_bike">krossiratas</string>
     <string name="activity_type_donkey_back_riding">eesliga ratsutamine</string>
     <string name="activity_type_driving">autosõit</string>
     <string name="activity_type_driving_bus">bussisõit</string>
     <string name="activity_type_driving_car">autoga sõitmine</string>
     <string name="activity_type_ferry">praam</string>
-    <string name="activity_type_frisbee">taldriku lennutamine</string>
+    <string name="activity_type_frisbee">frisbi</string>
     <string name="activity_type_gliding">purilend</string>
-    <string name="activity_type_hang_gliding">deltaplanerism</string>
+    <string name="activity_type_hang_gliding">deltaplaan</string>
     <string name="activity_type_helicopter">helikopter</string>
     <string name="activity_type_hiking">matkamine</string>
     <string name="activity_type_horse_back_riding">hobusega ratsutamine</string>
     <string name="activity_type_hot_air_balloon">kuumaõhupall</string>
     <string name="activity_type_ice_sailing">jääpurjetamine</string>
     <string name="activity_type_inline_skating">rulluisutamine</string>
-    <string name="activity_type_kayaking">süstasõit</string>
+    <string name="activity_type_kayaking">kajakisõit</string>
     <string name="activity_type_kite_surfing">lohesurf</string>
     <string name="activity_type_land_sailing">maapurjetamine</string>
-    <string name="activity_type_mixed_type">segatüüpi</string>
+    <string name="activity_type_mixed_type">segatüüp</string>
     <string name="activity_type_motor_bike">mootorratas</string>
     <string name="activity_type_motor_boating">mootorpaadiga sõitmine</string>
     <string name="activity_type_mountain_biking">mägirattasõit</string>
     <string name="activity_type_off_trail_hiking">maastikul matkamine</string>
     <string name="activity_type_other">muu</string>
     <string name="activity_type_paddling">sõudmine</string>
-    <string name="activity_type_para_gliding">liuglangevarjusõit</string>
-    <string name="activity_type_rc_airplane">mudellennuk</string>
-    <string name="activity_type_rc_boat">Paadimudel</string>
-    <string name="activity_type_rc_helicopter">mudelhelikopter</string>
+    <string name="activity_type_para_gliding">motovarjuga lendamine</string>
+    <string name="activity_type_rc_airplane">kaugjuhitav lennuk</string>
+    <string name="activity_type_rc_boat">kaugjuhitav paat</string>
+    <string name="activity_type_rc_helicopter">kaugjuhitav helikopter</string>
     <string name="activity_type_riding">ratsutamine</string>
-    <string name="activity_type_road_biking">jalgrattasõit maanteel</string>
+    <string name="activity_type_road_biking">maanteerattasõit</string>
     <string name="activity_type_roller_skiing">rullsuusatamine</string>
     <string name="activity_type_rowing">sõudmine</string>
     <string name="activity_type_running">jooksmine</string>
@@ -111,53 +109,53 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="activity_type_skate_boarding">rulasõit</string>
     <string name="activity_type_skating">uisutamine</string>
     <string name="activity_type_skiing">suusatamine</string>
-    <string name="activity_type_sky_jumping">langevarjuhüpped</string>
+    <string name="activity_type_sky_jumping">langevarjuhüppamine</string>
     <string name="activity_type_sled">kelk</string>
     <string name="activity_type_snow_boarding">lumelauasõit</string>
-    <string name="activity_type_snow_shoeing">lumeräätsadega sõitmine</string>
+    <string name="activity_type_snow_shoeing">lumeräätsadega matkamine</string>
     <string name="activity_type_speed_walking">kiirkõnd</string>
-    <string name="activity_type_street_running">linnajooks</string>
+    <string name="activity_type_street_running">linnas jooksmine</string>
     <string name="activity_type_surfing">surfamine</string>
     <string name="activity_type_track_cycling">trekisõit</string>
     <string name="activity_type_track_running">staadionijooks</string>
     <string name="activity_type_trail_hiking">matkarajal matkamine</string>
     <string name="activity_type_trail_running">maastikujooks</string>
     <string name="activity_type_train">rong</string>
-    <string name="activity_type_ultimate_frisbee">ülim frisbee</string>
+    <string name="activity_type_ultimate_frisbee">ülim frisbi</string>
     <string name="activity_type_unknown">tundmatu</string>
     <string name="activity_type_wakeboarding">veelauaga sõitmine</string>
-    <string name="activity_type_walking">kõndimine</string>
+    <string name="activity_type_walking">jalutamine</string>
     <string name="activity_type_water_skiing">veesuusatamine</string>
     <string name="activity_type_wind_surfing">purilauasõit</string>
     <!-- Description -->
     <string name="description_activity_type">Tegevuse tüüp: %1$s</string>
-    <string name="description_average_moving_pace_in_minute">Keskmine liikumiskiirus: %1$s min/km (%2$s min/mi)</string>
+    <string name="description_average_moving_pace_in_minute">Keskmine liikumis tempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_moving_speed">Keskmine liikumiskiirus: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_average_pace_in_minute">Keskmine kiirus: %1$s min/km (%2$s min/mi)</string>
+    <string name="description_average_pace_in_minute">Keskmine tempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_speed">Keskmine kiirus: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_altitude_gain">Saavutatud kõrgus: %1$d m ( %2$d jalga)</string>
-    <string name="description_altitude_imperial">Kõrgus (jalga)</string>
-    <string name="description_altitude_metric">Kõrgus (m)</string>
-    <string name="description_fastest_pace_in_minute">Kõrgeim tempo: %1$s min/km (%2$s min/mi)</string>
-    <string name="description_max_altitude">Max kõrgus: %1$d m (%2$d jalga)</string>
+    <string name="description_altitude_gain">Kõrguse kasv: %1$d m ( %2$d jalga)</string>
+    <string name="description_altitude_imperial">Tõus (jalga)</string>
+    <string name="description_altitude_metric">Tõus (m)</string>
+    <string name="description_fastest_pace_in_minute">Kiireim tempo: %1$s min/km (%2$s min/mi)</string>
+    <string name="description_max_altitude">Max tõus: %1$d m (%2$d jalga)</string>
     <string name="description_max_speed">Max kiirus: %1$.2f km/h (%2$.1f mi/h)</string>
-    <string name="description_min_altitude">Min kõrgus: %1$d m ( %2$d jalga)</string>
+    <string name="description_min_altitude">Min tõus: %1$d m ( %2$d jalga)</string>
     <string name="description_moving_time">Liikumisaeg: %1$s</string>
     <string name="description_pace_imperial">Tempo (min/mi)</string>
     <string name="description_pace_metric">Tempo (min/km)</string>
     <string name="description_recorded_time">Salvestatud: %1$s</string>
     <string name="description_speed_ms">Kiirus (m/s)</string>
     <string name="description_sensor_cadence">Rütm (p/min)</string>
-    <string name="description_sensor_heart_rate">Pulsisagedus (l/min)</string>
+    <string name="description_sensor_heart_rate">Pulsisagedus (lööki minutis)</string>
     <string name="description_sensor_power">Võimsus (W)</string>
     <string name="description_default_speed_or_pace">Tegevuse tüübi järgi</string>
     <string name="description_speed_imperial">Kiirus (mi/h)</string>
     <string name="description_speed_metric">Kiirus (km/h)</string>
     <string name="description_time">Aeg</string>
     <string name="description_total_distance">Kogupikkus: %1$.2f km (%2$.1f mi)</string>
-    <string name="description_total_time">Koguaeg: %1$s</string>
+    <string name="description_total_time">Aeg kokku: %1$s</string>
     <!-- Export -->
-    <string name="export_with_photos">fotodega</string>
+    <string name="export_with_photos">koos fotodega</string>
     <string name="export_without_photos">ilma fotodeta</string>
     <string name="export_progress_message">Eksportimine kataloogi %1$s…</string>
     <!-- External Storage -->
@@ -178,42 +176,42 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="gps_wait_for_signal">Oodatakse GPS-signaali</string>
     <!-- Image -->
     <string name="image_arrow">Nool</string>
-    <string name="image_marker">Mark</string>
-    <string name="image_marker_count">Markerite arv</string>
+    <string name="image_marker">Märgis</string>
+    <string name="image_marker_count">Märgistuste arv</string>
     <string name="image_pause">Peata</string>
-    <string name="image_photo_marker">Fotomarker</string>
+    <string name="image_photo_marker">Fotomärgis</string>
     <string name="image_record">Salvesta</string>
     <string name="image_stop">Peata</string>
     <string name="image_track">Rada</string>
     <!-- Import -->
     <string name="import_progress_message">Importimine kataloogist %1$s…</string>
     <!-- Marker -->
-    <string name="marker_add_error">Ei saa markerit lisada. GPS-signaal puudub. Proovige uuesti.</string>
-    <string name="marker_add_success">Marker lisati</string>
-    <string name="marker_add_canceled">Tühistatud, markerit ei lisatud</string>
-    <string name="marker_add_photo_canceled">Tühistatud, fotomarkerit pole lisatud</string>
-    <string name="marker_delete_one_confirm_message">Marker kustutatakse seadmest jäädavalt</string>
-    <string name="marker_delete_one_confirm_title">Kas kustutada marker?</string>
-    <string name="marker_delete_multiple_confirm_message">Valitud markerid kustutatakse seadmest jäädavalt</string>
-    <string name="marker_name_format">Mark %1$d</string>
+    <string name="marker_add_error">Ei saa märgist lisada. GPS-signaal puudub. Proovige uuesti.</string>
+    <string name="marker_add_success">Märgis lisati</string>
+    <string name="marker_add_canceled">Tühistatud, märgist ei lisatud</string>
+    <string name="marker_add_photo_canceled">Tühistatud, fotomärgist ei lisatud</string>
+    <string name="marker_delete_one_confirm_message">Märgis kustutatakse seadmest jäädavalt</string>
+    <string name="marker_delete_one_confirm_title">Kas kustutada märgis\?</string>
+    <string name="marker_delete_multiple_confirm_message">Valitud märgis kustutatakse seadmest jäädavalt</string>
+    <string name="marker_name_format">Märgis %1$d</string>
     <string name="marker_title">%1$d/%2$d</string>
     <!-- Marker Detail -->
     <!-- Marker Edit -->
-    <string name="marker_edit_marker_type">Markeri tüüp (nt juga)</string>
-    <string name="marker_edit_marker_type_hint">Markeri tüüp</string>
+    <string name="marker_edit_marker_type">Märgise tüüp (nt juga)</string>
+    <string name="marker_edit_marker_type_hint">Märgise tüüp</string>
     <!-- Marker List -->
-    <string name="marker_list_empty_message">Teil ei ole markereid</string>
+    <string name="marker_list_empty_message">Teil ei ole märgiseid</string>
     <!-- Menu -->
-    <string name="menu_aggregated_statistics">Agreg.statistika</string>
+    <string name="menu_aggregated_statistics">Agregeeritud statistika</string>
     <string name="menu_delete">Kustuta</string>
     <string name="menu_edit">Muuda</string>
     <string name="menu_export_all">Ekspordi kõik</string>
     <string name="menu_help">Abi</string>
     <string name="menu_import_all">Impordi kõik</string>
-    <string name="menu_insert_marker">Lisa marker</string>
+    <string name="menu_insert_marker">Lisa märgis</string>
     <string name="menu_insert_photo">Foto lisamine</string>
     <string name="menu_insert_gallery_img">Sisestage galerii pilt</string>
-    <string name="menu_markers">Markerid</string>
+    <string name="menu_markers">Märgised</string>
     <string name="menu_search">Otsing</string>
     <string name="menu_select_all">Vali kõik</string>
     <string name="menu_settings">Seaded</string>
@@ -221,7 +219,7 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="menu_show_on_map">Kuva kaardil</string>
     <string name="menu_start_gps">Käivita GPS</string>
     <string name="menu_stop_gps">Peata GPS</string>
-    <string name="menu_resume_track">Jätka pala</string>
+    <string name="menu_resume_track">Jätka rada</string>
     <!-- OpenTracks -->
     <string name="recording_service">Salvestamisteenus</string>
     <!-- Permission -->
@@ -230,12 +228,12 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <!-- Sensor State -->
     <string name="sensor_state_battery">Aku tase</string>
     <string name="sensor_state_cadence">Rütm</string>
-    <string name="sensor_state_cadence_value">%1$d p/min</string>
+    <string name="sensor_state_cadence_value">%1$d p/min (pööret minutis)</string>
     <string name="sensor_state_heart_rate">Pulsisagedus</string>
     <string name="sensor_state_heart_rate_value">%1$d lööki minutis</string>
     <string name="sensor_state_power">Võimsus</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="sensor_could_not_scan">Bluetooth-seadmeid ei õnnestunud skannida (tõrge %1$i).</string>
+    <string name="sensor_could_not_scan">Bluetooth seadmeid ei õnnestunud skannida (tõrge %1$i).</string>
     <string name="bluetooth_disabled">Lubage Bluetooth.</string>
     <string name="settings_not_while_recording">Raja salvestamise ajal ei ole kättesaadav</string>
     <string name="settings_show">Kuva</string>
@@ -430,24 +428,24 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="share_image_subject">Tahaksin teiega pilti jagada</string>
     <string name="share_image_body">Ma arvan, et see pilt võiks teid huvitada.</string>
     <string name="open_track_as_trackfileformat">Ava kui %1$s</string>
-    <string name="activity_type_escooter">eskuuter</string>
-    <string name="open_track_as_GPX">Avatud kui GPX</string>
-    <string name="open_track_as_KML">Avatud kui KML</string>
-    <string name="description_altitude_loss">Kõrguse kadu: %1$d m (%2$d ft)</string>
-    <string name="export_all_do_it_for_all">tehke seda kõigi konfliktide jaoks</string>
+    <string name="activity_type_escooter">elektritõukeratas</string>
+    <string name="open_track_as_GPX">Ava kui GPX</string>
+    <string name="open_track_as_KML">Ava kui KML</string>
+    <string name="description_altitude_loss">Kõrguse langus: %1$d m (%2$d jalga)</string>
+    <string name="export_all_do_it_for_all">tehke seda iga konfilkti puhul</string>
     <string name="export_error_post_workout">Treeningujärgne eksport nurjus, palun kontrolli ekspordikataloogi.</string>
-    <string name="import_thread_interrupted">Teema katkestatud</string>
+    <string name="import_thread_interrupted">Lõim katkestatud</string>
     <string name="import_parser_error">Parseri viga: %1$s</string>
     <string name="import_unable_to_import_file">Faili importimine nurjus: %1$s</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Lõpetatud ühe veaga</item>
-        <item quantity="other">Lõpetatud %1$d vigadega</item>
+        <item quantity="other">Lõpetatud %1$d veaga</item>
     </plurals>
     <string name="gps_fixed_and_ready">GPS fikseeritud ja valmis</string>
-    <string name="import_prevent_reimport">Olete määranud vältida re-import track</string>
-    <string name="generic_overwrite">Ülekirjutamine</string>
-    <string name="export_progress_summary_overwrite_msg">Ülekirjutatud lood</string>
-    <string name="export_track_errors">Palasid ei ekspordita</string>
+    <string name="import_prevent_reimport">Olete määranud vältida raja re-importimist</string>
+    <string name="generic_overwrite">Kirjuta üle</string>
+    <string name="export_progress_summary_overwrite_msg">Ülekirjutatud rajad</string>
+    <string name="export_track_errors">Eksportimata rajad</string>
     <string name="export_track_already_exists_msg">Rada %1$s on sihtkataloogis juba olemas.</string>
     <string name="aggregated_stats_empty_message">Salvestage oma esimene pala, et näha koondatud statistikat</string>
     <string name="voice_pace_lap">Ringiaeg %1$s</string>
@@ -459,7 +457,7 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="settings_recording_fullscreen_on_while_recording_summary">Salvestamise ajal esitada täisekraanil.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Täisekraan</string>
     <string name="settings_default_trackfileformat">Failivormingu eksport/jagamine</string>
-    <string name="sensor_state_power_avg">Avg Võimsus</string>
+    <string name="sensor_state_power_avg">Keskmine Võimsus</string>
     <string name="sensor_state_heart_rate_max">Maksimaalne pulss</string>
     <string name="sensor_state_heart_rate_avg">Keskmine pulsisagedus</string>
     <string name="sensor_state_cadence_max">Max kadentsus</string>
@@ -476,23 +474,23 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="settings_default_export_uri_title">Track ekspordi kataloog</string>
     <string name="instant_export_enabled_title">Vahetu treeningujärgne eksport</string>
     <string name="export_progress_summary_errors_msg">Viga</string>
-    <string name="export_progress_summary_skip_msg">Palad vahele</string>
-    <string name="export_progress_summary_new_msg">Uued palad eksporditud</string>
+    <string name="export_progress_summary_skip_msg">Vahele jäetud rajad</string>
+    <string name="export_progress_summary_new_msg">Uued rajad eksporditud</string>
     <string name="generic_open_track">Avatud rada</string>
-    <string name="generic_completed">Lõpetanud</string>
-    <string name="generic_click_twice_cancel">Tühistamiseks klõpsake uuesti</string>
+    <string name="generic_completed">Lõpetatud</string>
+    <string name="generic_click_twice_cancel">Tühistamiseks vajutage uuesti tagasi</string>
     <string name="gps_disabled_msg">GPS keelatud</string>
     <string name="import_unsupported_format">Toetamata failivorming</string>
-    <string name="import_no_kml_file_found">Ei, doktor.KMZ-is leitud KML fail</string>
+    <string name="import_no_kml_file_found">doc.kml faili ei leitud KMZ-st</string>
     <string name="import_error_info">%1$s: %2$s</string>
-    <string name="import_error_list_dialog_title">Failid, mida ei impordita</string>
+    <string name="import_error_list_dialog_title">Faile pole imporditud</string>
     <string name="import_file_imported">Fail %1$s imporditud</string>
     <string name="import_progress_summary_ok_msg">Imporditud failid</string>
     <string name="import_progress_summary_exists_msg">Juba olemas</string>
-    <string name="generic_show_errors">Vigade Näitamine</string>
+    <string name="generic_show_errors">Näita vigu</string>
     <string name="generic_separator_done_total">/</string>
-    <string name="generic_skip">Jäta</string>
-    <string name="import_progress_summary_errors_msg">Viga</string>
+    <string name="generic_skip">Jäta vahele</string>
+    <string name="import_progress_summary_errors_msg">Vead</string>
     <string name="track_distance_notification">Kaugus: %1$s</string>
     <string name="track_speed_notification">Kiirus: %1$s</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
@@ -512,17 +510,17 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="description_speed_source_gps">GPS</string>
     <string name="settings_cycling_sensor">Jalgrattasõit</string>
     <string name="settings_import_section">Import</string>
-    <string name="permission_bluetooth_failed">OpenTracks nõuab luba kasutada Bluetooth.</string>
-    <string name="permission_bluetooth_failed_rejected">Peate käsitsi andma Opentrackidele juurdepääsu lähedalasuvatele seadmetele süsteemi seadetes.</string>
+    <string name="permission_bluetooth_failed">OpenTracks vajab Bluetooth-i kasutamiseks luba.</string>
+    <string name="permission_bluetooth_failed_rejected">Peate Opentracks\'ile süsteemiseadetes andma käsitsi loa lähedalasuvatele seadmetele.</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="location_coordinate">%1$s°</string>
     <string name="field_set_primary">Esmane</string>
     <string name="generic_choose_an_option">Valige suvand</string>
     <string name="settings_layout_reset_done">Kõik paigutusseaded on muudetud vaikeväärtusteks</string>
     <string name="settings_all_reset">Lähtestage</string>
-    <string name="settings_defaults_title">Vaikeühikud ja tegevus</string>
-    <string name="settings_defaults_summary">Eelistatud Üksused, Vaiketegevus, Raja Vaikenimi</string>
-    <string name="settings_ui_title">kasutajaliides</string>
+    <string name="settings_defaults_title">Vaikeühikud ja -tegevused</string>
+    <string name="settings_defaults_summary">Eelistatud Ühikud, Vaiketegevused, Raja Vaikenimi</string>
+    <string name="settings_ui_title">Kasutajaliides</string>
     <string name="settings_ui_summary">Välimus, Salvestamise Paigutus, Teema</string>
     <string name="settings_gps_summary">Ajavahemik, vahemaa intervall, maksimaalne kaugus, täpsus</string>
     <string name="settings_sensors_title">Bluetooth Andurid</string>
@@ -533,7 +531,7 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="settings_import_export_title">Import/Eksport</string>
     <string name="settings_gps_title">GPS</string>
     <string name="settings_open_tracks_summary">Kõik OpenTracks Projekti Kohta</string>
-    <string name="settings_open_tracks_title">Avatud Rajad</string>
+    <string name="settings_open_tracks_title">OpenTracks</string>
     <string name="settings_reset_summary">Lähtestage Seaded vaikeväärtustele</string>
     <string name="settings_recording_customize_layout_title">Kohandage oma salvestuspaigutust</string>
     <string name="settings_recording_customize_layout_select_columns">Andmeväljad rea kohta</string>
@@ -557,22 +555,22 @@ Kui GPS-seade teatab ebatäpsetest andmetest (nt asukoht, kiirus, kõrgus), ei s
     <string name="settings_running_sensor">Töötama</string>
     <string name="settings_generic_sensor">Geneeriline</string>
     <string name="custom_layout_list_layout_removed">Paigutus eemaldati</string>
-    <string name="menu_add_custom_layout">Uus kujundus</string>
-    <string name="generic_undo">Tagasi</string>
+    <string name="menu_add_custom_layout">Uus paigutus</string>
+    <string name="generic_undo">Võta tagasi</string>
     <string name="menu_select_layout">Valige paigutus</string>
     <string name="stats_custom_layout_default_layout">Vaikimisi paigutus</string>
     <string name="custom_layout_select_layout">Valige paigutus</string>
     <string name="custom_layout_list_edit_already_exists">Paigutuse nimi on juba olemas</string>
     <string name="custom_layout_list_edit_name">Sisestage paigutuse nimi, et lisada</string>
     <string name="custom_layout_list_title">Plaanid</string>
-    <string name="generic_filter">Filtri</string>
+    <string name="generic_filter">Filtreeri</string>
     <string name="generic_from">Alates</string>
-    <string name="generic_to">Et</string>
-    <string name="menu_filter">Filtri</string>
+    <string name="generic_to">Kuni</string>
+    <string name="menu_filter">Filtreeri</string>
     <string name="settings_sensor_bluetooth_service_filter_enabled">Näitab ainult neid Bluetooth-seadmeid, mis teatavad nõutavatest teenustest</string>
     <string name="aggregated_stats_filter_no_results">Määratud filtri jaoks ei ole tegevusi</string>
     <string name="generic_today">Täna</string>
-    <string name="export_dir_not_writable">" (mitte kirjutatav!)"</string>
+    <string name="export_dir_not_writable">" (pole kirjutatav!)"</string>
     <string name="export_cannot_write_to_dir">Ei saa kirjutada ekspordikataloogi.</string>
     <string name="generic_yesterday">Eile</string>
 </resources>
