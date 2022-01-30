@@ -284,10 +284,10 @@ limitations under the License.
     <string name="settings_stats_units_metric">Metrijärjestelmä (km, m)</string>
     <string name="settings_stats_units_title">Halutut yksiköt</string>
     <!-- Share Track -->
-    <string name="share_track_share_file_body">Luulen, että saatat olla kiinnostunut tästä kappaleesta.
+    <string name="share_track_share_file_body">Luulen, että saatat olla kiinnostunut tästä reitistä.
 \n
 \n%1$s</string>
-    <string name="share_track_subject">Haluaisin jakaa kappaleen kanssasi</string>
+    <string name="share_track_subject">Haluaisin jakaa reitin kanssasi</string>
     <!-- Stats -->
     <string name="stats_average_moving_pace">Keskim. liikkumisvauhti</string>
     <string name="stats_average_moving_speed">Keskim. liikkumisnopeus</string>
@@ -330,7 +330,7 @@ limitations under the License.
     <string name="unit_kilometer_per_hour">km/h</string>
     <string name="unit_meter">m</string>
     <string name="unit_mile">mailia</string>
-    <string name="unit_mile_per_hour">km/h</string>
+    <string name="unit_mile_per_hour">mailia/h</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/maili</string>
     <!-- Value -->
@@ -447,18 +447,18 @@ limitations under the License.
     <string name="gps_fixed_and_ready">GPS kiinteä ja valmis</string>
     <string name="import_no_kml_file_found">Ei doc.KML tiedosto löytyy KMZ</string>
     <string name="settings_default_export_uri_title">Seuraa vientihakemistoa</string>
-    <string name="instant_export_enabled_summary">Vie raita varastoon tallennuksen jälkeen on valmis</string>
+    <string name="instant_export_enabled_summary">Vie reitti tiedostoon tallennuksen loputtua</string>
     <string name="voice_speed_lap">Kierrosnopeus %1$s</string>
     <string name="settings_sensor_wheel_circumference">Pyörän ympärysmitta (mm)</string>
     <string name="import_thread_interrupted">Lanka keskeytetty</string>
     <string name="import_unsupported_format">Tukematon tiedostomuoto</string>
-    <string name="settings_prevent_reimport_tracks_title">Estä kappaleiden uudelleen tuonti</string>
+    <string name="settings_prevent_reimport_tracks_title">Estä reittien uudelleen tuonti</string>
     <string name="import_parser_error">Jäsentimen virhe: %1$s</string>
     <string name="import_unable_to_import_file">Tiedostoa ei voi tuoda: %1$s</string>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="import_error_list_dialog_title">Tiedostoja ei tuotu</string>
     <string name="import_file_imported">Tiedosto %1$s tuotu</string>
-    <string name="import_prevent_reimport">Olet asettanut Estä uudelleen tuonti raita</string>
+    <string name="import_prevent_reimport">Olet estänyt reitin uudelleentuonnin</string>
     <string name="import_progress_summary_ok_msg">Tuodut tiedostot</string>
     <string name="import_progress_summary_exists_msg">Jo olemassa</string>
     <string name="import_progress_summary_errors_msg">Virhe</string>
@@ -466,21 +466,21 @@ limitations under the License.
     <string name="settings_recording_fullscreen_on_while_recording_title">Kokoruutu</string>
     <string name="interval_list_empty_message">Ei ole mitään intervallia vielä</string>
     <string name="export_error_post_workout">Treenin jälkeinen vienti epäonnistui, tarkista vientihakemisto.</string>
-    <string name="export_progress_summary_overwrite_msg">Kappaleet ylikirjoitettu</string>
+    <string name="export_progress_summary_overwrite_msg">Reitit ylikirjoitettu</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Valmista yhdellä virheellä</item>
         <item quantity="other">Valmista %1$d virheellä</item>
     </plurals>
-    <string name="export_track_already_exists_msg">Kappale %1$s on jo olemassa kohdehakemistossa.</string>
+    <string name="export_track_already_exists_msg">Reitti %1$s on jo olemassa kohdehakemistossa.</string>
     <string name="export_all_do_it_for_all">tee se kaikkien konfliktien vuoksi</string>
-    <string name="export_track_errors">Kappaleita ei viety</string>
+    <string name="export_track_errors">Reittejä ei viety</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Tallennuksen aikana, läsnä koko näytön.</string>
     <string name="settings_night_mode_title">UI-teema</string>
     <string name="settings_night_mode_option_system">Järjestelmä</string>
     <string name="settings_night_mode_option_day">Päivä</string>
     <string name="settings_night_mode_option_night">Yö</string>
-    <string name="export_progress_summary_new_msg">Uusia kappaleita viety</string>
-    <string name="export_progress_summary_skip_msg">Kappaleet ohitettu</string>
+    <string name="export_progress_summary_new_msg">Uusia reittejä viety</string>
+    <string name="export_progress_summary_skip_msg">Reitit ohitettu</string>
     <string name="export_progress_summary_errors_msg">Virhe</string>
     <string name="generic_overwrite">Korvaa</string>
     <string name="generic_skip">Ohita</string>
@@ -503,7 +503,7 @@ limitations under the License.
     <string name="delete_service">Poistopalvelu</string>
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="menu_voice_rate">Äänen nopeus</string>
-    <string name="track_delete_not_recording">Tätä raitaa ei voi poistaa, koska se on parhaillaan tallennettuna.</string>
+    <string name="track_delete_not_recording">Tätä reittiä ei voi poistaa koska sitä tallennetaan parhaillaan.</string>
     <string name="settings_sensor_cycling_cadence">Pyöräily: tahtiaika</string>
     <string name="settings_sensor_cycling_distance_speed">Pyöräily: etäisyys ja nopeus</string>
     <string name="settings_sensor_running_speed_and_cadence">Juoksu: etäisyys, nopeus ja askeltiheys</string>
@@ -515,4 +515,47 @@ limitations under the License.
     <string name="description_speed_source_gps">GPS</string>
     <string name="generic_choose_an_option">Valitse vaihtoehto</string>
     <string name="generic_undo">Kumoa</string>
+    <string name="menu_select_layout">Valitse asettelu</string>
+    <string name="settings_announcements_totaltime_frequency">Aikaväli</string>
+    <string name="settings_public_api_enabled_summary_on">Muut sovellukset voivat aloittaa tai lopettaa tallennuksen.</string>
+    <string name="field_set_primary">Ensisijainen</string>
+    <string name="generic_today">Tänään</string>
+    <string name="field_set_secondary">Toissijainen</string>
+    <string name="field_remove_from_layout">Poista</string>
+    <string name="menu_add_custom_layout">Uusi asettelu</string>
+    <string name="settings_ui_summary">Ulkonäkö, asettelu, teema</string>
+    <string name="settings_gps_title">GPS</string>
+    <string name="settings_sensors_title">Bluetooth-anturit</string>
+    <string name="settings_import_export_title">Tuonti/Vienti</string>
+    <string name="custom_layout_list_edit_name">Nimeä luotava asettelu</string>
+    <string name="custom_layout_list_edit_already_exists">Samanniminen asettelu on jo olemassa</string>
+    <string name="custom_layout_list_layout_removed">Asettelu poistettu</string>
+    <string name="custom_layout_select_layout">Valitse asettelu</string>
+    <string name="stats_custom_layout_default_layout">Oletusasettelu</string>
+    <string name="settings_layout_reset">Poista omat asettelut</string>
+    <string name="settings_layout_reset_confirm_message">Kaikki asettelut palautetaan oletusasetuksiinsa. Yhtäkään tallennettua reittiä ei poisteta.</string>
+    <string name="settings_layout_reset_confirm_title">Poistetaanko asettelut\?</string>
+    <string name="settings_layout_reset_done">Kaikki asetteluasetukset palautettu oletuksiinsa</string>
+    <string name="settings_all_reset">Tehdasasetukset</string>
+    <string name="settings_cycling_sensor">Pyöräily</string>
+    <string name="settings_generic_sensor">Yleinen</string>
+    <string name="permission_bluetooth_failed">OpenTracks tarvitsee luvan käyttääkseen Bluetoothia.</string>
+    <string name="location_coordinate">%1$s°</string>
+    <string name="location_latitude_longitude">%1$s, %2$s</string>
+    <string name="generic_yesterday">Eilen</string>
+    <string name="settings_open_tracks_summary">Kaikki OpenTracks-projektista</string>
+    <string name="settings_ui_title">Käyttöliittymä</string>
+    <string name="settings_import_export_summary">Tuo, vie, automaattinen vienti</string>
+    <string name="settings_units_category">Yksiköt</string>
+    <string name="settings_reset_summary">Palauta oletusasetukset</string>
+    <string name="settings_recording_customize_layout_select_columns">Tietokenttiä rivillä</string>
+    <string name="custom_layout_list_title">Asettelut</string>
+    <string name="settings_running_sensor">Juoksu</string>
+    <string name="settings_public_api_enabled_title">Julkinen rajapinta</string>
+    <string name="settings_public_api_enabled_summary_off">Vain OpenTracks voi aloittaa tai lopettaa tallennuksen.</string>
+    <string name="settings_public_api_disabled_toast">OpenTracksin julkinen rajapinta on pois käytöstä. Sen voi ottaa käyttöön asetuksista.</string>
+    <string name="stats_coordinates">Leveys- ja pituusaste</string>
+    <string name="stats_sensors_heart_rate">Sykenopeus</string>
+    <string name="stats_sensors_power">Teho</string>
+    <string name="no_compatible_file_manager_installed">Yhteensopiva tiedostojen hallinta puuttuu</string>
 </resources>
