@@ -570,4 +570,8 @@ limitations under the License.
     <string name="export_dir_not_writable">" (ikke skrivbar!)"</string>
     <string name="export_cannot_write_to_dir">Kan ikke skrive til eksportmappe.</string>
     <string name="no_compatible_file_manager_installed">Ingen kompatibel filbehandler installert</string>
+    <string name="settings_public_api_enabled_title">Offentlig API</string>
+    <string name="settings_public_api_enabled_summary_on">Andre installerte apper kan starte eller stoppe opptak.</string>
+    <string name="settings_public_api_enabled_summary_off">Bare OpenTracks kan starte og stoppe opptak.</string>
+    <string name="settings_public_api_disabled_toast">OpenTracks offentlige API er slått av: det kan slås på i innstillingene.</string>
 </resources>
