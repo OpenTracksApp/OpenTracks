@@ -243,9 +243,9 @@ limitations under the License.
     <string name="settings_chart_by_distance">Vahemaa järgi</string>
     <string name="settings_chart_by_time">Aja järgi</string>
     <!-- Settings Recording -->
-    <string name="settings_recording_show_on_lockscreen_while_recording_title">Kuva lukukraanil statistikat</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Kuva lukustuskuval statistikat</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Salvestamise ajal näidake statistikat ilma seadet avamata.</string>
-    <string name="settings_recording_keep_screen_on_while_recording_title">Hoidke ekraani peal</string>
+    <string name="settings_recording_keep_screen_on_while_recording_title">Hoia ekraan sisse lülitatud</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Salvestamise ajal hoidke ekraani sisse lülitatud.</string>
     <string name="settings_recording">Salvestamine</string>
     <string name="settings_recording_default_activity_title">Tegevuse vaiketüüp</string>
