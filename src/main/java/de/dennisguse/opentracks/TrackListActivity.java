@@ -16,13 +16,11 @@
 
 package de.dennisguse.opentracks;
 
-import android.Manifest;
 import android.app.ActivityOptions;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.location.LocationManager;
@@ -33,15 +31,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
@@ -213,8 +207,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         ActivityUtils.configureListViewContextualMenu(viewBinding.trackList, contextualActionModeCallback);
 
         loadData(getIntent());
-
-        requestGPSPermissions();
     }
 
     @Override
@@ -390,26 +382,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     @Override
     protected Track.Id getRecordingTrackId() {
         return recordingStatus.getTrackId();
-    }
-
-    private void requestGPSPermissions() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-
-        ActivityResultLauncher<String[]> locationPermissionRequest = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-                    Boolean fineLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false);
-                    Boolean coarseLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false);
-                    if (fineLocationGranted == null || !fineLocationGranted
-                            || coarseLocationGranted == null || !coarseLocationGranted) {
-                        Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                }
-        );
-        String[] permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
-        locationPermissionRequest.launch(permissions);
     }
 
     /**

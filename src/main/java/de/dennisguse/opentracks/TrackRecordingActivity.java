@@ -1,5 +1,6 @@
 package de.dennisguse.opentracks;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,7 +12,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -39,6 +43,7 @@ import de.dennisguse.opentracks.ui.markers.MarkerEditActivity;
 import de.dennisguse.opentracks.ui.markers.MarkerListActivity;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
+import de.dennisguse.opentracks.util.PermissionUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
@@ -142,6 +147,8 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         if (savedInstanceState != null) {
             viewBinding.trackDetailActivityViewPager.setCurrentItem(savedInstanceState.getInt(CURRENT_TAB_TAG_KEY));
         }
+
+        requestGPSPermissions();
     }
 
     @Override
@@ -399,5 +406,23 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
         setLockscreenPolicy();
         setScreenOnPolicy();
+    }
+
+    private void requestGPSPermissions() {
+        if (PermissionUtils.hasGPSPermission(this)) {
+            return;
+        }
+
+        ActivityResultLauncher<String[]> locationPermissionRequest = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
+                    Boolean fineLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false);
+                    Boolean coarseLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false);
+                    if (fineLocationGranted == null || !fineLocationGranted
+                            || coarseLocationGranted == null || !coarseLocationGranted) {
+                        Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+        String[] permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+        locationPermissionRequest.launch(permissions);
     }
 }
