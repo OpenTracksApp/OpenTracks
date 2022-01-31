@@ -18,14 +18,16 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
+import de.dennisguse.opentracks.util.PermissionUtils;
 
 @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
 public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private final String TAG = GPSHandler.class.getSimpleName();
 
-    private LocationManager locationManager;
     private final TrackPointCreator trackPointCreator;
+    private Context context;
+    private LocationManager locationManager;
     private GpsStatus gpsStatus;
     private Duration gpsInterval;
     private Distance thresholdHorizontalAccuracy;
@@ -36,6 +38,7 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
     }
 
     public void onStart(@NonNull Context context) {
+        this.context = context;
         PreferencesUtils.registerOnSharedPreferenceChangeListener(this);
         gpsStatus = new GpsStatus(context, this);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -51,9 +54,12 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
     //TODO upgrade to AGP7.0.0/API31 started complaining about removeUpdates.
     public void onStop() {
         lastTrackPoint = null;
-        if (locationManager != null) {
-            locationManager.removeUpdates(this);
+        if (locationManager != null && context != null) {
+            if (PermissionUtils.hasGPSPermission(context)) {
+                locationManager.removeUpdates(this);
+            }
             locationManager = null;
+            context = null;
         }
 
         if (gpsStatus != null) {
@@ -146,14 +152,16 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
     }
 
     private void registerLocationListener() {
-        if (locationManager == null) {
-            Log.e(TAG, "locationManager is null.");
+        if (locationManager == null || context == null) {
+            Log.e(TAG, "Not started.");
             return;
         }
-        try {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsInterval.toMillis(), 0, this);
-        } catch (SecurityException e) {
-            Log.e(TAG, "Could not register location listener; permissions not granted.", e);
+        if (PermissionUtils.hasGPSPermission(context)) {
+            try {
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsInterval.toMillis(), 0, this);
+            } catch (SecurityException e) {
+                Log.e(TAG, "Could not register location listener; permissions not granted.", e);
+            }
         }
     }
 
