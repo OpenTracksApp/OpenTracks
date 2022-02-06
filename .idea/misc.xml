@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="src/main/res/drawable/ic_activity_bike_24dp.xml" value="0.1765" />
+        <entry key="src/main/res/drawable/ic_activity_sailing_24dp.xml" value="0.1935" />
+        <entry key="src/main/res/drawable/ic_activity_snowboarding_24dp.xml" value="0.1935" />
+        <entry key="src/main/res/drawable/ic_activity_swimming_24dp.xml" value="0.1935" />
+        <entry key="src/main/res/drawable/ic_activity_swimming_open_24dp.xml" value="0.1935" />
+        <entry key="src/main/res/drawable/ic_activity_workout_24dp.xml" value="0.1935" />
         <entry key="src/main/res/menu/aggregated_statistics.xml" value="0.10208333333333333" />
         <entry key="src/main/res/xml/settings_gps.xml" value="0.22604166666666667" />
         <entry key="src/main/res/xml/settings_sensors.xml" value="0.2101851851851852" />

@@ -168,6 +168,9 @@ limitations under the License.
     <string name="activity_type_walking">walking</string>
     <string name="activity_type_water_skiing">water skiing</string>
     <string name="activity_type_wind_surfing">wind surfing</string>
+    <string name="activity_type_swimming">swimming</string>
+    <string name="activity_type_swimming_open">swimming in open water</string>
+    <string name="activity_type_workout">workout</string>
     <!-- Description -->
     <string name="description_activity_type">Activity type: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Average moving pace: %1$s min/km (%2$s min/mi)</string>
