@@ -89,7 +89,7 @@ limitations under the License.
                     android:layout_weight="24">
 
                     <TextView
-                        style="@style/TextLarge"
+                        style="?attr/textAppearanceHeadline6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/track_list_empty_message" />

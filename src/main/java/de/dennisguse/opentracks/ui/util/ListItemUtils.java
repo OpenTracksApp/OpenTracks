@@ -17,11 +17,9 @@
 package de.dennisguse.opentracks.ui.util;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.time.OffsetDateTime;
@@ -77,11 +75,9 @@ public class ListItemUtils {
         TextView timeDistanceTextView = view.findViewById(R.id.list_item_time_distance);
         String timeDistanceText;
         if (isRecording) {
-            timeDistanceTextView.setTextColor(context.getResources().getColor(isPaused ? android.R.color.white : R.color.recording_text));
             timeDistanceText = context.getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
         } else {
             // Match list_item_time_distance in list_item.xml
-            timeDistanceTextView.setTextAppearance(context, R.style.TextSmall);
             timeDistanceText = getTimeDistance(totalTime, totalDistance);
             if (markerCount > 0) {
                 timeDistanceText += "  \u2027";
@@ -132,10 +128,6 @@ public class ListItemUtils {
             timeDistanceTextView.setSingleLine(true);
             setTextView(context, categoryDescriptionTextView, categoryDescription, hasPhoto);
         }
-
-        // Adjust iconImageView layout gravity
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iconImageView.getLayoutParams();
-        params.gravity = timeDistanceTextView.getVisibility() == View.GONE && markerCountIcon.getVisibility() == View.GONE ? Gravity.TOP : Gravity.CENTER_VERTICAL;
     }
 
     /**

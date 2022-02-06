@@ -78,7 +78,7 @@ class ChooseActivityTypeImageAdapter extends BaseAdapter {
         }
 
         if (position == selected) {
-            imageView.setBackgroundColor(ContextCompat.getColor(parent.getContext(), R.color.colorAccent));
+            imageView.setBackgroundColor(ContextCompat.getColor(parent.getContext(), R.color.opentracks_secondary_color));
         } else {
             imageView.setBackgroundColor(Color.TRANSPARENT);
         }

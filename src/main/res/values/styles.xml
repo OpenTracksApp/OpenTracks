@@ -15,7 +15,13 @@ limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="BottomButton" parent="Widget.AppCompat.Button.Borderless">
+    <!-- toolbar -->
+    <style name="Widget.OpenTracks.Toolbar.Surface" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="android:background">#ff0000</item>
+    </style>
+
+    <!-- bottom bar -->
+    <style name="BottomButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
@@ -36,70 +42,20 @@ limitations under the License.
         <item name="android:layout_width">match_parent</item>
     </style>
 
-    <style name="EditCategory" parent="@style/TextMedium">
-        <item name="android:completionThreshold">1</item>
-        <item name="android:gravity">bottom</item>
-        <item name="android:layout_gravity">bottom</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:selectAllOnFocus">true</item>
-        <item name="android:singleLine">true</item>
-    </style>
-
-    <style name="EditDescription" parent="@style/TextMedium">
-        <item name="android:inputType">textAutoCorrect|textCapSentences|textMultiLine</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:maxLines">50</item>
-        <item name="android:selectAllOnFocus">true</item>
-        <item name="android:singleLine">false</item>
-    </style>
-
-    <style name="EditLabel" parent="@style/TextMedium">
-        <item name="android:layout_width">match_parent</item>
-    </style>
-
-    <style name="EditLabel.WithPaddingTop">
-        <item name="android:paddingTop">16dp</item>
-    </style>
-
-    <style name="EditNameMarker" parent="@style/TextMedium.WithIcon">
-        <item name="android:inputType">textAutoCorrect|textCapWords</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:selectAllOnFocus">true</item>
-        <item name="android:singleLine">true</item>
-    </style>
-
-    <style name="EditNameTrack" parent="@style/TextMedium">
-        <item name="android:inputType">textAutoCorrect|textCapWords</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:selectAllOnFocus">true</item>
-        <item name="android:singleLine">true</item>
-    </style>
-
-    <style name="ListEmptyTextView" parent="@style/TextLarge">
-        <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:padding">8dp</item>
-    </style>
-
-    <style name="ListItemDate" parent="@style/TextSmall">
-        <item name="android:gravity">right</item>
-        <item name="android:layout_gravity">bottom</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:singleLine">true</item>
-    </style>
     <!-- scroll view -->
     <style name="ScrollView">
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:scrollbarStyle">outsideInset</item>
     </style>
+
     <!-- scroll view with bottom buttons -->
     <style name="ScrollView.WithBottomButtons">
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">1</item>
     </style>
-    <!-- sensor state value -->
-    <!-- stats horizontal line -->
+
+    <!-- horizontal line -->
     <style name="HorizontalLine">
         <item name="android:background">@color/stats_separator</item>
         <item name="android:layout_height">1dp</item>
@@ -107,225 +63,9 @@ limitations under the License.
         <item name="android:layout_marginBottom">8dp</item>
         <item name="android:layout_width">match_parent</item>
     </style>
-    <style name="StatsHorizontalLine" parent="HorizontalLine">
-        <item name="android:layout_margin">8dp</item>
-    </style>
-    <!-- stats large item container -->
-    <style name="StatsLargeItemContainer">
-        <item name="android:layout_gravity">center</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:paddingBottom">6dp</item>
-        <item name="android:paddingTop">6dp</item>
-    </style>
 
-    <style name="LargeLabel" parent="@style/TextSmall">
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">?attr/colorAccent</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:layout_marginTop">8dp</item>
-    </style>
-
-    <style name="IntervalLabel" parent="@style/LargeLabel">
-        <item name="android:singleLine">true</item>
-        <item name="android:layout_margin">1dp</item>
-        <item name="android:textAlignment">textStart</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_width">1dp</item>
-        <item name="android:layout_gravity">center</item>
-    </style>
-
-    <style name="StatsPrimaryLabel" parent="@style/TextMicro">
-        <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:singleLine">false</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">?attr/colorAccent</item>
-        <item name="android:paddingLeft">4dp</item>
-        <item name="android:paddingRight">4dp</item>
-        <item name="android:layout_marginTop">8dp</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="StatsSecondaryLabel" parent="@style/TextMicro">
-        <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:singleLine">false</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:paddingLeft">4dp</item>
-        <item name="android:paddingRight">4dp</item>
-        <item name="android:layout_marginTop">16dp</item>
-        <item name="android:textStyle">normal</item>
-    </style>
-
-    <style name="StatsLabelHidden" parent="@style/StatsPrimaryLabel">
-        <item name="android:textColor">@android:color/secondary_text_dark</item>
-    </style>
-
-    <style name="StatsPrimaryValue" parent="@style/TextLarge">
-        <item name="android:layout_gravity">center</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:textSize">36sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="StatsSecondaryValue" parent="@style/TextLarge">
-        <item name="android:layout_gravity">center</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:textSize">28sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="StatsValueHidden" parent="@style/StatsPrimaryValue">
-        <item name="android:textColor">@android:color/secondary_text_dark</item>
-    </style>
-    <!-- stats large value container -->
-    <style name="StatsLargeValueContainer">
-        <item name="android:layout_gravity">center</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">-4dp</item>
-        <item name="android:layout_width">wrap_content</item>
-    </style>
-    <!-- stats scroll view -->
-    <style name="StatsScrollView" parent="@style/ScrollView">
-        <item name="android:scrollbarStyle">outsideOverlay</item>
-    </style>
-    <!-- stats small group container -->
-    <style name="StatsSmallGroupContainer" parent="@style/StatsLargeItemContainer">
-        <item name="android:layout_gravity">top|center</item>
-        <item name="android:paddingTop">12dp</item>
-    </style>
-    <!-- stats small item container, for placing inside StatsSmallGroupContainer -->
-    <style name="StatsSmallItemContainer" parent="@style/StatsLargeItemContainer">
-        <item name="android:paddingTop">12dp</item>
-    </style>
-
-    <style name="StatsSmallLabel" parent="@style/TextSmall">
-        <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:singleLine">false</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:layout_marginTop">16dp</item>
-    </style>
-
-    <style name="StatsSmallValue" parent="@style/TextLarge">
-        <item name="android:layout_gravity">center</item>
-        <item name="android:singleLine">true</item>
-    </style>
-
-    <style name="StatsTinyValue" parent="@style/TextSmall">
-        <item name="android:layout_gravity">center</item>
-        <item name="android:singleLine">true</item>
-    </style>
-
-    <style name="StatsTinyLabel" parent="@style/TextSmall">
-        <item name="android:gravity">center</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:singleLine">false</item>
-    </style>
-
-    <style name="StatsSmallValueContainer" parent="@style/StatsLargeValueContainer">
-        <item name="android:layout_marginTop">-2dp</item>
-    </style>
-
-    <style name="StatsUnit" parent="@style/TextSmall">
-        <item name="android:layout_gravity">bottom</item>
-        <item name="android:paddingLeft">4dp</item>
-        <item name="android:singleLine">true</item>
-    </style>
-
-    <style name="TextLargeStats" parent="TextAppearance.AppCompat.Large">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">4dp</item>
-        <item name="android:layout_marginTop">16dp</item>
-    </style>
-
-    <style name="TextMediumStats" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">4dp</item>
-        <item name="android:color">@android:color/secondary_text_light</item>
-    </style>
-
-    <style name="TextSmallStats" parent="TextAppearance.AppCompat.Small">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:paddingLeft">8dp</item>
-        <item name="android:paddingRight">4dp</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:textAlignment">viewEnd</item>
-        <item name="android:color">@android:color/secondary_text_light</item>
-    </style>
-
-    <style name="IconStats">
-        <item name="android:layout_width">48dp</item>
-        <item name="android:layout_height">48dp</item>
-        <item name="tint">?android:textColorPrimary</item>
-    </style>
-
-    <style name="TextMicro" parent="@style/TextSmall">
-        <item name="android:textSize">12sp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-    </style>
-
-    <style name="TextLarge" parent="TextAppearance.AppCompat.Large">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-    </style>
-
-    <style name="TextMedium" parent="TextAppearance.AppCompat.Medium">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-    </style>
-
-    <style name="TextMediumPrimary" parent="@style/TextMedium">
-        <item name="android:textColor">?android:textColorPrimary</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-    </style>
-
-    <style name="TextMedium.WithIcon" style="@style/TextMedium">
-        <item name="android:drawablePadding">8dp</item>
-        <item name="android:gravity">center_vertical</item>
-    </style>
-
-    <style name="TextSmall" parent="TextAppearance.AppCompat.Small">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
-    </style>
-
-    <style name="TextImportExportSummaryStart" parent="TextMediumPrimary">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">12dp</item>
-        <item name="android:layout_marginEnd">8dp</item>
-        <item name="android:layout_marginStart">24dp</item>
-        <item name="android:gravity">end</item>
-    </style>
-
-    <style name="TextImportExportSummaryEnd" parent="TextMediumPrimary">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">8dp</item>
-        <item name="android:layout_marginEnd">24dp</item>
-    </style>
-
-    <style name="ProgressBar" parent="@style/Widget.AppCompat.ProgressBar.Horizontal" />
-
-    <!-- Card View for stats -->
-    <style name="StatsCardView">
+    <!-- card view -->
+    <style name="OpenTracksCardView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="cardElevation">1dp</item>
@@ -336,7 +76,7 @@ limitations under the License.
 
     <!-- Snackbar -->
     <style name="MaterialSnackbarTheme" parent="@style/Widget.MaterialComponents.Snackbar">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Snackbar</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.OpenTracks.Snackbar</item>
         <item name="actionTextColorAlpha">1</item>
 
         <item name="backgroundTint">@android:color/holo_red_dark</item>
@@ -353,7 +93,7 @@ limitations under the License.
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="ThemeOverlay.App.Snackbar" parent="">
+    <style name="ThemeOverlay.OpenTracks.Snackbar" parent="">
         <item name="colorSurface">@android:color/holo_red_dark</item>
         <item name="colorOnSurface">@android:color/holo_red_dark</item>
     </style>

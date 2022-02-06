@@ -17,129 +17,120 @@
             android:padding="20dp">
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/help_feature_title"
-                android:textStyle="bold" />
+                style="?attr/textAppearanceHeadline6"
+                android:text="@string/help_feature_title" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceBody1"
                 android:text="@string/help_feature_content" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceHeadline6"
                 android:layout_marginTop="20dp"
-                android:text="@string/help_track_map_title"
-                android:textStyle="bold" />
+                android:text="@string/help_track_map_title" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceBody1"
                 android:linksClickable="true"
                 android:text="@string/help_track_map_content" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceHeadline6"
                 android:layout_marginTop="20dp"
-                android:text="@string/help_recording_title"
-                android:textStyle="bold" />
+                android:text="@string/help_recording_title" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceBody1"
                 android:text="@string/help_recording_content" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceHeadline6"
                 android:layout_marginTop="20dp"
-                android:text="@string/help_storage_pictures_title"
-                android:textStyle="bold" />
+                android:text="@string/help_storage_pictures_title" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceBody1"
                 android:text="@string/help_storage_pictures_content" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceHeadline6"
                 android:layout_marginTop="20dp"
-                android:text="@string/help_track_export_title"
-                android:textStyle="bold" />
+                android:text="@string/help_track_export_title" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceBody1"
                 android:text="@string/help_track_export_content" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/help_data_google_play_services_title"
-                android:textStyle="bold" />
+                style="?attr/textAppearanceHeadline6"
+                android:text="@string/help_data_google_play_services_title" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceBody1"
                 android:text="@android:string/no" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceHeadline6"
                 android:layout_marginTop="20dp"
-                android:text="@string/help_data_storage_title"
-                android:textStyle="bold" />
+                android:text="@string/help_data_storage_title" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceBody1"
                 android:text="@string/help_data_storage_content" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceHeadline6"
                 android:layout_marginTop="20dp"
-                android:text="@string/help_gps_troubleshooting_title"
-                android:textStyle="bold" />
+                android:text="@string/help_gps_troubleshooting_title" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceBody1"
                 android:linksClickable="true"
                 android:text="@string/help_gps_troubleshooting_content" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceHeadline6"
                 android:layout_marginTop="20dp"
-                android:text="@string/help_support_title"
-                android:textStyle="bold" />
+                android:text="@string/help_support_title" />
 
             <TextView
-                style="@style/TextMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceBody1"
                 android:linksClickable="true"
                 android:text="@string/help_support_content" />
         </LinearLayout>

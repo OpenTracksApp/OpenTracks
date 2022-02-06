@@ -10,7 +10,9 @@
 
     <TextClock
         android:id="@+id/stats_clock"
-        style="@style/StatsPrimaryValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.OpenTracks.PrimaryValue"
         android:value="@string/value_unknown"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +21,9 @@
 
     <TextView
         android:id="@+id/stats_description_main"
-        style="@style/StatsPrimaryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.OpenTracks.PrimaryHeader"
         android:text="@string/stats_clock"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -43,8 +43,8 @@ public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<Recycl
         viewHolder.title.setText(field.getTitle());
         viewHolder.value.setText(StatisticsUtils.emptyValue(context, field.getKey()));
 
-        viewHolder.title.setTextAppearance(context, field.isVisible() ? (field.isPrimary() ? R.style.StatsPrimaryLabel : R.style.StatsSecondaryLabel) : R.style.StatsLabelHidden);
-        viewHolder.value.setTextAppearance(context, field.isVisible() ? (field.isPrimary() ? R.style.StatsPrimaryValue : R.style.StatsSecondaryValue) : R.style.StatsValueHidden);
+        viewHolder.title.setTextAppearance(context, field.isVisible() ? (field.isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader) : R.style.TextAppearance_OpenTracks_HiddenHeader);
+        viewHolder.value.setTextAppearance(context, field.isVisible() ? (field.isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryValue : R.style.TextAppearance_OpenTracks_SecondaryValue) : R.style.TextAppearance_OpenTracks_HiddenValue);
         viewHolder.statusIcon.setVisibility(field.isVisible() ? View.GONE : View.VISIBLE);
         viewHolder.statusIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_baseline_visibility_off_24));
         viewHolder.moveIcon.setVisibility(field.isVisible() ? View.VISIBLE : View.GONE);

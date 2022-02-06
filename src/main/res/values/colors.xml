@@ -14,6 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 <resources>
+    <!-- Brand colors -->
+    <color name="opentracks_primary_color">#344955</color>
+    <color name="opentracks_primary_variant_color">#232f34</color>
+    <color name="opentracks_on_primary_color">@android:color/white</color>
+    <color name="opentracks_secondary_color">#ff8800</color>
+    <color name="opentracks_secondary_transparent">#55ff8800</color>
+    <color name="opentracks_on_secondary_color">@android:color/white</color>
+
+    <color name="opentracks_surface_day_background_color">#f5f5f5</color>
+    <color name="opentracks_surface_day_on_background_color">@android:color/black</color>
+
+    <color name="opentracks_surface_night_background_color">@android:color/black</color>
+    <color name="opentracks_surface_night_on_background_color">@android:color/white</color>
+
+    <!-- Chart colors -->
     <color name="chart_cadence_border">#FFF128F3</color> <!-- pink -->
     <color name="chart_cadence_fill">#40F128F3</color> <!-- transparent pink -->
     <color name="chart_altitude_border">#FF339933</color> <!-- green -->
@@ -27,8 +42,10 @@ limitations under the License.
     <color name="chart_power_border">#FF7A26C0</color> <!-- purple -->
     <color name="chart_power_fill">#407A26C0</color> <!-- transparent purple -->
 
-    <color name="colorAccent">@android:color/holo_orange_dark</color>
-    <color name="colorAccentTransparent">#55FF8800</color>
+    <!-- Generic colors -->
+    <color name="red_dark">#ffbe161b</color>
+
+    <color name="light_gray">#aaaaaa</color>
 
     <color name="colorBackgroundDelete">#F44336</color>
     <color name="colorForegroundDelete">#FEFEFE</color>

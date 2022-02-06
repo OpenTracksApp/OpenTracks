@@ -10,18 +10,20 @@
 
     <TextView
         android:id="@+id/interval_item_distance"
-        style="@style/TextMediumPrimary"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
+        style="?attr/textAppearanceBody1"
         tools:text="1 km" />
 
     <TextView
         android:id="@+id/interval_item_rate"
-        style="@style/TextMediumPrimary"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
+        style="?attr/textAppearanceBody1"
         tools:text="15 km/h" />
 
     <LinearLayout
@@ -32,17 +34,19 @@
 
         <TextView
             android:id="@+id/interval_item_gain"
-            style="@style/TextSmall"
             android:layout_width="match_parent"
-            app:drawableStartCompat="@drawable/ic_arrow_drop_up_24"
-            tools:text="100 m" />
+            android:layout_height="wrap_content"
+            style="?attr/textAppearanceBody2"
+            tools:text="100 m"
+            app:drawableStartCompat="@drawable/ic_arrow_drop_up_24" />
 
         <TextView
             android:id="@+id/interval_item_loss"
-            style="@style/TextSmall"
             android:layout_width="match_parent"
-            app:drawableStartCompat="@drawable/ic_arrow_drop_down_24"
-            tools:text="100 m" />
+            android:layout_height="wrap_content"
+            style="?attr/textAppearanceBody2"
+            tools:text="100 m"
+            app:drawableStartCompat="@drawable/ic_arrow_drop_down_24" />
 
     </LinearLayout>
 

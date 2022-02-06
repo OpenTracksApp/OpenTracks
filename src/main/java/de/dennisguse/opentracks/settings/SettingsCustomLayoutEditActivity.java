@@ -2,8 +2,6 @@ package de.dennisguse.opentracks.settings;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
@@ -17,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.stream.IntStream;
 
 import de.dennisguse.opentracks.AbstractActivity;
+import de.dennisguse.opentracks.ui.util.ArrayAdapterFilterDisabled;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.databinding.ActivitySettingsCustomLayoutBinding;
 import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
@@ -80,23 +79,16 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
         itemTouchHelper.attachToRecyclerView(recyclerViewVisible);
 
         // Spinner with items per row.
-        ArrayAdapter<Integer> spinnerAdapter = new ArrayAdapter<>(this,
+        ArrayAdapterFilterDisabled<Integer> rowsOptionAdapter = new ArrayAdapterFilterDisabled<>(this,
                 android.R.layout.simple_spinner_dropdown_item,
                 IntStream.of(getResources().getIntArray(R.array.stats_custom_layout_fields_columns_per_row)).boxed().toArray(Integer[]::new));
-        viewBinding.spinnerOptions.setAdapter(spinnerAdapter);
-        viewBinding.spinnerOptions.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                numColumns = position + 1;
-                gridLayoutManager.setSpanCount(numColumns);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+        viewBinding.rowsOptions.setAdapter(rowsOptionAdapter);
+        viewBinding.rowsOptions.setOnItemClickListener((parent, view, position, id) -> {
+            numColumns = position + 1;
+            gridLayoutManager.setSpanCount(numColumns);
         });
-        viewBinding.spinnerOptions.setSelection(numColumns - 1);
+
+        viewBinding.rowsOptions.setText(rowsOptionAdapter.getItem(numColumns - 1).toString(), false);
 
         // Recycler view with not visible stats.
         layoutFieldsHidden = StatisticsUtils.filterVisible(layout, false);

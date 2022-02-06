@@ -15,20 +15,41 @@ limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="ThemeCustom" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <!--        <item name="colorPrimary">TODO</item>-->
-        <!--        <item name="colorPrimaryDark">TODO</item>-->
+    <style name="ThemeCustom" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/opentracks_primary_color</item>
+        <item name="colorPrimaryVariant">@color/opentracks_primary_variant_color</item>
+        <item name="colorOnPrimary">@color/opentracks_on_primary_color</item>
 
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
+        <item name="colorSecondary">@color/opentracks_secondary_color</item>
+        <item name="colorSecondaryVariant">@color/opentracks_secondary_color</item>
+        <item name="colorOnSecondary">@color/opentracks_on_secondary_color</item>
+
+        <item name="colorError">@color/red_dark</item>
+        <item name="colorOnError">@android:color/white</item>
+
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
         <item name="windowActionModeOverlay">true</item>
+
+        <item name="android:colorBackground">@android:color/white</item>
+        <item name="colorOnBackground">@android:color/black</item>
+
+        <item name="colorSurface">@color/opentracks_surface_day_background_color</item>
+        <item name="colorOnSurface">@color/opentracks_surface_day_on_background_color</item>
+
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
 
         <!-- Snackbar -->
         <item name="snackbarStyle">@style/MaterialSnackbarTheme</item>
         <item name="snackbarButtonStyle">@style/MaterialSnackbarTextButtonTheme</item>
         <item name="snackbarTextViewStyle">@style/MaterialSnackbarTextViewTheme</item>
 
+        <!-- Linear progress indicator -->
+        <item name="linearProgressIndicatorStyle">@style/OpenTracksLinearProgressIndicator</item>
+    </style>
+
+    <style name="OpenTracksLinearProgressIndicator" parent="Widget.MaterialComponents.LinearProgressIndicator">
+        <item name="indicatorColor">?attr/colorSecondary</item>
     </style>
 
     <style name="SplashTheme" parent="ThemeCustom">

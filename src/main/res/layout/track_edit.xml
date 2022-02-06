@@ -16,6 +16,7 @@ limitations under the License.
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar" />
@@ -31,9 +32,11 @@ limitations under the License.
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textInputOutlinedStyle"
                 android:hint="@string/generic_name"
                 android:imeOptions="actionNext"
-                android:importantForAutofill="no">
+                android:importantForAutofill="no"
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/track_edit_name"
@@ -41,6 +44,7 @@ limitations under the License.
                     android:layout_height="wrap_content"
                     android:inputType="textCapWords"
                     android:selectAllOnFocus="true" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -52,30 +56,39 @@ limitations under the License.
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    style="?attr/textInputOutlinedExposedDropdownMenuStyle"
                     android:imeOptions="actionNext"
-                    android:importantForAutofill="no">
+                    android:importantForAutofill="no"
+                    android:layout_marginBottom="16dp">
 
-                    <AutoCompleteTextView
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/track_edit_activity_type"
-                        style="@style/EditCategory"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
                         android:hint="@string/track_edit_activity_type_hint"
                         android:imeOptions="actionNext"
                         android:selectAllOnFocus="true" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <ImageView
                     android:id="@+id/track_edit_activity_type_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="bottom" />
+                    android:layout_gravity="bottom"
+                    tools:src="@drawable/ic_activity_bike_24dp"/>
+
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textInputOutlinedStyle"
                 android:hint="@string/generic_description"
                 android:imeOptions="actionNext"
-                android:importantForAutofill="no">
+                android:importantForAutofill="no"
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/track_edit_description"
@@ -83,6 +96,7 @@ limitations under the License.
                     android:layout_height="wrap_content"
                     android:inputType="textCapSentences"
                     android:selectAllOnFocus="true" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

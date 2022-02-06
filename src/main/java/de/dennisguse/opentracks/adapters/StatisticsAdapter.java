@@ -120,10 +120,10 @@ public class StatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 return;
             }
             this.value.setText(statisticData.hasValue() ? statisticData.getValue() : context.getString(R.string.value_unknown));
-            this.value.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.StatsPrimaryValue : R.style.StatsSecondaryValue);
+            this.value.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryValue : R.style.TextAppearance_OpenTracks_SecondaryValue);
             this.unit.setText(statisticData.getUnit());
             this.descMain.setText(statisticData.getField().getTitle());
-            this.descMain.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.StatsPrimaryLabel : R.style.StatsSecondaryLabel);
+            this.descMain.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader);
             if (statisticData.hasDescription()) {
                 this.descSecondary.setVisibility(View.VISIBLE);
                 this.descSecondary.setText(statisticData.getDescription());
@@ -147,8 +147,8 @@ public class StatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             if (statisticData == null) {
                 return;
             }
-            this.value.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.StatsPrimaryValue : R.style.StatsSecondaryValue);
-            this.descMain.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.StatsPrimaryLabel : R.style.StatsSecondaryLabel);
+            this.value.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryValue : R.style.TextAppearance_OpenTracks_SecondaryValue);
+            this.descMain.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader);
         }
     }
 

@@ -13,7 +13,7 @@
 
     <TextView
         android:id="@+id/aggregated_stats_empty_view"
-        style="@style/TextLarge"
+        style="?attr/textAppearanceHeadline4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"

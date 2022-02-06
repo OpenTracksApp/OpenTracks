@@ -1,0 +1,23 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="ThemeCustom" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/opentracks_secondary_color</item>
+        <item name="colorPrimaryVariant">@android:color/black</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+
+        <item name="colorSecondary">@color/opentracks_secondary_color</item>
+        <item name="colorSecondaryVariant">@color/opentracks_secondary_color</item>
+        <item name="colorOnSecondary">@color/opentracks_on_secondary_color</item>
+
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
+        <item name="android:colorBackground">@android:color/black</item>
+        <item name="colorOnBackground">@android:color/white</item>
+
+        <item name="colorSurface">@color/opentracks_surface_night_background_color</item>
+        <item name="colorOnSurface">@color/opentracks_surface_night_on_background_color</item>
+
+        <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
+    </style>
+
+</resources>

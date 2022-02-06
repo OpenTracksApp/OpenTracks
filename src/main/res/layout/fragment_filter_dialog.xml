@@ -1,106 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView style="@style/ScrollView.WithBottomButtons">
-        <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/filter_items"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp">
+            android:padding="8dp"
+            android:orientation="vertical"
+            app:singleSelection="false"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/filter_date_from" />
 
-            <GridLayout
-                android:id="@+id/filter_items"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filter_date_from"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/generic_from"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:padding="8dp"
+            app:layout_constraintTop_toBottomOf="@id/filter_items"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/filter_date_picker_from">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/filter_date_edit_text_from"
+                android:drawableStart="@drawable/ic_baseline_date_range_24"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="2"
-                android:orientation="horizontal"
-                android:padding="8dp"
-                android:alignmentMode="alignBounds"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/filter_date_from" />
+                android:enabled="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="date"
+                android:selectAllOnFocus="true" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/filter_date_from"
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <DatePicker
+            android:id="@+id/filter_date_picker_from"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            app:layout_constraintTop_toBottomOf="@id/filter_date_from"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/filter_date_to" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filter_date_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/generic_to"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:padding="8dp"
+            app:layout_constraintTop_toBottomOf="@id/filter_date_picker_from"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/filter_date_picker_to">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/filter_date_edit_text_to"
+                android:drawableStart="@drawable/ic_baseline_date_range_24"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/generic_from"
-                android:imeOptions="actionNext"
-                android:importantForAutofill="no"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@id/filter_items"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/filter_date_picker_from">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/filter_date_edit_text_from"
-                    android:drawableStart="@drawable/ic_baseline_date_range_24"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="true"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:inputType="date"
-                    android:selectAllOnFocus="true" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:enabled="true"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="date"
+                android:selectAllOnFocus="true" />
 
-            <DatePicker
-                android:id="@+id/filter_date_picker_from"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                app:layout_constraintTop_toBottomOf="@id/filter_date_from"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/filter_date_to" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/filter_date_to"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/generic_to"
-                android:imeOptions="actionNext"
-                android:importantForAutofill="no"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@id/filter_date_picker_from"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/filter_date_picker_to">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/filter_date_edit_text_to"
-                    android:drawableStart="@drawable/ic_baseline_date_range_24"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="true"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:inputType="date"
-                    android:selectAllOnFocus="true" />
-            </com.google.android.material.textfield.TextInputLayout>
+        <DatePicker
+            android:id="@+id/filter_date_picker_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            app:layout_constraintTop_toBottomOf="@id/filter_date_to"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-            <DatePicker
-                android:id="@+id/filter_date_picker_to"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                tools:visibility="visible"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                app:layout_constraintTop_toBottomOf="@id/filter_date_to"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
-
-</LinearLayout>
+</ScrollView>

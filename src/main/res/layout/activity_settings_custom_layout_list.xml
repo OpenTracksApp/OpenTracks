@@ -22,6 +22,7 @@
             android:id="@+id/custom_layout_list_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             app:errorEnabled="true"
             android:layout_margin="16dp">
 
@@ -39,17 +40,22 @@
             android:id="@+id/custom_layout_list_bottom_bar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:gravity="center_vertical"
+            android:layout_margin="16dp"
+            android:gravity="end"
             android:orientation="horizontal">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/custom_layout_list_cancel_button"
-                style="@style/BottomButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:text="@android:string/cancel" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/custom_layout_list_ok_button"
-                style="@style/BottomButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
                 android:text="@android:string/ok" />
 
         </LinearLayout>

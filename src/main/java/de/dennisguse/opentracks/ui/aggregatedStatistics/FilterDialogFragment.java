@@ -5,11 +5,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
-import android.widget.GridLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +16,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.time.LocalDate;
@@ -61,17 +62,17 @@ public class FilterDialogFragment extends DialogFragment {
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View layout = inflater.inflate(R.layout.fragment_filter_dialog, null, false);
-        GridLayout itemsLayout = layout.findViewById(R.id.filter_items);
+        MaterialButtonToggleGroup itemsLayout = layout.findViewById(R.id.filter_items);
         builder.setView(layout);
 
         for (FilterItem item : filterItems) {
             View view = inflater.inflate(R.layout.fragment_filter_dialog_item, null);
 
-            CheckBox checkBox = view.findViewById(R.id.filter_dialog_check_button);
-            checkBox.setText(item.value);
-            checkBox.setChecked(item.isChecked);
-            checkBox.setTag(item.id);
-            checkBox.setOnClickListener(v -> item.isChecked = !item.isChecked);
+            MaterialButton button = view.findViewById(R.id.filter_dialog_check_button);
+            button.setText(item.value);
+            button.setChecked(item.isChecked);
+            button.setTag(item.id);
+            button.setOnClickListener(v -> item.isChecked = !item.isChecked);
 
             itemsLayout.addView(view);
         }
