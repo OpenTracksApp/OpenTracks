@@ -52,6 +52,9 @@ public class TrackIconUtils {
     private static final String INLINE_SKATING = "INLINES_SKATING";
     private static final String SKATE_BOARDING = "SKATE_BOARDING";
     private static final String CLIMBING = "CLIMBING";
+    private static final String SWIMMING = "SWIMMING";
+    private static final String SWIMMING_OPEN = "SWIMMING_OPEN";
+    private static final String WORKOUT = "WORKOUT";
 
     private static final int ACTIVITY_UNKNOWN_LOGO = R.drawable.ic_logo_24dp;
 
@@ -71,6 +74,8 @@ public class TrackIconUtils {
     private static final int[] SKATE_BOARDING_LIST = new int[]{R.string.activity_type_skate_boarding};
     private static final int[] KAYAKING_LIST = new int[]{R.string.activity_type_kayaking};
     private static final int[] WALK_LIST = new int[]{R.string.activity_type_hiking, R.string.activity_type_off_trail_hiking, R.string.activity_type_speed_walking, R.string.activity_type_trail_hiking, R.string.activity_type_walking};
+    private static final int[] SWIM_LIST = new int[]{R.string.activity_type_swimming, R.string.activity_type_swimming_open};
+    private static final int[] WORKOUT_LIST = new int[]{R.string.activity_type_workout};
 
     // List of icons whose sports associated use speed (in km/h or mi/h).
     private static final int[] SPEED_ICON = {
@@ -110,6 +115,9 @@ public class TrackIconUtils {
         MAP.put(KAYAK, new Pair<>(R.string.activity_type_kayaking, R.drawable.ic_activity_kayaking_24dp));
         MAP.put(BOAT, new Pair<>(R.string.activity_type_boat, R.drawable.ic_activity_boat_24dp));
         MAP.put(SAILING, new Pair<>(R.string.activity_type_sailing, R.drawable.ic_activity_sailing_24dp));
+        MAP.put(SWIMMING, new Pair<>(R.string.activity_type_swimming, R.drawable.ic_activity_swimming_24dp));
+        MAP.put(SWIMMING_OPEN, new Pair<>(R.string.activity_type_swimming_open, R.drawable.ic_activity_swimming_open_24dp));
+        MAP.put(WORKOUT, new Pair<>(R.string.activity_type_workout, R.drawable.ic_activity_workout_24dp));
     }
 
     private TrackIconUtils() {
@@ -207,6 +215,12 @@ public class TrackIconUtils {
         }
         if (inList(resources, activityType, WALK_LIST)) {
             return WALK;
+        }
+        if (inList(resources, activityType, SWIM_LIST)) {
+            return SWIMMING;
+        }
+        if (inList(resources, activityType, WORKOUT_LIST)) {
+            return WORKOUT;
         }
         return UNKNOWN;
     }
