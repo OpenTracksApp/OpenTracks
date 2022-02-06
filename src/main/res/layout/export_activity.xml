@@ -28,9 +28,9 @@
 
             <TextView
                 android:id="@+id/export_progress_done"
-                style="@style/TextMediumPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceSubtitle1"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="48dp"
                 app:layout_constraintEnd_toStartOf="@id/export_progress_slash"
@@ -41,9 +41,9 @@
 
             <TextView
                 android:id="@+id/export_progress_slash"
-                style="@style/TextMediumPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceSubtitle1"
                 android:text="@string/generic_separator_done_total"
                 app:layout_constraintBottom_toBottomOf="@id/export_progress_done"
                 app:layout_constraintEnd_toStartOf="@id/export_progress_total"
@@ -52,9 +52,9 @@
 
             <TextView
                 android:id="@+id/export_progress_total"
-                style="@style/TextMediumPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceSubtitle1"
                 android:layout_marginEnd="24dp"
                 app:layout_constraintBottom_toBottomOf="@id/export_progress_slash"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -62,9 +62,8 @@
                 app:layout_constraintTop_toTopOf="@id/export_progress_slash"
                 tools:text="10" />
 
-            <ProgressBar
+            <com.google.android.material.progressindicator.LinearProgressIndicator
                 android:id="@+id/export_progress_bar"
-                style="@style/ProgressBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -79,7 +78,11 @@
             <!-- Tracks exported (new tracks) -->
             <TextView
                 android:id="@+id/export_progress_summary_new_msg"
-                style="@style/TextImportExportSummaryStart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="?attr/textAppearanceSubtitle1"
+                android:gravity="end"
+                android:layout_margin="16dp"
                 android:text="@string/export_progress_summary_new_msg"
                 app:layout_constraintEnd_toEndOf="@id/guideline_vertical_half"
                 app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +90,9 @@
 
             <TextView
                 android:id="@+id/export_progress_summary_new"
-                style="@style/TextImportExportSummaryEnd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="?attr/textAppearanceSubtitle1"
                 app:layout_constraintBottom_toBottomOf="@id/export_progress_summary_new_msg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guideline_vertical_half"
@@ -112,7 +117,11 @@
             <!-- Tracks overwritten -->
             <TextView
                 android:id="@+id/export_progress_summary_overwrite_msg"
-                style="@style/TextImportExportSummaryStart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="?attr/textAppearanceSubtitle1"
+                android:gravity="end"
+                android:layout_margin="16dp"
                 android:text="@string/export_progress_summary_overwrite_msg"
                 app:layout_constraintEnd_toEndOf="@id/guideline_vertical_half"
                 app:layout_constraintStart_toStartOf="parent"
@@ -120,7 +129,9 @@
 
             <TextView
                 android:id="@+id/export_progress_summary_overwrite"
-                style="@style/TextImportExportSummaryEnd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="?attr/textAppearanceSubtitle1"
                 app:layout_constraintBottom_toBottomOf="@id/export_progress_summary_overwrite_msg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guideline_vertical_half"
@@ -145,7 +156,11 @@
             <!-- Tracks skipped -->
             <TextView
                 android:id="@+id/export_progress_summary_skip_msg"
-                style="@style/TextImportExportSummaryStart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="?attr/textAppearanceSubtitle1"
+                android:gravity="end"
+                android:layout_margin="16dp"
                 android:text="@string/export_progress_summary_skip_msg"
                 app:layout_constraintEnd_toEndOf="@id/guideline_vertical_half"
                 app:layout_constraintStart_toStartOf="parent"
@@ -153,7 +168,9 @@
 
             <TextView
                 android:id="@+id/export_progress_summary_skip"
-                style="@style/TextImportExportSummaryEnd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="?attr/textAppearanceSubtitle1"
                 app:layout_constraintBottom_toBottomOf="@id/export_progress_summary_skip_msg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guideline_vertical_half"
@@ -178,7 +195,11 @@
             <!-- Tracks errors -->
             <TextView
                 android:id="@+id/export_progress_summary_errors_msg"
-                style="@style/TextImportExportSummaryStart"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="?attr/textAppearanceSubtitle1"
+                android:gravity="end"
+                android:layout_margin="16dp"
                 android:text="@string/export_progress_summary_errors_msg"
                 app:layout_constraintEnd_toEndOf="@id/guideline_vertical_half"
                 app:layout_constraintStart_toStartOf="parent"
@@ -186,7 +207,9 @@
 
             <TextView
                 android:id="@+id/export_progress_summary_errors"
-                style="@style/TextImportExportSummaryEnd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="?attr/textAppearanceSubtitle1"
                 app:layout_constraintBottom_toBottomOf="@id/export_progress_summary_errors_msg"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/guideline_vertical_half"
@@ -224,9 +247,9 @@
 
             <TextView
                 android:id="@+id/export_progress_alert_msg"
-                style="@style/TextMediumPrimary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                style="?attr/textAppearanceSubtitle1"
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="24dp"
@@ -276,6 +299,7 @@
             android:text="@string/generic_overwrite"
             android:visibility="gone"
             tools:visibility="visible"/>
+
     </LinearLayout>
 
 </LinearLayout>

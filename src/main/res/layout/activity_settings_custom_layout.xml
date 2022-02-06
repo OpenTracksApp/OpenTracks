@@ -7,27 +7,20 @@
 
     <include layout="@layout/toolbar" />
 
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/rows_options_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:orientation="horizontal">
+        android:hint="@string/settings_recording_customize_layout_select_columns">
 
-        <TextView
-            style="@style/TextMediumPrimary"
-            android:layout_width="wrap_content"
+        <de.dennisguse.opentracks.ui.util.AutoCompleteTextViewForDropdown
+            android:id="@+id/rows_options"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@string/settings_recording_customize_layout_select_columns" />
+            android:inputType="none" />
 
-        <Spinner
-            android:id="@+id/spinner_options"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center" />
-
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"

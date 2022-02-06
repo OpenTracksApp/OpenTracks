@@ -10,7 +10,9 @@
 
     <TextView
         android:id="@+id/stats_value"
-        style="@style/StatsPrimaryValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.OpenTracks.PrimaryValue"
         android:value="@string/value_unknown"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintTop_toTopOf="parent"
@@ -20,7 +22,9 @@
 
     <TextView
         android:id="@+id/stats_unit"
-        style="@style/StatsUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.OpenTracks.PrimaryUnit"
         tools:text="@string/sensor_unit_beats_per_minute"
         app:layout_constraintStart_toEndOf="@id/stats_value"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +32,9 @@
 
     <TextView
         android:id="@+id/stats_description_main"
-        style="@style/StatsPrimaryLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.OpenTracks.PrimaryHeader"
         tools:text="@string/sensor_state_heart_rate"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +42,9 @@
 
     <TextView
         android:id="@+id/stats_description_secondary"
-        style="@style/StatsTinyValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.OpenTracks.SecondaryHeader"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

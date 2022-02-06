@@ -15,7 +15,8 @@ limitations under the License.
 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <ImageView
         android:id="@+id/marker_detail_marker_photo"
@@ -46,20 +47,32 @@ limitations under the License.
 
             <TextView
                 android:id="@+id/marker_detail_marker_name"
-                style="@style/TextMedium"
-                android:paddingTop="8dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?attr/textAppearanceBody1"
+                android:paddingTop="8dp"
+                tools:text="Marker Name" />
 
             <TextView
                 android:id="@+id/marker_detail_marker_category"
-                style="@style/TextSmall" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?attr/textAppearanceBody2"
+                tools:text="Marker Category" />
 
             <TextView
                 android:id="@+id/marker_detail_marker_description"
-                style="@style/TextSmall" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?attr/textAppearanceBody2"
+                tools:text="Marker Description" />
 
             <TextView
                 android:id="@+id/marker_detail_marker_location"
-                style="@style/TextSmall" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?attr/textAppearanceBody2"
+                tools:text="Marker Location" />
         </LinearLayout>
     </FrameLayout>
 </FrameLayout>

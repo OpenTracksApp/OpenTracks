@@ -39,9 +39,9 @@ limitations under the License.
 
         <TextView
             android:id="@+id/controller_total_time"
-            style="@style/TextSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="?attr/textAppearanceSubtitle2"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:gravity="center"
@@ -50,9 +50,9 @@ limitations under the License.
 
         <TextView
             android:id="@+id/controller_status"
-            style="@style/TextMicro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="?attr/textAppearanceSubtitle2"
             android:layout_above="@id/controller_total_time"
             android:layout_alignParentStart="true"
             android:gravity="center"

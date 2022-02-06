@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -33,6 +32,7 @@ public class IntervalsFragment extends Fragment {
 
     private static final String FROM_TOP_TO_BOTTOM_KEY = "fromTopToBottom";
     private static final String TRACK_ID_KEY = "trackId";
+    private static final String SELECTED_INTERVAL_KEY = "selectedIntervalKey";
 
     private IntervalStatisticsModel viewModel;
     protected IntervalStatisticsAdapter.StackMode stackModeListView;
@@ -41,7 +41,7 @@ public class IntervalsFragment extends Fragment {
     private Track.Id trackId;
     private boolean metricUnits;
     private IntervalStatisticsAdapter adapter;
-    private ArrayAdapter<IntervalStatisticsModel.IntervalOption> spinnerAdapter;
+    private ArrayAdapter<IntervalStatisticsModel.IntervalOption> intervalsAdapter;
 
     private boolean isReportSpeed;
 
@@ -50,8 +50,8 @@ public class IntervalsFragment extends Fragment {
     protected final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         if (PreferencesUtils.isKey(R.string.stats_units_key, key) || PreferencesUtils.isKey(R.string.stats_rate_key, key)) {
             updateIntervals(PreferencesUtils.isMetricUnits(), selectedInterval);
-            if (spinnerAdapter != null) {
-                spinnerAdapter.notifyDataSetChanged();
+            if (intervalsAdapter != null) {
+                intervalsAdapter.notifyDataSetChanged();
             }
         }
     };
@@ -76,6 +76,15 @@ public class IntervalsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         stackModeListView = getArguments().getBoolean(FROM_TOP_TO_BOTTOM_KEY, true) ? IntervalStatisticsAdapter.StackMode.STACK_FROM_TOP : IntervalStatisticsAdapter.StackMode.STACK_FROM_BOTTOM;
         trackId = getArguments().getParcelable(TRACK_ID_KEY);
+        if (savedInstanceState != null) {
+            selectedInterval = (IntervalStatisticsModel.IntervalOption) savedInstanceState.getSerializable(SELECTED_INTERVAL_KEY);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(SELECTED_INTERVAL_KEY, selectedInterval);
     }
 
     @Override
@@ -93,7 +102,7 @@ public class IntervalsFragment extends Fragment {
         // TODO handle empty view: before we did viewBinding.intervalList.setEmptyView(viewBinding.intervalListEmptyView);
         viewBinding.intervalList.setAdapter(adapter);
 
-        spinnerAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {
+        intervalsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -112,17 +121,13 @@ public class IntervalsFragment extends Fragment {
             }
         };
 
-        viewBinding.spinnerIntervals.setAdapter(spinnerAdapter);
-        viewBinding.spinnerIntervals.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                updateIntervals(metricUnits, IntervalStatisticsModel.IntervalOption.values()[i]);
-            }
+        viewBinding.intervalsDropdown.setAdapter(intervalsAdapter);
+        viewBinding.intervalsDropdown.setOnItemClickListener((parent, view1, position, id) -> updateIntervals(metricUnits, IntervalStatisticsModel.IntervalOption.values()[position]));
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
+        viewBinding.intervalsDropdown.setText(
+                getContext().getString(R.string.value_integer_kilometer, Integer.parseInt(selectedInterval != null ? selectedInterval.toString() : IntervalStatisticsModel.IntervalOption.values()[0].toString())),
+                false
+        );
     }
 
     @Override
@@ -173,6 +178,7 @@ public class IntervalsFragment extends Fragment {
         if (viewModel == null) {
             return;
         }
+
         viewBinding.intervalRate.setText(isReportSpeed ? getString(R.string.stats_speed) : getString(R.string.stats_pace));
         LiveData<List<IntervalStatistics.Interval>> liveData = viewModel.getIntervalStats(trackId, metricUnits, selectedInterval);
         liveData.observe(getActivity(), intervalList -> adapter.swapData(intervalList, metricUnits, isReportSpeed));

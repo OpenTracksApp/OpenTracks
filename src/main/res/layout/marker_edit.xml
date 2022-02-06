@@ -31,40 +31,48 @@ limitations under the License.
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textInputOutlinedStyle"
                 android:hint="@string/generic_name"
                 android:imeOptions="actionNext"
-                android:importantForAutofill="no">
+                android:importantForAutofill="no"
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:drawableStart="@drawable/ic_marker_orange_pushpin_with_shadow"
                     android:id="@+id/marker_edit_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_marker_orange_pushpin_with_shadow"
                     android:inputType="textCapWords"
                     android:selectAllOnFocus="true" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textInputOutlinedExposedDropdownMenuStyle"
                 android:imeOptions="actionNext"
-                android:importantForAutofill="no">
+                android:importantForAutofill="no"
+                android:layout_marginBottom="16dp">
 
-                <AutoCompleteTextView
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/marker_edit_marker_type"
-                    style="@style/EditCategory"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:hint="@string/marker_edit_marker_type"
                     android:imeOptions="actionNext"
                     android:selectAllOnFocus="true" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                style="?attr/textInputOutlinedStyle"
                 android:hint="@string/generic_description"
                 android:imeOptions="actionNext"
-                android:importantForAutofill="no">
+                android:importantForAutofill="no"
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/marker_edit_description"
@@ -72,6 +80,7 @@ limitations under the License.
                     android:layout_height="wrap_content"
                     android:inputType="textCapSentences"
                     android:selectAllOnFocus="true" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <RelativeLayout

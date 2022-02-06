@@ -38,17 +38,17 @@ limitations under the License.
 
         <TextView
             android:id="@+id/controller_total_time"
-            style="@style/TextSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="?attr/textAppearanceSubtitle2"
             android:layout_centerInParent="true"
             android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/controller_status"
-            style="@style/TextMicro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="?attr/textAppearanceSubtitle2"
             android:layout_above="@id/controller_total_time"
             android:layout_centerHorizontal="true"
             android:singleLine="true" />

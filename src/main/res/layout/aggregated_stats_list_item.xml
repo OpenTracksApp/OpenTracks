@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="8dp"
+    android:paddingEnd="8dp"
+    android:paddingStart="8dp"
     android:paddingBottom="24dp">
 
     <!-- Guidelines -->
@@ -33,8 +36,7 @@
         android:id="@+id/aggregated_stats_sport_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toStartOf="@id/aggregated_stats_type_label"
         app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="?android:textColorPrimary"
@@ -42,10 +44,11 @@
 
     <TextView
         android:id="@+id/aggregated_stats_type_label"
-        style="@style/LargeLabel"
-        android:layout_marginStart="16dp"
+        style="@style/TextAppearance.OpenTracks.PrimaryHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/aggregated_stats_sport_icon"
         app:layout_constraintStart_toEndOf="@+id/aggregated_stats_sport_icon"
         app:layout_constraintTop_toTopOf="@+id/aggregated_stats_sport_icon"
@@ -53,10 +56,11 @@
 
     <TextView
         android:id="@+id/aggregated_stats_num_tracks"
-        style="@style/LargeLabel"
-        android:layout_marginStart="4dp"
+        style="@style/TextAppearance.OpenTracks.PrimaryHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginStart="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/aggregated_stats_type_label"
         app:layout_constraintStart_toEndOf="@+id/aggregated_stats_type_label"
         app:layout_constraintTop_toTopOf="@+id/aggregated_stats_type_label"
@@ -65,8 +69,9 @@
     <!-- Distance -->
     <TextView
         android:id="@+id/aggregated_stats_distance"
-        style="@style/StatsPrimaryValue"
-        android:layout_marginTop="16dp"
+        style="@style/TextAppearance.OpenTracks.PrimaryValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@id/aggregated_stats_distance_unit"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@id/guideline1"
@@ -76,8 +81,9 @@
 
     <TextView
         android:id="@+id/aggregated_stats_distance_unit"
-        style="@style/StatsUnit"
-        android:singleLine="true"
+        style="@style/TextAppearance.OpenTracks.PrimaryUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/aggregated_stats_distance"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintStart_toEndOf="@+id/aggregated_stats_distance"
@@ -86,9 +92,9 @@
     <!-- Time -->
     <TextView
         android:id="@+id/aggregated_stats_time"
-        style="@style/StatsPrimaryValue"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        style="@style/TextAppearance.OpenTracks.PrimaryValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/aggregated_stats_sport_icon"
@@ -97,8 +103,9 @@
     <!-- Avg. rate -->
     <TextView
         android:id="@+id/aggregated_stats_avg_rate"
-        style="@style/StatsSmallValue"
-        android:layout_marginTop="24dp"
+        style="@style/TextAppearance.OpenTracks.SecondaryValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/aggregated_stats_avg_rate_unit"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@id/guideline1"
@@ -107,7 +114,9 @@
 
     <TextView
         android:id="@+id/aggregated_stats_avg_rate_unit"
-        style="@style/StatsUnit"
+        style="@style/TextAppearance.OpenTracks.PrimaryUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/aggregated_stats_avg_rate"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintStart_toEndOf="@+id/aggregated_stats_avg_rate"
@@ -115,8 +124,9 @@
 
     <TextView
         android:id="@+id/aggregated_stats_avg_rate_label"
-        style="@style/StatsTinyLabel"
-        android:singleLine="true"
+        style="@style/TextAppearance.OpenTracks.SecondaryHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="@id/guideline2"
         app:layout_constraintStart_toEndOf="@id/guideline1"
@@ -126,8 +136,9 @@
     <!-- Max. rate -->
     <TextView
         android:id="@+id/aggregated_stats_max_rate"
-        style="@style/StatsSmallValue"
-        android:layout_marginTop="24dp"
+        style="@style/TextAppearance.OpenTracks.SecondaryValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toStartOf="@+id/aggregated_stats_max_rate_unit"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@id/guideline2"
@@ -136,7 +147,9 @@
 
     <TextView
         android:id="@+id/aggregated_stats_max_rate_unit"
-        style="@style/StatsUnit"
+        style="@style/TextAppearance.OpenTracks.PrimaryUnit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/aggregated_stats_max_rate"
         app:layout_constraintEnd_toStartOf="@id/guideline3"
         app:layout_constraintStart_toEndOf="@+id/aggregated_stats_max_rate"
@@ -144,8 +157,9 @@
 
     <TextView
         android:id="@+id/aggregated_stats_max_rate_label"
-        style="@style/StatsTinyLabel"
-        android:singleLine="true"
+        style="@style/TextAppearance.OpenTracks.SecondaryHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toStartOf="@id/guideline3"
         app:layout_constraintStart_toEndOf="@id/guideline2"
