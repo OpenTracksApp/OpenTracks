@@ -40,6 +40,9 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
     private TrackStatisticsUpdater trackStatisticsUpdater;
 
     private TrackPoint lastTrackPoint;
+    private TrackPoint lastTrackPointUIWithSpeed;
+    private TrackPoint lastTrackPointUIWithAltitude;
+
     private TrackPoint lastStoredTrackPoint;
     private TrackPoint lastStoredTrackPointWithLocation;
 
@@ -91,17 +94,13 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics());
         onNewTrackPoint(trackPointCreator.createSegmentStartManual());
 
-        lastTrackPoint = null;
-        lastStoredTrackPoint = null;
-        lastStoredTrackPointWithLocation = null;
+        reset();
     }
 
     void pause(TrackPointCreator trackPointCreator) {
         insertTrackPoint(trackPointCreator.createSegmentEnd());
 
-        lastTrackPoint = null;
-        lastStoredTrackPoint = null;
-        lastStoredTrackPointWithLocation = null;
+        reset();
     }
 
     void end(TrackPointCreator trackPointCreator) {
@@ -111,17 +110,15 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         trackId = null;
         trackStatisticsUpdater = null;
 
-        lastTrackPoint = null;
-        lastStoredTrackPoint = null;
-        lastStoredTrackPointWithLocation = null;
+        reset();
     }
 
-    Pair<Track, Pair<TrackPoint, SensorDataSet>> get(TrackPointCreator trackPointCreator) {
+    Pair<Track, Pair<TrackPoint, SensorDataSet>> getDataForUI(TrackPointCreator trackPointCreator) {
         if (trackPointCreator == null) {
             return null;
         }
         TrackStatisticsUpdater tmpTrackStatisticsUpdater = new TrackStatisticsUpdater(trackStatisticsUpdater);
-        Pair<TrackPoint, SensorDataSet> current = trackPointCreator.createCurrentTrackPoint(lastTrackPoint);
+        Pair<TrackPoint, SensorDataSet> current = trackPointCreator.createCurrentTrackPoint(lastTrackPointUIWithSpeed, lastTrackPointUIWithAltitude, lastStoredTrackPointWithLocation);
 
         tmpTrackStatisticsUpdater.addTrackPoint(current.first);
 
@@ -165,6 +162,12 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
      * @return TrackPoint was stored?
      */
     boolean onNewTrackPoint(@NonNull TrackPoint trackPoint) {
+        if (trackPoint.hasSpeed()) {
+            lastTrackPointUIWithSpeed = trackPoint;
+        }
+        if (trackPoint.hasAltitude()) {
+            lastTrackPointUIWithAltitude = trackPoint;
+        }
         //Storing trackPoint
 
         // Always insert the first segment location
@@ -251,6 +254,15 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
              */
             Log.w(TAG, "SQLiteException", e);
         }
+    }
+
+    private void reset() {
+        lastTrackPoint = null;
+        lastTrackPointUIWithSpeed = null;
+        lastTrackPointUIWithAltitude = null;
+
+        lastStoredTrackPoint = null;
+        lastStoredTrackPointWithLocation = null;
     }
 
     @Override

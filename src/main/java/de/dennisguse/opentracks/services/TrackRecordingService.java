@@ -46,7 +46,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     private static final String TAG = TrackRecordingService.class.getSimpleName();
 
-    private static final Duration RECORDING_DATA_UPDATE_INTERVAL = Duration.ofSeconds(1);
+    private static final Duration RECORDING_DATA_UPDATE_INTERVAL = Duration.ofMillis(100);
 
     public static final RecordingStatus STATUS_DEFAULT = RecordingStatus.notRecording();
     public static final RecordingData NOT_RECORDING = new RecordingData(null, null, null);
@@ -367,7 +367,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
             return;
         }
 
-        Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.get(trackPointCreator);
+        Pair<Track, Pair<TrackPoint, SensorDataSet>> data = trackRecordingManager.getDataForUI(trackPointCreator);
         if (data == null) {
             Log.w(TAG, "Requesting data if not recording is taking place, should not be done.");
             return;

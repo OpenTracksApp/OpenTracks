@@ -78,7 +78,6 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
         }
         remoteSensorManager.reset();
         altitudeSumManager.reset();
-        gpsHandler.reset();
     }
 
     private SensorDataSet fill(TrackPoint trackPoint) {
@@ -136,22 +135,22 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
         return segmentEnd;
     }
 
-    public Pair<TrackPoint, SensorDataSet> createCurrentTrackPoint(@Nullable TrackPoint lastValidTrackPoint) {
+    public Pair<TrackPoint, SensorDataSet> createCurrentTrackPoint(@Nullable TrackPoint lastTrackPointUISpeed, @Nullable TrackPoint lastTrackPointUIAltitude, @Nullable TrackPoint lastStoredTrackPointWithLocation) {
         TrackPoint currentTrackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, createNow());
-        TrackPoint lastTrackPoint = gpsHandler.getLastTrackPoint();
 
-        if (lastTrackPoint != null && lastTrackPoint.hasLocation()) {
-            currentTrackPoint.setSpeed(lastTrackPoint.getSpeed());
-            currentTrackPoint.setAltitude(lastTrackPoint.getAltitude());
-            if (lastTrackPoint.hasBearing()) {
-                currentTrackPoint.setBearing(lastTrackPoint.getBearing());
-            }
+        if (lastTrackPointUISpeed != null) {
+            currentTrackPoint.setSpeed(lastTrackPointUISpeed.getSpeed());
         }
-        if (lastValidTrackPoint != null && lastValidTrackPoint.hasLocation()) {
+        if (lastTrackPointUIAltitude != null) {
+            currentTrackPoint.setAltitude(lastTrackPointUIAltitude.getAltitude());
+        }
+
+        if (lastStoredTrackPointWithLocation != null && lastStoredTrackPointWithLocation.hasLocation()) {
             //We are taking the coordinates from the last stored TrackPoint, so the distance is monotonously increasing.
-            currentTrackPoint.setLongitude(lastValidTrackPoint.getLongitude());
-            currentTrackPoint.setLatitude(lastValidTrackPoint.getLatitude());
+            currentTrackPoint.setLongitude(lastStoredTrackPointWithLocation.getLongitude());
+            currentTrackPoint.setLatitude(lastStoredTrackPointWithLocation.getLatitude());
         }
+
         SensorDataSet sensorDataSet = fill(currentTrackPoint);
 
         return new Pair<>(currentTrackPoint, sensorDataSet);
