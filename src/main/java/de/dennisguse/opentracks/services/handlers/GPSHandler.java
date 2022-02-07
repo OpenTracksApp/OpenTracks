@@ -31,7 +31,6 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
     private GpsStatus gpsStatus;
     private Duration gpsInterval;
     private Distance thresholdHorizontalAccuracy;
-    private TrackPoint lastTrackPoint;
 
     public GPSHandler(TrackPointCreator trackPointCreator) {
         this.trackPointCreator = trackPointCreator;
@@ -53,7 +52,6 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
     @SuppressWarnings({"MissingPermission"})
     //TODO upgrade to AGP7.0.0/API31 started complaining about removeUpdates.
     public void onStop() {
-        lastTrackPoint = null;
         if (locationManager != null && context != null) {
             if (PermissionUtils.hasGPSPermission(context)) {
                 locationManager.removeUpdates(this);
@@ -129,7 +127,6 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
             return;
         }
 
-        lastTrackPoint = trackPoint;
         trackPointCreator.onNewTrackPoint(trackPoint);
     }
 
@@ -165,10 +162,6 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
         }
     }
 
-    TrackPoint getLastTrackPoint() {
-        return lastTrackPoint;
-    }
-
     Distance getThresholdHorizontalAccuracy() {
         return thresholdHorizontalAccuracy;
     }
@@ -176,9 +169,5 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
     @Override
     public void onGpsStatusChanged(GpsStatusValue prevStatus, GpsStatusValue currentStatus) {
         trackPointCreator.sendGpsStatus(currentStatus);
-    }
-
-    void reset() {
-        lastTrackPoint = null;
     }
 }
