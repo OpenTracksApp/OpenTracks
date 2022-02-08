@@ -182,6 +182,10 @@ public class PreferencesUtils {
         return getBoolean(R.string.publicapi_enabled_key, resources.getBoolean(R.bool.publicapi_enabled_default));
     }
 
+    public static boolean isPublicAPIDashboardEnabled() {
+        return getBoolean(R.string.publicapi_dashboard_enabled_key, resources.getBoolean(R.bool.publicapi_dashboard_enabled_default));
+    }
+
     public static boolean isMetricUnits() {
         final String STATS_UNIT = resources.getString(R.string.stats_units_default);
         return STATS_UNIT.equals(getString(R.string.stats_units_key, STATS_UNIT));

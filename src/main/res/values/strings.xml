@@ -447,10 +447,14 @@ limitations under the License.
     <string name="settings_stats_units_title">Preferred units</string>
 
     <!-- Settings public api -->
+    <string name="settings_api_title">Public API</string>
     <string name="settings_public_api_enabled_title">Public API</string>
     <string name="settings_public_api_enabled_summary_on">Other installed applications can start or stop recordings.</string>
     <string name="settings_public_api_enabled_summary_off">Only OpenTracks can start and stop recordings.</string>
     <string name="settings_public_api_disabled_toast">OpenTracks Public API is disabled: it can be enabled in the settings.</string>
+    <string name="settings_public_api_dashboard_enabled_title">Automatic data transfer</string>
+    <string name="settings_public_api_dashboard_enabled_summary_on">An application that started a recording can also access the recorded data.</string>
+    <string name="settings_public_api_dashboard_enabled_summary_off">Recorded data will not be shared automatically with other applications.</string>
 
     <!-- Settings import/export -->
     <string name="settings_import_section">Import</string>

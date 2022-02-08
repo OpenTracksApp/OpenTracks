@@ -118,26 +118,32 @@ __Only required permission:__
 * _ACCESS_FINE_LOCATION_: required to use the GPS.
 
 ### API
-The following functionalities by sending from an external application (e.g., [Automate](https://llamalab.com/automate/), [Tasker](https://tasker.joaoapps.com), or [Easer](https://github.com/renyuneyun/Easer)).
-The API can be invoked by sending an Intent to start an activity.
-Package  (depends on the variant installed):
+
+OpenTracks includes an API for starting/stopping recording by another installed application (e.g., [Automate](https://llamalab.com/automate/), [Tasker](https://tasker.joaoapps.com), or [Easer](https://github.com/renyuneyun/Easer)).
+The API can be invoked by sending an explicit Intent to start an activity.
+
+`Package`  (depends on the variant installed):
 * F-Droid: `de.dennisguse.opentracks`
 * GooglePlay: `de.dennisguse.opentracks.playStore`
 * Debug: `de.dennisguse.opentracks.debug`
 * Nightly: `de.dennisguse.opentracks.nightly`
 
-Activity:
+`Class`:
 * **Start a recording:**  `de.dennisguse.opentracks.publicapi.StartRecording`
 
-* For testing via adb: `adb shell am start -n "package/activity"`
+For testing via adb: `adb shell am start -n "package/class"`
+
+The Start/Stop API is disabled by default to protect the user's privacy, but it can easily be enabled in the settings.
 
 ## Custom Dashboards (incl. map)
-As of v3.3.1, OpenTracks supports custom dashboards.
-The reference implementation is [OSMDashboard](https://github.com/OpenTracksApp/OSMDashboard), which presents an OpenStreetMap map (showing the current track, incl. updates).
-The developer documentation is in [README_API.md](README_API.md).
+As of v3.3.1, OpenTracks supports custom dashboards for displaying previously recorded and live tracks.
+
+The reference implementation is [OSMDashboard](https://github.com/OpenTracksApp/OSMDashboard), which presents an OpenStreetMap map (showing the current track, incl. updates). The Dashboard API is also used by [Gadgetbridge](https://codeberg.org/Freeyourgadget/Gadgetbridge/) for displaying live track statistics on supported wearables.
 
 Alternatively, recorded tracks can be shared as KMZ/GPX with installed applications (e.g., [OsmAnd](https://play.google.com/store/apps/details?id=net.osmand)).
 However, this is rather slow and does not provide updates while recording.
+
+The developer documentation is in [README_API.md](README_API.md).
 
 ## Project history
 
