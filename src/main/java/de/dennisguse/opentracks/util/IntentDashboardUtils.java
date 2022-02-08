@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -23,6 +24,7 @@ import de.dennisguse.opentracks.settings.PreferencesUtils;
  * The receiving {@link android.app.Activity} gets temporary access to the {@link TracksColumns} and the {@link TrackPointsColumns} (incl. update).
  */
 public class IntentDashboardUtils {
+    private static final String TAG = IntentDashboardUtils.class.getSimpleName();
 
     private static final String ACTION_DASHBOARD = "Intent.OpenTracks-Dashboard";
 
@@ -58,6 +60,15 @@ public class IntentDashboardUtils {
      * @param trackIds the track ids
      */
     public static void startDashboard(Context context, boolean isRecording, Track.Id... trackIds) {
+        startDashboard(context, isRecording, null, null, trackIds);
+    }
+
+    /**
+     * Send intent to show tracks on a map (needs an another app) as resource URIs.
+     * By providing a targetPackage and targetClass an explicit intent can be sent,
+     * thus bypassing the need for the user to select an app.
+     */
+    public static void startDashboard(Context context, boolean isRecording, String targetPackage, String targetClass, Track.Id... trackIds) {
         if (trackIds.length == 0) {
             return;
         }
@@ -86,6 +97,13 @@ public class IntentDashboardUtils {
         clipData.addItem(new ClipData.Item(uris.get(TRACKPOINTS_URI_INDEX)));
         clipData.addItem(new ClipData.Item(uris.get(MARKERS_URI_INDEX)));
         intent.setClipData(clipData);
+
+        if ((targetPackage != null) && (targetClass != null)) {
+            Log.i(TAG, "Starting dashboard activity with explicit intent (package=" + targetPackage + ", class=" + targetClass + ")");
+            intent.setClassName(targetPackage, targetClass);
+        } else {
+            Log.i(TAG, "Starting dashboard activity with generic intent (package=" + targetPackage + ", class=" + targetClass + ")");
+        }
 
         context.startActivity(intent);
     }

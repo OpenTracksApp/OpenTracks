@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/settings_api_title">
+
+    <SwitchPreferenceCompat
+        android:title="@string/settings_public_api_enabled_title"
+        android:summaryOn="@string/settings_public_api_enabled_summary_on"
+        android:summaryOff="@string/settings_public_api_enabled_summary_off"
+        android:defaultValue="@bool/publicapi_enabled_default"
+        android:key="@string/publicapi_enabled_key" />
+
+    <SwitchPreferenceCompat
+        android:title="@string/settings_public_api_dashboard_enabled_title"
+        android:summaryOn="@string/settings_public_api_dashboard_enabled_summary_on"
+        android:summaryOff="@string/settings_public_api_dashboard_enabled_summary_off"
+        android:defaultValue="@bool/publicapi_dashboard_enabled_default"
+        android:key="@string/publicapi_dashboard_enabled_key" />
+
+</PreferenceScreen>

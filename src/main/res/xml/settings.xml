@@ -50,12 +50,11 @@
         android:summary="@string/settings_reset_summary"
         android:title="@string/settings_all_reset" />
 
-    <SwitchPreferenceCompat
-        android:title="@string/settings_public_api_enabled_title"
-        android:summaryOn="@string/settings_public_api_enabled_summary_on"
-        android:summaryOff="@string/settings_public_api_enabled_summary_off"
-        android:defaultValue="@bool/publicapi_enabled_default"
-        android:key="@string/publicapi_enabled_key" />
+    <Preference
+        android:icon="@drawable/ic_baseline_api_24"
+        android:key="@string/settings_api_key"
+        android:summary="Remote control and statistics API for other apps"
+        android:title="@string/settings_api_title"/>
 
     <Preference
         android:icon="@drawable/ic_baseline_info_24"
