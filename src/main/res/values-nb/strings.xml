@@ -574,4 +574,7 @@ limitations under the License.
     <string name="settings_public_api_enabled_summary_on">Andre installerte apper kan starte eller stoppe opptak.</string>
     <string name="settings_public_api_enabled_summary_off">Bare OpenTracks kan starte og stoppe opptak.</string>
     <string name="settings_public_api_disabled_toast">OpenTracks offentlige API er slått av: det kan slås på i innstillingene.</string>
+    <string name="activity_type_swimming">svømming</string>
+    <string name="activity_type_swimming_open">svømming i åpent vann</string>
+    <string name="activity_type_workout">styrketrening</string>
 </resources>
