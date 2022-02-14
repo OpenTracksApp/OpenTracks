@@ -9,14 +9,12 @@ import android.util.Pair;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.ShareContentProvider;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
-import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.FileUtils;
 
@@ -47,6 +45,7 @@ public class ShareUtils {
             trackDescription = track == null ? "" : new DescriptionGenerator(context).generateTrackDescription(track, false);
         }
 
+        String mime = "";
         ArrayList<Uri> uris = new ArrayList<>();
         for (Track.Id trackId : trackIds) {
             Track track = contentProviderUtils.getTrack(trackId);
@@ -56,14 +55,14 @@ public class ShareUtils {
             }
 
             String trackName = FileUtils.sanitizeFileName(track.getName());
-            Pair<Uri, String> uriTrackFile = ShareContentProvider.createURI(trackId, trackName, PreferencesUtils.getExportTrackFileFormat());
-            Pair<Uri, String> uriSharePicture = ShareContentProvider.createURI(trackId, trackName, TrackFileFormat.SHARE_PICTURE_PNG);
+            Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackId, trackName, PreferencesUtils.getExportTrackFileFormat());
 
-            uris.addAll(Arrays.asList(uriSharePicture.first, uriTrackFile.first));
+            uris.add(uriAndMime.first);
+            mime = uriAndMime.second;
         }
 
         return new Intent(Intent.ACTION_SEND_MULTIPLE)
-                .setType("image/*")
+                .setType(mime)
                 .putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris)
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 .putExtra(Intent.EXTRA_SUBJECT, context.getString(R.string.share_track_subject))

@@ -66,8 +66,6 @@ public class ShareContentProvider extends CustomContentProvider {
 
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA.getName() + "/*/*", URI_KMZ_WITH_TRACKDETAIL_AND_SENSORDATA);
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.getName() + "/*/*", URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES);
-
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.SHARE_PICTURE_PNG.getName() + "/*/*", URI_SHARE_PICTURE);
     }
 
     /**
@@ -147,9 +145,6 @@ public class ShareContentProvider extends CustomContentProvider {
                 return TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA;
             case URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES:
                 return TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES;
-
-            case URI_SHARE_PICTURE:
-                return TrackFileFormat.SHARE_PICTURE_PNG;
 
             default:
                 throw new RuntimeException("Could not derive TrackFileFormat from Uri " + uri);
