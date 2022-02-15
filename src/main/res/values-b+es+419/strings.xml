@@ -100,7 +100,7 @@
     <string name="generic_paused">En pausa</string>
     <string name="generic_recording">Grabando…</string>
     <string name="generic_save">Guardar</string>
-    <string name="generic_tracks">Rutas</string>
+    <string name="generic_tracks">Recorridos</string>
     <string name="gps_starting">Iniciando GPS</string>
     <string name="gps_wait_for_better_signal">Esperando una mejor señal de GPS</string>
     <string name="gps_wait_for_signal">Esperando señal de GPS</string>
@@ -141,7 +141,7 @@
     <string name="menu_show_on_map">Mostrar en el mapa</string>
     <string name="menu_start_gps">Iniciar GPS</string>
     <string name="menu_stop_gps">Detener GPS</string>
-    <string name="menu_resume_track">Reanudar ruta</string>
+    <string name="menu_resume_track">Reanudar recorrido</string>
     <string name="recording_service">Servicio de grabación</string>
     <string name="sensor_state_battery">Nivel de la batería</string>
     <string name="sensor_state_cadence">Cadencia</string>
@@ -169,9 +169,9 @@
     <string name="settings_recording_track_name_number_option">Número</string>
     <string name="settings_recording_track_name_title">Nombre de recorrido predeterminado</string>
     <string name="settings_reset">Restablecer</string>
-    <string name="settings_reset_confirm_message">Todos los parámetros de configuración se restablecerán a los valores predeterminados.</string>
+    <string name="settings_reset_confirm_message">Todos las configuraciones se restablecerán a los valores predeterminados. Esto no eliminará ningún recorrido en el dispositivo.</string>
     <string name="settings_reset_confirm_title">¿Restablecer ahora?</string>
-    <string name="settings_reset_done">Se restablecieron los valores predeterminados de todas las opciones de configuración</string>
+    <string name="settings_reset_done">Se restablecieron los valores predeterminados de todas las configuraciones</string>
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_stats_rate_title">Tasa preferida</string>
     <string name="settings_stats_units_imperial">Imperiales (millas, pies)</string>
@@ -199,7 +199,7 @@
     <string name="track_name_format">Recorrido %1$d</string>
     <string name="track_markers">Marcadores de %1$s</string>
     <string name="track_delete_one_confirm_message">El recorrido y sus marcadores se eliminarán del dispositivo permanentemente.</string>
-    <string name="track_delete_one_confirm_title">¿Eliminar ruta?</string>
+    <string name="track_delete_one_confirm_title">¿Eliminar recorrido\?</string>
     <string name="track_delete_multiple_confirm_message">Los recorridos seleccionados y sus respectivos marcadores se eliminarán del dispositivo permanentemente.</string>
     <string name="track_delete_progress_message">Eliminando…</string>
     <string name="track_detail_stats_tab">Estadísticas</string>
@@ -320,7 +320,7 @@
     <string name="about_url">Página web del proyecto: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Nombre de la versión: %1$s</string>
     <string name="bluetooth_disabled">Por favor habilite Bluetooth.</string>
-    <string name="settings_default_trackfileformat">Exportar/compartir formato de archivo</string>
+    <string name="settings_default_trackfileformat">Formato para exportar/compartir</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Mostrar estadísticas en pantalla de bloqueo</string>
     <string name="permission_gps_failed">OpenTracks necesita permiso para usar el GPS.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Mantener la pantalla encendida</string>
@@ -378,9 +378,9 @@
     <string name="track_distance_notification">Distancia: %1$s</string>
     <string name="aggregated_stats_empty_message">Grabe su primer recorrido para ver estadísticas agregadas</string>
     <string name="settings_default_export_uri_title">Directorio de exportación de recorrido</string>
-    <string name="help_track_map_content"> Utilice el icono de mapa pequeño.
+    <string name="help_track_map_content"> Utilice el pequeño icono de mapa.
 \na) (actualizaciones en vivo) Instale <a href="https://github.com/OpenTracksApp/OSMDashboard"> OSMDashboard </a>. Proporciona mapas en línea o fuera de línea a través de <a href="https://www.openstreetmap.org"> OpenStreetMap </a>.
-\nEn realidad, OSMDashboard es una aplicación separada que solo puede acceder (temporalmente) a los datos de las pistas que se mostrarán.
+\nEn realidad, OSMDashboard es una aplicación separada que solo puede acceder (temporalmente) a los datos de los recorridos que se mostrarán.
 \nb) A través de una aplicación de mapas normal (p. ej., <a href="http://osmand.net/"> OsmAnd </a> y <a href="https://maps.me/"> MAPS.ME </a>). Estas aplicaciones deben admitir el formato de archivo KMZ (solo ubicaciones y marcas de tiempo). De hecho, una aplicación debe admitir <i> ACTION_VIEW </i> con MIME <i> application / vnd.google-earth.kmz</i>. </string>
     <string name="voice_speed_lap">Velocidad de vuelta de %1$s</string>
     <string name="voice_pace_lap">Tiempo de vuelta de %1$s</string>
@@ -394,12 +394,12 @@
 \n* crear marcadores (incluidas imágenes)
 \n* funciona completamente sin conexión
 \n* mostrar pistas en un mapa (ver más abajo)</string>
-    <string name="help_track_map_title">¿Cómo mostrar un camino en un mapa\?</string>
+    <string name="help_track_map_title">¿Cómo mostrar un recorrido en un mapa\?</string>
     <string name="help_storage_pictures_title">¿Cómo almacena OpenTracks las imágenes que se tomaron como marcadores\?</string>
     <string name="help_storage_pictures_content">Estos se almacenan en el almacenamiento interno de la aplicación (es decir, solo se puede acceder a ellos dentro de OpenTracks).</string>
-    <string name="help_track_export_title">¿Cómo puedo exportar / compartir pistas grabadas\?</string>
-    <string name="help_track_export_content"> Las pistas se pueden exportar desde la configuración como KMZ, KML o GPX. KMZ / KML todos los datos; para GPX solo ubicaciones. Las pistas compartidas a través del <i> icono de compartir </i> se comparten como KMZ. </string>
-    <string name="help_data_google_play_services_title">¿OpenTracks requiere / usa el servicio Google Play\?</string>
+    <string name="help_track_export_title">¿Cómo puedo exportar/compartir recorridos grabados\?</string>
+    <string name="help_track_export_content"> Los recorridos se pueden exportar desde la configuración como KMZ, KML o GPX. KMZ / KML todos los datos; para GPX solo ubicaciones. Los recorridos compartidos a través del <i> icono de compartir </i> se comparten como KMZ. </string>
+    <string name="help_data_google_play_services_title">¿OpenTracks requiere/usa los servicios de Google Play\?</string>
     <string name="help_recording_title">¿Cómo registra OpenTracks los datos\?</string>
     <string name="help_recording_content">OpenTracks utiliza el sensor GPS del dispositivo para registrar la ubicación de forma continua. Si el dispositivo GPS informa datos inexactos (por ejemplo, ubicación, velocidad, elevación), OpenTracks no puede hacer nada al respecto.</string>
     <string name="help_data_storage_title">¿Cómo almacena OpenTracks los datos de los sensores\?</string>
@@ -413,7 +413,7 @@
     <string name="description_default_speed_or_pace">Por tipo de actividad</string>
     <string name="export_with_photos">con fotos</string>
     <string name="export_without_photos">sin fotos</string>
-    <string name="export_track_already_exists_msg">La pista %1$s ya existe en el directorio de destino.</string>
+    <string name="export_track_already_exists_msg">El recorrido %1$s ya existe en el directorio de destino.</string>
     <string name="export_all_do_it_for_all">hacerlo para todos los conflictos</string>
     <string name="export_track_errors">Recorridos no exportados</string>
     <string name="export_progress_summary_overwrite_msg">Recorridos sobreescritos</string>
@@ -452,8 +452,8 @@
     <string name="settings_announcements_distance_frequency">Intervalo de distancia</string>
     <string name="settings_layout_reset">Restablecer pantalla personalizada</string>
     <string name="settings_announcements">Anuncios</string>
-    <string name="settings_layout_reset_confirm_title">¿Restablecer todas las disposiciones\?</string>
-    <string name="settings_layout_reset_done">Todas las disposiciones se han revertido a los valores por defecto</string>
+    <string name="settings_layout_reset_confirm_title">¿Restablecer todos los diseños\?</string>
+    <string name="settings_layout_reset_done">Todos los diseños se han revertido a los valores predeterminados</string>
     <string name="settings_all_reset">Restablecer</string>
     <string name="stats_sensors_heart_rate">Ritmo cardíaco</string>
     <string name="stats_sensors_cadence">Cadencia</string>
@@ -464,22 +464,22 @@
     <string name="description_speed_source_gps">GPS</string>
     <string name="menu_voice_rate">Velocidad de la voz</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
-    <string name="settings_layout_reset_confirm_message">Todos los ajustes de disposición se revertirán a los valores por defecto. Esto no eliminará ningún recorrido en el dispositivo.</string>
+    <string name="settings_layout_reset_confirm_message">Todos los ajustes de diseño se revertirán a los valores predeterminados. Esto no eliminará ningún recorrido en el dispositivo.</string>
     <string name="settings_sensor_running_speed_and_cadence">Distancia, velocidad y cadencia</string>
     <string name="stats_coordinates">Latitud/Longitud</string>
     <string name="location_coordinate">%1$s°</string>
-    <string name="title_activity_settings_custom_layout">Personalizar distribución de grabación</string>
+    <string name="title_activity_settings_custom_layout">Personalizar pantalla de grabación</string>
     <string name="generic_choose_an_option">Selecciona una opción</string>
     <string name="settings_sensor_cycling_distance_speed">Distancia y velocidad</string>
     <string name="settings_sensor_cycling_cadence">Cadencia</string>
     <string name="track_delete_not_recording">Este recorrido no puede ser eliminado porque se está grabando actualmente.</string>
-    <string name="settings_defaults_title">Unidades y actividad por defecto</string>
+    <string name="settings_defaults_title">Unidades y actividad predeterminadas</string>
     <string name="export_cannot_write_to_dir">No se puede escribir al directorio de exportación.</string>
     <string name="export_dir_not_writable">" (¡No se puede escribir!)"</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
     <string name="stats_clock">Reloj</string>
     <string name="generic_filter">Filtrar</string>
-    <string name="menu_select_layout">Seleccionar distribución</string>
+    <string name="menu_select_layout">Seleccionar diseño</string>
     <string name="settings_import_export_title">Importar/Exportar</string>
     <string name="settings_announcements_title">Avisos de voz</string>
     <string name="settings_announcements_summary">Tiempo, Distancia, Velocidad de la voz</string>
@@ -494,7 +494,7 @@
     <string name="generic_today">Hoy</string>
     <string name="generic_yesterday">Ayer</string>
     <string name="menu_filter">Filtrar</string>
-    <string name="settings_ui_summary">Apariencia, Distribución de grabación, Tema</string>
+    <string name="settings_ui_summary">Apariencia, Diseño de grabación, Tema</string>
     <string name="settings_gps_title">GPS</string>
     <string name="settings_gps_summary">Intervalo de tiempo, Intervalo de distancia, Distancia máxima, Precisión</string>
     <string name="settings_sensors_title">Sensores Bluetooth</string>
@@ -505,14 +505,14 @@
     <string name="activity_type_workout">Entrenamiento</string>
     <string name="generic_from">Desde</string>
     <string name="generic_to">A</string>
-    <string name="settings_defaults_summary">Unidades preferidas, actividad por defecto, nombre por defecto de la pista</string>
+    <string name="settings_defaults_summary">Unidades preferidas, Actividad predeterminada, Nombre predeterminado del recorrido</string>
     <string name="settings_ui_title">Interfaz de usuario</string>
     <string name="settings_public_api_disabled_toast">La API pública de OpenTracks está deshabilitada: esta se puede activar en los ajustes.</string>
     <string name="settings_public_api_enabled_summary_off">Sólo OpenTracks puede iniciar y detener grabaciones.</string>
     <string name="generic_dismiss">Descartar</string>
     <string name="gps_recording_status">%1$s: %2$s</string>
     <string name="gps_recording_without_signal">OpenTracks está grabando sin datos GPS.</string>
-    <string name="menu_add_custom_layout">Nueva distribución</string>
+    <string name="menu_add_custom_layout">Nuevo diseño</string>
     <string name="permission_bluetooth_failed_rejected">Es necesario conceder manualmente a OpenTracks el acceso a los Dispositivos Cercanos en la configuración del sistema.</string>
     <string name="settings_open_tracks_summary">Todo sobre el proyecto OpenTracks</string>
     <string name="settings_activity_defaults_category">Prederminados de la actividad</string>
