@@ -577,4 +577,7 @@ limitations under the License.
     <string name="activity_type_swimming">svømming</string>
     <string name="activity_type_swimming_open">svømming i åpent vann</string>
     <string name="activity_type_workout">styrketrening</string>
+    <string name="generic_dismiss">Avvis</string>
+    <string name="gps_recording_status">%1$s: %2$s</string>
+    <string name="gps_recording_without_signal">OpenTracks gjør opptak uten GPS-data.</string>
 </resources>
