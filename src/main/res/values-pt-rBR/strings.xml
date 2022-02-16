@@ -522,4 +522,13 @@
     <string name="export_cannot_write_to_dir">Não é possível escrever para o diretório de exportação.</string>
     <string name="export_dir_not_writable">" (não se escreve!)"</string>
     <string name="no_compatible_file_manager_installed">Nenhum gerenciador de arquivos compatível instalado</string>
+    <string name="activity_type_swimming">natação</string>
+    <string name="activity_type_swimming_open">nadando em águas abertas</string>
+    <string name="activity_type_workout">treino</string>
+    <string name="settings_public_api_enabled_summary_off">Apenas o OpenTracks pode iniciar e parar gravações.</string>
+    <string name="settings_public_api_disabled_toast">A API pública do OpenTracks está desabilitada: pode ser habilitada nas configurações.</string>
+    <string name="gps_recording_status">%1$s: %2$s</string>
+    <string name="settings_public_api_enabled_title">API pública</string>
+    <string name="gps_recording_without_signal">O OpenTracks está gravando sem dados de GPS.</string>
+    <string name="settings_public_api_enabled_summary_on">Outros aplicativos instalados podem iniciar ou interromper gravações.</string>
 </resources>
