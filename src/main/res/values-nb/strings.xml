@@ -580,4 +580,5 @@ limitations under the License.
     <string name="generic_dismiss">Avvis</string>
     <string name="gps_recording_status">%1$s: %2$s</string>
     <string name="gps_recording_without_signal">OpenTracks gjør opptak uten GPS-data.</string>
+    <string name="settings_api_title">Offentlig API</string>
 </resources>
