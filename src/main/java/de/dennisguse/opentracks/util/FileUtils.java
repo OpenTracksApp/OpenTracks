@@ -146,7 +146,7 @@ public class FileUtils {
         for (int i = 0; i < name.length(); i++) {
             int codePoint = name.codePointAt(i);
             char character = name.charAt(i);
-            if (Character.isLetterOrDigit(character) || codePoint > 127 || isSpecialFat32(character) || character == '.') {
+            if (Character.isLetterOrDigit(character) || isSpecialFat32(character) || character == '.') {
                 builder.appendCodePoint(codePoint);
             } else {
                 builder.append("_");

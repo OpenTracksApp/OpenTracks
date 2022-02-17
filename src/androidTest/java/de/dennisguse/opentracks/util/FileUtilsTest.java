@@ -15,14 +15,14 @@
  */
 package de.dennisguse.opentracks.util;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.io.File;
 import java.util.Arrays;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for {@link FileUtils}.
@@ -98,6 +98,13 @@ public class FileUtilsTest {
     public void testSanitizeFileName_collapse() {
         String name = "hello//there";
         String expected = "hello_there";
+        assertEquals(expected, FileUtils.sanitizeFileName(name));
+    }
+
+    @Test
+    public void testSanitizeFileName_emoji() {
+        String name = "\uD83C\uDF5B-Food";
+        String expected = "_-Food";
         assertEquals(expected, FileUtils.sanitizeFileName(name));
     }
 
