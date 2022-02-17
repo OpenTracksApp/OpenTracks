@@ -581,4 +581,7 @@ limitations under the License.
     <string name="gps_recording_status">%1$s: %2$s</string>
     <string name="gps_recording_without_signal">OpenTracks gjør opptak uten GPS-data.</string>
     <string name="settings_api_title">Offentlig API</string>
+    <string name="settings_public_api_dashboard_enabled_title">Automatisk dataoverføring</string>
+    <string name="settings_public_api_dashboard_enabled_summary_on">Et program som startet et opptak kan også få tilgang til de registrerte dataene.</string>
+    <string name="settings_public_api_dashboard_enabled_summary_off">Registrerte data blir ikke delt automatisk med andre programmer.</string>
 </resources>
