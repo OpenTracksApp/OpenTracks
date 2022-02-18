@@ -19,8 +19,10 @@ import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.TrackPointIterator;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -46,7 +48,7 @@ public class VoiceAnnouncementUtilsTest {
         stats.setTotalAltitudeGain(6000f);
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, true, null);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, true, null, null);
 
         // then
         assertEquals("total distance 20.00 kilometers in 1 hour 5 minutes 10 seconds at 18.4 kilometers per hour", announcement);
@@ -67,7 +69,7 @@ public class VoiceAnnouncementUtilsTest {
         }
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, true, lastInterval);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, true, lastInterval, null);
 
         // then
         Assert.assertEquals(
@@ -91,7 +93,7 @@ public class VoiceAnnouncementUtilsTest {
         stats.setTotalAltitudeGain(6000f);
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, false, null);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, false, null, null);
 
         // then
         assertEquals("total distance 20.00 kilometers in 1 hour 5 minutes 10 seconds at 3 minutes 15 seconds per kilometer", announcement);
@@ -112,7 +114,7 @@ public class VoiceAnnouncementUtilsTest {
         }
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, false, lastInterval);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, false, lastInterval, null);
 
         // then
         assertEquals(
@@ -136,7 +138,7 @@ public class VoiceAnnouncementUtilsTest {
         stats.setTotalAltitudeGain(6000f);
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, true, null);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, true, null, null);
 
         // then
         assertEquals("total distance 12.43 miles in 1 hour 5 minutes 10 seconds at 11.4 miles per hour", announcement);
@@ -157,7 +159,7 @@ public class VoiceAnnouncementUtilsTest {
         }
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, true, lastInterval);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, true, lastInterval, null);
 
         // then
         assertEquals(
@@ -181,7 +183,7 @@ public class VoiceAnnouncementUtilsTest {
         stats.setTotalAltitudeGain(6000f);
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, false, null);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, false, null, null);
 
         // then
         assertEquals("total distance 12.43 miles in 1 hour 5 minutes 10 seconds at 5 minutes 15 seconds per mile", announcement);
@@ -202,7 +204,7 @@ public class VoiceAnnouncementUtilsTest {
         }
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, false, lastInterval);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, false, lastInterval, null);
 
         // then
         //assertEquals("total distance 12.43 miles in 1 hour 5 minutes 10 seconds at 5 minutes 15 seconds per mile Lap time of 1 minute 53 seconds per mile", announcement);
@@ -215,6 +217,25 @@ public class VoiceAnnouncementUtilsTest {
                         buildAndGetTimeText(lastInterval.getSpeed().toPace(false), true) +
                         " per mile",
                 announcement);
+    }
+
+    @Test
+    public void getAnnouncement_heart_rate_and_sensor_statistics() {
+        TrackStatistics stats = new TrackStatistics();
+        stats.setTotalDistance(Distance.of(20000));
+        stats.setTotalTime(Duration.ofHours(2).plusMinutes(5).plusSeconds(10));
+        stats.setMovingTime(Duration.ofHours(1).plusMinutes(5).plusSeconds(10));
+        stats.setMaxSpeed(Speed.of(100));
+        stats.setTotalAltitudeGain(6000f);
+        stats.setAverageHeartRate(HeartRate.of(139f));
+
+        SensorStatistics sensorStatistics = new SensorStatistics(null, HeartRate.of(180f), null, null, null);
+
+        // when
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, true, null, sensorStatistics);
+
+        // then
+        assertEquals("total distance 20.00 kilometers in 1 hour 5 minutes 10 seconds at 18.4 kilometers per hour Average heart rate 180 BPM Current heart rate 139 BPM", announcement);
     }
 
     /**

@@ -40,6 +40,7 @@ public class TrackStatisticsUpdaterTest {
 
         assertNull(statistics.getTotalAltitudeGain());
         assertNull(statistics.getTotalAltitudeLoss());
+        assertNull(statistics.getAverageHeartRate());
     }
 
     @Test
@@ -66,6 +67,7 @@ public class TrackStatisticsUpdaterTest {
 
         assertNull(statistics.getTotalAltitudeGain());
         assertNull(statistics.getTotalAltitudeLoss());
+        assertNull(statistics.getAverageHeartRate());
     }
 
     @Test
@@ -91,6 +93,8 @@ public class TrackStatisticsUpdaterTest {
         assertEquals(14.226, statistics.getMaxSpeed().toMPS(), 0.01);
         assertEquals(14.226, statistics.getAverageMovingSpeed().toMPS(), 0.01);
         assertEquals(9.84, statistics.getAverageSpeed().toMPS(), 0.01);
+        // Fix this once test is run
+        assertEquals(100f, statistics.getAverageHeartRate().getBPM(), 0.01);
     }
 
     @Test

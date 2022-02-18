@@ -34,6 +34,7 @@ import de.dennisguse.opentracks.data.TrackPointIterator;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
 
@@ -171,8 +172,12 @@ public class VoiceAnnouncement {
         IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.one(isMetricUnits));
         intervalStatistics.addTrackPoints(trackPointIterator);
         IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
+        SensorStatistics sensorStatistics = null;
+        if (track.getId() != null) {
+            sensorStatistics = contentProviderUtils.getSensorStats(track.getId());
+        }
 
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), isMetricUnits, isReportSpeed, lastInterval);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), isMetricUnits, isReportSpeed, lastInterval, sensorStatistics);
 
         // We don't care about the utterance id. It is supplied here to force onUtteranceCompleted to be called.
         tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null, "not used");

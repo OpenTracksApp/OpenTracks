@@ -22,10 +22,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 
@@ -64,6 +66,7 @@ public class TrackStatisticsUpdater {
 
     private final AltitudeRingBuffer altitudeBuffer;
     private final SpeedRingBuffer speedBuffer;
+    private final ArrayList<HeartRate> heartRateReadings;
 
     // The current segment's statistics
     private final TrackStatistics currentSegment;
@@ -85,6 +88,7 @@ public class TrackStatisticsUpdater {
 
         altitudeBuffer = new AltitudeRingBuffer(ALTITUDE_SMOOTHING_FACTOR);
         speedBuffer = new SpeedRingBuffer(SPEED_SMOOTHING_FACTOR);
+        heartRateReadings = new ArrayList<>();
     }
 
     public TrackStatisticsUpdater(TrackStatisticsUpdater toCopy) {
@@ -93,6 +97,7 @@ public class TrackStatisticsUpdater {
 
         this.altitudeBuffer = new AltitudeRingBuffer(toCopy.altitudeBuffer);
         this.speedBuffer = new SpeedRingBuffer(toCopy.speedBuffer);
+        this.heartRateReadings = new ArrayList<>(toCopy.heartRateReadings);
 
         this.lastTrackPoint = toCopy.lastTrackPoint;
     }
@@ -142,6 +147,19 @@ public class TrackStatisticsUpdater {
             currentSegment.updateAltitudeExtremities(newAverage);
         }
 
+        // Update heart rate
+        if (trackPoint.hasHeartRate()) {
+            heartRateReadings.add(trackPoint.getHeartRate());
+
+            float sum = 0f;
+
+            for (HeartRate heartRate : heartRateReadings) {
+                sum += heartRate.getBPM();
+            }
+
+            currentSegment.setAverageHeartRate(HeartRate.of(sum / heartRateReadings.size()));
+        }
+
         // Update total distance
         if (trackPoint.hasSensorDistance()) {
             // Sensor-based distance/speed
@@ -184,6 +202,7 @@ public class TrackStatisticsUpdater {
         lastTrackPoint = null;
         altitudeBuffer.reset();
         speedBuffer.reset();
+        heartRateReadings.clear();
     }
 
     /**
