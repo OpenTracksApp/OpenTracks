@@ -1,5 +1,7 @@
 package de.dennisguse.opentracks.services.announcement;
 
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceHeartRate;
+
 import android.content.Context;
 
 import androidx.annotation.Nullable;
@@ -62,18 +64,19 @@ class VoiceAnnouncementUtils {
 
         currentRateMsg = currentInterval == null ? "" : " " + currentRateMsg;
 
-        if (sensorStatistics != null && sensorStatistics.hasHeartRate()) {
-            heartRateMsg = context.getString(R.string.average_heart_rate, Math.round(sensorStatistics.getAvgHeartRate().getBPM()));
-        }
-
-        if (currentInterval != null && currentInterval.hasAverageHeartRate()) {
-            if (!heartRateMsg.isEmpty()) {
-                heartRateMsg += " ";
+        if (shouldVoiceAnnounceHeartRate()) {
+            if (sensorStatistics != null && sensorStatistics.hasHeartRate()) {
+                heartRateMsg = context.getString(R.string.average_heart_rate, Math.round(sensorStatistics.getAvgHeartRate().getBPM()));
             }
-            heartRateMsg += context.getString(R.string.current_heart_rate, Math.round(currentInterval.getAverageHeartRate().getBPM()));
-        }
 
-        heartRateMsg = heartRateMsg.isEmpty() ? "": " " + heartRateMsg;
+            if (currentInterval != null && currentInterval.hasAverageHeartRate()) {
+                if (!heartRateMsg.isEmpty()) {
+                    heartRateMsg += " ";
+                }
+                heartRateMsg += context.getString(R.string.current_heart_rate, Math.round(currentInterval.getAverageHeartRate().getBPM()));
+            }
+        }
+        heartRateMsg = heartRateMsg.isEmpty() ? "" : " " + heartRateMsg;
 
         return context.getString(R.string.voice_template, totalDistance, getAnnounceTime(context, trackStatistics.getMovingTime()), rate) + currentRateMsg + heartRateMsg;
     }

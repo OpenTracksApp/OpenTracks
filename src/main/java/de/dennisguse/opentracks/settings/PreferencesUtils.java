@@ -316,6 +316,10 @@ public class PreferencesUtils {
         return getFloat(R.string.voice_speed_rate_key, DEFAULT);
     }
 
+    public static boolean shouldVoiceAnnounceHeartRate() {
+        return getBoolean(R.string.voice_announce_heart_rate_key, false);
+    }
+
     public static Distance getRecordingDistanceInterval() {
         return Distance.of(getInt(R.string.recording_distance_interval_key, getRecordingDistanceIntervalDefaultInternal()));
     }

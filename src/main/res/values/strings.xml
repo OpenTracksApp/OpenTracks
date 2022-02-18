@@ -405,6 +405,7 @@ limitations under the License.
     <string name="settings_announcements">Announcements</string>
     <string name="settings_announcements_totaltime_frequency">Time interval</string>
     <string name="settings_announcements_distance_frequency">Distance interval</string>
+    <string name="settings_announcements_report_heart_rate">Report heart rate</string>
 
     <string name="settings_reset">Reset</string>
     <!-- Custom Layout -->
