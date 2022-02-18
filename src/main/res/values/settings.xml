@@ -283,6 +283,7 @@
         <item>1.2</item>
         <item>1.3</item>
     </string-array>
+    <string name="voice_announce_heart_rate_key" translatable="false">voiceAnnounceHeartRate</string>
 
     <string name="export_trackfileformat_key" translatable="false">exportTrackFileFormat</string>
     <!-- See TrackFileFormat -->

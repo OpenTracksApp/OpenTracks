@@ -26,4 +26,9 @@
         android:title="@string/menu_voice_rate"
         app:useSimpleSummaryProvider="true" />
 
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/voice_announce_heart_rate_key"
+        android:title="@string/settings_announcements_report_heart_rate" />
+
 </PreferenceScreen>

@@ -405,6 +405,7 @@ limitations under the License.
     <string name="settings_announcements">Announcements</string>
     <string name="settings_announcements_totaltime_frequency">Time interval</string>
     <string name="settings_announcements_distance_frequency">Distance interval</string>
+    <string name="settings_announcements_report_heart_rate">Report heart rate</string>
 
     <string name="settings_reset">Reset</string>
     <!-- Custom Layout -->
@@ -582,6 +583,8 @@ limitations under the License.
         <item quantity="one">total distance 1 mile</item>
         <item quantity="other">total distance %1$.2f miles</item>
     </plurals>
+    <string name="average_heart_rate">Average heart rate %1$d BPM</string>
+    <string name="current_heart_rate">Current heart rate %1$d BPM</string>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">bank</string>

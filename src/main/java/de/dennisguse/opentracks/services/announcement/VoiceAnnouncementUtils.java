@@ -1,5 +1,7 @@
 package de.dennisguse.opentracks.services.announcement;
 
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceHeartRate;
+
 import android.content.Context;
 
 import androidx.annotation.Nullable;
@@ -9,6 +11,7 @@ import java.time.Duration;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
 
@@ -17,7 +20,14 @@ class VoiceAnnouncementUtils {
     private VoiceAnnouncementUtils() {
     }
 
-    static String getAnnouncement(Context context, TrackStatistics trackStatistics, boolean isMetricUnits, boolean isReportSpeed, @Nullable IntervalStatistics.Interval currentInterval) {
+    static String getAnnouncement(
+            Context context,
+            TrackStatistics trackStatistics,
+            boolean isMetricUnits,
+            boolean isReportSpeed,
+            @Nullable IntervalStatistics.Interval currentInterval,
+            @Nullable SensorStatistics sensorStatistics
+    ) {
         Distance distance = trackStatistics.getTotalDistance();
         Speed distancePerTime = trackStatistics.getAverageMovingSpeed();
         Speed currentDistancePerTime = currentInterval != null ? currentInterval.getSpeed() : null;
@@ -32,6 +42,7 @@ class VoiceAnnouncementUtils {
         String rate;
         String currentRate;
         String currentRateMsg;
+        String heartRateMsg = "";
         if (isReportSpeed) {
             int speedId = isMetricUnits ? R.plurals.voiceSpeedKilometersPerHour : R.plurals.voiceSpeedMilesPerHour;
             double speedInUnit = distancePerTime.to(isMetricUnits);
@@ -53,7 +64,21 @@ class VoiceAnnouncementUtils {
 
         currentRateMsg = currentInterval == null ? "" : " " + currentRateMsg;
 
-        return context.getString(R.string.voice_template, totalDistance, getAnnounceTime(context, trackStatistics.getMovingTime()), rate) + currentRateMsg;
+        if (shouldVoiceAnnounceHeartRate()) {
+            if (sensorStatistics != null && sensorStatistics.hasHeartRate()) {
+                heartRateMsg = context.getString(R.string.average_heart_rate, Math.round(sensorStatistics.getAvgHeartRate().getBPM()));
+            }
+
+            if (currentInterval != null && currentInterval.hasAverageHeartRate()) {
+                if (!heartRateMsg.isEmpty()) {
+                    heartRateMsg += " ";
+                }
+                heartRateMsg += context.getString(R.string.current_heart_rate, Math.round(currentInterval.getAverageHeartRate().getBPM()));
+            }
+        }
+        heartRateMsg = heartRateMsg.isEmpty() ? "" : " " + heartRateMsg;
+
+        return context.getString(R.string.voice_template, totalDistance, getAnnounceTime(context, trackStatistics.getMovingTime()), rate) + currentRateMsg + heartRateMsg;
     }
 
     //TODO We might need to localize this using strings.xml if order is relevant.
