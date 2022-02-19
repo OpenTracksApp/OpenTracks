@@ -575,6 +575,13 @@ limitations under the License.
     <string name="voice_template">%1$s in %2$s at %3$s</string>
     <string name="voice_speed_lap">Lap speed of %1$s</string>
     <string name="voice_pace_lap">Lap time of %1$s</string>
+    <string name="voice_per_kilometer">per kilometer</string>
+    <string name="voice_per_mile">per mile</string>
+    <string name="lap_time">Lap time</string>
+    <string name="pace">Pace</string>
+    <string name="lap_speed">Lap speed</string>
+    <string name="speed">Speed</string>
+    <string name="total_distance">Total distance</string>
     <plurals name="voiceTotalDistanceKilometers">
         <item quantity="one">total distance 1 kilometer</item>
         <item quantity="other">total distance %1$.2f kilometers</item>
@@ -583,8 +590,16 @@ limitations under the License.
         <item quantity="one">total distance 1 mile</item>
         <item quantity="other">total distance %1$.2f miles</item>
     </plurals>
-    <string name="average_heart_rate">Average heart rate %1$d BPM</string>
-    <string name="current_heart_rate">Current heart rate %1$d BPM</string>
+    <plurals name="voiceDistanceKilometers">
+        <item quantity="one">1 kilometer</item>
+        <item quantity="other">%1$.2f kilometers</item>
+    </plurals>
+    <plurals name="voiceDistanceMiles">
+        <item quantity="one">1 mile</item>
+        <item quantity="other">%1$.2f miles</item>
+    </plurals>
+    <string name="average_heart_rate">Average heart rate</string>
+    <string name="current_heart_rate">Current heart rate</string>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">bank</string>

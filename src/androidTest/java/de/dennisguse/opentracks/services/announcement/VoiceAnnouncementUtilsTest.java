@@ -50,10 +50,10 @@ public class VoiceAnnouncementUtilsTest {
         stats.setTotalAltitudeGain(6000f);
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, true, null, null);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, true, null, null).toString();
 
         // then
-        assertEquals("total distance 20.00 kilometers in 1 hour 5 minutes 10 seconds at 18.4 kilometers per hour", announcement);
+        assertEquals("Total distance 20.00 kilometers, 1 hour 5 minutes 10 seconds, Speed 18.4 kilometers per hour,", announcement);
     }
 
     @Test
@@ -67,21 +67,22 @@ public class VoiceAnnouncementUtilsTest {
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, null)) {
             assertEquals(trackPointIterator.getCount(), numberOfPoints);
             IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.of(1000));
+            intervalStatistics.addTrackPoints(trackPointIterator);
             lastInterval = intervalStatistics.getIntervalList().get(intervalStatistics.getIntervalList().size() - 1);
         }
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, true, lastInterval, null);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, true, lastInterval, null).toString();
 
         // then
         Assert.assertEquals(
-                "total distance " +
+                "Total distance " +
                         StringUtils.getDistanceParts(context, stats.getTotalDistance(), true).first +
-                        " kilometers in " + buildAndGetTimeText(stats.getTotalTime(), false) + " at " +
+                        " kilometers, " + buildAndGetTimeText(stats.getTotalTime(), false) + ", Speed " +
                         StringUtils.getSpeedParts(context, stats.getAverageMovingSpeed(), true, true).first +
-                        " kilometers per hour Lap speed of " +
+                        " kilometers per hour, Lap speed " +
                         StringUtils.getSpeedParts(context, lastInterval.getSpeed(), true, true).first +
-                        " kilometers per hour",
+                        " kilometers per hour,",
                 announcement);
     }
 
@@ -95,10 +96,10 @@ public class VoiceAnnouncementUtilsTest {
         stats.setTotalAltitudeGain(6000f);
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, false, null, null);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, false, null, null).toString();
 
         // then
-        assertEquals("total distance 20.00 kilometers in 1 hour 5 minutes 10 seconds at 3 minutes 15 seconds per kilometer", announcement);
+        assertEquals("Total distance 20.00 kilometers, 1 hour 5 minutes 10 seconds, Pace 3 minutes 15 seconds per kilometer,", announcement);
     }
 
     @Test
@@ -112,21 +113,22 @@ public class VoiceAnnouncementUtilsTest {
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, null)) {
             assertEquals(trackPointIterator.getCount(), numberOfPoints);
             IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.of(1000));
+            intervalStatistics.addTrackPoints(trackPointIterator);
             lastInterval = intervalStatistics.getIntervalList().get(intervalStatistics.getIntervalList().size() - 1);
         }
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, false, lastInterval, null);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, false, lastInterval, null).toString();
 
         // then
         assertEquals(
-                "total distance " +
+                "Total distance " +
                         StringUtils.getDistanceParts(context, stats.getTotalDistance(), true).first +
-                        " kilometers in " + buildAndGetTimeText(stats.getTotalTime(), false) + " at " +
+                        " kilometers, " + buildAndGetTimeText(stats.getTotalTime(), false) + ", Pace " +
                         buildAndGetTimeText(stats.getAverageMovingSpeed().toPace(true), true) +
-                        " per kilometer Lap time of " +
+                        " per kilometer, Lap time " +
                         buildAndGetTimeText(lastInterval.getSpeed().toPace(true), true) +
-                        " per kilometer",
+                        " per kilometer,",
                 announcement);
     }
 
@@ -140,10 +142,10 @@ public class VoiceAnnouncementUtilsTest {
         stats.setTotalAltitudeGain(6000f);
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, true, null, null);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, true, null, null).toString();
 
         // then
-        assertEquals("total distance 12.43 miles in 1 hour 5 minutes 10 seconds at 11.4 miles per hour", announcement);
+        assertEquals("Total distance 12.43 miles, 1 hour 5 minutes 10 seconds, Speed 11.4 miles per hour,", announcement);
     }
 
     @Test
@@ -157,21 +159,22 @@ public class VoiceAnnouncementUtilsTest {
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, null)) {
             assertEquals(trackPointIterator.getCount(), numberOfPoints);
             IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.of(1000));
+            intervalStatistics.addTrackPoints(trackPointIterator);
             lastInterval = intervalStatistics.getIntervalList().get(intervalStatistics.getIntervalList().size() - 1);
         }
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, true, lastInterval, null);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, true, lastInterval, null).toString();
 
         // then
         assertEquals(
-                "total distance " +
+                "Total distance " +
                         StringUtils.getDistanceParts(context, stats.getTotalDistance(), false).first +
-                        " miles in " + buildAndGetTimeText(stats.getTotalTime(), false) + " at " +
+                        " miles, " + buildAndGetTimeText(stats.getTotalTime(), false) + ", Speed " +
                         StringUtils.getSpeedParts(context, stats.getAverageMovingSpeed(), false, true).first +
-                        " miles per hour Lap speed of " +
+                        " miles per hour, Lap speed " +
                         StringUtils.getSpeedParts(context, lastInterval.getSpeed(), false, true).first +
-                        " miles per hour",
+                        " miles per hour,",
                 announcement);
     }
 
@@ -185,10 +188,10 @@ public class VoiceAnnouncementUtilsTest {
         stats.setTotalAltitudeGain(6000f);
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, false, null, null);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, false, null, null).toString();
 
         // then
-        assertEquals("total distance 12.43 miles in 1 hour 5 minutes 10 seconds at 5 minutes 15 seconds per mile", announcement);
+        assertEquals("Total distance 12.43 miles, 1 hour 5 minutes 10 seconds, Pace 5 minutes 15 seconds per mile,", announcement);
     }
 
     @Test
@@ -202,22 +205,23 @@ public class VoiceAnnouncementUtilsTest {
         try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, null)) {
             assertEquals(trackPointIterator.getCount(), numberOfPoints);
             IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.of(1000));
+            intervalStatistics.addTrackPoints(trackPointIterator);
             lastInterval = intervalStatistics.getIntervalList().get(intervalStatistics.getIntervalList().size() - 1);
         }
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, false, lastInterval, null);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, false, false, lastInterval, null).toString();
 
         // then
         //assertEquals("total distance 12.43 miles in 1 hour 5 minutes 10 seconds at 5 minutes 15 seconds per mile Lap time of 1 minute 53 seconds per mile", announcement);
         assertEquals(
-                "total distance " +
+                "Total distance " +
                         StringUtils.getDistanceParts(context, stats.getTotalDistance(), false).first +
-                        " miles in " + buildAndGetTimeText(stats.getTotalTime(), false) + " at " +
+                        " miles, " + buildAndGetTimeText(stats.getTotalTime(), false) + ", Pace " +
                         buildAndGetTimeText(stats.getAverageMovingSpeed().toPace(false), true) +
-                        " per mile Lap time of " +
+                        " per mile, Lap time " +
                         buildAndGetTimeText(lastInterval.getSpeed().toPace(false), true) +
-                        " per mile",
+                        " per mile,",
                 announcement);
     }
 
@@ -240,10 +244,10 @@ public class VoiceAnnouncementUtilsTest {
         SensorStatistics sensorStatistics = new SensorStatistics(HeartRate.of(180f), HeartRate.of(180f), null, null, null);
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, true, lastInterval, sensorStatistics);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, true, lastInterval, sensorStatistics).toString();
 
         // then
-        assertEquals("total distance 14.21 kilometers in 16 minutes 39 seconds at 51.2 kilometers per hour Lap speed of 51.2 kilometers per hour Average heart rate 180 BPM Current heart rate 132 BPM", announcement);
+        assertEquals("Total distance 14.21 kilometers, 16 minutes 39 seconds, Speed 51.2 kilometers per hour, Lap speed 51.2 kilometers per hour, Average heart rate 180 bpm, Current heart rate 132 bpm,", announcement);
     }
 
     /**
