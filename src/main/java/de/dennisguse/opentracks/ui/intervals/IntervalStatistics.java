@@ -172,6 +172,7 @@ public class IntervalStatistics {
             time = time.plus(trackStatistics.getTotalTime());
             gain_m = trackStatistics.hasTotalAltitudeGain() ? trackStatistics.getTotalAltitudeGain() : gain_m;
             loss_m = trackStatistics.hasTotalAltitudeLoss() ? trackStatistics.getTotalAltitudeLoss() : loss_m;
+            avgHeartRate = trackStatistics.getAverageHeartRate();
             if (lastTrackPoint == null) {
                 return;
             }
@@ -188,6 +189,7 @@ public class IntervalStatistics {
             time = trackStatistics.getTotalTime();
             gain_m = trackStatistics.hasTotalAltitudeGain() ? trackStatistics.getTotalAltitudeGain() : gain_m;
             loss_m = trackStatistics.hasTotalAltitudeLoss() ? trackStatistics.getTotalAltitudeLoss() : loss_m;
+            avgHeartRate = trackStatistics.getAverageHeartRate();
         }
     }
 }

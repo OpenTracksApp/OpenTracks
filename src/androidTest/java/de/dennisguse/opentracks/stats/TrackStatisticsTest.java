@@ -109,7 +109,7 @@ public class TrackStatisticsTest {
         assertEquals(Speed.of(statistics.getTotalDistance(), statistics.getMovingTime()).toMPS(), statistics.getMaxSpeed().toMPS(), 0.001);
         assertEquals(1200.0, statistics.getMinAltitude(), 0.001);
         assertEquals(3575.0, statistics.getMaxAltitude(), 0.001);
-        assertEquals(140.0, statistics.getAverageHeartRate().getBPM(), 0.001);
+        assertEquals(150.0, statistics.getAverageHeartRate().getBPM(), 0.001);
     }
 
     @Test

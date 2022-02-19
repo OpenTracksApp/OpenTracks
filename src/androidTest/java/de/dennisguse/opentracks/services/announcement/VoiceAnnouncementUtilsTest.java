@@ -22,6 +22,7 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
@@ -36,6 +37,7 @@ public class VoiceAnnouncementUtilsTest {
     @Before
     public void setUp() {
         contentProviderUtils = new ContentProviderUtils(context);
+        PreferencesUtils.setVoiceAnnounceHeartRate(false);
     }
 
     @Test
@@ -221,21 +223,27 @@ public class VoiceAnnouncementUtilsTest {
 
     @Test
     public void getAnnouncement_heart_rate_and_sensor_statistics() {
-        TrackStatistics stats = new TrackStatistics();
-        stats.setTotalDistance(Distance.of(20000));
-        stats.setTotalTime(Duration.ofHours(2).plusMinutes(5).plusSeconds(10));
-        stats.setMovingTime(Duration.ofHours(1).plusMinutes(5).plusSeconds(10));
-        stats.setMaxSpeed(Speed.of(100));
-        stats.setTotalAltitudeGain(6000f);
-        stats.setAverageHeartRate(HeartRate.of(139f));
+        PreferencesUtils.setVoiceAnnounceHeartRate(true);
 
-        SensorStatistics sensorStatistics = new SensorStatistics(null, HeartRate.of(180f), null, null, null);
+        int numberOfPoints = 1000;
+        Pair<Track.Id, TrackStatistics> trackWithStats = TestDataUtil.buildTrackWithTrackPoints(contentProviderUtils, numberOfPoints);
+        Track.Id trackId = trackWithStats.first;
+        TrackStatistics stats = trackWithStats.second;
+        IntervalStatistics.Interval lastInterval;
+        try (TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(trackId, null)) {
+            assertEquals(trackPointIterator.getCount(), numberOfPoints);
+            IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.of(1000));
+            intervalStatistics.addTrackPoints(trackPointIterator);
+            lastInterval = intervalStatistics.getIntervalList().get(intervalStatistics.getIntervalList().size() - 1);
+        }
+
+        SensorStatistics sensorStatistics = new SensorStatistics(HeartRate.of(180f), HeartRate.of(180f), null, null, null);
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, true, null, sensorStatistics);
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, true, lastInterval, sensorStatistics);
 
         // then
-        assertEquals("total distance 20.00 kilometers in 1 hour 5 minutes 10 seconds at 18.4 kilometers per hour Average heart rate 180 BPM Current heart rate 139 BPM", announcement);
+        assertEquals("total distance 14.21 kilometers in 16 minutes 39 seconds at 51.2 kilometers per hour Lap speed of 51.2 kilometers per hour Average heart rate 180 BPM Current heart rate 132 BPM", announcement);
     }
 
     /**
