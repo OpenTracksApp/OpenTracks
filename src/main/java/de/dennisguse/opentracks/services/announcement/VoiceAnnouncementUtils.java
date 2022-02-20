@@ -4,6 +4,7 @@ import static android.text.Spanned.SPAN_INCLUSIVE_EXCLUSIVE;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceHeartRate;
 
 import android.content.Context;
+import android.os.Build;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.TtsSpan;
@@ -11,6 +12,7 @@ import android.text.style.TtsSpan;
 import androidx.annotation.Nullable;
 
 import java.time.Duration;
+import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
@@ -32,6 +34,7 @@ class VoiceAnnouncementUtils {
             @Nullable IntervalStatistics.Interval currentInterval,
             @Nullable SensorStatistics sensorStatistics
     ) {
+        Locale locale = getLanguageLocale(context);
         SpannableStringBuilder builder = new SpannableStringBuilder();
         Distance distance = trackStatistics.getTotalDistance();
         Speed distancePerTime = trackStatistics.getAverageMovingSpeed();
@@ -46,7 +49,7 @@ class VoiceAnnouncementUtils {
                 builder,
                 // This string is not actually spoken
                 context.getResources().getQuantityString(distanceId, getQuantityCount(distanceInUnit), distanceInUnit),
-                String.format("%.2f", distanceInUnit),
+                String.format(locale, "%.2f", distanceInUnit),
                 // Units should always be english singular
                 isMetricUnits ? "kilometer" : "mile"
         );
@@ -61,6 +64,7 @@ class VoiceAnnouncementUtils {
         if (!movingTime.isZero()) {
             appendDuration(
                     context,
+                    locale,
                     builder,
                     movingTime
             );
@@ -75,7 +79,7 @@ class VoiceAnnouncementUtils {
             appendDecimalUnit(
                     builder,
                     context.getResources().getQuantityString(speedId, getQuantityCount(speedInUnit), speedInUnit),
-                    String.format("%.1f", speedInUnit),
+                    String.format(locale, "%.1f", speedInUnit),
                     isMetricUnits ? "kilometer per hour" : "mile per hour"
             );
             builder.append(".");
@@ -89,7 +93,7 @@ class VoiceAnnouncementUtils {
                     appendDecimalUnit(
                             builder,
                             context.getResources().getQuantityString(speedId, getQuantityCount(currentDistancePerTimeInUnit), currentDistancePerTimeInUnit),
-                            String.format("%.1f", currentDistancePerTimeInUnit),
+                            String.format(locale, "%.1f", currentDistancePerTimeInUnit),
                             isMetricUnits ? "kilometer per hour" : "mile per hour"
                     );
                     builder.append(".");
@@ -100,6 +104,7 @@ class VoiceAnnouncementUtils {
             builder.append(" ").append(context.getString(R.string.pace));
             appendDuration(
                     context,
+                    locale,
                     builder,
                     time
             );
@@ -110,6 +115,7 @@ class VoiceAnnouncementUtils {
                 builder.append(" ").append(context.getString(R.string.lap_time));
                 appendDuration(
                         context,
+                        locale,
                         builder,
                         currentTime
                 );
@@ -146,12 +152,36 @@ class VoiceAnnouncementUtils {
         return builder;
     }
 
+    /**
+     * Fixes an issue where if a user configures a strange locale combination such as en-SE,
+     * where the language uses a different decimal point (.) compared to the region (,), then
+     * TTS will fail to speak decimal numbers because it will only speak with the language's
+     * decimal point but String formatting methods use the region's decimal point.
+     * <p>
+     * So construct a Locale based on the user's language alone.
+     */
+    static Locale getLanguageLocale(Context context) {
+        Locale baseLocale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            baseLocale = context.getResources().getConfiguration().getLocales().get(0);
+        } else {
+            baseLocale = context.getResources().getConfiguration().locale;
+        }
+
+        return getLanguageLocale(baseLocale);
+    }
+
+    static Locale getLanguageLocale(Locale baseLocale) {
+        return Locale.forLanguageTag(baseLocale.getLanguage());
+    }
+
     static int getQuantityCount(double d) {
         return (int) d;
     }
 
     private static void appendDuration(
             Context context,
+            Locale locale,
             SpannableStringBuilder builder,
             Duration duration
     ) {
@@ -164,7 +194,7 @@ class VoiceAnnouncementUtils {
                     builder,
                     context.getResources()
                             .getQuantityString(R.plurals.voiceHours, hours, hours),
-                    String.format("%1$d", hours),
+                    String.format(locale, "%1$d", hours),
                     "hour"
             );
         }
@@ -173,7 +203,7 @@ class VoiceAnnouncementUtils {
                     builder,
                     context.getResources()
                             .getQuantityString(R.plurals.voiceMinutes, minutes, minutes),
-                    String.format("%1$d", minutes),
+                    String.format(locale, "%1$d", minutes),
                     "minute"
             );
         }
@@ -182,7 +212,7 @@ class VoiceAnnouncementUtils {
                     builder,
                     context.getResources()
                             .getQuantityString(R.plurals.voiceSeconds, seconds, seconds),
-                    String.format("%1$d", seconds),
+                    String.format(locale, "%1$d", seconds),
                     "second"
             );
         }

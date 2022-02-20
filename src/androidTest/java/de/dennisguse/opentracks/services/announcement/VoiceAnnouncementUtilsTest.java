@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.services.announcement;
 
 import static org.junit.Assert.assertEquals;
+import static de.dennisguse.opentracks.services.announcement.VoiceAnnouncementUtils.getLanguageLocale;
 
 import android.content.Context;
 import android.util.Pair;
@@ -13,6 +14,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.time.Duration;
+import java.util.Locale;
 
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
@@ -36,6 +38,15 @@ public class VoiceAnnouncementUtilsTest {
     public void setUp() {
         contentProviderUtils = new ContentProviderUtils(context);
         PreferencesUtils.setVoiceAnnounceHeartRate(false);
+    }
+
+    @Test
+    public void getLanguageLocaleStripsRegion() {
+        Locale incompatibleRegion = Locale.forLanguageTag("en-SE");
+        // This demonstrates the problem
+        assertEquals("1,23", String.format(incompatibleRegion, "%.2f", 1.234));
+        // And the solution
+        assertEquals("1.23", String.format(getLanguageLocale(incompatibleRegion), "%.2f", 1.234));
     }
 
     @Test
