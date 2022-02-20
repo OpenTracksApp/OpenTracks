@@ -26,9 +26,37 @@
         android:title="@string/menu_voice_rate"
         app:useSimpleSummaryProvider="true" />
 
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="@string/voice_announce_heart_rate_key"
-        android:title="@string/settings_announcements_report_heart_rate" />
+    <PreferenceCategory android:title="@string/settings_announcements">
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/voice_announce_total_distance_key"
+            android:title="@string/total_distance" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/voice_announce_total_time_key"
+            android:title="@string/stats_total_time" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/voice_announce_average_speed_pace_key"
+            android:title="@string/settings_announcements_average_speed_pace" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/voice_announce_lap_speed_pace_key"
+            android:title="@string/settings_announcements_lap_speed_pace" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/voice_announce_average_heart_rate_key"
+            android:title="@string/settings_announcements_average_heart_rate" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/voice_announce_lap_heart_rate_key"
+            android:title="@string/settings_announcements_lap_heart_rate" />
+    </PreferenceCategory>
 
 </PreferenceScreen>

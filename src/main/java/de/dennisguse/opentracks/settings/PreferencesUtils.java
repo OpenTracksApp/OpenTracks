@@ -343,13 +343,58 @@ public class PreferencesUtils {
         return getFloat(R.string.voice_speed_rate_key, DEFAULT);
     }
 
-    public static boolean shouldVoiceAnnounceHeartRate() {
-        return getBoolean(R.string.voice_announce_heart_rate_key, false);
+    public static boolean shouldVoiceAnnounceTotalDistance() {
+        return getBoolean(R.string.voice_announce_total_distance_key, true);
     }
 
     @VisibleForTesting
-    public static void setVoiceAnnounceHeartRate(boolean value) {
-        setBoolean(R.string.voice_announce_heart_rate_key, value);
+    public static void setVoiceAnnounceTotalDistance(boolean value) {
+        setBoolean(R.string.voice_announce_total_distance_key, value);
+    }
+
+    public static boolean shouldVoiceAnnounceTotalTime() {
+        return getBoolean(R.string.voice_announce_total_time_key, true);
+    }
+
+    @VisibleForTesting
+    public static void setVoiceAnnounceTotalTime(boolean value) {
+        setBoolean(R.string.voice_announce_total_time_key, value);
+    }
+
+    public static boolean shouldVoiceAnnounceAverageSpeedPace() {
+        return getBoolean(R.string.voice_announce_average_speed_pace_key, true);
+    }
+
+    @VisibleForTesting
+    public static void setVoiceAnnounceAverageSpeedPace(boolean value) {
+        setBoolean(R.string.voice_announce_average_speed_pace_key, value);
+    }
+
+    public static boolean shouldVoiceAnnounceLapSpeedPace() {
+        return getBoolean(R.string.voice_announce_lap_speed_pace_key, true);
+    }
+
+    @VisibleForTesting
+    public static void setVoiceAnnounceLapSpeedPace(boolean value) {
+        setBoolean(R.string.voice_announce_lap_speed_pace_key, value);
+    }
+
+    public static boolean shouldVoiceAnnounceLapHeartRate() {
+        return getBoolean(R.string.voice_announce_lap_heart_rate_key, false);
+    }
+
+    @VisibleForTesting
+    public static void setVoiceAnnounceLapHeartRate(boolean value) {
+        setBoolean(R.string.voice_announce_lap_heart_rate_key, value);
+    }
+
+    public static boolean shouldVoiceAnnounceAverageHeartRate() {
+        return getBoolean(R.string.voice_announce_average_heart_rate_key, false);
+    }
+
+    @VisibleForTesting
+    public static void setVoiceAnnounceAverageHeartRate(boolean value) {
+        setBoolean(R.string.voice_announce_average_heart_rate_key, value);
     }
 
     public static Distance getRecordingDistanceInterval() {

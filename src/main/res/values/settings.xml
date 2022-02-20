@@ -291,7 +291,12 @@
         <item>1.2</item>
         <item>1.3</item>
     </string-array>
-    <string name="voice_announce_heart_rate_key" translatable="false">voiceAnnounceHeartRate</string>
+    <string name="voice_announce_total_distance_key" translatable="false">voiceAnnounceTotalDistance</string>
+    <string name="voice_announce_total_time_key" translatable="false">voiceAnnounceTotalTime</string>
+    <string name="voice_announce_average_speed_pace_key" translatable="false">voiceAnnounceAverageSpeedPace</string>
+    <string name="voice_announce_lap_speed_pace_key" translatable="false">voiceAnnounceLapSpeedPace</string>
+    <string name="voice_announce_average_heart_rate_key" translatable="false">voiceAnnounceAverageHeartRate</string>
+    <string name="voice_announce_lap_heart_rate_key" translatable="false">voiceAnnounceLapHeartRate</string>
 
     <string name="export_trackfileformat_key" translatable="false">exportTrackFileFormat</string>
     <!-- See TrackFileFormat -->
