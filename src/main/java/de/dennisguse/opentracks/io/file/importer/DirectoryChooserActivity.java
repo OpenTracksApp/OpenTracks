@@ -54,10 +54,7 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
 
     protected void onActivityResultCustom(@NonNull Intent resultData) {
         Uri directoryUri = resultData.getData();
-        int takeFlags = resultData.getFlags();
-        takeFlags &= (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        getContentResolver().takePersistableUriPermission(directoryUri, takeFlags);
-
+        IntentUtils.persistDirectoryAccessPermission(this, directoryUri, resultData.getFlags());
         startActivity(createNextActivityIntent(directoryUri));
     }
 
@@ -111,11 +108,11 @@ public abstract class DirectoryChooserActivity extends AppCompatActivity {
             Uri oldDirectoryUri = PreferencesUtils.getDefaultExportDirectoryUri();
             Uri newDirectoryUri = resultData.getData();
             if (oldDirectoryUri != null && !newDirectoryUri.equals(oldDirectoryUri)) {
-                IntentUtils.releaseDirectoryAccessPermission(getApplicationContext(), oldDirectoryUri);
+                IntentUtils.releaseDirectoryAccessPermission(this, oldDirectoryUri);
             }
 
             PreferencesUtils.setDefaultExportDirectoryUri(newDirectoryUri);
-            IntentUtils.persistDirectoryAccessPermission(getApplicationContext(), newDirectoryUri, resultData.getFlags());
+            IntentUtils.persistDirectoryAccessPermission(this, newDirectoryUri, resultData.getFlags());
         }
 
         @Override

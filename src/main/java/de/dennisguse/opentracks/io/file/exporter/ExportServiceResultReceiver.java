@@ -32,8 +32,10 @@ public class ExportServiceResultReceiver extends ResultReceiver {
         switch (resultCode) {
             case RESULT_CODE_SUCCESS:
                 receiver.onExportSuccess(trackId);
+                break;
             case RESULT_CODE_ERROR:
                 receiver.onExportError(trackId);
+                break;
             default:
                 throw new RuntimeException("Unknown resultCode.");
         }
