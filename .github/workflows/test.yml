@@ -1,6 +1,9 @@
 #https://github.com/marketplace/actions/android-emulator-runner
 name: Test
-on: [ push ]
+on:
+  push:
+  pull_request_target:
+
 jobs:
   test:
     timeout-minutes: 45
