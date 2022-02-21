@@ -22,7 +22,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.data.models.Altitude;
@@ -66,7 +65,8 @@ public class TrackStatisticsUpdater {
 
     private final AltitudeRingBuffer altitudeBuffer;
     private final SpeedRingBuffer speedBuffer;
-    private final ArrayList<HeartRate> heartRateReadings;
+    private float averageHeartRateBPM = 0.0f;
+    private long totalHeartRateMillis = 0;
 
     // The current segment's statistics
     private final TrackStatistics currentSegment;
@@ -88,7 +88,6 @@ public class TrackStatisticsUpdater {
 
         altitudeBuffer = new AltitudeRingBuffer(ALTITUDE_SMOOTHING_FACTOR);
         speedBuffer = new SpeedRingBuffer(SPEED_SMOOTHING_FACTOR);
-        heartRateReadings = new ArrayList<>();
     }
 
     public TrackStatisticsUpdater(TrackStatisticsUpdater toCopy) {
@@ -97,7 +96,6 @@ public class TrackStatisticsUpdater {
 
         this.altitudeBuffer = new AltitudeRingBuffer(toCopy.altitudeBuffer);
         this.speedBuffer = new SpeedRingBuffer(toCopy.speedBuffer);
-        this.heartRateReadings = new ArrayList<>(toCopy.heartRateReadings);
 
         this.lastTrackPoint = toCopy.lastTrackPoint;
     }
@@ -148,16 +146,14 @@ public class TrackStatisticsUpdater {
         }
 
         // Update heart rate
-        if (trackPoint.hasHeartRate()) {
-            heartRateReadings.add(trackPoint.getHeartRate());
+        if (trackPoint.hasHeartRate() && lastTrackPoint != null) {
+            Duration trackPointDuration = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
+            long newTotalMillis = totalHeartRateMillis + trackPointDuration.toMillis();
 
-            float sum = 0f;
+            averageHeartRateBPM = (totalHeartRateMillis * averageHeartRateBPM + trackPointDuration.toMillis() * trackPoint.getHeartRate().getBPM()) / newTotalMillis;
+            totalHeartRateMillis = newTotalMillis;
 
-            for (HeartRate heartRate : heartRateReadings) {
-                sum += heartRate.getBPM();
-            }
-
-            currentSegment.setAverageHeartRate(HeartRate.of(sum / heartRateReadings.size()));
+            currentSegment.setAverageHeartRate(HeartRate.of(averageHeartRateBPM));
         }
 
         // Update total distance
@@ -202,7 +198,12 @@ public class TrackStatisticsUpdater {
         lastTrackPoint = null;
         altitudeBuffer.reset();
         speedBuffer.reset();
-        heartRateReadings.clear();
+        resetAverageHeartRate();
+    }
+
+    private void resetAverageHeartRate() {
+        averageHeartRateBPM = 0.0f;
+        totalHeartRateMillis = 0;
     }
 
     /**

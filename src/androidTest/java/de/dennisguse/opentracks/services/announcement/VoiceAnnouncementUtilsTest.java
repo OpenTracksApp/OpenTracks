@@ -247,7 +247,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, true, lastInterval, sensorStatistics).toString();
 
         // then
-        assertEquals("Total distance 14.21 kilometers, 16 minutes 39 seconds, Speed 51.2 kilometers per hour, Lap speed 51.2 kilometers per hour, Average heart rate 180 bpm, Current heart rate 132 bpm,", announcement);
+        assertEquals("Total distance 14.21 kilometers, 16 minutes 39 seconds, Speed 51.2 kilometers per hour, Lap speed 51.2 kilometers per hour, Average heart rate 180 bpm, Current heart rate 133 bpm,", announcement);
     }
 
     /**

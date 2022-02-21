@@ -247,6 +247,10 @@ public class TrackStatistics {
         return totalTime.minus(movingTime);
     }
 
+    public boolean hasAverageHeartRate() {
+        return avgHeartRate != null;
+    }
+
     @Nullable
     public HeartRate getAverageHeartRate() {
         return avgHeartRate;
