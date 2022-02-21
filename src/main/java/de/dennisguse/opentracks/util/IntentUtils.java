@@ -77,7 +77,7 @@ public class IntentUtils {
 
     public static void persistDirectoryAccessPermission(Context context, Uri directoryUri, int existingFlags) {
         int newFlags = existingFlags & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        context.getContentResolver().takePersistableUriPermission(directoryUri, newFlags);
+        context.getApplicationContext().getContentResolver().takePersistableUriPermission(directoryUri, newFlags);
     }
 
     public static void releaseDirectoryAccessPermission(Context context, final Uri documentUri) {
@@ -85,7 +85,7 @@ public class IntentUtils {
             return;
         }
 
-        context.getContentResolver().getPersistedUriPermissions().stream()
+        context.getApplicationContext().getContentResolver().getPersistedUriPermissions().stream()
                 .map(UriPermission::getUri)
                 .filter(documentUri::equals)
                 .forEach(u -> context.getContentResolver().releasePersistableUriPermission(u, 0));
@@ -96,7 +96,7 @@ public class IntentUtils {
             return null;
         }
         try {
-            return DocumentFile.fromTreeUri(context, directoryUri);
+            return DocumentFile.fromTreeUri(context.getApplicationContext(), directoryUri);
         } catch (Exception e) {
             Log.w(TAG, "Could not decode directory: " + e.getMessage());
         }
