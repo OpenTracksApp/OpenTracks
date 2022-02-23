@@ -51,7 +51,7 @@ class VoiceAnnouncementUtils {
                 isMetricUnits ? "kilometer" : "mile"
         );
         // Punctuation helps introduce natural pauses in TTS
-        builder.append(",");
+        builder.append(".");
         if (distance.isZero()) {
             return builder;
         }
@@ -64,7 +64,7 @@ class VoiceAnnouncementUtils {
                     builder,
                     movingTime
             );
-            builder.append(",");
+            builder.append(".");
         }
 
         if (isReportSpeed) {
@@ -78,7 +78,7 @@ class VoiceAnnouncementUtils {
                     String.format("%.1f", speedInUnit),
                     isMetricUnits ? "kilometer per hour" : "mile per hour"
             );
-            builder.append(",");
+            builder.append(".");
 
             if (currentDistancePerTime != null) {
                 double currentDistancePerTimeInUnit = currentDistancePerTime.to(isMetricUnits);
@@ -92,7 +92,7 @@ class VoiceAnnouncementUtils {
                             String.format("%.1f", currentDistancePerTimeInUnit),
                             isMetricUnits ? "kilometer per hour" : "mile per hour"
                     );
-                    builder.append(",");
+                    builder.append(".");
                 }
             }
         } else {
@@ -103,8 +103,7 @@ class VoiceAnnouncementUtils {
                     builder,
                     time
             );
-            builder.append(" ").append(context.getString(perUnitStringId))
-                    .append(",");
+            builder.append(" ").append(context.getString(perUnitStringId)).append(".");
 
             Duration currentTime = currentDistancePerTime != null ? currentDistancePerTime.toPace(isMetricUnits) : Duration.ofMillis(0);
             if (!currentTime.isZero()) {
@@ -114,8 +113,7 @@ class VoiceAnnouncementUtils {
                         builder,
                         currentTime
                 );
-                builder.append(" ").append(context.getString(perUnitStringId))
-                        .append(",");
+                builder.append(" ").append(context.getString(perUnitStringId)).append(".");
             }
         }
 
@@ -129,7 +127,7 @@ class VoiceAnnouncementUtils {
                         context.getString(R.string.sensor_state_heart_rate_value, averageHeartRate),
                         averageHeartRate
                 );
-                builder.append(",");
+                builder.append(".");
             }
 
             if (currentInterval != null && currentInterval.hasAverageHeartRate()) {
@@ -141,7 +139,7 @@ class VoiceAnnouncementUtils {
                         context.getString(R.string.sensor_state_heart_rate_value, currentHeartRate),
                         currentHeartRate
                 );
-                builder.append(",");
+                builder.append(".");
             }
         }
 
