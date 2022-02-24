@@ -569,7 +569,7 @@ limitations under the License.
     <string name="settings_announcements_summary">Tiempo, Distancia, Velocidad de la voz</string>
     <string name="settings_sensor_bluetooth_service_filter_enabled">Mostrar sólo los dispositivos Bluetooth que anuncian los servicios requeridos</string>
     <string name="settings_open_tracks_summary">Todo sobre el proyecto OpenTracks</string>
-    <string name="settings_defaults_title">Unidades y actividad predeterminadas</string>
+    <string name="settings_defaults_title">Unidades y Actividad predeterminadas</string>
     <string name="settings_defaults_summary">Unidades preferidas, Actividad predeterminada, Nombre predeterminado del recorrido</string>
     <string name="settings_open_tracks_title">Open Tracks</string>
     <string name="generic_undo">Deshacer</string>
@@ -584,4 +584,8 @@ limitations under the License.
     <string name="generic_dismiss">Descartar</string>
     <string name="gps_recording_status">%1$s: %2$s</string>
     <string name="gps_recording_without_signal">OpenTracks está grabando sin datos GPS.</string>
+    <string name="settings_api_title">API pública</string>
+    <string name="settings_public_api_dashboard_enabled_title">Transferencia automática de datos</string>
+    <string name="settings_public_api_dashboard_enabled_summary_on">Una aplicación que ha iniciado una grabación puede también acceder a los datos grabados.</string>
+    <string name="settings_public_api_dashboard_enabled_summary_off">Los datos grabados no se compartirán automáticamente con otras aplicaciones.</string>
 </resources>
