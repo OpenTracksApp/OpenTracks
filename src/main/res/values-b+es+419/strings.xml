@@ -473,7 +473,7 @@
     <string name="settings_sensor_cycling_distance_speed">Distancia y velocidad</string>
     <string name="settings_sensor_cycling_cadence">Cadencia</string>
     <string name="track_delete_not_recording">Este recorrido no puede ser eliminado porque se está grabando actualmente.</string>
-    <string name="settings_defaults_title">Unidades y actividad predeterminadas</string>
+    <string name="settings_defaults_title">Unidades y Actividad predeterminadas</string>
     <string name="export_cannot_write_to_dir">No se puede escribir al directorio de exportación.</string>
     <string name="export_dir_not_writable">" (¡No se puede escribir!)"</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
@@ -533,4 +533,8 @@
     <string name="no_compatible_file_manager_installed">No hay un gestor de archivos compatible instalado</string>
     <string name="settings_running_sensor">Correr</string>
     <string name="settings_sensor_bluetooth_service_filter_enabled">Mostrar sólo los dispositivos Bluetooth que anuncian los servicios requeridos</string>
+    <string name="settings_api_title">API pública</string>
+    <string name="settings_public_api_dashboard_enabled_title">Transferencia automática de datos</string>
+    <string name="settings_public_api_dashboard_enabled_summary_off">Los datos grabados no se compartirán automáticamente con otras aplicaciones.</string>
+    <string name="settings_public_api_dashboard_enabled_summary_on">Una aplicación que ha iniciado una grabación puede también acceder a los datos grabados.</string>
 </resources>
