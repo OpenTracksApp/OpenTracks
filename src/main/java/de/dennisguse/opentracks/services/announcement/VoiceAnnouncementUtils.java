@@ -1,9 +1,14 @@
 package de.dennisguse.opentracks.services.announcement;
 
+import static android.text.Spanned.SPAN_INCLUSIVE_EXCLUSIVE;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceHeartRate;
 
 import android.content.Context;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.TtsSpan;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.time.Duration;
@@ -20,90 +25,149 @@ class VoiceAnnouncementUtils {
     private VoiceAnnouncementUtils() {
     }
 
-    static String getAnnouncement(
-            Context context,
-            TrackStatistics trackStatistics,
-            boolean isMetricUnits,
-            boolean isReportSpeed,
-            @Nullable IntervalStatistics.Interval currentInterval,
-            @Nullable SensorStatistics sensorStatistics
-    ) {
+    static Spannable getAnnouncement(Context context, TrackStatistics trackStatistics, boolean isMetricUnits, boolean isReportSpeed, @Nullable IntervalStatistics.Interval currentInterval, @Nullable SensorStatistics sensorStatistics) {
+        SpannableStringBuilder builder = new SpannableStringBuilder();
         Distance distance = trackStatistics.getTotalDistance();
         Speed distancePerTime = trackStatistics.getAverageMovingSpeed();
         Speed currentDistancePerTime = currentInterval != null ? currentInterval.getSpeed() : null;
+        int perUnitStringId = isMetricUnits ? R.string.voice_per_kilometer : R.string.voice_per_mile;
 
-        int totalDistanceId = isMetricUnits ? R.plurals.voiceTotalDistanceKilometers : R.plurals.voiceTotalDistanceMiles;
         double distanceInUnit = distance.toKM_Miles(isMetricUnits);
-        String totalDistance = context.getResources().getQuantityString(totalDistanceId, getQuantityCount(distanceInUnit), distanceInUnit);
+        int distanceId = isMetricUnits ? R.plurals.voiceDistanceKilometers : R.plurals.voiceDistanceMiles;
+
+        builder.append(context.getString(R.string.total_distance));
+        long distanceIntegerPart = (long) distanceInUnit;
+        // Extract the decimal part
+        String distanceFractionalPart = String.format("%.2f", (distanceInUnit - distanceIntegerPart)).substring(2);
+        // Units should always be english singular for TTS.
+        // See https://developer.android.com/reference/android/text/style/TtsSpan?hl=en#TYPE_MEASURE
+        appendDecimalUnit(builder, context.getResources().getQuantityString(distanceId, getQuantityCount(distanceInUnit), distanceInUnit), distanceIntegerPart, distanceFractionalPart, isMetricUnits ? "kilometer" : "mile");
+        // Punctuation helps introduce natural pauses in TTS
+        builder.append(".");
         if (distance.isZero()) {
-            return totalDistance;
+            return builder;
         }
 
-        String rate;
-        String currentRate;
-        String currentRateMsg;
-        String heartRateMsg = "";
+        // Announce time
+        Duration movingTime = trackStatistics.getMovingTime();
+        if (!movingTime.isZero()) {
+            appendDuration(context, builder, movingTime);
+            builder.append(".");
+        }
+
         if (isReportSpeed) {
             int speedId = isMetricUnits ? R.plurals.voiceSpeedKilometersPerHour : R.plurals.voiceSpeedMilesPerHour;
             double speedInUnit = distancePerTime.to(isMetricUnits);
-            rate = context.getResources().getQuantityString(speedId, getQuantityCount(speedInUnit), speedInUnit);
 
-            double currentDistancePerTimeInUnit = currentDistancePerTime != null ? currentDistancePerTime.to(isMetricUnits) : 0;
-            currentRate = context.getResources().getQuantityString(speedId, getQuantityCount(currentDistancePerTimeInUnit), currentDistancePerTimeInUnit);
-            currentRateMsg = context.getString(R.string.voice_speed_lap, currentRate);
+            builder.append(" ")
+                    .append(context.getString(R.string.speed));
+            long speedIntegerPart = (long) speedInUnit;
+            // Extract the decimal part
+            String speedFractionalPart = String.format("%.1f", (speedInUnit - speedIntegerPart)).substring(2);
+            appendDecimalUnit(builder, context.getResources().getQuantityString(speedId, getQuantityCount(speedInUnit), speedInUnit), speedIntegerPart, speedFractionalPart, isMetricUnits ? "kilometer per hour" : "mile per hour");
+            builder.append(".");
+
+            if (currentDistancePerTime != null) {
+                double currentDistancePerTimeInUnit = currentDistancePerTime.to(isMetricUnits);
+
+                if (currentDistancePerTimeInUnit > 0) {
+
+                    builder.append(" ")
+                            .append(context.getString(R.string.lap_speed));
+                    long currentDistanceIntegerPart = (long) currentDistancePerTimeInUnit;
+                    // Extract the decimal part
+                    String currentDistanceFractionalPart = String.format("%.1f", (currentDistancePerTimeInUnit - currentDistanceIntegerPart)).substring(2);
+                    appendDecimalUnit(builder, context.getResources().getQuantityString(speedId, getQuantityCount(currentDistancePerTimeInUnit), currentDistancePerTimeInUnit), currentDistanceIntegerPart, currentDistanceFractionalPart, isMetricUnits ? "kilometer per hour" : "mile per hour");
+                    builder.append(".");
+                }
+            }
         } else {
             Duration time = distancePerTime.toPace(isMetricUnits);
-
-            int paceId = isMetricUnits ? R.string.voice_pace_per_kilometer : R.string.voice_pace_per_mile;
-            rate = context.getString(paceId, getAnnounceTime(context, time));
+            builder.append(" ")
+                    .append(context.getString(R.string.pace));
+            appendDuration(context, builder, time);
+            builder.append(" ")
+                    .append(context.getString(perUnitStringId))
+                    .append(".");
 
             Duration currentTime = currentDistancePerTime != null ? currentDistancePerTime.toPace(isMetricUnits) : Duration.ofMillis(0);
-            currentRate = context.getString(paceId, getAnnounceTime(context, currentTime));
-            currentRateMsg = context.getString(R.string.voice_pace_lap, currentRate);
+            if (!currentTime.isZero()) {
+                builder.append(" ")
+                        .append(context.getString(R.string.lap_time));
+                appendDuration(context, builder, currentTime);
+                builder.append(" ")
+                        .append(context.getString(perUnitStringId))
+                        .append(".");
+            }
         }
-
-        currentRateMsg = currentInterval == null ? "" : " " + currentRateMsg;
 
         if (shouldVoiceAnnounceHeartRate()) {
             if (sensorStatistics != null && sensorStatistics.hasHeartRate()) {
-                heartRateMsg = context.getString(R.string.average_heart_rate, Math.round(sensorStatistics.getAvgHeartRate().getBPM()));
+                int averageHeartRate = Math.round(sensorStatistics.getAvgHeartRate().getBPM());
+
+                builder.append(" ")
+                        .append(context.getString(R.string.average_heart_rate));
+                appendCardinal(builder, context.getString(R.string.sensor_state_heart_rate_value, averageHeartRate), averageHeartRate);
+                builder.append(".");
             }
 
             if (currentInterval != null && currentInterval.hasAverageHeartRate()) {
-                if (!heartRateMsg.isEmpty()) {
-                    heartRateMsg += " ";
-                }
-                heartRateMsg += context.getString(R.string.current_heart_rate, Math.round(currentInterval.getAverageHeartRate().getBPM()));
+                int currentHeartRate = Math.round(currentInterval.getAverageHeartRate().getBPM());
+
+                builder.append(" ")
+                        .append(context.getString(R.string.current_heart_rate));
+                appendCardinal(builder, context.getString(R.string.sensor_state_heart_rate_value, currentHeartRate), currentHeartRate);
+                builder.append(".");
             }
         }
-        heartRateMsg = heartRateMsg.isEmpty() ? "" : " " + heartRateMsg;
 
-        return context.getString(R.string.voice_template, totalDistance, getAnnounceTime(context, trackStatistics.getMovingTime()), rate) + currentRateMsg + heartRateMsg;
-    }
-
-    //TODO We might need to localize this using strings.xml if order is relevant.
-    private static String getAnnounceTime(Context context, Duration duration) {
-        String result = "";
-
-        int hours = (int) (duration.toHours());
-        int minutes = (int) (duration.toMinutes() % 60);
-        int seconds = (int) (duration.getSeconds() % 60);
-
-        if (hours != 0) {
-            String hoursText = context.getResources()
-                    .getQuantityString(R.plurals.voiceHours, hours, hours);
-            result += hoursText + " ";
-        }
-        String minutesText = context.getResources()
-                .getQuantityString(R.plurals.voiceMinutes, minutes, minutes);
-        String secondsText = context.getResources()
-                .getQuantityString(R.plurals.voiceSeconds, seconds, seconds);
-
-        return result + minutesText + " " + secondsText;
+        return builder;
     }
 
     static int getQuantityCount(double d) {
         return (int) d;
+    }
+
+    private static void appendDuration(@NonNull Context context, @NonNull SpannableStringBuilder builder, @NonNull Duration duration) {
+        int hours = (int) (duration.toHours());
+        int minutes = (int) (duration.toMinutes() % 60);
+        int seconds = (int) (duration.getSeconds() % 60);
+
+        if (hours > 0) {
+            appendDecimalUnit(builder, context.getResources().getQuantityString(R.plurals.voiceHours, hours, hours), hours, null, "hour");
+        }
+        if (minutes > 0) {
+            appendDecimalUnit(builder, context.getResources().getQuantityString(R.plurals.voiceMinutes, minutes, minutes), minutes, null, "minute");
+        }
+        if (seconds > 0 || duration.isZero()) {
+            appendDecimalUnit(builder, context.getResources().getQuantityString(R.plurals.voiceSeconds, seconds, seconds), seconds, null, "second");
+        }
+    }
+
+    /**
+     * Speaks as: 98.14 [UNIT] - ninety eight point one four [UNIT with correct plural form]
+     */
+    private static void appendDecimalUnit(@NonNull SpannableStringBuilder builder, @NonNull String localizedText, long integerPart, @Nullable String fractionalPart, @NonNull String unit) {
+        TtsSpan.MeasureBuilder measureBuilder = new TtsSpan.MeasureBuilder()
+                .setUnit(unit);
+
+        if (fractionalPart == null) {
+            measureBuilder.setNumber(integerPart);
+        } else {
+            measureBuilder.setIntegerPart(integerPart)
+                    .setFractionalPart(fractionalPart);
+        }
+
+        builder.append(" ")
+                .append(localizedText, measureBuilder.build(), SPAN_INCLUSIVE_EXCLUSIVE);
+    }
+
+    /**
+     * Speaks as: 98 - ninety eight
+     */
+    private static void appendCardinal(@NonNull SpannableStringBuilder builder, @NonNull String localizedText, long number) {
+        builder.append(" ")
+                .append(localizedText, new TtsSpan.CardinalBuilder().setNumber(number).build(), SPAN_INCLUSIVE_EXCLUSIVE);
     }
 }
 

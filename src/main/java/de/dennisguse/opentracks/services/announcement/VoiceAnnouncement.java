@@ -21,6 +21,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
+import android.text.Spannable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -177,7 +178,7 @@ public class VoiceAnnouncement {
             sensorStatistics = contentProviderUtils.getSensorStats(track.getId());
         }
 
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), isMetricUnits, isReportSpeed, lastInterval, sensorStatistics);
+        Spannable announcement = VoiceAnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), isMetricUnits, isReportSpeed, lastInterval, sensorStatistics);
 
         // We don't care about the utterance id. It is supplied here to force onUtteranceCompleted to be called.
         tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null, "not used");
