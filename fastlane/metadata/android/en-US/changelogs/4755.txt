@@ -1,0 +1,6 @@
+v3.25.1: OpenTracks
+
+Bugfix:
+- Automatic export: hopefully prevent silent failures
+- Automatic export: prevent crash
+
