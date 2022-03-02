@@ -26,6 +26,7 @@ import java.util.List;
 
 import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 
@@ -64,6 +65,8 @@ public class TrackStatisticsUpdater {
 
     private final AltitudeRingBuffer altitudeBuffer;
     private final SpeedRingBuffer speedBuffer;
+    private float averageHeartRateBPM;
+    private Duration totalHeartRateDuration = Duration.ZERO;
 
     // The current segment's statistics
     private final TrackStatistics currentSegment;
@@ -85,6 +88,7 @@ public class TrackStatisticsUpdater {
 
         altitudeBuffer = new AltitudeRingBuffer(ALTITUDE_SMOOTHING_FACTOR);
         speedBuffer = new SpeedRingBuffer(SPEED_SMOOTHING_FACTOR);
+        resetAverageHeartRate();
     }
 
     public TrackStatisticsUpdater(TrackStatisticsUpdater toCopy) {
@@ -95,6 +99,7 @@ public class TrackStatisticsUpdater {
         this.speedBuffer = new SpeedRingBuffer(toCopy.speedBuffer);
 
         this.lastTrackPoint = toCopy.lastTrackPoint;
+        resetAverageHeartRate();
     }
 
     public TrackStatistics getTrackStatistics() {
@@ -142,6 +147,17 @@ public class TrackStatisticsUpdater {
             currentSegment.updateAltitudeExtremities(newAverage);
         }
 
+        // Update heart rate
+        if (trackPoint.hasHeartRate() && lastTrackPoint != null) {
+            Duration trackPointDuration = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
+            Duration newTotalDuration = totalHeartRateDuration.plus(trackPointDuration);
+
+            averageHeartRateBPM = (totalHeartRateDuration.toMillis() * averageHeartRateBPM + trackPointDuration.toMillis() * trackPoint.getHeartRate().getBPM()) / newTotalDuration.toMillis();
+            totalHeartRateDuration = newTotalDuration;
+
+            currentSegment.setAverageHeartRate(HeartRate.of(averageHeartRateBPM));
+        }
+
         // Update total distance
         if (trackPoint.hasSensorDistance()) {
             // Sensor-based distance/speed
@@ -184,6 +200,12 @@ public class TrackStatisticsUpdater {
         lastTrackPoint = null;
         altitudeBuffer.reset();
         speedBuffer.reset();
+        resetAverageHeartRate();
+    }
+
+    private void resetAverageHeartRate() {
+        averageHeartRateBPM = 0.0f;
+        totalHeartRateDuration = Duration.ZERO;
     }
 
     /**

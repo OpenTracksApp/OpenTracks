@@ -172,6 +172,13 @@ public class PreferencesUtils {
         setString(keyId, resources.getString(valueId));
     }
 
+    @VisibleForTesting
+    public static void setBoolean(int keyId, Boolean value) {
+        Editor editor = sharedPreferences.edit();
+        editor.putBoolean(getKey(keyId), value);
+        editor.apply();
+    }
+
     static void setInt(int keyId, int value) {
         Editor editor = sharedPreferences.edit();
         editor.putInt(getKey(keyId), value);
@@ -314,6 +321,15 @@ public class PreferencesUtils {
     public static float getVoiceSpeedRate() {
         final float DEFAULT = Float.parseFloat(resources.getString(R.string.voice_speed_rate_default));
         return getFloat(R.string.voice_speed_rate_key, DEFAULT);
+    }
+
+    public static boolean shouldVoiceAnnounceHeartRate() {
+        return getBoolean(R.string.voice_announce_heart_rate_key, false);
+    }
+
+    @VisibleForTesting
+    public static void setVoiceAnnounceHeartRate(boolean value) {
+        setBoolean(R.string.voice_announce_heart_rate_key, value);
     }
 
     public static Distance getRecordingDistanceInterval() {

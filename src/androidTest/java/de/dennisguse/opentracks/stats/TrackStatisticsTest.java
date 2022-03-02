@@ -28,6 +28,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Speed;
 
 /**
@@ -67,6 +68,7 @@ public class TrackStatisticsTest {
         assertEquals(0.0, statistics.getMaxSpeed().toMPS(), 0.0);
         assertEquals(0.0, statistics.getAverageSpeed().toMPS(), 0.0);
         assertEquals(0.0, statistics.getAverageMovingSpeed().toMPS(), 0.0);
+        assertNull(statistics.getAverageHeartRate());
     }
 
     @Test
@@ -91,6 +93,8 @@ public class TrackStatisticsTest {
         statistics.setMinAltitude(1200.0);  // Resulting min altitude
         statistics2.setMaxAltitude(3575.0);  // Resulting max altitude
         statistics2.setMinAltitude(2800.0);
+        statistics.setAverageHeartRate(HeartRate.of(100f));
+        statistics2.setAverageHeartRate(HeartRate.of(200f));
 
         // when
         statistics.merge(statistics2);
@@ -105,6 +109,7 @@ public class TrackStatisticsTest {
         assertEquals(Speed.of(statistics.getTotalDistance(), statistics.getMovingTime()).toMPS(), statistics.getMaxSpeed().toMPS(), 0.001);
         assertEquals(1200.0, statistics.getMinAltitude(), 0.001);
         assertEquals(3575.0, statistics.getMaxAltitude(), 0.001);
+        assertEquals(150.0, statistics.getAverageHeartRate().getBPM(), 0.001);
     }
 
     @Test

@@ -25,6 +25,7 @@ import java.time.Instant;
 
 import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -56,6 +57,8 @@ public class TrackStatistics {
     private Speed maxSpeed;
     private Float totalAltitudeGain_m = null;
     private Float totalAltitudeLoss_m = null;
+    // The average heart rate seen on this track
+    private HeartRate avgHeartRate = null;
 
     public TrackStatistics() {
         reset();
@@ -76,6 +79,7 @@ public class TrackStatistics {
         altitudeExtremities.set(other.altitudeExtremities.getMin(), other.altitudeExtremities.getMax());
         totalAltitudeGain_m = other.totalAltitudeGain_m;
         totalAltitudeLoss_m = other.totalAltitudeLoss_m;
+        avgHeartRate = other.avgHeartRate;
     }
 
     @VisibleForTesting
@@ -106,6 +110,19 @@ public class TrackStatistics {
             stopTime = other.stopTime;
         } else {
             stopTime = stopTime.isAfter(other.stopTime) ? stopTime : other.stopTime;
+        }
+
+        if (avgHeartRate == null) {
+            avgHeartRate = other.avgHeartRate;
+        } else {
+            if (other.avgHeartRate != null) {
+                // Using total time as weights for the averaging.
+                // Important to do this before total time is updated
+                avgHeartRate = HeartRate.of(
+                        (totalTime.getSeconds() * avgHeartRate.getBPM() + other.totalTime.getSeconds() * other.avgHeartRate.getBPM())
+                                / (totalTime.getSeconds() + other.totalTime.getSeconds())
+                );
+            }
         }
 
         totalDistance = totalDistance.plus(other.totalDistance);
@@ -230,6 +247,15 @@ public class TrackStatistics {
         return totalTime.minus(movingTime);
     }
 
+    public boolean hasAverageHeartRate() {
+        return avgHeartRate != null;
+    }
+
+    @Nullable
+    public HeartRate getAverageHeartRate() {
+        return avgHeartRate;
+    }
+
     /**
      * Gets the average speed.
      * This calculation only takes into account the displacement until the last point that was accounted for in statistics.
@@ -284,6 +310,12 @@ public class TrackStatistics {
     public void updateAltitudeExtremities(Altitude altitude) {
         if (altitude != null) {
             altitudeExtremities.update(altitude.toM());
+        }
+    }
+
+    public void setAverageHeartRate(HeartRate heartRate) {
+        if (heartRate != null) {
+            avgHeartRate = heartRate;
         }
     }
 
