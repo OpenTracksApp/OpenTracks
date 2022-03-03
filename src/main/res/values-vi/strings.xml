@@ -562,4 +562,14 @@ limitations under the License.
     <string name="export_dir_not_writable">" (không ghi được!)"</string>
     <string name="export_cannot_write_to_dir">Không thể viết để xuất khẩu, xuất khẩu.</string>
     <string name="no_compatible_file_manager_installed">Không có tương thích quản lý tập tin cài đặt</string>
+    <string name="activity_type_swimming">bơi</string>
+    <string name="activity_type_workout">thể dục</string>
+    <string name="settings_public_api_enabled_title">API công khai</string>
+    <string name="settings_public_api_enabled_summary_off">Chỉ OpenTracks có thể bắt đầu và dừng ghi.</string>
+    <string name="settings_public_api_enabled_summary_on">Các ứng dụng khác có thể bắt đầu hoặc dừng ghi.</string>
+    <string name="settings_announcements_report_heart_rate">Báo cáo nhịp tim</string>
+    <string name="settings_api_title">API công khai</string>
+    <string name="generic_dismiss">Bỏ</string>
+    <string name="gps_recording_status">%1$s: %2$s</string>
+    <string name="gps_recording_without_signal">OpenTracks đang ghi lại mà không có dữ liệu GPS.</string>
 </resources>
