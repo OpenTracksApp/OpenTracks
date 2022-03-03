@@ -85,8 +85,8 @@ limitations under the License.
     <string name="description_activity_type">Aktivitetstype: %1$s</string>
     <string name="description_average_moving_pace_in_minute">Gjennomsnittlig forflytningstempo: %1$s min/km (%2$s min/mi)</string>
     <string name="description_average_moving_speed">Gjennomsnittlig forflytningshastighet: %1$.2f km/t (%2$.1f mi/h)</string>
-    <string name="description_average_pace_in_minute">Gjennomsnittstempo: %1$s min/km (%2$s min/mi)</string>
-    <string name="description_average_speed">Gjennomsnittshastighet: %1$.2f km/t (%2$.1f mi/h)</string>
+    <string name="description_average_pace_in_minute">Gjennomsnittlig tempo: %1$s min/km (%2$s min/mi)</string>
+    <string name="description_average_speed">Gjennomsnittlig hastighet: %1$.2f km/t (%2$.1f mi/h)</string>
     <string name="description_altitude_gain">Total stigning: %1$d m (%2$d ft)</string>
     <string name="description_altitude_imperial">Høyde (ft)</string>
     <string name="description_altitude_metric">Høyde (m)</string>
@@ -584,4 +584,22 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_title">Automatisk dataoverføring</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Et program som startet et opptak kan også få tilgang til de registrerte dataene.</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Registrerte data blir ikke delt automatisk med andre programmer.</string>
+    <string name="settings_announcements_report_heart_rate">Rapporter puls</string>
+    <string name="voice_per_kilometer">per kilometer</string>
+    <string name="voice_per_mile">per engelsk mil</string>
+    <string name="lap_time">Rundetid</string>
+    <string name="pace">Tempo</string>
+    <string name="lap_speed">Rundehastighet</string>
+    <string name="speed">Hastighet</string>
+    <string name="total_distance">Total distanse</string>
+    <plurals name="voiceDistanceMiles">
+        <item quantity="one">1 engelsk mil</item>
+        <item quantity="other">%1$.2f engelske mil</item>
+    </plurals>
+    <string name="average_heart_rate">Gjennomsnittlig puls</string>
+    <plurals name="voiceDistanceKilometers">
+        <item quantity="one">1 kilometer</item>
+        <item quantity="other">%1$.2f kilometer</item>
+    </plurals>
+    <string name="current_heart_rate">Gjeldende puls</string>
 </resources>
