@@ -23,11 +23,14 @@ import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.time.OffsetDateTime;
+import java.util.Locale;
 
+import de.dennisguse.opentracks.LocaleRule;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
@@ -39,6 +42,9 @@ import de.dennisguse.opentracks.settings.PreferencesUtils;
  */
 @RunWith(AndroidJUnit4.class)
 public class TrackNameUtilsTest {
+
+    @Rule
+    public final LocaleRule mLocaleRule = new LocaleRule(Locale.ENGLISH);
 
     private static final Track.Id TRACK_ID = new Track.Id(1L);
     private static final OffsetDateTime START_TIME = OffsetDateTime.parse("2022-01-02T10:15:30.1234+01:00");

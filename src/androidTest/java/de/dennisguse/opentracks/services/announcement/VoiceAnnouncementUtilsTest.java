@@ -9,11 +9,14 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.time.Duration;
+import java.util.Locale;
 
+import de.dennisguse.opentracks.LocaleRule;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.TrackPointIterator;
@@ -28,6 +31,9 @@ import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
 
 @RunWith(AndroidJUnit4.class)
 public class VoiceAnnouncementUtilsTest {
+
+    @Rule
+    public final LocaleRule mLocaleRule = new LocaleRule(Locale.ENGLISH);
 
     private final Context context = ApplicationProvider.getApplicationContext();
     private ContentProviderUtils contentProviderUtils;

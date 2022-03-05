@@ -9,6 +9,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static de.dennisguse.opentracks.util.EspressoUtils.waitFor;
 
 import android.util.Pair;
 import android.view.View;
@@ -73,7 +74,7 @@ public class EspressoAggregatedFilterTest {
                         withParent(allOf(withId(R.id.filter_items),
                                 withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
-        checkBox.check(matches(isDisplayed()));
+        checkBox.perform(waitFor(2000));
 
         // check there's an edit text for "from date"
         onView(withId(R.id.filter_date_edit_text_from)).check(matches(isDisplayed()));
@@ -81,4 +82,5 @@ public class EspressoAggregatedFilterTest {
         // check there's an edit text for "to date"
         onView(withId(R.id.filter_date_edit_text_to)).check(matches(isDisplayed()));
     }
+
 }

@@ -2,51 +2,42 @@ package de.dennisguse.opentracks;
 
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.Espresso.openContextualActionModeOverflowMenu;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
+import static de.dennisguse.opentracks.util.EspressoUtils.childAtPosition;
+import static de.dennisguse.opentracks.util.EspressoUtils.veryLongTouch;
+import static de.dennisguse.opentracks.util.EspressoUtils.waitFor;
 
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
-
-import androidx.test.espresso.PerformException;
-import androidx.test.espresso.UiController;
-import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.action.MotionEvents;
-import androidx.test.espresso.util.HumanReadables;
-import androidx.test.espresso.util.TreeIterables;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.GrantPermissionRule;
 
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.TypeSafeMatcher;
 import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.concurrent.TimeoutException;
+import java.util.Locale;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class EspressoEditTrackRecordingTest {
+
+    @Rule
+    public final LocaleRule mLocaleRule = new LocaleRule(Locale.ENGLISH);
 
     @Rule
     public ActivityScenarioRule<TrackListActivity> mActivityTestRule = new ActivityScenarioRule<>(TrackListActivity.class);
@@ -71,26 +62,10 @@ public class EspressoEditTrackRecordingTest {
             trackControllerRecordButton.perform(waitFor(15000));
 
             // open menu
-            ViewInteraction overflowMenuButton = onView(
-                    allOf(withContentDescription("More options"),
-                            childAtPosition(
-                                    childAtPosition(
-                                            withId(R.id.toolbar),
-                                            2),
-                                    2),
-                            isDisplayed()));
-            overflowMenuButton.perform(click());
+            openContextualActionModeOverflowMenu();
 
-            // click on edit
-            ViewInteraction appCompatTextView = onView(
-                    allOf(withId(R.id.title), withText("Edit"),
-                            childAtPosition(
-                                    childAtPosition(
-                                            withId(R.id.content),
-                                            0),
-                                    0),
-                            isDisplayed()));
-            appCompatTextView.perform(click());
+            // Click the item.
+            onView(withText(R.string.menu_edit)).perform(click());
 
             // change name for "New Name"
             ViewInteraction textInputEditText = onView(
@@ -147,112 +122,4 @@ public class EspressoEditTrackRecordingTest {
         }
     }
 
-    private static Matcher<View> childAtPosition(
-            final Matcher<View> parentMatcher, final int position) {
-
-        return new TypeSafeMatcher<>() {
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("Child at position " + position + " in parent ");
-                parentMatcher.describeTo(description);
-            }
-
-            @Override
-            public boolean matchesSafely(View view) {
-                ViewParent parent = view.getParent();
-                return parent instanceof ViewGroup && parentMatcher.matches(parent)
-                        && view.equals(((ViewGroup) parent).getChildAt(position));
-            }
-        };
-    }
-
-    public static ViewAction waitId(final int viewId, final long millis) {
-        return new ViewAction() {
-            @Override
-            public Matcher<View> getConstraints() {
-                return isRoot();
-            }
-
-            @Override
-            public String getDescription() {
-                return "wait for a specific view with id <" + viewId + "> during " + millis + " millis.";
-            }
-
-            @Override
-            public void perform(final UiController uiController, final View view) {
-                uiController.loopMainThreadUntilIdle();
-                final long startTime = System.currentTimeMillis();
-                final long endTime = startTime + millis;
-                final Matcher<View> viewMatcher = withId(viewId);
-
-                do {
-                    for (View child : TreeIterables.breadthFirstViewTraversal(view)) {
-                        // found view with required ID
-                        if (viewMatcher.matches(child)) {
-                            return;
-                        }
-                    }
-
-                    uiController.loopMainThreadForAtLeast(50);
-                }
-                while (System.currentTimeMillis() < endTime);
-
-                // timeout happens
-                throw new PerformException.Builder()
-                        .withActionDescription(this.getDescription())
-                        .withViewDescription(HumanReadables.describe(view))
-                        .withCause(new TimeoutException())
-                        .build();
-            }
-        };
-    }
-
-    private static ViewAction waitFor(final long duration_ms) {
-        return new ViewAction() {
-
-            @Override
-            public String getDescription() {
-                return "Wait for milliseconds.";
-            }
-
-            @Override
-            public Matcher<View> getConstraints() {
-                return isDisplayed();
-            }
-
-            @Override
-            public void perform(UiController uiController, final View view) {
-                uiController.loopMainThreadForAtLeast(duration_ms);
-            }
-        };
-    }
-
-    private static ViewAction veryLongTouch(final int duration_ms) {
-        return new ViewAction() {
-            @Override
-            public String getDescription() {
-                return "Perform long touch.";
-            }
-
-            @Override
-            public Matcher<View> getConstraints() {
-                return isDisplayed();
-            }
-
-            @Override
-            public void perform(UiController uiController, final View view) {
-                // Get view absolute position
-                int[] location = new int[2];
-                view.getLocationOnScreen(location);
-
-                // Offset coordinates by view position
-                float[] coordinates = new float[]{location[0] + 1, location[1] + 1};
-
-                // Send down event, pause, and send up
-                MotionEvent down = MotionEvents.sendDown(uiController, coordinates, new float[]{1f, 1f}).down;
-                uiController.loopMainThreadForAtLeast(duration_ms);
-                MotionEvents.sendUp(uiController, down, coordinates);
-            }
-        };
-    }
 }

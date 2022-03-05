@@ -24,6 +24,7 @@ import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -45,6 +46,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 
+import de.dennisguse.opentracks.LocaleRule;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
 
@@ -55,6 +57,9 @@ import de.dennisguse.opentracks.data.models.Speed;
  */
 @RunWith(AndroidJUnit4.class)
 public class StringUtilsTest {
+
+    @Rule
+    public final LocaleRule mLocaleRule = new LocaleRule(Locale.ENGLISH);
 
     private final Context context = ApplicationProvider.getApplicationContext();
 

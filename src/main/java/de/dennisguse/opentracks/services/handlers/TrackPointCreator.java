@@ -85,8 +85,15 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
             Log.w(TAG, "Not started, should not be called.");
             return null;
         }
-        SensorDataSet sensorDataSet = remoteSensorManager.fill(trackPoint);
-        altitudeSumManager.fill(trackPoint);
+        SensorDataSet sensorDataSet = null;
+        BluetoothRemoteSensorManager localRemoteSensorManager = remoteSensorManager;
+        if (localRemoteSensorManager != null) {
+            sensorDataSet = localRemoteSensorManager.fill(trackPoint);
+        }
+        AltitudeSumManager localAltitudeSumManager = altitudeSumManager;
+        if (localAltitudeSumManager != null) {
+            localAltitudeSumManager.fill(trackPoint);
+        }
 
         return sensorDataSet;
     }

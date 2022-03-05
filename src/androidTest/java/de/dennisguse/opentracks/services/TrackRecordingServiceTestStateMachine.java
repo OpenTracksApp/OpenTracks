@@ -215,7 +215,7 @@ public class TrackRecordingServiceTestStateMachine {
 
         // when
         service.pauseCurrentTrack();
-        Thread.sleep(1000);
+        Thread.sleep(2000);
 
         // then
         assertEquals(TrackRecordingService.STATUS_DEFAULT, service.getRecordingStatusObservable().getValue());
