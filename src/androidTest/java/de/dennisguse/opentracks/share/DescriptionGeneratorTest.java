@@ -24,6 +24,7 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -31,7 +32,9 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.util.Locale;
 
+import de.dennisguse.opentracks.LocaleRule;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
@@ -46,6 +49,9 @@ import de.dennisguse.opentracks.util.StringUtils;
  */
 @RunWith(AndroidJUnit4.class)
 public class DescriptionGeneratorTest {
+
+    @Rule
+    public final LocaleRule mLocaleRule = new LocaleRule(Locale.ENGLISH);
 
     private static final Instant START_TIME = Instant.ofEpochMilli(1288721514000L);
     private DescriptionGenerator descriptionGenerator;

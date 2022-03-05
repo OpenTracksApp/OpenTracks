@@ -13,22 +13,20 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
+import static de.dennisguse.opentracks.util.EspressoUtils.childAtPosition;
+import static de.dennisguse.opentracks.util.EspressoUtils.veryLongTouch;
+import static de.dennisguse.opentracks.util.EspressoUtils.waitFor;
+import static de.dennisguse.opentracks.util.EspressoUtils.withListSize;
 
 import android.app.ActivityManager;
 import android.app.Instrumentation;
 import android.content.Context;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.ListView;
 
-import androidx.test.espresso.Espresso;
+import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
-import androidx.test.espresso.UiController;
-import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.action.MotionEvents;
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -37,7 +35,6 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 
 import org.hamcrest.Description;
-import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.After;
 import org.junit.Before;
@@ -65,12 +62,12 @@ public class EspressoDeleteTrackTest {
         Instrumentation instrumentation
                 = InstrumentationRegistry.getInstrumentation();
         idlingResource = new MyIdlingResource(instrumentation.getTargetContext());
-        Espresso.registerIdlingResources(idlingResource);
+        IdlingRegistry.getInstance().register(idlingResource);
     }
 
     @After
     public void unregisterIntentServiceIdlingResource() {
-        Espresso.unregisterIdlingResources(idlingResource);
+        IdlingRegistry.getInstance().unregister(idlingResource);
     }
 
     @Ignore("Test fails permanently")
@@ -140,87 +137,6 @@ public class EspressoDeleteTrackTest {
         onView(withId(R.id.track_list)).check(ViewAssertions.matches(withListSize(countBefore - 1)));
     }
 
-    private static Matcher<View> childAtPosition(
-            final Matcher<View> parentMatcher, final int position) {
-
-        return new TypeSafeMatcher<>() {
-            @Override
-            public void describeTo(Description description) {
-                description.appendText("Child at position " + position + " in parent ");
-                parentMatcher.describeTo(description);
-            }
-
-            @Override
-            public boolean matchesSafely(View view) {
-                ViewParent parent = view.getParent();
-                return parent instanceof ViewGroup && parentMatcher.matches(parent)
-                        && view.equals(((ViewGroup) parent).getChildAt(position));
-            }
-        };
-    }
-
-    public static Matcher<View> withListSize (final int size) {
-        return new TypeSafeMatcher<>() {
-            @Override
-            public boolean matchesSafely(final View view) {
-                return ((ListView) view).getCount() == size;
-            }
-
-            @Override
-            public void describeTo(final Description description) {
-                description.appendText("ListView should have " + size + " items");
-            }
-        };
-    }
-
-    private static ViewAction waitFor(final long duration_ms) {
-        return new ViewAction() {
-
-            @Override
-            public String getDescription() {
-                return "Wait for milliseconds.";
-            }
-
-            @Override
-            public Matcher<View> getConstraints() {
-                return isDisplayed();
-            }
-
-            @Override
-            public void perform(UiController uiController, final View view) {
-                uiController.loopMainThreadForAtLeast(duration_ms);
-            }
-        };
-    }
-
-    private static ViewAction veryLongTouch(final int duration_ms) {
-        return new ViewAction() {
-            @Override
-            public String getDescription() {
-                return "Perform long touch.";
-            }
-
-            @Override
-            public Matcher<View> getConstraints() {
-                return isDisplayed();
-            }
-
-            @Override
-            public void perform(UiController uiController, final View view) {
-                // Get view absolute position
-                int[] location = new int[2];
-                view.getLocationOnScreen(location);
-
-                // Offset coordinates by view position
-                float[] coordinates = new float[]{location[0] + 1, location[1] + 1};
-
-                // Send down event, pause, and send up
-                MotionEvent down = MotionEvents.sendDown(uiController, coordinates, new float[]{1f, 1f}).down;
-                uiController.loopMainThreadForAtLeast(duration_ms);
-                MotionEvents.sendUp(uiController, down, coordinates);
-            }
-        };
-    }
 
     private int numberOfItemsListView() {
         final int[] counts = new int[1];

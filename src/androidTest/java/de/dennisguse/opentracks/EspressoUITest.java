@@ -1,5 +1,15 @@
 package de.dennisguse.opentracks;
 
+import static androidx.test.espresso.Espresso.onData;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.anything;
+import static de.dennisguse.opentracks.util.EspressoUtils.selectTabAtIndex;
+import static de.dennisguse.opentracks.util.EspressoUtils.waitFor;
+
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -12,20 +22,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.GrantPermissionRule;
 
-import com.google.android.material.tabs.TabLayout;
-
 import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static androidx.test.espresso.Espresso.onData;
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static org.hamcrest.Matchers.anything;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -136,43 +136,4 @@ public class EspressoUITest {
         };
     }
 
-    private static ViewAction waitFor(final long duration_ms) {
-        return new ViewAction() {
-
-            @Override
-            public String getDescription() {
-                return "Wait for milliseconds.";
-            }
-
-            @Override
-            public Matcher<View> getConstraints() {
-                return isDisplayed();
-            }
-
-            @Override
-            public void perform(UiController uiController, final View view) {
-                uiController.loopMainThreadForAtLeast(duration_ms);
-            }
-        };
-    }
-
-    private static ViewAction selectTabAtIndex(final int index) {
-        return new ViewAction() {
-            @Override
-            public String getDescription() {
-                return "Selecting tab.";
-            }
-
-            @Override
-            public Matcher<View> getConstraints() {
-                return isDisplayed();
-            }
-
-            @Override
-            public void perform(UiController uiController, View view) {
-                TabLayout tabLayout = (TabLayout) view;
-                tabLayout.getTabAt(index).select();
-            }
-        };
-    }
 }
