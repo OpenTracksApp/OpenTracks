@@ -450,7 +450,7 @@ limitations under the License.
     <string name="settings_night_mode_title">Vzhled</string>
     <string name="settings_night_mode_option_day">Světlý</string>
     <string name="settings_night_mode_option_night">Tmavý</string>
-    <string name="settings_sensor_wheel_circumference">Obvod kolečka (mm)</string>
+    <string name="settings_sensor_wheel_circumference">Obvod kola (mm)</string>
     <string name="stats_split_interval">Rozdělit interval</string>
     <string name="track_detail_intervals_tab">Intervaly</string>
     <string name="voice_pace_lap">Čas na kolo %1$s</string>
@@ -551,13 +551,13 @@ limitations under the License.
     <string name="settings_activity_defaults_category">Výchozí nastavení aktivity</string>
     <string name="settings_units_category">Jednotky</string>
     <string name="settings_import_export_summary">Import, export, automatický export</string>
-    <string name="settings_import_export_title">Dovoz/vývoz</string>
+    <string name="settings_import_export_title">Import/export</string>
     <string name="settings_announcements_summary">Čas, vzdálenost, rychlost hlasu</string>
     <string name="settings_announcements_title">Hlasová oznámení</string>
     <string name="settings_sensors_title">Bluetooth senzory</string>
     <string name="settings_gps_summary">Časový interval, Interval vzdálenosti, Maximální vzdálenost, Přesnost</string>
-    <string name="settings_ui_summary">Vzhled, Rozložení záznamu, Téma</string>
-    <string name="settings_open_tracks_title">Otevřené stopy</string>
+    <string name="settings_ui_summary">Vzhled, Vzhled měření, Téma</string>
+    <string name="settings_open_tracks_title">O programu</string>
     <string name="settings_open_tracks_summary">Vše o projektu OpenTracks</string>
     <string name="settings_defaults_title">Výchozí jednotky a aktivity</string>
     <string name="settings_ui_title">Uživatelské rozhraní</string>
@@ -582,4 +582,5 @@ limitations under the License.
     <string name="export_dir_not_writable">" (nelze zapisovat!)"</string>
     <string name="generic_today">Dnes</string>
     <string name="no_compatible_file_manager_installed">Není nainstalován kompatibilní správce souborů</string>
+    <string name="settings_announcements_report_heart_rate">Hlásit tepovou frekvenci</string>
 </resources>
