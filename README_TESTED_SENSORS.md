@@ -59,6 +59,7 @@ We do not support type of movement (i.e., walking vs running).
 
 * Polar Stride
 * Stryd (incl. power)
+* Wahoo Tickr X (Cadence appears to be reported in SPM rather than RPM)
 
 ## Tested Barometric Sensor Smartphones
 
