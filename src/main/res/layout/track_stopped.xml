@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/fields"
+        layout="@layout/track_edit_fields" />
+
+    <LinearLayout style="@style/BottomButtonBar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <!-- Time -->
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="?attr/textAppearanceHeadline2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="04:54:36" />
+
+            <!-- Distance -->
+            <TextView
+                android:id="@+id/distance"
+                style="?attr/textAppearanceHeadline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/distance_unit"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/time"
+                tools:layout_editor_absoluteX="52dp"
+                tools:text="130" />
+
+            <TextView
+                android:id="@+id/distance_unit"
+                style="@style/TextAppearance.OpenTracks.PrimaryUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/distance"
+                app:layout_constraintEnd_toStartOf="@id/guideline"
+                app:layout_constraintStart_toEndOf="@+id/distance"
+                tools:text="km" />
+
+            <!-- Average moving speed -->
+            <TextView
+                android:id="@+id/speed"
+                style="?attr/textAppearanceHeadline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toStartOf="@id/speed_unit"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@id/guideline"
+                app:layout_constraintTop_toBottomOf="@id/time"
+                tools:text="26,5" />
+
+            <TextView
+                android:id="@+id/speed_unit"
+                style="@style/TextAppearance.OpenTracks.PrimaryUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/speed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/speed"
+                tools:text="km/h" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/stats_summary_barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="time,distance,speed" />
+
+            <ImageView
+                android:id="@+id/resume_button"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="48dp"
+                app:srcCompat="@drawable/ic_button_resume"
+                app:layout_constraintTop_toBottomOf="@id/stats_summary_barrier"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/finish_button"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <ImageView
+                android:id="@+id/finish_button"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                app:srcCompat="@drawable/ic_button_done"
+                app:layout_constraintTop_toTopOf="@id/resume_button"
+                app:layout_constraintStart_toEndOf="@id/resume_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/resume_button" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

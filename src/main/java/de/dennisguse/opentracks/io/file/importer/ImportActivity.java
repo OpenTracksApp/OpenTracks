@@ -25,7 +25,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.documentfile.provider.DocumentFile;
 import androidx.fragment.app.FragmentActivity;
@@ -71,8 +70,6 @@ public class ImportActivity extends FragmentActivity {
         viewBinding = ImportActivityBinding.inflate(getLayoutInflater());
         setContentView(viewBinding.getRoot());
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-
         final Intent intent = getIntent();
         final ClipData intentClipData = intent.getClipData();
 
@@ -106,9 +103,6 @@ public class ImportActivity extends FragmentActivity {
             documentFiles = documentUris.stream().map(it -> DocumentFile.fromSingleUri(this, it)).collect(Collectors.toList());
         }
 
-        //Works for a directory, but we might have received multiple files via SEND_MULTIPLE.
-        toolbar.setTitle(getString(R.string.import_progress_message, documentFiles.get(0).getName()));
-
         initViews();
 
         viewModel = new ViewModelProvider(this).get(ImportViewModel.class);
@@ -116,6 +110,10 @@ public class ImportActivity extends FragmentActivity {
             summary = data;
             setProgress();
         });
+
+        //Works for a directory, but we might have received multiple files via SEND_MULTIPLE.
+        viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(getString(R.string.import_progress_message, documentFiles.get(0).getName()));
+        viewBinding.bottomAppBarLayout.bottomAppBar.setNavigationIcon(R.drawable.ic_logo_color_24dp);
     }
 
     @Override

@@ -24,6 +24,8 @@ public class AboutActivity extends AbstractActivity {
         viewBinding.aboutTextVersionCode.setText(getString(R.string.about_version_code, SystemUtils.getAppVersionCode(this)));
         viewBinding.aboutAppUrl.setText(getString(R.string.about_url, getString(R.string.app_web_url)));
 
+        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
+
         ViewUtils.makeClickableLinks(findViewById(android.R.id.content));
     }
 

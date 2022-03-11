@@ -105,7 +105,7 @@ public class MarkerResourceCursorAdapter extends ResourceCursorAdapter implement
 
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
         Track track = contentProviderUtils.getTrack(new Track.Id(trackId));
-        ListItemUtils.setListItem(activity, view, false, true, iconId, R.string.image_marker, name, null, null, 0,
+        ListItemUtils.setListItem(activity, view, false, iconId, R.string.image_marker, name, null, null, 0,
                 OffsetDateTime.ofInstant(Instant.ofEpochMilli(time), track.getZoneOffset()), category, description, hasPhoto);
     }
 

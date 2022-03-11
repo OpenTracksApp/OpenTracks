@@ -42,28 +42,27 @@ public class EspressoUITest {
     public void record_pause_resume_stop() {
         {
             // TrackListActivity: start recording
-            ViewInteraction trackControllerRecordButton = onView(withId(R.id.controller_record));
+            ViewInteraction trackControllerRecordButton = onView(withId(R.id.track_list_fab_action));
             trackControllerRecordButton.perform(click());
         }
         {
             // TrackRecordingActivity
-            ViewInteraction trackControllerRecordButton = onView(withId(R.id.controller_record));
-            ViewInteraction trackControllerStopButton = onView(withId(R.id.controller_stop));
+            ViewInteraction trackControllerStopButton = onView(withId(R.id.track_recording_fab_action));
 
-            // wait; stay recording
-            trackControllerRecordButton.perform(waitFor(5000));
-
-            //pause
-            trackControllerRecordButton.perform(veryLongTouch(1600));
-
-            // wait; stay paused
-            trackControllerRecordButton.perform(waitFor(1000));
-
-            // resume
-            trackControllerRecordButton.perform(click());
-
-            // wait; stay recording
-            trackControllerRecordButton.perform(waitFor(1000));
+//            // wait; stay recording
+//            trackControllerRecordButton.perform(waitFor(5000));
+//
+//            //pause
+//            trackControllerRecordButton.perform(veryLongTouch(1600));
+//
+//            // wait; stay paused
+//            trackControllerRecordButton.perform(waitFor(1000));
+//
+//            // resume
+//            trackControllerRecordButton.perform(click());
+//
+//            // wait; stay recording
+//            trackControllerRecordButton.perform(waitFor(1000));
 
             // stop;
             trackControllerStopButton.perform(veryLongTouch(1600));
@@ -75,13 +74,13 @@ public class EspressoUITest {
     public void record_move_through_tabs() {
         {
             // TrackListActivity: start recording
-            ViewInteraction trackControllerRecordButton = onView(withId(R.id.controller_record));
+            ViewInteraction trackControllerRecordButton = onView(withId(R.id.track_list_fab_action));
             trackControllerRecordButton.perform(click());
         }
         {
             // TrackRecordingActivity
             ViewInteraction tabLayout = onView(withId(R.id.track_detail_activity_tablayout));
-            ViewInteraction trackControllerStopButton = onView(withId(R.id.controller_stop));
+            ViewInteraction trackControllerStopButton = onView(withId(R.id.track_recording_fab_action));
 
             tabLayout.perform(selectTabAtIndex(1));
             tabLayout.perform(waitFor(1000));

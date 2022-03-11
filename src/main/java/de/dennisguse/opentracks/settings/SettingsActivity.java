@@ -10,6 +10,8 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.databinding.SettingsBinding;
+import de.dennisguse.opentracks.databinding.TrackRecordedBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 
 public class SettingsActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
@@ -20,6 +22,8 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
     public static final String FRAGMENT_KEY = "fragmentKey";
 
     private PreferenceFragmentCompat fragment = null;
+
+    private SettingsBinding viewBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +40,9 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
         if (fragment == null) {
             fragment = new MainSettingsFragment();
         }
+
+        viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(getString(R.string.menu_settings));
+        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.settings_fragment, fragment).commit();
     }
@@ -66,7 +73,8 @@ public class SettingsActivity extends AbstractActivity implements ChooseActivity
 
     @Override
     protected View getRootView() {
-        return getLayoutInflater().inflate(R.layout.settings, null);
+        viewBinding = SettingsBinding.inflate(getLayoutInflater());
+        return viewBinding.getRoot();
     }
 
     private PreferenceFragmentCompat getPreferenceScreen(String key) {

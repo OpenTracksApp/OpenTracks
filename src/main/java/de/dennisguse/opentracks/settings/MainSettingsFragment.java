@@ -69,12 +69,6 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        ((SettingsActivity) getActivity()).getSupportActionBar().setTitle(R.string.menu_settings);
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         trackRecordingServiceConnection.bind(getContext());

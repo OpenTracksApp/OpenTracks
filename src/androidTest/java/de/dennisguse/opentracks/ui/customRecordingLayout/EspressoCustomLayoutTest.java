@@ -41,7 +41,7 @@ public class EspressoCustomLayoutTest {
     @Test
     public void customLayoutTest() {
         // TrackListActivity: start recording
-        ViewInteraction trackControllerRecordButton = onView(ViewMatchers.withId(R.id.controller_record));
+        ViewInteraction trackControllerRecordButton = onView(ViewMatchers.withId(R.id.track_list_fab_action));
         trackControllerRecordButton.perform(click());
 
         // Get custom layout preferences and check all data fields are showed.
@@ -50,7 +50,7 @@ public class EspressoCustomLayoutTest {
         onView(withId(R.id.stats_recycler_view)).check(new RecyclerViewItemCountAssertion((int) layout.getFields().stream().filter(DataField::isVisible).count()));
 
         // stop recording
-        ViewInteraction trackControllerStopButton = onView(withId(R.id.controller_stop));
+        ViewInteraction trackControllerStopButton = onView(withId(R.id.track_recording_fab_action));
         trackControllerStopButton.perform(veryLongTouch(1600));
     }
 

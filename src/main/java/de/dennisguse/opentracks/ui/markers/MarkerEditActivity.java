@@ -101,7 +101,7 @@ public class MarkerEditActivity extends AbstractActivity {
         });
 
         boolean isNewMarker = markerId == null;
-        setTitle(isNewMarker ? R.string.menu_insert_marker : R.string.menu_edit);
+        viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(getString(isNewMarker ? R.string.menu_insert_marker : R.string.menu_edit));
         viewBinding.markerEditDone.setText(isNewMarker ? R.string.generic_add : R.string.generic_save);
         viewBinding.markerEditDone.setOnClickListener(v -> {
             viewModel.onDone(viewBinding.markerEditName.getText().toString(),
@@ -150,6 +150,8 @@ public class MarkerEditActivity extends AbstractActivity {
                                 viewBinding.markerEditDescription.getText().toString());
                     }
                 });
+
+        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
     }
 
     @Override

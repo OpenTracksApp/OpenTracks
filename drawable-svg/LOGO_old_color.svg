@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    enable-background="new 0 0 95.334 100"
+    height="100"
+    id="Ebene_1"
+    version="1.1"
+    viewBox="0 0 100 100"
+    width="100"
+    x="0px"
+    xmlns="http://www.w3.org/2000/svg"
+    y="0px"
+    xml:space="preserve"><metadata
+   id="metadata16"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata>
+    <defs id="defs14" />
+    <g id="g9"
+        transform="translate(-1.0593197,1.9067775)">
+	<linearGradient gradientUnits="userSpaceOnUse"
+        id="SVGID_1_"
+        x1="28.7554"
+        x2="82.789497"
+        y1="81.535202"
+        y2="9.2979002">
+		<stop style="stop-color:#FBB22F"
+            id="stop2"
+            offset="0" />
+        <stop style="stop-color:#F58820"
+            id="stop4"
+            offset="1" />
+	</linearGradient>
+        <path style="fill:url(#SVGID_1_)"
+            d="M 83.548,10.927 C 84.255,8.511 83.102,7.649 80.985,9.01 L 11.146,53.921 c -2.117,1.361 -1.795,2.628 0.714,2.815 L 40.865,58.9 c 2.51,0.188 5.291,2.267 6.18,4.621 l 10.282,27.208 c 0.89,2.354 2.195,2.304 2.902,-0.111 z"
+            id="path7" />
+</g>
+</svg>

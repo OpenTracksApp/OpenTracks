@@ -44,7 +44,6 @@ public class ListItemUtils {
      * @param context                  the context
      * @param view                     the list item view
      * @param isRecording              true if recording
-     * @param isPaused                 true if paused
      * @param iconId                   the icon id
      * @param iconContentDescriptionId the icon content description id
      * @param name                     the name value
@@ -56,11 +55,11 @@ public class ListItemUtils {
      * @param description              the description value
      * @param hasPhoto                 true if this list item has photo
      */
-    public static void setListItem(Context context, View view, boolean isRecording, boolean isPaused, int iconId, int iconContentDescriptionId, String name, String totalTime, String totalDistance, int markerCount, OffsetDateTime offsetDateTime, String category, String description, boolean hasPhoto) {
+    public static void setListItem(Context context, View view, boolean isRecording, int iconId, int iconContentDescriptionId, String name, String totalTime, String totalDistance, int markerCount, OffsetDateTime offsetDateTime, String category, String description, boolean hasPhoto) {
         // Set icon
         if (isRecording) {
-            iconId = isPaused ? R.drawable.ic_track_paused : R.drawable.ic_track_recording;
-            iconContentDescriptionId = isPaused ? R.string.image_pause : R.string.image_record;
+            iconId = R.drawable.ic_track_recording;
+            iconContentDescriptionId = R.string.image_record;
         }
 
         ImageView iconImageView = view.findViewById(R.id.list_item_icon);
@@ -75,7 +74,7 @@ public class ListItemUtils {
         TextView timeDistanceTextView = view.findViewById(R.id.list_item_time_distance);
         String timeDistanceText;
         if (isRecording) {
-            timeDistanceText = context.getString(isPaused ? R.string.generic_paused : R.string.generic_recording);
+            timeDistanceText = context.getString(R.string.generic_recording);
         } else {
             // Match list_item_time_distance in list_item.xml
             timeDistanceText = getTimeDistance(totalTime, totalDistance);

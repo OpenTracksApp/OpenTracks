@@ -39,7 +39,6 @@ import de.dennisguse.opentracks.services.announcement.VoiceAnnouncementManager;
 import de.dennisguse.opentracks.services.handlers.EGM2008CorrectionManager;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
-import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.SystemUtils;
 
 public class TrackRecordingService extends Service implements TrackPointCreator.Callback {
@@ -234,8 +233,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         }
 
         endRecording(true);
-
-        ExportUtils.postWorkoutExport(this, trackId);
 
         stopSelf();
     }

@@ -324,6 +324,7 @@ limitations under the License.
         </activity>
 
         <activity android:name=".TrackRecordedActivity" />
+        <activity android:name=".TrackStoppedActivity" />
 
         <activity
             android:name=".TrackRecordingActivity"
