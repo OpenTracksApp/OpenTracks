@@ -60,6 +60,9 @@ public class AggregatedStatisticsActivity extends AbstractActivity implements Fi
             }
             adapter.notifyDataSetChanged();
         });
+
+        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
+        viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(getString(R.string.menu_aggregated_statistics));
     }
 
     @Override

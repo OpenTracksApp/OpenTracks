@@ -40,8 +40,6 @@ public class SettingsCustomLayoutListActivity extends AbstractActivity implement
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setTitle(getString(R.string.custom_layout_list_title));
-
         adapter = new SettingsCustomLayoutListAdapter(this, this);
         recyclerView = viewBinding.recyclerView;
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -114,6 +112,9 @@ public class SettingsCustomLayoutListActivity extends AbstractActivity implement
 
         ItemTouchHelper itemTouchhelper = new ItemTouchHelper(recyclerViewSwipeDeleteCallback);
         itemTouchhelper.attachToRecyclerView(recyclerView);
+
+        viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(getString(R.string.custom_layout_list_title));
+        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
     }
 
     @Override

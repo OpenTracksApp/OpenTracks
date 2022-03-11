@@ -22,20 +22,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.Pair;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
@@ -76,7 +79,7 @@ import de.dennisguse.opentracks.util.TrackIconUtils;
  *
  * @author Leif Hendrik Wilden
  */
-public class TrackListActivity extends AbstractTrackDeleteActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller, ControllerFragment.Callback {
+public class TrackListActivity extends AbstractTrackDeleteActivity implements ConfirmDeleteDialogFragment.ConfirmDeleteCaller {
 
     private static final String TAG = TrackListActivity.class.getSimpleName();
 
@@ -101,6 +104,9 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         public void onPrepare(Menu menu, int[] positions, long[] trackIds, boolean showSelectAll) {
             boolean isSingleSelection = trackIds.length == 1;
 
+            viewBinding.bottomAppBar.performHide(true);
+            viewBinding.trackListFabAction.setVisibility(View.INVISIBLE);
+
             menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
             menu.findItem(R.id.list_context_menu_select_all).setVisible(showSelectAll);
         }
@@ -108,6 +114,12 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         @Override
         public boolean onClick(int itemId, int[] positions, long[] trackIds) {
             return handleContextItem(itemId, trackIds);
+        }
+
+        @Override
+        public void onDestroy() {
+            viewBinding.trackListFabAction.setVisibility(View.VISIBLE);
+            viewBinding.bottomAppBar.performShow(true);
         }
     };
 
@@ -201,7 +213,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 String category = icon != null && !icon.equals("") ? null : cursor.getString(categoryIndex);
                 String description = cursor.getString(descriptionIndex);
 
-                ListItemUtils.setListItem(TrackListActivity.this, view, isRecording, recordingStatus.isPaused(),
+                ListItemUtils.setListItem(TrackListActivity.this, view, isRecording,
                         iconId, R.string.image_track, name, totalTime, totalDistance, markerCount,
                         OffsetDateTime.ofInstant(Instant.ofEpochMilli(startTime), ZoneOffset.ofTotalSeconds(startTimeOffset)),
                         category, description, false);
@@ -210,13 +222,34 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         viewBinding.trackList.setAdapter(resourceCursorAdapter);
         ActivityUtils.configureListViewContextualMenu(viewBinding.trackList, contextualActionModeCallback);
 
-        loadData(getIntent());
-    }
+        viewBinding.trackListFabAction.setOnClickListener((view) -> {
+            if (recordingStatus.isRecording()) {
+                Toast.makeText(TrackListActivity.this, getString(R.string.hold_to_stop), Toast.LENGTH_LONG).show();
+                return;
+            }
 
-    @Override
-    protected void setupActionBarBack(Toolbar toolbar) {
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_logo_color_24dp);
+            // Not Recording -> Recording
+            updateGpsMenuItem(false, true);
+            Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class);
+            startActivity(newIntent);
+        });
+        viewBinding.trackListFabAction.setOnLongClickListener((view) -> {
+            if (!recordingStatus.isRecording()) {
+                return false;
+            }
+
+            // Recording -> Stop
+            ((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).vibrate(1000);
+            updateGpsMenuItem(false, false);
+            trackRecordingServiceConnection.stopRecording(TrackListActivity.this);
+            viewBinding.trackListFabAction.setImageResource(R.drawable.ic_baseline_record_24);
+            viewBinding.trackListFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.red_dark));
+            return true;
+        });
+
+        setSupportActionBar(viewBinding.bottomAppBar);
+
+        loadData(getIntent());
     }
 
     @Override
@@ -234,6 +267,9 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         // Update UI
         this.invalidateOptionsMenu();
         LoaderManager.getInstance(this).restartLoader(0, null, loaderCallbacks);
+
+        // Float button
+        setFloatButton();
     }
 
     @Override
@@ -263,6 +299,13 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
         searchMenuItem = menu.findItem(R.id.track_list_search);
         SearchView searchView = ActivityUtils.configureSearchWidget(this, searchMenuItem);
+
+        searchView.findViewById(R.id.search_edit_frame).setPadding(0, 0, 48, 0);
+
+        SearchView.SearchAutoComplete searchAutoComplete = searchView.findViewById(R.id.search_src_text);
+        searchAutoComplete.setHintTextColor(getResources().getColor(android.R.color.white));
+        searchAutoComplete.setTextColor(getResources().getColor(android.R.color.white));
+
         searchView.setOnCloseListener(() -> {
             searchView.clearFocus();
             searchMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -515,38 +558,18 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         }
     }
 
-    @Override
-    public void recordStart() {
-        if (recordingStatus.getTrackId() == null) {
-            // Not recording -> Recording
-            updateGpsMenuItem(false, true);
-            Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class);
-            startActivity(newIntent);
-        } else if (recordingStatus.isPaused()) {
-            // Paused -> Resume
-            updateGpsMenuItem(false, true);
-            trackRecordingServiceConnection.resumeTrack();
-        }
-    }
-
-    @Override
-    public void recordPause() {
-        updateGpsMenuItem(false, true);
-        trackRecordingServiceConnection.pauseTrack();
-    }
-
-    @Override
-    public void recordStop() {
-        updateGpsMenuItem(false, false);
-        trackRecordingServiceConnection.stopRecording(TrackListActivity.this);
-    }
-
     public void onGpsStatusChanged(GpsStatusValue newStatus) {
         gpsStatusValue = newStatus;
         updateGpsMenuItem(true, recordingStatus.isRecording());
     }
 
+    private void setFloatButton() {
+        viewBinding.trackListFabAction.setImageResource(recordingStatus.isRecording() ? R.drawable.ic_baseline_stop_24 : R.drawable.ic_baseline_record_24);
+        viewBinding.trackListFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, recordingStatus.isRecording() ? R.color.opentracks_secondary_color : R.color.red_dark));
+    }
+
     private void onRecordingStatusChanged(RecordingStatus status) {
         recordingStatus = status;
+        setFloatButton();
     }
 }

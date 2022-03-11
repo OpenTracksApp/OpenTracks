@@ -2,10 +2,12 @@ package de.dennisguse.opentracks;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -56,7 +59,7 @@ import de.dennisguse.opentracks.util.TrackUtils;
  */
 //NOTE: This activity does NOT react to preference changes of R.string.recording_track_id_key.
 //This mode of communication should be removed anyhow.
-public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackDataHubInterface, ControllerFragment.Callback {
+public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackDataHubInterface {
 
     public static final String EXTRA_TRACK_ID = "track_id";
 
@@ -116,9 +119,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         runOnUiThread(TrackRecordingActivity.this::invalidateOptionsMenu); //TODO Should not be necessary
     };
 
-    private MenuItem insertMarkerMenuItem;
-    private MenuItem markerListMenuItem;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,6 +148,26 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         }
 
         requestGPSPermissions();
+
+        viewBinding.trackRecordingFabAction.setImageResource(R.drawable.ic_baseline_stop_24);
+        viewBinding.trackRecordingFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.opentracks_secondary_color));
+        viewBinding.trackRecordingFabAction.setBackgroundColor(getResources().getColor(R.color.opentracks_secondary_color));
+        viewBinding.trackRecordingFabAction.setOnLongClickListener((view) -> {
+            ((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).vibrate(1000);
+            trackRecordingServiceConnection.stopRecording(TrackRecordingActivity.this);
+            Intent newIntent = IntentUtils.newIntent(TrackRecordingActivity.this, TrackStoppedActivity.class)
+                    .putExtra(TrackStoppedActivity.EXTRA_TRACK_ID, trackId);
+            startActivity(newIntent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            finish();
+            return true;
+        });
+        viewBinding.trackRecordingFabAction.setOnClickListener((view) -> {
+            Toast.makeText(TrackRecordingActivity.this, getString(R.string.hold_to_stop), Toast.LENGTH_LONG).show();
+        });
+
+        viewBinding.bottomAppBar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
+        setSupportActionBar(viewBinding.bottomAppBar);
     }
 
     @Override
@@ -247,17 +267,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.track_record, menu);
-
-        insertMarkerMenuItem = menu.findItem(R.id.track_detail_insert_marker);
-        markerListMenuItem = menu.findItem(R.id.track_detail_markers);
-
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        updateMenuItems(recordingStatus.isPaused());
-        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -315,43 +325,11 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
         return trackDataHub;
     }
 
-    /**
-     * Updates the menu items.
-     */
-    private void updateMenuItems(boolean isPaused) {
-        insertMarkerMenuItem.setVisible(!isPaused);
-        markerListMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-        setTitle(getString(isPaused ? R.string.generic_paused : R.string.generic_recording));
-    }
-
     @Override
     public void onChooseActivityTypeDone(String iconValue) {
         Track track = contentProviderUtils.getTrack(trackId);
         String category = getString(TrackIconUtils.getIconActivityType(iconValue));
         TrackUtils.updateTrack(this, track, null, category, null, contentProviderUtils);
-    }
-
-    @Override
-    public void recordStart() {
-        updateMenuItems(false);
-        trackRecordingServiceConnection.resumeTrack();
-    }
-
-    @Override
-    public void recordPause() {
-        updateMenuItems(true);
-        trackRecordingServiceConnection.pauseTrack();
-    }
-
-    @Override
-    public void recordStop() {
-        trackRecordingServiceConnection.stopRecording(TrackRecordingActivity.this);
-        Intent newIntent = IntentUtils.newIntent(TrackRecordingActivity.this, TrackRecordedActivity.class)
-                .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
-        startActivity(newIntent);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-        updateMenuItems(true);
-        finish();
     }
 
     private class CustomFragmentPagerAdapter extends FragmentStateAdapter {

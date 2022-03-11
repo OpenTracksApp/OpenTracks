@@ -15,12 +15,7 @@ limitations under the License.
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- toolbar -->
-    <style name="Widget.OpenTracks.Toolbar.Surface" parent="Widget.MaterialComponents.Toolbar.Surface">
-        <item name="android:background">#ff0000</item>
-    </style>
-
-    <!-- bottom bar -->
+    <!-- bottom buttons bar -->
     <style name="BottomButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>

@@ -50,16 +50,15 @@ public class EspressoEditTrackRecordingTest {
     public void espressoEditTrackRecordingTest() {
         {
             // TrackListActivity: start recording
-            ViewInteraction trackControllerRecordButton = onView(withId(R.id.controller_record));
-            trackControllerRecordButton.perform(click());
+            ViewInteraction fabRecordButton = onView(withId(R.id.track_list_fab_action));
+            fabRecordButton.perform(click());
         }
         {
             // TrackRecordingActivity
-            ViewInteraction trackControllerRecordButton = onView(withId(R.id.controller_record));
-            ViewInteraction trackControllerStopButton = onView(withId(R.id.controller_stop));
+            ViewInteraction trackControllerStopButton = onView(withId(R.id.track_recording_fab_action));
 
             // wait; stay recording
-            trackControllerRecordButton.perform(waitFor(15000));
+            trackControllerStopButton.perform(waitFor(15000));
 
             // open menu
             openContextualActionModeOverflowMenu();
@@ -88,37 +87,17 @@ public class EspressoEditTrackRecordingTest {
             textInputEditText2.perform(closeSoftKeyboard());
 
             // save edition
-            ViewInteraction appCompatButton = onView(
-                    allOf(withId(R.id.track_edit_save),
-                            childAtPosition(
-                                    childAtPosition(
-                                            withClassName(is("android.widget.LinearLayout")),
-                                            3),
-                                    1),
-                            isDisplayed()));
+            ViewInteraction appCompatButton = onView(withId(R.id.track_edit_save));
             appCompatButton.perform(click());
-
-            //pause
-            trackControllerRecordButton.perform(veryLongTouch(1600));
-
-            // wait; stay paused
-            trackControllerRecordButton.perform(waitFor(1000));
-
-            // resume
-            trackControllerRecordButton.perform(click());
-
-            // wait; stay recording
-            trackControllerRecordButton.perform(waitFor(1000));
 
             // stop;
             trackControllerStopButton.perform(veryLongTouch(1600));
 
-            // check track's name is "New Name"
-            ViewInteraction textView = onView(
-                    allOf(withId(R.id.stats_name_value),
-                            withParent(withParent(IsInstanceOf.instanceOf(android.widget.ScrollView.class))),
-                            isDisplayed()));
-            textView.check(matches(withText("New Name")));
+            // it's on track stopped activity and there are two buttons
+            ViewInteraction resumeButton = onView(withId(R.id.resume_button));
+            resumeButton.check(matches(isDisplayed()));
+            ViewInteraction finishButton = onView(withId(R.id.finish_button));
+            finishButton.check(matches(isDisplayed()));
         }
     }
 

@@ -78,17 +78,16 @@ public class EspressoDeleteTrackTest {
 
         {
             // TrackListActivity: start recording
-            ViewInteraction trackControllerRecordButton = onView(withId(R.id.controller_record));
+            ViewInteraction trackControllerRecordButton = onView(withId(R.id.track_list_fab_action));
             trackControllerRecordButton.perform(click());
         }
 
         {
             // TrackRecordingActivity
-            ViewInteraction trackControllerRecordButton = onView(withId(R.id.controller_record));
-            ViewInteraction trackControllerStopButton = onView(withId(R.id.controller_stop));
+            ViewInteraction trackControllerStopButton = onView(withId(R.id.track_recording_fab_action));
 
             // wait; stay recording
-            trackControllerRecordButton.perform(waitFor(5000));
+            trackControllerStopButton.perform(waitFor(5000));
 
             // stop;
             trackControllerStopButton.perform(veryLongTouch(1600));
@@ -108,7 +107,7 @@ public class EspressoDeleteTrackTest {
                 allOf(withContentDescription("More options"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.toolbar),
+                                        withId(R.id.bottom_app_bar),
                                         2),
                                 2),
                         isDisplayed()));

@@ -59,13 +59,13 @@ public class EspressoAggregatedFilterTest {
     @Test
     public void espressoAggregatedFilterTest() {
         // open AggregatedStatisticsActivity through toolbar's menu item
-        onView(ViewMatchers.withId(R.id.toolbar)).check(matches(isDisplayed()));
-        onView(withId(R.id.toolbar)).check(matches(hasDescendant(withId(R.id.track_list_aggregated_stats))));
+        onView(ViewMatchers.withId(R.id.bottom_app_bar)).check(matches(isDisplayed()));
+        onView(withId(R.id.bottom_app_bar)).check(matches(hasDescendant(withId(R.id.track_list_aggregated_stats))));
         onView(withId(R.id.track_list_aggregated_stats)).perform(click());
 
         // open FilterDialogFragment through toolbar's menu item
-        onView(withId(R.id.toolbar)).check(matches(isDisplayed()));
-        onView(withId(R.id.toolbar)).check(matches(hasDescendant(withId(R.id.aggregated_statistics_filter))));
+        onView(withId(R.id.bottom_app_bar)).check(matches(isDisplayed()));
+        onView(withId(R.id.bottom_app_bar)).check(matches(hasDescendant(withId(R.id.aggregated_statistics_filter))));
         onView(withId(R.id.aggregated_statistics_filter)).perform(click());
 
         // check there's a checkbox with CATEGORY text

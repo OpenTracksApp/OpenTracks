@@ -10,14 +10,18 @@ import de.dennisguse.opentracks.ui.util.ViewUtils;
 
 public class HelpActivity extends AbstractActivity {
 
+    private HelpBinding helpBinding;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setSupportActionBar(helpBinding.bottomAppBarLayout.bottomAppBar);
         ViewUtils.makeClickableLinks(findViewById(android.R.id.content));
     }
 
     @Override
     protected View getRootView() {
-        return HelpBinding.inflate(getLayoutInflater()).getRoot();
+        helpBinding = HelpBinding.inflate(getLayoutInflater());
+        return helpBinding.getRoot();
     }
 }

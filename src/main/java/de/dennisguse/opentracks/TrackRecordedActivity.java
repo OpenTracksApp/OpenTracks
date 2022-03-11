@@ -102,6 +102,11 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindCallback);
 
+        Track track = contentProviderUtils.getTrack(trackId);
+        viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(track != null ? track.getName() : "");
+        viewBinding.bottomAppBarLayout.bottomAppBar.replaceMenu(R.menu.track_detail);
+        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
+
         postponeEnterTransition();
     }
 
@@ -162,8 +167,6 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     public boolean onPrepareOptionsMenu(Menu menu) {
         menu.findItem(R.id.track_detail_markers).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
         menu.findItem(R.id.track_detail_resume_track).setVisible(!recordingStatus.isRecording());
-        Track track = contentProviderUtils.getTrack(trackId);
-        setTitle(track != null ? track.getName() : "");
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -246,7 +249,7 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     private void handleIntent(Intent intent) {
         trackId = intent.getParcelableExtra(EXTRA_TRACK_ID);
         if (trackId == null) {
-            Log.e(TAG, "TrackDetailActivity needs EXTRA_TRACK_ID.");
+            Log.e(TAG, TrackRecordedActivity.class.getSimpleName() + " needs EXTRA_TRACK_ID.");
             finish();
         }
     }

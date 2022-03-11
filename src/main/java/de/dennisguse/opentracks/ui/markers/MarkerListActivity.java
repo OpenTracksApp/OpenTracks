@@ -80,6 +80,8 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         public void onPrepare(Menu menu, int[] positions, long[] ids, boolean showSelectAll) {
             boolean isSingleSelection = ids.length == 1;
 
+            viewBinding.bottomAppBarLayout.bottomAppBar.performHide(true);
+
             menu.findItem(R.id.list_context_menu_show_on_map).setVisible(isSingleSelection);
             menu.findItem(R.id.list_context_menu_edit).setVisible(isSingleSelection);
             menu.findItem(R.id.list_context_menu_delete).setVisible(true);
@@ -91,6 +93,11 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         @Override
         public boolean onClick(int itemId, int[] positions, long[] ids) {
             return handleContextItem(itemId, ids);
+        }
+
+        @Override
+        public void onDestroy() {
+            viewBinding.bottomAppBarLayout.bottomAppBar.performShow(true);
         }
     };
     private MenuItem insertMarkerMenuItem;
@@ -121,6 +128,8 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
         ActivityUtils.configureListViewContextualMenu(viewBinding.markerList, contextualActionModeCallback);
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindCallback);
+
+        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
     }
 
     @Override
@@ -301,9 +310,9 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
             this.searchQuery = searchQuery;
             restart();
             if (searchQuery != null) {
-                setTitle(searchQuery);
+                viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(searchQuery);
             } else {
-                setTitle(R.string.menu_markers);
+                viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(getString(R.string.menu_markers));
             }
         }
 

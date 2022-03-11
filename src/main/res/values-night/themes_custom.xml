@@ -11,8 +11,6 @@
 
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
-        <item name="windowActionModeOverlay">true</item>
-
         <item name="android:colorBackground">@android:color/black</item>
         <item name="colorOnBackground">@android:color/white</item>
 
@@ -20,6 +18,26 @@
         <item name="colorOnSurface">@color/opentracks_surface_night_on_background_color</item>
 
         <item name="android:activatedBackgroundIndicator">@drawable/activated_background</item>
+
+        <item name="bottomAppBarStyle">@style/Widget.OpenTracks.BottomAppBar</item>
+
+        <item name="floatingActionButtonStyle">@style/Widget.OpenTracks.FloatingActionButton</item>
+
+        <item name="android:windowActionModeOverlay">true</item>
+
+    </style>
+
+    <style name="Widget.OpenTracks.BottomAppBar" parent="Widget.MaterialComponents.BottomAppBar.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.OpenTracks.BottomAppBar</item>
+    </style>
+
+    <style name="ThemeOverlay.OpenTracks.BottomAppBar" parent="">
+        <item name="colorPrimary">@android:color/black</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+    </style>
+
+    <style name="Widget.OpenTracks.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="fabCustomSize">64dp</item>
     </style>
 
 </resources>

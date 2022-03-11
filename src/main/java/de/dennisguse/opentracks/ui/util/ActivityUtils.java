@@ -45,7 +45,7 @@ public class ActivityUtils {
 
             @Override
             public void onDestroyActionMode(ActionMode mode) {
-                // Do nothing
+                contextualActionModeCallback.onDestroy();
             }
 
             @Override
@@ -127,5 +127,10 @@ public class ActivityUtils {
          * @param ids       the selected items' ids, if available
          */
         boolean onClick(int itemId, int[] positions, long[] ids);
+
+        /**
+         * Invoked when contextual action mode is destroyed.
+         */
+        void onDestroy();
     }
 }

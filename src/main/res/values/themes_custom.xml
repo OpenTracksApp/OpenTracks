@@ -29,8 +29,6 @@ limitations under the License.
 
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
-        <item name="windowActionModeOverlay">true</item>
-
         <item name="android:colorBackground">@android:color/white</item>
         <item name="colorOnBackground">@android:color/black</item>
 
@@ -46,6 +44,15 @@ limitations under the License.
 
         <!-- Linear progress indicator -->
         <item name="linearProgressIndicatorStyle">@style/OpenTracksLinearProgressIndicator</item>
+
+        <!-- Bottom bar -->
+        <item name="bottomAppBarStyle">@style/Widget.MaterialComponents.BottomAppBar.Colored</item>
+
+        <!-- Floating buttons -->
+        <item name="floatingActionButtonStyle">@style/Widget.OpenTracks.FloatingActionButton</item>
+
+        <item name="android:windowActionModeOverlay">true</item>
+
     </style>
 
     <style name="OpenTracksLinearProgressIndicator" parent="Widget.MaterialComponents.LinearProgressIndicator">
@@ -57,4 +64,9 @@ limitations under the License.
         <item name="android:navigationBarColor">@color/splashscreen_background</item>
         <item name="android:windowBackground">@drawable/splashscreen</item>
     </style>
+
+    <style name="Widget.OpenTracks.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="fabCustomSize">64dp</item>
+    </style>
+
 </resources>

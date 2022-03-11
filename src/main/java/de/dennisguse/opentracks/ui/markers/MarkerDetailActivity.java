@@ -105,7 +105,7 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
 
             @Override
             public void onPageSelected(int position) {
-                setTitle(markerAdapter.getPageTitle(position));
+                viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(markerAdapter.getPageTitle(position));
             }
 
             @Override
@@ -113,6 +113,8 @@ public class MarkerDetailActivity extends AbstractActivity implements DeleteMark
             }
         });
         viewBinding.makerDetailActivityViewPager.setCurrentItem(markerIndex == -1 ? 0 : markerIndex);
+
+        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
     }
 
     @Override

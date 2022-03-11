@@ -6,7 +6,6 @@ import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.stream.IntStream;
 
 import de.dennisguse.opentracks.AbstractActivity;
-import de.dennisguse.opentracks.ui.util.ArrayAdapterFilterDisabled;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.databinding.ActivitySettingsCustomLayoutBinding;
 import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
 import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
 import de.dennisguse.opentracks.ui.customRecordingLayout.SettingsCustomLayoutEditAdapter;
+import de.dennisguse.opentracks.ui.util.ArrayAdapterFilterDisabled;
 import de.dennisguse.opentracks.util.StatisticsUtils;
 
 public class SettingsCustomLayoutEditActivity extends AbstractActivity implements SettingsCustomLayoutEditAdapter.SettingsCustomLayoutItemClickListener {
@@ -97,7 +96,8 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
         recyclerViewNotVisible.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewNotVisible.setAdapter(adapterFieldsHidden);
 
-        setTitle(profile);
+        viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(profile);
+        setSupportActionBar(viewBinding.bottomAppBarLayout.bottomAppBar);
     }
 
     @Override
@@ -115,12 +115,6 @@ public class SettingsCustomLayoutEditActivity extends AbstractActivity implement
     protected void onDestroy() {
         super.onDestroy();
         layoutFieldsVisible = null;
-    }
-
-    @Override
-    protected void setupActionBarBack(Toolbar toolbar) {
-        super.setupActionBarBack(toolbar);
-        toolbar.setTitle(R.string.menu_settings);
     }
 
     @Override

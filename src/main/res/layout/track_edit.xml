@@ -13,109 +13,39 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include layout="@layout/toolbar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="60dp">
 
-    <ScrollView style="@style/ScrollView.WithBottomButtons">
+        <include
+            android:id="@+id/fields"
+            layout="@layout/track_edit_fields" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="8dp">
+        <View style="@style/BottomButtonDivider" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="?attr/textInputOutlinedStyle"
-                android:hint="@string/generic_name"
-                android:imeOptions="actionNext"
-                android:importantForAutofill="no"
-                android:layout_marginBottom="16dp">
+        <LinearLayout style="@style/BottomButtonBar">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/track_edit_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapWords"
-                    android:selectAllOnFocus="true" />
+            <Button
+                android:id="@+id/track_edit_cancel"
+                style="@style/BottomButton"
+                android:layout_gravity="start"
+                android:text="@android:string/cancel" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    style="?attr/textInputOutlinedExposedDropdownMenuStyle"
-                    android:imeOptions="actionNext"
-                    android:importantForAutofill="no"
-                    android:layout_marginBottom="16dp">
-
-                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                        android:id="@+id/track_edit_activity_type"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:hint="@string/track_edit_activity_type_hint"
-                        android:imeOptions="actionNext"
-                        android:selectAllOnFocus="true" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <ImageView
-                    android:id="@+id/track_edit_activity_type_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
-                    tools:src="@drawable/ic_activity_bike_24dp"/>
-
-            </LinearLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="?attr/textInputOutlinedStyle"
-                android:hint="@string/generic_description"
-                android:imeOptions="actionNext"
-                android:importantForAutofill="no"
-                android:layout_marginBottom="16dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/track_edit_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapSentences"
-                    android:selectAllOnFocus="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
+            <Button
+                android:id="@+id/track_edit_save"
+                style="@style/BottomButton"
+                android:layout_gravity="end"
+                android:text="@string/generic_save" />
         </LinearLayout>
-    </ScrollView>
 
-    <View style="@style/BottomButtonDivider" />
-
-    <LinearLayout style="@style/BottomButtonBar">
-
-        <Button
-            android:id="@+id/track_edit_cancel"
-            style="@style/BottomButton"
-            android:layout_gravity="start"
-            android:text="@android:string/cancel" />
-
-        <Button
-            android:id="@+id/track_edit_save"
-            style="@style/BottomButton"
-            android:layout_gravity="end"
-            android:text="@string/generic_save" />
     </LinearLayout>
-</LinearLayout>
+
+    <include android:id="@+id/bottom_app_bar_layout" layout="@layout/bottomappbar" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

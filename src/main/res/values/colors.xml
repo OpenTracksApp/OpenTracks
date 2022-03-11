@@ -18,8 +18,8 @@ limitations under the License.
     <color name="opentracks_primary_color">#344955</color>
     <color name="opentracks_primary_variant_color">#232f34</color>
     <color name="opentracks_on_primary_color">@android:color/white</color>
-    <color name="opentracks_secondary_color">#ff8800</color>
-    <color name="opentracks_secondary_transparent">#55ff8800</color>
+    <color name="opentracks_secondary_color">#FF6D00</color>
+    <color name="opentracks_secondary_transparent">#55FF6D00</color>
     <color name="opentracks_on_secondary_color">@android:color/white</color>
 
     <color name="opentracks_surface_day_background_color">#f5f5f5</color>

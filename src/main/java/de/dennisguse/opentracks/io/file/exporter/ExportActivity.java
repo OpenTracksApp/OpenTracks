@@ -37,7 +37,6 @@ import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.tables.TracksColumns;
 import de.dennisguse.opentracks.databinding.ExportActivityBinding;
-import de.dennisguse.opentracks.databinding.ToolbarBinding;
 import de.dennisguse.opentracks.io.file.ErrorListDialog;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.util.ExportUtils;
@@ -135,7 +134,6 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewBinding = ExportActivityBinding.inflate(getLayoutInflater());
-        ToolbarBinding mergedBinding = ToolbarBinding.bind(viewBinding.getRoot());
         setContentView(viewBinding.getRoot());
 
         directoryUri = getIntent().getParcelableExtra(EXTRA_DIRECTORY_URI_KEY);
@@ -145,8 +143,6 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
 
         DocumentFile documentFile = DocumentFile.fromTreeUri(this, directoryUri);
         String directoryDisplayName = FileUtils.getPath(documentFile);
-
-        mergedBinding.toolbar.setTitle(getString(R.string.export_progress_message, directoryDisplayName));
 
         resultReceiver = new ExportServiceResultReceiver(new Handler(), this);
 
@@ -170,6 +166,9 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
             setProgress();
             initExport(getTotalDone());
         }
+
+        viewBinding.bottomAppBarLayout.bottomAppBarTitle.setText(getString(R.string.export_progress_message, directoryDisplayName));
+        viewBinding.bottomAppBarLayout.bottomAppBar.setNavigationIcon(R.drawable.ic_logo_color_24dp);
     }
 
     @Override

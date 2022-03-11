@@ -13,79 +13,94 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <include layout="@layout/toolbar" />
-
-    <ListView
-        android:id="@+id/track_list"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.0" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="50dp"
+        android:clipToPadding="false">
 
-    <RelativeLayout
-        android:id="@+id/track_list_empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.0">
-
-        <LinearLayout
-            android:id="@+id/track_list_arrow_long"
+        <ListView
+            android:id="@+id/track_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:paddingTop="16dp"
-            android:paddingBottom="12dp">
+            android:layout_height="0dp"
+            android:layout_weight="0.8" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="10"
-                android:contentDescription="@string/image_arrow"
-                android:src="@drawable/ic_arrow_long" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="17" />
-        </LinearLayout>
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/track_list_empty_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/track_list_arrow_long">
+            android:layout_height="0dp"
+            android:layout_weight="1.2">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="5" />
-
-            <TextView
-                style="?attr/textAppearanceHeadline6"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/track_list_arrow_long"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="22"
-                android:gravity="start"
-                android:text="@string/track_list_empty_message" />
+                android:layout_alignParentBottom="true"
+                android:paddingTop="16dp"
+                android:paddingBottom="12dp">
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
-        </LinearLayout>
-    </RelativeLayout>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/controller_fragment"
-        android:name="de.dennisguse.opentracks.ControllerFragment"
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:paddingBottom="50dp"
+                    android:contentDescription="@string/image_arrow"
+                    android:src="@drawable/ic_arrow_long" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/track_list_arrow_long">
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3" />
+
+                <TextView
+                    style="?attr/textAppearanceHeadline6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:gravity="right"
+                    android:text="@string/track_list_empty_message" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottom_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:fabAlignmentMode="end"
+        app:logo="@drawable/ic_logo_color_24dp"
+        app:menu="@menu/track_list" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/track_list_fab_action"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_record_24"
+        app:layout_anchor="@id/bottom_app_bar" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

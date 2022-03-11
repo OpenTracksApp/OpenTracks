@@ -19,9 +19,7 @@ package de.dennisguse.opentracks;
 import android.os.Bundle;
 import android.view.View;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import de.dennisguse.opentracks.services.announcement.VoiceAnnouncement;
 
@@ -38,9 +36,6 @@ public abstract class AbstractActivity extends AppCompatActivity {
         setVolumeControlStream(VoiceAnnouncement.AUDIO_STREAM);
 
         setContentView(getRootView());
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setupActionBarBack(toolbar);
     }
 
     @Override
@@ -50,12 +45,4 @@ public abstract class AbstractActivity extends AppCompatActivity {
     }
 
     protected abstract View getRootView();
-
-    protected void setupActionBarBack(@Nullable Toolbar toolbar) {
-        setSupportActionBar(toolbar);
-        if (toolbar != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-    }
 }
