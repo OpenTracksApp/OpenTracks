@@ -493,7 +493,7 @@ limitations under the License.
     <string name="export_progress_summary_new_msg">Vyvezeny nové tratě</string>
     <string name="import_progress_summary_exists_msg">Existovat</string>
     <string name="import_progress_summary_ok_msg">Importované soubory</string>
-    <string name="generic_open_track">Otevřená Trať</string>
+    <string name="generic_open_track">Otevřená trať</string>
     <string name="sensor_state_power_avg">Výkon Avg</string>
     <string name="sensor_state_heart_rate_max">Maximální srdeční frekvence</string>
     <string name="sensor_state_heart_rate_avg">Avg srdeční frekvence</string>
@@ -551,12 +551,12 @@ limitations under the License.
     <string name="settings_activity_defaults_category">Výchozí nastavení aktivity</string>
     <string name="settings_units_category">Jednotky</string>
     <string name="settings_import_export_summary">Import, export, automatický export</string>
-    <string name="settings_import_export_title">Import/export</string>
+    <string name="settings_import_export_title">Dovoz/vývoz</string>
     <string name="settings_announcements_summary">Čas, vzdálenost, rychlost hlasu</string>
     <string name="settings_announcements_title">Hlasová oznámení</string>
     <string name="settings_sensors_title">Bluetooth senzory</string>
     <string name="settings_gps_summary">Časový interval, Interval vzdálenosti, Maximální vzdálenost, Přesnost</string>
-    <string name="settings_ui_summary">Vzhled, Vzhled měření, Téma</string>
+    <string name="settings_ui_summary">Vzhled, Rozložení záznamu, Téma</string>
     <string name="settings_open_tracks_title">O programu</string>
     <string name="settings_open_tracks_summary">Vše o projektu OpenTracks</string>
     <string name="settings_defaults_title">Výchozí jednotky a aktivity</string>
@@ -583,4 +583,31 @@ limitations under the License.
     <string name="generic_today">Dnes</string>
     <string name="no_compatible_file_manager_installed">Není nainstalován kompatibilní správce souborů</string>
     <string name="settings_announcements_report_heart_rate">Hlásit tepovou frekvenci</string>
+    <string name="voice_per_kilometer">za kilometr</string>
+    <string name="lap_time">Čas kola</string>
+    <string name="lap_speed">Rychlost kola</string>
+    <string name="speed">Rychlost</string>
+    <string name="total_distance">Celková vzdálenost</string>
+    <plurals name="voiceDistanceKilometers">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="average_heart_rate">Průměrný srdeční tep</string>
+    <string name="current_heart_rate">Aktuální srdeční tep</string>
+    <string name="settings_public_api_enabled_summary_on">Ostatní nainstalované aplikace mohou nahrávání spustit nebo zastavit.</string>
+    <string name="voice_per_mile">za míli</string>
+    <string name="activity_type_swimming">plavání</string>
+    <string name="activity_type_swimming_open">plavání ve volné vodě</string>
+    <string name="activity_type_workout">trénink</string>
+    <string name="generic_dismiss">Odmítnout</string>
+    <string name="gps_recording_status">%1$s: %2$s</string>
+    <string name="gps_recording_without_signal">OpenTracks nahrává bez údajů GPS.</string>
+    <string name="settings_public_api_enabled_title">Veřejné API</string>
+    <string name="settings_public_api_enabled_summary_off">Pouze aplikace OpenTracks může spouštět a zastavovat nahrávání.</string>
+    <string name="settings_public_api_disabled_toast">Veřejné rozhraní API služby OpenTracks je zakázáno: lze jej povolit v nastavení.</string>
+    <string name="settings_api_title">Veřejné API</string>
+    <string name="settings_public_api_dashboard_enabled_title">Automatický přenos dat</string>
+    <string name="settings_public_api_dashboard_enabled_summary_on">Aplikace, která zahájila nahrávání, může také přistupovat k nahraným datům.</string>
+    <string name="settings_public_api_dashboard_enabled_summary_off">Zaznamenaná data nebudou automaticky sdílena s jinými aplikacemi.</string>
 </resources>
