@@ -582,4 +582,36 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="export_cannot_write_to_dir">Non se pode escribir no directorio de exportación.</string>
     <string name="export_dir_not_writable">" (non escribible!)"</string>
     <string name="no_compatible_file_manager_installed">Non compatible xestor de ficheiros instalados</string>
+    <string name="settings_api_title">API pública</string>
+    <string name="settings_announcements_report_heart_rate">Informar do pulso</string>
+    <string name="settings_public_api_enabled_title">API pública</string>
+    <string name="settings_public_api_disabled_toast">API pública de OpenTracks desactivada: pode activarse nos axustes.</string>
+    <string name="lap_time">Tempo da volta</string>
+    <string name="lap_speed">Velocidade da volta</string>
+    <string name="total_distance">Distancia total</string>
+    <plurals name="voiceDistanceMiles">
+        <item quantity="one">1 milla</item>
+        <item quantity="other">%1$.2f millas</item>
+    </plurals>
+    <string name="settings_public_api_enabled_summary_on">Outras aplicacións instaladas poden iniciar ou deter gravacións.</string>
+    <string name="settings_public_api_enabled_summary_off">Só OpenTracks pode iniciar e deter as gravacións.</string>
+    <string name="settings_public_api_dashboard_enabled_title">Transferencia automática de datos</string>
+    <string name="settings_public_api_dashboard_enabled_summary_on">Unha aplicación que inicie unha gravación pode acceder tamén aos datos gravados.</string>
+    <string name="settings_public_api_dashboard_enabled_summary_off">Os datos gravados non serán compartidos automáticamente con outras apps.</string>
+    <string name="voice_per_kilometer">por quilómetro</string>
+    <string name="voice_per_mile">por milla</string>
+    <string name="pace">Ritmo</string>
+    <string name="speed">Velocidade</string>
+    <plurals name="voiceDistanceKilometers">
+        <item quantity="one">1 quilómetro</item>
+        <item quantity="other">%1$.2f quilómetros</item>
+    </plurals>
+    <string name="average_heart_rate">Pulso medio</string>
+    <string name="current_heart_rate">Pulso actual</string>
+    <string name="activity_type_swimming">nadando</string>
+    <string name="activity_type_swimming_open">nadar en augas abertas</string>
+    <string name="activity_type_workout">adestramento</string>
+    <string name="generic_dismiss">Desbotar</string>
+    <string name="gps_recording_status">%1$s: %2$s</string>
+    <string name="gps_recording_without_signal">OpenTracks está gravando sen datos GPS.</string>
 </resources>
