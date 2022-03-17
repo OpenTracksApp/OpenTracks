@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
     <string name="about_preference_title">Over OpenTracks</string>
-    <string name="about_description"><i>OpenTracks</i> is een sporttrackingapplicatie die uw privacy volledig respecteert.</string>
+    <string name="about_description"><i>OpenTracks</i> is een sport tracker applicatie met respect voor privacy.</string>
     <string name="about_url">Project webpagina: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Versie naam: %1$s</string>
     <string name="about_version_code">Versiecode: %1$d</string>
@@ -501,7 +501,10 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="delete_service">Dienst verwijdering</string>
     <string name="menu_voice_rate">Spraak snelheid</string>
     <string name="track_delete_not_recording">Dit fragment kan niet worden gewist omdat het momenteel is opgenomen.</string>
-    <string name="settings_sensor_cycling_cadence">Fietsen: cadans</string>
-    <string name="settings_sensor_cycling_distance_speed">Fietsen: afstand en snelheid</string>
-    <string name="settings_sensor_running_speed_and_cadence">Lopen: afstand, snelheid en cadans</string>
+    <string name="settings_sensor_cycling_cadence">Cadans</string>
+    <string name="settings_sensor_cycling_distance_speed">Afstand en snelheid</string>
+    <string name="settings_sensor_running_speed_and_cadence">Afstand, snelheid en cadans</string>
+    <string name="activity_type_swimming">zwemmen</string>
+    <string name="description_speed_source_gps">GPS</string>
+    <string name="activity_type_swimming_open">zwemmen in open water</string>
 </resources>
