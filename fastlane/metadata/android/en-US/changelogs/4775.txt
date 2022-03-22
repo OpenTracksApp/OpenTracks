@@ -1,0 +1,4 @@
+v3.26.1: OpenTracks
+
+Bugfix:
+- Contextual action bar didn't overlap toolbar in night theme.
