@@ -37,6 +37,7 @@ import de.dennisguse.opentracks.data.TrackPointIterator;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
 
@@ -128,6 +129,7 @@ public class GPXTrackExporter implements TrackExporter {
     private void writeTrackPoints(Track track) throws InterruptedException {
         boolean wroteTrack = false;
         boolean wroteSegment = false;
+        Distance trackDistance = Distance.of(0);
 
         LinkedList<TrackPoint> sensorPoints = new LinkedList<>();
 
@@ -159,7 +161,7 @@ public class GPXTrackExporter implements TrackExporter {
                         writeOpenSegment();
                         wroteSegment = true;
 
-                        writeTrackPoint(track.getZoneOffset(), trackPoint, sensorPoints);
+                        trackDistance = trackDistance.plus(writeTrackPoint(track.getZoneOffset(), trackPoint, sensorPoints, trackDistance));
                         sensorPoints.clear();
                         break;
                     case SENSORPOINT:
@@ -172,7 +174,7 @@ public class GPXTrackExporter implements TrackExporter {
                             wroteSegment = true;
                         }
 
-                        writeTrackPoint(track.getZoneOffset(), trackPoint, sensorPoints);
+                        trackDistance = trackDistance.plus(writeTrackPoint(track.getZoneOffset(), trackPoint, sensorPoints, trackDistance));
                         sensorPoints.clear();
                         break;
                     default:
@@ -225,6 +227,7 @@ public class GPXTrackExporter implements TrackExporter {
             printWriter.println("xmlns:opentracks=\"http://opentracksapp.com/xmlschemas/v1\"");
             printWriter.println("xmlns:gpxtpx=\"http://www.garmin.com/xmlschemas/TrackPointExtension/v2\"");
             printWriter.println("xmlns:gpxtrkx=\"http://www.garmin.com/xmlschemas/TrackStatsExtension/v1\"");
+            printWriter.println("xmlns:cluetrust=\"http://www.cluetrust.com/Schemas/\"");
             printWriter.println("xmlns:pwr=\"http://www.garmin.com/xmlschemas/PowerExtension/v1\"");
             printWriter.println("xsi:schemaLocation=" +
                     "\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd"
@@ -232,6 +235,7 @@ public class GPXTrackExporter implements TrackExporter {
                     + " http://www.garmin.com/xmlschemas/TrackPointExtension/v2 https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd"
                     + " http://www.garmin.com/xmlschemas/PowerExtension/v1 https://www8.garmin.com/xmlschemas/PowerExtensionv1.xsd"
                     + " http://www.garmin.com/xmlschemas/TrackStatsExtension/v1"
+                    + " http://www.cluetrust.com/Schemas http://www.cluetrust.com/Schemas/gpxdata10.xsd"
                     + " http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd\">");
         }
     }
@@ -312,7 +316,9 @@ public class GPXTrackExporter implements TrackExporter {
         printWriter.println("</trkseg>");
     }
 
-    public void writeTrackPoint(ZoneOffset zoneOffset, TrackPoint trackPoint, List<TrackPoint> sensorPoints) {
+    public Distance writeTrackPoint(ZoneOffset zoneOffset, TrackPoint trackPoint, List<TrackPoint> sensorPoints, Distance trackDistance) {
+        Distance cumulativeDistance = null;
+
         if (printWriter != null) {
 
             printWriter.println("<trkpt " + formatLocation(trackPoint.getLatitude(), trackPoint.getLongitude()) + ">");
@@ -352,9 +358,10 @@ public class GPXTrackExporter implements TrackExporter {
                     trackPointExtensionContent += ("<opentracks:loss>" + ALTITUDE_FORMAT.format(cumulativeLoss) + "</opentracks:loss>\n");
                 }
 
-                Double cumulativeDistance = cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasSensorDistance() ? tp.getSensorDistance().toM() : null);
+                cumulativeDistance = Distance.of(cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasSensorDistance() ? tp.getSensorDistance().toM() : null));
                 if (cumulativeDistance != null) {
-                    trackPointExtensionContent += ("<opentracks:distance>" + ALTITUDE_FORMAT.format(cumulativeDistance) + "</opentracks:distance>\n");
+                    trackPointExtensionContent += ("<opentracks:distance>" + DISTANCE_FORMAT.format(cumulativeDistance.toM()) + "</opentracks:distance>\n");
+                    trackPointExtensionContent += ("<cluetrust:distance>" + DISTANCE_FORMAT.format(trackDistance.plus(cumulativeDistance).toM()) + "</cluetrust:distance>\n");
                 }
 
                 if (!trackPointExtensionContent.isEmpty()) {
@@ -366,6 +373,10 @@ public class GPXTrackExporter implements TrackExporter {
 
             printWriter.println("</trkpt>");
         }
+        if (cumulativeDistance != null) {
+            return cumulativeDistance;
+        }
+        return Distance.of(0);
     }
 
     private Double cumulateSensorData(TrackPoint trackPoint, List<TrackPoint> sensorPoints, Function<TrackPoint, Double> map) {
