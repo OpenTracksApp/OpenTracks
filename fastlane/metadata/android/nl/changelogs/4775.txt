@@ -1,0 +1,4 @@
+v3.26.1: OpenTracks
+
+Bugfix:
+- Contextuele actie balk overlapte de werkbalk niet in het nachtthema.

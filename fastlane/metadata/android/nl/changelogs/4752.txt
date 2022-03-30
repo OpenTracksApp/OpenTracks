@@ -1,0 +1,11 @@
+v3.25.0: OpenTracks
+
+Veranderingen:
+- GPS is nu optioneel incl. waarschuwing GPS uitgeschakeld
+- PublicAPI: andere apps kunnen nu opgenomen gegevens ontvangen als ze een opname starten (geïmplementeerd voor Gadgetbridge)
+- Nieuwe activiteiten: zwemmen, buiten zwemmen, en training
+- Verwijderd: share pic functie
+
+Bugfix:
+- UI: snelheid/hoogte met wisselingen tussen 0,0 en de werkelijke waarde
+- Tracks met emoji's kunnen worden geëxporteerd

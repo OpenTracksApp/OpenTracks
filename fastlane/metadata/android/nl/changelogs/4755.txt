@@ -1,0 +1,5 @@
+v3.25.1: OpenTracks
+
+Verbetering:
+- Automatische export: hopelijk voorkomen van stille mislukkingen
+- Automatische export: voorkom crash
