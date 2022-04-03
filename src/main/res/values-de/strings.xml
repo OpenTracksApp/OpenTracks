@@ -477,8 +477,8 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="export_progress_summary_errors_msg">Fehler</string>
     <string name="generic_click_twice_cancel">Klicke nochmal auf zurück, um abzubrechen</string>
     <string name="import_error_list_dialog_title">Dateien wurden nicht importiert</string>
-    <string name="voice_speed_lap">Rundengeschwindigkeit %1$s</string>
-    <string name="voice_pace_lap">Rundenzeit %1$s</string>
+    <string name="voice_speed_lap">Rundengeschwindigkeit von %1$s</string>
+    <string name="voice_pace_lap">Rundenzeit von %1$s</string>
     <string name="export_track_already_exists_msg">Die Streckenaufzeichung %1$s existiert bereits im Zielverzeichnis.</string>
     <string name="gps_fixed_and_ready">GPS-Position bestimmt und bereit</string>
     <string name="instant_export_enabled_title">Sofortiger Export im Anschluss an die Übung</string>
@@ -500,7 +500,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="import_parser_error">Parser Fehler: %1$s</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Anzeige im Vollbildmodus während der Aufzeichnung.</string>
     <string name="sensor_state_heart_rate_avg">Durchschnittlicher Herzfrequenz</string>
-    <string name="settings_prevent_reimport_tracks_title">Re-import von Tracks verhindern</string>
+    <string name="settings_prevent_reimport_tracks_title">Verhindere den erneuten Import von Strecken(aufzeichnungen)</string>
     <string name="import_no_kml_file_found">Keine doc.kml Datei im KMZ gefunden</string>
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="import_thread_interrupted">Thread unterbrochen</string>
