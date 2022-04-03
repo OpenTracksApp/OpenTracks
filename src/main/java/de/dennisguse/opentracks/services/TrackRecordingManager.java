@@ -98,14 +98,14 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
     }
 
     void pause(TrackPointCreator trackPointCreator) {
-        insertTrackPoint(trackPointCreator.createSegmentEnd());
+        insertTrackPoint(trackPointCreator.createSegmentEnd(), true);
 
         reset();
     }
 
     void end(TrackPointCreator trackPointCreator) {
         TrackPoint segmentEnd = trackPointCreator.createSegmentEnd();
-        insertTrackPoint(segmentEnd);
+        insertTrackPoint(segmentEnd, true);
 
         trackId = null;
         trackStatisticsUpdater = null;
@@ -172,12 +172,12 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
 
         // Always insert the first segment location
         if (lastStoredTrackPoint == null) {
-            insertTrackPoint(trackPoint);
+            insertTrackPoint(trackPoint, true);
             return true;
         }
 
         if (trackPoint.hasLocation() && lastStoredTrackPointWithLocation == null) {
-            insertTrackPoint(trackPoint);
+            insertTrackPoint(trackPoint, true);
             return true;
         }
 
@@ -195,19 +195,19 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
 
         if (distanceToLastStoredTrackPoint.greaterThan(maxRecordingDistance)) {
             trackPoint.setType(TrackPoint.Type.SEGMENT_START_AUTOMATIC);
-            insertTrackPoint(trackPoint);
+            insertTrackPoint(trackPoint, true);
             return true;
         }
 
         if (distanceToLastStoredTrackPoint.greaterOrEqualThan(recordingDistanceInterval)
                 && trackPoint.isMoving()) {
-            insertTrackPoint(trackPoint);
+            insertTrackPoint(trackPoint, false);
             return true;
         }
 
         if (trackPoint.isMoving() != lastStoredTrackPoint.isMoving()) {
             // Moving from non-moving to moving or vice versa; required to compute moving time correctly.
-            insertTrackPoint(trackPoint);
+            insertTrackPoint(trackPoint, true);
             return true;
         }
 
@@ -221,8 +221,8 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         return trackStatisticsUpdater.getTrackStatistics();
     }
 
-    private void insertTrackPoint(@NonNull TrackPoint trackPoint) {
-        if (lastTrackPoint != null) {
+    private void insertTrackPoint(@NonNull TrackPoint trackPoint, boolean storeLastTrackPointIfUseful) {
+        if (storeLastTrackPointIfUseful && lastTrackPoint != null) {
             if (lastStoredTrackPoint != null && lastTrackPoint.getTime().equals(lastStoredTrackPoint.getTime())) {
                 // Do not insert if inserted already
                 Log.w(TAG, "Ignore insertTrackPoint. trackPoint time same as last valid trackId point time.");
@@ -231,8 +231,8 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
                 // Remove the sensorDistance from trackPoint that is already going  be stored with lastTrackPoint.
                 trackPoint.minusCumulativeSensorData(lastTrackPoint);
             }
-            lastTrackPoint = null;
         }
+        lastTrackPoint = null;
 
         insertTrackPointHelper(trackPoint);
     }

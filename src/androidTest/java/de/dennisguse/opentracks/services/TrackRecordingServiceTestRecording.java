@@ -612,6 +612,55 @@ public class TrackRecordingServiceTestRecording {
         ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
     }
 
+    @MediumTest
+    @Test
+    public void testRecording_gpsOnly_recordingDistance_movement_non_idle() {
+        // given
+        String startTime = "2020-02-02T02:02:02Z";
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
+        trackPointCreator.setClock(startTime);
+        Track.Id trackId = service.startNewTrack();
+        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+
+        // when
+        String gps1 = "2020-02-02T02:02:03Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps1, 45.0, 35.0, 1, 15);
+
+        // when - will be ignored
+        String gps2 = "2020-02-02T02:02:04Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps2, 45.0, 35.0, 1, 15);
+
+        // when
+        String gps3 = "2020-02-02T02:02:05Z";
+        TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps3, 45.0001, 35.0, 1, 15);
+
+        // when
+        String stopTime = "2020-02-02T02:02:12Z";
+        trackPointCreator.setClock(stopTime);
+        service.endCurrentTrack();
+
+        // then
+        new TrackPointAssert().assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse(startTime)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps1))
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setHorizontalAccuracy(Distance.of(1))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+                        .setSpeed(Speed.of(15)),
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps3))
+                        .setLatitude(45)
+                        .setLongitude(35)
+                        .setHorizontalAccuracy(Distance.of(1))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+                        .setSpeed(Speed.of(15)),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse(stopTime))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+        ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
+    }
 
     @MediumTest
     @Test
@@ -796,15 +845,12 @@ public class TrackRecordingServiceTestRecording {
                 new TrackPoint(TrackPoint.Type.SENSORPOINT, Instant.parse(sensor3))
                         .setSpeed(Speed.of(5))
                         .setSensorDistance(Distance.of(10)),
-                new TrackPoint(TrackPoint.Type.SENSORPOINT, Instant.parse(sensor5)) //TODO No need to store this TrackPoint, data could be merged into the next one
-                        .setSpeed(Speed.of(5))
-                        .setSensorDistance(Distance.of(4)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps3))
                         .setLatitude(45.001)
                         .setLongitude(35)
                         .setHorizontalAccuracy(Distance.of(1))
                         .setSpeed(Speed.of(5))
-                        .setSensorDistance(Distance.of(0)),
+                        .setSensorDistance(Distance.of(4.0)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse(gps4))
                         .setLatitude(45.001)
                         .setLongitude(35)
