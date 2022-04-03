@@ -469,7 +469,7 @@ public class ExportImportTest {
                 return sensorDataSet;
             }
         });
-        trackPointCreator.onChange(null);
+        trackPointCreator.onChange(new SensorDataSet());
     }
 
     private void mockAltitudeChange(TrackPointCreator trackPointCreator, float altitudeGain) {
