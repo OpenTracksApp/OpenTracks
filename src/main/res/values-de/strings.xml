@@ -281,7 +281,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_sensor_disconnected">Verbindung getrennt von %1$s</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Bevorzugtes Maß</string>
-    <string name="settings_stats_units_imperial">Englisch (mi, ft)</string>
+    <string name="settings_stats_units_imperial">Imperiales Maß (mi, ft)</string>
     <string name="settings_stats_units_metric">Metrisch (km, m)</string>
     <string name="settings_stats_units_title">Bevorzugte Einheiten</string>
     <!-- Share Track -->
@@ -294,7 +294,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="stats_average_moving_speed">Durchschnittsgeschwindigkeit
 \n(Bewegung)</string>
     <string name="stats_average_pace">Durchschnitt</string>
-    <string name="stats_average_speed">Durchschnitt</string>
+    <string name="stats_average_speed">Durchschnittsgeschwindigkeit</string>
     <string name="stats_altitude">Höhe</string>
     <string name="stats_fastest_pace">Schnellstes Tempo</string>
     <string name="stats_gain">Anstieg</string>
@@ -332,7 +332,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="unit_kilometer_per_hour">km/h</string>
     <string name="unit_meter">m</string>
     <string name="unit_mile">mi</string>
-    <string name="unit_mile_per_hour">Meilen/Std.</string>
+    <string name="unit_mile_per_hour">mph</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">Min./Meile</string>
     <!-- Value -->
@@ -445,7 +445,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_night_mode_option_night">Nacht</string>
     <string name="settings_sensor_wheel_circumference">Radumfang (mm)</string>
     <string name="stats_loss">Abstieg</string>
-    <string name="hold_to_stop">Halten zum Anhalten</string>
+    <string name="hold_to_stop">Halten zum Stoppen</string>
     <string name="import_progress_summary_errors_msg">Fehler</string>
     <string name="import_progress_summary_exists_msg">Schon vorhanden</string>
     <string name="export_track_errors">Aufzeichnungen wurden nicht exportiert</string>
@@ -475,7 +475,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="export_progress_summary_overwrite_msg">Streckenaufzeichnung überschrieben</string>
     <string name="export_progress_summary_skip_msg">Strecke übersprungen</string>
     <string name="export_progress_summary_errors_msg">Fehler</string>
-    <string name="generic_click_twice_cancel">Klicke nochmal auf zurück um abzubrechen</string>
+    <string name="generic_click_twice_cancel">Klicke nochmal auf zurück, um abzubrechen</string>
     <string name="import_error_list_dialog_title">Dateien wurden nicht importiert</string>
     <string name="voice_speed_lap">Rundengeschwindigkeit %1$s</string>
     <string name="voice_pace_lap">Rundenzeit %1$s</string>
@@ -494,12 +494,12 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="menu_voice_rate">Sprachgeschwindigkeit</string>
     <string name="import_prevent_reimport">Du hast re-import von Tracks verhindern aktiviert</string>
     <string name="about_third_party_data">Daten von Drittherstellern</string>
-    <string name="sensor_state_heart_rate_max">Maximaler Puls</string>
+    <string name="sensor_state_heart_rate_max">Maximaler Herzfrequenz</string>
     <string name="track_delete_not_recording">Dieser Track kann nicht gelöscht werden, da er gerade aufgezeichnet wird.</string>
-    <string name="interval_list_empty_message">Noch kein Intervall vorhanden</string>
+    <string name="interval_list_empty_message">Es gibt noch keine Intervalle.</string>
     <string name="import_parser_error">Parser Fehler: %1$s</string>
-    <string name="settings_recording_fullscreen_on_while_recording_summary">Ganzen Bildschirm während Aufnahmen verwenden.</string>
-    <string name="sensor_state_heart_rate_avg">Durchschnittlicher Puls</string>
+    <string name="settings_recording_fullscreen_on_while_recording_summary">Anzeige im Vollbildmodus während der Aufzeichnung.</string>
+    <string name="sensor_state_heart_rate_avg">Durchschnittlicher Herzfrequenz</string>
     <string name="settings_prevent_reimport_tracks_title">Re-import von Tracks verhindern</string>
     <string name="import_no_kml_file_found">Keine doc.kml Datei im KMZ gefunden</string>
     <string name="track_delete_progress">%1$d/%2$d</string>
@@ -529,4 +529,32 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_sensors_summary">Fahrradsensoren, Radumfang und Lauf-Sensoren</string>
     <string name="settings_announcements_title">Sprachansagen</string>
     <string name="generic_undo">Rückgängig</string>
+    <string name="generic_today">Heute</string>
+    <string name="generic_yesterday">Gestern</string>
+    <string name="settings_announcements_totaltime_frequency">Zeitintervall</string>
+    <string name="stats_custom_layout_default_layout">Standardlayout</string>
+    <string name="settings_cycling_sensor">Radfahren</string>
+    <string name="custom_layout_list_edit_already_exists">Layoutname existiert bereits</string>
+    <string name="stats_sensors_heart_rate">Herzfrequenz</string>
+    <string name="activity_type_swimming">schwimmen</string>
+    <string name="activity_type_swimming_open">Freiwasserschwimmen</string>
+    <string name="activity_type_workout">Training</string>
+    <string name="settings_defaults_title">Einheiten und Aktivitäten</string>
+    <string name="stats_coordinates">Breitengrad/Längengrad</string>
+    <string name="settings_sensor_running_speed_and_cadence">Distanz, Geschwindigkeit und Trittfrequenz</string>
+    <string name="gps_recording_without_signal">OpenTracks nimmt auf ohne GPS-Daten.</string>
+    <string name="settings_ui_title">Benutzeroberfläche</string>
+    <string name="custom_layout_list_layout_removed">Layout wurde entfernt</string>
+    <string name="custom_layout_select_layout">Layout auswählen</string>
+    <string name="settings_running_sensor">Laufen</string>
+    <string name="settings_sensor_bluetooth_service_filter_enabled">Zeige nur Bluetooth-Geräte, die benötigte Dienste bekanntmachen</string>
+    <string name="settings_public_api_enabled_summary_on">Andere installierte Anwendungen können Aufzeichnungen starten oder stoppen.</string>
+    <string name="settings_public_api_disabled_toast">OpenTracks öffentliche API ist deaktiviert: es kann in den Einstellungen aktiviert werden.</string>
+    <string name="settings_export_section">Export</string>
+    <string name="settings_public_api_enabled_summary_off">Nur OpenTracks kann Aufzeichnungen starten und stoppen.</string>
+    <string name="settings_import_section">Import</string>
+    <string name="settings_api_title">Öffentliche API</string>
+    <string name="settings_public_api_dashboard_enabled_title">Automatischer Datentransfer</string>
+    <string name="settings_public_api_dashboard_enabled_summary_on">Eine Anwendung, welche eine Aufzeichnung gestartet hat, darf auch auf die aufgezeichneten Daten zugreifen.</string>
+    <string name="settings_public_api_dashboard_enabled_summary_off">Aufgezeichnete Daten werden nicht automatisch mit anderen Anwendungen geteilt.</string>
 </resources>
