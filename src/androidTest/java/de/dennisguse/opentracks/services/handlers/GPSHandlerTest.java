@@ -22,7 +22,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.time.Instant;
 
 import de.dennisguse.opentracks.data.models.Distance;
-import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -62,7 +61,7 @@ public class GPSHandlerTest {
         locationHandler.onLocationChanged(createLocation(45f, 35f, 3, 5, System.currentTimeMillis()));
 
         // then
-        verify(trackPointCreator, times(1)).onNewTrackPoint(any(TrackPoint.class));
+        verify(trackPointCreator, times(1)).onChange(any(Location.class));
     }
 
     /**
@@ -78,7 +77,7 @@ public class GPSHandlerTest {
         locationHandler.onLocationChanged(createLocation(latitude, 35f, 3, 5, System.currentTimeMillis()));
 
         // then
-        verify(trackPointCreator, times(0)).onNewTrackPoint(any(TrackPoint.class));
+        verify(trackPointCreator, times(0)).onChange(any(Location.class));
     }
 
     /**
@@ -94,7 +93,7 @@ public class GPSHandlerTest {
 
         // then
         // no newTrackPoint called
-        verify(trackPointCreator, times(0)).onNewTrackPoint(any(TrackPoint.class));
+        verify(trackPointCreator, times(0)).onChange(any(Location.class));
     }
 
     @Test
@@ -107,7 +106,7 @@ public class GPSHandlerTest {
         locationHandler.onLocationChanged(createLocation(99.0, 35.0, Long.MAX_VALUE, 15, System.currentTimeMillis()));
 
         // then
-        verify(trackPointCreator, times(1)).onNewTrackPoint(any(TrackPoint.class));
+        verify(trackPointCreator, times(1)).onChange(any(Location.class));
     }
 
     /**

@@ -17,6 +17,8 @@ package de.dennisguse.opentracks.util;
 
 import android.location.Location;
 
+import de.dennisguse.opentracks.data.models.Distance;
+
 /**
  * Utility class for decimating tracks at a given level of precision.
  *
@@ -39,5 +41,12 @@ public class LocationUtils {
         return location != null
                 && Math.abs(location.getLatitude()) <= 90
                 && Math.abs(location.getLongitude()) <= 180;
+    }
+
+    public static boolean fulfillsAccuracy(Location location, Distance thresholdHorizontalAccuracy) {
+        return location.hasAccuracy() &&
+                Distance.of(location.getAccuracy())
+                        .lessThan(thresholdHorizontalAccuracy);
+
     }
 }

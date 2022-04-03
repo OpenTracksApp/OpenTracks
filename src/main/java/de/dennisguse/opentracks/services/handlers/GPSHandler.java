@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
+import java.time.Instant;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
@@ -109,25 +110,23 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
             return;
         }
 
-        TrackPoint trackPoint = new TrackPoint(location, trackPointCreator.createNow());
-        boolean isAccurate = trackPoint.fulfillsAccuracy(thresholdHorizontalAccuracy);
-        boolean isValid = LocationUtils.isValidLocation(location);
-
         if (gpsStatus != null) {
+            // Send each update to the status; please note that this TrackPoint is not stored.
+            TrackPoint trackPoint = new TrackPoint(location, Instant.ofEpochMilli(location.getTime()));
             gpsStatus.onLocationChanged(trackPoint);
         }
 
-        if (!isValid) {
+        if (!LocationUtils.isValidLocation(location)) {
             Log.w(TAG, "Ignore newTrackPoint. location is invalid.");
             return;
         }
 
-        if (!isAccurate) {
+        if (!LocationUtils.fulfillsAccuracy(location, thresholdHorizontalAccuracy)) {
             Log.d(TAG, "Ignore newTrackPoint. Poor accuracy.");
             return;
         }
 
-        trackPointCreator.onNewTrackPoint(trackPoint);
+        trackPointCreator.onChange(location);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.services.handlers;
 
 import android.content.Context;
+import android.location.Location;
 import android.util.Log;
 import android.util.Pair;
 
@@ -47,7 +48,7 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
         this.gpsHandler = gpsHandler;
     }
 
-    public void start(@NonNull Context context) {
+    public synchronized void start(@NonNull Context context) {
         this.context = context;
 
         gpsHandler.onStart(context);
@@ -71,7 +72,7 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
         gpsHandler.onStop();
     }
 
-    public void reset() {
+    public synchronized void reset() {
         if (remoteSensorManager == null || altitudeSumManager == null) {
             Log.d(TAG, "No recording running and no reset necessary.");
             return;
@@ -80,7 +81,7 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
         altitudeSumManager.reset();
     }
 
-    private SensorDataSet fill(TrackPoint trackPoint) {
+    private SensorDataSet addSensorData(TrackPoint trackPoint) {
         if (!isStarted()) {
             Log.w(TAG, "Not started, should not be called.");
             return null;
@@ -98,7 +99,7 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
         return sensorDataSet;
     }
 
-    public void stop() {
+    public synchronized void stop() {
         gpsHandler.onStop();
 
         if (remoteSensorManager != null) {
@@ -114,16 +115,21 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
         this.context = null;
     }
 
+    public synchronized void onChange(@NonNull Location location) {
+        onNewTrackPoint(new TrackPoint(location, createNow()));
+    }
+
     /**
      * Got a new TrackPoint from Bluetooth only; contains no GPS location.
      */
     @Override
-    public void onChange(SensorDataSet sensorDataSet) {
+    public synchronized void onChange(@NonNull SensorDataSet unused) {
         onNewTrackPoint(new TrackPoint(TrackPoint.Type.SENSORPOINT, createNow()));
     }
 
-    public synchronized void onNewTrackPoint(@NonNull TrackPoint trackPoint) {
-        fill(trackPoint);
+    @VisibleForTesting
+    public void onNewTrackPoint(@NonNull TrackPoint trackPoint) {
+        addSensorData(trackPoint);
 
         boolean stored = service.newTrackPoint(trackPoint, gpsHandler.getThresholdHorizontalAccuracy());
         if (stored) {
@@ -131,13 +137,13 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
         }
     }
 
-    public TrackPoint createSegmentStartManual() {
+    public synchronized TrackPoint createSegmentStartManual() {
         return TrackPoint.createSegmentStartManualWithTime(createNow());
     }
 
-    public TrackPoint createSegmentEnd() {
+    public synchronized TrackPoint createSegmentEnd() {
         TrackPoint segmentEnd = TrackPoint.createSegmentEndWithTime(createNow());
-        fill(segmentEnd);
+        addSensorData(segmentEnd);
         reset();
         return segmentEnd;
     }
@@ -158,11 +164,12 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
             currentTrackPoint.setLatitude(lastStoredTrackPointWithLocation.getLatitude());
         }
 
-        SensorDataSet sensorDataSet = fill(currentTrackPoint);
+        SensorDataSet sensorDataSet = addSensorData(currentTrackPoint);
 
         return new Pair<>(currentTrackPoint, sensorDataSet);
     }
 
+    @VisibleForTesting
     Instant createNow() {
         return Instant.now(clock);
     }
