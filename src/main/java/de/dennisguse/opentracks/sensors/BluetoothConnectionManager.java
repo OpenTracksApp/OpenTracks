@@ -107,7 +107,6 @@ public abstract class BluetoothConnectionManager<DataType> {
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic) {
             Log.d(TAG, "Received data from " + gatt.getDevice().getAddress());
-
             SensorData<DataType> sensorData = parsePayload(gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
             if (sensorData != null) {
                 Log.d(TAG, "Decoded data from " + gatt.getDevice().getAddress() + ": " + sensorData);

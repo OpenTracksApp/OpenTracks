@@ -165,6 +165,11 @@ public class BluetoothUtils {
         index = 3;
         if (valueLength - index >= 1) {
             cadence = Cadence.of(characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, index));
+
+            // Hacky workaround as the Wahoo Tickr X provides cadence in SPM (steps per minute) in violation to the standard.
+            if (sensorName != null && sensorName.startsWith("TICKR X")) {
+                cadence = Cadence.of(cadence.getRPM() / 2);
+            }
         }
 
         index = 4;
