@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import java.util.List;
+import java.util.Objects;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
@@ -59,10 +60,11 @@ public class IntervalsFragment extends Fragment {
     /**
      * Creates an instance of this class.
      *
-     * @param  fromTopToBottom If true then the intervals are shown from top to bottom (the first interval on top). Otherwise the intervals are shown from bottom to top.
+     * @param fromTopToBottom If true then the intervals are shown from top to bottom (the first interval on top). Otherwise the intervals are shown from bottom to top.
      * @return IntervalsFragment instance.
      */
-    public static Fragment newInstance(Track.Id trackId, boolean fromTopToBottom) {
+    public static Fragment newInstance(@NonNull Track.Id trackId, boolean fromTopToBottom) {
+        Objects.nonNull(trackId);
         Bundle bundle = new Bundle();
         bundle.putBoolean(FROM_TOP_TO_BOTTOM_KEY, fromTopToBottom);
         bundle.putParcelable(TRACK_ID_KEY, trackId);
