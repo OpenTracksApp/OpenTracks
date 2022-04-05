@@ -588,4 +588,22 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_title">Transferencia automática de datos</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Una aplicación que ha iniciado una grabación puede también acceder a los datos grabados.</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Los datos grabados no se compartirán automáticamente con otras aplicaciones.</string>
+    <string name="settings_announcements_report_heart_rate">Anunciar ritmo cardíaco</string>
+    <string name="voice_per_kilometer">por kilometro</string>
+    <string name="voice_per_mile">por milla</string>
+    <string name="lap_time">Tiempo de vuelta</string>
+    <string name="pace">Ritmo</string>
+    <string name="lap_speed">Velocidad de vuelta</string>
+    <string name="speed">Velocidad</string>
+    <string name="total_distance">Distancia total</string>
+    <plurals name="voiceDistanceKilometers">
+        <item quantity="one">1 kilómetro</item>
+        <item quantity="other">%1$.2f kilómetros</item>
+    </plurals>
+    <plurals name="voiceDistanceMiles">
+        <item quantity="one">1 milla</item>
+        <item quantity="other">%1$.2f millas</item>
+    </plurals>
+    <string name="average_heart_rate">Ritmo cardíaco promedio</string>
+    <string name="current_heart_rate">Ritmo cardíaco actual</string>
 </resources>
