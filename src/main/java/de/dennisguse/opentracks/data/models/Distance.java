@@ -1,6 +1,7 @@
 package de.dennisguse.opentracks.data.models;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.Objects;
 
@@ -12,6 +13,14 @@ public class Distance {
 
     public static Distance of(String distance_m) {
         return of(Float.parseFloat(distance_m));
+    }
+
+    @Nullable
+    public static Distance ofOrNull(Double distance_m) {
+        if (distance_m == null) {
+            return null;
+        }
+        return of(distance_m);
     }
 
     public static Distance ofMile(double distance_mile) {
