@@ -589,9 +589,9 @@ limitations under the License.
     <string name="speed">Rychlost</string>
     <string name="total_distance">Celková vzdálenost</string>
     <plurals name="voiceDistanceKilometers">
-        <item quantity="one"></item>
-        <item quantity="few"></item>
-        <item quantity="other"></item>
+        <item quantity="one"/>
+        <item quantity="few"/>
+        <item quantity="other"/>
     </plurals>
     <string name="average_heart_rate">Průměrný srdeční tep</string>
     <string name="current_heart_rate">Aktuální srdeční tep</string>
@@ -611,4 +611,9 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_summary_on">Aplikace, která zahájila nahrávání, může také přistupovat k nahraným datům.</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Zaznamenaná data nebudou automaticky sdílena s jinými aplikacemi.</string>
     <string name="pace">Tempo</string>
+    <plurals name="voiceDistanceMiles">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="other"></item>
+    </plurals>
 </resources>
