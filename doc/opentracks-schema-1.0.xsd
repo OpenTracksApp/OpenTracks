@@ -29,4 +29,13 @@
             </xsd:documentation>
         </xsd:annotation>
     </xsd:element>
+    <xsd:element name="accuracy"
+        type="xsd:float">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                Accuracy in meters of the current TrackPoint.
+                Only used in GPX.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
 </xsd:schema>
