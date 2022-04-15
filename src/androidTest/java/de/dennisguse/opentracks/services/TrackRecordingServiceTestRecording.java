@@ -281,7 +281,7 @@ public class TrackRecordingServiceTestRecording {
         TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps2, 45.0001, 35.0, 1, 15);
 
         // then
-        assertEquals(new TrackStatistics(startTime, gps2, 11.113178253173828f, 4, 3, 15, 0f, 0f)
+        assertEquals(new TrackStatistics(startTime, gps2, 11.113178253173828f, 4, 3, 3.70f, 0f, 0f)
                 , contentProviderUtils.getTrack(trackId).getTrackStatistics());
 
         // when
@@ -289,7 +289,7 @@ public class TrackRecordingServiceTestRecording {
         TrackRecordingServiceTestUtils.sendGPSLocation(trackPointCreator, gps3, 45.0002, 35.0, 1, 15);
 
         // then
-        assertEquals(new TrackStatistics(startTime, gps3, 22.226356506347656, 6, 5, 15, 0f, 0f)
+        assertEquals(new TrackStatistics(startTime, gps3, 22.226356506347656, 6, 5, 5.556589126586914f, 0f, 0f)
                 , contentProviderUtils.getTrack(trackId).getTrackStatistics());
 
 
@@ -299,7 +299,7 @@ public class TrackRecordingServiceTestRecording {
         service.endCurrentTrack();
 
         // then
-        assertEquals(new TrackStatistics(startTime, stopTime, 22.226356506347656, 10, 5, 15, 0f, 0f)
+        assertEquals(new TrackStatistics(startTime, stopTime, 22.226356506347656, 10, 5, 5.556589126586914f, 0f, 0f)
                 , contentProviderUtils.getTrack(trackId).getTrackStatistics());
 
         new TrackPointAssert().assertEquals(List.of(
@@ -435,7 +435,7 @@ public class TrackRecordingServiceTestRecording {
         service.endCurrentTrack();
 
         // then
-        assertEquals(new TrackStatistics(startTime, stopTime, 2.222635507583618, 10, 5, 15, 0f, 0f)
+        assertEquals(new TrackStatistics(startTime, stopTime, 2.222635507583618, 10, 5, 0.44f, 0f, 0f)
                 , contentProviderUtils.getTrack(trackId).getTrackStatistics());
 
         new TrackPointAssert().assertEquals(List.of(

@@ -34,7 +34,6 @@ import java.util.Set;
 
 import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Marker;
-import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.data.tables.MarkerColumns;
@@ -367,7 +366,7 @@ public class TrackDataHub {
                 // Also include the last point if the selected track is not recording.
                 if ((localNumLoadedTrackPoints % samplingFrequency == 0) || (trackPointId == lastTrackPointId && !isSelectedTrackRecording())) {
                     for (Listener trackDataListener : listeners) {
-                        trackDataListener.onSampledInTrackPoint(trackPoint, currentUpdater.getTrackStatistics(), currentUpdater.getSmoothedSpeed(), currentUpdater.getSmoothedAltitude());
+                        trackDataListener.onSampledInTrackPoint(trackPoint, currentUpdater.getTrackStatistics(), currentUpdater.getSmoothedAltitude());
                     }
                 } else {
                     for (Listener trackDataListener : listeners) {
@@ -432,7 +431,7 @@ public class TrackDataHub {
          *
          * @param trackPoint the trackPoint
          */
-        default void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, Speed smoothedSpeed, @Nullable Altitude smoothedAltitude_m) {
+        default void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, @Nullable Altitude smoothedAltitude_m) {
         }
 
         /**

@@ -34,7 +34,6 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.TrackDataHub;
 import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Marker;
-import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.databinding.ChartBinding;
@@ -187,9 +186,9 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
         }
     }
 
-    public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, Speed smoothedSpeed, Altitude smoothedAltitude) {
+    public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, Altitude smoothedAltitude) {
         if (isResumed()) {
-            ChartPoint point = new ChartPoint(trackStatistics, trackPoint, smoothedSpeed, smoothedAltitude, chartByDistance, viewBinding.chartView.getMetricUnits());
+            ChartPoint point = new ChartPoint(trackStatistics, trackPoint, trackPoint.getSpeed(), smoothedAltitude, chartByDistance, viewBinding.chartView.getMetricUnits());
             pendingPoints.add(point);
         }
     }

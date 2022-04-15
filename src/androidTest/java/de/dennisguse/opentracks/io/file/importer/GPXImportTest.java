@@ -181,7 +181,7 @@ public class GPXImportTest {
 
         // 3. trackstatistics
         TrackStatistics trackStatistics = importedTrack.getTrackStatistics();
-        assertEquals(4, trackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(0.758, trackStatistics.getMaxSpeed().toMPS(), 0.01);
         assertEquals(Duration.ofSeconds(101), trackStatistics.getMovingTime());
 
         // 4. trackpoints

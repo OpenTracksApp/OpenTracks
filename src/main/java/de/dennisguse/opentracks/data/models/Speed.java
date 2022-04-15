@@ -17,6 +17,10 @@ public class Speed {
         return new Speed(distance.toM() / (duration.toMillis() * UnitConversions.MS_TO_S));
     }
 
+    public static Speed of(@NonNull TrackPoint previous, @NonNull TrackPoint current) {
+        return Speed.of(current.distanceToPrevious(previous), Duration.between(previous.getTime(), current.getTime()));
+    }
+
     public static Speed of(double speed_mps) {
         return new Speed(speed_mps);
     }
