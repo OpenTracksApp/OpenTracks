@@ -206,8 +206,7 @@ public class ExportImportTest {
         assertEquals(track.getIcon(), importedTrack.getIcon());
 
         // 2. trackpoints
-        TrackPointAssert a = new TrackPointAssert()
-                .noAccuracy();
+        TrackPointAssert a = new TrackPointAssert();
         List<TrackPoint> actual = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
         a.assertEquals(trackPoints, actual);
 
@@ -320,8 +319,7 @@ public class ExportImportTest {
         // Therefore, the track segmentation is changes.
 
         TrackPointAssert a = new TrackPointAssert()
-                .setDelta(0.05)
-                .noAccuracy(); // speed is not fully
+                .setDelta(0.05); // speed is not fully
         List<TrackPoint> actual = TestDataUtil.getTrackPoints(contentProviderUtils, importTrackId);
         a.assertEquals(List.of(
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2020-02-02T02:02:03Z"))
@@ -330,7 +328,8 @@ public class ExportImportTest {
                         .setAltitude(10)
                         .setSpeed(Speed.of(15))
                         .setAltitudeLoss(1f)
-                        .setAltitudeGain(1f),
+                        .setAltitudeGain(1f)
+                        .setHorizontalAccuracy(Distance.of(10)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:05Z"))
                         .setLatitude(3)
                         .setLongitude(14.001)
@@ -341,21 +340,24 @@ public class ExportImportTest {
                         .setSensorDistance(Distance.of(12))
                         .setHeartRate(66f)
                         .setPower(50f)
-                        .setCadence(3f),
+                        .setCadence(3f)
+                        .setHorizontalAccuracy(Distance.of(10)),
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2020-02-02T02:02:21Z"))
                         .setLatitude(3)
                         .setLongitude(14.002)
                         .setAltitude(10)
                         .setAltitudeLoss(0f)
                         .setAltitudeGain(0f)
-                        .setSpeed(Speed.of(15)),
+                        .setSpeed(Speed.of(15))
+                        .setHorizontalAccuracy(Distance.of(10)),
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2020-02-02T02:02:22Z"))
                         .setLatitude(3)
                         .setLongitude(16)
                         .setAltitude(10)
                         .setAltitudeLoss(0f)
                         .setAltitudeGain(0f)
-                        .setSpeed(Speed.of(15)),
+                        .setSpeed(Speed.of(15))
+                        .setHorizontalAccuracy(Distance.of(10)),
                 new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:23Z"))
                         .setLatitude(3)
                         .setLongitude(16.001)
@@ -363,6 +365,7 @@ public class ExportImportTest {
                         .setAltitudeLoss(0f)
                         .setAltitudeGain(0f)
                         .setSpeed(Speed.of(15))
+                        .setHorizontalAccuracy(Distance.of(10))
         ), actual);
 
         // 3. trackstatistics

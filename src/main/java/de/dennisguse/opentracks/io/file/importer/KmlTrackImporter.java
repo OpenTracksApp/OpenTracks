@@ -89,6 +89,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private final ArrayList<Float> sensorPowerList = new ArrayList<>();
     private final ArrayList<Float> altitudeGainList = new ArrayList<>();
     private final ArrayList<Float> altitudeLossList = new ArrayList<>();
+    private final ArrayList<Float> accuracyHorizontal = new ArrayList<>();
 
     private final ArrayList<Marker> markers = new ArrayList<>();
 
@@ -294,6 +295,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
         sensorPowerList.clear();
         altitudeGainList.clear();
         altitudeLossList.clear();
+        accuracyHorizontal.clear();
     }
 
     private void onTrackSegmentEnd() {
@@ -332,6 +334,9 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
             }
             if (i < altitudeLossList.size()) {
                 trackPoint.setAltitudeLoss(altitudeLossList.get(i));
+            }
+            if (i < accuracyHorizontal.size() && accuracyHorizontal.get(i) != null) {
+                trackPoint.setHorizontalAccuracy(Distance.of(accuracyHorizontal.get(i)));
             }
 
             // Update TrackPoint type for START / STOP.
@@ -429,6 +434,9 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 break;
             case KMLTrackExporter.EXTENDED_DATA_TYPE_ALTITUDE_LOSS:
                 altitudeLossList.add(value);
+                break;
+            case KMLTrackExporter.EXTENDED_DATA_TYPE_ACCURACY_HORIZONTAL:
+                accuracyHorizontal.add(value);
                 break;
             default:
                 Log.w(TAG, "Data from extended data " + extendedDataType + " is not (yet) supported.");
