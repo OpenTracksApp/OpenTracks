@@ -8,8 +8,6 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
 
 public class TrackPointAssert {
 
-    private boolean assertAccuracy = true;
-
     private double delta = 0.001;
 
     public TrackPointAssert() {
@@ -45,13 +43,9 @@ public class TrackPointAssert {
             Assert.assertEquals(expected.getSpeed().toMPS(), actual.getSpeed().toMPS(), delta);
         }
 
-        if (assertAccuracy) {
-            Assert.assertEquals(expected.hasHorizontalAccuracy(), actual.hasHorizontalAccuracy());
-            if (expected.hasHorizontalAccuracy()) {
-                Assert.assertEquals(expected.getHorizontalAccuracy().toM(), actual.getHorizontalAccuracy().toM(), delta);
-            }
-        } else {
-            Assert.assertFalse(actual.hasHorizontalAccuracy());
+        Assert.assertEquals(expected.hasHorizontalAccuracy(), actual.hasHorizontalAccuracy());
+        if (expected.hasHorizontalAccuracy()) {
+            Assert.assertEquals(expected.getHorizontalAccuracy().toM(), actual.getHorizontalAccuracy().toM(), delta);
         }
 
         Assert.assertEquals(expected.hasSensorDistance(), actual.hasSensorDistance());
@@ -94,11 +88,6 @@ public class TrackPointAssert {
         for (int i = 0; i < expected.size(); i++) {
             assertEquals(expected.get(i), actual.get(i));
         }
-    }
-
-    public TrackPointAssert noAccuracy() {
-        this.assertAccuracy = false;
-        return this;
     }
 
     public TrackPointAssert setDelta(double delta) {

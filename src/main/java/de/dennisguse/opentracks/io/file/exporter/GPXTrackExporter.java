@@ -359,7 +359,7 @@ public class GPXTrackExporter implements TrackExporter {
                 }
 
                 if (trackPoint.hasHorizontalAccuracy()) {
-                    trackPointExtensionContent += ("<opentracks:accuracy>" + DISTANCE_FORMAT.format(trackPoint.getHorizontalAccuracy().toM()) + "</opentracks:accuracy>");
+                    trackPointExtensionContent += ("<opentracks:accuracy_horizontal>" + DISTANCE_FORMAT.format(trackPoint.getHorizontalAccuracy().toM()) + "</opentracks:accuracy_horizontal>");
                 }
 
                 cumulativeDistance = Distance.ofOrNull(cumulateSensorData(trackPoint, sensorPoints, (tp) -> tp.hasSensorDistance() ? tp.getSensorDistance().toM() : null));

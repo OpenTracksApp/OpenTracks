@@ -82,6 +82,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private static final String TAG_EXTENSION_GAIN = "opentracks:gain";
     private static final String TAG_EXTENSION_LOSS = "opentracks:loss";
     private static final String TAG_EXTENSION_DISTANCE = "opentracks:distance";
+    private static final String TAG_EXTENSION_ACCURACY_HORIZONTAL = "opentracks:accuracy_horizontal";
 
     private Locator locator;
 
@@ -106,12 +107,13 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private String heartrate;
     private String cadence;
     private String power;
-    protected String markerType;
-    protected String photoUrl;
-    protected String uuid;
-    protected String gain;
-    protected String loss;
-    protected String sensorDistance;
+    private String markerType;
+    private String photoUrl;
+    private String uuid;
+    private String gain;
+    private String loss;
+    private String sensorDistance;
+    private String accuracyHorizontal;
 
     private final LinkedList<TrackPoint> currentSegment = new LinkedList<>();
 
@@ -240,6 +242,11 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
                     sensorDistance = content.trim();
                 }
                 break;
+            case TAG_EXTENSION_ACCURACY_HORIZONTAL:
+                if (content != null) {
+                    accuracyHorizontal = content.trim();
+                }
+                break;
         }
 
         content = "";
@@ -342,6 +349,13 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse distance: %s", sensorDistance)), e);
             }
         }
+        if (accuracyHorizontal != null) {
+            try {
+                trackPoint.setHorizontalAccuracy(Distance.of(accuracyHorizontal));
+            } catch (NumberFormatException e) {
+                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse accuracy_horizontal: %s", sensorDistance)), e);
+            }
+        }
 
         return trackPoint;
     }
@@ -357,6 +371,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
         loss = null;
 
         sensorDistance = null;
+        accuracyHorizontal = null;
         power = null;
         heartrate = null;
         cadence = null;
