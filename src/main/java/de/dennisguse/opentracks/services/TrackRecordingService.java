@@ -120,11 +120,12 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     @Override
     public void onDestroy() {
+        trackPointCreator.stop();
+        trackPointCreator = null;
+
         handler.removeCallbacksAndMessages(null); //Some tests do not finish the recording completely
         handler = null;
 
-        trackPointCreator.stop();
-        trackPointCreator = null;
         trackRecordingManager.stop();
         trackRecordingManager = null;
 
