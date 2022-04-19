@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.io.file.exporter.CSVTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.GPXTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.KMLTrackExporter;
 import de.dennisguse.opentracks.io.file.exporter.KmzTrackExporter;
@@ -99,6 +100,23 @@ public enum TrackFileFormat {
 
         public String getExtension() {
             return "gpx";
+        }
+    },
+
+    CSV {
+        @Override
+        public TrackExporter createTrackExporter(Context context) {
+            return new CSVTrackExporter(new ContentProviderUtils(context));
+        }
+
+        @Override
+        public String getMimeType() {
+            return "text/csv";
+        }
+
+        @Override
+        public String getExtension() {
+            return "csv";
         }
     };
 

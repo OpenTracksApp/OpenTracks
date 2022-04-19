@@ -53,8 +53,7 @@ public class ShareContentProvider extends CustomContentProvider {
 
     private static final int URI_KMZ_WITH_TRACKDETAIL_AND_SENSORDATA = 6;
     private static final int URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES = 7;
-
-    private static final int URI_SHARE_PICTURE = 8;
+    private static final int URI_CSV = 8;
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     private static final String TRACKID_DELIMITER = "_";
@@ -66,6 +65,7 @@ public class ShareContentProvider extends CustomContentProvider {
 
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA.getName() + "/*/*", URI_KMZ_WITH_TRACKDETAIL_AND_SENSORDATA);
         uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.getName() + "/*/*", URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.CSV.getName() + "/*/*", URI_CSV);
     }
 
     /**
@@ -145,6 +145,9 @@ public class ShareContentProvider extends CustomContentProvider {
                 return TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA;
             case URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES:
                 return TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES;
+
+            case URI_CSV:
+                return TrackFileFormat.CSV;
 
             default:
                 throw new RuntimeException("Could not derive TrackFileFormat from Uri " + uri);
