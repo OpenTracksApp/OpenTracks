@@ -16,6 +16,7 @@ import androidx.preference.PreferenceManager;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
 import androidx.test.rule.ServiceTestRule;
 
@@ -27,15 +28,19 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
@@ -424,6 +429,36 @@ public class ExportImportTest {
         // 1. track
         Track trackImported = contentProviderUtils.getTrack(importTrackId);
         assertNull(trackImported);
+    }
+
+    @LargeTest
+    @Test
+    public void csv_export_only() throws TimeoutException, IOException {
+        setUp();
+
+        // given
+        Track track = contentProviderUtils.getTrack(trackId);
+
+        TrackExporter trackExporter = TrackFileFormat.CSV.createTrackExporter(context);
+
+        // when
+        // 1. export
+        trackExporter.writeTrack(track, context.getContentResolver().openOutputStream(tmpFileUri));
+        contentProviderUtils.deleteTrack(context, trackId);
+
+        // then
+        InputStream expected = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.csv_export);
+        String expectedText = new BufferedReader(new InputStreamReader(expected, StandardCharsets.UTF_8))
+                .lines()
+                .collect(Collectors.joining("\n"));
+
+
+        InputStream actual = context.getContentResolver().openInputStream(tmpFileUri);
+        String actualText = new BufferedReader(new InputStreamReader(actual, StandardCharsets.UTF_8))
+                .lines()
+                .collect(Collectors.joining("\n"));
+
+        assertEquals(expectedText, actualText);
     }
 
     private void assertMarkers() {

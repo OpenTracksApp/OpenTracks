@@ -45,7 +45,8 @@ public class ImportExportSettingsFragment extends PreferenceFragmentCompat {
                 TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES,
                 TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA,
                 TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA,
-                TrackFileFormat.GPX
+                TrackFileFormat.GPX,
+                TrackFileFormat.CSV
         };
         String[] entries = new String[trackFileFormats.length];
         String[] entryValues = new String[trackFileFormats.length];
