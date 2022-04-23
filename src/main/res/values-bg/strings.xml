@@ -259,16 +259,12 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">мин/км</string>
     <string name="unit_minute_per_mile">мин/мил</string>
     <!-- Value -->
-    <string name="value_integer_feet">%1$d фт</string>
     <string name="value_integer_feet_excellent_gps">%1$d фт (отличен GPS)</string>
     <string name="value_integer_feet_recommended">%1$d фт (препоръчително)</string>
-    <string name="value_integer_kilometer">%1$d км</string>
     <string name="value_integer_kilometer_hour">%1$d км/ч</string>
-    <string name="value_integer_meter">%1$d м</string>
     <string name="value_integer_meter_excellent_gps">%1$d м (отличен GPS)</string>
     <string name="value_integer_meter_poor_gps">%1$d м (слаб GPS)</string>
     <string name="value_integer_meter_recommended">%1$d м (препоръчително)</string>
-    <string name="value_integer_mile">%1$d мил</string>
     <string name="value_integer_mile_hour">%1$d мил/ч</string>
     <string name="value_integer_minute">%1$d мин</string>
     <string name="value_integer_second">%1$d сек</string>

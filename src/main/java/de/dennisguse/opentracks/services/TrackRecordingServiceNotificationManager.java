@@ -17,6 +17,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
 import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -79,8 +80,10 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
 
     void updateTrackPoint(Context context, TrackStatistics trackStatistics, TrackPoint trackPoint, Distance recordingGpsAccuracy) {
         String formattedAccuracy = context.getString(R.string.value_none);
+
+        DistanceFormatter formatter = DistanceFormatter.Builder().build(context);
         if (trackPoint.hasHorizontalAccuracy()) {
-            formattedAccuracy = StringUtils.formatDistance(context, trackPoint.getHorizontalAccuracy(), metricUnits);
+            formattedAccuracy = formatter.formatDistance(trackPoint.getHorizontalAccuracy(), metricUnits);
 
             boolean currentLocationWasAccurate = trackPoint.getHorizontalAccuracy().lessThan(recordingGpsAccuracy);
             boolean shouldAlert = !currentLocationWasAccurate && previousLocationWasAccurate;
@@ -88,7 +91,7 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
             previousLocationWasAccurate = currentLocationWasAccurate;
         }
 
-        notificationBuilder.setContentTitle(context.getString(R.string.track_distance_notification, StringUtils.formatDistance(context, trackStatistics.getTotalDistance(), metricUnits)));
+        notificationBuilder.setContentTitle(context.getString(R.string.track_distance_notification, formatter.formatDistance(trackStatistics.getTotalDistance(), metricUnits)));
         notificationBuilder.setContentText(context.getString(R.string.track_speed_notification, StringUtils.formatSpeed(context, trackPoint.getSpeed(), metricUnits, true)));
         notificationBuilder.setSubText(context.getString(R.string.track_recording_notification_accuracy, formattedAccuracy));
         updateNotification();

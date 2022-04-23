@@ -329,16 +329,12 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="unit_minute_per_kilometer">min./km</string>
     <string name="unit_minute_per_mile">min./mil</string>
     <!-- Value -->
-    <string name="value_integer_feet">%1$d fod</string>
     <string name="value_integer_feet_excellent_gps">%1$d fod (fremragende GPS)</string>
     <string name="value_integer_feet_recommended">%1$d fod (anbefales)</string>
-    <string name="value_integer_kilometer">%1$d km</string>
     <string name="value_integer_kilometer_hour">%1$d km/t</string>
-    <string name="value_integer_meter">%1$d m</string>
     <string name="value_integer_meter_excellent_gps">%1$d m (fremragende GPS)</string>
     <string name="value_integer_meter_poor_gps">%1$d m (dårlig GPS)</string>
     <string name="value_integer_meter_recommended">%1$d m (anbefalet)</string>
-    <string name="value_integer_mile">%1$d mil</string>
     <string name="value_integer_mile_hour">%1$d mil/t</string>
     <string name="value_integer_minute">%1$d min</string>
     <string name="value_integer_second">%1$d sek</string>

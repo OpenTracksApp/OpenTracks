@@ -210,16 +210,12 @@
     <string name="unit_mile_per_hour">英里/小時</string>
     <string name="unit_minute_per_kilometer">分鐘/公里</string>
     <string name="unit_minute_per_mile">分鐘/英里</string>
-    <string name="value_integer_feet">%1$d 英尺</string>
     <string name="value_integer_feet_excellent_gps">%1$d 英尺 (GPS 訊號佳)</string>
     <string name="value_integer_feet_recommended">%1$d 英尺 (建議值)</string>
-    <string name="value_integer_kilometer">%1$d 公里</string>
     <string name="value_integer_kilometer_hour">%1$d 公里/小時</string>
-    <string name="value_integer_meter">%1$d 公尺</string>
     <string name="value_integer_meter_excellent_gps">%1$d 公尺 (GPS 訊號佳)</string>
     <string name="value_integer_meter_poor_gps">%1$d 公尺 (GPS 訊號差)</string>
     <string name="value_integer_meter_recommended">%1$d 公尺 (建議值)</string>
-    <string name="value_integer_mile">%1$d 英里</string>
     <string name="value_integer_mile_hour">%1$d 英里/小時</string>
     <string name="value_integer_minute">%1$d 分鐘</string>
     <string name="value_integer_second">%1$d 秒</string>

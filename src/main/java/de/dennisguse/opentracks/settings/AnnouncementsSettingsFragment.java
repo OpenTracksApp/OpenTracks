@@ -28,6 +28,6 @@ public class AnnouncementsSettingsFragment extends PreferenceFragmentCompat {
         voiceFrequency.setEntries(PreferencesUtils.getVoiceAnnouncementFrequencyEntries());
 
         ListPreference voiceDistance = findPreference(getString(R.string.voice_announcement_distance_key));
-        voiceDistance.setEntries(PreferencesUtils.getVoiceAnnouncementDistanceEntries(getContext()));
+        voiceDistance.setEntries(PreferencesUtils.getVoiceAnnouncementDistanceEntries());
     }
 }

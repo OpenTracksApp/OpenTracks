@@ -212,16 +212,12 @@
     <string name="unit_mile_per_hour">mph</string>
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">mnt/mil</string>
-    <string name="value_integer_feet">%1$d kaki</string>
     <string name="value_integer_feet_excellent_gps">%1$d kaki (GPS sangat baik)</string>
     <string name="value_integer_feet_recommended">%1$d kaki (direkomendasikan)</string>
-    <string name="value_integer_kilometer">%1$d km</string>
     <string name="value_integer_kilometer_hour">%1$d km/j</string>
-    <string name="value_integer_meter">%1$d m</string>
     <string name="value_integer_meter_excellent_gps">%1$d m (GPS sangat baik)</string>
     <string name="value_integer_meter_poor_gps">%1$d m (GPS buruk)</string>
     <string name="value_integer_meter_recommended">%1$d m (disarankan)</string>
-    <string name="value_integer_mile">%1$d mil</string>
     <string name="value_integer_mile_hour">%1$d mi/j</string>
     <string name="value_integer_minute">%1$d mnt</string>
     <string name="value_integer_second">%1$d d</string>

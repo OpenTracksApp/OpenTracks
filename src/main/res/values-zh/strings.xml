@@ -276,16 +276,12 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">分钟/公里</string>
     <string name="unit_minute_per_mile">分钟/英里</string>
     <!-- Value -->
-    <string name="value_integer_feet">%1$d 英尺</string>
     <string name="value_integer_feet_excellent_gps">%1$d 英尺（GPS 信号极佳）</string>
     <string name="value_integer_feet_recommended">%1$d 英尺（推荐）</string>
-    <string name="value_integer_kilometer">%1$d 公里</string>
     <string name="value_integer_kilometer_hour">%1$d 公里/小时</string>
-    <string name="value_integer_meter">%1$d 米</string>
     <string name="value_integer_meter_excellent_gps">%1$d 米（GPS 信号极佳）</string>
     <string name="value_integer_meter_poor_gps">%1$d 米（GPS 信号差）</string>
     <string name="value_integer_meter_recommended">%1$d 米（推荐）</string>
-    <string name="value_integer_mile">%1$d 英里</string>
     <string name="value_integer_mile_hour">%1$d 英里/小时</string>
     <string name="value_integer_minute">%1$d 分钟</string>
     <string name="value_integer_second">%1$d 秒</string>

@@ -258,16 +258,12 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">دقیقه در کیلومتر</string>
     <string name="unit_minute_per_mile">دقیقه در مایل</string>
     <!-- Value -->
-    <string name="value_integer_feet">%1$d فوت</string>
     <string name="value_integer_feet_excellent_gps">%1$d فوت (GPS عالی)</string>
     <string name="value_integer_feet_recommended">%1$d فوت (توصیه می‌شود)</string>
-    <string name="value_integer_kilometer">%1$d کیلومتر</string>
     <string name="value_integer_kilometer_hour">%1$d کیلومتر در ساعت</string>
-    <string name="value_integer_meter">%1$d متر</string>
     <string name="value_integer_meter_excellent_gps">%1$d متر (GPS عالی)</string>
     <string name="value_integer_meter_poor_gps">%1$d متر (GPS ضعیف)</string>
     <string name="value_integer_meter_recommended">%1$d متر (توصیه شده)</string>
-    <string name="value_integer_mile">%1$d مایل</string>
     <string name="value_integer_mile_hour">%1$d مایل در ساعت</string>
     <string name="value_integer_minute">%1$d دقیقه</string>
     <string name="value_integer_second">%1$d ثانیه</string>

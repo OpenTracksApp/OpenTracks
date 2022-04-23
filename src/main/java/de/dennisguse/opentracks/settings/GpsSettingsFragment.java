@@ -9,7 +9,7 @@ import java.time.Duration;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
-import de.dennisguse.opentracks.util.StringUtils;
+import de.dennisguse.opentracks.data.models.DistanceFormatter;
 
 public class GpsSettingsFragment extends PreferenceFragmentCompat {
 
@@ -17,12 +17,16 @@ public class GpsSettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.settings_gps);
 
+        final DistanceFormatter formatter = DistanceFormatter.Builder()
+                .setDecimalCount(0)
+                .build(getContext());
+
         findPreference(getString(R.string.recording_distance_interval_key))
                 .setSummaryProvider(
                         preference -> {
                             boolean metricUnits = PreferencesUtils.isMetricUnits();
                             Distance distance = PreferencesUtils.getRecordingDistanceInterval();
-                            return getString(R.string.settings_recording_location_frequency_summary, StringUtils.formatDistance(getContext(), distance, metricUnits));
+                            return getString(R.string.settings_recording_location_frequency_summary, formatter.formatDistance(distance, metricUnits));
                         }
                 );
 
@@ -31,7 +35,7 @@ public class GpsSettingsFragment extends PreferenceFragmentCompat {
                         preference -> {
                             boolean metricUnits = PreferencesUtils.isMetricUnits();
                             Distance distance = PreferencesUtils.getMaxRecordingDistance();
-                            return getString(R.string.settings_recording_max_recording_distance_summary, StringUtils.formatDistance(getContext(), distance, metricUnits));
+                            return getString(R.string.settings_recording_max_recording_distance_summary, formatter.formatDistance(distance, metricUnits));
                         }
                 );
 
@@ -40,7 +44,7 @@ public class GpsSettingsFragment extends PreferenceFragmentCompat {
                         preference -> {
                             boolean metricUnits = PreferencesUtils.isMetricUnits();
                             Distance distance = PreferencesUtils.getThresholdHorizontalAccuracy();
-                            return getString(R.string.settings_recording_min_required_accuracy_summary, StringUtils.formatDistance(getContext(), distance, metricUnits));
+                            return getString(R.string.settings_recording_min_required_accuracy_summary, formatter.formatDistance(distance, metricUnits));
                         }
                 );
 

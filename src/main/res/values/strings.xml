@@ -529,18 +529,14 @@ limitations under the License.
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <!-- Value -->
 
-    <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (excellent GPS)</string>
     <string name="value_integer_feet_recommended">%1$d ft (recommended)</string>
-    <string name="value_integer_kilometer">%1$d km</string>
     <string name="value_integer_kilometer_hour">%1$d km/h</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (recommended)</string>
-    <string name="value_integer_meter">%1$d m</string>
     <string name="value_integer_meter_excellent_gps">%1$d m (excellent GPS)</string>
     <string name="value_integer_meter_poor_gps">%1$d m (poor GPS)</string>
     <string name="value_integer_meter_recommended">%1$d m (recommended)</string>
-    <string name="value_integer_mile">%1$d mi</string>
     <string name="value_integer_mile_hour">%1$d mi/h</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (recommended)</string>

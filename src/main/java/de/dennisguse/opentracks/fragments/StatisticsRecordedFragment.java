@@ -37,6 +37,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackRecordedActivity;
 import de.dennisguse.opentracks.adapters.StatisticsAdapter;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.StatisticsRecordedBinding;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
@@ -186,7 +187,7 @@ public class StatisticsRecordedFragment extends Fragment {
         TrackStatistics trackStatistics = track.getTrackStatistics();
         // Set total distance
         {
-            Pair<String, String> parts = StringUtils.getDistanceParts(getContext(), trackStatistics.getTotalDistance(), preferenceMetricUnits);
+            Pair<String, String> parts = DistanceFormatter.Builder().build(getContext()).getDistanceParts(trackStatistics.getTotalDistance(), preferenceMetricUnits);
 
             viewBinding.statsDistanceValue.setText(parts.first);
             viewBinding.statsDistanceUnit.setText(parts.second);

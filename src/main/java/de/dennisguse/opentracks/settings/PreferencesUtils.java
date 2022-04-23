@@ -39,12 +39,11 @@ import java.util.stream.Stream;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.Speed;
-import de.dennisguse.opentracks.data.models.UnitConversions;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.ui.customRecordingLayout.CsvLayoutUtils;
 import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
-import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
@@ -304,17 +303,20 @@ public class PreferencesUtils {
     /**
      * @return Result depends on isMetricUnits
      */
-    @Deprecated //TODO Context should not be used here; requires refactoring of StringUtils.
-    static String[] getVoiceAnnouncementDistanceEntries(Context context) {
+    static String[] getVoiceAnnouncementDistanceEntries() {
         String[] values = resources.getStringArray(R.array.voice_announcement_distance_values);
         String[] options = new String[values.length];
         boolean metricUnits = isMetricUnits();
+
+        DistanceFormatter formatter = DistanceFormatter.Builder()
+                .setDecimalCount(0)
+                .build(resources);
         for (int i = 0; i < values.length; i++) {
             if (resources.getString(R.string.announcement_off).equals(values[i])) {
                 options[i] = resources.getString(R.string.value_off);
             } else {
                 Distance distance = Distance.one(metricUnits).multipliedBy(Double.parseDouble(values[i]));
-                options[i] = StringUtils.formatDistance(context, distance, metricUnits, 0);
+                options[i] = formatter.formatDistance(distance, metricUnits);
             }
         }
         return options;
@@ -353,21 +355,23 @@ public class PreferencesUtils {
         final int recordingDistanceIntervalDefault = (int) getRecordingDistanceIntervalDefault().toM();
         boolean metricUnits = isMetricUnits();
 
+        DistanceFormatter formatter = DistanceFormatter.Builder()
+                .setDecimalCount(0)
+                .build(resources);
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);
-            String displayValue;
+            Distance distance = Distance.of(1).multipliedBy(value);
+
+            String displayValue = formatter.formatDistance(distance, metricUnits);
             if (metricUnits) {
-                displayValue = resources.getString(R.string.value_integer_meter, value);
                 if (value == recordingDistanceIntervalDefault) {
                     entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
                 } else {
                     entries[i] = displayValue;
                 }
             } else {
-                int feet = (int) (value * UnitConversions.M_TO_FT);
-                displayValue = resources.getString(R.string.value_integer_feet, feet);
                 if (value == recordingDistanceIntervalDefault) {
-                    entries[i] = resources.getString(R.string.value_integer_feet_recommended, feet);
+                    entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
                 } else {
                     entries[i] = displayValue;
                 }
@@ -389,21 +393,23 @@ public class PreferencesUtils {
         final int maxRecordingDistanceDefault = Integer.parseInt(resources.getString(R.string.max_recording_distance_default));
         boolean metricUnits = isMetricUnits();
 
+        DistanceFormatter formatter = DistanceFormatter.Builder()
+                .setDecimalCount(0)
+                .build(resources);
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);
-            String displayValue;
+            Distance distance = Distance.of(1).multipliedBy(value);
+
+            String displayValue = formatter.formatDistance(distance, metricUnits);
             if (metricUnits) {
-                displayValue = resources.getString(R.string.value_integer_meter, value);
                 if (value == maxRecordingDistanceDefault) {
                     entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
                 } else {
                     entries[i] = displayValue;
                 }
             } else {
-                int feet = (int) (value * UnitConversions.M_TO_FT);
-                displayValue = resources.getString(R.string.value_integer_feet, feet);
                 if (value == maxRecordingDistanceDefault) {
-                    entries[i] = resources.getString(R.string.value_integer_feet_recommended, feet);
+                    entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
                 } else {
                     entries[i] = displayValue;
                 }
@@ -453,11 +459,16 @@ public class PreferencesUtils {
 
         boolean metricUnits = isMetricUnits();
 
+        DistanceFormatter formatter = DistanceFormatter.Builder()
+                .setDecimalCount(0)
+                .build(resources);
+
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);
-            String displayValue;
+            Distance distance = Distance.of(1).multipliedBy(value);
+
+            String displayValue = formatter.formatDistance(distance, metricUnits);
             if (metricUnits) {
-                displayValue = resources.getString(R.string.value_integer_meter, value);
                 if (value == recordingGPSAccuracyDefault) {
                     entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
                 } else if (value == recordingGPSAccuracyExcellent) {
@@ -468,13 +479,10 @@ public class PreferencesUtils {
                     entries[i] = displayValue;
                 }
             } else {
-                int feet = (int) (value * UnitConversions.M_TO_FT);
-                displayValue = resources.getString(R.string.value_integer_feet, feet);
-
                 if (value == recordingGPSAccuracyDefault) {
-                    entries[i] = resources.getString(R.string.value_integer_feet_recommended, feet);
+                    entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
                 } else if (value == recordingGPSAccuracyExcellent) {
-                    entries[i] = resources.getString(R.string.value_integer_feet_excellent_gps, feet);
+                    entries[i] = resources.getString(R.string.value_integer_feet_excellent_gps, (int) distance.toFT());
                 } else {
                     entries[i] = displayValue;
                 }

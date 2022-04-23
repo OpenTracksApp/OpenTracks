@@ -258,16 +258,12 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">λεπτά / χιλ.</string>
     <string name="unit_minute_per_mile">λεπτά/μίλι</string>
     <!-- Value -->
-    <string name="value_integer_feet">%1$d πόδια</string>
     <string name="value_integer_feet_excellent_gps">%1$d πόδια (τέλειο σήμα GPS)</string>
     <string name="value_integer_feet_recommended">%1$d ft (συνιστάται)</string>
-    <string name="value_integer_kilometer">%1$d χιλιόμετρα</string>
     <string name="value_integer_kilometer_hour">%1$d χλμ/ώρα</string>
-    <string name="value_integer_meter">%1$d μέτρα</string>
     <string name="value_integer_meter_excellent_gps">%1$d μέτρα (τέλειο σήμα GPS)</string>
     <string name="value_integer_meter_poor_gps">%1$d μέτρα (χαμηλό σήμα GPS)</string>
     <string name="value_integer_meter_recommended">%1$d m (συνιστάται)</string>
-    <string name="value_integer_mile">%1$d μίλια</string>
     <string name="value_integer_mile_hour">%1$d μίλια/ώρα</string>
     <string name="value_integer_minute">%1$d λεπ.</string>
     <string name="value_integer_second">%1$d δευτ</string>
