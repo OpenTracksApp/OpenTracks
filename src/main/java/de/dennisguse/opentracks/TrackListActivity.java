@@ -49,6 +49,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.tables.TracksColumns;
 import de.dennisguse.opentracks.databinding.TrackListBinding;
@@ -190,7 +191,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 int iconId = TrackIconUtils.getIconDrawable(icon);
                 String name = cursor.getString(nameIndex);
                 String totalTime = StringUtils.formatElapsedTime(Duration.ofMillis(cursor.getLong(totalTimeIndex)));
-                String totalDistance = StringUtils.formatDistance(TrackListActivity.this, Distance.of(cursor.getDouble(totalDistanceIndex)), metricUnits);
+                String totalDistance = DistanceFormatter.Builder().build(TrackListActivity.this).formatDistance(Distance.of(cursor.getDouble(totalDistanceIndex)), metricUnits);
                 int markerCount = cursor.getInt(markerCountIndex);
                 long startTime = cursor.getLong(startTimeIndex);
                 int startTimeOffset = cursor.getInt(startTimeOffsetIndex);

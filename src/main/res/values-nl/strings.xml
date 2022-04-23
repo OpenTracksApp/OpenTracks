@@ -326,16 +326,12 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/mi</string>
     <!-- Value -->
-    <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (uitstekend GPS-signaal)</string>
     <string name="value_integer_feet_recommended">%1$d ft (aanbevolen)</string>
-    <string name="value_integer_kilometer">%1$d km</string>
     <string name="value_integer_kilometer_hour">%1$d km/u</string>
-    <string name="value_integer_meter">%1$d m</string>
     <string name="value_integer_meter_excellent_gps">%1$d m (uitstekend GPS-signaal)</string>
     <string name="value_integer_meter_poor_gps">%1$d m (slecht GPS-signaal)</string>
     <string name="value_integer_meter_recommended">%1$d m (aanbevolen)</string>
-    <string name="value_integer_mile">%1$d mi</string>
     <string name="value_integer_mile_hour">%1$d mi/u</string>
     <string name="value_integer_minute">%1$d min</string>
     <string name="value_integer_second">%1$d s</string>

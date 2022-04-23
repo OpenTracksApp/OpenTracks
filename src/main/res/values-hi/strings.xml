@@ -258,16 +258,12 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">मि/किमी</string>
     <string name="unit_minute_per_mile">मि/मील</string>
     <!-- Value -->
-    <string name="value_integer_feet">%1$d फुट</string>
     <string name="value_integer_feet_excellent_gps">%1$d फुट (उत्कृष्ट GPS)</string>
     <string name="value_integer_feet_recommended">%1$d फ़ुट (अनुशंसित)</string>
-    <string name="value_integer_kilometer">%1$d किमी</string>
     <string name="value_integer_kilometer_hour">%1$d किमी/घं</string>
-    <string name="value_integer_meter">%1$d मी</string>
     <string name="value_integer_meter_excellent_gps">%1$d मीटर (उत्कृष्ट GPS)</string>
     <string name="value_integer_meter_poor_gps">%1$d मी (खराब GPS)</string>
     <string name="value_integer_meter_recommended">%1$d मी (अनुशंसित)</string>
-    <string name="value_integer_mile">%1$d मील</string>
     <string name="value_integer_mile_hour">%1$d मील/घं</string>
     <string name="value_integer_minute">%1$d मि</string>
     <string name="value_integer_second">%1$d</string>

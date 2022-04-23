@@ -258,16 +258,12 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">د/كم</string>
     <string name="unit_minute_per_mile">دقيقة/ميل</string>
     <!-- Value -->
-    <string name="value_integer_feet">%1$d قدم</string>
     <string name="value_integer_feet_excellent_gps">%1$d قدم (إشارة نظام تحديد المواقع ممتازة)</string>
     <string name="value_integer_feet_recommended">%1$d قدم (موصى به)</string>
-    <string name="value_integer_kilometer">%1$d كم</string>
     <string name="value_integer_kilometer_hour">%1$d‏ كم/ساعة</string>
-    <string name="value_integer_meter">%1$d م</string>
     <string name="value_integer_meter_excellent_gps">%1$d م (إشارة نظام تحديد المواقع ممتازة)</string>
     <string name="value_integer_meter_poor_gps">%1$d م (إشارة نظام تحديد المواقع سيئة)</string>
     <string name="value_integer_meter_recommended">%1$d م (موصى به)</string>
-    <string name="value_integer_mile">%1$d ميل</string>
     <string name="value_integer_mile_hour">%1$d‏‏ ميل/ساعة</string>
     <string name="value_integer_minute">%1$d دقيقة</string>
     <string name="value_integer_second">%1$d ث</string>

@@ -20,10 +20,10 @@ import java.util.Objects;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
+import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.IntervalListViewBinding;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-import de.dennisguse.opentracks.util.StringUtils;
 
 /**
  * A fragment to display the intervals from recorded track.
@@ -106,6 +106,10 @@ public class IntervalsFragment extends Fragment {
         // TODO handle empty view: before we did viewBinding.intervalList.setEmptyView(viewBinding.intervalListEmptyView);
         viewBinding.intervalList.setAdapter(adapter);
 
+        final DistanceFormatter formatter = DistanceFormatter.Builder()
+                .setDecimalCount(0)
+                .build(getContext());
+
         intervalsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {
             @NonNull
             @Override
@@ -113,7 +117,7 @@ public class IntervalsFragment extends Fragment {
                 TextView v = (TextView) super.getView(position, convertView, parent);
 
                 IntervalStatisticsModel.IntervalOption option = getItem(position);
-                String stringValue = StringUtils.formatDistance(getContext(), option.getDistance(metricUnits), metricUnits, 0);
+                String stringValue = formatter.formatDistance(option.getDistance(metricUnits), metricUnits);
                 v.setText(stringValue);
                 return v;
             }
@@ -130,13 +134,13 @@ public class IntervalsFragment extends Fragment {
 
             //TODO This duplicates the intervalAdapter code
             IntervalStatisticsModel.IntervalOption option = selectedInterval != null ? selectedInterval : IntervalStatisticsModel.IntervalOption.DEFAULT;
-            String stringValue = StringUtils.formatDistance(getContext(), option.getDistance(metricUnits), metricUnits, 0);
+            String stringValue = formatter.formatDistance(option.getDistance(metricUnits), metricUnits);
             viewBinding.intervalsDropdown.setText(stringValue, false);
         });
 
         //TODO This duplicates the intervalAdapter code
         IntervalStatisticsModel.IntervalOption option = selectedInterval != null ? selectedInterval : IntervalStatisticsModel.IntervalOption.DEFAULT;
-        String stringValue = StringUtils.formatDistance(getContext(), option.getDistance(metricUnits), metricUnits, 0);
+        String stringValue = formatter.formatDistance(option.getDistance(metricUnits), metricUnits);
         viewBinding.intervalsDropdown.setText(stringValue, false);
     }
 

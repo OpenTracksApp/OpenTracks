@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
@@ -161,7 +162,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
             typeLabel.setText(category);
             numTracks.setText(StringUtils.valueInParentheses(String.valueOf(aggregatedStatistic.getCountTracks())));
 
-            Pair<String, String> parts = StringUtils.getDistanceParts(context, aggregatedStatistic.getTrackStatistics().getTotalDistance(), metricsUnits);
+            Pair<String, String> parts = DistanceFormatter.Builder().build(context).getDistanceParts(aggregatedStatistic.getTrackStatistics().getTotalDistance(), metricsUnits);
             distance.setText(parts.first);
             distanceUnit.setText(parts.second);
 

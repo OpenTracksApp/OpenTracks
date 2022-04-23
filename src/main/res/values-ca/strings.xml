@@ -257,16 +257,12 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/milles</string>
     <!-- Value -->
-    <string name="value_integer_feet">%1$d peus</string>
     <string name="value_integer_feet_excellent_gps">%1$d peus (senyal de GPS excel·lent)</string>
     <string name="value_integer_feet_recommended">%1$d peus (recomanat)</string>
-    <string name="value_integer_kilometer">%1$d km</string>
     <string name="value_integer_kilometer_hour">%1$d km/h</string>
-    <string name="value_integer_meter">%1$d m</string>
     <string name="value_integer_meter_excellent_gps">%1$d m (GPS amb bona senyal)</string>
     <string name="value_integer_meter_poor_gps">%1$d m (GPS amb poca senyal)</string>
     <string name="value_integer_meter_recommended">%1$d m (recomanat)</string>
-    <string name="value_integer_mile">%1$d milles</string>
     <string name="value_integer_mile_hour">%1$d mi/h</string>
     <string name="value_integer_minute">%1$d min</string>
     <string name="value_integer_second">%1$d s</string>

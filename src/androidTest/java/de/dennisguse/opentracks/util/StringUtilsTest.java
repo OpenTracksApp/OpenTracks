@@ -47,7 +47,6 @@ import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.LocaleRule;
-import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
 
 /**
@@ -89,21 +88,6 @@ public class StringUtilsTest {
         assertEquals("1:00:00", StringUtils.formatElapsedTimeWithHour(Duration.ofMillis(3600000)));
         assertEquals("10:00:00", StringUtils.formatElapsedTimeWithHour(Duration.ofMillis(36000000)));
         assertEquals("100:00:00", StringUtils.formatElapsedTimeWithHour(Duration.ofMillis(360000000)));
-    }
-
-    /**
-     * Tests {@link StringUtils#formatDistance(android.content.Context, Distance, boolean)}.
-     */
-    @Test
-    public void testFormatDistance() {
-        // A large number in metric
-        assertEquals("5.00 km", StringUtils.formatDistance(context, Distance.of(5000), true));
-        // A large number in imperial
-        assertEquals("3.11 mi", StringUtils.formatDistance(context, Distance.of(5000), false));
-        // A small number in metric
-        assertEquals("100.00 m", StringUtils.formatDistance(context, Distance.of(100), true));
-        // A small number in imperial
-        assertEquals("328.08 ft", StringUtils.formatDistance(context, Distance.of(100), false));
     }
 
     /**

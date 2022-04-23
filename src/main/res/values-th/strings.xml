@@ -257,16 +257,12 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">นาที/กม.</string>
     <string name="unit_minute_per_mile">นาที/ไมล์</string>
     <!-- Value -->
-    <string name="value_integer_feet">%1$d ฟุต</string>
     <string name="value_integer_feet_excellent_gps">%1$d ฟุต (สัญญาณ GPS ดี)</string>
     <string name="value_integer_feet_recommended">%1$d ฟุต (แนะนำ)</string>
-    <string name="value_integer_kilometer">%1$d กม.</string>
     <string name="value_integer_kilometer_hour">%1$d กม./ชม.</string>
-    <string name="value_integer_meter">%1$d ม.</string>
     <string name="value_integer_meter_excellent_gps">%1$d ม. (สัญญาณ GPS ดี)</string>
     <string name="value_integer_meter_poor_gps">%1$d ม. (สัญญาณ GPS ไม่ดี)</string>
     <string name="value_integer_meter_recommended">%1$d ม. (แนะนำ)</string>
-    <string name="value_integer_mile">%1$d ไมล์</string>
     <string name="value_integer_mile_hour">%1$d ไมล์/ชม.</string>
     <string name="value_integer_minute">%1$d นาที</string>
     <string name="value_integer_second">%1$d วินาที</string>

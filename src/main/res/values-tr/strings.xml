@@ -258,16 +258,12 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">dk./km</string>
     <string name="unit_minute_per_mile">dk./mil</string>
     <!-- Value -->
-    <string name="value_integer_feet">%1$d ft</string>
     <string name="value_integer_feet_excellent_gps">%1$d ft (mükemmel GPS)</string>
     <string name="value_integer_feet_recommended">%1$d ft (önerilir)</string>
-    <string name="value_integer_kilometer">%1$d km</string>
     <string name="value_integer_kilometer_hour">%1$d km/sa.</string>
-    <string name="value_integer_meter">%1$d m</string>
     <string name="value_integer_meter_excellent_gps">%1$d m (mükemmel GPS)</string>
     <string name="value_integer_meter_poor_gps">%1$d m (zayıf GPS)</string>
     <string name="value_integer_meter_recommended">%1$d m (önerilen)</string>
-    <string name="value_integer_mile">%1$d mil</string>
     <string name="value_integer_mile_hour">%1$d mil/sa.</string>
     <string name="value_integer_minute">%1$d dk.</string>
     <string name="value_integer_second">%1$d sn.</string>

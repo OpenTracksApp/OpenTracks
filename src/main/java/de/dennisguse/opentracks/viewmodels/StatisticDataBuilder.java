@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Cadence;
+import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
@@ -53,7 +54,7 @@ public class StatisticDataBuilder {
             valueAndUnit = new Pair<>(StringUtils.formatElapsedTime(trackStatistics.getMovingTime()), null);
             title = context.getString(R.string.stats_moving_time);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_distance_key))) {
-            valueAndUnit = StringUtils.getDistanceParts(context, trackStatistics.getTotalDistance(), metricUnits);
+            valueAndUnit = DistanceFormatter.Builder().build(context).getDistanceParts(trackStatistics.getTotalDistance(), metricUnits);
             title = context.getString(R.string.stats_distance);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_speed_key)) || fieldKey.equals(context.getString(R.string.stats_custom_layout_pace_key))) {
             boolean reportSpeed = fieldKey.equals("speed");

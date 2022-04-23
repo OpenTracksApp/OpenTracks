@@ -259,16 +259,12 @@ limitations under the License.
     <string name="unit_minute_per_kilometer">min/km</string>
     <string name="unit_minute_per_mile">min/jūdzē</string>
     <!-- Value -->
-    <string name="value_integer_feet">%1$d pēda(-as)</string>
     <string name="value_integer_feet_excellent_gps">%1$d pēda(-as) (izcilas kvalitātes GPS)</string>
     <string name="value_integer_feet_recommended">%1$d pēdas (ieteicams)</string>
-    <string name="value_integer_kilometer">%1$d km</string>
     <string name="value_integer_kilometer_hour">%1$d km/h</string>
-    <string name="value_integer_meter">%1$d m</string>
     <string name="value_integer_meter_excellent_gps">%1$d m (izcilas kvalitātes GPS)</string>
     <string name="value_integer_meter_poor_gps">%1$d m (vājš GPS)</string>
     <string name="value_integer_meter_recommended">%1$d m (ieteicams)</string>
-    <string name="value_integer_mile">%1$d jūdze(-es)</string>
     <string name="value_integer_mile_hour">%1$d jūdze(-es)/h</string>
     <string name="value_integer_minute">%1$d min</string>
     <string name="value_integer_second">%1$d sek</string>
