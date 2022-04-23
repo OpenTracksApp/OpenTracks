@@ -191,7 +191,9 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 int iconId = TrackIconUtils.getIconDrawable(icon);
                 String name = cursor.getString(nameIndex);
                 String totalTime = StringUtils.formatElapsedTime(Duration.ofMillis(cursor.getLong(totalTimeIndex)));
-                String totalDistance = DistanceFormatter.Builder().build(TrackListActivity.this).formatDistance(Distance.of(cursor.getDouble(totalDistanceIndex)), metricUnits);
+                String totalDistance = DistanceFormatter.Builder()
+                        .setMetricUnits(metricUnits)
+                        .build(TrackListActivity.this).formatDistance(Distance.of(cursor.getDouble(totalDistanceIndex)));
                 int markerCount = cursor.getInt(markerCountIndex);
                 long startTime = cursor.getLong(startTimeIndex);
                 int startTimeOffset = cursor.getInt(startTimeOffsetIndex);

@@ -310,13 +310,14 @@ public class PreferencesUtils {
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
+                .setMetricUnits(metricUnits)
                 .build(resources);
         for (int i = 0; i < values.length; i++) {
             if (resources.getString(R.string.announcement_off).equals(values[i])) {
                 options[i] = resources.getString(R.string.value_off);
             } else {
                 Distance distance = Distance.one(metricUnits).multipliedBy(Double.parseDouble(values[i]));
-                options[i] = formatter.formatDistance(distance, metricUnits);
+                options[i] = formatter.formatDistance(distance);
             }
         }
         return options;
@@ -356,13 +357,14 @@ public class PreferencesUtils {
         boolean metricUnits = isMetricUnits();
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
+                .setMetricUnits(metricUnits)
                 .setDecimalCount(0)
                 .build(resources);
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);
             Distance distance = Distance.of(1).multipliedBy(value);
 
-            String displayValue = formatter.formatDistance(distance, metricUnits);
+            String displayValue = formatter.formatDistance(distance);
             if (metricUnits) {
                 if (value == recordingDistanceIntervalDefault) {
                     entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
@@ -395,12 +397,13 @@ public class PreferencesUtils {
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
+                .setMetricUnits(metricUnits)
                 .build(resources);
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);
             Distance distance = Distance.of(1).multipliedBy(value);
 
-            String displayValue = formatter.formatDistance(distance, metricUnits);
+            String displayValue = formatter.formatDistance(distance);
             if (metricUnits) {
                 if (value == maxRecordingDistanceDefault) {
                     entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
@@ -461,13 +464,14 @@ public class PreferencesUtils {
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
+                .setMetricUnits(metricUnits)
                 .build(resources);
 
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);
             Distance distance = Distance.of(1).multipliedBy(value);
 
-            String displayValue = formatter.formatDistance(distance, metricUnits);
+            String displayValue = formatter.formatDistance(distance);
             if (metricUnits) {
                 if (value == recordingGPSAccuracyDefault) {
                     entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);

@@ -13,17 +13,20 @@ public class DistanceFormatter {
 
     private final int decimalCount;
 
-    private DistanceFormatter(Resources resources, int decimalCount) {
+    private final boolean metricUnits;
+
+    private DistanceFormatter(Resources resources, int decimalCount, boolean metricUnits) {
         this.resources = resources;
         this.decimalCount = decimalCount;
+        this.metricUnits = metricUnits;
     }
 
-    public String formatDistance(Distance distance, boolean metricUnits) {
+    public String formatDistance(Distance distance) {
         if (distance.isInvalid()) {
             return resources.getString(R.string.value_unknown);
         }
 
-        Pair<String, String> distanceParts = getDistanceParts(distance, metricUnits);
+        Pair<String, String> distanceParts = getDistanceParts(distance);
 
         return resources.getString(R.string.distance_with_unit, distanceParts.first, distanceParts.second);
     }
@@ -34,7 +37,7 @@ public class DistanceFormatter {
      * @param metricUnits true to use metric unit
      * @return the formatted distance (or null) and it's unit as {@link Pair}
      */
-    public Pair<String, String> getDistanceParts(Distance distance, boolean metricUnits) {
+    public Pair<String, String> getDistanceParts(Distance distance) {
         if (distance.isInvalid()) {
             return new Pair<>(null, resources.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet));
         }
@@ -62,8 +65,11 @@ public class DistanceFormatter {
 
         private int decimalCount;
 
+        private boolean metricUnits;
+
         public Builder() {
             decimalCount = 2;
+            metricUnits = true;
         }
 
         public Builder setDecimalCount(int decimalCount) {
@@ -71,8 +77,13 @@ public class DistanceFormatter {
             return this;
         }
 
+        public Builder setMetricUnits(boolean metricUnits) {
+            this.metricUnits = metricUnits;
+            return this;
+        }
+
         public DistanceFormatter build(Resources resource) {
-            return new DistanceFormatter(resource, decimalCount);
+            return new DistanceFormatter(resource, decimalCount, metricUnits);
         }
 
         public DistanceFormatter build(Context context) {

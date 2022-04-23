@@ -55,7 +55,9 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
         } else {
             sumDistance = interval.getDistance().multipliedBy(nextPosition);
         }
-        viewHolder.distance.setText(DistanceFormatter.Builder().build(context).formatDistance(sumDistance, metricUnits));
+        viewHolder.distance.setText(DistanceFormatter.Builder()
+                .setMetricUnits(metricUnits)
+                .build(context).formatDistance(sumDistance));
 
         viewHolder.rate.setText(StringUtils.formatSpeed(context, interval.getSpeed(), metricUnits, isReportSpeed));
 

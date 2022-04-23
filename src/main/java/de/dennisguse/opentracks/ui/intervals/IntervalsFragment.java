@@ -108,6 +108,7 @@ public class IntervalsFragment extends Fragment {
 
         final DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
+                .setMetricUnits(metricUnits)
                 .build(getContext());
 
         intervalsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {
@@ -117,7 +118,7 @@ public class IntervalsFragment extends Fragment {
                 TextView v = (TextView) super.getView(position, convertView, parent);
 
                 IntervalStatisticsModel.IntervalOption option = getItem(position);
-                String stringValue = formatter.formatDistance(option.getDistance(metricUnits), metricUnits);
+                String stringValue = formatter.formatDistance(option.getDistance(metricUnits));
                 v.setText(stringValue);
                 return v;
             }
@@ -199,10 +200,11 @@ public class IntervalsFragment extends Fragment {
     private void setIntervalsDropdownText() {
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
+                .setMetricUnits(metricUnits)
                 .build(getContext());
 
         IntervalStatisticsModel.IntervalOption option = selectedInterval != null ? selectedInterval : IntervalStatisticsModel.IntervalOption.DEFAULT;
-        String stringValue = formatter.formatDistance(option.getDistance(metricUnits), metricUnits);
+        String stringValue = formatter.formatDistance(option.getDistance(metricUnits));
         viewBinding.intervalsDropdown.setText(stringValue, false);
     }
 
