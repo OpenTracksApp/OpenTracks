@@ -553,7 +553,7 @@ limitations under the License.
     <string name="aggregated_stats_filter_no_results">Нет активностей для данного фильтра</string>
     <string name="custom_layout_list_edit_already_exists">Имя раскладки уже существует</string>
     <plurals name="voiceDistanceKilometers">
-        <item quantity="one">1 километр</item>
+        <item quantity="one">%1$.2f километр</item>
         <item quantity="few">%1$.2f километра</item>
         <item quantity="many">%1$.2f километров</item>
         <item quantity="other">%1$.2f километров</item>
@@ -586,7 +586,7 @@ limitations under the License.
     <string name="speed">Скорость</string>
     <string name="total_distance">Общая дистанция</string>
     <plurals name="voiceDistanceMiles">
-        <item quantity="one">1 миля</item>
+        <item quantity="one">%1$.2f миля</item>
         <item quantity="few">%1$.2f миля</item>
         <item quantity="many">%1$.2f миль</item>
         <item quantity="other">%1$.2f миль</item>
