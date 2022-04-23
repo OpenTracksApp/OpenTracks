@@ -44,6 +44,7 @@ import de.dennisguse.opentracks.data.models.UnitConversions;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.ui.customRecordingLayout.CsvLayoutUtils;
 import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
+import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
@@ -303,7 +304,8 @@ public class PreferencesUtils {
     /**
      * @return Result depends on isMetricUnits
      */
-    static String[] getVoiceAnnouncementDistanceEntries() {
+    @Deprecated //TODO Context should not be used here; requires refactoring of StringUtils.
+    static String[] getVoiceAnnouncementDistanceEntries(Context context) {
         String[] values = resources.getStringArray(R.array.voice_announcement_distance_values);
         String[] options = new String[values.length];
         boolean metricUnits = isMetricUnits();
@@ -311,8 +313,8 @@ public class PreferencesUtils {
             if (resources.getString(R.string.announcement_off).equals(values[i])) {
                 options[i] = resources.getString(R.string.value_off);
             } else {
-                int value = Integer.parseInt(values[i]);
-                options[i] = resources.getString(metricUnits ? R.string.value_integer_kilometer : R.string.value_integer_mile, value);
+                Distance distance = Distance.one(metricUnits).multipliedBy(Double.parseDouble(values[i]));
+                options[i] = StringUtils.formatDistance(context, distance, metricUnits, 0);
             }
         }
         return options;
