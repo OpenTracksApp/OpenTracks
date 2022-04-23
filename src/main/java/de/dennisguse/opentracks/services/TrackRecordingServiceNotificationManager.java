@@ -84,9 +84,11 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
     void updateTrackPoint(Context context, TrackStatistics trackStatistics, TrackPoint trackPoint, Distance recordingGpsAccuracy) {
         String formattedAccuracy = context.getString(R.string.value_none);
 
-        DistanceFormatter formatter = DistanceFormatter.Builder().build(context);
+        DistanceFormatter formatter = DistanceFormatter.Builder()
+                .setMetricUnits(metricUnits)
+                .build(context);
         if (trackPoint.hasHorizontalAccuracy()) {
-            formattedAccuracy = formatter.formatDistance(trackPoint.getHorizontalAccuracy(), metricUnits);
+            formattedAccuracy = formatter.formatDistance(trackPoint.getHorizontalAccuracy());
 
             boolean currentLocationWasAccurate = trackPoint.getHorizontalAccuracy().lessThan(recordingGpsAccuracy);
             boolean shouldAlert = !currentLocationWasAccurate && previousLocationWasAccurate;
@@ -94,7 +96,7 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
             previousLocationWasAccurate = currentLocationWasAccurate;
         }
 
-        notificationBuilder.setContentTitle(context.getString(R.string.track_distance_notification, formatter.formatDistance(trackStatistics.getTotalDistance(), metricUnits)));
+        notificationBuilder.setContentTitle(context.getString(R.string.track_distance_notification, formatter.formatDistance(trackStatistics.getTotalDistance())));
         notificationBuilder.setContentText(context.getString(R.string.track_speed_notification, StringUtils.formatSpeed(context, trackPoint.getSpeed(), metricUnits, true)));
         notificationBuilder.setSubText(context.getString(R.string.track_recording_notification_accuracy, formattedAccuracy));
         updateNotification();

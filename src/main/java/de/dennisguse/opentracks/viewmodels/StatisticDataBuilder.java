@@ -54,7 +54,9 @@ public class StatisticDataBuilder {
             valueAndUnit = new Pair<>(StringUtils.formatElapsedTime(trackStatistics.getMovingTime()), null);
             title = context.getString(R.string.stats_moving_time);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_distance_key))) {
-            valueAndUnit = DistanceFormatter.Builder().build(context).getDistanceParts(trackStatistics.getTotalDistance(), metricUnits);
+            valueAndUnit = DistanceFormatter.Builder()
+                    .setMetricUnits(metricUnits)
+                    .build(context).getDistanceParts(trackStatistics.getTotalDistance());
             title = context.getString(R.string.stats_distance);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_speed_key)) || fieldKey.equals(context.getString(R.string.stats_custom_layout_pace_key))) {
             boolean reportSpeed = fieldKey.equals("speed");

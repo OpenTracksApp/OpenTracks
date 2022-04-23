@@ -17,34 +17,34 @@ public class GpsSettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.settings_gps);
 
+        boolean metricUnits = PreferencesUtils.isMetricUnits();
+
         final DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
+                .setMetricUnits(metricUnits)
                 .build(getContext());
 
         findPreference(getString(R.string.recording_distance_interval_key))
                 .setSummaryProvider(
                         preference -> {
-                            boolean metricUnits = PreferencesUtils.isMetricUnits();
                             Distance distance = PreferencesUtils.getRecordingDistanceInterval();
-                            return getString(R.string.settings_recording_location_frequency_summary, formatter.formatDistance(distance, metricUnits));
+                            return getString(R.string.settings_recording_location_frequency_summary, formatter.formatDistance(distance));
                         }
                 );
 
         findPreference(getString(R.string.max_recording_distance_key))
                 .setSummaryProvider(
                         preference -> {
-                            boolean metricUnits = PreferencesUtils.isMetricUnits();
                             Distance distance = PreferencesUtils.getMaxRecordingDistance();
-                            return getString(R.string.settings_recording_max_recording_distance_summary, formatter.formatDistance(distance, metricUnits));
+                            return getString(R.string.settings_recording_max_recording_distance_summary, formatter.formatDistance(distance));
                         }
                 );
 
         findPreference(getString(R.string.recording_gps_accuracy_key))
                 .setSummaryProvider(
                         preference -> {
-                            boolean metricUnits = PreferencesUtils.isMetricUnits();
                             Distance distance = PreferencesUtils.getThresholdHorizontalAccuracy();
-                            return getString(R.string.settings_recording_min_required_accuracy_summary, formatter.formatDistance(distance, metricUnits));
+                            return getString(R.string.settings_recording_min_required_accuracy_summary, formatter.formatDistance(distance));
                         }
                 );
 

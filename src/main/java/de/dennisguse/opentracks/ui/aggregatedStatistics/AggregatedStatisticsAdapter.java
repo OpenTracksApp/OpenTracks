@@ -162,7 +162,9 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
             typeLabel.setText(category);
             numTracks.setText(StringUtils.valueInParentheses(String.valueOf(aggregatedStatistic.getCountTracks())));
 
-            Pair<String, String> parts = DistanceFormatter.Builder().build(context).getDistanceParts(aggregatedStatistic.getTrackStatistics().getTotalDistance(), metricsUnits);
+            Pair<String, String> parts = DistanceFormatter.Builder()
+                    .setMetricUnits(metricsUnits)
+                    .build(context).getDistanceParts(aggregatedStatistic.getTrackStatistics().getTotalDistance());
             distance.setText(parts.first);
             distanceUnit.setText(parts.second);
 

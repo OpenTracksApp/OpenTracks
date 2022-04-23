@@ -187,7 +187,9 @@ public class StatisticsRecordedFragment extends Fragment {
         TrackStatistics trackStatistics = track.getTrackStatistics();
         // Set total distance
         {
-            Pair<String, String> parts = DistanceFormatter.Builder().build(getContext()).getDistanceParts(trackStatistics.getTotalDistance(), preferenceMetricUnits);
+            Pair<String, String> parts = DistanceFormatter.Builder()
+                    .setMetricUnits(preferenceMetricUnits)
+                    .build(getContext()).getDistanceParts(trackStatistics.getTotalDistance());
 
             viewBinding.statsDistanceValue.setText(parts.first);
             viewBinding.statsDistanceUnit.setText(parts.second);

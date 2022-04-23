@@ -16,18 +16,28 @@ public class DistanceFormatterTest {
     private final Context context = ApplicationProvider.getApplicationContext();
 
     @Test
-    public void testFormatDistance() {
+    public void testFormatDistance_metric() {
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(2)
+                .setMetricUnits(true)
                 .build(context);
 
         // A large number in metric
-        assertEquals("5.00 km", formatter.formatDistance(Distance.of(5000), true));
-        // A large number in imperial
-        assertEquals("3.11 mi", formatter.formatDistance(Distance.of(5000), false));
+        assertEquals("5.00 km", formatter.formatDistance(Distance.of(5000)));
         // A small number in metric
-        assertEquals("100.00 m", formatter.formatDistance(Distance.of(100), true));
+        assertEquals("100.00 m", formatter.formatDistance(Distance.of(100)));
+    }
+
+    @Test
+    public void testFormatDistance_imperial() {
+        DistanceFormatter formatter = DistanceFormatter.Builder()
+                .setDecimalCount(2)
+                .setMetricUnits(false)
+                .build(context);
+
+        // A large number in imperial
+        assertEquals("3.11 mi", formatter.formatDistance(Distance.of(5000)));
         // A small number in imperial
-        assertEquals("328.08 ft", formatter.formatDistance(Distance.of(100), false));
+        assertEquals("328.08 ft", formatter.formatDistance(Distance.of(100)));
     }
 }
