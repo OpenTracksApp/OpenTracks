@@ -23,6 +23,7 @@ import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.IntervalListViewBinding;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.util.StringUtils;
 
 /**
  * A fragment to display the intervals from recorded track.
@@ -95,6 +96,7 @@ public class IntervalsFragment extends Fragment {
         return viewBinding.getRoot();
     }
 
+    @Deprecated //TODO This method must be re-implemented.
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -109,11 +111,10 @@ public class IntervalsFragment extends Fragment {
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 TextView v = (TextView) super.getView(position, convertView, parent);
-                if (metricUnits) {
-                    v.setText(getContext().getString(R.string.value_integer_kilometer, Integer.parseInt(v.getText().toString())));
-                } else {
-                    v.setText(getContext().getString(R.string.value_integer_mile, Integer.parseInt(v.getText().toString())));
-                }
+
+                IntervalStatisticsModel.IntervalOption option = getItem(position);
+                String stringValue = StringUtils.formatDistance(getContext(), option.getDistance(metricUnits), metricUnits, 0);
+                v.setText(stringValue);
                 return v;
             }
 
@@ -124,12 +125,19 @@ public class IntervalsFragment extends Fragment {
         };
 
         viewBinding.intervalsDropdown.setAdapter(intervalsAdapter);
-        viewBinding.intervalsDropdown.setOnItemClickListener((parent, view1, position, id) -> updateIntervals(metricUnits, IntervalStatisticsModel.IntervalOption.values()[position]));
+        viewBinding.intervalsDropdown.setOnItemClickListener((parent, view1, position, id) -> {
+            updateIntervals(metricUnits, IntervalStatisticsModel.IntervalOption.values()[position]);
 
-        viewBinding.intervalsDropdown.setText(
-                getContext().getString(R.string.value_integer_kilometer, Integer.parseInt(selectedInterval != null ? selectedInterval.toString() : IntervalStatisticsModel.IntervalOption.values()[0].toString())),
-                false
-        );
+            //TODO This duplicates the intervalAdapter code
+            IntervalStatisticsModel.IntervalOption option = selectedInterval != null ? selectedInterval : IntervalStatisticsModel.IntervalOption.DEFAULT;
+            String stringValue = StringUtils.formatDistance(getContext(), option.getDistance(metricUnits), metricUnits, 0);
+            viewBinding.intervalsDropdown.setText(stringValue, false);
+        });
+
+        //TODO This duplicates the intervalAdapter code
+        IntervalStatisticsModel.IntervalOption option = selectedInterval != null ? selectedInterval : IntervalStatisticsModel.IntervalOption.DEFAULT;
+        String stringValue = StringUtils.formatDistance(getContext(), option.getDistance(metricUnits), metricUnits, 0);
+        viewBinding.intervalsDropdown.setText(stringValue, false);
     }
 
     @Override

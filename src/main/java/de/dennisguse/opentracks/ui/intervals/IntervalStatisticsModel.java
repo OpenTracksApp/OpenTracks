@@ -106,7 +106,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
 
     public void update(Track.Id trackId, boolean metricUnits, @Nullable IntervalOption interval) {
         if (interval == null) {
-            interval = IntervalOption.OPTION_1;
+            interval = IntervalOption.DEFAULT;
         }
 
         lastTrackPointId = null;
@@ -119,6 +119,8 @@ public class IntervalStatisticsModel extends AndroidViewModel {
      * Intervals length this view model support.
      */
     public enum IntervalOption {
+        OPTION_0_1(0.1f),
+        OPTION_0_5(0.5f),
         OPTION_1(1),
         OPTION_2(2),
         OPTION_3(3),
@@ -128,9 +130,11 @@ public class IntervalStatisticsModel extends AndroidViewModel {
         OPTION_20(20),
         OPTION_50(50);
 
-        private final int multiplier;
+        static IntervalOption DEFAULT = OPTION_1;
 
-        IntervalOption(int multiplier) {
+        private final double multiplier;
+
+        IntervalOption(double multiplier) {
             this.multiplier = multiplier;
         }
 
@@ -140,13 +144,12 @@ public class IntervalStatisticsModel extends AndroidViewModel {
                     .multipliedBy(multiplier);
         }
 
-        public boolean sameMultiplier(IntervalOption intervalOption) {
-            return intervalOption != null && this.multiplier == intervalOption.multiplier;
+        public double getMultiplier() {
+            return multiplier;
         }
 
-        @Override
-        public String toString() {
-            return "" + multiplier; //TODO Somehow IntervalsFragment relies on a parsable Integer.
+        public boolean sameMultiplier(IntervalOption intervalOption) {
+            return intervalOption != null && this.multiplier == intervalOption.multiplier;
         }
     }
 }

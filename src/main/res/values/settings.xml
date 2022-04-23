@@ -265,6 +265,9 @@
     <string name="voice_announcement_distance_default" translatable="false">@string/announcement_off</string>
     <string-array name="voice_announcement_distance_values">
         <item>@string/voice_announcement_distance_default</item> <!-- km/miles -->
+        <item>0.1</item>
+        <item>0.2</item>
+        <item>0.5</item>
         <item>1</item>
         <item>5</item>
         <item>10</item>

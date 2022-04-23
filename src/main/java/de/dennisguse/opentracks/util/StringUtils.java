@@ -136,11 +136,15 @@ public class StringUtils {
      * @param metricUnits true to use metric units. False to use imperial units
      */
     public static String formatDistance(Context context, Distance distance, boolean metricUnits) {
+        return formatDistance(context, distance, metricUnits, 2);
+    }
+
+    public static String formatDistance(Context context, Distance distance, boolean metricUnits, int decimalCount) {
         if (distance.isInvalid()) {
             return context.getString(R.string.value_unknown);
         }
 
-        Pair<String, String> distanceParts = getDistanceParts(context, distance, metricUnits);
+        Pair<String, String> distanceParts = getDistanceParts(context, distance, metricUnits, decimalCount);
 
         return context.getString(R.string.distance_with_unit, distanceParts.first, distanceParts.second);
     }
@@ -196,21 +200,25 @@ public class StringUtils {
      * @return the formatted distance (or null) and it's unit as {@link Pair}
      */
     public static Pair<String, String> getDistanceParts(Context context, Distance distance, boolean metricUnits) {
+        return getDistanceParts(context, distance, metricUnits, 2);
+    }
+
+    public static Pair<String, String> getDistanceParts(Context context, Distance distance, boolean metricUnits, int decimalCount) {
         if (distance.isInvalid()) {
             return new Pair<>(null, context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet));
         }
 
         if (metricUnits) {
             if (distance.greaterThan(Distance.of(500))) {
-                return new Pair<>(formatDecimal(distance.toKM()), context.getString(R.string.unit_kilometer));
+                return new Pair<>(formatDecimal(distance.toKM(), decimalCount), context.getString(R.string.unit_kilometer));
             } else {
-                return new Pair<>(formatDecimal(distance.toM()), context.getString(R.string.unit_meter));
+                return new Pair<>(formatDecimal(distance.toM(), decimalCount), context.getString(R.string.unit_meter));
             }
         } else {
             if (distance.greaterThan(Distance.ofMile(0.5))) {
-                return new Pair<>(formatDecimal(distance.toMI()), context.getString(R.string.unit_mile));
+                return new Pair<>(formatDecimal(distance.toMI(), decimalCount), context.getString(R.string.unit_mile));
             } else {
-                return new Pair<>(formatDecimal(distance.toFT()), context.getString(R.string.unit_feet));
+                return new Pair<>(formatDecimal(distance.toFT(), decimalCount), context.getString(R.string.unit_feet));
             }
         }
     }
