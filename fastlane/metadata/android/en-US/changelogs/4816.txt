@@ -1,0 +1,17 @@
+v3.27.0: OpenTracks
+
+Changes:
+- Voice annoucements: add 100m, 200m, and 500m
+- Interval: add 100m and 500m
+- Clock shows now also seconds
+- GPX, KML, KMZ: export and import horizontal accuracy
+- GPX: export cumulative distance via clustrust extension
+- CSV: basic export (TrackPoints only; not for backup)
+- Workaround for Tickr X as it reports SPM instead of RPM 
+
+Bugfixes:
+- Adhere to recording distance interval;
+  TrackPoints were recorded although they were too close
+- Prevent crash on stop recording (race condition)
+- Prevent crash when using multiple sensors (race condition)
+- Prevent crash when opening OpenTracks via notification
