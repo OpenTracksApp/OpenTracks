@@ -28,6 +28,7 @@ import java.time.ZoneId;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.UnitConversions;
 import de.dennisguse.opentracks.stats.TrackStatistics;
@@ -209,8 +210,8 @@ public class DescriptionGenerator {
      */
     @VisibleForTesting
     void writePace(Speed speed, StringBuilder builder, int resId, String lineBreak) {
-        Pair<String, String> paceInMetrics = StringUtils.getSpeedParts(context, speed, true, false);
-        Pair<String, String> paceInImperial = StringUtils.getSpeedParts(context, speed, false, false);
+        Pair<String, String> paceInMetrics = SpeedFormatter.Builder().setMetricUnits(true).setReportSpeedOrPace(false).build(context).getSpeedParts(speed);
+        Pair<String, String> paceInImperial = SpeedFormatter.Builder().setMetricUnits(false).setReportSpeedOrPace(false).build(context).getSpeedParts(speed);
 
         String formattedPaceMetrics = paceInMetrics.first != null ? paceInMetrics.first : context.getString(R.string.value_unknown);
         String formattedPaceImperial = paceInImperial.first != null ? paceInImperial.first : context.getString(R.string.value_unknown);

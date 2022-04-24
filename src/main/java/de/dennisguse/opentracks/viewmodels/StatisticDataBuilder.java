@@ -14,6 +14,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.services.RecordingData;
@@ -47,6 +48,10 @@ public class StatisticDataBuilder {
 
         final String sensorUnknown = context.getString(R.string.value_unknown);
 
+        SpeedFormatter speedFormatterPace = SpeedFormatter.Builder().setMetricUnits(metricUnits).setReportSpeedOrPace(false).build(context);
+        SpeedFormatter speedFormatterSpeed = SpeedFormatter.Builder().setMetricUnits(metricUnits).setReportSpeedOrPace(true).build(context);
+
+
         if (fieldKey.equals(context.getString(R.string.stats_custom_layout_total_time_key))) {
             valueAndUnit = new Pair<>(StringUtils.formatElapsedTime(trackStatistics.getTotalTime()), null);
             title = context.getString(R.string.stats_total_time);
@@ -62,31 +67,32 @@ public class StatisticDataBuilder {
             boolean reportSpeed = fieldKey.equals("speed");
             title = reportSpeed ? context.getString(R.string.stats_speed) : context.getString(R.string.stats_pace);
 
+            SpeedFormatter localSpeedFormatter = SpeedFormatter.Builder().setMetricUnits(metricUnits).setReportSpeedOrPace(reportSpeed).build(context);
             if (sensorDataSet != null && sensorDataSet.getSpeed() != null) {
-                valueAndUnit = StringUtils.getSpeedParts(context, sensorDataSet.getSpeed().first, metricUnits, reportSpeed);
+                valueAndUnit = localSpeedFormatter.getSpeedParts(sensorDataSet.getSpeed().first);
                 description = sensorDataSet.getSpeed().second;
             } else {
                 Speed speed = latestTrackPoint != null && latestTrackPoint.hasSpeed() ? latestTrackPoint.getSpeed() : null;
-                valueAndUnit = StringUtils.getSpeedParts(context, speed, metricUnits, reportSpeed);
+                valueAndUnit = localSpeedFormatter.getSpeedParts(speed);
                 description = context.getString(R.string.description_speed_source_gps);
             }
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_average_moving_speed_key))) {
-            valueAndUnit = StringUtils.getSpeedParts(context, trackStatistics.getAverageMovingSpeed(), metricUnits, true);
+            valueAndUnit = speedFormatterSpeed.getSpeedParts(trackStatistics.getAverageMovingSpeed());
             title = context.getString(R.string.stats_average_moving_speed);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_average_speed_key))) {
-            valueAndUnit = StringUtils.getSpeedParts(context, trackStatistics.getAverageSpeed(), metricUnits, true);
+            valueAndUnit = speedFormatterSpeed.getSpeedParts(trackStatistics.getAverageSpeed());
             title = context.getString(R.string.stats_average_speed);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_max_speed_key))) {
-            valueAndUnit = StringUtils.getSpeedParts(context, trackStatistics.getMaxSpeed(), metricUnits, true);
+            valueAndUnit = speedFormatterSpeed.getSpeedParts(trackStatistics.getMaxSpeed());
             title = context.getString(R.string.stats_max_speed);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_average_moving_pace_key))) {
-            valueAndUnit = StringUtils.getSpeedParts(context, trackStatistics.getAverageMovingSpeed(), metricUnits, false);
+            valueAndUnit = speedFormatterPace.getSpeedParts(trackStatistics.getAverageMovingSpeed());
             title = context.getString(R.string.stats_average_moving_pace);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_average_pace_key))) {
-            valueAndUnit = StringUtils.getSpeedParts(context, trackStatistics.getAverageSpeed(), metricUnits, false);
+            valueAndUnit = speedFormatterPace.getSpeedParts(trackStatistics.getAverageSpeed());
             title = context.getString(R.string.stats_average_pace);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_fastest_pace_key))) {
-            valueAndUnit = StringUtils.getSpeedParts(context, trackStatistics.getMaxSpeed(), metricUnits, true);
+            valueAndUnit = speedFormatterPace.getSpeedParts(trackStatistics.getMaxSpeed());
             title = context.getString(R.string.stats_fastest_pace);
         } else if (fieldKey.equals(context.getString(R.string.stats_custom_layout_altitude_key))) {
             Float altitude = latestTrackPoint != null && latestTrackPoint.hasAltitude() ? (float) latestTrackPoint.getAltitude().toM() : null;

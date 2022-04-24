@@ -38,6 +38,7 @@ import de.dennisguse.opentracks.TrackRecordedActivity;
 import de.dennisguse.opentracks.adapters.StatisticsAdapter;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
+import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.StatisticsRecordedBinding;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
@@ -207,11 +208,12 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsTotalTimeValue.setText(StringUtils.formatElapsedTime(trackStatistics.getTotalTime()));
         }
 
+        SpeedFormatter formatter = SpeedFormatter.Builder().setMetricUnits(preferenceMetricUnits).setReportSpeedOrPace(preferenceReportSpeed).build(getContext());
         // Set average speed/pace
         {
             viewBinding.statsAverageSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
 
-            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), trackStatistics.getAverageSpeed(), preferenceMetricUnits, preferenceReportSpeed);
+            Pair<String, String> parts = formatter.getSpeedParts(trackStatistics.getAverageSpeed());
             viewBinding.statsAverageSpeedValue.setText(parts.first);
             viewBinding.statsAverageSpeedUnit.setText(parts.second);
         }
@@ -220,7 +222,7 @@ public class StatisticsRecordedFragment extends Fragment {
         {
             viewBinding.statsMaxSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_max_speed : R.string.stats_fastest_pace);
 
-            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), trackStatistics.getMaxSpeed(), preferenceMetricUnits, preferenceReportSpeed);
+            Pair<String, String> parts = formatter.getSpeedParts(trackStatistics.getMaxSpeed());
             viewBinding.statsMaxSpeedValue.setText(parts.first);
             viewBinding.statsMaxSpeedUnit.setText(parts.second);
         }
@@ -229,7 +231,7 @@ public class StatisticsRecordedFragment extends Fragment {
         {
             viewBinding.statsMovingSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_moving_speed : R.string.stats_average_moving_pace);
 
-            Pair<String, String> parts = StringUtils.getSpeedParts(getContext(), trackStatistics.getAverageMovingSpeed(), preferenceMetricUnits, preferenceReportSpeed);
+            Pair<String, String> parts = formatter.getSpeedParts(trackStatistics.getAverageMovingSpeed());
             viewBinding.statsMovingSpeedValue.setText(parts.first);
             viewBinding.statsMovingSpeedUnit.setText(parts.second);
         }

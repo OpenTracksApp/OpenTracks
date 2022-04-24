@@ -45,7 +45,6 @@ import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Power;
-import de.dennisguse.opentracks.data.models.Speed;
 
 /**
  * Various string manipulation methods.
@@ -128,15 +127,6 @@ public class StringUtils {
         return TextUtils.split(value, ":").length == 2 ? "0:" + value : value;
     }
 
-    public static String formatSpeed(Context context, Speed speed, boolean metricUnits, boolean reportSpeed) {
-        Pair<String, String> distanceParts = getSpeedParts(context, speed, metricUnits, reportSpeed);
-
-        return context.getString(R.string.speed_with_unit, distanceParts.first, distanceParts.second);
-    }
-
-    private static String formatDecimal(double value) {
-        return StringUtils.formatDecimal(value, 2);
-    }
 
     /**
      * Format a decimal number while removing trailing zeros of the decimal part (if present).
@@ -168,39 +158,6 @@ public class StringUtils {
      */
     public static String formatCoordinate(Context context, double latitude, double longitude) {
         return context.getString(R.string.location_latitude_longitude, Location.convert(latitude, Location.FORMAT_DEGREES), Location.convert(longitude, Location.FORMAT_DEGREES));
-    }
-
-    /**
-     * Gets the formatted speed with unit.
-     *
-     * @param context     the context
-     * @param speed       the speed
-     * @param metricUnits true to use metric unit
-     * @param reportSpeed true to report speed; false for pace
-     * @return the formatted speed (or null) and it's unit as {@link Pair}
-     */
-    public static Pair<String, String> getSpeedParts(Context context, Speed speed, boolean metricUnits, boolean reportSpeed) {
-        int unitId;
-        if (metricUnits) {
-            unitId = reportSpeed ? R.string.unit_kilometer_per_hour : R.string.unit_minute_per_kilometer;
-        } else {
-            unitId = reportSpeed ? R.string.unit_mile_per_hour : R.string.unit_minute_per_mile;
-        }
-        String unitString = context.getString(unitId);
-
-        if (speed == null) {
-            speed = Speed.zero();
-        }
-
-        if (reportSpeed) {
-            return new Pair<>(StringUtils.formatDecimal(speed.to(metricUnits), 1), unitString);
-        }
-
-        int pace = (int) speed.toPace(metricUnits).getSeconds();
-
-        int minutes = pace / 60;
-        int seconds = pace % 60;
-        return new Pair<>(context.getString(R.string.time, minutes, seconds), unitString);
     }
 
     public static Pair<String, String> getHeartRateParts(Context context, HeartRate heartrate) {

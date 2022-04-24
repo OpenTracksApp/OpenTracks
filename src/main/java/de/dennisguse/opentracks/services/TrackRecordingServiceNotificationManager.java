@@ -20,12 +20,12 @@ import de.dennisguse.opentracks.TrackRecordedActivity;
 import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
+import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.util.StringUtils;
 
 /**
  * Manages the content of the notification shown by {@link TrackRecordingService}.
@@ -97,7 +97,8 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
         }
 
         notificationBuilder.setContentTitle(context.getString(R.string.track_distance_notification, formatter.formatDistance(trackStatistics.getTotalDistance())));
-        notificationBuilder.setContentText(context.getString(R.string.track_speed_notification, StringUtils.formatSpeed(context, trackPoint.getSpeed(), metricUnits, true)));
+        String formattedSpeed = SpeedFormatter.Builder().setMetricUnits(metricUnits).setReportSpeedOrPace(true).build(context).formatSpeed(trackPoint.getSpeed());
+        notificationBuilder.setContentText(context.getString(R.string.track_speed_notification, formattedSpeed));
         notificationBuilder.setSubText(context.getString(R.string.track_recording_notification_accuracy, formattedAccuracy));
         updateNotification();
 

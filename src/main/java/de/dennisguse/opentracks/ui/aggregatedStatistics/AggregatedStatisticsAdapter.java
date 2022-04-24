@@ -14,6 +14,7 @@ import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
+import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
@@ -119,15 +120,17 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
 
         public void setSpeed(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
             setCommonValues(aggregatedStatistic);
+
+            SpeedFormatter formatter = SpeedFormatter.Builder().setMetricUnits(metricsUnits).setReportSpeedOrPace(reportSpeed).build(context);
             {
-                Pair<String, String> parts = StringUtils.getSpeedParts(context, aggregatedStatistic.getTrackStatistics().getAverageMovingSpeed(), metricsUnits, reportSpeed);
+                Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getAverageMovingSpeed());
                 avgSpeed.setText(parts.first);
                 avgSpeedUnit.setText(parts.second);
                 avgSpeedLabel.setText(context.getString(R.string.stats_average_moving_speed));
             }
 
             {
-                Pair<String, String> parts = StringUtils.getSpeedParts(context, aggregatedStatistic.getTrackStatistics().getMaxSpeed(), metricsUnits, reportSpeed);
+                Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getMaxSpeed());
                 maxSpeed.setText(parts.first);
                 maxSpeedUnit.setText(parts.second);
                 maxSpeedLabel.setText(context.getString(R.string.stats_max_speed));
@@ -135,16 +138,18 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         }
 
         public void setPace(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
+            SpeedFormatter formatter = SpeedFormatter.Builder().setMetricUnits(metricsUnits).setReportSpeedOrPace(reportSpeed).build(context);
+
             setCommonValues(aggregatedStatistic);
             {
-                Pair<String, String> parts = StringUtils.getSpeedParts(context, aggregatedStatistic.getTrackStatistics().getAverageMovingSpeed(), metricsUnits, reportSpeed);
+                Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getAverageMovingSpeed());
                 avgSpeed.setText(parts.first);
                 avgSpeedUnit.setText(parts.second);
                 avgSpeedLabel.setText(context.getString(R.string.stats_average_moving_pace));
             }
 
             {
-                Pair<String, String> parts = StringUtils.getSpeedParts(context, aggregatedStatistic.getTrackStatistics().getMaxSpeed(), metricsUnits, reportSpeed);
+                Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getMaxSpeed());
                 maxSpeed.setText(parts.first);
                 maxSpeedUnit.setText(parts.second);
                 maxSpeedLabel.setText(R.string.stats_fastest_pace);
