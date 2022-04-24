@@ -133,15 +133,11 @@ public class IntervalsFragment extends Fragment {
             updateIntervals(metricUnits, IntervalStatisticsModel.IntervalOption.values()[position]);
 
             //TODO This duplicates the intervalAdapter code
-            IntervalStatisticsModel.IntervalOption option = selectedInterval != null ? selectedInterval : IntervalStatisticsModel.IntervalOption.DEFAULT;
-            String stringValue = formatter.formatDistance(option.getDistance(metricUnits), metricUnits);
-            viewBinding.intervalsDropdown.setText(stringValue, false);
+            setIntervalsDropdownText();
         });
 
         //TODO This duplicates the intervalAdapter code
-        IntervalStatisticsModel.IntervalOption option = selectedInterval != null ? selectedInterval : IntervalStatisticsModel.IntervalOption.DEFAULT;
-        String stringValue = formatter.formatDistance(option.getDistance(metricUnits), metricUnits);
-        viewBinding.intervalsDropdown.setText(stringValue, false);
+        setIntervalsDropdownText();
     }
 
     @Override
@@ -196,6 +192,18 @@ public class IntervalsFragment extends Fragment {
         viewBinding.intervalRate.setText(isReportSpeed ? getString(R.string.stats_speed) : getString(R.string.stats_pace));
         LiveData<List<IntervalStatistics.Interval>> liveData = viewModel.getIntervalStats(trackId, metricUnits, selectedInterval);
         liveData.observe(getActivity(), intervalList -> adapter.swapData(intervalList, metricUnits, isReportSpeed));
+
+        setIntervalsDropdownText();
+    }
+
+    private void setIntervalsDropdownText() {
+        DistanceFormatter formatter = DistanceFormatter.Builder()
+                .setDecimalCount(0)
+                .build(getContext());
+
+        IntervalStatisticsModel.IntervalOption option = selectedInterval != null ? selectedInterval : IntervalStatisticsModel.IntervalOption.DEFAULT;
+        String stringValue = formatter.formatDistance(option.getDistance(metricUnits), metricUnits);
+        viewBinding.intervalsDropdown.setText(stringValue, false);
     }
 
     private synchronized void updateIntervals(boolean metricUnits, IntervalStatisticsModel.IntervalOption selectedInterval) {
