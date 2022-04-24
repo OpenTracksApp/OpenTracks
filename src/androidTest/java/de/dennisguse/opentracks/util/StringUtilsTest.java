@@ -47,7 +47,6 @@ import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.LocaleRule;
-import de.dennisguse.opentracks.data.models.Speed;
 
 /**
  * Tests for {@link StringUtils}.
@@ -165,27 +164,6 @@ public class StringUtilsTest {
         assertEquals("-0.10", StringUtils.formatDecimal(-0.1, 2));
 
         assertEquals("1.0", StringUtils.formatDecimal(0.99, 1));
-    }
-
-    @Test
-    public void testGetSpeedParts() {
-        assertEquals("4:59", StringUtils.getSpeedParts(context, Speed.of(3.34), true, false).first);
-        assertEquals("5:00", StringUtils.getSpeedParts(context, Speed.of(3.33), true, false).first);
-
-        assertEquals("11.9", StringUtils.getSpeedParts(context, Speed.of(3.31), true, true).first);
-        assertEquals("7.5", StringUtils.getSpeedParts(context, Speed.of(3.34), false, true).first);
-
-        assertEquals("min/km", StringUtils.getSpeedParts(context, Speed.zero(), true, false).second);
-        assertEquals("min/mi", StringUtils.getSpeedParts(context, Speed.zero(), false, false).second);
-    }
-
-    @Test
-    public void testFormatSpeed() {
-        assertEquals("4:59 min/km", StringUtils.formatSpeed(context, Speed.of(3.34), true, false));
-        assertEquals("8:02 min/mi", StringUtils.formatSpeed(context, Speed.of(3.34), false, false));
-
-        assertEquals("12.0 km/h", StringUtils.formatSpeed(context, Speed.of(3.34), true, true));
-        assertEquals("7.5 mph", StringUtils.formatSpeed(context, Speed.of(3.34), false, true));
     }
 
     @Test

@@ -14,6 +14,7 @@ import java.util.List;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
+import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.util.StringUtils;
 
 public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -59,7 +60,8 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
                 .setMetricUnits(metricUnits)
                 .build(context).formatDistance(sumDistance));
 
-        viewHolder.rate.setText(StringUtils.formatSpeed(context, interval.getSpeed(), metricUnits, isReportSpeed));
+        SpeedFormatter formatter = SpeedFormatter.Builder().setMetricUnits(metricUnits).setReportSpeedOrPace(isReportSpeed).build(context);
+        viewHolder.rate.setText(formatter.formatSpeed(interval.getSpeed()));
 
         viewHolder.gain.setText(StringUtils.formatAltitudeChange(context, interval.getGain_m(), metricUnits));
         viewHolder.loss.setText(StringUtils.formatAltitudeChange(context, interval.getLoss_m(), metricUnits));
