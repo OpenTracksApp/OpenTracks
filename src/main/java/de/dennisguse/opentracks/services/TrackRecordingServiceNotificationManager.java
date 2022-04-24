@@ -15,7 +15,6 @@ import androidx.core.app.TaskStackBuilder;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TrackListActivity;
-import de.dennisguse.opentracks.TrackRecordingActivity;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.TrackPoint;
@@ -100,7 +99,7 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
     }
 
     Notification setRecording(Context context) {
-        Intent intent = IntentUtils.newIntent(context, TrackRecordingActivity.class);
+        Intent intent = IntentUtils.newIntent(context, TrackListActivity.class);
 
         int pendingIntentFlags = PendingIntent.FLAG_UPDATE_CURRENT;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
