@@ -19,6 +19,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -48,7 +49,7 @@ public class TrackRecordingServiceNotificationManagerTest {
                 .thenReturn(notificationCompatBuilder);
 
         TrackRecordingServiceNotificationManager subject = new TrackRecordingServiceNotificationManager(notificationManager, notificationCompatBuilder);
-        subject.setMetricUnits(true);
+        subject.setUnitSystem(UnitSystem.METRIC);
 
         // when
         subject.updateTrackPoint(context, trackStatisticsMock, trackPointMock, Distance.of(100));

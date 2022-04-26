@@ -6,6 +6,7 @@ import java.time.Duration;
 import java.util.Objects;
 
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.settings.UnitSystem;
 
 public class Speed {
 
@@ -92,33 +93,35 @@ public class Speed {
         return toKMH() * UnitConversions.KM_TO_MI;
     }
 
-    public Duration toPace(boolean metricUnit) {
+    public Duration toPace(UnitSystem unitSystem) {
         if (isZero()) {
             return Duration.ofSeconds(0);
         }
 
-        double distance = speed_mps * (metricUnit ? UnitConversions.M_TO_KM : UnitConversions.M_TO_MI);
+        double distance = speed_mps;
+        switch (unitSystem) { //TODO Can we use to(UnitSystem)?
+            case METRIC:
+                distance *= UnitConversions.M_TO_KM;
+                break;
+            case IMPERIAL:
+                distance *= UnitConversions.M_TO_MI;
+                break;
+            default:
+                throw new RuntimeException("Not implemented");
+        }
+
         return Duration.ofSeconds(Math.round(1 / distance));
     }
 
-    public double to(boolean metricUnit) {
-        return to(metricUnit ? Unit.KMH : Unit.MPH);
-    }
-
-    public double to(Unit unit) {
-        switch (unit) {
-            case KMH:
+    public double to(UnitSystem unitSystem) {
+        switch (unitSystem) {
+            case METRIC:
                 return toKMH();
-            case MPH:
+            case IMPERIAL:
                 return toMPH();
             default:
                 throw new RuntimeException("Not implemented");
         }
-    }
-
-    public enum Unit {
-        KMH,
-        MPH,
     }
 
     @Override

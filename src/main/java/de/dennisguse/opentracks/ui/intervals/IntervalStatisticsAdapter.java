@@ -15,6 +15,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.SpeedFormatter;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.util.StringUtils;
 
 public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -22,11 +23,11 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
     private List<IntervalStatistics.Interval> intervalList;
     private final Context context;
     private final StackMode stackMode;
-    private boolean metricUnits;
+    private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
     private boolean isReportSpeed;
 
-    public IntervalStatisticsAdapter(Context context, StackMode stackMode, boolean metricUnits, boolean isReportSpeed) {
-        this.metricUnits = metricUnits;
+    public IntervalStatisticsAdapter(Context context, StackMode stackMode, UnitSystem unitSystem, boolean isReportSpeed) {
+        this.unitSystem = unitSystem;
         this.context = context;
         this.stackMode = stackMode;
         this.isReportSpeed = isReportSpeed;
@@ -57,14 +58,14 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
             sumDistance = interval.getDistance().multipliedBy(nextPosition);
         }
         viewHolder.distance.setText(DistanceFormatter.Builder()
-                .setMetricUnits(metricUnits)
+                .setUnit(unitSystem)
                 .build(context).formatDistance(sumDistance));
 
-        SpeedFormatter formatter = SpeedFormatter.Builder().setMetricUnits(metricUnits).setReportSpeedOrPace(isReportSpeed).build(context);
+        SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(isReportSpeed).build(context);
         viewHolder.rate.setText(formatter.formatSpeed(interval.getSpeed()));
 
-        viewHolder.gain.setText(StringUtils.formatAltitudeChange(context, interval.getGain_m(), metricUnits));
-        viewHolder.loss.setText(StringUtils.formatAltitudeChange(context, interval.getLoss_m(), metricUnits));
+        viewHolder.gain.setText(StringUtils.formatAltitude(context, interval.getGain_m(), unitSystem));
+        viewHolder.loss.setText(StringUtils.formatAltitude(context, interval.getLoss_m(), unitSystem));
 
     }
 
@@ -76,8 +77,8 @@ public class IntervalStatisticsAdapter extends RecyclerView.Adapter<RecyclerView
         return intervalList.size();
     }
 
-    public List<IntervalStatistics.Interval> swapData(List<IntervalStatistics.Interval> data, boolean metricUnits, boolean isReportSpeed) {
-        this.metricUnits = metricUnits;
+    public List<IntervalStatistics.Interval> swapData(List<IntervalStatistics.Interval> data, UnitSystem unitSystem, boolean isReportSpeed) {
+        this.unitSystem = unitSystem;
         this.isReportSpeed = isReportSpeed;
         intervalList = data;
 

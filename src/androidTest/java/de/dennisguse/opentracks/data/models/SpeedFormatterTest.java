@@ -10,6 +10,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import de.dennisguse.opentracks.settings.UnitSystem;
+
 @RunWith(AndroidJUnit4.class)
 public class SpeedFormatterTest {
 
@@ -19,7 +21,7 @@ public class SpeedFormatterTest {
     public void testGetSpeedParts_pace_metric() {
         SpeedFormatter formatter = SpeedFormatter.Builder()
                 .setDecimalCount(2)
-                .setMetricUnits(true)
+                .setUnit(UnitSystem.METRIC)
                 .setReportSpeedOrPace(false)
                 .build(context);
 
@@ -33,7 +35,7 @@ public class SpeedFormatterTest {
     public void testGetSpeedParts_pace_imperial() {
         SpeedFormatter formatter = SpeedFormatter.Builder()
                 .setDecimalCount(2)
-                .setMetricUnits(false)
+                .setUnit(UnitSystem.IMPERIAL)
                 .setReportSpeedOrPace(false)
                 .build(context);
 
@@ -47,7 +49,7 @@ public class SpeedFormatterTest {
     public void testGetSpeedParts_speed_metric() {
         SpeedFormatter formatter = SpeedFormatter.Builder()
                 .setDecimalCount(2)
-                .setMetricUnits(true)
+                .setUnit(UnitSystem.METRIC)
                 .setReportSpeedOrPace(true)
                 .build(context);
 
@@ -59,7 +61,7 @@ public class SpeedFormatterTest {
     public void testGetSpeedParts_speed_imperial() {
         SpeedFormatter formatter = SpeedFormatter.Builder()
                 .setDecimalCount(2)
-                .setMetricUnits(false)
+                .setUnit(UnitSystem.IMPERIAL)
                 .setReportSpeedOrPace(true)
                 .build(context);
 
@@ -71,7 +73,7 @@ public class SpeedFormatterTest {
     public void testFormatSpeed() {
         SpeedFormatter formatter = SpeedFormatter.Builder()
                 .setDecimalCount(2)
-                .setMetricUnits(true)
+                .setUnit(UnitSystem.METRIC)
                 .setReportSpeedOrPace(false)
                 .build(context);
 

@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 
 import java.util.Objects;
 
+import de.dennisguse.opentracks.settings.UnitSystem;
+
 public class Distance {
 
     public static Distance of(double distance_m) {
@@ -43,11 +45,14 @@ public class Distance {
         return of(0.1 * distance_dm);
     }
 
-    public static Distance one(boolean metricUnit) {
-        if (metricUnit) {
-            return Distance.ofKilometer(1);
-        } else {
-            return Distance.ofMile(1);
+    public static Distance one(UnitSystem unitSystem) {
+        switch (unitSystem) {
+            case METRIC:
+                return Distance.ofKilometer(1);
+            case IMPERIAL:
+                return Distance.ofMile(1);
+            default:
+                throw new RuntimeException("Not implemented");
         }
     }
 
@@ -109,12 +114,26 @@ public class Distance {
         return toKM() * UnitConversions.KM_TO_MI;
     }
 
-    public double toKM_Miles(boolean metricUnit) {
-        return metricUnit ? toKM() : toMI();
+    public double toKM_Miles(UnitSystem unitSystem) {
+        switch (unitSystem) {
+            case METRIC:
+                return toKM();
+            case IMPERIAL:
+                return toMI();
+            default:
+                throw new RuntimeException("Not implemented");
+        }
     }
 
-    public double toM_FT(boolean metricUnit) {
-        return metricUnit ? toM() : toFT();
+    public double toM_FT(UnitSystem unitSystem) {
+        switch (unitSystem) {
+            case METRIC:
+                return toM();
+            case IMPERIAL:
+                return toFT();
+            default:
+                throw new RuntimeException("Not implemented");
+        }
     }
 
     @Override

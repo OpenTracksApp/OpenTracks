@@ -42,6 +42,7 @@ import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.StatisticsRecordedBinding;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -81,7 +82,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
     private StatisticsRecordedBinding viewBinding;
 
-    private boolean preferenceMetricUnits;
+    private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
     private boolean preferenceReportSpeed;
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
@@ -89,7 +90,7 @@ public class StatisticsRecordedFragment extends Fragment {
 
         if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
             updateUInecessary = true;
-            preferenceMetricUnits = PreferencesUtils.isMetricUnits();
+            unitSystem = PreferencesUtils.getUnitSystem();
         }
 
         if (PreferencesUtils.isKey(R.string.stats_rate_key, key) && track != null) {
@@ -189,7 +190,7 @@ public class StatisticsRecordedFragment extends Fragment {
         // Set total distance
         {
             Pair<String, String> parts = DistanceFormatter.Builder()
-                    .setMetricUnits(preferenceMetricUnits)
+                    .setUnit(unitSystem)
                     .build(getContext()).getDistanceParts(trackStatistics.getTotalDistance());
 
             viewBinding.statsDistanceValue.setText(parts.first);
@@ -208,7 +209,7 @@ public class StatisticsRecordedFragment extends Fragment {
             viewBinding.statsTotalTimeValue.setText(StringUtils.formatElapsedTime(trackStatistics.getTotalTime()));
         }
 
-        SpeedFormatter formatter = SpeedFormatter.Builder().setMetricUnits(preferenceMetricUnits).setReportSpeedOrPace(preferenceReportSpeed).build(getContext());
+        SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(preferenceReportSpeed).build(getContext());
         // Set average speed/pace
         {
             viewBinding.statsAverageSpeedLabel.setText(preferenceReportSpeed ? R.string.stats_average_speed : R.string.stats_average_pace);
@@ -243,11 +244,11 @@ public class StatisticsRecordedFragment extends Fragment {
 
             Pair<String, String> parts;
 
-            parts = StringUtils.getAltitudeChangeParts(getContext(), altitudeGain_m, preferenceMetricUnits);
+            parts = StringUtils.getAltitudeParts(getContext(), altitudeGain_m, unitSystem);
             viewBinding.statsAltitudeGainValue.setText(parts.first);
             viewBinding.statsAltitudeGainUnit.setText(parts.second);
 
-            parts = StringUtils.getAltitudeChangeParts(getContext(), altitudeLoss_m, preferenceMetricUnits);
+            parts = StringUtils.getAltitudeParts(getContext(), altitudeLoss_m, unitSystem);
             viewBinding.statsAltitudeLossValue.setText(parts.first);
             viewBinding.statsAltitudeLossUnit.setText(parts.second);
 

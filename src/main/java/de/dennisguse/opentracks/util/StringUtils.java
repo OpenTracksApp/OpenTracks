@@ -43,8 +43,10 @@ import java.time.temporal.TemporalAccessor;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Power;
+import de.dennisguse.opentracks.settings.UnitSystem;
 
 /**
  * Various string manipulation methods.
@@ -252,35 +254,18 @@ public class StringUtils {
     /**
      * @return the formatted altitude_m (or null) and it's unit as {@link Pair}
      */
-    public static Pair<String, String> getAltitudeParts(Context context, Float altitude_m, boolean metricUnits) {
-        String formattedValue = context.getString(R.string.value_unknown);
-        String unit = context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet);
+    public static Pair<String, String> getAltitudeParts(Context context, Float altitude_m, UnitSystem unitSystem) {
+        DistanceFormatter formatter = DistanceFormatter.Builder()
+                .setDecimalCount(1)
+                .setUnit(unitSystem)
+                .build(context);
 
-        if (altitude_m != null) {
-            double value = Distance.of(altitude_m).toM_FT(metricUnits);
-            formattedValue = StringUtils.formatDecimal(value, 1);
-        }
-
-        return new Pair<>(formattedValue, unit);
+        Distance distance = altitude_m != null ? Distance.of(altitude_m) : Distance.of(Double.NaN); //TODO Refactor Double.NaN
+        return formatter.getDistanceParts(distance);
     }
 
-    public static String formatAltitude(Context context, Float altitude_m, boolean metricUnits) {
-        Pair<String, String> altitudeParts = getAltitudeParts(context, altitude_m, metricUnits);
-
-        return context.getString(R.string.altitude_with_unit, altitudeParts.first, altitudeParts.second);
-    }
-
-    /**
-     * @return the formatted altitudeDifference_m (or null) and it's unit as {@link Pair}
-     */
-    public static Pair<String, String> getAltitudeChangeParts(Context context, Float altitudeDifference_m, boolean metricUnits) {
-        String formattedValue = altitudeDifference_m != null ? String.valueOf((int) Distance.of(altitudeDifference_m).toM_FT(metricUnits)) : context.getString(R.string.value_unknown);
-        String unit = context.getString(metricUnits ? R.string.unit_meter : R.string.unit_feet);
-        return new Pair<>(formattedValue, unit);
-    }
-
-    public static String formatAltitudeChange(Context context, Float altitude_m, boolean metricUnits) {
-        Pair<String, String> altitudeParts = getAltitudeChangeParts(context, altitude_m, metricUnits);
+    public static String formatAltitude(Context context, Float altitude_m, UnitSystem unitSystem) {
+        Pair<String, String> altitudeParts = getAltitudeParts(context, altitude_m, unitSystem);
 
         return context.getString(R.string.altitude_with_unit, altitudeParts.first, altitudeParts.second);
     }

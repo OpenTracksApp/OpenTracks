@@ -17,11 +17,11 @@ public class GpsSettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.settings_gps);
 
-        boolean metricUnits = PreferencesUtils.isMetricUnits();
+        UnitSystem unitSystem = PreferencesUtils.getUnitSystem();
 
         final DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
-                .setMetricUnits(metricUnits)
+                .setUnit(unitSystem)
                 .build(getContext());
 
         findPreference(getString(R.string.recording_distance_interval_key))

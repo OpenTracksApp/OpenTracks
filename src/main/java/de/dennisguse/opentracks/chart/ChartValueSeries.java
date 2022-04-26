@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 
 import java.text.NumberFormat;
 
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.ExtremityMonitor;
 
 /**
@@ -217,11 +218,15 @@ abstract class ChartValueSeries {
         return maxMarkerValue;
     }
 
-    /**
-     * Gets the title id.
-     */
-    int getTitleId(boolean metricUnits) {
-        return metricUnits ? metricTitleId : imperialTitleId;
+    int getTitleId(UnitSystem unitSystem) {
+        switch (unitSystem) {
+            case METRIC:
+                return metricTitleId;
+            case IMPERIAL:
+                return imperialTitleId;
+            default:
+                throw new RuntimeException("Not implemented");
+        }
     }
 
     /**

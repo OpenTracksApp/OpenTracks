@@ -25,6 +25,7 @@ import de.dennisguse.opentracks.services.RecordingData;
 import de.dennisguse.opentracks.services.TrackRecordingService;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
 import de.dennisguse.opentracks.viewmodels.StatisticData;
 import de.dennisguse.opentracks.viewmodels.StatisticsDataModel;
@@ -55,14 +56,14 @@ public class StatisticsRecordingFragment extends Fragment {
     private StatisticsDataModel viewModel;
     private LiveData<List<StatisticData>> statisticsLiveData;
 
-    private boolean preferenceMetricUnits;
+    private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
 
     private final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         boolean updateUInecessary = false;
 
         if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
             updateUInecessary = true;
-            preferenceMetricUnits = PreferencesUtils.isMetricUnits();
+            unitSystem = PreferencesUtils.getUnitSystem();
         }
 
         if (PreferencesUtils.isKey(R.string.stats_custom_layouts_key, key) || PreferencesUtils.isKey(R.string.stats_custom_layout_selected_layout_key, key)) {
@@ -157,7 +158,7 @@ public class StatisticsRecordingFragment extends Fragment {
 
     private void updateUI() {
         if (isResumed()) {
-            viewModel.update(recordingData, layout, preferenceMetricUnits);
+            viewModel.update(recordingData, layout, unitSystem);
         }
     }
 

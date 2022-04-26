@@ -10,6 +10,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import de.dennisguse.opentracks.settings.UnitSystem;
+
 @RunWith(AndroidJUnit4.class)
 public class DistanceFormatterTest {
 
@@ -19,7 +21,7 @@ public class DistanceFormatterTest {
     public void testFormatDistance_metric() {
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(2)
-                .setMetricUnits(true)
+                .setUnit(UnitSystem.METRIC)
                 .build(context);
 
         // A large number in metric
@@ -32,7 +34,7 @@ public class DistanceFormatterTest {
     public void testFormatDistance_imperial() {
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(2)
-                .setMetricUnits(false)
+                .setUnit(UnitSystem.IMPERIAL)
                 .build(context);
 
         // A large number in imperial

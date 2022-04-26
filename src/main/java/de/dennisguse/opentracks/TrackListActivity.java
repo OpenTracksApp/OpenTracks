@@ -59,6 +59,7 @@ import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.services.handlers.GpsStatusValue;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.settings.SettingsActivity;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.share.ShareUtils;
 import de.dennisguse.opentracks.ui.aggregatedStatistics.AggregatedStatisticsActivity;
 import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragment;
@@ -88,7 +89,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     private final TrackLoaderCallBack loaderCallbacks = new TrackLoaderCallBack();
 
     // Preferences
-    private boolean metricUnits = true;
+    private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
 
     private GpsStatusValue gpsStatusValue = TrackRecordingService.STATUS_GPS_DEFAULT;
     private RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
@@ -112,7 +113,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
-            metricUnits = PreferencesUtils.isMetricUnits();
+            unitSystem = PreferencesUtils.getUnitSystem();
         }
         if (key != null) {
             runOnUiThread(() -> {
@@ -192,7 +193,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
                 String name = cursor.getString(nameIndex);
                 String totalTime = StringUtils.formatElapsedTime(Duration.ofMillis(cursor.getLong(totalTimeIndex)));
                 String totalDistance = DistanceFormatter.Builder()
-                        .setMetricUnits(metricUnits)
+                        .setUnit(unitSystem)
                         .build(TrackListActivity.this).formatDistance(Distance.of(cursor.getDouble(totalDistanceIndex)));
                 int markerCount = cursor.getInt(markerCountIndex);
                 long startTime = cursor.getLong(startTimeIndex);

@@ -24,6 +24,7 @@ import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.IntervalListViewBinding;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.settings.UnitSystem;
 
 /**
  * A fragment to display the intervals from recorded track.
@@ -41,7 +42,7 @@ public class IntervalsFragment extends Fragment {
     private IntervalStatisticsModel.IntervalOption selectedInterval;
 
     private Track.Id trackId;
-    private boolean metricUnits;
+    private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
     private IntervalStatisticsAdapter adapter;
     private ArrayAdapter<IntervalStatisticsModel.IntervalOption> intervalsAdapter;
 
@@ -51,7 +52,7 @@ public class IntervalsFragment extends Fragment {
 
     protected final SharedPreferences.OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
         if (PreferencesUtils.isKey(R.string.stats_units_key, key) || PreferencesUtils.isKey(R.string.stats_rate_key, key)) {
-            updateIntervals(PreferencesUtils.isMetricUnits(), selectedInterval);
+            updateIntervals(PreferencesUtils.getUnitSystem(), selectedInterval);
             if (intervalsAdapter != null) {
                 intervalsAdapter.notifyDataSetChanged();
             }
@@ -101,14 +102,14 @@ public class IntervalsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        adapter = new IntervalStatisticsAdapter(getContext(), stackModeListView, metricUnits, isReportSpeed);
+        adapter = new IntervalStatisticsAdapter(getContext(), stackModeListView, unitSystem, isReportSpeed);
         viewBinding.intervalList.setLayoutManager(new LinearLayoutManager(getContext()));
         // TODO handle empty view: before we did viewBinding.intervalList.setEmptyView(viewBinding.intervalListEmptyView);
         viewBinding.intervalList.setAdapter(adapter);
 
         final DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
-                .setMetricUnits(metricUnits)
+                .setUnit(unitSystem)
                 .build(getContext());
 
         intervalsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {
@@ -118,7 +119,7 @@ public class IntervalsFragment extends Fragment {
                 TextView v = (TextView) super.getView(position, convertView, parent);
 
                 IntervalStatisticsModel.IntervalOption option = getItem(position);
-                String stringValue = formatter.formatDistance(option.getDistance(metricUnits));
+                String stringValue = formatter.formatDistance(option.getDistance(unitSystem));
                 v.setText(stringValue);
                 return v;
             }
@@ -131,7 +132,7 @@ public class IntervalsFragment extends Fragment {
 
         viewBinding.intervalsDropdown.setAdapter(intervalsAdapter);
         viewBinding.intervalsDropdown.setOnItemClickListener((parent, view1, position, id) -> {
-            updateIntervals(metricUnits, IntervalStatisticsModel.IntervalOption.values()[position]);
+            updateIntervals(unitSystem, IntervalStatisticsModel.IntervalOption.values()[position]);
 
             //TODO This duplicates the intervalAdapter code
             setIntervalsDropdownText();
@@ -191,8 +192,8 @@ public class IntervalsFragment extends Fragment {
         }
 
         viewBinding.intervalRate.setText(isReportSpeed ? getString(R.string.stats_speed) : getString(R.string.stats_pace));
-        LiveData<List<IntervalStatistics.Interval>> liveData = viewModel.getIntervalStats(trackId, metricUnits, selectedInterval);
-        liveData.observe(getActivity(), intervalList -> adapter.swapData(intervalList, metricUnits, isReportSpeed));
+        LiveData<List<IntervalStatistics.Interval>> liveData = viewModel.getIntervalStats(trackId, unitSystem, selectedInterval);
+        liveData.observe(getActivity(), intervalList -> adapter.swapData(intervalList, unitSystem, isReportSpeed));
 
         setIntervalsDropdownText();
     }
@@ -200,23 +201,23 @@ public class IntervalsFragment extends Fragment {
     private void setIntervalsDropdownText() {
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
-                .setMetricUnits(metricUnits)
+                .setUnit(unitSystem)
                 .build(getContext());
 
         IntervalStatisticsModel.IntervalOption option = selectedInterval != null ? selectedInterval : IntervalStatisticsModel.IntervalOption.DEFAULT;
-        String stringValue = formatter.formatDistance(option.getDistance(metricUnits));
+        String stringValue = formatter.formatDistance(option.getDistance(unitSystem));
         viewBinding.intervalsDropdown.setText(stringValue, false);
     }
 
-    private synchronized void updateIntervals(boolean metricUnits, IntervalStatisticsModel.IntervalOption selectedInterval) {
-        boolean update = metricUnits != this.metricUnits
+    private synchronized void updateIntervals(UnitSystem unitSystem, IntervalStatisticsModel.IntervalOption selectedInterval) {
+        boolean update = unitSystem != this.unitSystem
                 || selectedInterval == null
                 || !selectedInterval.sameMultiplier(this.selectedInterval);
-        this.metricUnits = metricUnits;
+        this.unitSystem = unitSystem;
         this.selectedInterval = selectedInterval;
 
         if (update && viewModel != null) {
-            viewModel.update(trackId, this.metricUnits, this.selectedInterval);
+            viewModel.update(trackId, this.unitSystem, this.selectedInterval);
         }
     }
 }
