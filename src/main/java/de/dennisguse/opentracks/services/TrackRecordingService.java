@@ -313,7 +313,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     private void showNotification(boolean isGpsStarted) {
         if (isRecording()) {
-            startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setRecording(this));
+            startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setRecording(this, recordingStatus.getTrackId()));
         }
         if (!isRecording() && isGpsStarted) {
             startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this));
