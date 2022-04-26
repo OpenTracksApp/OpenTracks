@@ -5,12 +5,13 @@ import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.settings.UnitSystem;
 
-public class PreferenceMetricUnitRule implements TestRule {
-    private final boolean metricUnits;
+public class PreferenceUnitSystemRule implements TestRule {
+    private final UnitSystem unit;
 
-    public PreferenceMetricUnitRule(boolean metricUnits) {
-        this.metricUnits = metricUnits;
+    public PreferenceUnitSystemRule(UnitSystem unit) {
+        this.unit = unit;
     }
 
     @Override
@@ -18,13 +19,13 @@ public class PreferenceMetricUnitRule implements TestRule {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                final boolean previousMetricUnits = PreferencesUtils.isMetricUnits();
+                final UnitSystem previousUnitSystem = PreferencesUtils.getUnitSystem();
 
                 try {
-                    PreferencesUtils.setMetricUnits(metricUnits);
+                    PreferencesUtils.setUnit(unit);
                     base.evaluate();
                 } finally {
-                    PreferencesUtils.setMetricUnits(previousMetricUnits);
+                    PreferencesUtils.setUnit(previousUnitSystem);
                 }
             }
         };

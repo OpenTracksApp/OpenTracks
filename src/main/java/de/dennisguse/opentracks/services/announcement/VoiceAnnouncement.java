@@ -35,6 +35,7 @@ import de.dennisguse.opentracks.data.TrackPointIterator;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
@@ -165,12 +166,12 @@ public class VoiceAnnouncement {
         }
 
 
-        boolean isMetricUnits = PreferencesUtils.isMetricUnits();
+        UnitSystem unitSystem = PreferencesUtils.getUnitSystem();
         boolean isReportSpeed = PreferencesUtils.isReportSpeed(track.getCategory());
 
         //TODO Do not load all trackpoints for every announcement
         TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null);
-        IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.one(isMetricUnits));
+        IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.one(unitSystem));
         intervalStatistics.addTrackPoints(trackPointIterator);
         IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
         SensorStatistics sensorStatistics = null;
@@ -178,7 +179,7 @@ public class VoiceAnnouncement {
             sensorStatistics = contentProviderUtils.getSensorStats(track.getId());
         }
 
-        Spannable announcement = VoiceAnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), isMetricUnits, isReportSpeed, lastInterval, sensorStatistics);
+        Spannable announcement = VoiceAnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), unitSystem, isReportSpeed, lastInterval, sensorStatistics);
 
         // We don't care about the utterance id. It is supplied here to force onUtteranceCompleted to be called.
         tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null, "not used");

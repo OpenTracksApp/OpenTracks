@@ -23,6 +23,7 @@ import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.services.RecordingData;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
@@ -61,7 +62,7 @@ public class StatisticDataBuilderTest extends TestCase {
         layout.addField(context.getString(R.string.stats_custom_layout_max_speed_key), context.getString(R.string.stats_max_speed), false, true, false);
 
         // when
-        List<StatisticData> statisticDataList = StatisticDataBuilder.fromRecordingData(context, recordingDataMock, layout, true);
+        List<StatisticData> statisticDataList = StatisticDataBuilder.fromRecordingData(context, recordingDataMock, layout, UnitSystem.METRIC);
 
         // then
         assertEquals(statisticDataList.size(), 3);
@@ -100,7 +101,7 @@ public class StatisticDataBuilderTest extends TestCase {
         layout.addField(context.getString(R.string.stats_custom_layout_power_key), context.getString(R.string.stats_sensors_power), true, true, false);
 
         // when
-        List<StatisticData> statisticDataList = StatisticDataBuilder.fromRecordingData(context, recordingDataMock, layout, true);
+        List<StatisticData> statisticDataList = StatisticDataBuilder.fromRecordingData(context, recordingDataMock, layout, UnitSystem.METRIC);
 
         // then
         assertEquals(statisticDataList.size(), 18);

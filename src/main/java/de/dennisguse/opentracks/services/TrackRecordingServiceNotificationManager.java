@@ -24,6 +24,7 @@ import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.IntentUtils;
 
@@ -42,7 +43,7 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
 
     private boolean previousLocationWasAccurate = true;
 
-    private Boolean metricUnits = null;
+    private UnitSystem unitSystem = null;
 
     TrackRecordingServiceNotificationManager(Context context) {
         PreferencesUtils.registerOnSharedPreferenceChangeListener(this);
@@ -85,7 +86,7 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
         String formattedAccuracy = context.getString(R.string.value_none);
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
-                .setMetricUnits(metricUnits)
+                .setUnit(unitSystem)
                 .build(context);
         if (trackPoint.hasHorizontalAccuracy()) {
             formattedAccuracy = formatter.formatDistance(trackPoint.getHorizontalAccuracy());
@@ -97,7 +98,7 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
         }
 
         notificationBuilder.setContentTitle(context.getString(R.string.track_distance_notification, formatter.formatDistance(trackStatistics.getTotalDistance())));
-        String formattedSpeed = SpeedFormatter.Builder().setMetricUnits(metricUnits).setReportSpeedOrPace(true).build(context).formatSpeed(trackPoint.getSpeed());
+        String formattedSpeed = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(true).build(context).formatSpeed(trackPoint.getSpeed());
         notificationBuilder.setContentText(context.getString(R.string.track_speed_notification, formattedSpeed));
         notificationBuilder.setSubText(context.getString(R.string.track_recording_notification_accuracy, formattedAccuracy));
         updateNotification();
@@ -149,8 +150,8 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
         notificationManager.cancel(NOTIFICATION_ID);
     }
 
-    void setMetricUnits(boolean metricUnits) {
-        this.metricUnits = metricUnits;
+    void setUnitSystem(UnitSystem unitSystem) {
+        this.unitSystem = unitSystem;
     }
 
     private void updateNotification() {
@@ -164,7 +165,7 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
-            setMetricUnits(PreferencesUtils.isMetricUnits());
+            setUnitSystem(PreferencesUtils.getUnitSystem());
         }
     }
 }

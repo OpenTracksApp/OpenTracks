@@ -64,10 +64,23 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
     }
 
     private void updateUnits() {
-        boolean metricUnits = PreferencesUtils.isMetricUnits();
+        UnitSystem unitSystem = PreferencesUtils.getUnitSystem();
 
         ListPreference statsRatePreferences = findPreference(getString(R.string.stats_rate_key));
-        String[] entries = getResources().getStringArray(metricUnits ? R.array.stats_rate_metric_options : R.array.stats_rate_imperial_options);
+
+        int entriesId;
+        switch (unitSystem) {
+            case METRIC:
+                entriesId = R.array.stats_rate_metric_options;
+                break;
+            case IMPERIAL:
+                entriesId = R.array.stats_rate_imperial_options;
+                break;
+            default:
+                throw new RuntimeException("Not implemented");
+        }
+
+        String[] entries = getResources().getStringArray(entriesId);
         statsRatePreferences.setEntries(entries);
 
         HackUtils.invalidatePreference(statsRatePreferences);

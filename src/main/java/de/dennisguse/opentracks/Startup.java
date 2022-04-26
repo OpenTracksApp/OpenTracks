@@ -4,8 +4,6 @@ import android.app.Application;
 import android.os.StrictMode;
 import android.util.Log;
 
-import java.util.Locale;
-
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
@@ -28,9 +26,7 @@ public class Startup extends Application {
         PreferencesUtils.initPreferences(this, getResources());
         // Set default values of preferences on first start.
         PreferencesUtils.resetPreferences(this, false);
-        if (PreferencesUtils.getString( R.string.stats_units_key, "").equals("")) {
-            PreferencesUtils.setMetricUnits(!Locale.US.equals(Locale.getDefault()));
-        }
+        PreferencesUtils.applyDefaultUnit();
         PreferencesUtils.applyNightMode();
 
 

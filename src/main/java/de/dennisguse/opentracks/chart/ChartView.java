@@ -46,6 +46,7 @@ import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Marker;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.ExtremityMonitor;
 import de.dennisguse.opentracks.ui.markers.MarkerDetailActivity;
 import de.dennisguse.opentracks.ui.markers.MarkerUtils;
@@ -116,7 +117,7 @@ public class ChartView extends View {
     private int effectiveHeight = 0;
 
     private boolean chartByDistance = false;
-    private boolean metricUnits = true;
+    private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
     private boolean reportSpeed = true;
     private boolean showPointer = false;
 
@@ -371,17 +372,12 @@ public class ChartView extends View {
         this.chartByDistance = chartByDistance;
     }
 
-    public boolean getMetricUnits() {
-        return metricUnits;
+    public UnitSystem getUnitSystem() {
+        return unitSystem;
     }
 
-    /**
-     * Sets metric units.
-     *
-     * @param value true to use metric units
-     */
-    public void setMetricUnits(boolean value) {
-        metricUnits = value;
+    public void setUnitSystem(UnitSystem value) {
+        unitSystem = value;
     }
 
     public boolean getReportSpeed() {
@@ -677,7 +673,7 @@ public class ChartView extends View {
         for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
                 count++;
-                String title = getContext().getString(chartValueSeries.getTitleId(metricUnits));
+                String title = getContext().getString(chartValueSeries.getTitleId(unitSystem));
                 Paint paint = chartValueSeries.getTitlePaint();
                 int x = (int) (0.5 * width) + getScrollX();
                 int y = topBorder - spacer - (lines - count) * (lineHeight + spacer);
@@ -696,7 +692,7 @@ public class ChartView extends View {
         for (ChartValueSeries chartValueSeries : seriesList) {
             if (chartValueSeries.isEnabled() && chartValueSeries.hasData() || allowIfEmpty(chartValueSeries)) {
                 lines++;
-                String title = getContext().getString(chartValueSeries.getTitleId(metricUnits));
+                String title = getContext().getString(chartValueSeries.getTitleId(unitSystem));
                 Rect rect = getRect(chartValueSeries.getTitlePaint(), title);
                 if (rect.height() > lineHeight) {
                     lineHeight = rect.height();
@@ -731,7 +727,14 @@ public class ChartView extends View {
     private String getXAxisLabel() {
         Context context = getContext();
         if (chartByDistance) {
-            return metricUnits ? context.getString(R.string.unit_kilometer) : context.getString(R.string.unit_mile);
+            switch (unitSystem) {
+                case METRIC:
+                    return context.getString(R.string.unit_kilometer);
+                case IMPERIAL:
+                    return context.getString(R.string.unit_mile);
+                default:
+                    throw new RuntimeException("Not implemented");
+            }
         } else {
             return context.getString(R.string.description_time);
         }
@@ -986,7 +989,7 @@ public class ChartView extends View {
 
     private double getMarkerXValue(Marker marker) {
         if (chartByDistance) {
-            return marker.getLength().toKM_Miles(metricUnits);
+            return marker.getLength().toKM_Miles(unitSystem);
         } else {
             return marker.getDuration().toMillis();
         }

@@ -22,6 +22,7 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.data.tables.TrackPointsColumns;
+import de.dennisguse.opentracks.settings.UnitSystem;
 
 /**
  * This model is used to load intervals for a track.
@@ -64,14 +65,14 @@ public class IntervalStatisticsModel extends AndroidViewModel {
         handler = null;
     }
 
-    public MutableLiveData<List<IntervalStatistics.Interval>> getIntervalStats(Track.Id trackId, boolean metricUnits, @Nullable IntervalOption interval) {
+    public MutableLiveData<List<IntervalStatistics.Interval>> getIntervalStats(Track.Id trackId, UnitSystem unitSystem, @Nullable IntervalOption interval) {
         if (intervalsLiveData == null) {
             if (interval == null) {
                 interval = IntervalOption.OPTION_1;
             }
 
             intervalsLiveData = new MutableLiveData<>();
-            distanceInterval = interval.getDistance(metricUnits);
+            distanceInterval = interval.getDistance(unitSystem);
             intervalStatistics = new IntervalStatistics(distanceInterval);
 
             loadIntervalStatistics(trackId);
@@ -104,13 +105,13 @@ public class IntervalStatisticsModel extends AndroidViewModel {
         }
     }
 
-    public void update(Track.Id trackId, boolean metricUnits, @Nullable IntervalOption interval) {
+    public void update(Track.Id trackId, UnitSystem unitSystem, @Nullable IntervalOption interval) {
         if (interval == null) {
             interval = IntervalOption.DEFAULT;
         }
 
         lastTrackPointId = null;
-        distanceInterval = interval.getDistance(metricUnits);
+        distanceInterval = interval.getDistance(unitSystem);
         intervalStatistics = new IntervalStatistics(distanceInterval);
         loadIntervalStatistics(trackId);
     }
@@ -138,9 +139,9 @@ public class IntervalStatisticsModel extends AndroidViewModel {
             this.multiplier = multiplier;
         }
 
-        public Distance getDistance(boolean metricUnits) {
+        public Distance getDistance(UnitSystem unitSystem) {
             return Distance
-                    .one(metricUnits)
+                    .one(unitSystem)
                     .multipliedBy(multiplier);
         }
 

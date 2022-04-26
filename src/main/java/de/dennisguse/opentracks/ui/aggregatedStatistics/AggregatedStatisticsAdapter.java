@@ -16,6 +16,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
@@ -99,7 +100,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         private final TextView maxSpeedUnit;
         private final TextView maxSpeedLabel;
 
-        private boolean metricsUnits;
+        private UnitSystem unitSystem = UnitSystem.defaultUnitSystem();
         private boolean reportSpeed;
 
         public ViewHolder(View view) {
@@ -121,7 +122,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         public void setSpeed(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
             setCommonValues(aggregatedStatistic);
 
-            SpeedFormatter formatter = SpeedFormatter.Builder().setMetricUnits(metricsUnits).setReportSpeedOrPace(reportSpeed).build(context);
+            SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
             {
                 Pair<String, String> parts = formatter.getSpeedParts(aggregatedStatistic.getTrackStatistics().getAverageMovingSpeed());
                 avgSpeed.setText(parts.first);
@@ -138,7 +139,7 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
         }
 
         public void setPace(AggregatedStatistics.AggregatedStatistic aggregatedStatistic) {
-            SpeedFormatter formatter = SpeedFormatter.Builder().setMetricUnits(metricsUnits).setReportSpeedOrPace(reportSpeed).build(context);
+            SpeedFormatter formatter = SpeedFormatter.Builder().setUnit(unitSystem).setReportSpeedOrPace(reportSpeed).build(context);
 
             setCommonValues(aggregatedStatistic);
             {
@@ -161,14 +162,14 @@ public class AggregatedStatisticsAdapter extends BaseAdapter {
             String category = aggregatedStatistic.getCategory();
 
             reportSpeed = PreferencesUtils.isReportSpeed(category);
-            metricsUnits = PreferencesUtils.isMetricUnits();
+            unitSystem = PreferencesUtils.getUnitSystem();
 
             sportIcon.setImageResource(getIcon(aggregatedStatistic));
             typeLabel.setText(category);
             numTracks.setText(StringUtils.valueInParentheses(String.valueOf(aggregatedStatistic.getCountTracks())));
 
             Pair<String, String> parts = DistanceFormatter.Builder()
-                    .setMetricUnits(metricsUnits)
+                    .setUnit(unitSystem)
                     .build(context).getDistanceParts(aggregatedStatistic.getTrackStatistics().getTotalDistance());
             distance.setText(parts.first);
             distanceUnit.setText(parts.second);

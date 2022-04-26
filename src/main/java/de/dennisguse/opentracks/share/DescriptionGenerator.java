@@ -31,6 +31,7 @@ import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.UnitConversions;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
 
@@ -210,8 +211,8 @@ public class DescriptionGenerator {
      */
     @VisibleForTesting
     void writePace(Speed speed, StringBuilder builder, int resId, String lineBreak) {
-        Pair<String, String> paceInMetrics = SpeedFormatter.Builder().setMetricUnits(true).setReportSpeedOrPace(false).build(context).getSpeedParts(speed);
-        Pair<String, String> paceInImperial = SpeedFormatter.Builder().setMetricUnits(false).setReportSpeedOrPace(false).build(context).getSpeedParts(speed);
+        Pair<String, String> paceInMetrics = SpeedFormatter.Builder().setUnit(UnitSystem.METRIC).setReportSpeedOrPace(false).build(context).getSpeedParts(speed);
+        Pair<String, String> paceInImperial = SpeedFormatter.Builder().setUnit(UnitSystem.IMPERIAL).setReportSpeedOrPace(false).build(context).getSpeedParts(speed);
 
         String formattedPaceMetrics = paceInMetrics.first != null ? paceInMetrics.first : context.getString(R.string.value_unknown);
         String formattedPaceImperial = paceInImperial.first != null ? paceInImperial.first : context.getString(R.string.value_unknown);

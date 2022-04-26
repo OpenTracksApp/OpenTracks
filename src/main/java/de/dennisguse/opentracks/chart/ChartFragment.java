@@ -39,6 +39,7 @@ import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.databinding.ChartBinding;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 
@@ -77,9 +78,9 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (PreferencesUtils.isKey(R.string.stats_units_key, key)) {
-                boolean metricUnits = PreferencesUtils.isMetricUnits();
-                if (metricUnits != viewBinding.chartView.getMetricUnits()) {
-                    viewBinding.chartView.setMetricUnits(metricUnits);
+                UnitSystem unitSystem = PreferencesUtils.getUnitSystem();
+                if (unitSystem != viewBinding.chartView.getUnitSystem()) {
+                    viewBinding.chartView.setUnitSystem(unitSystem);
                     runOnUiThread(() -> {
                         if (isResumed()) {
                             viewBinding.chartView.requestLayout();
@@ -189,7 +190,7 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
 
     public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, Speed smoothedSpeed, Altitude smoothedAltitude) {
         if (isResumed()) {
-            ChartPoint point = new ChartPoint(trackStatistics, trackPoint, smoothedSpeed, smoothedAltitude, chartByDistance, viewBinding.chartView.getMetricUnits());
+            ChartPoint point = new ChartPoint(trackStatistics, trackPoint, smoothedSpeed, smoothedAltitude, chartByDistance, viewBinding.chartView.getUnitSystem());
             pendingPoints.add(point);
         }
     }

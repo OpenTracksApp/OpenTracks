@@ -32,7 +32,9 @@ import androidx.preference.PreferenceManager;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -193,19 +195,30 @@ public class PreferencesUtils {
         return getBoolean(R.string.publicapi_dashboard_enabled_key, resources.getBoolean(R.bool.publicapi_dashboard_enabled_default));
     }
 
-    public static boolean isMetricUnits() {
-        final String STATS_UNIT = resources.getString(R.string.stats_units_default);
-        return STATS_UNIT.equals(getString(R.string.stats_units_key, STATS_UNIT));
+    public static UnitSystem getUnitSystem() {
+        final String STATS_UNIT_DEFAULT = resources.getString(R.string.stats_units_default);
+
+        final String VALUE = getString(R.string.stats_units_key, STATS_UNIT_DEFAULT);
+        return Arrays.stream(UnitSystem.values())
+                .filter(d -> VALUE.equals(getString(d.getPreferenceId(), STATS_UNIT_DEFAULT)))
+                .findFirst()
+                .orElse(UnitSystem.defaultUnitSystem()); //TODO This AGAIN defines the default
     }
 
-    public static void setMetricUnits(boolean metricUnits) {
-        String unit;
-        if (metricUnits) {
-            unit = resources.getString(R.string.stats_units_metric);
-        } else {
-            unit = resources.getString(R.string.stats_units_imperial);
+    public static void setUnit(UnitSystem unitSystem) {
+        setString(R.string.stats_units_key, unitSystem.getPreferenceId());
+    }
+
+    //TODO Check if actually needed or can be superseeded by a flexible default in getUnit()
+    public static void applyDefaultUnit() {
+        if (getString(R.string.stats_units_key, "").equals("")) {
+
+            if (!Locale.US.equals(Locale.getDefault())) {
+                setUnit(UnitSystem.METRIC);
+            } else {
+                setUnit(UnitSystem.IMPERIAL);
+            }
         }
-        setString(R.string.stats_units_key, unit);
     }
 
     public static boolean isReportSpeed(String category) {
@@ -292,31 +305,31 @@ public class PreferencesUtils {
     }
 
     /**
-     * @return Result depends on isMetricUnits
+     * @return Result depends on getUnitSystem
      */
     public static Distance getVoiceAnnouncementDistance() {
         final float DEFAULT = Integer.parseInt(resources.getString(R.string.voice_announcement_distance_default));
         float value = getFloat(R.string.voice_announcement_distance_key, DEFAULT);
-        return Distance.one(isMetricUnits()).multipliedBy(value);
+        return Distance.one(getUnitSystem()).multipliedBy(value);
     }
 
     /**
-     * @return Result depends on isMetricUnits
+     * @return Result depends on getUnitSystem
      */
     static String[] getVoiceAnnouncementDistanceEntries() {
         String[] values = resources.getStringArray(R.array.voice_announcement_distance_values);
         String[] options = new String[values.length];
-        boolean metricUnits = isMetricUnits();
+        UnitSystem unitSystem = getUnitSystem();
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
-                .setMetricUnits(metricUnits)
+                .setUnit(unitSystem)
                 .build(resources);
         for (int i = 0; i < values.length; i++) {
             if (resources.getString(R.string.announcement_off).equals(values[i])) {
                 options[i] = resources.getString(R.string.value_off);
             } else {
-                Distance distance = Distance.one(metricUnits).multipliedBy(Double.parseDouble(values[i]));
+                Distance distance = Distance.one(unitSystem).multipliedBy(Double.parseDouble(values[i]));
                 options[i] = formatter.formatDistance(distance);
             }
         }
@@ -354,10 +367,10 @@ public class PreferencesUtils {
         String[] entries = new String[entryValues.length];
 
         final int recordingDistanceIntervalDefault = (int) getRecordingDistanceIntervalDefault().toM();
-        boolean metricUnits = isMetricUnits();
+        UnitSystem unitSystem = getUnitSystem();
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
-                .setMetricUnits(metricUnits)
+                .setUnit(unitSystem)
                 .setDecimalCount(0)
                 .build(resources);
         for (int i = 0; i < entryValues.length; i++) {
@@ -365,18 +378,23 @@ public class PreferencesUtils {
             Distance distance = Distance.of(1).multipliedBy(value);
 
             String displayValue = formatter.formatDistance(distance);
-            if (metricUnits) {
-                if (value == recordingDistanceIntervalDefault) {
-                    entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
-                } else {
-                    entries[i] = displayValue;
-                }
-            } else {
-                if (value == recordingDistanceIntervalDefault) {
-                    entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
-                } else {
-                    entries[i] = displayValue;
-                }
+            switch (unitSystem) {
+                case METRIC:
+                    if (value == recordingDistanceIntervalDefault) {
+                        entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
+                    } else {
+                        entries[i] = displayValue;
+                    }
+                    break;
+                case IMPERIAL:
+                    if (value == recordingDistanceIntervalDefault) {
+                        entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
+                    } else {
+                        entries[i] = displayValue;
+                    }
+                    break;
+                default:
+                    throw new RuntimeException("Not implemented");
             }
         }
 
@@ -393,29 +411,34 @@ public class PreferencesUtils {
         String[] entries = new String[entryValues.length];
 
         final int maxRecordingDistanceDefault = Integer.parseInt(resources.getString(R.string.max_recording_distance_default));
-        boolean metricUnits = isMetricUnits();
+        UnitSystem unitSystem = getUnitSystem();
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
-                .setMetricUnits(metricUnits)
+                .setUnit(unitSystem)
                 .build(resources);
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);
             Distance distance = Distance.of(1).multipliedBy(value);
 
             String displayValue = formatter.formatDistance(distance);
-            if (metricUnits) {
-                if (value == maxRecordingDistanceDefault) {
-                    entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
-                } else {
-                    entries[i] = displayValue;
-                }
-            } else {
-                if (value == maxRecordingDistanceDefault) {
-                    entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
-                } else {
-                    entries[i] = displayValue;
-                }
+            switch (unitSystem) {
+                case METRIC:
+                    if (value == maxRecordingDistanceDefault) {
+                        entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
+                    } else {
+                        entries[i] = displayValue;
+                    }
+                    break;
+                case IMPERIAL:
+                    if (value == maxRecordingDistanceDefault) {
+                        entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
+                    } else {
+                        entries[i] = displayValue;
+                    }
+                    break;
+                default:
+                    throw new RuntimeException("Not implemented");
             }
         }
 
@@ -460,11 +483,11 @@ public class PreferencesUtils {
         final int recordingGPSAccuracyExcellent = Integer.parseInt(resources.getString(R.string.recording_gps_accuracy_excellent));
         final int recordingGPSAccuracyPoor = Integer.parseInt(resources.getString(R.string.recording_gps_accuracy_poor));
 
-        boolean metricUnits = isMetricUnits();
+        UnitSystem unitSystem = getUnitSystem();
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(0)
-                .setMetricUnits(metricUnits)
+                .setUnit(unitSystem)
                 .build(resources);
 
         for (int i = 0; i < entryValues.length; i++) {
@@ -472,24 +495,29 @@ public class PreferencesUtils {
             Distance distance = Distance.of(1).multipliedBy(value);
 
             String displayValue = formatter.formatDistance(distance);
-            if (metricUnits) {
-                if (value == recordingGPSAccuracyDefault) {
-                    entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
-                } else if (value == recordingGPSAccuracyExcellent) {
-                    entries[i] = resources.getString(R.string.value_integer_meter_excellent_gps, value);
-                } else if (value == recordingGPSAccuracyPoor) {
-                    entries[i] = resources.getString(R.string.value_integer_meter_poor_gps, value);
-                } else {
-                    entries[i] = displayValue;
-                }
-            } else {
-                if (value == recordingGPSAccuracyDefault) {
-                    entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
-                } else if (value == recordingGPSAccuracyExcellent) {
-                    entries[i] = resources.getString(R.string.value_integer_feet_excellent_gps, (int) distance.toFT());
-                } else {
-                    entries[i] = displayValue;
-                }
+            switch (unitSystem) {
+                case METRIC:
+                    if (value == recordingGPSAccuracyDefault) {
+                        entries[i] = resources.getString(R.string.value_integer_meter_recommended, value);
+                    } else if (value == recordingGPSAccuracyExcellent) {
+                        entries[i] = resources.getString(R.string.value_integer_meter_excellent_gps, value);
+                    } else if (value == recordingGPSAccuracyPoor) {
+                        entries[i] = resources.getString(R.string.value_integer_meter_poor_gps, value);
+                    } else {
+                        entries[i] = displayValue;
+                    }
+                    break;
+                case IMPERIAL:
+                    if (value == recordingGPSAccuracyDefault) {
+                        entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
+                    } else if (value == recordingGPSAccuracyExcellent) {
+                        entries[i] = resources.getString(R.string.value_integer_feet_excellent_gps, (int) distance.toFT());
+                    } else {
+                        entries[i] = displayValue;
+                    }
+                    break;
+                default:
+                    throw new RuntimeException("Not implemented");
             }
         }
 
@@ -509,24 +537,30 @@ public class PreferencesUtils {
 
         final float idleSpeedDefault = Float.parseFloat(resources.getString(R.string.idle_speed_default));
 
-        boolean metricUnits = isMetricUnits();
+        UnitSystem unitSystem = getUnitSystem();
 
         for (int i = 0; i < entryValues.length; i++) {
             float value = Float.parseFloat(entryValues[i]);
-            if (metricUnits) {
-                if (value == idleSpeedDefault) {
-                    entries[i] = resources.getString(R.string.value_float_kilometer_hour_recommended, value);
-                } else {
-                    entries[i] = resources.getString(R.string.value_float_kilometer_hour, value);
-                }
-            } else {
-                double valueMPH = Speed.ofKMH(value).toMPH();
 
-                if (value == idleSpeedDefault) {
-                    entries[i] = resources.getString(R.string.value_float_mile_hour_recommended, valueMPH);
-                } else {
-                    entries[i] = resources.getString(R.string.value_float_mile_hour, valueMPH);
-                }
+            switch (unitSystem) {
+                case METRIC:
+                    if (value == idleSpeedDefault) {
+                        entries[i] = resources.getString(R.string.value_float_kilometer_hour_recommended, value);
+                    } else {
+                        entries[i] = resources.getString(R.string.value_float_kilometer_hour, value);
+                    }
+                    break;
+                case IMPERIAL:
+                    double valueMPH = Speed.ofKMH(value).toMPH();
+
+                    if (value == idleSpeedDefault) {
+                        entries[i] = resources.getString(R.string.value_float_mile_hour_recommended, valueMPH);
+                    } else {
+                        entries[i] = resources.getString(R.string.value_float_mile_hour, valueMPH);
+                    }
+                    break;
+                default:
+                    throw new RuntimeException("Not implemented");
             }
         }
 

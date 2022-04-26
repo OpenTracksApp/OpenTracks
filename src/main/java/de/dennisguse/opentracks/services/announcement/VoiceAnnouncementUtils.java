@@ -16,6 +16,7 @@ import java.time.Duration;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
@@ -25,15 +26,37 @@ class VoiceAnnouncementUtils {
     private VoiceAnnouncementUtils() {
     }
 
-    static Spannable getAnnouncement(Context context, TrackStatistics trackStatistics, boolean isMetricUnits, boolean isReportSpeed, @Nullable IntervalStatistics.Interval currentInterval, @Nullable SensorStatistics sensorStatistics) {
+    static Spannable getAnnouncement(Context context, TrackStatistics trackStatistics, UnitSystem unitSystem, boolean isReportSpeed, @Nullable IntervalStatistics.Interval currentInterval, @Nullable SensorStatistics sensorStatistics) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
         Distance distance = trackStatistics.getTotalDistance();
         Speed distancePerTime = trackStatistics.getAverageMovingSpeed();
         Speed currentDistancePerTime = currentInterval != null ? currentInterval.getSpeed() : null;
-        int perUnitStringId = isMetricUnits ? R.string.voice_per_kilometer : R.string.voice_per_mile;
 
-        double distanceInUnit = distance.toKM_Miles(isMetricUnits);
-        int distanceId = isMetricUnits ? R.plurals.voiceDistanceKilometers : R.plurals.voiceDistanceMiles;
+        int perUnitStringId;
+        int distanceId;
+        int speedId;
+        String unitDistanceTTS;
+        String unitSpeedTTS;
+        switch (unitSystem) {
+            case METRIC:
+                perUnitStringId = R.string.voice_per_kilometer;
+                distanceId = R.plurals.voiceDistanceKilometers;
+                speedId = R.plurals.voiceSpeedKilometersPerHour;
+                unitDistanceTTS = "kilometer";
+                unitSpeedTTS = "kilometer per hour";
+                break;
+            case IMPERIAL:
+                perUnitStringId = R.string.voice_per_mile;
+                distanceId = R.plurals.voiceDistanceMiles;
+                speedId = R.plurals.voiceSpeedMilesPerHour;
+                unitDistanceTTS = "mile";
+                unitSpeedTTS = "mile per hour";
+                break;
+            default:
+                throw new RuntimeException("Not implemented");
+        }
+
+        double distanceInUnit = distance.toKM_Miles(unitSystem);
 
         builder.append(context.getString(R.string.total_distance));
         long distanceIntegerPart = (long) distanceInUnit;
@@ -41,7 +64,7 @@ class VoiceAnnouncementUtils {
         String distanceFractionalPart = String.format("%.2f", (distanceInUnit - distanceIntegerPart)).substring(2);
         // Units should always be english singular for TTS.
         // See https://developer.android.com/reference/android/text/style/TtsSpan?hl=en#TYPE_MEASURE
-        appendDecimalUnit(builder, context.getResources().getQuantityString(distanceId, getQuantityCount(distanceInUnit), distanceInUnit), distanceIntegerPart, distanceFractionalPart, isMetricUnits ? "kilometer" : "mile");
+        appendDecimalUnit(builder, context.getResources().getQuantityString(distanceId, getQuantityCount(distanceInUnit), distanceInUnit), distanceIntegerPart, distanceFractionalPart, unitDistanceTTS);
         // Punctuation helps introduce natural pauses in TTS
         builder.append(".");
         if (distance.isZero()) {
@@ -56,19 +79,18 @@ class VoiceAnnouncementUtils {
         }
 
         if (isReportSpeed) {
-            int speedId = isMetricUnits ? R.plurals.voiceSpeedKilometersPerHour : R.plurals.voiceSpeedMilesPerHour;
-            double speedInUnit = distancePerTime.to(isMetricUnits);
+            double speedInUnit = distancePerTime.to(unitSystem);
 
             builder.append(" ")
                     .append(context.getString(R.string.speed));
             long speedIntegerPart = (long) speedInUnit;
             // Extract the decimal part
             String speedFractionalPart = String.format("%.1f", (speedInUnit - speedIntegerPart)).substring(2);
-            appendDecimalUnit(builder, context.getResources().getQuantityString(speedId, getQuantityCount(speedInUnit), speedInUnit), speedIntegerPart, speedFractionalPart, isMetricUnits ? "kilometer per hour" : "mile per hour");
+            appendDecimalUnit(builder, context.getResources().getQuantityString(speedId, getQuantityCount(speedInUnit), speedInUnit), speedIntegerPart, speedFractionalPart, unitSpeedTTS);
             builder.append(".");
 
             if (currentDistancePerTime != null) {
-                double currentDistancePerTimeInUnit = currentDistancePerTime.to(isMetricUnits);
+                double currentDistancePerTimeInUnit = currentDistancePerTime.to(unitSystem);
 
                 if (currentDistancePerTimeInUnit > 0) {
 
@@ -77,12 +99,12 @@ class VoiceAnnouncementUtils {
                     long currentDistanceIntegerPart = (long) currentDistancePerTimeInUnit;
                     // Extract the decimal part
                     String currentDistanceFractionalPart = String.format("%.1f", (currentDistancePerTimeInUnit - currentDistanceIntegerPart)).substring(2);
-                    appendDecimalUnit(builder, context.getResources().getQuantityString(speedId, getQuantityCount(currentDistancePerTimeInUnit), currentDistancePerTimeInUnit), currentDistanceIntegerPart, currentDistanceFractionalPart, isMetricUnits ? "kilometer per hour" : "mile per hour");
+                    appendDecimalUnit(builder, context.getResources().getQuantityString(speedId, getQuantityCount(currentDistancePerTimeInUnit), currentDistancePerTimeInUnit), currentDistanceIntegerPart, currentDistanceFractionalPart, unitSpeedTTS);
                     builder.append(".");
                 }
             }
         } else {
-            Duration time = distancePerTime.toPace(isMetricUnits);
+            Duration time = distancePerTime.toPace(unitSystem);
             builder.append(" ")
                     .append(context.getString(R.string.pace));
             appendDuration(context, builder, time);
@@ -90,7 +112,7 @@ class VoiceAnnouncementUtils {
                     .append(context.getString(perUnitStringId))
                     .append(".");
 
-            Duration currentTime = currentDistancePerTime != null ? currentDistancePerTime.toPace(isMetricUnits) : Duration.ofMillis(0);
+            Duration currentTime = currentDistancePerTime != null ? currentDistancePerTime.toPace(unitSystem) : Duration.ofMillis(0);
             if (!currentTime.isZero()) {
                 builder.append(" ")
                         .append(context.getString(R.string.lap_time));

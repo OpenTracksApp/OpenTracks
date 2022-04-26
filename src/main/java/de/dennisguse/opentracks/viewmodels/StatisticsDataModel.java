@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.List;
 
 import de.dennisguse.opentracks.services.RecordingData;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
 
 public class StatisticsDataModel extends AndroidViewModel {
@@ -26,9 +27,9 @@ public class StatisticsDataModel extends AndroidViewModel {
         return statsData;
     }
 
-    public void update(RecordingData recordingData, Layout layout, boolean metricUnit) {
+    public void update(RecordingData recordingData, Layout layout, UnitSystem unitSystem) {
         new Thread(() -> {
-            List<StatisticData> statisticDataList = StatisticDataBuilder.fromRecordingData(getApplication(), recordingData, layout, metricUnit);
+            List<StatisticData> statisticDataList = StatisticDataBuilder.fromRecordingData(getApplication(), recordingData, layout, unitSystem);
             statsData.postValue(statisticDataList);
         }).start();
     }

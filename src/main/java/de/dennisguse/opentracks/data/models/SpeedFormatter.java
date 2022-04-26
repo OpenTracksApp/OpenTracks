@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.Pair;
 
+import androidx.annotation.NonNull;
+
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.util.StringUtils;
 
 public class SpeedFormatter {
@@ -13,14 +16,14 @@ public class SpeedFormatter {
 
     private final int decimalCount;
 
-    private final boolean metricUnits;
+    private final UnitSystem unitSystem;
 
     private final boolean reportSpeedOrPace;
 
-    private SpeedFormatter(Resources resources, int decimalCount, boolean metricUnits, boolean reportSpeedOrPace) {
+    private SpeedFormatter(Resources resources, int decimalCount, UnitSystem unitSystem, boolean reportSpeedOrPace) {
         this.resources = resources;
         this.decimalCount = decimalCount;
-        this.metricUnits = metricUnits;
+        this.unitSystem = unitSystem;
         this.reportSpeedOrPace = reportSpeedOrPace;
     }
 
@@ -37,11 +40,17 @@ public class SpeedFormatter {
      */
     public Pair<String, String> getSpeedParts(Speed speed) {
         int unitId;
-        if (metricUnits) {
-            unitId = reportSpeedOrPace ? R.string.unit_kilometer_per_hour : R.string.unit_minute_per_kilometer;
-        } else {
-            unitId = reportSpeedOrPace ? R.string.unit_mile_per_hour : R.string.unit_minute_per_mile;
+        switch (unitSystem) {
+            case METRIC:
+                unitId = reportSpeedOrPace ? R.string.unit_kilometer_per_hour : R.string.unit_minute_per_kilometer;
+                break;
+            case IMPERIAL:
+                unitId = reportSpeedOrPace ? R.string.unit_mile_per_hour : R.string.unit_minute_per_mile;
+                break;
+            default:
+                throw new RuntimeException("Not implemented");
         }
+
         String unitString = resources.getString(unitId);
 
         if (speed == null) {
@@ -49,10 +58,10 @@ public class SpeedFormatter {
         }
 
         if (reportSpeedOrPace) {
-            return new Pair<>(StringUtils.formatDecimal(speed.to(metricUnits), 1), unitString);
+            return new Pair<>(StringUtils.formatDecimal(speed.to(unitSystem), 1), unitString);
         }
 
-        int pace = (int) speed.toPace(metricUnits).getSeconds();
+        int pace = (int) speed.toPace(unitSystem).getSeconds();
 
         int minutes = pace / 60;
         int seconds = pace % 60;
@@ -67,13 +76,12 @@ public class SpeedFormatter {
 
         private int decimalCount;
 
-        private boolean metricUnits;
+        private UnitSystem unitSystem;
 
         private boolean reportSpeedOrPace;
 
         public Builder() {
             decimalCount = 2;
-            metricUnits = true;
             reportSpeedOrPace = true;
         }
 
@@ -82,8 +90,8 @@ public class SpeedFormatter {
             return this;
         }
 
-        public Builder setMetricUnits(boolean metricUnits) {
-            this.metricUnits = metricUnits;
+        public Builder setUnit(@NonNull UnitSystem unitSystem) {
+            this.unitSystem = unitSystem;
             return this;
         }
 
@@ -93,7 +101,7 @@ public class SpeedFormatter {
         }
 
         public SpeedFormatter build(Resources resource) {
-            return new SpeedFormatter(resource, decimalCount, metricUnits, reportSpeedOrPace);
+            return new SpeedFormatter(resource, decimalCount, unitSystem, reportSpeedOrPace);
         }
 
         public SpeedFormatter build(Context context) {

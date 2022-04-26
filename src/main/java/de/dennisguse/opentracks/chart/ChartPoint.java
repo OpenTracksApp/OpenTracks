@@ -8,6 +8,7 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.data.models.UnitConversions;
+import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 public class ChartPoint {
@@ -28,20 +29,20 @@ public class ChartPoint {
         this.altitude = altitude;
     }
 
-    public ChartPoint(@NonNull TrackStatistics trackStatistics, @NonNull TrackPoint trackPoint, Speed smoothedSpeed, Altitude smoothedAltitude, boolean chartByDistance, boolean metricUnits) {
+    public ChartPoint(@NonNull TrackStatistics trackStatistics, @NonNull TrackPoint trackPoint, Speed smoothedSpeed, Altitude smoothedAltitude, boolean chartByDistance, UnitSystem unitSystem) {
         if (chartByDistance) {
-            timeOrDistance = trackStatistics.getTotalDistance().toKM_Miles(metricUnits);
+            timeOrDistance = trackStatistics.getTotalDistance().toKM_Miles(unitSystem);
         } else {
             timeOrDistance = trackStatistics.getTotalTime().toMillis();
         }
 
         if (smoothedAltitude != null) {
-            altitude = Distance.of(smoothedAltitude.toM()).toM_FT(metricUnits);
+            altitude = Distance.of(smoothedAltitude.toM()).toM_FT(unitSystem);
         }
 
         if (smoothedSpeed != null) {
-            speed = smoothedSpeed.to(metricUnits);
-            pace = smoothedSpeed.toPace(metricUnits).toMillis() * UnitConversions.MS_TO_S * UnitConversions.S_TO_MIN;
+            speed = smoothedSpeed.to(unitSystem);
+            pace = smoothedSpeed.toPace(unitSystem).toMillis() * UnitConversions.MS_TO_S * UnitConversions.S_TO_MIN;
         }
         if (trackPoint.hasHeartRate()) {
             heartRate = (double) trackPoint.getHeartRate().getBPM();
