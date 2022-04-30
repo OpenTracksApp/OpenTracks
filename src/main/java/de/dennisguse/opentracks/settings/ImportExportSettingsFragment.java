@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.documentfile.provider.DocumentFile;
+import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -12,9 +13,12 @@ import java.util.Locale;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
 import de.dennisguse.opentracks.util.IntentUtils;
 
 public class ImportExportSettingsFragment extends PreferenceFragmentCompat {
+
+    private static final String TAG = ImportExportSettingsFragment.class.getSimpleName();
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -22,6 +26,7 @@ public class ImportExportSettingsFragment extends PreferenceFragmentCompat {
 
         setExportTrackFileFormatOptions();
         setExportDirectorySummary();
+        setFilenameTemplate();
     }
 
     @Override
@@ -76,5 +81,19 @@ public class ImportExportSettingsFragment extends PreferenceFragmentCompat {
 
             return directoryUri + (directory.canWrite() ? "" : getString(R.string.export_dir_not_writable));
         });
+    }
+
+    private void setFilenameTemplate() {
+        EditTextPreference preference = findPreference(getString(R.string.export_filename_format_key));
+
+        preference.setDialogMessage(TrackFilenameGenerator.getAllOptions());
+        preference.setDefaultValue(TrackFilenameGenerator.DEFAULT_TEMPLATE);
+
+        preference.setOnPreferenceChangeListener((p, newValue) -> new TrackFilenameGenerator(newValue.toString()).isValid());
+
+        preference.setSummaryProvider(p ->
+                PreferencesUtils.getTrackFileformatGenerator()
+                        .getExample()
+        );
     }
 }

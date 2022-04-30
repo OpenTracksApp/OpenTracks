@@ -43,6 +43,9 @@
             android:key="@string/export_trackfileformat_key"
             android:title="@string/settings_default_trackfileformat"
             app:useSimpleSummaryProvider="true" />
+        <EditTextPreference
+            android:key="@string/export_filename_format_key"
+            android:title="@string/settings_export_filename_title" />
     </PreferenceCategory>
 
 </PreferenceScreen>

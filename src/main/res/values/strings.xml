@@ -371,6 +371,7 @@ limitations under the License.
     <!-- Settings Advanced -->
     <string name="settings_advanced">Advanced</string>
     <string name="settings_default_trackfileformat">Export/sharing file format</string>
+    <string name="settings_export_filename_title">Format of the filename</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">By distance</string>
     <string name="settings_chart_by_time">By time</string>

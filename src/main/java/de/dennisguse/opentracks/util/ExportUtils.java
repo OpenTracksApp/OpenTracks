@@ -108,7 +108,7 @@ public class ExportUtils {
     }
 
     private static Uri getExportDocumentFileUri(Context context, Track track, TrackFileFormat trackFileFormat, DocumentFile directory) {
-        String exportFileName = getExportFileNameForTrack(track, trackFileFormat.getExtension());
+        String exportFileName = PreferencesUtils.getTrackFileformatGenerator().format(track, trackFileFormat);
         Uri exportDocumentFileUri = findFile(context, directory.getUri(), exportFileName);
         if (exportDocumentFileUri == null) {
             final DocumentFile file = directory.createFile(trackFileFormat.getMimeType(), exportFileName);
@@ -117,10 +117,6 @@ public class ExportUtils {
             }
         }
         return exportDocumentFileUri;
-    }
-
-    private static String getExportFileNameForTrack(Track track, String trackFileFormatExtension) {
-        return track.getUuid().toString().substring(0, 8) + "_" + FileUtils.sanitizeFileName(track.getName()) + "." + trackFileFormatExtension;
     }
 
     private static Uri findFile(Context context, Uri directoryUri, String exportFileName) {

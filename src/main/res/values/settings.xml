@@ -48,6 +48,8 @@
     <string name="post_workout_export_enabled_key" translatable="false">instantExportEnabled</string>
     <bool name="post_workout_export_enabled_default" translatable="false">false</bool>
 
+    <string name="export_filename_format_key" translatable="false">instantExportFilename</string>
+
     <string name="settings_import" translatable="false">settingsImport</string>
     <string name="settings_export" translatable="false">settingsExport</string>
 
