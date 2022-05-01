@@ -1,0 +1,16 @@
+v3.27.0: OpenTracks
+
+Mudanças:
+- Anúncios de voz: adicionado 100m, 200m e 500m
+- Intervalo: adicionado 100m e 500m
+- O relógio mostra agora também os segundos
+- GPX, KML, KMZ: uma maior precisão horizontal de exportação e importação
+- GPX: exporta a distância acumulada via extensão clustrust
+- CSV: exportação básica (apenas TrackPoints; não para backup)
+- Solução alternativa para o Tickr X, pois relata SPM em vez de RPM
+
+Correções de bugs:
+- Foi Aderido ao intervalo de distância de gravação; Os TrackPoints foram registrados embora estivessem muito próximos
+- Prevenir travamento ao parar de gravar (condição de corrida)
+- Evite acidentes ao usar vários sensores (condição de corrida)
+- Evite travamentos ao abrir o OpenTracks via notificação
