@@ -527,4 +527,27 @@
     <string name="settings_public_api_enabled_title">API pública</string>
     <string name="gps_recording_without_signal">O OpenTracks está gravando sem dados de GPS.</string>
     <string name="settings_public_api_enabled_summary_on">Outros aplicativos instalados podem iniciar ou interromper gravações.</string>
+    <string name="lap_time">Tempo da volta</string>
+    <string name="pace">Ritmo</string>
+    <string name="speed">Velocidade</string>
+    <string name="average_heart_rate">Frequência cardíaca média</string>
+    <string name="settings_public_api_dashboard_enabled_summary_on">Um aplicativo que iniciou uma gravação também pode acessar os dados gravados.</string>
+    <string name="settings_public_api_dashboard_enabled_summary_off">Os dados gravados não serão compartilhados automaticamente com outros aplicativos.</string>
+    <plurals name="voiceDistanceKilometers">
+        <item quantity="one">1 quilômetro</item>
+        <item quantity="other">%1$.2f quilômetros</item>
+    </plurals>
+    <string name="generic_dismiss">Dispensar</string>
+    <string name="settings_announcements_report_heart_rate">Informar frequência cardíaca</string>
+    <string name="settings_api_title">API pública</string>
+    <string name="settings_public_api_dashboard_enabled_title">Transferência automática de dados</string>
+    <string name="voice_per_kilometer">por quilômetro</string>
+    <string name="voice_per_mile">por milha</string>
+    <string name="lap_speed">Velocidade da volta</string>
+    <string name="total_distance">Distância total</string>
+    <plurals name="voiceDistanceMiles">
+        <item quantity="one">1 milha</item>
+        <item quantity="other">%1$.2f milhas</item>
+    </plurals>
+    <string name="current_heart_rate">Frequência cardíaca atual</string>
 </resources>
