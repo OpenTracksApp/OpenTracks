@@ -575,11 +575,12 @@ public class PreferencesUtils {
     }
 
     public static TrackFilenameGenerator getTrackFileformatGenerator() {
-        TrackFilenameGenerator generator = new TrackFilenameGenerator(getString(R.string.export_filename_format_key, TrackFilenameGenerator.DEFAULT_TEMPLATE));
+        String DEFAULT = getString(R.string.export_filename_format_default, null);
+        TrackFilenameGenerator generator = new TrackFilenameGenerator(getString(R.string.export_filename_format_key, DEFAULT));
         if (generator.isValid()) {
             return generator;
         } else {
-            return new TrackFilenameGenerator(TrackFilenameGenerator.DEFAULT_TEMPLATE);
+            return new TrackFilenameGenerator(DEFAULT);
         }
     }
 

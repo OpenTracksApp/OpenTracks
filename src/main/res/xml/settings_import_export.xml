@@ -45,7 +45,8 @@
             app:useSimpleSummaryProvider="true" />
         <EditTextPreference
             android:key="@string/export_filename_format_key"
-            android:title="@string/settings_export_filename_title" />
+            android:title="@string/settings_export_filename_title"
+            android:defaultValue="@string/export_filename_format_default" />
     </PreferenceCategory>
 
 </PreferenceScreen>

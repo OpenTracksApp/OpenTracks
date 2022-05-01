@@ -28,8 +28,6 @@ public class TrackFilenameGenerator {
                 .collect(Collectors.joining(", "));
     }
 
-    public static final String DEFAULT_TEMPLATE = STARTTIME_KEY + "_" + TRACKNAME_KEY;
-
     private final String template;
 
     public TrackFilenameGenerator(@NonNull String template) {

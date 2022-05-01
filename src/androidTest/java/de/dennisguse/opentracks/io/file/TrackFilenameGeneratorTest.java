@@ -2,6 +2,8 @@ package de.dennisguse.opentracks.io.file;
 
 import static org.junit.Assert.assertEquals;
 
+import androidx.test.core.app.ApplicationProvider;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +15,7 @@ import java.util.Collection;
 import java.util.TimeZone;
 import java.util.UUID;
 
+import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.TimezoneRule;
 import de.dennisguse.opentracks.data.models.Track;
 
@@ -28,7 +31,7 @@ public class TrackFilenameGeneratorTest {
                 {"{uuid}_{name}", "0000fee0_Best Track.gpx" },
                 {"{name}_{uuid}", "Best Track_0000fee0.gpx" },
                 {"{time}_{name}", "2020-02-02T02_02_02Z_Best Track.gpx" },
-                {TrackFilenameGenerator.DEFAULT_TEMPLATE, "2020-02-02T02_02_02Z_Best Track.gpx" },
+                {ApplicationProvider.getApplicationContext().getString(R.string.export_filename_format_default), "2020-02-02T02_02_02Z_Best Track.gpx" },
         });
     }
 
