@@ -44,6 +44,7 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.DistanceFormatter;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
 import de.dennisguse.opentracks.ui.customRecordingLayout.CsvLayoutUtils;
 import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
 import de.dennisguse.opentracks.util.TrackIconUtils;
@@ -571,6 +572,16 @@ public class PreferencesUtils {
     public static boolean shouldInstantExportAfterWorkout() {
         final boolean INSTANT_POST_WORKOUT_EXPORT_DEFAULT = resources.getBoolean(R.bool.post_workout_export_enabled_default);
         return getBoolean(R.string.post_workout_export_enabled_key, INSTANT_POST_WORKOUT_EXPORT_DEFAULT) && isDefaultExportDirectoryUri();
+    }
+
+    public static TrackFilenameGenerator getTrackFileformatGenerator() {
+        String DEFAULT = getString(R.string.export_filename_format_default, null);
+        TrackFilenameGenerator generator = new TrackFilenameGenerator(getString(R.string.export_filename_format_key, DEFAULT));
+        if (generator.isValid()) {
+            return generator;
+        } else {
+            return new TrackFilenameGenerator(DEFAULT);
+        }
     }
 
     public static TrackFileFormat getExportTrackFileFormat() {

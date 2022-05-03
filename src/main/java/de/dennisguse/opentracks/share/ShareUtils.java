@@ -15,8 +15,8 @@ import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.ShareContentProvider;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-import de.dennisguse.opentracks.util.FileUtils;
 
 public class ShareUtils {
 
@@ -54,8 +54,9 @@ public class ShareUtils {
                 continue;
             }
 
-            String trackName = FileUtils.sanitizeFileName(track.getName());
-            Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackId, trackName, PreferencesUtils.getExportTrackFileFormat());
+            TrackFileFormat format = PreferencesUtils.getExportTrackFileFormat();
+            String trackName = PreferencesUtils.getTrackFileformatGenerator().format(track, format);
+            Pair<Uri, String> uriAndMime = ShareContentProvider.createURI(trackId, trackName, format);
 
             uris.add(uriAndMime.first);
             mime = uriAndMime.second;
