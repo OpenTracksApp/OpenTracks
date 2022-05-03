@@ -100,6 +100,7 @@ public class CSVTrackExporter implements TrackExporter {
                 new Column("longitude", t -> t.hasLocation() ? COORDINATE_FORMAT.format(t.getLatitude()) : ""),
                 new Column("altitude", t -> t.hasAltitude() ? COORDINATE_FORMAT.format(t.getAltitude().toM()) : ""),
                 new Column("accuracy_horizontal", t -> t.hasHorizontalAccuracy() ? DISTANCE_FORMAT.format(t.getHorizontalAccuracy().toM()) : ""),
+                new Column("accuracy_vertical", t -> t.hasVerticalAccuracy() ? DISTANCE_FORMAT.format(t.getVerticalAccuracy().toM()) : ""),
 
                 new Column("speed", t -> t.hasSpeed() ? SPEED_FORMAT.format(t.getSpeed().toKMH()) : ""),
                 new Column("altitude_gain", t -> t.hasAltitudeGain() ? DISTANCE_FORMAT.format(t.getAltitudeGain()) : ""),

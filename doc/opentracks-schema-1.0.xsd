@@ -33,7 +33,19 @@
         type="xsd:float">
         <xsd:annotation>
             <xsd:documentation xml:lang="en">
-                Accuracy in meters of the current TrackPoint; 68% chance that the actual location is
+                Horizontal accuracy in meters of the current TrackPoint; 68% chance that the actual
+                location is
+                within this radius around the measured location.
+                Only used in GPX.
+            </xsd:documentation>
+        </xsd:annotation>
+    </xsd:element>
+    <xsd:element name="accuracy_vertical"
+        type="xsd:float">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="en">
+                Vertical accuracy in meters of the current TrackPoint; 68% chance that the actual
+                location is
                 within this radius around the measured location.
                 Only used in GPX.
             </xsd:documentation>

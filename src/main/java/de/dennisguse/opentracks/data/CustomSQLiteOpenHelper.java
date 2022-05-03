@@ -28,7 +28,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final String TAG = CustomSQLiteOpenHelper.class.getSimpleName();
 
-    private static final int DATABASE_VERSION = 33;
+    private static final int DATABASE_VERSION = 34;
 
     public CustomSQLiteOpenHelper(Context context) {
         this(context, ((Startup) context.getApplicationContext()).getDatabaseName());
@@ -91,6 +91,9 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                 case 33:
                     upgradeFrom32to33(db);
                     break;
+                case 34:
+                    upgradeFrom33to34(db);
+                    break;
 
                 default:
                     throw new RuntimeException("Not implemented: upgrade to " + toVersion);
@@ -132,6 +135,9 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
                     break;
                 case 32:
                     downgradeFrom33to32(db);
+                    break;
+                case 33:
+                    downgradeFrom34to33(db);
                     break;
                 default:
                     throw new RuntimeException("Not implemented: downgrade to " + toVersion);
@@ -206,7 +212,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         db.beginTransaction();
 
         db.execSQL("ALTER TABLE tracks ADD COLUMN uuid BLOB");
-        try (Cursor cursor = db.query("tracks", new String[]{"_id"}, null, null, null, null, null)) {
+        try (Cursor cursor = db.query("tracks", new String[]{"_id" }, null, null, null, null, null)) {
             if (cursor.moveToFirst()) {
                 int trackIdIndex = cursor.getColumnIndexOrThrow("_id");
                 do {
@@ -396,7 +402,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
         db.beginTransaction();
 
         // TrackPoints
-        //TODO That does not restore deleted trackpoints
+        // Info: this does not restore deleted trackpoints
         db.execSQL("UPDATE trackpoints SET latitude = 200 * 1E6, longitude = NULL WHERE type = -2");
         db.execSQL("UPDATE trackpoints SET latitude = 100 * 1E6, longitude = NULL WHERE type = 1");
 
@@ -481,7 +487,7 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
         ZoneRules zoneRules = ZoneOffset.systemDefault().getRules();
 
-        try (Cursor cursor = db.query("tracks", new String[]{"_id", "starttime"}, null, null, null, null, null)) {
+        try (Cursor cursor = db.query("tracks", new String[]{"_id", "starttime" }, null, null, null, null, null)) {
             if (cursor.moveToFirst()) {
                 int trackIdIndex = cursor.getColumnIndexOrThrow("_id");
                 int startTimeIndex = cursor.getColumnIndexOrThrow("starttime");
@@ -512,6 +518,33 @@ public class CustomSQLiteOpenHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE UNIQUE INDEX tracks_uuid_index ON tracks(uuid)");
 
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+
+    /**
+     * Add accuracy_vertical
+     */
+    private void upgradeFrom33to34(SQLiteDatabase db) {
+        db.beginTransaction();
+
+        db.execSQL("ALTER TABLE trackpoints ADD COLUMN accuracy_vertical FLOAT");
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
+
+    private void downgradeFrom34to33(SQLiteDatabase db) {
+        db.beginTransaction();
+
+        db.execSQL("ALTER TABLE trackpoints RENAME TO trackpoints_old");
+        db.execSQL("CREATE TABLE trackpoints (_id INTEGER PRIMARY KEY AUTOINCREMENT, trackid INTEGER NOT NULL, longitude INTEGER, latitude INTEGER, time INTEGER, elevation FLOAT, accuracy FLOAT, speed FLOAT, bearing FLOAT, sensor_heartrate FLOAT, sensor_cadence FLOAT, sensor_power FLOAT, elevation_gain FLOAT, elevation_loss FLOAT, type TEXT CHECK(type IN (-2, -1, 0, 1)), sensor_distance FLOAT, FOREIGN KEY (trackid) REFERENCES tracks(_id) ON UPDATE CASCADE ON DELETE CASCADE)");
+        db.execSQL("INSERT INTO trackpoints SELECT _id, trackid, longitude, latitude, time, elevation, accuracy, speed, bearing, sensor_heartrate, sensor_cadence, sensor_power, elevation_gain, elevation_gain, type, sensor_distance FROM trackpoints_old");
+        db.execSQL("DROP TABLE trackpoints_old");
+
+        db.execSQL("CREATE INDEX trackpoints_trackid_index ON trackpoints(trackid)");
 
         db.setTransactionSuccessful();
         db.endTransaction();
