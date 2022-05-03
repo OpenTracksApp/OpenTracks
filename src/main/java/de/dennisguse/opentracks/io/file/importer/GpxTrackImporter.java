@@ -83,7 +83,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private static final String TAG_EXTENSION_LOSS = "opentracks:loss";
     private static final String TAG_EXTENSION_DISTANCE = "opentracks:distance";
     private static final String TAG_EXTENSION_ACCURACY_HORIZONTAL = "opentracks:accuracy_horizontal";
-
+    private static final String TAG_EXTENSION_ACCURACY_VERTICAL = "opentracks:accuracy_vertical";
     private Locator locator;
 
     private final Context context;
@@ -114,6 +114,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private String loss;
     private String sensorDistance;
     private String accuracyHorizontal;
+    private String accuracyVertical;
 
     private final LinkedList<TrackPoint> currentSegment = new LinkedList<>();
 
@@ -247,6 +248,11 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
                     accuracyHorizontal = content.trim();
                 }
                 break;
+            case TAG_EXTENSION_ACCURACY_VERTICAL:
+                if (content != null) {
+                    accuracyVertical = content.trim();
+                }
+                break;
         }
 
         content = "";
@@ -356,6 +362,13 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse accuracy_horizontal: %s", sensorDistance)), e);
             }
         }
+        if (accuracyVertical != null) {
+            try {
+                trackPoint.setVerticalAccuracy(Distance.of(accuracyVertical));
+            } catch (NumberFormatException e) {
+                throw new ParsingException(createErrorMessage(String.format(Locale.US, "Unable to parse accuracy_vertical: %s", sensorDistance)), e);
+            }
+        }
 
         return trackPoint;
     }
@@ -372,6 +385,7 @@ public class GpxTrackImporter extends DefaultHandler implements XMLImporter.Trac
 
         sensorDistance = null;
         accuracyHorizontal = null;
+        accuracyVertical = null;
         power = null;
         heartrate = null;
         cadence = null;

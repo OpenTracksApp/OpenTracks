@@ -16,6 +16,7 @@
 package de.dennisguse.opentracks.data.models;
 
 import android.location.Location;
+import android.os.Build;
 import android.os.Parcel;
 
 import androidx.annotation.NonNull;
@@ -44,6 +45,7 @@ public class TrackPoint {
     private Double latitude;
     private Double longitude;
     private Distance horizontalAccuracy;
+    private Distance verticalAccuracy;
     private Altitude altitude;
     private Speed speed;
     private Float bearing;
@@ -205,6 +207,9 @@ public class TrackPoint {
         this.altitude = location.hasAltitude() ? Altitude.WGS84.of(location.getAltitude()) : null;
         this.speed = location.hasSpeed() ? Speed.of(location.getSpeed()) : null;
         this.horizontalAccuracy = location.hasAccuracy() ? Distance.of(location.getAccuracy()) : null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            this.verticalAccuracy = location.hasVerticalAccuracy() ? Distance.of(location.getVerticalAccuracyMeters()) : null;
+        }
 
         //TODO Should we copy the bearing?
         return this;
@@ -306,6 +311,19 @@ public class TrackPoint {
 
     public TrackPoint setHorizontalAccuracy(Distance horizontalAccuracy) {
         this.horizontalAccuracy = horizontalAccuracy;
+        return this;
+    }
+
+    public boolean hasVerticalAccuracy() {
+        return verticalAccuracy != null;
+    }
+
+    public Distance getVerticalAccuracy() {
+        return verticalAccuracy;
+    }
+
+    public TrackPoint setVerticalAccuracy(Distance horizontalAccuracy) {
+        this.verticalAccuracy = horizontalAccuracy;
         return this;
     }
 

@@ -573,6 +573,9 @@ public class ContentProviderUtils {
         if (!cursor.isNull(indexes.accuracyIndex)) {
             trackPoint.setHorizontalAccuracy(Distance.of(cursor.getFloat(indexes.accuracyIndex)));
         }
+        if (!cursor.isNull(indexes.accuracyVerticalIndex)) {
+            trackPoint.setVerticalAccuracy(Distance.of(cursor.getFloat(indexes.accuracyVerticalIndex)));
+        }
         if (!cursor.isNull(indexes.speedIndex)) {
             trackPoint.setSpeed(Speed.of(cursor.getFloat(indexes.speedIndex)));
         }

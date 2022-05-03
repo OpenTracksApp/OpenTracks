@@ -47,6 +47,10 @@ public class TrackPointAssert {
         if (expected.hasHorizontalAccuracy()) {
             Assert.assertEquals(expected.getHorizontalAccuracy().toM(), actual.getHorizontalAccuracy().toM(), delta);
         }
+        Assert.assertEquals(expected.hasVerticalAccuracy(), actual.hasVerticalAccuracy());
+        if (expected.hasVerticalAccuracy()) {
+            Assert.assertEquals(expected.getVerticalAccuracy().toM(), actual.getVerticalAccuracy().toM(), delta);
+        }
 
         Assert.assertEquals(expected.hasSensorDistance(), actual.hasSensorDistance());
         if (expected.hasSensorDistance()) {

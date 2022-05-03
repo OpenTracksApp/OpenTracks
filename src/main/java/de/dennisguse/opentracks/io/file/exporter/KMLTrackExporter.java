@@ -66,6 +66,7 @@ public class KMLTrackExporter implements TrackExporter {
     public static final String EXTENDED_DATA_TYPE_ALTITUDE_GAIN = "elevation_gain";
     public static final String EXTENDED_DATA_TYPE_ALTITUDE_LOSS = "elevation_loss";
     public static final String EXTENDED_DATA_TYPE_ACCURACY_HORIZONTAL = "accuracy_horizontal";
+    public static final String EXTENDED_DATA_TYPE_ACCURACY_VERTICAL = "accuracy_vertical";
 
     private static final String MARKER_ICON = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png";
     private static final String TRACK_ICON = "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
@@ -90,6 +91,7 @@ public class KMLTrackExporter implements TrackExporter {
     private final List<Float> altitudeGainList = new ArrayList<>();
     private final List<Float> altitudeLossList = new ArrayList<>();
     private final List<Float> accuracyHorizontal = new ArrayList<>();
+    private final List<Float> accuracyVertical = new ArrayList<>();
 
     public KMLTrackExporter(Context context, boolean exportPhotos) {
         this.context = context;
@@ -336,6 +338,7 @@ public class KMLTrackExporter implements TrackExporter {
             altitudeGainList.clear();
             altitudeLossList.clear();
             accuracyHorizontal.clear();
+            accuracyVertical.clear();
         }
     }
 
@@ -368,6 +371,9 @@ public class KMLTrackExporter implements TrackExporter {
             if (accuracyHorizontal.stream().anyMatch(Objects::nonNull)) {
                 writeSimpleArrayData(accuracyHorizontal, EXTENDED_DATA_TYPE_ACCURACY_HORIZONTAL);
             }
+            if (accuracyVertical.stream().anyMatch(Objects::nonNull)) {
+                writeSimpleArrayData(accuracyVertical, EXTENDED_DATA_TYPE_ACCURACY_VERTICAL);
+            }
             printWriter.println("</SchemaData>");
             printWriter.println("</ExtendedData>");
             printWriter.println("</gx:Track>");
@@ -394,6 +400,7 @@ public class KMLTrackExporter implements TrackExporter {
             altitudeGainList.add(trackPoint.hasAltitudeGain() ? trackPoint.getAltitudeGain() : null);
             altitudeLossList.add(trackPoint.hasAltitudeLoss() ? trackPoint.getAltitudeLoss() : null);
             accuracyHorizontal.add(trackPoint.hasHorizontalAccuracy() ? (float) trackPoint.getHorizontalAccuracy().toM() : null);
+            accuracyVertical.add(trackPoint.hasVerticalAccuracy() ? (float) trackPoint.getVerticalAccuracy().toM() : null);
         }
     }
 

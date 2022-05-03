@@ -46,6 +46,7 @@ public interface TrackPointsColumns extends BaseColumns {
     String TIME = "time";
     String ALTITUDE = "elevation";
     String HORIZONTAL_ACCURACY = "accuracy";
+    String VERTICAL_ACCURACY = "accuracy_vertical";
     String SPEED = "speed";
     String BEARING = "bearing";
     String SENSOR_HEARTRATE = "sensor_heartrate";
@@ -79,6 +80,7 @@ public interface TrackPointsColumns extends BaseColumns {
             + ALTITUDE_LOSS + " FLOAT, "
             + TYPE + " TEXT CHECK(type IN (-2, -1, 0, 1, 2)), "
             + SENSOR_DISTANCE + " FLOAT, "
+            + VERTICAL_ACCURACY + " FLOAT, "
             + "FOREIGN KEY (" + TRACKID + ") REFERENCES " + TracksColumns.TABLE_NAME + "(" + TracksColumns._ID + ") ON UPDATE CASCADE ON DELETE CASCADE"
             + ")";
 
