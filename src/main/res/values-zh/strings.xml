@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
 Copyright 2010 Google Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <!-- Activity Type -->
     <string name="activity_type_airplane">坐飞机</string>
     <string name="activity_type_atv">全地形越野</string>
@@ -124,7 +124,7 @@ limitations under the License.
     <!-- Gps -->
     <string name="gps_starting">正在启动GPS</string>
     <string name="gps_wait_for_better_signal">正在等待更好的GPS信号</string>
-    <string name="gps_wait_for_signal">正在等待GPS信号</string>
+    <string name="gps_wait_for_signal">正在等待 GPS 信号</string>
     <!-- Image -->
     <string name="image_arrow">箭头</string>
     <string name="image_marker">标记</string>
@@ -380,9 +380,14 @@ limitations under the License.
     <!-- Share image -->
     <string name="hold_to_stop">长按停止</string>
     <string name="hold_to_pause">长按暂停</string>
-
     <string name="instant_export_enabled_summary">活动结束后，自动导出数据</string>
     <string name="instant_export_enabled_title">自动导出</string>
-
     <string name="settings_default_export_uri_title">选择导出目录</string>
+    <string name="help_recording_content">OpenTracks 使用设备内置的 GPS 传感器来记录位置信息，即使来自 GPS 传感器的数据（比如位置、速度、高度）并不精确。</string>
+    <string name="gps_recording_without_signal">OpenTracks 正在无 GPS 信号状态下记录数据。</string>
+    <string name="help_data_storage_title">OpenTracks 如何存储传感器数据？</string>
+    <string name="help_data_google_play_services_title">OpenTracks 依赖或者使用 Google Play 服务吗？</string>
+    <string name="help_recording_title">OpenTracks 如何记录数据？</string>
+    <string name="gps_fixed_and_ready">GPS 已就绪</string>
+    <string name="gps_disabled_msg">GPS 被禁用</string>
 </resources>
