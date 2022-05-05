@@ -158,7 +158,7 @@ public class ExportImportTest {
         service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
 
         trackPointCreator.setClock("2020-02-02T02:02:06Z");
-        trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context, trackPointCreator));
+        trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context, null, trackPointCreator));
         service.pauseCurrentTrack();
 
         trackPointCreator.setClock("2020-02-02T02:02:20Z");
@@ -171,7 +171,7 @@ public class ExportImportTest {
         sendLocation(trackPointCreator, "2020-02-02T02:02:23Z", 3, 16.001, 10, 15, 10, 0);
 
         trackPointCreator.setClock("2020-02-02T02:02:24Z");
-        trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context, trackPointCreator));
+        trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context, null, trackPointCreator));
         service.endCurrentTrack();
 
         Track track = contentProviderUtils.getTrack(trackId);
@@ -487,7 +487,7 @@ public class ExportImportTest {
     }
 
     private void mockBLESensorData(TrackPointCreator trackPointCreator, Float speed, Distance distance, float heartRate, float cadence, Float power) {
-        trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context, trackPointCreator) {
+        trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context, null, trackPointCreator) {
             @Override
             public SensorDataSet fill(@NonNull TrackPoint trackPoint) {
                 SensorDataSet sensorDataSet = new SensorDataSet();

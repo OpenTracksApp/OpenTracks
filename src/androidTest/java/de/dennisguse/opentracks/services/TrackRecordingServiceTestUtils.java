@@ -27,7 +27,7 @@ public class TrackRecordingServiceTestUtils {
         TrackRecordingService service = ((TrackRecordingService.Binder) mServiceRule.bindService(new Intent(context, TrackRecordingService.class)))
                 .getService();
 
-        service.getTrackPointCreator().setRemoteSensorManager(new BluetoothRemoteSensorManager(context, service.getTrackPointCreator()));
+        service.getTrackPointCreator().setRemoteSensorManager(new BluetoothRemoteSensorManager(context, null, service.getTrackPointCreator()));
         service.getTrackPointCreator().setClock(Clock.systemUTC());
         service.endCurrentTrack();
     }

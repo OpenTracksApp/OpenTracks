@@ -24,6 +24,8 @@ import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
+import android.os.Build;
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -110,7 +112,12 @@ public abstract class BluetoothConnectionManager<DataType> {
             SensorData<DataType> sensorData = parsePayload(gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
             if (sensorData != null) {
                 Log.d(TAG, "Decoded data from " + gatt.getDevice().getAddress() + ": " + sensorData);
-                observer.onChanged(sensorData);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    observer.onChanged(sensorData);
+                } else {
+                    //TODO This might lead to NPEs in case of race conditions due to shutdown.
+                    observer.getHandler().post(() -> observer.onChanged(sensorData));
+                }
             }
         }
     };
@@ -128,7 +135,11 @@ public abstract class BluetoothConnectionManager<DataType> {
 
         Log.d(TAG, "Connecting to: " + device);
 
-        bluetoothGatt = device.connectGatt(context, true, connectCallback);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            bluetoothGatt = device.connectGatt(context, true, connectCallback, BluetoothDevice.TRANSPORT_AUTO, 0, this.observer.getHandler());
+        } else {
+            bluetoothGatt = device.connectGatt(context, true, connectCallback);
+        }
         SensorData<?> sensorData = createEmptySensorData(bluetoothGatt.getDevice().getAddress());
         observer.onChanged(sensorData);
     }
@@ -275,5 +286,8 @@ public abstract class BluetoothConnectionManager<DataType> {
         void onChanged(SensorData<?> sensorData);
 
         void onDisconnecting(SensorData<?> sensorData);
+
+        @NonNull
+        Handler getHandler();
     }
 }

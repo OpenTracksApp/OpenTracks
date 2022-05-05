@@ -32,7 +32,7 @@ public class TrackPointCreatorTest {
     @Before
     public void setUp() {
         subject = new TrackPointCreator(locationHandler, server);
-        subject.start(context);
+        subject.start(context, null);
     }
 
     @After
