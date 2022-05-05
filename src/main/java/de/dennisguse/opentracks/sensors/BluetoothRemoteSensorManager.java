@@ -20,6 +20,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -57,7 +58,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
 
     private final BluetoothAdapter bluetoothAdapter;
     private final Context context;
-
+    private final Handler handler;
     private boolean started = false;
 
     private Distance preferenceWheelCircumference;
@@ -111,8 +112,9 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
         }
     };
 
-    public BluetoothRemoteSensorManager(@NonNull Context context, @NonNull SensorDataSetChangeObserver observer) {
+    public BluetoothRemoteSensorManager(@NonNull Context context, @NonNull Handler handler, @NonNull SensorDataSetChangeObserver observer) {
         this.context = context;
+        this.handler = handler;
         this.observer = observer;
         bluetoothAdapter = BluetoothUtils.getAdapter(context);
     }
@@ -216,6 +218,12 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
     @Override
     public void onDisconnecting(SensorData<?> sensorData) {
         sensorDataSet.remove(sensorData);
+    }
+
+    @NonNull
+    @Override
+    public Handler getHandler() {
+        return handler;
     }
 
     public interface SensorDataSetChangeObserver {

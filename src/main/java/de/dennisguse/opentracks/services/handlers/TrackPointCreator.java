@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.services.handlers;
 
 import android.content.Context;
 import android.location.Location;
+import android.os.Handler;
 import android.util.Log;
 import android.util.Pair;
 
@@ -48,12 +49,12 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
         this.gpsHandler = gpsHandler;
     }
 
-    public synchronized void start(@NonNull Context context) {
+    public synchronized void start(@NonNull Context context, @NonNull Handler handler) {
         this.context = context;
 
         gpsHandler.onStart(context);
 
-        remoteSensorManager = new BluetoothRemoteSensorManager(context, this);
+        remoteSensorManager = new BluetoothRemoteSensorManager(context, handler, this);
         altitudeSumManager = new AltitudeSumManager();
 
         remoteSensorManager.start();

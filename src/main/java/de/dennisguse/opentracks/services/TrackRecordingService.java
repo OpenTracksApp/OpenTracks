@@ -211,7 +211,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     private void startSensors() {
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
-        trackPointCreator.start(this);
+        trackPointCreator.start(this, handler);
         showNotification(true);
     }
 
