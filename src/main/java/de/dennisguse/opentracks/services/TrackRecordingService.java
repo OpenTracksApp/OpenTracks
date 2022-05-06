@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.services;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.PowerManager.WakeLock;
 import android.util.Log;
 import android.util.Pair;
@@ -101,7 +102,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     public void onCreate() {
         super.onCreate();
 
-        handler = new Handler();
+        handler = new Handler(Looper.getMainLooper());
 
         recordingStatusObservable = new MutableLiveData<>();
         updateRecordingStatus(STATUS_DEFAULT);
