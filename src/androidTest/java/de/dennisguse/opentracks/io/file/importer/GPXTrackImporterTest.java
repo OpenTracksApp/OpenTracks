@@ -33,7 +33,7 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
  * Test that legacy KML/GPX formats can still be imported.
  */
 @RunWith(JUnit4.class)
-public class GPXImportTest {
+public class GPXTrackImporterTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
     private final ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
