@@ -3,6 +3,7 @@ package de.dennisguse.opentracks;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -39,33 +40,30 @@ public class EspressoUITest {
 
     @LargeTest
     @Test
-    public void record_pause_resume_stop() {
+    public void record_stop_resume_stop_finish() {
         {
             // TrackListActivity: start recording
             ViewInteraction trackControllerRecordButton = onView(withId(R.id.track_list_fab_action));
             trackControllerRecordButton.perform(click());
         }
         {
-            // TrackRecordingActivity
-            ViewInteraction trackControllerStopButton = onView(withId(R.id.track_recording_fab_action));
+            // TrackRecordingActivity: wait to record some time and then stop
+            onView(withId(R.id.track_recording_fab_action))
+                    .perform(waitFor(5000))
+                    .perform(longClick());
 
-//            // wait; stay recording
-//            trackControllerRecordButton.perform(waitFor(5000));
-//
-//            //pause
-//            trackControllerRecordButton.perform(veryLongTouch(1600));
-//
-//            // wait; stay paused
-//            trackControllerRecordButton.perform(waitFor(1000));
-//
-//            // resume
-//            trackControllerRecordButton.perform(click());
-//
-//            // wait; stay recording
-//            trackControllerRecordButton.perform(waitFor(1000));
+            // TrackStoppedActivity: resume
+            onView(withId(R.id.resume_button))
+                    .perform(click());
 
-            // stop;
-            trackControllerStopButton.perform(veryLongTouch(1600));
+            // TrackRecordingActivity: wait and then stop
+            onView(withId(R.id.track_recording_fab_action))
+                    .perform(waitFor(5000))
+                    .perform(longClick());
+
+            // TrackStoppedActivity
+            onView(withId(R.id.finish_button))
+                    .perform(click());
         }
     }
 
