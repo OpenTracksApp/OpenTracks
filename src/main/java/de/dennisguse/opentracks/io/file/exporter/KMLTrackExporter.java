@@ -68,9 +68,6 @@ public class KMLTrackExporter implements TrackExporter {
     public static final String EXTENDED_DATA_TYPE_ACCURACY_HORIZONTAL = "accuracy_horizontal";
     public static final String EXTENDED_DATA_TYPE_ACCURACY_VERTICAL = "accuracy_vertical";
 
-    private static final String MARKER_ICON = "http://maps.google.com/mapfiles/kml/pushpin/blue-pushpin.png";
-    private static final String TRACK_ICON = "http://earth.google.com/images/kml-icons/track-directional/track-0.png";
-
     private static final NumberFormat SENSOR_DATA_FORMAT = NumberFormat.getInstance(Locale.US);
 
     static {
@@ -536,7 +533,7 @@ public class KMLTrackExporter implements TrackExporter {
         printWriter.println("<LineStyle><color>7f0000ff</color><width>4</width></LineStyle>");
         printWriter.println("<IconStyle>");
         printWriter.println("<scale>1.3</scale>");
-        printWriter.println("<Icon><href>" + TRACK_ICON + "</href></Icon>");
+        printWriter.println("<Icon />");
         printWriter.println("</IconStyle>");
         printWriter.println("</Style>");
     }
@@ -546,9 +543,7 @@ public class KMLTrackExporter implements TrackExporter {
      */
     private void writePlacemarkerStyle() {
         printWriter.println("<Style id=\"" + KMLTrackExporter.MARKER_STYLE + "\"><IconStyle>");
-        printWriter.println("<scale>1.3</scale>");
-        printWriter.println("<Icon><href>" + KMLTrackExporter.MARKER_ICON + "</href></Icon>");
-        printWriter.println("<hotSpot x=\"" + 20 + "\" y=\"" + 2 + "\" xunits=\"pixels\" yunits=\"pixels\"/>");
+        printWriter.println("<Icon />");
         printWriter.println("</IconStyle></Style>");
     }
 
