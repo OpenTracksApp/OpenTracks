@@ -1,0 +1,6 @@
+v3.28.0: OpenTracks
+
+Changes:
+- Configurable filename for export/sharing (default: {starttime}_{name}.{suffix})
+- Vertical GPS accuracy is now stored and can be exported/imported
+ (API level >= 26).
