@@ -41,7 +41,7 @@ import de.dennisguse.opentracks.io.file.exporter.KMLTrackExporter;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
- * Imports a KML file.
+ * Imports a KML file; preferred version: KML2.3, but also supports KML2.2.
  *
  * @author Jimmy Shih
  */
@@ -54,18 +54,31 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private static final String TAG_COORDINATES = "coordinates";
     private static final String TAG_DESCRIPTION = "description";
     private static final String TAG_ICON = "icon";
-    private static final String TAG_GX_COORD = "gx:coord";
-    private static final String TAG_GX_MULTI_TRACK = "gx:MultiTrack";
-    private static final String TAG_GX_SIMPLE_ARRAY_DATA = "gx:SimpleArrayData";
-    private static final String TAG_GX_TRACK = "gx:Track";
-    private static final String TAG_GX_VALUE = "gx:value";
+
+    private static final String TAG_COORD = "coord";
+    private static final String TAG_KML22_COORD = "gx:coord";
+
+    private static final String TAG_MULTI_TRACK = "MultiTrack";
+    private static final String TAG_KML22_MULTI_TRACK = "gx:MultiTrack";
+
+    private static final String TAG_DATA_CATEGORY = "Data"; //used for Track.category
+
+    private static final String TAG_SIMPLE_ARRAY_DATA = "SimpleArrayData";
+    private static final String TAG_KML22_SIMPLE_ARRAY_DATA = "gx:SimpleArrayData";
+
+    private static final String TAG_TRACK = "Track";
+    private static final String TAG_KML22_TRACK = "gx:Track";
+
+    private static final String TAG_VALUE = "value";
+    private static final String TAG_KML22_VALUE = "gx:value";
+
     private static final String TAG_HREF = "href";
     private static final String TAG_KML = "kml";
     private static final String TAG_NAME = "name";
     private static final String TAG_PHOTO_OVERLAY = "PhotoOverlay";
     private static final String TAG_PLACEMARK = "Placemark";
     private static final String TAG_STYLE_URL = "styleUrl";
-    private static final String TAG_VALUE = "value";
+    //    private static final String TAG_VALUE = "value"; TODO
     private static final String TAG_WHEN = "when";
     private static final String TAG_UUID = "opentracks:trackid";
 
@@ -81,7 +94,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
     private final ArrayList<Instant> whenList = new ArrayList<>();
     private final ArrayList<Location> locationList = new ArrayList<>();
 
-    private String extendedDataType;
+    private String dataType;
     private final ArrayList<Float> sensorSpeedList = new ArrayList<>();
     private final ArrayList<Float> sensorDistanceList = new ArrayList<>();
     private final ArrayList<Float> sensorCadenceList = new ArrayList<>();
@@ -128,17 +141,21 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 // Note that a track is contained in a Placemark, calling onMarkerStart will clear various track variables like name, category, and description.
                 onMarkerStart();
                 break;
-            case TAG_GX_MULTI_TRACK:
+            case TAG_MULTI_TRACK:
+            case TAG_KML22_MULTI_TRACK:
                 trackImporter.newTrack();
                 break;
-            case TAG_GX_TRACK:
+            case TAG_TRACK:
+            case TAG_KML22_TRACK:
                 if (trackImporter == null) {
-                    throw new SAXException("No " + TAG_GX_MULTI_TRACK);
+                    throw new SAXException("Missing " + TAG_MULTI_TRACK);
                 }
                 onTrackSegmentStart();
                 break;
-            case TAG_GX_SIMPLE_ARRAY_DATA:
-                onExtendedDataStart(attributes);
+            case TAG_DATA_CATEGORY:
+            case TAG_SIMPLE_ARRAY_DATA:
+            case TAG_KML22_SIMPLE_ARRAY_DATA:
+                dataType = attributes.getValue(ATTRIBUTE_NAME);
                 break;
         }
     }
@@ -162,18 +179,28 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
             case TAG_COORDINATES:
                 onMarkerLocationEnd();
                 break;
-            case TAG_GX_MULTI_TRACK:
+            case TAG_MULTI_TRACK:
+            case TAG_KML22_MULTI_TRACK:
                 trackImporter.setTrack(context, name, uuid, description, category, icon, zoneOffset);
                 zoneOffset = null;
                 break;
-            case TAG_GX_TRACK:
+            case TAG_TRACK:
+            case TAG_KML22_TRACK:
                 onTrackSegmentEnd();
                 break;
-            case TAG_GX_COORD:
+            case TAG_COORD:
+            case TAG_KML22_COORD:
                 onCoordEnded();
                 break;
-            case TAG_GX_VALUE:
-                onExtendedDataValueEnd();
+            case TAG_VALUE:
+            case TAG_KML22_VALUE:
+                if (KMLTrackExporter.EXTENDED_DATA_TYPE_CATEGORY.equals(dataType)) {
+                    if (content != null) {
+                        category = content.trim();
+                    }
+                } else {
+                    onExtendedDataValueEnd();
+                }
                 break;
             case TAG_NAME:
                 if (content != null) {
@@ -193,11 +220,6 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
             case TAG_ICON:
                 if (content != null) {
                     icon = content.trim();
-                }
-                break;
-            case TAG_VALUE:
-                if (content != null) {
-                    category = content.trim();
                 }
                 break;
             case TAG_WHEN:
@@ -401,11 +423,6 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
         return location;
     }
 
-
-    private void onExtendedDataStart(Attributes attributes) {
-        extendedDataType = attributes.getValue(ATTRIBUTE_NAME);
-    }
-
     private void onExtendedDataValueEnd() throws SAXException {
         Float value = null;
         if (content != null) {
@@ -414,11 +431,11 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 try {
                     value = Float.parseFloat(content);
                 } catch (NumberFormatException e) {
-                    throw new SAXException(createErrorMessage("Unable to parse gx:value:" + content), e);
+                    throw new SAXException(createErrorMessage("Unable to parse value:" + content), e);
                 }
             }
         }
-        switch (extendedDataType) {
+        switch (dataType) {
             case KMLTrackExporter.EXTENDED_DATA_TYPE_SPEED:
                 sensorSpeedList.add(value);
                 break;
@@ -447,7 +464,7 @@ public class KmlTrackImporter extends DefaultHandler implements XMLImporter.Trac
                 accuracyVertical.add(value);
                 break;
             default:
-                Log.w(TAG, "Data from extended data " + extendedDataType + " is not (yet) supported.");
+                Log.w(TAG, "Data from extended data " + dataType + " is not (yet) supported.");
         }
     }
 
