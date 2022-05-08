@@ -57,8 +57,6 @@ import de.dennisguse.opentracks.util.TrackUtils;
  * @author Leif Hendrik Wilden
  * @author Rodrigo Damazio
  */
-//NOTE: This activity does NOT react to preference changes of R.string.recording_track_id_key.
-//This mode of communication should be removed anyhow.
 public class TrackRecordingActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller, TrackDataHubInterface {
 
     public static final String EXTRA_TRACK_ID = "track_id";
@@ -76,13 +74,11 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
     private TrackRecordingBinding viewBinding;
 
-    // Initialized from Intent; if a new track recording is started, a new TrackId will be provided by TrackRecordingService
-    @Deprecated
     private Track.Id trackId;
 
     private RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
 
-    private final TrackRecordingServiceConnection.Callback bindChangedCallback = service -> {
+    private final TrackRecordingServiceConnection.Callback bindChangedCallback = (service, unused) -> {
         service.getRecordingStatusObservable()
                 .observe(TrackRecordingActivity.this, this::onRecordingStatusChanged);
 
@@ -90,18 +86,12 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 .observe(TrackRecordingActivity.this, this::onGpsStatusChanged);
 
         if (!service.isRecording()) {
-            if (trackId == null) {
-                // trackId isn't initialized -> leads a new recording.
-                trackId = service.startNewTrack();
-            } else {
-                // trackId is initialized -> resumes the track.
-                service.resumeTrack(trackId);
-            }
-
-            // A recording track is on.
-            trackDataHub.loadTrack(trackId);
-            trackDataHub.setRecordingStatus(recordingStatus);
+            finish();
+            return;
         }
+
+        trackDataHub.loadTrack(trackId);
+        trackDataHub.setRecordingStatus(recordingStatus);
     };
 
     private final OnSharedPreferenceChangeListener sharedPreferenceChangeListener = (sharedPreferences, key) -> {
@@ -123,17 +113,14 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         contentProviderUtils = new ContentProviderUtils(this);
-        trackId = null;
-        if (savedInstanceState != null) {
-            //Activity was recreated.
-            trackId = savedInstanceState.getParcelable(EXTRA_TRACK_ID);
-        } else {
-            // Resume a track
-            trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
-            if (trackId != null && contentProviderUtils.getTrack(trackId) == null) {
-                Log.w(TAG, "TrackId does not exists; cannot continue the recording.");
-                finish();
-            }
+
+        trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
+        if (trackId == null) {
+            throw new RuntimeException("TrackId is mandatory");
+        }
+        if (contentProviderUtils.getTrack(trackId) == null) {
+            Log.w(TAG, "TrackId does not exists; cannot continue the recording.");
+            finish();
         }
 
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
@@ -240,7 +227,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(CURRENT_TAB_TAG_KEY, viewBinding.trackDetailActivityViewPager.getCurrentItem());
-        outState.putParcelable(EXTRA_TRACK_ID, trackId);
     }
 
     @Override
@@ -377,6 +363,9 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     }
 
     private void onRecordingStatusChanged(RecordingStatus status) {
+        if (!status.isRecording()) {
+            finish();
+        }
         recordingStatus = status;
 
         trackDataHub.setRecordingStatus(recordingStatus);
@@ -415,7 +404,8 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
                 .make(viewBinding.trackRecordingCoordinatorLayout,
                         getString(R.string.gps_recording_status, getString(gpsStatusValue.message), getString(R.string.gps_recording_without_signal)),
                         Snackbar.LENGTH_INDEFINITE)
-                .setAction(getString(R.string.generic_dismiss), v -> {});
+                .setAction(getString(R.string.generic_dismiss), v -> {
+                });
         snackbar.show();
     }
 }

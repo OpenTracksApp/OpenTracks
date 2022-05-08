@@ -79,7 +79,7 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
 
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
 
-    private final TrackRecordingServiceConnection.Callback bindCallback = service -> service.getRecordingStatusObservable()
+    private final TrackRecordingServiceConnection.Callback bindCallback = (service, unused) -> service.getRecordingStatusObservable()
             .observe(TrackRecordedActivity.this, this::onRecordingStatusChanged);
 
     @Override
@@ -203,11 +203,17 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
         }
 
         if (item.getItemId() == R.id.track_detail_resume_track) {
-            Intent newIntent = IntentUtils.newIntent(TrackRecordedActivity.this, TrackRecordingActivity.class)
-                    .putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, trackId);
-            startActivity(newIntent);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-            finish();
+            new TrackRecordingServiceConnection((service, connection) -> {
+                service.resumeTrack(trackId);
+
+                Intent newIntent = IntentUtils.newIntent(TrackRecordedActivity.this, TrackRecordingActivity.class)
+                        .putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, trackId);
+                startActivity(newIntent);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+                connection.unbind(this);
+                finish();
+            }).startAndBind(this);
             return true;
         }
 

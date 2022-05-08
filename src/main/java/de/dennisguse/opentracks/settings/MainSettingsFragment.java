@@ -18,7 +18,7 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
     private RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
     private final TrackRecordingServiceConnection.Callback bindServiceCallback =
-            service -> service.getRecordingStatusObservable()
+            (service, unused) -> service.getRecordingStatusObservable()
                     .observe(MainSettingsFragment.this, this::onRecordingStatusChanged);
 
     @Override

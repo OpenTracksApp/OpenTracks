@@ -92,15 +92,10 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
             return;
         }
         if (callback != null) {
-            callback.onConnected(trackRecordingService);
+            callback.onConnected(trackRecordingService, this);
         }
     }
 
-    /**
-     * Resumes the track recording service connection.
-     *
-     * @param context the context
-     */
     public void startConnection(@NonNull Context context) {
         if (trackRecordingService != null) {
             // Service is already started and bound.
@@ -115,6 +110,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     /**
      * Unbinds the service (but leave it running).
      */
+    //TODO This is often called for one-shot operations and should be refactored as unbinding is required.
     public void unbind(Context context) {
         try {
             context.unbindService(this);
@@ -141,7 +137,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         trackRecordingService = value;
         if (callback != null) {
             if (value != null) {
-                callback.onConnected(value);
+                callback.onConnected(value, this);
             } else {
                 callback.onDisconnected();
             }
@@ -214,7 +210,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     }
 
     public interface Callback {
-        void onConnected(TrackRecordingService service);
+        void onConnected(TrackRecordingService service, TrackRecordingServiceConnection connection);
 
         default void onDisconnected() {
         }
