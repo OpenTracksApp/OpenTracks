@@ -71,7 +71,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
     private TrackRecordingServiceConnection trackRecordingServiceConnection;
 
-    private final TrackRecordingServiceConnection.Callback bindCallback = service -> service.getRecordingStatusObservable()
+    private final TrackRecordingServiceConnection.Callback bindCallback = (service, unused) -> service.getRecordingStatusObservable()
             .observe(MarkerListActivity.this, this::onRecordingStatusChanged);
 
     // Callback when an item is selected in the contextual action mode

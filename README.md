@@ -130,6 +130,7 @@ The API can be invoked by sending an explicit Intent to start an activity.
 
 `Class`:
 * **Start a recording:**  `de.dennisguse.opentracks.publicapi.StartRecording`
+* **Start a recording:**  `de.dennisguse.opentracks.publicapi.StopRecording`
 
 For testing via adb: `adb shell am start -n "package/class"`
 

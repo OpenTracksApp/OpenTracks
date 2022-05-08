@@ -22,7 +22,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -139,7 +138,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     private MenuItem searchMenuItem;
     private MenuItem startGpsMenuItem;
 
-    private final TrackRecordingServiceConnection.Callback bindChangedCallback = service -> {
+    private final TrackRecordingServiceConnection.Callback bindChangedCallback = (service, unused) -> {
         service.getRecordingStatusObservable()
                 .observe(TrackListActivity.this, this::onRecordingStatusChanged);
 
@@ -167,16 +166,15 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindChangedCallback);
 
         viewBinding.trackList.setEmptyView(viewBinding.trackListEmptyView);
-        viewBinding.trackList.setOnItemClickListener((parent, view, position, trackId) -> {
-            if (recordingStatus.isRecording() && trackId == recordingStatus.getTrackId().getId()) {
+        viewBinding.trackList.setOnItemClickListener((parent, view, position, trackIdId) -> {
+            Track.Id trackId = new Track.Id(trackIdId);
+            Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordedActivity.class)
+                    .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
+            if (recordingStatus.isRecording() && trackId.equals(recordingStatus.getTrackId())) {
                 // Is recording -> open record activity.
-                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class)
-                        .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, new Track.Id(trackId));
                 startActivity(newIntent);
             } else {
                 // Not recording -> open detail activity.
-                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordedActivity.class)
-                        .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, new Track.Id(trackId));
                 ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(
                         this,
                         new Pair<>(view.findViewById(R.id.list_item_icon), TrackRecordedActivity.VIEW_TRACK_ICON));
@@ -230,8 +228,15 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
             // Not Recording -> Recording
             updateGpsMenuItem(false, true);
-            Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class);
-            startActivity(newIntent);
+            new TrackRecordingServiceConnection((service, connection) -> {
+                Track.Id trackId = service.startNewTrack();
+
+                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class);
+                newIntent.putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, trackId);
+                startActivity(newIntent);
+
+                connection.unbind(this);
+            }).startAndBind(this);
         });
         viewBinding.trackListFabAction.setOnLongClickListener((view) -> {
             if (!recordingStatus.isRecording()) {
