@@ -31,7 +31,7 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
  * Test that legacy KML/GPX formats can still be imported.
  */
 @RunWith(JUnit4.class)
-public class KMLImportTest {
+public class KMLTrackImporterTest {
 
     private final Context context = ApplicationProvider.getApplicationContext();
     private final ContentProviderUtils contentProviderUtils = new ContentProviderUtils(context);
