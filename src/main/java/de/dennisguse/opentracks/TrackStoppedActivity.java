@@ -13,6 +13,7 @@ import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.databinding.TrackStoppedBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
+import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
@@ -94,16 +95,14 @@ public class TrackStoppedActivity extends AbstractActivity implements ChooseActi
         });
 
         viewBinding.resumeButton.setOnClickListener(v -> {
-            resume();
-            finish();
+            resumeTrackAndFinish();
         });
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        resume();
-        finish();
+        resumeTrackAndFinish();
     }
 
     @Override
@@ -122,10 +121,17 @@ public class TrackStoppedActivity extends AbstractActivity implements ChooseActi
         viewBinding.fields.trackEditActivityType.setText(getString(TrackIconUtils.getIconActivityType(iconValue)));
     }
 
-    private void resume() {
-        Intent newIntent = IntentUtils.newIntent(TrackStoppedActivity.this, TrackRecordingActivity.class)
-                .putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, trackId);
-        startActivity(newIntent);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    private void resumeTrackAndFinish() {
+        new TrackRecordingServiceConnection((service, connection) -> {
+            service.resumeTrack(trackId);
+
+            Intent newIntent = IntentUtils.newIntent(TrackStoppedActivity.this, TrackRecordingActivity.class)
+                    .putExtra(TrackRecordingActivity.EXTRA_TRACK_ID, trackId);
+            startActivity(newIntent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
+            connection.unbind(this);
+            finish();
+        }).startAndBind(this);
     }
 }
