@@ -587,11 +587,9 @@ public class PreferencesUtils {
     public static TrackFileFormat getExportTrackFileFormat() {
         final String TRACKFILEFORMAT_NAME_DEFAULT = getString(R.string.export_trackfileformat_default, null);
         String trackFileFormatName = getString(R.string.export_trackfileformat_key, TRACKFILEFORMAT_NAME_DEFAULT);
-        try {
-            return TrackFileFormat.valueOf(trackFileFormatName);
-        } catch (Exception e) {
-            return TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA;
-        }
+        return Arrays.stream(TrackFileFormat.values())
+                .filter(format -> format.getPreferenceId().equals(trackFileFormatName))
+                .findFirst().orElse(TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES);
     }
 
     public static boolean getPreventReimportTracks() {

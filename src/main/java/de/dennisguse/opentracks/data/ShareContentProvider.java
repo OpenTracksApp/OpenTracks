@@ -59,13 +59,13 @@ public class ShareContentProvider extends CustomContentProvider {
     private static final String TRACKID_DELIMITER = "_";
 
     static {
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.GPX.getName() + "/*/*", URI_GPX);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.GPX.getPreferenceId() + "/*/*", URI_GPX);
 
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.getName() + "/*/*", URI_KML_WITH_TRACKDETAIL_SENSORDATA);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA.getPreferenceId() + "/*/*", URI_KML_WITH_TRACKDETAIL_SENSORDATA);
 
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA.getName() + "/*/*", URI_KMZ_WITH_TRACKDETAIL_AND_SENSORDATA);
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.getName() + "/*/*", URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES);
-        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.CSV.getName() + "/*/*", URI_CSV);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA.getPreferenceId() + "/*/*", URI_KMZ_WITH_TRACKDETAIL_AND_SENSORDATA);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES.getPreferenceId() + "/*/*", URI_KMZ_WITH_TRACKDETAIL_SENSORDATA_AND_PICTURES);
+        uriMatcher.addURI(ContentProviderUtils.AUTHORITY_PACKAGE, TracksColumns.TABLE_NAME + "/" + TrackFileFormat.CSV.getPreferenceId() + "/*/*", URI_CSV);
     }
 
     /**
@@ -91,7 +91,7 @@ public class ShareContentProvider extends CustomContentProvider {
         }
         trackIdBuilder.deleteCharAt(trackIdBuilder.lastIndexOf(TRACKID_DELIMITER));
 
-        Uri uri = Uri.parse(TracksColumns.CONTENT_URI + "/" + trackFileFormat.getName() + "/" + trackIdBuilder + "/" + Uri.encode(trackName) + "." + trackFileFormat.getExtension());
+        Uri uri = Uri.parse(TracksColumns.CONTENT_URI + "/" + trackFileFormat.getPreferenceId() + "/" + trackIdBuilder + "/" + Uri.encode(trackName) + "." + trackFileFormat.getExtension());
         String mime = getTypeMime(uri);
 
         Log.d(TAG, "Created uri " + uri + " with MIME " + mime);

@@ -2,8 +2,6 @@ package de.dennisguse.opentracks.io.file;
 
 import android.content.Context;
 
-import java.util.Locale;
-
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.io.file.exporter.CSVTrackExporter;
@@ -19,7 +17,7 @@ import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
  */
 public enum TrackFileFormat {
 
-    KML_WITH_TRACKDETAIL_AND_SENSORDATA {
+    KML_WITH_TRACKDETAIL_AND_SENSORDATA("KML_WITH_TRACKDETAIL_AND_SENSORDATA") {
         @Override
         public TrackExporter createTrackExporter(Context context) {
             return new KMLTrackExporter(context, false);
@@ -36,7 +34,7 @@ public enum TrackFileFormat {
     },
 
     @Deprecated //TODO Check if we really need this
-    KMZ_WITH_TRACKDETAIL_AND_SENSORDATA {
+    KMZ_WITH_TRACKDETAIL_AND_SENSORDATA("KMZ_WITH_TRACKDETAIL_AND_SENSORDATA") {
 
         private static final boolean exportPhotos = false;
 
@@ -61,7 +59,7 @@ public enum TrackFileFormat {
         }
     },
 
-    KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES {
+    KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES("KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES") {
 
         private static final boolean exportPhotos = true;
 
@@ -87,7 +85,7 @@ public enum TrackFileFormat {
 
     },
 
-    GPX {
+    GPX("GPX") {
         @Override
         public TrackExporter createTrackExporter(Context context) {
             return new GPXTrackExporter(new ContentProviderUtils(context), context.getString(R.string.app_name));
@@ -103,7 +101,7 @@ public enum TrackFileFormat {
         }
     },
 
-    CSV {
+    CSV("CSV") {
         @Override
         public TrackExporter createTrackExporter(Context context) {
             return new CSVTrackExporter(new ContentProviderUtils(context));
@@ -123,6 +121,12 @@ public enum TrackFileFormat {
     private static final String MIME_KMZ = "application/vnd.google-earth.kmz";
 
     private static final String MIME_KML = "application/vnd.google-earth.kml+xml";
+
+    private final String preferenceId;
+
+    TrackFileFormat(String preferenceId) {
+        this.preferenceId = preferenceId;
+    }
 
     /**
      * Returns the mime type for each format.
@@ -149,9 +153,9 @@ public enum TrackFileFormat {
     }
 
     /**
-     * Returns the name for each format.
+     * The identifier to be stored in the preferences.
      */
-    public String getName() {
-        return this.name().toLowerCase(Locale.US);
+    public String getPreferenceId() {
+        return preferenceId;
     }
 }

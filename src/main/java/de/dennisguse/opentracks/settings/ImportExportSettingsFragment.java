@@ -61,7 +61,7 @@ public class ImportExportSettingsFragment extends PreferenceFragmentCompat {
             String trackFileFormatUpperCase = trackFileFormat.getExtension().toUpperCase(Locale.US); //ASCII upper case
             int photoMessageId = trackFileFormat.includesPhotos() ? R.string.export_with_photos : R.string.export_without_photos;
             entries[i] = String.format("%s (%s)", trackFileFormatUpperCase, getString(photoMessageId));
-            entryValues[i] = trackFileFormat.name();
+            entryValues[i] = trackFileFormat.getPreferenceId();
         }
 
         ListPreference listPreference = findPreference(getString(R.string.export_trackfileformat_key));
