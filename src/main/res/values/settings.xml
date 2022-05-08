@@ -298,7 +298,7 @@
     <string name="import_prevent_reimport_key" translatable="false">preventReimportTrackKey</string>
     <bool name="import_prevent_reimport_default">true</bool>
 
-    <string name="settings_api_key">settingsAPI</string>
+    <string name="settings_api_key" translatable="false">settingsAPI</string>
     <string name="publicapi_enabled_key" translatable="false">apiEnabledKey</string>
     <bool name="publicapi_enabled_default">false</bool>
     <string name="publicapi_dashboard_enabled_key" translatable="false">apiDashboardEnabledKey</string>

@@ -40,6 +40,6 @@ public class ShareContentProviderTest {
         trackIds.add(new Track.Id(1));
         Pair<Uri, String> shareURIandMIME = ShareContentProvider.createURI(trackIds, "../../&1=1", TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA);
 
-        assertEquals(Uri.parse("content://de.dennisguse.opentracks.debug.content/tracks/kml_with_trackdetail_and_sensordata/1/..%2F..%2F%261%3D1.kml"), shareURIandMIME.first);
+        assertEquals(Uri.parse("content://de.dennisguse.opentracks.debug.content/tracks/KML_WITH_TRACKDETAIL_AND_SENSORDATA/1/..%2F..%2F%261%3D1.kml"), shareURIandMIME.first);
     }
 }
