@@ -354,4 +354,31 @@ limitations under the License.
     <string name="waypoint_type_water_fountain">içme suyu çeşmesi</string>
     <string name="waypoint_type_waypoint">referans noktası</string>
     <string name="about_preference_title">OpenTracks Hakkında</string>
+    <string name="help_track_export_content"> Parkurlar ayarlar\'dan KMZ, KML veya GPX olarak dışa aktarılabilir. KMZ/KML tüm veriler; Sadece GPX konumları. <i>Paylaş simgesi</i> aracılığıyla paylaşılan parkurlar KMZ olarak paylaşılır. </string>
+    <string name="about_third_party_data">Üçüncü taraf verileri</string>
+    <string name="help_recording_title">OpenTracks verileri nasıl kaydeder\?</string>
+    <string name="about_libraries">Kütüphaneler</string>
+    <string name="about_version_name">Sürüm adı: %1$s</string>
+    <string name="help_track_map_title">Harita üzerinde bir parça nasıl gösterilir\?</string>
+    <string name="about_description"><i>OpenTracks</i> gizliliğinize tamamen saygı duyan bir spor takip etme uygulamasıdır.</string>
+    <string name="help_data_google_play_services_title">OpenTracks, Google Play Hizmetini gerektirir/kullanır mı\?</string>
+    <string name="help_storage_pictures_content">Bunlar uygulamanın dahili deposunda saklanır (Sadece OpenTracks içinde erişilebilir).</string>
+    <string name="about_history">OpenTracks <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'ın MyTracks</i></a>\'ının bir çatalıdır (2016\'da son verilmiştir).</string>
+    <string name="help_feature_title">OpenTracks\'in sahip olduğu özellikler:</string>
+    <string name="help_feature_content">* GPS parçaları oluşturun
+\n * kalp atış hızı sensörü kullanın (yalnızca Bluetooth LE)
+\n* sesli duyurular (zamana veya mesafeye göre)
+\n * işaretleyiciler oluşturun (resimler dahil)
+\n * tamamen çevrimdışı çalışır
+\n * harita üzerinde parkurları gösterir (aşağıya bakın)</string>
+    <string name="help_track_map_content">" Küçük harita simgesini kullanın.
+\n a) (canlı güncellemeler) &lt;a href=\"https://github.com/OpenTracksApp/OSMDashboard\"&gt;
+\nOSMDashboard&lt;/a&gt;\'u yükleyin. &lt;a href=\"https://www.openstreetmap.org\"&gt;
+\nOpenStreetMap&lt;/a&gt; aracılığıyla çevrimiçi veya çevrimdışı haritalar sağlar.
+\n Aslında OSMDashboard, sadece gösterilecek olan parçaların verilerine (geçici olarak) erişebilen ayrı bir uygulamadır.
+\n b) Normal bir harita uygulaması aracılığıyla (ör. &lt;a href=\"http://osmand.net/\"&gt;OsmAnd&lt;/a&gt; ve &lt;a href=\"https://maps.me/\"&gt;MAPS.ME&lt; /a&gt;). Bu uygulamaların KMZ dosya biçimini (yalnızca konumlar ve zaman damgaları) desteklemesi gerekir. Aslında, bir uygulamanın MIME &lt;i&gt;application/vnd.google-earth.kmz&lt;/i&gt; ile &lt;i&gt;ACTION_VIEW&lt;/i&gt; özelliğini desteklemesi gerekir. &lt;/i&gt; "</string>
+    <string name="help_storage_pictures_title">OpenTracks, işaretçi olarak çekilmiş resimleri nasıl saklar\?</string>
+    <string name="about_url">Proje web sayfası: <a href="%1$s">%1$s</a></string>
+    <string name="help_track_export_title">Kayıtlı parkurları nasıl dışa aktarabilirim/paylaşabilirim\?</string>
+    <string name="about_version_code">Sürüm kodu: %1$d</string>
 </resources>
