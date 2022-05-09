@@ -5,7 +5,7 @@ set -e
 # Folder where svg screenshots are expected.
 SRC_DIR="screenshots-svg/"
 # Folder where png files will be saved.
-DST_DIR="fastlane/metadata/android/en-US/phoneScreenshots/"
+DST_DIR="fastlane/metadata/android/en-US/images/phoneScreenshots/"
 
 echo "Exporting svg files to png..."
 
