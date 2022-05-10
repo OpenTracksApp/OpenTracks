@@ -610,4 +610,5 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="generic_dismiss">Desbotar</string>
     <string name="gps_recording_status">%1$s: %2$s</string>
     <string name="gps_recording_without_signal">OpenTracks está gravando sen datos GPS.</string>
+    <string name="settings_export_filename_title">Formato do nome do ficheiro</string>
 </resources>
