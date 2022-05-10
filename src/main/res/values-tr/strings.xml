@@ -381,4 +381,108 @@ limitations under the License.
     <string name="about_url">Proje web sayfası: <a href="%1$s">%1$s</a></string>
     <string name="help_track_export_title">Kayıtlı parkurları nasıl dışa aktarabilirim/paylaşabilirim\?</string>
     <string name="about_version_code">Sürüm kodu: %1$d</string>
+    <string name="generic_choose_an_option">Bir seçenek belirleyin</string>
+    <string name="gps_disabled_msg">GPS devre dışı</string>
+    <string name="gps_fixed_and_ready">GPS belirlendi ve hazır</string>
+    <string name="activity_type_swimming">yüzme</string>
+    <string name="activity_type_swimming_open">açık suda yüzmek</string>
+    <string name="activity_type_workout">antrenman</string>
+    <string name="description_default_speed_or_pace">Aktivite türüne göre</string>
+    <string name="export_without_photos">fotoğrafsız</string>
+    <string name="description_speed_source_gps">GPS</string>
+    <string name="export_error_post_workout">Antrenman sonrası dışa aktarma başarısız oldu, lütfen dışa aktarma dizinini kontrol edin.</string>
+    <string name="export_progress_summary_new_msg">Yeni parçalar dışa aktarıldı</string>
+    <string name="generic_today">Bugün</string>
+    <string name="generic_click_twice_cancel">İptal etmek için tekrar geri düğmesine tıklayın</string>
+    <string name="generic_yesterday">Dün</string>
+    <string name="generic_filter">Filtre</string>
+    <string name="import_parser_error">Ayrıştırıcı hatası: %1$s</string>
+    <string name="import_unable_to_import_file">Dosya içe aktarılamıyor: %1$s</string>
+    <string name="import_unsupported_format">Desteklenmeyen dosya formatı</string>
+    <string name="import_no_kml_file_found">KMZ\'de doc.kml dosyası bulunamadı</string>
+    <string name="import_error_info">%1$s: %2$s</string>
+    <string name="import_error_list_dialog_title">Dosyalar içe aktarılmadı</string>
+    <string name="menu_filter">Filtrele</string>
+    <string name="sensor_state_cadence_avg">Ort. Tempo</string>
+    <string name="sensor_state_cadence_max">Maks. Tempo</string>
+    <string name="settings_ui_summary">Görünüm, Kayıt Düzeni, Tema</string>
+    <string name="settings_gps_title">GPS</string>
+    <string name="settings_defaults_summary">Tercih Edilen Birimler, Varsayılan Etkinlik, Varsayılan Parça Adı</string>
+    <string name="settings_gps_summary">Zaman aralığı, Mesafe aralığı, Maks. Mesafe, Hassasiyet</string>
+    <string name="settings_announcements_title">Sesli Anonslar</string>
+    <string name="settings_announcements_summary">Zaman, Mesafe, Ses Hızı</string>
+    <string name="help_data_storage_content"> Sensör verileri, kaydedilen konum başına saklanır. Kalp atış hızı sensörü açısından bu, konum başına yalnızca <i>bir</i> kalp atış hızı ölçümünün depolandığı anlamına gelir. Hareketsiz duruyorsanız veya içerideyseniz, hiçbir sensör verisi kaydedilmeyecektir (ancak gösterilecektir). </string>
+    <string name="help_support_content"> Yapabileceklerin:
+\n a) OpenTracks hakkında bahsetmek,
+\n b) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">özellikler önermek</a>,
+\n c) <a href="https://github.com/OpenTracksApp/OpenTracks/issues">hataları bildirmek</a>,
+\n d) yazılım geliştirmede yardımcı olmak,
+\n e) <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>\'dan satın alın,
+\n f) bağış yapmak ve
+\n g) OpenTracks\'e yardımcı olduğunu düşündüğünüz her şeyi yapın. </string>
+    <string name="open_track_as_trackfileformat">%1$s olarak aç</string>
+    <string name="export_cannot_write_to_dir">Dışa aktarma dizinine yazılamıyor.</string>
+    <string name="generic_dismiss">Reddet</string>
+    <string name="gps_recording_without_signal">OpenTracks GPS verileri olmadan kayıt yapıyor.</string>
+    <string name="export_all_do_it_for_all">bütün çatışmalar için bunu uygula</string>
+    <string name="generic_undo">Geri al</string>
+    <string name="menu_insert_gallery_img">Galeri resmi ekle</string>
+    <string name="settings_sensors_title">Bluetooth Sensörleri</string>
+    <string name="settings_sensors_summary">Bisiklet Sensörleri, Tekerlek Çevresi, Koşu Sensörleri</string>
+    <string name="delete_service">Silme hizmeti</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="one">Bir hatayla tamamlandı</item>
+        <item quantity="other">%1$d hatayla tamamlandı</item>
+    </plurals>
+    <string name="marker_add_photo_canceled">İptal edildi, fotoğraf işaretçisi eklenmedi</string>
+    <string name="menu_voice_rate">Ses hızı</string>
+    <string name="menu_add_custom_layout">Yeni düzen</string>
+    <string name="menu_select_layout">Dizilim Seç</string>
+    <string name="permission_bluetooth_failed_rejected">Sistem ayarlarında Yakındaki Cihazlara OpenTracks erişimini manuel olarak vermeniz gerekir.</string>
+    <string name="permission_bluetooth_failed">OpenTracks Bluetooth\'u kullanmak için izin gerektirir.</string>
+    <string name="field_remove_from_layout">Kaldır</string>
+    <string name="no_compatible_file_manager_installed">Uyumlu dosya yöneticisi yüklü değil</string>
+    <string name="export_with_photos">fotoğraflarla</string>
+    <string name="menu_resume_track">Parçayı devam ettir</string>
+    <string name="sensor_state_heart_rate_avg">Ort. Nabız</string>
+    <string name="sensor_state_power_avg">Ort. Güç</string>
+    <string name="sensor_state_heart_rate_max">Maks. Nabız</string>
+    <string name="sensor_could_not_scan">Bluetooth cihazları taranamadı (%1$i hatası).</string>
+    <string name="bluetooth_disabled">Lütfen Bluetooth\'u etkinleştirin.</string>
+    <string name="settings_open_tracks_title">Open Tracks</string>
+    <string name="settings_open_tracks_summary">OpenTracks Projesi hakkında her şey</string>
+    <string name="help_support_title">OpenTracks\'i nasıl destekleyebilirim\?</string>
+    <string name="export_track_already_exists_msg">%1$s parçası hedef dizinde zaten var.</string>
+    <string name="description_altitude_loss">Yükseklik kaybı: %1$d m (%2$d ft)</string>
+    <string name="help_gps_troubleshooting_title">OpenTracks konumları kaydetmiyor mu\?</string>
+    <string name="help_gps_troubleshooting_content"> Ne yapabilirsin:
+\n a) GPS\'in etkin olup olmadığını kontrol edin,
+\n b) GPS alımını iyileştirmek (örneğin, dışarı çıkmak),
+\n c) <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/"> GPSTest</a> uygulamasıyla kontrol edin ve
+\n d) pil tasarrufunu devre dışı bırakın.
+\n
+\n Her şey yardımcı olmazsa, lütfen bir hata bildirin. </string>
+    <string name="open_track_as_KML">KML olarak aç</string>
+    <string name="open_track_as_GPX">GPX olarak aç</string>
+    <string name="help_recording_content">OpenTracks, konumu devamlı olarak kaydetmek için cihazın GPS sensörünü kullanır. GPS cihazı yanlış veriler bildirirse (ör. konum, hız, yükseklik) OpenTracks bu konuda bir şey yapamaz.</string>
+    <string name="help_data_storage_title">OpenTracks sensör verilerini nasıl depolar\?</string>
+    <string name="export_dir_not_writable">" (yazılabilir değil!)"</string>
+    <string name="export_track_errors">Parçalar dışa aktarılmadı</string>
+    <string name="export_progress_summary_overwrite_msg">Parçaların üzerine yazıldı</string>
+    <string name="export_progress_summary_skip_msg">Parçalar atlandı</string>
+    <string name="export_progress_summary_errors_msg">Hatalar</string>
+    <string name="generic_open_track">Parçayı Aç</string>
+    <string name="generic_overwrite">Üzerine yaz</string>
+    <string name="generic_skip">Atla</string>
+    <string name="generic_separator_done_total">/</string>
+    <string name="generic_show_errors">Hataları Göster</string>
+    <string name="generic_completed">Tamamlandı</string>
+    <string name="gps_recording_status">%1$s: %2$s</string>
+    <string name="import_file_imported">%1$s dosyası içe aktarıldı</string>
+    <string name="import_progress_summary_exists_msg">Zaten var</string>
+    <string name="import_progress_summary_errors_msg">Hatalar</string>
+    <string name="permission_gps_failed">OpenTracks GPS kullanmak için izin gerektirir.</string>
+    <string name="import_progress_summary_ok_msg">Dosyalar içe aktarıldı</string>
+    <string name="settings_defaults_title">Varsayılan Birimler ve Etkinlik</string>
+    <string name="settings_ui_title">Kullanıcı arayüzü</string>
 </resources>
