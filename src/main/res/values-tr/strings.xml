@@ -485,4 +485,11 @@ limitations under the License.
     <string name="import_progress_summary_ok_msg">Dosyalar içe aktarıldı</string>
     <string name="settings_defaults_title">Varsayılan Birimler ve Etkinlik</string>
     <string name="settings_ui_title">Kullanıcı arayüzü</string>
+    <string name="settings_default_trackfileformat">Dosya biçimini dışa aktarma/paylaşma</string>
+    <string name="settings_export_filename_title">Dosya adının biçimi</string>
+    <string name="settings_import_export_title">İçe/Dışa Aktar</string>
+    <string name="settings_import_export_summary">İçe, Dışa, Otomatik Dışa Aktar</string>
+    <string name="settings_units_category">Birimler</string>
+    <string name="settings_activity_defaults_category">Aktivitenin Varsayılanları</string>
+    <string name="settings_reset_summary">Ayarları varsayılan değerlere sıfırla</string>
 </resources>
