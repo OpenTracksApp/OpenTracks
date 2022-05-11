@@ -551,4 +551,5 @@
     <string name="average_heart_rate">Ritmo cardíaco promedio</string>
     <string name="current_heart_rate">Ritmo cardíaco actual</string>
     <string name="settings_announcements_report_heart_rate">Anunciar ritmo cardíaco</string>
+    <string name="settings_export_filename_title">Formato del nombre del archivo</string>
 </resources>
