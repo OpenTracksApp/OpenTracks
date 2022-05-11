@@ -1,0 +1,22 @@
+Gizliliğinize saygı duyan bir spor takipçisi.
+
+Spor ve açık hava etkinlikleri mutluluk, beceri ve güven verir.
+
+Antrenmanınızı takip ederek sağlığınıza değer verin.
+Koşarken veya yürürken kaydeder ve size bisiklet sürmek için daha büyük ekranlı bir bisiklet bilgisayarı verir.
+Yol boyunca ilginç yerleri resimlerle işaretleyin.
+Analiz için kaydedilen istatistikleri çok ayrıntılı tutun.
+Yalnızca başkalarının sahip olmasını istediğiniz verileri paylaşın.
+
+* Sesli duyurular.
+* Bluetooth LE sensörlerini destekler: kalp atış hızı, hız ve mesafe (bisiklet), tempo (bisiklet) ve güç ölçer (bisiklet).
+* İrtifa kazancı ve kaybı: barometrik sensör aracılığıyla.
+* EGM2008'de gösterilen rakım (ortalama deniz seviyesinin üzerinde); WGS84 olarak dışa aktarılır.
+* Verileri KMZ (fotoğraflar dahil), KML veya GPX olarak parça olarak dışa aktarın.
+* İnternet erişimi veya ekstra izin yok.
+* Sistem ayarlarına uygun olarak koyu ve açık tema.
+* Reklamsız.
+
+Libre yazılımı / Özgür Yazılım / Açık Kaynak
+yani kaynak kodunu kullanabilir, inceleyebilir, değiştirebilir ve paylaşabilirsiniz.
+Lisanslı Apache 2.0
