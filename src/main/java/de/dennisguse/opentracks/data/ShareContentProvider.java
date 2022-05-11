@@ -80,7 +80,7 @@ public class ShareContentProvider extends CustomContentProvider {
     /**
      * @return An URI for one file containing all tracks.
      */
-    public static Pair<Uri, String> createURI(Set<Track.Id> trackIds, String trackName, @NonNull TrackFileFormat trackFileFormat) {
+    public static Pair<Uri, String> createURI(Set<Track.Id> trackIds, String filename, @NonNull TrackFileFormat trackFileFormat) {
         if (trackIds.isEmpty()) {
             throw new UnsupportedOperationException();
         }
@@ -91,7 +91,7 @@ public class ShareContentProvider extends CustomContentProvider {
         }
         trackIdBuilder.deleteCharAt(trackIdBuilder.lastIndexOf(TRACKID_DELIMITER));
 
-        Uri uri = Uri.parse(TracksColumns.CONTENT_URI + "/" + trackFileFormat.getPreferenceId() + "/" + trackIdBuilder + "/" + Uri.encode(trackName) + "." + trackFileFormat.getExtension());
+        Uri uri = Uri.parse(TracksColumns.CONTENT_URI + "/" + trackFileFormat.getPreferenceId() + "/" + trackIdBuilder + "/" + Uri.encode(filename));
         String mime = getTypeMime(uri);
 
         Log.d(TAG, "Created uri " + uri + " with MIME " + mime);
