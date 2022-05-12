@@ -35,6 +35,7 @@ import de.dennisguse.opentracks.sensors.sensorData.SensorDataCycling;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.util.PermissionUtils;
 
 /**
  * Bluetooth LE sensor manager: manages connections to Bluetooth LE sensors.
@@ -160,6 +161,9 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
             return;
         } else {
             connectionManager.disconnect();
+        }
+        if (!PermissionUtils.hasBluetoothPermissions(context)) {
+            Log.w(TAG, "BLUETOOTH_SCAN and/or BLUETOOTH_CONNECT not granted; not connecting.");
         }
 
         Log.i(TAG, "Connecting to bluetooth address: " + address);

@@ -1,6 +1,5 @@
 package de.dennisguse.opentracks.settings.bluetooth;
 
-import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
@@ -9,8 +8,6 @@ import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.ParcelUuid;
 import android.text.TextUtils;
@@ -18,10 +15,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.preference.DialogPreference;
 import androidx.preference.PreferenceDialogFragmentCompat;
 import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
@@ -35,6 +29,7 @@ import java.util.stream.Collectors;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.sensors.BluetoothUtils;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.util.PermissionUtils;
 
 /**
  * Preference to select a discoverable Bluetooth LE device.
@@ -150,26 +145,17 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
             bluetoothIcon = AnimatedVectorDrawableCompat.create(getContext(), R.drawable.ic_bluetooth_searching_animated_24dp);
             bluetoothIcon.start();
 
-            if (
-                    Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && (
-                            ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED ||
-                                    ContextCompat.checkSelfPermission(getContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED
-                    )
-            ) {
-                ActivityResultLauncher<String[]> requestPermissionLauncher =
-                        registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), granted -> {
-                            if (!granted.containsValue(false)) {
-                                startBluetoothScan();
-                            } else if (shouldShowRequestPermissionRationale(Manifest.permission.BLUETOOTH_SCAN) || shouldShowRequestPermissionRationale(Manifest.permission.BLUETOOTH_CONNECT)) {
+            if (!PermissionUtils.hasBluetoothPermissions(getContext())) {
+                PermissionUtils.requestBluetoothPermission(this,
+                        this::startBluetoothScan,
+                        () -> {
+                            if (PermissionUtils.shouldShowRequestPermissionRationaleBluetooth(this)) {
                                 Toast.makeText(getContext(), R.string.permission_bluetooth_failed_rejected, Toast.LENGTH_LONG).show();
-                                dismiss();
                             } else {
                                 Toast.makeText(getContext(), R.string.permission_bluetooth_failed, Toast.LENGTH_SHORT).show();
-                                dismiss();
                             }
+                            dismiss();
                         });
-
-                requestPermissionLauncher.launch(new String[]{Manifest.permission.BLUETOOTH_CONNECT, Manifest.permission.BLUETOOTH_SCAN});
             } else {
                 startBluetoothScan();
             }
