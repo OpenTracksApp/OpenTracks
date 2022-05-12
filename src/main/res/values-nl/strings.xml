@@ -604,4 +604,5 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="custom_layout_select_layout">Lay-out kiezen</string>
     <string name="stats_custom_layout_default_layout">Standaard lay-out</string>
     <string name="settings_all_reset">Teruggezet</string>
+    <string name="settings_export_filename_title">Format van de bestandsnaam</string>
 </resources>
