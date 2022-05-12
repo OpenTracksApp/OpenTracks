@@ -201,7 +201,7 @@ public class PreferencesUtils {
 
         final String VALUE = getString(R.string.stats_units_key, STATS_UNIT_DEFAULT);
         return Arrays.stream(UnitSystem.values())
-                .filter(d -> VALUE.equals(getString(d.getPreferenceId(), STATS_UNIT_DEFAULT)))
+                .filter(d -> VALUE.equals(resources.getString(d.getPreferenceId(), STATS_UNIT_DEFAULT)))
                 .findFirst()
                 .orElse(UnitSystem.defaultUnitSystem()); //TODO This AGAIN defines the default
     }
