@@ -598,4 +598,5 @@ limitations under the License.
         <item quantity="other">%1$.2f kilometer</item>
     </plurals>
     <string name="current_heart_rate">Gjeldende puls</string>
+    <string name="settings_export_filename_title">Format av filnavnet</string>
 </resources>
