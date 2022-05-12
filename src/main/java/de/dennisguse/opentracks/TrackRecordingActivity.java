@@ -1,6 +1,5 @@
 package de.dennisguse.opentracks;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,8 +14,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -379,17 +376,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             return;
         }
 
-        ActivityResultLauncher<String[]> locationPermissionRequest = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-                    Boolean fineLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false);
-                    Boolean coarseLocationGranted = result.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false);
-                    if (fineLocationGranted == null || !fineLocationGranted
-                            || coarseLocationGranted == null || !coarseLocationGranted) {
-                        Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show();
-                    }
-                }
-        );
-        String[] permissions = new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
-        locationPermissionRequest.launch(permissions);
+        PermissionUtils.requestGPSPermission(this, null, () -> Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show());
     }
 
     private void onGpsStatusChanged(GpsStatusValue gpsStatusValue) {
