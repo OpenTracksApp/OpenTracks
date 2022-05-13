@@ -83,7 +83,7 @@ public class TrackFilenameGenerator {
         try {
             getExample();
             return !template.isEmpty();
-        } catch (TemplateInvalidException e) {
+        } catch (TemplateInvalidException | NullPointerException e) {
             return false;
         }
     }
@@ -94,7 +94,7 @@ public class TrackFilenameGenerator {
         track.setUuid(UUID.fromString("fefefefefe-0000-1000-8000-00805f9b34fb"));
         track.getTrackStatistics().setStartTime(Instant.ofEpochMilli(0));
 
-        return format(track, TrackFileFormat.GPX);
+        return format(track, TrackFileFormat.KMZ_WITH_TRACKDETAIL_AND_SENSORDATA_AND_PICTURES);
     }
 
     public static class TemplateInvalidException extends RuntimeException {

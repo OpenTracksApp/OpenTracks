@@ -575,7 +575,7 @@ public class PreferencesUtils {
     }
 
     public static TrackFilenameGenerator getTrackFileformatGenerator() {
-        String DEFAULT = getString(R.string.export_filename_format_default, null);
+        String DEFAULT = resources.getString(R.string.export_filename_format_default);
         TrackFilenameGenerator generator = new TrackFilenameGenerator(getString(R.string.export_filename_format_key, DEFAULT));
         if (generator.isValid()) {
             return generator;
