@@ -618,4 +618,5 @@ limitations under the License.
     <string name="gps_recording_without_signal">OpenTracks записывает без данных GPS.</string>
     <string name="settings_announcements_summary">Время, Дистанция, Настройки голоса</string>
     <string name="settings_all_reset">Сброс</string>
+    <string name="settings_export_filename_title">Формат имени файла</string>
 </resources>
