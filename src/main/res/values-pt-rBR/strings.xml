@@ -550,4 +550,5 @@
         <item quantity="other">%1$.2f milhas</item>
     </plurals>
     <string name="current_heart_rate">Frequência cardíaca atual</string>
+    <string name="settings_export_filename_title">Formato do nome do arquivo</string>
 </resources>
