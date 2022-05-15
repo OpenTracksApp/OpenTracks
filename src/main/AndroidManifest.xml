@@ -364,6 +364,14 @@ limitations under the License.
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ShowErrorActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleInstance"
+            android:process=":crash"/>
+
         <provider
             android:name=".data.ShareContentProvider"
             android:authorities="${applicationId}.content"

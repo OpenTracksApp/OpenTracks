@@ -666,4 +666,7 @@ limitations under the License.
     <string name="field_set_secondary">Secondary</string>
     <string name="field_remove_from_layout">Remove</string>
     <string name="no_compatible_file_manager_installed">No compatible file manager installed</string>
+    <string name="error_crash_title">%1$s crashed</string>
+    <string name="share_crash_report">Share crash report</string>
+    <string name="report_bug">Report bug</string>
 </resources>

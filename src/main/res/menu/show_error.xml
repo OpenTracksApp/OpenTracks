@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="AppCompatResource">
+
+    <item
+        android:id="@+id/error_share"
+        android:icon="@drawable/ic_share_24dp"
+        android:showAsAction="ifRoom"
+        android:title="@string/share_crash_report"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/error_report"
+        android:icon="@drawable/ic_bug_report_24dp"
+        android:showAsAction="ifRoom"
+        android:title="@string/report_bug"
+        app:showAsAction="ifRoom" />
+
+</menu>
