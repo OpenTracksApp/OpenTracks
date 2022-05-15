@@ -119,7 +119,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             throw new RuntimeException("TrackId is mandatory");
         }
         if (contentProviderUtils.getTrack(trackId) == null) {
-            Log.w(TAG, "TrackId does not exists; cannot continue the recording.");
+            Log.w(TAG, "TrackId does not exists.");
             finish();
         }
 

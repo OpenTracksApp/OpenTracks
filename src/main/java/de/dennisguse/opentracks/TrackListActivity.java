@@ -168,13 +168,15 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         viewBinding.trackList.setEmptyView(viewBinding.trackListEmptyView);
         viewBinding.trackList.setOnItemClickListener((parent, view, position, trackIdId) -> {
             Track.Id trackId = new Track.Id(trackIdId);
-            Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordedActivity.class)
-                    .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
             if (recordingStatus.isRecording() && trackId.equals(recordingStatus.getTrackId())) {
                 // Is recording -> open record activity.
+                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordingActivity.class)
+                        .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
                 startActivity(newIntent);
             } else {
                 // Not recording -> open detail activity.
+                Intent newIntent = IntentUtils.newIntent(TrackListActivity.this, TrackRecordedActivity.class)
+                        .putExtra(TrackRecordedActivity.EXTRA_TRACK_ID, trackId);
                 ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(
                         this,
                         new Pair<>(view.findViewById(R.id.list_item_icon), TrackRecordedActivity.VIEW_TRACK_ICON));
