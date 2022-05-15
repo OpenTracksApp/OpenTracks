@@ -1,10 +1,16 @@
 package de.dennisguse.opentracks;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
+import android.content.Context;
+import android.os.Build;
 import android.os.StrictMode;
 import android.util.Log;
 
+import java.lang.reflect.Method;
+
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.util.ExceptionHandler;
 
 /**
  * Code that is executed when the application starts.
@@ -35,6 +41,36 @@ public class Startup extends Application {
             Log.d(TAG, "Enabling strict mode");
             StrictMode.enableDefaults();
         }
+    }
+
+    @Override
+    protected void attachBaseContext(final Context base) {
+        super.attachBaseContext(base);
+
+        // handle crashes only outside the crash reporter activity/process
+        if (!isCrashReportingProcess()) {
+            Thread.UncaughtExceptionHandler defaultPlatformHandler = Thread.getDefaultUncaughtExceptionHandler();
+            ExceptionHandler crashReporter = new ExceptionHandler(this, defaultPlatformHandler);
+            Thread.setDefaultUncaughtExceptionHandler(crashReporter);
+        }
+    }
+
+    private boolean isCrashReportingProcess() {
+        String processName = "";
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
+            // Using the same technique as Application.getProcessName() for older devices
+            // Using reflection since ActivityThread is an internal API
+            try {
+                @SuppressLint("PrivateApi")
+                Class<?> activityThread = Class.forName("android.app.ActivityThread");
+                @SuppressLint("DiscouragedPrivateApi") Method getProcessName = activityThread.getDeclaredMethod("currentProcessName");
+                processName = (String) getProcessName.invoke(null);
+            } catch (Exception ignored) {
+            }
+        } else {
+            processName = Application.getProcessName();
+        }
+        return processName != null && processName.endsWith(":crash");
     }
 
     /**
