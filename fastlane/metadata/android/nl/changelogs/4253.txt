@@ -1,0 +1,16 @@
+v3.18.6: OpenTracks
+
+Wijzigingen:
+- "Toon op kaart"-functionaliteit via KML in plaats van KMZ
+- Spraakaankondigingen bevatten geen app naam
+- Tijdens opname: hoogtewinst/-verlies wordt elke seconde bijgewerkt
+- Winkel beschrijvingen vertaald
+
+Bufixes:
+- Ongeldige vertalingen van stemboodschappen opgelost
+
+Ontwikkelaar:
+- Android12-toestemmingen (BLUETOOTH_SCAN)
+- Android12-toestemmingen (ACCESS_COARSE_LOCATION)
+- Assertiviteit voor TrackPoints (testen)
+- Ongebruikte vertalingen verwijderd
