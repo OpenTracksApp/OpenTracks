@@ -21,10 +21,11 @@ public class TrackFilenameGenerator {
     public static final String UUID_KEY = "{uuid}";
     public static final String TRACKNAME_KEY = "{name}";
     public static final String CATEGORY_KEY = "{category}";
-    public static final String STARTTIME_KEY = "{time}";
+    public static final String STARTTIME_TIME_KEY = "{time}";
+    public static final String STARTTIME_DATE_KEY = "{date}";
 
     public static String getAllOptions() {
-        return Stream.of(UUID_KEY, TRACKNAME_KEY, CATEGORY_KEY, STARTTIME_KEY)
+        return Stream.of(UUID_KEY, TRACKNAME_KEY, CATEGORY_KEY, STARTTIME_TIME_KEY, STARTTIME_DATE_KEY)
                 .collect(Collectors.joining(", "));
     }
 
@@ -40,7 +41,8 @@ public class TrackFilenameGenerator {
         values.put(UUID_KEY, track.getUuid().toString().substring(0, 8));
         values.put(TRACKNAME_KEY, track.getName());
         values.put(CATEGORY_KEY, track.getCategory());
-        values.put(STARTTIME_KEY, track.getStartTime().toString());
+        values.put(STARTTIME_TIME_KEY, track.getStartTime().toLocalTime().toString());
+        values.put(STARTTIME_DATE_KEY, track.getStartTime().toLocalDate().toString());
 
         return FileUtils.sanitizeFileName(format(template, values)) + "." + trackFileFormat.getExtension();
     }
