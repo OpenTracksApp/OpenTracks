@@ -49,7 +49,7 @@
     <bool name="post_workout_export_enabled_default" translatable="false">false</bool>
 
     <string name="export_filename_format_key" translatable="false">instantExportFilename</string>
-    <string name="export_filename_format_default" translatable="false">{time}_{name}</string>
+    <string name="export_filename_format_default" translatable="false">{date}_{time}_{name}</string>
 
     <string name="settings_import" translatable="false">settingsImport</string>
     <string name="settings_export" translatable="false">settingsExport</string>
