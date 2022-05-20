@@ -619,4 +619,7 @@ limitations under the License.
     <string name="settings_announcements_summary">Время, Дистанция, Настройки голоса</string>
     <string name="settings_all_reset">Сброс</string>
     <string name="settings_export_filename_title">Формат имени файла</string>
+    <string name="error_crash_title">%1$s вылетел</string>
+    <string name="share_crash_report">Поделиться отчётом о вылете</string>
+    <string name="report_bug">Сообщить об ошибке</string>
 </resources>
