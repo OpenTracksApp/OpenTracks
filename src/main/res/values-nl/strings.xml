@@ -605,4 +605,7 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="stats_custom_layout_default_layout">Standaard lay-out</string>
     <string name="settings_all_reset">Teruggezet</string>
     <string name="settings_export_filename_title">Format van de bestandsnaam</string>
+    <string name="error_crash_title">%1$s gecrasht</string>
+    <string name="report_bug">Bug rapporteren</string>
+    <string name="share_crash_report">Deel het crash rapport</string>
 </resources>
