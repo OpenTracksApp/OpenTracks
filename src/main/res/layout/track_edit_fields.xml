@@ -23,7 +23,7 @@
                 android:id="@+id/track_edit_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textCapWords"
+                android:inputType="textCapSentences"
                 android:selectAllOnFocus="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
