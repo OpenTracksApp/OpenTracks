@@ -168,7 +168,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="generic_description_line">Beschrijving: %1$s</string>
     <string name="generic_name">Naam</string>
     <string name="generic_name_line">Naam: %1$s</string>
-    <string name="generic_paused">Onderbroken</string>
     <string name="generic_recording">Opnemen…</string>
     <string name="generic_save">Opslaan</string>
     <string name="generic_tracks">Routes</string>
@@ -180,7 +179,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="image_arrow">Pijl</string>
     <string name="image_marker">Markering</string>
     <string name="image_marker_count">Aantal markeringen</string>
-    <string name="image_pause">Onderbreken</string>
     <string name="image_photo_marker">Fotomarkering</string>
     <string name="image_record">Opnemen</string>
     <string name="image_stop">Stoppen</string>
@@ -467,7 +465,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="voice_speed_lap">Ronde snelheid van %1$s</string>
     <string name="instant_export_enabled_title">Directe uitvoer na de training</string>
     <string name="instant_export_enabled_summary">Exporteer track naar opslag nadat opname is voltooid</string>
-    <string name="hold_to_pause">Vasthouden om te pauzeren</string>
     <string name="export_progress_summary_skip_msg">Tracks overgeslagen</string>
     <string name="export_progress_summary_overwrite_msg">Tracks overschreven</string>
     <string name="export_progress_summary_errors_msg">Fouten</string>

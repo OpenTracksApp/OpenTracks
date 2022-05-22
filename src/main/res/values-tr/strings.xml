@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Açıklama: %1$s</string>
     <string name="generic_name">Adı</string>
     <string name="generic_name_line">Adı: %1$s</string>
-    <string name="generic_paused">Duraklatıldı</string>
     <string name="generic_recording">Kaydediliyor…</string>
     <string name="generic_save">Kaydet</string>
     <string name="generic_tracks">Parkurlar</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Ok</string>
     <string name="image_marker">İşaretçi</string>
     <string name="image_marker_count">İşaretçi sayısı</string>
-    <string name="image_pause">Duraklat</string>
     <string name="image_photo_marker">Fotoğraf işaretçisi</string>
     <string name="image_record">Kaydet</string>
     <string name="image_stop">Durdur</string>
@@ -524,7 +522,6 @@ limitations under the License.
     <string name="settings_error_initial_values_restored">Üzgünüz bir hata oluştu. Tüm ayarlar varsayılan değerlere döndürüldü.</string>
     <string name="track_speed_notification">Hız: %1$s</string>
     <string name="aggregated_stats_empty_message">Toplu istatistikleri görmek için ilk parçanızı kaydedin</string>
-    <string name="hold_to_pause">Duraklatmak için basılı tutun</string>
     <string name="instant_export_enabled_title">Antrenman sonrası anında dışa aktarma</string>
     <string name="settings_public_api_dashboard_enabled_title">Otomatik veri aktarımı</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Kaydı başlatan bir uygulama da kaydedilen verilere erişebilir.</string>

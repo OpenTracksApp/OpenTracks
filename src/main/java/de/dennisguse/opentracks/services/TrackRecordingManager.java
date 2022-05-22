@@ -82,25 +82,23 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         return trackId;
     }
 
-    //TODO Handle non-existing trackId? Start a new track or exception?
-    void resumeExistingTrack(@NonNull Track.Id resumeTrackId, @NonNull TrackPointCreator trackPointCreator) {
+    /**
+     * @return if the recording could be started.
+     */
+    boolean resumeExistingTrack(@NonNull Track.Id resumeTrackId, @NonNull TrackPointCreator trackPointCreator) {
         trackId = resumeTrackId;
         Track track = contentProviderUtils.getTrack(trackId);
         if (track == null) {
             Log.e(TAG, "Ignore resumeTrack. Track " + trackId.getId() + " does not exists.");
-            return;
+            return false;
         }
 
         trackStatisticsUpdater = new TrackStatisticsUpdater(track.getTrackStatistics());
         onNewTrackPoint(trackPointCreator.createSegmentStartManual());
 
         reset();
-    }
 
-    void pause(TrackPointCreator trackPointCreator) {
-        insertTrackPoint(trackPointCreator.createSegmentEnd(), true);
-
-        reset();
+        return true;
     }
 
     void end(TrackPointCreator trackPointCreator) {

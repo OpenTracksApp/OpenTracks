@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Leírás: %1$s</string>
     <string name="generic_name">Név</string>
     <string name="generic_name_line">Név: %1$s</string>
-    <string name="generic_paused">Szüneteltetett</string>
     <string name="generic_recording">Rögzítés…</string>
     <string name="generic_save">Mentés</string>
     <string name="generic_tracks">Számok</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Nyíl</string>
     <string name="image_marker">Jelölő</string>
     <string name="image_marker_count">Jelölőszámláló</string>
-    <string name="image_pause">Szünet</string>
     <string name="image_photo_marker">Fényképjelölő</string>
     <string name="image_record">Rögzítés</string>
     <string name="image_stop">Leállítás</string>
@@ -388,7 +386,6 @@ limitations under the License.
     <string name="interval_list_empty_message">Még nincs intervallum</string>
     <string name="settings_default_export_uri_title">Pálya export könyvtár</string>
     <string name="instant_export_enabled_summary">Sáv exportálása a tárolóba a felvétel befejezése után</string>
-    <string name="hold_to_pause">Tartsa a szünethez</string>
     <string name="hold_to_stop">Tartsa lenyomva a leállításhoz</string>
     <string name="track_distance_notification">Távolság: %1$s</string>
     <string name="instant_export_enabled_title">Azonnali edzés utáni export</string>

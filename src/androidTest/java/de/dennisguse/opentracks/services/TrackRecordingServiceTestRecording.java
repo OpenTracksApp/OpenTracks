@@ -159,7 +159,7 @@ public class TrackRecordingServiceTestRecording {
         // when
         String pauseTime = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(pauseTime);
-        service.pauseCurrentTrack();
+        service.endCurrentTrack();
 
         // then
         assertEquals(new TrackStatistics(startTime, pauseTime, 0, 1, 0, 0, 0f, 0f)
@@ -205,7 +205,7 @@ public class TrackRecordingServiceTestRecording {
 
         String pauseTime = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(pauseTime);
-        service.pauseCurrentTrack();
+        service.endCurrentTrack();
 
         // when
         trackPointCreator.setClock("2020-02-02T02:02:04Z");

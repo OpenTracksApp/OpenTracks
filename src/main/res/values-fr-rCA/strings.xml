@@ -97,7 +97,6 @@
     <string name="generic_description_line">Description : %1$s</string>
     <string name="generic_name">Nom</string>
     <string name="generic_name_line">Nom : %1$s</string>
-    <string name="generic_paused">Suspendue</string>
     <string name="generic_recording">Enregistrement en cours…</string>
     <string name="generic_save">Enregistrer</string>
     <string name="generic_tracks">Parcours</string>
@@ -107,7 +106,6 @@
     <string name="image_arrow">Flèche</string>
     <string name="image_marker">Repère</string>
     <string name="image_marker_count">Nombre de repères</string>
-    <string name="image_pause">Pause</string>
     <string name="image_photo_marker">Repère de photo</string>
     <string name="image_record">Enregistrer</string>
     <string name="image_stop">Arrêter</string>

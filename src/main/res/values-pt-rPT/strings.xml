@@ -97,7 +97,6 @@
     <string name="generic_description_line">Descrição: %1$s</string>
     <string name="generic_name">Nome</string>
     <string name="generic_name_line">Nome: %1$s</string>
-    <string name="generic_paused">Parado</string>
     <string name="generic_recording">A gravar…</string>
     <string name="generic_save">Guardar</string>
     <string name="generic_tracks">Percursos</string>
@@ -107,7 +106,6 @@
     <string name="image_arrow">Seta</string>
     <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Contagem do marcador</string>
-    <string name="image_pause">Interromper</string>
     <string name="image_photo_marker">Marcador de fotografias</string>
     <string name="image_record">Gravar</string>
     <string name="image_stop">Parar</string>

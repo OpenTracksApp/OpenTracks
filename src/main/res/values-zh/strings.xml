@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">说明：%1$s</string>
     <string name="generic_name">名称</string>
     <string name="generic_name_line">名称：%1$s</string>
-    <string name="generic_paused">已暂停</string>
     <string name="generic_recording">正在记录…</string>
     <string name="generic_save">保存</string>
     <string name="generic_tracks">路线</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">箭头</string>
     <string name="image_marker">标记</string>
     <string name="image_marker_count">标记数</string>
-    <string name="image_pause">暂停</string>
     <string name="image_photo_marker">照片标记</string>
     <string name="image_record">记录</string>
     <string name="image_stop">停止</string>
@@ -379,7 +377,6 @@ limitations under the License.
     <string name="description_default_speed_or_pace">按活动类型</string>
     <!-- Share image -->
     <string name="hold_to_stop">长按停止</string>
-    <string name="hold_to_pause">长按暂停</string>
     <string name="instant_export_enabled_summary">活动结束后，自动导出数据</string>
     <string name="instant_export_enabled_title">自动导出</string>
     <string name="settings_default_export_uri_title">选择导出目录</string>

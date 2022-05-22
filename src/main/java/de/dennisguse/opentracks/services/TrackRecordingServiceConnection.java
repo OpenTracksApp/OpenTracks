@@ -167,17 +167,6 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
         setTrackRecordingService(null);
     }
 
-    public void resumeTrack() {
-        if (trackRecordingService != null) {
-            trackRecordingService.resumeCurrentTrack();
-        }
-    }
-    public void pauseTrack() {
-        if (trackRecordingService != null) {
-            trackRecordingService.pauseCurrentTrack();
-        }
-    }
-
     @Nullable
     public Marker.Id addMarker(Context context, String name, String category, String description, String photoUrl) {
         TrackRecordingService trackRecordingService = getServiceIfBound();

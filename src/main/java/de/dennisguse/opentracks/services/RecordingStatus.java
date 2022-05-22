@@ -9,12 +9,10 @@ import de.dennisguse.opentracks.data.models.Track;
 
 public class RecordingStatus {
     private final Track.Id trackId;
-    private final boolean paused;
 
     @VisibleForTesting
-    RecordingStatus(Track.Id trackId, boolean paused) {
+    RecordingStatus(Track.Id trackId) {
         this.trackId = trackId;
-        this.paused = paused;
     }
 
     public Track.Id getTrackId() {
@@ -25,24 +23,12 @@ public class RecordingStatus {
         return trackId != null;
     }
 
-    public boolean isPaused() {
-        return paused;
-    }
-
-    public boolean isRecordingAndNotPaused() {
-        return isRecording() && !isPaused();
-    }
-
     static RecordingStatus notRecording() {
-        return new RecordingStatus(null, false);
+        return new RecordingStatus(null);
     }
 
     static RecordingStatus record(@NonNull Track.Id trackId) {
-        return new RecordingStatus(trackId, false);
-    }
-
-    RecordingStatus pause() {
-        return new RecordingStatus(getTrackId(), true);
+        return new RecordingStatus(trackId);
     }
 
     public RecordingStatus stop() {
@@ -54,7 +40,6 @@ public class RecordingStatus {
     public String toString() {
         return "RecordingStatus{" +
                 "trackId=" + trackId +
-                ", paused=" + paused +
                 '}';
     }
 
@@ -63,11 +48,11 @@ public class RecordingStatus {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RecordingStatus that = (RecordingStatus) o;
-        return paused == that.paused && Objects.equals(trackId, that.trackId);
+        return Objects.equals(trackId, that.trackId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(trackId, paused);
+        return Objects.hash(trackId);
     }
 }

@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Описание: %1$s</string>
     <string name="generic_name">Название</string>
     <string name="generic_name_line">Название: %1$s</string>
-    <string name="generic_paused">Пауза</string>
     <string name="generic_recording">Запись…</string>
     <string name="generic_save">Сохранить</string>
     <string name="generic_tracks">Треки</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Стрелка</string>
     <string name="image_marker">Маркер</string>
     <string name="image_marker_count">Количество маркеров</string>
-    <string name="image_pause">Пауза</string>
     <string name="image_photo_marker">Маркер фотографии</string>
     <string name="image_record">Запись</string>
     <string name="image_stop">Стоп</string>
@@ -476,7 +474,6 @@ limitations under the License.
     <string name="voice_pace_lap">Время круга %1$s</string>
     <string name="voice_speed_lap">Скорость круга %1$s</string>
     <string name="instant_export_enabled_title">Мгновенный экспорт после тренировки</string>
-    <string name="hold_to_pause">Удерживайте для паузы</string>
     <string name="hold_to_stop">Удерживать для остановки</string>
     <string name="share_image_body">Я думаю, вас может заинтересовать это изображение.</string>
     <string name="help_support_content"> Вы можете:

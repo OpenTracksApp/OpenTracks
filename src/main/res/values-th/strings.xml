@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">รายละเอียด: %1$s</string>
     <string name="generic_name">ชื่อ</string>
     <string name="generic_name_line">ชื่อ: %1$s</string>
-    <string name="generic_paused">หยุดชั่วคราว</string>
     <string name="generic_recording">กำลังบันทึก…</string>
     <string name="generic_save">บันทึก</string>
     <string name="generic_tracks">เส้นการเดินทาง</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">ลูกศร</string>
     <string name="image_marker">เครื่องหมาย</string>
     <string name="image_marker_count">จำนวนเครื่องหมาย</string>
-    <string name="image_pause">หยุด</string>
     <string name="image_photo_marker">เครื่องหมายรูปภาพ</string>
     <string name="image_record">บันทึก</string>
     <string name="image_stop">หยุด</string>

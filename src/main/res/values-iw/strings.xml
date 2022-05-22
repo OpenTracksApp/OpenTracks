@@ -97,7 +97,6 @@
     <string name="generic_description_line">תיאור: %1$s</string>
     <string name="generic_name">שם</string>
     <string name="generic_name_line">שם: %1$s</string>
-    <string name="generic_paused">מושהה</string>
     <string name="generic_recording">מקליט…</string>
     <string name="generic_save">שמור</string>
     <string name="generic_tracks">מסלולים</string>
@@ -107,7 +106,6 @@
     <string name="image_arrow">חץ</string>
     <string name="image_marker">סמן</string>
     <string name="image_marker_count">ספירת סמן</string>
-    <string name="image_pause">השהה</string>
     <string name="image_photo_marker">סמן תמונות</string>
     <string name="image_record">הקלט</string>
     <string name="image_stop">עצור</string>

@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Descrição: %1$s</string>
     <string name="generic_name">Nome</string>
     <string name="generic_name_line">Nome: %1$s</string>
-    <string name="generic_paused">Pausada</string>
     <string name="generic_recording">Gravando…</string>
     <string name="generic_save">Salvar</string>
     <string name="generic_tracks">Rotas</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Seta</string>
     <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Contagem do marcador</string>
-    <string name="image_pause">Pausa</string>
     <string name="image_photo_marker">Marcador de foto</string>
     <string name="image_record">Gravar</string>
     <string name="image_stop">Parar</string>

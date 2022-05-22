@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Beskrivning: %1$s</string>
     <string name="generic_name">Namn</string>
     <string name="generic_name_line">Namn: %1$s</string>
-    <string name="generic_paused">Pausat</string>
     <string name="generic_recording">Spelar in…</string>
     <string name="generic_save">Spara</string>
     <string name="generic_tracks">Spår</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Pil</string>
     <string name="image_marker">Markör</string>
     <string name="image_marker_count">Antal markörer</string>
-    <string name="image_pause">Pausa</string>
     <string name="image_photo_marker">Fotomarkör</string>
     <string name="image_record">Spela in</string>
     <string name="image_stop">Stopp</string>
@@ -457,7 +455,6 @@ limitations under the License.
     <string name="settings_night_mode_option_night">Natt</string>
     <string name="generic_overwrite">Skriva</string>
     <string name="generic_separator_done_total">/</string>
-    <string name="hold_to_pause">Håll till paus</string>
     <string name="export_track_errors">Spår som inte exporteras</string>
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="help_data_storage_content"> Sensordata lagras per inspelad plats. När det gäller en pulssensor betyder det att endast <i>en</i> pulsmätning lagras per plats. Om du står stilla eller är inomhus, kommer inga sensordata att registreras (men det kommer att visas). </string>

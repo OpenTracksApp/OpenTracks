@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">説明: %1$s</string>
     <string name="generic_name">名前</string>
     <string name="generic_name_line">名前: %1$s</string>
-    <string name="generic_paused">一時停止</string>
     <string name="generic_recording">記録中…</string>
     <string name="generic_save">保存</string>
     <string name="generic_tracks">トラック</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">矢印</string>
     <string name="image_marker">マーカー</string>
     <string name="image_marker_count">マーカー数</string>
-    <string name="image_pause">停止</string>
     <string name="image_photo_marker">写真マーカー</string>
     <string name="image_record">記録</string>
     <string name="image_stop">停止</string>

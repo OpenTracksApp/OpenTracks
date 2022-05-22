@@ -97,7 +97,6 @@
     <string name="generic_description_line">Keterangan: %1$s</string>
     <string name="generic_name">Nama</string>
     <string name="generic_name_line">Nama: %1$s</string>
-    <string name="generic_paused">Dijeda</string>
     <string name="generic_recording">Merekam…</string>
     <string name="generic_save">Simpan</string>
     <string name="generic_tracks">Lintasan</string>
@@ -107,7 +106,6 @@
     <string name="image_arrow">Panah</string>
     <string name="image_marker">Penanda</string>
     <string name="image_marker_count">Hitungan penanda</string>
-    <string name="image_pause">Jeda</string>
     <string name="image_photo_marker">Penanda foto</string>
     <string name="image_record">Rekam</string>
     <string name="image_stop">Hentikan</string>

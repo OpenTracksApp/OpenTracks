@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Opis: %1$s</string>
     <string name="generic_name">Ime</string>
     <string name="generic_name_line">Ime: %1$s</string>
-    <string name="generic_paused">Pauzirano</string>
     <string name="generic_recording">Snimanje…</string>
     <string name="generic_save">Spremi</string>
     <string name="generic_tracks">Trase</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Strelica</string>
     <string name="image_marker">Oznaka</string>
     <string name="image_marker_count">Broj oznaka</string>
-    <string name="image_pause">Pauza</string>
     <string name="image_photo_marker">Oznaka fotografije</string>
     <string name="image_record">Snimanje</string>
     <string name="image_stop">Stop</string>

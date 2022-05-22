@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Описание: %1$s</string>
     <string name="generic_name">Име</string>
     <string name="generic_name_line">Име: %1$s</string>
-    <string name="generic_paused">На пауза</string>
     <string name="generic_recording">Записва се…</string>
     <string name="generic_save">Запазване</string>
     <string name="generic_tracks">Маршрути</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Стрелка</string>
     <string name="image_marker">Маркер</string>
     <string name="image_marker_count">Брой маркери</string>
-    <string name="image_pause">Пауза</string>
     <string name="image_photo_marker">Маркер за снимки</string>
     <string name="image_record">Запис</string>
     <string name="image_stop">Спиране</string>
@@ -404,7 +402,6 @@ limitations under the License.
     <string name="help_storage_pictures_title">Как OpenTracks съхранява снимките, които са направени като маркери\?</string>
     <string name="bluetooth_disabled">Моля, включете Bluetooth.</string>
     <string name="sensor_could_not_scan">Не можа да сканира за Bluetooth устройства (грешка %1$i).</string>
-    <string name="hold_to_pause">Задръжте за пауза</string>
     <string name="interval_list_empty_message">Все още няма интервали</string>
     <string name="track_detail_intervals_tab">Интервали</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">По време на запис показвайте статистически данни, без да отключвате устройството.</string>

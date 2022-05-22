@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Apraksts: %1$s</string>
     <string name="generic_name">Nosaukums</string>
     <string name="generic_name_line">Nosaukums: %1$s</string>
-    <string name="generic_paused">Apturēts</string>
     <string name="generic_recording">Notiek ierakstīšana…</string>
     <string name="generic_save">Saglabāt</string>
     <string name="generic_tracks">Maršruti</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Bultiņa</string>
     <string name="image_marker">Atzīme</string>
     <string name="image_marker_count">Atzīmju numerācija</string>
-    <string name="image_pause">Pauze</string>
     <string name="image_photo_marker">Fotoattēlu atzīme</string>
     <string name="image_record">Ierakstīt</string>
     <string name="image_stop">Apturēt</string>
@@ -425,7 +423,6 @@ limitations under the License.
     <string name="sensor_could_not_scan">Nebija iespējams skenēt Bluetooth ierīces (kļūda %1$i).</string>
     <string name="export_without_photos">bez fotogrāfijām</string>
     <string name="import_prevent_reimport">Jūs esat iestatījis novērst atkārtotas importēšanas dziesmu</string>
-    <string name="hold_to_pause">Turiet, lai pauzē</string>
     <string name="gps_fixed_and_ready">GPS ir fiksēts un gatavs</string>
     <string name="settings_night_mode_title">UI tēma</string>
     <string name="stats_split_interval">Sadalītais intervāls</string>

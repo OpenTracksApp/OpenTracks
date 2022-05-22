@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Mô tả: %1$s</string>
     <string name="generic_name">Tên</string>
     <string name="generic_name_line">Tên: %1$s</string>
-    <string name="generic_paused">Đã tạm dừng</string>
     <string name="generic_recording">Đang ghi…</string>
     <string name="generic_save">Lưu</string>
     <string name="generic_tracks">Đường đi</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Mũi tên</string>
     <string name="image_marker">Điểm đánh dấu</string>
     <string name="image_marker_count">Số lượng điểm đánh dấu</string>
-    <string name="image_pause">Tạm dừng</string>
     <string name="image_photo_marker">Điểm đánh dấu ảnh</string>
     <string name="image_record">Ghi</string>
     <string name="image_stop">Dừng</string>
@@ -490,7 +488,6 @@ limitations under the License.
     <string name="location_coordinate">%1$s°</string>
     <string name="track_pace_notification">Tốc độ: %1$s</string>
     <string name="instant_export_enabled_summary">Xuất khẩu theo dõi lưu trữ sau khi ghi được hoàn thành</string>
-    <string name="hold_to_pause">Giữ tạm dừng</string>
     <string name="hold_to_stop">Giữ để dừng lại</string>
     <string name="share_image_subject">Tôi muốn chia sẻ hình ảnh với bạn</string>
     <string name="field_set_primary">Chính</string>

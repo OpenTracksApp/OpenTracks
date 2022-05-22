@@ -97,7 +97,6 @@
     <string name="generic_description_line">內容描述：%1$s</string>
     <string name="generic_name">名稱</string>
     <string name="generic_name_line">名稱：%1$s</string>
-    <string name="generic_paused">已暫停</string>
     <string name="generic_recording">正在記錄…</string>
     <string name="generic_save">儲存</string>
     <string name="generic_tracks">足跡</string>
@@ -107,7 +106,6 @@
     <string name="image_arrow">箭頭</string>
     <string name="image_marker">標記</string>
     <string name="image_marker_count">標記數</string>
-    <string name="image_pause">暫停</string>
     <string name="image_photo_marker">相片標記</string>
     <string name="image_record">記錄</string>
     <string name="image_stop">停止</string>

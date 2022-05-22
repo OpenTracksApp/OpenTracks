@@ -223,7 +223,6 @@ limitations under the License.
     <string name="generic_name">Name</string>
     <string name="generic_name_line">Name: %1$s</string>
     <string name="generic_open_track">Open Track</string>
-    <string name="generic_paused">Paused</string>
     <string name="generic_recording">Recording&#8230;</string>
     <string name="generic_save">Save</string>
     <string name="generic_tracks">Tracks</string>
@@ -257,7 +256,6 @@ limitations under the License.
     <string name="image_arrow">Arrow</string>
     <string name="image_marker">Marker</string>
     <string name="image_marker_count">Marker count</string>
-    <string name="image_pause">Pause</string>
     <string name="image_photo_marker">Photo marker</string>
     <string name="image_record">Record</string>
     <string name="image_stop">Stop</string>
@@ -654,7 +652,6 @@ limitations under the License.
     <string name="share_image_body">I think you might be interested in this image.</string>
 
     <string name="hold_to_stop">Hold to stop</string>
-    <string name="hold_to_pause">Hold to pause</string>
 
     <string name="instant_export_enabled_summary">Export track to storage after recording is finished</string>
     <string name="instant_export_enabled_title">Instant post-workout export</string>
