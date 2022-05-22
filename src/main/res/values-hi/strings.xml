@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">विवरण: %1$s</string>
     <string name="generic_name">नाम</string>
     <string name="generic_name_line">नाम: %1$s</string>
-    <string name="generic_paused">पॉज़ किया गया</string>
     <string name="generic_recording">रेकॉर्ड हो रहा है…</string>
     <string name="generic_save">सहेजें</string>
     <string name="generic_tracks">ट्रैक</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">तीर</string>
     <string name="image_marker">मार्कर</string>
     <string name="image_marker_count">मार्कर गणना</string>
-    <string name="image_pause">पॉज़ करें</string>
     <string name="image_photo_marker">फ़ोटो मार्कर</string>
     <string name="image_record">रिकॉर्ड करें</string>
     <string name="image_stop">रोकें</string>

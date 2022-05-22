@@ -125,7 +125,6 @@ limitations under the License.
     <string name="generic_description_line">Opis: %1$s</string>
     <string name="generic_name">Nazwa</string>
     <string name="generic_name_line">Nazwa: %1$s</string>
-    <string name="generic_paused">Wstrzymano</string>
     <string name="generic_recording">Rejestrowanie…</string>
     <string name="generic_save">Zapisz</string>
     <string name="generic_tracks">Trasy</string>
@@ -139,7 +138,6 @@ limitations under the License.
     <string name="image_arrow">Strzałka</string>
     <string name="image_marker">Znacznik</string>
     <string name="image_marker_count">Liczba znaczników</string>
-    <string name="image_pause">Pauza</string>
     <string name="image_photo_marker">Znacznik zdjęcia</string>
     <string name="image_record">Rejestruj</string>
     <string name="image_stop">Zatrzymaj</string>
@@ -422,7 +420,6 @@ limitations under the License.
     <string name="share_image_subject">Chcę udostępnić Ci obrazek</string>
     <string name="about_url">Strona projektu <a href="%1$s">%1$s</a></string>
     <string name="about_preference_title">O OpenTracks</string>
-    <string name="hold_to_pause">Przytrzymaj, aby wstrzymać</string>
     <string name="about_history">OpenTracks to fork <a href="https://code.google.com/archive/p/mytracks/"><i>Google\'s MyTracks</i></a> (projekt przerwany w 2016).</string>
     <string name="activity_type_escooter">hulajnoga elektryczna</string>
     <string name="help_feature_content">* tworzy ślady GPS

@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">설명: %1$s</string>
     <string name="generic_name">이름</string>
     <string name="generic_name_line">이름: %1$s</string>
-    <string name="generic_paused">일시중지됨</string>
     <string name="generic_recording">기록 중…</string>
     <string name="generic_save">저장</string>
     <string name="generic_tracks">운동기록</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">화살표</string>
     <string name="image_marker">마커</string>
     <string name="image_marker_count">마커 수</string>
-    <string name="image_pause">일시중지</string>
     <string name="image_photo_marker">사진 마커</string>
     <string name="image_record">기록</string>
     <string name="image_stop">중지</string>

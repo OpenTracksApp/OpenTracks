@@ -171,7 +171,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="generic_description_line">Beskrivelse: %1$s</string>
     <string name="generic_name">Navn</string>
     <string name="generic_name_line">Navn: %1$s</string>
-    <string name="generic_paused">Midlertidigt afbrudt</string>
     <string name="generic_recording">Registrerer…</string>
     <string name="generic_save">Gem</string>
     <string name="generic_tracks">Ruter</string>
@@ -183,7 +182,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="image_arrow">Pil</string>
     <string name="image_marker">Markør</string>
     <string name="image_marker_count">Antal markører</string>
-    <string name="image_pause">Pause</string>
     <string name="image_photo_marker">Billedmarkør</string>
     <string name="image_record">Registrer</string>
     <string name="image_stop">Stop</string>
@@ -466,7 +464,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="track_detail_intervals_tab">Intervaller</string>
     <string name="voice_pace_lap">Omgangstid på %1$s</string>
     <string name="voice_speed_lap">Omgangshastighed på %1$s</string>
-    <string name="hold_to_pause">Hold nede for at holde pause</string>
     <string name="hold_to_stop">Hold for at stoppe</string>
     <string name="settings_prevent_reimport_tracks_title">Forhindre genimport af spor</string>
     <plurals name="generic_completed_with_errors">

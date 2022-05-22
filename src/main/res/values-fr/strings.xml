@@ -169,7 +169,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="generic_description_line">Description : %1$s</string>
     <string name="generic_name">Nom</string>
     <string name="generic_name_line">Nom : %1$s</string>
-    <string name="generic_paused">En pause</string>
     <string name="generic_recording">Enregistrement…</string>
     <string name="generic_save">Enregistrer</string>
     <string name="generic_tracks">Parcours</string>
@@ -181,7 +180,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="image_arrow">Flèche</string>
     <string name="image_marker">Repère</string>
     <string name="image_marker_count">Nombre de repères</string>
-    <string name="image_pause">Pause</string>
     <string name="image_photo_marker">Repère de photo</string>
     <string name="image_record">Enregistrer</string>
     <string name="image_stop">Arrêter</string>
@@ -442,7 +440,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_night_mode_option_system">Système</string>
     <string name="stats_split_interval">Intervalle partagé</string>
     <string name="instant_export_enabled_summary">Exportation de la trace vers le stockage après la fin de l\'enregistrement</string>
-    <string name="hold_to_pause">Tenir pour faire une pause</string>
     <string name="hold_to_stop">Maintenir pour arrêter</string>
     <string name="track_distance_notification">Distance : %1$s</string>
     <string name="open_track_as_KML">Ouvert comme KML</string>

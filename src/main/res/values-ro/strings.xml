@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Descriere: %1$s</string>
     <string name="generic_name">Nume</string>
     <string name="generic_name_line">Nume: %1$s</string>
-    <string name="generic_paused">Oprit temporar</string>
     <string name="generic_recording">Se înregistrează…</string>
     <string name="generic_save">Salvaţi</string>
     <string name="generic_tracks">Trasee</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Săgeată</string>
     <string name="image_marker">Marcator</string>
     <string name="image_marker_count">Număr marcator</string>
-    <string name="image_pause">Pauză</string>
     <string name="image_photo_marker">Marcator fotografie</string>
     <string name="image_record">Înregistrați</string>
     <string name="image_stop">Opriți</string>
@@ -414,7 +412,6 @@ limitations under the License.
     <string name="export_progress_summary_overwrite_msg">Piese suprascrise</string>
     <string name="about_preference_title">Despre OpenTracks</string>
     <string name="help_recording_title">Cum înregistrează OpenTracks datele\?</string>
-    <string name="hold_to_pause">Țineți apăsat pentru pauză</string>
     <string name="hold_to_stop">Țineți pentru a opri</string>
     <string name="stats_loss">Pierderea</string>
     <string name="sensor_state_heart_rate_max">Rata cardiacă maximă</string>

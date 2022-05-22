@@ -177,7 +177,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="generic_description_line">Descrición: %1$s</string>
     <string name="generic_name">Nome</string>
     <string name="generic_name_line">Nome: %1$s</string>
-    <string name="generic_paused">En pausa</string>
     <string name="generic_recording">Gravando…</string>
     <string name="generic_save">Gardar</string>
     <string name="generic_tracks">Traxectos</string>
@@ -191,7 +190,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="image_arrow">Frecha</string>
     <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Reconto de marcadores</string>
-    <string name="image_pause">Pausar</string>
     <string name="image_photo_marker">Marcador de fotos</string>
     <string name="image_record">Gravar</string>
     <string name="image_stop">Deter</string>
@@ -443,7 +441,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="share_image_subject">Quixera compartir unha imaxe contigo</string>
     <string name="share_image_body">Creo que che podería gustar esta imaxe.</string>
     <string name="hold_to_stop">Mantén preso para deter</string>
-    <string name="hold_to_pause">Mantén preso para pausar</string>
     <string name="export_all_do_it_for_all">facelo para todos os conflitos</string>
     <string name="export_track_errors">Rutas non exportadas</string>
     <string name="generic_skip">Omitir</string>

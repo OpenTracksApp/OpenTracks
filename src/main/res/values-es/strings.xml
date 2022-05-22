@@ -166,7 +166,6 @@ limitations under the License.
     <string name="generic_description_line">Descripción: %1$s</string>
     <string name="generic_name">Nombre</string>
     <string name="generic_name_line">Nombre: %1$s</string>
-    <string name="generic_paused">En pausa</string>
     <string name="generic_recording">Grabando…</string>
     <string name="generic_save">Guardar</string>
     <string name="generic_tracks">Recorridos</string>
@@ -178,7 +177,6 @@ limitations under the License.
     <string name="image_arrow">Flecha</string>
     <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Recuento de marcadores</string>
-    <string name="image_pause">Pausa</string>
     <string name="image_photo_marker">Marcador de foto</string>
     <string name="image_record">Grabar</string>
     <string name="image_stop">Parar</string>
@@ -450,7 +448,6 @@ limitations under the License.
     <string name="track_detail_intervals_tab">Intervalos</string>
     <string name="aggregated_stats_empty_message">Grabe su primer recorrido para ver estadísticas agregadas</string>
     <string name="voice_pace_lap">Tiempo de vuelta de %1$s</string>
-    <string name="hold_to_pause">Mantener para pausar</string>
     <string name="instant_export_enabled_title">Exportación instantánea post-entrenamiento</string>
     <string name="settings_default_export_uri_title">Directorio de exportación de recorrido</string>
     <string name="export_track_already_exists_msg">El recorrido %1$s ya existe en el directorio de destino.</string>

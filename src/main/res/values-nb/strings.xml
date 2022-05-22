@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Beskrivelse: %1$s</string>
     <string name="generic_name">Navn</string>
     <string name="generic_name_line">Navn: %1$s</string>
-    <string name="generic_paused">I pausemodus</string>
     <string name="generic_recording">Tar opp …</string>
     <string name="generic_save">Lagre</string>
     <string name="generic_tracks">Spor</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Pil</string>
     <string name="image_marker">Markør</string>
     <string name="image_marker_count">Markørantall</string>
-    <string name="image_pause">Stans midlertidig</string>
     <string name="image_photo_marker">Bildemarkør</string>
     <string name="image_record">Ta opp</string>
     <string name="image_stop">Stopp</string>
@@ -407,7 +405,6 @@ limitations under the License.
     <string name="menu_insert_gallery_img">Sett inn galleribilde</string>
     <string name="permission_gps_failed">OpenTracks krever tillatelse til å bruke GPS.</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Vis statistikk under opptak uten å låse opp enheten.</string>
-    <string name="hold_to_pause">Hold nede for å sette i pausemodus</string>
     <string name="share_image_subject">Jeg vil gjerne dele et bilde med deg</string>
     <string name="import_thread_interrupted">Tråden avbrutt</string>
     <string name="sensor_could_not_scan">Kunne ikke skanne etter Bluetooth-enheter (feil %1$i).</string>

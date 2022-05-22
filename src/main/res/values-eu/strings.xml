@@ -169,7 +169,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="generic_description_line">Azalpena: %1$s</string>
     <string name="generic_name">Izena</string>
     <string name="generic_name_line">Izena: %1$s</string>
-    <string name="generic_paused">Etenda</string>
     <string name="generic_recording">Grabatzen…</string>
     <string name="generic_save">Gorde</string>
     <string name="generic_tracks">Ibilbideak</string>
@@ -181,7 +180,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="image_arrow">Gezia</string>
     <string name="image_marker">Markatzailea</string>
     <string name="image_marker_count">Markatzaile kopurua</string>
-    <string name="image_pause">Pausatu</string>
     <string name="image_photo_marker">Argazki-markatzailea</string>
     <string name="image_record">Grabatu</string>
     <string name="image_stop">Gelditu</string>
@@ -470,7 +468,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="stats_loss">Galera</string>
     <string name="voice_pace_lap">Itzulian-denbora %1$s</string>
     <string name="voice_speed_lap">Itzulian abiadura %1$s</string>
-    <string name="hold_to_pause">Eutsi eteteko</string>
     <string name="hold_to_stop">Eutsi gelditzeko</string>
     <string name="export_progress_summary_skip_msg">Ibilbideak saltatu</string>
     <string name="export_progress_summary_errors_msg">Akatsak</string>

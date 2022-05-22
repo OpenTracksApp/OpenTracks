@@ -166,7 +166,6 @@ limitations under the License.
     <string name="generic_description_line">Kirjeldus: %1$s</string>
     <string name="generic_name">Nimi</string>
     <string name="generic_name_line">Nimi: %1$s</string>
-    <string name="generic_paused">Peatatud</string>
     <string name="generic_recording">Salvestamine…</string>
     <string name="generic_save">Salvesta</string>
     <string name="generic_tracks">Rajad</string>
@@ -178,7 +177,6 @@ limitations under the License.
     <string name="image_arrow">Nool</string>
     <string name="image_marker">Märgis</string>
     <string name="image_marker_count">Märgistuste arv</string>
-    <string name="image_pause">Peata</string>
     <string name="image_photo_marker">Fotomärgis</string>
     <string name="image_record">Salvesta</string>
     <string name="image_stop">Peata</string>
@@ -465,7 +463,6 @@ limitations under the License.
     <string name="interval_list_empty_message">Ei ole ühtegi intervalli veel</string>
     <string name="voice_speed_lap">Ringi kiirus %1$s</string>
     <string name="hold_to_stop">Hoidke lõpetada</string>
-    <string name="hold_to_pause">Hoidke pausi</string>
     <string name="instant_export_enabled_summary">Ekspordi pala salvestusruumi pärast salvestamise lõpetamist</string>
     <string name="settings_default_export_uri_title">Track ekspordi kataloog</string>
     <string name="instant_export_enabled_title">Vahetu treeningujärgne eksport</string>

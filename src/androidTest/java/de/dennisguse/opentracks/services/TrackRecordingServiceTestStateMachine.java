@@ -143,7 +143,7 @@ public class TrackRecordingServiceTestStateMachine {
 
     @MediumTest
     @Test
-    public void recording_startPauseStopResume_no_data() throws InterruptedException {
+    public void recording_startStopResume_no_data() throws InterruptedException {
         // given
         assertFalse(service.isRecording());
 
@@ -153,31 +153,19 @@ public class TrackRecordingServiceTestStateMachine {
 
         // then
         assertTrue(service.isRecording());
-        assertEquals(new RecordingStatus(trackId, false), service.getRecordingStatusObservable().getValue());
+        assertEquals(new RecordingStatus(trackId), service.getRecordingStatusObservable().getValue());
         assertNotEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
         assertEquals(GpsStatusValue.GPS_ENABLED, service.getGpsStatusObservable().getValue());
 
+        service.endCurrentTrack();
 
         // when
-        service.pauseCurrentTrack();
+        service.resumeTrack(trackId);
         Thread.sleep(1000);
 
         // then
         assertTrue(service.isRecording());
-        assertTrue(service.isPaused());
-        assertEquals(new RecordingStatus(trackId, true), service.getRecordingStatusObservable().getValue());
-        assertNotEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
-        assertEquals(GpsStatusValue.GPS_NONE, service.getGpsStatusObservable().getValue()); //TODO The GPS is kept in pause, right? Might be a bug.
-
-
-        // when
-        service.resumeCurrentTrack();
-        Thread.sleep(1000);
-
-        // then
-        assertTrue(service.isRecording());
-        assertFalse(service.isPaused());
-        assertEquals(new RecordingStatus(trackId, false), service.getRecordingStatusObservable().getValue());
+        assertEquals(new RecordingStatus(trackId), service.getRecordingStatusObservable().getValue());
         assertNotEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
         assertEquals(GpsStatusValue.GPS_ENABLED, service.getGpsStatusObservable().getValue());
 
@@ -188,7 +176,6 @@ public class TrackRecordingServiceTestStateMachine {
 
         // then
         assertFalse(service.isRecording());
-        assertFalse(service.isPaused());
         assertEquals(TrackRecordingService.STATUS_DEFAULT, service.getRecordingStatusObservable().getValue());
         assertEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
         assertEquals(GpsStatusValue.GPS_NONE, service.getGpsStatusObservable().getValue());
@@ -200,8 +187,7 @@ public class TrackRecordingServiceTestStateMachine {
 
         // then
         assertTrue(service.isRecording());
-        assertFalse(service.isPaused());
-        assertEquals(new RecordingStatus(trackId, false), service.getRecordingStatusObservable().getValue());
+        assertEquals(new RecordingStatus(trackId), service.getRecordingStatusObservable().getValue());
         Thread.sleep(1000); //TODO Figure out why we need to wait here until the update is happening
         assertNotEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
         assertEquals(GpsStatusValue.GPS_ENABLED, service.getGpsStatusObservable().getValue());
@@ -209,29 +195,31 @@ public class TrackRecordingServiceTestStateMachine {
 
     @MediumTest
     @Test
-    public void invalidStateChanges() throws InterruptedException {
+    public void cannotResume_non_existing_track() throws InterruptedException {
         // given
         assertFalse(service.isRecording());
-
-        // when
-        service.pauseCurrentTrack();
-        Thread.sleep(2000);
-
-        // then
         assertEquals(TrackRecordingService.STATUS_DEFAULT, service.getRecordingStatusObservable().getValue());
         assertEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
         assertEquals(GpsStatusValue.GPS_NONE, service.getGpsStatusObservable().getValue());
 
-
         // when
-        service.resumeCurrentTrack();
-        Thread.sleep(1000);
+        service.resumeTrack(new Track.Id(-1));
 
         // then
+        assertFalse(service.isRecording());
         assertEquals(TrackRecordingService.STATUS_DEFAULT, service.getRecordingStatusObservable().getValue());
         assertEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
         assertEquals(GpsStatusValue.GPS_NONE, service.getGpsStatusObservable().getValue());
+    }
 
+    @MediumTest
+    @Test
+    public void cannotEnd_without_starting() throws InterruptedException {
+        // given
+        assertFalse(service.isRecording());
+        assertEquals(TrackRecordingService.STATUS_DEFAULT, service.getRecordingStatusObservable().getValue());
+        assertEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
+        assertEquals(GpsStatusValue.GPS_NONE, service.getGpsStatusObservable().getValue());
 
         // when
         service.endCurrentTrack();
@@ -257,8 +245,7 @@ public class TrackRecordingServiceTestStateMachine {
 
         // then
         assertTrue(service.isRecording());
-        assertFalse(service.isPaused());
-        assertEquals(new RecordingStatus(trackId, false), service.getRecordingStatusObservable().getValue());
+        assertEquals(new RecordingStatus(trackId), service.getRecordingStatusObservable().getValue());
         Thread.sleep(1000); //TODO Figure out why we need to wait here until the update is happening
         assertNotEquals(TrackRecordingService.NOT_RECORDING, service.getRecordingDataObservable().getValue());
         assertEquals(GpsStatusValue.GPS_ENABLED, service.getGpsStatusObservable().getValue());

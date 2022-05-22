@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Опис: %1$s</string>
     <string name="generic_name">Име</string>
     <string name="generic_name_line">Име: %1$s</string>
-    <string name="generic_paused">Паузирано</string>
     <string name="generic_recording">Снимање…</string>
     <string name="generic_save">Сачувај</string>
     <string name="generic_tracks">Праћења</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Стрелица</string>
     <string name="image_marker">Означивач</string>
     <string name="image_marker_count">Број означивача</string>
-    <string name="image_pause">Паузирајте</string>
     <string name="image_photo_marker">Означивач слика</string>
     <string name="image_record">Снимите</string>
     <string name="image_stop">Зауставите</string>

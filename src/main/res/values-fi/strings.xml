@@ -172,7 +172,6 @@ limitations under the License.
     <string name="generic_description_line">Kuvaus: %1$s</string>
     <string name="generic_name">Nimi</string>
     <string name="generic_name_line">Nimi: %1$s</string>
-    <string name="generic_paused">Keskeytetty</string>
     <string name="generic_recording">Tallennetaan…</string>
     <string name="generic_save">Tallenna</string>
     <string name="generic_tracks">Reitit</string>
@@ -184,7 +183,6 @@ limitations under the License.
     <string name="image_arrow">Nuoli</string>
     <string name="image_marker">Merkki</string>
     <string name="image_marker_count">Merkkien määrä</string>
-    <string name="image_pause">Tauko</string>
     <string name="image_photo_marker">Kuvamerkki</string>
     <string name="image_record">Tallenna</string>
     <string name="image_stop">Lopeta</string>
@@ -438,7 +436,6 @@ limitations under the License.
     <string name="track_detail_intervals_tab">Välein</string>
     <string name="voice_pace_lap">Kierrosaika %1$s</string>
     <string name="instant_export_enabled_title">Instant post-workout vienti</string>
-    <string name="hold_to_pause">Pidä tauko</string>
     <string name="hold_to_stop">Pidä lopettaa</string>
     <string name="gps_fixed_and_ready">GPS kiinteä ja valmis</string>
     <string name="import_no_kml_file_found">Ei doc.KML tiedosto löytyy KMZ</string>

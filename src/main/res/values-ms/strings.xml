@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Keterangan: %1$s</string>
     <string name="generic_name">Nama</string>
     <string name="generic_name_line">Nama: %1$s</string>
-    <string name="generic_paused">Dijeda</string>
     <string name="generic_recording">Merakam…</string>
     <string name="generic_save">Simpan</string>
     <string name="generic_tracks">Lagu</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Anak panah</string>
     <string name="image_marker">Penanda</string>
     <string name="image_marker_count">Kiraan penanda</string>
-    <string name="image_pause">Jeda</string>
     <string name="image_photo_marker">Penanda foto</string>
     <string name="image_record">Rakam</string>
     <string name="image_stop">Berhenti</string>

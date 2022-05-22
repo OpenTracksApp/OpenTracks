@@ -97,7 +97,6 @@
     <string name="generic_description_line">Descriere: %1$s</string>
     <string name="generic_name">Nume</string>
     <string name="generic_name_line">Nume: %1$s</string>
-    <string name="generic_paused">Oprit temporar</string>
     <string name="generic_recording">Se înregistrează…</string>
     <string name="generic_save">Salvaţi</string>
     <string name="generic_tracks">Trasee</string>
@@ -107,7 +106,6 @@
     <string name="image_arrow">Săgeată</string>
     <string name="image_marker">Marcator</string>
     <string name="image_marker_count">Număr marcator</string>
-    <string name="image_pause">Pauză</string>
     <string name="image_photo_marker">Marcator fotografie</string>
     <string name="image_record">Înregistrați</string>
     <string name="image_stop">Opriți</string>

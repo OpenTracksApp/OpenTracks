@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Popis: %1$s</string>
     <string name="generic_name">Meno</string>
     <string name="generic_name_line">Meno: %1$s</string>
-    <string name="generic_paused">Pozastavené</string>
     <string name="generic_recording">Zaznamenáva sa…</string>
     <string name="generic_save">Uložiť</string>
     <string name="generic_tracks">Trasy</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Šípka</string>
     <string name="image_marker">Značka</string>
     <string name="image_marker_count">Počet značiek</string>
-    <string name="image_pause">Pozastaviť</string>
     <string name="image_photo_marker">Fotografická značka</string>
     <string name="image_record">Zaznamenať</string>
     <string name="image_stop">Zastaviť</string>
@@ -530,7 +528,6 @@ limitations under the License.
     <string name="track_detail_intervals_tab">Intervaly</string>
     <string name="share_image_subject">Rád by som sa s vami podelil o jeden obrázok</string>
     <string name="hold_to_stop">Podržaním zastavíte</string>
-    <string name="hold_to_pause">Podržaním pozastavíte</string>
     <string name="instant_export_enabled_summary">Exportovanie stopy do pamäte po dokončení nahrávania</string>
     <string name="title_activity_settings_custom_layout">Prispôsobenie rozloženia nahrávania</string>
     <string name="field_set_primary">Primárne</string>

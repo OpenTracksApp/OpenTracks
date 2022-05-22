@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Περιγραφή: %1$s</string>
     <string name="generic_name">Όνομα</string>
     <string name="generic_name_line">Όνομα: %1$s</string>
-    <string name="generic_paused">Σε παύση</string>
     <string name="generic_recording">Καταγραφή…</string>
     <string name="generic_save">αποθήκευση</string>
     <string name="generic_tracks">Διαδρομές</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Βέλος</string>
     <string name="image_marker">Δείκτης</string>
     <string name="image_marker_count">Αριθμός δείκτη</string>
-    <string name="image_pause">Παύση</string>
     <string name="image_photo_marker">Δείκτης φωτογραφίας</string>
     <string name="image_record">Εγγραφή</string>
     <string name="image_stop">Στοπ</string>

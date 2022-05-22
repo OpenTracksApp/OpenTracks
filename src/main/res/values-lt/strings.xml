@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Aprašymas: %1$s</string>
     <string name="generic_name">Vardas</string>
     <string name="generic_name_line">Vardas: %1$s</string>
-    <string name="generic_paused">Pristabdyta</string>
     <string name="generic_recording">Įrašoma…</string>
     <string name="generic_save">Išsaugoti</string>
     <string name="generic_tracks">Maršrutai</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Rodyklė</string>
     <string name="image_marker">Žymeklis</string>
     <string name="image_marker_count">Žymeklių skaičius</string>
-    <string name="image_pause">Pristabdyti</string>
     <string name="image_photo_marker">Nuotraukos žymeklis</string>
     <string name="image_record">Įrašyti</string>
     <string name="image_stop">Stabdyti</string>
@@ -438,7 +436,6 @@ limitations under the License.
     <string name="help_storage_pictures_content">Jie saugomi programos vidinėje atmintyje (t. Y. Pasiekiami tik OpenTracks).</string>
     <string name="description_default_speed_or_pace">Pagal veiklos rūšį</string>
     <string name="help_recording_content">OpenTracks naudoja prietaiso GPS jutiklį, kad nuolat įrašytų vietą. Jei GPS įrenginys praneša apie netikslius duomenis (pvz., Vietą, greitį, aukštį), OpenTracks negali nieko padaryti.</string>
-    <string name="hold_to_pause">Laikykite, kad pristabdytumėte</string>
     <string name="generic_open_track">Atidaryti takelį</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Įrašydami palaikykite ekraną įjungtą.</string>
     <string name="track_delete_progress">%1$d/%2$d</string>

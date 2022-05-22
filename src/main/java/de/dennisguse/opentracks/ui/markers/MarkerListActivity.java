@@ -181,7 +181,7 @@ public class MarkerListActivity extends AbstractActivity implements DeleteMarker
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        insertMarkerMenuItem.setVisible(track != null && track.getId().equals(recordingStatus.getTrackId()) && !recordingStatus.isPaused());
+        insertMarkerMenuItem.setVisible(track != null && track.getId().equals(recordingStatus.getTrackId()));
         return super.onPrepareOptionsMenu(menu);
     }
 

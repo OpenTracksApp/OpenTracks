@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Paglalarawan: %1$s</string>
     <string name="generic_name">Pangalan</string>
     <string name="generic_name_line">Pangalan: %1$s</string>
-    <string name="generic_paused">Naka-pause</string>
     <string name="generic_recording">Nagre-record…</string>
     <string name="generic_save">I-save</string>
     <string name="generic_tracks">Mga Track</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Arrow</string>
     <string name="image_marker">Marker</string>
     <string name="image_marker_count">Bilang ng marker</string>
-    <string name="image_pause">Pause</string>
     <string name="image_photo_marker">Marker ng larawan</string>
     <string name="image_record">Mag-record</string>
     <string name="image_stop">Huminto</string>

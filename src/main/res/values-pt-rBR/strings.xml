@@ -97,7 +97,6 @@
     <string name="generic_description_line">Descrição: %1$s</string>
     <string name="generic_name">Nome</string>
     <string name="generic_name_line">Nome: %1$s</string>
-    <string name="generic_paused">Pausada</string>
     <string name="generic_recording">Gravando…</string>
     <string name="generic_save">Salvar</string>
     <string name="generic_tracks">Trilhas</string>
@@ -107,7 +106,6 @@
     <string name="image_arrow">Seta</string>
     <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Contagem do marcador</string>
-    <string name="image_pause">Pausa</string>
     <string name="image_photo_marker">Marcador de foto</string>
     <string name="image_record">Gravar</string>
     <string name="image_stop">Parar</string>
@@ -320,7 +318,6 @@
     <string name="voice_speed_lap">Velocidade da volta de %1$s</string>
     <string name="share_image_body">Eu acho que você pode estar interessado nesta imagem.</string>
     <string name="hold_to_stop">Segure para parar</string>
-    <string name="hold_to_pause">Segure para fazer uma pausa</string>
     <string name="instant_export_enabled_title">Exportação instantânea pós-treino</string>
     <string name="settings_default_export_uri_title">Diretório de exportação de trilhas</string>
     <string name="stats_split_interval">Intervalo de divisão</string>

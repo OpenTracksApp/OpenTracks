@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">الوصف: %1$s</string>
     <string name="generic_name">الاسم</string>
     <string name="generic_name_line">الاسم: %1$s</string>
-    <string name="generic_paused">متوقف مؤقتًا</string>
     <string name="generic_recording">جارٍ التسجيل…</string>
     <string name="generic_save">حفظ</string>
     <string name="generic_tracks">المسارات</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">سهم</string>
     <string name="image_marker">علامة</string>
     <string name="image_marker_count">عدد العلامات</string>
-    <string name="image_pause">إيقاف مؤقت</string>
     <string name="image_photo_marker">علامة الصورة</string>
     <string name="image_record">تسجيل</string>
     <string name="image_stop">إيقاف</string>

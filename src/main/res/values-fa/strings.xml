@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">شرح: %1$s</string>
     <string name="generic_name">نام</string>
     <string name="generic_name_line">نام: %1$s</string>
-    <string name="generic_paused">در حال مکث</string>
     <string name="generic_recording">در حال ضبط…</string>
     <string name="generic_save">ذخیره</string>
     <string name="generic_tracks">مسیرها</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">پیکان</string>
     <string name="image_marker">نشانگر</string>
     <string name="image_marker_count">تعداد نشانگر</string>
-    <string name="image_pause">مکث</string>
     <string name="image_photo_marker">نشانگر عکس</string>
     <string name="image_record">ضبط</string>
     <string name="image_stop">توقف</string>

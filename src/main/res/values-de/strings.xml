@@ -172,7 +172,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="generic_description_line">Beschreibung: %1$s</string>
     <string name="generic_name">Name</string>
     <string name="generic_name_line">Name: %1$s</string>
-    <string name="generic_paused">Pausiert</string>
     <string name="generic_recording">Aufzeichnung…</string>
     <string name="generic_save">Speichern</string>
     <string name="generic_tracks">Strecken</string>
@@ -184,7 +183,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="image_arrow">Pfeil</string>
     <string name="image_marker">Markierung</string>
     <string name="image_marker_count">Anzahl der Markierungen</string>
-    <string name="image_pause">Pausieren</string>
     <string name="image_photo_marker">Fotomarkierung</string>
     <string name="image_record">Aufzeichnen</string>
     <string name="image_stop">Beenden</string>
@@ -457,7 +455,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     </plurals>
     <string name="import_error_info">%1$s: %2$s</string>
     <string name="import_file_imported">Datei %1$s wurde importiert</string>
-    <string name="hold_to_pause">Halten für Pause</string>
     <string name="description_altitude_loss">Höhenverlust: %1$d m (%2$d ft)</string>
     <string name="export_error_post_workout">Der Datenexport im Anschluss an die Übung ist fehlgeschlagen. Bitte prüfe den Exportordner.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Vollbild</string>

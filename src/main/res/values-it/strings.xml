@@ -157,7 +157,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="generic_description_line">Descrizione: %1$s</string>
     <string name="generic_name">Nome</string>
     <string name="generic_name_line">Nome: %1$s</string>
-    <string name="generic_paused">In pausa</string>
     <string name="generic_recording">Registrazione…</string>
     <string name="generic_save">Salva</string>
     <string name="generic_tracks">Percorsi</string>
@@ -169,7 +168,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="image_arrow">Freccia</string>
     <string name="image_marker">Indicatore</string>
     <string name="image_marker_count">Contatore indicatori</string>
-    <string name="image_pause">Pausa</string>
     <string name="image_photo_marker">Indicatore fotografico</string>
     <string name="image_record">Registra</string>
     <string name="image_stop">Interrompi</string>
@@ -470,7 +468,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="voice_pace_lap">Tempo sul giro di %1$s</string>
     <string name="share_image_body">Penso che potresti essere interessat* a questa immagine.</string>
     <string name="hold_to_stop">Tieni premuto per fermare</string>
-    <string name="hold_to_pause">Tieni premuto per mettere in pausa</string>
     <string name="instant_export_enabled_summary">Esporta la traccia nella memoria al termine della registrazione</string>
     <string name="instant_export_enabled_title">Esportazione istantanea post-allenamento</string>
     <string name="generic_open_track">Traccia aperta</string>

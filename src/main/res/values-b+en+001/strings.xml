@@ -97,7 +97,6 @@
     <string name="generic_description_line">Description: %1$s</string>
     <string name="generic_name">Name</string>
     <string name="generic_name_line">Name: %1$s</string>
-    <string name="generic_paused">Paused</string>
     <string name="generic_recording">Recording…</string>
     <string name="generic_save">Save</string>
     <string name="generic_tracks">Tracks</string>
@@ -107,7 +106,6 @@
     <string name="image_arrow">Arrow</string>
     <string name="image_marker">Marker</string>
     <string name="image_marker_count">Marker count</string>
-    <string name="image_pause">Pause</string>
     <string name="image_photo_marker">Photo marker</string>
     <string name="image_record">Record</string>
     <string name="image_stop">Stop</string>

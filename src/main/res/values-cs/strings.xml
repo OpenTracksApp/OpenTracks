@@ -166,7 +166,6 @@ limitations under the License.
     <string name="generic_description_line">Popis: %1$s</string>
     <string name="generic_name">Název</string>
     <string name="generic_name_line">Název: %1$s</string>
-    <string name="generic_paused">Pozastaveno</string>
     <string name="generic_recording">Nahrávání…</string>
     <string name="generic_save">Uložit</string>
     <string name="generic_tracks">Trasy</string>
@@ -178,7 +177,6 @@ limitations under the License.
     <string name="image_arrow">Šipka</string>
     <string name="image_marker">Značka</string>
     <string name="image_marker_count">Počet značek</string>
-    <string name="image_pause">Pozastavit</string>
     <string name="image_photo_marker">Fotografická značka</string>
     <string name="image_record">Zaznamenat</string>
     <string name="image_stop">Ukončit</string>
@@ -450,7 +448,6 @@ limitations under the License.
     <string name="stats_split_interval">Rozdělit interval</string>
     <string name="track_detail_intervals_tab">Intervaly</string>
     <string name="voice_pace_lap">Čas na kolo %1$s</string>
-    <string name="hold_to_pause">Podržet pro pozastavení</string>
     <string name="instant_export_enabled_title">Instantní export po tréninku</string>
     <string name="settings_default_export_uri_title">Adresář pro export tras</string>
     <string name="import_thread_interrupted">Vlákno přerušeno</string>

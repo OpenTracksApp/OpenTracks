@@ -117,7 +117,6 @@ limitations under the License.
     <string name="generic_description_line">Descripció: %1$s</string>
     <string name="generic_name">Nom</string>
     <string name="generic_name_line">Nom: %1$s</string>
-    <string name="generic_paused">En pausa</string>
     <string name="generic_recording">S\'està enregistrant…</string>
     <string name="generic_save">Desa</string>
     <string name="generic_tracks">Rutes</string>
@@ -129,7 +128,6 @@ limitations under the License.
     <string name="image_arrow">Fletxa</string>
     <string name="image_marker">Marcador</string>
     <string name="image_marker_count">Recompte de marcadors</string>
-    <string name="image_pause">Atura</string>
     <string name="image_photo_marker">Marcador de fotos</string>
     <string name="image_record">Enregistra</string>
     <string name="image_stop">Atura</string>
