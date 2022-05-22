@@ -34,7 +34,7 @@
                     android:id="@+id/custom_layout_list_edit_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapWords"
+                    android:inputType="textCapSentences"
                     android:imeOptions="actionDone"
                     android:hint="@string/custom_layout_list_edit_name" />
 

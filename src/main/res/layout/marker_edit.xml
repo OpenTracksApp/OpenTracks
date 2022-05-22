@@ -45,7 +45,7 @@ limitations under the License.
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_marker_orange_pushpin_with_shadow"
-                        android:inputType="textCapWords"
+                        android:inputType="textCapSentences"
                         android:selectAllOnFocus="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>
