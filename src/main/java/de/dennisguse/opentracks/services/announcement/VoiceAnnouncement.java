@@ -34,8 +34,8 @@ import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.TrackPointIterator;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.ui.intervals.IntervalStatistics;
@@ -56,6 +56,10 @@ public class VoiceAnnouncement {
     private final AudioManager audioManager;
 
     private final ContentProviderUtils contentProviderUtils;
+    private TrackPoint.Id startTrackPointId = null;
+
+    private IntervalStatistics intervalStatistics;
+    private Distance intervalDistance;
 
     private final AudioManager.OnAudioFocusChangeListener audioFocusChangeListener = new AudioManager.OnAudioFocusChangeListener() {
         @Override
@@ -116,6 +120,8 @@ public class VoiceAnnouncement {
         this.context = context;
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         contentProviderUtils = new ContentProviderUtils(context);
+        intervalDistance = PreferencesUtils.getVoiceAnnouncementDistance();
+        intervalStatistics = new IntervalStatistics(intervalDistance);
     }
 
     public void start() {
@@ -165,21 +171,22 @@ public class VoiceAnnouncement {
             return;
         }
 
+        Distance currentIntervalDistance = PreferencesUtils.getVoiceAnnouncementDistance();
+        if (currentIntervalDistance != intervalDistance) {
+            intervalStatistics = new IntervalStatistics(currentIntervalDistance);
+            intervalDistance = currentIntervalDistance;
+            startTrackPointId = null;
+        }
 
-        UnitSystem unitSystem = PreferencesUtils.getUnitSystem();
-        boolean isReportSpeed = PreferencesUtils.isReportSpeed(track.getCategory());
-
-        //TODO Do not load all trackpoints for every announcement
-        TrackPointIterator trackPointIterator = contentProviderUtils.getTrackPointLocationIterator(track.getId(), null);
-        IntervalStatistics intervalStatistics = new IntervalStatistics(Distance.one(unitSystem));
-        intervalStatistics.addTrackPoints(trackPointIterator);
+        TrackPointIterator trackPointIterator = new TrackPointIterator(contentProviderUtils, track.getId(), startTrackPointId);
+        startTrackPointId = intervalStatistics.addTrackPoints(trackPointIterator);
         IntervalStatistics.Interval lastInterval = intervalStatistics.getLastInterval();
         SensorStatistics sensorStatistics = null;
         if (track.getId() != null) {
             sensorStatistics = contentProviderUtils.getSensorStats(track.getId());
         }
 
-        Spannable announcement = VoiceAnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), unitSystem, isReportSpeed, lastInterval, sensorStatistics);
+        Spannable announcement = VoiceAnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), PreferencesUtils.getUnitSystem(), PreferencesUtils.isReportSpeed(track.getCategory()) lastInterval, sensorStatistics);
 
         if (announcement.length() > 0) {
             // We don't care about the utterance id. It is supplied here to force onUtteranceCompleted to be called.
