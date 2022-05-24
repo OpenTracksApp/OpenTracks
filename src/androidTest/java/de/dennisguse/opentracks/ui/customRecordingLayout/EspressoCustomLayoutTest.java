@@ -3,10 +3,10 @@ package de.dennisguse.opentracks.ui.customRecordingLayout;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static org.hamcrest.CoreMatchers.is;
-import static de.dennisguse.opentracks.util.EspressoUtils.veryLongTouch;
 
 import android.view.View;
 
@@ -51,7 +51,7 @@ public class EspressoCustomLayoutTest {
 
         // stop recording
         ViewInteraction trackControllerStopButton = onView(withId(R.id.track_recording_fab_action));
-        trackControllerStopButton.perform(veryLongTouch(1600));
+        trackControllerStopButton.perform(longClick());
     }
 
     private static class RecyclerViewItemCountAssertion implements ViewAssertion {

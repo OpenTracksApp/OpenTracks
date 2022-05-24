@@ -11,19 +11,12 @@ import static org.hamcrest.Matchers.anything;
 import static de.dennisguse.opentracks.util.EspressoUtils.selectTabAtIndex;
 import static de.dennisguse.opentracks.util.EspressoUtils.waitFor;
 
-import android.view.MotionEvent;
-import android.view.View;
-
-import androidx.test.espresso.UiController;
-import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.action.MotionEvents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.GrantPermissionRule;
 
-import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -93,7 +86,7 @@ public class EspressoUITest {
             tabLayout.perform(waitFor(1000));
 
             // stop
-            trackControllerStopButton.perform(veryLongTouch(1600));
+            trackControllerStopButton.perform(longClick());
         }
     }
 
@@ -101,36 +94,6 @@ public class EspressoUITest {
     @Test
     public void selectAndDeleteTrack() {
         onView(withId(R.id.track_list)).check(matches(isDisplayed()));
-        onData(anything()).inAdapterView(withId(R.id.track_list)).atPosition(0).perform(veryLongTouch(2000));
+        onData(anything()).inAdapterView(withId(R.id.track_list)).atPosition(0).perform(longClick());
     }
-
-    private static ViewAction veryLongTouch(final int duration_ms) {
-        return new ViewAction() {
-            @Override
-            public String getDescription() {
-                return "Perform long touch.";
-            }
-
-            @Override
-            public Matcher<View> getConstraints() {
-                return isDisplayed();
-            }
-
-            @Override
-            public void perform(UiController uiController, final View view) {
-                // Get view absolute position
-                int[] location = new int[2];
-                view.getLocationOnScreen(location);
-
-                // Offset coordinates by view position
-                float[] coordinates = new float[]{location[0] + 1, location[1] + 1};
-
-                // Send down event, pause, and send up
-                MotionEvent down = MotionEvents.sendDown(uiController, coordinates, new float[]{1f, 1f}).down;
-                uiController.loopMainThreadForAtLeast(duration_ms);
-                MotionEvents.sendUp(uiController, down, coordinates);
-            }
-        };
-    }
-
 }
