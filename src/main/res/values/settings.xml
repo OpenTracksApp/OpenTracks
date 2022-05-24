@@ -304,8 +304,6 @@
     <string name="publicapi_dashboard_enabled_key" translatable="false">apiDashboardEnabledKey</string>
     <bool name="publicapi_dashboard_enabled_default">false</bool>
 
-    <integer name="buttonDelayMillis">1500</integer>
-
     <!-- androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode() -->
     <string name="night_mode_key" translatable="false">nightMode</string>
     <string name="night_mode_default" translatable="false">@string/night_mode_system_value</string>
