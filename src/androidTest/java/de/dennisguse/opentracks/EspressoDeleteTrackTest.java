@@ -5,6 +5,7 @@ import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -14,7 +15,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static de.dennisguse.opentracks.util.EspressoUtils.childAtPosition;
-import static de.dennisguse.opentracks.util.EspressoUtils.veryLongTouch;
 import static de.dennisguse.opentracks.util.EspressoUtils.waitFor;
 import static de.dennisguse.opentracks.util.EspressoUtils.withListSize;
 
@@ -90,7 +90,7 @@ public class EspressoDeleteTrackTest {
             trackControllerStopButton.perform(waitFor(5000));
 
             // stop;
-            trackControllerStopButton.perform(veryLongTouch(1600));
+            trackControllerStopButton.perform(longClick());
         }
 
         // back
@@ -100,7 +100,7 @@ public class EspressoDeleteTrackTest {
         countBefore = numberOfItemsListView();
 
         // select track
-        onData(anything()).inAdapterView(withId(R.id.track_list)).atPosition(0).perform(veryLongTouch(5000));
+        onData(anything()).inAdapterView(withId(R.id.track_list)).atPosition(0).perform(longClick());
 
         // open menu and delete selected track
         ViewInteraction overflowMenuButton = onView(
