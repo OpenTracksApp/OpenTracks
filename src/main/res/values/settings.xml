@@ -358,7 +358,6 @@
     - Key value for the dataField.
     - Comma separated flags for: visible, primary and span/wide for the dataField.
     -->
-    <string name="stats_custom_layout_fields_default_value_separator" translatable="false">_</string>
     <string-array name="stats_custom_layout_fields_default_value_0">
         <item>@string/stats_custom_layout_distance_key</item>
         <item>1,1,0</item>
