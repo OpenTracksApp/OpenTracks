@@ -270,12 +270,6 @@ limitations under the License.
     <string name="value_off">Išjungta</string>
     <string name="value_smallest_recommended">Mažiausia (rekomenduojama)</string>
     <!-- Voice -->
-    <string name="voice_template">%1$s per %2$s, %3$s greičiu</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">bendras atstumas %1$.2f kilometras</item>
-        <item quantity="few">bendras atstumas %1$.2f kilometrai</item>
-        <item quantity="other">bendras atstumas %1$.2f kilometrų</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">bankas</string>
@@ -347,10 +341,8 @@ limitations under the License.
     <string name="sensor_could_not_scan">Nepavyko nuskaityti „Bluetooth“ įrenginių (klaida %1$i).</string>
     <string name="settings_night_mode_option_night">Naktis</string>
     <string name="track_pace_notification">Tempas %1$s</string>
-    <string name="voice_pace_per_kilometer">%1$s už kilometrą</string>
     <string name="open_track_as_KML">Atidaryti kaip KML</string>
     <string name="share_image_subject">Norėčiau pasidalinti vaizdu su jumis</string>
-    <string name="voice_pace_per_mile">%1$s per mylią</string>
     <string name="track_detail_intervals_tab">Intervalai</string>
     <string name="generic_click_twice_cancel">Spustelėkite dar kartą, kad atšauktumėte</string>
     <string name="import_prevent_reimport">Nustatėte neleisti pakartotinai importuoti takelio</string>
@@ -390,7 +382,6 @@ limitations under the License.
     <string name="export_all_do_it_for_all">darykite tai dėl visų konfliktų</string>
     <string name="sensor_state_power_avg">Vidutinė galia</string>
     <string name="track_distance_notification">Atstumas: %1$s</string>
-    <string name="voice_speed_lap">rato greitis %1$s</string>
     <string name="sensor_state_heart_rate_avg">Vidutinis širdies ritmas</string>
     <string name="help_track_export_title">Kaip eksportuoti / bendrinti įrašytus takelius\?</string>
     <string name="track_speed_notification">Greitis %1$s</string>
@@ -413,7 +404,6 @@ limitations under the License.
     <string name="settings_prevent_reimport_tracks_title">Neleiskite reimportuoti takelių</string>
     <string name="permission_gps_failed">OpenTracks reikalingas leidimas naudoti GPS.</string>
     <string name="description_altitude_loss">Aukščio nuostolis: %1$d m (%2$d pėdos)</string>
-    <string name="voice_pace_lap">rato laikas %1$s</string>
     <string name="stats_loss">Nuostolis</string>
     <string name="export_progress_summary_overwrite_msg">Takeliai perrašyti</string>
     <string name="export_track_already_exists_msg">Takelis %1$s jau yra paskirties kataloge.</string>

@@ -374,17 +374,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
         <item quantity="one">1 quilómetro por hora</item>
         <item quantity="other">%1$.1f quilómetros por hora</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s por quilómetro</string>
-    <string name="voice_pace_per_mile">%1$s por quilómetro</string>
-    <string name="voice_template">%1$s en %2$s a %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">distancia total 1 quilómetro</item>
-        <item quantity="other">distancia total %1$.2f quilómetros</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">distancia total 1 milla</item>
-        <item quantity="other">distancia total %1$.2f millas</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Caixeiro automático</string>
     <string name="waypoint_type_bank">banco</string>
@@ -458,7 +447,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_night_mode_option_night">Noite</string>
     <string name="stats_split_interval">Intervalo parcial</string>
     <string name="track_detail_intervals_tab">Intervalos</string>
-    <string name="voice_pace_lap">Tempo da volta de %1$s</string>
     <string name="instant_export_enabled_title">Exportación instantánea tras o adestramento</string>
     <string name="settings_default_export_uri_title">Directorio onde exportar as rutas</string>
     <string name="export_track_already_exists_msg">A ruta %1$s xa existe no directorio de destino.</string>
@@ -470,7 +458,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_night_mode_title">Decorado IU</string>
     <string name="settings_night_mode_option_system">Sistema</string>
     <string name="interval_list_empty_message">Aínda non hai intervalos</string>
-    <string name="voice_speed_lap">Velocidade da volta de %1$s</string>
     <string name="instant_export_enabled_summary">Rematou a exportación da ruta á almacenaxe tras a gravación</string>
     <string name="import_thread_interrupted">Fío interrumpido</string>
     <string name="export_progress_summary_new_msg">Exportadas as novas rutas</string>

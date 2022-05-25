@@ -300,21 +300,6 @@ limitations under the License.
         <item quantity="many">%1$.1f миль на годину</item>
         <item quantity="other">%1$.1f милі на годину</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s на кілометр</string>
-    <string name="voice_pace_per_mile">%1$s на милю</string>
-    <string name="voice_template">%1$s за %2$s (зі швидкістю %3$s)</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">загальна відстань: %1$.2f кілометр</item>
-        <item quantity="few">загальна відстань: %1$.2f км</item>
-        <item quantity="many">загальна відстань: %1$.2f км</item>
-        <item quantity="other">загальна відстань: %1$.2f кілометра</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">загальна відстань: %1$.2f миля</item>
-        <item quantity="few">загальна відстань: %1$.2f милі</item>
-        <item quantity="many">загальна відстань: %1$.2f миль</item>
-        <item quantity="other">загальна відстань: %1$.2f милі</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Банкомат</string>
     <string name="waypoint_type_bank">банк</string>
@@ -378,8 +363,6 @@ limitations under the License.
     <string name="stats_split_interval">Розділити на</string>
     <string name="track_recording_notification_accuracy">Точність місцеположення: %1$s</string>
     <string name="track_detail_intervals_tab">Інтервали</string>
-    <string name="voice_speed_lap">Швидкість кола %1$s</string>
-    <string name="voice_pace_lap">Час кола %1$s</string>
     <string name="interval_list_empty_message">Ще немає інтервалу</string>
     <string name="share_image_body">Думаю, вам може бути цікаво це зображення.</string>
     <string name="instant_export_enabled_summary">Експорт треку в сховище після завершення запису</string>

@@ -360,17 +360,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
         <item quantity="one">1 mil i timen</item>
         <item quantity="other">%1$.1f mil i timen</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s pr. kilometer</string>
-    <string name="voice_pace_per_mile">%1$s pr. mil</string>
-    <string name="voice_template">%1$s på %2$s ved %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">afstand i alt 1 kilometer</item>
-        <item quantity="other">afstand i alt %1$.2f kilometer</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">afstand i alt 1 mil</item>
-        <item quantity="other">afstand i alt %1$.2f mil</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Pengeautomat</string>
     <string name="waypoint_type_bank">bank</string>
@@ -462,8 +451,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="interval_list_empty_message">Der er ikke noget interval endnu</string>
     <string name="aggregated_stats_empty_message">Optag dit første spor for at se aggregerede statistikker</string>
     <string name="track_detail_intervals_tab">Intervaller</string>
-    <string name="voice_pace_lap">Omgangstid på %1$s</string>
-    <string name="voice_speed_lap">Omgangshastighed på %1$s</string>
     <string name="hold_to_stop">Hold for at stoppe</string>
     <string name="settings_prevent_reimport_tracks_title">Forhindre genimport af spor</string>
     <plurals name="generic_completed_with_errors">

@@ -237,15 +237,6 @@
     <plurals name="voiceSpeedMilesPerHour">
         <item quantity="other">%1$.1f mil per jam</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s per kilometer</string>
-    <string name="voice_pace_per_mile">%1$s per mil</string>
-    <string name="voice_template">%1$s dalam %2$s pada kecepatan %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="other">jarak total %1$.2f kilometer</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="other">jarak total %1$.2f mil</item>
-    </plurals>
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">bank</string>
     <string name="waypoint_type_bar">bar</string>

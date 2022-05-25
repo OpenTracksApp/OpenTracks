@@ -285,15 +285,6 @@ limitations under the License.
     <plurals name="voiceSpeedMilesPerHour">
         <item quantity="other">%1$.1f dặm mỗi giờ</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s mỗi ki lô mét</string>
-    <string name="voice_pace_per_mile">%1$s mỗi dặm</string>
-    <string name="voice_template">%1$s trong %2$s tại %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="other">tổng khoảng cách là %1$.2f ki lô mét</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="other">tổng khoảng cách là %1$.2f dặm</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">ngân hàng</string>
@@ -482,8 +473,6 @@ limitations under the License.
     <string name="stats_sensors_power">Sức mạnh</string>
     <string name="track_distance_notification">Khoảng cách: %1$s</string>
     <string name="track_speed_notification">Tốc độ: %1$s</string>
-    <string name="voice_pace_lap">Thời gian lòng của %1$s</string>
-    <string name="voice_speed_lap">Vòng tốc độ của %1$s</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="location_coordinate">%1$s°</string>
     <string name="track_pace_notification">Tốc độ: %1$s</string>

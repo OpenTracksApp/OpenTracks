@@ -290,17 +290,6 @@ limitations under the License.
         <item quantity="one">1 mile per timme</item>
         <item quantity="other">%1$.1f miles per timme</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s par kilometer</string>
-    <string name="voice_pace_per_mile">%1$s per mile</string>
-    <string name="voice_template">%1$s på %2$s med %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">totalt avstånd 1 kilometer</item>
-        <item quantity="other">totalt avstånd %1$.2f kilometer</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">totalt avstånd 1 miles</item>
-        <item quantity="other">totalt avstånd %1$.2f miles</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankomat</string>
     <string name="waypoint_type_bank">bank</string>
@@ -384,8 +373,6 @@ limitations under the License.
     <string name="aggregated_stats_empty_message">Spela in ditt första spår för att se aggregerad statistik</string>
     <string name="help_storage_pictures_content">Dessa lagras i appens interna lagringsutrymme (dvs. de är endast tillgängliga inom OpenTracks).</string>
     <string name="interval_list_empty_message">Det finns inte något intervall ännu</string>
-    <string name="voice_speed_lap">Varvtalet %1$s</string>
-    <string name="voice_pace_lap">Varvtid för %1$s</string>
     <string name="hold_to_stop">Håll för att stoppa</string>
     <string name="settings_night_mode_option_system">Systemet</string>
     <string name="menu_voice_rate">Rösthastighet</string>

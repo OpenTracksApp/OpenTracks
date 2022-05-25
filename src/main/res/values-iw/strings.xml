@@ -250,21 +250,6 @@
         <item quantity="many">%1$.1f מייל לשעה</item>
         <item quantity="other">%1$.1f מייל לשעה</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s לקילומטר</string>
-    <string name="voice_pace_per_mile">%1$s למייל</string>
-    <string name="voice_template">\'המסלולים שלי\' %1$s במשך %2$s במהירות %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">המרחק הכולל הוא קילומטר אחד</item>
-        <item quantity="two">המרחק הכולל הוא שני קילומטר</item>
-        <item quantity="many">המרחק הכולל הוא %1$.2f קילומטר</item>
-        <item quantity="other">המרחק הכולל הוא %1$.2f קילומטר</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">המרחק הכולל הוא מייל אחד</item>
-        <item quantity="two">המרחק הכולל הוא שני מייל</item>
-        <item quantity="many">המרחק הכולל הוא %1$.2f מייל</item>
-        <item quantity="other">המרחק הכולל הוא %1$.2f מייל</item>
-    </plurals>
     <string name="waypoint_type_atm">כספומט</string>
     <string name="waypoint_type_bank">בנק</string>
     <string name="waypoint_type_bar">בר</string>

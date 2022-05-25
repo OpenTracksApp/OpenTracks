@@ -288,17 +288,6 @@ limitations under the License.
         <item quantity="one">1 milla per hora</item>
         <item quantity="other">%1$.1f milles per hora</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s per quilòmetre</string>
-    <string name="voice_pace_per_mile">%1$s per milla</string>
-    <string name="voice_template">%1$s en %2$s a %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">1 quilòmetre de distància total</item>
-        <item quantity="other">%1$.2f quilòmetres de distància total</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">1 milla de distància total</item>
-        <item quantity="other">%1$.2f milles de distància total</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">caixer</string>
     <string name="waypoint_type_bank">banc</string>

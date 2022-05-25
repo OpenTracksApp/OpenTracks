@@ -284,15 +284,6 @@ limitations under the License.
     <plurals name="voiceSpeedMilesPerHour">
         <item quantity="other">시간 당 %1$.1f마일</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">킬로미터 당 %1$s</string>
-    <string name="voice_pace_per_mile">마일 당 %1$s</string>
-    <string name="voice_template">%1$s을(를) %2$s에 완료했으며 속도는 %3$s입니다.</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="other">총 거리 %1$.2f킬로미터</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="other">총 거리 %1$.2f마일</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">은행</string>

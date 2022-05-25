@@ -290,17 +290,6 @@ limitations under the License.
         <item quantity="one">1 mérföld óránként</item>
         <item quantity="other">%1$.1f mérföld óránként</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s kilométerenként</string>
-    <string name="voice_pace_per_mile">%1$s mérföldenként</string>
-    <string name="voice_template">%1$s %2$s alatt %3$s sebességgel</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">össztávolság: 1 kilométer</item>
-        <item quantity="other">össztávolság: %1$.2f kilométer</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">össztávolság: 1 mérföld</item>
-        <item quantity="other">össztávolság: %1$.2f mérföld</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankautomata</string>
     <string name="waypoint_type_bank">bank</string>
@@ -399,7 +388,6 @@ limitations under the License.
     <string name="import_unsupported_format">Nem támogatott fájlformátum</string>
     <string name="description_default_speed_or_pace">Tevékenységtípus szerint</string>
     <string name="export_without_photos">fotók nélkül</string>
-    <string name="voice_speed_lap">%1$s körsebessége</string>
     <string name="help_gps_troubleshooting_content"> Mit tehetsz:
 \n a) ellenőrizze, hogy a GPS engedélyezve van-e,
 \n b) javítsa a GPS-vételt (pl. menjen a szabadba),
@@ -427,7 +415,6 @@ limitations under the License.
     <string name="settings_sensor_disconnected">Megszakadt a kapcsolat %1$s</string>
     <string name="stats_loss">Veszteség</string>
     <string name="track_recording_notification_accuracy">Helyszín pontossága: %1$s</string>
-    <string name="voice_pace_lap">Köridő %1$s</string>
     <string name="export_progress_summary_overwrite_msg">Sávok felülírása</string>
     <string name="export_progress_summary_skip_msg">Kihagyott sávok</string>
     <string name="export_progress_summary_errors_msg">Hibák</string>

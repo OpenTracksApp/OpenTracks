@@ -358,17 +358,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
         <item quantity="one">1 milia orduko</item>
         <item quantity="other">%1$.1f milia orduko</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s kilometro bakoitzeko</string>
-    <string name="voice_pace_per_mile">%1$s miliako</string>
-    <string name="voice_template">Distantzia: %1$s. Denbora: %2$s. Abiadura: %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">distantzia, guztira: 1 kilometro</item>
-        <item quantity="other">distantzia, guztira: %1$.2f kilometro</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">distantzia, guztira: 1 milia</item>
-        <item quantity="other">distantzia, guztira: %1$.2f milia</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">kutxazaina</string>
     <string name="waypoint_type_bank">bankua</string>
@@ -466,8 +455,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="track_detail_intervals_tab">Tarteak</string>
     <string name="stats_split_interval">Zatitu tarte</string>
     <string name="stats_loss">Galera</string>
-    <string name="voice_pace_lap">Itzulian-denbora %1$s</string>
-    <string name="voice_speed_lap">Itzulian abiadura %1$s</string>
     <string name="hold_to_stop">Eutsi gelditzeko</string>
     <string name="export_progress_summary_skip_msg">Ibilbideak saltatu</string>
     <string name="export_progress_summary_errors_msg">Akatsak</string>

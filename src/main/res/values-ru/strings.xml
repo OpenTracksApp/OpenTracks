@@ -300,21 +300,6 @@ limitations under the License.
         <item quantity="many">%1$.1f миль в час</item>
         <item quantity="other">%1$.1f мили в ча</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s на километр</string>
-    <string name="voice_pace_per_mile">%1$s на милю</string>
-    <string name="voice_template">%1$s за %2$s (%3$s)</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">Общая длина: %1$.2f километр</item>
-        <item quantity="few">Общая длина: %1$.2f километра</item>
-        <item quantity="many">Общая длина: %1$.2f километров</item>
-        <item quantity="other">Общая длина: %1$.2f километра</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">Общая длина: %1$.2f миля</item>
-        <item quantity="few">Общая длина: %1$.2f мили</item>
-        <item quantity="many">Общая длина: %1$.2f миль</item>
-        <item quantity="other">Общая длина: %1$.2f мили</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Банкомат</string>
     <string name="waypoint_type_bank">Банк</string>
@@ -471,8 +456,6 @@ limitations under the License.
     <string name="track_distance_notification">Расстояние: %1$s</string>
     <string name="interval_list_empty_message">Интервалов пока нет</string>
     <string name="aggregated_stats_empty_message">Запишите свой первый трек, чтобы увидеть агрегированную статистику</string>
-    <string name="voice_pace_lap">Время круга %1$s</string>
-    <string name="voice_speed_lap">Скорость круга %1$s</string>
     <string name="instant_export_enabled_title">Мгновенный экспорт после тренировки</string>
     <string name="hold_to_stop">Удерживать для остановки</string>
     <string name="share_image_body">Я думаю, вас может заинтересовать это изображение.</string>

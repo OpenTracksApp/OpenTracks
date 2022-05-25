@@ -293,11 +293,6 @@ limitations under the License.
         <item quantity="few">укупна раздаљина %1$.1f километра</item>
         <item quantity="other">укупна раздаљина %1$.1f километара</item>
     </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">укупна раздаљина %1$.2f миља</item>
-        <item quantity="few">укупна раздаљина %1$.2f миља</item>
-        <item quantity="other">укупна раздаљина %1$.2f миља</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">банкомат</string>
     <string name="waypoint_type_bank">банка</string>

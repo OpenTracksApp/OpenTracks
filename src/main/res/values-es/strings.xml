@@ -355,17 +355,6 @@ limitations under the License.
         <item quantity="one">1 milla por hora</item>
         <item quantity="other">%1$.1f millas por hora</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s por kilómetro</string>
-    <string name="voice_pace_per_mile">%1$s por milla</string>
-    <string name="voice_template">%1$s en %2$s a %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">distancia total de 1 kilómetro</item>
-        <item quantity="other">distancia total de %1$.2f kilómetros</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">distancia total de 1 milla</item>
-        <item quantity="other">distancia total de %1$.2f millas</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">cajero automático</string>
     <string name="waypoint_type_bank">banco</string>
@@ -447,7 +436,6 @@ limitations under the License.
     <string name="stats_split_interval">Intervalo partido</string>
     <string name="track_detail_intervals_tab">Intervalos</string>
     <string name="aggregated_stats_empty_message">Grabe su primer recorrido para ver estadísticas agregadas</string>
-    <string name="voice_pace_lap">Tiempo de vuelta de %1$s</string>
     <string name="instant_export_enabled_title">Exportación instantánea post-entrenamiento</string>
     <string name="settings_default_export_uri_title">Directorio de exportación de recorrido</string>
     <string name="export_track_already_exists_msg">El recorrido %1$s ya existe en el directorio de destino.</string>
@@ -461,7 +449,6 @@ limitations under the License.
     <string name="settings_default_trackfileformat">Formato para exportar/compartir</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Pantalla completa</string>
     <string name="interval_list_empty_message">Aún no hay ningún intervalo</string>
-    <string name="voice_speed_lap">Velocidad de vuelta de %1$s</string>
     <string name="hold_to_stop">Mantener para parar</string>
     <string name="instant_export_enabled_summary">Exportar el recorrido al almacenamiento una vez finalizada la grabación</string>
     <string name="stats_loss">Pérdida</string>

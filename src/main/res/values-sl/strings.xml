@@ -301,20 +301,6 @@ limitations under the License.
         <item quantity="few">%1$.1f milj na uro</item>
         <item quantity="other">%1$.1f milj na uro</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s na kilometer</string>
-    <string name="voice_template">%1$s v %2$s pri %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">skupna razdalja %1$.2f kilometer</item>
-        <item quantity="two">skupna razdalja %1$.2f kilometra</item>
-        <item quantity="few">skupna razdalja %1$.2f kilometrov</item>
-        <item quantity="other">skupna razdalja %1$.2f kilometrov</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">skupna razdalja %1$.2f milja</item>
-        <item quantity="two">skupna razdalja %1$.2f milji</item>
-        <item quantity="few">skupna razdalja %1$.2f milj</item>
-        <item quantity="other">skupna razdalja %1$.2f milj</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankomat</string>
     <string name="waypoint_type_bank">banka</string>

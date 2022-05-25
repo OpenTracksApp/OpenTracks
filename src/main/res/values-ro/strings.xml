@@ -295,18 +295,6 @@ limitations under the License.
         <item quantity="few">%1$.1f mile pe oră</item>
         <item quantity="other">%1$.1f (de) mile pe oră</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s pe kilometru</string>
-    <string name="voice_template">%1$s în %2$s cu %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">distanţa totală 1 kilometru</item>
-        <item quantity="few">distanţa totală %1$.2f kilometri</item>
-        <item quantity="other">distanţa totală %1$.2f (de) kilometri</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">distanţa totală 1 milă</item>
-        <item quantity="few">distanţa totală %1$.2f mile</item>
-        <item quantity="other">distanţa totală %1$.2f (de) mile</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Bancomat</string>
     <string name="waypoint_type_bank">bancă</string>
@@ -419,7 +407,6 @@ limitations under the License.
     <string name="settings_default_export_uri_title">Director de export de cale</string>
     <string name="instant_export_enabled_title">Export instantaneu post-antrenament</string>
     <string name="instant_export_enabled_summary">Exportați piesa în spațiul de stocare după terminarea înregistrării</string>
-    <string name="voice_pace_per_mile">%1$s pe milă</string>
     <string name="track_delete_not_recording">Această piesă nu poate fi ștearsă, deoarece este înregistrată în prezent.</string>
     <string name="track_pace_notification">Ritm: %1$s</string>
     <string name="stats_split_interval">Intervalul de divizare</string>
@@ -440,7 +427,6 @@ limitations under the License.
     <string name="track_speed_notification">Viteză: %1$s</string>
     <string name="track_distance_notification">Distanta: %1$s</string>
     <string name="settings_sensor_cycling_cadence">Ciclism: cadența</string>
-    <string name="voice_speed_lap">Viteza pe tur de %1$s</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Afișați statisticile pe ecranul de blocare</string>
     <string name="sensor_state_heart_rate_avg">Avg Ritmul cardiac</string>
     <string name="delete_service">Serviciu de ștergere</string>
@@ -459,7 +445,6 @@ limitations under the License.
     <string name="permission_gps_failed">OpenTracks necesită permisiunea de a utiliza GPS.</string>
     <string name="settings_sensor_disconnected">Deconectat de la %1$s</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Ecran complet</string>
-    <string name="voice_pace_lap">Timp de tur de %1$s</string>
     <string name="aggregated_stats_empty_message">Înregistrează-ți prima piesă pentru a vedea statisticile agregate</string>
     <string name="settings_night_mode_option_day">Ziua</string>
     <string name="import_unable_to_import_file">Nu se poate importa fișierul: %1$s</string>
