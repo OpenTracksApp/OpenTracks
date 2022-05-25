@@ -147,7 +147,6 @@
     <string name="sensor_state_power">Potência</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Indisponível durante a gravação de um percurso</string>
-    <string name="settings_show">Mostrar</string>
     <string name="settings_advanced">Avançado</string>
     <string name="settings_chart_by_distance">Por distância</string>
     <string name="settings_chart_by_time">Por tempo</string>
@@ -164,7 +163,6 @@
     <string name="settings_recording_track_name_date_local_option">Data (local)</string>
     <string name="settings_recording_track_name_number_option">Número</string>
     <string name="settings_recording_track_name_title">Nome de percurso predefinido</string>
-    <string name="settings_reset">Repor</string>
     <string name="settings_reset_confirm_message">Todas as definições são revertidas para os valores predefinidos.</string>
     <string name="settings_reset_confirm_title">Repor agora?</string>
     <string name="settings_reset_done">Todas as definições foram revertidas para os valores predefinidos</string>

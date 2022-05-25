@@ -236,7 +236,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="sensor_could_not_scan">Kon niet scannen naar Bluetooth-apparaten (fout %1$i).</string>
     <string name="bluetooth_disabled">Schakel Bluetooth in.</string>
     <string name="settings_not_while_recording">Niet beschikbaar tijdens het opnemen van een route</string>
-    <string name="settings_show">Weergeven</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Geavanceerd</string>
     <!-- Settings Chart -->
@@ -261,7 +260,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_recording_track_name_number_option">Nummer</string>
     <string name="settings_recording_track_name_title">Standaardroutenaam</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Opnieuw instellen</string>
     <string name="settings_reset_confirm_message">Alle instellingen worden teruggezet op de standaardwaarden.</string>
     <string name="settings_reset_confirm_title">Nu opnieuw instellen?</string>
     <string name="settings_reset_done">Voor alle instellingen zijn de standaardwaarden teruggezet</string>
@@ -492,7 +490,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="generic_yesterday">Gisteren</string>
     <string name="settings_ui_title">User Interface</string>
     <string name="stats_coordinates">Breedte- /Lengtegraad</string>
-    <string name="settings_announcements">Berichten</string>
     <string name="settings_announcements_distance_frequency">Afstandsinterval</string>
     <string name="settings_recording_idle_speed_title">Drempelwaarde stationair</string>
     <string name="value_float_kilometer_hour">%1$.1f km/u</string>

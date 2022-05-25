@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Энергия</string>
     <string name="sensor_state_power_value">%1$d Вт</string>
     <string name="settings_not_while_recording">Недоступно во время записи трека</string>
-    <string name="settings_show">Показать</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Расширенные</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Номер</string>
     <string name="settings_recording_track_name_title">Название по умолчанию</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Сброс настроек</string>
     <string name="settings_reset_confirm_message">Будут восстановлены значения по умолчанию.</string>
     <string name="settings_reset_confirm_title">Сбросить настройки?</string>
     <string name="settings_reset_done">Настройки по умолчанию восстановлены</string>
@@ -511,7 +509,6 @@ limitations under the License.
     <string name="settings_units_category">Единицы</string>
     <string name="settings_announcements_totaltime_frequency">Интервал времени</string>
     <string name="settings_announcements_distance_frequency">Интервал дистанции</string>
-    <string name="settings_announcements">Уведомления</string>
     <string name="custom_layout_list_layout_removed">Раскладка удалена</string>
     <string name="settings_cycling_sensor">Велосипед</string>
     <string name="settings_public_api_enabled_title">Публичный API</string>

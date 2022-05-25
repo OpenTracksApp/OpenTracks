@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Güç</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Parkur kaydı sırasında kullanılamaz</string>
-    <string name="settings_show">Göster</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Gelişmiş</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Sayı</string>
     <string name="settings_recording_track_name_title">Varsayılan parkur adı</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Sıfırla</string>
     <string name="settings_reset_confirm_message">Tüm ayarlar varsayılan değerlerine geri alınacak.</string>
     <string name="settings_reset_confirm_title">Şimdi sıfırlansın mı?</string>
     <string name="settings_reset_done">Tüm ayarlar varsayılan değerlere döndürüldü</string>
@@ -542,7 +540,6 @@ limitations under the License.
     </plurals>
     <string name="instant_export_enabled_summary">Kayıt tamamlandıktan sonra parçayı depolamaya aktar</string>
     <string name="value_float_mile_hour">%1$.1f mi/s</string>
-    <string name="settings_announcements">Anonslar</string>
     <string name="settings_announcements_totaltime_frequency">Zaman aralığı</string>
     <string name="settings_announcements_distance_frequency">Mesafe aralığı</string>
     <string name="stats_sensors_heart_rate">Kalp atış hızı</string>

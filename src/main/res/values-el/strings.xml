@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Ισχύς</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Η επιλογή δεν είναι διαθέσιμη κατά την εγγραφή ίχνους</string>
-    <string name="settings_show">Εμφάνιση</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Προηγμένες</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Αριθμός</string>
     <string name="settings_recording_track_name_title">Προεπιλεγμένο όνομα ίχνους</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Επαναφορά</string>
     <string name="settings_reset_confirm_message">Όλες οι ρυθμίσεις θα επανέλθουν στις προεπιλεγμένες τιμές.</string>
     <string name="settings_reset_confirm_title">Επαναφορά τώρα;</string>
     <string name="settings_reset_done">Όλες οι ρυθμίσεις έχουν επανέλθει στις προεπιλεγμένες τιμές</string>

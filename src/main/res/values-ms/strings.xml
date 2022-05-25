@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Kuasa</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Tidak tersedia semasa merakam laluan</string>
-    <string name="settings_show">Tunjukkan</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Terperinci</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Nombor</string>
     <string name="settings_recording_track_name_title">Nama lalai laluan</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Tetapkan semula</string>
     <string name="settings_reset_confirm_message">Semua tetapan akan dikembalikan kepada nilai lalai.</string>
     <string name="settings_reset_confirm_title">Tetapkan semula sekarang?</string>
     <string name="settings_reset_done">Semua tetapan telah dikembalikan kepada nilai tetapan asal</string>

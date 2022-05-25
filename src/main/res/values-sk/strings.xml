@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Výkon</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Počas záznamu trasy nie je k dispozícii</string>
-    <string name="settings_show">Zobraziť</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Rozšírené</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Číslovanie</string>
     <string name="settings_recording_track_name_title">Predvolený názov trasy</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Obnoviť</string>
     <string name="settings_reset_confirm_message">Obnovia sa predvolené hodnoty všetkých nastavení.</string>
     <string name="settings_reset_confirm_title">Obnoviť?</string>
     <string name="settings_reset_done">Boli vrátené predvolené hodnoty všetkých nastavení</string>
@@ -350,7 +348,6 @@ limitations under the License.
     <string name="settings_recording_customize_layout_select_columns">Počet polí na riadok</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Na celú obrazovku</string>
     <string name="settings_recording_customize_layout_title">Prispôsobiť vzhľad meranie</string>
-    <string name="settings_announcements">Oznámenia</string>
     <string name="settings_announcements_totaltime_frequency">Časový interval</string>
     <string name="settings_announcements_distance_frequency">Interval vzdialenosti</string>
     <string name="settings_layout_reset">Nastaviť predvolený vzhľad</string>

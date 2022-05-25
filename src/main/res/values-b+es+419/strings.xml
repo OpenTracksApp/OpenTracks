@@ -149,7 +149,6 @@
     <string name="sensor_state_power">Potencia</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">No está disponible durante la grabación de un recorrido</string>
-    <string name="settings_show">Mostrar</string>
     <string name="settings_advanced">Opciones avanzadas</string>
     <string name="settings_chart_by_distance">Por distancia</string>
     <string name="settings_chart_by_time">Por tiempo</string>
@@ -166,7 +165,6 @@
     <string name="settings_recording_track_name_date_local_option">Fecha (local)</string>
     <string name="settings_recording_track_name_number_option">Número</string>
     <string name="settings_recording_track_name_title">Nombre de recorrido predeterminado</string>
-    <string name="settings_reset">Restablecer</string>
     <string name="settings_reset_confirm_message">Todos las configuraciones se restablecerán a los valores predeterminados. Esto no eliminará ningún recorrido en el dispositivo.</string>
     <string name="settings_reset_confirm_title">¿Restablecer ahora?</string>
     <string name="settings_reset_done">Se restablecieron los valores predeterminados de todas las configuraciones</string>
@@ -431,7 +429,6 @@
     <string name="settings_announcements_totaltime_frequency">Intervalo de tiempo</string>
     <string name="settings_announcements_distance_frequency">Intervalo de distancia</string>
     <string name="settings_layout_reset">Restablecer pantalla personalizada</string>
-    <string name="settings_announcements">Anuncios</string>
     <string name="settings_layout_reset_confirm_title">¿Restablecer todos los diseños\?</string>
     <string name="settings_layout_reset_done">Todos los diseños se han revertido a los valores predeterminados</string>
     <string name="settings_all_reset">Restablecer</string>

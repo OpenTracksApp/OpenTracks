@@ -180,7 +180,6 @@ limitations under the License.
     <string name="sensor_state_power">功率</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">记录路线时不可用</string>
-    <string name="settings_show">显示</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">高级</string>
     <string name="settings_default_trackfileformat">导出文件格式</string>
@@ -212,7 +211,6 @@ limitations under the License.
     <string name="settings_night_mode_option_day">白天模式</string>
     <string name="settings_night_mode_option_night">夜间模式</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">重置</string>
     <string name="settings_reset_confirm_message">所有设置都将恢复为默认值。</string>
     <string name="settings_reset_confirm_title">立即重置？</string>
     <string name="settings_reset_done">所有设置都已恢复为默认值</string>

@@ -147,7 +147,6 @@
     <string name="sensor_state_power">電源</string>
     <string name="sensor_state_power_value">%1$d 瓦</string>
     <string name="settings_not_while_recording">記錄足跡時無法使用這個選項</string>
-    <string name="settings_show">顯示</string>
     <string name="settings_advanced">進階</string>
     <string name="settings_chart_by_distance">依距離</string>
     <string name="settings_chart_by_time">依時間</string>
@@ -164,7 +163,6 @@
     <string name="settings_recording_track_name_date_local_option">日期 (當地)</string>
     <string name="settings_recording_track_name_number_option">數字</string>
     <string name="settings_recording_track_name_title">預設足跡名稱</string>
-    <string name="settings_reset">重設</string>
     <string name="settings_reset_confirm_message">系統會將所有設定還原為預設值。</string>
     <string name="settings_reset_confirm_title">確定要立即重設？</string>
     <string name="settings_reset_done">所有設定已還原為預設值</string>

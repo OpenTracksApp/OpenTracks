@@ -147,7 +147,6 @@
     <string name="sensor_state_power">Power</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Not available while recording a track</string>
-    <string name="settings_show">Show</string>
     <string name="settings_advanced">Advanced</string>
     <string name="settings_chart_by_distance">By distance</string>
     <string name="settings_chart_by_time">By time</string>
@@ -164,7 +163,6 @@
     <string name="settings_recording_track_name_date_local_option">Date (local)</string>
     <string name="settings_recording_track_name_number_option">Number</string>
     <string name="settings_recording_track_name_title">Default track name</string>
-    <string name="settings_reset">Reset</string>
     <string name="settings_reset_confirm_message">All settings will be reverted to default values.</string>
     <string name="settings_reset_confirm_title">Reset now?</string>
     <string name="settings_reset_done">All settings have been reverted to default values</string>

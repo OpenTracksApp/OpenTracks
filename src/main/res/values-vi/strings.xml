@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Công suất</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Không khả dụng khi đang ghi tuyến đường</string>
-    <string name="settings_show">Hiển thị</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Nâng cao</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Số</string>
     <string name="settings_recording_track_name_title">Tên mặc định của tuyến đường</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Đặt lại</string>
     <string name="settings_reset_confirm_message">Tất cả cài đặt của bạn sẽ được hoàn nguyên về giá trị mặc định.</string>
     <string name="settings_reset_confirm_title">Đặt lại bây giờ?</string>
     <string name="settings_reset_done">Tất cả cài đặt đã được hoàn nguyên về giá trị mặc định</string>
@@ -443,7 +441,6 @@ limitations under the License.
     <string name="settings_night_mode_option_system">Hệ thống</string>
     <string name="settings_night_mode_option_day">Ngày</string>
     <string name="settings_night_mode_option_night">Đêm</string>
-    <string name="settings_announcements">Thông báo</string>
     <string name="settings_announcements_totaltime_frequency">Khoảng thời gian</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Trong khi quay hiện tại trong hình.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Toàn màn hình</string>

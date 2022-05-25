@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">الطاقة</string>
     <string name="sensor_state_power_value">%1$d واط</string>
     <string name="settings_not_while_recording">غير متاح أثناء تسجيل مسار</string>
-    <string name="settings_show">إظهار</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">خيارات متقدمة</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">عدد</string>
     <string name="settings_recording_track_name_title">اسم المسار الافتراضي</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">إعادة تعيين</string>
     <string name="settings_reset_confirm_message">ستتم إعادة جميع الإعدادات إلى القيم الافتراضية.</string>
     <string name="settings_reset_confirm_title">إعادة التعيين الآن؟</string>
     <string name="settings_reset_done">لقد تمت إعادة جميع الإعدادات إلى القيم الافتراضية</string>

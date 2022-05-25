@@ -234,7 +234,6 @@ limitations under the License.
     <string name="sensor_could_not_scan">No se pudieron buscar dispositivos Bluetooth (error %1$i).</string>
     <string name="bluetooth_disabled">Por favor habilite Bluetooth.</string>
     <string name="settings_not_while_recording">No está disponible durante la grabación de un recorrido</string>
-    <string name="settings_show">Mostrar</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Opciones avanzadas</string>
     <!-- Settings Chart -->
@@ -259,7 +258,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Número</string>
     <string name="settings_recording_track_name_title">Nombre de recorrido predeterminado</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Restablecer</string>
     <string name="settings_reset_confirm_message">Todos las configuraciones se restablecerán a los valores predeterminados. Esto no eliminará ningún recorrido en el dispositivo.</string>
     <string name="settings_reset_confirm_title">¿Restablecer ahora?</string>
     <string name="settings_reset_done">Se restablecieron los valores predeterminados de todas las configuraciones</string>
@@ -482,7 +480,6 @@ limitations under the License.
     <string name="settings_sensor_running_speed_and_cadence">Distancia, velocidad y cadencia</string>
     <string name="settings_sensor_cycling_distance_speed">Distancia y velocidad</string>
     <string name="settings_sensor_cycling_cadence">Cadencia</string>
-    <string name="settings_announcements">Anuncios</string>
     <string name="settings_announcements_totaltime_frequency">Intervalo de tiempo</string>
     <string name="settings_announcements_distance_frequency">Intervalo de distancia</string>
     <string name="stats_sensors_heart_rate">Ritmo cardíaco</string>

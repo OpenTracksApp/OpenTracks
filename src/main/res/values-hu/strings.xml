@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Teljesítmény</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Pálya rögzítése közben nem érhető el</string>
-    <string name="settings_show">Megjelenítés</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Speciális</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Szám</string>
     <string name="settings_recording_track_name_title">Pálya alapértelmezett neve</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Visszaállítás</string>
     <string name="settings_reset_confirm_message">Minden beállítás visszaáll az alapértelmezett értékekre.</string>
     <string name="settings_reset_confirm_title">Visszaállítja most?</string>
     <string name="settings_reset_done">Minden beállítás visszaállt az alapértelmezett értékre</string>

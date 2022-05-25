@@ -147,7 +147,6 @@
     <string name="sensor_state_power">Putere</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Indisponibilă în timp ce înregistrați un traseu.</string>
-    <string name="settings_show">Afișați</string>
     <string name="settings_advanced">Avansate</string>
     <string name="settings_chart_by_distance">După distanță</string>
     <string name="settings_chart_by_time">După durată</string>
@@ -164,7 +163,6 @@
     <string name="settings_recording_track_name_date_local_option">Data (local)</string>
     <string name="settings_recording_track_name_number_option">Număr</string>
     <string name="settings_recording_track_name_title">Nume prestabilit traseu</string>
-    <string name="settings_reset">Resetaţi</string>
     <string name="settings_reset_confirm_message">Toate setările vor fi readuse la valorile implicite.</string>
     <string name="settings_reset_confirm_title">Resetați acum?</string>
     <string name="settings_reset_done">Toate setările au revenit la valorile prestabilite</string>

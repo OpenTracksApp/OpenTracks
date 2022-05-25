@@ -242,7 +242,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="sensor_could_not_scan">Konnte nicht nach Bluetooth-Geräten scannen (Fehler %1$i).</string>
     <string name="bluetooth_disabled">Bitte Bluetooth aktivieren.</string>
     <string name="settings_not_while_recording">Während der Aufzeichnung eines Tracks nicht verfügbar</string>
-    <string name="settings_show">Anzeigen</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Erweitert</string>
     <string name="settings_default_trackfileformat">Dateiformat für export/teilen</string>
@@ -268,7 +267,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_recording_track_name_number_option">Nummer</string>
     <string name="settings_recording_track_name_title">Standard-Trackname</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Zurücksetzen</string>
     <string name="settings_reset_confirm_message">Alle Einstellungen werden auf die Standardwerte zurückgesetzt.</string>
     <string name="settings_reset_confirm_title">Jetzt zurücksetzen?</string>
     <string name="settings_reset_done">Alle Einstellungen wurden auf ihre Standardwerte zurückgesetzt</string>
@@ -497,7 +495,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_reset_summary">Einstellungen zurücksetzen</string>
     <string name="settings_recording_customize_layout_title">Layout anpassen</string>
     <string name="settings_recording_customize_layout_select_columns">Felder pro Zeile</string>
-    <string name="settings_announcements">Sprachansagen</string>
     <string name="custom_layout_list_title">Layouts</string>
     <string name="description_speed_source_gps">GPS</string>
     <string name="menu_select_layout">Wähle Layout</string>

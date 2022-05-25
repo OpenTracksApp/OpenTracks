@@ -147,7 +147,6 @@
     <string name="sensor_state_power">Puissance</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Non disponible pendant l\'enregistrement d\'un parcours.</string>
-    <string name="settings_show">Afficher</string>
     <string name="settings_advanced">Avancé</string>
     <string name="settings_chart_by_distance">En fonction de la distance</string>
     <string name="settings_chart_by_time">En fonction de la durée</string>
@@ -164,7 +163,6 @@
     <string name="settings_recording_track_name_date_local_option">Date (format local)</string>
     <string name="settings_recording_track_name_number_option">Numéro</string>
     <string name="settings_recording_track_name_title">Nom parcours par défaut</string>
-    <string name="settings_reset">Réinitialiser</string>
     <string name="settings_reset_confirm_message">Les valeurs par défaut seront rétablies pour tous les paramètres.</string>
     <string name="settings_reset_confirm_title">Réinitialiser maintenant ?</string>
     <string name="settings_reset_done">Les valeurs par défaut de tous les paramètres ont bien été rétablies.</string>

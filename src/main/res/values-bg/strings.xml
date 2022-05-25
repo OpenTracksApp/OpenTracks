@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Захранване</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Не е налице при записване на маршрут</string>
-    <string name="settings_show">Показване</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Разширени</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Число</string>
     <string name="settings_recording_track_name_title">Стандартен маршрут: Име</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Нулиране</string>
     <string name="settings_reset_confirm_message">Всички настройки ще бъдат върнати към стандартните им стойности.</string>
     <string name="settings_reset_confirm_title">Да се зададе ли повторно сега?</string>
     <string name="settings_reset_done">Всички настройки са възстановени до стойностите по подразбиране</string>

@@ -147,7 +147,6 @@
     <string name="sensor_state_power">Daya</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Tidak tersedia saat merekam trek</string>
-    <string name="settings_show">Tampilkan</string>
     <string name="settings_advanced">Lanjutan</string>
     <string name="settings_chart_by_distance">Menurut jarak</string>
     <string name="settings_chart_by_time">Menurut waktu</string>
@@ -164,7 +163,6 @@
     <string name="settings_recording_track_name_date_local_option">Tanggal (lokal)</string>
     <string name="settings_recording_track_name_number_option">Angka</string>
     <string name="settings_recording_track_name_title">Nama trek default</string>
-    <string name="settings_reset">Setel ulang</string>
     <string name="settings_reset_confirm_message">Semua pengaturan akan dikembalikan ke nilai baku. Ini tidak akan menghapus trek apapun pada perangkat.</string>
     <string name="settings_reset_confirm_title">Setel ulang sekarang?</string>
     <string name="settings_reset_done">Semua setelan telah dikembalikan ke nilai default</string>

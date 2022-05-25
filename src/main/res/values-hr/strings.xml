@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Napajanje</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Nije dostupno tijekom snimanja staze</string>
-    <string name="settings_show">Prikaži</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Napredno</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Broj</string>
     <string name="settings_recording_track_name_title">Zadani naziv staze</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Poništiti</string>
     <string name="settings_reset_confirm_message">Sve će se postavke vratiti na zadane vrijednosti.</string>
     <string name="settings_reset_confirm_title">Želite li sada vratiti na zadano?</string>
     <string name="settings_reset_done">Sve su postavke vraćene na zadane vrijednosti</string>

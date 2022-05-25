@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Maitinimas</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Kol įrašinėjamas maršrutas, nepasiekiama</string>
-    <string name="settings_show">Rodyti</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Išplėstinės</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Skaičius</string>
     <string name="settings_recording_track_name_title">Numatyt. maršruto pav</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Nustatyti iš naujo</string>
     <string name="settings_reset_confirm_message">Visi nustatymai bus grąžinti į numatytąsias vertes.</string>
     <string name="settings_reset_confirm_title">Nustatyti iš naujo dabar?</string>
     <string name="settings_reset_done">Visi nustatymai buvo grąžinti į numatytąsias reikšmes</string>

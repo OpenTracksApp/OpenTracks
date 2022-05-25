@@ -190,7 +190,6 @@ limitations under the License.
     <string name="sensor_state_power">Moc</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Niedostępne podczas rejestrowania trasy</string>
-    <string name="settings_show">Pokaż</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Zaawansowane</string>
     <string name="settings_default_trackfileformat">Format pliku eksportu/udostępniania</string>
@@ -222,7 +221,6 @@ limitations under the License.
     <string name="settings_night_mode_option_day">Dzienny</string>
     <string name="settings_night_mode_option_night">Nocny</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Zresetuj</string>
     <string name="settings_reset_confirm_message">Wszystkie ustawienia zostaną zresetowane do wartości domyślnych.</string>
     <string name="settings_reset_confirm_title">Zresetować teraz?</string>
     <string name="settings_reset_done">Wszystkie ustawienia wróciły do wartości domyślnych</string>
@@ -497,7 +495,6 @@ limitations under the License.
     <string name="settings_ui_title">Interfejs Użytkownika</string>
     <string name="settings_gps_summary">Przedział czasu, Przedział dystansu, Maksymalny dystans, Dokładność</string>
     <string name="settings_recording_customize_layout_title">Zmień swój układ ekranu podczas śledzenia</string>
-    <string name="settings_announcements">Wiadomości</string>
     <string name="settings_announcements_totaltime_frequency">Przedział czasu</string>
     <string name="stats_sensors_heart_rate">Częstość akcji serca</string>
     <string name="stats_clock">Zegar</string>
