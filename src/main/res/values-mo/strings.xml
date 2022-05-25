@@ -245,19 +245,6 @@
         <item quantity="few">%1$.1f milă pe oră</item>
         <item quantity="other">%1$.1f mile pe oră</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s pe kilometru</string>
-    <string name="voice_pace_per_mile">%1$s pe milă</string>
-    <string name="voice_template">%1$s în %2$s cu %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">distanţa totală %1$.2f kilometri</item>
-        <item quantity="few">distanţa totală %1$.2f kilometru</item>
-        <item quantity="other">distanţa totală %1$.2f kilometri</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">distanţa totală %1$.2f mile</item>
-        <item quantity="few">distanţa totală %1$.2f milă</item>
-        <item quantity="other">distanţa totală %1$.2f mile</item>
-    </plurals>
     <string name="waypoint_type_atm">Bancomat</string>
     <string name="waypoint_type_bank">bancă</string>
     <string name="waypoint_type_bar">bar</string>

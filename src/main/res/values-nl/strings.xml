@@ -357,17 +357,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
         <item quantity="one">1 mijl per uur</item>
         <item quantity="other">%1$.1f mijl per uur</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s te kilometer</string>
-    <string name="voice_pace_per_mile">%1$s per mijl</string>
-    <string name="voice_template">%1$s in %2$s bij %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">totale afstand 1 kilometer</item>
-        <item quantity="other">totale afstand %1$.2f kilometer</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">totale afstand 1 mijl</item>
-        <item quantity="other">totale afstand %1$.2f mijl</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Pinautomaat</string>
     <string name="waypoint_type_bank">bank</string>
@@ -461,8 +450,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="stats_loss">Verlies</string>
     <string name="interval_list_empty_message">Er zijn nog geen intervallen</string>
     <string name="stats_split_interval">Gesplitst interval</string>
-    <string name="voice_pace_lap">Rondetijd van %1$s</string>
-    <string name="voice_speed_lap">Ronde snelheid van %1$s</string>
     <string name="instant_export_enabled_title">Directe uitvoer na de training</string>
     <string name="instant_export_enabled_summary">Exporteer track naar opslag nadat opname is voltooid</string>
     <string name="export_progress_summary_skip_msg">Tracks overgeslagen</string>

@@ -355,17 +355,6 @@ limitations under the License.
         <item quantity="one">1 miil tunnis</item>
         <item quantity="other">%1$.1f miili tunnis</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s kilomeetri kohta</string>
-    <string name="voice_pace_per_mile">%1$s miilis</string>
-    <string name="voice_template">%1$s ajaga %2$s ja kiirusega %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">kogupikkus 1 kilomeeter</item>
-        <item quantity="other">kogupikkus %1$.2f kilomeetrit</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">kogupikkus 1 miil</item>
-        <item quantity="other">kogupikkus %1$.2f miili</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Sularahaautomaat</string>
     <string name="waypoint_type_bank">pank</string>
@@ -442,7 +431,6 @@ limitations under the License.
     <string name="export_track_errors">Eksportimata rajad</string>
     <string name="export_track_already_exists_msg">Rada %1$s on sihtkataloogis juba olemas.</string>
     <string name="aggregated_stats_empty_message">Salvestage oma esimene pala, et näha koondatud statistikat</string>
-    <string name="voice_pace_lap">Ringiaeg %1$s</string>
     <string name="settings_prevent_reimport_tracks_title">Palade reimportimise vältimine</string>
     <string name="settings_night_mode_option_night">Öö</string>
     <string name="settings_night_mode_option_day">Päev</string>
@@ -461,7 +449,6 @@ limitations under the License.
     <string name="track_detail_intervals_tab">Intervallid</string>
     <string name="stats_split_interval">Jagatud intervall</string>
     <string name="interval_list_empty_message">Ei ole ühtegi intervalli veel</string>
-    <string name="voice_speed_lap">Ringi kiirus %1$s</string>
     <string name="hold_to_stop">Hoidke lõpetada</string>
     <string name="instant_export_enabled_summary">Ekspordi pala salvestusruumi pärast salvestamise lõpetamist</string>
     <string name="settings_default_export_uri_title">Track ekspordi kataloog</string>

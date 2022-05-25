@@ -295,19 +295,6 @@ limitations under the License.
         <item quantity="few">%1$.1f míľ za hodinu</item>
         <item quantity="other">%1$.1f míľ za hodinu</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s na kilometer</string>
-    <string name="voice_pace_per_mile">%1$s na míľu</string>
-    <string name="voice_template">%1$s, čas %2$s, rýchlosť %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">celková vzdialenosť 1 kilometer</item>
-        <item quantity="few">celková vzdialenosť %1$.2f kilometra</item>
-        <item quantity="other">celková vzdialenosť %1$.2f kilometra</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">celková vzdialenosť 1 míľa</item>
-        <item quantity="few">celková vzdialenosť %1$.2f míle</item>
-        <item quantity="other">celková vzdialenosť %1$.2f míľ</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankomat</string>
     <string name="waypoint_type_bank">banka</string>
@@ -510,8 +497,6 @@ limitations under the License.
     <string name="location_coordinate">%1$s°</string>
     <string name="permission_bluetooth_failed">OpenTracks vyžaduje povolenie na používanie Bluetooth.</string>
     <string name="settings_sensor_wheel_circumference">Obvod kolesa (mm)</string>
-    <string name="voice_pace_lap">Čas kola %1$s</string>
-    <string name="voice_speed_lap">Rýchlosť kola %1$s</string>
     <string name="settings_sensor_bluetooth_service_filter_enabled">Zobrazenie iba zariadení Bluetooth, ktoré oznamujú požadované služby</string>
     <string name="stats_loss">Straty</string>
     <string name="track_pace_notification">Tempo: %1$s</string>

@@ -289,17 +289,6 @@ limitations under the License.
         <item quantity="one">%1$.1f  मील प्रति घंटा</item>
         <item quantity="other">%1$.1f मील प्रति घंट</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s प्रति किलोमीटर</string>
-    <string name="voice_pace_per_mile">%1$s प्रति मील</string>
-    <string name="voice_template">%3$s पर %2$s में %1$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">कुल दूरी %1$.2f किलोमीटर</item>
-        <item quantity="other">कुल दूरी %1$.2f किलोमीटर</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">कुल दूरी %1$.2f मील</item>
-        <item quantity="other">कुल दूरी %1$.2f मील</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">ATM</string>
     <string name="waypoint_type_bank">बैंक</string>

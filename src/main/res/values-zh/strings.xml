@@ -302,14 +302,6 @@ limitations under the License.
     <plurals name="voiceSpeedMilesPerHour">
         <item quantity="other">每小时 %1$.1f 英里</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">每公里 %1$s</string>
-    <string name="voice_template">%1$s；时间：%2$s；速度：%3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="other">总距离 %1$.2f 公里</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="other">总距离 %1$.2f 英里</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">自动取款机</string>
     <string name="waypoint_type_bank">银行</string>

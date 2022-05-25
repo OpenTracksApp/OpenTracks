@@ -360,19 +360,6 @@ limitations under the License.
         <item quantity="few">%1$.1f míle za hodinu</item>
         <item quantity="other">%1$.1f mil za hodinu</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s na kilometr</string>
-    <string name="voice_pace_per_mile">%1$s na míli</string>
-    <string name="voice_template">%1$s za %2$s rychlostí %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">celková vzdálenost 1 kilometr</item>
-        <item quantity="few">celková vzdálenost %1$.2f kilometry</item>
-        <item quantity="other">celková vzdálenost %1$.2f kilometrů</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">celková vzdálenost 1 míle</item>
-        <item quantity="few">celková vzdálenost %1$.2f míle</item>
-        <item quantity="other">celková vzdálenost %1$.2f mil</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Bankomat</string>
     <string name="waypoint_type_bank">banka</string>
@@ -447,7 +434,6 @@ limitations under the License.
     <string name="settings_sensor_wheel_circumference">Obvod kola (mm)</string>
     <string name="stats_split_interval">Rozdělit interval</string>
     <string name="track_detail_intervals_tab">Intervaly</string>
-    <string name="voice_pace_lap">Čas na kolo %1$s</string>
     <string name="instant_export_enabled_title">Instantní export po tréninku</string>
     <string name="settings_default_export_uri_title">Adresář pro export tras</string>
     <string name="import_thread_interrupted">Vlákno přerušeno</string>
@@ -470,7 +456,6 @@ limitations under the License.
     <string name="settings_night_mode_option_system">Systémový</string>
     <string name="aggregated_stats_empty_message">Zaznamenejte svou první trasu pro zobrazení agregované statistiky</string>
     <string name="interval_list_empty_message">Ještě zde nejsou žádné intervaly</string>
-    <string name="voice_speed_lap">Rychlost na kolo %1$s</string>
     <string name="hold_to_stop">Podržet pro ukončení</string>
     <string name="instant_export_enabled_summary">Exportovat trasu na úložiště po ukončení záznamu</string>
     <plurals name="generic_completed_with_errors">

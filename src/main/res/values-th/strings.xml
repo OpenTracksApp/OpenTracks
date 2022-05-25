@@ -283,15 +283,6 @@ limitations under the License.
     <plurals name="voiceSpeedMilesPerHour">
         <item quantity="other">%1$.1f ไมล์ต่อชั่วโมง</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s ต่อกิโลเมตร</string>
-    <string name="voice_pace_per_mile">%1$s ต่อไมล์</string>
-    <string name="voice_template">%1$s ใน %2$s ที่ความเร็ว %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="other">รวมระยะทาง %1$.2f กิโลเมตร</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="other">รวมระยะทาง %1$.2f ไมล์</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">เอทีเอ็ม</string>
     <string name="waypoint_type_bank">ธนาคาร</string>

@@ -235,15 +235,6 @@
     <plurals name="voiceSpeedMilesPerHour">
         <item quantity="other">每小時 %1$.1f 英里</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">每小時 %1$s 英里</string>
-    <string name="voice_pace_per_mile">每英里 %1$s</string>
-    <string name="voice_template">%1$s (時間：%2$s，速度：%3$s)。</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="other">總距離 %1$.2f 公里</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="other">總距離 %1$.2f 英里</item>
-    </plurals>
     <string name="waypoint_type_atm">提款機</string>
     <string name="waypoint_type_bank">銀行</string>
     <string name="waypoint_type_bar">酒吧</string>

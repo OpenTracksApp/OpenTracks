@@ -295,11 +295,6 @@ limitations under the License.
         <item quantity="one">kopējais garums ir %1$.1f kilometrs</item>
         <item quantity="other">kopējais garums ir %1$.1f kilometri</item>
     </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="zero">kopējais garums ir %1$.2f jūdzes</item>
-        <item quantity="one">kopējais garums ir %1$.2f jūdze</item>
-        <item quantity="other">kopējais garums ir %1$.2f jūdzes</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Bankas automāts</string>
     <string name="waypoint_type_bank">banka</string>
@@ -413,7 +408,6 @@ limitations under the License.
     <string name="settings_error_initial_values_restored">Atvainojiet, bet ir notikusi kļūda. Visi iestatījumi ir atjaunoti līdz noklusējuma vērtībām.</string>
     <string name="settings_default_export_uri_title">Dziesmu eksporta direktorija</string>
     <string name="instant_export_enabled_title">Tūlītējs eksports pēc treniņa</string>
-    <string name="voice_pace_per_kilometer">%1$s par kilometru</string>
     <string name="interval_list_empty_message">Pagaidām nav intervālu</string>
     <string name="settings_night_mode_option_night">Nakts</string>
     <string name="import_thread_interrupted">Vītne pārtraukts</string>
@@ -430,12 +424,10 @@ limitations under the License.
     <string name="export_track_already_exists_msg">Dziesma %1$s jau eksistē galamērķa direktorijā.</string>
     <string name="marker_add_photo_canceled">Atcelts, foto zīme nav pievienota</string>
     <string name="help_track_export_title">Kā es varu eksportēt/ kopīgot ierakstītos ierakstus\?</string>
-    <string name="voice_pace_lap">Klēpes laiks %1$s</string>
     <string name="instant_export_enabled_summary">Dziesmas eksportēšana uz krātuvi pēc ierakstīšanas pabeigšanas</string>
     <string name="activity_type_escooter">eScooter</string>
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="sensor_state_power_avg">Vidējā jauda</string>
-    <string name="voice_template">%1$s in %2$s pie %3$s</string>
     <string name="about_libraries">Bibliotēkas</string>
     <string name="description_default_speed_or_pace">Pēc aktivitātes veida</string>
     <string name="import_progress_summary_exists_msg">Jau eksistē</string>
@@ -462,7 +454,6 @@ limitations under the License.
     <string name="sensor_state_cadence_avg">Vidējā kadence</string>
     <string name="settings_night_mode_option_system">Sistēmas</string>
     <string name="help_track_map_title">Kā attēlot trasi kartē\?</string>
-    <string name="voice_speed_lap">Klēpes ātrums %1$s</string>
     <string name="generic_overwrite">Pārraksti</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Ierakstīšanas laikā ekrāns ir ieslēgts.</string>
     <string name="import_unsupported_format">Neatbalstīts faila formāts</string>
@@ -470,7 +461,6 @@ limitations under the License.
     <string name="about_version_name">Versijas vārds: %1$s</string>
     <string name="help_data_storage_title">Kā OpenTracks glabā sensoru datus\?</string>
     <string name="help_recording_title">Kā OpenTracks ieraksta datus\?</string>
-    <string name="voice_pace_per_mile">%1$s par jūdzi</string>
     <string name="export_with_photos">ar fotogrāfijām</string>
     <string name="sensor_state_heart_rate_avg">Vidējais sirdsdarbība</string>
     <string name="generic_open_track">Atvērtā trase</string>

@@ -367,17 +367,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
         <item quantity="one">1 Meile pro Stunde</item>
         <item quantity="other">%1$.1f Meilen pro Stunde</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s pro Kilometer</string>
-    <string name="voice_pace_per_mile">%1$s pro Meile</string>
-    <string name="voice_template">%1$s in %2$s bei %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">Gesamtstrecke: 1 Kilometer</item>
-        <item quantity="other">Gesamtstrecke: %1$.2f Kilometer</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">Gesamtstrecke: 1 Meile</item>
-        <item quantity="other">Gesamtstrecke: %1$.2f Meilen</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Geldautomat</string>
     <string name="waypoint_type_bank">Bank</string>
@@ -470,8 +459,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="export_progress_summary_errors_msg">Fehler</string>
     <string name="generic_click_twice_cancel">Klicke nochmal auf zurück, um abzubrechen</string>
     <string name="import_error_list_dialog_title">Dateien wurden nicht importiert</string>
-    <string name="voice_speed_lap">Rundengeschwindigkeit von %1$s</string>
-    <string name="voice_pace_lap">Rundenzeit von %1$s</string>
     <string name="export_track_already_exists_msg">Die Streckenaufzeichung %1$s existiert bereits im Zielverzeichnis.</string>
     <string name="gps_fixed_and_ready">GPS-Position bestimmt und bereit</string>
     <string name="instant_export_enabled_title">Sofortiger Export im Anschluss an die Übung</string>

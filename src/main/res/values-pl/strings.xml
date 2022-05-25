@@ -336,23 +336,6 @@ limitations under the License.
         <item quantity="many">%1$.1f mili na godzinę</item>
         <item quantity="other">%1$.1f mili na godzinę</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s na kilometr</string>
-    <string name="voice_pace_per_mile">%1$s na milę</string>
-    <string name="voice_template">%1$s w czasie %2$s z prędkością %3$s</string>
-    <string name="voice_speed_lap">Prędkosć w interwale %1$s</string>
-    <string name="voice_pace_lap">Czas w interwale %1$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">całkowita odległość: 1 kilometr</item>
-        <item quantity="few">całkowita odległość: %1$.2f kilometra</item>
-        <item quantity="many">całkowita odległość: %1$.2f kilometra</item>
-        <item quantity="other">całkowita odległość: %1$.2f kilometra</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">całkowita odległość: 1 mila</item>
-        <item quantity="few">całkowita odległość: %1$.2f mili</item>
-        <item quantity="many">całkowita odległość: %1$.2f mili</item>
-        <item quantity="other">całkowita odległość: %1$.2f mili</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">bankomat</string>
     <string name="waypoint_type_bank">bank</string>

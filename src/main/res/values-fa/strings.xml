@@ -289,17 +289,6 @@ limitations under the License.
         <item quantity="one">%1$.1f مایل در ساعت</item>
         <item quantity="other">%1$.1f مایل در ساعت</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s در کیلومتر</string>
-    <string name="voice_pace_per_mile">%1$s در مایل</string>
-    <string name="voice_template">‏‏ %1$s در %2$s با %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">کل مسافت %1$.2f کیلومتر</item>
-        <item quantity="other">کل مسافت %1$.2f کیلومتر</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">کل مسافت %1$.2f مایل</item>
-        <item quantity="other">کل مسافت %1$.2f مایل</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">خودپرداز</string>
     <string name="waypoint_type_bank">بانک</string>

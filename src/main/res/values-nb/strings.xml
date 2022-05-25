@@ -290,17 +290,6 @@ limitations under the License.
         <item quantity="one">1 engelsk mil i timen</item>
         <item quantity="other">%1$.1f engelske mil i timen</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s per kilometer</string>
-    <string name="voice_pace_per_mile">%1$s per engelsk mil</string>
-    <string name="voice_template">%1$s på %2$s med %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">total distanse 1 kilometer</item>
-        <item quantity="other">total distanse %1$.2f kilometer</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">total distanse 1 engelsk mil</item>
-        <item quantity="other">total distanse %1$.2f engelske mil</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">minibank</string>
     <string name="waypoint_type_bank">bank</string>
@@ -389,8 +378,6 @@ limitations under the License.
     <string name="aggregated_stats_empty_message">Ta opp ditt første spor for å se samlet statistikk</string>
     <string name="stats_split_interval">Intervall</string>
     <string name="interval_list_empty_message">Det er ingen intervaller ennå</string>
-    <string name="voice_speed_lap">Rundehastighet %1$s</string>
-    <string name="voice_pace_lap">Rundetid %1$s</string>
     <string name="hold_to_stop">Hold nede for å stoppe</string>
     <string name="instant_export_enabled_summary">Eksporter spor etter at opptak er ferdig</string>
     <string name="instant_export_enabled_title">Auto-eksport etter opptak</string>

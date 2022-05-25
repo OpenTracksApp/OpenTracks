@@ -290,17 +290,6 @@ limitations under the License.
         <item quantity="one">1 миля в час</item>
         <item quantity="other">%1$.1f мили в час</item>
     </plurals>
-    <string name="voice_pace_per_kilometer">%1$s на километър</string>
-    <string name="voice_pace_per_mile">%1$s на миля</string>
-    <string name="voice_template">%1$s за %2$s при %3$s</string>
-    <plurals name="voiceTotalDistanceKilometers">
-        <item quantity="one">общо разстояние 1 километър</item>
-        <item quantity="other">общо разстояние %1$.2f километра</item>
-    </plurals>
-    <plurals name="voiceTotalDistanceMiles">
-        <item quantity="one">общо разстояние 1 миля</item>
-        <item quantity="other">общо разстояние %1$.2f мили</item>
-    </plurals>
     <!-- Waypoint Type -->
     <string name="waypoint_type_atm">Банкомат</string>
     <string name="waypoint_type_bank">банка</string>
@@ -437,7 +426,7 @@ limitations under the License.
     <string name="export_track_errors">Не се експортират писти</string>
     <string name="gps_disabled_msg">GPS е изключен</string>
     <string name="share_image_body">Мисля, че тази снимка може да ви заинтересува.</string>
-    <string name="voice_speed_lap">Скорост на обиколка от %1$s</string>
+
     <string name="help_support_title">Как да подкрепя OpenTracks\?</string>
     <string name="permission_gps_failed">OpenTracks изисква разрешение за използване на GPS.</string>
     <string name="sensor_state_power_avg">Средна мощност</string>
@@ -471,7 +460,6 @@ limitations under the License.
 \n д) да купувате в <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n е) да направите дарение, и
 \n ж) направете всичко, което смятате, че помага на OpenTracks. </string>
-    <string name="voice_pace_lap">Време на обиколка от %1$s</string>
     <string name="generic_click_twice_cancel">Кликнете отново назад, за да отмените</string>
     <plurals name="generic_completed_with_errors">
         <item quantity="one">Завърши с една грешка</item>
