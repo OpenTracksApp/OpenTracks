@@ -107,14 +107,10 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
 
     private void updatePrefsDependOnRecording() {
         Preference importExportPreference = findPreference(getString(R.string.settings_import_export_key));
-        Preference resetPreference = findPreference(getString(R.string.settings_reset_key));
 
         boolean isRecording = recordingStatus.isRecording();
 
         importExportPreference.setSummary(isRecording ? getString(R.string.settings_not_while_recording) : getString(R.string.settings_import_export_summary));
         importExportPreference.setEnabled(!isRecording);
-
-        resetPreference.setSummary(isRecording ? getString(R.string.settings_not_while_recording) : getString(R.string.settings_reset_summary));
-        resetPreference.setEnabled(!isRecording);
     }
 }
