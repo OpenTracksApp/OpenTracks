@@ -234,7 +234,6 @@ limitations under the License.
     <string name="sensor_could_not_scan">Nelze vyhledat zařízení Bluetooth (chyba %1$i).</string>
     <string name="bluetooth_disabled">Aktivujte prosím Bluetooth.</string>
     <string name="settings_not_while_recording">Při záznamu trasy není tato funkce dostupná</string>
-    <string name="settings_show">Zobrazit</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Pokročilé</string>
     <!-- Settings Chart -->
@@ -259,7 +258,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Číslo</string>
     <string name="settings_recording_track_name_title">Výchozí název trasy</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Resetovat</string>
     <string name="settings_reset_confirm_message">Všechna nastavení budou obnovena na výchozí hodnoty. Toto nevymaže žádné trasy na přístroji.</string>
     <string name="settings_reset_confirm_title">Resetovat nyní?</string>
     <string name="settings_reset_done">Všechna nastavení byla obnovena na výchozí hodnoty</string>
@@ -497,7 +495,6 @@ limitations under the License.
     <string name="settings_announcements_totaltime_frequency">Časový interval</string>
     <string name="settings_announcements_distance_frequency">Interval vzdálenosti</string>
     <string name="settings_all_reset">Obnovení</string>
-    <string name="settings_announcements">Oznámení</string>
     <string name="settings_layout_reset">Nastavit výchozí vzhled</string>
     <string name="settings_layout_reset_confirm_message">Všechna nastavení vzhledu se vrátí na výchozí hodnoty. Nebudou tím odstraněny žádné zaznamenané aktivity v zařízení.</string>
     <string name="settings_layout_reset_confirm_title">Výchozí vzhled\?</string>

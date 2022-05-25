@@ -147,7 +147,6 @@
     <string name="sensor_state_power">Alimentação</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Não disponível durante a gravação de uma trilha</string>
-    <string name="settings_show">Mostrar</string>
     <string name="settings_advanced">Avançado</string>
     <string name="settings_chart_by_distance">Por distância</string>
     <string name="settings_chart_by_time">Por tempo</string>
@@ -164,7 +163,6 @@
     <string name="settings_recording_track_name_date_local_option">Data (local)</string>
     <string name="settings_recording_track_name_number_option">Número</string>
     <string name="settings_recording_track_name_title">Nome padrão para trilhas</string>
-    <string name="settings_reset">Redefinir</string>
     <string name="settings_reset_confirm_message">Todas as configurações serão revertidas para os valores padrão.</string>
     <string name="settings_reset_confirm_title">Redefinir agora?</string>
     <string name="settings_reset_done">Todas as configurações foram revertidas para os valores padrão</string>
@@ -434,7 +432,6 @@
     <string name="description_speed_source_gps">GPS</string>
     <string name="settings_recording_customize_layout_title">Personalize seu layout de gravação</string>
     <string name="settings_recording_customize_layout_select_columns">Campos de dados por linha</string>
-    <string name="settings_announcements">Anúncios</string>
     <string name="settings_announcements_totaltime_frequency">Intervalo de tempo</string>
     <string name="settings_announcements_distance_frequency">Intervalo de distância</string>
     <string name="settings_layout_reset_confirm_title">Redefinir seus layouts\?</string>

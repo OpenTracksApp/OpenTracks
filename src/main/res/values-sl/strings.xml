@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Moč</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Ni na voljo med snemanjem poti</string>
-    <string name="settings_show">Prikaži</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Dodatno</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Številka</string>
     <string name="settings_recording_track_name_title">Privzeto ime poti</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Ponastavi</string>
     <string name="settings_reset_confirm_message">Vse nastavitve bodo povrnjene na privzete vrednosti.</string>
     <string name="settings_reset_confirm_title">Ponastavi zdaj?</string>
     <string name="settings_reset_done">Vse nastavitve so bile povrnjene na privzete vrednosti</string>

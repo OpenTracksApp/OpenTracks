@@ -240,7 +240,6 @@ limitations under the License.
     <string name="sensor_could_not_scan">Bluetooth-laitteita ei saatu etsittyä (virhe %1$i).</string>
     <string name="bluetooth_disabled">Ota Bluetooth käyttöön.</string>
     <string name="settings_not_while_recording">Ei saatavilla reitin tallennuksen aikana</string>
-    <string name="settings_show">Näytä</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Lisäasetukset</string>
     <string name="settings_default_trackfileformat">Tiedostomuoto vientiä ja jakamista varten</string>
@@ -266,7 +265,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Numero</string>
     <string name="settings_recording_track_name_title">Reitin oletusnimi</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Palauta</string>
     <string name="settings_reset_confirm_message">Kaikki asetukset palautetaan oletusarvoisiksi.</string>
     <string name="settings_reset_confirm_title">Palautetaanko oletukset nyt?</string>
     <string name="settings_reset_done">Kaikki asetukset on palautettu oletusarvoisiksi</string>

@@ -337,7 +337,6 @@ limitations under the License.
     <string name="sensor_could_not_scan">Could not scan for Bluetooth devices (error %1$i).</string>
     <string name="bluetooth_disabled">Please enable Bluetooth.</string>
     <string name="settings_not_while_recording">Not available while recording a track</string>
-    <string name="settings_show">Show</string>
 
     <string name="settings_open_tracks_title">Open Tracks</string>
     <string name="settings_open_tracks_summary">All About OpenTracks Project</string>
@@ -401,12 +400,10 @@ limitations under the License.
     <string name="settings_night_mode_option_day">Day</string>
     <string name="settings_night_mode_option_night">Night</string>
 
-    <string name="settings_announcements">Announcements</string>
     <string name="settings_announcements_totaltime_frequency">Time interval</string>
     <string name="settings_announcements_distance_frequency">Distance interval</string>
     <string name="settings_announcements_report_heart_rate">Report heart rate</string>
 
-    <string name="settings_reset">Reset</string>
     <!-- Custom Layout -->
     <string name="custom_layout_list_title">Layouts</string>
     <string name="custom_layout_list_edit_name">Type layout\'s name to add</string>

@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Jauda</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Nav pieejams maršruta ierakstīšanas laikā</string>
-    <string name="settings_show">Rādīt</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Papildu iestatījumi</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Numurs</string>
     <string name="settings_recording_track_name_title">Noklusējuma maršruta nosaukums</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Atiestatīt</string>
     <string name="settings_reset_confirm_message">Visiem iestatījumiem tiks atjaunotas to noklusējuma vērtības.</string>
     <string name="settings_reset_confirm_title">Vai atiestatīt tagad?</string>
     <string name="settings_reset_done">Visos iestatījumos atjaunotas to noklusējuma vērtības</string>

@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Снага</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Није доступно при снимању праћења</string>
-    <string name="settings_show">Прикажи</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Напредно</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Број</string>
     <string name="settings_recording_track_name_title">Подразумевано име</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Ресетуј</string>
     <string name="settings_reset_confirm_message">Сва подешавања ће бити враћена на подразумеване вредности.</string>
     <string name="settings_reset_confirm_title">Желите да ресетујете?</string>
     <string name="settings_reset_done">Сва подешавања су враћена на подразумеване вредности</string>

@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">電源</string>
     <string name="sensor_state_power_value">%1$dW</string>
     <string name="settings_not_while_recording">トラックの記録中はご利用いただけません</string>
-    <string name="settings_show">表示</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">詳細設定</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">番号</string>
     <string name="settings_recording_track_name_title">デフォルトのトラック名</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">リセット</string>
     <string name="settings_reset_confirm_message">すべての設定がデフォルト値に戻されます。</string>
     <string name="settings_reset_confirm_title">リセットしますか？</string>
     <string name="settings_reset_done">すべての設定をデフォルト値に戻しました</string>

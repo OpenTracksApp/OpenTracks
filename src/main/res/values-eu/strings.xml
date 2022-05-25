@@ -237,7 +237,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="sensor_could_not_scan">Ezin izan da Bluetooth gailuak bilatu (%1$i errorea).</string>
     <string name="bluetooth_disabled">Mesedez, aktibatu Bluetooth.</string>
     <string name="settings_not_while_recording">Ez dago erabilgarri ibilbidea grabatzen ari den bitartean</string>
-    <string name="settings_show">Erakutsi</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Aurreratua</string>
     <!-- Settings Chart -->
@@ -262,7 +261,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="settings_recording_track_name_number_option">Zenbakia</string>
     <string name="settings_recording_track_name_title">Ibilbidearen izen lehenetsia</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Berrezarri</string>
     <string name="settings_reset_confirm_message">Ezarpen guztiak balio lehenetsietara leheneratuko dira.</string>
     <string name="settings_reset_confirm_title">Berrezarri egin nahi duzu?</string>
     <string name="settings_reset_done">Ezarpen guztiak balio lehenetsietara leheneratu dira</string>
@@ -521,7 +519,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="settings_recording_customize_layout_select_columns">Datu-eremuak errenkadako</string>
     <string name="settings_recording_customize_layout_title">Pertsonalizatu zure grabazioaren diseinua</string>
     <string name="settings_recording_idle_speed_title">Inaktibitatearen abiaduraren muga</string>
-    <string name="settings_announcements">Iragarkiak</string>
     <string name="settings_announcements_totaltime_frequency">Denbora-tartea</string>
     <string name="settings_announcements_distance_frequency">Distantzia tartea</string>
     <string name="settings_running_sensor">Exekutatzen</string>

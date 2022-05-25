@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">पॉवर</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">ट्रैक रिकॉर्ड करते समय उपलब्ध नहीं</string>
-    <string name="settings_show">दिखाएं</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">उन्नत</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">नंबर</string>
     <string name="settings_recording_track_name_title">डिफ़ॉल्ट ट्रैक नाम</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">रीसेट करें</string>
     <string name="settings_reset_confirm_message">सभी सेटिंग को डिफ़ॉल्ट मानों पर उलट दिया जाएगा.</string>
     <string name="settings_reset_confirm_title">अभी रीसेट करें?</string>
     <string name="settings_reset_done">सभी सेटिंग को सामान्य मानों में उलट दिया गया है</string>

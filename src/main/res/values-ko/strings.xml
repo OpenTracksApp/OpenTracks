@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">출력</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">운동기록을 기록하는 동안 사용할 수 없습니다.</string>
-    <string name="settings_show">표시</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">고급</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">숫자</string>
     <string name="settings_recording_track_name_title">기본 운동기록 이름</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">재설정</string>
     <string name="settings_reset_confirm_message">모든 설정이 기본값으로 복구됩니다.</string>
     <string name="settings_reset_confirm_title">지금 재설정하시겠습니까?</string>
     <string name="settings_reset_done">모든 설정을 기본값으로 되돌렸습니다.</string>

@@ -239,7 +239,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="sensor_could_not_scan">Kunne ikke scanne efter Bluetooth-enheder (fejl %1$i).</string>
     <string name="bluetooth_disabled">Aktivér Bluetooth.</string>
     <string name="settings_not_while_recording">Ikke tilgængelig ved registrering af rute</string>
-    <string name="settings_show">Vis</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avanceret</string>
     <!-- Settings Chart -->
@@ -264,7 +263,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="settings_recording_track_name_number_option">Nummer</string>
     <string name="settings_recording_track_name_title">Standardnavn på spor</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Nulstil</string>
     <string name="settings_reset_confirm_message">Alle indstillinger vil blive ændret til standardværdierne..</string>
     <string name="settings_reset_confirm_title">Vil du nulstille nu?</string>
     <string name="settings_reset_done">Alle indstillinger er blevet gendannet til standardværdierne</string>
@@ -500,7 +498,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="settings_reset_summary">Nulstil indstillingerne til standardværdierne</string>
     <string name="settings_recording_customize_layout_title">Tilpas dit optagelseslayout</string>
     <string name="settings_recording_customize_layout_select_columns">Datafelter pr. række</string>
-    <string name="settings_announcements">Meddelelser</string>
     <string name="settings_announcements_totaltime_frequency">Tidsinterval</string>
     <string name="settings_announcements_distance_frequency">Afstandsinterval</string>
     <string name="custom_layout_list_title">Opsætning</string>

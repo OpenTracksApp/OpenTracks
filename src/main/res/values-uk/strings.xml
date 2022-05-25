@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Потужність</string>
     <string name="sensor_state_power_value">%1$d В</string>
     <string name="settings_not_while_recording">Недоступно під час записування шляху</string>
-    <string name="settings_show">Показати</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Розширені</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Номер</string>
     <string name="settings_recording_track_name_title">Назва шляху за умовчанням</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Скинути</string>
     <string name="settings_reset_confirm_message">Усі налаштування буде скинуто до значень за умовчанням.</string>
     <string name="settings_reset_confirm_title">Скинути зараз?</string>
     <string name="settings_reset_done">Для всіх налаштувань відновлено значення за умовчанням</string>
@@ -521,7 +519,6 @@ limitations under the License.
     <string name="custom_layout_list_edit_name">Введіть ім\'я макета для додавання</string>
     <string name="settings_announcements_distance_frequency">Інтервал відстаней</string>
     <string name="settings_announcements_totaltime_frequency">Часовий інтервал</string>
-    <string name="settings_announcements">Оголошення</string>
     <string name="settings_recording_idle_speed_title">Поріг холостого ходу</string>
     <string name="settings_running_sensor">Рухомий</string>
     <string name="settings_generic_sensor">Загальний</string>

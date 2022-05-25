@@ -218,7 +218,7 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="sensor_state_power">Potenza</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Non disponibile durante la registrazione di un percorso</string>
-    <string name="settings_show">Mostra</string>
+
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avanzate</string>
     <!-- Settings Chart -->
@@ -238,7 +238,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_recording_track_name_number_option">Numero</string>
     <string name="settings_recording_track_name_title">Nome percorso predefinito</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Reimposta</string>
     <string name="settings_reset_confirm_message">Tutte le impostazioni verranno ripristinate sui valori predefiniti. Questo non eliminerà alcuna traccia dal dispositivo.</string>
     <string name="settings_reset_confirm_title">Reimpostare ora?</string>
     <string name="settings_reset_done">Tutte le impostazioni sono ripristinate sui valori predefiniti</string>
@@ -533,7 +532,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_units_category">Unità</string>
     <string name="settings_activity_defaults_category">Predefiniti dell\'Attività</string>
     <string name="settings_reset_summary">Reimposta Impostazioni ai Valori Predefiniti</string>
-    <string name="settings_announcements">Annunci</string>
     <string name="settings_layout_reset">Reimposta Layout Personalizzato</string>
     <string name="settings_layout_reset_confirm_message">Tutte le impostazioni di layout saranno reimpostate ai valori predefiniti. Questo non eliminerà alcuna traccia dal dispositivo.</string>
     <string name="settings_layout_reset_confirm_title">Rempostare i tuoi layout\?</string>

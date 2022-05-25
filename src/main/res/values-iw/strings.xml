@@ -147,7 +147,6 @@
     <string name="sensor_state_power">הספק</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">לא זמין בעת הקלטת מסלול</string>
-    <string name="settings_show">הצג</string>
     <string name="settings_advanced">מתקדם</string>
     <string name="settings_chart_by_distance">לפי מרחק</string>
     <string name="settings_chart_by_time">לפי זמן</string>
@@ -164,7 +163,6 @@
     <string name="settings_recording_track_name_date_local_option">תאריך (מקומי)</string>
     <string name="settings_recording_track_name_number_option">מספר</string>
     <string name="settings_recording_track_name_title">ברירת המחדל של שם מסלול</string>
-    <string name="settings_reset">אפס</string>
     <string name="settings_reset_confirm_message">כל ההגדרות יוחזרו לערכי ברירת המחדל.</string>
     <string name="settings_reset_confirm_title">לאפס כעת?</string>
     <string name="settings_reset_done">כל ההגדרות הוחזרו לערכי ברירת המחדל</string>

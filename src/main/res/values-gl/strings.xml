@@ -247,7 +247,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="sensor_could_not_scan">Non se escanearon dispositivos Bluetooth (fallo %1$i).</string>
     <string name="bluetooth_disabled">Activa o Bluetooth.</string>
     <string name="settings_not_while_recording">Non dispoñible durante a gravación dunha ruta</string>
-    <string name="settings_show">Mostrar</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Opcións avanzadas</string>
     <string name="settings_default_trackfileformat">Formato do ficheiro a exportar/compartir</string>
@@ -275,7 +274,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_recording_track_name_number_option">Número</string>
     <string name="settings_recording_track_name_title">Nome da ruta por omisión</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Restablecer</string>
     <string name="settings_reset_confirm_message">Toda a configuración volverá aos valores predeterminados.</string>
     <string name="settings_reset_confirm_title">Restablecer agora?</string>
     <string name="settings_reset_done">Restablecéronse todos os valores predeterminados da configuración</string>
@@ -509,7 +507,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="field_remove_from_layout">Eliminar</string>
     <string name="field_set_primary">Primario</string>
     <string name="field_set_secondary">Secundario</string>
-    <string name="settings_announcements">Anuncios</string>
     <string name="settings_announcements_totaltime_frequency">Intervalo temporal</string>
     <string name="settings_generic_sensor">Xenérico</string>
     <string name="settings_cycling_sensor">Ciclismo</string>

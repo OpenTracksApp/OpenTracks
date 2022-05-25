@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Kraft</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">Inte tillgängligt under inspelning av ett spår</string>
-    <string name="settings_show">Visa</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avancerat</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Siffra</string>
     <string name="settings_recording_track_name_title">Standardnamn</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Återställ</string>
     <string name="settings_reset_confirm_message">Alla inställningar återställs till standardvärdena.</string>
     <string name="settings_reset_confirm_title">Återställ nu?</string>
     <string name="settings_reset_done">Alla inställningar har återställts till standardvärdena</string>

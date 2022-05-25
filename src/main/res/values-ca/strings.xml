@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">Potència</string>
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_not_while_recording">No està disponible durant l\'enregistrament d\'una ruta.</string>
-    <string name="settings_show">Mostra\'n més</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avançades</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">Número</string>
     <string name="settings_recording_track_name_title">Nom de la ruta</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">Restableix</string>
     <string name="settings_reset_confirm_message">Es tornaran a definir els valors predeterminats de la configuració.</string>
     <string name="settings_reset_confirm_title">Voleu restablir-ho ara?</string>
     <string name="settings_reset_done">S\'ha recuperat la configuració predeterminada.</string>

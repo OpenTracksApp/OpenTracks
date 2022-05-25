@@ -178,7 +178,6 @@ limitations under the License.
     <string name="sensor_state_power">กำลัง</string>
     <string name="sensor_state_power_value">%1$d วัตต์</string>
     <string name="settings_not_while_recording">ไม่สามารถใช้งานได้ในขณะบันทึกเส้นการเดินทาง</string>
-    <string name="settings_show">แสดง</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">ขั้นสูง</string>
     <!-- Settings Chart -->
@@ -198,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_track_name_number_option">หมายเลข</string>
     <string name="settings_recording_track_name_title">ชื่อเส้นการเดินทางเริ่มต้น</string>
     <!-- Settings Reset -->
-    <string name="settings_reset">รีเซ็ต</string>
     <string name="settings_reset_confirm_message">การตั้งค่าทั้งหมดจะกลับไปเป็นค่าเริ่มต้น </string>
     <string name="settings_reset_confirm_title">รีเซ็ตเลยไหม</string>
     <string name="settings_reset_done">การตั้งค่าทั้งหมดถูกเปลี่ยนกลับไปเป็นค่าเริ่มต้นแล้ว</string>
