@@ -233,7 +233,6 @@ limitations under the License.
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Nelze vyhledat zařízení Bluetooth (chyba %1$i).</string>
     <string name="bluetooth_disabled">Aktivujte prosím Bluetooth.</string>
-    <string name="settings_not_while_recording">Při záznamu trasy není tato funkce dostupná</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Pokročilé</string>
     <!-- Settings Chart -->

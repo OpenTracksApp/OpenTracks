@@ -246,7 +246,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Non se escanearon dispositivos Bluetooth (fallo %1$i).</string>
     <string name="bluetooth_disabled">Activa o Bluetooth.</string>
-    <string name="settings_not_while_recording">Non dispoñible durante a gravación dunha ruta</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Opcións avanzadas</string>
     <string name="settings_default_trackfileformat">Formato do ficheiro a exportar/compartir</string>

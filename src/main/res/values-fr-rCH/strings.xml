@@ -146,7 +146,6 @@
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Puissance</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="settings_not_while_recording">Non disponible pendant l\'enregistrement d\'un parcours.</string>
     <string name="settings_advanced">Avancé</string>
     <string name="settings_chart_by_distance">En fonction de la distance</string>
     <string name="settings_chart_by_time">En fonction de la durée</string>

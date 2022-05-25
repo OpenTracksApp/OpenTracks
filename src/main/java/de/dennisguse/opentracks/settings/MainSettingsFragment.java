@@ -2,6 +2,7 @@ package de.dennisguse.opentracks.settings;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -13,19 +14,9 @@ import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 
 public class MainSettingsFragment extends PreferenceFragmentCompat {
 
-    private static final String TAG = MainSettingsFragment.class.getSimpleName();
-
-    private RecordingStatus recordingStatus = TrackRecordingService.STATUS_DEFAULT;
-    private TrackRecordingServiceConnection trackRecordingServiceConnection;
-    private final TrackRecordingServiceConnection.Callback bindServiceCallback =
-            (service, unused) -> service.getRecordingStatusObservable()
-                    .observe(MainSettingsFragment.this, this::onRecordingStatusChanged);
-
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         addPreferencesFromResource(R.xml.settings);
-
-        trackRecordingServiceConnection = new TrackRecordingServiceConnection(bindServiceCallback);
 
         findPreference(getString(R.string.settings_defaults_key)).setOnPreferenceClickListener(preference -> {
             ((SettingsActivity) getActivity()).openScreen(getString(R.string.settings_defaults_key));
@@ -69,20 +60,7 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        trackRecordingServiceConnection.bind(getContext());
-        updatePrefsDependOnRecording();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        trackRecordingServiceConnection.unbind(getContext());
-    }
-
-    @Override
-    public void onDisplayPreferenceDialog(Preference preference) {
+    public void onDisplayPreferenceDialog(@NonNull Preference preference) {
         DialogFragment dialogFragment = null;
 
         if (preference instanceof ResetDialogPreference) {
@@ -96,21 +74,5 @@ public class MainSettingsFragment extends PreferenceFragmentCompat {
         }
 
         super.onDisplayPreferenceDialog(preference);
-    }
-
-    private void onRecordingStatusChanged(RecordingStatus status) {
-        this.recordingStatus = status;
-        if (isAdded()) {
-            updatePrefsDependOnRecording();
-        }
-    }
-
-    private void updatePrefsDependOnRecording() {
-        Preference importExportPreference = findPreference(getString(R.string.settings_import_export_key));
-
-        boolean isRecording = recordingStatus.isRecording();
-
-        importExportPreference.setSummary(isRecording ? getString(R.string.settings_not_while_recording) : getString(R.string.settings_import_export_summary));
-        importExportPreference.setEnabled(!isRecording);
     }
 }

@@ -336,7 +336,6 @@ limitations under the License.
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Could not scan for Bluetooth devices (error %1$i).</string>
     <string name="bluetooth_disabled">Please enable Bluetooth.</string>
-    <string name="settings_not_while_recording">Not available while recording a track</string>
 
     <string name="settings_open_tracks_title">Open Tracks</string>
     <string name="settings_open_tracks_summary">All About OpenTracks Project</string>

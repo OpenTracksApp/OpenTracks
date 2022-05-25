@@ -238,7 +238,6 @@ Hvis GPS-enheden rapporterer unøjagtige data (f.eks. Placering, hastighed, høj
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Kunne ikke scanne efter Bluetooth-enheder (fejl %1$i).</string>
     <string name="bluetooth_disabled">Aktivér Bluetooth.</string>
-    <string name="settings_not_while_recording">Ikke tilgængelig ved registrering af rute</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avanceret</string>
     <!-- Settings Chart -->

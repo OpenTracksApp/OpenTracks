@@ -177,7 +177,6 @@ limitations under the License.
     <string name="sensor_state_heart_rate_value">%1$dbpm</string>
     <string name="sensor_state_power">電源</string>
     <string name="sensor_state_power_value">%1$dW</string>
-    <string name="settings_not_while_recording">トラックの記録中はご利用いただけません</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">詳細設定</string>
     <!-- Settings Chart -->

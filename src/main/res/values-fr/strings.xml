@@ -236,7 +236,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Impossible de rechercher les appareils Bluetooth (erreur %1$i).</string>
     <string name="bluetooth_disabled">Veuillez activer Bluetooth.</string>
-    <string name="settings_not_while_recording">Non disponible pendant l\'enregistrement d\'un parcours</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avancé</string>
     <!-- Settings Chart -->

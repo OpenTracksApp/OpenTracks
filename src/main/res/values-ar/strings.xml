@@ -177,7 +177,6 @@ limitations under the License.
     <string name="sensor_state_heart_rate_value">%1$d نبضة في الدقيقة</string>
     <string name="sensor_state_power">الطاقة</string>
     <string name="sensor_state_power_value">%1$d واط</string>
-    <string name="settings_not_while_recording">غير متاح أثناء تسجيل مسار</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">خيارات متقدمة</string>
     <!-- Settings Chart -->

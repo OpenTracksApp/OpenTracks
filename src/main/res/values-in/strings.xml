@@ -146,7 +146,6 @@
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Daya</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="settings_not_while_recording">Tidak tersedia saat merekam trek</string>
     <string name="settings_advanced">Lanjutan</string>
     <string name="settings_chart_by_distance">Menurut jarak</string>
     <string name="settings_chart_by_time">Menurut waktu</string>

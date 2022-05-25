@@ -177,7 +177,6 @@ limitations under the License.
     <string name="sensor_state_heart_rate_value">%1$d уд/мин</string>
     <string name="sensor_state_power">Энергия</string>
     <string name="sensor_state_power_value">%1$d Вт</string>
-    <string name="settings_not_while_recording">Недоступно во время записи трека</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Расширенные</string>
     <!-- Settings Chart -->

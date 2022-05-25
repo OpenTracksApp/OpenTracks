@@ -146,7 +146,6 @@
     <string name="sensor_state_heart_rate_value">%1$d b/m</string>
     <string name="sensor_state_power">Alimentation</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="settings_not_while_recording">Cette option n\'est pas accessible pendant l\'enregistrement d\'un parcours.</string>
     <string name="settings_advanced">Options avancées</string>
     <string name="settings_chart_by_distance">Par distance</string>
     <string name="settings_chart_by_time">Par heure</string>
