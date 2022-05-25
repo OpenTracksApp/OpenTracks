@@ -2,9 +2,9 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include
@@ -28,12 +28,12 @@
             <!-- Time -->
             <TextView
                 android:id="@+id/time"
+                style="?attr/textAppearanceHeadline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="?attr/textAppearanceHeadline2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="04:54:36" />
 
             <!-- Distance -->
@@ -93,21 +93,23 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginTop="48dp"
-                app:srcCompat="@drawable/ic_button_resume"
-                app:layout_constraintTop_toBottomOf="@id/stats_summary_barrier"
-                app:layout_constraintStart_toStartOf="parent"
+                android:contentDescription="@string/image_record"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/finish_button"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/stats_summary_barrier"
+                app:srcCompat="@drawable/ic_button_resume" />
 
             <ImageView
                 android:id="@+id/finish_button"
                 android:layout_width="64dp"
                 android:layout_height="64dp"
-                app:srcCompat="@drawable/ic_button_done"
-                app:layout_constraintTop_toTopOf="@id/resume_button"
-                app:layout_constraintStart_toEndOf="@id/resume_button"
+                android:contentDescription="@string/image_stop"
+                app:layout_constraintBottom_toBottomOf="@id/resume_button"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/resume_button" />
+                app:layout_constraintStart_toEndOf="@id/resume_button"
+                app:layout_constraintTop_toTopOf="@id/resume_button"
+                app:srcCompat="@drawable/ic_button_done" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
