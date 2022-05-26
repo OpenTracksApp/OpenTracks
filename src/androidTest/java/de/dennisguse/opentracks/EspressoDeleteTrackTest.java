@@ -55,149 +55,33 @@ public class EspressoDeleteTrackTest {
     @Rule
     public GrantPermissionRule mGrantPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
 
-    private MyIdlingResource idlingResource;
-
-    @Before
-    public void registerIntentServiceIdlingResource() {
-        Instrumentation instrumentation
-                = InstrumentationRegistry.getInstrumentation();
-        idlingResource = new MyIdlingResource(instrumentation.getTargetContext());
-        IdlingRegistry.getInstance().register(idlingResource);
-    }
-
-    @After
-    public void unregisterIntentServiceIdlingResource() {
-        IdlingRegistry.getInstance().unregister(idlingResource);
-    }
-
-    @Ignore("Test fails permanently")
-    @Deprecated
     @Test
     public void espressoDeleteTrackTest() {
-        int countBefore;
+        // TrackListActivity: start recording
+        onView(withId(R.id.track_list_fab_action)).perform(click());
 
-        {
-            // TrackListActivity: start recording
-            ViewInteraction trackControllerRecordButton = onView(withId(R.id.track_list_fab_action));
-            trackControllerRecordButton.perform(click());
-        }
+        // TrackRecordingActivity
+        onView(withId(R.id.track_recording_fab_action))
+                // wait; stay recording
+                .perform(waitFor(5000))
+                // stop;
+                .perform(longClick());
 
-        {
-            // TrackRecordingActivity
-            ViewInteraction trackControllerStopButton = onView(withId(R.id.track_recording_fab_action));
-
-            // wait; stay recording
-            trackControllerStopButton.perform(waitFor(5000));
-
-            // stop;
-            trackControllerStopButton.perform(longClick());
-        }
-
-        // back
-        pressBack();
-
-        // get number of items before deleting a track
-        countBefore = numberOfItemsListView();
+        // TrackStoppedActivity
+        onView(withId(R.id.finish_button)).perform(click());
 
         // select track
         onData(anything()).inAdapterView(withId(R.id.track_list)).atPosition(0).perform(longClick());
 
         // open menu and delete selected track
-        ViewInteraction overflowMenuButton = onView(
-                allOf(withContentDescription("More options"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.bottom_app_bar),
-                                        2),
-                                2),
-                        isDisplayed()));
-        overflowMenuButton.perform(click());
+        onView(allOf(withContentDescription("More options"), isDisplayed()))
+                .perform(click());
 
-        ViewInteraction appCompatTextView = onView(
-                allOf(withId(R.id.title), withText("Delete"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        appCompatTextView.perform(click());
+        onView(withText("Delete")).perform(click());
 
-        ViewInteraction appCompatButton = onView(
-                allOf(withId(android.R.id.button1), withText("Yes"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.buttonPanel),
-                                        0),
-                                3)));
-        appCompatButton.perform(scrollTo(), click());
+        onView(withText("OK")).perform(click());
 
-        // check number of items after delete
-        onView(withId(R.id.track_list)).check(ViewAssertions.matches(withListSize(countBefore - 1)));
-    }
-
-
-    private int numberOfItemsListView() {
-        final int[] counts = new int[1];
-        onView(withId(R.id.track_list)).check(matches(new TypeSafeMatcher<View>() {
-            @Override
-            public boolean matchesSafely(View view) {
-                ListView listView = (ListView) view;
-
-                counts[0] = listView.getCount();
-
-                return true;
-            }
-
-            @Override
-            public void describeTo(Description description) {
-            }
-        }));
-
-        return counts[0];
-    }
-
-
-    private static class MyIdlingResource implements IdlingResource {
-
-        private final Context context;
-        private ResourceCallback resourceCallback;
-
-        public MyIdlingResource(Context context) {
-            this.context = context;
-        }
-
-        @Override
-        public String getName() {
-            return MyIdlingResource.class.getName();
-        }
-
-        @Override
-        public void registerIdleTransitionCallback(IdlingResource.ResourceCallback resourceCallback) {
-            this.resourceCallback = resourceCallback;
-        }
-
-        @Override
-        public boolean isIdleNow() {
-            boolean idle = !isDeleteServiceRunning();
-            if (idle && resourceCallback != null) {
-                resourceCallback.onTransitionToIdle();
-            }
-            return idle;
-        }
-
-        private boolean isDeleteServiceRunning() {
-            ActivityManager manager =
-                    (ActivityManager) context.getSystemService(
-                            Context.ACTIVITY_SERVICE);
-            for (ActivityManager.RunningServiceInfo info :
-                    manager.getRunningServices(Integer.MAX_VALUE)) {
-                if (TrackDeleteService.class.getName().equals(
-                        info.service.getClassName())) {
-                    return true;
-                }
-            }
-            return false;
-        }
+        // tracklist is empty now
+        onView(allOf(withText("Start recording your next adventure here"), isDisplayed()));
     }
 }
