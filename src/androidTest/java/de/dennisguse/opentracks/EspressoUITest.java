@@ -4,9 +4,12 @@ import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.longClick;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isClickable;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anything;
 import static de.dennisguse.opentracks.util.EspressoUtils.selectTabAtIndex;
 import static de.dennisguse.opentracks.util.EspressoUtils.waitFor;
@@ -46,7 +49,7 @@ public class EspressoUITest {
                     .perform(longClick());
 
             // TrackStoppedActivity: resume
-            onView(withId(R.id.resume_button))
+            onView(allOf(withId(R.id.resume_button), isClickable()))
                     .perform(click());
 
             // TrackRecordingActivity: wait and then stop
