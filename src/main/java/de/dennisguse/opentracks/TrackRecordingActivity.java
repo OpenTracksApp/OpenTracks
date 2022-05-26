@@ -131,8 +131,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
             viewBinding.trackDetailActivityViewPager.setCurrentItem(savedInstanceState.getInt(CURRENT_TAB_TAG_KEY));
         }
 
-        requestGPSPermissions();
-
         viewBinding.trackRecordingFabAction.setImageResource(R.drawable.ic_baseline_stop_24);
         viewBinding.trackRecordingFabAction.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.opentracks_secondary_color));
         viewBinding.trackRecordingFabAction.setBackgroundColor(getResources().getColor(R.color.opentracks_secondary_color));
@@ -369,14 +367,6 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
 
         setLockscreenPolicy();
         setScreenOnPolicy();
-    }
-
-    private void requestGPSPermissions() {
-        if (PermissionUtils.hasGPSPermission(this)) {
-            return;
-        }
-
-        PermissionUtils.requestGPSPermission(this, null, () -> Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show());
     }
 
     private void onGpsStatusChanged(GpsStatusValue gpsStatusValue) {
