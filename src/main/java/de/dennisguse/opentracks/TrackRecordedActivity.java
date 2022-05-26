@@ -179,7 +179,7 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
         }
 
         if (item.getItemId() == R.id.track_detail_menu_show_on_map) {
-            IntentDashboardUtils.startDashboard(this, false, trackId);
+            IntentDashboardUtils.showTrackOnMap(this, false, trackId);
             return true;
         }
 

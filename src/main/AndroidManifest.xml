@@ -348,23 +348,6 @@ limitations under the License.
         <activity android:name=".settings.SettingsCustomLayoutEditActivity" />
 
         <activity
-            android:name=".share.ShowOnMapProxyActivity$KML"
-            android:exported="true">
-            <intent-filter android:label="@string/open_track_as_KML">
-                <action android:name="Intent.OpenTracks-Dashboard" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".share.ShowOnMapProxyActivity$GPX"
-            android:exported="true">
-            <intent-filter android:label="@string/open_track_as_GPX">
-                <action android:name="Intent.OpenTracks-Dashboard" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity
             android:name=".ShowErrorActivity"
             android:excludeFromRecents="true"
             android:exported="false"

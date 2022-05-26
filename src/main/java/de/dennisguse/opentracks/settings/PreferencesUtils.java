@@ -47,6 +47,7 @@ import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
 import de.dennisguse.opentracks.ui.customRecordingLayout.CsvLayoutUtils;
 import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
+import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
 /**
@@ -761,4 +762,13 @@ public class PreferencesUtils {
     public static void clear() {
         sharedPreferences.edit().clear().commit();
     }
+
+    public static void setShowOnMapFormat(final String showOnMapFormat) {
+        setString(R.string.show_on_map_format_key, showOnMapFormat);
+    }
+
+    public static String getShowOnMapFormat() {
+        return getString(R.string.show_on_map_format_key, IntentDashboardUtils.PREFERENCE_ID_ASK);
+    }
+
 }

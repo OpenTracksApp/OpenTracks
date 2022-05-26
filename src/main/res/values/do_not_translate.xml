@@ -99,4 +99,5 @@ limitations under the License.
         <item>@string/waypoint_type_water_fountain</item>
         <item>@string/waypoint_type_waypoint</item>
     </string-array>
+
 </resources>

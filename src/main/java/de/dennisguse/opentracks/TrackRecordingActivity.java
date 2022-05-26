@@ -256,7 +256,7 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.track_detail_menu_show_on_map) {
-            IntentDashboardUtils.startDashboard(this, true, trackId);
+            IntentDashboardUtils.showTrackOnMap(this, true, trackId);
             return true;
         }
 

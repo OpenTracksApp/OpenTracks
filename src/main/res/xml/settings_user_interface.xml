@@ -43,4 +43,10 @@
         android:summary="@string/settings_recording_fullscreen_on_while_recording_summary"
         android:title="@string/settings_recording_fullscreen_on_while_recording_title" />
 
+    <ListPreference
+        android:defaultValue="@string/show_on_map_format_ask"
+        android:key="@string/show_on_map_format_key"
+        android:title="@string/select_show_on_map_behavior"
+        app:useSimpleSummaryProvider="true" />
+
 </PreferenceScreen>
