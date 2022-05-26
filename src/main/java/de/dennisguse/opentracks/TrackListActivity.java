@@ -485,7 +485,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         }
 
         if (itemId == R.id.list_context_menu_show_on_map) {
-            IntentDashboardUtils.startDashboard(this, false, trackIds);
+            IntentDashboardUtils.showTrackOnMap(this, false, trackIds);
             return true;
         }
 

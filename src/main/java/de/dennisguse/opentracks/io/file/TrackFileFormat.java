@@ -1,6 +1,12 @@
 package de.dennisguse.opentracks.io.file;
 
 import android.content.Context;
+import android.content.res.Resources;
+
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
@@ -126,6 +132,23 @@ public enum TrackFileFormat {
 
     TrackFileFormat(String preferenceId) {
         this.preferenceId = preferenceId;
+    }
+
+    public static Map<String, String> toPreferenceIdLabelMap(final Resources resources, final TrackFileFormat ... trackFileFormats) {
+        Map<String, String> preferenceIdLabelMap = new LinkedHashMap<>(trackFileFormats.length);
+        for (TrackFileFormat trackFileFormat : trackFileFormats) {
+            String trackFileFormatUpperCase = trackFileFormat.getExtension().toUpperCase(Locale.US); //ASCII upper case
+            int photoMessageId = trackFileFormat.includesPhotos() ? R.string.export_with_photos : R.string.export_without_photos;
+            preferenceIdLabelMap.put(trackFileFormat.getPreferenceId(), String.format("%s (%s)", trackFileFormatUpperCase, resources.getString(photoMessageId)));
+        }
+        return preferenceIdLabelMap;
+    }
+
+    public static TrackFileFormat valueOfPreferenceId(final String preferenceId) {
+        return Arrays.stream(values())
+                .filter(trackFileFormat -> trackFileFormat.getPreferenceId().equals(preferenceId))
+                .findFirst()
+                .orElse(null);
     }
 
     /**

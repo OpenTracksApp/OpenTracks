@@ -639,4 +639,9 @@ limitations under the License.
     <string name="error_crash_title">%1$s crashed</string>
     <string name="share_crash_report">Share crash report</string>
     <string name="report_bug">Report bug</string>
+
+    <string name="select_show_on_map_behavior">Select \"show on map\" behavior</string>
+    <string name="show_on_map_format_ask">Ask</string>
+    <string name="show_on_dashboard">OpenTracks Dashboard API</string>
+    <string name="always">Always</string>
 </resources>
