@@ -515,7 +515,7 @@ limitations under the License.
     <string name="settings_activity_defaults_category">Výchozí nastavení aktivity</string>
     <string name="settings_units_category">Jednotky</string>
     <string name="settings_import_export_summary">Import, export, automatický export</string>
-    <string name="settings_import_export_title">Dovoz/vývoz</string>
+    <string name="settings_import_export_title">Import/Export</string>
     <string name="settings_announcements_summary">Čas, vzdálenost, rychlost hlasu</string>
     <string name="settings_announcements_title">Hlasová oznámení</string>
     <string name="settings_sensors_title">Bluetooth senzory</string>
