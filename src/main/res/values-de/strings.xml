@@ -241,7 +241,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Konnte nicht nach Bluetooth-Geräten scannen (Fehler %1$i).</string>
     <string name="bluetooth_disabled">Bitte Bluetooth aktivieren.</string>
-    <string name="settings_not_while_recording">Während der Aufzeichnung eines Tracks nicht verfügbar</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Erweitert</string>
     <string name="settings_default_trackfileformat">Dateiformat für export/teilen</string>

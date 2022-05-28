@@ -179,7 +179,6 @@ limitations under the License.
     <string name="sensor_state_heart_rate_value">%1$d BPM</string>
     <string name="sensor_state_power">功率</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="settings_not_while_recording">记录路线时不可用</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">高级</string>
     <string name="settings_default_trackfileformat">导出文件格式</string>

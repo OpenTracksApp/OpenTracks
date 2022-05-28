@@ -236,7 +236,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Ezin izan da Bluetooth gailuak bilatu (%1$i errorea).</string>
     <string name="bluetooth_disabled">Mesedez, aktibatu Bluetooth.</string>
-    <string name="settings_not_while_recording">Ez dago erabilgarri ibilbidea grabatzen ari den bitartean</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Aurreratua</string>
     <!-- Settings Chart -->

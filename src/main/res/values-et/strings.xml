@@ -233,7 +233,6 @@ limitations under the License.
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Bluetooth seadmeid ei õnnestunud skannida (tõrge %1$i).</string>
     <string name="bluetooth_disabled">Lubage Bluetooth.</string>
-    <string name="settings_not_while_recording">Raja salvestamise ajal ei ole kättesaadav</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Täpsemad seaded</string>
     <!-- Settings Chart -->

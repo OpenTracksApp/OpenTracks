@@ -235,7 +235,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Kon niet scannen naar Bluetooth-apparaten (fout %1$i).</string>
     <string name="bluetooth_disabled">Schakel Bluetooth in.</string>
-    <string name="settings_not_while_recording">Niet beschikbaar tijdens het opnemen van een route</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Geavanceerd</string>
     <!-- Settings Chart -->

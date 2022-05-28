@@ -177,7 +177,6 @@ limitations under the License.
     <string name="sensor_state_heart_rate_value">%1$d nhịp đập/phút</string>
     <string name="sensor_state_power">Công suất</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="settings_not_while_recording">Không khả dụng khi đang ghi tuyến đường</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Nâng cao</string>
     <!-- Settings Chart -->

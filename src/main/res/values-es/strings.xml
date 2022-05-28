@@ -233,7 +233,6 @@ limitations under the License.
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">No se pudieron buscar dispositivos Bluetooth (error %1$i).</string>
     <string name="bluetooth_disabled">Por favor habilite Bluetooth.</string>
-    <string name="settings_not_while_recording">No está disponible durante la grabación de un recorrido</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Opciones avanzadas</string>
     <!-- Settings Chart -->

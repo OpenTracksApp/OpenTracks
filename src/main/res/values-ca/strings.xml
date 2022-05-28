@@ -177,7 +177,6 @@ limitations under the License.
     <string name="sensor_state_heart_rate_value">%1$d ppm</string>
     <string name="sensor_state_power">Potència</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="settings_not_while_recording">No està disponible durant l\'enregistrament d\'una ruta.</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avançades</string>
     <!-- Settings Chart -->

@@ -177,7 +177,6 @@ limitations under the License.
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">출력</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="settings_not_while_recording">운동기록을 기록하는 동안 사용할 수 없습니다.</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">고급</string>
     <!-- Settings Chart -->

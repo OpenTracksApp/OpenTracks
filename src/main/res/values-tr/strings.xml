@@ -177,7 +177,6 @@ limitations under the License.
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Güç</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="settings_not_while_recording">Parkur kaydı sırasında kullanılamaz</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Gelişmiş</string>
     <!-- Settings Chart -->

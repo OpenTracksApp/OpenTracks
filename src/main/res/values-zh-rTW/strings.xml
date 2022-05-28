@@ -146,7 +146,6 @@
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">電源</string>
     <string name="sensor_state_power_value">%1$d 瓦</string>
-    <string name="settings_not_while_recording">記錄足跡時無法使用這個選項</string>
     <string name="settings_advanced">進階</string>
     <string name="settings_chart_by_distance">依距離</string>
     <string name="settings_chart_by_time">依時間</string>

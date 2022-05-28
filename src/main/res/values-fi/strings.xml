@@ -239,7 +239,6 @@ limitations under the License.
     <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Bluetooth-laitteita ei saatu etsittyä (virhe %1$i).</string>
     <string name="bluetooth_disabled">Ota Bluetooth käyttöön.</string>
-    <string name="settings_not_while_recording">Ei saatavilla reitin tallennuksen aikana</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Lisäasetukset</string>
     <string name="settings_default_trackfileformat">Tiedostomuoto vientiä ja jakamista varten</string>

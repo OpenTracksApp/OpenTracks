@@ -217,7 +217,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="sensor_state_heart_rate_value">%1$d battiti al minuto</string>
     <string name="sensor_state_power">Potenza</string>
     <string name="sensor_state_power_value">%1$d W</string>
-    <string name="settings_not_while_recording">Non disponibile durante la registrazione di un percorso</string>
 
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avanzate</string>
