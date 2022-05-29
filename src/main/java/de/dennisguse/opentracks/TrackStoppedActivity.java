@@ -44,26 +44,26 @@ public class TrackStoppedActivity extends AbstractActivity implements ChooseActi
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
         Track track = contentProviderUtils.getTrack(trackId);
 
-        viewBinding.fields.trackEditName.setText(track.getName());
+        viewBinding.trackEditName.setText(track.getName());
 
-        viewBinding.fields.trackEditActivityType.setText(track.getCategory());
+        viewBinding.trackEditActivityType.setText(track.getCategory());
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.activity_types, android.R.layout.simple_dropdown_item_1line);
-        viewBinding.fields.trackEditActivityType.setAdapter(adapter);
-        viewBinding.fields.trackEditActivityType.setOnItemClickListener((parent, view, position, id) -> setActivityTypeIcon(TrackIconUtils.getIconValue(this, (String) viewBinding.fields.trackEditActivityType.getAdapter().getItem(position))));
-        viewBinding.fields.trackEditActivityType.setOnFocusChangeListener((v, hasFocus) -> {
+        viewBinding.trackEditActivityType.setAdapter(adapter);
+        viewBinding.trackEditActivityType.setOnItemClickListener((parent, view, position, id) -> setActivityTypeIcon(TrackIconUtils.getIconValue(this, (String) viewBinding.trackEditActivityType.getAdapter().getItem(position))));
+        viewBinding.trackEditActivityType.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 setActivityTypeIcon(TrackIconUtils.getIconValue(
-                        TrackStoppedActivity.this, viewBinding.fields.trackEditActivityType.getText().toString()));
+                        TrackStoppedActivity.this, viewBinding.trackEditActivityType.getText().toString()));
             }
         });
 
         String iconValue = track.getIcon();
 
         setActivityTypeIcon(iconValue);
-        viewBinding.fields.trackEditActivityTypeIcon.setOnClickListener(v -> ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), viewBinding.fields.trackEditActivityType.getText().toString()));
+        viewBinding.trackEditActivityTypeIcon.setOnClickListener(v -> ChooseActivityTypeDialogFragment.showDialog(getSupportFragmentManager(), viewBinding.trackEditActivityType.getText().toString()));
 
-        viewBinding.fields.trackEditDescription.setText(track.getDescription());
+        viewBinding.trackEditDescription.setText(track.getDescription());
 
         viewBinding.time.setText(StringUtils.formatElapsedTime(track.getTrackStatistics().getMovingTime()));
 
@@ -87,8 +87,8 @@ public class TrackStoppedActivity extends AbstractActivity implements ChooseActi
         }
 
         viewBinding.finishButton.setOnClickListener(v -> {
-            TrackUtils.updateTrack(TrackStoppedActivity.this, track, viewBinding.fields.trackEditName.getText().toString(),
-                    viewBinding.fields.trackEditActivityType.getText().toString(), viewBinding.fields.trackEditDescription.getText().toString(),
+            TrackUtils.updateTrack(TrackStoppedActivity.this, track, viewBinding.trackEditName.getText().toString(),
+                    viewBinding.trackEditActivityType.getText().toString(), viewBinding.trackEditDescription.getText().toString(),
                     contentProviderUtils);
             ExportUtils.postWorkoutExport(this, trackId);
             finish();
@@ -112,13 +112,13 @@ public class TrackStoppedActivity extends AbstractActivity implements ChooseActi
     }
 
     private void setActivityTypeIcon(String iconValue) {
-        viewBinding.fields.trackEditActivityTypeIcon.setImageResource(TrackIconUtils.getIconDrawable(iconValue));
+        viewBinding.trackEditActivityTypeIcon.setImageResource(TrackIconUtils.getIconDrawable(iconValue));
     }
 
     @Override
     public void onChooseActivityTypeDone(String iconValue) {
         setActivityTypeIcon(iconValue);
-        viewBinding.fields.trackEditActivityType.setText(getString(TrackIconUtils.getIconActivityType(iconValue)));
+        viewBinding.trackEditActivityType.setText(getString(TrackIconUtils.getIconActivityType(iconValue)));
     }
 
     private void resumeTrackAndFinish() {
