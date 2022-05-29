@@ -120,7 +120,6 @@
     <string name="marker_name_format">Marcador %1$d</string>
     <string name="marker_title">%1$d de %2$d</string>
     <string name="marker_edit_marker_type">Tipo de marcador (por exemplo, cascata)</string>
-    <string name="marker_edit_marker_type_hint">Tipo de marcador</string>
     <string name="marker_list_empty_message">Não tem marcadores</string>
     <string name="menu_aggregated_statistics">Estatísticas agregadas</string>
     <string name="menu_delete">Eliminar</string>
@@ -139,17 +138,12 @@
     <string name="menu_start_gps">Ligar GPS</string>
     <string name="menu_stop_gps">Desligar GPS</string>
     <string name="recording_service">Serviço de gravação</string>
-    <string name="sensor_state_battery">Nível da bateria</string>
-    <string name="sensor_state_cadence">Cadência</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">Frequência cardíaca</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Potência</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_advanced">Avançado</string>
     <string name="settings_chart_by_distance">Por distância</string>
     <string name="settings_chart_by_time">Por tempo</string>
-    <string name="settings_recording">Gravação</string>
     <string name="settings_recording_default_activity_title">Tipo de atividade predefinido</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre locais gravados</string>
     <string name="settings_recording_max_recording_distance_summary">É criado um novo segmento quando a distância entre os dois locais é superior a %1$s</string>

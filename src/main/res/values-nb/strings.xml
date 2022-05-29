@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Markørtype (f.eks. foss)</string>
-    <string name="marker_edit_marker_type_hint">Markørtype</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Du har ingen markører</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Opptakstjeneste</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Batterinivå</string>
-    <string name="sensor_state_cadence">Kadens</string>
-    <string name="sensor_state_cadence_value">%1$d o/min</string>
     <string name="sensor_state_heart_rate">Puls</string>
     <string name="sensor_state_heart_rate_value">%1$d slag/min</string>
     <string name="sensor_state_power">Kraft</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avansert</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Etter distanse</string>
     <string name="settings_chart_by_time">Etter tid</string>
-    <string name="settings_recording">Opptak</string>
     <string name="settings_recording_default_activity_title">Standard aktivitetstype</string>
     <string name="settings_recording_location_frequency_summary">%1$s mellom innspilte posisjoner</string>
     <string name="settings_recording_max_recording_distance_summary">Det blir opprettet et nytt segment hvis avstanden mellom to posisjoner er større enn %1$s</string>
@@ -369,7 +363,6 @@ limitations under the License.
     <string name="settings_night_mode_option_system">System</string>
     <string name="settings_night_mode_option_day">Dag</string>
     <string name="settings_night_mode_option_night">Natt</string>
-    <string name="settings_error_initial_values_restored">Beklager, men det oppstod en feil. Alle innstillinger er tilbakestilt til standardverdiene.</string>
     <string name="track_recording_notification_accuracy">Posisjonsnøyaktighet: %1$s</string>
     <string name="track_detail_intervals_tab">Intervaller</string>
     <string name="aggregated_stats_empty_message">Ta opp ditt første spor for å se samlet statistikk</string>
@@ -392,7 +385,6 @@ limitations under the License.
     <string name="share_image_subject">Jeg vil gjerne dele et bilde med deg</string>
     <string name="import_thread_interrupted">Tråden avbrutt</string>
     <string name="sensor_could_not_scan">Kunne ikke skanne etter Bluetooth-enheter (feil %1$i).</string>
-    <string name="settings_sensor_connecting">Koblet til %1$s</string>
     <string name="help_data_google_play_services_title">Krever/bruker OpenTracks Google Play Service\?</string>
     <string name="help_feature_title">OpenTracks har følgende funksjoner:</string>
     <string name="help_feature_content">* opprette GPS-spor
@@ -414,7 +406,6 @@ limitations under the License.
     <string name="gps_fixed_and_ready">GPS bestemt og klar</string>
     <string name="import_parser_error">Analysefeil: %1$s</string>
     <string name="import_error_info">%1$s: %2$s</string>
-    <string name="settings_sensor_disconnected">Koblet fra %1$s</string>
     <string name="help_storage_pictures_title">Hvordan lagrer OpenTracks bilder som er tatt som markører\?</string>
     <string name="help_storage_pictures_content">Disse lagres i appens interne lagring (dvs. bare tilgjengelig i OpenTracks).</string>
     <string name="generic_click_twice_cancel">Trykk tilbake-knappen igjen for å avbryte</string>
@@ -490,7 +481,6 @@ limitations under the License.
     <string name="stats_sensors_power">Kraft</string>
     <string name="location_coordinate">%1$s°</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
-    <string name="title_activity_settings_custom_layout">Tilpass opptakslayouten</string>
     <string name="field_set_primary">Primær</string>
     <string name="field_set_secondary">Sekundær</string>
     <string name="field_remove_from_layout">Fjern</string>

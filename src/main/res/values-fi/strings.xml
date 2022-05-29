@@ -202,7 +202,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Merkin tyyppi (esim. vesiputous)</string>
-    <string name="marker_edit_marker_type_hint">Merkkityyppi</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Sinulla ei ole merkkejä</string>
     <!-- Menu -->
@@ -230,13 +229,9 @@ limitations under the License.
     <string name="permission_gps_failed">OpenTracks tarvitsee luvan käyttää satelliittipaikannusta.</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Akun taso</string>
-    <string name="sensor_state_cadence">Kierrosluku</string>
-    <string name="sensor_state_cadence_value">%1$d kierr./min</string>
     <string name="sensor_state_heart_rate">Syke</string>
     <string name="sensor_state_heart_rate_value">%1$d ppm</string>
     <string name="sensor_state_power">Virransyöttö</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Bluetooth-laitteita ei saatu etsittyä (virhe %1$i).</string>
     <string name="bluetooth_disabled">Ota Bluetooth käyttöön.</string>
     <!-- Settings Advanced -->
@@ -250,7 +245,6 @@ limitations under the License.
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Näytä tilastot myös ilman laitteen lukituksen avaamista tallentaessa.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Pidä näyttö päällä</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Pidä näyttö päällä tallentaessa.</string>
-    <string name="settings_recording">Tallennus</string>
     <string name="settings_recording_default_activity_title">Toiminnan oletustyyppi</string>
     <string name="settings_recording_location_frequency_summary">%1$s tallennettujen sijaintien välillä</string>
     <string name="settings_recording_max_recording_distance_summary">Uusi segmentti luodaan, jos kahden sijainnin etäisyys on suurempi kuin %1$s</string>
@@ -267,11 +261,8 @@ limitations under the License.
     <string name="settings_reset_confirm_message">Kaikki asetukset palautetaan oletusarvoisiksi.</string>
     <string name="settings_reset_confirm_title">Palautetaanko oletukset nyt?</string>
     <string name="settings_reset_done">Kaikki asetukset on palautettu oletusarvoisiksi</string>
-    <string name="settings_error_initial_values_restored">Pahoittelut, mutta virhe tapahtui. Kaikki asetukset on palautettu oletuksiinsa.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_connecting">Yhdistetty: %1$s</string>
-    <string name="settings_sensor_disconnected">Yhteys katkaistu: %1$s</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Haluttu nopeus</string>
     <string name="settings_stats_units_imperial">Brittiläinen järj.

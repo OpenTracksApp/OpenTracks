@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Typ značky (napr. vodopád…)</string>
-    <string name="marker_edit_marker_type_hint">Typ značky</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Nemáte žiadne značky</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Služba na záznam</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Stav batérie</string>
-    <string name="sensor_state_cadence">Kadencia</string>
-    <string name="sensor_state_cadence_value">%1$d otáčok/min</string>
     <string name="sensor_state_heart_rate">Srdcová frekvencia</string>
     <string name="sensor_state_heart_rate_value">%1$d úderov/min</string>
     <string name="sensor_state_power">Výkon</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Rozšírené</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Podľa vzdialenosti</string>
     <string name="settings_chart_by_time">Podľa času</string>
-    <string name="settings_recording">Záznam</string>
     <string name="settings_recording_default_activity_title">Predvolený typ aktivity</string>
     <string name="settings_recording_location_frequency_summary">%1$s medzi zaznamenanými polohami</string>
     <string name="settings_recording_max_recording_distance_summary">Nový segment bude vytvorený v prípade, že vzdialenosť medzi dvoma polohami prekoná %1$s</string>
@@ -354,9 +348,6 @@ limitations under the License.
     <string name="settings_layout_reset_confirm_title">Predvolený vzhľad\?</string>
     <string name="settings_layout_reset_done">Všetky nastavenia vzhľadu bola vrátená na predvolené hodnoty</string>
     <string name="settings_all_reset">Obnovenie</string>
-    <string name="settings_error_initial_values_restored">Ľutujeme, ale došlo k chybe. Všetky nastavenia bola vrátená na predvolené hodnoty.</string>
-    <string name="settings_sensor_connecting">Pripojené k senzoru %1$s</string>
-    <string name="settings_sensor_disconnected">Odpojené od %1$s</string>
     <string name="settings_sensor_cycling_distance_speed">Vzdialenosť a rýchlosť</string>
     <string name="settings_sensor_running_speed_and_cadence">Vzdialenosť, rýchlosť a kadencia</string>
     <string name="settings_sensor_cycling_cadence">Kadencia</string>
@@ -510,7 +501,6 @@ limitations under the License.
     <string name="share_image_subject">Rád by som sa s vami podelil o jeden obrázok</string>
     <string name="hold_to_stop">Podržaním zastavíte</string>
     <string name="instant_export_enabled_summary">Exportovanie stopy do pamäte po dokončení nahrávania</string>
-    <string name="title_activity_settings_custom_layout">Prispôsobenie rozloženia nahrávania</string>
     <string name="field_set_primary">Primárne</string>
     <string name="field_set_secondary">Sekundárne</string>
     <string name="export_all_do_it_for_all">urobiť to pre všetky konflikty</string>

@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">मार्कर प्रकार (उदा., झरना)</string>
-    <string name="marker_edit_marker_type_hint">मार्कर प्रकार</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">आपके पास कोई मार्कर नहीं है</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">रिकॉर्डिंग सेवा</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">बैटरी स्‍तर</string>
-    <string name="sensor_state_cadence">केडेंस</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">हृदय गति</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">पॉवर</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">उन्नत</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">दूरी के अनुसार</string>
     <string name="settings_chart_by_time">समय के अनुसार</string>
-    <string name="settings_recording">रिकॉर्डिंग</string>
     <string name="settings_recording_default_activity_title">डिफ़ॉल्ट गतिविधि प्रकार</string>
     <string name="settings_recording_location_frequency_summary">रिकॉर्ड किए गए स्थानों के बीच %1$s</string>
     <string name="settings_recording_max_recording_distance_summary">यदि रिकॉर्ड किए गए दो स्थानों के बीच दूरी %1$s से अधिक हो तो एक नया खंड बनाया जाता है</string>

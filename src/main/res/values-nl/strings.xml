@@ -198,7 +198,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Type markering (bijv. waterval)</string>
-    <string name="marker_edit_marker_type_hint">Type markering</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">U heeft geen markeringen</string>
     <!-- Menu -->
@@ -226,13 +225,9 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="permission_gps_failed">Voor OpenTracks is toestemming nodig om GPS te gebruiken.</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Accuniveau</string>
-    <string name="sensor_state_cadence">Cadans</string>
-    <string name="sensor_state_cadence_value">%1$d tpm</string>
     <string name="sensor_state_heart_rate">Hartslag</string>
     <string name="sensor_state_heart_rate_value">%1$d spm</string>
     <string name="sensor_state_power">Vermogen</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Kon niet scannen naar Bluetooth-apparaten (fout %1$i).</string>
     <string name="bluetooth_disabled">Schakel Bluetooth in.</string>
     <!-- Settings Advanced -->
@@ -245,7 +240,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Toon tijdens de opname de statistieken zonder het apparaat te ontgrendelen.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Houd het scherm aan</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Houd tijdens de opname het scherm aan.</string>
-    <string name="settings_recording">Opname</string>
     <string name="settings_recording_default_activity_title">Standaardtype activiteit</string>
     <string name="settings_recording_location_frequency_summary">%1$s tussen opgenomen locaties</string>
     <string name="settings_recording_max_recording_distance_summary">Er wordt een nieuw segment gemaakt als de afstand tussen twee locaties groter is dan %1$s</string>
@@ -262,11 +256,8 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_reset_confirm_message">Alle instellingen worden teruggezet op de standaardwaarden.</string>
     <string name="settings_reset_confirm_title">Nu opnieuw instellen?</string>
     <string name="settings_reset_done">Voor alle instellingen zijn de standaardwaarden teruggezet</string>
-    <string name="settings_error_initial_values_restored">Sorry, maar er is een fout gemaakt. Alle instellingen zijn teruggezet naar de standaardwaarden.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_connecting">Verbonden met %1$s</string>
-    <string name="settings_sensor_disconnected">Ontkoppeld van %1$s</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Voorkeursverhouding</string>
     <string name="settings_stats_units_imperial">Engels (mi, ft)</string>
@@ -565,7 +556,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="activity_type_workout">training</string>
     <string name="settings_layout_reset_confirm_title">Lay-outs terugzetten\?</string>
     <string name="settings_layout_reset_done">Alle lay-out instellingen zijn teruggezet naar de standaardwaarden</string>
-    <string name="title_activity_settings_custom_layout">Lay-out van opname aanpassen</string>
     <string name="field_set_primary">Primair</string>
     <string name="gps_recording_status">%1$s: %2$s</string>
     <string name="gps_recording_without_signal">OpenTracks neemt op zonder GPS gegevens.</string>

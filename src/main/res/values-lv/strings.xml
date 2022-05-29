@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Marķiera veids (piemēram, ūdenskritums)</string>
-    <string name="marker_edit_marker_type_hint">Marķiera veids</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Jums nav pieejama neviena atzīme</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Ierakstīšanas pakalpojums</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Akumulatora uzlādes līmenis</string>
-    <string name="sensor_state_cadence">Kadence</string>
-    <string name="sensor_state_cadence_value"> %1$d apgr./min</string>
     <string name="sensor_state_heart_rate">Sirdsdarbības ātrums</string>
     <string name="sensor_state_heart_rate_value">%1$d sit./min</string>
     <string name="sensor_state_power">Jauda</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Papildu iestatījumi</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Pēc attāluma</string>
     <string name="settings_chart_by_time">Pēc laika</string>
-    <string name="settings_recording">Notiek ierakstīšana</string>
     <string name="settings_recording_default_activity_title">Noklusējuma aktivitātes veids</string>
     <string name="settings_recording_location_frequency_summary">%1$s starp ierakstītajām atrašanās vietām</string>
     <string name="settings_recording_max_recording_distance_summary">Ja attālums starp divām atrašanās vietām ir lielāks par %1$s, tiek izveidots jauns atzars</string>
@@ -402,7 +396,6 @@ limitations under the License.
     <string name="settings_default_trackfileformat">Eksporta/ koplietošanas faila formāts</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Rādīt statistiku bloķēšanas ekrānā</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Ierakstīšanas laikā ir pilnekrāna režīmā.</string>
-    <string name="settings_error_initial_values_restored">Atvainojiet, bet ir notikusi kļūda. Visi iestatījumi ir atjaunoti līdz noklusējuma vērtībām.</string>
     <string name="settings_default_export_uri_title">Dziesmu eksporta direktorija</string>
     <string name="instant_export_enabled_title">Tūlītējs eksports pēc treniņa</string>
     <string name="interval_list_empty_message">Pagaidām nav intervālu</string>
@@ -431,7 +424,6 @@ limitations under the License.
     <string name="delete_service">Dzēšanas pakalpojuma</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Ierakstīšanas laikā rādiet statistiku, neatbloķējot ierīci.</string>
     <string name="import_file_imported">Failu %1$s importēšana</string>
-    <string name="settings_sensor_connecting">Saistīts ar %1$s</string>
     <string name="track_recording_notification_accuracy">Atrašanās vietas precizitāte: %1$s</string>
     <string name="share_image_subject">Vēlos dalīties ar jums kādā attēlā</string>
     <string name="import_error_list_dialog_title">Faili nav importēti</string>
@@ -462,6 +454,5 @@ limitations under the License.
     <string name="sensor_state_heart_rate_avg">Vidējais sirdsdarbība</string>
     <string name="generic_open_track">Atvērtā trase</string>
     <string name="aggregated_stats_empty_message">Ierakstiet savu pirmo dziesmu, lai redzētu apkopoto statistiku</string>
-    <string name="settings_sensor_disconnected">Atslēgts no %1$s</string>
     <string name="bluetooth_disabled">Lūdzu, iespējojiet Bluetooth.</string>
 </resources>

@@ -120,7 +120,6 @@
     <string name="marker_name_format">Marcador %1$d</string>
     <string name="marker_title">%1$d de %2$d</string>
     <string name="marker_edit_marker_type">Tipo de marcador (por exemplo, cascata)</string>
-    <string name="marker_edit_marker_type_hint">Tipo de marcador</string>
     <string name="marker_list_empty_message">Você não tem marcadores</string>
     <string name="menu_aggregated_statistics">Estatísticas reunidas</string>
     <string name="menu_delete">Excluir</string>
@@ -139,17 +138,12 @@
     <string name="menu_start_gps">Iniciar GPS</string>
     <string name="menu_stop_gps">Parar GPS</string>
     <string name="recording_service">Serviço de gravação</string>
-    <string name="sensor_state_battery">Nível da bateria</string>
-    <string name="sensor_state_cadence">Cadência</string>
-    <string name="sensor_state_cadence_value">%1$d ram</string>
     <string name="sensor_state_heart_rate">Frequência cardíaca</string>
     <string name="sensor_state_heart_rate_value">%1$d bom</string>
     <string name="sensor_state_power">Alimentação</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_advanced">Avançado</string>
     <string name="settings_chart_by_distance">Por distância</string>
     <string name="settings_chart_by_time">Por tempo</string>
-    <string name="settings_recording">Gravação</string>
     <string name="settings_recording_default_activity_title">Tipo de atividade padrão</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre os locais gravados</string>
     <string name="settings_recording_max_recording_distance_summary">Um novo segmento será criado se a distância entre os dois locais for maior que %1$s</string>
@@ -298,7 +292,6 @@
     <string name="settings_recording_fullscreen_on_while_recording_summary">Durante a gravação, apresente em tela cheia.</string>
     <string name="settings_night_mode_option_system">Sistema</string>
     <string name="settings_night_mode_option_day">Dia</string>
-    <string name="settings_sensor_disconnected">Desconectado de %1$s</string>
     <string name="track_detail_intervals_tab">intervalos</string>
     <string name="interval_list_empty_message">Não há nenhum intervalo ainda</string>
     <string name="share_image_body">Eu acho que você pode estar interessado nesta imagem.</string>
@@ -341,7 +334,6 @@
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Durante a gravação, mostre estatísticas sem desbloquear o dispositivo.</string>
     <string name="settings_night_mode_title">Tema UI</string>
     <string name="settings_night_mode_option_night">Noite</string>
-    <string name="settings_error_initial_values_restored">Desculpe, mas ocorreu um erro. Todas as configurações foram revertidas para os valores padrão.</string>
     <string name="about_url">Página do projeto: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Nome da versão: %1$s</string>
     <string name="about_version_code">Código da versão: %1$d</string>
@@ -384,7 +376,6 @@
     <string name="generic_click_twice_cancel">Clique novamente para cancelar</string>
     <string name="gps_disabled_msg">GPS desativado</string>
     <string name="gps_fixed_and_ready">GPS corrigido e pronto</string>
-    <string name="settings_sensor_connecting">Conectado a %1$s</string>
     <string name="aggregated_stats_empty_message">Registre sua primeira trilha para ver as estatísticas agregadas</string>
     <string name="share_image_subject">Eu gostaria de compartilhar uma imagem com você</string>
     <string name="instant_export_enabled_summary">Exportar trilha para armazenamento depois que a gravação for concluída</string>
@@ -440,7 +431,6 @@
     <string name="stats_sensors_power">Poder</string>
     <string name="location_coordinate">%1$s°</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
-    <string name="title_activity_settings_custom_layout">Personalizar Layout de Gravação</string>
     <string name="field_set_primary">Primário</string>
     <string name="field_set_secondary">Secundário</string>
     <string name="field_remove_from_layout">Remover</string>

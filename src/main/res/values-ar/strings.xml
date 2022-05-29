@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">نوع المُحدد (على سبيل المثال شلال)</string>
-    <string name="marker_edit_marker_type_hint">نوع المُحدد</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">ليس لديك أية علامات</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">خدمة التسجيل</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">مستوى شحن البطارية</string>
-    <string name="sensor_state_cadence">الإيقاع</string>
-    <string name="sensor_state_cadence_value">%1$d دورة في الدقيقة</string>
     <string name="sensor_state_heart_rate">معدل ضربات القلب</string>
     <string name="sensor_state_heart_rate_value">%1$d نبضة في الدقيقة</string>
     <string name="sensor_state_power">الطاقة</string>
-    <string name="sensor_state_power_value">%1$d واط</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">خيارات متقدمة</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">بحسب المسافة</string>
     <string name="settings_chart_by_time">بحسب الوقت</string>
-    <string name="settings_recording">التسجيل</string>
     <string name="settings_recording_default_activity_title">نوع النشاط الافتراضي</string>
     <string name="settings_recording_location_frequency_summary">%1$s‏ بين المواقع المسجلة</string>
     <string name="settings_recording_max_recording_distance_summary">يتم إنشاء جزء جديد إذا كانت المسافة بين موقعين أكبر من %1$s</string>

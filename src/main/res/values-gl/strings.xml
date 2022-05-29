@@ -209,7 +209,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Tipo de marcador (por exemplo, fervenza)</string>
-    <string name="marker_edit_marker_type_hint">Tipo de marcador</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Non tes marcadores</string>
     <!-- Menu -->
@@ -237,13 +236,9 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="permission_gps_failed">OpenTracks precisa permiso para usar o GPS.</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Nivel da batería</string>
-    <string name="sensor_state_cadence">Cadencia</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">Frecuencia cardíaca</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Potencia</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Non se escanearon dispositivos Bluetooth (fallo %1$i).</string>
     <string name="bluetooth_disabled">Activa o Bluetooth.</string>
     <!-- Settings Advanced -->
@@ -259,7 +254,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_recording_keep_screen_on_while_recording_summary">Ao gravar, manten a pantalla acesa.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Pantalla completa</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Mentras grava, mostrar a pantalla completa.</string>
-    <string name="settings_recording">Gravación</string>
     <string name="settings_recording_default_activity_title">Tipo de actividade predeterminada</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre as situacións gravadas</string>
     <string name="settings_recording_max_recording_distance_summary">Créase un novo segmento se a distancia entre as situacións é superior a %1$s</string>
@@ -276,11 +270,8 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_reset_confirm_message">Toda a configuración volverá aos valores predeterminados.</string>
     <string name="settings_reset_confirm_title">Restablecer agora?</string>
     <string name="settings_reset_done">Restablecéronse todos os valores predeterminados da configuración</string>
-    <string name="settings_error_initial_values_restored">Sentímolo, pero algo fallou. Os axustes foron restablecidos aos valores por omisión.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_connecting">Conectado a %1$s</string>
-    <string name="settings_sensor_disconnected">Desconectado de %1$s</string>
     <string name="settings_sensor_wheel_circumference">Circunferencia da roda (mm)</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Indicador preferido</string>
@@ -502,7 +493,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="stats_sensors_cadence">Cadencia</string>
     <string name="location_coordinate">%1$sº</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
-    <string name="title_activity_settings_custom_layout">Personaliza a disposición ao gravar</string>
     <string name="field_remove_from_layout">Eliminar</string>
     <string name="field_set_primary">Primario</string>
     <string name="field_set_secondary">Secundario</string>

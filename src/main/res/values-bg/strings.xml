@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Тип маркер (напр. водопад)</string>
-    <string name="marker_edit_marker_type_hint">Тип маркер</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Нямате маркери</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Услуга за запис</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Ниво на батерията</string>
-    <string name="sensor_state_cadence">Такт</string>
-    <string name="sensor_state_cadence_value">%1$d об/мин</string>
     <string name="sensor_state_heart_rate">Сърдечен ритъм</string>
     <string name="sensor_state_heart_rate_value">%1$d уд/мин</string>
     <string name="sensor_state_power">Захранване</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Разширени</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">По разстояние</string>
     <string name="settings_chart_by_time">По време</string>
-    <string name="settings_recording">Записване</string>
     <string name="settings_recording_default_activity_title">Тип стандартна дейност</string>
     <string name="settings_recording_location_frequency_summary">%1$s между записаните местоположения</string>
     <string name="settings_recording_max_recording_distance_summary">Създава се нова отсечка, ако разстоянието между две местоположения е по-голямо от %1$s</string>
@@ -429,7 +423,6 @@ limitations under the License.
     <string name="sensor_state_power_avg">Средна мощност</string>
     <string name="help_feature_title">OpenTracks има следните функции:</string>
     <string name="delete_service">Услуга за изтриване</string>
-    <string name="settings_sensor_disconnected">Изключен от %1$s</string>
     <string name="settings_night_mode_option_system">Система</string>
     <string name="settings_prevent_reimport_tracks_title">Забрана за повторно импортиране на песни</string>
     <string name="export_progress_summary_skip_msg">Пропуснати писти</string>
@@ -438,7 +431,6 @@ limitations under the License.
     <string name="about_libraries">Библиотеки</string>
     <string name="sensor_state_cadence_avg">Среден каданс</string>
     <string name="settings_sensor_wheel_circumference">Обиколка на колелото (mm)</string>
-    <string name="settings_sensor_connecting">Свързан към %1$s</string>
     <string name="description_default_speed_or_pace">По вид дейност</string>
     <string name="import_error_list_dialog_title">Файловете не се импортират</string>
     <string name="generic_overwrite">Презапис</string>
@@ -470,7 +462,6 @@ limitations under the License.
     <string name="export_error_post_workout">Експортът след тренировка е неуспешен, моля, проверете директорията за експорт.</string>
     <string name="about_third_party_data">Данни от трети страни</string>
     <string name="import_unsupported_format">Неподдържан формат на файла</string>
-    <string name="settings_error_initial_values_restored">Съжаляваме, но възникна грешка. Всички настройки са възстановени до стойностите по подразбиране.</string>
     <string name="import_parser_error">Грешка при парсера: %1$s</string>
     <string name="instant_export_enabled_summary">Експортиране на запис в хранилището след приключване на записа</string>
     <string name="settings_sensor_cycling_cadence">Колоездене: каданс</string>

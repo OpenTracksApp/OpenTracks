@@ -186,7 +186,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Tipo di indicatore (ad es. cascata)</string>
-    <string name="marker_edit_marker_type_hint">Tipo di indicatore</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Non ci sono indicatori</string>
     <!-- Menu -->
@@ -210,20 +209,15 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="recording_service">Servizio di registrazione</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Livello batteria</string>
-    <string name="sensor_state_cadence">Cadenza</string>
-    <string name="sensor_state_cadence_value">%1$d giri al minuto</string>
     <string name="sensor_state_heart_rate">Battito cardiaco</string>
     <string name="sensor_state_heart_rate_value">%1$d battiti al minuto</string>
     <string name="sensor_state_power">Potenza</string>
-    <string name="sensor_state_power_value">%1$d W</string>
 
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avanzate</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Per distanza</string>
     <string name="settings_chart_by_time">Per durata</string>
-    <string name="settings_recording">Registrazione</string>
     <string name="settings_recording_default_activity_title">Tipo di attività predefinita</string>
     <string name="settings_recording_location_frequency_summary">%1$s tra posizioni registrate</string>
     <string name="settings_recording_max_recording_distance_summary">Viene creato un nuovo segmento se la distanza tra due punti è maggiore di %1$s</string>
@@ -381,7 +375,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="waypoint_type_water_fountain">fontana ad acqua</string>
     <string name="waypoint_type_waypoint">tappa</string>
     <string name="settings_night_mode_title">Tema dell\'interfaccia utente</string>
-    <string name="settings_error_initial_values_restored">Mi dispiace, ma si è verificato un errore. Tutte le impostazioni sono state riportate ai valori predefiniti.</string>
     <string name="stats_split_interval">Intervallo di divisione</string>
     <string name="aggregated_stats_empty_message">Registra il tuo primo percorso per vedere le statistiche aggregate</string>
     <string name="share_image_subject">Vorrei condividere un\'immagine con te</string>
@@ -447,8 +440,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_night_mode_option_system">Sistema</string>
     <string name="settings_night_mode_option_day">Chiaro</string>
     <string name="settings_night_mode_option_night">Scuro</string>
-    <string name="settings_sensor_connecting">Connesso a %1$s</string>
-    <string name="settings_sensor_disconnected">Disconnesso da %1$s</string>
     <string name="track_detail_intervals_tab">Intervalli</string>
     <string name="interval_list_empty_message">Non c\'è ancora nessun intervallo</string>
     <string name="share_image_body">Penso che potresti essere interessat* a questa immagine.</string>
@@ -516,7 +507,6 @@ Infatti, un\'applicazione deve supportare <i>ACTION_VIEW</i> con MIME <i>applica
     <string name="settings_layout_reset_done">Tutte le impostazioni del layout sono state reimpostate ai valori predefiniti</string>
     <string name="settings_generic_sensor">Generico</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
-    <string name="title_activity_settings_custom_layout">Personalizza Layout di Registrazione</string>
     <string name="settings_open_tracks_title">Binari aperti</string>
     <string name="settings_open_tracks_summary">Tutto a proposito del progetto OpenTracks</string>
     <string name="settings_ui_title">Interfaccia Utente</string>

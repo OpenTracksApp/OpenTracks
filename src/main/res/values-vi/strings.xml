@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Loại điểm đánh dấu (ví dụ: thác nước)</string>
-    <string name="marker_edit_marker_type_hint">Loại điểm đánh dấu</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Bạn không có bất kỳ điểm đánh dấu nào</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Dịch vụ ghi</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Mức pin</string>
-    <string name="sensor_state_cadence">Nhịp</string>
-    <string name="sensor_state_cadence_value">%1$d vòng/phút</string>
     <string name="sensor_state_heart_rate">Nhịp tim</string>
     <string name="sensor_state_heart_rate_value">%1$d nhịp đập/phút</string>
     <string name="sensor_state_power">Công suất</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Nâng cao</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Theo khoảng cách</string>
     <string name="settings_chart_by_time">Theo thời gian</string>
-    <string name="settings_recording">Ghi tuyến đường</string>
     <string name="settings_recording_default_activity_title">Loại hoạt động mặc định</string>
     <string name="settings_recording_location_frequency_summary">%1$s giữa các vị trí được ghi</string>
     <string name="settings_recording_max_recording_distance_summary">Một đoạn mới được tạo nếu khoảng cách giữa hai vị trí lớn hơn %1$s</string>
@@ -454,9 +448,6 @@ limitations under the License.
     <string name="settings_layout_reset_confirm_title">Thiết lập lại bố trí của bạn\?</string>
     <string name="settings_layout_reset_done">Tất cả bố trí cài đặt đã trở lại là việc định giá trị</string>
     <string name="settings_all_reset">Đặt lại</string>
-    <string name="settings_error_initial_values_restored">Xin lỗi, nhưng đã xảy ra lỗi. Tất cả các thiết lập đã trở lại là việc định giá trị.</string>
-    <string name="settings_sensor_connecting">Kết nối với %1$s</string>
-    <string name="settings_sensor_disconnected">Ngắt kết nối từ %1$s</string>
     <string name="settings_sensor_cycling_distance_speed">Khoảng cách và tốc độ</string>
     <string name="settings_sensor_cycling_cadence">Nhịp</string>
     <string name="settings_sensor_running_speed_and_cadence">Khoảng cách, tốc độ và nhịp</string>
@@ -476,7 +467,6 @@ limitations under the License.
     <string name="hold_to_stop">Giữ để dừng lại</string>
     <string name="share_image_subject">Tôi muốn chia sẻ hình ảnh với bạn</string>
     <string name="field_set_primary">Chính</string>
-    <string name="title_activity_settings_custom_layout">Tuỳ Ghi Bố Trí</string>
     <string name="settings_default_export_uri_title">Theo dõi xuất khẩu, xuất khẩu</string>
     <string name="interval_list_empty_message">Không có bất kỳ khoảng thời gian sơ</string>
     <string name="aggregated_stats_empty_message">Hồ sơ của đua đầu tiên, để xem tổng thống kê</string>

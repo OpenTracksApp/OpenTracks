@@ -202,7 +202,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Art der Markierung, z. B. Wasserfall</string>
-    <string name="marker_edit_marker_type_hint">Art der Markierung</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Sie haben noch keine Markierungen</string>
     <!-- Menu -->
@@ -232,13 +231,9 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="permission_bluetooth_failed_rejected">Du musst OpenTracks die Berechtigung zum Zugriff auf Geräte in der Nähe manuell in den Systemeinstellungen geben.</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Akkustatus</string>
-    <string name="sensor_state_cadence">Trittfrequenz</string>
-    <string name="sensor_state_cadence_value">%1$d Umdrehungen pro Minute</string>
     <string name="sensor_state_heart_rate">Herzfrequenz</string>
     <string name="sensor_state_heart_rate_value">%1$d Schläge pro Minute</string>
     <string name="sensor_state_power">Leistung</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Konnte nicht nach Bluetooth-Geräten scannen (Fehler %1$i).</string>
     <string name="bluetooth_disabled">Bitte Bluetooth aktivieren.</string>
     <!-- Settings Advanced -->
@@ -252,7 +247,6 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Zeige während der Aufzeichnung Statistiken an, ohne das Gerät zu entsperren.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Bildschirm eingeschaltet lassen</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Lasse während der Aufnahme den Bildschirm eingeschaltet.</string>
-    <string name="settings_recording">Aufzeichnung</string>
     <string name="settings_recording_default_activity_title">Standardaktivität</string>
     <string name="settings_recording_location_frequency_summary">Entfernungs-/Zeitintervall %1$s zwischen zwei Standortaufzeichnungen</string>
     <string name="settings_recording_max_recording_distance_summary">Ein neues Segment wird erstellt, wenn die Entfernung zwischen zwei Standorten mehr als %1$s beträgt</string>
@@ -269,11 +263,8 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="settings_reset_confirm_message">Alle Einstellungen werden auf die Standardwerte zurückgesetzt.</string>
     <string name="settings_reset_confirm_title">Jetzt zurücksetzen?</string>
     <string name="settings_reset_done">Alle Einstellungen wurden auf ihre Standardwerte zurückgesetzt</string>
-    <string name="settings_error_initial_values_restored">Entschuldigung, es ist ein Fehler aufgetreten. Alle Einstellungen wurden auf die Standardwerte zurückgesetzt.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_connecting">Verbunden mit %1$s</string>
-    <string name="settings_sensor_disconnected">Verbindung getrennt von %1$s</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Bevorzugtes Maß</string>
     <string name="settings_stats_units_imperial">Imperiales Maß (mi, ft)</string>

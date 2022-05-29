@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">İşaretçi türü (ör. şelale)</string>
-    <string name="marker_edit_marker_type_hint">İşaretçi türü</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Hiç işaretçiniz yok</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Kayıt hizmeti</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Pil seviyesi</string>
-    <string name="sensor_state_cadence">Kadans</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">Kalp hızı</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Güç</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Gelişmiş</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Mesafeye göre</string>
     <string name="settings_chart_by_time">Zamana göre</string>
-    <string name="settings_recording">Kayıt</string>
     <string name="settings_recording_default_activity_title">Varsayılan aktivite türü</string>
     <string name="settings_recording_location_frequency_summary">Kaydedilen konumlar arası %1$s</string>
     <string name="settings_recording_max_recording_distance_summary">İki konum arasındaki mesafe şundan fazlaysa yeni segment oluşturulur: %1$s</string>
@@ -504,7 +498,6 @@ limitations under the License.
     <string name="custom_layout_list_title">Dizilimler</string>
     <string name="custom_layout_list_layout_removed">Dizilim kaldırıldı</string>
     <string name="settings_cycling_sensor">Bisiklet</string>
-    <string name="settings_error_initial_values_restored">Üzgünüz bir hata oluştu. Tüm ayarlar varsayılan değerlere döndürüldü.</string>
     <string name="track_speed_notification">Hız: %1$s</string>
     <string name="aggregated_stats_empty_message">Toplu istatistikleri görmek için ilk parçanızı kaydedin</string>
     <string name="instant_export_enabled_title">Antrenman sonrası anında dışa aktarma</string>
@@ -558,7 +551,6 @@ limitations under the License.
     </plurals>
     <string name="settings_recording_fullscreen_on_while_recording_title">Tam ekran</string>
     <string name="current_heart_rate">Şu anki kalp atış hızı</string>
-    <string name="title_activity_settings_custom_layout">Kayıt Düzenini Özelleştirme</string>
     <string name="field_set_primary">Birincil</string>
     <string name="field_set_secondary">İkincil</string>
     <string name="settings_sensor_bluetooth_service_filter_enabled">Yalnızca gerekli hizmetleri bildiren Bluetooth cihazlarını göster</string>
@@ -566,11 +558,9 @@ limitations under the License.
     <string name="share_image_body">Bu görüntü ilginizi çekebilir.</string>
     <string name="share_image_subject">Sizinle bir resim paylaşmak istiyorum</string>
     <string name="settings_sensor_cycling_distance_speed">Mesafe ve Hız</string>
-    <string name="settings_sensor_connecting">%1$s ile bağlantı kuruldu</string>
     <string name="settings_sensor_cycling_cadence">Kadans</string>
     <string name="settings_sensor_running_speed_and_cadence">Mesafe, Hız ve Kadans</string>
     <string name="settings_sensor_wheel_circumference">Tekerlek Çevresi (mm)</string>
-    <string name="settings_sensor_disconnected">%1$s ile bağlantı kesildi</string>
     <string name="track_recording_notification_accuracy">Konum doğruluğu: %1$s</string>
     <string name="import_prevent_reimport">Parçayı yeniden içe aktarmayı engellemeye ayarladınız</string>
     <string name="settings_night_mode_option_day">Gündüz</string>

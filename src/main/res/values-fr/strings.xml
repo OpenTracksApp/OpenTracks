@@ -199,7 +199,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Type de repère (exemple : cascade)</string>
-    <string name="marker_edit_marker_type_hint">Type de repère</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Vous n\'avez aucun repère</string>
     <!-- Menu -->
@@ -227,13 +226,9 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="permission_gps_failed">OpenTracks nécessite une autorisation pour utiliser le GPS.</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Niveau de la batterie</string>
-    <string name="sensor_state_cadence">Cadences</string>
-    <string name="sensor_state_cadence_value">%1$d tr/min</string>
     <string name="sensor_state_heart_rate">Fréquence cardiaque</string>
     <string name="sensor_state_heart_rate_value">%1$d ppm</string>
     <string name="sensor_state_power">Puissance</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Impossible de rechercher les appareils Bluetooth (erreur %1$i).</string>
     <string name="bluetooth_disabled">Veuillez activer Bluetooth.</string>
     <!-- Settings Advanced -->
@@ -246,7 +241,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Pendant l\'enregistrement, afficher les statistiques sans déverrouiller l\'appareil.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Garder l\'écran allumé</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Pendant l\'enregistrement, garder l\'écran allumé.</string>
-    <string name="settings_recording">Enregistrement</string>
     <string name="settings_recording_default_activity_title">Type activité par déf</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre chaque enregistrement de la position</string>
     <string name="settings_recording_max_recording_distance_summary">Une nouvelle section est créée si la distance entre deux positions est supérieure à %1$s</string>
@@ -263,11 +257,8 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_reset_confirm_message">Les valeurs par défaut seront rétablies pour tous les paramètres.</string>
     <string name="settings_reset_confirm_title">Réinitialiser maintenant ?</string>
     <string name="settings_reset_done">Les valeurs par défaut de tous les paramètres ont bien été rétablies</string>
-    <string name="settings_error_initial_values_restored">Désolé, mais une erreur sest produite. Tous les paramètres ont été rétablis aux valeurs par défaut.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_connecting">Connecté à %1$s</string>
-    <string name="settings_sensor_disconnected">Déconnecté de %1$s</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Mode de calcul souhaité</string>
     <string name="settings_stats_units_imperial">Unités impériales (mi, pi)</string>
@@ -501,7 +492,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_all_reset">Réinitialiser</string>
     <string name="location_coordinate">%1$s°</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
-    <string name="title_activity_settings_custom_layout">Personnaliser la disposition d\'enregistrement</string>
     <string name="permission_bluetooth_failed">OpenTracks a besoin de la permission d\'utiliser le Bluetooth.</string>
     <string name="settings_recording_customize_layout_select_columns">Champs de données pas rangée</string>
     <string name="field_set_primary">Principal</string>

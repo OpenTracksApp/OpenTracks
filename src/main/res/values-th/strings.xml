@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">ประเภทเครื่องหมาย (เช่น น้ำตก)</string>
-    <string name="marker_edit_marker_type_hint">ประเภทเครื่องหมาย</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">คุณไม่มีเครื่องหมายเลย</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">บริการการบันทึก</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">ระดับแบตเตอรี่</string>
-    <string name="sensor_state_cadence">รอบขา</string>
-    <string name="sensor_state_cadence_value">%1$d รอบต่อนาที</string>
     <string name="sensor_state_heart_rate">อัตราการเต้นหัวใจ</string>
     <string name="sensor_state_heart_rate_value">%1$d ครั้งต่อนาที</string>
     <string name="sensor_state_power">กำลัง</string>
-    <string name="sensor_state_power_value">%1$d วัตต์</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">ขั้นสูง</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">ตามระยะทาง</string>
     <string name="settings_chart_by_time">ตามเวลา</string>
-    <string name="settings_recording">การบันทึก</string>
     <string name="settings_recording_default_activity_title">ประเภทกิจกรรมเริ่มต้น</string>
     <string name="settings_recording_location_frequency_summary">บันทึกตำแหน่งทุก %1$s</string>
     <string name="settings_recording_max_recording_distance_summary">เซ็กเมนต์ใหม่จะถูกสร้างขึ้นถ้าระยะห่างระหว่างสองตำแหน่งมีค่ามากกว่า %1$s</string>

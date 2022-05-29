@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Tipus de marcador (p. ex. cascada)</string>
-    <string name="marker_edit_marker_type_hint">Tipus de marcador</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">No teniu cap marcador.</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Servei d\'enregistrament</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Nivell de la bateria</string>
-    <string name="sensor_state_cadence">Cadència</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">Freqüència cardíaca</string>
     <string name="sensor_state_heart_rate_value">%1$d ppm</string>
     <string name="sensor_state_power">Potència</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avançades</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Per distància</string>
     <string name="settings_chart_by_time">Per temps</string>
-    <string name="settings_recording">Enregistrament</string>
     <string name="settings_recording_default_activity_title">Activitat predeterminada</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre ubicacions registrades</string>
     <string name="settings_recording_max_recording_distance_summary">Es crea un tram si la distància entre dues ubicacions és superior a %1$s.</string>

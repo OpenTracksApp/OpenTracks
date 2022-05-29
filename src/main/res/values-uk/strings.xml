@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Тип маркера (наприклад, водоспад)</string>
-    <string name="marker_edit_marker_type_hint">Тип маркера</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Немає маркерів</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Служба запису</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Рівень заряду батареї</string>
-    <string name="sensor_state_cadence">Темп</string>
-    <string name="sensor_state_cadence_value">%1$d об/хв</string>
     <string name="sensor_state_heart_rate">Пульс</string>
     <string name="sensor_state_heart_rate_value">%1$d уд/хв</string>
     <string name="sensor_state_power">Потужність</string>
-    <string name="sensor_state_power_value">%1$d В</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Розширені</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Дистанція</string>
     <string name="settings_chart_by_time">Час</string>
-    <string name="settings_recording">Записування</string>
     <string name="settings_recording_default_activity_title">Тип за умовчанням</string>
     <string name="settings_recording_location_frequency_summary">Записувати відрізок через кожні %1$s</string>
     <string name="settings_recording_max_recording_distance_summary">Кожні %1$s шляху відміряється новий відрізок</string>
@@ -354,9 +348,6 @@ limitations under the License.
     <string name="sensor_state_power_avg">Сер. потужність</string>
     <string name="settings_night_mode_option_day">День</string>
     <string name="settings_night_mode_option_night">Ніч</string>
-    <string name="settings_error_initial_values_restored">Вибачте, але сталася помилка. Всі налаштування було скинуто до стандартних значень.</string>
-    <string name="settings_sensor_connecting">Під\'єднано до %1$s</string>
-    <string name="settings_sensor_disconnected">Відключено від %1$s</string>
     <string name="stats_split_interval">Розділити на</string>
     <string name="track_recording_notification_accuracy">Точність місцеположення: %1$s</string>
     <string name="track_detail_intervals_tab">Інтервали</string>
@@ -490,7 +481,6 @@ limitations under the License.
     <string name="generic_choose_an_option">Оберіть опцію</string>
     <string name="permission_bluetooth_failed">OpenTracks просить дозволу використання Bluetooth.</string>
     <string name="permission_bluetooth_failed_rejected">Вам необхідно вручну надати OpenTracks доступ до прилеглих пристроїв в системних налаштуваннях.</string>
-    <string name="title_activity_settings_custom_layout">Налаштування Макета Запису</string>
     <string name="field_set_primary">Первинний</string>
     <string name="field_remove_from_layout">Видаляти</string>
     <string name="stats_clock">Години</string>

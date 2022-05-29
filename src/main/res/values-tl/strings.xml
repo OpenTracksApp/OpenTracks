@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Uri ng marker (hal.talon)</string>
-    <string name="marker_edit_marker_type_hint">Uri ng marker</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Wala kang anumang mga marker</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Serbisyo ng pagrerekord</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Antas ng baterya</string>
-    <string name="sensor_state_cadence">Cadence</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">Heart rate</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Power</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Advanced</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Ayon sa distansya</string>
     <string name="settings_chart_by_time">Ayon sa oras</string>
-    <string name="settings_recording">Pagre-rekord</string>
     <string name="settings_recording_default_activity_title">Dafault na uri ng gawain</string>
     <string name="settings_recording_location_frequency_summary">%1$s sa pagitan ng mga nakatalang lokasyon</string>
     <string name="settings_recording_max_recording_distance_summary">Nilikha ang isang bagong segment kung mas malaki sa %1$s ang distansya sa pagitan ng dalawang lokasyon</string>
