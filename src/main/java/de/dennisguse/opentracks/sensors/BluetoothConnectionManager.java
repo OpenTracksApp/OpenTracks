@@ -136,9 +136,9 @@ public abstract class BluetoothConnectionManager<DataType> {
         Log.d(TAG, "Connecting to: " + device);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            bluetoothGatt = device.connectGatt(context, true, connectCallback, BluetoothDevice.TRANSPORT_AUTO, 0, this.observer.getHandler());
+            bluetoothGatt = device.connectGatt(context, false, connectCallback, BluetoothDevice.TRANSPORT_AUTO, 0, this.observer.getHandler());
         } else {
-            bluetoothGatt = device.connectGatt(context, true, connectCallback);
+            bluetoothGatt = device.connectGatt(context, false, connectCallback);
         }
         SensorData<?> sensorData = createEmptySensorData(bluetoothGatt.getDevice().getAddress());
         observer.onChanged(sensorData);
