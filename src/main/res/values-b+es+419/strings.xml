@@ -120,7 +120,6 @@
     <string name="marker_name_format">Marcador %1$d</string>
     <string name="marker_title">%1$d de %2$d</string>
     <string name="marker_edit_marker_type">Tipo de marcador (p. ej., cascada)</string>
-    <string name="marker_edit_marker_type_hint">Tipo de marcador</string>
     <string name="marker_list_empty_message">No tienes ningún marcador</string>
     <string name="menu_aggregated_statistics">Estadíst. globales</string>
     <string name="menu_delete">Eliminar</string>
@@ -141,17 +140,12 @@
     <string name="menu_stop_gps">Detener GPS</string>
     <string name="menu_resume_track">Reanudar recorrido</string>
     <string name="recording_service">Servicio de grabación</string>
-    <string name="sensor_state_battery">Nivel de la batería</string>
-    <string name="sensor_state_cadence">Cadencia</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">Frecuencia cardíaca</string>
     <string name="sensor_state_heart_rate_value">%1$d lpm</string>
     <string name="sensor_state_power">Potencia</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_advanced">Opciones avanzadas</string>
     <string name="settings_chart_by_distance">Por distancia</string>
     <string name="settings_chart_by_time">Por tiempo</string>
-    <string name="settings_recording">Grabación</string>
     <string name="settings_recording_default_activity_title">Tipo de actividad predeterminada</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre las ubicaciones grabadas</string>
     <string name="settings_recording_max_recording_distance_summary">Se crea un nuevo tramo si la distancia entre dos ubicaciones es superior a %1$s</string>
@@ -304,7 +298,6 @@
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Mostrar estadísticas en pantalla de bloqueo</string>
     <string name="permission_gps_failed">OpenTracks necesita permiso para usar el GPS.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Mantener la pantalla encendida</string>
-    <string name="settings_sensor_disconnected">Desconectado de %1$s</string>
     <string name="instant_export_enabled_title">Exportación instantánea post-entrenamiento</string>
     <string name="hold_to_stop">Mantener para parar</string>
     <string name="settings_sensor_wheel_circumference">Circunferencia de la rueda (mm)</string>
@@ -320,8 +313,6 @@
     <string name="settings_night_mode_option_system">Sistema</string>
     <string name="settings_night_mode_option_day">Día</string>
     <string name="settings_night_mode_option_night">Noche</string>
-    <string name="settings_error_initial_values_restored">Lo sentimos, pero ha ocurrido un error. Todas las configuraciones se han revertido a los valores predeterminados.</string>
-    <string name="settings_sensor_connecting">Conectado a %1$s</string>
     <string name="track_speed_notification">Velocidad: %1$s</string>
     <string name="instant_export_enabled_summary">Exportar el recorrido al almacenamiento una vez finalizada la grabación</string>
     <string name="description_altitude_loss">Pérdida de elevación: %1$d m (%2$d pies)</string>
@@ -444,7 +435,6 @@
     <string name="settings_sensor_running_speed_and_cadence">Distancia, velocidad y cadencia</string>
     <string name="stats_coordinates">Latitud/Longitud</string>
     <string name="location_coordinate">%1$s°</string>
-    <string name="title_activity_settings_custom_layout">Personalizar pantalla de grabación</string>
     <string name="generic_choose_an_option">Selecciona una opción</string>
     <string name="settings_sensor_cycling_distance_speed">Distancia y velocidad</string>
     <string name="settings_sensor_cycling_cadence">Cadencia</string>

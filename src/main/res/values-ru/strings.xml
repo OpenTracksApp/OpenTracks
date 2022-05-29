@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Тип маркера (например, водопад)</string>
-    <string name="marker_edit_marker_type_hint">Тип маркера</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Вы пока не добавили ни одного маркера</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Служба записи треков</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Уровень заряда батареи</string>
-    <string name="sensor_state_cadence">Вращение педалей</string>
-    <string name="sensor_state_cadence_value">%1$d об/мин</string>
     <string name="sensor_state_heart_rate">Пульс</string>
     <string name="sensor_state_heart_rate_value">%1$d уд/мин</string>
     <string name="sensor_state_power">Энергия</string>
-    <string name="sensor_state_power_value">%1$d Вт</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Расширенные</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Расстояние</string>
     <string name="settings_chart_by_time">Время</string>
-    <string name="settings_recording">Запись</string>
     <string name="settings_recording_default_activity_title">Вид активности</string>
     <string name="settings_recording_location_frequency_summary">Записывать точки с интервалом %1$s</string>
     <string name="settings_recording_max_recording_distance_summary">Макс. расстояние между точками в одном сегменте: %1$s</string>
@@ -428,8 +422,6 @@ limitations under the License.
     <string name="track_recording_notification_accuracy">Точность расположения: %1$s</string>
     <string name="stats_split_interval">Раздельный интервал</string>
     <string name="settings_sensor_wheel_circumference">Окружность колеса (мм)</string>
-    <string name="settings_sensor_disconnected">Отключен от %1$s</string>
-    <string name="settings_sensor_connecting">Подключен к %1$s</string>
     <string name="settings_night_mode_option_night">Ночная</string>
     <string name="settings_night_mode_option_day">Дневная</string>
     <string name="export_progress_summary_overwrite_msg">Перезапись дорожек</string>
@@ -464,7 +456,6 @@ limitations under the License.
 \n д) покупать в <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play Store</a>,
 \n f) жертвовать, и
 \n g) делать все, что, по вашему мнению, поможет OpenTracks. </string>
-    <string name="settings_error_initial_values_restored">Извините, но произошла ошибка. Все настройки были возвращены к значениям по умолчанию.</string>
     <string name="settings_night_mode_option_system">Системная</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Во время записи присутствует полноэкранный режим.</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Во время записи показывайте статистику, не разблокируя устройство.</string>
@@ -532,7 +523,6 @@ limitations under the License.
     </plurals>
     <string name="settings_layout_reset">Сбросить свои раскладки</string>
     <string name="settings_layout_reset_done">Настройки всех раскладок были сброшены</string>
-    <string name="title_activity_settings_custom_layout">Изменить раскладку записи</string>
     <string name="generic_to">До</string>
     <string name="generic_today">Сегодня</string>
     <string name="generic_yesterday">Вчера</string>

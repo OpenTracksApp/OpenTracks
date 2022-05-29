@@ -196,7 +196,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Tipo de marcador (p. ej., cascada)</string>
-    <string name="marker_edit_marker_type_hint">Tipo de marcador</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">No tienes ningún marcador</string>
     <!-- Menu -->
@@ -224,13 +223,9 @@ limitations under the License.
     <string name="permission_gps_failed">OpenTracks necesita permiso para usar el GPS.</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Nivel de la batería</string>
-    <string name="sensor_state_cadence">Cadencia</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">Frecuencia cardíaca</string>
     <string name="sensor_state_heart_rate_value">%1$d lpm</string>
     <string name="sensor_state_power">Potencia</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">No se pudieron buscar dispositivos Bluetooth (error %1$i).</string>
     <string name="bluetooth_disabled">Por favor habilite Bluetooth.</string>
     <!-- Settings Advanced -->
@@ -243,7 +238,6 @@ limitations under the License.
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Mientras graba, mostrar estadísticas sin desbloquear el dispositivo.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Mantener la pantalla encendida</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Mientras graba, mantener la pantalla encendida.</string>
-    <string name="settings_recording">Grabación</string>
     <string name="settings_recording_default_activity_title">Tipo de actividad predeterminada</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre las ubicaciones grabadas</string>
     <string name="settings_recording_max_recording_distance_summary">Se crea un nuevo tramo si la distancia entre dos ubicaciones es superior a %1$s</string>
@@ -260,11 +254,8 @@ limitations under the License.
     <string name="settings_reset_confirm_message">Todos las configuraciones se restablecerán a los valores predeterminados. Esto no eliminará ningún recorrido en el dispositivo.</string>
     <string name="settings_reset_confirm_title">¿Restablecer ahora?</string>
     <string name="settings_reset_done">Se restablecieron los valores predeterminados de todas las configuraciones</string>
-    <string name="settings_error_initial_values_restored">Lo sentimos, pero ha ocurrido un error. Todas las configuraciones se han revertido a los valores predeterminados.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_connecting">Conectado a %1$s</string>
-    <string name="settings_sensor_disconnected">Desconectado de %1$s</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Tasa preferida</string>
     <string name="settings_stats_units_imperial">Imperiales (millas, pies)</string>
@@ -498,7 +489,6 @@ limitations under the License.
     <string name="generic_choose_an_option">Selecciona una opción</string>
     <string name="settings_layout_reset">Restablecer pantalla personalizada</string>
     <string name="stats_coordinates">Latitud/Longitud</string>
-    <string name="title_activity_settings_custom_layout">Personalizar pantalla de grabación</string>
     <string name="field_set_secondary">Secundario</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>

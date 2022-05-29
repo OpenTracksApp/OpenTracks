@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Τύπος σήμανσης (π.χ. καταρράκτης)</string>
-    <string name="marker_edit_marker_type_hint">Τύπος σήμανσης</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Δεν έχετε κανένα δείκτη</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Υπηρεσία καταγραφής</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Στάθμη μπαταρίας</string>
-    <string name="sensor_state_cadence">Ρυθμός</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">Καρδιακοί παλμοί</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Ισχύς</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Προηγμένες</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Κατά απόσταση</string>
     <string name="settings_chart_by_time">Κατά χρόνο</string>
-    <string name="settings_recording">Εγγραφή</string>
     <string name="settings_recording_default_activity_title">Προεπιλεγμένος τύπος δραστηριότητας</string>
     <string name="settings_recording_location_frequency_summary">%1$s μεταξύ καταγεγραμμένων θέσεων</string>
     <string name="settings_recording_max_recording_distance_summary">Δημιουργείται ένα νέο τμήμα εάν η απόσταση ανάμεσα σε δύο θέσεις είναι μεγαλύτερη από %1$s</string>

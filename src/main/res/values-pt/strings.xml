@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Tipo de marcador (por exemplo, cascata)</string>
-    <string name="marker_edit_marker_type_hint">Tipo de marcador</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Você não tem marcadores</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Serviço de gravação</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Nível da bateria</string>
-    <string name="sensor_state_cadence">Cadência</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">Frequência cardíaca</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Alimentação</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avançado</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Por distância</string>
     <string name="settings_chart_by_time">Por tempo</string>
-    <string name="settings_recording">Gravação</string>
     <string name="settings_recording_default_activity_title">Tipo de atividade padrão</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre os locais gravados</string>
     <string name="settings_recording_max_recording_distance_summary">Um novo segmento será criado se a distância entre os dois locais for maior que %1$s</string>

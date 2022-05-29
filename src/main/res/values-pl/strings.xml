@@ -156,7 +156,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Typ znacznika (np. wodospad)</string>
-    <string name="marker_edit_marker_type_hint">Typ znacznika</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Nie masz żadnych znaczników</string>
     <!-- Menu -->
@@ -182,13 +181,9 @@ limitations under the License.
     <string name="recording_service">Usługa rejestrowania</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Poziom naładowania baterii</string>
-    <string name="sensor_state_cadence">Prędkość obrotowa</string>
-    <string name="sensor_state_cadence_value">%1$d obr./min</string>
     <string name="sensor_state_heart_rate">Częstość akcji serca</string>
     <string name="sensor_state_heart_rate_value">%1$d uderz./min</string>
     <string name="sensor_state_power">Moc</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Zaawansowane</string>
     <string name="settings_default_trackfileformat">Format pliku eksportu/udostępniania</string>
@@ -202,7 +197,6 @@ limitations under the License.
     <string name="settings_recording_keep_screen_on_while_recording_summary">Podczas nagrywania, nie wyłączaj ekranu.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Pełny ekran</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Podczas nagrywania, zajmuj cały ekran.</string>
-    <string name="settings_recording">Rejestrowanie</string>
     <string name="settings_recording_default_activity_title">Domyślny typ aktywności</string>
     <string name="settings_recording_location_frequency_summary">%1$s między rejestrowanymi lokalizacjami</string>
     <string name="settings_recording_max_recording_distance_summary">Nowy segment jest tworzony, jeśli odległość między dwiema lokalizacjami jest większa niż %1$s</string>
@@ -225,8 +219,6 @@ limitations under the License.
     <string name="settings_reset_done">Wszystkie ustawienia wróciły do wartości domyślnych</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_connecting">Podłączony do %1$s</string>
-    <string name="settings_sensor_disconnected">Rozłaczony z %1$s</string>
     <string name="settings_sensor_wheel_circumference">Obwód Koła (mm)</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Wybór tempo/prędkość</string>
@@ -466,7 +458,6 @@ limitations under the License.
     <string name="sensor_state_cadence_max">Maks. kadencja</string>
     <string name="sensor_state_cadence_avg">Średnia kadencja</string>
     <string name="sensor_state_power_avg">Avg Moc</string>
-    <string name="settings_error_initial_values_restored">Przepraszamy, ale wystąpił błąd. Wszystkie ustawienia zostały przywrócone do wartości domyślnych.</string>
     <string name="track_recording_notification_accuracy">Dokładność lokalizacji: %1$s</string>
     <string name="import_unable_to_import_file">Nie można zaimportować pliku: %1$s</string>
     <string name="import_parser_error">Błąd parsera: %1$s</string>
@@ -543,7 +534,6 @@ limitations under the License.
     <string name="value_float_kilometer_hour_recommended">%1$.1f km/h (zalecane)</string>
     <string name="value_float_mile_hour">%1$.1f mi/h</string>
     <string name="value_float_mile_hour_recommended">%1$.1f mi/h (zalecane)</string>
-    <string name="title_activity_settings_custom_layout">Zmień układ ekranu podczas śledzenia</string>
     <string name="field_remove_from_layout">Usuń</string>
     <string name="field_set_primary">Główny</string>
     <string name="field_set_secondary">Poboczny</string>

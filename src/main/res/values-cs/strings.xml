@@ -196,7 +196,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Typ značky (např. vodopád)</string>
-    <string name="marker_edit_marker_type_hint">Typ značky</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Nemáte žádné značky</string>
     <!-- Menu -->
@@ -224,13 +223,9 @@ limitations under the License.
     <string name="permission_gps_failed">OpenTracks vyžaduje povolení k používání GPS.</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Stav baterie</string>
-    <string name="sensor_state_cadence">Frekvence chůze</string>
-    <string name="sensor_state_cadence_value">%1$d ot./min</string>
     <string name="sensor_state_heart_rate">Srdeční frekvence</string>
     <string name="sensor_state_heart_rate_value">%1$d úderů/min</string>
     <string name="sensor_state_power">Napájení</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Nelze vyhledat zařízení Bluetooth (chyba %1$i).</string>
     <string name="bluetooth_disabled">Aktivujte prosím Bluetooth.</string>
     <!-- Settings Advanced -->
@@ -243,7 +238,6 @@ limitations under the License.
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Během nahrávání zobrazte statistiky bez odemknutí zařízení.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Nechte obrazovku zapnutou</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Během nahrávání udržovat obrazovku zapnutou.</string>
-    <string name="settings_recording">Záznam</string>
     <string name="settings_recording_default_activity_title">Výchozí typ aktivity</string>
     <string name="settings_recording_location_frequency_summary">%1$s mezi zaznamenanými polohami</string>
     <string name="settings_recording_max_recording_distance_summary">Vytvořit nový segment pokud je vzdálenost mezi dvěma polohami větší než %1$s</string>
@@ -260,11 +254,8 @@ limitations under the License.
     <string name="settings_reset_confirm_message">Všechna nastavení budou obnovena na výchozí hodnoty. Toto nevymaže žádné trasy na přístroji.</string>
     <string name="settings_reset_confirm_title">Resetovat nyní?</string>
     <string name="settings_reset_done">Všechna nastavení byla obnovena na výchozí hodnoty</string>
-    <string name="settings_error_initial_values_restored">Litujeme, ale došlo k chybě. Všechna nastavení byla vrácena na výchozí hodnoty.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_connecting">Připojeno k senzoru %1$s</string>
-    <string name="settings_sensor_disconnected">Odpojeno od %1$s</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Preferovaná rychlost</string>
     <string name="settings_stats_units_imperial">Imperiální jednotky (míle, stopy)</string>
@@ -487,7 +478,6 @@ limitations under the License.
     <string name="settings_sensor_running_speed_and_cadence">Vzdálenost, rychlost a kadence</string>
     <string name="settings_recording_customize_layout_title">Přizpůsobit vzhled měření</string>
     <string name="settings_recording_customize_layout_select_columns">Počet polí na řádek</string>
-    <string name="title_activity_settings_custom_layout">Přizpůsobit vzhled měření</string>
     <string name="field_set_primary">První</string>
     <string name="field_set_secondary">Druhý</string>
     <string name="field_remove_from_layout">Odstranit</string>

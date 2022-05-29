@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">نوع نشانگر (برای مثال آبشار)</string>
-    <string name="marker_edit_marker_type_hint">نوع نشانگر</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">شما هیچ نشانگری ندارید</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">خدمات ضبط</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">مقدار شارژ باتری</string>
-    <string name="sensor_state_cadence">سرعت دورانی</string>
-    <string name="sensor_state_cadence_value">%1$d دور در دقیقه</string>
     <string name="sensor_state_heart_rate">ضربان قلب</string>
     <string name="sensor_state_heart_rate_value">%1$d ضربان در دقیقه</string>
     <string name="sensor_state_power">توان</string>
-    <string name="sensor_state_power_value">%1$d وات</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">پیشرفته</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">بر حسب مسافت</string>
     <string name="settings_chart_by_time">بر حسب زمان</string>
-    <string name="settings_recording">در حال ضبط</string>
     <string name="settings_recording_default_activity_title">نوع فعالیت پیش‌فرض</string>
     <string name="settings_recording_location_frequency_summary">%1$s بین موقعیت‌های مکانی ضبط شده</string>
     <string name="settings_recording_max_recording_distance_summary">چنانچه فاصله بین دو موقعیت مکانی بیشتر از %1$s باشد، یک قطعه جدید ایجاد شود</string>

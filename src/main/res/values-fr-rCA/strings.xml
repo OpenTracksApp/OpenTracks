@@ -120,7 +120,6 @@
     <string name="marker_name_format">Repère %1$d</string>
     <string name="marker_title">%1$d sur %2$d</string>
     <string name="marker_edit_marker_type">Type de repère (p. ex. : cascade)</string>
-    <string name="marker_edit_marker_type_hint">Type de repère</string>
     <string name="marker_list_empty_message">Vous n\'avez aucun repère</string>
     <string name="menu_aggregated_statistics">Statistiques cumulées</string>
     <string name="menu_delete">Supprimer</string>
@@ -139,17 +138,12 @@
     <string name="menu_start_gps">Démarrer le GPS</string>
     <string name="menu_stop_gps">Arrêter le GPS</string>
     <string name="recording_service">Service d\'enregistrement</string>
-    <string name="sensor_state_battery">Niveau de charge de la pile</string>
-    <string name="sensor_state_cadence">Cadence</string>
-    <string name="sensor_state_cadence_value">%1$d tr/min</string>
     <string name="sensor_state_heart_rate">Fréquence cardiaque</string>
     <string name="sensor_state_heart_rate_value">%1$d b/m</string>
     <string name="sensor_state_power">Alimentation</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_advanced">Options avancées</string>
     <string name="settings_chart_by_distance">Par distance</string>
     <string name="settings_chart_by_time">Par heure</string>
-    <string name="settings_recording">Enregistrement</string>
     <string name="settings_recording_default_activity_title">Type d\'activité par défaut</string>
     <string name="settings_recording_location_frequency_summary">%1$s entre les positions enregistrées</string>
     <string name="settings_recording_max_recording_distance_summary">Un nouveau segment sera créé si la distance entre deux positions enregistrées est supérieure à %1$s</string>

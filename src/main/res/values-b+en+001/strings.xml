@@ -120,7 +120,6 @@
     <string name="marker_name_format">Marker %1$d</string>
     <string name="marker_title">%1$d of %2$d</string>
     <string name="marker_edit_marker_type">Marker type (e.g. waterfall)</string>
-    <string name="marker_edit_marker_type_hint">Marker type</string>
     <string name="marker_list_empty_message">You don\'t have any markers</string>
     <string name="menu_aggregated_statistics">Aggregated stats</string>
     <string name="menu_delete">Delete</string>
@@ -139,17 +138,12 @@
     <string name="menu_start_gps">Start GPS</string>
     <string name="menu_stop_gps">Stop GPS</string>
     <string name="recording_service">Recording service</string>
-    <string name="sensor_state_battery">Battery level</string>
-    <string name="sensor_state_cadence">Cadence</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">Heart rate</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Power</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_advanced">Advanced</string>
     <string name="settings_chart_by_distance">By distance</string>
     <string name="settings_chart_by_time">By time</string>
-    <string name="settings_recording">Recording</string>
     <string name="settings_recording_default_activity_title">Default activity type</string>
     <string name="settings_recording_location_frequency_summary">%1$s between recorded locations</string>
     <string name="settings_recording_max_recording_distance_summary">A new segment is created if the distance between two locations is greater than %1$s</string>

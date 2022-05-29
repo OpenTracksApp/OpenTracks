@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Tip de marcator (de exemplu: cascadă)</string>
-    <string name="marker_edit_marker_type_hint">Tipul de marcator</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Nu aveți niciun marcator</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Serviciu de înregistrare</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Nivelul bateriei</string>
-    <string name="sensor_state_cadence">Cadenţă</string>
-    <string name="sensor_state_cadence_value">%1$d RPM</string>
     <string name="sensor_state_heart_rate">Ritm cardiac</string>
     <string name="sensor_state_heart_rate_value">%1$d Bpm</string>
     <string name="sensor_state_power">Putere</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avansate</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">După distanță</string>
     <string name="settings_chart_by_time">După durată</string>
-    <string name="settings_recording">Înregistrare</string>
     <string name="settings_recording_default_activity_title">Tip activitate standard</string>
     <string name="settings_recording_location_frequency_summary">%1$s între locațiile înregistrate</string>
     <string name="settings_recording_max_recording_distance_summary">Este creat un segment nou dacă distanța dintre două locații este mai mare decât %1$s</string>
@@ -440,19 +434,16 @@ limitations under the License.
     <string name="settings_prevent_reimport_tracks_title">Împiedicați reimportul de piese</string>
     <string name="import_progress_summary_ok_msg">Fișierele importate</string>
     <string name="permission_gps_failed">OpenTracks necesită permisiunea de a utiliza GPS.</string>
-    <string name="settings_sensor_disconnected">Deconectat de la %1$s</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Ecran complet</string>
     <string name="aggregated_stats_empty_message">Înregistrează-ți prima piesă pentru a vedea statisticile agregate</string>
     <string name="settings_night_mode_option_day">Ziua</string>
     <string name="import_unable_to_import_file">Nu se poate importa fișierul: %1$s</string>
-    <string name="settings_error_initial_values_restored">Ne pare rău, dar a apărut o eroare. Toate setările au fost readuse la valorile implicite.</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">În timpul înregistrării, mențineți ecranul aprins.</string>
     <string name="sensor_state_cadence_avg">Avg Cadența medie</string>
     <string name="menu_resume_track">Urma de reluare</string>
     <string name="marker_add_photo_canceled">Anulat, nu a fost adăugat niciun marcaj foto</string>
     <string name="settings_night_mode_title">UI Tema UI</string>
     <string name="sensor_state_power_avg">Puterea medie</string>
-    <string name="settings_sensor_connecting">Conectată la %1$s</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">În timpul înregistrării, prezentați pe ecran complet.</string>
     <string name="interval_list_empty_message">Nu există niciun interval încă</string>
     <string name="import_error_info">%1$s: %2$s</string>

@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Žymeklio tipas (pvz., krioklys)</string>
-    <string name="marker_edit_marker_type_hint">Žymeklio tipas</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Jūs neturite žymeklių</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Įrašymo paslauga</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Akumuliatoriaus lygis</string>
-    <string name="sensor_state_cadence">Kadencija</string>
-    <string name="sensor_state_cadence_value">%1$d aps./min</string>
     <string name="sensor_state_heart_rate">Širdies susitr. dažnis</string>
     <string name="sensor_state_heart_rate_value">%1$d dūž./min</string>
     <string name="sensor_state_power">Maitinimas</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Išplėstinės</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Pagal atstumą</string>
     <string name="settings_chart_by_time">Pagal laiką</string>
-    <string name="settings_recording">Įrašymas</string>
     <string name="settings_recording_default_activity_title">Numatyt. veiklos tipas</string>
     <string name="settings_recording_location_frequency_summary">%1$s tarp įrašytų vietų</string>
     <string name="settings_recording_max_recording_distance_summary">Naujas segmentas sukuriamas, jei atstumas tarp dviejų vietų yra didesnis nei %1$s</string>
@@ -334,7 +328,6 @@ limitations under the License.
     <string name="import_progress_summary_ok_msg">Importuoti failai</string>
     <string name="bluetooth_disabled">Įjunkite Bluetooth.</string>
     <string name="instant_export_enabled_summary">Eksportuoti takelį į saugyklą baigus įrašymą</string>
-    <string name="settings_sensor_disconnected">Atsijungta nuo %1$s</string>
     <string name="sensor_could_not_scan">Nepavyko nuskaityti „Bluetooth“ įrenginių (klaida %1$i).</string>
     <string name="settings_night_mode_option_night">Naktis</string>
     <string name="track_pace_notification">Tempas %1$s</string>
@@ -406,9 +399,7 @@ limitations under the License.
     <string name="export_track_already_exists_msg">Takelis %1$s jau yra paskirties kataloge.</string>
     <string name="sensor_state_heart_rate_max">Maksimalus širdies ritmas</string>
     <string name="help_recording_title">Kaip OpenTracks įrašo duomenis\?</string>
-    <string name="settings_error_initial_values_restored">Deja, įvyko klaida. Visi nustatymai buvo grąžinti į numatytąsias vertes.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Per visą ekraną</string>
-    <string name="settings_sensor_connecting">Prisijungta prie %1$s</string>
     <string name="import_no_kml_file_found">KMZ nerastas doc.kml failas</string>
     <string name="settings_sensor_wheel_circumference">Rato apskritimas (mm)</string>
     <string name="about_version_code">Versijos kodas: %1$d</string>

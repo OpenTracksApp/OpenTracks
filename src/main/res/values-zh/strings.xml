@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">标记类型（如瀑布）</string>
-    <string name="marker_edit_marker_type_hint">标记类型</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">您没有任何标记</string>
     <!-- Menu -->
@@ -172,13 +171,9 @@ limitations under the License.
     <string name="recording_service">记录服务</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">电池电量</string>
-    <string name="sensor_state_cadence">蹬车频率</string>
-    <string name="sensor_state_cadence_value">%1$d RPM</string>
     <string name="sensor_state_heart_rate">心率</string>
     <string name="sensor_state_heart_rate_value">%1$d BPM</string>
     <string name="sensor_state_power">功率</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">高级</string>
     <string name="settings_default_trackfileformat">导出文件格式</string>
@@ -192,7 +187,6 @@ limitations under the License.
     <string name="settings_recording_keep_screen_on_while_recording_summary">记录时，保持屏幕常亮。</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">全屏显示</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">记录时，全屏幕显示。</string>
-    <string name="settings_recording">记录</string>
     <string name="settings_recording_default_activity_title">默认活动类型</string>
     <string name="settings_recording_location_frequency_summary">每隔%1$s记录一次位置</string>
     <string name="settings_recording_max_recording_distance_summary">如果两个位置之间的距离超过%1$s，则创建新的路段</string>

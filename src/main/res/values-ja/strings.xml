@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">マーカーの種類（例: 滝）</string>
-    <string name="marker_edit_marker_type_hint">マーカーの種類</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">マーカーはありません</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">記録サービス</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">電池残量</string>
-    <string name="sensor_state_cadence">ケイデンス</string>
-    <string name="sensor_state_cadence_value">%1$drpm</string>
     <string name="sensor_state_heart_rate">心拍数</string>
     <string name="sensor_state_heart_rate_value">%1$dbpm</string>
     <string name="sensor_state_power">電源</string>
-    <string name="sensor_state_power_value">%1$dW</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">詳細設定</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">距離</string>
     <string name="settings_chart_by_time">時間</string>
-    <string name="settings_recording">記録</string>
     <string name="settings_recording_default_activity_title">デフォルトのアクティビティタイプ</string>
     <string name="settings_recording_location_frequency_summary">現在地の記録頻度: %1$s</string>
     <string name="settings_recording_max_recording_distance_summary">2地点間の距離が%1$sを超える場合は新しいセグメントを作成します</string>

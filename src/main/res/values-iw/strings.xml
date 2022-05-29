@@ -120,7 +120,6 @@
     <string name="marker_name_format">סמן %1$d</string>
     <string name="marker_title">%1$d מתוך %2$d משימות</string>
     <string name="marker_edit_marker_type">סוג סמן (כגון מפל)</string>
-    <string name="marker_edit_marker_type_hint">סוג סמן</string>
     <string name="marker_list_empty_message">אין לך סמנים</string>
     <string name="menu_aggregated_statistics">סטטיסטיקה מצטברת</string>
     <string name="menu_delete">מחק</string>
@@ -139,17 +138,12 @@
     <string name="menu_start_gps">הפעל GPS</string>
     <string name="menu_stop_gps">עצור GPS</string>
     <string name="recording_service">שירות הקלטה</string>
-    <string name="sensor_state_battery">טעינת סוללה</string>
-    <string name="sensor_state_cadence">קצב</string>
-    <string name="sensor_state_cadence_value">%1$d סיבובים לדקה</string>
     <string name="sensor_state_heart_rate">דופק</string>
     <string name="sensor_state_heart_rate_value">%1$d פעימות לדקה</string>
     <string name="sensor_state_power">הספק</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_advanced">מתקדם</string>
     <string name="settings_chart_by_distance">לפי מרחק</string>
     <string name="settings_chart_by_time">לפי זמן</string>
-    <string name="settings_recording">מקליט</string>
     <string name="settings_recording_default_activity_title">ברירת המחדל לסוג פעילות</string>
     <string name="settings_recording_location_frequency_summary">%1$s בין מיקומים מוקלטים</string>
     <string name="settings_recording_max_recording_distance_summary">אם המרחק בין שני מיקומים גדול מ-%1$s, ייווצר קטע חדש</string>

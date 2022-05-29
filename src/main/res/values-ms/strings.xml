@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Jenis penanda (mis. air terjun)</string>
-    <string name="marker_edit_marker_type_hint">Jenis penanda</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Anda tiada sebarang penanda</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Khidmat rakaman</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Aras bateri</string>
-    <string name="sensor_state_cadence">Rentak</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">Kadar denyut jantung</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Kuasa</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Terperinci</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Mengikut jarak</string>
     <string name="settings_chart_by_time">Mengikut masa</string>
-    <string name="settings_recording">Rakaman</string>
     <string name="settings_recording_default_activity_title">Jenis aktiviti tetapan asal</string>
     <string name="settings_recording_location_frequency_summary">%1$s antara lokasi rakaman</string>
     <string name="settings_recording_max_recording_distance_summary">Segmen baharu dibuat jika jarak di antara dua lokasi melebihi %1$s</string>

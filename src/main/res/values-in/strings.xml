@@ -120,7 +120,6 @@
     <string name="marker_name_format">Penanda %1$d</string>
     <string name="marker_title">%1$d dari %2$d</string>
     <string name="marker_edit_marker_type">Jenis penanda (misal: air terjun)</string>
-    <string name="marker_edit_marker_type_hint">Jenis penanda</string>
     <string name="marker_list_empty_message">Anda tidak memiliki penanda</string>
     <string name="menu_aggregated_statistics">Statistik agregat</string>
     <string name="menu_delete">Hapus</string>
@@ -139,17 +138,12 @@
     <string name="menu_start_gps">Nyalakan GPS</string>
     <string name="menu_stop_gps">Matikan GPS</string>
     <string name="recording_service">Layanan perekaman</string>
-    <string name="sensor_state_battery">Level baterai</string>
-    <string name="sensor_state_cadence">Tempo</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">Denyut jantung</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Daya</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="settings_advanced">Lanjutan</string>
     <string name="settings_chart_by_distance">Menurut jarak</string>
     <string name="settings_chart_by_time">Menurut waktu</string>
-    <string name="settings_recording">Perekaman</string>
     <string name="settings_recording_default_activity_title">Jenis aktivitas default</string>
     <string name="settings_recording_location_frequency_summary">%1$s antara lokasi yang direkam</string>
     <string name="settings_recording_max_recording_distance_summary">Segmen baru dibuat jika jarak antara dua lokasi lebih besar dari %1$s</string>
@@ -293,7 +287,6 @@
     <string name="help_support_title">Bagaimana mendukung OpenTracks\?</string>
     <string name="import_progress_summary_errors_msg">Kesalahan</string>
     <string name="open_track_as_GPX">Buka sebagai GPX</string>
-    <string name="settings_error_initial_values_restored">Maaf, tapi terjadi kesalahan. Semua pengaturan telah dikembalikan ke nilai baku.</string>
     <string name="track_speed_notification">Kecepatan: %1$s</string>
     <string name="import_unable_to_import_file">Tidak bisa mengimpor berkas: %1$s</string>
     <string name="open_track_as_trackfileformat">Buka sebagai %1$s</string>

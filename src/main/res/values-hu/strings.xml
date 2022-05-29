@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Jelölő típusa (pl. vízesés)</string>
-    <string name="marker_edit_marker_type_hint">Jelölő típusa</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Nincsenek jelölők</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Rögzítőszolgáltatás</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Akkumulátor töltöttségi szintje</string>
-    <string name="sensor_state_cadence">Fordulatszám</string>
-    <string name="sensor_state_cadence_value">%1$d fordulat/perc</string>
     <string name="sensor_state_heart_rate">Szívritmus</string>
     <string name="sensor_state_heart_rate_value">%1$d ütés/perc</string>
     <string name="sensor_state_power">Teljesítmény</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Speciális</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Távolság szerint</string>
     <string name="settings_chart_by_time">Idő szerint</string>
-    <string name="settings_recording">Rögzítés</string>
     <string name="settings_recording_default_activity_title">Alapértelmezett tevékenységtípus</string>
     <string name="settings_recording_location_frequency_summary">%1$s helyszínrögzítések között</string>
     <string name="settings_recording_max_recording_distance_summary">Új szegmens jön létre, ha a két hely közötti távolság nagyobb, mint %1$s</string>
@@ -407,9 +401,6 @@ limitations under the License.
     <string name="settings_night_mode_option_system">Rendszer</string>
     <string name="settings_night_mode_option_day">Nap</string>
     <string name="settings_night_mode_option_night">Éjszaka</string>
-    <string name="settings_error_initial_values_restored">Sajnáljuk, de hiba történt. Minden beállítás visszaállt az alapértelmezett értékekre.</string>
-    <string name="settings_sensor_connecting">Csatlakoztatva %1$s</string>
-    <string name="settings_sensor_disconnected">Megszakadt a kapcsolat %1$s</string>
     <string name="stats_loss">Veszteség</string>
     <string name="track_recording_notification_accuracy">Helyszín pontossága: %1$s</string>
     <string name="export_progress_summary_overwrite_msg">Sávok felülírása</string>

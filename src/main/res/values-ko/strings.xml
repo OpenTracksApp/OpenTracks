@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">아이콘 유형(예: 폭포)</string>
-    <string name="marker_edit_marker_type_hint">아이콘 유형</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">마커가 없습니다.</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">기록 서비스</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">배터리 수준</string>
-    <string name="sensor_state_cadence">페달 회전수</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">심장박동수</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">출력</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">고급</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">거리 기준</string>
     <string name="settings_chart_by_time">시간 기준</string>
-    <string name="settings_recording">기록</string>
     <string name="settings_recording_default_activity_title">기본 운동 유형</string>
     <string name="settings_recording_location_frequency_summary">위치 기록 주기는 %1$s입니다.</string>
     <string name="settings_recording_max_recording_distance_summary">두 위치의 거리가 %1$s(을)를 초과하는 경우 새 세그먼트가 생성됩니다.</string>

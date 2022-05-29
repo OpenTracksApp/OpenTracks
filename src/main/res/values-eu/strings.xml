@@ -199,7 +199,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Markatzaile mota (adibidez, ur-jauzia)</string>
-    <string name="marker_edit_marker_type_hint">Markatzaile mota</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Ez duzu markatzailerik</string>
     <!-- Menu -->
@@ -227,13 +226,9 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="permission_gps_failed">OpenTracks GPSa erabiltzeko baimena behar du.</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Bateria maila</string>
-    <string name="sensor_state_cadence">Erritmoa</string>
-    <string name="sensor_state_cadence_value">%1$d mbi</string>
     <string name="sensor_state_heart_rate">Maiztasun kardiakoa</string>
     <string name="sensor_state_heart_rate_value">%1$d mbb</string>
     <string name="sensor_state_power">Potentzia</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Ezin izan da Bluetooth gailuak bilatu (%1$i errorea).</string>
     <string name="bluetooth_disabled">Mesedez, aktibatu Bluetooth.</string>
     <!-- Settings Advanced -->
@@ -246,7 +241,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Grabatzen ari zaren bitartean, erakutsi estatistikak gailua desblokeatu gabe.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Mantendu pantaila</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Grabatzen ari zaren bitartean, mantendu pantaila.</string>
-    <string name="settings_recording">Grabaketa</string>
     <string name="settings_recording_default_activity_title">Jarduera mota lehenetsia</string>
     <string name="settings_recording_location_frequency_summary">%1$s erregistratutako kokapenen artean</string>
     <string name="settings_recording_max_recording_distance_summary">Segmentu berri bat sortzen da bi kokapenen arteko distantzia %1$s baino gehiagokoa bada</string>
@@ -263,11 +257,8 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="settings_reset_confirm_message">Ezarpen guztiak balio lehenetsietara leheneratuko dira.</string>
     <string name="settings_reset_confirm_title">Berrezarri egin nahi duzu?</string>
     <string name="settings_reset_done">Ezarpen guztiak balio lehenetsietara leheneratu dira</string>
-    <string name="settings_error_initial_values_restored">Sentitzen dugu, baina akats bat gertatu da. Ezarpen guztiak lehenetsitako balioetara itzuli dira.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetootha</string>
-    <string name="settings_sensor_connecting">Honekin konektatuta: %1$s</string>
-    <string name="settings_sensor_disconnected">Deskonektatuta %1$s</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Erritmo hobetsia</string>
     <string name="settings_stats_units_imperial">Inperiala (mi, ft)</string>
@@ -549,7 +540,6 @@ GPS gailuak datu okerrak salatzen baditu (adibidez, kokapena, abiadura, kota), O
     <string name="aggregated_stats_filter_no_results">Ez dago jarduerarik zehaztutako iragazkiarentzat</string>
     <string name="field_set_secondary">Bigarren mailakoa</string>
     <string name="field_set_primary">Nagusia</string>
-    <string name="title_activity_settings_custom_layout">Pertsonalizatu Grabazioaren Diseinua</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="generic_undo">Desegin</string>
     <string name="no_compatible_file_manager_installed">Fitxategi-kudeatzaile bateragarririk ez da instalatu</string>

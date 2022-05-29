@@ -120,7 +120,6 @@
     <string name="marker_name_format">標記 %1$d</string>
     <string name="marker_title">%1$d 個位置 (共 %2$d 個)</string>
     <string name="marker_edit_marker_type">標記類型 (例如瀑布)</string>
-    <string name="marker_edit_marker_type_hint">標記類型</string>
     <string name="marker_list_empty_message">您沒有任何標記</string>
     <string name="menu_aggregated_statistics">彙總的統計資料</string>
     <string name="menu_delete">刪除</string>
@@ -139,17 +138,12 @@
     <string name="menu_start_gps">啟動 GPS</string>
     <string name="menu_stop_gps">關閉 GPS</string>
     <string name="recording_service">記錄服務</string>
-    <string name="sensor_state_battery">電池電量</string>
-    <string name="sensor_state_cadence">轉速</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">心率</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">電源</string>
-    <string name="sensor_state_power_value">%1$d 瓦</string>
     <string name="settings_advanced">進階</string>
     <string name="settings_chart_by_distance">依距離</string>
     <string name="settings_chart_by_time">依時間</string>
-    <string name="settings_recording">記錄</string>
     <string name="settings_recording_default_activity_title">預設活動類型</string>
     <string name="settings_recording_location_frequency_summary">每 %1$s記錄一次位置資訊</string>
     <string name="settings_recording_max_recording_distance_summary">系統會在兩個地點之間的距離大於 %1$s時建立新的區段</string>

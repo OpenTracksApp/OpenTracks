@@ -196,7 +196,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Märgise tüüp (nt juga)</string>
-    <string name="marker_edit_marker_type_hint">Märgise tüüp</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Teil ei ole märgiseid</string>
     <!-- Menu -->
@@ -224,13 +223,9 @@ limitations under the License.
     <string name="permission_gps_failed">OpenTracks vajab GPS-i kasutamiseks luba.</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Aku tase</string>
-    <string name="sensor_state_cadence">Rütm</string>
-    <string name="sensor_state_cadence_value">%1$d p/min (pööret minutis)</string>
     <string name="sensor_state_heart_rate">Pulsisagedus</string>
     <string name="sensor_state_heart_rate_value">%1$d lööki minutis</string>
     <string name="sensor_state_power">Võimsus</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <string name="sensor_could_not_scan">Bluetooth seadmeid ei õnnestunud skannida (tõrge %1$i).</string>
     <string name="bluetooth_disabled">Lubage Bluetooth.</string>
     <!-- Settings Advanced -->
@@ -243,7 +238,6 @@ limitations under the License.
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Salvestamise ajal näidake statistikat ilma seadet avamata.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Hoia ekraan sisse lülitatud</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Salvestamise ajal hoidke ekraani sisse lülitatud.</string>
-    <string name="settings_recording">Salvestamine</string>
     <string name="settings_recording_default_activity_title">Tegevuse vaiketüüp</string>
     <string name="settings_recording_location_frequency_summary">%1$s salvestatud asukohtade vahel</string>
     <string name="settings_recording_max_recording_distance_summary">Kui vahemaa kahe asukoha vahel on üle %1$s, luuakse uus lõik</string>
@@ -260,11 +254,8 @@ limitations under the License.
     <string name="settings_reset_confirm_message">Taastatakse kõikide seadete vaikeväärtus.</string>
     <string name="settings_reset_confirm_title">Kas lähtestada kohe?</string>
     <string name="settings_reset_done">Kõik seaded on taastatud vaikeväärtustena</string>
-    <string name="settings_error_initial_values_restored">Vabandust, kuid ilmnes viga. Kõik sätted on taastatud vaikeväärtustele.</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
-    <string name="settings_sensor_connecting">Ühendatud anduriga %1$s</string>
-    <string name="settings_sensor_disconnected">Lahti ühendatud %1$s</string>
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Eelistatud määr</string>
     <string name="settings_stats_units_imperial">Inglise mõõtühikud (miili, jalga)</string>
@@ -522,7 +513,6 @@ limitations under the License.
     <string name="stats_sensors_cadence">Rütm</string>
     <string name="stats_sensors_heart_rate">Südamerütm</string>
     <string name="field_set_secondary">Teisene</string>
-    <string name="title_activity_settings_custom_layout">Salvestamise Paigutuse Kohandamine</string>
     <string name="settings_sensors_summary">Rattaandurid, Ratta Ümbermõõt, Jooksuandurid</string>
     <string name="settings_activity_defaults_category">Tegevuse Vaikeväärtused</string>
     <string name="field_remove_from_layout">Eemaldama</string>

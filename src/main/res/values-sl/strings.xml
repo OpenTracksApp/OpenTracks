@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Vrsta oznake (npr. slap)</string>
-    <string name="marker_edit_marker_type_hint">Vrsta oznake</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Nimate nobene oznake</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Storitev snemanja</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Raven napolnjenosti baterije</string>
-    <string name="sensor_state_cadence">Ritem</string>
-    <string name="sensor_state_cadence_value">%1$d rpm</string>
     <string name="sensor_state_heart_rate">Srčni utrip</string>
     <string name="sensor_state_heart_rate_value">%1$d bpm</string>
     <string name="sensor_state_power">Moč</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Dodatno</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Po razdalji</string>
     <string name="settings_chart_by_time">Po času</string>
-    <string name="settings_recording">Snemanje</string>
     <string name="settings_recording_default_activity_title">Privzeta vrsta dejavnosti</string>
     <string name="settings_recording_location_frequency_summary">Beleženje lokacije vsakih %1$s</string>
     <string name="settings_recording_max_recording_distance_summary">Ustvarjen bo nov odsek, če je razdalja med lokacijama večja od %1$s</string>

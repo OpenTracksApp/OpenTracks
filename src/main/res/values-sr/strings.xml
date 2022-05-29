@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Тип означивача (нпр. водопад)</string>
-    <string name="marker_edit_marker_type_hint">Тип означивача</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Немате ниједан означивач</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Услуга бележења</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Ниво батерије</string>
-    <string name="sensor_state_cadence">Каденца</string>
-    <string name="sensor_state_cadence_value">%1$d обртаја у минуту</string>
     <string name="sensor_state_heart_rate">Пулс</string>
     <string name="sensor_state_heart_rate_value">%1$d откуцаја у минуту</string>
     <string name="sensor_state_power">Снага</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Напредно</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Према раздаљини</string>
     <string name="settings_chart_by_time">Према времену</string>
-    <string name="settings_recording">Снимање</string>
     <string name="settings_recording_default_activity_title">Подразум. активност</string>
     <string name="settings_recording_location_frequency_summary">%1$s између забележених локација</string>
     <string name="settings_recording_max_recording_distance_summary">Нов сегмент се прави ако је раздаљина између две локације већа од %1$s</string>

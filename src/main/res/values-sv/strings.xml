@@ -146,7 +146,6 @@ limitations under the License.
     <!-- Marker Detail -->
     <!-- Marker Edit -->
     <string name="marker_edit_marker_type">Markörtyp (t.ex. vattenfall)</string>
-    <string name="marker_edit_marker_type_hint">Markörtyp</string>
     <!-- Marker List -->
     <string name="marker_list_empty_message">Du har inga markörer</string>
     <!-- Menu -->
@@ -170,19 +169,14 @@ limitations under the License.
     <string name="recording_service">Inspelningstjänst</string>
     <!-- Search -->
     <!-- Sensor State -->
-    <string name="sensor_state_battery">Batterinivå</string>
-    <string name="sensor_state_cadence">Kadens</string>
-    <string name="sensor_state_cadence_value">%1$d vpm</string>
     <string name="sensor_state_heart_rate">Puls</string>
     <string name="sensor_state_heart_rate_value">%1$d BPM</string>
     <string name="sensor_state_power">Kraft</string>
-    <string name="sensor_state_power_value">%1$d W</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">Avancerat</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">Efter avstånd</string>
     <string name="settings_chart_by_time">Efter tid</string>
-    <string name="settings_recording">Inspelning</string>
     <string name="settings_recording_default_activity_title">Standardaktivitetstyp</string>
     <string name="settings_recording_location_frequency_summary">%1$s mellan inspelade platser</string>
     <string name="settings_recording_max_recording_distance_summary">En nytt segment skapas om avståndet mellan två platser är längre än %1$s</string>
@@ -380,11 +374,9 @@ limitations under the License.
     <string name="import_parser_error">Tolkningsfel: %1$s</string>
     <string name="export_without_photos">utan foton</string>
     <string name="export_with_photos">med bilder</string>
-    <string name="settings_error_initial_values_restored">Ledsen, men ett fel uppstod. Alla inställningar har återställts till standardvärdena.</string>
     <string name="open_track_as_KML">Öppna som KML</string>
     <string name="permission_gps_failed">OpenTracks kräver tillstånd att använda GPS.</string>
     <string name="sensor_state_cadence_avg">Avg Kadens</string>
-    <string name="settings_sensor_disconnected">Frånkopplad från %1$s</string>
     <string name="generic_open_track">Öppna Spår</string>
     <string name="track_distance_notification">Avstånd: %1$s</string>
     <string name="about_libraries">Bibliotek</string>
@@ -411,7 +403,6 @@ limitations under the License.
     <string name="settings_night_mode_option_day">Dag</string>
     <string name="help_track_export_title">Hur kan jag exportera/dela inspelade spår\?</string>
     <string name="stats_loss">Förlust</string>
-    <string name="settings_sensor_connecting">Ansluten till %1$s</string>
     <string name="about_url">Projektets webbsida: <a href="%1$s">%1$s</a></string>
     <string name="export_all_do_it_for_all">gör det för alla konflikter</string>
     <string name="help_data_google_play_services_title">Kräver/använder OpenTracks Google Play Service\?</string>
