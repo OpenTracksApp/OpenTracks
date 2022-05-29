@@ -74,8 +74,8 @@ limitations under the License.
                     style="?attr/textAppearanceHeadline6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
-                    android:gravity="right"
+                    android:layout_weight="10"
+                    android:gravity="end"
                     android:text="@string/track_list_empty_message" />
 
                 <View
