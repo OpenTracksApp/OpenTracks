@@ -6,18 +6,18 @@
   <path
       android:pathData="M62.5,62.5m-59.984,0a59.984,59.984 0,1 1,119.968 0a59.984,59.984 0,1 1,-119.968 0"
       android:strokeWidth="5.03185"
-      android:fillColor="#00000000"
-      android:strokeColor="#ff6d00"/>
+      android:fillColor="@android:color/transparent"
+      android:strokeColor="@color/opentracks_secondary_color"/>
   <path
       android:pathData="M62.5,62.5m-50,0a50,50 0,1 1,100 0a50,50 0,1 1,-100 0"
-      android:strokeWidth="6.91728"
-      android:fillColor="#ff6d00"
-      android:strokeColor="#00000000"/>
+      android:strokeWidth="1.0"
+      android:fillColor="@color/opentracks_secondary_color"
+      android:strokeColor="@color/opentracks_secondary_color"/>
   <path
       android:pathData="M38.62,63.866 L52.899,78.144 86.38,44.664"
       android:strokeLineJoin="miter"
       android:strokeWidth="6.2"
-      android:fillColor="#00000000"
-      android:strokeColor="#ffffff"
+      android:fillColor="@color/opentracks_secondary_color"
+      android:strokeColor="@android:color/white"
       android:strokeLineCap="butt"/>
 </vector>
