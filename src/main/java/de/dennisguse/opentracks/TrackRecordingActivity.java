@@ -11,11 +11,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowInsets;
+import android.view.WindowInsetsController;
 import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -183,9 +188,20 @@ public class TrackRecordingActivity extends AbstractActivity implements ChooseAc
     }
 
     private void setFullscreenPolicy() {
-        boolean keepScreenOn = PreferencesUtils.shouldUseFullscreen();
+        boolean fullscreen = PreferencesUtils.shouldUseFullscreen();
 
-        if (keepScreenOn) {
+        WindowInsetsControllerCompat windowInsetsController = ViewCompat.getWindowInsetsController(getWindow().getDecorView());
+        if (windowInsetsController != null) {
+            windowInsetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+            if (fullscreen) {
+                windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
+            } else {
+                windowInsetsController.show(WindowInsetsCompat.Type.systemBars());
+            }
+            return;
+        }
+
+        if (fullscreen) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
