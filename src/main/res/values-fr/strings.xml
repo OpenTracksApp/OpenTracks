@@ -13,8 +13,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-<resources>
+--><resources>
     <string name="about_preference_title">À propos d\'OpenTracks</string>
     <string name="about_description"><i>OpenTracks</i> est une application de suivi sportif qui respecte totalement votre vie privée.</string>
     <string name="about_url">Page web du projet : <a href="%1$s">%1$s</a></string>
@@ -151,7 +150,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="description_sensor_cadence">Cadence (tr/min)</string>
     <string name="description_sensor_heart_rate">Fréquence cardiaque (bpm)</string>
     <string name="description_sensor_power">Puissance (W)</string>
-    <string name="description_default_speed_or_pace">Par type d activité</string>
+    <string name="description_default_speed_or_pace">Par type d\'activité</string>
     <string name="description_speed_imperial">Vitesse (mi/h)</string>
     <string name="description_speed_metric">Vitesse (km/h)</string>
     <string name="description_time">Durée</string>
@@ -526,8 +525,8 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="generic_undo">Annuler</string>
     <string name="menu_add_custom_layout">Nouvelle présentation</string>
     <string name="generic_filter">Filtre</string>
-    <string name="generic_to">A</string>
-    <string name="generic_from">Sur</string>
+    <string name="generic_to">Au</string>
+    <string name="generic_from">Du</string>
     <string name="menu_select_layout">Sélectionner la mise en page</string>
     <string name="menu_filter">Filtre</string>
     <string name="custom_layout_list_edit_name">Tapez le nom du modèle à ajouter</string>
@@ -543,4 +542,44 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="export_cannot_write_to_dir">Impossible d\'écrire dans le répertoire d\'exportation.</string>
     <string name="export_dir_not_writable">" (non inscriptible !)"</string>
     <string name="no_compatible_file_manager_installed">Aucun gestionnaire de fichiers compatible n\'est installé</string>
+    <string name="settings_announcements_report_heart_rate">Rapport de la fréquence cardiaque</string>
+    <string name="settings_public_api_enabled_title">API publique</string>
+    <string name="average_heart_rate">Fréquence cardiaque moyenne</string>
+    <string name="current_heart_rate">Fréquence cardiaque actuelle</string>
+    <plurals name="voiceDistanceMiles">
+        <item quantity="one">1 mile</item>
+        <item quantity="other">%1$.2f miles</item>
+    </plurals>
+    <string name="lap_time">Temps par tour</string>
+    <string name="speed">Vitesse</string>
+    <string name="settings_public_api_dashboard_enabled_summary_off">Les données enregistrées ne seront pas automatiquement partagées avec d\'autres applications.</string>
+    <string name="settings_public_api_enabled_summary_on">D\'autres applications installées peuvent démarrer ou arrêter les enregistrements.</string>
+    <string name="settings_public_api_enabled_summary_off">Seul OpenTracks peut démarrer et arrêter les enregistrements.</string>
+    <plurals name="voiceDistanceKilometers">
+        <item quantity="one">1 kilomètre</item>
+        <item quantity="other">%1$.2f kilomètres</item>
+    </plurals>
+    <string name="total_distance">Distance totale</string>
+    <string name="activity_type_swimming">natation</string>
+    <string name="activity_type_swimming_open">natation en eau libre</string>
+    <string name="activity_type_workout">entraînement</string>
+    <string name="generic_dismiss">Oublier</string>
+    <string name="gps_recording_status">%1$s : %2$s</string>
+    <string name="settings_api_title">API publique</string>
+    <string name="settings_public_api_disabled_toast">L\'API publique d\'OpenTracks est désactivé : Elle peut être activé dans les paramètres.</string>
+    <string name="voice_per_kilometer">par kilomètre</string>
+    <string name="voice_per_mile">par mile</string>
+    <string name="pace">Rythme</string>
+    <string name="lap_speed">Vitesse par tour</string>
+    <string name="show_on_map_format_ask">Demander</string>
+    <string name="show_on_dashboard">Tableau de bord de l\'API OpenTracks</string>
+    <string name="always">Toujours</string>
+    <string name="share_crash_report">Partager le rapport de crash</string>
+    <string name="report_bug">Signaler un problème</string>
+    <string name="error_crash_title">%1$s a crashé</string>
+    <string name="gps_recording_without_signal">OpenTracks enregistre actuellement sans les données GPS.</string>
+    <string name="settings_export_filename_title">Format du nom de fichier</string>
+    <string name="select_show_on_map_behavior">Sélectionner le comportement \"Montrer sur la carte\"</string>
+    <string name="settings_public_api_dashboard_enabled_title">Transfert automatique des données</string>
+    <string name="settings_public_api_dashboard_enabled_summary_on">Une application qui a commencé un enregistrement peut aussi accéder aux données enregistrées.</string>
 </resources>
