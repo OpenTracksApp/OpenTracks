@@ -15,13 +15,14 @@ import de.dennisguse.opentracks.databinding.TrackStoppedBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.ui.aggregatedStatistics.ConfirmDeleteDialogFragment;
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 import de.dennisguse.opentracks.util.TrackUtils;
 
-public class TrackStoppedActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
+public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {
 
     private static final String TAG = TrackStoppedActivity.class.getSimpleName();
 
@@ -30,6 +31,8 @@ public class TrackStoppedActivity extends AbstractActivity implements ChooseActi
     private TrackStoppedBinding viewBinding;
 
     private Track.Id trackId;
+
+    private boolean isDiscarding = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,13 +97,16 @@ public class TrackStoppedActivity extends AbstractActivity implements ChooseActi
             finish();
         });
 
-        viewBinding.resumeButton.setOnClickListener(v -> {
-            resumeTrackAndFinish();
-        });
+        viewBinding.resumeButton.setOnClickListener(v -> resumeTrackAndFinish());
+
+        viewBinding.discardButton.setOnClickListener(v -> ConfirmDeleteDialogFragment.showDialog(getSupportFragmentManager(), trackId));
     }
 
     @Override
     public void onBackPressed() {
+        if (isDiscarding) {
+            return;
+        }
         super.onBackPressed();
         resumeTrackAndFinish();
     }
@@ -133,5 +139,23 @@ public class TrackStoppedActivity extends AbstractActivity implements ChooseActi
             connection.unbind(this);
             finish();
         }).startAndBind(this);
+    }
+
+    @Override
+    protected void onDeleteConfirmed() {
+        isDiscarding = true;
+        viewBinding.loadingLayout.loadingText.setText(getString(R.string.track_discarding));
+        viewBinding.contentLinearLayout.setVisibility(View.GONE);
+        viewBinding.loadingLayout.loadingIndeterminate.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onDeleteFinished() {
+        finish();
+    }
+
+    @Override
+    protected Track.Id getRecordingTrackId() {
+        return null;
     }
 }

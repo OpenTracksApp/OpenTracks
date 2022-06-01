@@ -445,6 +445,11 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         // Do nothing
     }
 
+    @Override
+    protected void onDeleteFinished() {
+        // Do nothing
+    }
+
     @Nullable
     @Override
     protected Track.Id getRecordingTrackId() {

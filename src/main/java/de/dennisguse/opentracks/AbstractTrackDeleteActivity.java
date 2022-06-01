@@ -88,10 +88,13 @@ public abstract class AbstractTrackDeleteActivity extends AbstractActivity imple
         if (deleteStatus.isFinished() && trackDeleteServiceConnection != null) {
             trackDeleteServiceConnection.unbind(this);
             trackDeleteServiceConnection = null;
+            onDeleteFinished();
         }
     }
 
     protected abstract void onDeleteConfirmed();
+
+    protected abstract void onDeleteFinished();
 
     protected abstract Track.Id getRecordingTrackId();
 
