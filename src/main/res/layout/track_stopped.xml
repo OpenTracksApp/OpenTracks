@@ -7,187 +7,219 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView style="@style/ScrollView.WithBottomButtons">
+    <include
+        android:id="@+id/loading_layout"
+        layout="@layout/loading_indeterminate"
+        android:visibility="gone" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="8dp">
+    <LinearLayout
+        android:id="@+id/content_linear_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="?attr/textInputOutlinedStyle"
-                android:hint="@string/generic_name"
-                android:imeOptions="actionNext"
-                android:importantForAutofill="no"
-                android:layout_marginBottom="16dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/track_edit_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textCapSentences"
-                    android:selectAllOnFocus="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+        <ScrollView style="@style/ScrollView.WithBottomButtons">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:padding="8dp">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="?attr/textInputOutlinedExposedDropdownMenuStyle"
+                    style="?attr/textInputOutlinedStyle"
+                    android:hint="@string/generic_name"
                     android:imeOptions="actionNext"
                     android:importantForAutofill="no"
                     android:layout_marginBottom="16dp">
 
-                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                        android:id="@+id/track_edit_activity_type"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/track_edit_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:hint="@string/track_edit_activity_type_hint"
-                        android:imeOptions="actionNext"
+                        android:inputType="textCapSentences"
                         android:selectAllOnFocus="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <ImageView
-                    android:id="@+id/track_edit_activity_type_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
-                    tools:src="@drawable/ic_activity_bike_24dp"/>
-
-            </LinearLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="?attr/textInputOutlinedStyle"
-                android:hint="@string/generic_description"
-                android:imeOptions="actionNext"
-                android:importantForAutofill="no"
-                android:layout_marginBottom="16dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/track_edit_description"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapSentences"
-                    android:selectAllOnFocus="true" />
+                    android:orientation="horizontal">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        style="?attr/textInputOutlinedExposedDropdownMenuStyle"
+                        android:imeOptions="actionNext"
+                        android:importantForAutofill="no"
+                        android:layout_marginBottom="16dp">
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/track_edit_activity_type"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:hint="@string/track_edit_activity_type_hint"
+                            android:imeOptions="actionNext"
+                            android:selectAllOnFocus="true" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/track_edit_activity_type_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        tools:src="@drawable/ic_activity_bike_24dp"/>
+
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?attr/textInputOutlinedStyle"
+                    android:hint="@string/generic_description"
+                    android:imeOptions="actionNext"
+                    android:importantForAutofill="no"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/track_edit_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapSentences"
+                        android:selectAllOnFocus="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5" />
+
+                    <!-- Time -->
+                    <TextView
+                        android:id="@+id/time"
+                        style="?attr/textAppearanceHeadline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="04:54:36" />
+
+                    <!-- Distance -->
+                    <TextView
+                        android:id="@+id/distance"
+                        style="?attr/textAppearanceHeadline3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toStartOf="@id/distance_unit"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/time"
+                        tools:layout_editor_absoluteX="52dp"
+                        tools:text="130" />
+
+                    <TextView
+                        android:id="@+id/distance_unit"
+                        style="@style/TextAppearance.OpenTracks.PrimaryUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/distance"
+                        app:layout_constraintEnd_toStartOf="@id/guideline"
+                        app:layout_constraintStart_toEndOf="@+id/distance"
+                        tools:text="km" />
+
+                    <!-- Average moving speed -->
+                    <TextView
+                        android:id="@+id/speed"
+                        style="?attr/textAppearanceHeadline3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toStartOf="@id/speed_unit"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintStart_toEndOf="@id/guideline"
+                        app:layout_constraintTop_toBottomOf="@id/time"
+                        tools:text="26,5" />
+
+                    <TextView
+                        android:id="@+id/speed_unit"
+                        style="@style/TextAppearance.OpenTracks.PrimaryUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@id/speed"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/speed"
+                        tools:text="km/h" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+        </ScrollView>
+
+        <LinearLayout style="@style/BottomButtonBar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_height="match_parent"
+                android:padding="8dp">
 
                 <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline"
+                    android:id="@+id/buttons_guideline"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:orientation="vertical"
                     app:layout_constraintGuide_percent="0.5" />
 
-                <!-- Time -->
-                <TextView
-                    android:id="@+id/time"
-                    style="?attr/textAppearanceHeadline2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                <ImageView
+                    android:id="@+id/discard_button"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="52dp"
+                    android:contentDescription="@string/image_discard"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/resume_button"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="04:54:36" />
+                    app:srcCompat="@drawable/ic_delete_forever_24dp" />
 
-                <!-- Distance -->
-                <TextView
-                    android:id="@+id/distance"
-                    style="?attr/textAppearanceHeadline3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toStartOf="@id/distance_unit"
-                    app:layout_constraintHorizontal_chainStyle="packed"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/time"
-                    tools:layout_editor_absoluteX="52dp"
-                    tools:text="130" />
+                <ImageView
+                    android:id="@+id/resume_button"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:contentDescription="@string/image_record"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/buttons_guideline"
+                    app:layout_constraintStart_toEndOf="@id/buttons_guideline"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_button_resume" />
 
-                <TextView
-                    android:id="@+id/distance_unit"
-                    style="@style/TextAppearance.OpenTracks.PrimaryUnit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="@+id/distance"
-                    app:layout_constraintEnd_toStartOf="@id/guideline"
-                    app:layout_constraintStart_toEndOf="@+id/distance"
-                    tools:text="km" />
-
-                <!-- Average moving speed -->
-                <TextView
-                    android:id="@+id/speed"
-                    style="?attr/textAppearanceHeadline3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toStartOf="@id/speed_unit"
-                    app:layout_constraintHorizontal_chainStyle="packed"
-                    app:layout_constraintStart_toEndOf="@id/guideline"
-                    app:layout_constraintTop_toBottomOf="@id/time"
-                    tools:text="26,5" />
-
-                <TextView
-                    android:id="@+id/speed_unit"
-                    style="@style/TextAppearance.OpenTracks.PrimaryUnit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="@id/speed"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/speed"
-                    tools:text="km/h" />
+                <ImageView
+                    android:id="@+id/finish_button"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:contentDescription="@string/image_stop"
+                    android:layout_marginStart="36dp"
+                    app:layout_constraintBottom_toBottomOf="@id/resume_button"
+                    app:layout_constraintStart_toEndOf="@id/resume_button"
+                    app:layout_constraintTop_toTopOf="@id/resume_button"
+                    app:srcCompat="@drawable/ic_button_done" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
-    </ScrollView>
-
-    <LinearLayout style="@style/BottomButtonBar">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp">
-
-            <ImageView
-                android:id="@+id/resume_button"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:contentDescription="@string/image_record"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/finish_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_button_resume" />
-
-            <ImageView
-                android:id="@+id/finish_button"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:contentDescription="@string/image_stop"
-                app:layout_constraintBottom_toBottomOf="@id/resume_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/resume_button"
-                app:layout_constraintTop_toTopOf="@id/resume_button"
-                app:srcCompat="@drawable/ic_button_done" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

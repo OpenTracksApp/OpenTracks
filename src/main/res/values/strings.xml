@@ -259,6 +259,7 @@ limitations under the License.
     <string name="image_photo_marker">Photo marker</string>
     <string name="image_record">Record</string>
     <string name="image_stop">Stop</string>
+    <string name="image_discard">Discard</string>
     <string name="image_track">Track</string>
     <!-- Import -->
     <string name="import_thread_interrupted">Thread interrupted</string>
@@ -491,6 +492,7 @@ limitations under the License.
     <string name="track_delete_progress_message">Deleting&#8230;</string>
     <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="track_delete_not_recording">This track cannot be deleted as it is currently recorded.</string>
+    <string name="track_discarding">Discarding Track</string>
     <!-- Track Detail -->
     <string name="track_detail_stats_tab">Stats</string>
     <string name="track_detail_intervals_tab">Intervals</string>

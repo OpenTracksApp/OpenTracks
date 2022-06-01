@@ -244,6 +244,11 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
         runOnUiThread(this::finish);
     }
 
+    @Override
+    protected void onDeleteFinished() {
+        // Do nothing
+    }
+
     /**
      * Gets the {@link TrackDataHub}.
      */
