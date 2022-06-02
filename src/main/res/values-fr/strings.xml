@@ -547,7 +547,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="average_heart_rate">Fréquence cardiaque moyenne</string>
     <string name="current_heart_rate">Fréquence cardiaque actuelle</string>
     <plurals name="voiceDistanceMiles">
-        <item quantity="one">1 mile</item>
+        <item quantity="one">%1$.2f mile</item>
         <item quantity="other">%1$.2f miles</item>
     </plurals>
     <string name="lap_time">Temps par tour</string>
@@ -556,7 +556,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_public_api_enabled_summary_on">D\'autres applications installées peuvent démarrer ou arrêter les enregistrements.</string>
     <string name="settings_public_api_enabled_summary_off">Seul OpenTracks peut démarrer et arrêter les enregistrements.</string>
     <plurals name="voiceDistanceKilometers">
-        <item quantity="one">1 kilomètre</item>
+        <item quantity="one">%1$.2f kilomètre</item>
         <item quantity="other">%1$.2f kilomètres</item>
     </plurals>
     <string name="total_distance">Distance totale</string>
