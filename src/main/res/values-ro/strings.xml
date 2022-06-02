@@ -472,4 +472,37 @@ limitations under the License.
         <item quantity="few">Finalizat cu %1$d erori</item>
         <item quantity="other">Finalizat cu %1$d erori</item>
     </plurals>
+    <string name="activity_type_swimming">înot</string>
+    <string name="activity_type_swimming_open">înot în apă deschisă</string>
+    <string name="activity_type_workout">antrenament</string>
+    <string name="menu_filter">Filtru</string>
+    <string name="menu_add_custom_layout">Noul layout</string>
+    <string name="settings_ui_title">Interfață utilizator</string>
+    <string name="generic_yesterday">Ieri</string>
+    <string name="generic_today">Astăzi</string>
+    <string name="settings_sensors_summary">Senzori de ciclism, Circumferința roții, Senzori de alergare</string>
+    <string name="settings_gps_summary">Interval de timp, Interval de distanță, Distanța maximă, Precizie</string>
+    <string name="custom_layout_list_edit_already_exists">Numele Layout-ului există deja</string>
+    <string name="custom_layout_list_title">Machete</string>
+    <string name="custom_layout_list_edit_name">Tastați numele layout pentru a adăuga</string>
+    <string name="settings_recording_idle_speed_title">Pragul de viteză la ralanti</string>
+    <string name="settings_announcements_report_heart_rate">Raportați ritmul cardiac</string>
+    <string name="generic_filter">Filtru</string>
+    <string name="menu_select_layout">Selectați Layout</string>
+    <string name="settings_import_export_title">Importație/Export</string>
+    <string name="settings_units_category">Unități</string>
+    <string name="settings_announcements_summary">Timp, distanță, viteză vocală</string>
+    <string name="settings_announcements_totaltime_frequency">Interval de timp</string>
+    <string name="settings_announcements_distance_frequency">Interval de distanță</string>
+    <string name="custom_layout_list_layout_removed">Aspectul a fost eliminat</string>
+    <string name="settings_defaults_title">Unități și activitate implicite</string>
+    <string name="settings_ui_summary">Aspect, Înregistrare, Layout, Temă</string>
+    <string name="export_dir_not_writable">" (nu se poate scrie!)"</string>
+    <string name="generic_dismiss">Respingeți</string>
+    <string name="gps_recording_status">%1$s: %2$s</string>
+    <string name="settings_recording_customize_layout_select_columns">Câmpuri de date pe rând</string>
+    <string name="export_cannot_write_to_dir">Nu se poate scrie în directorul de export.</string>
+    <string name="generic_choose_an_option">Alegeți o opțiune</string>
+    <string name="generic_undo">Anulați</string>
+    <string name="settings_defaults_summary">Unități preferate, Activitate implicită, Urmărire nume implicit</string>
 </resources>
