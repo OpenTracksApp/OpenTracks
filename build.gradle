@@ -119,7 +119,7 @@ android {
 dependencies {
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
 
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'androidx.preference:preference:1.2.0'
     implementation 'androidx.documentfile:documentfile:1.0.1'
     implementation 'com.google.android.material:material:1.6.1'
