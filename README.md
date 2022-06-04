@@ -9,7 +9,6 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
         <th>Free (F-Droid)</th>
         <th>Free (Nightly for F-Droid)</th>
         <th>Donations</th>
-        <th>Translations</th>
     </tr>
     <tr>
         <td align="center">
@@ -27,11 +26,6 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
                 <img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg" height="45" align="middle">
             </a>
         </td>
-        <td align="center">
-            <a href="https://weblate.bubu1.eu/engage/OpenTracks/">
-                <img src="https://weblate.bubu1.eu/widgets/OpenTracks/-/opentracks/svg-badge.svg" alt="Translation status" />
-            </a>
-        </td>
     </tr>
     <tr>
         <td align="center">
@@ -43,21 +37,15 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
                 <img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="60" align="middle">
             </a>
         </td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td align="center">
-            <a href="https://www.amazon.de/dp/B09K2KNQ7X/">
-                <img alt="Get it on Amazon App Store" src="https://images-na.ssl-images-amazon.com/images/G/01/mobile-apps/devportal2/res/images/amazon-appstore-badge-english-white.png" height="40" align="middle">
-            </a>
-        </td>
-        <td></td>
     </tr>
 </table>
 
+<a href="https://weblate.bubu1.eu/engage/OpenTracks/">
+	<img src="https://weblate.bubu1.eu/widgets/OpenTracks/-/opentracks/horizontal-auto.svg" alt="Translation status" />
+</a>
+
 ## Screenshots
+
 <div>
     <img width="23%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screenshot1.png">
     <img width="23%" src="fastlane/metadata/android/en-US/images/phoneScreenshots/screenshot2.png">
