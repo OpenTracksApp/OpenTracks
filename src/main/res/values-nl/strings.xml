@@ -499,7 +499,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="settings_public_api_dashboard_enabled_summary_on">Een app die een opname start, heeft ook toegang tot de opgenomen gegevens.</string>
     <string name="stats_sensors_cadence">Cadans</string>
     <string name="stats_sensors_heart_rate">Hartslag</string>
-    <string name="settings_announcements_report_heart_rate">Hartslag melden</string>
     <string name="settings_layout_reset">Aangepaste lay-out terugzetten</string>
     <string name="settings_layout_reset_confirm_message">Alle lay-out instellingen worden teruggezet naar de standaardwaarden. Tracks worden niet gewist.</string>
     <string name="settings_public_api_enabled_summary_on">Andere geïnstalleerde apps kunnen opnames starten of stoppen.</string>

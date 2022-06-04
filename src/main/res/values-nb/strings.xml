@@ -550,7 +550,6 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_title">Automatisk dataoverføring</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Et program som startet et opptak kan også få tilgang til de registrerte dataene.</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Registrerte data blir ikke delt automatisk med andre programmer.</string>
-    <string name="settings_announcements_report_heart_rate">Rapporter puls</string>
     <string name="voice_per_kilometer">per kilometer</string>
     <string name="voice_per_mile">per engelsk mil</string>
     <string name="lap_time">Rundetid</string>

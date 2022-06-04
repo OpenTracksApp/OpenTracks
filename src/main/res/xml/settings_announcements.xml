@@ -26,7 +26,7 @@
         android:title="@string/menu_voice_rate"
         app:useSimpleSummaryProvider="true" />
 
-    <PreferenceCategory android:title="@string/settings_announcements">
+    <PreferenceCategory android:title="@string/settings_announcements_title">
 
         <SwitchPreference
             android:defaultValue="true"

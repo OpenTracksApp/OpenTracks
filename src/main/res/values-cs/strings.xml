@@ -546,7 +546,6 @@ limitations under the License.
     <string name="export_dir_not_writable">" (nelze zapisovat!)"</string>
     <string name="generic_today">Dnes</string>
     <string name="no_compatible_file_manager_installed">Není nainstalován kompatibilní správce souborů</string>
-    <string name="settings_announcements_report_heart_rate">Hlásit tepovou frekvenci</string>
     <string name="voice_per_kilometer">za kilometr</string>
     <string name="lap_time">Čas kola</string>
     <string name="lap_speed">Rychlost kola</string>

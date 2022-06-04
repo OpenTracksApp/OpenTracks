@@ -535,7 +535,6 @@ limitations under the License.
     <string name="settings_public_api_enabled_title">API công khai</string>
     <string name="settings_public_api_enabled_summary_off">Chỉ OpenTracks có thể bắt đầu và dừng ghi.</string>
     <string name="settings_public_api_enabled_summary_on">Các ứng dụng khác có thể bắt đầu hoặc dừng ghi.</string>
-    <string name="settings_announcements_report_heart_rate">Báo cáo nhịp tim</string>
     <string name="settings_api_title">API công khai</string>
     <string name="generic_dismiss">Bỏ</string>
     <string name="gps_recording_status">%1$s: %2$s</string>

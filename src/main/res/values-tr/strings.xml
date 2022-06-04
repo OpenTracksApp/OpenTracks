@@ -512,7 +512,6 @@ limitations under the License.
     <string name="location_coordinate">%1$s°</string>
     <string name="settings_all_reset">Sıfırla</string>
     <string name="settings_generic_sensor">Genel</string>
-    <string name="settings_announcements_report_heart_rate">Kalp atış hızını bildir</string>
     <string name="custom_layout_list_edit_name">Eklemek için dizilimin adını yazın</string>
     <string name="settings_layout_reset_confirm_message">Tüm dizilim ayarları varsayılan değerlere döndürülecektir. Bu cihazdaki hiçbir parçayı silmez.</string>
     <string name="settings_running_sensor">Koşu</string>
