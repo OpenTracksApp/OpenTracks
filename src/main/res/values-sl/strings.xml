@@ -386,7 +386,6 @@ limitations under the License.
     <string name="settings_cycling_sensor">Kolesarjenje</string>
     <string name="settings_running_sensor">Teče</string>
     <string name="track_recording_notification_accuracy">Natančnost lokacije: %1$s</string>
-    <string name="settings_announcements_report_heart_rate">Poročanje o srčnem utripu</string>
     <string name="location_latitude_longitude">%1$s, %2$s</string>
     <string name="location_coordinate">%1$s°</string>
     <string name="track_distance_notification">Razdalja: %1$s</string>

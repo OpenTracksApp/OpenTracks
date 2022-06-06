@@ -508,7 +508,6 @@
         <item quantity="other">%1$.2f quilômetros</item>
     </plurals>
     <string name="generic_dismiss">Dispensar</string>
-    <string name="settings_announcements_report_heart_rate">Informar frequência cardíaca</string>
     <string name="settings_api_title">API pública</string>
     <string name="settings_public_api_dashboard_enabled_title">Transferência automática de dados</string>
     <string name="voice_per_kilometer">por quilômetro</string>

@@ -554,7 +554,6 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_title">Transferencia automática de datos</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Una aplicación que ha iniciado una grabación puede también acceder a los datos grabados.</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Los datos grabados no se compartirán automáticamente con otras aplicaciones.</string>
-    <string name="settings_announcements_report_heart_rate">Anunciar ritmo cardíaco</string>
     <string name="voice_per_kilometer">por kilometro</string>
     <string name="voice_per_mile">por milla</string>
     <string name="lap_time">Tiempo de vuelta</string>

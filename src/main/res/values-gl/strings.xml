@@ -549,7 +549,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="export_dir_not_writable">" (non escribible!)"</string>
     <string name="no_compatible_file_manager_installed">Non compatible xestor de ficheiros instalados</string>
     <string name="settings_api_title">API pública</string>
-    <string name="settings_announcements_report_heart_rate">Informar do pulso</string>
     <string name="settings_public_api_enabled_title">API pública</string>
     <string name="settings_public_api_disabled_toast">API pública de OpenTracks desactivada: pode activarse nos axustes.</string>
     <string name="lap_time">Tempo da volta</string>

@@ -1,7 +1,12 @@
 package de.dennisguse.opentracks.services.announcement;
 
 import static android.text.Spanned.SPAN_INCLUSIVE_EXCLUSIVE;
-import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceHeartRate;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageHeartRate;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceAverageSpeedPace;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapHeartRate;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapSpeedPace;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMovingTime;
 
 import android.content.Context;
 import android.text.Spannable;
@@ -58,38 +63,42 @@ class VoiceAnnouncementUtils {
 
         double distanceInUnit = distance.toKM_Miles(unitSystem);
 
-        builder.append(context.getString(R.string.total_distance));
-        long distanceIntegerPart = (long) distanceInUnit;
-        // Extract the decimal part
-        String distanceFractionalPart = String.format("%.2f", (distanceInUnit - distanceIntegerPart)).substring(2);
-        // Units should always be english singular for TTS.
-        // See https://developer.android.com/reference/android/text/style/TtsSpan?hl=en#TYPE_MEASURE
-        appendDecimalUnit(builder, context.getResources().getQuantityString(distanceId, getQuantityCount(distanceInUnit), distanceInUnit), distanceIntegerPart, distanceFractionalPart, unitDistanceTTS);
-        // Punctuation helps introduce natural pauses in TTS
-        builder.append(".");
+        if (shouldVoiceAnnounceTotalDistance()) {
+            builder.append(context.getString(R.string.total_distance));
+            long distanceIntegerPart = (long) distanceInUnit;
+            // Extract the decimal part
+            String distanceFractionalPart = String.format("%.2f", (distanceInUnit - distanceIntegerPart)).substring(2);
+            // Units should always be english singular for TTS.
+            // See https://developer.android.com/reference/android/text/style/TtsSpan?hl=en#TYPE_MEASURE
+            appendDecimalUnit(builder, context.getResources().getQuantityString(distanceId, getQuantityCount(distanceInUnit), distanceInUnit), distanceIntegerPart, distanceFractionalPart, unitDistanceTTS);
+            // Punctuation helps introduce natural pauses in TTS
+            builder.append(".");
+        }
         if (distance.isZero()) {
             return builder;
         }
 
         // Announce time
         Duration movingTime = trackStatistics.getMovingTime();
-        if (!movingTime.isZero()) {
+        if (shouldVoiceAnnounceMovingTime() && !movingTime.isZero()) {
             appendDuration(context, builder, movingTime);
             builder.append(".");
         }
 
         if (isReportSpeed) {
-            double speedInUnit = distancePerTime.to(unitSystem);
+            if (shouldVoiceAnnounceAverageSpeedPace()) {
+                double speedInUnit = distancePerTime.to(unitSystem);
 
-            builder.append(" ")
-                    .append(context.getString(R.string.speed));
-            long speedIntegerPart = (long) speedInUnit;
-            // Extract the decimal part
-            String speedFractionalPart = String.format("%.1f", (speedInUnit - speedIntegerPart)).substring(2);
-            appendDecimalUnit(builder, context.getResources().getQuantityString(speedId, getQuantityCount(speedInUnit), speedInUnit), speedIntegerPart, speedFractionalPart, unitSpeedTTS);
-            builder.append(".");
+                builder.append(" ")
+                        .append(context.getString(R.string.speed));
+                long speedIntegerPart = (long) speedInUnit;
+                // Extract the decimal part
+                String speedFractionalPart = String.format("%.1f", (speedInUnit - speedIntegerPart)).substring(2);
+                appendDecimalUnit(builder, context.getResources().getQuantityString(speedId, getQuantityCount(speedInUnit), speedInUnit), speedIntegerPart, speedFractionalPart, unitSpeedTTS);
+                builder.append(".");
+            }
 
-            if (currentDistancePerTime != null) {
+            if (shouldVoiceAnnounceLapSpeedPace() && currentDistancePerTime != null) {
                 double currentDistancePerTimeInUnit = currentDistancePerTime.to(unitSystem);
 
                 if (currentDistancePerTimeInUnit > 0) {
@@ -104,16 +113,18 @@ class VoiceAnnouncementUtils {
                 }
             }
         } else {
-            Duration time = distancePerTime.toPace(unitSystem);
-            builder.append(" ")
-                    .append(context.getString(R.string.pace));
-            appendDuration(context, builder, time);
-            builder.append(" ")
-                    .append(context.getString(perUnitStringId))
-                    .append(".");
+            if (shouldVoiceAnnounceAverageSpeedPace()) {
+                Duration time = distancePerTime.toPace(unitSystem);
+                builder.append(" ")
+                        .append(context.getString(R.string.pace));
+                appendDuration(context, builder, time);
+                builder.append(" ")
+                        .append(context.getString(perUnitStringId))
+                        .append(".");
+            }
 
-            Duration currentTime = currentDistancePerTime != null ? currentDistancePerTime.toPace(unitSystem) : Duration.ofMillis(0);
-            if (!currentTime.isZero()) {
+            if (shouldVoiceAnnounceLapSpeedPace() && currentDistancePerTime != null) {
+                Duration currentTime = currentDistancePerTime.toPace(unitSystem);
                 builder.append(" ")
                         .append(context.getString(R.string.lap_time));
                 appendDuration(context, builder, currentTime);
@@ -123,24 +134,21 @@ class VoiceAnnouncementUtils {
             }
         }
 
-        if (shouldVoiceAnnounceHeartRate()) {
-            if (sensorStatistics != null && sensorStatistics.hasHeartRate()) {
-                int averageHeartRate = Math.round(sensorStatistics.getAvgHeartRate().getBPM());
+        if (shouldVoiceAnnounceAverageHeartRate() && sensorStatistics != null && sensorStatistics.hasHeartRate()) {
+            int averageHeartRate = Math.round(sensorStatistics.getAvgHeartRate().getBPM());
 
-                builder.append(" ")
-                        .append(context.getString(R.string.average_heart_rate));
-                appendCardinal(builder, context.getString(R.string.sensor_state_heart_rate_value, averageHeartRate), averageHeartRate);
-                builder.append(".");
-            }
+            builder.append(" ")
+                    .append(context.getString(R.string.average_heart_rate));
+            appendCardinal(builder, context.getString(R.string.sensor_state_heart_rate_value, averageHeartRate), averageHeartRate);
+            builder.append(".");
+        }
+        if (shouldVoiceAnnounceLapHeartRate() && currentInterval != null && currentInterval.hasAverageHeartRate()) {
+            int currentHeartRate = Math.round(currentInterval.getAverageHeartRate().getBPM());
 
-            if (currentInterval != null && currentInterval.hasAverageHeartRate()) {
-                int currentHeartRate = Math.round(currentInterval.getAverageHeartRate().getBPM());
-
-                builder.append(" ")
-                        .append(context.getString(R.string.current_heart_rate));
-                appendCardinal(builder, context.getString(R.string.sensor_state_heart_rate_value, currentHeartRate), currentHeartRate);
-                builder.append(".");
-            }
+            builder.append(" ")
+                    .append(context.getString(R.string.current_heart_rate));
+            appendCardinal(builder, context.getString(R.string.sensor_state_heart_rate_value, currentHeartRate), currentHeartRate);
+            builder.append(".");
         }
 
         return builder;

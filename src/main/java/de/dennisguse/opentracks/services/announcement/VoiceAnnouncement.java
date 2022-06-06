@@ -181,8 +181,10 @@ public class VoiceAnnouncement {
 
         Spannable announcement = VoiceAnnouncementUtils.getAnnouncement(context, track.getTrackStatistics(), unitSystem, isReportSpeed, lastInterval, sensorStatistics);
 
-        // We don't care about the utterance id. It is supplied here to force onUtteranceCompleted to be called.
-        tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null, "not used");
+        if (announcement.length() > 0) {
+            // We don't care about the utterance id. It is supplied here to force onUtteranceCompleted to be called.
+            tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null, "not used");
+        }
     }
 
     public void stop() {

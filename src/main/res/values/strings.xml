@@ -395,7 +395,10 @@ limitations under the License.
 
     <string name="settings_announcements_totaltime_frequency">Time interval</string>
     <string name="settings_announcements_distance_frequency">Distance interval</string>
-    <string name="settings_announcements_report_heart_rate">Report heart rate</string>
+    <string name="settings_announcements_average_heart_rate">Average heart rate</string>
+    <string name="settings_announcements_lap_heart_rate">Lap heart rate</string>
+    <string name="settings_announcements_average_speed_pace">Average speed/pace</string>
+    <string name="settings_announcements_lap_speed_pace">Lap speed/pace</string>
 
     <!-- Custom Layout -->
     <string name="custom_layout_list_title">Layouts</string>

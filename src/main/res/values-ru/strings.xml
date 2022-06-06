@@ -532,7 +532,6 @@ limitations under the License.
     <string name="settings_reset_summary">Сбросить настройки</string>
     <string name="settings_recording_idle_speed_title">Порог скорости холостого хода</string>
     <string name="settings_generic_sensor">Обычные</string>
-    <string name="settings_announcements_report_heart_rate">Сообщать пульс</string>
     <string name="custom_layout_select_layout">Выбрать раскладку</string>
     <string name="stats_custom_layout_default_layout">Раскладка по умолчанию</string>
     <string name="settings_layout_reset_confirm_title">Сбросить свои раскладки\?</string>

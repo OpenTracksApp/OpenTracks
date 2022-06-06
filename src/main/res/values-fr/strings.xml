@@ -542,7 +542,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="export_cannot_write_to_dir">Impossible d\'écrire dans le répertoire d\'exportation.</string>
     <string name="export_dir_not_writable">" (non inscriptible !)"</string>
     <string name="no_compatible_file_manager_installed">Aucun gestionnaire de fichiers compatible n\'est installé</string>
-    <string name="settings_announcements_report_heart_rate">Rapport de la fréquence cardiaque</string>
     <string name="settings_public_api_enabled_title">API publique</string>
     <string name="average_heart_rate">Fréquence cardiaque moyenne</string>
     <string name="current_heart_rate">Fréquence cardiaque actuelle</string>
