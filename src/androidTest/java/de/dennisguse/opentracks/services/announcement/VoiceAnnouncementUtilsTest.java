@@ -46,7 +46,7 @@ public class VoiceAnnouncementUtilsTest {
         PreferencesUtils.setVoiceAnnounceLapHeartRate(false);
         PreferencesUtils.setVoiceAnnounceAverageHeartRate(false);
         PreferencesUtils.setVoiceAnnounceTotalDistance(true);
-        PreferencesUtils.setVoiceAnnounceTotalTime(true);
+        PreferencesUtils.setVoiceAnnounceMovingTime(true);
         PreferencesUtils.setVoiceAnnounceAverageSpeedPace(true);
         PreferencesUtils.setVoiceAnnounceLapSpeedPace(true);
     }
@@ -234,7 +234,7 @@ public class VoiceAnnouncementUtilsTest {
         PreferencesUtils.setVoiceAnnounceLapHeartRate(true);
         PreferencesUtils.setVoiceAnnounceAverageHeartRate(false);
         PreferencesUtils.setVoiceAnnounceTotalDistance(false);
-        PreferencesUtils.setVoiceAnnounceTotalTime(false);
+        PreferencesUtils.setVoiceAnnounceMovingTime(false);
         PreferencesUtils.setVoiceAnnounceAverageSpeedPace(false);
         PreferencesUtils.setVoiceAnnounceLapSpeedPace(false);
 

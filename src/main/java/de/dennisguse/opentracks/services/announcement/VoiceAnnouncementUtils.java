@@ -6,7 +6,7 @@ import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnno
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapHeartRate;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceLapSpeedPace;
 import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalDistance;
-import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceTotalTime;
+import static de.dennisguse.opentracks.settings.PreferencesUtils.shouldVoiceAnnounceMovingTime;
 
 import android.content.Context;
 import android.text.Spannable;
@@ -80,7 +80,7 @@ class VoiceAnnouncementUtils {
 
         // Announce time
         Duration movingTime = trackStatistics.getMovingTime();
-        if (shouldVoiceAnnounceTotalTime() && !movingTime.isZero()) {
+        if (shouldVoiceAnnounceMovingTime() && !movingTime.isZero()) {
             appendDuration(context, builder, movingTime);
             builder.append(".");
         }

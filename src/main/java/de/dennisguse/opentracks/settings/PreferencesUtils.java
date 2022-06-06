@@ -352,13 +352,13 @@ public class PreferencesUtils {
         setBoolean(R.string.voice_announce_total_distance_key, value);
     }
 
-    public static boolean shouldVoiceAnnounceTotalTime() {
-        return getBoolean(R.string.voice_announce_total_time_key, true);
+    public static boolean shouldVoiceAnnounceMovingTime() {
+        return getBoolean(R.string.voice_announce_moving_time_key, true);
     }
 
     @VisibleForTesting
-    public static void setVoiceAnnounceTotalTime(boolean value) {
-        setBoolean(R.string.voice_announce_total_time_key, value);
+    public static void setVoiceAnnounceMovingTime(boolean value) {
+        setBoolean(R.string.voice_announce_moving_time_key, value);
     }
 
     public static boolean shouldVoiceAnnounceAverageSpeedPace() {

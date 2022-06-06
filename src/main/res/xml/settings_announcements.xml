@@ -35,8 +35,8 @@
 
         <SwitchPreference
             android:defaultValue="true"
-            android:key="@string/voice_announce_total_time_key"
-            android:title="@string/stats_total_time" />
+            android:key="@string/voice_announce_moving_time_key"
+            android:title="@string/stats_moving_time" />
 
         <SwitchPreference
             android:defaultValue="true"
