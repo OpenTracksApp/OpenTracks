@@ -486,7 +486,6 @@ limitations under the License.
     <string name="custom_layout_list_title">Machete</string>
     <string name="custom_layout_list_edit_name">Tastați numele layout pentru a adăuga</string>
     <string name="settings_recording_idle_speed_title">Pragul de viteză la ralanti</string>
-    <string name="settings_announcements_report_heart_rate">Raportați ritmul cardiac</string>
     <string name="generic_filter">Filtru</string>
     <string name="menu_select_layout">Selectați Layout</string>
     <string name="settings_import_export_title">Importație/Export</string>

@@ -500,7 +500,6 @@ limitations under the License.
     <string name="settings_recording_idle_speed_title">Alapjárati fordulatszám-küszöbérték</string>
     <string name="custom_layout_list_title">Elrendezések</string>
     <string name="custom_layout_list_edit_name">Írja be az elrendezés nevét a hozzáadáshoz</string>
-    <string name="settings_announcements_report_heart_rate">Pulzusszám jelentése</string>
     <string name="aggregated_stats_filter_no_results">A megadott szűrőhöz nincsenek tevékenységek</string>
     <string name="speed">Sebesség</string>
     <string name="total_distance">Teljes távolság</string>
