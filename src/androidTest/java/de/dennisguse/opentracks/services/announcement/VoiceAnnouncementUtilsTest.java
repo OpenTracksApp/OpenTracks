@@ -253,9 +253,9 @@ public class VoiceAnnouncementUtilsTest {
         SensorStatistics sensorStatistics = new SensorStatistics(HeartRate.of(180f), HeartRate.of(180f), null, null, null);
 
         // when
-        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, true, true, lastInterval, sensorStatistics).toString();
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.METRIC, true, lastInterval, sensorStatistics).toString();
 
         // then
-        assertEquals(" Current heart rate 132 bpm,", announcement);
+        assertEquals(" Current heart rate 133 bpm.", announcement);
     }
 }
