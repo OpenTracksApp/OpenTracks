@@ -581,4 +581,10 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="select_show_on_map_behavior">Sélectionner le comportement \"Montrer sur la carte\"</string>
     <string name="settings_public_api_dashboard_enabled_title">Transfert automatique des données</string>
     <string name="settings_public_api_dashboard_enabled_summary_on">Une application qui a commencé un enregistrement peut aussi accéder aux données enregistrées.</string>
+    <string name="settings_announcements_average_speed_pace">Allure/vitesse moyenne</string>
+    <string name="settings_announcements_lap_speed_pace">Allure/vitesse au tour</string>
+    <string name="settings_announcements_average_heart_rate">Moyenne de fréquence cardiaque</string>
+    <string name="settings_announcements_lap_heart_rate">Fréquence cardiaque au tour</string>
+    <string name="image_discard">Ignorer</string>
+    <string name="track_discarding">Ignorer la trace</string>
 </resources>
