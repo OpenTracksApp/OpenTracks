@@ -1,0 +1,11 @@
+v3.20.2 : OpenTracks
+
+Changements :
+- Le gain et la perte d'altitude sont des entiers au lieu de floats
+- Demander la permission avant d'utiliser Bluetooth par un message Toast
+
+Correction d'un bug :
+- Définir FLAG_IMMUTABLE pour PendingIntents pour éviter un crash sur Android 12
+- Le capteur de cadence renvoie 0 au lieu de None lorsque l'utilisateur ne pédale pas.
+- Le capteur de vitesse renvoie 0 au lieu de la dernière vitesse connue quand c'est arrêté
+- Avec les capteurs, le temps de déplacement s'arrête lorsqu'il n'est pas en mouvement

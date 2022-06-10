@@ -7,5 +7,11 @@ Fonctionnalités :
 * Dénivelé positif et négatif: via capteur de pression barométrique
 * Synthèse vocale
 * Prise en charge des capteurs Bluetooth LE : rythme cardiaque, vitesse et distance (vélo), cadence de pédalage (vélo), et capteur de puissance (vélo)
-* Export : export des traces au format  KMZ (photos incluses), KML ou GPX
+* Export : export des traces au format KMZ (photos incluses), KML ou GPX
 * Pas d'accès internet requis : Internet n'est pas nécessaire pour le fonctionnement de l'application
+* Thème sombre ou claire, avec le respect des paramètres du système
+* Pas de publicités
+
+Logiciel Open Source
+Vous pouvez utiliser, étudier, changer et partager le code source.
+Licence Apache 2.0
