@@ -42,12 +42,6 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
 public class TrackStatisticsUpdater {
 
     /**
-     * The number of altitude readings to smooth to get a somewhat accurate signal.
-     */
-    @VisibleForTesting
-    private static final int ALTITUDE_SMOOTHING_FACTOR = 25;
-
-    /**
      * The number of speed reading to smooth to get a somewhat accurate signal.
      */
     @VisibleForTesting
@@ -63,7 +57,6 @@ public class TrackStatisticsUpdater {
 
     private final TrackStatistics trackStatistics;
 
-    private final AltitudeRingBuffer altitudeBuffer;
     private final SpeedRingBuffer speedBuffer;
     private float averageHeartRateBPM;
     private Duration totalHeartRateDuration = Duration.ZERO;
@@ -86,7 +79,6 @@ public class TrackStatisticsUpdater {
         this.trackStatistics = trackStatistics;
         this.currentSegment = new TrackStatistics();
 
-        altitudeBuffer = new AltitudeRingBuffer(ALTITUDE_SMOOTHING_FACTOR);
         speedBuffer = new SpeedRingBuffer(SPEED_SMOOTHING_FACTOR);
         resetAverageHeartRate();
     }
@@ -95,7 +87,6 @@ public class TrackStatisticsUpdater {
         this.currentSegment = new TrackStatistics(toCopy.currentSegment);
         this.trackStatistics = new TrackStatistics(toCopy.trackStatistics);
 
-        this.altitudeBuffer = new AltitudeRingBuffer(toCopy.altitudeBuffer);
         this.speedBuffer = new SpeedRingBuffer(toCopy.speedBuffer);
 
         this.lastTrackPoint = toCopy.lastTrackPoint;
@@ -140,11 +131,7 @@ public class TrackStatisticsUpdater {
 
         //Update absolute (GPS-based) altitude
         if (trackPoint.hasAltitude()) {
-            // Update altitude using the smoothed average
-            altitudeBuffer.setNext(trackPoint.getAltitude());
-            Altitude newAverage = altitudeBuffer.getAverage();
-
-            currentSegment.updateAltitudeExtremities(newAverage);
+            currentSegment.updateAltitudeExtremities(trackPoint.getAltitude());
         }
 
         // Update heart rate
@@ -198,7 +185,6 @@ public class TrackStatisticsUpdater {
         currentSegment.reset(trackPoint.getTime());
 
         lastTrackPoint = null;
-        altitudeBuffer.reset();
         speedBuffer.reset();
         resetAverageHeartRate();
     }

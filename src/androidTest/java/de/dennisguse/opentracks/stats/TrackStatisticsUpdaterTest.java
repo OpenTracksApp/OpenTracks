@@ -86,7 +86,7 @@ public class TrackStatisticsUpdaterTest {
         assertEquals(Duration.ofSeconds(9), statistics.getMovingTime());
 
         assertEquals(2.5, statistics.getMinAltitude(), 0.01);
-        assertEquals(28.75, statistics.getMaxAltitude(), 0.01);
+        assertEquals(32.5, statistics.getMaxAltitude(), 0.01);
         assertEquals(36, statistics.getTotalAltitudeGain(), 0.01);
         assertEquals(36, statistics.getTotalAltitudeLoss(), 0.01);
 
