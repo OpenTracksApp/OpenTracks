@@ -208,14 +208,6 @@ public class TrackStatisticsUpdater {
         totalHeartRateDuration = Duration.ZERO;
     }
 
-    /**
-     * Gets the smoothed altitude over several readings.
-     * The altitude readings is noisy so the smoothed altitude is better than the raw altitude for many tasks.
-     */
-    public Altitude getSmoothedAltitude() {
-        return altitudeBuffer.getAverage();
-    }
-
     public Speed getSmoothedSpeed() {
         return speedBuffer.getAverage();
     }

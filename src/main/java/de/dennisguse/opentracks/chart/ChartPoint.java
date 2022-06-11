@@ -29,15 +29,15 @@ public class ChartPoint {
         this.altitude = altitude;
     }
 
-    public ChartPoint(@NonNull TrackStatistics trackStatistics, @NonNull TrackPoint trackPoint, Speed smoothedSpeed, Altitude smoothedAltitude, boolean chartByDistance, UnitSystem unitSystem) {
+    public ChartPoint(@NonNull TrackStatistics trackStatistics, @NonNull TrackPoint trackPoint, Speed smoothedSpeed, boolean chartByDistance, UnitSystem unitSystem) {
         if (chartByDistance) {
             timeOrDistance = trackStatistics.getTotalDistance().toKM_Miles(unitSystem);
         } else {
             timeOrDistance = trackStatistics.getTotalTime().toMillis();
         }
 
-        if (smoothedAltitude != null) {
-            altitude = Distance.of(smoothedAltitude.toM()).toM_FT(unitSystem);
+        if (trackPoint.hasAltitude()) {
+            altitude = Distance.of(trackPoint.getAltitude().toM()).toM_FT(unitSystem);
         }
 
         if (smoothedSpeed != null) {

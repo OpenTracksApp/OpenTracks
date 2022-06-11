@@ -46,7 +46,7 @@ public class TrackPoint {
     private Double longitude;
     private Distance horizontalAccuracy;
     private Distance verticalAccuracy;
-    private Altitude altitude;
+    private Altitude altitude; //TODO use Altitude.WGS84
     private Speed speed;
     private Float bearing;
     private Distance sensorDistance;

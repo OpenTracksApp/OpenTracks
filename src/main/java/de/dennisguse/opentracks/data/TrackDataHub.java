@@ -367,7 +367,7 @@ public class TrackDataHub {
                 // Also include the last point if the selected track is not recording.
                 if ((localNumLoadedTrackPoints % samplingFrequency == 0) || (trackPointId == lastTrackPointId && !isSelectedTrackRecording())) {
                     for (Listener trackDataListener : listeners) {
-                        trackDataListener.onSampledInTrackPoint(trackPoint, currentUpdater.getTrackStatistics(), currentUpdater.getSmoothedSpeed(), currentUpdater.getSmoothedAltitude());
+                        trackDataListener.onSampledInTrackPoint(trackPoint, currentUpdater.getTrackStatistics(), currentUpdater.getSmoothedSpeed());
                     }
                 } else {
                     for (Listener trackDataListener : listeners) {
@@ -432,7 +432,7 @@ public class TrackDataHub {
          *
          * @param trackPoint the trackPoint
          */
-        default void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, Speed smoothedSpeed, @Nullable Altitude smoothedAltitude_m) {
+        default void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, Speed smoothedSpeed) {
         }
 
         /**
