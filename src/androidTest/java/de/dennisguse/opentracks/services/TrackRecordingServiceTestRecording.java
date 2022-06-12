@@ -829,12 +829,12 @@ public class TrackRecordingServiceTestRecording {
         // when
         String sensor1 = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(sensor1);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(0))); //Should be ignored
+        remoteSensorManager.onSensorDataChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(0))); //Should be ignored
 
         // when
         String sensor2 = "2020-02-02T02:02:04Z";
         trackPointCreator.setClock(sensor2);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(2)));
+        remoteSensorManager.onSensorDataChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(2)));
 
         // when
         String gps1 = "2020-02-02T02:02:05Z";
@@ -843,12 +843,12 @@ public class TrackRecordingServiceTestRecording {
         // when
         String sensor3 = "2020-02-02T02:02:06Z";
         trackPointCreator.setClock(sensor3);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(12)));
+        remoteSensorManager.onSensorDataChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(12)));
 
         // when
         String sensor4 = "2020-02-02T02:02:07Z";
         trackPointCreator.setClock(sensor4);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(14))); //Should be ignored
+        remoteSensorManager.onSensorDataChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(14))); //Should be ignored
 
         // when
         String gps2 = "2020-02-02T02:02:08Z";
@@ -857,7 +857,7 @@ public class TrackRecordingServiceTestRecording {
         // when
         String sensor5 = "2020-02-02T02:02:10Z";
         trackPointCreator.setClock(sensor5);
-        remoteSensorManager.onChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(16))); //Should be ignored
+        remoteSensorManager.onSensorDataChanged(new SensorDataRunning("", "", Speed.of(5), null, Distance.of(16))); //Should be ignored
 
         // when
         String gps3 = "2020-02-02T02:02:12Z";

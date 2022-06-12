@@ -102,15 +102,16 @@ public abstract class BluetoothConnectionManager<DataType> {
             if (BluetoothUtils.BATTERY.getServiceUUID().equals(characteristic.getService().getUuid())) {
                 final Integer batteryLevel = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
                 Log.d(TAG, "Battery level of " + gatt.getDevice().getAddress() + ": " + batteryLevel);
+                observer.onBatteryLevelChanged(batteryLevel);
             } else {
                 SensorData<DataType> sensorData = parsePayload(serviceMeasurementUUID.get(), gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
                 if (sensorData != null) {
                     Log.d(TAG, "Decoded data from " + gatt.getDevice().getAddress() + ": " + sensorData);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        observer.onChanged(sensorData);
+                        observer.onSensorDataChanged(sensorData);
                     } else {
                         //TODO This might lead to NPEs in case of race conditions due to shutdown.
-                        observer.getHandler().post(() -> observer.onChanged(sensorData));
+                        observer.getHandler().post(() -> observer.onSensorDataChanged(sensorData));
                     }
                 }
             }
@@ -141,7 +142,7 @@ public abstract class BluetoothConnectionManager<DataType> {
             bluetoothGatt = device.connectGatt(context, false, connectCallback);
         }
         SensorData<?> sensorData = createEmptySensorData(bluetoothGatt.getDevice().getAddress());
-        observer.onChanged(sensorData);
+        observer.onSensorDataChanged(sensorData);
     }
 
     private synchronized void clearData() {
@@ -176,7 +177,9 @@ public abstract class BluetoothConnectionManager<DataType> {
 
     interface SensorDataObserver {
 
-        void onChanged(SensorData<?> sensorData);
+        void onSensorDataChanged(SensorData<?> sensorData);
+
+        void onBatteryLevelChanged(int level);
 
         void onDisconnecting(SensorData<?> sensorData);
 

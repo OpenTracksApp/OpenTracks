@@ -16,14 +16,19 @@
 
 package de.dennisguse.opentracks.sensors;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 
 import java.time.Duration;
 
@@ -186,7 +191,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
     }
 
     @Override
-    public synchronized void onChanged(SensorData<?> sensorData) {
+    public synchronized void onSensorDataChanged(SensorData<?> sensorData) {
         if (sensorData instanceof SensorDataCyclingCadence) {
             SensorDataCyclingCadence previous = sensorDataSet.getCyclingCadence();
             Log.d(TAG, "Previous: " + previous + "; current: " + sensorData);
@@ -218,6 +223,13 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
 
         sensorDataSet.set(sensorData);
         observer.onChange(new SensorDataSet(sensorDataSet));
+    }
+
+    @Override
+    public void onBatteryLevelChanged(int level) {
+        //TODO How to pass this info to the UI?
+        // Make it a snackbar or make it a notification?
+        // Do we need to notify the user every time it changes?
     }
 
     @Override
