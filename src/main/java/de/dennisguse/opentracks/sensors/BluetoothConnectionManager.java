@@ -54,19 +54,19 @@ public abstract class BluetoothConnectionManager<DataType> {
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             switch (newState) {
                 case BluetoothProfile.STATE_CONNECTING:
-                    Log.d(TAG, "Connecting to sensor: " + gatt.getDevice());
+                    Log.i(TAG, "Connecting to sensor: " + gatt.getDevice());
                     break;
                 case BluetoothProfile.STATE_CONNECTED:
-                    Log.d(TAG, "Connected to sensor: " + gatt.getDevice());
+                    Log.i(TAG, "Connected to sensor: " + gatt.getDevice());
 
                     gatt.discoverServices();
                     break;
                 case BluetoothProfile.STATE_DISCONNECTING:
-                    Log.d(TAG, "Disconnecting from sensor: " + gatt.getDevice());
+                    Log.i(TAG, "Disconnecting from sensor: " + gatt.getDevice());
                     break;
 
                 case BluetoothProfile.STATE_DISCONNECTED:
-                    Log.d(TAG, "Disconnected from sensor: " + gatt.getDevice());
+                    Log.i(TAG, "Disconnected from sensor: " + gatt.getDevice());
 
                     clearData();
                     break;
@@ -75,38 +75,17 @@ public abstract class BluetoothConnectionManager<DataType> {
 
         @Override
         public void onServicesDiscovered(@NonNull BluetoothGatt gatt, int status) {
-            BluetoothGattService gattService = null;
-            ServiceMeasurementUUID serviceMeasurement = null;
-            for (ServiceMeasurementUUID s : serviceMeasurementUUIDs) {
-                gattService = gatt.getService(s.getServiceUUID());
-                if (gattService != null) {
-                    serviceMeasurement = s;
-                    break;
-                }
-            }
+            Optional<ServiceMeasurementUUID> serviceMeasurement =
+                    serviceMeasurementUUIDs.stream()
+                            .filter(s -> gatt.getService(s.getServiceUUID()) != null)
+                            .findFirst();
 
-            if (gattService == null) {
-                Log.e(TAG, "Could not get gattService for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + serviceMeasurement);
+            if (serviceMeasurement.isEmpty()) {
+                Log.e(TAG, "Could not get service for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + serviceUUID);
                 return;
             }
-
-            BluetoothGattCharacteristic characteristic = gattService.getCharacteristic(serviceMeasurement.getMeasurementUUID());
-            if (characteristic == null) {
-                Log.e(TAG, "Could not get BluetoothCharacteristic for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + serviceMeasurement.getServiceUUID() + " characteristicUUID=" + serviceMeasurement.getMeasurementUUID());
-                return;
-            }
-            gatt.setCharacteristicNotification(characteristic, true);
-
-            // Register for updates.
-            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(BluetoothUtils.CLIENT_CHARACTERISTIC_CONFIG_UUID);
-            if (descriptor == null) {
-                Log.e(TAG, "CLIENT_CHARACTERISTIC_CONFIG_UUID characteristic not available; cannot request notifications for changed data.");
-                return;
-            }
-
-            descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-            gatt.writeDescriptor(descriptor);
-
+            BluetoothUtils.subscribe(gatt, BluetoothUtils.BATTERY);
+            BluetoothUtils.subscribe(gatt, serviceMeasurement.get());
         }
 
         @Override
@@ -120,14 +99,19 @@ public abstract class BluetoothConnectionManager<DataType> {
                 return;
             }
 
-            SensorData<DataType> sensorData = parsePayload(serviceMeasurementUUID.get(), gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
-            if (sensorData != null) {
-                Log.d(TAG, "Decoded data from " + gatt.getDevice().getAddress() + ": " + sensorData);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    observer.onChanged(sensorData);
-                } else {
-                    //TODO This might lead to NPEs in case of race conditions due to shutdown.
-                    observer.getHandler().post(() -> observer.onChanged(sensorData));
+            if (BluetoothUtils.BATTERY.getServiceUUID().equals(characteristic.getService().getUuid())) {
+                final Integer batteryLevel = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
+                Log.d(TAG, "Battery level of " + gatt.getDevice().getAddress() + ": " + batteryLevel);
+            } else {
+                SensorData<DataType> sensorData = parsePayload(serviceMeasurementUUID.get(), gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
+                if (sensorData != null) {
+                    Log.d(TAG, "Decoded data from " + gatt.getDevice().getAddress() + ": " + sensorData);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        observer.onChanged(sensorData);
+                    } else {
+                        //TODO This might lead to NPEs in case of race conditions due to shutdown.
+                        observer.getHandler().post(() -> observer.onChanged(sensorData));
+                    }
                 }
             }
         }
@@ -149,7 +133,7 @@ public abstract class BluetoothConnectionManager<DataType> {
             return;
         }
 
-        Log.d(TAG, "Connecting to: " + device);
+        Log.i(TAG, "Connecting to: " + device);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             bluetoothGatt = device.connectGatt(context, false, connectCallback, BluetoothDevice.TRANSPORT_AUTO, 0, this.observer.getHandler());
