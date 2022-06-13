@@ -46,6 +46,7 @@ public class DistanceFormatter {
                 case METRIC:
                     return new Pair<>(null, resources.getString(R.string.unit_meter));
                 case IMPERIAL:
+                case NAUTICAL_IMPERIAL:
                     return new Pair<>(null, resources.getString(R.string.unit_feet));
                 default:
                     throw new RuntimeException("Not implemented");
@@ -62,6 +63,12 @@ public class DistanceFormatter {
             case IMPERIAL:
                 if (distance.greaterThan(Distance.ofMile(0.5))) {
                     return new Pair<>(StringUtils.formatDecimal(distance.toMI(), decimalCount), resources.getString(R.string.unit_mile));
+                } else {
+                    return new Pair<>(StringUtils.formatDecimal(distance.toFT(), decimalCount), resources.getString(R.string.unit_feet));
+                }
+            case NAUTICAL_IMPERIAL:
+                if (distance.greaterThan(Distance.ofNauticalMile(0.5))) {
+                    return new Pair<>(StringUtils.formatDecimal(distance.toNauticalMiles(), decimalCount), resources.getString(R.string.unit_nautical_mile));
                 } else {
                     return new Pair<>(StringUtils.formatDecimal(distance.toFT(), decimalCount), resources.getString(R.string.unit_feet));
                 }

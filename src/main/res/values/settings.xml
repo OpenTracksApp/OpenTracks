@@ -204,15 +204,20 @@
 
     <string name="stats_rate_key" translatable="false">statsRate</string>
     <string name="stats_rate_default" translatable="false">@string/stats_rate_speed_or_pace_default</string>
+    <string-array name="stats_rate_metric_options">
+        <item>@string/description_default_speed_or_pace</item>
+        <item>@string/description_speed_metric</item>
+        <item>@string/description_pace_metric</item>
+    </string-array>
     <string-array name="stats_rate_imperial_options">
         <item>@string/description_default_speed_or_pace</item>
         <item>@string/description_speed_imperial</item>
         <item>@string/description_pace_imperial</item>
     </string-array>
-    <string-array name="stats_rate_metric_options">
+    <string-array name="stats_rate_nautical_options">
         <item>@string/description_default_speed_or_pace</item>
-        <item>@string/description_speed_metric</item>
-        <item>@string/description_pace_metric</item>
+        <item>@string/description_speed_nautical</item>
+        <item>@string/description_pace_imperial</item>
     </string-array>
 
     <string name="stats_rate_speed_or_pace_default" translatable="false">ACTIVITY_TYPE</string>
@@ -229,12 +234,15 @@
     <string-array name="stats_units_values">
         <item>@string/stats_units_metric</item>
         <item>@string/stats_units_imperial</item>
+        <item>@string/stats_units_nautical</item>
     </string-array>
     <string name="stats_units_metric" translatable="false">METRIC</string>
     <string name="stats_units_imperial" translatable="false">IMPERIAL</string>
+    <string name="stats_units_nautical" translatable="false">NAUTICAL</string>
     <string-array name="stats_units_options">
         <item>@string/settings_stats_units_metric</item>
         <item>@string/settings_stats_units_imperial</item>
+        <item>@string/settings_stats_units_nautical</item>
     </string-array>
 
     <string name="track_name_key" translatable="false">trackName</string>

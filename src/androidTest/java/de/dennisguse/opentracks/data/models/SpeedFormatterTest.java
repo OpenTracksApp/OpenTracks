@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 
 import de.dennisguse.opentracks.settings.UnitSystem;
 
+//TODO Use make parametrized tests?
 @RunWith(AndroidJUnit4.class)
 public class SpeedFormatterTest {
 
@@ -39,10 +40,20 @@ public class SpeedFormatterTest {
                 .setReportSpeedOrPace(false)
                 .build(context);
 
-//        assertEquals("TODO", formatter.getSpeedParts(Speed.of(3.34)).first);
-//        assertEquals("TODO", formatter.getSpeedParts(Speed.of(3.33)).first);
-
+        assertEquals("8:02", formatter.getSpeedParts(Speed.of(3.34)).first);
         assertEquals("min/mi", formatter.getSpeedParts(Speed.zero()).second);
+    }
+
+    @Test
+    public void testGetSpeedParts_pace_nautical() {
+        SpeedFormatter formatter = SpeedFormatter.Builder()
+                .setDecimalCount(2)
+                .setUnit(UnitSystem.NAUTICAL_IMPERIAL)
+                .setReportSpeedOrPace(false)
+                .build(context);
+
+        assertEquals("9:14", formatter.getSpeedParts(Speed.of(3.34)).first);
+        assertEquals("min/NM", formatter.getSpeedParts(Speed.zero()).second);
     }
 
     @Test
@@ -67,6 +78,18 @@ public class SpeedFormatterTest {
 
         assertEquals("7.5", formatter.getSpeedParts(Speed.of(3.34)).first);
         assertEquals("mph", formatter.getSpeedParts(Speed.zero()).second);
+    }
+
+    @Test
+    public void testGetSpeedParts_speed_nautical() {
+        SpeedFormatter formatter = SpeedFormatter.Builder()
+                .setDecimalCount(2)
+                .setUnit(UnitSystem.NAUTICAL_IMPERIAL)
+                .setReportSpeedOrPace(true)
+                .build(context);
+
+        assertEquals("6.5", formatter.getSpeedParts(Speed.of(3.34)).first);
+        assertEquals("knots", formatter.getSpeedParts(Speed.zero()).second);
     }
 
     @Test

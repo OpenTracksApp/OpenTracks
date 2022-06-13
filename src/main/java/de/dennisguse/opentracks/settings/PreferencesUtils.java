@@ -214,7 +214,6 @@ public class PreferencesUtils {
     //TODO Check if actually needed or can be superseeded by a flexible default in getUnit()
     public static void applyDefaultUnit() {
         if (getString(R.string.stats_units_key, "").equals("")) {
-
             if (!Locale.US.equals(Locale.getDefault())) {
                 setUnit(UnitSystem.METRIC);
             } else {
@@ -324,7 +323,7 @@ public class PreferencesUtils {
         UnitSystem unitSystem = getUnitSystem();
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
-                .setDecimalCount(0)
+                .setDecimalCount(1)
                 .setUnit(unitSystem)
                 .build(resources);
         for (int i = 0; i < values.length; i++) {
@@ -418,7 +417,7 @@ public class PreferencesUtils {
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setUnit(unitSystem)
-                .setDecimalCount(0)
+                .setDecimalCount(1)
                 .build(resources);
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);
@@ -434,6 +433,7 @@ public class PreferencesUtils {
                     }
                     break;
                 case IMPERIAL:
+                case NAUTICAL_IMPERIAL:
                     if (value == recordingDistanceIntervalDefault) {
                         entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
                     } else {
@@ -461,7 +461,7 @@ public class PreferencesUtils {
         UnitSystem unitSystem = getUnitSystem();
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
-                .setDecimalCount(0)
+                .setDecimalCount(1)
                 .setUnit(unitSystem)
                 .build(resources);
         for (int i = 0; i < entryValues.length; i++) {
@@ -478,6 +478,7 @@ public class PreferencesUtils {
                     }
                     break;
                 case IMPERIAL:
+                case NAUTICAL_IMPERIAL:
                     if (value == maxRecordingDistanceDefault) {
                         entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
                     } else {
@@ -533,7 +534,7 @@ public class PreferencesUtils {
         UnitSystem unitSystem = getUnitSystem();
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
-                .setDecimalCount(0)
+                .setDecimalCount(1)
                 .setUnit(unitSystem)
                 .build(resources);
 
@@ -555,6 +556,7 @@ public class PreferencesUtils {
                     }
                     break;
                 case IMPERIAL:
+                case NAUTICAL_IMPERIAL:
                     if (value == recordingGPSAccuracyDefault) {
                         entries[i] = resources.getString(R.string.value_integer_feet_recommended, (int) distance.toFT());
                     } else if (value == recordingGPSAccuracyExcellent) {
@@ -604,6 +606,14 @@ public class PreferencesUtils {
                         entries[i] = resources.getString(R.string.value_float_mile_hour_recommended, valueMPH);
                     } else {
                         entries[i] = resources.getString(R.string.value_float_mile_hour, valueMPH);
+                    }
+                    break;
+                case NAUTICAL_IMPERIAL:
+                    double valueKnots = Speed.ofKMH(value).toKnots();
+                    if (value == idleSpeedDefault) {
+                        entries[i] = resources.getString(R.string.value_float_knots_recommended, valueKnots);
+                    } else {
+                        entries[i] = resources.getString(R.string.value_float_knots, valueKnots);
                     }
                     break;
                 default:

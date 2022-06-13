@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 
 import de.dennisguse.opentracks.settings.UnitSystem;
 
+//TODO Parametrized tests
 @RunWith(AndroidJUnit4.class)
 public class DistanceFormatterTest {
 
@@ -41,5 +42,18 @@ public class DistanceFormatterTest {
         assertEquals("3.11 mi", formatter.formatDistance(Distance.of(5000)));
         // A small number in imperial
         assertEquals("328.08 ft", formatter.formatDistance(Distance.of(100)));
+    }
+
+    @Test
+    public void testFormatDistance_nautical() {
+        DistanceFormatter formatter = DistanceFormatter.Builder()
+                .setDecimalCount(2)
+                .setUnit(UnitSystem.NAUTICAL_IMPERIAL)
+                .build(context);
+
+        // A large number in nautical
+        assertEquals("2.70 NM", formatter.formatDistance(Distance.of(5000)));
+        // A small number in nautical
+        assertEquals("0.05 NM", formatter.formatDistance(Distance.of(100)));
     }
 }

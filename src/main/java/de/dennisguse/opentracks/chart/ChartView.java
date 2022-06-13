@@ -203,6 +203,7 @@ public class ChartView extends View {
                 new int[]{5, 10, 25, 50, 100, 250, 500, 1000, 2500, 5000},
                 R.string.description_altitude_metric,
                 R.string.description_altitude_imperial,
+                R.string.description_altitude_imperial,
                 R.color.chart_altitude_fill,
                 R.color.chart_altitude_border,
                 fontSizeSmall,
@@ -224,6 +225,7 @@ public class ChartView extends View {
                 new int[]{1, 5, 10, 20, 50, 100},
                 R.string.description_speed_metric,
                 R.string.description_speed_imperial,
+                R.string.description_speed_nautical,
                 R.color.chart_speed_fill,
                 R.color.chart_speed_border,
                 fontSizeSmall,
@@ -246,6 +248,7 @@ public class ChartView extends View {
                 new int[]{1, 2, 5, 10, 15, 20, 30, 60, 120},
                 R.string.description_pace_metric,
                 R.string.description_pace_imperial,
+                R.string.description_pace_nautical,
                 R.color.chart_pace_fill,
                 R.color.chart_pace_border,
                 fontSizeSmall,
@@ -266,6 +269,7 @@ public class ChartView extends View {
                 0,
                 Integer.MAX_VALUE,
                 new int[]{25, 50},
+                R.string.description_sensor_heart_rate,
                 R.string.description_sensor_heart_rate,
                 R.string.description_sensor_heart_rate,
                 R.color.chart_heart_rate_fill,
@@ -289,6 +293,7 @@ public class ChartView extends View {
                 new int[]{5, 10, 25, 50},
                 R.string.description_sensor_cadence,
                 R.string.description_sensor_cadence,
+                R.string.description_sensor_cadence,
                 R.color.chart_cadence_fill,
                 R.color.chart_cadence_border,
                 fontSizeSmall,
@@ -307,6 +312,7 @@ public class ChartView extends View {
                 0,
                 1000,
                 new int[]{5, 50, 100, 200},
+                R.string.description_sensor_power,
                 R.string.description_sensor_power,
                 R.string.description_sensor_power,
                 R.color.chart_power_fill,
@@ -732,6 +738,8 @@ public class ChartView extends View {
                     return context.getString(R.string.unit_kilometer);
                 case IMPERIAL:
                     return context.getString(R.string.unit_mile);
+                case NAUTICAL_IMPERIAL:
+                    return context.getString(R.string.unit_nautical_mile);
                 default:
                     throw new RuntimeException("Not implemented");
             }

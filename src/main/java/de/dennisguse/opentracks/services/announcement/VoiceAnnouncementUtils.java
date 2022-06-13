@@ -57,6 +57,13 @@ class VoiceAnnouncementUtils {
                 unitDistanceTTS = "mile";
                 unitSpeedTTS = "mile per hour";
                 break;
+            case NAUTICAL_IMPERIAL:
+                perUnitStringId = R.string.voice_per_nautical_mile;
+                distanceId = R.plurals.voiceDistanceNauticalMiles;
+                speedId = R.plurals.voiceSpeedMKnots;
+                unitDistanceTTS = "nautical mile";
+                unitSpeedTTS = "knots";
+                break;
             default:
                 throw new RuntimeException("Not implemented");
         }
