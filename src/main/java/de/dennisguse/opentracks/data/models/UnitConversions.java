@@ -53,6 +53,9 @@ public class UnitConversions {
     public static final double M_TO_MI = M_TO_KM * KM_TO_MI;
     // multiplication factor to convert meters to feet
     public static final double M_TO_FT = M_TO_MI * MI_TO_FT;
+    public static final double NAUTICAL_MILE_TO_M = 1852.0;
+    public static final double M_TO_NAUTICAL_MILE = 1 / NAUTICAL_MILE_TO_M;
+    public static final double KM_TO_NAUTICAL_MILE = 1000 * M_TO_NAUTICAL_MILE;
     // multiplication factor to convert meters per second to kilometers per hour
     public static final double MPS_TO_KMH = M_TO_KM / (S_TO_MIN * MIN_TO_HR);
     // multiplication factor to convert miles to km

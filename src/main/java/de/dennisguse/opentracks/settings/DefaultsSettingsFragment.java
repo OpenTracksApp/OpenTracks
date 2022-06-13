@@ -74,6 +74,7 @@ public class DefaultsSettingsFragment extends PreferenceFragmentCompat implement
                 entriesId = R.array.stats_rate_metric_options;
                 break;
             case IMPERIAL:
+            case NAUTICAL_IMPERIAL:
                 entriesId = R.array.stats_rate_imperial_options;
                 break;
             default:

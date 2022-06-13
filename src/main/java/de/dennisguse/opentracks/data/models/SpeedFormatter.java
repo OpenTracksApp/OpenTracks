@@ -47,6 +47,9 @@ public class SpeedFormatter {
             case IMPERIAL:
                 unitId = reportSpeedOrPace ? R.string.unit_mile_per_hour : R.string.unit_minute_per_mile;
                 break;
+            case NAUTICAL_IMPERIAL:
+                unitId = reportSpeedOrPace ? R.string.unit_knots : R.string.unit_minute_per_nautical_mile;
+                break;
             default:
                 throw new RuntimeException("Not implemented");
         }

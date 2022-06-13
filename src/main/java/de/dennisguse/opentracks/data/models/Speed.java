@@ -93,6 +93,10 @@ public class Speed {
         return toKMH() * UnitConversions.KM_TO_MI;
     }
 
+    public double toKnots() {
+        return toKMH() * UnitConversions.KM_TO_NAUTICAL_MILE;
+    }
+
     public Duration toPace(UnitSystem unitSystem) {
         if (isZero()) {
             return Duration.ofSeconds(0);
@@ -105,6 +109,9 @@ public class Speed {
                 break;
             case IMPERIAL:
                 distance *= UnitConversions.M_TO_MI;
+                break;
+            case NAUTICAL_IMPERIAL:
+                distance *= UnitConversions.M_TO_NAUTICAL_MILE;
                 break;
             default:
                 throw new RuntimeException("Not implemented");
@@ -119,6 +126,8 @@ public class Speed {
                 return toKMH();
             case IMPERIAL:
                 return toMPH();
+            case NAUTICAL_IMPERIAL:
+                return toKnots();
             default:
                 throw new RuntimeException("Not implemented");
         }

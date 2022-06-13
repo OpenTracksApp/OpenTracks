@@ -29,6 +29,10 @@ public class Distance {
         return of(distance_mile * UnitConversions.MI_TO_M);
     }
 
+    public static Distance ofNauticalMile(double distance_mile) {
+        return of(distance_mile * UnitConversions.NAUTICAL_MILE_TO_M);
+    }
+
     public static Distance ofKilometer(double distance_km) {
         return of(distance_km * UnitConversions.KM_TO_M);
     }
@@ -51,6 +55,8 @@ public class Distance {
                 return Distance.ofKilometer(1);
             case IMPERIAL:
                 return Distance.ofMile(1);
+            case NAUTICAL_IMPERIAL:
+                return Distance.ofNauticalMile(1);
             default:
                 throw new RuntimeException("Not implemented");
         }
@@ -114,12 +120,18 @@ public class Distance {
         return toKM() * UnitConversions.KM_TO_MI;
     }
 
+    public double toNauticalMiles() {
+        return toKM() * UnitConversions.KM_TO_NAUTICAL_MILE;
+    }
+
     public double toKM_Miles(UnitSystem unitSystem) {
         switch (unitSystem) {
             case METRIC:
                 return toKM();
             case IMPERIAL:
                 return toMI();
+            case NAUTICAL_IMPERIAL:
+                return toNauticalMiles();
             default:
                 throw new RuntimeException("Not implemented");
         }
@@ -129,6 +141,7 @@ public class Distance {
         switch (unitSystem) {
             case METRIC:
                 return toM();
+            case NAUTICAL_IMPERIAL:
             case IMPERIAL:
                 return toFT();
             default:

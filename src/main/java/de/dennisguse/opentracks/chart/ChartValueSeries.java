@@ -44,6 +44,7 @@ abstract class ChartValueSeries {
     private final int[] intervalValues;
     private final int metricTitleId;
     private final int imperialTitleId;
+    private final int nauticalTitleId;
     private final Paint fillPaint;
     private final Paint strokePaint;
     private final Paint titlePaint;
@@ -57,24 +58,13 @@ abstract class ChartValueSeries {
     private int maxMarkerValue = interval * ChartView.Y_AXIS_INTERVALS;
     private boolean enabled = true;
 
-    /**
-     * Constructor.
-     *
-     * @param context         the context
-     * @param absoluteMin     the absolute min value
-     * @param absoluteMax     the absolute max value
-     * @param intervalValues  the list of interval values
-     * @param metricTitleId   the metric title id
-     * @param imperialTitleId the imperial title id
-     * @param fillColor       the fill color
-     * @param strokeColor     the stroke color
-     */
-    ChartValueSeries(Context context, int absoluteMin, int absoluteMax, int[] intervalValues, int metricTitleId, int imperialTitleId, int fillColor, int strokeColor, int fontSizeSmall, int fontSizeMedium) {
+    ChartValueSeries(Context context, int absoluteMin, int absoluteMax, int[] intervalValues, int metricTitleId, int imperialTitleId, int nauticalTitleId, int fillColor, int strokeColor, int fontSizeSmall, int fontSizeMedium) {
         this.absoluteMin = absoluteMin;
         this.absoluteMax = absoluteMax;
         this.intervalValues = intervalValues;
         this.metricTitleId = metricTitleId;
         this.imperialTitleId = imperialTitleId;
+        this.nauticalTitleId = nauticalTitleId;
 
         fillPaint = new Paint();
         fillPaint.setStyle(Style.FILL);
@@ -224,39 +214,27 @@ abstract class ChartValueSeries {
                 return metricTitleId;
             case IMPERIAL:
                 return imperialTitleId;
+            case NAUTICAL_IMPERIAL:
+                return nauticalTitleId;
             default:
                 throw new RuntimeException("Not implemented");
         }
     }
 
-    /**
-     * Gets the title paint.
-     */
     Paint getTitlePaint() {
         return titlePaint;
     }
 
-    /**
-     * Gets the marker paint.
-     */
     Paint getMarkerPaint() {
         return markerPaint;
     }
 
-    /**
-     * Gets the largest marker.
-     */
     String getLargestMarker() {
         String minMarker = numberFormat.format(getMinMarkerValue());
         String maxMarker = numberFormat.format(getMaxMarkerValue());
         return minMarker.length() >= maxMarker.length() ? minMarker : maxMarker;
     }
 
-    /**
-     * Formats a marker value.
-     *
-     * @param value the value
-     */
     String formatMarker(int value) {
         return numberFormat.format(value);
     }
