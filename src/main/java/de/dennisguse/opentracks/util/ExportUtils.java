@@ -85,12 +85,6 @@ public class ExportUtils {
         }
     }
 
-    public static boolean isExportFileExists(UUID uuuid, String trackFileFormatExtension, List<String> filesName) {
-        String word = uuuid.toString().substring(0, 8) + ".*\\." + trackFileFormatExtension;
-        Pattern pattern = Pattern.compile(word);
-        return filesName.stream().anyMatch(w -> pattern.matcher(w).matches());
-    }
-
     public static List<String> getAllFiles(Context context, Uri directoryUri) {
         List<String> fileNames = new ArrayList<>();
         final ContentResolver resolver = context.getContentResolver();

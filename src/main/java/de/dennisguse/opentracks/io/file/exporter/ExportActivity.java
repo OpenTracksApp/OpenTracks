@@ -39,6 +39,7 @@ import de.dennisguse.opentracks.data.tables.TracksColumns;
 import de.dennisguse.opentracks.databinding.ExportActivityBinding;
 import de.dennisguse.opentracks.io.file.ErrorListDialog;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.ExportUtils;
 import de.dennisguse.opentracks.util.FileUtils;
 
@@ -234,7 +235,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
      * @param conflictResolution conflict resolution to be applied if needed.
      */
     private void export(Track track, int conflictResolution) {
-        boolean fileExists = ExportUtils.isExportFileExists(track.getUuid(), trackFileFormat.getExtension(), directoryFiles);
+        boolean fileExists = exportFileExists(track);
 
         if (fileExists && conflictResolution == CONFLICT_NONE) {
             conflict(track);
@@ -248,6 +249,11 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
 
     private void export(Track track) {
         export(track, autoConflict);
+    }
+
+    private boolean exportFileExists(Track track) {
+        String filename = PreferencesUtils.getTrackFileformatGenerator().format(track, trackFileFormat);
+        return directoryFiles.stream().anyMatch(filename::equals);
     }
 
     private void setConflictVisibility(int visibility) {
@@ -315,7 +321,7 @@ public class ExportActivity extends FragmentActivity implements ExportServiceRes
     public void onExportSuccess(Track.Id trackId) {
         Track track = contentProviderUtils.getTrack(trackId);
 
-        if (ExportUtils.isExportFileExists(track.getUuid(), trackFileFormat.getExtension(), directoryFiles)) {
+        if (exportFileExists(track)) {
             trackExportOverwrittenCount++;
         } else {
             trackExportSuccessCount++;
