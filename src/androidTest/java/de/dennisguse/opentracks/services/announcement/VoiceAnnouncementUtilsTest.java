@@ -68,6 +68,54 @@ public class VoiceAnnouncementUtilsTest {
     }
 
     @Test
+    public void getAnnouncement_metric_speed_rounding_check() {
+        TrackStatistics stats = new TrackStatistics();
+        stats.setTotalDistance(Distance.of(20000));
+        stats.setTotalTime(Duration.ofHours(1).plusMinutes(5).plusSeconds(10));
+        stats.setMovingTime(Duration.ofHours(1).plusSeconds(1));
+        stats.setMaxSpeed(Speed.of(100));
+        stats.setTotalAltitudeGain(6000f);
+
+        // when
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.METRIC, true, null, null).toString();
+
+        // then
+        assertEquals("Total distance 20.00 kilometers. 1 hour 1 second. Speed 20.0 kilometers per hour.", announcement);
+    }
+
+    @Test
+    public void getAnnouncement_metric_distance_rounding_check() {
+        TrackStatistics stats = new TrackStatistics();
+        stats.setTotalDistance(Distance.of(19999));
+        stats.setTotalTime(Duration.ofHours(1).plusMinutes(5).plusSeconds(10));
+        stats.setMovingTime(Duration.ofHours(1));
+        stats.setMaxSpeed(Speed.of(100));
+        stats.setTotalAltitudeGain(6000f);
+
+        // when
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.METRIC, true, null, null).toString();
+
+        // then
+        assertEquals("Total distance 20.00 kilometers. 1 hour. Speed 20.0 kilometers per hour.", announcement);
+    }
+
+    @Test
+    public void getAnnouncement_metric_distance_rounding_check_two() {
+        TrackStatistics stats = new TrackStatistics();
+        stats.setTotalDistance(Distance.of(19990));
+        stats.setTotalTime(Duration.ofHours(1).plusMinutes(5).plusSeconds(10));
+        stats.setMovingTime(Duration.ofHours(1));
+        stats.setMaxSpeed(Speed.of(100));
+        stats.setTotalAltitudeGain(6000f);
+
+        // when
+        String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.METRIC, true, null, null).toString();
+
+        // then
+        assertEquals("Total distance 19.99 kilometers. 1 hour. Speed 20.0 kilometers per hour.", announcement);
+    }
+
+    @Test
     public void getAnnouncement_withInterval_metric_speed() {
         // given
         int numberOfPoints = 1000;
