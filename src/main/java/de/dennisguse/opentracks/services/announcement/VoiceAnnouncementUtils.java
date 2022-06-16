@@ -65,12 +65,9 @@ class VoiceAnnouncementUtils {
 
         if (shouldVoiceAnnounceTotalDistance()) {
             builder.append(context.getString(R.string.total_distance));
-            long distanceIntegerPart = (long) distanceInUnit;
-            // Extract the decimal part
-            String distanceFractionalPart = String.format("%.2f", (distanceInUnit - distanceIntegerPart)).substring(2);
             // Units should always be english singular for TTS.
             // See https://developer.android.com/reference/android/text/style/TtsSpan?hl=en#TYPE_MEASURE
-            appendDecimalUnit(builder, context.getResources().getQuantityString(distanceId, getQuantityCount(distanceInUnit), distanceInUnit), distanceIntegerPart, distanceFractionalPart, unitDistanceTTS);
+            appendDecimalUnit(builder, context.getResources().getQuantityString(distanceId, getQuantityCount(distanceInUnit), distanceInUnit), distanceInUnit, 2, unitDistanceTTS);
             // Punctuation helps introduce natural pauses in TTS
             builder.append(".");
         }
@@ -88,27 +85,17 @@ class VoiceAnnouncementUtils {
         if (isReportSpeed) {
             if (shouldVoiceAnnounceAverageSpeedPace()) {
                 double speedInUnit = distancePerTime.to(unitSystem);
-
                 builder.append(" ")
                         .append(context.getString(R.string.speed));
-                long speedIntegerPart = (long) speedInUnit;
-                // Extract the decimal part
-                String speedFractionalPart = String.format("%.1f", (speedInUnit - speedIntegerPart)).substring(2);
-                appendDecimalUnit(builder, context.getResources().getQuantityString(speedId, getQuantityCount(speedInUnit), speedInUnit), speedIntegerPart, speedFractionalPart, unitSpeedTTS);
+                appendDecimalUnit(builder, context.getResources().getQuantityString(speedId, getQuantityCount(speedInUnit), speedInUnit), speedInUnit, 1, unitSpeedTTS);
                 builder.append(".");
             }
-
             if (shouldVoiceAnnounceLapSpeedPace() && currentDistancePerTime != null) {
                 double currentDistancePerTimeInUnit = currentDistancePerTime.to(unitSystem);
-
                 if (currentDistancePerTimeInUnit > 0) {
-
                     builder.append(" ")
                             .append(context.getString(R.string.lap_speed));
-                    long currentDistanceIntegerPart = (long) currentDistancePerTimeInUnit;
-                    // Extract the decimal part
-                    String currentDistanceFractionalPart = String.format("%.1f", (currentDistancePerTimeInUnit - currentDistanceIntegerPart)).substring(2);
-                    appendDecimalUnit(builder, context.getResources().getQuantityString(speedId, getQuantityCount(currentDistancePerTimeInUnit), currentDistancePerTimeInUnit), currentDistanceIntegerPart, currentDistanceFractionalPart, unitSpeedTTS);
+                    appendDecimalUnit(builder, context.getResources().getQuantityString(speedId, getQuantityCount(currentDistancePerTimeInUnit), currentDistancePerTimeInUnit), currentDistancePerTimeInUnit, 1, unitSpeedTTS);
                     builder.append(".");
                 }
             }
@@ -164,26 +151,34 @@ class VoiceAnnouncementUtils {
         int seconds = (int) (duration.getSeconds() % 60);
 
         if (hours > 0) {
-            appendDecimalUnit(builder, context.getResources().getQuantityString(R.plurals.voiceHours, hours, hours), hours, null, "hour");
+            appendDecimalUnit(builder, context.getResources().getQuantityString(R.plurals.voiceHours, hours, hours), hours, 0, "hour");
         }
         if (minutes > 0) {
-            appendDecimalUnit(builder, context.getResources().getQuantityString(R.plurals.voiceMinutes, minutes, minutes), minutes, null, "minute");
+            appendDecimalUnit(builder, context.getResources().getQuantityString(R.plurals.voiceMinutes, minutes, minutes), minutes, 0, "minute");
         }
         if (seconds > 0 || duration.isZero()) {
-            appendDecimalUnit(builder, context.getResources().getQuantityString(R.plurals.voiceSeconds, seconds, seconds), seconds, null, "second");
+            appendDecimalUnit(builder, context.getResources().getQuantityString(R.plurals.voiceSeconds, seconds, seconds), seconds, 0, "second");
         }
     }
 
     /**
      * Speaks as: 98.14 [UNIT] - ninety eight point one four [UNIT with correct plural form]
+     *
+     * @param number The number to speak
+     * @param precision The number of decimal places to announce
      */
-    private static void appendDecimalUnit(@NonNull SpannableStringBuilder builder, @NonNull String localizedText, long integerPart, @Nullable String fractionalPart, @NonNull String unit) {
+    private static void appendDecimalUnit(@NonNull SpannableStringBuilder builder, @NonNull String localizedText, double number, int precision, @NonNull String unit) {
         TtsSpan.MeasureBuilder measureBuilder = new TtsSpan.MeasureBuilder()
                 .setUnit(unit);
 
-        if (fractionalPart == null) {
-            measureBuilder.setNumber(integerPart);
+        if (precision == 0) {
+            measureBuilder.setNumber((long)number);
         } else {
+            // Round before extracting integral and decimal parts
+            double number = Math.round(Math.pow(10, precision) * number) / Math.pow(10.0, precision);
+            long integerPart = (long) number;
+            // Extract the decimal part
+            String fractionalPart = String.format("%." + precision + "f", (number - integerPart)).substring(2);
             measureBuilder.setIntegerPart(integerPart)
                     .setFractionalPart(fractionalPart);
         }
