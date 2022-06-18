@@ -54,6 +54,6 @@ public class DistanceFormatterTest {
         // A large number in nautical
         assertEquals("2.70 NM", formatter.formatDistance(Distance.of(5000)));
         // A small number in nautical
-        assertEquals("0.05 NM", formatter.formatDistance(Distance.of(100)));
+        assertEquals("328.08 ft", formatter.formatDistance(Distance.of(100)));
     }
 }

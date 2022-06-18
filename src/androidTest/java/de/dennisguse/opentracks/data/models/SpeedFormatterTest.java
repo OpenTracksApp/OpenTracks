@@ -89,7 +89,7 @@ public class SpeedFormatterTest {
                 .build(context);
 
         assertEquals("6.5", formatter.getSpeedParts(Speed.of(3.34)).first);
-        assertEquals("knots", formatter.getSpeedParts(Speed.zero()).second);
+        assertEquals("kn", formatter.getSpeedParts(Speed.zero()).second);
     }
 
     @Test

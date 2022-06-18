@@ -47,6 +47,7 @@ public class ChartValueSeriesTest {
                 new int[]{1, 100, 1000},
                 R.string.description_altitude_metric,
                 R.string.description_altitude_imperial,
+                R.string.description_altitude_imperial,
                 R.color.chart_altitude_fill,
                 R.color.chart_altitude_border,
                 15,
