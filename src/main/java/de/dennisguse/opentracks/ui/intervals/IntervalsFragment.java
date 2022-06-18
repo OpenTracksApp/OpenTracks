@@ -107,16 +107,16 @@ public class IntervalsFragment extends Fragment {
         // TODO handle empty view: before we did viewBinding.intervalList.setEmptyView(viewBinding.intervalListEmptyView);
         viewBinding.intervalList.setAdapter(adapter);
 
-        final DistanceFormatter formatter = DistanceFormatter.Builder()
-                .setDecimalCount(0)
-                .setUnit(unitSystem)
-                .build(getContext());
-
         intervalsAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, IntervalStatisticsModel.IntervalOption.values()) {
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
                 TextView v = (TextView) super.getView(position, convertView, parent);
+
+                DistanceFormatter formatter = DistanceFormatter.Builder()
+                        .setDecimalCount(0)
+                        .setUnit(unitSystem)
+                        .build(getContext());
 
                 IntervalStatisticsModel.IntervalOption option = getItem(position);
                 String stringValue = formatter.formatDistance(option.getDistance(unitSystem));
