@@ -182,10 +182,10 @@ class VoiceAnnouncementUtils {
             measureBuilder.setNumber((long)number);
         } else {
             // Round before extracting integral and decimal parts
-            double number = Math.round(Math.pow(10, precision) * number) / Math.pow(10.0, precision);
-            long integerPart = (long) number;
+            double roundedNumber = Math.round(Math.pow(10, precision) * number) / Math.pow(10.0, precision);
+            long integerPart = (long) roundedNumber;
             // Extract the decimal part
-            String fractionalPart = String.format("%." + precision + "f", (number - integerPart)).substring(2);
+            String fractionalPart = String.format("%." + precision + "f", (roundedNumber - integerPart)).substring(2);
             measureBuilder.setIntegerPart(integerPart)
                     .setFractionalPart(fractionalPart);
         }
