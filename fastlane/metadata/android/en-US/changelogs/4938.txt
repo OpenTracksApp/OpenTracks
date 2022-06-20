@@ -1,0 +1,10 @@
+v4.0.2: OpenTracks
+
+Changes:
+- Add nautical miles 
+- Settings can be reset while recording
+
+Bugfix:
+- Voice announcement rounding
+- Chart: elevation was weirdly smoothed
+- Export was not checking if file exists
