@@ -188,9 +188,9 @@ public class ChartFragment extends Fragment implements TrackDataHub.Listener {
         }
     }
 
-    public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics, Speed smoothedSpeed) {
+    public void onSampledInTrackPoint(@NonNull TrackPoint trackPoint, @NonNull TrackStatistics trackStatistics) {
         if (isResumed()) {
-            ChartPoint point = new ChartPoint(trackStatistics, trackPoint, smoothedSpeed, chartByDistance, viewBinding.chartView.getUnitSystem());
+            ChartPoint point = new ChartPoint(trackStatistics, trackPoint, trackPoint.getSpeed(), chartByDistance, viewBinding.chartView.getUnitSystem());
             pendingPoints.add(point);
         }
     }

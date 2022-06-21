@@ -19,16 +19,15 @@ package de.dennisguse.opentracks.stats;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.VisibleForTesting;
 
 import java.time.Duration;
 import java.util.List;
 
-import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.data.models.UnitConversions;
 
 /**
  * Updater for {@link TrackStatistics}.
@@ -41,23 +40,15 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
  */
 public class TrackStatisticsUpdater {
 
-    /**
-     * The number of speed reading to smooth to get a somewhat accurate signal.
-     */
-    @VisibleForTesting
-    private static final int SPEED_SMOOTHING_FACTOR = 25;
-
     private static final String TAG = TrackStatisticsUpdater.class.getSimpleName();
     /**
      * Ignore any acceleration faster than this.
      * Will ignore any speeds that imply acceleration greater than 2g's
-     * 2g = 19.6 m/s^2 = 0.0002 m/ms^2 = 0.02 m/(m*ms)
      */
-    private static final double MAX_ACCELERATION = 0.02;
+    private static final double SPEED_MAX_ACCELERATION = 2 * 9.81;
 
     private final TrackStatistics trackStatistics;
 
-    private final SpeedRingBuffer speedBuffer;
     private float averageHeartRateBPM;
     private Duration totalHeartRateDuration = Duration.ZERO;
 
@@ -79,15 +70,12 @@ public class TrackStatisticsUpdater {
         this.trackStatistics = trackStatistics;
         this.currentSegment = new TrackStatistics();
 
-        speedBuffer = new SpeedRingBuffer(SPEED_SMOOTHING_FACTOR);
         resetAverageHeartRate();
     }
 
     public TrackStatisticsUpdater(TrackStatisticsUpdater toCopy) {
         this.currentSegment = new TrackStatistics(toCopy.currentSegment);
         this.trackStatistics = new TrackStatistics(toCopy.trackStatistics);
-
-        this.speedBuffer = new SpeedRingBuffer(toCopy.speedBuffer);
 
         this.lastTrackPoint = toCopy.lastTrackPoint;
         resetAverageHeartRate();
@@ -165,10 +153,7 @@ public class TrackStatisticsUpdater {
 
             // Update max speed
             updateSpeed(trackPoint, lastTrackPoint);
-        } else {
-            speedBuffer.reset();
         }
-
 
         if (trackPoint.isSegmentEnd()) {
             reset(trackPoint);
@@ -185,7 +170,6 @@ public class TrackStatisticsUpdater {
         currentSegment.reset(trackPoint.getTime());
 
         lastTrackPoint = null;
-        speedBuffer.reset();
         resetAverageHeartRate();
     }
 
@@ -194,22 +178,14 @@ public class TrackStatisticsUpdater {
         totalHeartRateDuration = Duration.ZERO;
     }
 
-    public Speed getSmoothedSpeed() {
-        return speedBuffer.getAverage();
-    }
-
     /**
      * Updates a speed reading while assuming the user is moving.
      */
-    @VisibleForTesting
     private void updateSpeed(@NonNull TrackPoint trackPoint, @NonNull TrackPoint lastTrackPoint) {
-        if (!trackPoint.isMoving()) {
-            speedBuffer.reset();
-        } else if (isValidSpeed(trackPoint, lastTrackPoint)) {
-            speedBuffer.setNext(trackPoint.getSpeed());
-            Speed average = speedBuffer.getAverage();
-            if (average.greaterThan(currentSegment.getMaxSpeed())) {
-                currentSegment.setMaxSpeed(average);
+        if (isValidSpeed(trackPoint, lastTrackPoint)) {
+            Speed currentSpeed = trackPoint.getSpeed();
+            if (currentSpeed.greaterThan(currentSegment.getMaxSpeed())) {
+                currentSegment.setMaxSpeed(currentSpeed);
             }
         } else {
             Log.d(TAG, "Invalid speed. speed: " + trackPoint.getSpeed() + " lastLocationSpeed: " + lastTrackPoint.getSpeed());
@@ -217,30 +193,13 @@ public class TrackStatisticsUpdater {
     }
 
     private boolean isValidSpeed(@NonNull TrackPoint trackPoint, @NonNull TrackPoint lastTrackPoint) {
-        // There are a lot of noisy speed readings. Do the cheapest checks first, most expensive last.
-        if (trackPoint.getSpeed().isZero()) {
-            return false;
-        }
-
+        // See if the speed seems physically likely. Ignore any speeds that imply acceleration greater than 2g.
         Duration timeDifference = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
-        Speed maxAcceleration = Speed.of(MAX_ACCELERATION * timeDifference.toMillis());
-        {
-            // See if the speed seems physically likely. Ignore any speeds that imply acceleration greater than 2g.
-            Speed speedDifference = Speed.absDiff(lastTrackPoint.getSpeed(), trackPoint.getSpeed());
-            if (speedDifference.greaterThan(maxAcceleration)) {
-                return false;
-            }
-        }
+        Speed maxSpeedDifference = Speed.of(Distance.of(SPEED_MAX_ACCELERATION), Duration.ofMillis(1000))
+                .mul(timeDifference.toMillis() / UnitConversions.S_TO_MS);
 
-        // Only check if the speed buffer is full. Check that the speed is less than 10X the smoothed average and the speed difference doesn't imply 2g acceleration.
-        if (speedBuffer.isFull()) {
-            Speed average = speedBuffer.getAverage();
-            Speed speedDifference = Speed.absDiff(average, trackPoint.getSpeed());
-
-            return trackPoint.getSpeed().lessThan(average.mul(10)) && speedDifference.lessThan(maxAcceleration);
-        }
-
-        return true;
+        Speed speedDifference = Speed.absDiff(lastTrackPoint.getSpeed(), trackPoint.getSpeed());
+        return speedDifference.lessThan(maxSpeedDifference);
     }
 
     @NonNull
