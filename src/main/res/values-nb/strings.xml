@@ -206,10 +206,10 @@ limitations under the License.
 \n%1$s</string>
     <string name="share_track_subject">Jeg vil dele et spor med deg</string>
     <!-- Stats -->
-    <string name="stats_average_moving_pace">Gjennomsnittlig forflytningstempo</string>
-    <string name="stats_average_moving_speed">Gjennomsnittlig forflytningshastighet</string>
-    <string name="stats_average_pace">Gjennomsnittlig tempo</string>
-    <string name="stats_average_speed">Gjennomsnittlig hastighet</string>
+    <string name="stats_average_moving_pace">Gj. forflytningstempo</string>
+    <string name="stats_average_moving_speed">Gj. forflytningshastighet</string>
+    <string name="stats_average_pace">Gj. tempo</string>
+    <string name="stats_average_speed">Gj. hastighet</string>
     <string name="stats_altitude">Høyde</string>
     <string name="stats_fastest_pace">Raskeste tempo</string>
     <string name="stats_gain">Total stigning</string>
@@ -449,11 +449,11 @@ limitations under the License.
     <string name="generic_open_track">Åpne spor</string>
     <string name="import_progress_summary_exists_msg">Finnes allerede</string>
     <string name="import_progress_summary_errors_msg">Feil</string>
-    <string name="sensor_state_cadence_avg">Gjennomsnittlig kadens</string>
+    <string name="sensor_state_cadence_avg">Gj. kadens</string>
     <string name="sensor_state_cadence_max">Maks kadens</string>
-    <string name="sensor_state_heart_rate_avg">Gjennomsnittlig puls</string>
+    <string name="sensor_state_heart_rate_avg">Gj. puls</string>
     <string name="sensor_state_heart_rate_max">Maks puls</string>
-    <string name="sensor_state_power_avg">Gjennomsnittlig kraft</string>
+    <string name="sensor_state_power_avg">Gj. kraft</string>
     <string name="settings_sensor_wheel_circumference">Hjulomkrets (mm)</string>
     <string name="track_distance_notification">Distanse: %1$s</string>
     <string name="track_speed_notification">Hastighet: %1$s</string>
@@ -575,4 +575,28 @@ limitations under the License.
     <string name="show_on_map_format_ask">Spør</string>
     <string name="show_on_dashboard">OpenTracks Dashboard API</string>
     <string name="always">Alltid</string>
+    <string name="settings_announcements_average_heart_rate">Gjennomsnittlig puls</string>
+    <string name="settings_announcements_lap_heart_rate">Runde-puls</string>
+    <string name="settings_announcements_average_speed_pace">Gjennomsnittlig hastighet/tempo</string>
+    <string name="image_discard">Forkast</string>
+    <string name="settings_announcements_lap_speed_pace">Runde-hastighet/tempo</string>
+    <string name="description_pace_nautical">Tempo (min/NM)</string>
+    <string name="description_speed_nautical">Hastighet (knop)</string>
+    <string name="settings_stats_units_nautical">Nautisk (NM, ft)</string>
+    <string name="track_discarding">Forkaster spor</string>
+    <string name="unit_nautical_mile">NM</string>
+    <string name="unit_knots">kn</string>
+    <string name="unit_minute_per_nautical_mile">min/NM</string>
+    <string name="value_integer_knots">%1$d knop</string>
+    <string name="value_float_knots">%1$.1f knop</string>
+    <string name="value_float_knots_recommended">%1$.1f knop (anbefales)</string>
+    <string name="voice_per_nautical_mile">per nautisk mil</string>
+    <plurals name="voiceSpeedMKnots">
+        <item quantity="one">1 knop</item>
+        <item quantity="other">%1$.1f knop</item>
+    </plurals>
+    <plurals name="voiceDistanceNauticalMiles">
+        <item quantity="one">1 nautisk mil</item>
+        <item quantity="other">%1$.2f nautiske mil</item>
+    </plurals>
 </resources>
