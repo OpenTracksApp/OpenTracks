@@ -146,13 +146,10 @@ public class GPXTrackExporter implements TrackExporter {
 
                 switch (trackPoint.getType()) {
                     case SEGMENT_START_MANUAL:
-                        if (wroteSegment) writeCloseSegment();
-                        writeOpenSegment();
-                        wroteSegment = true;
                         Log.i(TAG, "Exporting " + TrackPoint.Type.SEGMENT_START_MANUAL.name() + " is not supported.");
                         break;
                     case SEGMENT_END_MANUAL:
-                        writeCloseSegment();
+                        if (wroteSegment) writeCloseSegment();
                         wroteSegment = false;
                         Log.i(TAG, "Exporting " + TrackPoint.Type.SEGMENT_END_MANUAL.name() + " is not supported.");
                         break;
