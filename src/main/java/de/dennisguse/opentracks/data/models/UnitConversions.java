@@ -24,6 +24,7 @@ public class UnitConversions {
 
     // Time //TODO Use Duration
     // multiplication factor to convert seconds to milliseconds
+    @Deprecated
     public static final long S_TO_MS = 1000;
 
     // multiplication factor to convert milliseconds to seconds

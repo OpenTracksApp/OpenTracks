@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.List;
 
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.models.Altitude;
@@ -243,6 +244,70 @@ public class TrackStatisticsUpdaterTest {
     @Ignore("TODO: create a concept ont to compute speed from GPS and sensor")
     @Test
     public void addTrackPoint_speed_from_GPS_moving_and_sensor_speed() {
+    }
+
+    @Test
+    public void addTrackPoint_maxSpeed_ignore_above_acceleration() {
+        TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
+        assertEquals(Speed.of(0f), subject.getTrackStatistics().getMaxSpeed());
+
+        subject.addTrackPoint(new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(0)));
+        assertEquals(Speed.of(0f), subject.getTrackStatistics().getMaxSpeed());
+
+        // Ignore as we set max speed if two consecutive trackpoints were considered moving
+        subject.addTrackPoint(new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(1))
+                .setSpeed(Speed.of(1f)));
+        assertEquals(Speed.of(0f), subject.getTrackStatistics().getMaxSpeed());
+
+        // Update max speed
+        subject.addTrackPoint(new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(2))
+                .setSpeed(Speed.of(1f)));
+        assertEquals(Speed.of(1f), subject.getTrackStatistics().getMaxSpeed());
+
+        // Update max speed
+        subject.addTrackPoint(new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(12))
+                .setSpeed(Speed.of(50f)));
+        assertEquals(Speed.of(50f), subject.getTrackStatistics().getMaxSpeed());
+
+        // Ignore; we were getting slower
+        subject.addTrackPoint(new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(13))
+                .setSpeed(Speed.of(5f)));
+        assertEquals(Speed.of(50f), subject.getTrackStatistics().getMaxSpeed());
+
+        // Ignore acceleration above 2g
+        subject.addTrackPoint(new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(14))
+                .setSpeed(Speed.of(500f)));
+        assertEquals(Speed.of(50f), subject.getTrackStatistics().getMaxSpeed());
+
+    }
+
+    @Test
+    public void addTrackPoint_maxSpeed_multiple_segments() {
+        TrackStatisticsUpdater subject = new TrackStatisticsUpdater();
+        assertEquals(Speed.of(0f), subject.getTrackStatistics().getMaxSpeed());
+
+        subject.addTrackPoints(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(0)),
+                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(1))
+                        .setSpeed(Speed.of(2f)),
+                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(2))
+                        .setSpeed(Speed.of(2f)),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochSecond(4))
+        ));
+        assertEquals(Speed.of(2f), subject.getTrackStatistics().getMaxSpeed());
+
+        // when
+        subject.addTrackPoints(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.ofEpochSecond(5)),
+                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(6))
+                        .setSpeed(Speed.of(1f)),
+                new TrackPoint(0, 0, Altitude.WGS84.of(0), Instant.ofEpochSecond(7))
+                        .setSpeed(Speed.of(1f)),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.ofEpochSecond(8))
+        ));
+
+        // then
+        assertEquals(Speed.of(2f), subject.getTrackStatistics().getMaxSpeed());
     }
 
     @Test
