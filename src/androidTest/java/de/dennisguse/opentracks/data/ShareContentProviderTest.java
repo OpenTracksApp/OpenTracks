@@ -7,7 +7,6 @@ import android.util.Pair;
 
 import org.junit.Test;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import de.dennisguse.opentracks.data.models.Track;
@@ -24,10 +23,7 @@ public class ShareContentProviderTest {
 
     @Test
     public void testCreateAndParseURI_valid() {
-        Set<Track.Id> trackIds = new HashSet<>();
-        trackIds.add(new Track.Id(1));
-        trackIds.add(new Track.Id(3));
-        trackIds.add(new Track.Id(5));
+        Set<Track.Id> trackIds = Set.of(new Track.Id(1), new Track.Id(3), new Track.Id(5));
 
         Pair<Uri, String> shareURIandMIME = ShareContentProvider.createURI(trackIds, "filename.suffix", TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA);
 
@@ -36,9 +32,7 @@ public class ShareContentProviderTest {
 
     @Test
     public void testCreateURIescapeFilename() {
-        Set<Track.Id> trackIds = new HashSet<>();
-        trackIds.add(new Track.Id(1));
-        Pair<Uri, String> shareURIandMIME = ShareContentProvider.createURI(trackIds, "../../&1=1", TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA);
+        Pair<Uri, String> shareURIandMIME = ShareContentProvider.createURI(Set.of(new Track.Id(1)), "../../&1=1", TrackFileFormat.KML_WITH_TRACKDETAIL_AND_SENSORDATA);
 
         assertEquals(Uri.parse("content://de.dennisguse.opentracks.debug.content/tracks/KML_WITH_TRACKDETAIL_AND_SENSORDATA/1/..%2F..%2F%261%3D1"), shareURIandMIME.first);
     }

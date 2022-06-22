@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.tables.TracksColumns;
@@ -72,9 +73,7 @@ public class ShareContentProvider extends CustomContentProvider {
      * @return An URI for one file containing this tracks.
      */
     public static Pair<Uri, String> createURI(Track.Id trackId, String trackName, @NonNull TrackFileFormat trackFileFormat) {
-        Set<Track.Id> trackIds = new HashSet<>(1);
-        trackIds.add(trackId);
-        return createURI(trackIds, trackName, trackFileFormat);
+        return createURI(Set.of(trackId), trackName, trackFileFormat);
     }
 
     /**
@@ -108,11 +107,7 @@ public class ShareContentProvider extends CustomContentProvider {
 
         String[] uriTrackIds = uriPaths.get(2).split(TRACKID_DELIMITER);
 
-        Set<Track.Id> trackIds = new HashSet<>();
-        for (String uriTrackId : uriTrackIds) {
-            trackIds.add(new Track.Id(Long.parseLong(uriTrackId)));
-        }
-        return trackIds;
+        return Arrays.stream(uriTrackIds).map(uriTrackId -> new Track.Id(Long.parseLong(uriTrackId))).collect(Collectors.toSet());
     }
 
     /**
