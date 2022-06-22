@@ -25,14 +25,12 @@ import android.os.HandlerThread;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.dennisguse.opentracks.data.models.Altitude;
 import de.dennisguse.opentracks.data.models.Marker;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
