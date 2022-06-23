@@ -462,7 +462,7 @@ limitations under the License.
     <string name="permission_gps_failed">OpenTracks GPS kullanmak için izin gerektirir.</string>
     <string name="import_progress_summary_ok_msg">Dosyalar içe aktarıldı</string>
     <string name="settings_defaults_title">Varsayılan Birimler ve Etkinlik</string>
-    <string name="settings_ui_title">Kullanıcı arayüzü</string>
+    <string name="settings_ui_title">Kullanıcı Arayüzü</string>
     <string name="settings_default_trackfileformat">Dosya biçimini dışa aktarma/paylaşma</string>
     <string name="settings_export_filename_title">Dosya adının biçimi</string>
     <string name="settings_import_export_title">İçe/Dışa Aktar</string>
@@ -477,7 +477,7 @@ limitations under the License.
     <string name="settings_recording_keep_screen_on_while_recording_summary">Kayıt esnasında ekranı açık tutar.</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Kayıt esnasında tam ekranda sunar.</string>
     <string name="settings_recording_idle_speed_title">Boşta hız eşiği</string>
-    <string name="settings_night_mode_title">Kullanıcı Arayüzü Teması</string>
+    <string name="settings_night_mode_title">Kullanıcı arayüzü teması</string>
     <string name="settings_night_mode_option_system">Sistem</string>
     <string name="settings_night_mode_option_night">Gece</string>
     <string name="custom_layout_select_layout">Dizilim seçin</string>
@@ -487,8 +487,8 @@ limitations under the License.
     <string name="settings_layout_reset_done">Tüm dizilim ayarları varsayılan değerlere döndürüldü</string>
     <string name="settings_public_api_enabled_title">Genel API</string>
     <string name="settings_public_api_enabled_summary_on">Diğer yüklü uygulamalar kayıtları başlatabilir veya durdurabilir.</string>
-    <string name="settings_import_section">İçe aktar</string>
-    <string name="settings_export_section">Dışa aktar</string>
+    <string name="settings_import_section">İçe Aktarma</string>
+    <string name="settings_export_section">Dışa Aktarma</string>
     <string name="settings_prevent_reimport_tracks_title">Parçaların yeniden içe aktarılmasını önleme</string>
     <string name="stats_coordinates">Enlem/Boylam</string>
     <string name="stats_sensors_power">Güç</string>
@@ -571,4 +571,23 @@ limitations under the License.
     <string name="report_bug">Hata bildir</string>
     <string name="error_crash_title">%1$s çöktü</string>
     <string name="select_show_on_map_behavior">\"Haritada göster\" eylemini seçin</string>
+    <string name="settings_announcements_average_heart_rate">Ortalama kalp atış hızı</string>
+    <string name="description_pace_nautical">Tempo (dk/NM)</string>
+    <string name="description_speed_nautical">Hız (düğüm)</string>
+    <string name="settings_announcements_average_speed_pace">Ortalama hız/tempo</string>
+    <string name="settings_announcements_lap_speed_pace">Tur hızı/temposu</string>
+    <string name="settings_stats_units_nautical">Deniz (NM, ft)</string>
+    <string name="unit_minute_per_nautical_mile">dk/NM</string>
+    <string name="value_integer_knots">%1$d düğüm</string>
+    <string name="value_float_knots">%1$.1f düğüm</string>
+    <string name="value_float_knots_recommended">%1$.1f düğüm (önerilen)</string>
+    <plurals name="voiceSpeedMKnots">
+        <item quantity="one">1 düğüm</item>
+        <item quantity="other">%1$.1f düğüm</item>
+    </plurals>
+    <string name="voice_per_nautical_mile">deniz mili başına</string>
+    <plurals name="voiceDistanceNauticalMiles">
+        <item quantity="one">1 deniz mili</item>
+        <item quantity="other">%1$.2f deniz mili</item>
+    </plurals>
 </resources>
