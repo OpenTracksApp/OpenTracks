@@ -15,14 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 --><resources>
     <string name="about_preference_title">O OpenTracks</string>
-    <string name="about_description"><i> OpenTracks </i> je sportovní sledovací aplikace, která zcela respektuje vaše soukromí.</string>
+    <string name="about_description"><i> OpenTracks </i> je aplikace pro záznam vašich sportů, která zcela respektuje vaše soukromí.</string>
     <string name="about_url">Webová stránka projektu: <a href="%1$s">%1$s</a></string>
     <string name="about_version_name">Název verze: %1$s</string>
     <string name="about_version_code">Kód verze: %1$d</string>
-    <string name="about_history">OpenTracks je fork aplikace <a href="https://code.google.com/archive/p/mytracks/"> <i> MyTracks Google </i> </a> (v roce 2016 ukončena).</string>
+    <string name="about_history">OpenTracks je fork aplikace <a href="https://code.google.com/archive/p/mytracks/"> <i> MyTracks Google </i> </a> (ukončena v roce 2016).</string>
     <string name="about_libraries">Knihovny</string>
     <!-- Help -->
-    <string name="help_feature_title">OpenTracks má následující funkce:</string>
+    <string name="help_feature_title">OpenTracks dokáže:</string>
     <string name="help_feature_content">* vytvářet GPS stopy
 \n* použít snímač srdeční frekvence (pouze Bluetooth LE)
 \n* hlasová oznámení (podle času nebo vzdálenosti)
@@ -34,14 +34,14 @@ limitations under the License.
 \n a) (živé aktualizace) Nainstalujte <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>. Poskytuje online nebo offline mapy prostřednictvím <a href="https://www.openstreetmap.org">OpenStreetMap</a>.
 \n Ve skutečnosti je OSMDashboard samostatná aplikace, která má přístup (dočasně) pouze k datům stop, které se budou zobrazovat.
 \n b) Prostřednictvím „normální“ mapové aplikace (např. <a href="http://osmand.net/">OsmAnd</a> a <a href="https://maps.me/">MAPS.ME</a>). Tyto aplikace musí podporovat formát souboru KMZ (pouze umístění a časová razítka). Ve skutečnosti musí aplikace podporovat <i>ACTION_VIEW</i> pomocí MIME <i>application/vnd.google-earth.kmz</i>. </string>
-    <string name="help_storage_pictures_title">Jak ukládá OpenTracks obrázky pořízené jako značky?</string>
+    <string name="help_storage_pictures_title">Jak ukládá OpenTracks obrázky pořízené jako značky na cestě\?</string>
     <string name="help_storage_pictures_content">Jsou uloženy v interním úložišti aplikace (tj. přístupné pouze v rámci OpenTracks).</string>
     <string name="help_track_export_title">Jak mohu exportovat/sdílet zaznamenané stopy\?</string>
-    <string name="help_track_export_content"> Trasy lze exportovat z Nastavení jako KMZ, KML nebo GPX. KMZ a KML obsahuje všechna data, GPX pouze umístění. Trasy sdílené pomocí <i>ikony sdílení</i> jsou sdíleny jako KMZ. </string>
+    <string name="help_track_export_content"> Trasy lze exportovat z Nastavení jako KMZ, KML nebo GPX. KMZ a KML obsahuje všechna data, GPX pouze polohu. Trasy sdílené pomocí <i>ikony sdílení</i> jsou sdíleny jako KMZ. </string>
     <string name="help_data_google_play_services_title">Vyžaduje/používá OpenTracks službu Google Play\?</string>
     <string name="help_recording_title">Jak OpenTracks zaznamenává data?</string>
     <string name="help_recording_content">OpenTracks používá GPS senzor zařízení k nepřetržitému zaznamenávání polohy. Pokud zařízení GPS hlásí nepřesná data (např. polohu, rychlost, nadmořskou výšku), OpenTracks s tím nemůže nic udělat.</string>
-    <string name="help_data_storage_title">Jak OpenTracks ukládá data senzorů?</string>
+    <string name="help_data_storage_title">Jak OpenTracks ukládá data ze senzorů\?</string>
     <string name="help_data_storage_content"> Data senzoru se ukládají na zaznamenané místo. Pokud jde o snímač srdeční frekvence, znamená to, že na každé místo je uloženo pouze <i> jedno </i> měření srdeční frekvence. Pokud stojíte v klidu nebo jste uvnitř, nebudou zaznamenána žádná data ze senzorů (ale budou zobrazena). </string>
     <string name="help_gps_troubleshooting_title">OpenTracks nezaznamenává místa?</string>
     <string name="help_gps_troubleshooting_content"> Co můžete udělat:
