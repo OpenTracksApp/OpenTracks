@@ -1,11 +1,13 @@
 package de.dennisguse.opentracks.util;
 
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.util.Pair;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
@@ -173,7 +175,12 @@ public class IntentDashboardUtils {
             Log.i(TAG, "Starting dashboard activity with generic intent (package=" + targetPackage + ", class=" + targetClass + ")");
         }
 
-        context.startActivity(intent);
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Log.e(TAG, "Dashboard not installed; cannot start it.");
+            Toast.makeText(context, R.string.show_on_dashboard_not_installed, Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
