@@ -41,12 +41,12 @@ import java.time.format.TextStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.LocaleRule;
+import de.dennisguse.opentracks.TimezoneRule;
 
 /**
  * Tests for {@link StringUtils}.
@@ -58,6 +58,9 @@ public class StringUtilsTest {
 
     @Rule
     public final LocaleRule mLocaleRule = new LocaleRule(Locale.ENGLISH);
+
+    @Rule
+    public TimezoneRule timezoneRule = new TimezoneRule(TimeZone.getTimeZone("Europe/Berlin"));
 
     private final Context context = ApplicationProvider.getApplicationContext();
 
@@ -99,51 +102,13 @@ public class StringUtilsTest {
     }
 
     @Test
-    public void testGetTime_fractional() {
-        assertGetTime("2010-05-04T03:02:01.352Z", 2010, 5, 4, 3, 2, 1, 352);
-        assertGetTime("2010-05-04T03:02:01.3529Z", 2010, 5, 4, 3, 2, 1, 352);
-    }
+    public void testParseTime() {
+        assertEquals(Instant.ofEpochMilli(352), StringUtils.parseTime("1970-01-01T00:00:00.352").toInstant());
+        assertEquals(Instant.ofEpochMilli(352), StringUtils.parseTime("1970-01-01T00:00:00.352Z").toInstant());
+        assertEquals(Instant.ofEpochMilli(352), StringUtils.parseTime("1970-01-01T00:00:00.352+00:00").toInstant());
 
-    @Test
-    public void testGetTime_timezone() {
-        assertGetTime("2010-05-04T03:02:01", 2010, 5, 4, 3, 2, 1, 0);
-        assertGetTime("2010-05-04T03:02:01Z", 2010, 5, 4, 3, 2, 1, 0);
-        assertGetTime("2010-05-04T03:02:01+00:00", 2010, 5, 4, 3, 2, 1, 0);
-        assertGetTime("2010-05-04T03:02:01-00:00", 2010, 5, 4, 3, 2, 1, 0);
-        assertGetTime("2010-05-04T03:02:01+01:00", 2010, 5, 4, 2, 2, 1, 0);
-        assertGetTime("2010-05-04T03:02:01+10:30", 2010, 5, 3, 16, 32, 1, 0);
-        assertGetTime("2010-05-04T03:02:01-09:30", 2010, 5, 4, 12, 32, 1, 0);
-        assertGetTime("2010-05-04T03:02:01-05:00", 2010, 5, 4, 8, 2, 1, 0);
-    }
-
-    @Test
-    public void testGetTime_fractionalAndTimezone() {
-        assertGetTime("2010-05-04T03:02:01.352Z", 2010, 5, 4, 3, 2, 1, 352);
-        assertGetTime("2010-05-04T03:02:01.47+00:00", 2010, 5, 4, 3, 2, 1, 470);
-        assertGetTime("2010-05-04T03:02:01.5791+03:00", 2010, 5, 4, 0, 2, 1, 579);
-        assertGetTime("2010-05-04T03:02:01.8-05:30", 2010, 5, 4, 8, 32, 1, 800);
-    }
-
-    /**
-     * Asserts the {@link StringUtils#parseTime(String)} returns the expected values.
-     *
-     * @param xmlDateTime the xml date time string
-     * @param year        the expected year
-     * @param month       the expected month
-     * @param day         the expected day
-     * @param hour        the expected hour
-     * @param minute      the expected minute
-     * @param second      the expected second
-     * @param millisecond the expected milliseconds
-     */
-    private void assertGetTime(String xmlDateTime, int year, int month, int day, int hour, int minute, int second, int millisecond) {
-        GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone("UTC"));
-        calendar.set(year, month - 1, day, hour, minute, second);
-        calendar.set(GregorianCalendar.MILLISECOND, millisecond);
-
-        // This comparision tends to be flaky (difference of 1ms)
-        // Assert.assertEquals(calendar.getTimeInMillis(), StringUtils.parseTime(xmlDateTime));
-        assertTrue(calendar.getTimeInMillis() + " vs. " + StringUtils.parseTime(xmlDateTime), Math.abs(calendar.getTimeInMillis() - StringUtils.parseTime(xmlDateTime).toInstant().toEpochMilli()) <= 1);
+        assertEquals(Instant.ofEpochMilli(352), StringUtils.parseTime("1970-01-01T01:00:00.352+01:00").toInstant());
+        assertEquals(Instant.ofEpochMilli(352).plus(Duration.ofHours(1)), StringUtils.parseTime("1970-01-01T00:00:00.352-01:00").toInstant());
     }
 
     @Test
