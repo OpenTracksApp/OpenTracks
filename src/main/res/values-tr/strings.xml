@@ -590,4 +590,5 @@ limitations under the License.
         <item quantity="one">1 deniz mili</item>
         <item quantity="other">%1$.2f deniz mili</item>
     </plurals>
+    <string name="image_discard"></string>
 </resources>
