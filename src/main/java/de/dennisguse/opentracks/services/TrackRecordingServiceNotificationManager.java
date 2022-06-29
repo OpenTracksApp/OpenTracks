@@ -68,6 +68,7 @@ class TrackRecordingServiceNotificationManager implements SharedPreferences.OnSh
     }
 
     void stop() {
+        cancelNotification();
         PreferencesUtils.unregisterOnSharedPreferenceChangeListener(this);
     }
 

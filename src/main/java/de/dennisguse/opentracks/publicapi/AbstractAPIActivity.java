@@ -34,7 +34,7 @@ public abstract class AbstractAPIActivity extends AppCompatActivity {
         if (PreferencesUtils.isPublicAPIenabled()) {
             Log.i(TAG, "Received and trying to execute requested action.");
             new TrackRecordingServiceConnection(serviceConnectedCallback)
-                    .startAndBind(this);
+                    .startAndBind(this, true);
         } else {
             Toast.makeText(this, getString(R.string.settings_public_api_disabled_toast), Toast.LENGTH_LONG).show();
             Log.w(TAG, "Public API is disabled; ignoring request.");
