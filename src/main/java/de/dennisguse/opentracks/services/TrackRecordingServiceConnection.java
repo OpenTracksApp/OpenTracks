@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import de.dennisguse.opentracks.BuildConfig;
 import de.dennisguse.opentracks.R;
@@ -66,15 +67,21 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
 
     /**
      * Starts and binds the service.
+     *
+     * @param foreground is the service expected to call `startForeground()`?
      */
-    public void startAndBind(Context context) {
+    public void startAndBind(Context context, boolean foreground) {
         if (trackRecordingService != null) {
             // Service is already started and bound.
             return;
         }
 
         Log.i(TAG, "Starting the service.");
-        context.startService(new Intent(context, TrackRecordingService.class));
+        if (foreground) {
+            ContextCompat.startForegroundService(context, new Intent(context, TrackRecordingService.class));
+        } else {
+            context.startService(new Intent(context, TrackRecordingService.class));
+        }
 
         startConnection(context);
     }
@@ -88,7 +95,7 @@ public class TrackRecordingServiceConnection implements ServiceConnection, Death
     @Deprecated
     public void startAndBindWithCallback(Context context) {
         if (trackRecordingService == null) {
-            startAndBind(context);
+            startAndBind(context, false);
             return;
         }
         if (callback != null) {

@@ -129,7 +129,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         trackRecordingManager = null;
 
         // Reverse order from onCreate
-        showNotification(false); //TODO Why?
+        stopForeground(true);
+
         notificationManager.stop();
         notificationManager = null;
 
@@ -205,7 +206,7 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
     private void startSensors() {
         wakeLock = SystemUtils.acquireWakeLock(this, wakeLock);
         trackPointCreator.start(this, handler);
-        showNotification(true);
+        startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this));
     }
 
     public void endCurrentTrack() {
@@ -247,7 +248,8 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         if (!isRecording()) return;
 
         trackPointCreator.stop();
-        showNotification(false);
+        stopForeground(true);
+        notificationManager.cancelNotification();
         wakeLock = SystemUtils.releaseWakeLock(wakeLock);
     }
 
@@ -270,19 +272,6 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
         //TODO This check should not be necessary, but prevents a crash; somehow the shutdown is not working correctly as we should not receive a notification then.
         if (gpsStatusObservable != null) {
             gpsStatusObservable.postValue(gpsStatusValue);
-        }
-    }
-
-    private void showNotification(boolean isGpsStarted) {
-        if (isRecording()) {
-            startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setRecording(this, recordingStatus.getTrackId()));
-        }
-        if (!isRecording() && isGpsStarted) {
-            startForeground(TrackRecordingServiceNotificationManager.NOTIFICATION_ID, notificationManager.setGPSonlyStarted(this));
-        }
-        if (!isRecording() && !isGpsStarted) {
-            stopForeground(true);
-            notificationManager.cancelNotification();
         }
     }
 
