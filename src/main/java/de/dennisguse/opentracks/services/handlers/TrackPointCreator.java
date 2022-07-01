@@ -58,7 +58,7 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
         altitudeSumManager = new AltitudeSumManager();
 
         remoteSensorManager.start();
-        altitudeSumManager.start(context);
+        altitudeSumManager.start(context, handler);
 
     }
 
