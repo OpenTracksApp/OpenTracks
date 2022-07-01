@@ -15,7 +15,7 @@ public class Speed {
             return zero();
         }
 
-        return new Speed(distance.toM() / (duration.toMillis() * UnitConversions.MS_TO_S));
+        return new Speed(distance.toM() / (duration.toMillis() / (double) Duration.ofSeconds(1).toMillis()));
     }
 
     public static Speed of(double speed_mps) {

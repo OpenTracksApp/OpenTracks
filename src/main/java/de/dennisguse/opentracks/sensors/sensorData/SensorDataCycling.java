@@ -11,7 +11,6 @@ import java.time.Duration;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
-import de.dennisguse.opentracks.data.models.UnitConversions;
 import de.dennisguse.opentracks.sensors.UintUtils;
 
 /**
@@ -68,8 +67,9 @@ public final class SensorDataCycling {
 
         public void compute(CyclingCadence previous) {
             if (hasData() && previous != null && previous.hasData()) {
-                float timeDiff_ms = UintUtils.diff(crankRevolutionsTime, previous.crankRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * UnitConversions.S_TO_MS;
-                if (timeDiff_ms <= 0) {
+                float timeDiff_ms = UintUtils.diff(crankRevolutionsTime, previous.crankRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * 1000;
+                Duration timeDiff = Duration.ofMillis((long) timeDiff_ms);
+                if (timeDiff.isZero() || timeDiff.isNegative()) {
                     Log.e(TAG, "Timestamps difference is invalid: cannot compute cadence.");
                     value = null;
                     return;
@@ -82,8 +82,7 @@ public final class SensorDataCycling {
                 }
 
                 long crankDiff = UintUtils.diff(crankRevolutionsCount, previous.crankRevolutionsCount, UintUtils.UINT32_MAX);
-                float cadence_ms = crankDiff / timeDiff_ms;
-                value = Cadence.of((float) (cadence_ms / UnitConversions.MS_TO_S / UnitConversions.S_TO_MIN));
+                value = Cadence.of(crankDiff, timeDiff);
             }
         }
 
@@ -147,7 +146,7 @@ public final class SensorDataCycling {
 
         public void compute(DistanceSpeed previous, Distance wheelCircumference) {
             if (hasData() && previous != null && previous.hasData()) {
-                float timeDiff_ms = UintUtils.diff(wheelRevolutionsTime, previous.wheelRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * UnitConversions.S_TO_MS;
+                float timeDiff_ms = UintUtils.diff(wheelRevolutionsTime, previous.wheelRevolutionsTime, UintUtils.UINT16_MAX) / 1024f * 1000;
                 Duration timeDiff = Duration.ofMillis((long) timeDiff_ms);
                 if (timeDiff.isZero() || timeDiff.isNegative()) {
                     Log.e(TAG, "Timestamps difference is invalid: cannot compute speed.");

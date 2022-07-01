@@ -21,7 +21,6 @@ import de.dennisguse.opentracks.data.TrackPointIterator;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
-import de.dennisguse.opentracks.data.models.UnitConversions;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.stats.TrackStatisticsUpdater;
 
@@ -180,7 +179,7 @@ public class IntervalStatisticsTest {
 
         // then
         assertEquals(trackStatistics.getTotalDistance().toM(), totalDistance.toM(), 0.01);
-        assertEquals(trackStatistics.getTotalTime().toMillis(), totalTime * UnitConversions.S_TO_MS, 1);
+        assertEquals(trackStatistics.getTotalTime().toSeconds(), totalTime, 0.01);
         assertEquals(intervalList.size(), (int) Math.ceil(trackStatistics.getTotalDistance().toM() / distanceInterval));
         if (totalGain != null) {
             assertEquals(totalGain, numberOfPoints * TestDataUtil.ALTITUDE_GAIN, 0.1);

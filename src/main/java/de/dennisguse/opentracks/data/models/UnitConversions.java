@@ -15,30 +15,14 @@
  */
 package de.dennisguse.opentracks.data.models;
 
+import java.time.Duration;
+
 /**
  * Unit conversion constants.
  *
  * @author Sandor Dornbush
  */
 public class UnitConversions {
-
-    // Time //TODO Use Duration
-    // multiplication factor to convert seconds to milliseconds
-    @Deprecated
-    public static final long S_TO_MS = 1000;
-
-    // multiplication factor to convert milliseconds to seconds
-    @Deprecated
-    public static final double MS_TO_S = 1d / S_TO_MS;
-    // multiplication factor to convert minutes to seconds
-    @Deprecated
-    public static final double MIN_TO_S = 60.0;
-    // multiplication factor to convert seconds to minutes
-    @Deprecated
-    public static final double S_TO_MIN = 1 / MIN_TO_S;
-    // multiplication factor to convert minutes to hours
-    @Deprecated
-    public static final double MIN_TO_HR = 1 / 60.0;
 
     // multiplication factor to convert kilometers to miles
     public static final double KM_TO_MI = 0.621371192;
@@ -58,7 +42,7 @@ public class UnitConversions {
     public static final double M_TO_NAUTICAL_MILE = 1 / NAUTICAL_MILE_TO_M;
     public static final double KM_TO_NAUTICAL_MILE = 1000 * M_TO_NAUTICAL_MILE;
     // multiplication factor to convert meters per second to kilometers per hour
-    public static final double MPS_TO_KMH = M_TO_KM / (S_TO_MIN * MIN_TO_HR);
+    public static final double MPS_TO_KMH = M_TO_KM / (1d / Duration.ofHours(1).toSeconds());
     // multiplication factor to convert miles to km
     public static final double MI_TO_KM = 1 / KM_TO_MI;
     // multiplication factor to convert miles to m
