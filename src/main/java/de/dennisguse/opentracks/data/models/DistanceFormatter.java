@@ -16,11 +16,14 @@ public class DistanceFormatter {
 
     private final int decimalCount;
 
+    private final double threshold;
+
     private final UnitSystem unitSystem;
 
-    private DistanceFormatter(Resources resources, int decimalCount, UnitSystem unitSystem) {
+    private DistanceFormatter(Resources resources, int decimalCount, double threshold, UnitSystem unitSystem) {
         this.resources = resources;
         this.decimalCount = decimalCount;
+        this.threshold = threshold;
         this.unitSystem = unitSystem;
         assert unitSystem != null;
     }
@@ -56,19 +59,19 @@ public class DistanceFormatter {
 
         switch (unitSystem) {
             case METRIC:
-                if (distance.greaterThan(Distance.of(500))) {
+                if (distance.greaterThan(Distance.ofKilometer(threshold))) {
                     return new Pair<>(StringUtils.formatDecimal(distance.toKM(), decimalCount), resources.getString(R.string.unit_kilometer));
                 } else {
                     return new Pair<>(StringUtils.formatDecimal(distance.toM(), decimalCount), resources.getString(R.string.unit_meter));
                 }
             case IMPERIAL:
-                if (distance.greaterThan(Distance.ofMile(0.5))) {
+                if (distance.greaterThan(Distance.ofMile(threshold))) {
                     return new Pair<>(StringUtils.formatDecimal(distance.toMI(), decimalCount), resources.getString(R.string.unit_mile));
                 } else {
                     return new Pair<>(StringUtils.formatDecimal(distance.toFT(), decimalCount), resources.getString(R.string.unit_feet));
                 }
             case NAUTICAL_IMPERIAL:
-                if (distance.greaterThan(Distance.ofNauticalMile(0.5))) {
+                if (distance.greaterThan(Distance.ofNauticalMile(threshold))) {
                     return new Pair<>(StringUtils.formatDecimal(distance.toNauticalMiles(), decimalCount), resources.getString(R.string.unit_nautical_mile));
                 } else {
                     return new Pair<>(StringUtils.formatDecimal(distance.toFT(), decimalCount), resources.getString(R.string.unit_feet));
@@ -88,8 +91,11 @@ public class DistanceFormatter {
 
         private UnitSystem unitSystem;
 
+        private double threshold;
+
         public Builder() {
             decimalCount = 2;
+            threshold = 0.5;
         }
 
         public Builder setDecimalCount(int decimalCount) {
@@ -102,8 +108,13 @@ public class DistanceFormatter {
             return this;
         }
 
+        public Builder setThreshold(double threshold) {
+            this.threshold = threshold;
+            return this;
+        }
+
         public DistanceFormatter build(Resources resource) {
-            return new DistanceFormatter(resource, decimalCount, unitSystem);
+            return new DistanceFormatter(resource, decimalCount, threshold, unitSystem);
         }
 
         public DistanceFormatter build(Context context) {

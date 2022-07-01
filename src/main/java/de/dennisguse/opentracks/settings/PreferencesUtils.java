@@ -323,7 +323,7 @@ public class PreferencesUtils {
         UnitSystem unitSystem = getUnitSystem();
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
-                .setDecimalCount(1)
+                .setDecimalCount(0)
                 .setUnit(unitSystem)
                 .build(resources);
         for (int i = 0; i < values.length; i++) {
@@ -417,7 +417,8 @@ public class PreferencesUtils {
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setUnit(unitSystem)
-                .setDecimalCount(1)
+                .setDecimalCount(0)
+                .setThreshold(Double.MAX_VALUE)
                 .build(resources);
         for (int i = 0; i < entryValues.length; i++) {
             int value = Integer.parseInt(entryValues[i]);
@@ -461,7 +462,8 @@ public class PreferencesUtils {
         UnitSystem unitSystem = getUnitSystem();
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
-                .setDecimalCount(1)
+                .setDecimalCount(0)
+                .setThreshold(Double.MAX_VALUE)
                 .setUnit(unitSystem)
                 .build(resources);
         for (int i = 0; i < entryValues.length; i++) {
@@ -534,7 +536,8 @@ public class PreferencesUtils {
         UnitSystem unitSystem = getUnitSystem();
 
         DistanceFormatter formatter = DistanceFormatter.Builder()
-                .setDecimalCount(1)
+                .setDecimalCount(0)
+                .setThreshold(Double.MAX_VALUE)
                 .setUnit(unitSystem)
                 .build(resources);
 
