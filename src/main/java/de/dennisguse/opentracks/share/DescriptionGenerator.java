@@ -30,7 +30,6 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.SpeedFormatter;
 import de.dennisguse.opentracks.data.models.Track;
-import de.dennisguse.opentracks.data.models.UnitConversions;
 import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 import de.dennisguse.opentracks.util.StringUtils;
@@ -230,7 +229,7 @@ public class DescriptionGenerator {
     @VisibleForTesting
     void writeAltitude(double altitude_m, StringBuilder builder, int resId, String lineBreak) {
         long altitudeInM = Math.round(altitude_m);
-        long altitudeInFt = Math.round(altitude_m * UnitConversions.M_TO_FT);
+        long altitudeInFt = Math.round(Distance.of(altitude_m).toFT());
         builder.append(context.getString(resId, altitudeInM, altitudeInFt));
         builder.append(lineBreak);
     }

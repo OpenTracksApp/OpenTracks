@@ -34,15 +34,15 @@ public class Distance {
     }
 
     public static Distance ofMile(double distance_mile) {
-        return of(distance_mile * UnitConversions.MI_TO_M);
+        return of(distance_mile * MI_TO_M);
     }
 
     public static Distance ofNauticalMile(double distance_mile) {
-        return of(distance_mile * UnitConversions.NAUTICAL_MILE_TO_M);
+        return of(distance_mile * NAUTICAL_MILE_TO_M);
     }
 
     public static Distance ofKilometer(double distance_km) {
-        return of(distance_km * UnitConversions.KM_TO_M);
+        return of(distance_km * KM_TO_M);
     }
 
     public static Distance ofMM(double distance_mm) {
@@ -117,19 +117,19 @@ public class Distance {
     }
 
     public double toKM() {
-        return distance_m * UnitConversions.M_TO_KM;
+        return distance_m * M_TO_KM;
     }
 
     public double toFT() {
-        return distance_m * UnitConversions.M_TO_FT;
+        return distance_m * M_TO_FT;
     }
 
     public double toMI() {
-        return toKM() * UnitConversions.KM_TO_MI;
+        return distance_m * M_TO_MI;
     }
 
     public double toNauticalMiles() {
-        return toKM() * UnitConversions.KM_TO_NAUTICAL_MILE;
+        return distance_m * M_TO_NAUTICAL_MILE;
     }
 
     public double toKM_Miles(UnitSystem unitSystem) {
@@ -177,4 +177,17 @@ public class Distance {
                 "distance_m=" + distance_m +
                 '}';
     }
+
+    // multiplication factors for conversion
+    private static final double KM_TO_M = 1000.0;
+    private static final double M_TO_KM = 1 / KM_TO_M;
+
+    public static final double MI_TO_M = 1609.344;
+    public static final double M_TO_MI = 1 / MI_TO_M;
+
+    private static final double MI_TO_FT = 5280.0;
+    public static final double M_TO_FT = M_TO_MI * MI_TO_FT;
+
+    private static final double NAUTICAL_MILE_TO_M = 1852.0;
+    private static final double M_TO_NAUTICAL_MILE = 1 / NAUTICAL_MILE_TO_M;
 }
