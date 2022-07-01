@@ -5,6 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -31,7 +32,7 @@ public class AltitudeSumManager implements SensorEventListener {
     private Float altitudeGain_m;
     private Float altitudeLoss_m;
 
-    public void start(Context context) {
+    public void start(Context context, Handler handler) {
         SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
 
         Sensor pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
@@ -39,7 +40,7 @@ public class AltitudeSumManager implements SensorEventListener {
             Log.w(TAG, "No pressure sensor available.");
             isConnected = false;
         } else {
-            isConnected = sensorManager.registerListener(this, pressureSensor, (int) TimeUnit.SECONDS.toMicros(5));
+            isConnected = sensorManager.registerListener(this, pressureSensor, (int) TimeUnit.SECONDS.toMicros(5), handler);
         }
 
         lastAcceptedPressureValue_hPa = Float.NaN;
