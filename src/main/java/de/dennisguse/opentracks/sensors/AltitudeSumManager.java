@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
+import java.util.concurrent.TimeUnit;
+
 import de.dennisguse.opentracks.data.models.TrackPoint;
 
 /**
@@ -37,7 +39,7 @@ public class AltitudeSumManager implements SensorEventListener {
             Log.w(TAG, "No pressure sensor available.");
             isConnected = false;
         } else {
-            isConnected = sensorManager.registerListener(this, pressureSensor, SensorManager.SENSOR_DELAY_FASTEST);
+            isConnected = sensorManager.registerListener(this, pressureSensor, (int) TimeUnit.SECONDS.toMicros(5));
         }
 
         lastAcceptedPressureValue_hPa = Float.NaN;
