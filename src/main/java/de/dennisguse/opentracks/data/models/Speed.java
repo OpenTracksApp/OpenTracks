@@ -85,16 +85,23 @@ public class Speed {
         return speed_mps;
     }
 
+    /**
+     * We interpret {@link Speed} here as a {@link Distance} over 1h.
+     */
+    private Distance toH() {
+        return Distance.of(speed_mps * Duration.ofHours(1).toSeconds());
+    }
+
     public double toKMH() {
-        return speed_mps * UnitConversions.MPS_TO_KMH;
+        return toH().toKM();
     }
 
     public double toMPH() {
-        return toKMH() * UnitConversions.KM_TO_MI;
+        return toH().toMI();
     }
 
     public double toKnots() {
-        return toKMH() * UnitConversions.KM_TO_NAUTICAL_MILE;
+        return toH().toNauticalMiles();
     }
 
     public Duration toPace(UnitSystem unitSystem) {
@@ -102,20 +109,7 @@ public class Speed {
             return Duration.ofSeconds(0);
         }
 
-        double distance = speed_mps;
-        switch (unitSystem) { //TODO Can we use to(UnitSystem)?
-            case METRIC:
-                distance *= UnitConversions.M_TO_KM;
-                break;
-            case IMPERIAL:
-                distance *= UnitConversions.M_TO_MI;
-                break;
-            case NAUTICAL_IMPERIAL:
-                distance *= UnitConversions.M_TO_NAUTICAL_MILE;
-                break;
-            default:
-                throw new RuntimeException("Not implemented");
-        }
+        double distance = Distance.of(speed_mps).toKM_Miles(unitSystem);
 
         return Duration.ofSeconds(Math.round(1 / distance));
     }

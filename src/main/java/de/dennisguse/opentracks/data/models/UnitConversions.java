@@ -15,8 +15,6 @@
  */
 package de.dennisguse.opentracks.data.models;
 
-import java.time.Duration;
-
 /**
  * Unit conversion constants.
  *
@@ -41,8 +39,6 @@ public class UnitConversions {
     public static final double NAUTICAL_MILE_TO_M = 1852.0;
     public static final double M_TO_NAUTICAL_MILE = 1 / NAUTICAL_MILE_TO_M;
     public static final double KM_TO_NAUTICAL_MILE = 1000 * M_TO_NAUTICAL_MILE;
-    // multiplication factor to convert meters per second to kilometers per hour
-    public static final double MPS_TO_KMH = M_TO_KM / (1d / Duration.ofHours(1).toSeconds());
     // multiplication factor to convert miles to km
     public static final double MI_TO_KM = 1 / KM_TO_MI;
     // multiplication factor to convert miles to m
