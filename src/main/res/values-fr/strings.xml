@@ -587,4 +587,23 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_announcements_lap_heart_rate">Fréquence cardiaque au tour</string>
     <string name="image_discard">Ignorer</string>
     <string name="track_discarding">Ignorer la trace</string>
+    <string name="description_pace_nautical">Allure (min/MN)</string>
+    <string name="show_on_dashboard_not_installed">Il n\'y a pas d\'application installé supportant l\'API OpenTracks Dashboard.</string>
+    <string name="description_speed_nautical">Vitesse (nœuds)</string>
+    <string name="settings_stats_units_nautical">Nautique (MN, pieds)</string>
+    <string name="unit_nautical_mile">MN</string>
+    <string name="unit_knots">kn</string>
+    <string name="unit_minute_per_nautical_mile">min/MN</string>
+    <string name="value_integer_knots">%1$d nœuds</string>
+    <string name="value_float_knots">%1$.1f nœuds</string>
+    <string name="value_float_knots_recommended">%1$.1f nœuds (recommandé)</string>
+    <string name="voice_per_nautical_mile">par mile nautique</string>
+    <plurals name="voiceSpeedMKnots">
+        <item quantity="one">1 nœud</item>
+        <item quantity="other">%1$.1f nœuds</item>
+    </plurals>
+    <plurals name="voiceDistanceNauticalMiles">
+        <item quantity="one">1 mile nautique</item>
+        <item quantity="other">%1$.2f milles nautique</item>
+    </plurals>
 </resources>
