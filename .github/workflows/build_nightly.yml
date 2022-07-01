@@ -1,6 +1,7 @@
 #https://github.com/marketplace/actions/android-emulator-runner
 name: Build nightly
-on: [ push ]
+on:
+  push
 
 jobs:
   nightly-build:
