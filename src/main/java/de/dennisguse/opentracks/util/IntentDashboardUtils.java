@@ -9,6 +9,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
 import java.util.ArrayList;
@@ -138,7 +139,7 @@ public class IntentDashboardUtils {
      * @param targetClass the target class
      * @param trackIds the track ids
      */
-    public static void startDashboard(Context context, boolean isRecording, String targetPackage, String targetClass, Track.Id... trackIds) {
+    public static void startDashboard(Context context, boolean isRecording, @Nullable String targetPackage, @Nullable String targetClass, Track.Id... trackIds) {
         if (trackIds.length == 0) {
             return;
         }
@@ -168,7 +169,7 @@ public class IntentDashboardUtils {
         clipData.addItem(new ClipData.Item(uris.get(MARKERS_URI_INDEX)));
         intent.setClipData(clipData);
 
-        if ((targetPackage != null) && (targetClass != null)) {
+        if (targetPackage != null && targetClass != null) {
             Log.i(TAG, "Starting dashboard activity with explicit intent (package=" + targetPackage + ", class=" + targetClass + ")");
             intent.setClassName(targetPackage, targetClass);
         } else {
