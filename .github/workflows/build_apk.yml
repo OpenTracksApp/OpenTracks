@@ -1,10 +1,10 @@
 #https://github.com/marketplace/actions/android-emulator-runner
-name: Build nightly
+name: Build APK
 on:
   push
 
 jobs:
-  nightly-build:
+  apk-build:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -15,7 +15,7 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: Assemble nighlty APK
+      - name: Assemble APK
         shell: bash
         run: |
           echo ${NIGHTLY_STORE_FILE} | base64 -d > KEY_NIGHTLY.jks
@@ -29,7 +29,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          name: OpenTracks-nightly.apk
+          name: OpenTracks-APK.apk
           path: ./build/outputs/apk/nightly/*.apk
           retention-days: 7
 
