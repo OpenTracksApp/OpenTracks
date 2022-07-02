@@ -599,4 +599,5 @@ limitations under the License.
         <item quantity="one">1 nautisk mil</item>
         <item quantity="other">%1$.2f nautiske mil</item>
     </plurals>
+    <string name="show_on_dashboard_not_installed">Ingen app som støtter OpenTracks Dashboard API er installert.</string>
 </resources>
