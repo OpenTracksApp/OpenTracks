@@ -90,16 +90,23 @@ public class TrackStoppedActivity extends AbstractTrackDeleteActivity implements
         }
 
         viewBinding.finishButton.setOnClickListener(v -> {
-            TrackUtils.updateTrack(TrackStoppedActivity.this, track, viewBinding.trackEditName.getText().toString(),
-                    viewBinding.trackEditActivityType.getText().toString(), viewBinding.trackEditDescription.getText().toString(),
-                    contentProviderUtils);
+            storeTrackMetaData(contentProviderUtils, track);
             ExportUtils.postWorkoutExport(this, trackId);
             finish();
         });
 
-        viewBinding.resumeButton.setOnClickListener(v -> resumeTrackAndFinish());
+        viewBinding.resumeButton.setOnClickListener(v -> {
+            storeTrackMetaData(contentProviderUtils, track);
+            resumeTrackAndFinish();
+        });
 
         viewBinding.discardButton.setOnClickListener(v -> ConfirmDeleteDialogFragment.showDialog(getSupportFragmentManager(), trackId));
+    }
+
+    private void storeTrackMetaData(ContentProviderUtils contentProviderUtils, Track track) {
+        TrackUtils.updateTrack(TrackStoppedActivity.this, track, viewBinding.trackEditName.getText().toString(),
+                viewBinding.trackEditActivityType.getText().toString(), viewBinding.trackEditDescription.getText().toString(),
+                contentProviderUtils);
     }
 
     @Override
