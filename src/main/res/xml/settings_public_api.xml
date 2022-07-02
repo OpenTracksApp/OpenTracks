@@ -3,6 +3,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:title="@string/settings_api_title">
 
+    <Preference
+        android:key="@string/publicapi_package_key"
+        android:selectable="false"
+        android:persistent="false"
+        android:title="@string/settings_public_api_package_title" />
+
     <SwitchPreferenceCompat
         android:title="@string/settings_public_api_enabled_title"
         android:summaryOn="@string/settings_public_api_enabled_summary_on"

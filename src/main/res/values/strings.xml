@@ -442,6 +442,7 @@ limitations under the License.
 
     <!-- Settings public api -->
     <string name="settings_api_title">Public API</string>
+    <string name="settings_public_api_package_title">Package name for Public API</string>
     <string name="settings_public_api_enabled_title">Public API</string>
     <string name="settings_public_api_enabled_summary_on">Other installed applications can start or stop recordings.</string>
     <string name="settings_public_api_enabled_summary_off">Only OpenTracks can start and stop recordings.</string>

@@ -314,6 +314,7 @@
     <bool name="import_prevent_reimport_default">true</bool>
 
     <string name="settings_api_key" translatable="false">settingsAPI</string>
+    <string name="publicapi_package_key" translatable="false">apiPackageKey</string>
     <string name="publicapi_enabled_key" translatable="false">apiEnabledKey</string>
     <bool name="publicapi_enabled_default">false</bool>
     <string name="publicapi_dashboard_enabled_key" translatable="false">apiDashboardEnabledKey</string>
