@@ -580,4 +580,36 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="gps_recording_status">%1$s: %2$s</string>
     <string name="gps_recording_without_signal">OpenTracks está gravando sen datos GPS.</string>
     <string name="settings_export_filename_title">Formato do nome do ficheiro</string>
+    <string name="settings_announcements_lap_heart_rate">Ritmo cardíaco na volta</string>
+    <string name="settings_announcements_average_heart_rate">Ritmo cardíaco medio</string>
+    <string name="image_discard">Descartar</string>
+    <string name="settings_announcements_average_speed_pace">Velocidade/ritmo medio</string>
+    <string name="settings_announcements_lap_speed_pace">Velocidade/ritmo da volta</string>
+    <string name="track_discarding">Desbotando Ruta</string>
+    <string name="share_crash_report">Comparte o informe do fallo</string>
+    <string name="description_pace_nautical">Ritmo (min/NM)</string>
+    <string name="description_speed_nautical">Velocidade (nós)</string>
+    <string name="settings_stats_units_nautical">Náutica (NM, ft)</string>
+    <string name="unit_nautical_mile">NM</string>
+    <string name="unit_knots">kn</string>
+    <string name="unit_minute_per_nautical_mile">min/NM</string>
+    <string name="value_integer_knots">%1$d nós</string>
+    <string name="value_float_knots">%1$.1f nós</string>
+    <string name="value_float_knots_recommended">%1$.1f nós (recomendado)</string>
+    <string name="voice_per_nautical_mile">por milla náutica</string>
+    <plurals name="voiceDistanceNauticalMiles">
+        <item quantity="one">1 milla náutica</item>
+        <item quantity="other">%1$.2f millas náuticas</item>
+    </plurals>
+    <string name="show_on_dashboard">Taboleiro da API OpenTracks</string>
+    <plurals name="voiceSpeedMKnots">
+        <item quantity="one">1 nó</item>
+        <item quantity="other">%1$.1f nós</item>
+    </plurals>
+    <string name="show_on_dashboard_not_installed">Non hai ningunha aplicación instalada con soporte para a API do taboleiro OpenTracks.</string>
+    <string name="select_show_on_map_behavior">Elixe \"ver no mapa\"</string>
+    <string name="show_on_map_format_ask">Preguntar</string>
+    <string name="always">Sempre</string>
+    <string name="error_crash_title">%1$s fallou</string>
+    <string name="report_bug">Informar do problema</string>
 </resources>
