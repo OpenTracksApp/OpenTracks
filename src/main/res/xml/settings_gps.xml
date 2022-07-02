@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/settings_gps_title">
 
     <ListPreference
@@ -31,6 +32,7 @@
         android:defaultValue="@string/idle_speed_default"
         android:entryValues="@array/idle_speed_values"
         android:key="@string/idle_speed_key"
-        android:title="@string/settings_recording_idle_speed_title" />
+        android:title="@string/settings_recording_idle_speed_title"
+        app:useSimpleSummaryProvider="true" />
 
 </PreferenceScreen>
