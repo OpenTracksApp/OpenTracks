@@ -336,4 +336,28 @@ limitations under the License.
     <string name="waypoint_type_waterfall">водопад</string>
     <string name="waypoint_type_water_fountain">фонтана</string>
     <string name="waypoint_type_waypoint">тачка пута</string>
+    <string name="about_url">Web stranica projekta: <a href="%1$s">%1$s</a></string>
+    <string name="help_feature_title">OtvorenaPraćenja ima sledeće funkcije:</string>
+    <string name="help_storage_pictures_title">Kako OtvorenaPraćenja čuva fotografije tamo gde su postavljeni markeri\?</string>
+    <string name="about_history">OtvorenaPraćenja je kopija od <a href="https://code.google.com/archive/p/mytracks/"><i>Guglove MojaPraćenja aplikacije</i></a> (zaustavljene u 2016).</string>
+    <string name="help_track_map_title">Kako da se pokaže praćenja na mapi\?</string>
+    <string name="help_track_map_content"> Koristi ikonicu male mape.
+\nA) (apdejti uživo) Instalirajte
+\n<a href="https://github.com/OpenTracksApp/OSMDashboard">OSMPočetna</a>. Izvodi onlajn mape ili oflajn preko <a href="https://www.openstreetmap.org">OtvorenihMapaZaUlice</a>.
+\nZapravo, OSMPočtna je pojedina aplikacija koja može pristupiti (privremeno) podacima o praćenjima koji se prikazuju.
+\nB) Sa normalnim aplikacijama za mape (npr. <a href="http://osmand.net/">OSMAnd</a> i <a href="https://maps.me/">MOJE.MAPE</a>). Te aplikacije imaju podršku za KMZ fajl format (lokacije i tajmstampovi). U temi, aplikacija mora da podrži <i>ACTION_VIEW</i> sa MIME-om <i>application/vnd.google-earth.kmz</i>. </string>
+    <string name="about_version_code">Kod verzije: %1$d</string>
+    <string name="about_libraries">Biblioteke</string>
+    <string name="about_version_name">Ime verzije: %1$s</string>
+    <string name="help_feature_content">* pravi praćenja o lokaciji
+\n* koristi senzor za merenje srca (samo Blutut LE)
+\n* predstavljanje glasa (od vremena ili distance)
+\n* pravi markere (uključujući slike)
+\n* radi potpuno bez interneta
+\n* pokazuje praćenja na mapi (vidi dole)</string>
+    <string name="about_description"><i>OtvorenaPraćenja</i> je aplikacija za praćenje sporta koja potpuno pazi o vašoj privatnosti.</string>
+    <string name="about_third_party_data">Informacije od trećih strana</string>
+    <string name="help_track_export_title">Kako ja mogu da izvezem/podelim sačuvand podatke\?</string>
+    <string name="about_preference_title">O OtvorenimPraćenjima</string>
+    <string name="help_storage_pictures_content">Oni su sačuvani u aplikaciji u internoj memoriji (samo pristupnoj bez OtvorenihPraćenja).</string>
 </resources>
