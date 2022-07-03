@@ -574,4 +574,5 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_summary_on">Aplikace, která zahájila nahrávání, může také přistupovat k nahraným datům.</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Zaznamenaná data nebudou automaticky sdílena s jinými aplikacemi.</string>
     <string name="pace">Tempo</string>
+    <string name="track_discarding">Mazání trasy</string>
 </resources>
