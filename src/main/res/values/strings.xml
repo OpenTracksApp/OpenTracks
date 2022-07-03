@@ -210,12 +210,12 @@ limitations under the License.
     <string name="export_cannot_write_to_dir">Cannot write to export directory.</string>
     <string name="export_dir_not_writable">" (not writable!)"</string>
     <string name="export_progress_message">Exporting to %1$s&#8230;</string>
-    <string name="export_track_already_exists_msg">The track %1$s already exists at the destination directory.</string>
+    <string name="export_track_already_exists_msg">The file %1$s already exists at the destination directory.</string>
     <string name="export_all_do_it_for_all">do it for all conflicts</string>
-    <string name="export_track_errors">Tracks not exported</string>
-    <string name="export_progress_summary_new_msg">New tracks exported</string>
-    <string name="export_progress_summary_overwrite_msg">Tracks overwritten</string>
-    <string name="export_progress_summary_skip_msg">Tracks skipped</string>
+    <string name="export_track_errors">Files not exported</string>
+    <string name="export_progress_summary_new_msg">New files exported</string>
+    <string name="export_progress_summary_overwrite_msg">Files overwritten</string>
+    <string name="export_progress_summary_skip_msg">Files skipped</string>
     <string name="export_progress_summary_errors_msg">Errors</string>
     <!-- External Storage -->
     <!-- Generic -->
@@ -297,7 +297,8 @@ limitations under the License.
     <string name="menu_aggregated_statistics">Aggregated stats</string>
     <string name="menu_delete">Delete</string>
     <string name="menu_edit">Edit</string>
-    <string name="menu_export_all">Export all</string>
+    <string name="menu_export_all">Export all (one file per track)</string>
+    <string name="menu_export_all_one_file">Export all (one file for all tracks)</string>
     <string name="menu_help">Help</string>
     <string name="menu_import_all">Import all</string>
     <string name="menu_insert_marker">Insert marker</string>

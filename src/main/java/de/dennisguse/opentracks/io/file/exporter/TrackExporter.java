@@ -19,6 +19,7 @@ package de.dennisguse.opentracks.io.file.exporter;
 import androidx.annotation.NonNull;
 
 import java.io.OutputStream;
+import java.util.List;
 
 import de.dennisguse.opentracks.data.models.Track;
 
@@ -29,7 +30,8 @@ import de.dennisguse.opentracks.data.models.Track;
  */
 public interface TrackExporter {
 
-    boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream);
+    boolean writeTrack(List<Track> tracks, @NonNull OutputStream outputStream);
 
+    @Deprecated // Only used for tests
     boolean writeTrack(Track track, @NonNull OutputStream outputStream);
 }

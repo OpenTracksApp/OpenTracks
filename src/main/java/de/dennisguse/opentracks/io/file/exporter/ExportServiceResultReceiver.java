@@ -17,7 +17,7 @@ public class ExportServiceResultReceiver extends ResultReceiver {
     public static final int RESULT_CODE_SUCCESS = 1;
     public static final int RESULT_CODE_ERROR = 0;
 
-    public static final String RESULT_EXTRA_TRACK_ID = "result_extra_track_id";
+    public static final String RESULT_EXTRA_EXPORT_TASK = "result_extra_export_task";
 
     private final Receiver receiver;
 
@@ -28,19 +28,19 @@ public class ExportServiceResultReceiver extends ResultReceiver {
 
     @Override
     protected void onReceiveResult(int resultCode, Bundle resultData) {
-        Track.Id trackId = resultData.getParcelable(ExportServiceResultReceiver.RESULT_EXTRA_TRACK_ID);
+        ExportTask exportTask = resultData.getParcelable(ExportServiceResultReceiver.RESULT_EXTRA_EXPORT_TASK);
         switch (resultCode) {
-            case RESULT_CODE_SUCCESS -> receiver.onExportSuccess(trackId);
-            case RESULT_CODE_ERROR -> receiver.onExportError(trackId);
+            case RESULT_CODE_SUCCESS -> receiver.onExportSuccess(exportTask);
+            case RESULT_CODE_ERROR -> receiver.onExportError(exportTask);
             default -> throw new RuntimeException("Unknown resultCode.");
         }
     }
 
     public interface Receiver {
-        default void onExportSuccess(Track.Id trackId) {
+        default void onExportSuccess(ExportTask exportTask) {
         }
 
-        default void onExportError(Track.Id trackId) {
+        default void onExportError(ExportTask exportTask) {
         }
     }
 }

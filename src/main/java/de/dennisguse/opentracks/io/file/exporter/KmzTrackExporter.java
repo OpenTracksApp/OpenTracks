@@ -28,6 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -65,11 +66,11 @@ public class KmzTrackExporter implements TrackExporter {
 
     @Override
     public boolean writeTrack(Track track, @NonNull OutputStream outputStream) {
-        return writeTrack(new Track[]{track}, outputStream);
+        return writeTrack(List.of(track), outputStream);
     }
 
     @Override
-    public boolean writeTrack(Track[] tracks, @NonNull OutputStream outputStream) {
+    public boolean writeTrack(List<Track> tracks, @NonNull OutputStream outputStream) {
         try (ZipOutputStream zipOutputStream = new ZipOutputStream(outputStream)) {
             // Add kml file
             ZipEntry zipEntry = new ZipEntry(KMZ_KML_FILE);
@@ -91,7 +92,7 @@ public class KmzTrackExporter implements TrackExporter {
         }
     }
 
-    private void addImages(Context context, Track[] tracks, ZipOutputStream zipOutputStream) throws InterruptedException, IOException {
+    private void addImages(Context context, List<Track> tracks, ZipOutputStream zipOutputStream) throws InterruptedException, IOException {
         for (Track track : tracks) {
             try (Cursor cursor = contentProviderUtils.getMarkerCursor(track.getId(), null, -1)) {
                 if (cursor != null && cursor.moveToFirst()) {
