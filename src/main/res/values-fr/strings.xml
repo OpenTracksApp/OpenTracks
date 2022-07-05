@@ -599,11 +599,11 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="value_float_knots_recommended">%1$.1f nœuds (recommandé)</string>
     <string name="voice_per_nautical_mile">par mile nautique</string>
     <plurals name="voiceSpeedMKnots">
-        <item quantity="one">1 nœud</item>
+        <item quantity="one">%1$.1f nœud</item>
         <item quantity="other">%1$.1f nœuds</item>
     </plurals>
     <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">1 mile nautique</item>
+        <item quantity="one">%1$.2f mile nautique</item>
         <item quantity="other">%1$.2f milles nautique</item>
     </plurals>
 </resources>
