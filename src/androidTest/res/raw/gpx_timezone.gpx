@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx
+version="1.1"
+creator="OpenTracks (Debug)"
+xmlns="http://www.topografix.com/GPX/1/1"
+xmlns:topografix="http://www.topografix.com/GPX/Private/TopoGrafix/0/1"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:opentracks="http://opentracksapp.com/xmlschemas/v1"
+xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v2"
+xmlns:gpxtrkx="http://www.garmin.com/xmlschemas/TrackStatsExtension/v1"
+xmlns:cluetrust="http://www.cluetrust.com/Schemas/"
+xmlns:pwr="http://www.garmin.com/xmlschemas/PowerExtension/v1"
+xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.topografix.com/GPX/Private/TopoGrafix/0/1 http://www.topografix.com/GPX/Private/TopoGrafix/0/1/topografix.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v2 https://www8.garmin.com/xmlschemas/TrackPointExtensionv2.xsd http://www.garmin.com/xmlschemas/PowerExtension/v1 https://www8.garmin.com/xmlschemas/PowerExtensionv1.xsd http://www.garmin.com/xmlschemas/TrackStatsExtension/v1 http://www.cluetrust.com/Schemas http://www.cluetrust.com/Schemas/gpxdata10.xsd http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd">
+<wpt lat="3" lon="14">
+<ele>10</ele>
+<time>2021-01-07T21:51:59.179+01:15</time>
+<name><![CDATA[Marker 1]]></name>
+<desc><![CDATA[Marker 1 desc]]></desc>
+<type><![CDATA[Marker 1 category]]></type>
+</wpt>
+<trk>
+<name><![CDATA[2021-01-07 22:51]]></name>
+<desc><![CDATA[the description]]></desc>
+<type><![CDATA[the category]]></type>
+<extensions>
+<topografix:color>c0c0c0</topografix:color>
+<opentracks:trackid>7002101e-4198-4613-8c24-544e01ca3981</opentracks:trackid>
+<gpxtrkx:TrackStatsExtension>
+<gpxtrkx:Distance>0.0</gpxtrkx:Distance>
+<gpxtrkx:TimerTime>0</gpxtrkx:TimerTime>
+<gpxtrkx:MovingTime>0</gpxtrkx:MovingTime>
+<gpxtrkx:StoppedTime>0</gpxtrkx:StoppedTime>
+<gpxtrkx:MaxSpeed>0.0</gpxtrkx:MaxSpeed>
+<gpxtrkx:Ascent>null</gpxtrkx:Ascent>
+<gpxtrkx:Descent>null</gpxtrkx:Descent>
+</gpxtrkx:TrackStatsExtension>
+</extensions>
+<trkseg>
+<trkpt lat="3" lon="14">
+<ele>10</ele>
+<time>2021-01-07T21:51:59.179+01:15</time>
+</trkpt>
+</trkseg>
+</trk>
+</gpx>

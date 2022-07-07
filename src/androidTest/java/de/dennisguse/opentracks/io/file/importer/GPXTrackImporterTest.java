@@ -15,11 +15,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
@@ -27,6 +32,8 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
+import de.dennisguse.opentracks.io.file.TrackFileFormat;
+import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
@@ -207,5 +214,32 @@ public class GPXTrackImporterTest {
                         .setAltitude(-5)
                         .setSpeed(Speed.of(3))
         ), importedTrackPoints);
+    }
+
+    @LargeTest
+    @Test
+    public void importExportTest_timezone() throws IOException {
+        // given
+        XMLImporter importer = new XMLImporter(new GpxTrackImporter(context, trackImporter));
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.gpx_timezone);
+        InputStream inputStreamExpected = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.gpx_timezone);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        // when
+        // 1. import
+        importTrackId = importer.importFile(inputStream).get(0);
+        Track importedTrack = contentProviderUtils.getTrack(importTrackId);
+
+        TrackExporter trackExporter = TrackFileFormat.GPX.createTrackExporter(context);
+        trackExporter.writeTrack(importedTrack, outputStream);
+
+        // then
+        String expected = new BufferedReader(
+                new InputStreamReader(inputStreamExpected, StandardCharsets.UTF_8))
+                .lines()
+                .collect(Collectors.joining("\n")) + "\n";
+
+        assertEquals(expected, outputStream.toString()); //TODO inputStream.readAllBytes() ?
     }
 }
