@@ -257,7 +257,8 @@ public class StringUtils {
     //TODO altitude_m should be double or a value object
     public static Pair<String, String> getAltitudeParts(Context context, Float altitude_m, UnitSystem unitSystem) {
         DistanceFormatter formatter = DistanceFormatter.Builder()
-                .setDecimalCount(1)
+                .setDecimalCount(0)
+                .setThreshold(Double.MAX_VALUE)
                 .setUnit(unitSystem)
                 .build(context);
 
