@@ -49,8 +49,7 @@ public class IntervalStatistics {
                 interval.add(trackStatisticsUpdater.getTrackStatistics(), trackPoint);
 
                 double adjustFactor = distanceInterval.dividedBy(interval.distance);
-                Interval adjustedInterval = new Interval(interval);
-                adjustedInterval.adjust(adjustFactor);
+                Interval adjustedInterval = new Interval(interval, adjustFactor);
 
                 intervalList.set(intervalList.size() - 1, adjustedInterval);
 
@@ -116,7 +115,6 @@ public class IntervalStatistics {
         public Interval(Interval i, double adjustFactor) {
             distance = i.distance.multipliedBy(adjustFactor);
             time = Duration.ofMillis((long) (i.time.toMillis() * adjustFactor));
-            time = i.time;
             gain_m = i.gain_m;
             loss_m = i.loss_m;
             avgHeartRate = i.avgHeartRate;
@@ -128,11 +126,6 @@ public class IntervalStatistics {
             gain_m = i.gain_m;
             loss_m = i.loss_m;
             avgHeartRate = i.avgHeartRate;
-        }
-
-        private void adjust(double adjustFactor) {
-            distance = distance.multipliedBy(adjustFactor);
-            time = Duration.ofMillis((long) (time.toMillis() * adjustFactor));
         }
 
         public Distance getDistance() {
