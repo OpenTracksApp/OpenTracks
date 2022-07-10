@@ -197,6 +197,14 @@ public class PreferencesUtils {
         return getBoolean(R.string.publicapi_dashboard_enabled_key, resources.getBoolean(R.bool.publicapi_dashboard_enabled_default));
     }
 
+    public static boolean shouldShowIntroduction() {
+        return getBoolean(R.string.show_introduction_screen_key, resources.getBoolean(R.bool.show_introduction_screen_default));
+    }
+
+    public static void setShowIntroduction(boolean introduction) {
+        setBoolean(R.string.show_introduction_screen_key, introduction);
+    }
+
     public static UnitSystem getUnitSystem() {
         final String STATS_UNIT_DEFAULT = resources.getString(R.string.stats_units_default);
 

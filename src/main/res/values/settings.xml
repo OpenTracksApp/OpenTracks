@@ -322,6 +322,9 @@
     <string name="publicapi_dashboard_enabled_key" translatable="false">apiDashboardEnabledKey</string>
     <bool name="publicapi_dashboard_enabled_default">false</bool>
 
+    <string name="show_introduction_screen_key">showIntroduction</string>
+    <bool name="show_introduction_screen_default">true</bool>
+
     <!-- androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode() -->
     <string name="night_mode_key" translatable="false">nightMode</string>
     <string name="night_mode_default" translatable="false">@string/night_mode_system_value</string>
