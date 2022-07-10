@@ -10,6 +10,7 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
+import java.time.Duration;
 import java.time.ZoneOffset;
 
 import de.dennisguse.opentracks.R;
@@ -180,8 +181,16 @@ class TrackRecordingManager implements SharedPreferences.OnSharedPreferenceChang
         }
 
         if (!trackPoint.hasLocation() && !trackPoint.hasSensorDistance()) {
-            Log.d(TAG, "Ignoring TrackPoint as it has no distance.");
-            return false;
+            Duration minStorageInterval = Duration.ofSeconds(10); // TODO Should be configurable.
+            boolean shouldStore = lastStoredTrackPoint.getTime().plus(minStorageInterval)
+                    .isBefore(trackPoint.getTime());
+            if (!shouldStore) {
+                Log.d(TAG, "Ignoring TrackPoint as it has no distance (and sensor data is not new enough).");
+                return false;
+            } else {
+                insertTrackPoint(trackPoint, true);
+                return true;
+            }
         }
 
         Distance distanceToLastStoredTrackPoint;

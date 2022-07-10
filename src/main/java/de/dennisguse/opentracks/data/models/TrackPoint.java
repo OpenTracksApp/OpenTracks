@@ -56,7 +56,7 @@ public class TrackPoint {
 
         SEGMENT_START_AUTOMATIC(-1), //Start of a segment due to too much distance from previous TrackPoint
         TRACKPOINT(0), //Just GPS data and may contain BLE sensor data
-        SENSORPOINT(2), //Just BLE sensor data; required to have speed and sensorDistance
+        SENSORPOINT(2), //Just BLE sensor data; may have speed and sensorDistance
 
         SEGMENT_END_MANUAL(1); //End of a segment
 
