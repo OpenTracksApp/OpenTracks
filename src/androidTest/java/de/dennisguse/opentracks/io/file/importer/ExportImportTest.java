@@ -155,26 +155,31 @@ public class ExportImportTest {
         mockAltitudeChange(trackPointCreator, 1);
         mockBLESensorData(trackPointCreator, 15f, sensorDistance, 66f, 3f, 50f);
 
-        trackPointCreator.setClock("2020-02-02T02:02:05Z");
+        trackPointCreator.setClock("2020-02-02T02:02:14Z");
+        mockBLESensorData(trackPointCreator, 15f, null, 66f, 3f, 50f);
+        trackPointCreator.setClock("2020-02-02T02:02:15Z");
+        mockBLESensorData(trackPointCreator, null, null, 66f, 3f, 50f);
+
+        trackPointCreator.setClock("2020-02-02T02:02:16Z");
         mockBLESensorData(trackPointCreator, 5f, Distance.of(2), 66f, 3f, 50f); // Distance will be added to next TrackPoint
 
-        sendLocation(trackPointCreator, "2020-02-02T02:02:05Z", 3, 14.001, 10, 13, 15, 10, 0);
+        sendLocation(trackPointCreator, "2020-02-02T02:02:17Z", 3, 14.001, 10, 13, 15, 10, 0);
         service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
 
-        trackPointCreator.setClock("2020-02-02T02:02:06Z");
+        trackPointCreator.setClock("2020-02-02T02:02:18Z");
         trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context, null, trackPointCreator));
         service.endCurrentTrack();
 
-        trackPointCreator.setClock("2020-02-02T02:02:20Z");
+        trackPointCreator.setClock("2020-02-02T02:03:20Z");
         service.resumeTrack(trackId);
 
-        sendLocation(trackPointCreator, "2020-02-02T02:02:21Z", 3, 14.002, 10, 13, 15, 10, 0);
+        sendLocation(trackPointCreator, "2020-02-02T02:03:21Z", 3, 14.002, 10, 13, 15, 10, 0);
 
-        sendLocation(trackPointCreator, "2020-02-02T02:02:22Z", 3, 16, 10, 13, 15, 10, 0);
+        sendLocation(trackPointCreator, "2020-02-02T02:03:22Z", 3, 16, 10, 13, 15, 10, 0);
 
-        sendLocation(trackPointCreator, "2020-02-02T02:02:23Z", 3, 16.001, 10, 27, 15, 10, 0);
+        sendLocation(trackPointCreator, "2020-02-02T02:03:23Z", 3, 16.001, 10, 27, 15, 10, 0);
 
-        trackPointCreator.setClock("2020-02-02T02:02:24Z");
+        trackPointCreator.setClock("2020-02-02T02:03:24Z");
         trackPointCreator.setRemoteSensorManager(new BluetoothRemoteSensorManager(context, null, trackPointCreator));
         service.endCurrentTrack();
 
@@ -187,7 +192,7 @@ public class ExportImportTest {
         track = contentProviderUtils.getTrack(trackId);
         trackPoints = TestDataUtil.getTrackPoints(contentProviderUtils, trackId);
         markers = contentProviderUtils.getMarkers(trackId);
-        assertEquals(10, trackPoints.size());
+        assertEquals(12, trackPoints.size());
         assertEquals(2, markers.size());
     }
 
@@ -231,29 +236,29 @@ public class ExportImportTest {
         // Time
         assertEquals(track.getZoneOffset(), importedTrack.getZoneOffset());
         assertEquals(Instant.parse("2020-02-02T02:02:02Z"), importedTrackStatistics.getStartTime());
-        assertEquals(Instant.parse("2020-02-02T02:02:24Z"), importedTrackStatistics.getStopTime());
+        assertEquals(Instant.parse("2020-02-02T02:03:24Z"), importedTrackStatistics.getStopTime());
 
         TrackStatistics originalTrackStatistics = track.getTrackStatistics();
 
         assertEquals(originalTrackStatistics.getTotalTime(), importedTrackStatistics.getTotalTime());
-        assertEquals(Duration.ofSeconds(7), importedTrackStatistics.getTotalTime());
+        assertEquals(Duration.ofSeconds(19), importedTrackStatistics.getTotalTime());
 
         assertEquals(originalTrackStatistics.getMovingTime(), importedTrackStatistics.getMovingTime());
         assertEquals(Duration.ofSeconds(3), importedTrackStatistics.getMovingTime());
 
         // Distance
         assertEquals(originalTrackStatistics.getTotalDistance(), importedTrackStatistics.getTotalDistance());
-        assertEquals(123.16, importedTrackStatistics.getTotalDistance().toM(), 0.01);
+        assertEquals(125.16, importedTrackStatistics.getTotalDistance().toM(), 0.01);
 
         // Speed
         assertEquals(originalTrackStatistics.getMaxSpeed(), importedTrackStatistics.getMaxSpeed());
-        assertEquals(41.05, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(41.72, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
 
         assertEquals(originalTrackStatistics.getAverageSpeed(), importedTrackStatistics.getAverageSpeed());
-        assertEquals(17.59, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
+        assertEquals(6.58, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
 
         assertEquals(originalTrackStatistics.getAverageMovingSpeed(), importedTrackStatistics.getAverageMovingSpeed());
-        assertEquals(41.05, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(41.72, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
 
         // Altitude
         assertEquals(originalTrackStatistics.getMinAltitude(), importedTrackStatistics.getMinAltitude(), 0.01);
@@ -345,19 +350,19 @@ public class ExportImportTest {
                         .setAltitudeLoss(1f)
                         .setAltitudeGain(1f)
                         .setHorizontalAccuracy(Distance.of(10)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:05Z"))
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:17Z"))
                         .setLatitude(3)
                         .setLongitude(14.001)
                         .setAltitude(10)
                         .setSpeed(Speed.of(5))
                         .setAltitudeLoss(1f)
                         .setAltitudeGain(1f)
-                        .setSensorDistance(Distance.of(12))
+                        .setSensorDistance(Distance.of(14))
                         .setHeartRate(66f)
                         .setPower(50f)
                         .setCadence(3f)
                         .setHorizontalAccuracy(Distance.of(10)),
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2020-02-02T02:02:21Z"))
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2020-02-02T02:03:21Z"))
                         .setLatitude(3)
                         .setLongitude(14.002)
                         .setAltitude(10)
@@ -365,7 +370,7 @@ public class ExportImportTest {
                         .setAltitudeGain(0f)
                         .setSpeed(Speed.of(15))
                         .setHorizontalAccuracy(Distance.of(10)),
-                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2020-02-02T02:02:22Z"))
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_AUTOMATIC, Instant.parse("2020-02-02T02:03:22Z"))
                         .setLatitude(3)
                         .setLongitude(16)
                         .setAltitude(10)
@@ -373,7 +378,7 @@ public class ExportImportTest {
                         .setAltitudeGain(0f)
                         .setSpeed(Speed.of(15))
                         .setHorizontalAccuracy(Distance.of(10)),
-                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:02:23Z"))
+                new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.parse("2020-02-02T02:03:23Z"))
                         .setLatitude(3)
                         .setLongitude(16.001)
                         .setAltitude(10)
@@ -390,18 +395,18 @@ public class ExportImportTest {
         // Time
         assertEquals(track.getZoneOffset(), importedTrack.getZoneOffset());
         assertEquals(Instant.parse("2020-02-02T02:02:03Z"), importedTrackStatistics.getStartTime());
-        assertEquals(Instant.parse("2020-02-02T02:02:23Z"), importedTrackStatistics.getStopTime());
+        assertEquals(Instant.parse("2020-02-02T02:03:23Z"), importedTrackStatistics.getStopTime());
 
-        assertEquals(Duration.ofSeconds(3), importedTrackStatistics.getTotalTime());
-        assertEquals(Duration.ofSeconds(3), importedTrackStatistics.getMovingTime());
+        assertEquals(Duration.ofSeconds(15), importedTrackStatistics.getTotalTime());
+        assertEquals(Duration.ofSeconds(15), importedTrackStatistics.getMovingTime());
 
         // Distance
-        assertEquals(123.16, importedTrackStatistics.getTotalDistance().toM(), 0.01);
+        assertEquals(125.16, importedTrackStatistics.getTotalDistance().toM(), 0.01);
 
         // Speed
-        assertEquals(41.05, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
-        assertEquals(41.05, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
-        assertEquals(41.05, importedTrackStatistics.getAverageMovingSpeed().toMPS(), 0.01);
+        assertEquals(8.34, importedTrackStatistics.getMaxSpeed().toMPS(), 0.01);
+        assertEquals(8.34, importedTrackStatistics.getAverageSpeed().toMPS(), 0.01);
+        assertEquals(8.34, importedTrackStatistics.getAverageMovingSpeed().toMPS(), 0.01);
 
         // Altitude
         assertEquals(10, importedTrackStatistics.getMinAltitude(), 0.01);

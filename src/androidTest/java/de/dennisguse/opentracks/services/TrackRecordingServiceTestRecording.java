@@ -31,12 +31,14 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.content.data.TestDataUtil;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.io.file.importer.TrackPointAssert;
 import de.dennisguse.opentracks.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.sensors.BluetoothRemoteSensorManager;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 import de.dennisguse.opentracks.services.handlers.TrackPointCreator;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
@@ -256,6 +258,47 @@ public class TrackRecordingServiceTestRecording {
                 new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse(resumeTime))
         ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
     }
+
+    @MediumTest
+    @Test
+    public void testRecording_blesensor_only_no_distance() {
+        // given
+        String startTime = "2020-02-02T02:02:02Z";
+        TrackPointCreator trackPointCreator = service.getTrackPointCreator();
+
+        trackPointCreator.setClock(startTime);
+        Track.Id trackId = service.startNewTrack();
+        trackPointCreator.stopGPS();
+        trackPointCreator.setAltitudeSumManager(altitudeSumManager);
+        BluetoothRemoteSensorManager remoteSensorManager = trackPointCreator.getRemoteSensorManager();
+
+        // when
+        String sensor1 = "2020-02-02T02:02:03Z";
+        trackPointCreator.setClock(sensor1);
+        remoteSensorManager.onChanged(new SensorDataHeartRate("", "", HeartRate.of(5))); //Should be ignored
+
+        String sensor3 = "2020-02-02T02:02:13Z";
+        trackPointCreator.setClock(sensor3);
+        remoteSensorManager.onChanged(new SensorDataHeartRate("", "", HeartRate.of(7)));
+
+        String stopTime = "2020-02-02T02:02:15Z";
+        trackPointCreator.setClock(stopTime);
+        service.endCurrentTrack();
+
+        // then
+        new TrackPointAssert().assertEquals(List.of(
+                new TrackPoint(TrackPoint.Type.SEGMENT_START_MANUAL, Instant.parse(startTime)),
+                new TrackPoint(TrackPoint.Type.SENSORPOINT, Instant.parse(sensor3))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+                        .setHeartRate(HeartRate.of(7)),
+                new TrackPoint(TrackPoint.Type.SEGMENT_END_MANUAL, Instant.parse(stopTime))
+                        .setAltitudeGain(0f)
+                        .setAltitudeLoss(0f)
+                        .setHeartRate(HeartRate.of(7))
+        ), TestDataUtil.getTrackPoints(contentProviderUtils, trackId));
+    }
+
 
     @MediumTest
     @Test
