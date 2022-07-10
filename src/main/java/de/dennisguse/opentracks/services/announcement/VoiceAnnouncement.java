@@ -17,6 +17,7 @@
 package de.dennisguse.opentracks.services.announcement;
 
 import android.content.Context;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.speech.tts.TextToSpeech;
@@ -138,7 +139,10 @@ public class VoiceAnnouncement {
             if (ttsFallback == null) {
                 Log.w(TAG, "MediaPlayer for ttsFallback could not be created.");
             } else {
-                ttsFallback.setAudioStreamType(AUDIO_STREAM);
+                ttsFallback.setAudioAttributes(
+                        new AudioAttributes.Builder()
+                                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                                .build());
                 ttsFallback.setLooping(false);
             }
         }
