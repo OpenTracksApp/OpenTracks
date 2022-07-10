@@ -57,6 +57,8 @@ public class MarkerEditActivity extends AbstractActivity {
     public static final String EXTRA_TRACK_ID = "track_id";
     public static final String EXTRA_MARKER_ID = "marker_id";
 
+    private static final String CAMERA_PHOTO_URI_KEY = "camera_photo_uri_key";
+
     private static final String TAG = MarkerEditActivity.class.getSimpleName();
     private Track.Id trackId;
     private Marker marker;
@@ -87,6 +89,10 @@ public class MarkerEditActivity extends AbstractActivity {
 
         trackId = getIntent().getParcelableExtra(EXTRA_TRACK_ID);
         Marker.Id markerId = getIntent().getParcelableExtra(EXTRA_MARKER_ID);
+
+        if (savedInstanceState != null) {
+            cameraPhotoUri = Uri.parse(savedInstanceState.getString(CAMERA_PHOTO_URI_KEY, ""));
+        }
 
         hasCamera = getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
 
@@ -165,6 +171,14 @@ public class MarkerEditActivity extends AbstractActivity {
         viewModel = null;
         takePictureFromGallery = null;
         takePictureFromCamera = null;
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (cameraPhotoUri != null) {
+            outState.putString(CAMERA_PHOTO_URI_KEY, cameraPhotoUri.toString());
+        }
     }
 
     @Override
