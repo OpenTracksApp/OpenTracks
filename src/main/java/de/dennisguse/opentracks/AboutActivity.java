@@ -33,4 +33,10 @@ public class AboutActivity extends AbstractActivity {
         viewBinding = AboutBinding.inflate(getLayoutInflater());
         return viewBinding.getRoot();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        viewBinding = null;
+    }
 }

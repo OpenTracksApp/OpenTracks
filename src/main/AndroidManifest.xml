@@ -87,6 +87,17 @@ limitations under the License.
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".introduction.IntroductionActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".AboutActivity" />
 
         <activity
@@ -310,13 +321,8 @@ limitations under the License.
 
         <activity
             android:name=".TrackListActivity"
-            android:exported="true"
-            android:launchMode="singleTop"
-            android:theme="@style/SplashTheme">
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
             <meta-data
@@ -354,7 +360,7 @@ limitations under the License.
             android:exported="false"
             android:finishOnTaskLaunch="true"
             android:launchMode="singleInstance"
-            android:process=":crash"/>
+            android:process=":crash" />
 
         <provider
             android:name=".data.ShareContentProvider"

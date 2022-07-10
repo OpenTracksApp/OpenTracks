@@ -159,8 +159,6 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SplashScreen.installSplashScreen(this);
-
         super.onCreate(savedInstanceState);
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
 
