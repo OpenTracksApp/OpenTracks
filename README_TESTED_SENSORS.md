@@ -38,10 +38,6 @@ However, often only one value is provided.
 
 We only support _Instantaneous Power_.
 
-_WARNING_: we only support physically movements with valid GPS coordinates.
-Using a device indoors (no GPS available) will only show the current power values, but won't store anything.
-Also the distance is not computed.
-
 For cycling:
 * Assioma Duo Powermeter
 * Elite drivo II
