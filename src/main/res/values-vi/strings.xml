@@ -559,4 +559,36 @@ limitations under the License.
     <string name="settings_public_api_dashboard_enabled_summary_on">Một ứng dụng bắt đầu ghi hình cũng có thể truy cập vào dữ liệu ghi lại.</string>
     <string name="settings_public_api_dashboard_enabled_summary_off">Ghi lại dữ liệu sẽ không được miễn phí tự động với các ứng dụng khác.</string>
     <string name="settings_public_api_dashboard_enabled_title">Chuyển dữ liệu tự động</string>
+    <string name="settings_export_filename_title">Định dạng tên tệp</string>
+    <string name="show_on_dashboard_not_installed">Không có ứng dụng hỗ trợ API OpenTracks Dashboard nào được cài đặt.</string>
+    <string name="description_pace_nautical">Nhịp độ (phút/dặm hải lý)</string>
+    <string name="image_discard">Bỏ</string>
+    <string name="settings_announcements_average_heart_rate">Nhịp tim trung bình</string>
+    <string name="settings_announcements_lap_heart_rate">Nhịp tim vòng</string>
+    <string name="settings_announcements_average_speed_pace">Tốc độ trung bình/nhịp độ</string>
+    <string name="settings_stats_units_nautical">Hải lý (dặm hải lý, ft)</string>
+    <string name="settings_public_api_package_title">Tên gói cho API công khai</string>
+    <plurals name="voiceDistanceNauticalMiles">
+        <item quantity="other">%1$.2f dặm hải lý</item>
+    </plurals>
+    <string name="select_show_on_map_behavior">Chọn hành vi \"hiện trên bản đồ\"</string>
+    <string name="settings_announcements_lap_speed_pace">Tốc độ vòng/nhịp độ</string>
+    <string name="track_discarding">Đang bỏ đoạn đường</string>
+    <plurals name="voiceSpeedMKnots">
+        <item quantity="other">%1$.1f nút</item>
+    </plurals>
+    <string name="voice_per_nautical_mile">trên dặm hải lý</string>
+    <string name="description_speed_nautical">Tốc độ (nút)</string>
+    <string name="unit_nautical_mile">Dặm hải lý</string>
+    <string name="unit_knots">nút</string>
+    <string name="unit_minute_per_nautical_mile">phút/dặm hải lý</string>
+    <string name="value_integer_knots">%1$d nút</string>
+    <string name="value_float_knots">%1$.1f nút</string>
+    <string name="value_float_knots_recommended">%1$.1f nút (khuyên dùng)</string>
+    <string name="error_crash_title">%1$s đã dừng đột ngột</string>
+    <string name="share_crash_report">Chia sẻ báo cáo dừng đột ngột</string>
+    <string name="report_bug">Báo cáo lỗi</string>
+    <string name="show_on_map_format_ask">Hỏi</string>
+    <string name="show_on_dashboard">API OpenTracks Dashboard</string>
+    <string name="always">Luôn luôn</string>
 </resources>
