@@ -254,13 +254,14 @@ public class StringUtils {
     /**
      * @return the formatted altitude_m (or null) and it's unit as {@link Pair}
      */
+    //TODO altitude_m should be double or a value object
     public static Pair<String, String> getAltitudeParts(Context context, Float altitude_m, UnitSystem unitSystem) {
         DistanceFormatter formatter = DistanceFormatter.Builder()
                 .setDecimalCount(1)
                 .setUnit(unitSystem)
                 .build(context);
 
-        Distance distance = altitude_m != null ? Distance.of(altitude_m) : Distance.of(Double.NaN); //TODO Refactor Double.NaN
+        Distance distance = altitude_m != null ? Distance.of(altitude_m) : Distance.of((Double) null);
         return formatter.getDistanceParts(distance);
     }
 

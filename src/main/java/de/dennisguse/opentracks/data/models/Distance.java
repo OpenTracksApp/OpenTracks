@@ -13,6 +13,14 @@ public class Distance {
         return new Distance(distance_m);
     }
 
+    public static Distance of(Double distance_m) {
+        if (distance_m == null) {
+            return Distance.of(Double.NaN);
+        } else {
+            return Distance.of((double) distance_m);
+        }
+    }
+
     public static Distance of(String distance_m) {
         return of(Float.parseFloat(distance_m));
     }

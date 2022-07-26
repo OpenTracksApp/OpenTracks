@@ -42,12 +42,13 @@ public class DistanceFormatter {
      */
     public Pair<String, String> getDistanceParts(Distance distance) {
         if (distance.isInvalid()) {
+            String valueUnknown = resources.getString(R.string.value_unknown);
             switch (unitSystem) {
                 case METRIC:
-                    return new Pair<>(null, resources.getString(R.string.unit_meter));
+                    return new Pair<>(valueUnknown, resources.getString(R.string.unit_meter));
                 case IMPERIAL:
                 case NAUTICAL_IMPERIAL:
-                    return new Pair<>(null, resources.getString(R.string.unit_feet));
+                    return new Pair<>(valueUnknown, resources.getString(R.string.unit_feet));
                 default:
                     throw new RuntimeException("Not implemented");
             }
