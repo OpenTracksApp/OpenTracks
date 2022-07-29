@@ -1,0 +1,8 @@
+v4.0.5: OpenTracks
+
+Changes:
+- PlayStore relase get's another logo
+
+Bugfix:
+- Interval list shows "-" if gain/loss is not present
+
