@@ -17,8 +17,8 @@ import androidx.documentfile.provider.DocumentFile;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.io.file.exporter.ExportActivity;
-import de.dennisguse.opentracks.util.IntentUtils;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
+import de.dennisguse.opentracks.util.IntentUtils;
 
 public abstract class DirectoryChooserActivity extends AppCompatActivity {
 

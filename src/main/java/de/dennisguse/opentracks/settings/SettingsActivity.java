@@ -11,7 +11,6 @@ import androidx.preference.PreferenceFragmentCompat;
 import de.dennisguse.opentracks.AbstractActivity;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.databinding.SettingsBinding;
-import de.dennisguse.opentracks.databinding.TrackRecordedBinding;
 import de.dennisguse.opentracks.fragments.ChooseActivityTypeDialogFragment;
 
 public class SettingsActivity extends AbstractActivity implements ChooseActivityTypeDialogFragment.ChooseActivityTypeCaller {

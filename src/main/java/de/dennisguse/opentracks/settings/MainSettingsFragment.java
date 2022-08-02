@@ -8,9 +8,6 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import de.dennisguse.opentracks.R;
-import de.dennisguse.opentracks.services.RecordingStatus;
-import de.dennisguse.opentracks.services.TrackRecordingService;
-import de.dennisguse.opentracks.services.TrackRecordingServiceConnection;
 
 public class MainSettingsFragment extends PreferenceFragmentCompat {
 

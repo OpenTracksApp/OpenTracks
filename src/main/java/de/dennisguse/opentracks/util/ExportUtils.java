@@ -17,8 +17,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import java.util.regex.Pattern;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Track;

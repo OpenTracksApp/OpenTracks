@@ -3,19 +3,15 @@ package de.dennisguse.opentracks;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 import de.dennisguse.opentracks.databinding.ActivityShowErrorBinding;
-import de.dennisguse.opentracks.databinding.TrackListBinding;
 
 public class ShowErrorActivity extends AbstractActivity {
 

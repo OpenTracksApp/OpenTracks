@@ -32,7 +32,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import de.dennisguse.opentracks.data.models.Marker;
-import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.Track;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.data.tables.MarkerColumns;

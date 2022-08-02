@@ -15,6 +15,10 @@
  */
 package de.dennisguse.opentracks.chart;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import androidx.annotation.NonNull;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -24,10 +28,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import de.dennisguse.opentracks.R;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Tests {@link ChartValueSeries}.
