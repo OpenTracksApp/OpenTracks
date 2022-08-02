@@ -65,7 +65,7 @@ public class EGM2008Utils {
         if (location.getLongitude() >= 0) {
             longitude = location.getLongitude();
         } else {
-            longitude = 180 + Math.abs(location.getLongitude());
+            longitude = 360 + location.getLongitude();
         }
         int longitudeIndex = (int) (longitude * RESOLUTION_IN_MINUTES);
 
@@ -171,6 +171,14 @@ public class EGM2008Utils {
         @Override
         public int hashCode() {
             return Objects.hash(latitudeIndex, longitudeIndex);
+        }
+
+        @Override
+        public String toString() {
+            return "Indices{" +
+                    "latitudeIndex=" + latitudeIndex +
+                    ", longitudeIndex=" + longitudeIndex +
+                    '}';
         }
     }
 }
