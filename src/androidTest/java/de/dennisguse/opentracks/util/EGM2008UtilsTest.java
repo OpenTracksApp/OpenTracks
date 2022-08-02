@@ -142,7 +142,7 @@ public class EGM2008UtilsTest {
     }
 
     @Test
-    public void data_Berlin() throws IOException {
+    public void data_Berlin_Germany_() throws IOException {
         // given
         TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(0));
         trackPoint.setLatitude(52.530644);
@@ -157,7 +157,7 @@ public class EGM2008UtilsTest {
     }
 
     @Test
-    public void data_Berlin_Caching() throws IOException {
+    public void data_Berlin_Germany_Caching() throws IOException {
         // given
         TrackPoint trackPoint1 = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(0));
         trackPoint1.setLatitude(52.530644);
@@ -177,6 +177,22 @@ public class EGM2008UtilsTest {
     }
 
     @Test
+    public void data_Seattle_USA() throws IOException {
+        // given
+        TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(0));
+
+        trackPoint.setLatitude(47.63153);
+        trackPoint.setLongitude(-122.30938);
+        trackPoint.setAltitude(0);
+
+        // when
+        EGM2008Utils.EGM2008Correction altitude_egm2008 = EGM2008Utils.createCorrection(context, trackPoint.getLocation());
+
+        // then
+        assertEquals(22.99, altitude_egm2008.correctAltitude(trackPoint.getLocation()), MAX_BILINEAR_ERROR);
+    }
+
+    @Test
     public void data_MaxUndulation() throws IOException {
         // given
         TrackPoint trackPoint = new TrackPoint(TrackPoint.Type.TRACKPOINT, Instant.ofEpochMilli(0));
@@ -190,6 +206,7 @@ public class EGM2008UtilsTest {
         // then
         assertEquals(-85.824, altitude_egm2008.correctAltitude(trackPoint.getLocation()), MAX_BILINEAR_ERROR);
     }
+
 
     @Test
     public void getIndices() {
@@ -208,7 +225,7 @@ public class EGM2008UtilsTest {
 
         trackPoint.setLatitude(-90);
         trackPoint.setLongitude(-180);
-        assertEquals(new EGM2008Utils.Indices(2160, 0), EGM2008Utils.getIndices(trackPoint.getLocation()));
+        assertEquals(new EGM2008Utils.Indices(2160, 2160), EGM2008Utils.getIndices(trackPoint.getLocation()));
     }
 
     @Test
