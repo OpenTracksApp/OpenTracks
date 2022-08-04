@@ -323,8 +323,8 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
         searchView.findViewById(R.id.search_edit_frame).setPadding(0, 0, 48, 0);
 
         SearchView.SearchAutoComplete searchAutoComplete = searchView.findViewById(R.id.search_src_text);
-        searchAutoComplete.setHintTextColor(getResources().getColor(android.R.color.white));
-        searchAutoComplete.setTextColor(getResources().getColor(android.R.color.white));
+        searchAutoComplete.setHintTextColor(ContextCompat.getColor(this, android.R.color.white));
+        searchAutoComplete.setTextColor(ContextCompat.getColor(this, android.R.color.white));
 
         searchView.setOnCloseListener(() -> {
             searchView.clearFocus();

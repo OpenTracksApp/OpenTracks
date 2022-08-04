@@ -22,6 +22,8 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -169,7 +171,7 @@ public class ListItemUtils {
         textView.setVisibility(View.VISIBLE);
         textView.setText(value);
         if (addShadow) {
-            textView.setShadowLayer(5, 0, 2, context.getResources().getColor(android.R.color.black));
+            textView.setShadowLayer(5, 0, 2, ContextCompat.getColor(context, android.R.color.black));
         } else {
             textView.setShadowLayer(0, 0, 0, 0);
         }
