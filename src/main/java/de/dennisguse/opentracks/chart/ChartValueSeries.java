@@ -24,6 +24,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Path;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import java.text.NumberFormat;
 
@@ -68,12 +69,12 @@ abstract class ChartValueSeries {
 
         fillPaint = new Paint();
         fillPaint.setStyle(Style.FILL);
-        fillPaint.setColor(context.getResources().getColor(fillColor));
+        fillPaint.setColor(ContextCompat.getColor(context, fillColor));
         fillPaint.setAntiAlias(true);
 
         strokePaint = new Paint();
         strokePaint.setStyle(Style.STROKE);
-        strokePaint.setColor(context.getResources().getColor(strokeColor));
+        strokePaint.setColor(ContextCompat.getColor(context, strokeColor));
         strokePaint.setAntiAlias(true);
 
         // Make copies of the stroke paint with the default thickness
