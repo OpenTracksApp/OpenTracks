@@ -1,0 +1,6 @@
+v4.0.6: OpenTracks
+
+Bugfix:
+- EGM2008 offset computed wrong for negative longitudes
+- PublicAPI crashed if OpenTracks was in background (API26+)
+
