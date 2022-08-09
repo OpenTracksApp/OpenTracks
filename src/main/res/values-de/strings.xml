@@ -276,9 +276,8 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
 \n%1$s</string>
     <string name="share_track_subject">Ich möchte einen Track mit dir teilen</string>
     <!-- Stats -->
-    <string name="stats_average_moving_pace">Durchschnitt\n(Bewegung)</string>
-    <string name="stats_average_moving_speed">Durchschnittsgeschwindigkeit
-\n(Bewegung)</string>
+    <string name="stats_average_moving_pace">Durchschnittliches Bewegungstempo</string>
+    <string name="stats_average_moving_speed">Mittlere Geschwindigkeit in Bewegung</string>
     <string name="stats_average_pace">Durchschnitt</string>
     <string name="stats_average_speed">Durchschnittsgeschwindigkeit</string>
     <string name="stats_altitude">Höhe</string>
@@ -464,7 +463,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="about_third_party_data">Daten von Drittherstellern</string>
     <string name="sensor_state_heart_rate_max">Maximaler Herzfrequenz</string>
     <string name="track_delete_not_recording">Dieser Track kann nicht gelöscht werden, da er gerade aufgezeichnet wird.</string>
-    <string name="interval_list_empty_message">Es gibt noch keine Intervalle.</string>
+    <string name="interval_list_empty_message">Es gibt noch keine Intervalle</string>
     <string name="import_parser_error">Parser Fehler: %1$s</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Anzeige im Vollbildmodus während der Aufzeichnung.</string>
     <string name="sensor_state_heart_rate_avg">Durchschnittlicher Herzfrequenz</string>
