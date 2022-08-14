@@ -23,7 +23,7 @@ class GpsStatus {
     private static final String TAG = GpsStatus.class.getSimpleName();
 
     // The duration that GpsStatus waits from minimal interval to consider GPS lost.
-    private static final Duration SIGNAL_LOST_THRESHOLD = Duration.ofSeconds(10);
+    private static final Duration SIGNAL_LOST_THRESHOLD = Duration.ofSeconds(30);
 
     private Distance thresholdHorizontalAccuracy;
     // Threshold for time without points.
