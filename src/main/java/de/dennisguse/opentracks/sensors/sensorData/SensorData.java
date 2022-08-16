@@ -12,6 +12,8 @@ public abstract class SensorData<T> {
 
     protected T value;
 
+    protected int batteryLevel;
+
     private final String sensorAddress;
     private final String sensorName;
 
@@ -61,6 +63,10 @@ public abstract class SensorData<T> {
             return value;
         }
         return getNoneValue();
+    }
+
+    public int getBatteryLevel() {
+        return batteryLevel;
     }
 
     /**

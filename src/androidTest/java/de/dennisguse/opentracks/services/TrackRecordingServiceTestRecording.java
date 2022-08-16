@@ -275,11 +275,11 @@ public class TrackRecordingServiceTestRecording {
         // when
         String sensor1 = "2020-02-02T02:02:03Z";
         trackPointCreator.setClock(sensor1);
-        remoteSensorManager.onChanged(new SensorDataHeartRate("", "", HeartRate.of(5))); //Should be ignored
+        remoteSensorManager.onSensorDataChanged(new SensorDataHeartRate("", "", HeartRate.of(5))); //Should be ignored
 
         String sensor3 = "2020-02-02T02:02:13Z";
         trackPointCreator.setClock(sensor3);
-        remoteSensorManager.onChanged(new SensorDataHeartRate("", "", HeartRate.of(7)));
+        remoteSensorManager.onSensorDataChanged(new SensorDataHeartRate("", "", HeartRate.of(7)));
 
         String stopTime = "2020-02-02T02:02:15Z";
         trackPointCreator.setClock(stopTime);

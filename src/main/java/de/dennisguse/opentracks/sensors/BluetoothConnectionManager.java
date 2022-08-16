@@ -99,20 +99,26 @@ public abstract class BluetoothConnectionManager<DataType> {
                 return;
             }
 
+            SensorData<DataType> sensorData = null;
             if (BluetoothUtils.BATTERY.getServiceUUID().equals(characteristic.getService().getUuid())) {
                 final Integer batteryLevel = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, 0);
                 Log.d(TAG, "Battery level of " + gatt.getDevice().getAddress() + ": " + batteryLevel);
-                observer.onBatteryLevelChanged(batteryLevel);
+
+                if (batteryLevel != null) {
+                    sensorData = createBatterySensorData(gatt.getDevice().getName(), gatt.getDevice().getAddress(), batteryLevel);
+                }
             } else {
-                SensorData<DataType> sensorData = parsePayload(serviceMeasurementUUID.get(), gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
-                if (sensorData != null) {
-                    Log.d(TAG, "Decoded data from " + gatt.getDevice().getAddress() + ": " + sensorData);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        observer.onSensorDataChanged(sensorData);
-                    } else {
-                        //TODO This might lead to NPEs in case of race conditions due to shutdown.
-                        observer.getHandler().post(() -> observer.onSensorDataChanged(sensorData));
-                    }
+                sensorData = parsePayload(serviceMeasurementUUID.get(), gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
+            }
+
+            if (sensorData != null) {
+                Log.d(TAG, "Decoded data from " + gatt.getDevice().getAddress() + ": " + sensorData);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    observer.onSensorDataChanged(sensorData);
+                } else {
+                    //TODO This might lead to NPEs in case of race conditions due to shutdown.
+                    final SensorData<DataType> fsd = sensorData;
+                    observer.getHandler().post(() -> observer.onSensorDataChanged(fsd));
                 }
             }
         }
@@ -170,6 +176,8 @@ public abstract class BluetoothConnectionManager<DataType> {
 
     protected abstract SensorData<DataType> createEmptySensorData(String address);
 
+    protected abstract SensorData<DataType> createBatterySensorData(String address, String name, int batteryLevel);
+
     /**
      * @return null if data could not be parsed.
      */
@@ -178,8 +186,6 @@ public abstract class BluetoothConnectionManager<DataType> {
     interface SensorDataObserver {
 
         void onSensorDataChanged(SensorData<?> sensorData);
-
-        void onBatteryLevelChanged(int level);
 
         void onDisconnecting(SensorData<?> sensorData);
 
