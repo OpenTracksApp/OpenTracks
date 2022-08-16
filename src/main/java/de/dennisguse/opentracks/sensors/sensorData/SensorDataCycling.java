@@ -40,13 +40,6 @@ public final class SensorDataCycling {
             this.crankRevolutionsTime = crankRevolutionsTime;
         }
 
-        /**
-         * Workaround for Wahoo CADENCE: provides speed instead of cadence
-         */
-        public CyclingCadence(@NonNull DistanceSpeed speed) {
-            this(speed.getSensorAddress(), speed.getSensorName(), speed.wheelRevolutionsCount, speed.wheelRevolutionsTime);
-        }
-
         public boolean hasData() {
             return crankRevolutionsCount != null && crankRevolutionsTime != null;
         }

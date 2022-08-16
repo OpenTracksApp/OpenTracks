@@ -30,8 +30,10 @@ import java.util.UUID;
 
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCycling;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 
 /**
@@ -109,14 +111,45 @@ public class BluetoothUtils {
         return null;
     }
 
-    public static Integer parseCyclingPower(BluetoothGattCharacteristic characteristic) {
+    public static SensorDataCyclingPower.Data parseCyclingPower(BluetoothGattCharacteristic characteristic) {
         // DOCUMENTATION https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.cycling_power_measurement.xml
         int valueLength = characteristic.getValue().length;
-        if (valueLength < 4) {
+        if (valueLength == 0) {
             return null;
         }
 
-        return characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_SINT16, 2);
+        int index = 0;
+        int flags1 = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, index++);
+        int flags2 = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, index++);
+        boolean hasPedalPowerBalance = (flags1 & 0x01) > 0;
+        boolean hasAccumulatedTorque = (flags1 & 0x04) > 0;
+        boolean hasWheel = (flags1 & 16) > 0;
+        boolean hasCrank = (flags1 & 32) > 0;
+
+        Integer instantaneousPower = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_SINT16, index);
+        index += 2;
+
+        if (hasPedalPowerBalance) {
+            index += 1;
+        }
+        if (hasAccumulatedTorque) {
+            index += 2;
+        }
+        if (hasWheel) {
+            index += 2 + 2;
+        }
+
+        SensorDataCycling.CyclingCadence cadence = null;
+        if (hasCrank && valueLength - index >= 4) {
+            long crankCount = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index);
+            index += 2;
+
+            int crankTime = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index); // 1/1024s
+
+            cadence = new SensorDataCycling.CyclingCadence("", "", crankCount, crankTime);
+        }
+
+        return new SensorDataCyclingPower.Data(Power.of(instantaneousPower), cadence);
     }
 
     public static SensorDataCycling.CadenceAndSpeed parseCyclingCrankAndWheel(String address, String sensorName, @NonNull BluetoothGattCharacteristic characteristic) {

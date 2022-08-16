@@ -254,9 +254,9 @@ public abstract class BluetoothConnectionManager<DataType> {
 
         @Override
         protected SensorDataCyclingPower parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-            Integer cyclingPower = BluetoothUtils.parseCyclingPower(characteristic);
+            SensorDataCyclingPower.Data cyclingPower = BluetoothUtils.parseCyclingPower(characteristic);
 
-            return cyclingPower != null ? new SensorDataCyclingPower(address, sensorName, Power.of(cyclingPower)) : null;
+            return cyclingPower != null ? new SensorDataCyclingPower(address, sensorName, cyclingPower.getPower()) : null;
         }
     }
 

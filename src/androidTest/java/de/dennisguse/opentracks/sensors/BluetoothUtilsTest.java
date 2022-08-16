@@ -11,6 +11,7 @@ import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCycling;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 
 public class BluetoothUtilsTest {
@@ -86,10 +87,25 @@ public class BluetoothUtilsTest {
         characteristic.setValue(new byte[]{0, 0, 40, 0});
 
         // when
-        int power_w = BluetoothUtils.parseCyclingPower(characteristic);
+        SensorDataCyclingPower.Data powerCadence = BluetoothUtils.parseCyclingPower(characteristic);
 
         // then
-        assertEquals(40, power_w);
+        assertEquals(40, powerCadence.getPower().getW(), 0.01);
+    }
+
+    @Test
+    public void parseCyclingPower_power_with_cadence() {
+        BluetoothGattCharacteristic characteristic = new BluetoothGattCharacteristic(BluetoothUtils.CYCLING_POWER.getServiceUUID(), 0, 0);
+        characteristic.setValue(new byte[]{0x2C, 0x00, 0x00, 0x00, (byte) 0x9F, 0x00, 0x0C, 0x00, (byte) 0xE5, 0x42});
+
+        // when
+        SensorDataCyclingPower.Data powerCadence = BluetoothUtils.parseCyclingPower(characteristic);
+
+        // then
+        assertEquals(0, powerCadence.getPower().getW(), 0.01);
+
+        assertEquals(12, powerCadence.getCadence().getCrankRevolutionsCount());
+        assertEquals(17125, powerCadence.getCadence().getCrankRevolutionsTime());
     }
 
     @Test
