@@ -70,7 +70,7 @@ import de.dennisguse.opentracks.ui.util.ActivityUtils;
 import de.dennisguse.opentracks.ui.util.ListItemUtils;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.IntentUtils;
-import de.dennisguse.opentracks.util.PermissionUtils;
+import de.dennisguse.opentracks.util.PermissionRequester;
 import de.dennisguse.opentracks.util.StringUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
@@ -263,13 +263,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
     }
 
     private void requestRequiredPermissions() {
-        if (!PermissionUtils.hasGPSPermission(this)) {
-            PermissionUtils.requestGPSPermission(this, null, () -> Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show());
-        }
-
-        if (!PermissionUtils.hasBluetoothPermissions(this)) {
-            PermissionUtils.requestBluetoothPermission(this, null, null);
-        }
+        PermissionRequester.ALL.requestPermissionsIfNeeded(this, this, null, (requester) -> Toast.makeText(this, R.string.permission_gps_failed, Toast.LENGTH_SHORT).show());
     }
 
     @Override

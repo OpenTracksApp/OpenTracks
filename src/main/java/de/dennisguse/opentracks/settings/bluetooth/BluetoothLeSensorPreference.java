@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.sensors.BluetoothUtils;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
-import de.dennisguse.opentracks.util.PermissionUtils;
+import de.dennisguse.opentracks.util.PermissionRequester;
 
 /**
  * Preference to select a discoverable Bluetooth LE device.
@@ -145,20 +145,18 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
             bluetoothIcon = AnimatedVectorDrawableCompat.create(getContext(), R.drawable.ic_bluetooth_searching_animated_24dp);
             bluetoothIcon.start();
 
-            if (!PermissionUtils.hasBluetoothPermissions(getContext())) {
-                PermissionUtils.requestBluetoothPermission(this,
-                        this::startBluetoothScan,
-                        () -> {
-                            if (PermissionUtils.shouldShowRequestPermissionRationaleBluetooth(this)) {
-                                Toast.makeText(getContext(), R.string.permission_bluetooth_failed_rejected, Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(getContext(), R.string.permission_bluetooth_failed, Toast.LENGTH_SHORT).show();
-                            }
-                            dismiss();
-                        });
-            } else {
-                startBluetoothScan();
-            }
+            PermissionRequester.BLUETOOTH.requestPermissionsIfNeeded(getContext(), this,
+                    this::startBluetoothScan,
+                    (requester) -> {
+                        if (requester.shouldShowRequestPermissionRationale(this)) {
+                            Toast.makeText(getContext(), R.string.permission_bluetooth_failed_rejected, Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getContext(), R.string.permission_bluetooth_failed, Toast.LENGTH_SHORT).show();
+                        }
+                        dismiss();
+                    });
+
+            startBluetoothScan();
         }
 
         private void startBluetoothScan() {

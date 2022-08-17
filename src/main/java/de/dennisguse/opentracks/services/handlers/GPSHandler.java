@@ -19,7 +19,7 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.LocationUtils;
-import de.dennisguse.opentracks.util.PermissionUtils;
+import de.dennisguse.opentracks.util.PermissionRequester;
 
 @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
 public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -54,7 +54,7 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
     //TODO upgrade to AGP7.0.0/API31 started complaining about removeUpdates.
     public void onStop() {
         if (locationManager != null && context != null) {
-            if (PermissionUtils.hasGPSPermission(context)) {
+            if (PermissionRequester.GPS.hasPermission(context)) {
                 locationManager.removeUpdates(this);
             }
             locationManager = null;
@@ -152,7 +152,7 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
             Log.e(TAG, "Not started.");
             return;
         }
-        if (PermissionUtils.hasGPSPermission(context)) {
+        if (PermissionRequester.GPS.hasPermission(context)) {
             try {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsInterval.toMillis(), 0, this);
             } catch (SecurityException e) {
