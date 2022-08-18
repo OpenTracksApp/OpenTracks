@@ -81,6 +81,8 @@ android {
         }
     }
 
+    namespace 'de.dennisguse.opentracks'
+
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
