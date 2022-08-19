@@ -431,7 +431,6 @@ limitations under the License.
     <string name="generic_overwrite">Skriva</string>
     <string name="generic_separator_done_total">/</string>
     <string name="export_track_errors">Spår som inte exporteras</string>
-    <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="help_data_storage_content"> Sensordata lagras per inspelad plats. När det gäller en pulssensor betyder det att endast <i>en</i> pulsmätning lagras per plats. Om du står stilla eller är inomhus, kommer inga sensordata att registreras (men det kommer att visas). </string>
     <string name="help_recording_title">Hur registrerar OpenTracks data\?</string>
     <string name="about_description"><i>OpenTracks</i> är ett program för sportspårning som helt respekterar din integritet.</string>

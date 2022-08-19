@@ -826,4 +826,17 @@ public class PreferencesUtils {
         return getString(R.string.show_on_map_format_key, IntentDashboardUtils.PREFERENCE_ID_ASK);
     }
 
+    public static int getTotalRowsDeleted() {
+        return getInt(R.string.total_rows_deleted_key, 0);
+    }
+
+    public static void addTotalRowsDeleted(final int totalRowsDeletedToAdd) {
+        int newTotalRowsDeleted = getTotalRowsDeleted() + totalRowsDeletedToAdd;
+        setInt(R.string.total_rows_deleted_key, newTotalRowsDeleted);
+    }
+
+    public static void resetTotalRowsDeleted() {
+        setInt(R.string.total_rows_deleted_key, 0);
+    }
+
 }

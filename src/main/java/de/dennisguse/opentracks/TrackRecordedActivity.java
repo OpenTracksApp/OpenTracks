@@ -232,9 +232,9 @@ public class TrackRecordedActivity extends AbstractTrackDeleteActivity implement
     }
 
     @Override
-    protected void onTrackDeleteStatus(TrackDeleteService.DeleteStatus deleteStatus) {
-        super.onTrackDeleteStatus(deleteStatus);
-        if (deleteStatus.isDeleted(trackId)) {
+    protected void onTrackDeleteStatus(TrackDeleteService.DeletionFinishedStatus deletionFinishedStatus) {
+        super.onTrackDeleteStatus(deletionFinishedStatus);
+        if (deletionFinishedStatus.isDeleted(trackId)) {
             runOnUiThread(this::finish);
         }
     }

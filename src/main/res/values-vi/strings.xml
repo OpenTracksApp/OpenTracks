@@ -471,7 +471,6 @@ limitations under the License.
     <string name="interval_list_empty_message">Không có bất kỳ khoảng thời gian sơ</string>
     <string name="aggregated_stats_empty_message">Hồ sơ của đua đầu tiên, để xem tổng thống kê</string>
     <string name="track_detail_intervals_tab">Khoảng thời gian</string>
-    <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Giữ trên màn hình</string>
     <string name="bluetooth_disabled">Xin vui lòng cho phép Bluetooth.</string>
     <string name="sensor_state_cadence_avg">Nhịp trung bình</string>

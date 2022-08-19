@@ -15,12 +15,14 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 public class TrackDeleteService extends Service {
 
@@ -31,7 +33,7 @@ public class TrackDeleteService extends Service {
 
     private final Binder binder = new Binder();
     private ExecutorService serviceExecutor;
-    private MutableLiveData<DeleteStatus> deleteResultObservable;
+    private MutableLiveData<DeletionFinishedStatus> deleteResultObservable;
     private NotificationManager notificationManager;
     private NotificationCompat.Builder notificationBuilder;
 
@@ -59,22 +61,18 @@ public class TrackDeleteService extends Service {
         return START_NOT_STICKY;
     }
 
-    private void deleteTracks(@NonNull ArrayList<Track.Id> trackIds) {
-        sendResult(null,0, trackIds.size());
+    private void deleteTracks(@NonNull List<Track.Id> trackIds) {
         serviceExecutor.execute(() -> {
             ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
-            for (int i = 0; i < trackIds.size(); i++) {
-                updateNotification(i + 1, trackIds.size());
-                contentProviderUtils.deleteTrack(this, trackIds.get(i));
-                sendResult(trackIds.get(i), i + 1, trackIds.size());
-            }
+            contentProviderUtils.deleteTracks(this, trackIds);
+            sendResult(trackIds);
             stopSelf();
         });
     }
 
-    private void sendResult(Track.Id trackId, int deletes, int total) {
+    private void sendResult(List<Track.Id> trackIds) {
         if (deleteResultObservable != null) {
-            deleteResultObservable.postValue(new DeleteStatus(trackId, deletes, total));
+            deleteResultObservable.postValue(new DeletionFinishedStatus(trackIds));
         }
     }
 
@@ -83,7 +81,7 @@ public class TrackDeleteService extends Service {
         return binder;
     }
 
-    public LiveData<DeleteStatus> getDeletingStatusObservable() {
+    public LiveData<DeletionFinishedStatus> getDeletingStatusObservable() {
         return deleteResultObservable;
     }
 
@@ -106,23 +104,11 @@ public class TrackDeleteService extends Service {
         notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID);
         notificationBuilder
                 .setContentTitle(this.getString(R.string.track_delete_progress_message))
-                .setContentText(this.getString(R.string.track_delete_progress, 0, tracksToDelete))
+                .setContentText(this.getString(R.string.track_delete_number_of_tracks, tracksToDelete))
                 .setSmallIcon(R.drawable.ic_logo_color_24dp)
-                .setProgress(tracksToDelete, 0, false);
+                .setProgress(0, 0, true);
 
         startForeground(NOTIFICATION_ID, notificationBuilder.build());
-    }
-
-    /**
-     * Updates notification progress.
-     *
-     * @param progress number of tracks already deleted.
-     * @param total    total of tracks to be deleted.
-     */
-    private void updateNotification(int progress, int total) {
-        notificationBuilder.setProgress(total, progress, false);
-        notificationBuilder.setContentText(this.getString(R.string.track_delete_progress, progress, total));
-        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
     }
 
     public class Binder extends android.os.Binder {
@@ -136,36 +122,25 @@ public class TrackDeleteService extends Service {
         }
     }
 
-    public static class DeleteStatus {
-        private final int progress;
-        private final int max;
-        private final Track.Id trackId;
+    public static class DeletionFinishedStatus {
+        private final List<Track.Id> trackIds;
 
         /**
-         * @param trackId  Track.Id just deleted if any.
-         * @param progress number of deletes.
-         * @param max      total of deletes to be done.
+         * @param trackIds List of deleted Track.Ids.
          */
-        private DeleteStatus(@Nullable Track.Id trackId, int progress, int max) {
-            this.trackId = trackId;
-            this.progress = progress;
-            this.max = max;
-        }
-
-        public boolean isFinished() {
-            return progress == max;
+        private DeletionFinishedStatus(@Nullable List<Track.Id> trackIds) {
+            this.trackIds = trackIds;
         }
 
         public boolean isDeleted(Track.Id trackId) {
-            return this.trackId != null && this.trackId.equals(trackId);
+            return this.trackIds != null && this.trackIds.contains(trackId);
         }
 
         @NonNull
         @Override
         public String toString() {
             return "DeleteStatus{" +
-                    "number of deletes=" + progress +
-                    ", total=" + max +
+                    "trackIds=" + trackIds +
                     '}';
         }
     }

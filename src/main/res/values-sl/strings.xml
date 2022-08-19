@@ -488,7 +488,6 @@ limitations under the License.
     <string name="lap_time">Čas kroga</string>
     <string name="track_detail_intervals_tab">Intervali</string>
     <string name="track_delete_not_recording">Te sledi ni mogoče izbrisati, saj je trenutno posneta.</string>
-    <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="stats_clock">Ura</string>
     <string name="settings_import_section">Uvoz</string>
     <string name="share_image_subject">Rad bi z vami delil sliko</string>

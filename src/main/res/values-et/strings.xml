@@ -464,7 +464,6 @@ limitations under the License.
     <string name="track_pace_notification">Tempo: %1$s</string>
     <string name="about_third_party_data">Kolmanda osapoole andmed</string>
     <string name="delete_service">Kustutamise teenus</string>
-    <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="menu_voice_rate">Hääle kiirus</string>
     <string name="track_delete_not_recording">Seda pala ei saa kustutada, kuna see on praegu salvestatud.</string>
     <string name="settings_sensor_cycling_cadence">Rütm</string>

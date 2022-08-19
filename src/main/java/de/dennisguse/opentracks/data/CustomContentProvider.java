@@ -27,6 +27,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -39,6 +40,7 @@ import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.data.tables.MarkerColumns;
 import de.dennisguse.opentracks.data.tables.TrackPointsColumns;
 import de.dennisguse.opentracks.data.tables.TracksColumns;
+import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 /**
  * A {@link ContentProvider} that handles access to track points, tracks, and markers tables.
@@ -52,6 +54,8 @@ public class CustomContentProvider extends ContentProvider {
     private static final String TAG = CustomContentProvider.class.getSimpleName();
 
     private static final String SQL_LIST_DELIMITER = ",";
+
+    private static final int TOTAL_DELETED_ROWS_VACUUM_THRESHOLD = 10000;
 
     private final UriMatcher uriMatcher;
 
@@ -131,14 +135,12 @@ public class CustomContentProvider extends ContentProvider {
     @Override
     public int delete(@NonNull Uri url, String where, String[] selectionArgs) {
         String table;
-        boolean shouldVacuum = false;
         switch (getUrlType(url)) {
             case TRACKPOINTS:
                 table = TrackPointsColumns.TABLE_NAME;
                 break;
             case TRACKS:
                 table = TracksColumns.TABLE_NAME;
-                shouldVacuum = true;
                 break;
             case MARKERS:
                 table = MarkerColumns.TABLE_NAME;
@@ -147,23 +149,40 @@ public class CustomContentProvider extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URL " + url);
         }
 
-        Log.w(TAG, "Deleting table " + table);
-        int count;
+        Log.w(TAG, "Deleting from table " + table);
+        int totalChangesBefore = getTotalChanges();
+        int deletedRowsFromTable;
         try {
             db.beginTransaction();
-            count = db.delete(table, where, selectionArgs);
+            deletedRowsFromTable = db.delete(table, where, selectionArgs);
+            Log.i(TAG, "Deleted " + deletedRowsFromTable + " rows of table " + table);
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
         }
         getContext().getContentResolver().notifyChange(url, null, false);
 
-        if (shouldVacuum) {
-            // If a potentially large amount of data was deleted, reclaim its space.
-            Log.i(TAG, "Vacuuming the database.");
+        int totalChanges = getTotalChanges() - totalChangesBefore;
+        Log.i(TAG, "Deleted " + totalChanges + " total rows from database");
+
+        PreferencesUtils.addTotalRowsDeleted(totalChanges);
+        int totalRowsDeleted = PreferencesUtils.getTotalRowsDeleted();
+        if (totalRowsDeleted > TOTAL_DELETED_ROWS_VACUUM_THRESHOLD) {
+            Log.i(TAG, "TotalRowsDeleted " + totalRowsDeleted + ", starting to vacuum the database.");
             db.execSQL("VACUUM");
+            PreferencesUtils.resetTotalRowsDeleted();
         }
-        return count;
+
+        return deletedRowsFromTable;
+    }
+
+    private int getTotalChanges() {
+        int totalCount;
+        try (Cursor cursor = db.rawQuery("SELECT total_changes()", null)) {
+            cursor.moveToNext();
+            totalCount = cursor.getInt(0);
+        }
+        return totalCount;
     }
 
     @Override

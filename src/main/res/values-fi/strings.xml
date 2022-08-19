@@ -469,7 +469,6 @@ limitations under the License.
     <string name="track_speed_notification">Nopeus: %1$s</string>
     <string name="about_third_party_data">Kolmannen osapuolen tiedot</string>
     <string name="delete_service">Poistopalvelu</string>
-    <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="menu_voice_rate">Äänen nopeus</string>
     <string name="track_delete_not_recording">Tätä reittiä ei voi poistaa koska sitä tallennetaan parhaillaan.</string>
     <string name="settings_sensor_cycling_cadence">Pyöräily: tahtiaika</string>

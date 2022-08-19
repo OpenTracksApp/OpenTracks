@@ -460,7 +460,6 @@ limitations under the License.
     <string name="track_pace_notification">Tempo: %1$s</string>
     <string name="about_third_party_data">Tredjepartsdata</string>
     <string name="delete_service">Slettingstjeneste</string>
-    <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="menu_voice_rate">Talehastighet</string>
     <string name="track_delete_not_recording">Dette sporet kan ikke slettes da det tas opp nå.</string>
     <string name="settings_sensor_cycling_cadence">Kadens</string>

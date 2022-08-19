@@ -465,7 +465,6 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="track_distance_notification">Afstand: %1$s</string>
     <string name="track_pace_notification">Tempo: %1$s</string>
     <string name="about_third_party_data">Gegevens van derden</string>
-    <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="delete_service">Dienst verwijdering</string>
     <string name="menu_voice_rate">Spraak snelheid</string>
     <string name="track_delete_not_recording">Dit fragment kan niet worden gewist omdat het momenteel is opgenomen.</string>

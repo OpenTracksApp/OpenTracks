@@ -458,7 +458,6 @@ limitations under the License.
     <string name="settings_recording_show_on_lockscreen_while_recording_title">Показване на статистически данни на заключения екран</string>
     <string name="help_data_google_play_services_title">Изисква ли OpenTracks/използва ли услугата Google Play\?</string>
     <string name="about_version_code">Код на версията: %1$d</string>
-    <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="export_error_post_workout">Експортът след тренировка е неуспешен, моля, проверете директорията за експорт.</string>
     <string name="about_third_party_data">Данни от трети страни</string>
     <string name="import_unsupported_format">Неподдържан формат на файла</string>
