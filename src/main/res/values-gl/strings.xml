@@ -472,7 +472,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="track_speed_notification">Velocidade: %1$s</string>
     <string name="about_third_party_data">Datos de terceiros alleos</string>
     <string name="delete_service">Eliminación de servizo</string>
-    <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="menu_voice_rate">Velocidade da voz</string>
     <string name="track_delete_not_recording">Esta pista non se pode eliminar porque está a funcionar a gravación.</string>
     <string name="settings_sensor_cycling_distance_speed">Distancia e Velocidade</string>

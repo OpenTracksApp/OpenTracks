@@ -465,7 +465,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="export_track_already_exists_msg">La trace %1$s existe déjà dans le répertoire de destination.</string>
     <string name="export_progress_summary_overwrite_msg">Traces écrasées</string>
     <string name="about_third_party_data">Données de tiers</string>
-    <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="delete_service">Service de suppression</string>
     <string name="menu_voice_rate">Vitesse vocale</string>
     <string name="track_delete_not_recording">Cette piste ne peut pas être supprimée car elle est en cours d\'enregistrement.</string>

@@ -187,7 +187,6 @@ public class ContentProviderUtils {
             FileUtils.deleteDirectoryRecurse(FileUtils.getPhotoDir(context, trackId));
         }
 
-        // Delete track last since it triggers a database vacuum call
         String whereClause = String.format(TracksColumns._ID + " IN (%s)", TextUtils.join(",", Collections.nCopies(trackIds.size(), "?")));
         contentResolver.delete(TracksColumns.CONTENT_URI, whereClause, trackIds.stream().map(id -> Long.toString(id.getId())).toArray(String[]::new));
     }
@@ -195,8 +194,6 @@ public class ContentProviderUtils {
     public void deleteTrack(Context context, @NonNull Track.Id trackId) {
         // Delete track folder resources.
         FileUtils.deleteDirectoryRecurse(FileUtils.getPhotoDir(context, trackId));
-
-        // Delete track last since it triggers a database vacuum call
         contentResolver.delete(TracksColumns.CONTENT_URI, TracksColumns._ID + "=?", new String[]{Long.toString(trackId.getId())});
     }
 

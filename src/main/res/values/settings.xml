@@ -46,6 +46,8 @@
 
     <string name="show_on_map_format_key" translatable="false">showOnMapFormatKey</string>
 
+    <string name="total_rows_deleted_key" translatable="false">totalRowsDeletedKey</string>
+
     <string name="settings_default_export_directory_key" translatable="false">settingsDefaultExportDirectory</string>
     <string name="post_workout_export_enabled_key" translatable="false">instantExportEnabled</string>
     <bool name="post_workout_export_enabled_default" translatable="false">false</bool>

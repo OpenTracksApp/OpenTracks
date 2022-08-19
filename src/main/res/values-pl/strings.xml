@@ -476,7 +476,6 @@ limitations under the License.
     <string name="track_distance_notification">Odległość: %1$s</string>
     <string name="about_third_party_data">Dane osób trzecich</string>
     <string name="delete_service">Usługa usuwania</string>
-    <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="menu_voice_rate">Szybkość głosu</string>
     <string name="track_delete_not_recording">Tej ścieżki nie można usunąć, ponieważ jest ona aktualnie nagrywana.</string>
     <string name="settings_sensor_cycling_distance_speed">Dystans i Prędkość</string>

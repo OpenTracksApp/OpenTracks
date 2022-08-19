@@ -84,8 +84,8 @@ public abstract class AbstractTrackDeleteActivity extends AbstractActivity imple
     /**
      * Called every time a track is deleted.
      */
-    protected void onTrackDeleteStatus(TrackDeleteService.DeleteStatus deleteStatus) {
-        if (deleteStatus.isFinished() && trackDeleteServiceConnection != null) {
+    protected void onTrackDeleteStatus(TrackDeleteService.DeletionFinishedStatus deletionFinishedStatus) {
+        if (trackDeleteServiceConnection != null) {
             trackDeleteServiceConnection.unbind(this);
             trackDeleteServiceConnection = null;
             onDeleteFinished();

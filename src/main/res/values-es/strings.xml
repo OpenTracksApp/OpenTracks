@@ -464,7 +464,6 @@ limitations under the License.
     <string name="track_pace_notification">Ritmo: %1$s</string>
     <string name="about_third_party_data">Datos de terceros</string>
     <string name="delete_service">Borrar servicio</string>
-    <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="menu_voice_rate">Velocidad de la voz</string>
     <string name="track_delete_not_recording">Este recorrido no puede ser eliminado porque se está grabando actualmente.</string>
     <string name="settings_sensor_running_speed_and_cadence">Distancia, velocidad y cadencia</string>

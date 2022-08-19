@@ -411,7 +411,6 @@
     <string name="stats_split_interval">Intervalo partido</string>
     <string name="track_recording_notification_accuracy">Precisión de ubicación: %1$s</string>
     <string name="track_pace_notification">Ritmo: %1$s</string>
-    <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="track_detail_intervals_tab">Intervalos</string>
     <string name="interval_list_empty_message">Aún no hay ningún intervalo</string>
     <string name="settings_recording_customize_layout_title">Personalice su pantalla de grabación</string>

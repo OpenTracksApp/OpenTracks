@@ -426,7 +426,6 @@ limitations under the License.
     <string name="import_progress_summary_exists_msg">Există deja</string>
     <string name="track_detail_intervals_tab">Intervaluri</string>
     <string name="track_recording_notification_accuracy">Precizia locației: %1$s</string>
-    <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="sensor_state_cadence_max">Max Cadență</string>
     <string name="sensor_could_not_scan">Nu a fost posibilă scanarea pentru dispozitive Bluetooth (eroare %1$i).</string>
     <string name="share_image_subject">Aș dori să vă împărtășesc o imagine</string>

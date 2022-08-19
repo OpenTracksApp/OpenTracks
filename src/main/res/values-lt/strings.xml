@@ -416,7 +416,6 @@ limitations under the License.
     <string name="help_recording_content">OpenTracks naudoja prietaiso GPS jutiklį, kad nuolat įrašytų vietą. Jei GPS įrenginys praneša apie netikslius duomenis (pvz., Vietą, greitį, aukštį), OpenTracks negali nieko padaryti.</string>
     <string name="generic_open_track">Atidaryti takelį</string>
     <string name="settings_recording_keep_screen_on_while_recording_summary">Įrašydami palaikykite ekraną įjungtą.</string>
-    <string name="track_delete_progress">%1$d/%2$d</string>
     <string name="open_track_as_GPX">Atidaryti kaip GPX</string>
     <string name="help_gps_troubleshooting_title">OpenTracks nefiksuoja vietų\?</string>
     <string name="generic_overwrite">Perrašyti</string>
