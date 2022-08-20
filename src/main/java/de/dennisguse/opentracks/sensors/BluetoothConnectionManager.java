@@ -30,14 +30,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.HeartRate;
-import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.sensors.sensorData.SensorData;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCycling;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 
 /**
  * Manages connection to a Bluetooth LE sensor and subscribes for onChange-notifications.
@@ -186,94 +181,6 @@ public abstract class BluetoothConnectionManager<DataType> {
             Integer heartRate = BluetoothUtils.parseHeartRate(characteristic);
 
             return heartRate != null ? new SensorDataHeartRate(address, sensorName, HeartRate.of(heartRate)) : null;
-        }
-    }
-
-    public static class CyclingCadence extends BluetoothConnectionManager<Cadence> {
-
-        CyclingCadence(SensorDataObserver observer) {
-            super(BluetoothUtils.CYCLING_SPEED_CADENCE, observer);
-        }
-
-        @Override
-        protected SensorDataCycling.CyclingCadence createEmptySensorData(String address) {
-            return new SensorDataCycling.CyclingCadence(address);
-        }
-
-        @Override
-        protected SensorDataCycling.CyclingCadence parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-            SensorDataCycling.CadenceAndSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);
-            if (cadenceAndSpeed == null) {
-                return null;
-            }
-
-            if (cadenceAndSpeed.getCadence() != null) {
-                return cadenceAndSpeed.getCadence();
-            }
-
-            return null;
-        }
-    }
-
-    public static class CyclingDistanceSpeed extends BluetoothConnectionManager<SensorDataCycling.DistanceSpeed.Data> {
-
-        CyclingDistanceSpeed(SensorDataObserver observer) {
-            super(BluetoothUtils.CYCLING_SPEED_CADENCE, observer);
-        }
-
-        @Override
-        protected SensorDataCycling.DistanceSpeed createEmptySensorData(String address) {
-            return new SensorDataCycling.DistanceSpeed(address);
-        }
-
-        @Override
-        protected SensorDataCycling.DistanceSpeed parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-            SensorDataCycling.CadenceAndSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);
-            if (cadenceAndSpeed == null) {
-                return null;
-            }
-
-            if (cadenceAndSpeed.getDistanceSpeed() != null) {
-                return cadenceAndSpeed.getDistanceSpeed();
-            }
-
-            return null;
-        }
-    }
-
-    public static class CyclingPower extends BluetoothConnectionManager<Power> {
-
-        CyclingPower(@NonNull SensorDataObserver observer) {
-            super(BluetoothUtils.CYCLING_POWER, observer);
-        }
-
-        @Override
-        protected SensorDataCyclingPower createEmptySensorData(String address) {
-            return new SensorDataCyclingPower(address);
-        }
-
-        @Override
-        protected SensorDataCyclingPower parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-            SensorDataCyclingPower.Data cyclingPower = BluetoothUtils.parseCyclingPower(characteristic);
-
-            return cyclingPower != null ? new SensorDataCyclingPower(address, sensorName, cyclingPower.getPower()) : null;
-        }
-    }
-
-    public static class RunningSpeedAndCadence extends BluetoothConnectionManager<SensorDataRunning.Data> {
-
-        RunningSpeedAndCadence(@NonNull SensorDataObserver observer) {
-            super(BluetoothUtils.RUNNING_SPEED_CADENCE, observer);
-        }
-
-        @Override
-        protected SensorDataRunning createEmptySensorData(String address) {
-            return new SensorDataRunning(address);
-        }
-
-        @Override
-        protected SensorDataRunning parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-            return BluetoothUtils.parseRunningSpeedAndCadence(address, sensorName, characteristic);
         }
     }
 

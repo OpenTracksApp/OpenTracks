@@ -64,11 +64,11 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
 
     private Distance preferenceWheelCircumference;
 
-    private final BluetoothConnectionManager.HeartRateConnectionManager heartRate = new BluetoothConnectionManager.HeartRateConnectionManager(this);
-    private final BluetoothConnectionManager.CyclingCadence cyclingCadence = new BluetoothConnectionManager.CyclingCadence(this);
-    private final BluetoothConnectionManager.CyclingDistanceSpeed cyclingSpeed = new BluetoothConnectionManager.CyclingDistanceSpeed(this);
-    private final BluetoothConnectionManager.CyclingPower cyclingPower = new BluetoothConnectionManager.CyclingPower(this);
-    private final BluetoothConnectionManager.RunningSpeedAndCadence runningSpeedAndCadence = new BluetoothConnectionManager.RunningSpeedAndCadence(this);
+    private final BluetoothRemoteSensorManagerHeartRate heartRate = new BluetoothRemoteSensorManagerHeartRate(this);
+    private final BluetoothRemoteSensorManagerCyclingCadence cyclingCadence = new BluetoothRemoteSensorManagerCyclingCadence(this);
+    private final BluetoothRemoteSensorManagerCyclingDistanceSpeed cyclingSpeed = new BluetoothRemoteSensorManagerCyclingDistanceSpeed(this);
+    private final BluetoothRemoteSensorManagerCyclingPower cyclingPower = new BluetoothRemoteSensorManagerCyclingPower(this);
+    private final BluetoothRemoteSensorManagerRunningSpeedAndCadence runningSpeedAndCadence = new BluetoothRemoteSensorManagerRunningSpeedAndCadence(this);
 
     private final SensorDataSet sensorDataSet = new SensorDataSet();
 
