@@ -122,6 +122,7 @@ public abstract class BluetoothConnectionManager<DataType> {
     synchronized void connect(Context context, @NonNull BluetoothDevice device) {
         if (bluetoothGatt != null) {
             Log.w(TAG, "Already connected; ignoring.");
+            return;
         }
 
         Log.d(TAG, "Connecting to: " + device);
