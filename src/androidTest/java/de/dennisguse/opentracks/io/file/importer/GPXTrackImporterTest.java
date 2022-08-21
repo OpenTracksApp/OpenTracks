@@ -69,7 +69,7 @@ public class GPXTrackImporterTest {
     public void gpx_with_pause_resume() throws IOException {
         // given
         XMLImporter importer = new XMLImporter(new GpxTrackImporter(context, trackImporter));
-        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.legacy_gpx_pause_resume);
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.test.R.raw.legacy_gpx_pause_resume);
 
         // when
         // 1. import
@@ -123,7 +123,7 @@ public class GPXTrackImporterTest {
     public void gpx_without_speed() throws IOException {
         // given
         XMLImporter importer = new XMLImporter(new GpxTrackImporter(context, trackImporter));
-        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.gpx11_without_speed);
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.test.R.raw.gpx11_without_speed);
 
         // when
         // 1. import
@@ -171,7 +171,7 @@ public class GPXTrackImporterTest {
     public void gpx_speed_no_namespace() throws IOException {
         // given
         XMLImporter importer = new XMLImporter(new GpxTrackImporter(context, trackImporter));
-        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.gpx11_with_speed_no_namespace);
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.test.R.raw.gpx11_with_speed_no_namespace);
 
         // when
         // 1. import
@@ -221,8 +221,8 @@ public class GPXTrackImporterTest {
     public void importExportTest_timezone() throws IOException {
         // given
         XMLImporter importer = new XMLImporter(new GpxTrackImporter(context, trackImporter));
-        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.gpx_timezone);
-        InputStream inputStreamExpected = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.gpx_timezone);
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.test.R.raw.gpx_timezone);
+        InputStream inputStreamExpected = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.test.R.raw.gpx_timezone);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 

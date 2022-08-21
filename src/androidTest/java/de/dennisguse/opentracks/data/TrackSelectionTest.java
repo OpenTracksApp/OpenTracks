@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.time.Duration;
 import java.time.Instant;
 
 import de.dennisguse.opentracks.data.models.Track;
@@ -105,7 +106,7 @@ public class TrackSelectionTest extends TestCase {
         long oneDay = 24 * 60 * 60 * 1000;
         TrackSelection filterWrong1 = new TrackSelection().addDateRange(instant, null);
         TrackSelection filterWrong2 = new TrackSelection().addDateRange(null, instant);
-        TrackSelection filterOk = new TrackSelection().addDateRange(instant, instant.plusMillis(oneDay));
+        TrackSelection filterOk = new TrackSelection().addDateRange(instant, instant.plus(Duration.ofDays(1)));
 
         // when
         SelectionData selectionWrong1 = filterWrong1.buildSelection();

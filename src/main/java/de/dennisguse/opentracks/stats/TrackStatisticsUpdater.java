@@ -27,7 +27,6 @@ import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Speed;
 import de.dennisguse.opentracks.data.models.TrackPoint;
-import de.dennisguse.opentracks.data.models.UnitConversions;
 
 /**
  * Updater for {@link TrackStatistics}.
@@ -196,7 +195,7 @@ public class TrackStatisticsUpdater {
         // See if the speed seems physically likely. Ignore any speeds that imply acceleration greater than 2g.
         Duration timeDifference = Duration.between(lastTrackPoint.getTime(), trackPoint.getTime());
         Speed maxSpeedDifference = Speed.of(Distance.of(SPEED_MAX_ACCELERATION), Duration.ofMillis(1000))
-                .mul(timeDifference.toMillis() / UnitConversions.S_TO_MS);
+                .mul(timeDifference.toSeconds());
 
         Speed speedDifference = Speed.absDiff(lastTrackPoint.getSpeed(), trackPoint.getSpeed());
         return speedDifference.lessThan(maxSpeedDifference);

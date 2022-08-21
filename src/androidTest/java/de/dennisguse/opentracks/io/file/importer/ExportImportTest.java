@@ -463,7 +463,7 @@ public class ExportImportTest {
         contentProviderUtils.deleteTrack(context, trackId);
 
         // then
-        InputStream expected = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.csv_export);
+        InputStream expected = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.test.R.raw.csv_export);
         String expectedText = new BufferedReader(new InputStreamReader(expected, StandardCharsets.UTF_8))
                 .lines()
                 .collect(Collectors.joining("\n"));

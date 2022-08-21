@@ -6,7 +6,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.2'
+        classpath 'com.android.tools.build:gradle:7.3.0-rc01'
     }
 }
 
@@ -81,6 +81,8 @@ android {
         }
     }
 
+    namespace 'de.dennisguse.opentracks'
+
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
@@ -118,7 +120,7 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.6'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.0'
 
     implementation 'androidx.appcompat:appcompat:1.5.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.5.1'
