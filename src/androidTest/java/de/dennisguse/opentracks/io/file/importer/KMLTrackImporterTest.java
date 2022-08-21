@@ -60,7 +60,7 @@ public class KMLTrackImporterTest {
     public void kml22_order_location_and_when() throws IOException {
         // given
         XMLImporter importer = new XMLImporter(new KmlTrackImporter(context, trackImporter));
-        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.kml22_order_location_and_when);
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.test.R.raw.kml22_order_location_and_when);
 
         // when
         // 1. import
@@ -109,7 +109,7 @@ public class KMLTrackImporterTest {
     public void kml22_time_decreases() throws IOException {
         // given
         XMLImporter importer = new XMLImporter(new KmlTrackImporter(context, trackImporter));
-        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.kml22_time_decreases);
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.test.R.raw.kml22_time_decreases);
 
         // when
         // 1. import
@@ -149,7 +149,7 @@ public class KMLTrackImporterTest {
     public void kml22_with_statistics_marker() throws IOException {
         // given
         XMLImporter importer = new XMLImporter(new KmlTrackImporter(context, trackImporter));
-        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.legacy_kml22_statistics_marker);
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.test.R.raw.legacy_kml22_statistics_marker);
 
         // when
         // 1. import
@@ -223,7 +223,7 @@ public class KMLTrackImporterTest {
     public void kml_without_locations() throws IOException {
         // given
         XMLImporter importer = new XMLImporter(new KmlTrackImporter(context, trackImporter));
-        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.kml22_without_locations);
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.test.R.raw.kml22_without_locations);
 
         // when
         importTrackId = importer.importFile(inputStream).get(0);
@@ -234,7 +234,7 @@ public class KMLTrackImporterTest {
     public void kml_when_locations_different() throws IOException {
         // given
         XMLImporter importer = new XMLImporter(new KmlTrackImporter(context, trackImporter));
-        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.debug.test.R.raw.kml22_when_locations_different);
+        InputStream inputStream = InstrumentationRegistry.getInstrumentation().getContext().getResources().openRawResource(de.dennisguse.opentracks.test.R.raw.kml22_when_locations_different);
 
         // when
         importTrackId = importer.importFile(inputStream).get(0);
