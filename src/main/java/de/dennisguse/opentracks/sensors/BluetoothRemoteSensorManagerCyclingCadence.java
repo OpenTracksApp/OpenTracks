@@ -3,7 +3,8 @@ package de.dennisguse.opentracks.sensors;
 import android.bluetooth.BluetoothGattCharacteristic;
 
 import de.dennisguse.opentracks.data.models.Cadence;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCycling;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadence;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadenceAndDistanceSpeed;
 
 public class BluetoothRemoteSensorManagerCyclingCadence extends BluetoothConnectionManager<Cadence> {
 
@@ -12,13 +13,13 @@ public class BluetoothRemoteSensorManagerCyclingCadence extends BluetoothConnect
     }
 
     @Override
-    protected SensorDataCycling.CyclingCadence createEmptySensorData(String address) {
-        return new SensorDataCycling.CyclingCadence(address);
+    protected SensorDataCyclingCadence createEmptySensorData(String address) {
+        return new SensorDataCyclingCadence(address);
     }
 
     @Override
-    protected SensorDataCycling.CyclingCadence parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-        SensorDataCycling.CadenceAndSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);
+    protected SensorDataCyclingCadence parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
+        SensorDataCyclingCadenceAndDistanceSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);
         if (cadenceAndSpeed == null) {
             return null;
         }

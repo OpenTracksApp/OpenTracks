@@ -61,7 +61,8 @@ import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.exporter.TrackExporter;
 import de.dennisguse.opentracks.sensors.AltitudeSumManager;
 import de.dennisguse.opentracks.sensors.BluetoothRemoteSensorManager;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCycling;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadence;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingDistanceSpeed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
@@ -504,16 +505,16 @@ public class ExportImportTest {
                 sensorDataSet.set(new SensorDataCyclingPower("power", "power", Power.of(power)));
                 sensorDataSet.set(new SensorDataHeartRate("heartRate", "heartRate", HeartRate.of(heartRate)));
 
-                SensorDataCycling.CyclingCadence cyclingCadence = Mockito.mock(SensorDataCycling.CyclingCadence.class);
+                SensorDataCyclingCadence cyclingCadence = Mockito.mock(SensorDataCyclingCadence.class);
                 Mockito.when(cyclingCadence.hasValue()).thenReturn(true);
                 Mockito.when(cyclingCadence.getValue()).thenReturn(Cadence.of(cadence));
                 sensorDataSet.set(cyclingCadence);
 
                 if (distance != null && speed != null) {
-                    SensorDataCycling.DistanceSpeed.Data distanceSpeedData = Mockito.mock(SensorDataCycling.DistanceSpeed.Data.class);
+                    SensorDataCyclingDistanceSpeed.Data distanceSpeedData = Mockito.mock(SensorDataCyclingDistanceSpeed.Data.class);
                     Mockito.when(distanceSpeedData.getDistanceOverall()).thenReturn(distance);
                     Mockito.when(distanceSpeedData.getSpeed()).thenReturn(Speed.of(speed));
-                    SensorDataCycling.DistanceSpeed distanceSpeed = Mockito.mock(SensorDataCycling.DistanceSpeed.class);
+                    SensorDataCyclingDistanceSpeed distanceSpeed = Mockito.mock(SensorDataCyclingDistanceSpeed.class);
                     Mockito.when(distanceSpeed.hasValue()).thenReturn(true);
                     Mockito.when(distanceSpeed.getValue()).thenReturn(distanceSpeedData);
                     sensorDataSet.set(distanceSpeed);

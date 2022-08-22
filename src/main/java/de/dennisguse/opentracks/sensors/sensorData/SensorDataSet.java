@@ -13,9 +13,9 @@ public final class SensorDataSet {
 
     private SensorDataHeartRate heartRate;
 
-    private SensorDataCycling.CyclingCadence cyclingCadence;
+    private SensorDataCyclingCadence cyclingCadence;
 
-    private SensorDataCycling.DistanceSpeed cyclingDistanceSpeed;
+    private SensorDataCyclingDistanceSpeed cyclingDistanceSpeed;
 
     private SensorDataCyclingPower cyclingPower;
 
@@ -64,11 +64,11 @@ public final class SensorDataSet {
         return null;
     }
 
-    public SensorDataCycling.CyclingCadence getCyclingCadence() {
+    public SensorDataCyclingCadence getCyclingCadence() {
         return cyclingCadence;
     }
 
-    public SensorDataCycling.DistanceSpeed getCyclingDistanceSpeed() {
+    public SensorDataCyclingDistanceSpeed getCyclingDistanceSpeed() {
         return cyclingDistanceSpeed;
     }
 
@@ -146,12 +146,12 @@ public final class SensorDataSet {
             return;
         }
 
-        if (type instanceof SensorDataCycling.CyclingCadence) {
-            this.cyclingCadence = (SensorDataCycling.CyclingCadence) data;
+        if (type instanceof SensorDataCyclingCadence) {
+            this.cyclingCadence = (SensorDataCyclingCadence) data;
             return;
         }
-        if (type instanceof SensorDataCycling.DistanceSpeed) {
-            this.cyclingDistanceSpeed = (SensorDataCycling.DistanceSpeed) data;
+        if (type instanceof SensorDataCyclingDistanceSpeed) {
+            this.cyclingDistanceSpeed = (SensorDataCyclingDistanceSpeed) data;
             return;
         }
 

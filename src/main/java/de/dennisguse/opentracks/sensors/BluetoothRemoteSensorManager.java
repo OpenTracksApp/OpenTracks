@@ -31,7 +31,8 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.TrackPoint;
 import de.dennisguse.opentracks.sensors.sensorData.SensorData;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCycling;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadence;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingDistanceSpeed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataSet;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
@@ -186,24 +187,24 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
 
     @Override
     public synchronized void onChanged(SensorData<?> sensorData) {
-        if (sensorData instanceof SensorDataCycling.CyclingCadence) {
-            SensorDataCycling.CyclingCadence previous = sensorDataSet.getCyclingCadence();
+        if (sensorData instanceof SensorDataCyclingCadence) {
+            SensorDataCyclingCadence previous = sensorDataSet.getCyclingCadence();
             Log.d(TAG, "Previous: " + previous + "; current: " + sensorData);
 
             if (sensorData.equals(previous)) {
                 Log.d(TAG, "onChanged: cadence data repeated.");
                 return;
             }
-            ((SensorDataCycling.CyclingCadence) sensorData).compute(previous);
+            ((SensorDataCyclingCadence) sensorData).compute(previous);
         }
-        if (sensorData instanceof SensorDataCycling.DistanceSpeed) {
-            SensorDataCycling.DistanceSpeed previous = sensorDataSet.getCyclingDistanceSpeed();
+        if (sensorData instanceof SensorDataCyclingDistanceSpeed) {
+            SensorDataCyclingDistanceSpeed previous = sensorDataSet.getCyclingDistanceSpeed();
             Log.d(TAG, "Previous: " + previous + "; Current" + sensorData);
             if (sensorData.equals(previous)) {
                 Log.d(TAG, "onChanged: cycling speed data repeated.");
                 return;
             }
-            ((SensorDataCycling.DistanceSpeed) sensorData).compute(previous, preferenceWheelCircumference);
+            ((SensorDataCyclingDistanceSpeed) sensorData).compute(previous, preferenceWheelCircumference);
         }
         if (sensorData instanceof SensorDataRunning) {
             SensorDataRunning previous = sensorDataSet.getRunningDistanceSpeedCadence();

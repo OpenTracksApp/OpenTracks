@@ -30,9 +30,9 @@ public class SensorDataCyclingPower extends SensorData<Power> {
 
     public static class Data {
         private final Power power;
-        private final SensorDataCycling.CyclingCadence cadence;
+        private final SensorDataCyclingCadence cadence;
 
-        public Data(Power power, @Nullable SensorDataCycling.CyclingCadence cadence) {
+        public Data(Power power, @Nullable SensorDataCyclingCadence cadence) {
             this.power = power;
             this.cadence = cadence;
         }
@@ -41,7 +41,7 @@ public class SensorDataCyclingPower extends SensorData<Power> {
             return power;
         }
 
-        public SensorDataCycling.CyclingCadence getCadence() {
+        public SensorDataCyclingCadence getCadence() {
             return cadence;
         }
 

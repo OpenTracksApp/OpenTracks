@@ -10,7 +10,7 @@ import org.junit.Test;
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
 import de.dennisguse.opentracks.data.models.Speed;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCycling;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadenceAndDistanceSpeed;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 
@@ -48,7 +48,7 @@ public class BluetoothUtilsTest {
         characteristic.setValue(new byte[]{0x02, (byte) 0xC8, 0x00, 0x00, 0x00, 0x06, (byte) 0x99});
 
         // when
-        SensorDataCycling.CadenceAndSpeed sensor = BluetoothUtils.parseCyclingCrankAndWheel("address", "sensorName", characteristic);
+        SensorDataCyclingCadenceAndDistanceSpeed sensor = BluetoothUtils.parseCyclingCrankAndWheel("address", "sensorName", characteristic);
 
         // then
         assertNull(sensor.getDistanceSpeed());
@@ -61,7 +61,7 @@ public class BluetoothUtilsTest {
         characteristic.setValue(new byte[]{0x01, (byte) 0xFF, (byte) 0xFF, 0, 1, 0x45, (byte) 0x99});
 
         // when
-        SensorDataCycling.CadenceAndSpeed sensor = BluetoothUtils.parseCyclingCrankAndWheel("address", "sensorName", characteristic);
+        SensorDataCyclingCadenceAndDistanceSpeed sensor = BluetoothUtils.parseCyclingCrankAndWheel("address", "sensorName", characteristic);
 
         // then
         assertEquals(65535 + 16777216, sensor.getDistanceSpeed().getWheelRevolutionsCount());
@@ -74,7 +74,7 @@ public class BluetoothUtilsTest {
         characteristic.setValue(new byte[]{0x03, (byte) 0xC8, 0x00, 0x00, 0x01, 0x06, (byte) 0x99, (byte) 0xE1, 0x00, 0x45, (byte) 0x99});
 
         // when
-        SensorDataCycling.CadenceAndSpeed sensor = BluetoothUtils.parseCyclingCrankAndWheel("address", "sensorName", characteristic);
+        SensorDataCyclingCadenceAndDistanceSpeed sensor = BluetoothUtils.parseCyclingCrankAndWheel("address", "sensorName", characteristic);
 
         // then
         assertEquals(200 + 16777216, sensor.getDistanceSpeed().getWheelRevolutionsCount());
