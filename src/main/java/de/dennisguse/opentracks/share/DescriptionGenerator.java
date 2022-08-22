@@ -153,7 +153,7 @@ public class DescriptionGenerator {
         }
 
         // Recorded time
-        builder.append(context.getString(R.string.description_recorded_time, StringUtils.formatDateTime(OffsetDateTime.ofInstant(stats.getStartTime(), ZoneId.systemDefault()))));
+        builder.append(context.getString(R.string.description_recorded_time, StringUtils.formatDateTimeWithOffset(OffsetDateTime.ofInstant(stats.getStartTime(), ZoneId.systemDefault()))));
         builder.append(lineBreak);
 
         return builder.toString();

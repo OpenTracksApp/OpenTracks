@@ -108,7 +108,11 @@ public class ListItemUtils {
         String timeValue = null;
         if (!isRecording) {
             dateValue = StringUtils.formatDateTodayRelative(context, offsetDateTime);
-            timeValue = offsetDateTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+            String pattern = "HH:mm";
+            if (!offsetDateTime.getOffset().equals(OffsetDateTime.now().getOffset())) {
+                pattern = "HH:mm x";
+            }
+            timeValue = offsetDateTime.format(DateTimeFormatter.ofPattern(pattern));
         }
         setTextView(context, dateTextView, dateValue, hasPhoto);
         setTextView(context, timeTextView, timeValue, hasPhoto);
