@@ -93,7 +93,6 @@ limitations under the License.
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:fabAlignmentMode="end"
-        app:logo="@drawable/ic_logo_color_24dp"
         app:menu="@menu/track_list" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
