@@ -605,4 +605,6 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
         <item quantity="one">%1$.2f mile nautique</item>
         <item quantity="other">%1$.2f milles nautique</item>
     </plurals>
+    <string name="settings_public_api_package_title">Nom du paquet pour l\'API Publique</string>
+    <string name="track_delete_number_of_tracks">%1$d parcours</string>
 </resources>
