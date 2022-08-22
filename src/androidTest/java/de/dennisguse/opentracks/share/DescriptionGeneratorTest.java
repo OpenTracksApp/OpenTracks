@@ -99,7 +99,7 @@ public class DescriptionGeneratorTest {
                         + "Min elevation: -500 m (-1640 ft)<br>"
                         + "Elevation gain: 6000 m (19685 ft)<br>"
                         + "Elevation loss: 6000 m (19685 ft)<br>"
-                        + "Recorded: " + StringUtils.formatDateTime(OffsetDateTime.ofInstant(START_TIME, ZoneId.systemDefault())) + "<br>";
+                        + "Recorded: " + StringUtils.formatDateTimeWithOffset(OffsetDateTime.ofInstant(START_TIME, ZoneId.systemDefault())) + "<br>";
 
         assertEquals(expected, descriptionGenerator.generateTrackDescription(track, true));
     }
@@ -135,7 +135,7 @@ public class DescriptionGeneratorTest {
                         + "Fastest pace: 0:10 min/km (0:16 min/mi)<br>"
                         + "Elevation gain: 6000 m (19685 ft)<br>"
                         + "Elevation loss: 6000 m (19685 ft)<br>"
-                        + "Recorded: " + StringUtils.formatDateTime(OffsetDateTime.ofInstant(START_TIME, ZoneId.systemDefault())) + "<br>";
+                        + "Recorded: " + StringUtils.formatDateTimeWithOffset(OffsetDateTime.ofInstant(START_TIME, ZoneId.systemDefault())) + "<br>";
 
         assertEquals(expected, descriptionGenerator.generateTrackDescription(track, true));
     }

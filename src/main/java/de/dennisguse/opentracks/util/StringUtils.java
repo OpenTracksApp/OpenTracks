@@ -62,17 +62,17 @@ public class StringUtils {
     }
 
     /**
-     * Formats the date and time of the OffsetDateTime (using default Locale format)
-     */
-    public static String formatDateTime(OffsetDateTime odt) {
-        return odt.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
-    }
-
-    /**
      * Formats the date and time with the offset (using default Locale format).
      */
     public static String formatDateTimeWithOffset(OffsetDateTime odt) {
         return odt.toZonedDateTime().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL));
+    }
+
+    public static String formatDateTimeWithOffsetIfDifferent(OffsetDateTime odt) {
+        if (!odt.getOffset().equals(OffsetDateTime.now().getOffset())) {
+            return odt.toZonedDateTime().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL));
+        }
+        return odt.toZonedDateTime().format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM));
     }
 
     public static String formatLocalDateTime(LocalDateTime localDateTime) {
