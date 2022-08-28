@@ -15,6 +15,7 @@ public class StartRecording extends AbstractAPIActivity {
 
     public static final String EXTRA_TRACK_NAME = "TRACK_NAME";
     public static final String EXTRA_TRACK_CATEGORY = "TRACK_CATEGORY";
+    public static final String EXTRA_TRACK_ICON = "TRACK_ICON";
     public static final String EXTRA_TRACK_DESCRIPTION = "TRACK_DESCRIPTION";
 
     public static final String EXTRA_STATS_TARGET_PACKAGE = "STATS_TARGET_PACKAGE";
@@ -40,8 +41,11 @@ public class StartRecording extends AbstractAPIActivity {
         ContentProviderUtils contentProviderUtils = new ContentProviderUtils(this);
         Track track = contentProviderUtils.getTrack(trackId);
 
-        TrackUtils.updateTrack(this, track, bundle.getString(EXTRA_TRACK_NAME, null),
-                bundle.getString(EXTRA_TRACK_CATEGORY, null), bundle.getString(EXTRA_TRACK_DESCRIPTION, null),
+        TrackUtils.updateTrack(this, track,
+                bundle.getString(EXTRA_TRACK_NAME, null),
+                bundle.getString(EXTRA_TRACK_CATEGORY, null),
+                bundle.getString(EXTRA_TRACK_ICON, null),
+                bundle.getString(EXTRA_TRACK_DESCRIPTION, null),
                 contentProviderUtils);
     }
 
