@@ -26,12 +26,17 @@ import de.dennisguse.opentracks.data.models.Track;
  *
  * @author Jimmy Shih
  */
+@Deprecated //TODO Refactor: all this should happen somewhere else (ContentProviderUtils?)
 public class TrackUtils {
 
     private TrackUtils() {
     }
 
     public static void updateTrack(Context context, Track track, String name, String category, String description, ContentProviderUtils contentProviderUtils) {
+        updateTrack(context, track, name, category, TrackIconUtils.getIconValue(context, category), description, contentProviderUtils);
+    }
+
+    public static void updateTrack(Context context, Track track, String name, String category, String iconValue, String description, ContentProviderUtils contentProviderUtils) {
         boolean update = false;
         if (name != null) {
             track.setName(name);
@@ -39,8 +44,12 @@ public class TrackUtils {
         }
         if (category != null) {
             track.setCategory(category);
-            track.setIcon(TrackIconUtils.getIconValue(context, category));
             update = true;
+        }
+        if (iconValue != null) {
+            track.setIcon(iconValue);
+        } else if (category != null){
+            track.setIcon(TrackIconUtils.getIconValue(context, category));
         }
         if (description != null) {
             track.setDescription(description);
