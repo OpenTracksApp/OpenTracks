@@ -59,10 +59,11 @@ limitations under the License.
         <item name="indicatorColor">?attr/colorSecondary</item>
     </style>
 
-    <style name="SplashTheme" parent="ThemeCustom">
-        <item name="android:statusBarColor">@color/splashscreen_background</item>
-        <item name="android:navigationBarColor">@color/splashscreen_background</item>
-        <item name="android:windowBackground">@drawable/splashscreen</item>
+    <style name="SplashTheme" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splashscreen_background</item>
+
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_logo_color_splashscreen</item>
+        <item name="postSplashScreenTheme">@style/ThemeCustom</item>
     </style>
 
     <style name="Widget.OpenTracks.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
