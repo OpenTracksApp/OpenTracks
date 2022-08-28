@@ -38,6 +38,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
+import androidx.core.splashscreen.SplashScreen;
 import androidx.cursoradapter.widget.ResourceCursorAdapter;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
@@ -158,8 +159,7 @@ public class TrackListActivity extends AbstractTrackDeleteActivity implements Co
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Reset theme after splash
-        setTheme(R.style.ThemeCustom);
+        SplashScreen.installSplashScreen(this);
 
         super.onCreate(savedInstanceState);
         setDefaultKeyMode(DEFAULT_KEYS_SEARCH_LOCAL);
