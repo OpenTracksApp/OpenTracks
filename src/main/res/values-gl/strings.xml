@@ -248,28 +248,28 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_chart_by_distance">Por distancia</string>
     <string name="settings_chart_by_time">Por duración</string>
     <!-- Settings Recording -->
-    <string name="settings_recording_show_on_lockscreen_while_recording_title">Mostrar estatísticas na pantalla de bloqueo</string>
+    <string name="settings_recording_show_on_lockscreen_while_recording_title">Estatísticas na pantalla de bloqueo</string>
     <string name="settings_recording_show_on_lockscreen_while_recording_summary">Ao gravar, mostra estatísticas sen desbloquear o dispositivo.</string>
     <string name="settings_recording_keep_screen_on_while_recording_title">Manter pantalla acesa</string>
-    <string name="settings_recording_keep_screen_on_while_recording_summary">Ao gravar, manten a pantalla acesa.</string>
+    <string name="settings_recording_keep_screen_on_while_recording_summary">Ao gravar, mantén a pantalla acesa.</string>
     <string name="settings_recording_fullscreen_on_while_recording_title">Pantalla completa</string>
     <string name="settings_recording_fullscreen_on_while_recording_summary">Mentras grava, mostrar a pantalla completa.</string>
     <string name="settings_recording_default_activity_title">Tipo de actividade predeterminada</string>
-    <string name="settings_recording_location_frequency_summary">%1$s entre as situacións gravadas</string>
-    <string name="settings_recording_max_recording_distance_summary">Créase un novo segmento se a distancia entre as situacións é superior a %1$s</string>
+    <string name="settings_recording_location_frequency_summary">%1$s entre as posicións gravadas</string>
+    <string name="settings_recording_max_recording_distance_summary">Créase un novo segmento se a distancia entre as posicións é superior a %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Distancia máxima</string>
-    <string name="settings_recording_min_recording_distance_title">Distancia entre situacións</string>
-    <string name="settings_recording_min_recording_interval_title">Tempo entre situacións</string>
+    <string name="settings_recording_min_recording_distance_title">Intervalo da distancia para gravar</string>
+    <string name="settings_recording_min_recording_interval_title">Tempo entre posicións</string>
     <string name="settings_recording_min_required_accuracy_summary">Descoñécese se a precisión é inferior a %1$s</string>
     <string name="settings_recording_min_required_accuracy_title">Precisión do GPS</string>
     <string name="settings_recording_track_name_date_iso_8601_option">Data (ISO 8601)</string>
     <string name="settings_recording_track_name_date_local_option">Data (local)</string>
     <string name="settings_recording_track_name_number_option">Número</string>
-    <string name="settings_recording_track_name_title">Nome da ruta por omisión</string>
+    <string name="settings_recording_track_name_title">Nome por defecto para a ruta</string>
     <!-- Settings Reset -->
-    <string name="settings_reset_confirm_message">Toda a configuración volverá aos valores predeterminados.</string>
+    <string name="settings_reset_confirm_message">Toda a configuración volverá aos valores predeterminados. Esto non elimina as rutas no dispotivo.</string>
     <string name="settings_reset_confirm_title">Restablecer agora?</string>
-    <string name="settings_reset_done">Restablecéronse todos os valores predeterminados da configuración</string>
+    <string name="settings_reset_done">Restableceuse a configuración aos valores por defecto</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">Bluetooth</string>
     <string name="settings_sensor_wheel_circumference">Circunferencia da roda (mm)</string>
@@ -515,7 +515,7 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_announcements_summary">A Distancia, Tempo, Voz Velocidade</string>
     <string name="settings_open_tracks_summary">Todo Sobre OpenTracks Proxecto</string>
     <string name="settings_defaults_title">Por defecto Unidades e Actividade</string>
-    <string name="settings_ui_title">Interface De Usuario</string>
+    <string name="settings_ui_title">Interface da app</string>
     <string name="settings_ui_summary">Aparencia, Gravación, Deseño, Tema</string>
     <string name="settings_gps_title">GPS</string>
     <string name="settings_gps_summary">Intervalo de tempo, Distancia intervalo, Max Distancia, Precisión</string>
@@ -525,7 +525,7 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_import_export_title">Importación/Exportación</string>
     <string name="settings_import_export_summary">Importación, Exportación, Auto Exportación</string>
     <string name="settings_units_category">Unidades</string>
-    <string name="settings_activity_defaults_category">Actividade de Inadimplência</string>
+    <string name="settings_activity_defaults_category">Valores por defecto</string>
     <string name="settings_reset_summary">Axustar a Configuración de Valores por Defecto</string>
     <string name="menu_select_layout">Elixe disposición</string>
     <string name="custom_layout_list_title">Disposicións</string>
@@ -611,4 +611,6 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="always">Sempre</string>
     <string name="error_crash_title">%1$s fallou</string>
     <string name="report_bug">Informar do problema</string>
+    <string name="settings_public_api_package_title">Nome do paquete para Public API</string>
+    <string name="track_delete_number_of_tracks">%1$d rutas</string>
 </resources>
