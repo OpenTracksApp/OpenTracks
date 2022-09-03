@@ -64,7 +64,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.METRIC, true, null, null).toString();
 
         // then
-        assertEquals("Total distance 20.00 kilometers. 1 hour 5 minutes 10 seconds. Speed 18.4 kilometers per hour.", announcement);
+        assertEquals("Total distance 20.00 kilometers. 1 hour 5 minutes 10 seconds. Average moving speed 18.4 kilometers per hour.", announcement);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.METRIC, true, null, null).toString();
 
         // then
-        assertEquals("Total distance 20.00 kilometers. 1 hour 1 second. Speed 20.0 kilometers per hour.", announcement);
+        assertEquals("Total distance 20.00 kilometers. 1 hour 1 second. Average moving speed 20.0 kilometers per hour.", announcement);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.METRIC, true, null, null).toString();
 
         // then
-        assertEquals("Total distance 20.00 kilometers. 1 hour. Speed 20.0 kilometers per hour.", announcement);
+        assertEquals("Total distance 20.00 kilometers. 1 hour. Average moving speed 20.0 kilometers per hour.", announcement);
     }
 
     @Test
@@ -112,7 +112,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.METRIC, true, null, null).toString();
 
         // then
-        assertEquals("Total distance 19.99 kilometers. 1 hour. Speed 20.0 kilometers per hour.", announcement);
+        assertEquals("Total distance 19.99 kilometers. 1 hour. Average moving speed 20.0 kilometers per hour.", announcement);
     }
 
     @Test
@@ -134,7 +134,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.METRIC, true, lastInterval, null).toString();
 
         // then
-        assertEquals("Total distance 14.21 kilometers. 16 minutes 39 seconds. Speed 51.2 kilometers per hour. Lap speed 51.2 kilometers per hour.", announcement);
+        assertEquals("Total distance 14.21 kilometers. 16 minutes 39 seconds. Average moving speed 51.2 kilometers per hour. Lap speed 51.2 kilometers per hour.", announcement);
     }
 
     @Test
@@ -188,7 +188,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.IMPERIAL, true, null, null).toString();
 
         // then
-        assertEquals("Total distance 12.43 miles. 1 hour 5 minutes 10 seconds. Speed 11.4 miles per hour.", announcement);
+        assertEquals("Total distance 12.43 miles. 1 hour 5 minutes 10 seconds. Average moving speed 11.4 miles per hour.", announcement);
     }
 
     @Test
@@ -210,7 +210,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.IMPERIAL, true, lastInterval, null).toString();
 
         // then
-        assertEquals("Total distance 8.83 miles. 16 minutes 39 seconds. Speed 31.8 miles per hour. Lap speed 31.8 miles per hour.", announcement);
+        assertEquals("Total distance 8.83 miles. 16 minutes 39 seconds. Average moving speed 31.8 miles per hour. Lap speed 31.8 miles per hour.", announcement);
     }
 
     @Test
@@ -274,7 +274,7 @@ public class VoiceAnnouncementUtilsTest {
         String announcement = VoiceAnnouncementUtils.getAnnouncement(context, stats, UnitSystem.METRIC, true, lastInterval, sensorStatistics).toString();
 
         // then
-        assertEquals("Total distance 14.21 kilometers. 16 minutes 39 seconds. Speed 51.2 kilometers per hour. Lap speed 51.2 kilometers per hour. Average heart rate 180 bpm. Current heart rate 133 bpm.", announcement);
+        assertEquals("Total distance 14.21 kilometers. 16 minutes 39 seconds. Average moving speed 51.2 kilometers per hour. Lap speed 51.2 kilometers per hour. Average heart rate 180 bpm. Current heart rate 133 bpm.", announcement);
     }
 
     @Test
