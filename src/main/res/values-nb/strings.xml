@@ -178,7 +178,7 @@ limitations under the License.
     <string name="settings_chart_by_distance">Etter distanse</string>
     <string name="settings_chart_by_time">Etter tid</string>
     <string name="settings_recording_default_activity_title">Standard aktivitetstype</string>
-    <string name="settings_recording_location_frequency_summary">%1$s mellom innspilte posisjoner</string>
+    <string name="settings_recording_location_frequency_summary">%1$s mellom registrerte posisjoner</string>
     <string name="settings_recording_max_recording_distance_summary">Det blir opprettet et nytt segment hvis avstanden mellom to posisjoner er større enn %1$s</string>
     <string name="settings_recording_max_recording_distance_title">Maks avstand</string>
     <string name="settings_recording_min_recording_distance_title">Avstandsintervall for opptak</string>
@@ -599,4 +599,6 @@ limitations under the License.
         <item quantity="other">%1$.2f nautiske mil</item>
     </plurals>
     <string name="show_on_dashboard_not_installed">Ingen app som støtter OpenTracks Dashboard API er installert.</string>
+    <string name="track_delete_number_of_tracks">%1$d spor</string>
+    <string name="settings_public_api_package_title">Pakkenavn for Offentlig API</string>
 </resources>
