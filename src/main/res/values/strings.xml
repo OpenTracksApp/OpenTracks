@@ -577,7 +577,7 @@ limitations under the License.
     <string name="lap_time">Lap time</string>
     <string name="pace">Pace</string>
     <string name="lap_speed">Lap speed</string>
-    <string name="speed">Speed</string>
+    <string name="speed">Average moving speed</string>
     <string name="total_distance">Total distance</string>
     <plurals name="voiceDistanceKilometers">
         <item quantity="one">1 kilometer</item>

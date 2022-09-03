@@ -33,8 +33,8 @@ class VoiceAnnouncementUtils {
 
     static Spannable getAnnouncement(Context context, TrackStatistics trackStatistics, UnitSystem unitSystem, boolean isReportSpeed, @Nullable IntervalStatistics.Interval currentInterval, @Nullable SensorStatistics sensorStatistics) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
-        Distance distance = trackStatistics.getTotalDistance();
-        Speed distancePerTime = trackStatistics.getAverageMovingSpeed();
+        Distance totalDistance = trackStatistics.getTotalDistance();
+        Speed averageMovingSpeed = trackStatistics.getAverageMovingSpeed();
         Speed currentDistancePerTime = currentInterval != null ? currentInterval.getSpeed() : null;
 
         int perUnitStringId;
@@ -68,7 +68,7 @@ class VoiceAnnouncementUtils {
                 throw new RuntimeException("Not implemented");
         }
 
-        double distanceInUnit = distance.toKM_Miles(unitSystem);
+        double distanceInUnit = totalDistance.toKM_Miles(unitSystem);
 
         if (shouldVoiceAnnounceTotalDistance()) {
             builder.append(context.getString(R.string.total_distance));
@@ -78,7 +78,7 @@ class VoiceAnnouncementUtils {
             // Punctuation helps introduce natural pauses in TTS
             builder.append(".");
         }
-        if (distance.isZero()) {
+        if (totalDistance.isZero()) {
             return builder;
         }
 
@@ -91,7 +91,7 @@ class VoiceAnnouncementUtils {
 
         if (isReportSpeed) {
             if (shouldVoiceAnnounceAverageSpeedPace()) {
-                double speedInUnit = distancePerTime.to(unitSystem);
+                double speedInUnit = averageMovingSpeed.to(unitSystem);
                 builder.append(" ")
                         .append(context.getString(R.string.speed));
                 appendDecimalUnit(builder, context.getResources().getQuantityString(speedId, getQuantityCount(speedInUnit), speedInUnit), speedInUnit, 1, unitSpeedTTS);
@@ -108,7 +108,7 @@ class VoiceAnnouncementUtils {
             }
         } else {
             if (shouldVoiceAnnounceAverageSpeedPace()) {
-                Duration time = distancePerTime.toPace(unitSystem);
+                Duration time = averageMovingSpeed.toPace(unitSystem);
                 builder.append(" ")
                         .append(context.getString(R.string.pace));
                 appendDuration(context, builder, time);
