@@ -17,7 +17,7 @@ public class BluetoothRemoteSensorManagerCyclingDistanceSpeed extends BluetoothC
     }
 
     @Override
-    protected SensorDataCyclingDistanceSpeed parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
+    protected SensorDataCyclingDistanceSpeed parsePayload(ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
         SensorDataCyclingCadenceAndDistanceSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);
         if (cadenceAndSpeed == null) {
             return null;

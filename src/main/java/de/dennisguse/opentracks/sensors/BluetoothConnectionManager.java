@@ -31,10 +31,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.sensors.sensorData.SensorData;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
 
 /**
  * Manages connection to a Bluetooth LE sensor and subscribes for onChange-notifications.
@@ -111,8 +111,16 @@ public abstract class BluetoothConnectionManager<DataType> {
 
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic) {
-            Log.d(TAG, "Received data from " + gatt.getDevice().getAddress());
-            SensorData<DataType> sensorData = parsePayload(gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
+            UUID serviceUUID = characteristic.getService().getUuid();
+            Log.d(TAG, "Received data from " + gatt.getDevice().getAddress() + " with service " + serviceUUID + " and characteristics " + characteristic.getUuid());
+            Optional<ServiceMeasurementUUID> serviceMeasurementUUID = serviceMeasurementUUIDs.stream()
+                    .filter(s -> s.getServiceUUID().equals(characteristic.getService().getUuid())).findFirst();
+            if (serviceMeasurementUUID.isEmpty()) {
+                Log.e(TAG, "Unknown service UUID; not supported?");
+                return;
+            }
+
+            SensorData<DataType> sensorData = parsePayload(serviceMeasurementUUID.get(), gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
             if (sensorData != null) {
                 Log.d(TAG, "Decoded data from " + gatt.getDevice().getAddress() + ": " + sensorData);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -180,26 +188,7 @@ public abstract class BluetoothConnectionManager<DataType> {
     /**
      * @return null if data could not be parsed.
      */
-    protected abstract SensorData<DataType> parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic);
-
-    public static class HeartRateConnectionManager extends BluetoothConnectionManager<HeartRate> {
-
-        HeartRateConnectionManager(@NonNull SensorDataObserver observer) {
-            super(BluetoothUtils.HEART_RATE_SUPPORTING_DEVICES, observer);
-        }
-
-        @Override
-        protected SensorDataHeartRate createEmptySensorData(String address) {
-            return new SensorDataHeartRate(address);
-        }
-
-        @Override
-        protected SensorDataHeartRate parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-            Integer heartRate = BluetoothUtils.parseHeartRate(characteristic);
-
-            return heartRate != null ? new SensorDataHeartRate(address, sensorName, HeartRate.of(heartRate)) : null;
-        }
-    }
+    protected abstract SensorData<DataType> parsePayload(@NonNull ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, @NonNull BluetoothGattCharacteristic characteristic);
 
     interface SensorDataObserver {
 

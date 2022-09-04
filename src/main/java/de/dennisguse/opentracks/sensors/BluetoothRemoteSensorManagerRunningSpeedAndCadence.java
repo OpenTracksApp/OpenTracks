@@ -18,7 +18,7 @@ public class BluetoothRemoteSensorManagerRunningSpeedAndCadence extends Bluetoot
     }
 
     @Override
-    protected SensorDataRunning parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
+    protected SensorDataRunning parsePayload(@NonNull ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
         return BluetoothUtils.parseRunningSpeedAndCadence(address, sensorName, characteristic);
     }
 }

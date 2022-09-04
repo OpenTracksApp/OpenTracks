@@ -119,7 +119,7 @@ public class BluetoothUtils {
         return null;
     }
 
-    public static SensorDataCyclingPower.Data parseCyclingPower(BluetoothGattCharacteristic characteristic) {
+    public static SensorDataCyclingPower.Data parseCyclingPower(String address, String sensorName, BluetoothGattCharacteristic characteristic) {
         // DOCUMENTATION https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.cycling_power_measurement.xml
         int valueLength = characteristic.getValue().length;
         if (valueLength == 0) {
@@ -154,10 +154,11 @@ public class BluetoothUtils {
 
             int crankTime = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index); // 1/1024s
 
-            cadence = new SensorDataCyclingCadence("", "", crankCount, crankTime);
+            cadence = new SensorDataCyclingCadence(address, sensorName, crankCount, crankTime);
         }
 
-        return new SensorDataCyclingPower.Data(Power.of(instantaneousPower), cadence);
+
+        return new SensorDataCyclingPower.Data(new SensorDataCyclingPower(sensorName, address, Power.of(instantaneousPower)), cadence);
     }
 
     public static SensorDataCyclingCadenceAndDistanceSpeed parseCyclingCrankAndWheel(String address, String sensorName, @NonNull BluetoothGattCharacteristic characteristic) {

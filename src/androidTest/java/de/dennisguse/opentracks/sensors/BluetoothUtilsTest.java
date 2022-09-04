@@ -87,10 +87,10 @@ public class BluetoothUtilsTest {
         characteristic.setValue(new byte[]{0, 0, 40, 0});
 
         // when
-        SensorDataCyclingPower.Data powerCadence = BluetoothUtils.parseCyclingPower(characteristic);
+        SensorDataCyclingPower.Data powerCadence = BluetoothUtils.parseCyclingPower("", "", characteristic);
 
         // then
-        assertEquals(40, powerCadence.getPower().getW(), 0.01);
+        assertEquals(40, powerCadence.getPower().getValue().getW(), 0.01);
     }
 
     @Test
@@ -99,10 +99,10 @@ public class BluetoothUtilsTest {
         characteristic.setValue(new byte[]{0x2C, 0x00, 0x00, 0x00, (byte) 0x9F, 0x00, 0x0C, 0x00, (byte) 0xE5, 0x42});
 
         // when
-        SensorDataCyclingPower.Data powerCadence = BluetoothUtils.parseCyclingPower(characteristic);
+        SensorDataCyclingPower.Data powerCadence = BluetoothUtils.parseCyclingPower("", "", characteristic);
 
         // then
-        assertEquals(0, powerCadence.getPower().getW(), 0.01);
+        assertEquals(0, powerCadence.getPower().getValue().getW(), 0.01);
 
         assertEquals(12, powerCadence.getCadence().getCrankRevolutionsCount());
         assertEquals(17125, powerCadence.getCadence().getCrankRevolutionsTime());

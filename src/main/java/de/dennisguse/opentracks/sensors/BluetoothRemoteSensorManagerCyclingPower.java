@@ -19,9 +19,9 @@ public class BluetoothRemoteSensorManagerCyclingPower extends BluetoothConnectio
     }
 
     @Override
-    protected SensorDataCyclingPower parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-        SensorDataCyclingPower.Data cyclingPower = BluetoothUtils.parseCyclingPower(characteristic);
+    protected SensorDataCyclingPower parsePayload(@NonNull ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, BluetoothGattCharacteristic characteristic) {
+        SensorDataCyclingPower.Data cyclingPower = BluetoothUtils.parseCyclingPower(address, sensorName, characteristic);
 
-        return cyclingPower != null ? new SensorDataCyclingPower(address, sensorName, cyclingPower.getPower()) : null;
+        return cyclingPower != null ? cyclingPower.getPower() : null;
     }
 }

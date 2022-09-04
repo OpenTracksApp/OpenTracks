@@ -7,21 +7,21 @@ import androidx.preference.PreferenceDialogFragmentCompat;
 
 import de.dennisguse.opentracks.sensors.BluetoothUtils;
 
-public class BluetoothLeCyclingCadenceAndSpeedPreference extends BluetoothLeSensorPreference {
+public class BluetoothLeCyclingSpeedPreference extends BluetoothLeSensorPreference {
 
-    public BluetoothLeCyclingCadenceAndSpeedPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public BluetoothLeCyclingSpeedPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public BluetoothLeCyclingCadenceAndSpeedPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    public BluetoothLeCyclingSpeedPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public BluetoothLeCyclingCadenceAndSpeedPreference(Context context, AttributeSet attrs) {
+    public BluetoothLeCyclingSpeedPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public BluetoothLeCyclingCadenceAndSpeedPreference(Context context) {
+    public BluetoothLeCyclingSpeedPreference(Context context) {
         super(context);
     }
 
