@@ -3,6 +3,10 @@ package de.dennisguse.opentracks.settings.bluetooth;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import androidx.preference.PreferenceDialogFragmentCompat;
+
+import de.dennisguse.opentracks.sensors.BluetoothUtils;
+
 public class BluetoothLeRunningSpeedAndCadencePreference extends BluetoothLeSensorPreference {
 
     public BluetoothLeRunningSpeedAndCadencePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -19,5 +23,10 @@ public class BluetoothLeRunningSpeedAndCadencePreference extends BluetoothLeSens
 
     public BluetoothLeRunningSpeedAndCadencePreference(Context context) {
         super(context);
+    }
+
+    @Override
+    public PreferenceDialogFragmentCompat createInstance() {
+        return BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(getKey(), BluetoothUtils.RUNNING_RUNNING_SPEED_CADENCE_UUID);
     }
 }

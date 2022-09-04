@@ -3,6 +3,10 @@ package de.dennisguse.opentracks.settings.bluetooth;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import androidx.preference.PreferenceDialogFragmentCompat;
+
+import de.dennisguse.opentracks.sensors.BluetoothUtils;
+
 public class BluetoothLeHeartRatePreference extends BluetoothLeSensorPreference {
 
     public BluetoothLeHeartRatePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -19,5 +23,10 @@ public class BluetoothLeHeartRatePreference extends BluetoothLeSensorPreference 
 
     public BluetoothLeHeartRatePreference(Context context) {
         super(context);
+    }
+
+    @Override
+    public PreferenceDialogFragmentCompat createInstance() {
+        return BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(getKey(), BluetoothUtils.HEART_RATE_SUPPORTING_DEVICES);
     }
 }

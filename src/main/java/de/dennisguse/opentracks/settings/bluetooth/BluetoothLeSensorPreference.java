@@ -92,6 +92,8 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
         return getValue();
     }
 
+    public abstract PreferenceDialogFragmentCompat createInstance();
+
     public static class BluetoothLeSensorPreferenceDialog extends PreferenceDialogFragmentCompat {
 
         private AnimatedVectorDrawableCompat bluetoothIcon;
