@@ -30,8 +30,6 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import java.util.UUID;
-
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.data.models.Power;
@@ -51,8 +49,7 @@ public abstract class BluetoothConnectionManager<DataType> {
 
     private final SensorDataObserver observer;
 
-    private final UUID serviceUUUID;
-    private final UUID measurementUUID;
+    private final ServiceMeasurementUUID sensor;
     private BluetoothGatt bluetoothGatt;
 
     private final BluetoothGattCallback connectCallback = new BluetoothGattCallback() {
@@ -81,15 +78,15 @@ public abstract class BluetoothConnectionManager<DataType> {
 
         @Override
         public void onServicesDiscovered(@NonNull BluetoothGatt gatt, int status) {
-            BluetoothGattService service = gatt.getService(serviceUUUID);
+            BluetoothGattService service = gatt.getService(sensor.getServiceUUID());
             if (service == null) {
-                Log.e(TAG, "Could not get service for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + serviceUUUID);
+                Log.e(TAG, "Could not get service for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + sensor);
                 return;
             }
 
-            BluetoothGattCharacteristic characteristic = service.getCharacteristic(measurementUUID);
+            BluetoothGattCharacteristic characteristic = service.getCharacteristic(sensor.getMeasurementUUID());
             if (characteristic == null) {
-                Log.e(TAG, "Could not get BluetoothCharacteristic for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + serviceUUUID + " characteristicUUID=" + measurementUUID);
+                Log.e(TAG, "Could not get BluetoothCharacteristic for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + sensor + " characteristicUUID=" + sensor.getMeasurementUUID());
                 return;
             }
             gatt.setCharacteristicNotification(characteristic, true);
@@ -122,9 +119,8 @@ public abstract class BluetoothConnectionManager<DataType> {
         }
     };
 
-    BluetoothConnectionManager(UUID serviceUUUID, UUID measurementUUID, SensorDataObserver observer) {
-        this.serviceUUUID = serviceUUUID;
-        this.measurementUUID = measurementUUID;
+    BluetoothConnectionManager(ServiceMeasurementUUID serviceUUUID, SensorDataObserver observer) {
+        this.sensor = serviceUUUID;
         this.observer = observer;
     }
 
@@ -177,7 +173,7 @@ public abstract class BluetoothConnectionManager<DataType> {
     public static class HeartRateConnectionManager extends BluetoothConnectionManager<HeartRate> {
 
         HeartRateConnectionManager(@NonNull SensorDataObserver observer) {
-            super(BluetoothUtils.HEART_RATE_SERVICE_UUID, BluetoothUtils.HEART_RATE_MEASUREMENT_CHAR_UUID, observer);
+            super(BluetoothUtils.HEARTRATE, observer);
         }
 
         @Override
@@ -196,7 +192,7 @@ public abstract class BluetoothConnectionManager<DataType> {
     public static class CyclingCadence extends BluetoothConnectionManager<Cadence> {
 
         CyclingCadence(SensorDataObserver observer) {
-            super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPEED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
+            super(BluetoothUtils.CYCLING_SPEED_CADENCE, observer);
         }
 
         @Override
@@ -222,7 +218,7 @@ public abstract class BluetoothConnectionManager<DataType> {
     public static class CyclingDistanceSpeed extends BluetoothConnectionManager<SensorDataCycling.DistanceSpeed.Data> {
 
         CyclingDistanceSpeed(SensorDataObserver observer) {
-            super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPEED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
+            super(BluetoothUtils.CYCLING_SPEED_CADENCE, observer);
         }
 
         @Override
@@ -248,7 +244,7 @@ public abstract class BluetoothConnectionManager<DataType> {
     public static class CyclingPower extends BluetoothConnectionManager<Power> {
 
         CyclingPower(@NonNull SensorDataObserver observer) {
-            super(BluetoothUtils.CYCLING_POWER_UUID, BluetoothUtils.CYCLING_POWER_MEASUREMENT_CHAR_UUID, observer);
+            super(BluetoothUtils.CYCLING_POWER, observer);
         }
 
         @Override
@@ -267,7 +263,7 @@ public abstract class BluetoothConnectionManager<DataType> {
     public static class RunningSpeedAndCadence extends BluetoothConnectionManager<SensorDataRunning.Data> {
 
         RunningSpeedAndCadence(@NonNull SensorDataObserver observer) {
-            super(BluetoothUtils.RUNNING_RUNNING_SPEED_CADENCE_UUID, BluetoothUtils.RUNNING_RUNNING_SPEED_CADENCE_CHAR_UUID, observer);
+            super(BluetoothUtils.RUNNING_SPEED_CADENCE, observer);
         }
 
         @Override

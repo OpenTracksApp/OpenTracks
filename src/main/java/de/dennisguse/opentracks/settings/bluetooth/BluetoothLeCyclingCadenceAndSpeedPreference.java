@@ -27,6 +27,6 @@ public class BluetoothLeCyclingCadenceAndSpeedPreference extends BluetoothLeSens
 
     @Override
     public PreferenceDialogFragmentCompat createInstance() {
-        return BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(getKey(), BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID);
+        return BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(getKey(), BluetoothUtils.CYCLING_SPEED_CADENCE);
     }
 }

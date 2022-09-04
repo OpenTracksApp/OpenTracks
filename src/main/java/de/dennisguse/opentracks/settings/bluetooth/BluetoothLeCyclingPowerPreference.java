@@ -27,6 +27,6 @@ public class BluetoothLeCyclingPowerPreference extends BluetoothLeSensorPreferen
 
     @Override
     public PreferenceDialogFragmentCompat createInstance() {
-        return BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(getKey(), BluetoothUtils.CYCLING_POWER_UUID);
+        return BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(getKey(), BluetoothUtils.CYCLING_POWER);
     }
 }
