@@ -52,6 +52,7 @@ public class BluetoothUtils {
             new UUID(0x2A3700001000L, 0x800000805f9b34fbL)
     );
 
+    // Used for device discovery in preferences
     public static final List<ServiceMeasurementUUID> HEART_RATE_SUPPORTING_DEVICES = Collections.unmodifiableList(Arrays.asList(
             HEARTRATE,
             //Devices that support HEART_RATE_SERVICE_UUID, but do not announce HEART_RATE_SERVICE_UUID in there BLE announcement messages (during device discovery).
@@ -69,6 +70,11 @@ public class BluetoothUtils {
     public static final ServiceMeasurementUUID CYCLING_SPEED_CADENCE = new ServiceMeasurementUUID(
             new UUID(0x181600001000L, 0x800000805f9b34fbL),
             new UUID(0x2A5B00001000L, 0x800000805f9b34fbL)
+    );
+
+    public static final List<ServiceMeasurementUUID> CYCLING_CADENCE = List.of(
+            CYCLING_POWER,
+            CYCLING_SPEED_CADENCE
     );
 
     public static final ServiceMeasurementUUID RUNNING_SPEED_CADENCE = new ServiceMeasurementUUID(

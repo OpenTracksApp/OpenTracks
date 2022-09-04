@@ -30,6 +30,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import java.util.List;
+
 import de.dennisguse.opentracks.data.models.HeartRate;
 import de.dennisguse.opentracks.sensors.sensorData.SensorData;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
@@ -44,7 +46,7 @@ public abstract class BluetoothConnectionManager<DataType> {
 
     private final SensorDataObserver observer;
 
-    private final ServiceMeasurementUUID sensor;
+    private final List<ServiceMeasurementUUID> serviceMeasurementUUIDs;
     private BluetoothGatt bluetoothGatt;
 
     private final BluetoothGattCallback connectCallback = new BluetoothGattCallback() {
@@ -73,15 +75,24 @@ public abstract class BluetoothConnectionManager<DataType> {
 
         @Override
         public void onServicesDiscovered(@NonNull BluetoothGatt gatt, int status) {
-            BluetoothGattService service = gatt.getService(sensor.getServiceUUID());
-            if (service == null) {
-                Log.e(TAG, "Could not get service for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + sensor);
+            BluetoothGattService gattService = null;
+            ServiceMeasurementUUID serviceMeasurement = null;
+            for (ServiceMeasurementUUID s : serviceMeasurementUUIDs) {
+                gattService = gatt.getService(s.getServiceUUID());
+                if (gattService != null) {
+                    serviceMeasurement = s;
+                    break;
+                }
+            }
+
+            if (gattService == null) {
+                Log.e(TAG, "Could not get gattService for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + serviceMeasurement);
                 return;
             }
 
-            BluetoothGattCharacteristic characteristic = service.getCharacteristic(sensor.getMeasurementUUID());
+            BluetoothGattCharacteristic characteristic = gattService.getCharacteristic(serviceMeasurement.getMeasurementUUID());
             if (characteristic == null) {
-                Log.e(TAG, "Could not get BluetoothCharacteristic for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + sensor + " characteristicUUID=" + sensor.getMeasurementUUID());
+                Log.e(TAG, "Could not get BluetoothCharacteristic for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + serviceMeasurement.getServiceUUID() + " characteristicUUID=" + serviceMeasurement.getMeasurementUUID());
                 return;
             }
             gatt.setCharacteristicNotification(characteristic, true);
@@ -115,7 +126,12 @@ public abstract class BluetoothConnectionManager<DataType> {
     };
 
     BluetoothConnectionManager(ServiceMeasurementUUID serviceUUUID, SensorDataObserver observer) {
-        this.sensor = serviceUUUID;
+        this.serviceMeasurementUUIDs = List.of(serviceUUUID);
+        this.observer = observer;
+    }
+
+    BluetoothConnectionManager(List<ServiceMeasurementUUID> serviceUUUID, SensorDataObserver observer) {
+        this.serviceMeasurementUUIDs = serviceUUUID;
         this.observer = observer;
     }
 
@@ -169,7 +185,7 @@ public abstract class BluetoothConnectionManager<DataType> {
     public static class HeartRateConnectionManager extends BluetoothConnectionManager<HeartRate> {
 
         HeartRateConnectionManager(@NonNull SensorDataObserver observer) {
-            super(BluetoothUtils.HEARTRATE, observer);
+            super(BluetoothUtils.HEART_RATE_SUPPORTING_DEVICES, observer);
         }
 
         @Override
