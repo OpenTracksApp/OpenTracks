@@ -83,20 +83,20 @@ limitations under the License.
     <string name="activity_type_wind_surfing">帆板运动</string>
     <!-- Description -->
     <string name="description_activity_type">活动类型：%1$s</string>
-    <string name="description_average_moving_pace_in_minute">平均移动步速：%1$s分钟/公里（%2$s分钟/英里）</string>
+    <string name="description_average_moving_pace_in_minute">平均移动配速：%1$s分钟/公里（%2$s分钟/英里）</string>
     <string name="description_average_moving_speed">平均移动速度：%1$.2f 公里/小时（%2$.1f 英里/小时）</string>
-    <string name="description_average_pace_in_minute">平均步速：%1$s分钟/公里（%2$s分钟/英里）</string>
+    <string name="description_average_pace_in_minute">平均配速：%1$s分钟/公里（%2$s分钟/英里）</string>
     <string name="description_average_speed">平均时速：%1$.2f 公里/小时（%2$.1f 英里/小时）</string>
     <string name="description_altitude_gain">海拔升高：%1$d 米（%2$d 英尺）</string>
     <string name="description_altitude_imperial">海拔（英尺）</string>
     <string name="description_altitude_metric">海拔（米）</string>
-    <string name="description_fastest_pace_in_minute">最快步速：%1$s分钟/公里（%2$s分钟/英里）</string>
+    <string name="description_fastest_pace_in_minute">最快配速：%1$s分钟/公里（%2$s分钟/英里）</string>
     <string name="description_max_altitude">最高海拔：%1$d 米（%2$d 英尺）</string>
     <string name="description_max_speed">最高限速：%1$.2f 公里/小时（%2$.1f 英里/小时）</string>
     <string name="description_min_altitude">最低海拔：%1$d 米（%2$d 英尺）</string>
     <string name="description_moving_time">移动时间：%1$s</string>
-    <string name="description_pace_imperial">步速（分钟/英里）</string>
-    <string name="description_pace_metric">步速（分钟/公里）</string>
+    <string name="description_pace_imperial">配速（分钟/英里）</string>
+    <string name="description_pace_metric">配速（分钟/公里）</string>
     <string name="description_recorded_time">记录时间：%1$s</string>
     <string name="description_speed_ms">速度（米/秒）</string>
     <string name="description_sensor_cadence">蹬踏频率（转数/分钟）</string>
@@ -176,7 +176,7 @@ limitations under the License.
     <string name="sensor_state_power">功率</string>
     <!-- Settings Advanced -->
     <string name="settings_advanced">高级</string>
-    <string name="settings_default_trackfileformat">导出文件格式</string>
+    <string name="settings_default_trackfileformat">导出/分享文件格式</string>
     <!-- Settings Chart -->
     <string name="settings_chart_by_distance">按距离</string>
     <string name="settings_chart_by_time">按时间</string>
@@ -204,8 +204,8 @@ limitations under the License.
     <string name="settings_night_mode_option_day">白天模式</string>
     <string name="settings_night_mode_option_night">夜间模式</string>
     <!-- Settings Reset -->
-    <string name="settings_reset_confirm_message">所有设置都将恢复为默认值。</string>
-    <string name="settings_reset_confirm_title">立即重置？</string>
+    <string name="settings_reset_confirm_message">所有设置都将恢复为默认值。此操作不会删除设备上的路线。</string>
+    <string name="settings_reset_confirm_title">是否立即重置？</string>
     <string name="settings_reset_done">所有设置都已恢复为默认值</string>
     <!-- Settings Sensor -->
     <string name="settings_sensor_bluetooth">蓝牙</string>
@@ -215,32 +215,32 @@ limitations under the License.
     <string name="settings_stats_units_imperial">英制（英里、英尺）</string>
     <string name="settings_stats_units_metric">公制（公里、米）</string>
     <string name="settings_stats_units_title">首选单位</string>
-    <string name="settings_prevent_reimport_tracks_title">禁止导出重复数据</string>
+    <string name="settings_prevent_reimport_tracks_title">防止重复导入路线</string>
     <!-- Share Track -->
     <string name="share_track_share_file_body">我想您可能会对此路线感兴趣。
 \n
 \n%1$s</string>
-    <string name="share_track_subject">我要与您分享路线</string>
+    <string name="share_track_subject">我想给您分享一条路线</string>
     <!-- Stats -->
-    <string name="stats_average_moving_pace">平均移动步速</string>
+    <string name="stats_average_moving_pace">平均移动配速</string>
     <string name="stats_average_moving_speed">平均移动速度</string>
-    <string name="stats_average_pace">平均步速</string>
+    <string name="stats_average_pace">平均配速</string>
     <string name="stats_average_speed">平均速度</string>
     <string name="stats_altitude">海拔</string>
-    <string name="stats_fastest_pace">最快步速</string>
-    <string name="stats_gain">爬高</string>
+    <string name="stats_fastest_pace">最快配速</string>
+    <string name="stats_gain">爬升</string>
     <string name="stats_latitude">纬度</string>
     <string name="stats_longitude">经度</string>
     <string name="stats_max_speed">最高速度</string>
     <string name="stats_moving_time">移动时间</string>
-    <string name="stats_pace">步速</string>
+    <string name="stats_pace">配速</string>
     <string name="stats_speed">速度</string>
     <string name="stats_distance">距离</string>
     <string name="stats_total_time">总时间</string>
     <string name="stats_split_interval">分段间隔</string>
     <!-- Track -->
     <string name="track_name_format">路线 %1$d</string>
-    <string name="track_markers">%1$s标记</string>
+    <string name="track_markers">%1$s 标记</string>
     <!-- Track Delete -->
     <string name="track_delete_one_confirm_message">系统将从设备中永久删除路线及其标记。</string>
     <string name="track_delete_one_confirm_title">删除路线？</string>
@@ -370,4 +370,227 @@ limitations under the License.
     <string name="help_recording_title">OpenTracks 如何记录数据？</string>
     <string name="gps_fixed_and_ready">GPS 已就绪</string>
     <string name="gps_disabled_msg">GPS 被禁用</string>
+    <string name="speed">平均移动速度</string>
+    <string name="about_description"><i>OpenTracks</i> 是一款完全尊重您的个人隐私的运动追踪软件。</string>
+    <string name="help_feature_content">* 创建 GPS 路线
+\n* 使用心率传感器（仅支持低功率蓝牙）
+\n* 语音播报（时间或距离）
+\n* 创建标记（可包含图片）
+\n* 完全不需要联网
+\n* 在地图上显示路线（见下方）</string>
+    <string name="help_gps_troubleshooting_content"> 下面是你可以做的事情： 
+\n 一、检查 GPS 是否已经开启， 
+\n 二、改善 GPS 信号（比如走到室外）， 
+\n 三、用譬如 <a href="https://f-droid.org/en/packages/com.android.gpstest.osmdroid/">GPSTest</a> 之类的工具检查 GPS 是否正常，并且
+\n 四、关闭节能模式。 
+\n 
+\n 如果以上措施都不起作用，请给我们提交 BUG 报告。 </string>
+    <string name="help_storage_pictures_title">OpenTracks 是如何存储被用作标记的照片的？</string>
+    <string name="help_track_export_content"> 您可以在设置界面导出路线，支持的格式有 KMZ、KML 和 GPX。KMZ 和 KML 格式包含全部数据；GPX 仅包含位置数据。用<i>分享图标</i>分享出去的路线即为 KMZ 格式。 </string>
+    <string name="help_support_content"> 你可以： 
+\n 一、向别人介绍 OpenTracks， 
+\n 二、<a href="https://github.com/OpenTracksApp/OpenTracks/issues">提交新功能建议</a>， 
+\n 三、<a href="https://github.com/OpenTracksApp/OpenTracks/issues">报告 BUG</a>， 
+\n 四、帮助开发本应用， 
+\n 五、在 <a href="https://play.google.com/store/apps/details?id=de.dennisguse.opentracks.playstore">Google Play 商店</a>购买本应用， 
+\n 六、赞助，或者 
+\n 七、做任何你认为可以帮助到 OpenTracks 的事情。 </string>
+    <string name="activity_type_swimming">游泳</string>
+    <string name="export_with_photos">带照片</string>
+    <string name="export_progress_summary_skip_msg">路线已跳过</string>
+    <string name="generic_overwrite">覆盖</string>
+    <string name="import_progress_summary_ok_msg">文件已导入</string>
+    <string name="delete_service">删除服务</string>
+    <string name="settings_open_tracks_summary">关于 OpenTracks 项目的一切</string>
+    <string name="value_float_kilometer_hour_recommended">%1$.1f 公里/小时（推荐）</string>
+    <string name="permission_bluetooth_failed">OpenTracks 需要使用蓝牙的权限。</string>
+    <string name="generic_choose_an_option">选择一项</string>
+    <string name="settings_gps_summary">时间间隔，距离间隔，最大距离，精度</string>
+    <string name="select_show_on_map_behavior">选择“在地图上显示”按钮的行为</string>
+    <string name="permission_bluetooth_failed_rejected">您需要在系统设置中手动授予 OpenTracks 访问附近设备的权限。</string>
+    <string name="settings_recording_customize_layout_title">自定义记录中布局</string>
+    <string name="settings_announcements_lap_heart_rate">单圈心率</string>
+    <string name="custom_layout_list_layout_removed">布局已删除</string>
+    <string name="stats_custom_layout_default_layout">默认布局</string>
+    <string name="settings_layout_reset_confirm_message">所有布局设置都会被恢复至默认值。此操作不会删除设备上的路线。</string>
+    <string name="settings_public_api_enabled_summary_on">其他应用可以开始或停止记录。</string>
+    <string name="settings_public_api_dashboard_enabled_summary_on">开始记录的应用可以访问记录下的数据。</string>
+    <string name="help_track_map_content"> 点击地图图标。 
+\n 方法一（在线地图）：安装 <a href="https://github.com/OpenTracksApp/OSMDashboard">OSMDashboard</a>。该应用提供基于 <a href="https://www.openstreetmap.org">OpenStreetMap</a> 的在线或离线地图。 
+\n 事实上，OSMDashboard 是一款独立的应用，它仅能（临时）访问将要被展示的数据。
+\n 方法二：通过一个正常的地图应用（例如 <a href="http://osmand.net/">OsmAnd</a> 和 <a href="https://maps.me/">MAPS.ME</a>）。这些应用需要支持 KMZ 文件格式（只包含位置和时间戳）。事实上，应用需要支持 <i>application/vnd.google-earth.kmz</i> MIME 类型的 <i>ACTION_VIEW</i> 操作。 </string>
+    <string name="export_progress_summary_errors_msg">错误</string>
+    <string name="permission_gps_failed">OpenTracks 需要使用 GPS 的权限。</string>
+    <string name="settings_recording_idle_speed_title">静止速度阈值</string>
+    <string name="custom_layout_list_title">布局</string>
+    <string name="image_discard">丢弃</string>
+    <string name="import_thread_interrupted">线程被中断</string>
+    <string name="import_unsupported_format">不支持的文件格式</string>
+    <string name="import_parser_error">解析器错误：%1$s</string>
+    <string name="import_unable_to_import_file">无法导入文件：%1$s</string>
+    <string name="menu_select_layout">选择布局</string>
+    <string name="voice_per_kilometer">每公里</string>
+    <string name="track_delete_number_of_tracks">%1$d 条路线</string>
+    <string name="stats_clock">时钟</string>
+    <string name="export_error_post_workout">健身后导出失败，请检查导出文件夹。</string>
+    <string name="export_track_already_exists_msg">路线 %1$s 已经存在于目标文件夹。</string>
+    <string name="pace">配速</string>
+    <string name="generic_show_errors">显示错误</string>
+    <string name="settings_export_filename_title">文件名格式</string>
+    <string name="generic_filter">过滤器</string>
+    <string name="generic_from">从</string>
+    <string name="generic_to">到</string>
+    <string name="menu_insert_gallery_img">插入相册中的图片</string>
+    <string name="settings_announcements_summary">时间，距离，语音速度</string>
+    <string name="settings_import_export_summary">导入，导出，自动导出</string>
+    <string name="settings_running_sensor">跑步</string>
+    <string name="settings_sensor_cycling_distance_speed">距离和速度</string>
+    <string name="settings_sensor_cycling_cadence">踏频</string>
+    <string name="settings_sensor_running_speed_and_cadence">距离、速度和踏频</string>
+    <string name="settings_import_section">导入</string>
+    <string name="stats_sensors_heart_rate">心率</string>
+    <string name="track_discarding">丢弃路线</string>
+    <string name="unit_nautical_mile">海里</string>
+    <string name="location_latitude_longitude">%1$s, %2$s</string>
+    <string name="voice_per_mile">每英里</string>
+    <string name="no_compatible_file_manager_installed">没有安装兼容的文件管理器</string>
+    <string name="track_detail_intervals_tab">分段</string>
+    <string name="settings_generic_sensor">通用</string>
+    <string name="settings_cycling_sensor">骑自行车</string>
+    <string name="settings_public_api_package_title">公共 API 包名</string>
+    <string name="stats_sensors_cadence">步频</string>
+    <string name="stats_sensors_power">功率</string>
+    <string name="track_recording_notification_accuracy">位置精度：%1$s</string>
+    <string name="unit_knots">节</string>
+    <string name="unit_minute_per_nautical_mile">分钟/海里</string>
+    <string name="location_coordinate">%1$s°</string>
+    <string name="value_float_kilometer_hour">%1$.1f 公里/小时</string>
+    <string name="value_integer_knots">%1$d 节</string>
+    <string name="value_float_mile_hour">%1$.1f 英里/小时</string>
+    <string name="value_float_knots">%1$.1f 节</string>
+    <string name="value_float_knots_recommended">%1$.1f 节（推荐）</string>
+    <string name="total_distance">总距离</string>
+    <string name="current_heart_rate">当前心率</string>
+    <string name="sensor_state_cadence_max">最大步频</string>
+    <string name="sensor_state_heart_rate_avg">平均心率</string>
+    <string name="sensor_state_heart_rate_max">最大心率</string>
+    <string name="sensor_state_power_avg">平均功率</string>
+    <string name="bluetooth_disabled">请开启蓝牙。</string>
+    <string name="settings_defaults_summary">偏好的单位，默认活动类型，路线默认名称</string>
+    <string name="settings_ui_title">用户界面</string>
+    <string name="settings_ui_summary">外观，记录中布局，主题</string>
+    <string name="settings_gps_title">GPS</string>
+    <string name="settings_import_export_title">导入/导出</string>
+    <string name="settings_activity_defaults_category">活动默认</string>
+    <string name="settings_announcements_totaltime_frequency">时间间隔</string>
+    <string name="settings_announcements_distance_frequency">距离间隔</string>
+    <string name="custom_layout_list_edit_already_exists">布局名已存在</string>
+    <string name="settings_public_api_enabled_title">公共 API</string>
+    <string name="track_distance_notification">距离：%1$s</string>
+    <string name="value_float_mile_hour_recommended">%1$.1f 英里/小时（推荐）</string>
+    <string name="lap_time">单圈用时</string>
+    <plurals name="voiceDistanceKilometers">
+        <item quantity="other">%1$.2f 公里</item>
+    </plurals>
+    <plurals name="voiceDistanceMiles">
+        <item quantity="other">%1$.2f 英里</item>
+    </plurals>
+    <string name="average_heart_rate">平均心率</string>
+    <string name="export_without_photos">不带照片</string>
+    <string name="settings_sensor_bluetooth_service_filter_enabled">只显示蓝牙广播中包含所需服务的设备</string>
+    <plurals name="voiceSpeedMKnots">
+        <item quantity="other">%1$.1f 节</item>
+    </plurals>
+    <string name="voice_per_nautical_mile">每海里</string>
+    <plurals name="voiceDistanceNauticalMiles">
+        <item quantity="other">%1$.2f 海里</item>
+    </plurals>
+    <string name="share_image_subject">我想跟你分享一张图片</string>
+    <string name="share_image_body">我觉得你可能对这张图片感兴趣。</string>
+    <string name="field_set_primary">设为主要</string>
+    <string name="field_remove_from_layout">移除</string>
+    <string name="help_gps_troubleshooting_title">为什么 OpenTracks 没有记录下我的位置？</string>
+    <string name="help_support_title">我能通过什么途径支持 OpenTracks 呢？</string>
+    <string name="generic_skip">跳过</string>
+    <string name="generic_separator_done_total">/</string>
+    <plurals name="generic_completed_with_errors">
+        <item quantity="other">已完成但有 %1$d 个错误</item>
+    </plurals>
+    <string name="generic_completed">已完成</string>
+    <string name="generic_click_twice_cancel">再按一次返回取消</string>
+    <string name="settings_api_title">公共 API</string>
+    <string name="aggregated_stats_empty_message">记录您的第一条路线后即可看到汇总统计数据</string>
+    <string name="aggregated_stats_filter_no_results">当前过滤条件下没有活动</string>
+    <string name="interval_list_empty_message">目前暂时没有分段</string>
+    <string name="lap_speed">单圈速度</string>
+    <string name="about_third_party_data">第三方数据</string>
+    <string name="help_track_map_title">如何在地图上显示路线？</string>
+    <string name="help_track_export_title">如何导出或分享我记录的路线？</string>
+    <string name="export_all_do_it_for_all">用同样方式处理全部冲突</string>
+    <string name="export_progress_summary_overwrite_msg">路线已覆盖</string>
+    <string name="show_on_dashboard_not_installed">没有安装支持 OpenTracks 仪表盘 API 的应用。</string>
+    <string name="help_storage_pictures_content">这些照片被保存在设备内部存储中（也就是说只能在 OpenTracks 内访问）。</string>
+    <string name="help_data_storage_content"> 应用每记录一次位置便同时记录一次传感器数据。以心率传感器为例，这意味着每一个位置仅仅对应<i>一个</i>心率读数。如果你站着不动或者处于室内，心率数据就不会被记录（但会被显示）。 </string>
+    <string name="description_speed_nautical">速度（节）</string>
+    <string name="description_speed_source_gps">GPS</string>
+    <string name="export_cannot_write_to_dir">无法写入导出文件夹。</string>
+    <string name="export_dir_not_writable">" （不可写！）"</string>
+    <string name="export_track_errors">路线没有被导出</string>
+    <string name="export_progress_summary_new_msg">新路线已导出</string>
+    <string name="generic_undo">撤销</string>
+    <string name="generic_dismiss">关闭</string>
+    <string name="settings_defaults_title">默认的单位和活动类型</string>
+    <string name="settings_sensors_title">蓝牙传感器</string>
+    <string name="settings_sensors_summary">自行车传感器，车轮周长，跑步传感器</string>
+    <string name="settings_announcements_title">语音播报</string>
+    <string name="settings_reset_summary">将设置重置为默认值</string>
+    <string name="settings_layout_reset">重置自定义布局</string>
+    <string name="description_pace_nautical">配速（分钟/海里）</string>
+    <string name="field_set_secondary">设为次要</string>
+    <string name="gps_recording_status">%1$s：%2$s</string>
+    <string name="generic_open_track">打开路线</string>
+    <string name="menu_add_custom_layout">创建新布局</string>
+    <string name="menu_filter">过滤器</string>
+    <string name="custom_layout_list_edit_name">输入布局名以添加</string>
+    <string name="custom_layout_select_layout">选择布局</string>
+    <string name="settings_layout_reset_confirm_title">是否重置布局？</string>
+    <string name="settings_announcements_average_speed_pace">平均速度/配速</string>
+    <string name="settings_stats_units_nautical">海事（海里、英尺）</string>
+    <string name="settings_public_api_enabled_summary_off">只有 OpenTracks 才能开始或停止记录。</string>
+    <string name="settings_public_api_disabled_toast">OpenTracks 公共 API 已停用：可以在设置中启用。</string>
+    <string name="settings_public_api_dashboard_enabled_title">自动数据传输</string>
+    <string name="settings_public_api_dashboard_enabled_summary_off">记录下的数据不会被自动分享给其他应用。</string>
+    <string name="settings_export_section">导出</string>
+    <string name="stats_loss">降低</string>
+    <string name="stats_coordinates">纬度/经度</string>
+    <string name="track_pace_notification">配速：%1$s</string>
+    <string name="settings_announcements_lap_speed_pace">单圈速度/配速</string>
+    <string name="activity_type_swimming_open">开放水域游泳</string>
+    <string name="activity_type_workout">健身</string>
+    <string name="generic_today">今天</string>
+    <string name="generic_yesterday">昨天</string>
+    <string name="import_no_kml_file_found">在 KMZ 中没有找到 doc.kml 文件</string>
+    <string name="import_error_info">%1$s：%2$s</string>
+    <string name="import_error_list_dialog_title">文件未导入</string>
+    <string name="import_file_imported">文件 %1$s 已导入</string>
+    <string name="import_prevent_reimport">您设置了防止重复导入路线</string>
+    <string name="import_progress_summary_exists_msg">已存在</string>
+    <string name="import_progress_summary_errors_msg">错误</string>
+    <string name="marker_add_photo_canceled">已取消，照片标记没有被添加</string>
+    <string name="sensor_state_cadence_avg">平均步频</string>
+    <string name="sensor_could_not_scan">无法扫描蓝牙设备（错误：%1$i）。</string>
+    <string name="settings_open_tracks_title">Open Tracks</string>
+    <string name="settings_units_category">单位</string>
+    <string name="settings_recording_customize_layout_select_columns">每行数据字段数</string>
+    <string name="settings_announcements_average_heart_rate">平均心率</string>
+    <string name="settings_layout_reset_done">所有布局设置已恢复至默认值</string>
+    <string name="settings_all_reset">重置</string>
+    <string name="track_delete_not_recording">该路线无法被删除，因为它还在记录中。</string>
+    <string name="error_crash_title">%1$s 已崩溃</string>
+    <string name="share_crash_report">分享崩溃报告</string>
+    <string name="report_bug">报告 BUG</string>
+    <string name="show_on_map_format_ask">询问</string>
+    <string name="show_on_dashboard">OpenTracks 仪表盘 API</string>
+    <string name="always">总是</string>
+    <string name="track_speed_notification">速度：%1$s</string>
 </resources>
