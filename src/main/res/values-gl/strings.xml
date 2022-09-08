@@ -45,11 +45,8 @@ limitations under the License.
     <string name="help_recording_content">
 OpenTracks usa o sensor GPS do dispositivo para gravar a localización de xeito contínuo.
 Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, elevación), OpenTracks  non pode facer nada ao respecto.</string>
-    <string name="help_data_storage_title">¿De que xeito garda OpenTracks os datos dos sensores?</string>
-    <string name="help_data_storage_content">
-Os datos dos sensores gárdanse asociados a localización.
-Respecto do ritmo cardíaco, significa que só se garda <i>unha medida</i> asociada a unha localización.
-Se te detés ou estás en interiores, non se gardarán datos do sensor (mais serán mostrados). </string>
+    <string name="help_data_storage_title">De que xeito garda OpenTracks os datos dos sensores\?</string>
+    <string name="help_data_storage_content"> Os datos dos sensores gárdanse asociados á localización. Respecto do ritmo cardíaco, significa que só se garda <i>unha medida</i> asociada a unha localización. Se te detés ou estás en interiores, non se gardarán datos do sensor (mais serán mostrados). </string>
     <string name="help_gps_troubleshooting_title">¿OpenTracks non grava as localizacións?</string>
     <string name="help_gps_troubleshooting_content"> Podes intentar:
 \n a) mira que o GPS esté activado,
@@ -276,7 +273,7 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <!-- Settings Stats -->
     <string name="settings_stats_rate_title">Indicador preferido</string>
     <string name="settings_stats_units_imperial">Imperiais (millas, pés)</string>
-    <string name="settings_stats_units_metric">Métricas (km, m)</string>
+    <string name="settings_stats_units_metric">Unidades (km, m)</string>
     <string name="settings_stats_units_title">Unidades preferidas</string>
     <!-- Share Track -->
     <string name="share_track_share_file_body">Creo que che pode interesar esta ruta.
@@ -504,7 +501,7 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_announcements_distance_frequency">Intervalo de distancia</string>
     <string name="permission_bluetooth_failed">OpenTracks require permiso para usar o Bluetooth.</string>
     <string name="permission_bluetooth_failed_rejected">Tes que permitirlle a OpenTracks nos axustes do sistema que acceda a Dispositivos Próximos.</string>
-    <string name="settings_recording_idle_speed_title">Ocioso límite de velocidade</string>
+    <string name="settings_recording_idle_speed_title">Limiar detección movemento</string>
     <string name="value_float_kilometer_hour">%1$.1f km/h</string>
     <string name="value_float_mile_hour">%1$.1f km/h</string>
     <string name="value_float_mile_hour_recommended">%1$.1f km/h (recomendado)</string>
@@ -519,9 +516,9 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
     <string name="settings_ui_summary">Aparencia, Gravación, Deseño, Tema</string>
     <string name="settings_gps_title">GPS</string>
     <string name="settings_gps_summary">Intervalo de tempo, Distancia intervalo, Max Distancia, Precisión</string>
-    <string name="settings_sensors_title">Bluetooth Sensores</string>
-    <string name="settings_sensors_summary">Ciclismo Sensores, Roda Circunferencia, Execución De Sensores</string>
-    <string name="settings_announcements_title">Voz Anuncios</string>
+    <string name="settings_sensors_title">Sensores Bluetooth</string>
+    <string name="settings_sensors_summary">Sensores de ciclismo, Circunferencia da roda, Sensores de carreira</string>
+    <string name="settings_announcements_title">Indicacións por Voz</string>
     <string name="settings_import_export_title">Importación/Exportación</string>
     <string name="settings_import_export_summary">Importación, Exportación, Auto Exportación</string>
     <string name="settings_units_category">Unidades</string>
@@ -600,12 +597,12 @@ Se te detés ou estás en interiores, non se gardarán datos do sensor (mais ser
         <item quantity="one">1 milla náutica</item>
         <item quantity="other">%1$.2f millas náuticas</item>
     </plurals>
-    <string name="show_on_dashboard">Taboleiro da API OpenTracks</string>
+    <string name="show_on_dashboard">Usar API OpenTracks</string>
     <plurals name="voiceSpeedMKnots">
         <item quantity="one">1 nó</item>
         <item quantity="other">%1$.1f nós</item>
     </plurals>
-    <string name="show_on_dashboard_not_installed">Non hai ningunha aplicación instalada con soporte para a API do taboleiro OpenTracks.</string>
+    <string name="show_on_dashboard_not_installed">Non hai ningunha aplicación instalada con soporte para a API de OpenTracks.</string>
     <string name="select_show_on_map_behavior">Elixe \"ver no mapa\"</string>
     <string name="show_on_map_format_ask">Preguntar</string>
     <string name="always">Sempre</string>
