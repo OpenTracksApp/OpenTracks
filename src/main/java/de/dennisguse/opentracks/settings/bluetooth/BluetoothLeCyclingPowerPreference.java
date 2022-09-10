@@ -3,6 +3,10 @@ package de.dennisguse.opentracks.settings.bluetooth;
 import android.content.Context;
 import android.util.AttributeSet;
 
+import androidx.preference.PreferenceDialogFragmentCompat;
+
+import de.dennisguse.opentracks.sensors.BluetoothUtils;
+
 public class BluetoothLeCyclingPowerPreference extends BluetoothLeSensorPreference {
 
     public BluetoothLeCyclingPowerPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -19,5 +23,10 @@ public class BluetoothLeCyclingPowerPreference extends BluetoothLeSensorPreferen
 
     public BluetoothLeCyclingPowerPreference(Context context) {
         super(context);
+    }
+
+    @Override
+    public PreferenceDialogFragmentCompat createInstance() {
+        return BluetoothLeSensorPreference.BluetoothLeSensorPreferenceDialog.newInstance(getKey(), BluetoothUtils.CYCLING_POWER);
     }
 }

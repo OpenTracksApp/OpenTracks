@@ -23,11 +23,11 @@ import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.sensors.BluetoothUtils;
+import de.dennisguse.opentracks.sensors.ServiceMeasurementUUID;
 import de.dennisguse.opentracks.settings.PreferencesUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
 
@@ -92,6 +92,8 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
         return getValue();
     }
 
+    public abstract PreferenceDialogFragmentCompat createInstance();
+
     public static class BluetoothLeSensorPreferenceDialog extends PreferenceDialogFragmentCompat {
 
         private AnimatedVectorDrawableCompat bluetoothIcon;
@@ -123,15 +125,18 @@ public abstract class BluetoothLeSensorPreference extends DialogPreference {
             }
         };
 
-        public static BluetoothLeSensorPreferenceDialog newInstance(String preferenceKey, UUID sensorUUID) {
+        public static BluetoothLeSensorPreferenceDialog newInstance(String preferenceKey, ServiceMeasurementUUID sensorUUID) {
             return newInstance(preferenceKey, Collections.singletonList(sensorUUID));
         }
 
-        public static BluetoothLeSensorPreferenceDialog newInstance(String preferenceKey, List<UUID> sensorUUIDs) {
+        public static BluetoothLeSensorPreferenceDialog newInstance(String preferenceKey, List<ServiceMeasurementUUID> sensorUUIDs) {
             final BluetoothLeSensorPreferenceDialog fragment = new BluetoothLeSensorPreferenceDialog();
             final Bundle b = new Bundle(1);
             b.putString(ARG_KEY, preferenceKey);
-            b.putParcelableArrayList(ARG_BLE_SERVICE_UUIDS, new ArrayList<>(sensorUUIDs.stream().map(ParcelUuid::new).collect(Collectors.toList())));
+            b.putParcelableArrayList(ARG_BLE_SERVICE_UUIDS, new ArrayList<>(sensorUUIDs.stream()
+                    .map(ServiceMeasurementUUID::getServiceUUID)
+                    .map(ParcelUuid::new)
+                    .collect(Collectors.toList())));
             fragment.setArguments(b);
             return fragment;
         }

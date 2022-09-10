@@ -30,16 +30,11 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-import de.dennisguse.opentracks.data.models.Cadence;
-import de.dennisguse.opentracks.data.models.HeartRate;
-import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.sensors.sensorData.SensorData;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCycling;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataHeartRate;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 
 /**
  * Manages connection to a Bluetooth LE sensor and subscribes for onChange-notifications.
@@ -51,8 +46,7 @@ public abstract class BluetoothConnectionManager<DataType> {
 
     private final SensorDataObserver observer;
 
-    private final UUID serviceUUUID;
-    private final UUID measurementUUID;
+    private final List<ServiceMeasurementUUID> serviceMeasurementUUIDs;
     private BluetoothGatt bluetoothGatt;
 
     private final BluetoothGattCallback connectCallback = new BluetoothGattCallback() {
@@ -81,15 +75,24 @@ public abstract class BluetoothConnectionManager<DataType> {
 
         @Override
         public void onServicesDiscovered(@NonNull BluetoothGatt gatt, int status) {
-            BluetoothGattService service = gatt.getService(serviceUUUID);
-            if (service == null) {
-                Log.e(TAG, "Could not get service for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + serviceUUUID);
+            BluetoothGattService gattService = null;
+            ServiceMeasurementUUID serviceMeasurement = null;
+            for (ServiceMeasurementUUID s : serviceMeasurementUUIDs) {
+                gattService = gatt.getService(s.getServiceUUID());
+                if (gattService != null) {
+                    serviceMeasurement = s;
+                    break;
+                }
+            }
+
+            if (gattService == null) {
+                Log.e(TAG, "Could not get gattService for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + serviceMeasurement);
                 return;
             }
 
-            BluetoothGattCharacteristic characteristic = service.getCharacteristic(measurementUUID);
+            BluetoothGattCharacteristic characteristic = gattService.getCharacteristic(serviceMeasurement.getMeasurementUUID());
             if (characteristic == null) {
-                Log.e(TAG, "Could not get BluetoothCharacteristic for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + serviceUUUID + " characteristicUUID=" + measurementUUID);
+                Log.e(TAG, "Could not get BluetoothCharacteristic for address=" + gatt.getDevice().getAddress() + " serviceUUID=" + serviceMeasurement.getServiceUUID() + " characteristicUUID=" + serviceMeasurement.getMeasurementUUID());
                 return;
             }
             gatt.setCharacteristicNotification(characteristic, true);
@@ -108,8 +111,16 @@ public abstract class BluetoothConnectionManager<DataType> {
 
         @Override
         public void onCharacteristicChanged(BluetoothGatt gatt, @NonNull BluetoothGattCharacteristic characteristic) {
-            Log.d(TAG, "Received data from " + gatt.getDevice().getAddress());
-            SensorData<DataType> sensorData = parsePayload(gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
+            UUID serviceUUID = characteristic.getService().getUuid();
+            Log.d(TAG, "Received data from " + gatt.getDevice().getAddress() + " with service " + serviceUUID + " and characteristics " + characteristic.getUuid());
+            Optional<ServiceMeasurementUUID> serviceMeasurementUUID = serviceMeasurementUUIDs.stream()
+                    .filter(s -> s.getServiceUUID().equals(characteristic.getService().getUuid())).findFirst();
+            if (serviceMeasurementUUID.isEmpty()) {
+                Log.e(TAG, "Unknown service UUID; not supported?");
+                return;
+            }
+
+            SensorData<DataType> sensorData = parsePayload(serviceMeasurementUUID.get(), gatt.getDevice().getName(), gatt.getDevice().getAddress(), characteristic);
             if (sensorData != null) {
                 Log.d(TAG, "Decoded data from " + gatt.getDevice().getAddress() + ": " + sensorData);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -122,15 +133,20 @@ public abstract class BluetoothConnectionManager<DataType> {
         }
     };
 
-    BluetoothConnectionManager(UUID serviceUUUID, UUID measurementUUID, SensorDataObserver observer) {
-        this.serviceUUUID = serviceUUUID;
-        this.measurementUUID = measurementUUID;
+    BluetoothConnectionManager(ServiceMeasurementUUID serviceUUUID, SensorDataObserver observer) {
+        this.serviceMeasurementUUIDs = List.of(serviceUUUID);
+        this.observer = observer;
+    }
+
+    BluetoothConnectionManager(List<ServiceMeasurementUUID> serviceUUUID, SensorDataObserver observer) {
+        this.serviceMeasurementUUIDs = serviceUUUID;
         this.observer = observer;
     }
 
     synchronized void connect(Context context, @NonNull BluetoothDevice device) {
         if (bluetoothGatt != null) {
             Log.w(TAG, "Already connected; ignoring.");
+            return;
         }
 
         Log.d(TAG, "Connecting to: " + device);
@@ -172,114 +188,7 @@ public abstract class BluetoothConnectionManager<DataType> {
     /**
      * @return null if data could not be parsed.
      */
-    protected abstract SensorData<DataType> parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic);
-
-    public static class HeartRateConnectionManager extends BluetoothConnectionManager<HeartRate> {
-
-        HeartRateConnectionManager(@NonNull SensorDataObserver observer) {
-            super(BluetoothUtils.HEART_RATE_SERVICE_UUID, BluetoothUtils.HEART_RATE_MEASUREMENT_CHAR_UUID, observer);
-        }
-
-        @Override
-        protected SensorDataHeartRate createEmptySensorData(String address) {
-            return new SensorDataHeartRate(address);
-        }
-
-        @Override
-        protected SensorDataHeartRate parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-            Integer heartRate = BluetoothUtils.parseHeartRate(characteristic);
-
-            return heartRate != null ? new SensorDataHeartRate(address, sensorName, HeartRate.of(heartRate)) : null;
-        }
-    }
-
-    public static class CyclingCadence extends BluetoothConnectionManager<Cadence> {
-
-        CyclingCadence(SensorDataObserver observer) {
-            super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPEED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
-        }
-
-        @Override
-        protected SensorDataCycling.CyclingCadence createEmptySensorData(String address) {
-            return new SensorDataCycling.CyclingCadence(address);
-        }
-
-        @Override
-        protected SensorDataCycling.CyclingCadence parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-            SensorDataCycling.CadenceAndSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);
-            if (cadenceAndSpeed == null) {
-                return null;
-            }
-
-            if (cadenceAndSpeed.getCadence() != null) {
-                return cadenceAndSpeed.getCadence();
-            }
-
-            return null;
-        }
-    }
-
-    public static class CyclingDistanceSpeed extends BluetoothConnectionManager<SensorDataCycling.DistanceSpeed.Data> {
-
-        CyclingDistanceSpeed(SensorDataObserver observer) {
-            super(BluetoothUtils.CYCLING_SPEED_CADENCE_SERVICE_UUID, BluetoothUtils.CYCLING_SPEED_CADENCE_MEASUREMENT_CHAR_UUID, observer);
-        }
-
-        @Override
-        protected SensorDataCycling.DistanceSpeed createEmptySensorData(String address) {
-            return new SensorDataCycling.DistanceSpeed(address);
-        }
-
-        @Override
-        protected SensorDataCycling.DistanceSpeed parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-            SensorDataCycling.CadenceAndSpeed cadenceAndSpeed = BluetoothUtils.parseCyclingCrankAndWheel(address, sensorName, characteristic);
-            if (cadenceAndSpeed == null) {
-                return null;
-            }
-
-            if (cadenceAndSpeed.getDistanceSpeed() != null) {
-                return cadenceAndSpeed.getDistanceSpeed();
-            }
-
-            return null;
-        }
-    }
-
-    public static class CyclingPower extends BluetoothConnectionManager<Power> {
-
-        CyclingPower(@NonNull SensorDataObserver observer) {
-            super(BluetoothUtils.CYCLING_POWER_UUID, BluetoothUtils.CYCLING_POWER_MEASUREMENT_CHAR_UUID, observer);
-        }
-
-        @Override
-        protected SensorDataCyclingPower createEmptySensorData(String address) {
-            return new SensorDataCyclingPower(address);
-        }
-
-        @Override
-        protected SensorDataCyclingPower parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-            Integer cyclingPower = BluetoothUtils.parseCyclingPower(characteristic);
-
-            return cyclingPower != null ? new SensorDataCyclingPower(address, sensorName, Power.of(cyclingPower)) : null;
-        }
-    }
-
-    public static class RunningSpeedAndCadence extends BluetoothConnectionManager<SensorDataRunning.Data> {
-
-        RunningSpeedAndCadence(@NonNull SensorDataObserver observer) {
-            super(BluetoothUtils.RUNNING_RUNNING_SPEED_CADENCE_UUID, BluetoothUtils.RUNNING_RUNNING_SPEED_CADENCE_CHAR_UUID, observer);
-        }
-
-        @Override
-        protected SensorDataRunning createEmptySensorData(String address) {
-            return new SensorDataRunning(address);
-        }
-
-        @Override
-        protected SensorDataRunning parsePayload(String sensorName, String address, BluetoothGattCharacteristic characteristic) {
-            return BluetoothUtils.parseRunningSpeedAndCadence(address, sensorName, characteristic);
-        }
-    }
+    protected abstract SensorData<DataType> parsePayload(@NonNull ServiceMeasurementUUID serviceMeasurementUUID, String sensorName, String address, @NonNull BluetoothGattCharacteristic characteristic);
 
     interface SensorDataObserver {
 

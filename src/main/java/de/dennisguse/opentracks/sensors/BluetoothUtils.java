@@ -30,8 +30,12 @@ import java.util.UUID;
 
 import de.dennisguse.opentracks.data.models.Cadence;
 import de.dennisguse.opentracks.data.models.Distance;
+import de.dennisguse.opentracks.data.models.Power;
 import de.dennisguse.opentracks.data.models.Speed;
-import de.dennisguse.opentracks.sensors.sensorData.SensorDataCycling;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadence;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingCadenceAndDistanceSpeed;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingDistanceSpeed;
+import de.dennisguse.opentracks.sensors.sensorData.SensorDataCyclingPower;
 import de.dennisguse.opentracks.sensors.sensorData.SensorDataRunning;
 
 /**
@@ -43,23 +47,40 @@ public class BluetoothUtils {
 
     public static final UUID CLIENT_CHARACTERISTIC_CONFIG_UUID = new UUID(0x290200001000L, 0x800000805f9b34fbL);
 
-    public static final UUID HEART_RATE_SERVICE_UUID = new UUID(0x180D00001000L, 0x800000805f9b34fbL);
-    public static final UUID HEART_RATE_MEASUREMENT_CHAR_UUID = new UUID(0x2A3700001000L, 0x800000805f9b34fbL);
+    public static final ServiceMeasurementUUID HEARTRATE = new ServiceMeasurementUUID(
+            new UUID(0x180D00001000L, 0x800000805f9b34fbL),
+            new UUID(0x2A3700001000L, 0x800000805f9b34fbL)
+    );
 
-    public static final List<UUID> HEART_RATE_SUPPORTING_DEVICES = Collections.unmodifiableList(Arrays.asList(
-            BluetoothUtils.HEART_RATE_SERVICE_UUID,
+    // Used for device discovery in preferences
+    public static final List<ServiceMeasurementUUID> HEART_RATE_SUPPORTING_DEVICES = Collections.unmodifiableList(Arrays.asList(
+            HEARTRATE,
             //Devices that support HEART_RATE_SERVICE_UUID, but do not announce HEART_RATE_SERVICE_UUID in there BLE announcement messages (during device discovery).
-            UUID.fromString("0000fee0-0000-1000-8000-00805f9b34fb") //Miband3
-    ));
+            new ServiceMeasurementUUID(
+                    UUID.fromString("0000fee0-0000-1000-8000-00805f9b34fb"), //Miband3
+                    HEARTRATE.getMeasurementUUID()
+            ))
+    );
 
-    public static final UUID CYCLING_POWER_UUID = new UUID(0x181800001000L, 0x800000805f9b34fbL);
-    public static final UUID CYCLING_POWER_MEASUREMENT_CHAR_UUID = new UUID(0x2A6300001000L, 0x800000805f9b34fbL);
+    public static final ServiceMeasurementUUID CYCLING_POWER = new ServiceMeasurementUUID(
+            new UUID(0x181800001000L, 0x800000805f9b34fbL),
+            new UUID(0x2A6300001000L, 0x800000805f9b34fbL)
+    );
 
-    public static final UUID CYCLING_SPEED_CADENCE_SERVICE_UUID = new UUID(0x181600001000L, 0x800000805f9b34fbL);
-    public static final UUID CYCLING_SPEED_CADENCE_MEASUREMENT_CHAR_UUID = new UUID(0x2A5B00001000L, 0x800000805f9b34fbL);
+    public static final ServiceMeasurementUUID CYCLING_SPEED_CADENCE = new ServiceMeasurementUUID(
+            new UUID(0x181600001000L, 0x800000805f9b34fbL),
+            new UUID(0x2A5B00001000L, 0x800000805f9b34fbL)
+    );
 
-    public static final UUID RUNNING_RUNNING_SPEED_CADENCE_UUID = new UUID(0x181400001000L, 0x800000805f9b34fbL);
-    public static final UUID RUNNING_RUNNING_SPEED_CADENCE_CHAR_UUID = new UUID(0x2A5300001000L, 0x800000805f9b34fbL);
+    public static final List<ServiceMeasurementUUID> CYCLING_CADENCE = List.of(
+            CYCLING_POWER,
+            CYCLING_SPEED_CADENCE
+    );
+
+    public static final ServiceMeasurementUUID RUNNING_SPEED_CADENCE = new ServiceMeasurementUUID(
+            new UUID(0x181400001000L, 0x800000805f9b34fbL),
+            new UUID(0x2A5300001000L, 0x800000805f9b34fbL)
+    );
 
     private static final String TAG = BluetoothUtils.class.getSimpleName();
 
@@ -98,17 +119,49 @@ public class BluetoothUtils {
         return null;
     }
 
-    public static Integer parseCyclingPower(BluetoothGattCharacteristic characteristic) {
+    public static SensorDataCyclingPower.Data parseCyclingPower(String address, String sensorName, BluetoothGattCharacteristic characteristic) {
         // DOCUMENTATION https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.cycling_power_measurement.xml
         int valueLength = characteristic.getValue().length;
-        if (valueLength < 4) {
+        if (valueLength == 0) {
             return null;
         }
 
-        return characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_SINT16, 2);
+        int index = 0;
+        int flags1 = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, index++);
+        int flags2 = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8, index++);
+        boolean hasPedalPowerBalance = (flags1 & 0x01) > 0;
+        boolean hasAccumulatedTorque = (flags1 & 0x04) > 0;
+        boolean hasWheel = (flags1 & 16) > 0;
+        boolean hasCrank = (flags1 & 32) > 0;
+
+        Integer instantaneousPower = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_SINT16, index);
+        index += 2;
+
+        if (hasPedalPowerBalance) {
+            index += 1;
+        }
+        if (hasAccumulatedTorque) {
+            index += 2;
+        }
+        if (hasWheel) {
+            index += 2 + 2;
+        }
+
+        SensorDataCyclingCadence cadence = null;
+        if (hasCrank && valueLength - index >= 4) {
+            long crankCount = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index);
+            index += 2;
+
+            int crankTime = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index); // 1/1024s
+
+            cadence = new SensorDataCyclingCadence(address, sensorName, crankCount, crankTime);
+        }
+
+
+        return new SensorDataCyclingPower.Data(new SensorDataCyclingPower(sensorName, address, Power.of(instantaneousPower)), cadence);
     }
 
-    public static SensorDataCycling.CadenceAndSpeed parseCyclingCrankAndWheel(String address, String sensorName, @NonNull BluetoothGattCharacteristic characteristic) {
+    public static SensorDataCyclingCadenceAndDistanceSpeed parseCyclingCrankAndWheel(String address, String sensorName, @NonNull BluetoothGattCharacteristic characteristic) {
         // DOCUMENTATION https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.csc_measurement.xml
         int valueLength = characteristic.getValue().length;
         if (valueLength == 0) {
@@ -120,25 +173,25 @@ public class BluetoothUtils {
         boolean hasCrank = (flags & 0x02) > 0;
 
         int index = 1;
-        SensorDataCycling.DistanceSpeed speed = null;
+        SensorDataCyclingDistanceSpeed speed = null;
         if (hasWheel && valueLength - index >= 6) {
             int wheelTotalRevolutionCount = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT32, index);
             index += 4;
             int wheelTime = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index); // 1/1024s
-            speed = new SensorDataCycling.DistanceSpeed(address, sensorName, wheelTotalRevolutionCount, wheelTime);
+            speed = new SensorDataCyclingDistanceSpeed(address, sensorName, wheelTotalRevolutionCount, wheelTime);
             index += 2;
         }
 
-        SensorDataCycling.CyclingCadence cadence = null;
+        SensorDataCyclingCadence cadence = null;
         if (hasCrank && valueLength - index >= 4) {
             long crankCount = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index);
             index += 2;
 
             int crankTime = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, index); // 1/1024s
-            cadence = new SensorDataCycling.CyclingCadence(address, sensorName, crankCount, crankTime);
+            cadence = new SensorDataCyclingCadence(address, sensorName, crankCount, crankTime);
         }
 
-        return new SensorDataCycling.CadenceAndSpeed(address, sensorName, cadence, speed);
+        return new SensorDataCyclingCadenceAndDistanceSpeed(address, sensorName, cadence, speed);
     }
 
     public static SensorDataRunning parseRunningSpeedAndCadence(String address, String sensorName, @NonNull BluetoothGattCharacteristic characteristic) {
