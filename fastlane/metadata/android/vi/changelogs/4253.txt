@@ -1,0 +1,16 @@
+v3.18.6: OpenTracks
+
+Thay đổi:
+- Tính năng "Hiện trên bản đồ" thông qua KML thay vì KMZ
+- Thông báo bằng giọng nói không bao gồm tên ứng dụng
+- Trong lúc ghi: Tăng/ giảm độ cao được cập nhật mỗi giây
+- Thông tin cửa hàng được cập nhật
+
+Sửa lỗi:
+- Sửa lỗi các bản dịch Thông báo giọng nói không hợp lệ
+
+Phát triển:
+- Quyền Android 12 (BLUETOOTH_SCAN)
+- Quyền Android 12 (ACCESS_COARSE_LOCATION)
+- Khẳng định cho TrackPoints (thử nghiệm)
+- Loại bỏ các bản dịch thừa
