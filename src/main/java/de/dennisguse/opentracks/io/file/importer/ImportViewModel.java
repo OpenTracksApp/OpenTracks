@@ -11,7 +11,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +47,14 @@ public class ImportViewModel extends AndroidViewModel implements ImportServiceRe
     }
 
     private void loadData(List<DocumentFile> documentFiles) {
-        List<DocumentFile> fileList = documentFiles.stream().map(FileUtils::getFiles).flatMap(Collection::stream).collect(Collectors.toList());
+        List<ArrayList<DocumentFile>> nestedFileList = documentFiles.stream()
+                .map(FileUtils::getFiles)
+                // TODO flatMap(Collection::stream) fails with ClassCastException; try in the future again
+                .collect(Collectors.toList());
+
+        List<DocumentFile> fileList = new ArrayList<>();
+        nestedFileList.forEach(fileList::addAll);
+
         summary.totalCount = fileList.size();
         filesToImport.addAll(fileList);
         importNextFile();
