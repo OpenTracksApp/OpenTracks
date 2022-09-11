@@ -546,7 +546,7 @@ limitations under the License.
     <string name="lap_time">Thời gian lòng</string>
     <string name="pace">Tốc độ</string>
     <string name="lap_speed">Vòng tốc độ</string>
-    <string name="speed">Tốc độ</string>
+    <string name="speed">Tốc độ di chuyển trung bình</string>
     <plurals name="voiceDistanceKilometers">
         <item quantity="other">%1$.2f Tầng km</item>
     </plurals>
@@ -590,4 +590,5 @@ limitations under the License.
     <string name="show_on_map_format_ask">Hỏi</string>
     <string name="show_on_dashboard">API OpenTracks Dashboard</string>
     <string name="always">Luôn luôn</string>
+    <string name="track_delete_number_of_tracks">%1$d tracks</string>
 </resources>
