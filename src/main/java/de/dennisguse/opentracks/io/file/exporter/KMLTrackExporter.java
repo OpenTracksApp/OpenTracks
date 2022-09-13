@@ -44,7 +44,8 @@ import de.dennisguse.opentracks.ui.markers.MarkerUtils;
 import de.dennisguse.opentracks.util.StringUtils;
 
 /**
- * Convert {@link Track} incl. {@link Marker} and {@link TrackPoint} to KML.
+ * Convert {@link Track} incl. {@link Marker} and {@link TrackPoint} to KML version 2.3.
+ * https://docs.opengeospatial.org/is/12-007r2/12-007r2.html
  *
  * @author Sandor Dornbush
  * @author Rodrigo Damazio
@@ -57,6 +58,8 @@ public class KMLTrackExporter implements TrackExporter {
     public static final String MARKER_STYLE = "waypoint";
     private static final String TRACK_STYLE = "track";
     private static final String SCHEMA_ID = "schema";
+
+    public static final String EXTENDED_DATA_TYPE_CATEGORY = "type";
 
     public static final String EXTENDED_DATA_TYPE_SPEED = "speed";
     public static final String EXTENDED_DATA_TYPE_DISTANCE = "distance";
@@ -224,11 +227,13 @@ public class KMLTrackExporter implements TrackExporter {
     private void writeHeader(Track[] tracks) {
         if (printWriter != null) {
             printWriter.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            printWriter.println("<kml xmlns=\"http://www.opengis.net/kml/2.2\"");
-            printWriter.println("xmlns:gx=\"http://www.google.com/kml/ext/2.2\"");
+            printWriter.println("<kml xmlns=\"http://www.opengis.net/kml/2.3\"");
             printWriter.println("xmlns:atom=\"http://www.w3.org/2005/Atom\"");
             printWriter.println("xmlns:opentracks=\"http://opentracksapp.com/xmlschemas/v1\">");
-            //TODO ADD xsi:schemaLocation here!
+            //TODO ADD xsi:schemaLocation for atom
+            printWriter.println("xsi:schemaLocation=" +
+                    "\"http://www.opengis.net/kml/2.3 http://schemas.opengis.net/kml/2.3/ogckml23.xsd"
+                    + " http://opentracksapp.com/xmlschemas/v1 http://opentracksapp.com/xmlschemas/OpenTracks_v1.xsd\">");
 
             printWriter.println("<Document>");
             printWriter.println("<open>1</open>");
@@ -309,16 +314,16 @@ public class KMLTrackExporter implements TrackExporter {
 
             printWriter.println("<styleUrl>#" + TRACK_STYLE + "</styleUrl>");
             writeCategory(track.getCategory());
-            printWriter.println("<gx:MultiTrack>");
+            printWriter.println("<MultiTrack>");
             printWriter.println("<altitudeMode>absolute</altitudeMode>");
-            printWriter.println("<gx:interpolate>1</gx:interpolate>");
+            printWriter.println("<interpolate>1</interpolate>");
         }
     }
 
 
     private void writeEndTrack() {
         if (printWriter != null) {
-            printWriter.println("</gx:MultiTrack>");
+            printWriter.println("</MultiTrack>");
             printWriter.println("</Placemark>");
         }
     }
@@ -326,7 +331,7 @@ public class KMLTrackExporter implements TrackExporter {
     @VisibleForTesting
     void writeOpenSegment() {
         if (printWriter != null) {
-            printWriter.println("<gx:Track>");
+            printWriter.println("<Track>");
             speedList.clear();
             distanceList.clear();
             powerList.clear();
@@ -373,7 +378,7 @@ public class KMLTrackExporter implements TrackExporter {
             }
             printWriter.println("</SchemaData>");
             printWriter.println("</ExtendedData>");
-            printWriter.println("</gx:Track>");
+            printWriter.println("</Track>");
         }
     }
 
@@ -383,9 +388,9 @@ public class KMLTrackExporter implements TrackExporter {
             printWriter.println("<when>" + getTime(zoneOffset, trackPoint.getLocation()) + "</when>");
 
             if (trackPoint.hasLocation()) {
-                printWriter.println("<gx:coord>" + getCoordinates(trackPoint.getLocation(), " ") + "</gx:coord>");
+                printWriter.println("<coord>" + getCoordinates(trackPoint.getLocation(), " ") + "</coord>");
             } else {
-                printWriter.println("<gx:coord/>");
+                printWriter.println("<coord/>");
             }
             speedList.add(trackPoint.hasSpeed() ? (float) trackPoint.getSpeed().toMPS() : null);
 
@@ -408,16 +413,16 @@ public class KMLTrackExporter implements TrackExporter {
      * @param name the name of the simple array data
      */
     private void writeSimpleArrayData(List<Float> list, String name) {
-        printWriter.println("<gx:SimpleArrayData name=\"" + name + "\">");
+        printWriter.println("<SimpleArrayData name=\"" + name + "\">");
         for (int i = 0; i < list.size(); i++) {
             Float value = list.get(i);
             if (value == null) {
-                printWriter.println("<gx:value />");
+                printWriter.println("<value />");
             } else {
-                printWriter.println("<gx:value>" + SENSOR_DATA_FORMAT.format(value) + "</gx:value>");
+                printWriter.println("<value>" + SENSOR_DATA_FORMAT.format(value) + "</value>");
             }
         }
-        printWriter.println("</gx:SimpleArrayData>");
+        printWriter.println("</SimpleArrayData>");
     }
 
     /**
@@ -521,7 +526,7 @@ public class KMLTrackExporter implements TrackExporter {
             return;
         }
         printWriter.println("<ExtendedData>");
-        printWriter.println("<Data name=\"type\"><value>" + StringUtils.formatCData(category) + "</value></Data>");
+        printWriter.println("<Data name=\"" + EXTENDED_DATA_TYPE_CATEGORY + "\"><value>" + StringUtils.formatCData(category) + "</value></Data>");
         printWriter.println("</ExtendedData>");
     }
 
@@ -554,8 +559,8 @@ public class KMLTrackExporter implements TrackExporter {
      * @param extendedDataType the extended data display name
      */
     private void writeSimpleArrayStyle(String name, String extendedDataType) {
-        printWriter.println("<gx:SimpleArrayField name=\"" + name + "\" type=\"float\">");
+        printWriter.println("<SimpleArrayField name=\"" + name + "\" type=\"float\">");
         printWriter.println("<displayName>" + StringUtils.formatCData(extendedDataType) + "</displayName>");
-        printWriter.println("</gx:SimpleArrayField>");
+        printWriter.println("</SimpleArrayField>");
     }
 }
