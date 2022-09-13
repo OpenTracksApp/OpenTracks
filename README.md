@@ -64,19 +64,19 @@ _OpenTracks_ is a sport tracking application that completely respects your priva
 * __Voice announcements__
 * __Photos and Markers:__ mark interesting locations while tracking
 * __Export:__
-  * export tracks either as KMZ (incl. photos), KML, or GPX
-  * export automatically after each recording (e.g., to sync via [Nextcloud](https://nextcloud.com/))
-  * avoid duplication: each exported file contain a random unique identifier (i.e., `opentracks:trackid`)
+    * export tracks either as [KMZ 2.3](https://docs.opengeospatial.org/is/12-007r2/12-007r2.html) (incl. photos), [KML 2.3](https://docs.opengeospatial.org/is/12-007r2/12-007r2.html), or [GPX 1.1](https://www.topografix.com/GPX/1/1/)
+    * export automatically after each recording (e.g., to sync via [Nextcloud](https://nextcloud.com/))
+    * avoid duplication: each exported file contain a random unique identifier (i.e., `opentracks:trackid`)
 * __Altitude:__
-  * gain/loss via barometric sensor (if present)
-  * shown in EGM2008 (above mean sea level); exported as WGS84
+    * gain/loss via barometric sensor (if present)
+    * shown in EGM2008 (above mean sea level); exported as WGS84
 * __Bluetooth LE sensors:__
-  * heart rate
-  * cycling: speed and distance
-  * cycling: cadence
-  * cycling: power meter
-  * running: speed and cadence
-  * support for BLE sensor training only (i.e., without GPS) for indoor training
+    * heart rate
+    * cycling: speed and distance
+    * cycling: cadence
+    * cycling: power meter
+    * running: speed and cadence
+    * support for BLE sensor training only (i.e., without GPS) for indoor training
 
   An overview of tested sensors: [README_TESTED_SENSORS.md](README_TESTED_SENSORS.md)
 
@@ -121,7 +121,14 @@ For testing via adb: `adb shell am start -e someParameter someValue -n "package/
 
 The Public API is disabled by default to protect the user's privacy, but it can easily be enabled in the settings.
 
-__IMPORTANT__: triggering `StartRecording` does not check if Android permissions (location or Bluetooth) were granted. If they are not granted, nothing will be recorded.
+## File formats compatibility with open-source software
+
+|                                                      | [GPX 1.1](https://www.topografix.com/GPX/1/1/) | [KML 2.3](https://docs.opengeospatial.org/is/12-007r2/12-007r2.html) | [KMZ 2.3](https://docs.opengeospatial.org/is/12-007r2/12-007r2.html) |
+|------------------------------------------------------|------------------------------------------------|----------------------------------------------------------------------|----------------------------------------------------------------------|
+| [OpenLayers 7.1.0](https://openlayers.org/)          | ?                                              | [no](https://github.com/openlayers/openlayers/issues/14104)          | [no](https://github.com/openlayers/openlayers/issues/14104)          |
+| [Golden Cheetah 3.5](https://www.goldencheetah.org/) | ?                                              | [no](https://github.com/GoldenCheetah/GoldenCheetah/issues/4271)     | [no](https://github.com/GoldenCheetah/GoldenCheetah/issues/4271)     |
+| [GpxPod](https://apps.nextcloud.com/apps/gpxpod)     | ?                                              | ?                                                                    | ?                                                                    |
+| [OsmAnd](https://github.com/osmandapp/OsmAnd)        | ?                                              | [no](https://github.com/osmandapp/OsmAnd/issues/15271)               | [no](https://github.com/osmandapp/OsmAnd/issues/15271)               |
 
 ## Dashboard API (incl. map)
 
