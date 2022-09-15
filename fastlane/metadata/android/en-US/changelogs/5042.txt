@@ -1,0 +1,8 @@
+v4.1.0: OpenTracks
+
+Changes:
+- Export KML/KMZ version 2.3 only (was 2.2)
+- For crank-based powermeters: fetch cadence
+
+Bugfix:
+- Workaround for crash on "import all"
