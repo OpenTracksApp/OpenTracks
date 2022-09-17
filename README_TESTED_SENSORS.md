@@ -2,7 +2,7 @@
 
 ## 0x180D: Heartrate Service
 
-* Decathlon|Geonaute|Kalenji Dual HRM Belt
+* Decathlon/Geonaute/Kalenji Dual HRM Belt
 * moofit heart rate monitor
 * Polar H7
 * Polar H10
@@ -38,13 +38,13 @@ However, often only one value is provided.
 
 We only support _Instantaneous Power_.
 
-For cycling:
+For cycling (incl. cadence):
 * Assioma Duo Powermeter
 * Elite drivo II
 * QUARQ Red DZero Powermeter
 * Tacx Satori Smart
 * Wahoo Kickr v4.0
-* Rotor 2INpower DM Road (only supports power measurement, cadence measurement is propietary @ firmware v1.061)
+* Rotor 2INpower DM Road (only supports power measurement, cadence measurement is proprietary @ firmware v1.061)
 
 For running:
 * Stryd
@@ -63,12 +63,12 @@ There are smartphones that have a barometric sensor that OpenTracks uses to comp
 
 In our tests there are smartphones whose barometric sensor works well and others don't. Here is a list of the smartphones tested:
 
-|Brand|Model|Android Version|Tests|
-|-----|-----|---------------|-----------|
-|Google|Pixel|LineageOS 17.1|Ok|
-|Google|Pixel 2 XL|LineageOS 17.1|Ok on the bike handlebars but it fails when I carry it in a pocket or backpack|
-|Google|Pixel 3|Android 11|Failure|
-|Google|Pixel 3a|Android 11|Ok|
-|Google|Pixel 3a|Lineage 18.1|Ok|
-|Google|Pixel 4a|Android 11|Ok|
-|Sony|Xperia XZ1 Compact|LineageOS 16.1|Failure|
+| Brand  | Model              | Android Version | Tests                                                                          |
+|--------|--------------------|-----------------|--------------------------------------------------------------------------------|
+| Google | Pixel              | LineageOS 17.1  | Ok                                                                             |
+| Google | Pixel 2 XL         | LineageOS 17.1  | Ok on the bike handlebars but it fails when I carry it in a pocket or backpack |
+| Google | Pixel 3            | Android 11      | Failure                                                                        |
+| Google | Pixel 3a           | Android 11      | Ok                                                                             |
+| Google | Pixel 3a           | Lineage 18.1    | Ok                                                                             |
+| Google | Pixel 4a           | Android 11      | Ok                                                                             |
+| Sony   | Xperia XZ1 Compact | LineageOS 16.1  | Failure                                                                        |
