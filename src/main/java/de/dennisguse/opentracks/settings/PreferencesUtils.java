@@ -279,6 +279,11 @@ public class PreferencesUtils {
         return getBoolean(R.string.settings_sensor_bluetooth_service_filter_enabled_key, DEFAULT);
     }
 
+    public static int getMaxHeartrate() {
+        final int DEFAULT = Integer.parseInt(resources.getString(R.string.settings_sensor_heart_rate_max_default));
+        return getInt(R.string.settings_sensor_heart_rate_max_key, DEFAULT);
+    }
+
     public static boolean shouldShowStatsOnLockscreen() {
         final boolean STATS_SHOW_ON_LOCKSCREEN_DEFAULT = resources.getBoolean(R.bool.stats_show_on_lockscreen_while_recording_default);
         return getBoolean(R.string.stats_show_on_lockscreen_while_recording_key, STATS_SHOW_ON_LOCKSCREEN_DEFAULT);
