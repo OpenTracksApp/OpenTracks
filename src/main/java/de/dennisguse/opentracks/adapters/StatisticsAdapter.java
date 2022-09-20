@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextClock;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.databinding.StatsClockItemBinding;
+import de.dennisguse.opentracks.databinding.StatsGenericItemBinding;
+import de.dennisguse.opentracks.databinding.StatsRecordedItemBinding;
 import de.dennisguse.opentracks.ui.customRecordingLayout.CustomLayoutFieldType;
 import de.dennisguse.opentracks.viewmodels.StatisticData;
 
@@ -30,13 +31,10 @@ public class StatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
         if (viewType == CustomLayoutFieldType.CLOCK.value()) {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stats_clock_item, parent, false);
-            return new StatisticsAdapter.ViewClockHolder(view);
+            return new ViewClockHolder(StatsClockItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
         } else {
-            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stats_generic_item, parent, false);
-            return new StatisticsAdapter.ViewHolder(view);
+            return new GenericViewHolder(StatsGenericItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
         }
     }
 
@@ -47,8 +45,8 @@ public class StatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             StatisticsAdapter.ViewClockHolder viewHolder = (StatisticsAdapter.ViewClockHolder) holder;
             viewHolder.setData(statisticData);
         } else {
-            StatisticsAdapter.ViewHolder viewHolder = (StatisticsAdapter.ViewHolder) holder;
-            viewHolder.setData(statisticData);
+            GenericViewHolder genericViewHolder = (GenericViewHolder) holder;
+            genericViewHolder.setData(statisticData);
         }
     }
 
@@ -96,80 +94,79 @@ public class StatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.stats_recorded_item, parent, false);
-            return new StatisticsAdapter.ViewRecordedHolder(view);
+            return new ViewRecordedHolder(StatsRecordedItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
         }
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView value;
-        final TextView unit;
-        final TextView descMain;
-        final TextView descSecondary;
+    private class GenericViewHolder extends RecyclerView.ViewHolder {
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            value = itemView.findViewById(R.id.stats_value);
-            unit = itemView.findViewById(R.id.stats_unit);
-            descMain = itemView.findViewById(R.id.stats_description_main);
-            descSecondary = itemView.findViewById(R.id.stats_description_secondary);
+        private final StatsGenericItemBinding itemBinding;
+
+        public GenericViewHolder(@NonNull StatsGenericItemBinding itemBinding) {
+            super(itemBinding.getRoot());
+            this.itemBinding = itemBinding;
         }
 
         public void setData(StatisticData statisticData) {
             if (statisticData == null) {
                 return;
             }
-            this.value.setText(statisticData.hasValue() ? statisticData.getValue() : context.getString(R.string.value_unknown));
-            this.value.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryValue : R.style.TextAppearance_OpenTracks_SecondaryValue);
-            this.unit.setText(statisticData.getUnit());
-            this.descMain.setText(statisticData.getField().getTitle());
-            this.descMain.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader);
+            itemBinding.statsValue.setText(statisticData.hasValue() ? statisticData.getValue() : context.getString(R.string.value_unknown));
+            itemBinding.statsValue.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryValue : R.style.TextAppearance_OpenTracks_SecondaryValue);
+
+            itemBinding.statsUnit.setText(statisticData.getUnit());
+
+            itemBinding.statsDescriptionMain.setText(statisticData.getField().getTitle());
+            itemBinding.statsDescriptionMain.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader);
+
             if (statisticData.hasDescription()) {
-                this.descSecondary.setVisibility(View.VISIBLE);
-                this.descSecondary.setText(statisticData.getDescription());
+                itemBinding.statsDescriptionSecondary.setVisibility(View.VISIBLE);
+                itemBinding.statsDescriptionSecondary.setText(statisticData.getDescription());
             } else {
-                this.descSecondary.setVisibility(View.GONE);
+                itemBinding.statsDescriptionSecondary.setVisibility(View.GONE);
             }
         }
     }
 
     private class ViewClockHolder extends RecyclerView.ViewHolder {
-        final TextClock value;
-        final TextView descMain;
 
-        public ViewClockHolder(@NonNull View itemView) {
-            super(itemView);
-            value = itemView.findViewById(R.id.stats_clock);
-            descMain = itemView.findViewById(R.id.stats_description_main);
+        private final StatsClockItemBinding itemView;
+
+        public ViewClockHolder(@NonNull StatsClockItemBinding itemView) {
+            super(itemView.getRoot());
+            this.itemView = itemView;
         }
 
         public void setData(StatisticData statisticData) {
             if (statisticData == null) {
                 return;
             }
-            this.value.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryValue : R.style.TextAppearance_OpenTracks_SecondaryValue);
-            this.descMain.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader);
+            itemView.statsClock.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryValue : R.style.TextAppearance_OpenTracks_SecondaryValue);
+            itemView.statsDescriptionMain.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader);
         }
     }
 
-    private class ViewRecordedHolder extends ViewHolder {
+    private class ViewRecordedHolder extends RecyclerView.ViewHolder {
 
-        public ViewRecordedHolder(@NonNull View itemView) {
-            super(itemView);
+        private final StatsRecordedItemBinding itemBinding;
+
+        public ViewRecordedHolder(@NonNull StatsRecordedItemBinding itemBinding) {
+            super(itemBinding.getRoot());
+            this.itemBinding = itemBinding;
         }
 
         public void setData(StatisticData statisticData) {
             if (statisticData == null) {
                 return;
             }
-            this.value.setText(statisticData.hasValue() ? statisticData.getValue() : context.getString(R.string.value_unknown));
-            this.unit.setText(statisticData.getUnit());
-            this.descMain.setText(statisticData.getField().getTitle());
+            itemBinding.statsValue.setText(statisticData.hasValue() ? statisticData.getValue() : context.getString(R.string.value_unknown));
+            itemBinding.statsUnit.setText(statisticData.getUnit());
+            itemBinding.statsDescriptionMain.setText(statisticData.getField().getTitle());
             if (statisticData.hasDescription()) {
-                this.descSecondary.setVisibility(View.VISIBLE);
-                this.descSecondary.setText(statisticData.getDescription());
+                itemBinding.statsDescriptionSecondary.setVisibility(View.VISIBLE);
+                itemBinding.statsDescriptionSecondary.setText(statisticData.getDescription());
             } else {
-                this.descSecondary.setVisibility(View.GONE);
+                itemBinding.statsDescriptionSecondary.setVisibility(View.GONE);
             }
         }
     }
