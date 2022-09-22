@@ -562,7 +562,7 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="voice_per_kilometer">por quilómetro</string>
     <string name="voice_per_mile">por milla</string>
     <string name="pace">Ritmo</string>
-    <string name="speed">Velocidade</string>
+    <string name="speed">Vel. media en movemento</string>
     <plurals name="voiceDistanceKilometers">
         <item quantity="one">1 quilómetro</item>
         <item quantity="other">%1$.2f quilómetros</item>
@@ -610,4 +610,5 @@ Se o GPS informa sobre datos pouco precisos (ex.: localización, velocidade, ele
     <string name="report_bug">Informar do problema</string>
     <string name="settings_public_api_package_title">Nome do paquete para Public API</string>
     <string name="track_delete_number_of_tracks">%1$d rutas</string>
+    <string name="introduction_osm_dashboard">OpenTracks non proporciona un mapa. Instala OSMDashboard para ver as gravacións nun mapa.</string>
 </resources>
