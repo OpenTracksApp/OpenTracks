@@ -10,6 +10,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import androidx.core.location.LocationManagerCompat;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -152,6 +153,12 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
             Log.e(TAG, "Not started.");
             return;
         }
+
+        if(!LocationManagerCompat.hasProvider(locationManager, LocationManager.GPS_PROVIDER)) {
+            Log.e(TAG, "Device doesn't have GPS.");
+            return;
+        }
+
         if (PermissionRequester.GPS.hasPermission(context)) {
             try {
                 locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsInterval.toMillis(), 0, this);
