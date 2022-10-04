@@ -554,7 +554,7 @@ limitations under the License.
     <string name="lap_time">Rundetid</string>
     <string name="pace">Tempo</string>
     <string name="lap_speed">Rundehastighet</string>
-    <string name="speed">Hastighet</string>
+    <string name="speed">Gjennomsnittlig forflytningshastighet</string>
     <string name="total_distance">Total distanse</string>
     <plurals name="voiceDistanceMiles">
         <item quantity="one">1 engelsk mil</item>
@@ -601,4 +601,5 @@ limitations under the License.
     <string name="show_on_dashboard_not_installed">Ingen app som støtter OpenTracks Dashboard API er installert.</string>
     <string name="track_delete_number_of_tracks">%1$d spor</string>
     <string name="settings_public_api_package_title">Pakkenavn for Offentlig API</string>
+    <string name="introduction_osm_dashboard">OpenTracks sørger ikke selv for et kart. Installer OSMDashboard for å vise opptakene dine på et kart.</string>
 </resources>
