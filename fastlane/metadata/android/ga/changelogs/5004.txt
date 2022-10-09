@@ -1,0 +1,10 @@
+v4. 0. 7: OpenTracks
+
+Athruithe:
+- Gps comhartha caillte teorainn ama: 30s
+- - Android 13: cead a iarraidh chun fógraí a thaispeáint
+- Scrios rianta níos tapúla (bunachar sonraí folúis amháin más gá)
+
+Ceartúcháin:
+- PublicAPI stop ordú mar thoradh ar tuairteála (a tugadh isteach i v4. 0. 6)
+- Ceadanna: ceadanna a iarraidh le linn tosaithe

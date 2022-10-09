@@ -1,0 +1,10 @@
+v4. 0. 2: OpenTracks
+
+Athruithe:
+- - Agus muirmhíle 
+- Is féidir socruithe a athshocrú agus taifeadadh á dhéanamh
+
+Ceartúcháin:
+- Fógra gutha slánú
+- Cairt: bhí ingearchló smoothed weirdly
+- Ní raibh easpórtáil ag seiceáil an bhfuil an comhad ann

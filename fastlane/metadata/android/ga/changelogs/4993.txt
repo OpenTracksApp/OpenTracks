@@ -1,0 +1,5 @@
+v4.0. 6: OpenTracks 
+
+Ceartúcháin:
+- Egm2008 fhritháireamh mícheart ríomh le haghaidh domhanfhad diúltach
+- - Crashed API poiblí má Bhí Rianta Oscailte sa chúlra (26 AIBREÁN+)

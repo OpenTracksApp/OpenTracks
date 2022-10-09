@@ -1,0 +1,8 @@
+v3.26.0: OpenTracks
+
+Athruithe:
+- Is féidir fógraí gutha a chumrú
+- Fógraí gutha faoi ráta croí
+
+Ceartúchán Bug:
+- Tuairteála mar gheall ar riocht cine

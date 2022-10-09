@@ -1,0 +1,5 @@
+v3.25.1: OpenTracks
+
+Ceartúchán Bug:
+- Easpórtáil uathoibríoch: tá súil againn teipeanna ciúine a chosc
+- Easpórtáil uathoibríoch: cosc tuairteála

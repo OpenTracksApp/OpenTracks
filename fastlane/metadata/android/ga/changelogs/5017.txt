@@ -1,0 +1,11 @@
+v4. 0. 8: OpenTracks
+
+Athruithe:
+- Airde a thaispeántar i gcónaí i m/ft
+- Taispeáin crios ama an riain mura bhfuil sé éagsúil le crios ama na feiste
+- PublicAPI: tacaíocht deilbhín an riain a shocrú go sainráite
+
+Forbróir:
+- A Tugadh Isteach Cianfhormáideoir
+- Uasghrádú GO AGP 7.3/desugar Ar Feadh Ré.aicme
+- Android12+: déan splancscáileán trí Androidx

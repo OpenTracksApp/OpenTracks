@@ -1,0 +1,7 @@
+v4.1. 1: OpenTracks
+
+Athruithe:
+- Cuir scáileán réamhrá leis (taispeáin uair amháin)
+
+Ceartúcháin:
+- Ná tuairteála mura bhfuil gléas GPS i láthair

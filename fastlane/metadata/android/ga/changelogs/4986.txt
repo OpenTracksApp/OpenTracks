@@ -1,0 +1,7 @@
+v4. 0. 5: OpenTracks
+
+Athruithe:
+- - PlayStore release faigh lógó eile
+
+Ceartúcháin:
+- Taispeánann liosta eatramh " - " mura bhfuil gnóthachan/caillteanas i láthair

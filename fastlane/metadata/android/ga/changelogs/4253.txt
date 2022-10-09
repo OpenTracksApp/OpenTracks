@@ -1,0 +1,16 @@
+v3.18.6: OpenTracks
+
+Athruithe:
+- "Taispeáin ar léarscáil" - feidhmiúlacht trí KML in ionad KMZ
+- Ní chuimsíonn fógra gutha ainm na haipe
+- Agus é ag taifeadadh: déantar gnóthachan/caillteanas ingearchló a nuashonrú gach soicind
+- Tuairiscí an tsiopa aistrithe
+
+Maoláin:
+- Aistriúcháin fógartha gutha seasta neamhbhailí
+
+Forbróir:
+- ceadanna Android12 (BLUETOOTH_SCAN)
+- ceadanna Android12 (ACCESS_COARSE_LOCATION)
+- Ag dearbhú do Trackpoints (tástáil)
+- Aistriúcháin neamhúsáidte bainte

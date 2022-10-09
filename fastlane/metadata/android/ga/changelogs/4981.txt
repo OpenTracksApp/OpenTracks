@@ -1,0 +1,13 @@
+v4. 0. 4: OpenTracks
+
+Athruithe:
+- Stóráil sonraí braiteoir BLE fiú gan achar (gach 10s)
+- PUBLIC API: ceadaíonn leagan ainm, catagóir, agus cur síos
+
+Ceartúcháin:
+- Tuairteála nuair a ghlacadh pictiúr agus rothlach an fón
+- 
+
+Forbróir:
+ Sprioc-SDK 33
+- Baraiméadar úsáideann eatramh de 5s

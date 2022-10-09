@@ -1,0 +1,11 @@
+v3.25.0: OpenTracks
+
+Athruithe:
+- Tá GPS roghnach anois lena n-áirítear. Rabhadh GPS díchumasaithe
+- PublicAPI: is féidir le feidhmchláir eile sonraí taifeadta a fháil anois má thosaíonn siad ar thaifeadadh (curtha i bhfeidhm do Gadgetbridge)
+- Gníomhaíochtaí nua: snámh, snámh oscailte, agus workout
+- Baineadh feidhmiúlacht pic sciar
+
+Ceartúchán Bug:
+- Chomhéadain: luas / airde nuair a léim idir 0.0 agus an luach iarbhír
+- Is féidir rianta le emojis a onnmhairiú

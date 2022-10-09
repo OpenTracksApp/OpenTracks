@@ -1,0 +1,11 @@
+v3.22.0: OpenTracks
+
+Athruithe:
+- Ní stórálfar láithreacha ach amháin má thaistilítear > an t-eatramh faid a thaifeadtar
+   (feidhmiúlacht fágtha bainte den bhrath díomhaoin/neamhdhíomhaoin)
+- Is féidir Chomhéadain a chumrú chun clog a thaispeáint
+- Is féidir luas díomhaoin a chumrú anois
+
+Ceartúchán Bug:
+- Eatraimh: tuairteála nuair a stóráiltear gnóthachan ach ní caillteanas
+- Agus tú ag taifeadadh: seachain tuairteáil agus fógraí gutha á ndíchumasú

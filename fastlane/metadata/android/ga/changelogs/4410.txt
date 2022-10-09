@@ -1,0 +1,7 @@
+v3.20.0: OpenTracks
+
+Athruithe:
+- Agus tú ag taifeadadh: tá UI staitisticí inchumraithe anois
+
+Ceartúchán Bug:
+- Níor tugadh aird ar athrú ainm/catagóir an traic le linn an taifeadta (a tugadh isteach i v3.19.0)

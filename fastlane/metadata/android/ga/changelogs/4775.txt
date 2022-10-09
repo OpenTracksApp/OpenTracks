@@ -1,0 +1,4 @@
+v3.26.1: OpenTracks
+
+Ceartúchán Bug:
+- Níor sháraigh barra gníomhaíochta comhthéacsúla an barra uirlisí i dtéama na hoíche.

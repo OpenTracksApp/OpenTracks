@@ -1,0 +1,6 @@
+v3.20.1: OpenTracks
+
+Athruithe:
+- Is féidir fógraí a úsáid anois de réir achair agus ama
+- Bíp fógraí mura bhfuil aon bhogearraí Téacs-go-hurlabhra suiteáilte
+- Baineadh minicíocht oiriúnaitheach suíomh GPS

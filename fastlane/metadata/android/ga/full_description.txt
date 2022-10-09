@@ -1,0 +1,22 @@
+Cairde rianaithe spóirt a bhfuil meas aige ar do phríobháideachas.
+
+Tugann gníomhaíochtaí spóirt agus lasmuigh sonas, scil agus muinín.
+
+Cuir luach ar do shláinte trí súil a choinneáil ar d'oiliúint.
+Taifeadann tú de réir mar a théann tú ag rith nó ag siúl, agus tugann sé ríomhaire rothar duit le scáileán níos mó le haghaidh rothaíochta.
+Marcáil láithreacha suimiúla ar do bhealach le pictiúir.
+Coinnigh staitisticí taifeadta go mion go leor le haghaidh anailíse.
+Comhroinn ach na sonraí a theastaíonn uait a bheith ag daoine eile.
+
+* Fógraí gutha.
+* Tacaíonn braiteoirí Bluetooth LE: ráta croí, luas agus fad (rothaíocht), deireadh (rothaíocht), agus méadar cumhachta (rothaíocht).
+* Gnóthachan agus caillteanas airde: trí bhraiteoir barometric.
+* Airde léirithe in EGM2008 (os cionn meánleibhéal na farraige); onnmhairiú mar WGS84.
+* Easpórtáil sonraí mar rianta mar KMZ (grianghraif san áireamh), KML, nó GPX.
+* Gan rochtain ar an Idirlíon nó ceadanna breise.
+* Téama dorcha agus éadrom, ag urramú socruithe an chórais.
+* Gan fógraí.
+
+Bogearraí Libre / Bogearraí Saor in Aisce / Foinse Oscailte
+rud a chiallaíonn gur féidir leat an cód foinse a úsáid, a staidéar, a athrú agus a roinnt.
+Ceadúnaithe Apache 2.0

@@ -1,0 +1,8 @@
+v4. 1. 0: OpenTracks
+
+Athruithe:
+- Easpórtáil leagan KML/KMZ 2. 3 amháin (2. 2)
+- Le haghaidh crank-bhunaithe powermeters: faigh cadence
+
+Ceartúcháin:
+- Workaround do tuairteála ar "iompórtáil gach rud"

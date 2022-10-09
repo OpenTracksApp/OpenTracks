@@ -1,0 +1,13 @@
+v4.0.1: OpenTracks
+
+Athruithe:
+- Is féidir fógraí gutha a chumrú anois
+- Folaíonn mód lánscáileáin anois barra nascleanúna Android freisin
+- Ba cheart go mbeadh nasc le braiteoirí BLE níos tapúla anois
+- Ceadaigh socruithe a athshocrú agus tú ag taifeadadh
+- Ceadaigh socruithe iompórtála/easpórtála a athrú agus tú ag taifeadadh
+- KML/KMZ: ná húsáid deilbhíní le luchtú ó Google
+
+Ceartúchán Bug:
+- Oibríonn TrackStoppedActivity ar scáileáin níos lú anois
+- Iarratas ar cheadanna ar an rianliosta

@@ -1,0 +1,10 @@
+v3.23.0: OpenTracks
+
+Athruithe:
+- Cuireadh próifílí Chomhéadain leis
+- Staitisticí comhiomlánaithe le haghaidh rianta roghnaithe
+- TrackPoints díomhaoin/neamhdhomhaoin athfhorfheidhmithe de réir mar a stop an t-am bogtha ag obair (tugtha isteach in v3.22.0)
+
+Ceartúcháin fhabht:
+- Braiteoirí BLE: sonraí soiléire maidir le dínascadh
+- Ní mór an t-easpórtáil uathoibríoch a cheadú go fóill

@@ -1,0 +1,8 @@
+v4.0. 3: OpenTracks
+
+Athruithe:
+ Sonraíocht: Max. luas mar a thuairiscigh braiteoir (GPS nó BLE)
+
+Ceartúcháin:
+- Cosc ar thuairteáil mura bhfuil Painéal Na Nionstraimí OSM suiteáilte
+- Easpórtáil rian GPX: ná heaspórtáil deighleáin an amhráin folamh

@@ -1,0 +1,8 @@
+v3.19.1: OpenTracks
+
+Athruithe:
+- Aistriúcháin nuashonraithe.
+
+Ceartúchán Bug:
+- Easpórtáil Gach Rianta fabht seasta.
+- Lean bug Track socraithe.
