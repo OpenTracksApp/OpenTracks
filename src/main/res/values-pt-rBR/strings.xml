@@ -519,4 +519,41 @@
     </plurals>
     <string name="current_heart_rate">Frequência cardíaca atual</string>
     <string name="settings_export_filename_title">Formato do nome do arquivo</string>
+    <string name="settings_announcements_average_heart_rate">Frequência cardíaca média</string>
+    <string name="settings_announcements_lap_heart_rate">Frequência cardíaca da volta</string>
+    <string name="track_delete_number_of_tracks">%1$d trilhas</string>
+    <string name="introduction_osm_dashboard">O próprio OpenTracks não fornece um mapa. Instale o OSMDashboard para visualizar suas gravações em um mapa.</string>
+    <string name="description_pace_nautical">Ritmo (min/NM)</string>
+    <string name="settings_public_api_package_title">Nome do pacote para API pública</string>
+    <string name="value_float_knots_recommended">%1$.1f nós (recomendado)</string>
+    <string name="image_discard">Descartar</string>
+    <string name="report_bug">Relatório de problema</string>
+    <string name="track_discarding">Descartando trilha</string>
+    <string name="unit_knots">kn</string>
+    <string name="unit_minute_per_nautical_mile">min/NM</string>
+    <string name="value_integer_knots">%1$d nós</string>
+    <string name="value_float_knots">%1$.1f nós</string>
+    <string name="voice_per_nautical_mile">por milha náutica</string>
+    <string name="settings_announcements_average_speed_pace">Velocidade/ritmo médio</string>
+    <string name="show_on_dashboard_not_installed">Nenhum aplicativo compatível com o painel API do OpenTracks instalado.</string>
+    <string name="settings_announcements_lap_speed_pace">Velocidade/ritmo de volta</string>
+    <string name="settings_stats_units_nautical">Milha náutica (NM, ft)</string>
+    <string name="unit_nautical_mile">NM</string>
+    <string name="error_crash_title">%1$s falharam</string>
+    <string name="share_crash_report">Compartilhar relatório de falha</string>
+    <string name="select_show_on_map_behavior">Selecionar comportamento de \"mostrar no mapa\"</string>
+    <string name="show_on_map_format_ask">Perguntas</string>
+    <string name="show_on_dashboard">Painel API do OpenTracks</string>
+    <string name="always">Sempre</string>
+    <string name="description_speed_nautical">Velocidade (nós)</string>
+    <plurals name="voiceSpeedMKnots">
+        <item quantity="one">1 nó</item>
+        <item quantity="many">%1$.1f nós</item>
+        <item quantity="other">%1$.1f nós</item>
+    </plurals>
+    <plurals name="voiceDistanceNauticalMiles">
+        <item quantity="one">1 milha náutica</item>
+        <item quantity="many">%1$.2f milhas náuticas</item>
+        <item quantity="other">%1$.2f milhas náuticas</item>
+    </plurals>
 </resources>
