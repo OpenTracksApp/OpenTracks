@@ -547,12 +547,12 @@
     <string name="always">Sempre</string>
     <string name="description_speed_nautical">Velocidade (nós)</string>
     <plurals name="voiceSpeedMKnots">
-        <item quantity="one">1 nó</item>
+        <item quantity="one">%1$.1f nó</item>
         <item quantity="many">%1$.1f nós</item>
         <item quantity="other">%1$.1f nós</item>
     </plurals>
     <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">1 milha náutica</item>
+        <item quantity="one">%1$.2f milha náutica</item>
         <item quantity="many">%1$.2f milhas náuticas</item>
         <item quantity="other">%1$.2f milhas náuticas</item>
     </plurals>
