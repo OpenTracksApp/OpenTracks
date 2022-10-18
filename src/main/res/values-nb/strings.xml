@@ -558,12 +558,12 @@ limitations under the License.
     <string name="total_distance">Total distanse</string>
     <plurals name="voiceDistanceMiles">
         <item quantity="one">1 engelsk mil</item>
-        <item quantity="other">%1$.2f engelske mil</item>
+        <item quantity="other">%1$.1f engelske mil</item>
     </plurals>
     <string name="average_heart_rate">Gjennomsnittlig puls</string>
     <plurals name="voiceDistanceKilometers">
         <item quantity="one">1 kilometer</item>
-        <item quantity="other">%1$.2f kilometer</item>
+        <item quantity="other">%1$.1f kilometer</item>
     </plurals>
     <string name="current_heart_rate">Gjeldende puls</string>
     <string name="settings_export_filename_title">Format på filnavnet</string>
@@ -596,7 +596,7 @@ limitations under the License.
     </plurals>
     <plurals name="voiceDistanceNauticalMiles">
         <item quantity="one">1 nautisk mil</item>
-        <item quantity="other">%1$.2f nautiske mil</item>
+        <item quantity="other">%1$.1f nautiske mil</item>
     </plurals>
     <string name="show_on_dashboard_not_installed">Ingen app som støtter OpenTracks Dashboard API er installert.</string>
     <string name="track_delete_number_of_tracks">%1$d spor</string>

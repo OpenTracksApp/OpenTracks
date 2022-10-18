@@ -512,11 +512,11 @@ Als het GPS-apparaat onnauwkeurige gegevens rapporteert (bijv. locatie, snelheid
     <string name="total_distance">Totale afstand</string>
     <plurals name="voiceDistanceKilometers">
         <item quantity="one">1 kilometer</item>
-        <item quantity="other">%1$.2f kilometers</item>
+        <item quantity="other">%1$.1f kilometers</item>
     </plurals>
     <plurals name="voiceDistanceMiles">
         <item quantity="one">1 mijl</item>
-        <item quantity="other">%1$.2f mijlen</item>
+        <item quantity="other">%1$.1f mijlen</item>
     </plurals>
     <string name="average_heart_rate">Gemiddelde hartslag</string>
     <string name="current_heart_rate">Actuele hartslag</string>

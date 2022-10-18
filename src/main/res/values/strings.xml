@@ -581,15 +581,15 @@ limitations under the License.
     <string name="total_distance">Total distance</string>
     <plurals name="voiceDistanceKilometers">
         <item quantity="one">1 kilometer</item>
-        <item quantity="other">%1$.2f kilometers</item>
+        <item quantity="other">%1$.1f kilometers</item>
     </plurals>
     <plurals name="voiceDistanceMiles">
         <item quantity="one">1 mile</item>
-        <item quantity="other">%1$.2f miles</item>
+        <item quantity="other">%1$.1f miles</item>
     </plurals>
     <plurals name="voiceDistanceNauticalMiles">
         <item quantity="one">1 nautical mile</item>
-        <item quantity="other">%1$.2f nautical miles</item>
+        <item quantity="other">%1$.1f nautical miles</item>
     </plurals>
     <string name="average_heart_rate">Average heart rate</string>
     <string name="current_heart_rate">Current heart rate</string>
