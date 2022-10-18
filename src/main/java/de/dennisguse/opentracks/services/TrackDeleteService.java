@@ -22,7 +22,6 @@ import java.util.concurrent.Executors;
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.data.ContentProviderUtils;
 import de.dennisguse.opentracks.data.models.Track;
-import de.dennisguse.opentracks.settings.PreferencesUtils;
 
 public class TrackDeleteService extends Service {
 

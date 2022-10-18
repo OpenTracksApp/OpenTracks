@@ -12,7 +12,6 @@ import static org.hamcrest.Matchers.allOf;
 import static de.dennisguse.opentracks.util.EspressoUtils.waitFor;
 
 import android.util.Pair;
-import android.view.View;
 
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.ViewInteraction;
@@ -72,7 +71,7 @@ public class EspressoAggregatedFilterTest {
         ViewInteraction checkBox = onView(
                 allOf(withId(R.id.filter_dialog_check_button), withText(CATEGORY),
                         withParent(allOf(withId(R.id.filter_items),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         checkBox.perform(waitFor(2000));
 
