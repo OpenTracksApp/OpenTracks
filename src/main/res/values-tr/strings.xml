@@ -526,7 +526,7 @@ limitations under the License.
     <string name="total_distance">Toplam mesafe</string>
     <plurals name="voiceDistanceKilometers">
         <item quantity="one">1 kilometre</item>
-        <item quantity="other">%1$.2f kilometre</item>
+        <item quantity="other">%1$.1f kilometre</item>
     </plurals>
     <string name="instant_export_enabled_summary">Kayıt tamamlandıktan sonra parçayı depolamaya aktar</string>
     <string name="value_float_mile_hour">%1$.1f mi/s</string>
@@ -545,7 +545,7 @@ limitations under the License.
     <string name="speed">Hız</string>
     <plurals name="voiceDistanceMiles">
         <item quantity="one">1 mil</item>
-        <item quantity="other">%1$.2f mil</item>
+        <item quantity="other">%1$.1f mil</item>
     </plurals>
     <string name="settings_recording_fullscreen_on_while_recording_title">Tam ekran</string>
     <string name="current_heart_rate">Şu anki kalp atış hızı</string>
@@ -587,7 +587,7 @@ limitations under the License.
     <string name="voice_per_nautical_mile">deniz mili başına</string>
     <plurals name="voiceDistanceNauticalMiles">
         <item quantity="one">1 deniz mili</item>
-        <item quantity="other">%1$.2f deniz mili</item>
+        <item quantity="other">%1$.1f deniz mili</item>
     </plurals>
     <string name="image_discard"/>
     <string name="settings_public_api_package_title">Genel API için paket adı</string>

@@ -490,10 +490,10 @@ limitations under the License.
     <string name="value_float_mile_hour_recommended">%1$.1f 英里/小时（推荐）</string>
     <string name="lap_time">单圈用时</string>
     <plurals name="voiceDistanceKilometers">
-        <item quantity="other">%1$.2f 公里</item>
+        <item quantity="other">%1$.1f 公里</item>
     </plurals>
     <plurals name="voiceDistanceMiles">
-        <item quantity="other">%1$.2f 英里</item>
+        <item quantity="other">%1$.1f 英里</item>
     </plurals>
     <string name="average_heart_rate">平均心率</string>
     <string name="export_without_photos">不带照片</string>
@@ -503,7 +503,7 @@ limitations under the License.
     </plurals>
     <string name="voice_per_nautical_mile">每海里</string>
     <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="other">%1$.2f 海里</item>
+        <item quantity="other">%1$.1f 海里</item>
     </plurals>
     <string name="share_image_subject">我想跟你分享一张图片</string>
     <string name="share_image_body">我觉得你可能对这张图片感兴趣。</string>

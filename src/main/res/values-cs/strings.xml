@@ -550,11 +550,6 @@ limitations under the License.
     <string name="lap_speed">Rychlost kola</string>
     <string name="speed">Rychlost</string>
     <string name="total_distance">Celková vzdálenost</string>
-    <plurals name="voiceDistanceKilometers">
-        <item quantity="one"/>
-        <item quantity="few"/>
-        <item quantity="other"/>
-    </plurals>
     <string name="average_heart_rate">Průměrný srdeční tep</string>
     <string name="current_heart_rate">Aktuální srdeční tep</string>
     <string name="settings_public_api_enabled_summary_on">Ostatní nainstalované aplikace mohou nahrávání spustit nebo zastavit.</string>

@@ -548,10 +548,10 @@ limitations under the License.
     <string name="lap_speed">Vòng tốc độ</string>
     <string name="speed">Tốc độ di chuyển trung bình</string>
     <plurals name="voiceDistanceKilometers">
-        <item quantity="other">%1$.2f Tầng km</item>
+        <item quantity="other">%1$.1f Tầng km</item>
     </plurals>
     <plurals name="voiceDistanceMiles">
-        <item quantity="other">%1$.2f dặm</item>
+        <item quantity="other">%1$.1f dặm</item>
     </plurals>
     <string name="average_heart_rate">Nhịp tim trung bình</string>
     <string name="current_heart_rate">Hiện tại nhịp tim</string>
@@ -568,7 +568,7 @@ limitations under the License.
     <string name="settings_stats_units_nautical">Hải lý (dặm hải lý, ft)</string>
     <string name="settings_public_api_package_title">Tên gói cho API công khai</string>
     <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="other">%1$.2f dặm hải lý</item>
+        <item quantity="other">%1$.1f dặm hải lý</item>
     </plurals>
     <string name="select_show_on_map_behavior">Chọn hành vi \"hiện trên bản đồ\"</string>
     <string name="settings_announcements_lap_speed_pace">Tốc độ vòng/nhịp độ</string>

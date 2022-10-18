@@ -562,11 +562,11 @@ limitations under the License.
     <string name="total_distance">Distancia total</string>
     <plurals name="voiceDistanceKilometers">
         <item quantity="one">1 kilómetro</item>
-        <item quantity="other">%1$.2f kilómetros</item>
+        <item quantity="other">%1$.1f kilómetros</item>
     </plurals>
     <plurals name="voiceDistanceMiles">
         <item quantity="one">1 milla</item>
-        <item quantity="other">%1$.2f millas</item>
+        <item quantity="other">%1$.1f millas</item>
     </plurals>
     <string name="average_heart_rate">Ritmo cardíaco promedio</string>
     <string name="current_heart_rate">Ritmo cardíaco actual</string>

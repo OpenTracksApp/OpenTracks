@@ -540,7 +540,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="stats_sensors_cadence">Trittfrequenz</string>
     <plurals name="voiceDistanceMiles">
         <item quantity="one">1 Meile</item>
-        <item quantity="other">%1$.2f Meilen</item>
+        <item quantity="other">%1$.1f Meilen</item>
     </plurals>
     <string name="field_set_primary">Primär</string>
     <string name="voice_per_mile">pro Meile</string>
@@ -552,7 +552,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="total_distance">Gesamtstrecke</string>
     <plurals name="voiceDistanceKilometers">
         <item quantity="one">1 Kilometer</item>
-        <item quantity="other">%1$.2f Kilometer</item>
+        <item quantity="other">%1$.1f Kilometer</item>
     </plurals>
     <string name="no_compatible_file_manager_installed">Kein kompatibler Dateimanager installiert</string>
     <string name="aggregated_stats_filter_no_results">Es gibt keine Aktivitäten für diesen Filter</string>
