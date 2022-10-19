@@ -59,6 +59,7 @@ limitations under the License.
     </string>
 
     <string name="help_data_google_play_services_title">Does OpenTracks require/use Google Play Service?</string>
+    <string name="help_data_google_play_services_content">No</string>
 
     <string name="help_recording_title">How does OpenTracks record data?</string>
     <string name="help_recording_content">

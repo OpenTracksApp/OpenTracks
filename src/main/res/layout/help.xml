@@ -89,13 +89,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="?attr/textAppearanceHeadline6"
+                    android:layout_marginTop="20dp"
                     android:text="@string/help_data_google_play_services_title" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="?attr/textAppearanceBody1"
-                    android:text="@android:string/no" />
+                    android:text="@string/help_data_google_play_services_content" />
 
                 <TextView
                     android:layout_width="match_parent"
