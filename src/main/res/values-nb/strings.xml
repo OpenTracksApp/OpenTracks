@@ -602,4 +602,5 @@ limitations under the License.
     <string name="track_delete_number_of_tracks">%1$d spor</string>
     <string name="settings_public_api_package_title">Pakkenavn for Offentlig API</string>
     <string name="introduction_osm_dashboard">OpenTracks sørger ikke selv for et kart. Installer OSMDashboard for å vise opptakene dine på et kart.</string>
+    <string name="help_data_google_play_services_content">Nei</string>
 </resources>
