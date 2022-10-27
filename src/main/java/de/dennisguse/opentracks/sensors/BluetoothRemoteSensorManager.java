@@ -56,7 +56,7 @@ public class BluetoothRemoteSensorManager implements BluetoothConnectionManager.
 
     private static final String TAG = BluetoothRemoteSensorManager.class.getSimpleName();
 
-    public static final Duration MAX_SENSOR_DATE_SET_AGE_MS = Duration.ofSeconds(5);
+    public static final Duration MAX_SENSOR_DATE_SET_AGE = Duration.ofSeconds(5);
 
     private final BluetoothAdapter bluetoothAdapter;
     private final Context context;

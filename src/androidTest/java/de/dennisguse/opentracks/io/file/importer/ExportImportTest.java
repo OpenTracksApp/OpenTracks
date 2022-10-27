@@ -24,7 +24,6 @@ import androidx.test.rule.ServiceTestRule;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -73,6 +72,9 @@ import de.dennisguse.opentracks.stats.TrackStatistics;
 
 /**
  * Export a track to {@link TrackFileFormat} and verify that the import is identical.
+ * <p>
+ * Note: those tests are affected by {@link de.dennisguse.opentracks.sensors.sensorData.SensorData}.isRecent().
+ * If the test device is too slow (like in a CI) these are likely to fail as the sensor data will be omitted from actual.
  */
 @RunWith(AndroidJUnit4.class)
 public class ExportImportTest {
@@ -157,12 +159,12 @@ public class ExportImportTest {
         mockBLESensorData(trackPointCreator, 15f, sensorDistance, 66f, 3f, 50f);
 
         trackPointCreator.setClock("2020-02-02T02:02:14Z");
-        mockBLESensorData(trackPointCreator, 15f, null, 66f, 3f, 50f);
+        mockBLESensorData(trackPointCreator, 15f, null, 67f, 3f, 50f);
         trackPointCreator.setClock("2020-02-02T02:02:15Z");
-        mockBLESensorData(trackPointCreator, null, null, 66f, 3f, 50f);
+        mockBLESensorData(trackPointCreator, null, null, 68f, 3f, 50f);
 
         trackPointCreator.setClock("2020-02-02T02:02:16Z");
-        mockBLESensorData(trackPointCreator, 5f, Distance.of(2), 66f, 3f, 50f); // Distance will be added to next TrackPoint
+        mockBLESensorData(trackPointCreator, 5f, Distance.of(2), 69f, 3f, 50f); // Distance will be added to next TrackPoint
 
         sendLocation(trackPointCreator, "2020-02-02T02:02:17Z", 3, 14.001, 10, 13, 15, 10, 0);
         service.insertMarker("Marker 2", "Marker 2 category", "Marker 2 desc", null);
@@ -359,7 +361,7 @@ public class ExportImportTest {
                         .setAltitudeLoss(1f)
                         .setAltitudeGain(1f)
                         .setSensorDistance(Distance.of(14))
-                        .setHeartRate(66f)
+                        .setHeartRate(69)
                         .setPower(50f)
                         .setCadence(3f)
                         .setHorizontalAccuracy(Distance.of(10)),
@@ -447,7 +449,6 @@ public class ExportImportTest {
         assertNull(trackImported);
     }
 
-    @Ignore(value = "TODO Fails on CI; works on API24 and API30 locally")
     @LargeTest
     @Test
     public void csv_export_only() throws TimeoutException, IOException {
