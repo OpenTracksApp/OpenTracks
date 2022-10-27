@@ -74,7 +74,7 @@ public abstract class SensorData<T> {
      */
     private boolean isRecent() {
         return Instant.now()
-                .isBefore(time.plus(BluetoothRemoteSensorManager.MAX_SENSOR_DATE_SET_AGE_MS));
+                .isBefore(time.plus(BluetoothRemoteSensorManager.MAX_SENSOR_DATE_SET_AGE));
     }
 
     @NonNull
