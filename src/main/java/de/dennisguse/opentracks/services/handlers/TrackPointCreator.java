@@ -66,13 +66,6 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
         return context != null;
     }
 
-    @Deprecated
-    //There should be a cooler way to do this; we want to send fake locations without getting affected by real GPS data.
-    @VisibleForTesting
-    public void stopGPS() {
-        gpsHandler.onStop();
-    }
-
     public synchronized void reset() {
         if (remoteSensorManager == null || altitudeSumManager == null) {
             Log.d(TAG, "No recording running and no reset necessary.");
