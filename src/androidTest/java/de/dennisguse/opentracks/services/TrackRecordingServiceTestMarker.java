@@ -29,7 +29,6 @@ import android.os.Looper;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.MediumTest;
-import androidx.test.rule.GrantPermissionRule;
 import androidx.test.rule.ServiceTestRule;
 
 import org.junit.After;
@@ -56,9 +55,6 @@ public class TrackRecordingServiceTestMarker {
 
     @Rule
     public final ServiceTestRule mServiceRule = ServiceTestRule.withTimeout(5, TimeUnit.SECONDS);
-
-    @Rule
-    public GrantPermissionRule mRuntimePermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION);
 
     private final Context context = ApplicationProvider.getApplicationContext();
     private ContentProviderUtils contentProviderUtils;
@@ -128,7 +124,6 @@ public class TrackRecordingServiceTestMarker {
     public void recording_GPSfix_createsMarker() {
         // given
         TrackPointCreator trackPointCreator = service.getTrackPointCreator();
-        trackPointCreator.stopGPS();
 
         trackPointCreator.setClock("2020-02-02T02:02:02Z");
         Track.Id trackId = service.startNewTrack();
