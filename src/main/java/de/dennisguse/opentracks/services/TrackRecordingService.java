@@ -267,10 +267,11 @@ public class TrackRecordingService extends Service implements TrackPointCreator.
 
     @Override
     public void newGpsStatus(GpsStatusValue gpsStatusValue) {
-        notificationManager.updateContent(getString(gpsStatusValue.message));
 
         //TODO This check should not be necessary, but prevents a crash; somehow the shutdown is not working correctly as we should not receive a notification then.
+        // It is likely a race condition as the LocationManager provides location updates without using the Handler.
         if (gpsStatusObservable != null) {
+            notificationManager.updateContent(getString(gpsStatusValue.message));
             gpsStatusObservable.postValue(gpsStatusValue);
         }
     }
