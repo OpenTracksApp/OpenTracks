@@ -131,7 +131,7 @@ public class IntervalStatisticsModel extends AndroidViewModel {
         OPTION_20(20),
         OPTION_50(50);
 
-        static IntervalOption DEFAULT = OPTION_1;
+        static final IntervalOption DEFAULT = OPTION_1;
 
         private final double multiplier;
 

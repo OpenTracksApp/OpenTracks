@@ -73,9 +73,7 @@ public class ImportExportSettingsFragment extends PreferenceFragmentCompat {
 
     private void setFilenameTemplate() {
         EditTextPreference preference = findPreference(getString(R.string.export_filename_format_key));
-        preference.setOnBindEditTextListener(t -> {
-            t.setHint(getString(R.string.export_filename_format_default));
-        });
+        preference.setOnBindEditTextListener(t -> t.setHint(getString(R.string.export_filename_format_default)));
         preference.setDialogMessage(TrackFilenameGenerator.getAllOptions());
 
         preference.setOnPreferenceChangeListener((p, newValue) -> new TrackFilenameGenerator(newValue.toString()).isValid());

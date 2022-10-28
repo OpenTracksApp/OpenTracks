@@ -77,10 +77,8 @@ public class StatisticsRecordingFragment extends Fragment {
         }
     };
 
-    private final TrackRecordingServiceConnection.Callback bindChangedCallback = (service, unused) -> {
-        service.getRecordingDataObservable()
-                .observe(StatisticsRecordingFragment.this, this::onRecordingDataChanged);
-    };
+    private final TrackRecordingServiceConnection.Callback bindChangedCallback = (service, unused) -> service.getRecordingDataObservable()
+            .observe(StatisticsRecordingFragment.this, this::onRecordingDataChanged);
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

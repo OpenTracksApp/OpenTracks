@@ -62,8 +62,8 @@ public class IntroductionActivity extends AbstractActivity {
     private static class CustomFragmentPagerAdapter extends FragmentStateAdapter {
 
         private static final List<FragmentCreator> fragmentCreators = List.of(
-                (FragmentCreator) WelcomeFragment::newInstance,
-                (FragmentCreator) OSMDashboardFragment::newInstance
+                WelcomeFragment::newInstance,
+                OSMDashboardFragment::newInstance
         );
 
         public CustomFragmentPagerAdapter(@NonNull FragmentActivity fa) {

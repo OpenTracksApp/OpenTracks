@@ -195,7 +195,7 @@ public class TrackRecordingServiceTestStateMachine {
 
     @MediumTest
     @Test
-    public void cannotResume_non_existing_track() throws InterruptedException {
+    public void cannotResume_non_existing_track() {
         // given
         assertFalse(service.isRecording());
         assertEquals(TrackRecordingService.STATUS_DEFAULT, service.getRecordingStatusObservable().getValue());
