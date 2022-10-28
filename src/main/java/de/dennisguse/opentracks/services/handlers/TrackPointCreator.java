@@ -52,7 +52,7 @@ public class TrackPointCreator implements BluetoothRemoteSensorManager.SensorDat
     public synchronized void start(@NonNull Context context, @NonNull Handler handler) {
         this.context = context;
 
-        gpsHandler.onStart(context);
+        gpsHandler.onStart(context, handler);
 
         remoteSensorManager = new BluetoothRemoteSensorManager(context, handler, this);
         altitudeSumManager = new AltitudeSumManager();

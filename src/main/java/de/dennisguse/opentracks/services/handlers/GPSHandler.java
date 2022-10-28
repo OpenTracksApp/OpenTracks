@@ -3,14 +3,16 @@ package de.dennisguse.opentracks.services.handlers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
+import androidx.core.location.LocationListenerCompat;
 import androidx.core.location.LocationManagerCompat;
+import androidx.core.location.LocationRequestCompat;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -23,12 +25,16 @@ import de.dennisguse.opentracks.util.LocationUtils;
 import de.dennisguse.opentracks.util.PermissionRequester;
 
 @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener, SharedPreferences.OnSharedPreferenceChangeListener {
+public class GPSHandler implements LocationListenerCompat, GpsStatus.GpsStatusListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     private final String TAG = GPSHandler.class.getSimpleName();
 
+    public static final String LOCATION_PROVIDER = LocationManager.GPS_PROVIDER;
+
     private final TrackPointCreator trackPointCreator;
     private Context context;
+    private Handler handler;
+
     private LocationManager locationManager;
     private GpsStatus gpsStatus;
     private Duration gpsInterval;
@@ -38,8 +44,10 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
         this.trackPointCreator = trackPointCreator;
     }
 
-    public void onStart(@NonNull Context context) {
+    public void onStart(@NonNull Context context, @NonNull Handler handler) {
         this.context = context;
+        this.handler = handler;
+
         PreferencesUtils.registerOnSharedPreferenceChangeListener(this);
         gpsStatus = new GpsStatus(context, this);
         locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
@@ -56,10 +64,11 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
     public void onStop() {
         if (locationManager != null && context != null) {
             if (PermissionRequester.GPS.hasPermission(context)) {
-                locationManager.removeUpdates(this);
+                LocationManagerCompat.removeUpdates(locationManager, this);
             }
             locationManager = null;
             context = null;
+            handler = null;
         }
 
         if (gpsStatus != null) {
@@ -154,14 +163,20 @@ public class GPSHandler implements LocationListener, GpsStatus.GpsStatusListener
             return;
         }
 
-        if(!LocationManagerCompat.hasProvider(locationManager, LocationManager.GPS_PROVIDER)) {
+        if (!LocationManagerCompat.hasProvider(locationManager, LOCATION_PROVIDER)) {
             Log.e(TAG, "Device doesn't have GPS.");
             return;
         }
 
+        LocationRequestCompat locationRequest = new LocationRequestCompat.Builder(gpsInterval.toMillis())
+                .setQuality(LocationRequestCompat.QUALITY_HIGH_ACCURACY)
+                .setMaxUpdateDelayMillis(0)
+                .build();
+
         if (PermissionRequester.GPS.hasPermission(context)) {
             try {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, gpsInterval.toMillis(), 0, this);
+                final Handler HANDLER = handler;
+                LocationManagerCompat.requestLocationUpdates(locationManager, LOCATION_PROVIDER, locationRequest, HANDLER::post, this);
             } catch (SecurityException e) {
                 Log.e(TAG, "Could not register location listener; permissions not granted.", e);
             }

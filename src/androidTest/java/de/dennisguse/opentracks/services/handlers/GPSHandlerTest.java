@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 
 import android.content.Context;
 import android.location.Location;
+import android.os.Handler;
 import android.os.Looper;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -49,7 +50,7 @@ public class GPSHandlerTest {
         Mockito.when(trackPointCreator.createNow())
                 .thenReturn(Instant.now());
 
-        locationHandler.onStart(context);
+        locationHandler.onStart(context, new Handler());
     }
 
     /**
