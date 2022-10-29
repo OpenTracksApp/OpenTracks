@@ -1,9 +1,11 @@
 package de.dennisguse.opentracks.viewmodels;
 
+import android.content.Context;
 import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
+import de.dennisguse.opentracks.ui.customRecordingLayout.CustomLayoutFieldType;
 import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
 
 public class StatisticData {
@@ -19,8 +21,24 @@ public class StatisticData {
         this.description = description;
     }
 
-    public DataField getField() {
-        return dataField;
+    public CustomLayoutFieldType getType(Context context) {
+        return dataField.getType(context);
+    }
+
+    public String getTitle() {
+        return dataField.getTitle();
+    }
+
+    public boolean isWide() {
+        return dataField.isWide();
+    }
+
+    public boolean isPrimary() {
+        return dataField.isPrimary();
+    }
+
+    public boolean isVisible() {
+        return dataField.isVisible();
     }
 
     public String getValue() {

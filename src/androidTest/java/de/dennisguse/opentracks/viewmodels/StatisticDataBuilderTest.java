@@ -67,9 +67,9 @@ public class StatisticDataBuilderTest extends TestCase {
 
         // then
         assertEquals(statisticDataList.size(), 3);
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_total_time))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_moving_time))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_distance))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_total_time))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_moving_time))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_distance))));
     }
 
     @Test
@@ -106,24 +106,24 @@ public class StatisticDataBuilderTest extends TestCase {
 
         // then
         assertEquals(statisticDataList.size(), 18);
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_total_time))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_moving_time))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_distance))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_speed))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_average_moving_speed))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_average_speed))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_max_speed))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_pace))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_average_moving_pace))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_average_pace))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_fastest_pace))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_altitude))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_gain))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_loss))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_coordinates))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_sensors_heart_rate))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_sensors_cadence))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_sensors_power))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_total_time))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_moving_time))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_distance))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_speed))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_average_moving_speed))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_average_speed))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_max_speed))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_pace))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_average_moving_pace))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_average_pace))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_fastest_pace))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_altitude))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_gain))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_loss))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_coordinates))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_sensors_heart_rate))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_sensors_cadence))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.stats_sensors_power))));
     }
 
     @Test
@@ -139,8 +139,8 @@ public class StatisticDataBuilderTest extends TestCase {
 
         // then
         assertEquals(statisticDataList.size(), 2);
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.sensor_state_heart_rate_max))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.sensor_state_heart_rate_avg))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.sensor_state_heart_rate_max))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.sensor_state_heart_rate_avg))));
     }
 
     @Test
@@ -156,8 +156,8 @@ public class StatisticDataBuilderTest extends TestCase {
 
         // then
         assertEquals(statisticDataList.size(), 2);
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.sensor_state_cadence_max))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.sensor_state_cadence_avg))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.sensor_state_cadence_max))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.sensor_state_cadence_avg))));
     }
 
     @Test
@@ -169,7 +169,7 @@ public class StatisticDataBuilderTest extends TestCase {
 
         // when
         List<StatisticData> statisticDataList = StatisticDataBuilder.fromSensorStatistics(context, sensorStatisticsMock);
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.sensor_state_power_avg))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.sensor_state_power_avg))));
 
         // then
         assertEquals(statisticDataList.size(), 1);
@@ -191,10 +191,10 @@ public class StatisticDataBuilderTest extends TestCase {
 
         // then
         assertEquals(statisticDataList.size(), 5);
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.sensor_state_heart_rate_max))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.sensor_state_heart_rate_avg))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.sensor_state_cadence_max))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.sensor_state_cadence_avg))));
-        assertTrue(statisticDataList.stream().anyMatch(i -> i.getField().getTitle().equals(context.getString(R.string.sensor_state_power_avg))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.sensor_state_heart_rate_max))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.sensor_state_heart_rate_avg))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.sensor_state_cadence_max))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.sensor_state_cadence_avg))));
+        assertTrue(statisticDataList.stream().anyMatch(i -> i.getTitle().equals(context.getString(R.string.sensor_state_power_avg))));
     }
 }

@@ -61,7 +61,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemViewType(int position) {
-        if (statisticDataList.get(position).getField().getType(context) == CustomLayoutFieldType.CLOCK) {
+        if (statisticDataList.get(position).getType(context) == CustomLayoutFieldType.CLOCK) {
             return CustomLayoutFieldType.CLOCK.value();
         } else {
             return CustomLayoutFieldType.GENERIC.value();
@@ -69,7 +69,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public boolean isItemWide(int position) {
-        return statisticDataList.get(position).getField().isWide();
+        return statisticDataList.get(position).isWide();
     }
 
     public List<StatisticData> swapData(List<StatisticData> data) {
@@ -112,12 +112,12 @@ public class StatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 return;
             }
             itemBinding.statsValue.setText(statisticData.hasValue() ? statisticData.getValue() : context.getString(R.string.value_unknown));
-            itemBinding.statsValue.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryValue : R.style.TextAppearance_OpenTracks_SecondaryValue);
+            itemBinding.statsValue.setTextAppearance(context, statisticData.isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryValue : R.style.TextAppearance_OpenTracks_SecondaryValue);
 
             itemBinding.statsUnit.setText(statisticData.getUnit());
 
-            itemBinding.statsDescriptionMain.setText(statisticData.getField().getTitle());
-            itemBinding.statsDescriptionMain.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader);
+            itemBinding.statsDescriptionMain.setText(statisticData.getTitle());
+            itemBinding.statsDescriptionMain.setTextAppearance(context, statisticData.isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader);
 
             if (statisticData.hasDescription()) {
                 itemBinding.statsDescriptionSecondary.setVisibility(View.VISIBLE);
@@ -141,8 +141,8 @@ public class StatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             if (statisticData == null) {
                 return;
             }
-            itemView.statsClock.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryValue : R.style.TextAppearance_OpenTracks_SecondaryValue);
-            itemView.statsDescriptionMain.setTextAppearance(context, statisticData.getField().isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader);
+            itemView.statsClock.setTextAppearance(context, statisticData.isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryValue : R.style.TextAppearance_OpenTracks_SecondaryValue);
+            itemView.statsDescriptionMain.setTextAppearance(context, statisticData.isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader);
         }
     }
 
@@ -161,7 +161,7 @@ public class StatisticsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
             itemBinding.statsValue.setText(statisticData.hasValue() ? statisticData.getValue() : context.getString(R.string.value_unknown));
             itemBinding.statsUnit.setText(statisticData.getUnit());
-            itemBinding.statsDescriptionMain.setText(statisticData.getField().getTitle());
+            itemBinding.statsDescriptionMain.setText(statisticData.getTitle());
             if (statisticData.hasDescription()) {
                 itemBinding.statsDescriptionSecondary.setVisibility(View.VISIBLE);
                 itemBinding.statsDescriptionSecondary.setText(statisticData.getDescription());

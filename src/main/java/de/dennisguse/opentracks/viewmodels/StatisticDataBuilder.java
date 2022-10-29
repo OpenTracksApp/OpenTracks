@@ -169,13 +169,13 @@ public class StatisticDataBuilder {
         if (sensorDataSet == null) {
             return sensorDataList;
         }
-        if (statisticDataList.stream().noneMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_sensors_heart_rate))) && sensorDataSet.getHeartRate() != null) {
+        if (statisticDataList.stream().noneMatch(i -> i.getTitle().equals(context.getString(R.string.stats_sensors_heart_rate))) && sensorDataSet.getHeartRate() != null) {
             sensorDataList.add(build(context, recordingData, "heart_rate", true, unitSystem));
         }
-        if (statisticDataList.stream().noneMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_sensors_cadence))) && sensorDataSet.getCadence() != null) {
+        if (statisticDataList.stream().noneMatch(i -> i.getTitle().equals(context.getString(R.string.stats_sensors_cadence))) && sensorDataSet.getCadence() != null) {
             sensorDataList.add(build(context, recordingData, "cadence", true, unitSystem));
         }
-        if (statisticDataList.stream().noneMatch(i -> i.getField().getTitle().equals(context.getString(R.string.stats_sensors_power))) && sensorDataSet.getCyclingPower() != null && sensorDataSet.getCyclingPower().hasValue()) {
+        if (statisticDataList.stream().noneMatch(i -> i.getTitle().equals(context.getString(R.string.stats_sensors_power))) && sensorDataSet.getCyclingPower() != null && sensorDataSet.getCyclingPower().hasValue()) {
             sensorDataList.add(build(context, recordingData, "power", true, unitSystem));
         }
 
