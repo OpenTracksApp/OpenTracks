@@ -327,22 +327,27 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <!-- Voice -->
     <plurals name="voiceHours">
         <item quantity="one">%1$d heure</item>
+        <item quantity="many">%1$d heures</item>
         <item quantity="other">%1$d heures</item>
     </plurals>
     <plurals name="voiceMinutes">
         <item quantity="one">%1$d minute</item>
+        <item quantity="many">%1$d minutes</item>
         <item quantity="other">%1$d minutes</item>
     </plurals>
     <plurals name="voiceSeconds">
         <item quantity="one">%1$d seconde</item>
+        <item quantity="many">%1$d secondes</item>
         <item quantity="other">%1$d secondes</item>
     </plurals>
     <plurals name="voiceSpeedKilometersPerHour">
         <item quantity="one">%1$.1f kilomètre-heure</item>
+        <item quantity="many">%1$.1f kilomètres-heure</item>
         <item quantity="other">%1$.1f kilomètres-heure</item>
     </plurals>
     <plurals name="voiceSpeedMilesPerHour">
         <item quantity="one">%1$.1f mile par heure</item>
+        <item quantity="many">%1$.1f miles par heure</item>
         <item quantity="other">%1$.1f miles par heure</item>
     </plurals>
     <!-- Waypoint Type -->
@@ -547,6 +552,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="current_heart_rate">Fréquence cardiaque actuelle</string>
     <plurals name="voiceDistanceMiles">
         <item quantity="one">%1$.1f mile</item>
+        <item quantity="many">%1$.1f miles</item>
         <item quantity="other">%1$.1f miles</item>
     </plurals>
     <string name="lap_time">Temps par tour</string>
@@ -556,6 +562,7 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="settings_public_api_enabled_summary_off">Seul OpenTracks peut démarrer et arrêter les enregistrements.</string>
     <plurals name="voiceDistanceKilometers">
         <item quantity="one">%1$.1f kilomètre</item>
+        <item quantity="many">%1$.1f kilomètres</item>
         <item quantity="other">%1$.1f kilomètres</item>
     </plurals>
     <string name="total_distance">Distance totale</string>
@@ -600,13 +607,16 @@ Si le dispositif GPS signale des données inexactes (par exemple, la localisatio
     <string name="voice_per_nautical_mile">par mile nautique</string>
     <plurals name="voiceSpeedMKnots">
         <item quantity="one">%1$.1f nœud</item>
+        <item quantity="many">%1$.1f nœuds</item>
         <item quantity="other">%1$.1f nœuds</item>
     </plurals>
     <plurals name="voiceDistanceNauticalMiles">
-        <item quantity="one">%1$.1f mile nautique</item>
+        <item quantity="one">%1$.1f mille nautique</item>
+        <item quantity="many">%1$.1f milles nautique</item>
         <item quantity="other">%1$.1f milles nautique</item>
     </plurals>
     <string name="settings_public_api_package_title">Nom du paquet pour l\'API Publique</string>
     <string name="track_delete_number_of_tracks">%1$d tracés</string>
     <string name="introduction_osm_dashboard">OpenTracks ne fournit pas de carte en tant que telle. Veuillez installer OSMDashboard pour visualiser vos tracés sur une carte.</string>
+    <string name="help_data_google_play_services_content">Non</string>
 </resources>
