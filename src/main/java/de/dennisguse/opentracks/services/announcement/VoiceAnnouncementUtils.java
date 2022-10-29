@@ -74,7 +74,7 @@ class VoiceAnnouncementUtils {
             builder.append(context.getString(R.string.total_distance));
             // Units should always be english singular for TTS.
             // See https://developer.android.com/reference/android/text/style/TtsSpan?hl=en#TYPE_MEASURE
-            appendDecimalUnit(builder, context.getResources().getQuantityString(distanceId, getQuantityCount(distanceInUnit), distanceInUnit), distanceInUnit, 2, unitDistanceTTS);
+            appendDecimalUnit(builder, context.getResources().getQuantityString(distanceId, getQuantityCount(distanceInUnit), distanceInUnit), distanceInUnit, 1, unitDistanceTTS);
             // Punctuation helps introduce natural pauses in TTS
             builder.append(".");
         }
