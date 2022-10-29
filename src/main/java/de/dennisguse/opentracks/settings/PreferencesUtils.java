@@ -47,6 +47,7 @@ import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.io.file.TrackFilenameGenerator;
 import de.dennisguse.opentracks.ui.customRecordingLayout.CsvLayoutUtils;
 import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.LayoutIO;
 import de.dennisguse.opentracks.util.IntentDashboardUtils;
 import de.dennisguse.opentracks.util.TrackIconUtils;
 
@@ -758,17 +759,17 @@ public class PreferencesUtils {
         String[] csvLines = csvCustomLayouts.split(CsvLayoutUtils.LINE_SEPARATOR);
         String layoutSelected = getString(R.string.stats_custom_layout_selected_layout_key, null);
         if (layoutSelected == null) {
-            return Layout.fromCsv(csvLines[0], resources);
+            return LayoutIO.fromCsv(csvLines[0], resources);
         }
 
         for (String line : csvLines) {
-            Layout layout = Layout.fromCsv(line, resources);
+            Layout layout = LayoutIO.fromCsv(line, resources);
             if (layout.sameName(layoutSelected)) {
                 return layout;
             }
         }
 
-        return Layout.fromCsv(csvLines[0], resources);
+        return LayoutIO.fromCsv(csvLines[0], resources);
     }
 
     public static void updateCustomLayouts(@NonNull List<Layout> layouts) {
@@ -800,7 +801,7 @@ public class PreferencesUtils {
         String csvCustomLayout = getString(R.string.stats_custom_layouts_key, buildDefaultLayout());
         String[] csvLines = csvCustomLayout.split(CsvLayoutUtils.LINE_SEPARATOR);
         for (String line : csvLines) {
-            layouts.add(Layout.fromCsv(line, resources));
+            layouts.add(LayoutIO.fromCsv(line, resources));
         }
 
         return layouts;

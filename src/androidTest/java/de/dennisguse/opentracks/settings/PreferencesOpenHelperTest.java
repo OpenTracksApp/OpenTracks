@@ -18,6 +18,7 @@ import java.util.List;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.LayoutIO;
 
 @RunWith(AndroidJUnit4.class)
 public class PreferencesOpenHelperTest {
@@ -109,7 +110,7 @@ public class PreferencesOpenHelperTest {
         PreferencesOpenHelper.newInstance(1).check();
 
         // then custom layout should be equals to default layout.
-        Layout defaultLayout = Layout.fromCsv(PreferencesUtils.buildDefaultLayout(), resources);
+        Layout defaultLayout = LayoutIO.fromCsv(PreferencesUtils.buildDefaultLayout(), resources);
         List<Layout> customLayout = PreferencesUtils.getAllCustomLayouts();
 
         assertEquals(customLayout.size(), 1);

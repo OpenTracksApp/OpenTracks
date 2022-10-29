@@ -26,6 +26,7 @@ import de.dennisguse.opentracks.services.RecordingData;
 import de.dennisguse.opentracks.settings.UnitSystem;
 import de.dennisguse.opentracks.stats.SensorStatistics;
 import de.dennisguse.opentracks.stats.TrackStatistics;
+import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
 import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -55,11 +56,11 @@ public class StatisticDataBuilderTest extends TestCase {
 
         // given
         Layout layout = new Layout(context.getString(R.string.default_activity_default));
-        layout.addField(context.getString(R.string.stats_custom_layout_total_time_key), context.getString(R.string.stats_total_time), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_moving_time_key), context.getString(R.string.stats_moving_time), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_distance_key), context.getString(R.string.stats_distance), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_speed_key), context.getString(R.string.stats_speed), false, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_max_speed_key), context.getString(R.string.stats_max_speed), false, true, false);
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_total_time_key), context.getString(R.string.stats_total_time), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_moving_time_key), context.getString(R.string.stats_moving_time), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_distance_key), context.getString(R.string.stats_distance), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_speed_key), context.getString(R.string.stats_speed), false, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_max_speed_key), context.getString(R.string.stats_max_speed), false, true, false));
 
         // when
         List<StatisticData> statisticDataList = StatisticDataBuilder.fromRecordingData(context, recordingDataMock, layout, UnitSystem.METRIC);
@@ -81,24 +82,24 @@ public class StatisticDataBuilderTest extends TestCase {
 
         // given
         Layout layout = new Layout(context.getString(R.string.default_activity_default));
-        layout.addField(context.getString(R.string.stats_custom_layout_total_time_key), context.getString(R.string.stats_total_time), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_moving_time_key), context.getString(R.string.stats_moving_time), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_distance_key), context.getString(R.string.stats_distance), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_speed_key), context.getString(R.string.stats_speed), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_average_moving_speed_key), context.getString(R.string.stats_average_moving_speed), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_average_speed_key), context.getString(R.string.stats_average_speed), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_max_speed_key), context.getString(R.string.stats_max_speed), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_pace_key), context.getString(R.string.stats_pace), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_average_moving_pace_key), context.getString(R.string.stats_average_moving_pace), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_average_pace_key), context.getString(R.string.stats_average_pace), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_fastest_pace_key), context.getString(R.string.stats_fastest_pace), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_altitude_key), context.getString(R.string.stats_altitude), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_gain_key), context.getString(R.string.stats_gain), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_loss_key), context.getString(R.string.stats_loss), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_coordinates_key), context.getString(R.string.stats_coordinates), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_heart_rate_key), context.getString(R.string.stats_sensors_heart_rate), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_cadence_key), context.getString(R.string.stats_sensors_cadence), true, true, false);
-        layout.addField(context.getString(R.string.stats_custom_layout_power_key), context.getString(R.string.stats_sensors_power), true, true, false);
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_total_time_key), context.getString(R.string.stats_total_time), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_moving_time_key), context.getString(R.string.stats_moving_time), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_distance_key), context.getString(R.string.stats_distance), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_speed_key), context.getString(R.string.stats_speed), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_average_moving_speed_key), context.getString(R.string.stats_average_moving_speed), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_average_speed_key), context.getString(R.string.stats_average_speed), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_max_speed_key), context.getString(R.string.stats_max_speed), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_pace_key), context.getString(R.string.stats_pace), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_average_moving_pace_key), context.getString(R.string.stats_average_moving_pace), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_average_pace_key), context.getString(R.string.stats_average_pace), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_fastest_pace_key), context.getString(R.string.stats_fastest_pace), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_altitude_key), context.getString(R.string.stats_altitude), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_gain_key), context.getString(R.string.stats_gain), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_loss_key), context.getString(R.string.stats_loss), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_coordinates_key), context.getString(R.string.stats_coordinates), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_heart_rate_key), context.getString(R.string.stats_sensors_heart_rate), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_cadence_key), context.getString(R.string.stats_sensors_cadence), true, true, false));
+        layout.addField(new DataField(context.getString(R.string.stats_custom_layout_power_key), context.getString(R.string.stats_sensors_power), true, true, false));
 
         // when
         List<StatisticData> statisticDataList = StatisticDataBuilder.fromRecordingData(context, recordingDataMock, layout, UnitSystem.METRIC);

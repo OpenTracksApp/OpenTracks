@@ -8,8 +8,6 @@ import android.os.Parcelable;
 import de.dennisguse.opentracks.R;
 
 public class DataField implements Parcelable {
-    public static final String YES_VALUE = "1";
-    public static final String NOT_VALUE = "0";
 
     private final String key;
     private final String title;
@@ -79,13 +77,6 @@ public class DataField implements Parcelable {
         } else {
             return CustomLayoutFieldType.GENERIC;
         }
-    }
-
-    public String toCsv() {
-        String visible = this.isVisible ? YES_VALUE : NOT_VALUE;
-        String primary = this.isPrimary ? YES_VALUE : NOT_VALUE;
-        String wide = this.isWide ? YES_VALUE : NOT_VALUE;
-        return key + CsvLayoutUtils.PROPERTY_SEPARATOR + visible + CsvLayoutUtils.PROPERTY_SEPARATOR + primary + CsvLayoutUtils.PROPERTY_SEPARATOR + wide;
     }
 
     public static String getTitleByKey(Resources resources, String key) {

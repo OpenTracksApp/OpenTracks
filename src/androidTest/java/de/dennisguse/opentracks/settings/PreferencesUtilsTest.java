@@ -23,6 +23,7 @@ import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.io.file.TrackFileFormat;
 import de.dennisguse.opentracks.ui.customRecordingLayout.DataField;
 import de.dennisguse.opentracks.ui.customRecordingLayout.Layout;
+import de.dennisguse.opentracks.ui.customRecordingLayout.LayoutIO;
 
 @RunWith(AndroidJUnit4.class)
 public class PreferencesUtilsTest {
@@ -257,8 +258,8 @@ public class PreferencesUtilsTest {
                 + context.getString(R.string.stats_custom_layout_speed_key) + ",0,0;";
 
         List<Layout> layoutsToBeUpdated = new ArrayList<>();
-        layoutsToBeUpdated.add(Layout.fromCsv(cyclingProfileUpdated, resources));
-        layoutsToBeUpdated.add(Layout.fromCsv(runningProfile, resources));
+        layoutsToBeUpdated.add(LayoutIO.fromCsv(cyclingProfileUpdated, resources));
+        layoutsToBeUpdated.add(LayoutIO.fromCsv(runningProfile, resources));
 
         PreferencesUtils.updateCustomLayouts(layoutsToBeUpdated);
 
@@ -302,7 +303,7 @@ public class PreferencesUtilsTest {
                 + context.getString(R.string.stats_custom_layout_distance_key) + ",0,0;"
                 + context.getString(R.string.stats_custom_layout_average_moving_speed_key) + ",0,0;"
                 + context.getString(R.string.stats_custom_layout_speed_key) + ",0,0;";
-        Layout layoutToBeUpdated = Layout.fromCsv(cyclingProfileUpdated, resources);
+        Layout layoutToBeUpdated = LayoutIO.fromCsv(cyclingProfileUpdated, resources);
         PreferencesUtils.updateCustomLayout(layoutToBeUpdated);
 
         // then only updated profile is modified in the custom layouts
