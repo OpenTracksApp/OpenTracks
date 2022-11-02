@@ -129,6 +129,7 @@ The Public API is disabled by default to protect the user's privacy, but it can 
 | [Golden Cheetah 3.5](https://www.goldencheetah.org/) | ?                                              | [no](https://github.com/GoldenCheetah/GoldenCheetah/issues/4271)     | [no](https://github.com/GoldenCheetah/GoldenCheetah/issues/4271)     |
 | [GpxPod](https://apps.nextcloud.com/apps/gpxpod)     | ?                                              | ?                                                                    | ?                                                                    |
 | [OsmAnd](https://github.com/osmandapp/OsmAnd)        | ?                                              | [no](https://github.com/osmandapp/OsmAnd/issues/15271)               | [no](https://github.com/osmandapp/OsmAnd/issues/15271)               |
+| [FitTrackee](https://github.com/SamR1/FitTrackee)    | yes                                            | n/a                                                                  | n/a                                                                  |
 
 ## Dashboard API (incl. map)
 
