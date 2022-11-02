@@ -450,7 +450,7 @@ Meldet das GPS-Gerät ungenaue Daten (z.B. Standort, Geschwindigkeit, Höhe), ka
     <string name="gps_fixed_and_ready">GPS-Position bestimmt und bereit</string>
     <string name="instant_export_enabled_title">Sofortiger Export im Anschluss an die Übung</string>
     <string name="instant_export_enabled_summary">Streckenaufzeichnung nach Beendigung der Aufnahme in den Speicher exportieren</string>
-    <string name="generic_open_track">Offene Strecke</string>
+    <string name="generic_open_track">Strecke öffnen</string>
     <string name="sensor_state_power_avg">Durchschnittliche Leistung</string>
     <string name="sensor_state_cadence_avg">Durchschnittliche Trittfrequenz</string>
     <string name="sensor_state_cadence_max">Maximale Trittfrequenz</string>
