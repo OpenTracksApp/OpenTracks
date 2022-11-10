@@ -11,27 +11,35 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.Callable;
 
 import de.dennisguse.opentracks.R;
 import de.dennisguse.opentracks.util.StatisticsUtils;
+import de.dennisguse.opentracks.viewmodels.Mapping;
+import de.dennisguse.opentracks.viewmodels.StatisticViewHolder;
 
 public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Layout layout;
     private final Context context;
     private final SettingsCustomLayoutItemClickListener itemClickListener;
+    private final Map<String, Callable<StatisticViewHolder<?>>> mapping;
+
 
     public SettingsCustomLayoutEditAdapter(Context context, SettingsCustomLayoutItemClickListener itemClickListener, Layout layout) {
         this.context = context;
         this.itemClickListener = itemClickListener;
         this.layout = layout;
+
+        mapping = Mapping.create(context);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.custom_stats_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.custom_stats_item, parent, false); //TODO CustomStatsItemBinding or rather use mapping.get().call() directly
         return new SettingsCustomLayoutEditAdapter.ViewHolder(view);
     }
 
@@ -40,7 +48,11 @@ public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<Recycl
         SettingsCustomLayoutEditAdapter.ViewHolder viewHolder = (SettingsCustomLayoutEditAdapter.ViewHolder) holder;
         DataField field = layout.getFields().get(position);
         viewHolder.itemView.setTag(field.getKey());
-        viewHolder.title.setText(field.getTitle());
+        try {
+            viewHolder.title.setText(mapping.get(field.getKey()).call().getTitleId());
+        } catch (Exception e) {
+            //Ignored.
+        }
         viewHolder.value.setText(StatisticsUtils.emptyValue(context, field.getKey()));
 
         viewHolder.title.setTextAppearance(context, field.isVisible() ? (field.isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader) : R.style.TextAppearance_OpenTracks_HiddenHeader);

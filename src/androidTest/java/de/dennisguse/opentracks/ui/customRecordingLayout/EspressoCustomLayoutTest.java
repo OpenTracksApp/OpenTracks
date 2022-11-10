@@ -47,7 +47,7 @@ public class EspressoCustomLayoutTest {
         // Get custom layout preferences and check all data fields are showed.
         Layout layout = PreferencesUtils.getCustomLayout();
 
-        onView(withId(R.id.stats_recycler_view)).check(new RecyclerViewItemCountAssertion((int) layout.getFields().stream().filter(DataField::isVisible).count()));
+        onView(withId(R.id.recycler_view)).check(new RecyclerViewItemCountAssertion((int) layout.getFields().stream().filter(DataField::isVisible).count()));
 
         // stop recording
         ViewInteraction trackControllerStopButton = onView(withId(R.id.track_recording_fab_action));

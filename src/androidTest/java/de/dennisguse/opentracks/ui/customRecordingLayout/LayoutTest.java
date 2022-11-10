@@ -39,10 +39,6 @@ public class LayoutTest extends TestCase {
         assertEquals(dataFieldList.get(1).getKey(), context.getString(R.string.stats_custom_layout_distance_key));
         assertEquals(dataFieldList.get(2).getKey(), context.getString(R.string.stats_custom_layout_altitude_key));
         assertEquals(dataFieldList.get(3).getKey(), context.getString(R.string.stats_custom_layout_gain_key));
-        assertEquals(dataFieldList.get(0).getTitle(), context.getString(R.string.stats_speed));
-        assertEquals(dataFieldList.get(1).getTitle(), context.getString(R.string.stats_distance));
-        assertEquals(dataFieldList.get(2).getTitle(), context.getString(R.string.stats_altitude));
-        assertEquals(dataFieldList.get(3).getTitle(), context.getString(R.string.stats_gain));
         assertTrue(dataFieldList.get(0).isVisible());
         assertTrue(dataFieldList.get(0).isPrimary());
         assertFalse(dataFieldList.get(0).isWide());
@@ -122,11 +118,11 @@ public class LayoutTest extends TestCase {
     public void testToCsv() {
         // given a layout's object
         Layout layout = new Layout("Test Layout", 2);
-        layout.addField(new DataField("key1", "Title 1", false, false, false));
-        layout.addField(new DataField("key2", "Title 2", false, true, false));
-        layout.addField(new DataField("key3", "Title 3", true, false, false));
-        layout.addField(new DataField("key4", "Title 4", true, true, false));
-        layout.addField(new DataField("key5", "Title 5", true, true, true));
+        layout.addField(new DataField("key1", false, false, false));
+        layout.addField(new DataField("key2", false, true, false));
+        layout.addField(new DataField("key3", true, false, false));
+        layout.addField(new DataField("key4", true, true, false));
+        layout.addField(new DataField("key5", true, true, true));
 
         // when converts it to CSV
         String csv = layout.toCsv();
@@ -139,11 +135,11 @@ public class LayoutTest extends TestCase {
     public void testToCsv_columnsByDefault() {
         // given a layout's object
         Layout layout = new Layout("Test Layout");
-        layout.addField(new DataField("key1", "Title 1", false, false, false));
-        layout.addField(new DataField("key2", "Title 2", false, true, false));
-        layout.addField(new DataField("key3", "Title 3", true, false, false));
-        layout.addField(new DataField("key4", "Title 4", true, true, false));
-        layout.addField(new DataField("key5", "Title 5", true, true, true));
+        layout.addField(new DataField("key1", false, false, false));
+        layout.addField(new DataField("key2", false, true, false));
+        layout.addField(new DataField("key3", true, false, false));
+        layout.addField(new DataField("key4", true, true, false));
+        layout.addField(new DataField("key5", true, true, true));
 
         // when converts it to CSV
         String csv = layout.toCsv();

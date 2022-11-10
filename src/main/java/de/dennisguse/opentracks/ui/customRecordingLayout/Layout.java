@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import de.dennisguse.opentracks.settings.PreferencesUtils;
@@ -111,5 +112,18 @@ public class Layout implements Parcelable {
         parcel.writeString(name);
         parcel.writeInt(columnsPerRow);
         parcel.writeList(dataFields);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Layout layout = (Layout) o;
+        return columnsPerRow == layout.columnsPerRow && Objects.equals(name, layout.name) && Objects.equals(dataFields, layout.dataFields);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, columnsPerRow, dataFields);
     }
 }

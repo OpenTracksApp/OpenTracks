@@ -196,10 +196,10 @@ public class PreferencesUtilsTest {
         // given
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         Layout layoutSrc = new Layout("road cycling");
-        layoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_moving_time_key), context.getString(R.string.stats_moving_time), true, true, false));
-        layoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_distance_key), context.getString(R.string.stats_distance), true, false, false));
-        layoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_average_moving_speed_key), context.getString(R.string.stats_average_moving_speed), false, true, false));
-        layoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_speed_key), context.getString(R.string.stats_speed), false, false, false));
+        layoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_moving_time_key), true, true, false));
+        layoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_distance_key), true, false, false));
+        layoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_average_moving_speed_key), false, true, false));
+        layoutSrc.addField(new DataField(context.getString(R.string.stats_custom_layout_speed_key), false, false, false));
 
         // when
         SharedPreferences.Editor editor = sharedPreferences.edit();

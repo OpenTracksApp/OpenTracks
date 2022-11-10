@@ -45,11 +45,11 @@ public class StatisticsUtilsTest extends TestCase {
     public void testFilterVisible() {
         // given
         Layout layout = new Layout("profile");
-        layout.addField(new DataField("key1", "title1", true, true, false));
-        layout.addField(new DataField("key2", "title2", false, true, false));
-        layout.addField(new DataField("key3", "title3", true, true, false));
-        layout.addField(new DataField("key4", "title4", false, true, false));
-        layout.addField(new DataField("key5", "title5", true, true, false));
+        layout.addField(new DataField("key1", true, true, false));
+        layout.addField(new DataField("key2", false, true, false));
+        layout.addField(new DataField("key3", true, true, false));
+        layout.addField(new DataField("key4", false, true, false));
+        layout.addField(new DataField("key5", true, true, false));
 
         // when
         Layout resultTrue = StatisticsUtils.filterVisible(layout, true);

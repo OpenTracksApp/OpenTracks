@@ -46,7 +46,6 @@ public class LayoutIO {
     private static DataField fromCSV(String[] fieldParts, @NonNull Resources resources) {
         return new DataField(
                 fieldParts[0],
-                DataField.getTitleByKey(resources, fieldParts[0]),
                 fieldParts[1].equals(YES_VALUE),
                 fieldParts[2].equals(YES_VALUE),
                 fieldParts[0].equals(resources.getString(R.string.stats_custom_layout_coordinates_key)));

@@ -754,6 +754,7 @@ public class PreferencesUtils {
     /**
      * @return custom layout selected or the first one if any has been selected or the one selected is not exists anymore.
      */
+    @Deprecated //TODO Move parsing to LayoutIO
     public static Layout getCustomLayout() {
         String csvCustomLayouts = getString(R.string.stats_custom_layouts_key, buildDefaultLayout());
         String[] csvLines = csvCustomLayouts.split(CsvLayoutUtils.LINE_SEPARATOR);
@@ -772,6 +773,7 @@ public class PreferencesUtils {
         return LayoutIO.fromCsv(csvLines[0], resources);
     }
 
+    //TODO Move string generation to LayoutIO
     public static void updateCustomLayouts(@NonNull List<Layout> layouts) {
         setString(R.string.stats_custom_layouts_key, layouts.stream().map(Layout::toCsv).collect(Collectors.joining(CsvLayoutUtils.LINE_SEPARATOR)));
     }
