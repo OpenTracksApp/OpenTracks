@@ -31,11 +31,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     public static class Distance extends GenericStatisticsViewHolder {
 
         @Override
-        public int getTitleId() {
-            return R.string.stats_distance;
-        }
-
-        @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
             Pair<String, String> valueAndUnit = DistanceFormatter.Builder()
                     .setUnit(unitSystem)
@@ -50,11 +45,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     public static class TotalTime extends GenericStatisticsViewHolder {
 
         @Override
-        public int getTitleId() {
-            return R.string.stats_total_time;
-        }
-
-        @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
             Pair<String, String> valueAndUnit = new Pair<>(StringUtils.formatElapsedTime(data.getTrackStatistics().getTotalTime()), null);
 
@@ -67,11 +57,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     public static class MovingTime extends GenericStatisticsViewHolder {
 
         @Override
-        public int getTitleId() {
-            return R.string.stats_moving_time;
-        }
-
-        @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
             String value = StringUtils.formatElapsedTime(data.getTrackStatistics().getMovingTime());
 
@@ -81,11 +66,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     }
 
     public static class SpeedOrPace extends GenericStatisticsViewHolder {
-
-        @Override
-        public int getTitleId() {
-            return R.string.stats_speed;
-        }
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
@@ -116,11 +96,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     public static class AverageMovingSpeed extends GenericStatisticsViewHolder {
 
         @Override
-        public int getTitleId() {
-            return R.string.stats_average_moving_speed;
-        }
-
-        @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
             SpeedFormatter speedFormatterSpeed = SpeedFormatter.Builder()
                     .setUnit(unitSystem)
@@ -136,11 +111,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     }
 
     public static class AverageSpeed extends GenericStatisticsViewHolder {
-
-        @Override
-        public int getTitleId() {
-            return R.string.stats_average_speed;
-        }
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
@@ -160,11 +130,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     public static class MaxSpeed extends GenericStatisticsViewHolder {
 
         @Override
-        public int getTitleId() {
-            return R.string.stats_max_speed;
-        }
-
-        @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
             SpeedFormatter speedFormatterSpeed = SpeedFormatter.Builder()
                     .setUnit(unitSystem)
@@ -180,11 +145,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     }
 
     public static class AverageMovingPace extends GenericStatisticsViewHolder {
-
-        @Override
-        public int getTitleId() {
-            return R.string.stats_average_moving_pace;
-        }
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
@@ -204,11 +164,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     public static class AveragePace extends GenericStatisticsViewHolder {
 
         @Override
-        public int getTitleId() {
-            return R.string.stats_average_pace;
-        }
-
-        @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
             SpeedFormatter speedFormatterSpeed = SpeedFormatter.Builder()
                     .setUnit(unitSystem)
@@ -224,11 +179,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     }
 
     public static class FastestPace extends GenericStatisticsViewHolder {
-
-        @Override
-        public int getTitleId() {
-            return R.string.stats_fastest_pace;
-        }
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
@@ -248,11 +198,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     public static class Altitude extends GenericStatisticsViewHolder {
 
         @Override
-        public int getTitleId() {
-            return R.string.stats_altitude;
-        }
-
-        @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
             TrackPoint latestTrackPoint = data.getLatestTrackPoint();
             Float altitude = latestTrackPoint != null && latestTrackPoint.hasAltitude() ? (float) latestTrackPoint.getAltitude().toM() : null;
@@ -269,11 +214,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     public static class Gain extends GenericStatisticsViewHolder {
 
         @Override
-        public int getTitleId() {
-            return R.string.stats_gain;
-        }
-
-        @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
 
             Pair<String, String> valueAndUnit = StringUtils.getAltitudeParts(getContext(), data.getTrackStatistics().getTotalAltitudeGain(), unitSystem);
@@ -287,11 +227,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     public static class Loss extends GenericStatisticsViewHolder {
 
         @Override
-        public int getTitleId() {
-            return R.string.stats_loss;
-        }
-
-        @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
 
             Pair<String, String> valueAndUnit = StringUtils.getAltitudeParts(getContext(), data.getTrackStatistics().getTotalAltitudeLoss(), unitSystem);
@@ -303,11 +238,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     }
 
     public static class Coordinates extends GenericStatisticsViewHolder {
-
-        @Override
-        public int getTitleId() {
-            return R.string.stats_coordinates;
-        }
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
@@ -325,11 +255,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     }
 
     public static class SensorHeartRate extends GenericStatisticsViewHolder {
-
-        @Override
-        public int getTitleId() {
-            return R.string.stats_sensors_heart_rate;
-        }
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
@@ -354,11 +279,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     public static class SensorCadence extends GenericStatisticsViewHolder {
 
         @Override
-        public int getTitleId() {
-            return R.string.stats_sensors_cadence;
-        }
-
-        @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {
             SensorDataSet sensorDataSet = data.getSensorDataSet();
             String sensorName = getContext().getString(R.string.value_unknown);
@@ -379,11 +299,6 @@ public abstract class GenericStatisticsViewHolder extends StatisticViewHolder<St
     }
 
     public static class SensorPower extends GenericStatisticsViewHolder {
-
-        @Override
-        public int getTitleId() {
-            return R.string.stats_sensors_power;
-        }
 
         @Override
         public void onChanged(UnitSystem unitSystem, RecordingData data) {

@@ -25,9 +25,6 @@ public abstract class StatisticViewHolder<T extends ViewBinding> {
 
     public abstract void configureUI(DataField dataField);
 
-    @Deprecated
-    public abstract int getTitleId();
-
     public abstract void onChanged(UnitSystem unitSystem, RecordingData data);
 
     public View getView() {

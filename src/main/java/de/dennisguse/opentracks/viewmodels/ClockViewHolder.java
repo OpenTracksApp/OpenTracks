@@ -22,11 +22,6 @@ public class ClockViewHolder extends StatisticViewHolder<StatsClockItemBinding> 
     }
 
     @Override
-    public int getTitleId() {
-        return R.string.stats_clock;
-    }
-
-    @Override
     public void onChanged(UnitSystem unitSystem, RecordingData data) {
     }
 }
