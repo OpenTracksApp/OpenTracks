@@ -4,8 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -16,6 +14,7 @@ import java.util.Optional;
 import java.util.concurrent.Callable;
 
 import de.dennisguse.opentracks.R;
+import de.dennisguse.opentracks.databinding.CustomStatsItemBinding;
 import de.dennisguse.opentracks.util.StatisticsUtils;
 import de.dennisguse.opentracks.viewmodels.Mapping;
 import de.dennisguse.opentracks.viewmodels.StatisticViewHolder;
@@ -39,8 +38,9 @@ public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<Recycl
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.custom_stats_item, parent, false); //TODO CustomStatsItemBinding or rather use mapping.get().call() directly
-        return new SettingsCustomLayoutEditAdapter.ViewHolder(view);
+        CustomStatsItemBinding binding = CustomStatsItemBinding.inflate(LayoutInflater.from(context), parent, false);
+        //TODO CustomStatsItemBinding or rather use mapping.get().call() directly
+        return new SettingsCustomLayoutEditAdapter.ViewHolder(binding);
     }
 
     @Override
@@ -49,17 +49,18 @@ public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<Recycl
         DataField field = layout.getFields().get(position);
         viewHolder.itemView.setTag(field.getKey());
         try {
-            viewHolder.title.setText(mapping.get(field.getKey()).call().getTitleId());
+            viewHolder.viewBinding.statsLayout.statsDescriptionMain.setText(mapping.get(field.getKey()).call().getTitleId());
         } catch (Exception e) {
             //Ignored.
         }
-        viewHolder.value.setText(StatisticsUtils.emptyValue(context, field.getKey()));
 
-        viewHolder.title.setTextAppearance(context, field.isVisible() ? (field.isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader) : R.style.TextAppearance_OpenTracks_HiddenHeader);
-        viewHolder.value.setTextAppearance(context, field.isVisible() ? (field.isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryValue : R.style.TextAppearance_OpenTracks_SecondaryValue) : R.style.TextAppearance_OpenTracks_HiddenValue);
-        viewHolder.statusIcon.setVisibility(field.isVisible() ? View.GONE : View.VISIBLE);
-        viewHolder.statusIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_baseline_visibility_off_24));
-        viewHolder.moveIcon.setVisibility(field.isVisible() ? View.VISIBLE : View.GONE);
+        viewHolder.viewBinding.statsLayout.statsValue.setText(StatisticsUtils.emptyValue(context, field.getKey()));
+
+        viewHolder.viewBinding.statsLayout.statsDescriptionMain.setTextAppearance(context, field.isVisible() ? (field.isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryHeader : R.style.TextAppearance_OpenTracks_SecondaryHeader) : R.style.TextAppearance_OpenTracks_HiddenHeader);
+        viewHolder.viewBinding.statsLayout.statsValue.setTextAppearance(context, field.isVisible() ? (field.isPrimary() ? R.style.TextAppearance_OpenTracks_PrimaryValue : R.style.TextAppearance_OpenTracks_SecondaryValue) : R.style.TextAppearance_OpenTracks_HiddenValue);
+        viewHolder.viewBinding.statsIconShowStatus.setVisibility(field.isVisible() ? View.GONE : View.VISIBLE);
+        viewHolder.viewBinding.statsIconShowStatus.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_baseline_visibility_off_24));
+        viewHolder.viewBinding.statsIvDragIndicator.setVisibility(field.isVisible() ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -93,20 +94,14 @@ public class SettingsCustomLayoutEditAdapter extends RecyclerView.Adapter<Recycl
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final TextView title;
-        final TextView value;
-        final TextView unit;
-        final ImageView statusIcon;
-        final ImageView moveIcon;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            title = itemView.findViewById(R.id.stats_description_main);
-            value = itemView.findViewById(R.id.stats_value);
-            unit = itemView.findViewById(R.id.stats_unit);
-            statusIcon = itemView.findViewById(R.id.stats_icon_show_status);
-            moveIcon = itemView.findViewById(R.id.stats_iv_drag_indicator);
-            itemView.setOnClickListener(this);
+        CustomStatsItemBinding viewBinding;
+
+        public ViewHolder(@NonNull CustomStatsItemBinding viewBinding) {
+            super(viewBinding.getRoot());
+            this.viewBinding = viewBinding;
+
+            viewBinding.getRoot().setOnClickListener(this);
         }
 
         @Override
